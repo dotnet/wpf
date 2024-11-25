@@ -79,7 +79,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             RibbonToolTip ribbonToolTip = (RibbonToolTip)d;
             UIElement target = e.NewValue as UIElement;
-            if (target == null)
+            if (target is null)
             {
                 ribbonToolTip.Ribbon = null;
             }
@@ -298,7 +298,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     }
 
                     DependencyObject visualParent = VisualTreeHelper.GetParent(element);
-                    if (visualParent == null)
+                    if (visualParent is null)
                     {
                         // This special check is for the case that the PlacementTarget is 
                         // within the Popup of a Collapsed RibbonGroup

@@ -92,11 +92,11 @@ namespace System.Windows
         internal override void Seal()
         {
 
-            if (_event == null)
+            if (_event is null)
             {
                 throw new ArgumentException(SR.Format(SR.NullPropertyIllegal, "EventSetter.Event"));
             }
-            if (_handler == null)
+            if (_handler is null)
             {
                 throw new ArgumentException(SR.Format(SR.NullPropertyIllegal, "EventSetter.Handler"));
             }

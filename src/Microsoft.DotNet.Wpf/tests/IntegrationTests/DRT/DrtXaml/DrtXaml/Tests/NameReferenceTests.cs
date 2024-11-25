@@ -229,7 +229,7 @@ namespace DrtXaml
             var root = (Test.Elements.ElementHolderWithNameScope)o;
             var nameScope = o as System.Windows.Markup.INameScope;
             var holder = nameScope.FindName("_refUser");
-            if (holder == null)
+            if (holder is null)
                 throw new NullReferenceException("Object10.Object0 should not be null");
 
             var top10 = (Test.Elements.Element10)root.Element;
@@ -245,7 +245,7 @@ namespace DrtXaml
             var title23 = top10.Element4;
 
             var holderLast = (Test.Elements.HoldsOneElement)top10.Element4;
-            if (holderLast.Element == null)
+            if (holderLast.Element is null)
                 throw new NullReferenceException("Object10.Object1 should not be null");
 
             if (holderLast.Element != title22)
@@ -784,7 +784,7 @@ namespace DrtXaml
             }
             catch (Exception ex)
             {
-                if (ex.InnerException == null)
+                if (ex.InnerException is null)
                 {
                     // Can't use Assert.Fail here because it throws InvalidOperationException,
                     // which might be what we're actually expecting

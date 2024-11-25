@@ -580,7 +580,7 @@ namespace System.Windows.Controls
 
             // ToolBar has a capture when its overflow panel is open
             // close the overflow panel is case capture is set to null
-            if (Mouse.Captured == null)
+            if (Mouse.Captured is null)
             {
                 Close();
             }
@@ -597,7 +597,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_toolBarPanel == null)
+                if (_toolBarPanel is null)
                     _toolBarPanel = FindToolBarPanel();
 
                 return _toolBarPanel;
@@ -608,7 +608,7 @@ namespace System.Windows.Controls
         {
             DependencyObject child = GetTemplateChild(ToolBarPanelTemplateName);
             ToolBarPanel toolBarPanel = child as ToolBarPanel;
-            if (child != null && toolBarPanel == null)
+            if (child != null && toolBarPanel is null)
                 throw new NotSupportedException(SR.Format(SR.ToolBar_InvalidStyle_ToolBarPanel, child.GetType()));
             return toolBarPanel;
         }
@@ -620,7 +620,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_toolBarOverflowPanel == null)
+                if (_toolBarOverflowPanel is null)
                     _toolBarOverflowPanel = FindToolBarOverflowPanel();
 
                 return _toolBarOverflowPanel;
@@ -631,7 +631,7 @@ namespace System.Windows.Controls
         {
             DependencyObject child = GetTemplateChild(ToolBarOverflowPanelTemplateName);
             ToolBarOverflowPanel toolBarOverflowPanel = child as ToolBarOverflowPanel;
-            if (child != null && toolBarOverflowPanel == null)
+            if (child != null && toolBarOverflowPanel is null)
                 throw new NotSupportedException(SR.Format(SR.ToolBar_InvalidStyle_ToolBarOverflowPanel, child.GetType()));
             return toolBarOverflowPanel;
         }

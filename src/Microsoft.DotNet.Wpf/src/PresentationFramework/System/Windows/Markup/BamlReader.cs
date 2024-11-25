@@ -545,7 +545,7 @@ namespace System.Windows.Markup
                 // If the current baml record is null, then the stream is finished, closed
                 // or something else that prevents us reading further, so treat this
                 // as an end-of-file condition
-                if (_currentBamlRecord == null)
+                if (_currentBamlRecord is null)
                 {
                     NodeTypeInternal = BamlNodeType.None;
                     _readState = ReadState.EndOfFile;
@@ -826,7 +826,7 @@ namespace System.Windows.Markup
             info.ClrNamespace = string.Empty;
             info.AssemblyName = string.Empty;
             info.Prefix = "xmlns";
-            info.LocalName = bamlRecord.Prefix == null ? string.Empty : bamlRecord.Prefix;
+            info.LocalName = bamlRecord.Prefix is null ? string.Empty : bamlRecord.Prefix;
             info.Name = string.IsNullOrEmpty(bamlRecord.Prefix) ?
                                           "xmlns" :
                                           $"xmlns:{bamlRecord.Prefix}";
@@ -988,15 +988,15 @@ namespace System.Windows.Markup
             // Reverse the binary data stored in the record into a string by first getting the
             // property.  If it has not already been cached in the attribute info record, then
             // attempt to resolve it as a DependencyProperty or a PropertyInfo.
-            if (attrInfo.DP == null && attrInfo.PropInfo == null)
+            if (attrInfo.DP is null && attrInfo.PropInfo is null)
             {
                 attrInfo.DP = MapTable.GetDependencyProperty(attrInfo);
 
-                if (attrInfo.OwnerType == null)
+                if (attrInfo.OwnerType is null)
                 {
                     throw new InvalidOperationException(SR.Format(SR.BamlReaderNoOwnerType, attrInfo.Name, AssemblyName));
                 }
-                if (attrInfo.DP == null)
+                if (attrInfo.DP is null)
                 {
                     try
                     {
@@ -1028,7 +1028,7 @@ namespace System.Windows.Markup
                         }
                     }
 
-                    if (attrInfo.PropInfo == null)
+                    if (attrInfo.PropInfo is null)
                     {
                         throw new InvalidOperationException(SR.Format(SR.ParserCantGetDPOrPi, info.Name));
                     }
@@ -1049,7 +1049,7 @@ namespace System.Windows.Markup
             {
                 Type declaringType = null;
                 _propertyDP = _bamlRecordReader.GetCustomDependencyPropertyValue(bamlRecord, out declaringType);
-                declaringType = declaringType == null ? _propertyDP.OwnerType : declaringType;
+                declaringType = declaringType is null ? _propertyDP.OwnerType : declaringType;
                 info.Value = $"{declaringType.Name}.{_propertyDP.Name}";
 
                 string xmlns = _parserContext.XamlTypeMapper.GetXmlNamespace(declaringType.Namespace,
@@ -1755,7 +1755,7 @@ namespace System.Windows.Markup
             {
                 if (value[i] == '{' || value[i] == '}')
                 {
-                    if (builder == null)
+                    if (builder is null)
                     {
                         builder = new StringBuilder(value.Length+2);
                         builder.Append(value,0,i);
@@ -1768,7 +1768,7 @@ namespace System.Windows.Markup
                 }
             }
 
-            if (builder == null)
+            if (builder is null)
             {
                 return value;
             }
@@ -1881,7 +1881,7 @@ namespace System.Windows.Markup
             BamlPIMappingRecord piMappingRecord = (BamlPIMappingRecord)_currentBamlRecord;
             BamlAssemblyInfoRecord assemblyInfo = MapTable.GetAssemblyInfoFromId(
                                                                   piMappingRecord.AssemblyId);
-            if (assemblyInfo == null)
+            if (assemblyInfo is null)
             {
                 throw new InvalidOperationException(SR.ParserMapPIMissingAssembly);
             }
@@ -2264,7 +2264,7 @@ namespace System.Windows.Markup
 
         private void InsertDeferedKey(Int32 valueOffset)
         {
-            if (_deferKeys == null)
+            if (_deferKeys is null)
             {
                 return;
             }
@@ -2380,7 +2380,7 @@ namespace System.Windows.Markup
                     }
                 }
 
-                if (dp == null)
+                if (dp is null)
                 {
                     throw new InvalidOperationException(SR.BamlBadExtensionValue);
                 }
@@ -2391,7 +2391,7 @@ namespace System.Windows.Markup
                 }
 
                 object prefixObject = _prefixDictionary[XamlReaderHelper.DefaultNamespaceURI];
-                valuePrefix = (prefixObject == null) ? string.Empty : (string)prefixObject;
+                valuePrefix = (prefixObject is null) ? string.Empty : (string)prefixObject;
             }
             else
             {
@@ -2466,7 +2466,7 @@ namespace System.Windows.Markup
                 }
 
                 object prefixObject = _prefixDictionary[XamlReaderHelper.DefaultNamespaceURI];
-                valuePrefix = (prefixObject == null) ? string.Empty : (string)prefixObject;
+                valuePrefix = (prefixObject is null) ? string.Empty : (string)prefixObject;
             }
             else
             {
@@ -2622,7 +2622,7 @@ namespace System.Windows.Markup
             // If the typeInfo indicates the type is NOT a core Avalon type, then the
             // assembly should be in the Assembly table of the BamlMapTable.  Otherwise
             // we have to get the Assembly information from the actual type.
-            if (typeInfo.AssemblyId >= 0 || typeInfo.Type == null)
+            if (typeInfo.AssemblyId >= 0 || typeInfo.Type is null)
             {
                 BamlAssemblyInfoRecord assyInfo = MapTable.GetAssemblyInfoFromId(
                                                                      typeInfo.AssemblyId);
@@ -3029,7 +3029,7 @@ namespace System.Windows.Markup
             {
                 get
                 {
-                    if (_staticResources == null)
+                    if (_staticResources is null)
                     {
                         _staticResources = new List<List<BamlRecord>>();
                     }

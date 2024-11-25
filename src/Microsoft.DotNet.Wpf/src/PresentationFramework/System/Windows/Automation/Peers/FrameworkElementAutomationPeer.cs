@@ -99,7 +99,7 @@ namespace System.Windows.Automation.Peers
             // to items that have been virtualized or removed from the underlying
             // collection, and that's enough to avoid the ElementNotAvailable exceptions.
             DependencyObject owner = Owner;
-            if (owner == null ||
+            if (owner is null ||
                 owner.GetValue(FrameworkElement.DataContextProperty) ==
                     System.Windows.Data.BindingOperations.DisconnectedSource)
             {

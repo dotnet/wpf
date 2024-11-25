@@ -110,7 +110,7 @@ namespace MS.Internal
 
             // If there was no UIElement parent in the visual ancestry,
             // check along the logical branch.
-            if(parent == null && continuePastVisualTree)
+            if(parent is null && continuePastVisualTree)
             {
                 UIElement childAsUIElement = child as UIElement;
                 if (childAsUIElement != null)

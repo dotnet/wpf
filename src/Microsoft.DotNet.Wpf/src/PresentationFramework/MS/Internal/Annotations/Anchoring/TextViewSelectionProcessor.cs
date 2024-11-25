@@ -273,7 +273,7 @@ namespace MS.Internal.Annotations.Anchoring
             ArgumentNullException.ThrowIfNull(selection);
 
             IServiceProvider provider = selection as IServiceProvider;
-            if (provider == null)
+            if (provider is null)
                 throw new ArgumentException(SR.SelectionMustBeServiceProvider, "selection");
 
             ITextView textView = provider.GetService(typeof(ITextView)) as ITextView;

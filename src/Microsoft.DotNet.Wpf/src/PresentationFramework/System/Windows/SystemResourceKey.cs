@@ -1936,7 +1936,7 @@ namespace System.Windows
         internal static object GetResource(short id)
         {
             SystemResourceKeyID keyId = (SystemResourceKeyID)id;
-            if (_srk == null)
+            if (_srk is null)
             {
                 _srk = new SystemResourceKey(keyId);
             }
@@ -2022,7 +2022,7 @@ namespace System.Windows
         {
             get
             {
-                if (_focusBorderBrushKey == null)
+                if (_focusBorderBrushKey is null)
                 {
                     _focusBorderBrushKey = new ComponentResourceKey(typeof(DataGrid), "FocusBorderBrushKey");
                 }
@@ -2035,7 +2035,7 @@ namespace System.Windows
         {
             get
             {
-                if (_textBlockComboBoxStyleKey == null)
+                if (_textBlockComboBoxStyleKey is null)
                 {
                     _textBlockComboBoxStyleKey = new ComponentResourceKey(typeof(DataGrid), "TextBlockComboBoxStyleKey");
                 }
@@ -2048,7 +2048,7 @@ namespace System.Windows
         {
             get
             {
-                if (_menuItemSeparatorStyleKey == null)
+                if (_menuItemSeparatorStyleKey is null)
                 {
                     _menuItemSeparatorStyleKey = new SystemThemeKey(SystemResourceKeyID.MenuItemSeparatorStyle);
                 }
@@ -2060,7 +2060,7 @@ namespace System.Windows
         {
             get
             {
-                if (_columnFloatingHeaderStyleKey == null)
+                if (_columnFloatingHeaderStyleKey is null)
                 {
                     _columnFloatingHeaderStyleKey = new ComponentResourceKey(typeof(DataGrid), "ColumnFloatingHeaderStyleKey");
                 }
@@ -2073,7 +2073,7 @@ namespace System.Windows
         {
             get
             {
-                if (_columnHeaderDropSeparatorStyleKey == null)
+                if (_columnHeaderDropSeparatorStyleKey is null)
                 {
                     _columnHeaderDropSeparatorStyleKey = new ComponentResourceKey(typeof(DataGrid), "ColumnHeaderDropSeparatorStyleKey");
                 }
@@ -2086,7 +2086,7 @@ namespace System.Windows
         {
             get
             {
-                if (_gridViewItemContainerStyleKey == null)
+                if (_gridViewItemContainerStyleKey is null)
                 {
                     _gridViewItemContainerStyleKey = new SystemThemeKey(SystemResourceKeyID.GridViewItemContainerStyle);
                 }
@@ -2099,7 +2099,7 @@ namespace System.Windows
         {
             get
             {
-                if (_scrollViewerStyleKey == null)
+                if (_scrollViewerStyleKey is null)
                 {
                     _scrollViewerStyleKey = new SystemThemeKey(SystemResourceKeyID.GridViewScrollViewerStyle);
                 }
@@ -2112,7 +2112,7 @@ namespace System.Windows
         {
             get
             {
-                if (_gridViewStyleKey == null)
+                if (_gridViewStyleKey is null)
                 {
                     _gridViewStyleKey = new SystemThemeKey(SystemResourceKeyID.GridViewStyle);
                 }
@@ -2125,7 +2125,7 @@ namespace System.Windows
         {
             get
             {
-                if (_statusBarSeparatorStyleKey == null)
+                if (_statusBarSeparatorStyleKey is null)
                 {
                     _statusBarSeparatorStyleKey = new SystemThemeKey(SystemResourceKeyID.StatusBarSeparatorStyle);
                 }
@@ -2137,7 +2137,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheButtonStyle == null)
+                if (_cacheButtonStyle is null)
                 {
                     _cacheButtonStyle = new SystemThemeKey(SystemResourceKeyID.ToolBarButtonStyle);
                 }
@@ -2153,7 +2153,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheToggleButtonStyle == null)
+                if (_cacheToggleButtonStyle is null)
                 {
                     _cacheToggleButtonStyle = new SystemThemeKey(SystemResourceKeyID.ToolBarToggleButtonStyle);
                 }
@@ -2168,7 +2168,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheSeparatorStyle == null)
+                if (_cacheSeparatorStyle is null)
                 {
                     _cacheSeparatorStyle = new SystemThemeKey(SystemResourceKeyID.ToolBarSeparatorStyle);
                 }
@@ -2184,7 +2184,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheCheckBoxStyle == null)
+                if (_cacheCheckBoxStyle is null)
                 {
                     _cacheCheckBoxStyle = new SystemThemeKey(SystemResourceKeyID.ToolBarCheckBoxStyle);
                 }
@@ -2199,7 +2199,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheRadioButtonStyle == null)
+                if (_cacheRadioButtonStyle is null)
                 {
                     _cacheRadioButtonStyle = new SystemThemeKey(SystemResourceKeyID.ToolBarRadioButtonStyle);
                 }
@@ -2215,7 +2215,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheComboBoxStyle == null)
+                if (_cacheComboBoxStyle is null)
                 {
                     _cacheComboBoxStyle = new SystemThemeKey(SystemResourceKeyID.ToolBarComboBoxStyle);
                 }
@@ -2231,7 +2231,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheTextBoxStyle == null)
+                if (_cacheTextBoxStyle is null)
                 {
                     _cacheTextBoxStyle = new SystemThemeKey(SystemResourceKeyID.ToolBarTextBoxStyle);
                 }
@@ -2247,7 +2247,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMenuStyle == null)
+                if (_cacheMenuStyle is null)
                 {
                     _cacheMenuStyle = new SystemThemeKey(SystemResourceKeyID.ToolBarMenuStyle);
                 }

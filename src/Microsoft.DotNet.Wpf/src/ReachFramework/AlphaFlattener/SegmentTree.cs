@@ -95,7 +95,7 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             if ((_min >= x0) && (_max <= x1)) // [_min.._max] is within [x0..x1]
             {
-                if (_sList == null)
+                if (_sList is null)
                 {
                     _sList = new List<int>();
                 }

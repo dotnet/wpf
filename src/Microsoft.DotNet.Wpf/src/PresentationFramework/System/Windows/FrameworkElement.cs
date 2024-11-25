@@ -481,7 +481,7 @@ namespace System.Windows
         {
             FrameworkElement targetFE = null;
 
-            if( targetName == null || targetName.Length == 0 )
+            if( targetName is null || targetName.Length == 0 )
             {
                 targetFE = startElement;
             }
@@ -491,7 +491,7 @@ namespace System.Windows
 
                 targetObject = LogicalTreeHelper.FindLogicalNode( startElement, targetName );
 
-                if( targetObject == null )
+                if( targetObject is null )
                 {
                     throw new ArgumentException( SR.Format(SR.TargetNameNotFound, targetName));
                 }
@@ -521,7 +521,7 @@ namespace System.Windows
             get
             {
                 TriggerCollection triggerCollection = EventTrigger.TriggerCollectionField.GetValue(this);
-                if (triggerCollection == null)
+                if (triggerCollection is null)
                 {
                     // Give the TriggerCollectiona back-link so that it can update
                     // 'this' on Add/Remove.
@@ -542,7 +542,7 @@ namespace System.Windows
         public bool ShouldSerializeTriggers()
         {
             TriggerCollection triggerCollection = EventTrigger.TriggerCollectionField.GetValue(this);
-            if (triggerCollection == null || triggerCollection.Count == 0)
+            if (triggerCollection is null || triggerCollection.Count == 0)
             {
                 return false;
             }
@@ -636,7 +636,7 @@ namespace System.Windows
         {
             get
             {
-                return (_templateChild == null) ? 0 : 1;
+                return (_templateChild is null) ? 0 : 1;
             }
         }
 
@@ -650,7 +650,7 @@ namespace System.Windows
         /// </remarks>
         protected override Visual GetVisualChild(int index)
         {
-            if (_templateChild == null)
+            if (_templateChild is null)
             {
                 throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
@@ -685,7 +685,7 @@ namespace System.Windows
             get
             {
                 ResourceDictionary resources = ResourcesField.GetValue(this);
-                if (resources == null)
+                if (resources is null)
                 {
                     resources = new ResourceDictionary();
                     resources.AddOwner(this);
@@ -793,7 +793,7 @@ namespace System.Windows
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool ShouldSerializeResources()
         {
-            if (Resources == null || Resources.Count == 0)
+            if (Resources is null || Resources.Count == 0)
             {
                 return false;
             }
@@ -815,7 +815,7 @@ namespace System.Windows
                 "The VisualTree should have been created from a Template");
             */
 
-            if (template == null)
+            if (template is null)
             {
                 return null;
             }
@@ -1426,7 +1426,7 @@ namespace System.Windows
         internal static object FindTemplateResourceInternal(DependencyObject target, object item, Type templateType)
         {
             // Data styling doesn't apply to UIElement (bug 1007133).
-            if (item == null || (item is UIElement))
+            if (item is null || (item is UIElement))
             {
                 return null;
             }
@@ -2010,7 +2010,7 @@ namespace System.Windows
 #endregion EventTracing
 
                         DependencyObject parentDO = parentFE;
-                        if (parentDO == null)
+                        if (parentDO is null)
                         {
                             parentDO = parentFCE;
                         }
@@ -2509,7 +2509,7 @@ namespace System.Windows
             }
 
             // Do it only if you do not have a logical parent
-            if (Parent == null)
+            if (Parent is null)
             {
                 // Invalidate relevant properties for this subtree
                 DependencyObject parent = (newParent != null) ? newParent : oldParent;
@@ -2546,15 +2546,15 @@ namespace System.Windows
 
             // Find our nearest FrameworkElement parent.
             FrameworkElement.GetContainingFrameworkElement(VisualTreeHelper.GetParent(this), out feParent, out fceParent);
-            Debug.Assert(fceParent == null, "Nearest framework parent via the visual tree has to be an FE. It cannot be an FCE");
+            Debug.Assert(fceParent is null, "Nearest framework parent via the visual tree has to be an FE. It cannot be an FCE");
 
-            if(e.OldParent == null)
+            if(e.OldParent is null)
             {
                 // We were plugged into something.
 
                 // See if this parent is a child of the ancestor who's parent changed.
                 // If so, we don't care about changes that happen above us.
-                if(feParent == null || !VisualTreeHelper.IsAncestorOf(e.Ancestor, feParent))
+                if(feParent is null || !VisualTreeHelper.IsAncestorOf(e.Ancestor, feParent))
                 {
                     // Update HasLoadedChangeHandler Flag
                     BroadcastEventHelper.AddOrRemoveHasLoadedChangeHandlerFlag(this, null, VisualTreeHelper.GetParent(e.Ancestor));
@@ -2571,7 +2571,7 @@ namespace System.Windows
                 // break in the visual tree must have been above it,
                 // so we don't need to respond.
 
-                if(feParent == null)
+                if(feParent is null)
                 {
                     // There was no FrameworkElement parent in our subtree, so we
                     // may be detaching from some FrameworkElement parent above
@@ -2851,7 +2851,7 @@ namespace System.Windows
             if(_parent != null || HasLogicalChildren)
             {
                 DependencyObject logicalSource = args.Source as DependencyObject;
-                if(logicalSource == null || !IsLogicalDescendent(logicalSource))
+                if(logicalSource is null || !IsLogicalDescendent(logicalSource))
                 {
                     args.Source=this;
                     source = this;
@@ -2941,7 +2941,7 @@ namespace System.Windows
             if (!IgnoreModelParentBuildRoute(args))
             {
                 // If there is no visual parent, route via the model tree.
-                if (visualParent == null)
+                if (visualParent is null)
                 {
                     continuePastCoreTree = modelParent != null;
                 }
@@ -3129,7 +3129,7 @@ namespace System.Windows
             }
 
             // If there is no visual parent, route via the model tree.
-            if (visualParent == null)
+            if (visualParent is null)
             {
                 continuePastCoreTree = modelParent != null;
             }
@@ -3828,7 +3828,7 @@ namespace System.Windows
         {
             get
             {
-                if (_defaultFocusVisualStyle == null)
+                if (_defaultFocusVisualStyle is null)
                 {
                     Style defaultFocusVisualStyle = new Style();
                     defaultFocusVisualStyle.Seal();
@@ -4363,7 +4363,7 @@ namespace System.Windows
                     //  check that LayoutTransform is non-trivial
                     if (layoutTransform != null && !layoutTransform.IsIdentity)
                     {
-                        if (ltd == null)
+                        if (ltd is null)
                         {
                             //  allocate and store ltd if needed
                             ltd = new LayoutTransformData();
@@ -4504,7 +4504,7 @@ namespace System.Windows
                     || clippedDesiredWidth < 0
                     || clippedDesiredHeight < 0)
                 {
-                    if (sb == null) //not yet allocated, allocate the box
+                    if (sb is null) //not yet allocated, allocate the box
                     {
                         sb = new SizeBox(unclippedDesiredSize);
                         UnclippedDesiredSizeField.SetValue(this, sb);
@@ -4601,7 +4601,7 @@ namespace System.Windows
                 // Next, compare against unclipped, transformed size.
                 SizeBox sb = UnclippedDesiredSizeField.GetValue(this);
                 Size unclippedDesiredSize;
-                if (sb == null)
+                if (sb is null)
                 {
                     unclippedDesiredSize = new Size(Math.Max(0, this.DesiredSize.Width - marginWidth),
                                                     Math.Max(0, this.DesiredSize.Height - marginHeight));
@@ -5154,7 +5154,7 @@ namespace System.Windows
             FrameworkElement fe = element as FrameworkElement;
             element.InternalSetOffsetWorkaround(new Vector());
 
-            Transform additionalTransform = (fe == null ? null : fe.GetFlowDirectionTransform()); //rtl
+            Transform additionalTransform = (fe is null ? null : fe.GetFlowDirectionTransform()); //rtl
 
             Transform renderTransform = element.RenderTransform;
             if(renderTransform == Transform.Identity)
@@ -5380,7 +5380,7 @@ namespace System.Windows
             {
                 KeyboardNavigation.Current.HideFocusVisual();
 
-                if (e.NewFocus == null)
+                if (e.NewFocus is null)
                 {
                     KeyboardNavigation.Current.NotifyFocusChanged(sender, e);
                 }
@@ -5543,7 +5543,7 @@ namespace System.Windows
             // Return the current system font when (changing the system theme OR creating an element and the default is outdated)
             // AND the element is a root AND the element has not had a value set on it by the user
             return  (SystemResources.SystemResourcesAreChanging || (fe.ReadInternalFlag(InternalFlags.CreatingRoot) && SystemResources.SystemResourcesHaveChanged)) &&
-                     fe._parent == null && VisualTreeHelper.GetParent(fe) == null &&
+                     fe._parent is null && VisualTreeHelper.GetParent(fe) is null &&
                      fe.GetValueSource(dp, null, out hasModifiers) == BaseValueSourceInternal.Default;
         }
 
@@ -5678,7 +5678,7 @@ namespace System.Windows
                 object[] loadedPending = LoadedPending;
                 object[] unloadedPending = UnloadedPending;
 
-                if (loadedPending == null && unloadedPending == null)
+                if (loadedPending is null && unloadedPending is null)
                 {
                     // The HasHandler flags are used for validation of the IsLoaded flag
                     if (SubtreeHasLoadedChangeHandler)
@@ -5868,7 +5868,7 @@ namespace System.Windows
 
         private static FrameworkServices EnsureFrameworkServices()
         {
-            if ((_frameworkServices == null))
+            if ((_frameworkServices is null))
             {
                 // Enable KeyboardNavigation, ContextMenu, and ToolTip services.
                  _frameworkServices = new FrameworkServices();
@@ -6320,7 +6320,7 @@ namespace System.Windows
         {
             get
             {
-                if (_controlDType == null)
+                if (_controlDType is null)
                 {
                     _controlDType = DependencyObjectType.FromSystemTypeInternal(typeof(Control));
                 }
@@ -6333,7 +6333,7 @@ namespace System.Windows
         {
             get
             {
-                if (_contentPresenterDType == null)
+                if (_contentPresenterDType is null)
                 {
                     _contentPresenterDType = DependencyObjectType.FromSystemTypeInternal(typeof(ContentPresenter));
                 }
@@ -6346,7 +6346,7 @@ namespace System.Windows
         {
             get
             {
-                if (_pageDType == null)
+                if (_pageDType is null)
                 {
                     _pageDType = DependencyObjectType.FromSystemTypeInternal(typeof(Page));
                 }
@@ -6359,7 +6359,7 @@ namespace System.Windows
         {
             get
             {
-                if (_pageFunctionBaseDType == null)
+                if (_pageFunctionBaseDType is null)
                 {
                     _pageFunctionBaseDType = DependencyObjectType.FromSystemTypeInternal(typeof(PageFunctionBase));
                 }

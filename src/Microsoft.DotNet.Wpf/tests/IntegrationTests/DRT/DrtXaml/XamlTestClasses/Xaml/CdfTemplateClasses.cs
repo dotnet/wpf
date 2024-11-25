@@ -429,7 +429,7 @@ namespace Cdf.Test.Elements
         {
             get
             {
-                if (visuals == null)
+                if (visuals is null)
                 {
                     visuals = Template.VisualTree.Evaluate();
                 }
@@ -611,11 +611,11 @@ namespace Cdf.Test.Elements
     {
         public override object Load(XamlReader xamlReader, IServiceProvider context)
         {
-            if (context == null)
+            if (context is null)
             {
                 throw new ArgumentNullException("context");
             }
-            if (xamlReader == null)
+            if (xamlReader is null)
             {
                 throw new ArgumentNullException("xamlReader");
             }
@@ -630,7 +630,7 @@ namespace Cdf.Test.Elements
 
         public override XamlReader Save(object value, IServiceProvider context)
         {
-            if (value == null)
+            if (value is null)
             {
                 throw new ArgumentNullException("value");
             }

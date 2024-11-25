@@ -104,7 +104,7 @@ namespace Microsoft.Windows.Themes
             {
                 if (((bool)e.NewValue))
                 {
-                    if (chrome._localResources == null)
+                    if (chrome._localResources is null)
                     {
                         chrome._localResources = new LocalResources();
                         chrome.InvalidateVisual();
@@ -141,7 +141,7 @@ namespace Microsoft.Windows.Themes
                         chrome.Glyph.GradientStops[2].BeginAnimation(GradientStop.ColorProperty, ca);
                     }
                 }
-                else if (chrome._localResources == null)
+                else if (chrome._localResources is null)
                 {
                     chrome.InvalidateVisual();
                 }
@@ -210,7 +210,7 @@ namespace Microsoft.Windows.Themes
 
             if (chrome.Animates)
             {
-                if (chrome._localResources == null)
+                if (chrome._localResources is null)
                 {
                     chrome._localResources = new LocalResources();
                     chrome.InvalidateVisual();
@@ -314,7 +314,7 @@ namespace Microsoft.Windows.Themes
 
             if (chrome.Animates)
             {
-                if (chrome._localResources == null)
+                if (chrome._localResources is null)
                 {
                     chrome._localResources = new LocalResources();
                     chrome.InvalidateVisual();
@@ -592,11 +592,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_leftArrowGeometry == null)
+                if (_leftArrowGeometry is null)
                 {
                     lock (_glyphAccess)
                     {
-                        if (_leftArrowGeometry == null)
+                        if (_leftArrowGeometry is null)
                         {
                             PathFigure figure = new PathFigure();
                             figure.StartPoint = new Point(4.0, 0.0);
@@ -622,11 +622,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_rightArrowGeometry == null)
+                if (_rightArrowGeometry is null)
                 {
                     lock (_glyphAccess)
                     {
-                        if (_rightArrowGeometry == null)
+                        if (_rightArrowGeometry is null)
                         {
                             PathFigure figure = new PathFigure();
                             figure.StartPoint = new Point(0.0, 0.0);
@@ -652,11 +652,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_upArrowGeometry == null)
+                if (_upArrowGeometry is null)
                 {
                     lock (_glyphAccess)
                     {
-                        if (_upArrowGeometry == null)
+                        if (_upArrowGeometry is null)
                         {
                             PathFigure figure = new PathFigure();
                             figure.StartPoint = new Point(0.0, 4.0);
@@ -682,11 +682,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_downArrowGeometry == null)
+                if (_downArrowGeometry is null)
                 {
                     lock (_glyphAccess)
                     {
-                        if (_downArrowGeometry == null)
+                        if (_downArrowGeometry is null)
                         {
                             PathFigure figure = new PathFigure();
                             figure.StartPoint = new Point(0.0, 0.0);
@@ -713,7 +713,7 @@ namespace Microsoft.Windows.Themes
 
         private void DrawArrow(DrawingContext dc, Brush brush, Rect bounds)
         {
-            if (_transform == null)
+            if (_transform is null)
             {
                 double glyphWidth = 7.0;
                 double glyphHeight = 4.0;
@@ -803,11 +803,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonHorizontalThumbFill == null)
+                if (_commonHorizontalThumbFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonHorizontalThumbFill == null)
+                        if (_commonHorizontalThumbFill is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -833,11 +833,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonHorizontalThumbHoverFill == null)
+                if (_commonHorizontalThumbHoverFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonHorizontalThumbHoverFill == null)
+                        if (_commonHorizontalThumbHoverFill is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -861,11 +861,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonHorizontalThumbPressedFill == null)
+                if (_commonHorizontalThumbPressedFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonHorizontalThumbPressedFill == null)
+                        if (_commonHorizontalThumbPressedFill is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -890,11 +890,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonVerticalThumbFill == null)
+                if (_commonVerticalThumbFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonVerticalThumbFill == null)
+                        if (_commonVerticalThumbFill is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -918,11 +918,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonVerticalThumbHoverFill == null)
+                if (_commonVerticalThumbHoverFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonVerticalThumbHoverFill == null)
+                        if (_commonVerticalThumbHoverFill is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -946,11 +946,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonVerticalThumbPressedFill == null)
+                if (_commonVerticalThumbPressedFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonVerticalThumbPressedFill == null)
+                        if (_commonVerticalThumbPressedFill is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -1021,7 +1021,7 @@ namespace Microsoft.Windows.Themes
 
                 if (_localResources != null)
                 {
-                    if (_localResources.Fill == null)
+                    if (_localResources.Fill is null)
                     {
                         if (_scrollGlyph == ScrollGlyph.HorizontalGripper)
                         {
@@ -1071,11 +1071,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonThumbOuterBorder == null)
+                if (_commonThumbOuterBorder is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonThumbOuterBorder == null)
+                        if (_commonThumbOuterBorder is null)
                         {
                             Pen temp = new Pen();
                             temp.Thickness = 1;
@@ -1095,11 +1095,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonThumbHoverOuterBorder == null)
+                if (_commonThumbHoverOuterBorder is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonThumbHoverOuterBorder == null)
+                        if (_commonThumbHoverOuterBorder is null)
                         {
                             Pen temp = new Pen();
                             temp.Thickness = 1;
@@ -1119,11 +1119,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonThumbPressedOuterBorder == null)
+                if (_commonThumbPressedOuterBorder is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonThumbPressedOuterBorder == null)
+                        if (_commonThumbPressedOuterBorder is null)
                         {
                             Pen temp = new Pen();
                             temp.Thickness = 1;
@@ -1167,7 +1167,7 @@ namespace Microsoft.Windows.Themes
 
                 if (_localResources != null)
                 {
-                    if (_localResources.OuterBorder == null)
+                    if (_localResources.OuterBorder is null)
                     {
                         _localResources.OuterBorder = CommonThumbOuterBorder.Clone();
 
@@ -1198,11 +1198,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonThumbInnerBorder == null)
+                if (_commonThumbInnerBorder is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonThumbInnerBorder == null)
+                        if (_commonThumbInnerBorder is null)
                         {
                             Pen temp = new Pen();
                             temp.Thickness = 1;
@@ -1239,7 +1239,7 @@ namespace Microsoft.Windows.Themes
 
                 if (_localResources != null)
                 {
-                    if (_localResources.InnerBorder == null)
+                    if (_localResources.InnerBorder is null)
                     {
                         _localResources.InnerBorder = CommonThumbInnerBorder.Clone();
 
@@ -1269,11 +1269,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonThumbShadow == null)
+                if (_commonThumbShadow is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonThumbShadow == null)
+                        if (_commonThumbShadow is null)
                         {
                             Pen temp = new Pen();
                             temp.Thickness = 1;
@@ -1310,7 +1310,7 @@ namespace Microsoft.Windows.Themes
 
                 if (_localResources != null)
                 {
-                    if (_localResources.Shadow == null)
+                    if (_localResources.Shadow is null)
                     {
                         _localResources.Shadow = CommonThumbShadow.Clone();
 
@@ -1342,11 +1342,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonHorizontalThumbEnabledGlyph == null)
+                if (_commonHorizontalThumbEnabledGlyph is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonHorizontalThumbEnabledGlyph == null)
+                        if (_commonHorizontalThumbEnabledGlyph is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -1369,11 +1369,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonHorizontalThumbHoverGlyph == null)
+                if (_commonHorizontalThumbHoverGlyph is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonHorizontalThumbHoverGlyph == null)
+                        if (_commonHorizontalThumbHoverGlyph is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -1396,11 +1396,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonHorizontalThumbPressedGlyph == null)
+                if (_commonHorizontalThumbPressedGlyph is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonHorizontalThumbPressedGlyph == null)
+                        if (_commonHorizontalThumbPressedGlyph is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -1423,11 +1423,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonVerticalThumbEnabledGlyph == null)
+                if (_commonVerticalThumbEnabledGlyph is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonVerticalThumbEnabledGlyph == null)
+                        if (_commonVerticalThumbEnabledGlyph is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -1450,11 +1450,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonVerticalThumbHoverGlyph == null)
+                if (_commonVerticalThumbHoverGlyph is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonVerticalThumbHoverGlyph == null)
+                        if (_commonVerticalThumbHoverGlyph is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -1477,11 +1477,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonVerticalThumbPressedGlyph == null)
+                if (_commonVerticalThumbPressedGlyph is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonVerticalThumbPressedGlyph == null)
+                        if (_commonVerticalThumbPressedGlyph is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -1505,11 +1505,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonButtonGlyph == null)
+                if (_commonButtonGlyph is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonButtonGlyph == null)
+                        if (_commonButtonGlyph is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.MappingMode = BrushMappingMode.Absolute;
@@ -1533,11 +1533,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonButtonEnabledGlyph == null)
+                if (_commonButtonEnabledGlyph is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonButtonEnabledGlyph == null)
+                        if (_commonButtonEnabledGlyph is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.MappingMode = BrushMappingMode.Absolute;
@@ -1561,11 +1561,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonButtonHoverGlyph == null)
+                if (_commonButtonHoverGlyph is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonButtonHoverGlyph == null)
+                        if (_commonButtonHoverGlyph is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.MappingMode = BrushMappingMode.Absolute;
@@ -1589,11 +1589,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonButtonPressedGlyph == null)
+                if (_commonButtonPressedGlyph is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonButtonPressedGlyph == null)
+                        if (_commonButtonPressedGlyph is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.MappingMode = BrushMappingMode.Absolute;
@@ -1672,7 +1672,7 @@ namespace Microsoft.Windows.Themes
 
                 if (_localResources != null)
                 {
-                    if (_localResources.Glyph == null)
+                    if (_localResources.Glyph is null)
                     {
                         if (_scrollGlyph == ScrollGlyph.HorizontalGripper ||
                             _scrollGlyph == ScrollGlyph.VerticalGripper)
@@ -1722,11 +1722,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonThumbEnabledGlyphShadow == null)
+                if (_commonThumbEnabledGlyphShadow is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonThumbEnabledGlyphShadow == null)
+                        if (_commonThumbEnabledGlyphShadow is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Colors.White);
                             temp.Opacity = 0.63;
@@ -1760,7 +1760,7 @@ namespace Microsoft.Windows.Themes
 
                 if (_localResources != null)
                 {
-                    if (_localResources.GlyphShadow == null)
+                    if (_localResources.GlyphShadow is null)
                     {
                         if (_scrollGlyph == ScrollGlyph.HorizontalGripper ||
                             _scrollGlyph == ScrollGlyph.VerticalGripper)

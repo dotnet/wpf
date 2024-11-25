@@ -82,7 +82,7 @@ namespace MS.Internal
                                 char separator)
         {
             _str = str;
-            _strLen = str == null ? 0 : str.Length;
+            _strLen = str is null ? 0 : str.Length;
             _currentTokenIndex = -1;
             _quoteChar = quoteChar;
             _argSeparator = separator;

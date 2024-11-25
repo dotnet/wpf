@@ -72,7 +72,7 @@ namespace System.Windows
         {
             string stringValue = value as string;
 
-            if (value == null)
+            if (value is null)
             {
                 throw new NotSupportedException(SR.Converter_ConvertFromNotSupported);
             }

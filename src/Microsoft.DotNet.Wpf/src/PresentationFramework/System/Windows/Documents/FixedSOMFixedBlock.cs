@@ -90,7 +90,7 @@ namespace System.Windows.Documents
                 foreach (FixedSOMSemanticBox box in _semanticBoxes)
                 {
                     FixedSOMTextRun run = box as FixedSOMTextRun;
-                    if (run == null ||
+                    if (run is null ||
                         !run.IsWhiteSpace)
                     {
                         return false;

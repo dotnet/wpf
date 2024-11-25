@@ -101,15 +101,15 @@ namespace System.Windows.Media.Animation
                 // The next clock is possibly the first child of the current clock
                 ClockGroup currentClockGroup = _currentClock as ClockGroup;
 
-                Clock nextClock = (currentClockGroup == null) ? null : currentClockGroup.FirstChild;
+                Clock nextClock = (currentClockGroup is null) ? null : currentClockGroup.FirstChild;
 
                 // Skip the children if explicitly asked to do so, or if there aren't any
-                if (((_flags & SubtreeFlag.SkipSubtree) != 0) || (nextClock == null))
+                if (((_flags & SubtreeFlag.SkipSubtree) != 0) || (nextClock is null))
                 {
                     // Pop back to the first ancestor that has siblings (current clock included). Don't
                     // go back further than the root of the subtree. At the end of this loop, nextClock
                     // will point to the proper next clock.
-                    while ((_currentClock != _rootClock) && ((nextClock = _currentClock.NextSibling) == null))
+                    while ((_currentClock != _rootClock) && ((nextClock = _currentClock.NextSibling) is null))
                     {
                         _currentClock = _currentClock.InternalParent;
                     }
@@ -214,7 +214,7 @@ namespace System.Windows.Media.Animation
                 // or, if we don't have a sibling, our parent. If the current
                 // clock is null, however, we are just starting, so skip this
                 // move and go straight to the descent part
-                if ((_currentClock != _rootClock) && (nextClock = _currentClock.NextSibling) == null)
+                if ((_currentClock != _rootClock) && (nextClock = _currentClock.NextSibling) is null)
                 {
                     // We have no siblings, so the next clock is our parent
                     _currentClock = _currentClock.InternalParent;

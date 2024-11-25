@@ -55,7 +55,7 @@ namespace System.Windows.Markup
             get
             {
                 Type t = _typeTable[index];
-                if (t == null)
+                if (t is null)
                 {
                     t = InitializeOneType((KnownElements)index);
                 }

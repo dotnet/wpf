@@ -94,7 +94,7 @@ namespace System.Windows.Input
         {
             get
             {
-                if (_stylusPointDescription == null)
+                if (_stylusPointDescription is null)
                 {
                     InitStylusPointDescription(); // init _stylusPointDescription.
                 }
@@ -257,7 +257,7 @@ namespace System.Windows.Input
             _lastInRangeTime = timestamp;
 
             // make sure this gets initialized on the penthread!!
-            if (_stylusPointDescription == null)
+            if (_stylusPointDescription is null)
             {
                 InitStylusPointDescription(); // init _stylusPointDescription.
             }
@@ -273,7 +273,7 @@ namespace System.Windows.Input
             _lastInRangeTime = timestamp;
             
             // make sure this gets initialized on the penthread!!
-            if (_stylusPointDescription == null)
+            if (_stylusPointDescription is null)
             {
                 InitStylusPointDescription(); // init _stylusPointDescription.
             }
@@ -289,7 +289,7 @@ namespace System.Windows.Input
             _lastInRangeTime = timestamp;
             
             // make sure this gets initialized on the penthread!!
-            if (_stylusPointDescription == null)
+            if (_stylusPointDescription is null)
             {
                 InitStylusPointDescription(); // init _stylusPointDescription.
             }
@@ -316,14 +316,14 @@ namespace System.Windows.Input
         internal void FirePenInRange(int stylusPointerId, int[] data, int timestamp)
         {
             // make sure this gets initialized on the penthread!!
-            if (_stylusPointDescription == null)
+            if (_stylusPointDescription is null)
             {
                 InitStylusPointDescription(); // init _stylusPointDescription.
             }
             
             // Special case where we want to forward this to the application early (this is the real
             // stylus InRange event we don't currently use).
-            if (data == null)
+            if (data is null)
             {
                 _lastInRangeTime = timestamp; // Always reset timestamp on InRange!!  Don't call EnsureTimestampUnique.
 
@@ -339,7 +339,7 @@ namespace System.Windows.Input
             {
                 _lastInRangeTime = timestamp; // Always reset timestamp on InRange!!  Don't call EnsureTimestampUnique.
 
-                if (_stylusDevicesInRange == null)
+                if (_stylusDevicesInRange is null)
                 {
                     _stylusDevicesInRange = new List<int>(); // create it as needed.
                 }
@@ -361,7 +361,7 @@ namespace System.Windows.Input
                     _lastInRangeTime = timestamp;
 
                     // make sure this gets initialized on the penthread!!
-                    if (_stylusPointDescription == null)
+                    if (_stylusPointDescription is null)
                     {
                         InitStylusPointDescription(); // init _stylusPointDescription.
                     }
@@ -380,7 +380,7 @@ namespace System.Windows.Input
                 _lastInRangeTime = timestamp;
 
                 // make sure this gets initialized on the penthread!!
-                if (_stylusPointDescription == null)
+                if (_stylusPointDescription is null)
                 {
                     InitStylusPointDescription(); // init _stylusPointDescription.
                 }
@@ -402,7 +402,7 @@ namespace System.Windows.Input
             _lastInRangeTime = timestamp;
             
             // make sure this gets initialized on the penthread!!
-            if (_stylusPointDescription == null)
+            if (_stylusPointDescription is null)
             {
                 InitStylusPointDescription(); // init _stylusPointDescription.
             }
@@ -439,7 +439,7 @@ namespace System.Windows.Input
             Debug.Assert(numPackets != 0);
             Debug.Assert(data != null);
             
-            if (_stylusPointDescription == null)
+            if (_stylusPointDescription is null)
             {
                 InitStylusPointDescription(); // init _stylusPointDescription.
             }

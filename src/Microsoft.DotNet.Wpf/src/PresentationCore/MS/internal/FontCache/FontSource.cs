@@ -181,7 +181,7 @@ namespace MS.Internal.FontCache
                 bits = _resourceCache.Get(_fontUri);
             }
 
-            if (bits == null)
+            if (bits is null)
             {
                 Stream fontStream;
 

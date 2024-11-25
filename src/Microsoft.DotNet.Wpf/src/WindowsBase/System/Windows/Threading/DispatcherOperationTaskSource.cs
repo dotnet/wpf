@@ -35,7 +35,7 @@ namespace System.Windows.Threading
 
         public override Task GetTask()
         {
-            if(_taskCompletionSource == null)
+            if(_taskCompletionSource is null)
             {
                 throw new InvalidOperationException();
             }
@@ -45,7 +45,7 @@ namespace System.Windows.Threading
         
         public override void SetCanceled()
         {
-            if(_taskCompletionSource == null)
+            if(_taskCompletionSource is null)
             {
                 throw new InvalidOperationException();
             }
@@ -55,7 +55,7 @@ namespace System.Windows.Threading
         
         public override void SetResult(object result)
         {
-            if(_taskCompletionSource == null)
+            if(_taskCompletionSource is null)
             {
                 throw new InvalidOperationException();
             }
@@ -65,7 +65,7 @@ namespace System.Windows.Threading
         
         public override void SetException(Exception exception)
         {
-            if(_taskCompletionSource == null)
+            if(_taskCompletionSource is null)
             {
                 throw new InvalidOperationException();
             }

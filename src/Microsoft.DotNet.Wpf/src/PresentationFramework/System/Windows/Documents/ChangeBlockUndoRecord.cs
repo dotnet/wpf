@@ -40,7 +40,7 @@ namespace System.Windows.Documents
                     {
                         // Don't bother opening a new undo unit if we're already nested
                         // inside another.
-                        if (_undoManager.OpenedUnit == null)
+                        if (_undoManager.OpenedUnit is null)
                         {
                             if (textContainer.TextSelection != null)
                             {

@@ -45,7 +45,7 @@ namespace System.Windows.Xps.Serialization
             ReachSerializerContext context
             )
         {
-            if(context == null)
+            if(context is null)
             {
            
             }
@@ -84,7 +84,7 @@ namespace System.Windows.Xps.Serialization
         {
             Visual v = serializedObject as Visual;
 
-            if (v == null)
+            if (v is null)
             {
                 throw new ArgumentException(SR.Format(SR.MustBeOfType, "serializedObject", typeof(Visual)));
             }
@@ -209,7 +209,7 @@ namespace System.Windows.Xps.Serialization
         {
             get
             {
-                if(base.XmlWriter == null)
+                if(base.XmlWriter is null)
                 {
                     base.XmlWriter = SerializationManager.AcquireXmlWriter(typeof(FixedPage));
                 }
@@ -237,7 +237,7 @@ namespace System.Windows.Xps.Serialization
         {
             Visual v = serializedObject as Visual;
 
-            if (v == null)
+            if (v is null)
             {
                 throw new ArgumentException(SR.Format(SR.MustBeOfType, "serializedObject", typeof(Visual)));
             }

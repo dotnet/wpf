@@ -140,7 +140,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_child == null)
+                if (_child is null)
                 {
                     return EmptyEnumerator.Instance;
                 }
@@ -165,7 +165,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected override int VisualChildrenCount
         {
-            get { return (_child == null) ? 0 : 1; }
+            get { return (_child is null) ? 0 : 1; }
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected override Visual GetVisualChild(int index)
         {
-            if (    (_child == null)
+            if (    (_child is null)
                 ||  (index != 0))
             {
                 throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);

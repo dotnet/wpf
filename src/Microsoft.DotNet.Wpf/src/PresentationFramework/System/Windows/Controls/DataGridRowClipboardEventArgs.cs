@@ -51,7 +51,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_clipboardRowContent == null)
+                if (_clipboardRowContent is null)
                 {
                     _clipboardRowContent = new List<DataGridClipboardCellContent>();
                 }

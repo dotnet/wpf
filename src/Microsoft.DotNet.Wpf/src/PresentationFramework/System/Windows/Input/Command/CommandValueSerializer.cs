@@ -19,13 +19,13 @@ namespace System.Windows.Input
     {
         public override bool CanConvertToString(object value, IValueSerializerContext context)
         {
-            if (context == null || context.GetValueSerializerFor(typeof(Type)) == null)
+            if (context is null || context.GetValueSerializerFor(typeof(Type)) is null)
                 return false;
 
             // Can only convert routed commands
             RoutedCommand command = value as RoutedCommand;
 
-            if (command == null || command.OwnerType == null)
+            if (command is null || command.OwnerType is null)
             {
                 return false;
             }
@@ -75,14 +75,14 @@ namespace System.Windows.Input
                     {
                         ValueSerializer typeSerializer = null;
 
-                        if (context == null)
+                        if (context is null)
                         {
                             throw new InvalidOperationException(SR.Format(SR.ValueSerializerContextUnavailable, this.GetType().Name ));
                         }
 
                         // Get the ValueSerializer for the System.Type type
                         typeSerializer = context.GetValueSerializerFor(typeof(Type));
-                        if (typeSerializer == null)
+                        if (typeSerializer is null)
                         {
                             throw new InvalidOperationException(SR.Format(SR.TypeValueSerializerUnavailable, this.GetType().Name ));
                         }
@@ -132,14 +132,14 @@ namespace System.Windows.Input
                         // Find the type name in the form of "ns:Class".
                         string typeName = value.Substring(0, dotIndex);
 
-                        if (context == null)
+                        if (context is null)
                         {
                             throw new InvalidOperationException(SR.Format(SR.ValueSerializerContextUnavailable, this.GetType().Name ));
                         }
 
                         // Get the ValueSerializer for the System.Type type
                         ValueSerializer typeSerializer = context.GetValueSerializerFor(typeof(Type));
-                        if (typeSerializer == null)
+                        if (typeSerializer is null)
                         {
                             throw new InvalidOperationException(SR.Format(SR.TypeValueSerializerUnavailable, this.GetType().Name ));
                         }

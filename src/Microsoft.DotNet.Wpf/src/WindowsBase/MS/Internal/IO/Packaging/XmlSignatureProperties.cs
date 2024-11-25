@@ -101,7 +101,7 @@ namespace MS.Internal.IO.Packaging
             Invariant.Assert(signatureId != null);
 
             // check for null format - use default if null
-            if (xmlDateTimeFormat == null)
+            if (xmlDateTimeFormat is null)
             {
                 xmlDateTimeFormat = DefaultDateTimeFormat;
             }
@@ -268,7 +268,7 @@ namespace MS.Internal.IO.Packaging
                         if ((string.Equals(reader.LocalName, timeValueTagName, StringComparison.Ordinal))
                             && PackagingUtilities.GetNonXmlnsAttributeCount(reader) == expectedAttributeCount)
                         {
-                            if (timeValue == null
+                            if (timeValue is null
                                 && reader.Read()
                                 && reader.MoveToContent() == XmlNodeType.Text
                                 && reader.Depth == 5)
@@ -288,7 +288,7 @@ namespace MS.Internal.IO.Packaging
                         else if ((string.Equals(reader.LocalName, timeFormatTagName, StringComparison.Ordinal))
                                  && PackagingUtilities.GetNonXmlnsAttributeCount(reader) == expectedAttributeCount)
                         {
-                            if (timeFormat == null
+                            if (timeFormat is null
                                 && reader.Read()
                                 && reader.MoveToContent() == XmlNodeType.Text
                                 && reader.Depth == 5)

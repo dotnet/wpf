@@ -89,7 +89,7 @@ namespace System.Windows.Automation.Peers
         ///
         protected override ItemAutomationPeer CreateItemAutomationPeer(object item)
         {
-            return _viewAutomationPeer == null ? base.CreateItemAutomationPeer(item) : _viewAutomationPeer.CreateItemAutomationPeer(item);
+            return _viewAutomationPeer is null ? base.CreateItemAutomationPeer(item) : _viewAutomationPeer.CreateItemAutomationPeer(item);
         }
 
         /// <summary>

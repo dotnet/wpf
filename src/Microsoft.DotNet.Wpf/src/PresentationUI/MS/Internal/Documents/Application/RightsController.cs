@@ -370,7 +370,7 @@ class RightsController : IDocumentController, IDisposable
             }
 
             Trace.SafeWriteIf(
-                encryptedPackage == null,
+                encryptedPackage is null,
                 Trace.Rights,
                 "Destination package is unprotected.");
 

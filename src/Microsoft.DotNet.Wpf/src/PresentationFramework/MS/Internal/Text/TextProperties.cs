@@ -212,7 +212,7 @@ namespace MS.Internal.Text
 
             // as an optimization, we may have already initialized _numberSubstitution to a default
             // value if none of the NumberSubstitution dependency properties have changed
-            if (_numberSubstitution == null)
+            if (_numberSubstitution is null)
             {
                 _numberSubstitution = DynamicPropertyReader.GetNumberSubstitution(target);
             }
@@ -225,7 +225,7 @@ namespace MS.Internal.Text
             TextDecorationCollection textDecorations = null;
             Highlights highlights = highlightPosition.TextContainer.Highlights;
 
-            if (highlights == null)
+            if (highlights is null)
             {
                 return textDecorations;
             }

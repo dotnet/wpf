@@ -82,7 +82,7 @@ namespace System.Windows.Automation
         // AutomationElements returned as properties (SelecitonContainer, RowHeaders).
         internal static AutomationElement Wrap(SafeNodeHandle hnode)
         {
-            if (hnode == null || hnode.IsInvalid)
+            if (hnode is null || hnode.IsInvalid)
             {
                 return null;
             }
@@ -314,7 +314,7 @@ namespace System.Windows.Automation
         public override bool Equals(object obj)
         {
             AutomationElement el = obj as AutomationElement;
-            if (obj == null || el == null)
+            if (obj is null || el is null)
                 return false;
 
             return Misc.Compare(this, el);
@@ -329,7 +329,7 @@ namespace System.Windows.Automation
             int[] id = GetRuntimeId();
             int hash = 0;
 
-            if (id == null)
+            if (id is null)
             {
                 // Hash codes need to be unique if the runtime ids are null we will end up 
                 // handing out duplicates so throw an exception.
@@ -356,11 +356,11 @@ namespace System.Windows.Automation
         /// </remarks>
         public static bool operator ==(AutomationElement left, AutomationElement right)
         {
-            if ((object)left == null)
-                return (object)right == null;
+            if ((object)left is null)
+                return (object)right is null;
 
-            if ((object)right == null)
-                return (object)left == null;
+            if ((object)right is null)
+                return (object)left is null;
 
             return left.Equals(right);
         }
@@ -708,7 +708,7 @@ namespace System.Windows.Automation
 
             // false -> don't throw, false -> don't wrap
             object obj = LookupCachedValue(pattern, false, false);
-            if (obj == null)
+            if (obj is null)
             {
                 return false;
             }
@@ -1118,7 +1118,7 @@ namespace System.Windows.Automation
 
         internal void CheckElement()
         {
-            if (_hnode == null || _hnode.IsInvalid)
+            if (_hnode is null || _hnode.IsInvalid)
             {
                 throw new InvalidOperationException(SR.CacheRequestNeedElementReference);
             }
@@ -1131,7 +1131,7 @@ namespace System.Windows.Automation
             CheckElement();
 
             UiaCoreApi.UiaCacheRequest cacheRequest;
-            if (request == null)
+            if (request is null)
                 cacheRequest = CacheRequest.DefaultUiaCacheRequest;
             else
                 cacheRequest = request.GetUiaCacheRequest();
@@ -1145,7 +1145,7 @@ namespace System.Windows.Automation
             CheckElement();
 
             UiaCoreApi.UiaCacheRequest cacheRequest;
-            if (request == null)
+            if (request is null)
                 cacheRequest = CacheRequest.DefaultUiaCacheRequest;
             else
                 cacheRequest = request.GetUiaCacheRequest();
@@ -1218,7 +1218,7 @@ namespace System.Windows.Automation
         // Lookup a cached AutomationPattern or AutomationProperty
         object LookupCachedValue(AutomationIdentifier id, bool throwIfNotRequested, bool wrap)
         {
-            if (_cachedValues == null)
+            if (_cachedValues is null)
             {
                 if (throwIfNotRequested)
                 {
@@ -1263,7 +1263,7 @@ namespace System.Windows.Automation
 
             // Bail now if no wrapping required; also, even with wrapping, null remains null
             // for both properties and patterns..
-            if (!wrap || val == null)
+            if (!wrap || val is null)
             {
                 return val;
             }

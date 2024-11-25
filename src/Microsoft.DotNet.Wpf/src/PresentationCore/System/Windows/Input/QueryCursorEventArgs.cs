@@ -46,7 +46,7 @@ namespace System.Windows.Input
         public Cursor Cursor
         {
             get {return _cursor;}
-            set {_cursor = ((value == null) ? Cursors.None : value);}
+            set {_cursor = ((value is null) ? Cursors.None : value);}
         }
 
         /// <summary>

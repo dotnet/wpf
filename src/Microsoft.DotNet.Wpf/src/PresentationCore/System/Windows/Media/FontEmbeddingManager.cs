@@ -115,7 +115,7 @@ namespace System.Windows.Media
         public ICollection<ushort> GetUsedGlyphs(Uri glyphTypeface)
         {
             Dictionary<ushort, bool> glyphsUsed = _collectedGlyphTypefaces[glyphTypeface];
-            if (glyphsUsed == null)
+            if (glyphsUsed is null)
             {
                 throw new ArgumentException(SR.GlyphTypefaceNotRecorded, "glyphTypeface");
             }

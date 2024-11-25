@@ -102,7 +102,7 @@ namespace System.Windows.Forms.Integration
                 {
                     throw new ArgumentNullException(string.Format(CultureInfo.CurrentCulture, SR.WFI_NullArgument, "propertyName"));
                 }
-                if (value == null)
+                if (value is null)
                 {
                     throw new ArgumentNullException(string.Format(CultureInfo.CurrentCulture, SR.WFI_NullArgument, "translator"));
                 }
@@ -155,7 +155,7 @@ namespace System.Windows.Forms.Integration
         {
             if (SourceObject != null)
             {
-                if (GetProperty(propertyName) == null)
+                if (GetProperty(propertyName) is null)
                 {
                     // Property 'Foreground' doesn't exist on type 'Window'
                     throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, SR.WFI_PropertyDoesntExist, propertyName, SourceObject.GetType().FullName));
@@ -195,7 +195,7 @@ namespace System.Windows.Forms.Integration
 
         private PropertyInfo GetProperty(string propertyName)
         {
-            if (SourceObject == null)
+            if (SourceObject is null)
             {
                 return null;
             }
@@ -238,7 +238,7 @@ namespace System.Windows.Forms.Integration
         {
             get
             {
-                if (_defaultTranslators == null)
+                if (_defaultTranslators is null)
                 {
                     _defaultTranslators = new Dictionary<string, PropertyTranslator>();
                 }
@@ -312,7 +312,7 @@ namespace System.Windows.Forms.Integration
         {
             PropertyTranslator translator;
 
-            if (!_wrappedDictionary.TryGetValue(propertyName, out translator) || translator == null)
+            if (!_wrappedDictionary.TryGetValue(propertyName, out translator) || translator is null)
             {
                 return;
             }

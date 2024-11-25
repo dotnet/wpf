@@ -298,7 +298,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 }
                 else
                 {
-                    if (saveMask == null)
+                    if (saveMask is null)
                     {
                         blend = BrushProxy.BlendColorWithBrush(false, color, other, !pre);
                     }
@@ -320,7 +320,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     }
                 }
 
-                if (blend == null)
+                if (blend is null)
                 {
                     result = false;
                 }
@@ -423,7 +423,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 }
                 else
                 {
-                    if (saveMask == null)
+                    if (saveMask is null)
                     {
                         blend = BrushProxy.BlendColorWithBrush(false, color, other, !pre);
                     }
@@ -480,7 +480,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             BrushProxy two = null;
 
-            if (one.BrushList == null)
+            if (one.BrushList is null)
             {
                 if (from >= brushes.Count) // Only single brush left
                 {
@@ -563,7 +563,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <returns>True if rasterizing is more cost effective</returns>
         private bool BetterRasterize(BrushProxy brush, Geometry shape)
         {
-            if ((brush == null) || (brush.BrushList == null))
+            if ((brush is null) || (brush.BrushList is null))
             {
                 return false;
             }
@@ -631,17 +631,17 @@ namespace Microsoft.Internal.AlphaFlattener
 
         private static double DrawGeometryCost(Brush b, Pen p, Geometry g)
         {
-            if (g == null)
+            if (g is null)
             {
                 return 0;
             }
 
-            if ((b == null) && (p == null))
+            if ((b is null) && (p is null))
             {
                 return 0;
             }
 
-            if (b == null)
+            if (b is null)
             {
                 b = p.Brush;
             }
@@ -694,7 +694,7 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             Debug.Assert(brushTrans.IsIdentity, "brushTrans not supported");
 
-            if ((brush == null) && (pen == null))
+            if ((brush is null) && (pen is null))
             {
                 return;
             }
@@ -721,7 +721,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             if ((brush != null) && (brush.BrushList != null)) // List of brushes
             {
-                Debug.Assert(pen == null, "no pen");
+                Debug.Assert(pen is null, "no pen");
 
                 if (_costing)
                 {
@@ -802,7 +802,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                     _dc.Comment("-> DrawGeometry " + _seq + ' ' + _comment);
 #endif
-                    if (p == null)
+                    if (p is null)
                     {
                         _dc.DrawGeometry(b, null, null, geometry);
                     }
@@ -864,7 +864,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 BitmapSource clippedImageSource = image.GetClippedImage(imageClip.Bounds, out clippedImageBounds);
 
-                if (clippedImageSource == null)
+                if (clippedImageSource is null)
                 {
                     // image has been clipped away
                     return;
@@ -935,7 +935,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             Brush b = bp.Brush;
 
-            if ((b == null) || (b is DrawingBrush))
+            if ((b is null) || (b is DrawingBrush))
             {
                 return false;
             }

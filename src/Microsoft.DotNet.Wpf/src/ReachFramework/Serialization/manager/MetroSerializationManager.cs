@@ -527,7 +527,7 @@ namespace System.Windows.Xps.Serialization
                 {
                     reachSerializer = (ReachSerializer)_serializersTable[serializerType];
 
-                    if (reachSerializer == null)
+                    if (reachSerializer is null)
                     {
                         reachSerializer = CreateReachSerializer(serializerType);
                         _serializersTable[serializerType] = reachSerializer;
@@ -708,7 +708,7 @@ namespace System.Windows.Xps.Serialization
 
             TypeCacheItem typeCacheItem = (TypeCacheItem)_typesCacheTable[type];
 
-            if(typeCacheItem == null)
+            if(typeCacheItem is null)
             {
                 //
                 // This means that the type was not seen before
@@ -768,7 +768,7 @@ namespace System.Windows.Xps.Serialization
             TypeDependencyPropertiesCacheItem
             cachedItem = (TypeDependencyPropertiesCacheItem)_typesDependencyPropertiesCacheTable[type];
 
-            if(cachedItem == null)
+            if(cachedItem is null)
             {
                 //
                 // This means that the type was not seen before
@@ -827,7 +827,7 @@ namespace System.Windows.Xps.Serialization
                               // Note: This is because the IService model does not abide
                               // by this pattern of declaring the DependencyProperty on
                               // the OwnerType. That is the only exception case.
-                              if (memberInfo == null)
+                              if (memberInfo is null)
                               {
                                   //
                                   // Create a PropertyInfo
@@ -840,7 +840,7 @@ namespace System.Windows.Xps.Serialization
                                   String name = dependencyProperty.Name;
                                   
                                   for (int i=0;
-                                       i<properties.Length && propertyInfo == null;
+                                       i<properties.Length && propertyInfo is null;
                                        i++)
                                   {
                                       if (properties[i].Name == name)
@@ -891,8 +891,8 @@ namespace System.Windows.Xps.Serialization
                                                       out designerSerializationFlagsAttr) == true)
                               {
                                   TypeCacheItem typeCacheItem = GetTypeCacheItem(propertyType);
-                                  serializerTypeForProperty = serializerTypeForProperty == null ? typeCacheItem.SerializerType : serializerTypeForProperty;
-                                  typeConverterForProperty  = typeConverterForProperty == null ? typeCacheItem.TypeConverter : typeConverterForProperty;
+                                  serializerTypeForProperty = serializerTypeForProperty is null ? typeCacheItem.SerializerType : serializerTypeForProperty;
+                                  typeConverterForProperty  = typeConverterForProperty is null ? typeCacheItem.TypeConverter : typeConverterForProperty;
 
                                   TypeDependencyPropertyCache
                                   dependencyPropertyCache = new TypeDependencyPropertyCache(memberInfo,
@@ -952,7 +952,7 @@ namespace System.Windows.Xps.Serialization
 
             TypeCacheItem typeCacheItem = (TypeCacheItem)_typesCacheTable[serializableObjectType];
 
-            if(typeCacheItem == null)
+            if(typeCacheItem is null)
             {
                 //
                 // This means that the type was not seen before
@@ -1039,7 +1039,7 @@ namespace System.Windows.Xps.Serialization
 
             if ((isReadOnly &&
                 propertyCache.Visibility == DesignerSerializationVisibility.Content) ||
-                propertyCache.DefaultValueAttr == null)
+                propertyCache.DefaultValueAttr is null)
             {
                 //
                 // Populate the property value in this data structure
@@ -1079,7 +1079,7 @@ namespace System.Windows.Xps.Serialization
 
             ReachSerializer result = Activator.CreateInstance(serializerType, args) as ReachSerializer;
 
-            if (result == null)
+            if (result is null)
             {
                 throw new XpsSerializationException(SR.ReachSerialization_UnableToInstantiateSerializer);
             }

@@ -128,7 +128,7 @@ namespace MS.Internal.AppModel
             set
             {
                 Debug.Assert(value.JEGroupState == this);
-                Debug.Assert(_groupExitEntry == null || _groupExitEntry.ContentId == value.ContentId);
+                Debug.Assert(_groupExitEntry is null || _groupExitEntry.ContentId == value.ContentId);
                 _groupExitEntry = value;
             }
         }
@@ -364,7 +364,7 @@ namespace MS.Internal.AppModel
                 if (endingPF.ParentPageFunctionId == Guid.Empty)
                 {
                     // We are looking for a non-PageFunction
-                    if (pageFunctionEntry == null)
+                    if (pageFunctionEntry is null)
                     {
                         return index; // found!
                     }
@@ -543,7 +543,7 @@ namespace MS.Internal.AppModel
 
             PageFunctionBase pageFunction = (PageFunctionBase)contentObject;
 
-            if (pageFunction == null)
+            if (pageFunction is null)
             {
                 throw new Exception(SR.Format(SR.InvalidPageFunctionType, contentObject.GetType()));
             }

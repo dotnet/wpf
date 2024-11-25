@@ -53,7 +53,7 @@ namespace Microsoft.Build.Tasks.Windows
             {
                 get
                 {
-                    if (_sourceStream == null)
+                    if (_sourceStream is null)
                     {
                         _sourceStream = new FileStream(_sourcePath, FileMode.Open, FileAccess.Read, FileShare.Read);
 

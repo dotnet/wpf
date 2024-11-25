@@ -112,7 +112,7 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(value);
 
             Condition condition = value as Condition;
-            if (condition == null)
+            if (condition is null)
             {
                 throw new ArgumentException(SR.MustBeCondition);
             }

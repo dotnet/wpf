@@ -73,7 +73,7 @@ namespace System.Windows.Markup
                         }
                     }
 
-                    if (type == null)
+                    if (type is null)
                     {              
                         IXamlSchemaContextProvider schemaContextProvider = (typeDescriptorContext.
                             GetService(typeof(IXamlSchemaContextProvider))
@@ -98,7 +98,7 @@ namespace System.Windows.Markup
                             {
                                 type = firstAmbientValue.Value as Type;
                             }
-                            if (type == null)
+                            if (type is null)
                             {
                                 type = typeof(FrameworkElement);
                             }
@@ -121,7 +121,7 @@ namespace System.Windows.Markup
                 }
             }
 
-            if (routedEvent == null)
+            if (routedEvent is null)
             {
                 // Falling through here means we are unable to perform the conversion.
                 throw GetConvertFromException(source);
@@ -162,7 +162,7 @@ namespace System.Windows.Markup
 
             // Find the namespace, even if its the default one
             string namespaceURI = parserContext.XmlnsDictionary[nsPrefix];
-            if (namespaceURI == null)
+            if (namespaceURI is null)
             {
                 throw new ArgumentException(SR.Format(SR.ParserPrefixNSProperty, nsPrefix, nameString));
             }

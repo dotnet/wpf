@@ -478,7 +478,7 @@ namespace DrtXaml.Tests
             XamlObjectWriter writer = new XamlObjectWriter(xsc);
             XamlServices.Transform(reader, writer);
             Element testElement = (Element)writer.RootNameScope.FindName("ElementName");
-            if (testElement == null)
+            if (testElement is null)
             {
                 throw new Exception("Getting root namescope not working correctly");
             }

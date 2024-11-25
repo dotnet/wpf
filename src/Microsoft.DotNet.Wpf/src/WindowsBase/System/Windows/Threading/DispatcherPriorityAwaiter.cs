@@ -56,7 +56,7 @@ namespace System.Windows.Threading
         /// </summary>
         public void OnCompleted(Action continuation)
         {
-            if(_dispatcher == null)
+            if(_dispatcher is null)
             {
                 throw new InvalidOperationException(SR.DispatcherPriorityAwaiterInvalid);
             }

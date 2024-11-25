@@ -220,7 +220,7 @@ namespace System.Printing
         {
             get
             {
-                if (_collationCap == null)
+                if (_collationCap is null)
                 {
                     List<Collation> valueSet = new List<Collation>();
 
@@ -253,7 +253,7 @@ namespace System.Printing
         {
             get
             {
-                if (_deviceFontCap == null)
+                if (_deviceFontCap is null)
                 {
                     List<DeviceFontSubstitution> valueSet = new List<DeviceFontSubstitution>();
 
@@ -286,7 +286,7 @@ namespace System.Printing
         {
             get
             {
-                if (_duplexingCap == null)
+                if (_duplexingCap is null)
                 {
                     List<Duplexing> valueSet = new List<Duplexing>();
 
@@ -323,7 +323,7 @@ namespace System.Printing
         {
             get
             {
-                if (_inputBinCap == null)
+                if (_inputBinCap is null)
                 {
                     List<InputBin> valueSet = new List<InputBin>();
 
@@ -373,7 +373,7 @@ namespace System.Printing
         {
             get
             {
-                if (_maxCopyCount == null)
+                if (_maxCopyCount is null)
                 {
                     if (_printCap.SupportsCapability(CapabilityName.JobCopyCount) &&
                         (_printCap.JobCopyCountCapability.MaxValue != PrintSchema.UnspecifiedIntValue))
@@ -393,7 +393,7 @@ namespace System.Printing
         {
             get
             {
-                if (_orientedPageMediaWidth == null)
+                if (_orientedPageMediaWidth is null)
                 {
                     if (_printCap.SupportsCapability(CapabilityName.PageImageableSize) &&
                         (_printCap.PageImageableSizeCapability.ImageableSizeWidth != PrintSchema.UnspecifiedDoubleValue))
@@ -413,7 +413,7 @@ namespace System.Printing
         {
             get
             {
-                if (_orientedPageMediaHeight == null)
+                if (_orientedPageMediaHeight is null)
                 {
                     if (_printCap.SupportsCapability(CapabilityName.PageImageableSize) &&
                         (_printCap.PageImageableSizeCapability.ImageableSizeHeight != PrintSchema.UnspecifiedDoubleValue))
@@ -437,7 +437,7 @@ namespace System.Printing
         {
             get
             {
-                if (_outputColorCap == null)
+                if (_outputColorCap is null)
                 {
                     List<OutputColor> valueSet = new List<OutputColor>();
 
@@ -470,7 +470,7 @@ namespace System.Printing
         {
             get
             {
-                if (_outputQualityCap == null)
+                if (_outputQualityCap is null)
                 {
                     List<OutputQuality> valueSet = new List<OutputQuality>();
 
@@ -503,7 +503,7 @@ namespace System.Printing
         {
             get
             {
-                if (_pageBorderlessCap == null)
+                if (_pageBorderlessCap is null)
                 {
                     List<PageBorderless> valueSet = new List<PageBorderless>();
 
@@ -535,7 +535,7 @@ namespace System.Printing
         {
             get
             {
-                if (_pageImageableArea == null)
+                if (_pageImageableArea is null)
                 {
                     if (_printCap.SupportsCapability(CapabilityName.PageImageableSize) &&
                         (_printCap.PageImageableSizeCapability.ImageableArea != null))
@@ -570,7 +570,7 @@ namespace System.Printing
         {
             get
             {
-                if (_pageMediaSizeCap == null)
+                if (_pageMediaSizeCap is null)
                 {
                     List<PageMediaSize> mediaSet = new List<PageMediaSize>();
 
@@ -610,7 +610,7 @@ namespace System.Printing
         {
             get
             {
-                if (_pageMediaTypeCap == null)
+                if (_pageMediaTypeCap is null)
                 {
                     List<PageMediaType> valueSet = new List<PageMediaType>();
 
@@ -643,7 +643,7 @@ namespace System.Printing
         {
             get
             {
-                if (_pageOrderCap == null)
+                if (_pageOrderCap is null)
                 {
                     List<PageOrder> valueSet = new List<PageOrder>();
 
@@ -676,7 +676,7 @@ namespace System.Printing
         {
             get
             {
-                if (_pageOrientationCap == null)
+                if (_pageOrientationCap is null)
                 {
                     List<PageOrientation> valueSet = new List<PageOrientation>();
 
@@ -709,7 +709,7 @@ namespace System.Printing
         {
             get
             {
-                if (_pageResolutionCap == null)
+                if (_pageResolutionCap is null)
                 {
                     List<PageResolution> resSet = new List<PageResolution>();
 
@@ -749,7 +749,7 @@ namespace System.Printing
         {
             get
             {
-                if (_pageScalingFactorRange == null)
+                if (_pageScalingFactorRange is null)
                 {
                     if (_printCap.SupportsCapability(CapabilityName.PageScaling))
                     {
@@ -818,7 +818,7 @@ namespace System.Printing
         {
             get
             {
-                if (_pagesPerSheetCap == null)
+                if (_pagesPerSheetCap is null)
                 {
                     List<int> valueSet = new List<int>();
 
@@ -852,7 +852,7 @@ namespace System.Printing
         {
             get
             {
-                if (_pagesPerSheetDirectionCap == null)
+                if (_pagesPerSheetDirectionCap is null)
                 {
                     List<PagesPerSheetDirection> valueSet = new List<PagesPerSheetDirection>();
 
@@ -887,7 +887,7 @@ namespace System.Printing
         {
             get
             {
-                if (_photoIntentCap == null)
+                if (_photoIntentCap is null)
                 {
                     List<PhotoPrintingIntent> valueSet = new List<PhotoPrintingIntent>();
 
@@ -919,7 +919,7 @@ namespace System.Printing
         {
             get
             {
-                if (_staplingCap == null)
+                if (_staplingCap is null)
                 {
                     List<Stapling> valueSet = new List<Stapling>();
 
@@ -952,7 +952,7 @@ namespace System.Printing
         {
             get
             {
-                if (_ttFontCap == null)
+                if (_ttFontCap is null)
                 {
                     List<TrueTypeFontMode> valueSet = new List<TrueTypeFontMode>();
 

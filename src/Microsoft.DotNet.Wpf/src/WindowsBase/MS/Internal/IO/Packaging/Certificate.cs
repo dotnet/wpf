@@ -99,7 +99,7 @@ namespace MS.Internal.IO.Packaging
         internal X509Certificate2 GetCertificate()
         {
             // lazy init
-            if (_certificate == null)
+            if (_certificate is null)
             {
                 // obtain from the part
                 using (Stream s = _part.GetStream())

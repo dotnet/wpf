@@ -146,7 +146,7 @@ namespace System.Windows.Navigation
 
         /// <summary>
         /// Reads the attached property JournalEntry.Name from the given element.
-        /// Setting it at the root element of a navigator will update NavWin’s dropdown menu when navigating inside of that navigator.
+        /// Setting it at the root element of a navigator will update NavWinï¿½s dropdown menu when navigating inside of that navigator.
         /// </summary>
         /// <param name="dependencyObject">The element from which to read the attached property.</param>
         /// <returns>The property's value.</returns>
@@ -235,7 +235,7 @@ namespace System.Windows.Navigation
 
         /// <summary>
         /// Attached DependencyProperty for Name property.
-        /// Setting it at the root element of a navigator will update NavWin’s dropdown menu when navigating inside of that navigator.
+        /// Setting it at the root element of a navigator will update NavWinï¿½s dropdown menu when navigating inside of that navigator.
         /// </summary>
         public static readonly DependencyProperty NameProperty =
             DependencyProperty.RegisterAttached("Name", typeof(string), typeof(JournalEntry), new PropertyMetadata(String.Empty));
@@ -293,7 +293,7 @@ namespace System.Windows.Navigation
             ArgumentNullException.ThrowIfNull(contentObject);
             if (IsAlive())
             {
-                Debug.Assert(_jeGroupState.JournalDataStreams == null);
+                Debug.Assert(_jeGroupState.JournalDataStreams is null);
             }
             else
             {

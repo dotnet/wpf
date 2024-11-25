@@ -687,7 +687,7 @@ namespace MS.Internal.Text
         /// <returns></returns>
         public override bool Equals(object other)
         {
-            if (other == null)
+            if (other is null)
             {
                 return false;
             }
@@ -735,7 +735,7 @@ namespace MS.Internal.Text
         public static bool operator ==(TypographyProperties first, TypographyProperties second)
         {
             //Need to cast to object to do null comparision.
-            if (((object)first) == null) return (((object)second) == null);
+            if (((object)first) is null) return (((object)second) is null);
 
             return first.Equals(second);
         }

@@ -98,7 +98,7 @@ namespace System.Xaml
             GeneralTransform transform;
             PresentationSource source = PresentationSource.CriticalFromVisual(relativeTo);
 
-            if (source == null)
+            if (source is null)
             {
                 return new Point(double.NaN, double.NaN);
             }
@@ -148,9 +148,9 @@ namespace System.Xaml
                 byte[] curKeyToken = curAsmName.GetPublicKeyToken();
 
                 if (string.Equals(curAsmName.Name, assemblyName.Name, StringComparison.InvariantCultureIgnoreCase) &&
-                     (reqVersion == null || reqVersion.Equals(curVersion)) &&
-                     (reqCulture == null || reqCulture.Equals(curCulture)) &&
-                     (reqKeyToken == null || IsSameKeyToken(reqKeyToken, curKeyToken)))
+                     (reqVersion is null || reqVersion.Equals(curVersion)) &&
+                     (reqCulture is null || reqCulture.Equals(curCulture)) &&
+                     (reqKeyToken is null || IsSameKeyToken(reqKeyToken, curKeyToken)))
                 {
                     return assemblies[i];
                 }
@@ -164,7 +164,7 @@ namespace System.Xaml
             lock (syncObject)
             {
                 AssemblyName result;
-                if (_assemblies == null)
+                if (_assemblies is null)
                 {
                     _assemblies = new Dictionary<object, AssemblyName>();
                 }
@@ -203,7 +203,7 @@ namespace System.Xaml
                 foreach (object key in _assemblies.Keys)
                 {
                     WeakReference weakRef = key as WeakReference;
-                    if (weakRef == null)
+                    if (weakRef is null)
                     {
                         continue;
                     }
@@ -215,7 +215,7 @@ namespace System.Xaml
                     else
                     {
                         // The target has been collected, add it to our list of keys to remove
-                        if (keysToRemove == null)
+                        if (keysToRemove is null)
                         {
                             keysToRemove = new List<object>();
                         }
@@ -255,7 +255,7 @@ namespace System.Xaml
         {
            bool isSame = false;
 
-           if (reqKeyToken == null && curKeyToken == null)
+           if (reqKeyToken is null && curKeyToken is null)
            {
                // Both Key Tokens are not set, treat them as same.
                isSame = true;

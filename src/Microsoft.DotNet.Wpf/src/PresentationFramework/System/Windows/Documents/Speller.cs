@@ -170,7 +170,7 @@ namespace System.Windows.Documents
             }
 
             SpellingError spellingError = GetError(position, direction, false /* forceEvaluation */);
-            return spellingError == null ? null : spellingError.Start;
+            return spellingError is null ? null : spellingError.Start;
         }
 
         // Called by SpellingError to retreive a list of suggestions
@@ -422,7 +422,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_uriMap == null)
+                if (_uriMap is null)
                 {
                     _uriMap = new Dictionary<Uri, DictionaryInfo>();
                 }
@@ -449,12 +449,12 @@ namespace System.Windows.Documents
             if (_failedToInit)
                 return false;
 
-            Invariant.Assert(_highlightLayer == null);
-            Invariant.Assert(_statusTable == null);
+            Invariant.Assert(_highlightLayer is null);
+            Invariant.Assert(_statusTable is null);
 
             _spellerInterop = SpellerInteropBase.CreateInstance();
 
-            _failedToInit = (_spellerInterop == null);
+            _failedToInit = (_spellerInterop is null);
 
             if (_failedToInit)
                 return false;
@@ -595,7 +595,7 @@ namespace System.Windows.Documents
         // when the selection moves away.
         private void OnCaretMovedWorker()
         {
-            if (!_pendingCaretMovedCallback || _textEditor == null)
+            if (!_pendingCaretMovedCallback || _textEditor is null)
             {
                 // Because the event route caches the callback, we can get a
                 // callback even after removing the handler.
@@ -625,8 +625,8 @@ namespace System.Windows.Documents
 
             // Consider prioritizing visible region.
 
-            // First iteration of the scan loop, searchStart == null.
-            if (searchStart == null)
+            // First iteration of the scan loop, searchStart is null.
+            if (searchStart is null)
             {
                 searchStart = _textEditor.TextContainer.Start;
             }
@@ -785,7 +785,7 @@ namespace System.Windows.Documents
             XmlLanguage language;
             CultureInfo culture = GetCurrentCultureAndLanguage(start, out language);
 
-            if (culture == null)
+            if (culture is null)
             {
                 // Someone set a bogus language on the run -- ignore it.
                 _statusTable.MarkCleanRange(start, end);
@@ -990,7 +990,7 @@ namespace System.Windows.Documents
             // In which case, take note of where we left off.
             if (status.HasExceededTimeLimit)
             {
-                Invariant.Assert(status.TimeoutPosition == null); // We should only set this once....
+                Invariant.Assert(status.TimeoutPosition is null); // We should only set this once....
 
                 int sentenceEndOffset = sentence.EndOffset;
 
@@ -1032,7 +1032,7 @@ namespace System.Windows.Documents
                 }
             }
 
-            return (status.TimeoutPosition == null);
+            return (status.TimeoutPosition is null);
         }
 
         // Flags a run of text with an error.
@@ -1512,7 +1512,7 @@ namespace System.Windows.Documents
             {
                 language = (XmlLanguage)position.GetValue(FrameworkElement.LanguageProperty);
 
-                if (language == null)
+                if (language is null)
                 {
                     cultureInfo = null;
                 }

@@ -162,10 +162,10 @@ namespace MS.Internal.IO.Packaging
         {
             get
             {
-                if (_languageID == null)
+                if (_languageID is null)
                 {
                     for (XmlElement currentNode = _glyphsNode; 
-                         currentNode != null && _languageID == null; 
+                         currentNode != null && _languageID is null; 
                          currentNode = (currentNode.ParentNode as XmlElement))
                     {
                         string languageString = currentNode.GetAttribute(_xmlLangAttribute);
@@ -205,7 +205,7 @@ namespace MS.Internal.IO.Packaging
                     // Note: XamlFilter.GetCurrentLcid is a private method that also has
                     // similar logic and will default to CultureInfo.InvariantCulture.LCID
                     // CultureInfo.InvariantCulture will never be null
-                    if(_languageID == null)
+                    if(_languageID is null)
                         _languageID = checked((uint)CultureInfo.InvariantCulture.LCID); 
                 }
                 // Cast Nullable<> into value type.
@@ -221,7 +221,7 @@ namespace MS.Internal.IO.Packaging
         { 
             get
             {
-                if (_unicodeString == null)
+                if (_unicodeString is null)
                 {
                     _unicodeString = _glyphsNode.GetAttribute(_unicodeStringAttribute);
                 }

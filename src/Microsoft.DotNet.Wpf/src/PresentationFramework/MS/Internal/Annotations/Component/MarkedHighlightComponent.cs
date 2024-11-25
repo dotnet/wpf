@@ -60,7 +60,7 @@ namespace MS.Internal.Annotations.Component
         {
             ArgumentNullException.ThrowIfNull(type);
 
-            _DPHost = host == null ? this : host;
+            _DPHost = host is null ? this : host;
             ClipToBounds = false;
 
             //create anchor highlight. The second parameter controls
@@ -190,7 +190,7 @@ namespace MS.Internal.Annotations.Component
             //we need to recalculate RenderingTransformations of the markers
             //according to their current positions in the TextView
             //after the content reflow
-            if (_attachedAnnotation == null)
+            if (_attachedAnnotation is null)
                 throw new InvalidOperationException(SR.InvalidAttachedAnnotation);
 
             HighlightAnchor.GetDesiredTransform(transform);
@@ -364,7 +364,7 @@ namespace MS.Internal.Annotations.Component
         private void SetMarkerTransform(Path marker, ITextPointer anchor, ITextPointer baseAnchor, int xScaleFactor)
         {
             //check if this marker is visible at all
-            if (marker == null)
+            if (marker is null)
                 return;
 
             Debug.Assert(anchor != null, "undefined anchor");
@@ -476,7 +476,7 @@ namespace MS.Internal.Annotations.Component
         {
             //register for caret events
             TextAnchor anchor = _attachedAnnotation.AttachedAnchor as TextAnchor;
-            if (anchor == null)
+            if (anchor is null)
             {
                 throw new ArgumentException(SR.InvalidAttachedAnchor);
             }
@@ -491,7 +491,7 @@ namespace MS.Internal.Annotations.Component
 
             //host in the appropriate adorner layer
             AdornerLayer layer = AdornerLayer.GetAdornerLayer(AnnotatedElement); // note, GetAdornerLayer requires UIElement
-            if (layer == null) throw new InvalidOperationException(SR.Format(SR.NoPresentationContextForGivenElement, AnnotatedElement));
+            if (layer is null) throw new InvalidOperationException(SR.Format(SR.NoPresentationContextForGivenElement, AnnotatedElement));
 
             AdornerPresentationContext.HostComponent(layer, this, AnnotatedElement, false);
 
@@ -605,7 +605,7 @@ namespace MS.Internal.Annotations.Component
         private void RegisterComponent()
         {
             ComponentsRegister componentsRegister = (ComponentsRegister)_documentHandlers[_selection];
-            if (componentsRegister == null)
+            if (componentsRegister is null)
             {
                 //create a new selection entry
                 componentsRegister = new ComponentsRegister(new EventHandler(OnSelectionChanged), new MouseEventHandler(OnMouseMove));
@@ -650,7 +650,7 @@ namespace MS.Internal.Annotations.Component
         /// </summary>
         private void UpdateGeometry()
         {
-            if ((HighlightAnchor == null) || !(HighlightAnchor is IHighlightRange))
+            if ((HighlightAnchor is null) || !(HighlightAnchor is IHighlightRange))
             {
                 throw new Exception(SR.UndefinedHighlightAnchor);
             }
@@ -894,7 +894,7 @@ namespace MS.Internal.Annotations.Component
             //get all the anchors
             ComponentsRegister componentsRegister = (ComponentsRegister)_documentHandlers[selection];
             //Debug.Assert(stateHandler != null, "The selection is not registered");
-            if (componentsRegister == null)
+            if (componentsRegister is null)
             {
                 return;
             }
@@ -932,11 +932,11 @@ namespace MS.Internal.Annotations.Component
 
             //the sender must provide ITextView service in order to have this feature working
             IServiceProvider service = sender as IServiceProvider;
-            if (service == null)
+            if (service is null)
                 return;
 
             ITextView textView = (ITextView)service.GetService(typeof(ITextView));
-            if (textView == null || !textView.IsValid)
+            if (textView is null || !textView.IsValid)
                 return;
 
             //get mouse point
@@ -959,13 +959,13 @@ namespace MS.Internal.Annotations.Component
 
             ITextContainer container = pos.TextContainer;
             ITextRange selection = container.TextSelection as ITextRange;
-            if (selection == null)
+            if (selection is null)
                 return;
 
             //now get the components registered with this selection
             ComponentsRegister registry = (ComponentsRegister)_documentHandlers[selection];
 
-            if (registry == null)
+            if (registry is null)
                 return;
 
             List<MarkedHighlightComponent> components = registry.Components;

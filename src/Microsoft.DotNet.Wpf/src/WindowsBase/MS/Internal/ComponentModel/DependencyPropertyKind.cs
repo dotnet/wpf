@@ -75,8 +75,8 @@ namespace MS.Internal.ComponentModel
 
                     if (!_isAttached && !_isDirect) 
                     {
-                        if (DependencyObjectPropertyDescriptor.GetAttachedPropertyMethod(_dp) == null &&
-                            _dp.OwnerType.GetProperty(_dp.Name, _dp.PropertyType) == null)
+                        if (DependencyObjectPropertyDescriptor.GetAttachedPropertyMethod(_dp) is null &&
+                            _dp.OwnerType.GetProperty(_dp.Name, _dp.PropertyType) is null)
                         {
                             _isInternal = true;
                         }

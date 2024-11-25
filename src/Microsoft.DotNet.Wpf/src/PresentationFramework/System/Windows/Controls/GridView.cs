@@ -225,7 +225,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_columns == null)
+                if (_columns is null)
                 {
                     _columns = new GridViewColumnCollection();
 

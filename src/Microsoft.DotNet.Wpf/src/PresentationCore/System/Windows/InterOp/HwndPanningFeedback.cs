@@ -82,7 +82,7 @@ namespace System.Windows.Interop
                     _deviceOffsetY = (int)deviceOffset.Y;
                     _inInertia = inInertia;
 
-                    if (_updatePanningOperation == null)
+                    if (_updatePanningOperation is null)
                     {
                         _updatePanningOperation = _hwndSource.Dispatcher.BeginInvoke(DispatcherPriority.Background,
                             new DispatcherOperationCallback(OnUpdatePanningFeedback), 

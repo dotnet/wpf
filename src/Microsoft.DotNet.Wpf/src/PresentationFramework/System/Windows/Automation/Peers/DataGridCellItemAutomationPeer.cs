@@ -282,7 +282,7 @@ namespace System.Windows.Automation.Peers
                 case PatternInterface.VirtualizedItem:
                     if (VirtualizedItemPatternIdentifiers.Pattern != null)
                     {
-                        if (OwningCellPeer == null)
+                        if (OwningCellPeer is null)
                             return this;
                         else
                         {
@@ -293,7 +293,7 @@ namespace System.Windows.Automation.Peers
                             }
 
                             // DataGridItemPeer could be virtualized
-                            if (OwningItemPeer == null)
+                            if (OwningItemPeer is null)
                                 return this;
                         }
                     }
@@ -622,7 +622,7 @@ namespace System.Windows.Automation.Peers
             bool success = false;
 
             // If the current cell is virtualized - scroll into view
-            if (this.OwningCell == null)
+            if (this.OwningCell is null)
             {
                 this.OwningDataGrid.ScrollIntoView(Item, _column);
             }
@@ -900,7 +900,7 @@ namespace System.Windows.Automation.Peers
 
         internal object Item
         {
-            get {  return (_item == null) ? null : _item.Target; }
+            get {  return (_item is null) ? null : _item.Target; }
         }
 
         private DataGridItemAutomationPeer OwningItemPeer

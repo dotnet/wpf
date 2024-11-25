@@ -142,7 +142,7 @@ namespace MS.Internal.MilCodeGen.Generators
                             {
                                 VerifyAccess();
                                 [[bindType]]BindingCollection bindings = [[bindType]]BindingCollectionField.GetValue(this);
-                                if (bindings == null)
+                                if (bindings is null)
                                 {
                                     bindings = new [[bindType]]BindingCollection([[conditional(bindType == "Input")]]this[[/conditional]]);
                                     [[bindType]]BindingCollectionField.SetValue(this, bindings);
@@ -258,7 +258,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     {
                         // VerifyAccess();
 
-                        if (e == null)
+                        if (e is null)
                         {
                             throw new ArgumentNullException("e");
                         }
@@ -277,7 +277,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     [SecurityCritical]
                     internal void RaiseEvent(RoutedEventArgs args, bool trusted)
                     {
-                        if (args == null)
+                        if (args is null)
                         {
                             throw new ArgumentNullException("args");
                         }
@@ -301,7 +301,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     [MS.Internal.Permissions.UserInitiatedRoutedEventPermissionAttribute(SecurityAction.Assert)]
                     internal void RaiseTrustedEvent(RoutedEventArgs args)
                     {
-                        if (args == null)
+                        if (args is null)
                         {
                             throw new ArgumentNullException("args");
                         }
@@ -404,12 +404,12 @@ namespace MS.Internal.MilCodeGen.Generators
                     {
                         // VerifyAccess();
 
-                        if (routedEvent == null)
+                        if (routedEvent is null)
                         {
                             throw new ArgumentNullException("routedEvent");
                         }
 
-                        if (handler == null)
+                        if (handler is null)
                         {
                             throw new ArgumentNullException("handler");
                         }
@@ -465,12 +465,12 @@ namespace MS.Internal.MilCodeGen.Generators
                     {
                         // VerifyAccess();
 
-                        if (routedEvent == null)
+                        if (routedEvent is null)
                         {
                             throw new ArgumentNullException("routedEvent");
                         }
 
-                        if (handler == null)
+                        if (handler is null)
                         {
                             throw new ArgumentNullException("handler");
                         }
@@ -532,11 +532,11 @@ namespace MS.Internal.MilCodeGen.Generators
                     /// </summary>
                     public void AddToEventRoute(EventRoute route, RoutedEventArgs e)
                     {
-                        if (route == null)
+                        if (route is null)
                         {
                             throw new ArgumentNullException("route");
                         }
-                        if (e == null)
+                        if (e is null)
                         {
                             throw new ArgumentNullException("e");
                         }
@@ -611,7 +611,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     /// </summary>
                     internal void EnsureEventHandlersStore()
                     {
-                        if (EventHandlersStore == null)
+                        if (EventHandlersStore is null)
                         {
                             EventHandlersStoreField.SetValue(this, new EventHandlersStore());
                             WriteFlag(CoreFlags.ExistsEventHandlersStore, true);

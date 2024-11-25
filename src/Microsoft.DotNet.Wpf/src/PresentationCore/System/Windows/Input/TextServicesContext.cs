@@ -263,7 +263,7 @@ namespace System.Windows.Input
             get
             {
                 // Create TextServicesContext on demand.
-                if (InputMethod.Current.TextServicesContext == null)
+                if (InputMethod.Current.TextServicesContext is null)
                 {
                     InputMethod.Current.TextServicesContext = new TextServicesContext();
                 }
@@ -418,10 +418,10 @@ namespace System.Windows.Input
         {
             get
             {
-                if (_dimEmpty == null)
+                if (_dimEmpty is null)
                 {
                     UnsafeNativeMethods.ITfThreadMgr threadManager = ThreadManager;
-                    if (threadManager == null)
+                    if (threadManager is null)
                     {
                         return null;
                     }

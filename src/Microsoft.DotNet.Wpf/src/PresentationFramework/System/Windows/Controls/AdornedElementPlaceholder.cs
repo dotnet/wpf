@@ -60,7 +60,7 @@ namespace System.Windows.Controls
         void IAddChild.AddChild (Object value)
         {
             // keeping consistent with other elements:  adding null is a no-op.
-            if (value == null)
+            if (value is null)
                 return;
 
             if (!(value is UIElement))
@@ -94,7 +94,7 @@ namespace System.Windows.Controls
             get
             {
                 TemplatedAdorner adorner = TemplatedAdorner;
-                return adorner == null ? null : TemplatedAdorner.AdornedElement;
+                return adorner is null ? null : TemplatedAdorner.AdornedElement;
             }
         }
 
@@ -136,7 +136,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (_child == null) ? 0 : 1;
+                return (_child is null) ? 0 : 1;
             }
         }
 
@@ -145,7 +145,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected override Visual GetVisualChild(int index)
         {
-            if (_child == null || index != 0)
+            if (_child is null || index != 0)
             {
                 throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
@@ -159,7 +159,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                // Could optimize this code by returning EmptyEnumerator.Instance if _child == null.
+                // Could optimize this code by returning EmptyEnumerator.Instance if _child is null.
                 return new SingleChildEnumerator(_child);
             }
         }
@@ -169,7 +169,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected override void OnInitialized(EventArgs e)
         {
-            if (TemplatedParent == null)
+            if (TemplatedParent is null)
                 throw new InvalidOperationException(SR.AdornedElementPlaceholderMustBeInTemplate);
 
             base.OnInitialized(e);
@@ -187,10 +187,10 @@ namespace System.Windows.Controls
         /// <returns>The desired size of the control.</returns>
         protected override Size MeasureOverride(Size constraint)
         {
-            if (TemplatedParent == null)
+            if (TemplatedParent is null)
                 throw new InvalidOperationException(SR.AdornedElementPlaceholderMustBeInTemplate);
 
-            if (AdornedElement == null)
+            if (AdornedElement is null)
                 return new Size(0,0);
 
             Size desiredSize = AdornedElement.RenderSize;
@@ -222,7 +222,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_templatedAdorner == null)
+                if (_templatedAdorner is null)
                 {
                     // find the TemplatedAdorner
                     FrameworkElement templateParent = this.TemplatedParent as FrameworkElement;
@@ -231,7 +231,7 @@ namespace System.Windows.Controls
                     {
                         _templatedAdorner = VisualTreeHelper.GetParent(templateParent) as TemplatedAdorner;
 
-                        if (_templatedAdorner != null && _templatedAdorner.ReferenceElement == null)
+                        if (_templatedAdorner != null && _templatedAdorner.ReferenceElement is null)
                         {
                             _templatedAdorner.ReferenceElement = this;
                         }

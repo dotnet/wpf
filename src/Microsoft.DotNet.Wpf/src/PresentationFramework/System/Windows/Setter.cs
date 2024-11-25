@@ -96,7 +96,7 @@ namespace System.Windows
             DependencyProperty dp = Property;
             object value = ValueInternal;
 
-            if (dp == null)
+            if (dp is null)
             {
                 throw new ArgumentException(SR.Format(SR.NullPropertyIllegal, "Setter.Property"));
             }
@@ -232,7 +232,7 @@ namespace System.Windows
 
             Setter setter = targetObject as Setter;
 
-            if (setter == null || eventArgs.Member.Name != "Value")
+            if (setter is null || eventArgs.Member.Name != "Value")
             {
                 return;
             }
@@ -255,7 +255,7 @@ namespace System.Windows
         public static void ReceiveTypeConverter(object targetObject, XamlSetTypeConverterEventArgs eventArgs)
         {
             Setter setter = targetObject as Setter;
-            if (setter == null)
+            if (setter is null)
             {
                 throw new ArgumentNullException("targetObject");
             }

@@ -37,7 +37,7 @@ namespace Microsoft.Windows.Controls
             RibbonGroup ownerRibbonGroup)
             : base(adornedElement)
         {
-            PlacementTarget = (placementTarget == null ? adornedElement : placementTarget);
+            PlacementTarget = (placementTarget is null ? adornedElement : placementTarget);
             HorizontalPlacement = horizontalPlacement;
             VerticalPlacement = verticalPlacement;
             HorizontalOffset = horizontalOffset;
@@ -52,7 +52,7 @@ namespace Microsoft.Windows.Controls
         protected override Visual GetVisualChild(int index)
         {
             if (index != 0 ||
-                _keyTipControl == null)
+                _keyTipControl is null)
             {
                 throw new ArgumentOutOfRangeException("index");
             }
@@ -63,7 +63,7 @@ namespace Microsoft.Windows.Controls
         {
             get
             {
-                return (_keyTipControl == null ? 0 : 1);
+                return (_keyTipControl is null ? 0 : 1);
             }
         }
 
@@ -96,7 +96,7 @@ namespace Microsoft.Windows.Controls
         /// </summary>
         public void LinkKeyTipControl(DependencyObject keyTipElement, KeyTipControl keyTipControl)
         {
-            Debug.Assert(_keyTipControl == null && keyTipControl.KeyTipAdorner == null);
+            Debug.Assert(_keyTipControl is null && keyTipControl.KeyTipAdorner is null);
             _keyTipControl = keyTipControl;
             _keyTipControl.KeyTipAdorner = this;
             _keyTipControl.Text = KeyTipService.GetKeyTip(keyTipElement).ToUpper(KeyTipService.GetCultureForElement(keyTipElement));
@@ -105,7 +105,7 @@ namespace Microsoft.Windows.Controls
             _keyTipControl.Style = keyTipStyle;
             _keyTipControl.RenderTransform = _keyTipTransform;
             bool clearCustomProperties = true;
-            if (keyTipStyle == null)
+            if (keyTipStyle is null)
             {
                 Ribbon.Ribbon ribbon = RibbonControlService.GetRibbon(PlacementTarget);
                 if (ribbon != null)
@@ -244,7 +244,7 @@ namespace Microsoft.Windows.Controls
         private void EnsureTransformY()
         {
             UIElement placementTarget = PlacementTarget;
-            if (placementTarget == null)
+            if (placementTarget is null)
             {
                 placementTarget = AdornedElement;
             }

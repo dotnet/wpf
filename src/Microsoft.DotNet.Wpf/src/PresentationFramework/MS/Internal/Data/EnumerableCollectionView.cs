@@ -397,7 +397,7 @@ namespace MS.Internal.Data
         protected override void ProcessCollectionChanged(NotifyCollectionChangedEventArgs args)
         {
             // ignore events received during initialization
-            if (_view == null)
+            if (_view is null)
                 return;
 
             // apply the change to the snapshot

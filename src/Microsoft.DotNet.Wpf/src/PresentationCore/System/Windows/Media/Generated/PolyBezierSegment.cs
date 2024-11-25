@@ -217,7 +217,7 @@ namespace System.Windows.Media
             // if these get touched by more than one thread in the lifetime
             // of your app. 
 
-            Debug.Assert(s_Points == null || s_Points.IsFrozen,
+            Debug.Assert(s_Points is null || s_Points.IsFrozen,
                 "Detected context bound default value PolyBezierSegment.s_Points (See OS Bug #947272).");
 
 

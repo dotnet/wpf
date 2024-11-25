@@ -32,7 +32,7 @@ namespace MS.Internal.AutomationProxies
             // return a Native IAccessble and not a OleAcc implementaion.  Winforms does provide a Native IAccessible.
 
             Accessible acc = null;
-            if (Accessible.AccessibleObjectFromWindow(hwnd, idObject, ref acc) != NativeMethods.S_OK || acc == null)
+            if (Accessible.AccessibleObjectFromWindow(hwnd, idObject, ref acc) != NativeMethods.S_OK || acc is null)
             {
                 return null;
             }
@@ -56,7 +56,7 @@ namespace MS.Internal.AutomationProxies
 
                 case AccessibleRole.StatusBar:
                     WindowsStatusBar sb = new WindowsStatusBar(hwnd, null, 0, acc);
-                    if (sb == null)
+                    if (sb is null)
                     {
                         return null;
                     }
@@ -78,7 +78,7 @@ namespace MS.Internal.AutomationProxies
             // return a Native IAccessble and not a OleAcc implementaion.  Winforms does provide a Native IAccessible.
 
             Accessible acc = null;
-            if (Accessible.AccessibleObjectFromWindow(hwnd, NativeMethods.OBJID_CLIENT, ref acc) != NativeMethods.S_OK || acc == null)
+            if (Accessible.AccessibleObjectFromWindow(hwnd, NativeMethods.OBJID_CLIENT, ref acc) != NativeMethods.S_OK || acc is null)
             {
                 return null;
             }

@@ -79,7 +79,7 @@ namespace System.Windows
         /// </summary>
         public PropertyPath(string path, params object[] pathParameters)
         {
-            if (System.Windows.Threading.Dispatcher.CurrentDispatcher == null)
+            if (System.Windows.Threading.Dispatcher.CurrentDispatcher is null)
                 throw new InvalidOperationException();  // This is actually never called since CurrentDispatcher will throw if null.
 
             _path = path;
@@ -137,7 +137,7 @@ namespace System.Windows
         {
             get
             {
-                if (_parameters == null)
+                if (_parameters is null)
                 {
                     SetPathParameterCollection(new PathParameterCollection());
                 }
@@ -242,7 +242,7 @@ namespace System.Windows
         {
             object accessor = _earlyBoundPathParts[k];
 
-            if (accessor == null)
+            if (accessor is null)
             {
                 accessor = SingleWorker.GetAccessor(k);
             }
@@ -274,7 +274,7 @@ namespace System.Windows
 
             for (int k=Length-1; k>=0; --k)
             {
-                if (_earlyBoundPathParts[k] == null)
+                if (_earlyBoundPathParts[k] is null)
                 {
                     string name = _arySVI[k].name;
                     if (IsPropertyReference(name))
@@ -312,7 +312,7 @@ namespace System.Windows
             // if user told us explicitly what to use, use it
             object accessor = _earlyBoundPathParts[level];
 
-            if (accessor == null)
+            if (accessor is null)
             {
                 accessor = ResolvePropertyName(_arySVI[level].name, item, ownerType, context, false);
             }
@@ -324,7 +324,7 @@ namespace System.Windows
         {
             IndexerParameterInfo[] parameters = _earlyBoundPathParts[level] as IndexerParameterInfo[];
 
-            if (parameters == null)
+            if (parameters is null)
             {
                 parameters = ResolveIndexerParams(_arySVI[level].paramList, context, false);
             }
@@ -352,7 +352,7 @@ namespace System.Windows
         {
             get
             {
-                if (_singleWorker == null)
+                if (_singleWorker is null)
                     _singleWorker = new PropertyPathWorker(this);
                 return _singleWorker;
             }
@@ -374,7 +374,7 @@ namespace System.Windows
             if (_arySVI.Length == 0)
             {
                 string detail = parser.Error;
-                if (detail == null)
+                if (detail is null)
                     detail = Path;
                 throw new InvalidOperationException(SR.Format(SR.PropertyPathSyntaxError, detail));
             }
@@ -513,7 +513,7 @@ namespace System.Windows
             if( typeConvertContext != null )
                 context = typeConvertContext.ParserContext;
 
-            if (context == null)
+            if (context is null)
                 context = typeDescriptorContext;
             _earlyBoundPathParts = new object[Length];
 
@@ -583,7 +583,7 @@ namespace System.Windows
                     propertyName = name.Substring(lastIndex + 1).Trim();
                     string ownerName = name.Substring(0, lastIndex).Trim();
                     ownerType = GetTypeFromName(ownerName, context);
-                    if (ownerType == null && throwOnError)
+                    if (ownerType is null && throwOnError)
                         throw new InvalidOperationException(SR.Format(SR.PropertyPathNoOwnerType, ownerName));
                 }
                 else
@@ -604,7 +604,7 @@ namespace System.Windows
 
                 // 2. PropertyDescriptor from item's custom lookup.
                 // When the item implements custom properties, we must use them.
-                if (accessor == null && item is ICustomTypeDescriptor)
+                if (accessor is null && item is ICustomTypeDescriptor)
                 {
                     accessor = TypeDescriptor.GetProperties(item)[propertyName];
                 }
@@ -614,7 +614,7 @@ namespace System.Windows
                 // This uses less working set than PropertyDescriptor, and we don't need
                 // the ValueChanged pattern.  (If item is a DO and wants to raise
                 // change notifications, it should make the property a DP.)
-                if (accessor == null &&
+                if (accessor is null &&
                     (item is INotifyPropertyChanged || item is DependencyObject))
                 {
                     accessor = GetPropertyHelper(ownerType, propertyName);
@@ -625,25 +625,25 @@ namespace System.Windows
                 // discover properties obtained from TypeDescriptorProvider -
                 // see bug 1713000).
                 // This supports the WinForms ValueChanged pattern.
-                if (accessor == null && item != null)
+                if (accessor is null && item != null)
                 {
                     accessor = TypeDescriptor.GetProperties(item)[propertyName];
                 }
 
                 // 5. PropertyInfo.
-                if (accessor == null)
+                if (accessor is null)
                 {
                     accessor = GetPropertyHelper(ownerType, propertyName);
                 }
 
                 // 6. IDynamicMetaObjectProvider
                 // This supports the DLR's dynamic objects
-                if (accessor == null && SystemCoreHelper.IsIDynamicMetaObjectProvider(item))
+                if (accessor is null && SystemCoreHelper.IsIDynamicMetaObjectProvider(item))
                 {
                     accessor = SystemCoreHelper.NewDynamicPropertyAccessor(item.GetType(), propertyName);
                 }
 
-                if (accessor == null && throwOnError)
+                if (accessor is null && throwOnError)
                     throw new InvalidOperationException(SR.Format(SR.PropertyPathNoProperty, ownerType.Name, propertyName));
 
                 return accessor;
@@ -675,7 +675,7 @@ namespace System.Windows
             {
                 try
                 {
-                    for (result = null;  result == null && ownerType != null;  ownerType = ownerType.BaseType)
+                    for (result = null;  result is null && ownerType != null;  ownerType = ownerType.BaseType)
                     {
                         result = ownerType.GetProperty(propertyName, BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public);
                     }
@@ -823,7 +823,7 @@ namespace System.Windows
                 #pragma warning restore 1634, 1691
             }
 
-            if (value == null && type.IsAssignableFrom(typeof(string)))
+            if (value is null && type.IsAssignableFrom(typeof(string)))
             {
                 value = param;
             }
@@ -855,7 +855,7 @@ namespace System.Windows
 
                 // Find the namespace URI, even if its the default one
                 string namespaceURI = parserContext.XmlnsDictionary[nsPrefix];
-                if (namespaceURI == null)
+                if (namespaceURI is null)
                 {
                     throw new ArgumentException(SR.Format(SR.ParserPrefixNSProperty, nsPrefix, name));
                 }
@@ -889,7 +889,7 @@ namespace System.Windows
 
             // if there's no parser or serializer context, use the tree context
             DependencyObject hostElement = context as DependencyObject;
-            if (hostElement == null)
+            if (hostElement is null)
             {
                 if (FrameworkCompatibilityPreferences.TargetsDesktop_V4_0)
                 {

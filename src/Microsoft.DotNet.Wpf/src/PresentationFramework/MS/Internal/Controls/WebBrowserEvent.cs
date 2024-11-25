@@ -51,18 +51,18 @@ namespace MS.Internal.Controls
 
             try
             {
-                Debug.Assert(url == null || url is string, "invalid url type");
-                Debug.Assert(targetFrameName == null || targetFrameName is string, "invalid targetFrameName type");
-                Debug.Assert(headers == null || headers is string, "invalid headers type");
+                Debug.Assert(url is null || url is string, "invalid url type");
+                Debug.Assert(targetFrameName is null || targetFrameName is string, "invalid targetFrameName type");
+                Debug.Assert(headers is null || headers is string, "invalid headers type");
                 //
                 // Due to a bug in the interop code where the variant.bstr value gets set
                 // to -1 on return back to native code, if the original value was null, we
                 // have to set targetFrameName and headers to "".
-                if (targetFrameName == null)
+                if (targetFrameName is null)
                 {
                     targetFrameName = "";
                 }
-                if (headers == null)
+                if (headers is null)
                 {
                     headers = "";
                 }
@@ -171,7 +171,7 @@ namespace MS.Internal.Controls
         /// </summary>
         public void NavigateComplete2(object pDisp, ref object url)
         {
-            Debug.Assert(url == null || url is string, "invalid url type");
+            Debug.Assert(url is null || url is string, "invalid url type");
 
             // Events only fired for top level navigation.
             UnsafeNativeMethods.IWebBrowser2 axIWebBrowser2 = (UnsafeNativeMethods.IWebBrowser2)pDisp;
@@ -225,7 +225,7 @@ namespace MS.Internal.Controls
         /// </summary>
         public void DocumentComplete(object pDisp, ref object url)
         {
-            Debug.Assert(url == null || url is string, "invalid url type");
+            Debug.Assert(url is null || url is string, "invalid url type");
 
             // Events only fired for top level navigation.
             UnsafeNativeMethods.IWebBrowser2 axIWebBrowser2 = (UnsafeNativeMethods.IWebBrowser2)pDisp;

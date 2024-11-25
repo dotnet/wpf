@@ -48,13 +48,13 @@ namespace MS.Internal.Controls
                     connectionPoint = null;
                 }
 
-                if (connectionPoint == null)
+                if (connectionPoint is null)
                 {
                     ex = new ArgumentException(SR.Format(SR.AxNoEventInterface, eventInterface.Name));
                 }
                 // IsComObject(sink): this is the case of a managed sink object wrapped in IDispatchSTAForwarder -
                 // see WebBrowser.CreateSink().
-                else if (sink == null || !eventInterface.IsInstanceOfType(sink) && !Marshal.IsComObject(sink))
+                else if (sink is null || !eventInterface.IsInstanceOfType(sink) && !Marshal.IsComObject(sink))
                 {
                     ex = new InvalidCastException(SR.Format(SR.AxNoSinkImplementation, eventInterface.Name));
                 }
@@ -76,14 +76,14 @@ namespace MS.Internal.Controls
             }
 
 
-            if (connectionPoint == null || cookie == 0)
+            if (connectionPoint is null || cookie == 0)
             {
                 if (connectionPoint != null)
                 {
                     Marshal.FinalReleaseComObject(connectionPoint);
                 }
 
-                if (ex == null)
+                if (ex is null)
                 {
                     throw new ArgumentException(SR.Format(SR.AxNoConnectionPoint, eventInterface.Name));
                 }

@@ -196,7 +196,7 @@ namespace System.Windows.Data
 
         private static bool IsValidXmlNamespaceManager(object value)
         {
-            return (value == null) || SystemXmlHelper.IsXmlNamespaceManager(value);
+            return (value is null) || SystemXmlHelper.IsXmlNamespaceManager(value);
         }
 
         #pragma warning restore 7008
@@ -222,7 +222,7 @@ namespace System.Windows.Data
         {
             if (path != null)
             {
-                if (System.Windows.Threading.Dispatcher.CurrentDispatcher == null)
+                if (System.Windows.Threading.Dispatcher.CurrentDispatcher is null)
                     throw new InvalidOperationException();  // This is actually never called since CurrentDispatcher will throw if null.
 
                 Path = new PropertyPath(path, (object[])null);
@@ -513,7 +513,7 @@ namespace System.Windows.Data
             get
             {
                 WeakReference<object> wr = (WeakReference<object>)GetValue(Feature.ObjectSource, null);
-                if (wr == null)
+                if (wr is null)
                     return null;
                 else
                 {

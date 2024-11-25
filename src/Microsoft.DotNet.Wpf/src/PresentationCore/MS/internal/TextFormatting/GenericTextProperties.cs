@@ -73,12 +73,12 @@ namespace MS.Internal.TextFormatting
                     _typeface.GetHashCode()
                 ^ _emSize.GetHashCode()
                 ^ _emHintingSize.GetHashCode()
-                ^ ((_foregroundBrush == null) ? 0 : _foregroundBrush.GetHashCode())
-                ^ ((_backgroundBrush == null) ? 0 : _backgroundBrush.GetHashCode())
-                ^ ((_textDecorations == null) ? 0 : _textDecorations.GetHashCode())
+                ^ ((_foregroundBrush is null) ? 0 : _foregroundBrush.GetHashCode())
+                ^ ((_backgroundBrush is null) ? 0 : _backgroundBrush.GetHashCode())
+                ^ ((_textDecorations is null) ? 0 : _textDecorations.GetHashCode())
                 ^ ((int)_baselineAlignment << 3)
                 ^ ((int)_culture.GetHashCode() << 6)
-                ^ ((_numberSubstitution == null) ? 0 : _numberSubstitution.GetHashCode());
+                ^ ((_numberSubstitution is null) ? 0 : _numberSubstitution.GetHashCode());
         }
 
 
@@ -89,7 +89,7 @@ namespace MS.Internal.TextFormatting
         /// <returns>objects equals</returns>
         public override bool Equals(object o)
         {
-            if ((o == null) || !(o is TextRunProperties))
+            if ((o is null) || !(o is TextRunProperties))
             {
                 return false;
             }
@@ -101,11 +101,11 @@ namespace MS.Internal.TextFormatting
                 && _emHintingSize == textRunProperties.FontHintingEmSize
                 && _culture == textRunProperties.CultureInfo
                 && _typeface.Equals(textRunProperties.Typeface)
-                && ((_textDecorations == null) ? textRunProperties.TextDecorations == null : _textDecorations.ValueEquals(textRunProperties.TextDecorations))
+                && ((_textDecorations is null) ? textRunProperties.TextDecorations is null : _textDecorations.ValueEquals(textRunProperties.TextDecorations))
                 && _baselineAlignment == textRunProperties.BaselineAlignment
-                && ((_foregroundBrush == null) ? (textRunProperties.ForegroundBrush == null) : (_foregroundBrush.Equals(textRunProperties.ForegroundBrush)))
-                && ((_backgroundBrush == null) ? (textRunProperties.BackgroundBrush == null) : (_backgroundBrush.Equals(textRunProperties.BackgroundBrush)))
-                && ((_numberSubstitution == null) ? (textRunProperties.NumberSubstitution == null) : (_numberSubstitution.Equals(textRunProperties.NumberSubstitution)));
+                && ((_foregroundBrush is null) ? (textRunProperties.ForegroundBrush is null) : (_foregroundBrush.Equals(textRunProperties.ForegroundBrush)))
+                && ((_backgroundBrush is null) ? (textRunProperties.BackgroundBrush is null) : (_backgroundBrush.Equals(textRunProperties.BackgroundBrush)))
+                && ((_numberSubstitution is null) ? (textRunProperties.NumberSubstitution is null) : (_numberSubstitution.Equals(textRunProperties.NumberSubstitution)));
         }
 
 

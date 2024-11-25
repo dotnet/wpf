@@ -162,7 +162,7 @@ namespace MS.Internal.AutomationProxies
                 WindowsButton wtv = (WindowsButton)Create(hwnd, 0);
 
                 // Create can return null if we don't know what kind of button this is
-                if (wtv == null)
+                if (wtv is null)
                 {
                     return;
                 }
@@ -325,7 +325,7 @@ namespace MS.Internal.AutomationProxies
 
             if (hwndRadioButton == IntPtr.Zero ||
                 Accessible.AccessibleObjectFromWindow(hwndRadioButton, NativeMethods.OBJID_CLIENT, ref accRadioButton) != NativeMethods.S_OK ||
-                accRadioButton == null)
+                accRadioButton is null)
             {
                 // framework will handle this one correctly
                 return null;
@@ -399,7 +399,7 @@ namespace MS.Internal.AutomationProxies
                 if (hwndParent != IntPtr.Zero && WindowsFormsHelper.IsWindowsFormsControl(hwndParent))
                 {
                     Accessible accParent = null;
-                    if (Accessible.AccessibleObjectFromWindow(hwndParent, NativeMethods.OBJID_CLIENT, ref accParent) != NativeMethods.S_OK || accParent == null)
+                    if (Accessible.AccessibleObjectFromWindow(hwndParent, NativeMethods.OBJID_CLIENT, ref accParent) != NativeMethods.S_OK || accParent is null)
                     {
                         return null;
                     }
@@ -479,7 +479,7 @@ namespace MS.Internal.AutomationProxies
                 Misc.SetFocus(_hwnd);
             }
 
-            if (_acc == null)
+            if (_acc is null)
             {
                 switch (_style)
                 {

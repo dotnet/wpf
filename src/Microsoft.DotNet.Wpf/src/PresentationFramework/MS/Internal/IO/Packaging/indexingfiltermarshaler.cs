@@ -265,7 +265,7 @@ namespace MS.Internal.IO.Packaging
             // Get the managed chunk
             ManagedChunk managedChunk = _implementation.GetChunk();
 
-            if (managedChunk == null)
+            if (managedChunk is null)
             {
                 // End of chunks.
 

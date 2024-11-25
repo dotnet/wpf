@@ -124,10 +124,10 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_highlightLayer == null)
+                if (_highlightLayer is null)
                 {
                     _highlightLayer = new DocumentSequenceHighlightLayer(_aggregatedContainer);
-                    Debug.Assert(ChildContainer.Highlights.GetLayer(typeof(TextSelection)) == null);
+                    Debug.Assert(ChildContainer.Highlights.GetLayer(typeof(TextSelection)) is null);
                     ChildContainer.Highlights.AddLayer(_highlightLayer);
                 }
                 return _highlightLayer;
@@ -169,7 +169,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return (this._previousBlock == null);
+                return (this._previousBlock is null);
             }
         }
 
@@ -179,7 +179,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return (this._nextBlock == null);
+                return (this._nextBlock is null);
             }
         }
 
@@ -240,7 +240,7 @@ namespace System.Windows.Documents
                     }
                 }
 
-                if (_container == null)
+                if (_container is null)
                 {
                     _container = new NullTextContainer();
                 }

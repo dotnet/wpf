@@ -67,7 +67,7 @@ namespace System.Windows
         {
             get
             {
-                if (_dType == null)
+                if (_dType is null)
                 {
                     // Specialized type identification
                     _dType = DependencyObjectType.FromSystemTypeInternal(GetType());
@@ -195,7 +195,7 @@ namespace System.Windows
 
             if (dp.ReadOnly)
             {
-                if (metadata == null)
+                if (metadata is null)
                 {
                     metadata = dp.GetMetadata(DependencyObjectType);
                 }
@@ -234,7 +234,7 @@ namespace System.Windows
             {
                 if (dp.IsPotentiallyInherited)
                 {
-                    if (metadata == null)
+                    if (metadata is null)
                     {
                         metadata = dp.GetMetadata(DependencyObjectType);
                     }
@@ -267,7 +267,7 @@ namespace System.Windows
                 {
                     if (dp.IsPotentiallyUsingDefaultValueFactory)
                     {
-                        if (metadata == null)
+                        if (metadata is null)
                         {
                             metadata = dp.GetMetadata(DependencyObjectType);
                         }
@@ -285,7 +285,7 @@ namespace System.Windows
                         return EffectiveValueEntry.CreateDefaultValueEntry(dp, dp.DefaultMetadata.DefaultValue);
                     }
 
-                    if (metadata == null)
+                    if (metadata is null)
                     {
                         metadata = dp.GetMetadata(DependencyObjectType);
                     }
@@ -365,7 +365,7 @@ namespace System.Windows
                     }
                 }
 
-                if (reference == null && entry.IsExpression)
+                if (reference is null && entry.IsExpression)
                 {
                     if (!entry.IsAnimated && !entry.IsCoerced)
                     {
@@ -375,7 +375,7 @@ namespace System.Windows
                 }
 
                 Debug.Assert(reference != null, "the only modified values that can have deferredreferences are (a) expression, (b) coerced control value");
-                if (reference == null)
+                if (reference is null)
                 {
                     return effectiveEntry;
                 }
@@ -717,7 +717,7 @@ namespace System.Windows
             // not an Expression, if applicable
 
             bool handled = false;
-            if ((currentExpr != null) && (newExpr == null))
+            if ((currentExpr != null) && (newExpr is null))
             {
                 // Resolve deferred references because we haven't modified
                 // the expression code to work with DeferredReference yet.
@@ -775,7 +775,7 @@ namespace System.Windows
                 }
 
                 // attach the new expression, if applicable
-                if (newExpr == null)
+                if (newExpr is null)
                 {
                     // simple local value set
                     newEntry.HasExpressionMarker = newValueHasExpressionMarker;
@@ -2028,7 +2028,7 @@ namespace System.Windows
         {
             // Do not call VerifyAccess because this is a virtual, and is used as a call-out.
 
-            if( e.Property == null )
+            if( e.Property is null )
             {
                 throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "e.Property"), "e");
             }
@@ -2085,7 +2085,7 @@ namespace System.Windows
 
                 if (dp.ReadOnly)
                 {
-                    if (metadata == null)
+                    if (metadata is null)
                     {
                         metadata = dp.GetMetadata(DependencyObjectType);
                     }
@@ -2102,7 +2102,7 @@ namespace System.Windows
 
                 if (dp.IsPotentiallyInherited)
                 {
-                    if (metadata == null)
+                    if (metadata is null)
                     {
                         metadata = dp.GetMetadata(DependencyObjectType);
                     }
@@ -2438,7 +2438,7 @@ namespace System.Windows
                 for (int i = 0; i < newSources.Length; i++)
                 {
                     Dispatcher sourceDispatcher = newSources[i].DependencyObject.Dispatcher;
-                    if (sourceDispatcher != dispatcher && !(expr.SupportsUnboundSources && sourceDispatcher == null))
+                    if (sourceDispatcher != dispatcher && !(expr.SupportsUnboundSources && sourceDispatcher is null))
                     {
                         throw new ArgumentException(SR.SourcesMustBeInSameThread);
                     }
@@ -2460,7 +2460,7 @@ namespace System.Windows
                             out AlternativeExpressionStorageCallback getExpression)
         {
             Debug.Assert(getExpressionCore != null, "getExpressionCore cannot be null");
-            Debug.Assert(_getExpressionCore == null, "The 'alternative Expression storage' feature has already been registered");
+            Debug.Assert(_getExpressionCore is null, "The 'alternative Expression storage' feature has already been registered");
 
             _getExpressionCore = getExpressionCore;
 
@@ -2699,7 +2699,7 @@ namespace System.Windows
                 {
                     // Remove the given handler
                     handlers = (EventHandler)Delegate.Remove(handlers, value);
-                    if (handlers == null)
+                    if (handlers is null)
                     {
                         // Clear the value for the uncommon field
                         // cause there are no more handlers
@@ -2757,7 +2757,7 @@ namespace System.Windows
         [Conditional ("DEBUG")]
         internal void Debug_AssertNoInheritanceContextListeners()
         {
-            Debug.Assert(InheritanceContextChangedHandlersField.GetValue(this) == null,
+            Debug.Assert(InheritanceContextChangedHandlersField.GetValue(this) is null,
                 "This object should not have any listeners to its InheritanceContextChanged event");
         }
 
@@ -3146,7 +3146,7 @@ namespace System.Windows
             }
             else
             {
-                if (_effectiveValues == null)
+                if (_effectiveValues is null)
                 {
                     _effectiveValues = new EffectiveValueEntry[EffectiveValuesInitialSize];
                 }
@@ -3260,7 +3260,7 @@ namespace System.Windows
                 }
             }
 
-            Debug.Assert(dp == null || (dp.GlobalIndex == newEntry.PropertyIndex), "EffectiveValueEntry & DependencyProperty do not match");
+            Debug.Assert(dp is null || (dp.GlobalIndex == newEntry.PropertyIndex), "EffectiveValueEntry & DependencyProperty do not match");
         }
 
         //
@@ -3332,7 +3332,7 @@ namespace System.Windows
                 entry.ResetValue(value, hasExpressionMarker);
             }
 
-            Debug.Assert(dp == null || (dp.GlobalIndex == entry.PropertyIndex), "EffectiveValueEntry & DependencyProperty do not match");
+            Debug.Assert(dp is null || (dp.GlobalIndex == entry.PropertyIndex), "EffectiveValueEntry & DependencyProperty do not match");
             _effectiveValues[entryIndex.Index] = entry;
         }
 

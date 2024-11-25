@@ -77,7 +77,7 @@ namespace System.Windows.Automation.Peers
 
             if (owner.IsGrouping)
             {
-                if (itemHost == null)
+                if (itemHost is null)
                     return null;
 
                 if (!useNetFx472CompatibleAccessibilityFeatures)
@@ -144,7 +144,7 @@ namespace System.Windows.Automation.Peers
                 // ensures the older behavior as ItemContainer pattern won't be available.
                 if (IsVirtualized)
                 {
-                    if (itemHost == null)
+                    if (itemHost is null)
                         return null;
 
                     childItems = itemHost.Children;
@@ -182,7 +182,7 @@ namespace System.Windows.Automation.Peers
                     ItemAutomationPeer peer = oldChildren[dataItem];
                     peer = ReusePeerForItem(peer, dataItem);
 
-                    if (peer == null)
+                    if (peer is null)
                     {
                         peer = CreateItemAutomationPeer(dataItem);
                     }
@@ -199,7 +199,7 @@ namespace System.Windows.Automation.Peers
 
                     // protection from indistinguishable items - for example, 2 strings with same value
                     // this scenario does not work in ItemsControl however is not checked for.
-                    if (peer != null && _dataChildren[dataItem] == null)
+                    if (peer != null && _dataChildren[dataItem] is null)
                     {
                         children.Add(peer);
                         _dataChildren[dataItem] = peer;
@@ -214,7 +214,7 @@ namespace System.Windows.Automation.Peers
 
         internal ItemAutomationPeer ReusePeerForItem(ItemAutomationPeer peer, object item)
         {
-            if (peer == null)
+            if (peer is null)
             {
                 peer = GetPeerFromWeakRefStorage(item);
                 if (peer != null)
@@ -240,7 +240,7 @@ namespace System.Windows.Automation.Peers
             ItemCollection items = owner.Items;
             if(items != null)
             {
-                if(GetPeerFromWeakRefStorage(itemPeer.Item) == null)
+                if(GetPeerFromWeakRefStorage(itemPeer.Item) is null)
                     WeakRefElementProxyStorage[itemPeer.Item] = wr;
             }
         }
@@ -271,7 +271,7 @@ namespace System.Windows.Automation.Peers
                 {
                     // get the peer corresponding to this provider
                     startAfterItem = PeerFromProvider(startAfter) as ItemAutomationPeer;
-                    if(startAfterItem == null)
+                    if(startAfterItem is null)
                         return null;
                 }
 
@@ -279,7 +279,7 @@ namespace System.Windows.Automation.Peers
                 int startIndex = 0;
                 if (startAfterItem != null)
                 {
-                    if (startAfterItem.Item == null)
+                    if (startAfterItem.Item is null)
                     {
                         throw new InvalidOperationException(SR.InavalidStartItem);
                     }
@@ -308,7 +308,7 @@ namespace System.Windows.Automation.Peers
                 for (int i = startIndex; i < items.Count; i++)
                 {
                     currentItemPeer = FindOrCreateItemAutomationPeer(items[i]);
-                    if (currentItemPeer == null)
+                    if (currentItemPeer is null)
                         continue;
                     try{
                         currentValue = GetSupportedPropertyValue(currentItemPeer, propertyId);
@@ -319,10 +319,10 @@ namespace System.Windows.Automation.Peers
                             continue;
                     }
 
-                    if (value == null || currentValue == null)
+                    if (value is null || currentValue is null)
                     {
                         // Accept null as value corresponding to the property if it finds an item with null as the value of corresponding property else ignore.
-                        if (currentValue == null && value == null && items.IndexOf(items[i]) == i)
+                        if (currentValue is null && value is null && items.IndexOf(items[i]) == i)
                             return (ProviderFromPeer(currentItemPeer));
                         else
                             continue;
@@ -385,10 +385,10 @@ namespace System.Windows.Automation.Peers
         protected virtual internal ItemAutomationPeer FindOrCreateItemAutomationPeer(object item)
         {
             ItemAutomationPeer peer = ItemPeers[item];
-            if (peer == null)
+            if (peer is null)
                 peer = GetPeerFromWeakRefStorage(item);
 
-            if (peer == null)
+            if (peer is null)
             {
                 peer = CreateItemAutomationPeer(item);
 
@@ -424,7 +424,7 @@ namespace System.Windows.Automation.Peers
         {
             ItemsControl itemsControl = (ItemsControl)Owner;
 
-            if (_recyclableWrapperCache == null)
+            if (_recyclableWrapperCache is null)
             {
                 _recyclableWrapperCache = new RecyclableWrapper(itemsControl, item);
             }
@@ -436,7 +436,7 @@ namespace System.Windows.Automation.Peers
             return _recyclableWrapperCache;
         }
 
-        // UpdateChildrenIntenal is called with ItemsInvalidateLimit to ensure we don’t fire unnecessary structure change events when items are just scrolled in/out of view in case of
+        // UpdateChildrenIntenal is called with ItemsInvalidateLimit to ensure we donï¿½t fire unnecessary structure change events when items are just scrolled in/out of view in case of
         // virtualized controls.
         override internal IDisposable UpdateChildren()
         {
@@ -458,7 +458,7 @@ namespace System.Windows.Automation.Peers
                 if(provider != null)
                 {
                     returnPeer = PeerFromProvider(provider as IRawElementProviderSimple) as ItemAutomationPeer;
-                    if(returnPeer == null)
+                    if(returnPeer is null)
                         WeakRefElementProxyStorage.Remove(item);
                 }
                 else
@@ -476,7 +476,7 @@ namespace System.Windows.Automation.Peers
             {
                 returnPeer = GetPeerFromWeakRefStorage(item);
             }
-            if(returnPeer == null)
+            if(returnPeer is null)
             {
                 returnPeer = ItemPeers[item];
             }
@@ -529,7 +529,7 @@ namespace System.Windows.Automation.Peers
         {
             get
             {
-                if (_recentlyRealizedPeers == null)
+                if (_recentlyRealizedPeers is null)
                 {
                     _recentlyRealizedPeers = new List<ItemAutomationPeer>();
                 }
@@ -595,19 +595,19 @@ namespace System.Windows.Automation.Peers
         {
             get
             {
-                if (_count == 0 || item == null)
+                if (_count == 0 || item is null)
                     return default(T);
 
                 if (_usesHashCode)
                 {
-                    if (_hashtable == null || !_hashtable.ContainsKey(item))
+                    if (_hashtable is null || !_hashtable.ContainsKey(item))
                         return default(T);
 
                     return _hashtable[item] as T;
                 }
                 else
                 {
-                    if (_list == null)
+                    if (_list is null)
                         return default(T);
 
                     for (int i = 0; i < _list.Count; i++)
@@ -623,7 +623,7 @@ namespace System.Windows.Automation.Peers
             set
             {
                 // Does not cache null items
-                if (item == null)
+                if (item is null)
                     return;
 
                 // When we add the first item we need to determine whether to use hashtable or list
@@ -634,7 +634,7 @@ namespace System.Windows.Automation.Peers
 
                 if (_usesHashCode)
                 {
-                    if (_hashtable == null)
+                    if (_hashtable is null)
                         _hashtable = new WeakDictionary<object,T>();
 
                     if(!_hashtable.ContainsKey(item) && value is T)
@@ -644,7 +644,7 @@ namespace System.Windows.Automation.Peers
                 }
                 else
                 {
-                    if (_list == null)
+                    if (_list is null)
                         _list = new List<KeyValuePair<object, T>>();
                     if(value is T)
                         _list.Add(new KeyValuePair<object, T>(item, value));
@@ -695,48 +695,48 @@ namespace System.Windows.Automation.Peers
 
             if(_usesHashCode)
             {
-                if(_hashtable == null)
+                if(_hashtable is null)
                     return;
                 foreach(KeyValuePair<object,T> dictionaryEntry in _hashtable)
                 {
                     WeakReference weakRef = dictionaryEntry.Value as WeakReference;
-                    if(weakRef == null)
+                    if(weakRef is null)
                     {
                         cleanUpItemsCollection.Add(dictionaryEntry.Key);
                         continue;
                     }
                     ElementProxy proxy = weakRef.Target as ElementProxy;
-                    if(proxy == null)
+                    if(proxy is null)
                     {
                         cleanUpItemsCollection.Add(dictionaryEntry.Key);
                         continue;
                     }
                     ItemAutomationPeer peer = proxy.Peer as ItemAutomationPeer;
-                    if(peer == null)
+                    if(peer is null)
                         cleanUpItemsCollection.Add(dictionaryEntry.Key);
                 }
             }
 
             else
             {
-                if(_list == null)
+                if(_list is null)
                     return;
                 foreach(KeyValuePair<object, T> keyValuePair in _list)
                 {
                     WeakReference weakRef = keyValuePair.Value as WeakReference;
-                    if(weakRef == null)
+                    if(weakRef is null)
                     {
                         cleanUpItemsCollection.Add(keyValuePair.Key);
                         continue;
                     }
                     ElementProxy proxy = weakRef.Target as ElementProxy;
-                    if(proxy == null)
+                    if(proxy is null)
                     {
                         cleanUpItemsCollection.Add(keyValuePair.Key);
                         continue;
                     }
                     ItemAutomationPeer peer = proxy.Peer as ItemAutomationPeer;
-                    if(peer == null)
+                    if(peer is null)
                         cleanUpItemsCollection.Add(keyValuePair.Key);
                 }
             }

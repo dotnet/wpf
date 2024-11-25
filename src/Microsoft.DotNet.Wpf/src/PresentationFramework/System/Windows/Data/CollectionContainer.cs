@@ -88,7 +88,7 @@ namespace System.Windows.Data
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool ShouldSerializeCollection()
         {
-            if (Collection == null)
+            if (Collection is null)
             {
                 return false;
             }
@@ -135,7 +135,7 @@ namespace System.Windows.Data
         {
             get
             {
-                if (View == null)
+                if (View is null)
                     return 0;
 
                 CollectionView cv = View as CollectionView;
@@ -158,7 +158,7 @@ namespace System.Windows.Data
         {
             get
             {
-                if (View == null)
+                if (View is null)
                     return true;
 
                 ICollectionView cv = View as ICollectionView;
@@ -212,7 +212,7 @@ namespace System.Windows.Data
 
         internal int ViewIndexOf(object item)
         {
-            if (View == null)
+            if (View is null)
                 return -1;
 
             CollectionView cv = View as CollectionView;
@@ -306,7 +306,7 @@ namespace System.Windows.Data
         {
             get
             {
-                if (_viewList == null && View != null)
+                if (_viewList is null && View != null)
                 {
                     _viewList = new IndexedEnumerable(View);
                 }

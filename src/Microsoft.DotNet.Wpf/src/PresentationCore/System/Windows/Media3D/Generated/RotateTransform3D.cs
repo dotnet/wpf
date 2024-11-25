@@ -425,7 +425,7 @@ namespace System.Windows.Media.Media3D
             // if these get touched by more than one thread in the lifetime
             // of your app.
 
-            Debug.Assert(s_Rotation == null || s_Rotation.IsFrozen,
+            Debug.Assert(s_Rotation is null || s_Rotation.IsFrozen,
                 "Detected context bound default value RotateTransform3D.s_Rotation (See OS Bug #947272).");
 
 

@@ -103,7 +103,7 @@ namespace System.Windows.Media.Imaging
                     out _safeFilehandle
                     );
 
-                if (_uriStream == null)
+                if (_uriStream is null)
                 {
                     GC.SuppressFinalize(this);
                 }
@@ -148,7 +148,7 @@ namespace System.Windows.Media.Imaging
                 out _safeFilehandle
                 );
 
-            if (_uriStream == null)
+            if (_uriStream is null)
             {
                 GC.SuppressFinalize(this);
             }
@@ -197,7 +197,7 @@ namespace System.Windows.Media.Imaging
             _unmanagedMemoryStream = unmanagedMemoryStream;
             _safeFilehandle = safeFilehandle;
 
-            if (_uriStream == null)
+            if (_uriStream is null)
             {
                 GC.SuppressFinalize(this);
             }
@@ -283,7 +283,7 @@ namespace System.Windows.Media.Imaging
             {
                 decoderHandle = cachedDecoder.InternalDecoder;
             }
-            else if ((finalUri != null) && (finalUri.IsAbsoluteUri) && (stream == null) &&
+            else if ((finalUri != null) && (finalUri.IsAbsoluteUri) && (stream is null) &&
                      ((finalUri.Scheme == Uri.UriSchemeHttp) ||
                       (finalUri.Scheme == Uri.UriSchemeHttps)))
             {
@@ -688,7 +688,7 @@ namespace System.Windows.Media.Imaging
                 EnsureBuiltInDecoder();
 
                 // There should always be a codec info.
-                if (_codecInfo == null)
+                if (_codecInfo is null)
                 {
                     SafeMILHandle /* IWICBitmapDecoderInfo */ codecInfoHandle =  new SafeMILHandle();
 
@@ -714,12 +714,12 @@ namespace System.Windows.Media.Imaging
                 VerifyAccess();
                 EnsureBuiltInDecoder();
 
-                if (_frames == null)
+                if (_frames is null)
                 {
                     SetupFrames(null, null);
                 }
 
-                if (_readOnlyFrames == null)
+                if (_readOnlyFrames is null)
                 {
                     _readOnlyFrames = new ReadOnlyCollection<BitmapFrame>(_frames);
                 }
@@ -958,7 +958,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         private int GetColorContexts(ref uint numContexts, IntPtr[] colorContextPtrs)
         {
-            Invariant.Assert(colorContextPtrs == null || numContexts <= colorContextPtrs.Length);
+            Invariant.Assert(colorContextPtrs is null || numContexts <= colorContextPtrs.Length);
             
             return UnsafeNativeMethods.WICBitmapDecoder.GetColorContexts(_decoderHandle, numContexts, colorContextPtrs, out numContexts);
         }
@@ -1048,7 +1048,7 @@ namespace System.Windows.Media.Imaging
                     }
                 }
 
-                if ((bitmapStream == null) || (bitmapStream == System.IO.Stream.Null))
+                if ((bitmapStream is null) || (bitmapStream == System.IO.Stream.Null))
                 {
                     // We didn't get a stream from the pack web request, so we have
                     // to try to create one ourselves.
@@ -1216,7 +1216,7 @@ namespace System.Windows.Media.Imaging
             // or the stream is not seekable
             // using async dowload in that case simply return the original stream
             // else you download the stream
-            if (bitmapStream == null || !bitmapStream.CanSeek)
+            if (bitmapStream is null || !bitmapStream.CanSeek)
             {
                 WebRequest request = null;
 
@@ -1232,7 +1232,7 @@ namespace System.Windows.Media.Imaging
             WebRequest request = null;
             Stream bitmapStream =  stream;
             // Download only if this content is not already downloaded or stream is not seekable
-            if (bitmapStream == null || !bitmapStream.CanSeek)
+            if (bitmapStream is null || !bitmapStream.CanSeek)
             {
                 request = WpfWebRequestHelper.CreateRequest(uri);
 
@@ -1372,7 +1372,7 @@ namespace System.Windows.Media.Imaging
                         }
                     }
                     // Remove from the cache if bitmapDecoder is already been collected
-                    if (bitmapDecoder == null)
+                    if (bitmapDecoder is null)
                     {
                         ImagingCache.RemoveFromDecoderCache(uri);
                     }
@@ -1416,11 +1416,11 @@ namespace System.Windows.Media.Imaging
             }
 
 
-            if ((_uri != null) && (decoder == null) && _shouldCacheDecoder)
+            if ((_uri != null) && (decoder is null) && _shouldCacheDecoder)
             {
                 // Add this decoder to the decoder cache
                 ImagingCache.AddToDecoderCache(
-                    (_baseUri == null) ? _uri : new Uri(_baseUri, _uri),
+                    (_baseUri is null) ? _uri : new Uri(_baseUri, _uri),
                     new WeakReference(this)
                     );
             }
@@ -1473,7 +1473,7 @@ namespace System.Windows.Media.Imaging
                     bfd = frames[i] as BitmapFrameDecode;
                     bfd.UpdateDecoder(this);
                 }
-                else if (decoder == null)
+                else if (decoder is null)
                 {
                     // All frames should be frozen.
                     bfd = new BitmapFrameDecode(

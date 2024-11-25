@@ -157,7 +157,7 @@ namespace System.Windows.Xps.Serialization
             // Ensure that we have a valid GlyphRun instance
             //
             GlyphRun fontGlyphRun = (GlyphRun)value;
-            if (fontGlyphRun == null)
+            if (fontGlyphRun is null)
             {
                 throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "GlyphRun"));
             }
@@ -167,7 +167,7 @@ namespace System.Windows.Xps.Serialization
             //
             IServiceProvider resourceServiceProvider = manager.ResourcePolicy;
             XpsFontSerializationService fontService = (XpsFontSerializationService)resourceServiceProvider.GetService(typeof(XpsFontSerializationService));
-            if (fontService == null)
+            if (fontService is null)
             {
                 throw new XpsSerializationException(SR.ReachSerialization_NoFontService);
             }

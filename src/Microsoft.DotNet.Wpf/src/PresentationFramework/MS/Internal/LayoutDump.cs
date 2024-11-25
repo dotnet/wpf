@@ -949,7 +949,7 @@ namespace MS.Internal
             System.Reflection.FieldInfo fieldOfParaClient = paragraphResultType.GetField("_paraClient", 
                 System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
 
-            if (fieldOfParaClient == null)
+            if (fieldOfParaClient is null)
             {
                 return;
             }

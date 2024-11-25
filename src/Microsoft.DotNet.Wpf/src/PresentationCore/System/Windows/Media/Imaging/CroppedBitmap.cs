@@ -170,7 +170,7 @@ namespace System.Windows.Media.Imaging
 
         internal override bool IsValidForFinalizeCreation(bool throwIfInvalid)
         {
-            if (Source == null)
+            if (Source is null)
             {
                 if (throwIfInvalid)
                 {

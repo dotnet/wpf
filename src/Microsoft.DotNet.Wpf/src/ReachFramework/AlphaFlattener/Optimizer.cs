@@ -87,7 +87,7 @@ namespace Microsoft.Internal.AlphaFlattener
                             // otherwise the primitive will be clipped away.
                             Debug.Assert(geometry != null, "No geometry available for primitive");
 
-                            if (clip == null)
+                            if (clip is null)
                             {
                                 clip = geometry;
                             }
@@ -338,7 +338,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                     BrushProxy bp = gp.Brush;
 
-                    if (bp == null)
+                    if (bp is null)
                     {
                         bp = gp.Pen.StrokeBrush;
 
@@ -420,7 +420,7 @@ namespace Microsoft.Internal.AlphaFlattener
                         }
                     }
 
-                    if (home == null)
+                    if (home is null)
                     {
                         home = new Cluster();
                         transparentCluster.Add(home);

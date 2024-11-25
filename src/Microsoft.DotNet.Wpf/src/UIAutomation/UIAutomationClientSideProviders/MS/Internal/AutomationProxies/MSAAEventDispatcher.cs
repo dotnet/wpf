@@ -47,7 +47,7 @@ namespace MS.Internal.AutomationProxies
             get
             {
                 // create on demand
-                if (_dispatcher == null)
+                if (_dispatcher is null)
                 {
                     _dispatcher = new MSAAEventDispatcher();
                 }

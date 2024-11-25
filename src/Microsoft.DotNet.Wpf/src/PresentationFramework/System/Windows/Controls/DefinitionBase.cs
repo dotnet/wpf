@@ -81,7 +81,7 @@ namespace System.Windows.Controls
         /// </summary>
         internal void OnEnterParentTree()
         {
-            if (_sharedState == null)
+            if (_sharedState is null)
             {
                 //  start with getting SharedSizeGroup value.
                 //  this property is NOT inhereted which should result in better overall perf.
@@ -525,7 +525,7 @@ namespace System.Windows.Controls
                     definition._sharedState = null;
                 }
 
-                if ((definition._sharedState == null) && (sharedSizeGroupId != null))
+                if ((definition._sharedState is null) && (sharedSizeGroupId != null))
                 {
                     SharedSizeScope privateSharedSizeScope = definition.PrivateSharedSizeScope;
                     if (privateSharedSizeScope != null)
@@ -551,7 +551,7 @@ namespace System.Windows.Controls
         private static bool SharedSizeGroupPropertyValueValid(object value)
         {
             //  null is default value
-            if (value == null)
+            if (value is null)
             {
                 return (true);
             }
@@ -607,7 +607,7 @@ namespace System.Windows.Controls
                     definition._sharedState = null;
                 }
 
-                if ((definition._sharedState == null) && (privateSharedSizeScope != null))
+                if ((definition._sharedState is null) && (privateSharedSizeScope != null))
                 {
                     string sharedSizeGroup = definition.SharedSizeGroup;
                     if (sharedSizeGroup != null)
@@ -717,7 +717,7 @@ namespace System.Windows.Controls
                 Debug.Assert(sharedSizeGroup != null);
 
                 SharedSizeState sharedState = _registry[sharedSizeGroup] as SharedSizeState;
-                if (sharedState == null)
+                if (sharedState is null)
                 {
                     sharedState = new SharedSizeState(this, sharedSizeGroup);
                     _registry[sharedSizeGroup] = sharedState;
@@ -807,7 +807,7 @@ namespace System.Windows.Controls
             /// </summary>
             internal void EnsureDeferredValidation(UIElement layoutUpdatedHost)
             {
-                if (_layoutUpdatedHost == null)
+                if (_layoutUpdatedHost is null)
                 {
                     _layoutUpdatedHost = layoutUpdatedHost;
                     _layoutUpdatedHost.LayoutUpdated += _layoutUpdated;

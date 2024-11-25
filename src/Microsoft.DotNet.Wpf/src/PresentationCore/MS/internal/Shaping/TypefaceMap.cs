@@ -61,7 +61,7 @@ namespace MS.Internal.Shaping
         {
             Invariant.Assert(fontFamily != null);
 
-            _fontFamilies = fallbackFontFamily == null ?
+            _fontFamilies = fallbackFontFamily is null ?
                  new FontFamily[] { fontFamily }
                : new FontFamily[] { fontFamily, fallbackFontFamily };
 
@@ -518,7 +518,7 @@ namespace MS.Internal.Shaping
 
             // If a device font is not already specified higher up the stack, look for a device font
             // for this font family that matches the typeface style, weight, and stretch.
-            if (deviceFont == null)
+            if (deviceFont is null)
             {
                 deviceFont = fontFamily.GetDeviceFont(_canonicalStyle, _canonicalWeight, _canonicalStretch);
             }
@@ -729,7 +729,7 @@ namespace MS.Internal.Shaping
             out int                     nextValid
             )
         {
-            if (familyName == null)
+            if (familyName is null)
             {
                 return MapUnresolvedCharacters(
                     unicodeString,

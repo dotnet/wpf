@@ -67,7 +67,7 @@ namespace MS.Internal.Shaping
 
             // if client did not supply us with workspace
             // we will create our own (temporarily)
-            if (workspace == null)
+            if (workspace is null)
             {
                 workspace = new OpenTypeLayoutWorkspace();
             }

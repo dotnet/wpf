@@ -536,7 +536,7 @@ namespace System.Windows.Xps.Packaging
         void
         ConfirmSpotLocation()
         {
-            if( SpotLocation == null )
+            if( SpotLocation is null )
             {
                 SpotLocation = new SpotLocation();
             }

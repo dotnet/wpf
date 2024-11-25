@@ -68,7 +68,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         {
             get
             {
-                if (_metricEntryOptional == null)
+                if (_metricEntryOptional is null)
                 {
                     _metricEntryOptional = new MetricEntryList[] {
                         new MetricEntryList (KnownIdCache.KnownGuidBaseIndex + (uint)KnownIdCache.OriginalISFIdIndex.X,                     StylusPointPropertyInfoDefaults.X),
@@ -541,7 +541,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             // because the other block may have customized GUID_X or GUID_Y.
 
             if (null == GetMetricEntryList())
-                return (metricColl.GetMetricEntryList() == null);
+                return (metricColl.GetMetricEntryList() is null);
             
             if (null == metricColl.GetMetricEntryList()) 
                 return false;

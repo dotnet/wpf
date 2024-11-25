@@ -426,7 +426,7 @@ namespace System.Windows.Xps.Packaging
         {
             get
             {
-                if( _optionalSignedTypes == null )
+                if( _optionalSignedTypes is null )
                 {
                     _optionalSignedTypes = new Dictionary<string, string>();
                     _optionalSignedTypes[XpsS0Markup.CoreDocumentPropertiesType.OriginalString] = "";

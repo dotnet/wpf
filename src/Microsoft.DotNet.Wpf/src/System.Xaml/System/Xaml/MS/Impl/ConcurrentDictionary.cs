@@ -63,7 +63,7 @@ namespace System.xaml.MS.Impl
         public bool TryGetValue(K key, out V value)
         {
             object result = _hashtable[key];
-            if (result == null)
+            if (result is null)
             {
                 value = default(V);
                 return false;
@@ -93,7 +93,7 @@ namespace System.xaml.MS.Impl
             get
             {
                 object result = _hashtable[key];
-                if (result == null)
+                if (result is null)
                 {
                     throw new KeyNotFoundException();
                 }
@@ -153,7 +153,7 @@ namespace System.xaml.MS.Impl
             lock (_hashtable)
             {
                 object existingValue = _hashtable[key];
-                if (existingValue == null)
+                if (existingValue is null)
                 {
                     return false;
                 }
@@ -171,7 +171,7 @@ namespace System.xaml.MS.Impl
         private object CheckValue(V value)
         {
             object result = value;
-            if (result == null)
+            if (result is null)
             {
                 throw new ArgumentNullException("value");
             }

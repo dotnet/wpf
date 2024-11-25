@@ -533,7 +533,7 @@ namespace MS.Internal.Data
             int size = LeftSize;
 
             RBNode<T> node = LeftChild;
-            if (node == null)
+            if (node is null)
             {
                 node = InsertNode(0);
                 node.InsertAt(0, item);
@@ -638,7 +638,7 @@ namespace MS.Internal.Data
 
         public bool Verify(int expectedSize, bool checkSort = true)
         {
-            if (!CheckSort || Comparison == null)
+            if (!CheckSort || Comparison is null)
                 checkSort = false;
             int index = 0, size = 0;
             T maxItem = default(T);

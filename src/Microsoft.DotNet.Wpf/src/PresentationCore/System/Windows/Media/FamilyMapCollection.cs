@@ -155,7 +155,7 @@ namespace System.Windows.Media
         /// </summary>
         public bool IsReadOnly
         {
-            get { return _fontInfo == null; }
+            get { return _fontInfo is null; }
         }
 
         #endregion
@@ -276,7 +276,7 @@ namespace System.Windows.Media
             _fontInfo.PrepareToAddFamilyMap(item);
 
             // Make room for the new item.
-            if (_items == null)
+            if (_items is null)
             {
                 _items = new FontFamilyMap[InitialCapacity];
             }
@@ -367,7 +367,7 @@ namespace System.Windows.Media
 
         private void VerifyChangeable()
         {
-            if (_fontInfo == null)
+            if (_fontInfo is null)
                 throw new NotSupportedException(SR.General_ObjectIsReadOnly);
         }
 
@@ -376,7 +376,7 @@ namespace System.Windows.Media
             ArgumentNullException.ThrowIfNull(obj);
 
             FontFamilyMap familyMap = obj as FontFamilyMap;
-            if (familyMap == null)
+            if (familyMap is null)
                 throw new ArgumentException(SR.Format(SR.CannotConvertType, obj.GetType(), typeof(FontFamilyMap)));
 
             return familyMap;
@@ -428,7 +428,7 @@ namespace System.Windows.Media
                 {
                     // If there is no current item a non-generic IEnumerator should throw an exception,
                     // but a generic IEnumerator<T> is not required to.
-                    if (_current == null)
+                    if (_current is null)
                         throw new InvalidOperationException(SR.Enumerator_VerifyContext);
 
                     return _current; 

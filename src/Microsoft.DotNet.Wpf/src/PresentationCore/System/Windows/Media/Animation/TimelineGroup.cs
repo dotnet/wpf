@@ -147,7 +147,7 @@ namespace System.Windows.Media.Animation
         {
             Timeline timelineChild = child as Timeline;
 
-            if (timelineChild == null)
+            if (timelineChild is null)
             {
                 throw new ArgumentException(SR.Timing_ChildMustBeTimeline, nameof(child));
             }

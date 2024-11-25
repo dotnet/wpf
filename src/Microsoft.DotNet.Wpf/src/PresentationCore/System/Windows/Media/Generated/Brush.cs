@@ -445,11 +445,11 @@ namespace System.Windows.Media
             // if these get touched by more than one thread in the lifetime
             // of your app.  (Windows OS 
 
-            Debug.Assert(s_Transform == null || s_Transform.IsFrozen,
+            Debug.Assert(s_Transform is null || s_Transform.IsFrozen,
                 "Detected context bound default value Brush.s_Transform (See OS Bug #947272).");
 
 
-            Debug.Assert(s_RelativeTransform == null || s_RelativeTransform.IsFrozen,
+            Debug.Assert(s_RelativeTransform is null || s_RelativeTransform.IsFrozen,
                 "Detected context bound default value Brush.s_RelativeTransform (See OS Bug #947272).");
 
 

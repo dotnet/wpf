@@ -102,7 +102,7 @@ namespace System.Windows.Threading
         public bool Contains(DispatcherPriority priority) // NOTE: should be Priority
         {
             /*
-            if (priority == null || !priority.IsValid)
+            if (priority is null || !priority.IsValid)
             {
                 return false;
             }
@@ -244,7 +244,7 @@ namespace System.Windows.Threading
         private void Initialize(DispatcherPriority min, bool isMinInclusive, DispatcherPriority max, bool isMaxInclusive) // NOTE: should be Priority
         {
             /*
-            if(min == null)
+            if(min is null)
             {
                 throw new ArgumentNullException("min");
             }
@@ -265,7 +265,7 @@ namespace System.Windows.Threading
             }
 
             /*            
-            if(max == null)
+            if(max is null)
             {
                 throw new ArgumentNullException("max");
             }

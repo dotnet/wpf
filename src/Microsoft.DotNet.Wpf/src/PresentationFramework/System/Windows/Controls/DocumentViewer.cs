@@ -288,7 +288,7 @@ namespace System.Windows.Controls
             // Yes, this seems, on the surface, to be a bit redundant -- but there is a difference between an
             // "unset null" and an "explicitly set" null to the Property engine that the TextEditor looks for.
             // We check that the ContextMenu is null because we don't want to override any user-specified ContextMenus.
-            if (this.ContextMenu == null)
+            if (this.ContextMenu is null)
             {
                 this.ContextMenu = null;
             }
@@ -877,7 +877,7 @@ namespace System.Windows.Controls
         {
             // Validate the new document type
             if (!(Document is FixedDocument) && !(Document is FixedDocumentSequence)
-                && !(Document == null))
+                && !(Document is null))
             {
                 throw new NotSupportedException(SR.DocumentViewerOnlySupportsFixedDocumentSequence);
             }
@@ -1743,7 +1743,7 @@ namespace System.Windows.Controls
 
             // If the target is not a DocumentViewer we silently return (but note that
             // we have Asserted this above.)
-            if (dv == null)
+            if (dv is null)
             {
                 return;
             }
@@ -1849,7 +1849,7 @@ namespace System.Windows.Controls
 
             // If the target is not a DocumentViewer we silently return (but note that
             // we have Asserted this above.)
-            if (dv == null)
+            if (dv is null)
             {
                 return;
             }
@@ -2007,7 +2007,7 @@ namespace System.Windows.Controls
             ArgumentNullException.ThrowIfNull(data);
 
             // If a ZoomConverter doesn't exist, create one.
-            if (dv._zoomPercentageConverter == null)
+            if (dv._zoomPercentageConverter is null)
             {
                 dv._zoomPercentageConverter = new ZoomPercentageConverter();
             }
@@ -2060,7 +2060,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void CreateIDocumentScrollInfo()
         {
-            if (_documentScrollInfo == null)
+            if (_documentScrollInfo is null)
             {
                 // Construct IDocumentScrollInfo (DocumentGrid).
                 _documentScrollInfo = new DocumentGrid();
@@ -2116,7 +2116,7 @@ namespace System.Windows.Controls
             // Make sure contentHost exists.  This wouldn't be much of a DocumentViewer if it didn't,
             //   since we need someplace to throw our IDocumentScrollInfo so we can display documents.
             // Throw an exception if it doesn't exist.
-            if (contentHost == null)
+            if (contentHost is null)
             {
                 throw new NotSupportedException(SR.DocumentViewerStyleMustIncludeContentHost);
             }
@@ -2151,7 +2151,7 @@ namespace System.Windows.Controls
             // Only create and hook up the toolbar, if we found a place to put it.
             if (findHost != null)
             {
-               if( _findToolbar == null )
+               if( _findToolbar is null )
                {
                     // create the new object
                     _findToolbar = new FindToolBar();
@@ -2258,7 +2258,7 @@ namespace System.Windows.Controls
         /// </summary>
         private KeyEventArgs ProcessFindKeys(KeyEventArgs e)
         {
-            if (_findToolbar == null || Document == null)
+            if (_findToolbar is null || Document is null)
             {
                 // Short-circuit. Find isn't enabled,
                 // just exit.

@@ -117,7 +117,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     {
                                         get
                                         {
-                                            if (s_emptyCollection == null)
+                                            if (s_emptyCollection is null)
                                             {
                                                 [[instance.TypeName]]KeyFrameCollection emptyCollection = new [[instance.TypeName]]KeyFrameCollection();
                                                 
@@ -347,7 +347,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     public int Add([[instance.TypeName]]KeyFrame keyFrame)
                                     {
-                                        if (keyFrame == null)
+                                        if (keyFrame is null)
                                         {
                                             throw new ArgumentNullException("keyFrame");
                                         }
@@ -431,7 +431,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     public void Insert(int index, [[instance.TypeName]]KeyFrame keyFrame)
                                     {
-                                        if (keyFrame == null)
+                                        if (keyFrame is null)
                                         {
                                             throw new ArgumentNullException("keyFrame");
                                         }
@@ -535,7 +535,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         }
                                         set
                                         {
-                                            if (value == null)
+                                            if (value is null)
                                             {
                                                 throw new ArgumentNullException(String.Format(CultureInfo.InvariantCulture, "[[instance.TypeName]]KeyFrameCollection[{0}]", index));
                                             }

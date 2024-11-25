@@ -99,7 +99,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (this.Parent == null)
+                if (this.Parent is null)
                 {
                     return null;
                 }
@@ -279,7 +279,7 @@ namespace System.Windows.Documents
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool ShouldSerializeBlocks(XamlDesignerSerializationManager manager)
         {
-            return manager != null && manager.XmlWriter == null;
+            return manager != null && manager.XmlWriter is null;
         }
         
         #endregion

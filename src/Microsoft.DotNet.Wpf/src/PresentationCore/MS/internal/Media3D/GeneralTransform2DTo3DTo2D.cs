@@ -235,7 +235,7 @@ namespace MS.Internal.Media3D
         {
             Point[] visCorners = new Point[4];
 
-            if (_validEdgesCache == null)
+            if (_validEdgesCache is null)
             {
                 // get the points relative to the parent
                 visCorners[0] = _transform2D.Transform(new Point(_visualBounds.Left,  _visualBounds.Top));
@@ -276,7 +276,7 @@ namespace MS.Internal.Media3D
             Int32Collection triIndices = _geometry.TriangleIndices;
 
             // if positions and texture coordinates are null, we can't really find what we need so return immediately
-            if (positions == null || textureCoords == null)
+            if (positions is null || textureCoords is null)
             {
                 return new List<HitTestEdge>();
             }
@@ -308,7 +308,7 @@ namespace MS.Internal.Media3D
             Point[] triangleTexCoords = new Point[3];
 
             // switch depending on if the mesh is indexed or not
-            if (triIndices == null || triIndices.Count == 0)
+            if (triIndices is null || triIndices.Count == 0)
             {
                 int texCoordCount = textureCoords.Count;
                 

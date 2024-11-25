@@ -356,7 +356,7 @@ namespace System.Windows.Media.Effects
             WritePreamble();
             Type t = DetermineShaderConstantType(dp.PropertyType, PixelShader);
 
-            if (t == null)
+            if (t is null)
             {
                 throw new InvalidOperationException(SR.Format(SR.Effect_ShaderConstantType, dp.PropertyType.Name));
             }
@@ -482,7 +482,7 @@ namespace System.Windows.Media.Effects
         // the specified value is inserted there.  For lists of value types.
         private static void StashInPosition<T>(ref List<T?> list, int position, T value, int maxIndex, ref uint count) where T : struct
         {
-            if (list == null)
+            if (list is null)
             {
                 list = new List<T?>(maxIndex);
             }
@@ -509,7 +509,7 @@ namespace System.Windows.Media.Effects
         // the specified value is inserted there.
         private void StashSamplerDataInPosition(int position, SamplerData newSampler, int maxIndex)
         {
-            if (_samplerData == null)
+            if (_samplerData is null)
             {
                 _samplerData = new List<SamplerData?>(maxIndex);
             }
@@ -572,7 +572,7 @@ namespace System.Windows.Media.Effects
 
             if (skipOnChannelCheck || _duceResource.IsOnChannel(channel))
             {
-                if (PixelShader == null)
+                if (PixelShader is null)
                 {
                     throw new InvalidOperationException(SR.Effect_ShaderPixelShaderSet);
                 }
@@ -728,7 +728,7 @@ namespace System.Windows.Media.Effects
                                         ? ((DUCE.IResource)ss._brush).GetHandle(channel)
                                         : DUCE.ResourceHandle.Null;
 
-                                    Debug.Assert(!hBrush.IsNull || ss._brush == null, "If brush isn't null, hBrush better not be");
+                                    Debug.Assert(!hBrush.IsNull || ss._brush is null, "If brush isn't null, hBrush better not be");
 
                                     channel.AppendCommandData((byte*)&hBrush, sizeof(DUCE.ResourceHandle));
                                 }

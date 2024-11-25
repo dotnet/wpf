@@ -409,7 +409,7 @@ namespace System.Windows.Markup.Localizer
             foreach (KeyValuePair<BamlLocalizableResourceKey, BamlLocalizableResource> pair in _dictionary)
             {
                 BamlLocalizableResource resourceCopy = 
-                    pair.Value == null ?
+                    pair.Value is null ?
                     null :
                     new BamlLocalizableResource(pair.Value);
 

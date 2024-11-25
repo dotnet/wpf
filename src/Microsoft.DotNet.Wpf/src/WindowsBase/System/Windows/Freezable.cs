@@ -499,7 +499,7 @@ namespace System.Windows
             {
                 // make sure _eventStorage is not null - with ThreadStatic it appears that the second
                 // thread to access the variable will set this to null
-                if (_eventStorage == null)
+                if (_eventStorage is null)
                 {
                     _eventStorage = new EventStorage(INITIAL_EVENTSTORAGE_SIZE);
                 }
@@ -1032,7 +1032,7 @@ namespace System.Windows
 
             // It is illegal to set a DependencyObject from one Dispatcher into a owner
             // being serviced by a different Dispatcher (i.e., they need to be on
-            // the same thread or be context free (Dispatcher == null))
+            // the same thread or be context free (Dispatcher is null))
             if (owner.Dispatcher != null &&
                 child.Dispatcher != null &&
                 owner.Dispatcher != child.Dispatcher)
@@ -1388,7 +1388,7 @@ namespace System.Windows
         {
             if (Freezable_UsingSingletonHandler)
             {
-                if (calledHandlers == null)
+                if (calledHandlers is null)
                 {
                     calledHandlers = GetEventStorage();
                 }
@@ -1397,7 +1397,7 @@ namespace System.Windows
             }
             else if (Freezable_UsingHandlerList)
             {
-                if (calledHandlers == null)
+                if (calledHandlers is null)
                 {
                     calledHandlers = GetEventStorage();
                 }
@@ -2026,7 +2026,7 @@ namespace System.Windows
                 Invariant.Assert(owner != null,
                     "We should not have null owners in the ContextList/SingletonContext.");
 
-                if (property == null)
+                if (property is null)
                 {
                     // This context was not made through a DependencyProperty.  There is
                     // nothing we can verify.

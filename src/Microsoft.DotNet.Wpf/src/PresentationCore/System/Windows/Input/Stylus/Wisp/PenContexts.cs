@@ -36,7 +36,7 @@ namespace System.Windows.Input
         internal PenContexts(WispLogic stylusLogic, PresentationSource inputSource)
         {
             HwndSource hwndSource = inputSource as HwndSource;
-            if(hwndSource == null || IntPtr.Zero == (hwndSource).CriticalHandle)
+            if(hwndSource is null || IntPtr.Zero == (hwndSource).CriticalHandle)
             {
                 throw new InvalidOperationException(SR.Stylus_PenContextFailure);
             }
@@ -49,7 +49,7 @@ namespace System.Windows.Input
 
         internal void Enable()
         {
-            if (_contexts == null)
+            if (_contexts is null)
             {
                 // create contexts
                 _contexts = _stylusLogic.WispTabletDevices.CreateContexts(_inputSource.CriticalHandle, this);
@@ -321,7 +321,7 @@ namespace System.Windows.Input
                     // that have been removed from the visual tree and we haven't been notified yet of
                     // that change.  In this case just ignore this plugincollection element and go to 
                     // the next.
-                    if (commonParent == null)
+                    if (commonParent is null)
                         continue;
                     // If curV is the commonParent we find then we're done.  This new plugin should be
                     // above this one.

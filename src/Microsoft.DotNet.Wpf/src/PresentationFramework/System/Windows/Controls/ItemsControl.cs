@@ -157,7 +157,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_items == null)
+                if (_items is null)
                 {
                     CreateItemCollectionAndGenerator();
                 }
@@ -244,7 +244,7 @@ namespace System.Windows.Controls
             get { return Items.ItemsSource; }
             set
             {
-                if (value == null)
+                if (value is null)
                 {
                     ClearValue(ItemsSourceProperty);
                 }
@@ -263,7 +263,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_itemContainerGenerator == null)
+                if (_itemContainerGenerator is null)
                 {
                     CreateItemCollectionAndGenerator();
                 }
@@ -546,7 +546,7 @@ namespace System.Windows.Controls
         {
             CheckTemplateSource();
 
-            if ((_itemContainerGenerator != null) && (ItemTemplate == null))
+            if ((_itemContainerGenerator != null) && (ItemTemplate is null))
             {
                 _itemContainerGenerator.Refresh();
             }
@@ -774,7 +774,7 @@ namespace System.Windows.Controls
         {
             Helper.CheckStyleAndStyleSelector("ItemContainer", ItemContainerStyleProperty, ItemContainerStyleSelectorProperty, this);
 
-            if ((_itemContainerGenerator != null) && (ItemContainerStyle == null))
+            if ((_itemContainerGenerator != null) && (ItemContainerStyle is null))
             {
                 _itemContainerGenerator.Refresh();
             }
@@ -1166,7 +1166,7 @@ namespace System.Windows.Controls
         public static ItemsControl ItemsControlFromItemContainer(DependencyObject container)
         {
             UIElement ui = container as UIElement;
-            if (ui == null)
+            if (ui is null)
                 return null;
 
             // ui appeared in items collection
@@ -1237,7 +1237,7 @@ namespace System.Windows.Controls
             if (element.ContainsValue(ItemContainerGenerator.ItemForItemContainerProperty))
             {
                 // does the element belong to the itemsControl?
-                if (itemsControl == null || itemsControl == ItemsControlFromItemContainer(element))
+                if (itemsControl is null || itemsControl == ItemsControlFromItemContainer(element))
                 {
                     return true;
                 }
@@ -1421,7 +1421,7 @@ namespace System.Windows.Controls
             // to clean up anything they may have done during Prepare (bug 1561206).
 
             GroupItem groupItem = container as GroupItem;
-            if (groupItem == null)
+            if (groupItem is null)
             {
                 ClearContainerForItemOverride(container, item);
 
@@ -1461,7 +1461,7 @@ namespace System.Windows.Controls
             // without having a logical parent (e.g. via ItemsSource) and without
             // having been generated yet. HasItem indicates if anything has been generated.
             DependencyObject parent = LogicalTreeHelper.GetParent(container);
-            if (parent == null)
+            if (parent is null)
             {
                 return IsItemItsOwnContainerOverride(container) &&
                     HasItems && Items.Contains(container);
@@ -1485,7 +1485,7 @@ namespace System.Windows.Controls
             }
 
             // b. lookup in GroupStyle list
-            if (result == null)
+            if (result is null)
             {
                 // use last entry for all higher levels
                 if (level >= GroupStyle.Count)
@@ -1815,7 +1815,7 @@ namespace System.Windows.Controls
         internal object OnBringItemIntoView(object arg)
         {
             ItemInfo info = arg as ItemInfo;
-            if (info == null)
+            if (info is null)
             {
                 info = NewItemInfo(arg);
             }
@@ -1889,7 +1889,7 @@ namespace System.Windows.Controls
             out FrameworkElement container)
         {
             container = null;
-            if (ItemsHost == null)
+            if (ItemsHost is null)
             {
                 return;
             }
@@ -1928,7 +1928,7 @@ namespace System.Windows.Controls
             FocusNavigationDirection direction,
             ItemNavigateArgs itemNavigateArgs)
         {
-            if (ItemsHost == null)
+            if (ItemsHost is null)
             {
                 return false;
             }
@@ -1968,8 +1968,8 @@ namespace System.Windows.Controls
             //
             // If there is no starting item, just navigate to the first item.
             //
-            if (startingItem == null &&
-                (startingElement == null || startingElement == this))
+            if (startingItem is null &&
+                (startingElement is null || startingElement == this))
             {
                 return NavigateToStartInternal(itemNavigateArgs, shouldFocus, out container);
             }
@@ -1986,7 +1986,7 @@ namespace System.Windows.Controls
                 // actually visually connected.  In this case we should use
                 // the ItemsHost as well.
                 //
-                if (startingElement == null || !ItemsHost.IsAncestorOf(startingElement))
+                if (startingElement is null || !ItemsHost.IsAncestorOf(startingElement))
                 {
                     //
                     // Bug 991220 makes it so that we have to start from the ScrollHost.
@@ -2190,7 +2190,7 @@ namespace System.Windows.Controls
         {
             container = null;
 
-            if (ItemsHost == null)
+            if (ItemsHost is null)
             {
                 return;
             }
@@ -2236,7 +2236,7 @@ namespace System.Windows.Controls
             FocusNavigationDirection direction,
             ItemNavigateArgs itemNavigateArgs)
         {
-            if (ItemsHost == null)
+            if (ItemsHost is null)
             {
                 return false;
             }
@@ -2276,8 +2276,8 @@ namespace System.Windows.Controls
             //
             // Move to the last guy on the page if we're not already there.
             //
-            if (startingItem == null &&
-                (startingElement == null || startingElement == this))
+            if (startingItem is null &&
+                (startingElement is null || startingElement == this))
             {
                 return NavigateToFirstItemOnCurrentPage(startingItem, direction, itemNavigateArgs, shouldFocus, out container);
             }
@@ -2496,7 +2496,7 @@ namespace System.Windows.Controls
 
         private FrameworkElement FindEndFocusableLeafContainer(Panel itemsHost, bool last)
         {
-            if (itemsHost == null)
+            if (itemsHost is null)
             {
                 return null;
             }
@@ -2611,7 +2611,7 @@ namespace System.Windows.Controls
                     // If the UI is non-null it must meet some minimum requirements to consider it for
                     // navigation (focusable, enabled).  If it has no UI we can make no judgements about it
                     // at this time, so it is navigable.
-                    if (container == null || Keyboard.IsFocusable(container))
+                    if (container is null || Keyboard.IsFocusable(container))
                     {
                         foundIndex = startIndex;
                         foundContainer = container;
@@ -2675,7 +2675,7 @@ namespace System.Windows.Controls
             if (index >= 0)
             {
                 container = ItemContainerGenerator.ContainerFromIndex(index) as FrameworkElement;
-                if (container == null)
+                if (container is null)
                 {
                     // In case of VirtualizingPanel, the container might not have been
                     // generated yet. Hence try generating it.
@@ -2866,7 +2866,7 @@ namespace System.Windows.Controls
                     returnItem = GetEncapsulatingItem(currentElement, out firstElement);
                 }
 
-                if (currentElement == null || returnItem == DependencyProperty.UnsetValue)
+                if (currentElement is null || returnItem == DependencyProperty.UnsetValue)
                 {
                     // Try the startingElement as a candidate.
                     ElementViewportPosition elementPosition = GetElementViewportPosition(viewportElement,
@@ -2900,7 +2900,7 @@ namespace System.Windows.Controls
             //       items will always be within the bounding box of the ItemsHost,
             //       and we want to know if you can actually see the element.
             FrameworkElement viewPort = ScrollHost;
-            if (viewPort == null)
+            if (viewPort is null)
             {
                 viewPort = ItemsHost;
             }
@@ -2927,7 +2927,7 @@ namespace System.Windows.Controls
         {
             FrameworkElement container = ItemContainerGenerator.ContainerFromItem(item) as FrameworkElement;
 
-            if (container == null)
+            if (container is null)
             {
                 return false;
             }
@@ -2998,12 +2998,12 @@ namespace System.Windows.Controls
             elementRect = Rect.Empty;
 
             // If there's no ScrollHost or ItemsHost, the element is not on the page
-            if (viewPort == null)
+            if (viewPort is null)
             {
                 return ElementViewportPosition.None;
             }
 
-            if (element == null || !viewPort.IsAncestorOf(element))
+            if (element is null || !viewPort.IsAncestorOf(element))
             {
                 return ElementViewportPosition.None;
             }
@@ -3214,7 +3214,7 @@ namespace System.Windows.Controls
                 else if (itemsControl._focusedInfo != null)
                 {
                     UIElement itemContainer = itemsControl._focusedInfo.Container as UIElement;
-                    if (itemContainer == null ||
+                    if (itemContainer is null ||
                         !Helper.IsAnyAncestorOf(itemContainer, focusedElement))
                     {
                         itemsControl._focusedInfo = null;
@@ -3256,7 +3256,7 @@ namespace System.Windows.Controls
             {
                 get
                 {
-                    if (_empty == null)
+                    if (_empty is null)
                     {
                         _empty = new ItemNavigateArgs(null, ModifierKeys.None);;
                     }
@@ -3318,7 +3318,7 @@ namespace System.Windows.Controls
             {
                 if (!ReadControlFlag(ControlBoolFlags.ScrollHostValid))
                 {
-                    if (_itemsHost == null)
+                    if (_itemsHost is null)
                     {
                         return null;
                     }
@@ -3501,7 +3501,7 @@ namespace System.Windows.Controls
             Style style = ItemContainerStyle;
 
             // no ItemContainerStyle set, try ItemContainerStyleSelector
-            if (style == null)
+            if (style is null)
             {
                 if (ItemContainerStyleSelector != null)
                 {
@@ -3605,7 +3605,7 @@ namespace System.Windows.Controls
         internal DependencyObject ContainerFromItemInfo(ItemInfo info)
         {
             DependencyObject container = info.Container;
-            if (container == null)
+            if (container is null)
             {
                 if (info.Index >= 0)
                 {
@@ -3641,7 +3641,7 @@ namespace System.Windows.Controls
             foreach (ItemInfo info in list)
             {
                 DependencyObject container = info.Container;
-                if (container == null)
+                if (container is null)
                 {
                     resolvePendingContainers = true;
                 }
@@ -3675,7 +3675,7 @@ namespace System.Windows.Controls
                 foreach (ItemInfo info in list)
                 {
                     DependencyObject container = info.Container;
-                    if (container == null)
+                    if (container is null)
                     {
                         int index = info.Index;
                         if (index >= 0)
@@ -3879,7 +3879,7 @@ namespace System.Windows.Controls
                     return true;
 
                 ItemInfo that = o as ItemInfo;
-                if (that == null)
+                if (that is null)
                     return false;
 
                 return Equals(that, matchUnresolved:false);
@@ -3913,7 +3913,7 @@ namespace System.Windows.Controls
                                 this.Index == that.Index)   // ~Sentinel => ignore negative indices
                      :  (this.Container == SentinelContainer) ||    // sentinel matches non-sentinel
                         (that.Container == SentinelContainer) ||
-                        (   (this.Container == null || that.Container == null) &&   // null matches non-null
+                        (   (this.Container is null || that.Container is null) &&   // null matches non-null
                             (this.Index < 0 || that.Index < 0 ||                    // provided that indices match
                                 this.Index == that.Index));
             }
@@ -3931,7 +3931,7 @@ namespace System.Windows.Controls
             // update container and index with current values
             internal ItemInfo Refresh(ItemContainerGenerator generator)
             {
-                if (Container == null && Index < 0)
+                if (Container is null && Index < 0)
                 {
                     Container = generator.ContainerFromItem(Item);
                 }
@@ -3941,7 +3941,7 @@ namespace System.Windows.Controls
                     Index = generator.IndexFromContainer(Container);
                 }
 
-                if (Container == null && Index >= 0)
+                if (Container is null && Index >= 0)
                 {
                     Container = generator.ContainerFromIndex(Index);
                 }

@@ -56,7 +56,7 @@ namespace System.Windows
         ///     Thread.  It is the expression's responsibility to handle these
         ///     correctly, typically by marshalling them to the right Thread.
         ///     Note:  The check is only suppressed when the source isn't owned
-        ///     by any Thread (i.e. source.Dispatcher == null).
+        ///     by any Thread (i.e. source.Dispatcher is null).
         /// </remarks>
         SupportsUnboundSources
     }

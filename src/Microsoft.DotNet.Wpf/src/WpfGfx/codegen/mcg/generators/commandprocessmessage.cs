@@ -183,7 +183,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 McgField field = entry.Field;
                 McgResource resource = field.Type as McgResource;
 
-                if (resource == null || resource.IsValueType || resource.IsCollection) 
+                if (resource is null || resource.IsValueType || resource.IsCollection) 
                 {
                     continue;
                 }
@@ -199,7 +199,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                     TYPE_[[resource.Name.ToUpper()]]
                                     ));
 
-                            if (pResource == NULL) 
+                            if (pResource is null) 
                             {
                                 RIP("Invalid resource handle (expected a [[resource.DuceClass]]).");
                                 IFC(WGXERR_UCE_MALFORMEDPACKET);
@@ -321,7 +321,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                 [[command.TargetResourceType]]
                                 ));
 
-                        if (pResource == NULL)
+                        if (pResource is null)
                         {
                             RIP("Invalid resource handle.");
                             IFC(WGXERR_UCE_MALFORMEDPACKET);

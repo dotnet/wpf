@@ -32,13 +32,13 @@ namespace System.Xaml.Schema
         {
             Debug.Assert(getter != null || setter != null);
 
-            if (getter == null && setter == null)
+            if (getter is null && setter is null)
             {
                 throw new XamlSchemaException(SR.Format(SR.SetOnlyProperty, declaringType.Name, name));
             }
 
             _isPublic = (getter != null) ? getter.IsPublic : setter.IsPublic;
-            _isReadOnly = (setter == null);
+            _isReadOnly = (setter is null);
             _isStatic = false;
             _isAttachable = true;
             _isEvent = false;
@@ -49,7 +49,7 @@ namespace System.Xaml.Schema
 
         protected override Type LookupSystemTypeOfProperty()
         {
-            if (_systemTypeOfProperty == null)
+            if (_systemTypeOfProperty is null)
             {
                 _systemTypeOfProperty = PrivateLookupSystemTypeOfProperty;
             }

@@ -90,7 +90,7 @@ namespace System.IO.Packaging
 
                 // If we don't find anything in the preloaded packages, look into the PackageStore
                 bool cachedPackageIsFromPublicStore = false;
-                if (c == null)
+                if (c is null)
                 {
                     cachedPackageIsThreadSafe = false;          // always assume PackageStore packages are not thread-safe
                     cachedPackageIsFromPublicStore = true;

@@ -185,7 +185,7 @@ namespace System.Windows
             }
 
             // Build tree of factories
-            if (_firstChild == null)
+            if (_firstChild is null)
             {
                 _firstChild = child;
                 _lastChild = child;
@@ -248,10 +248,10 @@ namespace System.Windows
                 resourceKey = dynamicResourceExtension.ResourceKey;
             }
 
-            if (resourceKey == null)
+            if (resourceKey is null)
             {
                 TemplateBindingExtension templateBinding = value as TemplateBindingExtension;
-                if (templateBinding == null)
+                if (templateBinding is null)
                 {
                     UpdatePropertyValueList( dp, PropertyValueType.Set, value );
                 }
@@ -323,7 +323,7 @@ namespace System.Windows
                 throw new ArgumentException(SR.HandlerTypeIllegal);
             }
 
-            if (_eventHandlersStore == null)
+            if (_eventHandlersStore is null)
             {
                 _eventHandlersStore = new EventHandlersStore();
             }
@@ -550,7 +550,7 @@ namespace System.Windows
 
         private void Seal()
         {
-            if (_type == null && _text == null)
+            if (_type is null && _text is null)
             {
                 throw new InvalidOperationException(SR.NullTypeIllegal);
             }
@@ -656,7 +656,7 @@ namespace System.Windows
                 // to what happens when adding a child to a visual collection.
                 IAddChild addChildParent = parent as IAddChild;
 
-                if (addChildParent == null)
+                if (addChildParent is null)
                 {
                     throw new InvalidOperationException(SR.Format(SR.TypeMustImplementIAddChild,
                                                          parent.GetType().Name));
@@ -750,7 +750,7 @@ namespace System.Windows
                         // Child nodes with no _childID (hence no _childIndex) are
                         //  tracked on a separate chain that will be appended to the
                         //  main chain for cleanup purposes.
-                        if (noChildIndexChildren == null)
+                        if (noChildIndexChildren is null)
                         {
                             noChildIndexChildren = new List<DependencyObject>(4);
                         }
@@ -957,7 +957,7 @@ namespace System.Windows
             if( childFactory != null )
             {
                 iAddChild = frameworkObject.DO as IAddChild;
-                if (iAddChild == null)
+                if (iAddChild is null)
                 {
                     throw new InvalidOperationException(SR.Format(SR.TypeMustImplementIAddChild,
                                                          frameworkObject.DO.GetType().Name));
@@ -1031,7 +1031,7 @@ namespace System.Windows
                 // Child nodes with no _childID (hence no _childIndex) are
                 //  tracked on a separate chain that will be appended to the
                 //  main chain for cleanup purposes.
-                if (noChildIndexChildren == null)
+                if (noChildIndexChildren is null)
                 {
                     noChildIndexChildren = new List<DependencyObject>(4);
                 }
@@ -1125,7 +1125,7 @@ namespace System.Windows
             }
 
             IAddChild  addChildParent = parent as IAddChild;
-            if (addChildParent == null)
+            if (addChildParent is null)
             {
                 throw new InvalidOperationException(SR.Format(SR.CannotHookupFCERoot,
                                                           type.Name));
@@ -1189,7 +1189,7 @@ namespace System.Windows
                     DependencyProperty dpContentStringFormat = DependencyProperty.FromName($"{prefix}StringFormat", targetType);
 
                     // if desired source for Content doesn't exist, report an error
-                    if (dpContent == null && o != DependencyProperty.UnsetValue)
+                    if (dpContent is null && o != DependencyProperty.UnsetValue)
                     {
                         throw new InvalidOperationException(SR.Format(SR.MissingContentSource, prefix, targetType));
                     }

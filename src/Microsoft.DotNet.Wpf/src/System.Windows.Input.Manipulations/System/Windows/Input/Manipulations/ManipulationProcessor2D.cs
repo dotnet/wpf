@@ -274,7 +274,7 @@ namespace System.Windows.Input.Manipulations
         public void ProcessManipulators(Int64 timestamp, IEnumerable<Manipulator2D> manipulators)
         {
             ManipulationSequence manipulation = this.currentManipulation;
-            if (manipulation == null)
+            if (manipulation is null)
             {
                 manipulation = new ManipulationSequence();
                 manipulation.Started += OnManipulationStarted;
@@ -328,7 +328,7 @@ namespace System.Windows.Input.Manipulations
         {
             // A new manipulation has begun, so make it the current one.
             Debug.Assert(sender != null);
-            Debug.Assert(this.currentManipulation == null, "Manipulation was already in progress");
+            Debug.Assert(this.currentManipulation is null, "Manipulation was already in progress");
             this.currentManipulation = (ManipulationSequence)sender;
 
             // We need to register for the Delta and Completed events on the manipulation,

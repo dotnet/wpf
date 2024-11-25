@@ -336,11 +336,11 @@ namespace System.Windows.Ink
         public void Erase(IEnumerable<Point> eraserPath, StylusShape eraserShape)
         {
             // Check the input parameters
-            if (eraserShape == null)
+            if (eraserShape is null)
             {
                 throw new System.ArgumentNullException(SR.SCEraseShape);
             }
-            if (eraserPath == null)
+            if (eraserPath is null)
             {
                 throw new System.ArgumentNullException(SR.SCErasePath);
             }

@@ -88,7 +88,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return (_ResultStart == null) ? -1 : _offset;
+                return (_ResultStart is null) ? -1 : _offset;
             }
         }
 
@@ -104,7 +104,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return (_ResultStart == null) ? -1 : _length;
+                return (_ResultStart is null) ? -1 : _length;
             }
         }
 
@@ -125,7 +125,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return (_CompositionStart == null) ? -1 : _offset;
+                return (_CompositionStart is null) ? -1 : _offset;
             }
         }
 
@@ -141,7 +141,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return (_CompositionStart == null) ? -1 : _length;
+                return (_CompositionStart is null) ? -1 : _length;
             }
         }
 
@@ -204,8 +204,8 @@ namespace System.Windows.Documents
 
             // We must cache integer offsets -- public listeners won't expect
             // them to float like TextPointers if the document changes.
-            _offset = (_resultStart == null) ? -1 : _resultStart.Offset;
-            _length = (_resultStart == null) ? -1 : _resultStart.GetOffsetToPosition(_resultEnd);
+            _offset = (_resultStart is null) ? -1 : _resultStart.Offset;
+            _length = (_resultStart is null) ? -1 : _resultStart.GetOffsetToPosition(_resultEnd);
         }
 
         // Set composition string to TextComposition.
@@ -228,8 +228,8 @@ namespace System.Windows.Documents
 
             // We must cache integer offsets -- public listeners won't expect
             // them to float like TextPointers if the document changes.
-            _offset = (_compositionStart == null) ? -1 : _compositionStart.Offset;
-            _length = (_compositionStart == null) ? -1 : _compositionStart.GetOffsetToPosition(_compositionEnd);
+            _offset = (_compositionStart is null) ? -1 : _compositionStart.Offset;
+            _length = (_compositionStart is null) ? -1 : _compositionStart.GetOffsetToPosition(_compositionEnd);
         }
 
         //------------------------------------------------------

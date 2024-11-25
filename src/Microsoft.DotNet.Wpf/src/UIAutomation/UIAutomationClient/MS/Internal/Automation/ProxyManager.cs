@@ -66,13 +66,13 @@ namespace MS.Internal.Automation
             
             string typeName = assemblyName.Name + ".UIAutomationClientSideProviders";
             Type t = a.GetType( typeName );
-            if( t == null )
+            if( t is null )
             {
                 throw new ProxyAssemblyNotLoadedException(SR.Format(SR.CouldNotFindType0InAssembly1, typeName, assemblyName));
             }
 
             FieldInfo fi = t.GetField("ClientSideProviderDescriptionTable", BindingFlags.Static | BindingFlags.Public);
-            if (fi == null || fi.FieldType !=  typeof(ClientSideProviderDescription[]))
+            if (fi is null || fi.FieldType !=  typeof(ClientSideProviderDescription[]))
             {
                 throw new ProxyAssemblyNotLoadedException(SR.Format(SR.CouldNotFindRegisterMethodOnType0InAssembly1, typeName, assemblyName));
             }
@@ -205,7 +205,7 @@ namespace MS.Internal.Automation
         internal static IRawElementProviderSimple GetNonClientProvider( IntPtr hwnd )
         {
             ClientSideProviderFactoryCallback nonClientFactory = ProxyManager.NonClientProxyFactory;
-            if( nonClientFactory == null )
+            if( nonClientFactory is null )
                 return null;
 
             return nonClientFactory( hwnd, 0, UnsafeNativeMethods.OBJID_CLIENT );
@@ -215,7 +215,7 @@ namespace MS.Internal.Automation
         internal static IRawElementProviderSimple GetUser32FocusedMenuProvider( IntPtr hwnd )
         {
             ClientSideProviderFactoryCallback menuFactory = ProxyManager.User32FocusedMenuProxyFactory;
-            if( menuFactory == null )
+            if( menuFactory is null )
                 return null;
 
             return menuFactory( hwnd, 0, UnsafeNativeMethods.OBJID_CLIENT );
@@ -505,7 +505,7 @@ namespace MS.Internal.Automation
 
             // If we don't have a proxy for the class try to match the real class 
             string baseClassName = null;
-            if (proxy == null)
+            if (proxy is null)
             {
                 baseClassName = GetBaseClassName(hwnd);
                 if (baseClassName == className)
@@ -522,11 +522,11 @@ namespace MS.Internal.Automation
             }
 
             // If we don't have a proxy yet look for a partial match if there are any
-            if (proxy == null && _partialClassHandlers.Count > 0)
+            if (proxy is null && _partialClassHandlers.Count > 0)
             {
                 proxy = FindProxyInEntryOrArrayList(ProxyScoping.PartialMatchApparentClassName, _partialClassHandlers, ref imageName, hwnd, idChild, idObject, className);
 
-                if (proxy == null && !String.IsNullOrEmpty(baseClassName))
+                if (proxy is null && !String.IsNullOrEmpty(baseClassName))
                 {
                     proxy = FindProxyInEntryOrArrayList(ProxyScoping.PartialMatchRealClassName, _partialClassHandlers, ref imageName, hwnd, idChild, idObject, baseClassName);
                 }
@@ -534,13 +534,13 @@ namespace MS.Internal.Automation
             
             // There is no match yet look for entry that just specified an image name
             // this is like a fallback proxy for a particular image
-            if( proxy == null )
+            if( proxy is null )
             {
                 proxy = FindProxyFromImageFallback(ref imageName, hwnd, idChild, idObject);
             }
 
             // use the fallback proxy if there is one               
-            if (proxy == null)
+            if (proxy is null)
             {
                 proxy = FindProxyInEntryOrArrayList(ProxyScoping.FallbackHandlers, _fallbackHandlers, ref imageName, hwnd, idChild, idObject, null);
             }
@@ -563,7 +563,7 @@ namespace MS.Internal.Automation
             {
                 // Null and Empty string mean different things here.
 #pragma warning suppress 6507
-                if (imageName == null)
+                if (imageName is null)
                     imageName = GetImageName(hwnd);
 
                 // Null and Empty string mean different things here.
@@ -587,11 +587,11 @@ namespace MS.Internal.Automation
         // This just handles the arraylist iteration, and calls through to GetProxyFromEntry to do the actual entry checking.
         static private IRawElementProviderSimple FindProxyInEntryOrArrayList(ProxyScoping findType, object entryOrArrayList, ref string imageName, NativeMethods.HWND hwnd, int idChild, int idObject, string classNameForPartialMatch)
         {
-            if (entryOrArrayList == null)
+            if (entryOrArrayList is null)
                 return null;
 
             ArrayList array = entryOrArrayList as ArrayList;
-            if (array == null)
+            if (array is null)
             {
                 return GetProxyFromEntry(findType, entryOrArrayList, ref imageName, hwnd, idChild, idObject, classNameForPartialMatch);
             }
@@ -649,12 +649,12 @@ namespace MS.Internal.Automation
 
                 // Get the image name if necessary...
 #pragma warning suppress 6507 // Null and Empty string mean different things here.
-                if (imageName == null && pi.ImageName != null)
+                if (imageName is null && pi.ImageName != null)
                 {
                     imageName = GetImageName(hwnd);
                 }
 
-                if (pi.ImageName == null || pi.ImageName == imageName)
+                if (pi.ImageName is null || pi.ImageName == imageName)
                 {
                     // Check if we have a match for this entry...
                     switch (findType)
@@ -693,7 +693,7 @@ namespace MS.Internal.Automation
             }
 
             // Second part: did we get a match? If so, use the factory callback to obtain an instance...
-            if (factoryCallback == null)
+            if (factoryCallback is null)
                 return null;
 
             // if we get an exception creating a proxy just don't create the proxy and let the UIAutomation default proxy be used
@@ -744,11 +744,11 @@ namespace MS.Internal.Automation
                     // fall through to add to table as usual, that ensures that it appears in a 'get' operation.
                 }
 
-                if( pi.ClassName == null && pi.ImageName == null )
+                if( pi.ClassName is null && pi.ImageName is null )
                 {
                     _fallbackHandlers.Insert(0, pi.ClientSideProviderFactoryCallback);
                 }
-                else if ( pi.ClassName == null )
+                else if ( pi.ClassName is null )
                 {
                     AddToHashTable(_imageOnlyHandlers, pi.ImageName, pi.ClientSideProviderFactoryCallback);
                 }
@@ -766,14 +766,14 @@ namespace MS.Internal.Automation
         private static void AddToHashTable( Hashtable table, string key, object data )
         {
             object o = table[ key ];
-            if( o == null )
+            if( o is null )
             {
                 table.Add( key, data );
             }
             else
             {
                 ArrayList l = o as ArrayList;
-                if( l == null )
+                if( l is null )
                 {
                     l = new ArrayList();
                     l.Insert( 0, o );

@@ -224,7 +224,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private static object CoerceQuickAccessToolBarImageSource(DependencyObject d, object baseValue)
         {
-            if (baseValue == null)
+            if (baseValue is null)
             {
                 return ((RibbonMenuItem)d).ImageSource;
             }
@@ -860,7 +860,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                             }
                             handled = true;
                         }
-                        else if (_ribbonCurrentSelection == null)
+                        else if (_ribbonCurrentSelection is null)
                         {
                             if (e.Key == Key.Right)
                             {
@@ -1118,7 +1118,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             }
             else
             {
-                if (_openSubmenuTimer == null)
+                if (_openSubmenuTimer is null)
                 {
                     _openSubmenuTimer = new DispatcherTimer(DispatcherPriority.Normal);
                     _openSubmenuTimer.Tick += (EventHandler)delegate(object sender, EventArgs e)
@@ -1145,7 +1145,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             }
             else
             {
-                if (_closeSubmenuTimer == null)
+                if (_closeSubmenuTimer is null)
                 {
                     _closeSubmenuTimer = new DispatcherTimer(DispatcherPriority.Normal);
                     _closeSubmenuTimer.Tick += (EventHandler)delegate(object sender, EventArgs e)
@@ -1333,7 +1333,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             _screenBounds = RibbonDropDownHelper.GetScreenBounds(_itemsPresenter, _popup);
 
             // Also cache the PopupRoot if opened for the first time
-            if (_popupRoot == null && _itemsPresenter != null)
+            if (_popupRoot is null && _itemsPresenter != null)
             {
                 _popupRoot = TreeHelper.FindVisualRoot(_itemsPresenter) as UIElement;
             }

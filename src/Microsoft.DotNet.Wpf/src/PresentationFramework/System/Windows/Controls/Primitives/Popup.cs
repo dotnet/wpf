@@ -195,7 +195,7 @@ namespace System.Windows.Controls.Primitives
             //
 
             List<Popup> registeredPopups = RegisteredPopupsField.GetValue(placementTarget);
-            if (registeredPopups == null)
+            if (registeredPopups is null)
             {
                 registeredPopups = new List<Popup>()
                 {
@@ -253,7 +253,7 @@ namespace System.Windows.Controls.Primitives
             {
                 UnregisterPopupFromPlacementTarget(this, oldValue);
 
-                if (newValue == null && VisualTreeHelper.GetParent(this) == null)
+                if (newValue is null && VisualTreeHelper.GetParent(this) is null)
                 {
                     TreeWalkHelper.InvalidateOnTreeChange(this, null, oldValue, false);
                 }
@@ -261,7 +261,7 @@ namespace System.Windows.Controls.Primitives
             if (newValue != null)
             {
                 //Only register with PlacementTarget if we aren't in a tree
-                if (VisualTreeHelper.GetParent(this) == null)
+                if (VisualTreeHelper.GetParent(this) is null)
                 {
                     RegisterPopupWithPlacementTarget(this, newValue);
 
@@ -350,7 +350,7 @@ namespace System.Windows.Controls.Primitives
             Popup popup = (Popup)d;
 
             // This is actually the current state and not necessary the desired state (i.e. old value)
-            bool currentVisible = (popup._secHelper.IsWindowAlive() && (popup._asyncDestroy == null)) || (popup._asyncCreate != null);
+            bool currentVisible = (popup._secHelper.IsWindowAlive() && (popup._asyncDestroy is null)) || (popup._asyncCreate != null);
             bool visible = (bool) e.NewValue;
 
             if (visible != currentVisible)
@@ -372,7 +372,7 @@ namespace System.Windows.Controls.Primitives
                     if (popup._secHelper.IsWindowAlive())
                     {
                         // Close the popup when it is unloaded from the visual tree
-                        if (CloseOnUnloadedHandler == null)
+                        if (CloseOnUnloadedHandler is null)
                         {
                             CloseOnUnloadedHandler = new RoutedEventHandler(CloseOnUnloaded);
                         }
@@ -385,7 +385,7 @@ namespace System.Windows.Controls.Primitives
                     // The popup wants to hide
                     popup.CancelAsyncCreate();
 
-                    if (popup._secHelper.IsWindowAlive() && (popup._asyncDestroy == null))
+                    if (popup._secHelper.IsWindowAlive() && (popup._asyncDestroy is null))
                     {
                         // The popup window still exists, get rid of it
                         // There are also no other async destroy requests
@@ -975,7 +975,7 @@ namespace System.Windows.Controls.Primitives
             object logicalParent = LogicalTreeHelper.GetParent(element);
 
             // If there's no logical parent, we better not have a visual parent
-            if (logicalParent == null && VisualTreeHelper.GetParent(element) != null)
+            if (logicalParent is null && VisualTreeHelper.GetParent(element) != null)
             {
                 return false;
             }
@@ -1108,7 +1108,7 @@ namespace System.Windows.Controls.Primitives
                     // When we have capture we will get all mouse button up/down messages.
                     // We should close if the press was outside.  The MouseButtonEventArgs don't tell whether we get this
                     // message because we have capture or if it was legit, so we have to do a hit test.
-                    if (_popupRoot.InputHitTest(e.GetPosition(_popupRoot)) == null)
+                    if (_popupRoot.InputHitTest(e.GetPosition(_popupRoot)) is null)
                     {
                         // The hit test didn't find any element; that means the click happened outside the popup.
                         SetCurrentValueInternal(IsOpenProperty, BooleanBoxes.FalseBox);
@@ -1159,7 +1159,7 @@ namespace System.Windows.Controls.Primitives
                     capturedElement = null;
                 }
 
-                if (capturedElement == null)
+                if (capturedElement is null)
                 {
                     // When the mouse is not already captured, we will consider the following:
                     // In all cases but Modeless, we want the popup and subtree to receive
@@ -1180,7 +1180,7 @@ namespace System.Windows.Controls.Primitives
                 // Only give up capture if we have it (someone may have taken it from us).
                 if (Mouse.Captured == _popupRoot)
                 {
-                    if (parentPopupRoot == null)
+                    if (parentPopupRoot is null)
                     {
                         Mouse.Capture(null);
                     }
@@ -1222,7 +1222,7 @@ namespace System.Windows.Controls.Primitives
                 //
                 // Note we do not reestablish capture if we are losing capture
                 // ourselves.
-                bool reestablishCapture = e.OriginalSource != root && Mouse.Captured == null && MS.Win32.SafeNativeMethods.GetCapture() == IntPtr.Zero;
+                bool reestablishCapture = e.OriginalSource != root && Mouse.Captured is null && MS.Win32.SafeNativeMethods.GetCapture() == IntPtr.Zero;
 
                 if(reestablishCapture)
                 {
@@ -1237,7 +1237,7 @@ namespace System.Windows.Controls.Primitives
                     }
 
                     PopupRoot newRoot = Mouse.Captured as PopupRoot;
-                    Popup newPopup = (newRoot == null) ? null : newRoot.Parent as Popup;
+                    Popup newPopup = (newRoot is null) ? null : newRoot.Parent as Popup;
                     bool childPopupTookCapture = newPopup != null && root != null &&
                         root == ParentPopupRootField.GetValue(newPopup);
 
@@ -1289,7 +1289,7 @@ namespace System.Windows.Controls.Primitives
         void IAddChild.AddChild(Object value)
         {
             UIElement element = value as UIElement;
-            if (element == null && value != null)
+            if (element is null && value != null)
             {
                 throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(UIElement)), "value");
             }
@@ -1331,7 +1331,7 @@ namespace System.Windows.Controls.Primitives
             // In the case that the Popup has a TemplatedParent we don't want
             // to block reverse inheritance because the Popup is considered
             // part of that tree.
-            return this.TemplatedParent == null;
+            return this.TemplatedParent is null;
         }
 
         /// <summary>
@@ -1346,7 +1346,7 @@ namespace System.Windows.Controls.Primitives
         {
             // If we are in the ether or otherwise the root of the tree and there is a
             // PlacementTarget, then send the event route over there.
-            if (Parent == null) // We already know we don't have a visual parent, check logical as well
+            if (Parent is null) // We already know we don't have a visual parent, check logical as well
             {
                 UIElement placementTarget = PlacementTarget;
                 // Use the placement target as the logical parent while the popup is open
@@ -1365,7 +1365,7 @@ namespace System.Windows.Controls.Primitives
             // input events to our model parent (the placement target)
             // Except for LostMouseCaptureEvents needed for menu/combobox subcapture
 
-            return Parent == null &&
+            return Parent is null &&
                 e.RoutedEvent != Mouse.LostMouseCaptureEvent;
         }
 
@@ -1378,7 +1378,7 @@ namespace System.Windows.Controls.Primitives
             {
                 object content = Child;
 
-                if (content == null)
+                if (content is null)
                 {
                     return EmptyEnumerator.Instance;
                 }
@@ -1432,7 +1432,7 @@ namespace System.Windows.Controls.Primitives
         {
             Visual targetVisual = PlacementTarget;
 
-            if (targetVisual == null)
+            if (targetVisual is null)
             {
                 targetVisual = VisualTreeHelper.GetContainingVisual2D(VisualTreeHelper.GetParent(this));
             }
@@ -1462,7 +1462,7 @@ namespace System.Windows.Controls.Primitives
 
         private void CreateNewPopupRoot()
         {
-            if (_popupRoot == null)
+            if (_popupRoot is null)
             {
                 _popupRoot = new PopupRoot();
                 AddLogicalChild(_popupRoot);
@@ -1818,7 +1818,7 @@ namespace System.Windows.Controls.Primitives
             // Since this isn't an illegal state for Popup to be in, we're walking the
             // target's visual parent chain to find the top-most root possible.
             // Catching the exception was rejected by architects.
-            Visual rootVisual = parent == null ? null : GetRootVisual(this);
+            Visual rootVisual = parent is null ? null : GetRootVisual(this);
             if (rootVisual != null)
             {
                 // Apply all transforms from target to window coordinate space
@@ -1858,7 +1858,7 @@ namespace System.Windows.Controls.Primitives
             // _positionInfo can be null if an exception aborted the measure process.
             // We can't recover from this, but we can let the app/user know what
             // caused the original exception.
-            if (_positionInfo == null)
+            if (_positionInfo is null)
             {
                 Exception nre = new NullReferenceException();
                 throw new NullReferenceException(nre.Message, SavedException);
@@ -1999,7 +1999,7 @@ namespace System.Windows.Controls.Primitives
         //       the browser area for partial trust
         private void UpdatePosition()
         {
-            if (_popupRoot == null)
+            if (_popupRoot is null)
                 return;
 
             PlacementMode placement = PlacementInternal;
@@ -2033,7 +2033,7 @@ namespace System.Windows.Controls.Primitives
                 {
                     customPlacements = customCallback(childBounds.Size, targetBounds.Size, new Point(HorizontalOffset, VerticalOffset));
                 }
-                positions = customPlacements == null ? 0 : customPlacements.Length;
+                positions = customPlacements is null ? 0 : customPlacements.Length;
 
                 // Return if callback closed the popup
                 if (!IsOpen)
@@ -2284,7 +2284,7 @@ namespace System.Windows.Controls.Primitives
         // Retrieves a list of the interesting points of the popup target in screen space
         private Point[] GetPlacementTargetInterestPoints(PlacementMode placement)
         {
-            if (_positionInfo == null)
+            if (_positionInfo is null)
             {
                 _positionInfo = new PositionInfo();
             }
@@ -2299,7 +2299,7 @@ namespace System.Windows.Controls.Primitives
             Vector offset = new Vector(HorizontalOffset, VerticalOffset);
 
             // Popup positioning is based on the PlacementTarget or the Placement mode
-            if (target == null || IsAbsolutePlacementMode(placement))
+            if (target is null || IsAbsolutePlacementMode(placement))
             {
                 // When the Mode is Mouse, the placement rectangle is the mouse position
                 if (placement == PlacementMode.Mouse || placement == PlacementMode.MousePoint)
@@ -2374,7 +2374,7 @@ namespace System.Windows.Controls.Primitives
         {
             UIElement child = Child;
 
-            if (child == null)
+            if (child is null)
             {
                 return InterestPointsFromRect(new Rect());
             }
@@ -3158,7 +3158,7 @@ namespace System.Windows.Controls.Primitives
 
             internal static bool IsVisualPresentationSourceNull(Visual visual)
             {
-                return (PopupSecurityHelper.GetPresentationSource(visual) == null);
+                return (PopupSecurityHelper.GetPresentationSource(visual) is null);
             }
 
             internal void ShowWindow()

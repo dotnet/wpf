@@ -142,7 +142,7 @@ namespace System.Windows.Media
         /// </summary>
         public void Insert(int index, PathSegment value)
         {
-            if (value == null)
+            if (value is null)
             {
                 throw new System.ArgumentException(SR.Collection_NoNull);
             }
@@ -250,7 +250,7 @@ namespace System.Windows.Media
             }
             set
             {
-                if (value == null)
+                if (value is null)
                 {
                     throw new System.ArgumentException(SR.Collection_NoNull);
                 }
@@ -472,7 +472,7 @@ namespace System.Windows.Media
         {
             get
             {
-                if (s_empty == null)
+                if (s_empty is null)
                 {
                     PathSegmentCollection collection = new PathSegmentCollection();
                     collection.Freeze();
@@ -543,7 +543,7 @@ namespace System.Windows.Media
         {
             int index = -1;
 
-            if (value == null)
+            if (value is null)
             {
                 throw new System.ArgumentException(SR.Collection_NoNull);
             }
@@ -934,7 +934,7 @@ namespace System.Windows.Media
 
                     foreach (PathSegment item in collection)
                     {
-                        if (item == null)
+                        if (item is null)
                         {
                             throw new System.ArgumentException(SR.Collection_NoNull);
                         }
@@ -951,7 +951,7 @@ namespace System.Windows.Media
             {
                 foreach (PathSegment item in collection)
                 {
-                    if (item == null)
+                    if (item is null)
                     {
                         throw new System.ArgumentException(SR.Collection_NoNull);
                     }

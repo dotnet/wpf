@@ -196,7 +196,7 @@ namespace System.Windows.Media
 
                 // Obtain handles for properties that implement DUCE.IResource
                 DUCE.ResourceHandle hTransform;
-                if (vTransform == null ||
+                if (vTransform is null ||
                     Object.ReferenceEquals(vTransform, Transform.Identity)
                     )
                 {

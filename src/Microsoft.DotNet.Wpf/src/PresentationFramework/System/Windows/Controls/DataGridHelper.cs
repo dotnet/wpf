@@ -194,7 +194,7 @@ namespace System.Windows.Controls
         /// </summary>
         public static bool TreeHasFocusAndTabStop(DependencyObject element)
         {
-            if (element == null)
+            if (element is null)
             {
                 return false;
             }
@@ -478,7 +478,7 @@ namespace System.Windows.Controls
         /// </summary>
         internal static bool IsOneWay(BindingBase bindingBase)
         {
-            if (bindingBase == null)
+            if (bindingBase is null)
             {
                 return false;
             }
@@ -564,7 +564,7 @@ namespace System.Windows.Controls
             if (targetElement != null)
             {
                 DependencyObject contextElement = FindContextElement(beb);
-                if (contextElement == null)
+                if (contextElement is null)
                 {
                     contextElement = targetElement;
                 }

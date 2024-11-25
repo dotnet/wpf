@@ -82,7 +82,7 @@ namespace System.Windows.Xps.Serialization
                (SerializationManager as XpsSerializationManager).RegisterDocumentStart();
             }
 
-            if (xmlnsForType == null)
+            if (xmlnsForType is null)
             {
                 XmlWriter.WriteStartElement(nameForType);
             }
@@ -121,7 +121,7 @@ namespace System.Windows.Xps.Serialization
                     language = (XmlLanguage)dependencyObject.GetValue(FrameworkContentElement.LanguageProperty);
                 }
 
-                if (language == null)
+                if (language is null)
                 {
                     //If the language property is null, assign the language to the default
                     language = XmlLanguage.GetLanguage(XpsS0Markup.XmlLangValue);
@@ -180,7 +180,7 @@ namespace System.Windows.Xps.Serialization
         {
             get
             {
-                if (base.XmlWriter == null)
+                if (base.XmlWriter is null)
                 {
                     base.XmlWriter = SerializationManager.AcquireXmlWriter(typeof(FixedDocument));
                 }

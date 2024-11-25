@@ -192,7 +192,7 @@ namespace System.Windows.Annotations.Storage
                     if (editor != null)
                     {
                         // Only deserialize the annotation if its not already in our map
-                        if (annotation == null)
+                        if (annotation is null)
                         {
                             annotation = (Annotation)_serializer.Deserialize(editor.ReadSubtree());
                         }
@@ -240,7 +240,7 @@ namespace System.Windows.Annotations.Storage
             // First we generate the XPath expression
             ArgumentNullException.ThrowIfNull(anchorLocator);
 
-            if (anchorLocator.Parts == null)
+            if (anchorLocator.Parts is null)
                 throw new ArgumentNullException("anchorLocator.Parts");
 
             //fire trace event
@@ -701,7 +701,7 @@ namespace System.Windows.Annotations.Storage
                 Dictionary<Guid, Annotation> annotations = null;
 
                 // Now, get the annotations in the map that satisfies the query criterion
-                if (anchorLocator == null)
+                if (anchorLocator is null)
                 {
                     annotations = _storeAnnotationsMap.FindAnnotations();
                 }
@@ -773,7 +773,7 @@ namespace System.Windows.Annotations.Storage
         /// duplicates</remarks>
         private void CheckKnownNamespaces(IDictionary<Uri, IList<Uri>> knownNamespaces)
         {
-            if (knownNamespaces == null)
+            if (knownNamespaces is null)
                 return;
 
             IList<Uri> allNamespaces = new List<Uri>();
@@ -787,7 +787,7 @@ namespace System.Windows.Annotations.Storage
             //add external namespaces
             foreach (Uri knownNamespace in knownNamespaces.Keys)
             {
-                if (knownNamespace == null)
+                if (knownNamespace is null)
                 {
                     throw new ArgumentException(SR.NullUri, "knownNamespaces");
                 }
@@ -805,7 +805,7 @@ namespace System.Windows.Annotations.Storage
                 {
                     foreach (Uri name in item.Value)
                     {
-                        if (name == null)
+                        if (name is null)
                         {
                             throw new ArgumentException(SR.NullUri, "knownNamespaces");
                         }
@@ -939,7 +939,7 @@ namespace System.Windows.Annotations.Storage
                 if (IsDisposed)
                     throw new ObjectDisposedException(null, SR.ObjectDisposed_StoreClosed);
 
-                if (_stream == null)
+                if (_stream is null)
                     throw new InvalidOperationException(SR.StreamNotSet);
             }
         }
@@ -955,7 +955,7 @@ namespace System.Windows.Annotations.Storage
             foreach (Annotation annotation in mapAnnotations)
             {
                 XPathNavigator editor = GetAnnotationNodeForId(annotation.Id);
-                if (editor == null)
+                if (editor is null)
                 {
                     editor = (XPathNavigator)_rootNavigator.CreateNavigator();
                     XmlWriter writer = editor.AppendChild();

@@ -67,7 +67,7 @@ internal sealed class DocumentManager
     /// </remarks>
     internal static DocumentManager CreateDefault()
     {
-        if (_singleton == null)
+        if (_singleton is null)
         {
             _controllers.Add(new HostedController());
             _controllers.Add(new PackageController());
@@ -143,7 +143,7 @@ internal sealed class DocumentManager
     /// <param name="document">A document.</param>
     internal void EnableEdit(Document document)
     {
-        if (document == null)
+        if (document is null)
         {
             document = _current;
         }
@@ -175,7 +175,7 @@ internal sealed class DocumentManager
     /// <returns>True if the operation succeeded</returns>
     internal bool SaveAs(Document document)
     {
-        if (document == null)
+        if (document is null)
         {
             document = _current;
         }
@@ -204,7 +204,7 @@ internal sealed class DocumentManager
     /// <returns>True if the operation succeeded</returns>
     internal bool Save(Document document)
     {
-        if (document == null)
+        if (document is null)
         {
             document = _current;
         }
@@ -242,7 +242,7 @@ internal sealed class DocumentManager
     /// <returns>True if the operation succeeded</returns>
     internal bool Reload(Document document)
     {
-        if (document == null)
+        if (document is null)
         {
             document = _current;
         }
@@ -297,7 +297,7 @@ internal sealed class DocumentManager
             PackageDocument doc = _current as PackageDocument;
             // If we don't have a PackageDocument (for example, if we are viewing 
             // a read-only file), then only our internal flag is used.
-            if (doc == null || doc.Package == null)
+            if (doc is null || doc.Package is null)
             {
                 return _isModified;
             }
@@ -324,7 +324,7 @@ internal sealed class DocumentManager
     private static bool DispatchEnableEdit
         (IDocumentController controller, Document document)
     {
-        if ((document.Dependency != null) && (document.Dependency.Workspace == null))
+        if ((document.Dependency != null) && (document.Dependency.Workspace is null))
         {
             Trace.SafeWrite(
                 Trace.File,
@@ -344,7 +344,7 @@ internal sealed class DocumentManager
     private static bool DispatchOpen
         (IDocumentController controller, Document document)
     {
-        if ((document.Dependency != null) && (document.Dependency.Source == null))
+        if ((document.Dependency != null) && (document.Dependency.Source is null))
         {
             Trace.SafeWrite(
                 Trace.File,
@@ -364,7 +364,7 @@ internal sealed class DocumentManager
     private static bool DispatchRebind
     (IDocumentController controller, Document document)
     {
-        if ((document.Dependency != null) && (document.Dependency.Source == null))
+        if ((document.Dependency != null) && (document.Dependency.Source is null))
         {
             Trace.SafeWrite(
                 Trace.File,
@@ -385,7 +385,7 @@ internal sealed class DocumentManager
     private static bool DispatchSaveAsPreperation
         (IDocumentController controller, Document document)
     {
-        if ((document.Dependency != null) && (document.Dependency.Destination == null))
+        if ((document.Dependency != null) && (document.Dependency.Destination is null))
         {
             Trace.SafeWrite(
                 Trace.File,
@@ -405,7 +405,7 @@ internal sealed class DocumentManager
     private static bool DispatchSaveCommit
         (IDocumentController controller, Document document)
     {
-        if ((document.Dependency != null) && (document.Dependency.Destination == null))
+        if ((document.Dependency != null) && (document.Dependency.Destination is null))
         {
             Trace.SafeWrite(
                 Trace.File,
@@ -426,7 +426,7 @@ internal sealed class DocumentManager
     private static bool DispatchSavePreperation
         (IDocumentController controller, Document document)
     {
-        if ((document.Dependency != null) && (document.Dependency.Destination == null))
+        if ((document.Dependency != null) && (document.Dependency.Destination is null))
         {
             Trace.SafeWrite(
                 Trace.File,

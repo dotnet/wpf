@@ -59,7 +59,7 @@ namespace System.Windows.Markup
             }
 
             // Validate the initialization.
-            if (_typeName == null)
+            if (_typeName is null)
             {
                 throw new InvalidOperationException(SR.MarkupExtensionTypeName);
             }
@@ -68,14 +68,14 @@ namespace System.Windows.Markup
             ArgumentNullException.ThrowIfNull(serviceProvider);
 
             IXamlTypeResolver xamlTypeResolver = serviceProvider.GetService(typeof(IXamlTypeResolver)) as IXamlTypeResolver;
-            if( xamlTypeResolver == null)
+            if( xamlTypeResolver is null)
             {
                 throw new InvalidOperationException(SR.Format(SR.MarkupExtensionNoContext, GetType().Name, nameof(IXamlTypeResolver)));
             }
 
             // Get the type
             _type = xamlTypeResolver.Resolve(_typeName);
-            if (_type == null)
+            if (_type is null)
             {
                 throw new InvalidOperationException(SR.Format(SR.MarkupExtensionTypeNameBad, _typeName));
             }

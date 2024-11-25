@@ -78,7 +78,7 @@ namespace System.Windows.Documents
             // Get the character position of the mouse event.
             ITextPointer cursorPosition = This.TextView.GetTextPositionFromPoint(mouseDownPoint, /*snapToText:*/true);
 
-            if (cursorPosition == null)
+            if (cursorPosition is null)
             {
                 // Cursor is between pages in a document viewer.
                 MoveFocusToUiScope(This);
@@ -163,7 +163,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null)
+            if (This is null)
             {
                 return;
             }
@@ -210,7 +210,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            if (This.TextView == null)
+            if (This.TextView is null)
             {
                 return;
             }
@@ -226,7 +226,7 @@ namespace System.Windows.Documents
                 // A PropertyTrigger can cause an invalidation merely by setting a property value, thereby
                 // breaking our behavior.
                 This.TextView.RenderScope.UpdateLayout();
-                if (This.TextView == null || !This.TextView.IsValid)
+                if (This.TextView is null || !This.TextView.IsValid)
                 {
                     return;
                 }
@@ -284,7 +284,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null)
+            if (This is null)
             {
                 return;
             }
@@ -295,7 +295,7 @@ namespace System.Windows.Documents
                 return;
             }
             // Ignore the event if the layout information is not valid.
-            if (This.TextView == null || !This.TextView.IsValid)
+            if (This.TextView is null || !This.TextView.IsValid)
             {
                 return;
             }
@@ -326,7 +326,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            if (This == null)
+            if (This is null)
             {
                 return;
             }
@@ -337,7 +337,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            if (This.TextView == null || !This.TextView.IsValid)
+            if (This.TextView is null || !This.TextView.IsValid)
             {
                 return;
             }
@@ -397,12 +397,12 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null)
+            if (This is null)
             {
                 return;
             }
 
-            if (This.TextView == null)
+            if (This.TextView is null)
             {
                 return;
             }
@@ -503,7 +503,7 @@ namespace System.Windows.Documents
                 // For bug 1547567, remove when resolved.
                 Invariant.Assert(This.Selection != null);
 
-                if (snappedCursorPosition == null)
+                if (snappedCursorPosition is null)
                 {
                     This.RequestExtendSelection(mouseMovePoint);
                 }
@@ -572,7 +572,7 @@ namespace System.Windows.Documents
                         using (This.Selection.DeclareChangeBlock())
                         {
                             // Check end-of-container condition
-                            if (snappedCursorPosition.GetNextInsertionPosition(LogicalDirection.Forward) == null &&
+                            if (snappedCursorPosition.GetNextInsertionPosition(LogicalDirection.Forward) is null &&
                                 snappedCursorPosition.ParentType != null) //  This check is a work around of bug that Parent can be null for some text boxes.
                             {
                                 // We are at the end of text container. Check whether mouse is farther than a last character
@@ -728,7 +728,7 @@ namespace System.Windows.Documents
         private static UIElement GetUIElementWhenMouseOver(TextEditor This, Point mouseMovePoint)
         {
             ITextPointer mouseMovePosition = This.TextView.GetTextPositionFromPoint(mouseMovePoint, /*snapToText:*/false);
-            if (mouseMovePosition == null)
+            if (mouseMovePosition is null)
             {
                 return null;
             }

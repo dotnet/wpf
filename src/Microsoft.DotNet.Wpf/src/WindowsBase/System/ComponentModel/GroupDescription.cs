@@ -114,7 +114,7 @@ namespace System.ComponentModel
         {
             get
             {
-                if (_sort == null)
+                if (_sort is null)
                     SetSortDescriptions(new SortDescriptionCollection());
                 return _sort;
             }

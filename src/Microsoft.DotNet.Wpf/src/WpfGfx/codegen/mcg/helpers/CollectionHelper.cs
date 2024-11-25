@@ -239,7 +239,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                     [[inline]]
                         foreach ([[type]] item in [[collection]])
                         {
-                            if (item == null)
+                            if (item is null)
                             {
                                 throw new System.ArgumentException(SR.Collection_NoNull);
                             }
@@ -292,7 +292,7 @@ namespace MS.Internal.MilCodeGen.Helpers
             {
                 return
                     [[inline]]
-                        if ([[value]] == null)
+                        if ([[value]] is null)
                         {
                             throw new System.ArgumentException(SR.Collection_NoNull);
                         }
@@ -395,7 +395,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                 [[inline]]
                     ReadPreamble();
 
-                    if (array == null)
+                    if (array is null)
                     {
                         throw new ArgumentNullException("array");
                     }
@@ -1145,7 +1145,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                     {
                         get
                         {
-                            if (s_empty == null)
+                            if (s_empty is null)
                             {
                                 [[resource.Name]] collection = new [[resource.Name]]();
                                 collection.Freeze();
@@ -1172,7 +1172,7 @@ namespace MS.Internal.MilCodeGen.Helpers
 
                     private [[type]] Cast(object value)
                     {
-                        if( value == null )
+                        if( value is null )
                         {
                             throw new System.ArgumentNullException("value");
                         }

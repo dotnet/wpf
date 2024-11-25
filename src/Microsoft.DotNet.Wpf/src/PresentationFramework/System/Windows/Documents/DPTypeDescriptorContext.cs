@@ -29,8 +29,8 @@ namespace System.Windows.Documents
 
         private DPTypeDescriptorContext(DependencyProperty property, object propertyValue)
         {
-            Invariant.Assert(property != null, "property == null");
-            Invariant.Assert(propertyValue != null, "propertyValue == null");
+            Invariant.Assert(property != null, "property is null");
+            Invariant.Assert(propertyValue != null, "propertyValue is null");
             Invariant.Assert(property.IsValidValue(propertyValue), "propertyValue must be of suitable type for the given dependency property");
 
             _property = property;
@@ -68,7 +68,7 @@ namespace System.Windows.Documents
                 stringValue = CultureInfoFixup(property, (CultureInfo)propertyValue);
             }
 
-            if (stringValue == null)
+            if (stringValue is null)
             {
                 DPTypeDescriptorContext context = new DPTypeDescriptorContext(property, propertyValue);
 

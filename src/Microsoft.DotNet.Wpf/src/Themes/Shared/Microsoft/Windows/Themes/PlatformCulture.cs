@@ -23,7 +23,7 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_platformCulture == null)
+                if (_platformCulture is null)
                 {
                     _platformCulture = MS.Internal.PlatformCulture.Value;
                 }

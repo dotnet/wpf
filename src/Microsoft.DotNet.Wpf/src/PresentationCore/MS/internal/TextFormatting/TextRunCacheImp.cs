@@ -112,7 +112,7 @@ namespace MS.Internal.TextFormatting
             _latestPosition = textRunSpanRider.SpanPosition;
             TextRun textRun = (TextRun)textRunSpanRider.CurrentElement;
 
-            if(textRun == null)
+            if(textRun is null)
             {
                 // run not already cached, fetch new run and cache it
 
@@ -126,7 +126,7 @@ namespace MS.Internal.TextFormatting
                 {
                     TextRunProperties properties = textRun.Properties;
 
-                    if (properties == null)
+                    if (properties is null)
                         throw new ArgumentException(SR.TextRunPropertiesCannotBeNull);
 
                     if (properties.FontRenderingEmSize <= 0)
@@ -139,10 +139,10 @@ namespace MS.Internal.TextFormatting
 
                     CultureInfo culture = CultureMapper.GetSpecificCulture(properties.CultureInfo);
 
-                    if (culture == null)
+                    if (culture is null)
                         throw new ArgumentException(SR.Format(SR.PropertyOfClassCannotBeNull, "CultureInfo", "TextRunProperties"));
 
-                    if (properties.Typeface == null)
+                    if (properties.Typeface is null)
                         throw new ArgumentException(SR.Format(SR.PropertyOfClassCannotBeNull, "Typeface", "TextRunProperties"));
                 }
 

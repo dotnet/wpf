@@ -204,7 +204,7 @@ namespace MS.Internal.Security.RightsManagement
             // enumerate user certificates andg get the current one 
             string userCertificateChain = GetGroupIdentityCert();
 
-            if (userCertificateChain == null)
+            if (userCertificateChain is null)
             {
                 return false;
             }
@@ -212,7 +212,7 @@ namespace MS.Internal.Security.RightsManagement
             // extract identity from the certitficate and match it with the user 
             ContentUser userFromCert = ExtractUserFromCertificateChain(userCertificateChain);
 
-            if (userFromCert == null)
+            if (userFromCert is null)
             {
                 return false;
             }
@@ -290,7 +290,7 @@ namespace MS.Internal.Security.RightsManagement
         {
             CheckDisposed();
 
-            Invariant.Assert(_envHandle == null);
+            Invariant.Assert(_envHandle is null);
 
             string providerPath = GetSecurityProviderPath();
             string machineCertificate = GetMachineCert();
@@ -362,7 +362,7 @@ namespace MS.Internal.Security.RightsManagement
                 // we get a string which can be parsed to get the ID and type 
                 string currentUserCertificate = EnumerateLicense(certificateType, index);
 
-                if (currentUserCertificate == null)
+                if (currentUserCertificate is null)
                     break;
 
                 // we need to parse the information out of the string 
@@ -423,7 +423,7 @@ namespace MS.Internal.Security.RightsManagement
             int index = 0;
 
             string currentCert = EnumerateLicense(enumerateLicenseFlags, index);
-            if (currentCert == null)
+            if (currentCert is null)
             {
                 return null;
             }
@@ -437,7 +437,7 @@ namespace MS.Internal.Security.RightsManagement
                 string newCert = EnumerateLicense(enumerateLicenseFlags, index);
 
                 // if we have completed the enumeration we can stop right here
-                if (newCert == null)
+                if (newCert is null)
                 {
                     break;
                 }
@@ -463,7 +463,7 @@ namespace MS.Internal.Security.RightsManagement
             {
                 string currentRes = GetLicenseOnSession(sessionHandle, enumerateLicenseFlags, index);
 
-                if (currentRes == null)
+                if (currentRes is null)
                 {
                     break;
                 }
@@ -542,7 +542,7 @@ namespace MS.Internal.Security.RightsManagement
             {
                 string clientLicensorCertificate = GetClientLicensorCert();
 
-                if (clientLicensorCertificate == null)
+                if (clientLicensorCertificate is null)
                     throw new RightsManagementException(SR.UserHasNoClientLicensorCert);
 
                 // Trim all the leading and trailing white space characters
@@ -839,7 +839,7 @@ namespace MS.Internal.Security.RightsManagement
             while (true)
             {
                 userCertificate = EnumerateLicense(EnumerateLicenseFlags.GroupIdentity, userCertIndex);
-                if (userCertificate == null)
+                if (userCertificate is null)
                 {
                     // we have to enumerate all of the user certs . . . 
                     break;
@@ -906,7 +906,7 @@ namespace MS.Internal.Security.RightsManagement
                 // regardless of the user type 
                 server = GetServiceLocation(ServiceType.Certification, ServiceLocation.Enterprise, null);
 
-                if (server == null)
+                if (server is null)
                 {
                     server = GetServiceLocation(ServiceType.Certification, ServiceLocation.Internet, null);
                 }
@@ -915,7 +915,7 @@ namespace MS.Internal.Security.RightsManagement
             {
                 // 1st we need to check regiostry for override, and then if it missing we can use Discovery Service
                 server = GetRegistryPassportCertificationUrl();
-                if (server == null)
+                if (server is null)
                 {  // let's use server discovery                 
                     server = GetServiceLocation(ServiceType.Certification, ServiceLocation.Internet, null);
                 }
@@ -930,7 +930,7 @@ namespace MS.Internal.Security.RightsManagement
         {
             // This Function Will return null, if the registry entry is missing
             RegistryKey key = Registry.LocalMachine.OpenSubKey(_passportActivationRegistryKeyName);
-            if (key == null)
+            if (key is null)
             {
                 return null;
             }
@@ -958,7 +958,7 @@ namespace MS.Internal.Security.RightsManagement
             // first try to get Corporate Domain server
             Uri server = GetServiceLocation(ServiceType.ClientLicensor, ServiceLocation.Enterprise, null);
 
-            if (server == null)
+            if (server is null)
             {
                 // if it fails try the internet discovery services 
                 server = GetServiceLocation(ServiceType.ClientLicensor, ServiceLocation.Internet, null);
@@ -1397,7 +1397,7 @@ namespace MS.Internal.Security.RightsManagement
                     string attributeName = GetUnboundLicenseStringAttribute(queryRootHandle,
                                                             NativeConstants.QUERY_APPDATANAME,
                                                             index);
-                    if (attributeName == null) // null is used to indicate a missing value or an end of sequence 
+                    if (attributeName is null) // null is used to indicate a missing value or an end of sequence 
                     {
                         break;
                     }
@@ -1469,7 +1469,7 @@ namespace MS.Internal.Security.RightsManagement
         }
 
         #region Debug
-        // We currently don’t use these two methods, but they may be useful in the future. 
+        // We currently donï¿½t use these two methods, but they may be useful in the future. 
         // So we keep them in the debug build only, and changed them from internal methods 
         // to private methods to remove them from asmmeta files.
 #if DEBUG
@@ -1635,7 +1635,7 @@ namespace MS.Internal.Security.RightsManagement
                             RightNameExpirationInfoPair rightInfo =
                                         GetRightInfoFromRightGroupQueryHandle(rightGroupQueryHandle, rightIndex);
 
-                            if (rightInfo == null)
+                            if (rightInfo is null)
                             {
                                 break;
                             }
@@ -1961,7 +1961,7 @@ namespace MS.Internal.Security.RightsManagement
         {
             get
             {
-                if (_cryptoProviderList == null)
+                if (_cryptoProviderList is null)
                 {
                     _cryptoProviderList = new List<CryptoProvider>(5);
                 }
@@ -1974,7 +1974,7 @@ namespace MS.Internal.Security.RightsManagement
         /// </summary>
         private void CheckDisposed()
         {
-            ObjectDisposedException.ThrowIf((_hSession == null) ||(_hSession.IsInvalid), typeof(SecureEnvironment));
+            ObjectDisposedException.ThrowIf((_hSession is null) ||(_hSession.IsInvalid), typeof(SecureEnvironment));
         }
 
         private const string _defaultUserName = @"DefaultUser@DefaultDomain.DefaultCom";     // RM default user name

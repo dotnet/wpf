@@ -84,7 +84,7 @@ namespace Microsoft.Internal.AlphaFlattener
         public void TreeFlatten(Primitive tree, Geometry clip, Matrix transform, double opacity, BrushProxy opacityMask)
         {
         More:
-            if (tree == null)
+            if (tree is null)
             {
                 return;
             }
@@ -101,7 +101,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 ArrayList children = canvas.Children;
 
                 // No children, nothing to do
-                if ((children == null) || (children.Count == 0))
+                if ((children is null) || (children.Count == 0))
                 {
                     return;
                 }
@@ -148,7 +148,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 }
 
                 if (Configuration.BlendAlphaWithWhite || Configuration.ForceAlphaOpaque ||
-                    (Utility.IsOpaque(opacity) && (opacityMask == null))) // For opaque subtree, just push trasform/clip into it.
+                    (Utility.IsOpaque(opacity) && (opacityMask is null))) // For opaque subtree, just push trasform/clip into it.
                 {
                     foreach (Primitive p in children)
                     {
@@ -230,7 +230,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 // Push transform/clip/opacity to leaf node
                 tree.Transform = tree.Transform * transform;
 
-                if (tree.Clip == null)
+                if (tree.Clip is null)
                 {
                     tree.Clip = clip;
                 }
@@ -293,7 +293,7 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             List<PrimitiveInfo> commands = _dl.Commands;
 
-            if (commands == null)
+            if (commands is null)
             {
                 return;
             }
@@ -381,7 +381,7 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 PrimitiveInfo info = commands[i];
 
-                if (info == null)
+                if (info is null)
                 {
                     continue;
                 }
@@ -615,7 +615,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             GeometryPrimitive gj = pj.primitive as GeometryPrimitive;
 
-            if ((gj == null) || (pj.underlay == null) || (pj.underlay.Count == 0))
+            if ((gj is null) || (pj.underlay is null) || (pj.underlay.Count == 0))
             {
                 return;
             }
@@ -626,14 +626,14 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 PrimitiveInfo pi = commands[i];
 
-                if (pi == null)
+                if (pi is null)
                 {
                     continue;
                 }
 
                 GeometryPrimitive gi = pi.primitive as GeometryPrimitive;
 
-                if ((gi != null) && (gi.Pen == null) && (pi.overlap.Count == 1) && pj.FullyCovers(pi))
+                if ((gi != null) && (gi.Pen is null) && (pi.overlap.Count == 1) && pj.FullyCovers(pi))
                 {
                     // c[i] ... c[j] => ... c[j] c[i]'
                     if (BlendCommands(pi, pj)) // pi.Brush = Blend(pi.Brush, pj.Brush)
@@ -678,7 +678,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     qi = commands[pi.underlay[pi.underlay.Count - 1]];
                 }
 
-                if ((qi == null) || (qi.primitive.IsOpaque && qi.FullyCovers(pi)))
+                if ((qi is null) || (qi.primitive.IsOpaque && qi.FullyCovers(pi)))
                 {
                     BrushProxy under = BrushProxy.CreateColorBrush(Colors.White);
 
@@ -696,7 +696,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     {
                         // Blend it with brush underneath
                         BrushProxy blendedBrush = gp.Brush;
-                        BrushProxy blendedPenBrush = gp.Pen == null ? null : gp.Pen.StrokeBrush;
+                        BrushProxy blendedPenBrush = gp.Pen is null ? null : gp.Pen.StrokeBrush;
 
                         if (blendedBrush != null)
                         {
@@ -838,7 +838,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 repeat:
                     PrimitiveInfo pi = commands[i];
 
-                    if (pi == null)
+                    if (pi is null)
                         continue;
 
                     // Optimization: If a primitive is covered by an opaque primtive, delete it
@@ -885,7 +885,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     }
 
                     // Optimization: Delete white primitives with nothing underneath
-                    if ((pi.underlay == null) && DisplayList.IsWhitePrimitive(pi.primitive))
+                    if ((pi.underlay is null) && DisplayList.IsWhitePrimitive(pi.primitive))
                     {
                         DeleteCommand(i);
 
@@ -911,7 +911,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 {
                     PrimitiveInfo pi = commands[i];
 
-                    if (pi == null)
+                    if (pi is null)
                     {
                         continue;
                     }
@@ -1096,7 +1096,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <param name="desp"></param>
         private void AlphaRender(Primitive primitive, List<int> overlapping, int overlapHasTransparency, bool disjoint, string desp)
         {
-            if (primitive == null)
+            if (primitive is null)
             {
                 return;
             }
@@ -1373,7 +1373,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
 /*      void ILegacyDevice.PushOpacity(double opacity, Brush opacityMask)
         {
-            Debug.Assert(opacityMask == null);
+            Debug.Assert(opacityMask is null);
 
             _ctx.PushOpacity(opacity);
         }
@@ -1382,7 +1382,7 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             if (pen != null)
             {
-                if (strokeBrush == null)
+                if (strokeBrush is null)
                 {
                     pen = null;
                 }

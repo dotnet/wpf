@@ -47,7 +47,7 @@ namespace Microsoft.Windows.Automation.Peers
 
             if (HeaderPeer != null)
             {
-                if (children == null)
+                if (children is null)
                 {
                     children = new List<AutomationPeer>(1);
                 }

@@ -183,7 +183,7 @@ namespace MS.Internal.Tasks
                     // if CultureInfo instance cannot be created for the given name,
                     // treat it as invalid culture name.
 
-                    if (cl == null)
+                    if (cl is null)
                       bValid = false;
                 }
             }

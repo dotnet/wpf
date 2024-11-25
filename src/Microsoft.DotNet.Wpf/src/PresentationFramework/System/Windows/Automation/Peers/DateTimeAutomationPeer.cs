@@ -386,7 +386,7 @@ namespace System.Windows.Automation.Peers
                 case PatternInterface.VirtualizedItem:
                     if (VirtualizedItemPatternIdentifiers.Pattern != null)
                     {
-                        if (owningButton == null)
+                        if (owningButton is null)
                         {
                             result = this;
                         }
@@ -873,7 +873,7 @@ namespace System.Windows.Automation.Peers
         void IInvokeProvider.Invoke()
         {
             Button owningButton = OwningButton;
-            if (owningButton == null || !this.IsEnabled())
+            if (owningButton is null || !this.IsEnabled())
                 throw new ElementNotEnabledException();
 
             // Async call of click event

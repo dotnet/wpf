@@ -116,7 +116,7 @@ namespace MS.Internal.Printing.Configuration
             ArgumentNullException.ThrowIfNull(ticket);
             ArgumentNullException.ThrowIfNull(oemDriverNamespace);
 
-            if (devMode == null)
+            if (devMode is null)
             {
                 return true;
             }
@@ -190,7 +190,7 @@ namespace MS.Internal.Printing.Configuration
         /// <param name="scope">Scopes print ticket properties, useful for disambiguating print ticket properties</param>
         public static void CopyDevModeToTicket(InternalPrintTicket baseTicket, DevMode deltaDevMode, PrintTicketScope scope, DevModeFields supportedFields)
         {
-            if (deltaDevMode == null)
+            if (deltaDevMode is null)
             {
                 return;
             }
@@ -282,7 +282,7 @@ namespace MS.Internal.Printing.Configuration
         /// <param name="scope">Scope of print ticket fields to apply</param>
         public static void CopyTicketToDevMode(DevMode baseDevMode, InternalPrintTicket deltaTicket, PrintTicketScope scope, DevModeFields supportedFields)
         {
-            if (deltaTicket == null)
+            if (deltaTicket is null)
             {
                 return;
             }
@@ -461,7 +461,7 @@ namespace MS.Internal.Printing.Configuration
             XmlNamespaceManager xmlNsMgr = ticket.NamespaceManager;
             string prefix = xmlNsMgr.LookupPrefix(xmlNamespace);
 
-            if (prefix == null)
+            if (prefix is null)
             {
                 prefix = PrintTicketEditor.AddStdNamespaceDeclaration(ticket.XmlDoc.DocumentElement, "ns", xmlNamespace);
             }

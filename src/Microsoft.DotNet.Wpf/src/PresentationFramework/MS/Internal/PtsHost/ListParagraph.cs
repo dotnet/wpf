@@ -75,7 +75,7 @@ namespace MS.Internal.PtsHost
 
             BaseParagraph paragraph = null;
 
-            while (paragraph == null)
+            while (paragraph is null)
             {
                 TextPointerContext runType = textPointer.GetPointerContext(LogicalDirection.Forward);
                 if (runType == TextPointerContext.ElementStart)

@@ -76,7 +76,7 @@ namespace MS.Internal.PtsHost
             VisualCollection visualChildren = visual.Children;
             int visualIndex = 0;
 
-            if(floatingElementList == null || floatingElementList.Count == 0)
+            if(floatingElementList is null || floatingElementList.Count == 0)
             {
                 visualChildren.Clear();
             }
@@ -411,7 +411,7 @@ namespace MS.Internal.PtsHost
         {
             IInputElement ie = null;
 
-            for (int index = 0; index < arrayParaDesc.Length && ie == null; index++)
+            for (int index = 0; index < arrayParaDesc.Length && ie is null; index++)
             {
                 BaseParaClient paraClient = ptsContext.HandleToObject(arrayParaDesc[index].pfsparaclient) as BaseParaClient;
                 PTS.ValidateHandle(paraClient);

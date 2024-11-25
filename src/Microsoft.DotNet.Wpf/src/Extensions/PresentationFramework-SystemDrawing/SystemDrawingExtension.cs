@@ -73,7 +73,7 @@ namespace MS.Internal
         {
             Bitmap bitmapData = GetBitmapImpl(data);
 
-            if (bitmapData == null)
+            if (bitmapData is null)
             {
                 width = height = 0;
                 return IntPtr.Zero;

@@ -132,7 +132,7 @@ namespace System.Windows.Input
             Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
             inputManager = dispatcher.InputManager as InputManager;
 
-            if (inputManager == null)
+            if (inputManager is null)
             {
                 inputManager = new InputManager();
                 dispatcher.InputManager = inputManager;
@@ -408,7 +408,7 @@ namespace System.Windows.Input
         {
             // The HitTest result may have changed for someone somewhere.
             // Raise the HitTestInvalidatedAsync event after the next layout.
-            if(_hitTestInvalidatedAsyncOperation == null)
+            if(_hitTestInvalidatedAsyncOperation is null)
             {
                 // It would be best to re-evaluate anything dependent on the hit-test results
                 // immediately after layout & rendering are complete.  Unfortunately this can
@@ -469,7 +469,7 @@ namespace System.Windows.Input
         {
             // If there is no pending ansyc hittest operation
 
-            if (_hitTestInvalidatedAsyncOperation == null)
+            if (_hitTestInvalidatedAsyncOperation is null)
             {
                 // Post an inactive item to the queue. When the timer expires
                 // we will promote this queue item to Input priority.
@@ -749,7 +749,7 @@ namespace System.Windows.Input
                     // an element.  Those that are not are associated with
                     // the target of the input device for this event.
                     DependencyObject eventSource = input.Source as DependencyObject;
-                    if(eventSource == null || !InputElement.IsValid(eventSource as IInputElement))
+                    if(eventSource is null || !InputElement.IsValid(eventSource as IInputElement))
                     {
                         if (input.Device != null)
                         {

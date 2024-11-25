@@ -331,7 +331,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_owner.TextEditor == null)
+                if (_owner.TextEditor is null)
                 {
                     return null;
                 }
@@ -358,7 +358,7 @@ namespace System.Windows.Controls
         /// <param name="item"></param>
         private static void ValidateUri(Uri item)
         {
-            if (item == null)
+            if (item is null)
             {
                 throw new ArgumentException(SR.CustomDictionaryNullItem);
             }

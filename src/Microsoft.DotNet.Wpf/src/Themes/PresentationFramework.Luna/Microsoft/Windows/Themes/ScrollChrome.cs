@@ -432,11 +432,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_leftArrowGeometry == null)
+                if (_leftArrowGeometry is null)
                 {
                     lock (_glyphAccess)
                     {
-                        if (_leftArrowGeometry == null)
+                        if (_leftArrowGeometry is null)
                         {
                             PathFigure figure = new PathFigure();
                             figure.StartPoint = new Point(4.5, 0.0);
@@ -465,11 +465,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_rightArrowGeometry == null)
+                if (_rightArrowGeometry is null)
                 {
                     lock (_glyphAccess)
                     {
-                        if (_rightArrowGeometry == null)
+                        if (_rightArrowGeometry is null)
                         {
                             PathFigure figure = new PathFigure();
                             figure.StartPoint = new Point(3.5, 0.0);
@@ -498,11 +498,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_upArrowGeometry == null)
+                if (_upArrowGeometry is null)
                 {
                     lock (_glyphAccess)
                     {
-                        if (_upArrowGeometry == null)
+                        if (_upArrowGeometry is null)
                         {
                             PathFigure figure = new PathFigure();
                             figure.StartPoint = new Point(0.0, 4.5);
@@ -531,11 +531,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_downArrowGeometry == null)
+                if (_downArrowGeometry is null)
                 {
                     lock (_glyphAccess)
                     {
-                        if (_downArrowGeometry == null)
+                        if (_downArrowGeometry is null)
                         {
                             PathFigure figure = new PathFigure();
                             figure.StartPoint = new Point(0.0, 3.5);
@@ -565,7 +565,7 @@ namespace Microsoft.Windows.Themes
 
         private void DrawArrow(DrawingContext dc, Brush brush, Rect bounds, ScrollGlyph glyph)
         {
-            if (_transform == null)
+            if (_transform is null)
             {
                 double glyphWidth = 9.0;
                 double glyphHeight = 9.0;
@@ -651,11 +651,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonLineButtonFillNC == null)
+                if (_commonLineButtonFillNC is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonLineButtonFillNC == null)
+                        if (_commonLineButtonFillNC is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -679,11 +679,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonVerticalFillNC == null)
+                if (_commonVerticalFillNC is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonVerticalFillNC == null)
+                        if (_commonVerticalFillNC is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -706,11 +706,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonHorizontalFillNC == null)
+                if (_commonHorizontalFillNC is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonHorizontalFillNC == null)
+                        if (_commonHorizontalFillNC is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -733,11 +733,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonHoverLineButtonFillNC == null)
+                if (_commonHoverLineButtonFillNC is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonHoverLineButtonFillNC == null)
+                        if (_commonHoverLineButtonFillNC is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -760,11 +760,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonHoverVerticalFillNC == null)
+                if (_commonHoverVerticalFillNC is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonHoverVerticalFillNC == null)
+                        if (_commonHoverVerticalFillNC is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -787,11 +787,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonHoverHorizontalFillNC == null)
+                if (_commonHoverHorizontalFillNC is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonHoverHorizontalFillNC == null)
+                        if (_commonHoverHorizontalFillNC is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -815,11 +815,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonPressedLineButtonFillNC == null)
+                if (_commonPressedLineButtonFillNC is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonPressedLineButtonFillNC == null)
+                        if (_commonPressedLineButtonFillNC is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -843,11 +843,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonPressedVerticalFillNC == null)
+                if (_commonPressedVerticalFillNC is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonPressedVerticalFillNC == null)
+                        if (_commonPressedVerticalFillNC is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -870,11 +870,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonPressedHorizontalFillNC == null)
+                if (_commonPressedHorizontalFillNC is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonPressedHorizontalFillNC == null)
+                        if (_commonPressedHorizontalFillNC is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -897,11 +897,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonVerticalFillHS == null)
+                if (_commonVerticalFillHS is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonVerticalFillHS == null)
+                        if (_commonVerticalFillHS is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -925,11 +925,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonHorizontalFillHS == null)
+                if (_commonHorizontalFillHS is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonHorizontalFillHS == null)
+                        if (_commonHorizontalFillHS is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -953,11 +953,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonHoverVerticalFillHS == null)
+                if (_commonHoverVerticalFillHS is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonHoverVerticalFillHS == null)
+                        if (_commonHoverVerticalFillHS is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -982,11 +982,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonHoverHorizontalFillHS == null)
+                if (_commonHoverHorizontalFillHS is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonHoverHorizontalFillHS == null)
+                        if (_commonHoverHorizontalFillHS is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -1010,11 +1010,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonPressedVerticalFillHS == null)
+                if (_commonPressedVerticalFillHS is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonPressedVerticalFillHS == null)
+                        if (_commonPressedVerticalFillHS is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -1038,11 +1038,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonPressedHorizontalFillHS == null)
+                if (_commonPressedHorizontalFillHS is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonPressedHorizontalFillHS == null)
+                        if (_commonPressedHorizontalFillHS is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -1066,11 +1066,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonVerticalFillM == null)
+                if (_commonVerticalFillM is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonVerticalFillM == null)
+                        if (_commonVerticalFillM is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -1095,11 +1095,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonHorizontalFillM == null)
+                if (_commonHorizontalFillM is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonHorizontalFillM == null)
+                        if (_commonHorizontalFillM is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0.5, 0);
@@ -1126,11 +1126,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonHoverVerticalFillM == null)
+                if (_commonHoverVerticalFillM is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonHoverVerticalFillM == null)
+                        if (_commonHoverVerticalFillM is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -1155,11 +1155,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonHoverHorizontalFillM == null)
+                if (_commonHoverHorizontalFillM is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonHoverHorizontalFillM == null)
+                        if (_commonHoverHorizontalFillM is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0.5, 0);
@@ -1185,11 +1185,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonPressedVerticalFillM == null)
+                if (_commonPressedVerticalFillM is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonPressedVerticalFillM == null)
+                        if (_commonPressedVerticalFillM is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -1215,11 +1215,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonPressedHorizontalFillM == null)
+                if (_commonPressedHorizontalFillM is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonPressedHorizontalFillM == null)
+                        if (_commonPressedHorizontalFillM is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0.5, 0);
@@ -1245,11 +1245,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonDisabledFill == null)
+                if (_commonDisabledFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonDisabledFill == null)
+                        if (_commonDisabledFill is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -1375,11 +1375,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonDisabledGlyph == null)
+                if (_commonDisabledGlyph is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonDisabledGlyph == null)
+                        if (_commonDisabledGlyph is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromArgb(0xFF, 0xC9, 0xC9, 0xC2));
                             temp.Freeze();
@@ -1396,11 +1396,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonArrowGlyphNC == null)
+                if (_commonArrowGlyphNC is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonArrowGlyphNC == null)
+                        if (_commonArrowGlyphNC is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromArgb(0xFF, 0x4D, 0x61, 0x85));
                             temp.Freeze();
@@ -1425,11 +1425,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonArrowGlyphM == null)
+                if (_commonArrowGlyphM is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonArrowGlyphM == null)
+                        if (_commonArrowGlyphM is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromArgb(0xFF, 0x3F, 0x3D, 0x3D));
                             temp.Freeze();
@@ -1446,11 +1446,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonHoverArrowGlyphM == null)
+                if (_commonHoverArrowGlyphM is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonHoverArrowGlyphM == null)
+                        if (_commonHoverArrowGlyphM is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromArgb(0xFF, 0x20, 0x20, 0x20));
                             temp.Freeze();
@@ -1467,11 +1467,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonGripperGlyphNC == null)
+                if (_commonGripperGlyphNC is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonGripperGlyphNC == null)
+                        if (_commonGripperGlyphNC is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromArgb(0xFF, 0xEE, 0xF4, 0xFE));
                             temp.Freeze();
@@ -1488,11 +1488,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonHoverGripperGlyphNC == null)
+                if (_commonHoverGripperGlyphNC is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonHoverGripperGlyphNC == null)
+                        if (_commonHoverGripperGlyphNC is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromArgb(0xFF, 0xFC, 0xFD, 0xFF));
                             temp.Freeze();
@@ -1509,11 +1509,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonPressedGripperGlyphNC == null)
+                if (_commonPressedGripperGlyphNC is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonPressedGripperGlyphNC == null)
+                        if (_commonPressedGripperGlyphNC is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromArgb(0xFF, 0xCF, 0xDD, 0xFD));
                             temp.Freeze();
@@ -1530,11 +1530,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonGripperGlyphHS == null)
+                if (_commonGripperGlyphHS is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonGripperGlyphHS == null)
+                        if (_commonGripperGlyphHS is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromArgb(0xFF, 0xD0, 0xDF, 0xAC));
                             temp.Freeze();
@@ -1551,11 +1551,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonHoverGripperGlyphHS == null)
+                if (_commonHoverGripperGlyphHS is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonHoverGripperGlyphHS == null)
+                        if (_commonHoverGripperGlyphHS is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromArgb(0xFF, 0xEB, 0xF5, 0xD4));
                             temp.Freeze();
@@ -1572,11 +1572,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonPressedGripperGlyphHS == null)
+                if (_commonPressedGripperGlyphHS is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonPressedGripperGlyphHS == null)
+                        if (_commonPressedGripperGlyphHS is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromArgb(0xFF, 0xB9, 0xD0, 0x97));
                             temp.Freeze();
@@ -1593,11 +1593,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonGripperGlyphM == null)
+                if (_commonGripperGlyphM is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonGripperGlyphM == null)
+                        if (_commonGripperGlyphM is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF));
                             temp.Freeze();
@@ -1669,11 +1669,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonDisabledGripperGlyphShadow == null)
+                if (_commonDisabledGripperGlyphShadow is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonDisabledGripperGlyphShadow == null)
+                        if (_commonDisabledGripperGlyphShadow is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromArgb(0xFF, 0xB9, 0xB9, 0xB2));
                             temp.Freeze();
@@ -1690,11 +1690,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonGripperGlyphShadowNC == null)
+                if (_commonGripperGlyphShadowNC is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonGripperGlyphShadowNC == null)
+                        if (_commonGripperGlyphShadowNC is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromArgb(0xFF, 0x8C, 0xB0, 0xF8));
                             temp.Freeze();
@@ -1711,11 +1711,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonHoverGripperGlyphShadowNC == null)
+                if (_commonHoverGripperGlyphShadowNC is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonHoverGripperGlyphShadowNC == null)
+                        if (_commonHoverGripperGlyphShadowNC is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromArgb(0xFF, 0x9C, 0xC5, 0xFF));
                             temp.Freeze();
@@ -1732,11 +1732,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonPressedGripperGlyphShadowNC == null)
+                if (_commonPressedGripperGlyphShadowNC is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonPressedGripperGlyphShadowNC == null)
+                        if (_commonPressedGripperGlyphShadowNC is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromArgb(0xFF, 0x83, 0x9E, 0xD8));
                             temp.Freeze();
@@ -1753,11 +1753,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonGripperGlyphShadowHS == null)
+                if (_commonGripperGlyphShadowHS is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonGripperGlyphShadowHS == null)
+                        if (_commonGripperGlyphShadowHS is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromArgb(0xFF, 0x8C, 0x9D, 0x73));
                             temp.Freeze();
@@ -1774,11 +1774,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonHoverGripperGlyphShadowHS == null)
+                if (_commonHoverGripperGlyphShadowHS is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonHoverGripperGlyphShadowHS == null)
+                        if (_commonHoverGripperGlyphShadowHS is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromArgb(0xFF, 0xB6, 0xC6, 0x8E));
                             temp.Freeze();
@@ -1795,11 +1795,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonPressedGripperGlyphShadowHS == null)
+                if (_commonPressedGripperGlyphShadowHS is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonPressedGripperGlyphShadowHS == null)
+                        if (_commonPressedGripperGlyphShadowHS is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromArgb(0xFF, 0x7A, 0x8B, 0x63));
                             temp.Freeze();
@@ -1816,11 +1816,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonGripperGlyphShadowM == null)
+                if (_commonGripperGlyphShadowM is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonGripperGlyphShadowM == null)
+                        if (_commonGripperGlyphShadowM is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromArgb(0xFF, 0x8E, 0x95, 0xA2));
                             temp.Freeze();
@@ -1878,11 +1878,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonOuterBorderPenNC == null)
+                if (_commonOuterBorderPenNC is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonOuterBorderPenNC == null)
+                        if (_commonOuterBorderPenNC is null)
                         {
                             Pen temp = new Pen();
                             temp.Brush = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF));
@@ -1900,11 +1900,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonOuterBorderPenHS == null)
+                if (_commonOuterBorderPenHS is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonOuterBorderPenHS == null)
+                        if (_commonOuterBorderPenHS is null)
                         {
                             Pen temp = new Pen();
                             temp.Brush = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF));
@@ -1922,11 +1922,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonOuterBorderPenM == null)
+                if (_commonOuterBorderPenM is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonOuterBorderPenM == null)
+                        if (_commonOuterBorderPenM is null)
                         {
                             Pen temp = new Pen();
                             temp.Brush = new SolidColorBrush(Color.FromArgb(0xFF, 0x94, 0x95, 0xA2));
@@ -1944,11 +1944,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonHoverOuterBorderPenM == null)
+                if (_commonHoverOuterBorderPenM is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonHoverOuterBorderPenM == null)
+                        if (_commonHoverOuterBorderPenM is null)
                         {
                             Pen temp = new Pen();
                             temp.Brush = new SolidColorBrush(Color.FromArgb(0xFF, 0x5B, 0x66, 0x65));
@@ -1966,11 +1966,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonPressedOuterBorderPenM == null)
+                if (_commonPressedOuterBorderPenM is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonPressedOuterBorderPenM == null)
+                        if (_commonPressedOuterBorderPenM is null)
                         {
                             Pen temp = new Pen();
                             temp.Brush = new SolidColorBrush(Color.FromArgb(0xFF, 0x43, 0x48, 0x48));
@@ -2023,11 +2023,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonDisabledInnerBorderPen == null)
+                if (_commonDisabledInnerBorderPen is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonDisabledInnerBorderPen == null)
+                        if (_commonDisabledInnerBorderPen is null)
                         {
                             Pen temp = new Pen();
                             temp.Brush = new SolidColorBrush(Color.FromArgb(0xFF, 0xE8, 0xE8, 0xDF));
@@ -2045,11 +2045,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonInnerBorderPenNC == null)
+                if (_commonInnerBorderPenNC is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonInnerBorderPenNC == null)
+                        if (_commonInnerBorderPenNC is null)
                         {
                             Pen temp = new Pen();
                             temp.Brush = new SolidColorBrush(Color.FromArgb(0xFF, 0xB4, 0xC8, 0xF6));
@@ -2069,11 +2069,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonHoverInnerBorderPenNC == null)
+                if (_commonHoverInnerBorderPenNC is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonHoverInnerBorderPenNC == null)
+                        if (_commonHoverInnerBorderPenNC is null)
                         {
                             Pen temp = new Pen();
                             temp.Brush = new SolidColorBrush(Color.FromArgb(0xFF, 0x98, 0xB1, 0xE4));
@@ -2091,11 +2091,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonHoverThumbInnerBorderPenNC == null)
+                if (_commonHoverThumbInnerBorderPenNC is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonHoverThumbInnerBorderPenNC == null)
+                        if (_commonHoverThumbInnerBorderPenNC is null)
                         {
                             Pen temp = new Pen();
                             temp.Brush = new SolidColorBrush(Color.FromArgb(0xFF, 0xAC, 0xCE, 0xFF));
@@ -2113,11 +2113,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonPressedInnerBorderPenNC == null)
+                if (_commonPressedInnerBorderPenNC is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonPressedInnerBorderPenNC == null)
+                        if (_commonPressedInnerBorderPenNC is null)
                         {
                             Pen temp = new Pen();
                             temp.Brush = new SolidColorBrush(Color.FromArgb(0xFF, 0x83, 0x8F, 0xDA));
@@ -2135,11 +2135,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonInnerBorderPenHS == null)
+                if (_commonInnerBorderPenHS is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonInnerBorderPenHS == null)
+                        if (_commonInnerBorderPenHS is null)
                         {
                             Pen temp = new Pen();
                             temp.Brush = new SolidColorBrush(Color.FromArgb(0xFF, 0x8E, 0x99, 0x7D));
@@ -2157,11 +2157,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonHoverInnerBorderPenHS == null)
+                if (_commonHoverInnerBorderPenHS is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonHoverInnerBorderPenHS == null)
+                        if (_commonHoverInnerBorderPenHS is null)
                         {
                             Pen temp = new Pen();
                             temp.Brush = new SolidColorBrush(Color.FromArgb(0xFF, 0xBD, 0xCB, 0x96));
@@ -2180,11 +2180,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonPressedInnerBorderPenHS == null)
+                if (_commonPressedInnerBorderPenHS is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonPressedInnerBorderPenHS == null)
+                        if (_commonPressedInnerBorderPenHS is null)
                         {
                             Pen temp = new Pen();
                             temp.Brush = new SolidColorBrush(Color.FromArgb(0xFF, 0x7A, 0x8B, 0x63));
@@ -2202,11 +2202,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonInnerBorderPenM == null)
+                if (_commonInnerBorderPenM is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonInnerBorderPenM == null)
+                        if (_commonInnerBorderPenM is null)
                         {
                             Pen temp = new Pen();
                             temp.Brush = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF));
@@ -2224,11 +2224,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonHoverInnerBorderPenM == null)
+                if (_commonHoverInnerBorderPenM is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonHoverInnerBorderPenM == null)
+                        if (_commonHoverInnerBorderPenM is null)
                         {
                             Pen temp = new Pen();
                             temp.Brush = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF));
@@ -2247,11 +2247,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonPressedInnerBorderPenM == null)
+                if (_commonPressedInnerBorderPenM is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonPressedInnerBorderPenM == null)
+                        if (_commonPressedInnerBorderPenM is null)
                         {
                             Pen temp = new Pen();
                             temp.Brush = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF));
@@ -2317,11 +2317,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonDisabledShadowPen == null)
+                if (_commonDisabledShadowPen is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonDisabledShadowPen == null)
+                        if (_commonDisabledShadowPen is null)
                         {
                             Pen temp = new Pen();
 
@@ -2349,11 +2349,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonShadowPenNC == null)
+                if (_commonShadowPenNC is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonShadowPenNC == null)
+                        if (_commonShadowPenNC is null)
                         {
                             Pen temp = new Pen();
 
@@ -2381,11 +2381,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonShadowPenHS == null)
+                if (_commonShadowPenHS is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonShadowPenHS == null)
+                        if (_commonShadowPenHS is null)
                         {
                             Pen temp = new Pen();
 

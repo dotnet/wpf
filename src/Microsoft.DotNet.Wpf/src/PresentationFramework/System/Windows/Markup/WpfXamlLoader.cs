@@ -48,7 +48,7 @@ namespace System.Windows.Markup
         internal static void EnsureXmlNamespaceMaps(object rootObject, XamlSchemaContext schemaContext)
         {
             DependencyObject depObj = rootObject as DependencyObject;
-            if (depObj == null)
+            if (depObj is null)
             {
                 return;
             }
@@ -57,7 +57,7 @@ namespace System.Windows.Markup
             // type resolutions fall back to the shared SchemaContext.
             var typeMapperContext = schemaContext as XamlTypeMapper.XamlTypeMapperSchemaContext;
             Hashtable namespaceMaps;
-            if (typeMapperContext == null)
+            if (typeMapperContext is null)
             {
                 namespaceMaps = new Hashtable();
             }
@@ -93,7 +93,7 @@ namespace System.Windows.Markup
                     EventTrace.EventProvider.TraceEvent(
                         EventTrace.Event.WClientParseXamlBamlInfo,
                         EventTrace.Keyword.KeywordXamlBaml | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose,
-                        args.Instance == null ? 0 : PerfService.GetPerfElementID(args.Instance),
+                        args.Instance is null ? 0 : PerfService.GetPerfElementID(args.Instance),
                         lineNumber,
                         linePosition);
                 }
@@ -215,7 +215,7 @@ namespace System.Windows.Markup
                                 }
                                 iteratorFrame = (WpfXamlFrame)iteratorFrame.Previous;
                             }
-                            if (stack.CurrentFrame.XmlnsDictionary == null)
+                            if (stack.CurrentFrame.XmlnsDictionary is null)
                             {
                                 stack.CurrentFrame.XmlnsDictionary =
                                          new XmlnsDictionary();
@@ -413,7 +413,7 @@ namespace System.Windows.Markup
             xamlWriter.WriteNode(xamlReader);
             // If there's a frame but no Type, that means there
             // was a namespace. Just set the Type
-            if (stack.Depth != 0 && stack.CurrentFrame.Type == null)
+            if (stack.Depth != 0 && stack.CurrentFrame.Type is null)
             {
                 stack.CurrentFrame.Type = xamlReader.Type;
             }

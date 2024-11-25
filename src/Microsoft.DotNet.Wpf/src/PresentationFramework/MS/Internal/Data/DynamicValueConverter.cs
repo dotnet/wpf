@@ -102,7 +102,7 @@ namespace MS.Internal.Data
                     // DefaultValueConverter.Create() is more sophisticated to find correct type converters,
                     // e.g. if source/targetType is object or well-known system types.
                     // if there is any change in types, give that code to come up with the correct converter
-                    if (_engine == null)
+                    if (_engine is null)
                     {
                         _engine = DataBindEngine.CurrentDataBindEngine;
                     }

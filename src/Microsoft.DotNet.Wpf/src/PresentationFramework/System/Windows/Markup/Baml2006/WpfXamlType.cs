@@ -55,7 +55,7 @@ namespace System.Windows.Baml2006
         {
             get
             {
-                if (_members == null)
+                if (_members is null)
                 {
                     _members = new ConcurrentDictionary<string, XamlMember>(ConcurrencyLevel, Capacity);
                 }
@@ -67,7 +67,7 @@ namespace System.Windows.Baml2006
         {
             get
             {
-                if (_attachableMembers == null)
+                if (_attachableMembers is null)
                 {
                     _attachableMembers = new ConcurrentDictionary<string, XamlMember>(ConcurrencyLevel, Capacity);
                 }
@@ -255,12 +255,12 @@ namespace System.Windows.Baml2006
                     if (isAttachable)
                     {
                         xamlMember = GetAttachedRoutedEvent(name, re);
-                        if (xamlMember == null)
+                        if (xamlMember is null)
                         {
                             xamlMember = GetRoutedEvent(name, re, skipReadOnlyCheck);
                         }
 
-                        if (xamlMember == null)
+                        if (xamlMember is null)
                         {
                             xamlMember = new WpfXamlMember(re, true);
                         }
@@ -268,12 +268,12 @@ namespace System.Windows.Baml2006
                     else
                     {
                         xamlMember = GetRoutedEvent(name, re, skipReadOnlyCheck);
-                        if (xamlMember == null)
+                        if (xamlMember is null)
                         {
                             xamlMember = GetAttachedRoutedEvent(name, re);
                         }
 
-                        if (xamlMember == null)
+                        if (xamlMember is null)
                         {
                             xamlMember = new WpfXamlMember(re, false);
                         }
@@ -315,7 +315,7 @@ namespace System.Windows.Baml2006
                     xamlMember = FindKnownMember(wpfXamlType, name, isAttachable);
                 }
 
-                if (xamlMember == null)
+                if (xamlMember is null)
                 {
                     if (IsBamlScenario)
                     {
@@ -330,7 +330,7 @@ namespace System.Windows.Baml2006
                         if (isAttachable)
                         {
                             xamlMember = GetAttachedDependencyProperty(name, property);
-                            if (xamlMember == null)
+                            if (xamlMember is null)
                             {
                                 return null;
                             }
@@ -338,12 +338,12 @@ namespace System.Windows.Baml2006
                         else
                         {
                             xamlMember = GetRegularDependencyProperty(name, property, skipReadOnlyCheck);
-                            if (xamlMember == null)
+                            if (xamlMember is null)
                             {
                                 xamlMember = GetAttachedDependencyProperty(name, property);
                             }
 
-                            if (xamlMember == null)
+                            if (xamlMember is null)
                             {
                                 xamlMember = new WpfXamlMember(property, false);
                             }
@@ -466,7 +466,7 @@ namespace System.Windows.Baml2006
                 {
                     xamlMember = System.Windows.Markup.XamlReader.BamlSharedSchemaContext.CreateKnownMember(wpfXamlType.Name, name);
                 }
-                if (isAttachable || (xamlMember == null && wpfXamlType.IsBamlScenario))
+                if (isAttachable || (xamlMember is null && wpfXamlType.IsBamlScenario))
                 {
                     xamlMember = System.Windows.Markup.XamlReader.BamlSharedSchemaContext.CreateKnownAttachableMember(wpfXamlType.Name, name);
                 }

@@ -91,7 +91,7 @@ namespace System.Windows.Baml2006
             assemblyId = (short)-assemblyId;
 
             Baml6Assembly assembly = _knownBamlAssemblies[assemblyId];
-            if (assembly == null)
+            if (assembly is null)
             {
                 assembly = CreateKnownBamlAssembly(assemblyId);
                 _knownBamlAssemblies[assemblyId] = assembly;
@@ -133,7 +133,7 @@ namespace System.Windows.Baml2006
             lock (_syncObject)
             {
                 bamlType = _knownBamlTypes[typeId];
-                if(bamlType == null)
+                if(bamlType is null)
                 {
                     bamlType = CreateKnownBamlType(typeId, true, true);
                     Debug.Assert(bamlType != null);
@@ -163,7 +163,7 @@ namespace System.Windows.Baml2006
             {
                 bamlMember = _knownBamlMembers[memberId];
 
-                if (bamlMember == null)
+                if (bamlMember is null)
                 {
                     bamlMember = CreateKnownMember(memberId);
                     Debug.Assert(bamlMember != null);
@@ -183,7 +183,7 @@ namespace System.Windows.Baml2006
             ArgumentNullException.ThrowIfNull(type);
 
             XamlType xamlType = GetKnownXamlType(type);
-            if (xamlType == null)
+            if (xamlType is null)
             {
                 xamlType = GetUnknownXamlType(type);
             }
@@ -219,7 +219,7 @@ namespace System.Windows.Baml2006
                     // Then check if it is one of the Known Types.
                     // KnowTypes created by name need to be checked for an exact match.
                     xamlType = CreateKnownBamlType(type.Name, true, true);
-                    if (xamlType == null && _themeHelpers != null)
+                    if (xamlType is null && _themeHelpers != null)
                     {
                         foreach (ThemeKnownTypeHelper helper in _themeHelpers)
                         {
@@ -286,9 +286,9 @@ namespace System.Windows.Baml2006
 
             // If there was no xmlns map on the given Tree Element.
             // Then, as a last resort, if the prefix was "" use the Wpf Element URI.
-            if (prefixDictionary == null)
+            if (prefixDictionary is null)
             {
-                if (_wpfDefaultNamespace == null)
+                if (_wpfDefaultNamespace is null)
                 {
                     var wpfDefaultNamespace = new System.Windows.Markup.XmlnsDictionary();
                     wpfDefaultNamespace.Add(String.Empty, Baml2006SchemaContext.WpfNamespace);
@@ -344,7 +344,7 @@ namespace System.Windows.Baml2006
         {
             get
             {
-                if (_themeHelpers == null)
+                if (_themeHelpers is null)
                 {
                     _themeHelpers = new List<ThemeKnownTypeHelper>();
                 }

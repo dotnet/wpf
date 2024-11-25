@@ -189,7 +189,7 @@ namespace System.Windows.Documents
 
             UIElement uie = value as UIElement;
 
-            if (uie == null)
+            if (uie is null)
             {
                 throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(UIElement)), "value");
             }
@@ -394,7 +394,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if(_uiElementCollection == null) //nobody used it yet
+                if(_uiElementCollection is null) //nobody used it yet
                 {
                     _uiElementCollection = CreateUIElementCollection(this);
                 }
@@ -565,13 +565,13 @@ namespace System.Windows.Documents
         {
             base.OnVisualParentChanged(oldParent);
 
-            if (oldParent == null)
+            if (oldParent is null)
             {
                 HighlightVisual highlightVisual = HighlightVisual.GetHighlightVisual(this);
 
                 AdornerLayer al = AdornerLayer.GetAdornerLayer(this);
 
-                if (highlightVisual == null && al != null)
+                if (highlightVisual is null && al != null)
                 {
                     //Get Page Content
                     PageContent pc = LogicalTreeHelper.GetParent(this) as PageContent;
@@ -593,7 +593,7 @@ namespace System.Windows.Documents
                 }
 #if DEBUG
                 DebugVisualAdorner debugVisualAd = DebugVisualAdorner.GetDebugVisual(this);
-                if (debugVisualAd == null && al != null)
+                if (debugVisualAd is null && al != null)
                 {
                     al.Add(new DebugVisualAdorner(this), System.Int32.MaxValue / 4);
                 }
@@ -640,7 +640,7 @@ namespace System.Windows.Documents
                 // the fragmene will include # sign
                 String fragment = workuri.Fragment;
 
-                int fragmentLength = (fragment == null) ? 0 : fragment.Length;
+                int fragmentLength = (fragment is null) ? 0 : fragment.Length;
                 if (fragmentLength != 0)
                 {
                     String inputUriString = inputUri.ToString();
@@ -693,7 +693,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_uiElementCollection == null)
+                if (_uiElementCollection is null)
                 {
                     return 0;
                 }
@@ -709,7 +709,7 @@ namespace System.Windows.Documents
         /// </summary>
         protected override Visual GetVisualChild(int index)
         {
-            if (_uiElementCollection == null)
+            if (_uiElementCollection is null)
             {
                 throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
@@ -903,7 +903,7 @@ namespace System.Windows.Documents
                 {
                     DocumentsTrace.FixedFormat.FixedDocument.Trace($"FixedPage.GeElement {node} is non S0 grouping element in L[{level}]!");
                     IEnumerable currentChildrens = LogicalTreeHelper.GetChildren((DependencyObject)element);
-                    if (currentChildrens == null)
+                    if (currentChildrens is null)
                     {
                         DocumentsTrace.FixedFormat.FixedDocument.Trace($"FixedPage.GetElement {node} is NOT a grouping element in L[{level}]!!!");
                         return null;
@@ -1069,19 +1069,19 @@ namespace System.Windows.Documents
 
             DependencyObject obj = current;
             FixedPage fixedPage = current as FixedPage;
-            while (fixedPage == null && obj != null)
+            while (fixedPage is null && obj != null)
             {
                 obj = obj.InheritanceParent;
                 fixedPage = obj as FixedPage;
             }
 
-            if (fixedPage == null)
+            if (fixedPage is null)
             {
                 return null;
             }
 
             //2) Check if fixedPage StartPartUri is null
-            if (fixedPage.StartPartUriString == null)
+            if (fixedPage.StartPartUriString is null)
             {
                 //3) Walk Logical Tree to the FixedDocumentSequence
                 DependencyObject parent = LogicalTreeHelper.GetParent(current);
@@ -1099,7 +1099,7 @@ namespace System.Windows.Documents
                             // If there is a fragment we need to strip it off
                             String fragment = startPartUri.Fragment;
 
-                            int fragmentLength = (fragment == null) ? 0 : fragment.Length;
+                            int fragmentLength = (fragment is null) ? 0 : fragment.Length;
                             if (fragmentLength != 0)
                             {
                                 fixedPage.StartPartUriString = startPartUriString.Substring(0, startPartUriString.IndexOf('#'));
@@ -1116,7 +1116,7 @@ namespace System.Windows.Documents
 
                 //If we don't have a starting part Uri, assign fixedPage.StartPartUriString to Empty so
                 //we don't try to look it up again.
-                if (fixedPage.StartPartUriString == null)
+                if (fixedPage.StartPartUriString is null)
                 {
                     fixedPage.StartPartUriString = String.Empty;
                 }
@@ -1214,7 +1214,7 @@ namespace System.Windows.Documents
             AdornerLayer al = AdornerLayer.GetAdornerLayer(page);
             DebugVisualAdorner debugVisualAd;
 
-            if (al == null)
+            if (al is null)
             {
                 return null;
             }

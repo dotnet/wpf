@@ -83,7 +83,7 @@ namespace System.Windows.Documents
 
                 ConvertToTextPosition(outRanges[0], out start, out end);
 
-                if (prop == null)
+                if (prop is null)
                     context.GetProperty(ref _guid, out prop);
 
                 UnsafeNativeMethods.IEnumTfRanges rangesProp;
@@ -145,7 +145,7 @@ namespace System.Windows.Documents
         /// </summary>
         protected static Object GetValue(int ecReadOnly, UnsafeNativeMethods.ITfProperty property, UnsafeNativeMethods.ITfRange range)
         {
-            if (property == null)
+            if (property is null)
                 return null;
 
             Object obj;

@@ -70,7 +70,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || This.IsReadOnly || !This.AcceptsRichContent || !(This.Selection is TextSelection))
+            if (This is null || !This._IsEnabled || This.IsReadOnly || !This.AcceptsRichContent || !(This.Selection is TextSelection))
             {
                 return;
             }
@@ -126,7 +126,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null)
+            if (This is null)
             {
                 return;
             }

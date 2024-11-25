@@ -71,7 +71,7 @@ namespace System.Windows.Input
         {
             get
             {
-                if(_text == null)
+                if(_text is null)
                 {
                     _text = GetText();
                 }

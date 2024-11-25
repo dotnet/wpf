@@ -508,7 +508,7 @@ namespace MS.Internal.Automation
         private TextRangeAdaptor ValidateAndThrow(ITextRangeProvider range)
         {
             TextRangeAdaptor rangeAdaptor = range as TextRangeAdaptor;
-            if (rangeAdaptor == null || rangeAdaptor._start.TextContainer != _start.TextContainer)
+            if (rangeAdaptor is null || rangeAdaptor._start.TextContainer != _start.TextContainer)
             {
                 throw new ArgumentException(SR.TextRangeProvider_WrongTextRange);
             }
@@ -1137,7 +1137,7 @@ namespace MS.Internal.Automation
                             ReadOnlyCollection<TextSegment> textSegments = pageTextView.TextSegments;
                             while (moved < absCount)
                             {
-                                if (textSegments == null || textSegments.Count == 0)
+                                if (textSegments is null || textSegments.Count == 0)
                                 {
                                     break;
                                 }
@@ -1282,7 +1282,7 @@ namespace MS.Internal.Automation
                     foreach (FontFamilyMap familyMap in fontFamily.FamilyMaps)
                     {
                         // A language-neutral family map matches any text language.
-                        if (familyMap.Language == null)
+                        if (familyMap.Language is null)
                             return familyMap.Target;
 
                         // Does the language match the text culture or a parent culture?
@@ -1301,7 +1301,7 @@ namespace MS.Internal.Automation
         /// </summary>
         private static int GetTextDecorationColor(TextDecorationCollection decorations, TextDecorationLocation location)
         {
-            if (decorations == null)
+            if (decorations is null)
             {
                 return 0;
             }
@@ -1327,7 +1327,7 @@ namespace MS.Internal.Automation
         /// </summary>
         private static TextDecorationLineStyle GetTextDecorationLineStyle(TextDecorationCollection decorations, TextDecorationLocation location)
         {
-            if (decorations == null)
+            if (decorations is null)
             {
                 return TextDecorationLineStyle.None;
             }
@@ -1385,7 +1385,7 @@ namespace MS.Internal.Automation
             // If no AutomationPeer is found, assume the owner of TextPattern.
             // Otherwise make sure that the AutomationPeer is properly connected
             // through automation tree.
-            if (peer == null)
+            if (peer is null)
             {
                 peer = _textPeer;
             }
@@ -1653,7 +1653,7 @@ namespace MS.Internal.Automation
         ITextRangeProvider ITextRangeProvider.FindAttribute(int attributeId, object value, bool backward)
         {
             AutomationTextAttribute attribute = AutomationTextAttribute.LookupById(attributeId);
-            if (attribute == null)
+            if (attribute is null)
             {
                 throw new ArgumentNullException("attributeId");
             }
@@ -1681,7 +1681,7 @@ namespace MS.Internal.Automation
                 {
                     if (attr.AreEqual(value, attr.GetValueAt(position)))
                     {
-                        if (attrEnd == null)
+                        if (attrEnd is null)
                         {
                             attrEnd = position.CreatePointer(LogicalDirection.Backward);
                         }
@@ -1712,7 +1712,7 @@ namespace MS.Internal.Automation
                 {
                     if (attr.AreEqual(value, attr.GetValueAt(position)))
                     {
-                        if (attrStart == null)
+                        if (attrStart is null)
                         {
                             attrStart = position.CreatePointer(LogicalDirection.Forward);
                         }
@@ -1794,7 +1794,7 @@ namespace MS.Internal.Automation
             // In Windows 8, a new text attribute was introduced that WPF does not have any reference for
             // this caused WPF to throw an ArgumentException.  This code path was strange as we already can
             // return NotSupported, which is a valid response.  So change this to no longer throw.
-            if (attribute == null || !_textPatternAttributes.ContainsKey(attribute))
+            if (attribute is null || !_textPatternAttributes.ContainsKey(attribute))
             {
                 return AutomationElementIdentifiers.NotSupported;
             }

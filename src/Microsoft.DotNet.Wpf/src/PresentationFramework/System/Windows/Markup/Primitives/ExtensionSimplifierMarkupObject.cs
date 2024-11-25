@@ -304,7 +304,7 @@ namespace System.Windows.Markup.Primitives
                         break;
                     }
 
-                    if (result == null)
+                    if (result is null)
                     {
                         Debug.Fail("No items where found and IsComposite return true");
                         result = "";

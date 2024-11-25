@@ -82,7 +82,7 @@ namespace System.Windows.Documents
         /// <exception cref="System.ArgumentException">
         /// Throws an ArgumentException if start and end are not
         /// positioned within the same document, or if start is positioned
-        /// after end, or if start == null but end != null.
+        /// after end, or if start is null but end != null.
         /// </exception>
         /// <remarks>
         /// This method extracts the TextElement from its current position,
@@ -136,7 +136,7 @@ namespace System.Windows.Documents
             {
                 tree = EnsureTextContainer();
 
-                if (start == null)
+                if (start is null)
                 {
                     //
                     // Case 0: Extract this element from its tree.
@@ -240,7 +240,7 @@ namespace System.Windows.Documents
         {
             TextContainer tree;
 
-            if (textPosition == null)
+            if (textPosition is null)
             {
                 if (this.IsInTree)
                 {
@@ -1225,10 +1225,10 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_textElementNode == null)
+                if (_textElementNode is null)
                     return true;
 
-                return (_textElementNode.ContainedNode == null);
+                return (_textElementNode.ContainedNode is null);
             }
         }
 
@@ -1326,7 +1326,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_typographyPropertiesGroup == null)
+                if (_typographyPropertiesGroup is null)
                 {
                     _typographyPropertiesGroup = GetTypographyProperties(this);
                 }
@@ -1405,7 +1405,7 @@ namespace System.Windows.Documents
 
                 if (this.IsIMEStructuralElement)
                 {
-                    isFirstIMEVisibleSibling = (this.TextElementNode == null) ? true : this.TextElementNode.IsFirstSibling;
+                    isFirstIMEVisibleSibling = (this.TextElementNode is null) ? true : this.TextElementNode.IsFirstSibling;
                 }
 
                 return isFirstIMEVisibleSibling;

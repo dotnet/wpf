@@ -44,7 +44,7 @@ namespace System.Windows.Documents
         // Register text store that will receive move/sice event.
         internal void RegisterTextStore(TextStore textstore)
         {
-            if (_arTextStore == null)
+            if (_arTextStore is null)
             {
                _arTextStore = new ArrayList(1);
             }

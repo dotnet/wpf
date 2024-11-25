@@ -185,7 +185,7 @@ namespace System.IO.Packaging
                         "PackWebResponse - GetResponseStream()");
 #endif
             // create and return only a single stream for multiple calls
-            if (_responseStream == null)
+            if (_responseStream is null)
             {
                 // can't do this until the response is available
                 WaitForResponse();  // after this call, we have a viable _fullResponse object because WaitForResponse would have thrown otherwise
@@ -227,7 +227,7 @@ namespace System.IO.Packaging
                 }
 
                 // handle degenerate case where there is no part name
-                if (_partName == null)
+                if (_partName is null)
                 {
                     _fullStreamLength = streamLength;    // entire container
                     _mimeType = WpfWebRequestHelper.GetContentType(_fullResponse);
@@ -395,7 +395,7 @@ namespace System.IO.Packaging
                 }
 
                 // cache the value - if it's empty that means we already tried (and failed) to find a real type
-                if (_mimeType == null)
+                if (_mimeType is null)
                 {
                     // Get the response stream which has the side effect of setting the _mimeType member.
                     GetResponseStream();
@@ -617,10 +617,10 @@ namespace System.IO.Packaging
                         "CachedResponse - Getting response stream");
 #endif
                     // only one copy
-                    if (_parent._responseStream == null)
+                    if (_parent._responseStream is null)
                     {
                         // full container request?
-                        if (_parent._partName == null)
+                        if (_parent._partName is null)
                         {
                             Debug.Assert(false, "Cannot return full-container stream from cached container object");
                         }
@@ -859,7 +859,7 @@ namespace System.IO.Packaging
             // Need to inspect for errors and throw if there was trouble on the other thread.
             if (_responseError)
             {
-                if (_responseException == null)
+                if (_responseException is null)
                     throw new WebException(SR.WebResponseFailure);
                 else
                     throw _responseException;   // throw literal exception if there is one

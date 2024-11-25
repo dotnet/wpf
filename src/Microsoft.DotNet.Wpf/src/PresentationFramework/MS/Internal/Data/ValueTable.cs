@@ -62,7 +62,7 @@ namespace MS.Internal.Data
             else
             {
                 // lazy creation of the cache
-                if (_table == null)
+                if (_table is null)
                 {
                     _table = new HybridDictionary();
                 }
@@ -75,7 +75,7 @@ namespace MS.Internal.Data
                 Action FetchAndCacheValue = () =>
                 {
                     // if there's no entry, fetch the value and cache it
-                    if (value == null)
+                    if (value is null)
                     {
                         if (SystemDataHelper.IsDataSetCollectionProperty(pd))
                         {
@@ -92,7 +92,7 @@ namespace MS.Internal.Data
                             value = pd.GetValue(item);
                         }
 
-                        if (value == null)
+                        if (value is null)
                         {
                             value = CachedNull;     // distinguish a null value from no entry
                         }
@@ -120,7 +120,7 @@ namespace MS.Internal.Data
 
                 FetchAndCacheValue();
 
-                if (value == null)
+                if (value is null)
                 {
                     // we can only get here if we cached a weak reference
                     // whose target has since been GC'd.  Repeating the call
@@ -156,7 +156,7 @@ namespace MS.Internal.Data
         internal void RegisterForChanges(object item, PropertyDescriptor pd, DataBindEngine engine)
         {
             // lazy creation of the cache
-            if (_table == null)
+            if (_table is null)
             {
                 _table = new HybridDictionary();
             }
@@ -164,7 +164,7 @@ namespace MS.Internal.Data
             ValueTableKey key = new ValueTableKey(item, pd);
             object value = _table[key];
 
-            if (value == null)
+            if (value is null)
             {
                 // new entry needed - add a listener
                 INotifyPropertyChanged inpc = item as INotifyPropertyChanged;
@@ -182,7 +182,7 @@ namespace MS.Internal.Data
         void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             string propertyName = e.PropertyName;
-            if (propertyName == null)   // normalize - null and empty mean the same
+            if (propertyName is null)   // normalize - null and empty mean the same
             {
                 propertyName = String.Empty;
             }
@@ -262,7 +262,7 @@ namespace MS.Internal.Data
         // remove stale entries from the table
         internal bool Purge()
         {
-            if (_table == null)
+            if (_table is null)
                 return false;
 
             // first see if there are any stale entries.  No sense allocating
@@ -326,7 +326,7 @@ namespace MS.Internal.Data
 
             public bool IsStale
             {
-                get { return Item == null || PropertyDescriptor == null; }
+                get { return Item is null || PropertyDescriptor is null; }
             }
 
             public override bool Equals(object o)
@@ -339,7 +339,7 @@ namespace MS.Internal.Data
                 {
                     object item = this.Item;
                     PropertyDescriptor descriptor = this.PropertyDescriptor;
-                    if (item == null || descriptor == null)
+                    if (item is null || descriptor is null)
                         return false;   // a stale key matches nothing (except itself)
 
                     return this._hashCode == that._hashCode &&

@@ -30,7 +30,7 @@ namespace MS.Internal.Data
         {
             _sortParameters = sortParameters;
             _namespaceManager = namespaceManager;
-            _culture = (culture == null) ? CultureInfo.InvariantCulture : culture;
+            _culture = (culture is null) ? CultureInfo.InvariantCulture : culture;
         }
 
         int IComparer.Compare(object o1, object o2)
@@ -39,9 +39,9 @@ namespace MS.Internal.Data
             XmlNode node1 = o1 as XmlNode;
             XmlNode node2 = o2 as XmlNode;
 
-            if (node1 == null)
+            if (node1 is null)
                 return -1;
-            if (node2 == null)
+            if (node2 is null)
                 return +1;
 
             for (int k = 0; k < _sortParameters.Count; ++k)

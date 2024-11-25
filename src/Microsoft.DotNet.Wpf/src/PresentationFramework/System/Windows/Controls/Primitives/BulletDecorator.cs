@@ -134,12 +134,12 @@ namespace System.Windows.Controls.Primitives
         {
             get
             {
-                if (_bullet == null)
+                if (_bullet is null)
                 {
                     return base.LogicalChildren;
                 }
 
-                if (Child == null)
+                if (Child is null)
                 {
                     return new SingleChildEnumerator(_bullet);
                 }
@@ -211,7 +211,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         protected override int VisualChildrenCount
         {
-            get { return (Child == null ? 0 : 1) + (_bullet == null ? 0 : 1); }
+            get { return (Child is null ? 0 : 1) + (_bullet is null ? 0 : 1); }
         }
 
         /// <summary>
@@ -395,7 +395,7 @@ namespace System.Windows.Controls.Primitives
 
                     // Cases where the child is a TextBlock
                     TextBlock textBlock = child as TextBlock;
-                    if (textBlock == null)
+                    if (textBlock is null)
                     {
                         AccessText accessText = child as AccessText;
                         if (accessText != null &&

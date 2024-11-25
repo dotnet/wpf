@@ -88,7 +88,7 @@ namespace System.Windows.Documents
                     }
                     if (endIndex < 0)
                     {
-                        endIndex = glyphRun.Characters == null ? 0 : glyphRun.Characters.Count;
+                        endIndex = glyphRun.Characters is null ? 0 : glyphRun.Characters.Count;
                     }
                     element = FixedSOMTextRun.Create(alignmentBox, transform, glyphs, fixedNode, startIndex, endIndex, false);
                 }

@@ -216,7 +216,7 @@ namespace System.Windows.Documents
         internal void AddLayer(HighlightLayer highlightLayer)
         {
             // Delay alloc the layers store.
-            if (_layers == null)
+            if (_layers is null)
             {
                 _layers = new ArrayList(1);
             }
@@ -389,7 +389,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return (_layers == null) ? 0 : _layers.Count;
+                return (_layers is null) ? 0 : _layers.Count;
             }
         }
 

@@ -544,7 +544,7 @@ namespace System.Windows.Controls
             Calendar c = d as Calendar;
             Debug.Assert(c != null);
 
-            if (c.SelectionMode != CalendarSelectionMode.None || e.NewValue == null)
+            if (c.SelectionMode != CalendarSelectionMode.None || e.NewValue is null)
             {
                 DateTime? addedDate;
 
@@ -873,7 +873,7 @@ namespace System.Windows.Controls
 
         internal static bool IsValidDateSelection(Calendar cal, object value)
         {
-            return (value == null) || (!cal.BlackoutDates.Contains((DateTime)value));
+            return (value is null) || (!cal.BlackoutDates.Contains((DateTime)value));
         }
 
         internal void OnDayButtonMouseUp(MouseButtonEventArgs e)
@@ -1161,7 +1161,7 @@ namespace System.Windows.Controls
 
         private static bool IsValidKeyboardSelection(Calendar cal, object value)
         {
-            if (value == null)
+            if (value is null)
             {
                 return true;
             }

@@ -395,7 +395,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
         private string WriteRegisterCollectionNotifiers(McgResource parentResource, string fieldName, McgResource resource)
         {
-            if (resource == null) return String.Empty;
+            if (resource is null) return String.Empty;
 
             McgResource resourceType = resource.CollectionType as McgResource;
 
@@ -414,7 +414,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
         private string WriteUnRegisterCollectionNotifiers(McgResource parentResource, string fieldName, McgResource resource)
         {
-            if (resource == null) return String.Empty;
+            if (resource is null) return String.Empty;
 
             McgResource resourceType = resource.CollectionType as McgResource;
 
@@ -671,7 +671,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                         [[fieldResource.MilTypeEnum]]
                                         ));
 
-                                if (m_data.m_p[[FirstCap(field.Name)]] == NULL)
+                                if (m_data.m_p[[FirstCap(field.Name)]] is null)
                                 {
                                     RIP("Invalid handle.");
                                     IFC(WGXERR_UCE_MALFORMEDPACKET);
@@ -850,7 +850,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                         [[fieldResource.MilTypeEnum]]
                                         ));
 
-                                if (m_data.m_p[[FirstCap(field.Name)]]Animation == NULL)
+                                if (m_data.m_p[[FirstCap(field.Name)]]Animation is null)
                                 {
                                     RIP("Invalid handle.");
                                     IFC(WGXERR_UCE_MALFORMEDPACKET);

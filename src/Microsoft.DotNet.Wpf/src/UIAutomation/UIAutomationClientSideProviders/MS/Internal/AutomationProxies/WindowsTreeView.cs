@@ -816,7 +816,7 @@ namespace MS.Internal.AutomationProxies
                 else if (iid == InvokePattern.Pattern)
                 {
                     //This condition is to avoid calling CreateNativeFromEvent repeatedly.
-                    if (_nativeAcc == null && System.Environment.OSVersion.Version.Major >= 6 && Misc.IsWindowInGivenProcess(_hwnd, "explorer"))
+                    if (_nativeAcc is null && System.Environment.OSVersion.Version.Major >= 6 && Misc.IsWindowInGivenProcess(_hwnd, "explorer"))
                     {
                         int childId = ChildIDFromTVItem();
                         _nativeAcc = Accessible.CreateNativeFromEvent(_hwnd, NativeMethods.OBJID_CLIENT, childId);
@@ -1060,7 +1060,7 @@ namespace MS.Internal.AutomationProxies
 
                     for (ProxyFragment topLevelParent = _parent; ; topLevelParent = topLevelParent._parent)
                     {
-                        if (topLevelParent._parent == null)
+                        if (topLevelParent._parent is null)
                         {
                             System.Diagnostics.Debug.Assert (topLevelParent is WindowsTreeView, "Invalid Parent for a TreeView Item");
                             return topLevelParent;

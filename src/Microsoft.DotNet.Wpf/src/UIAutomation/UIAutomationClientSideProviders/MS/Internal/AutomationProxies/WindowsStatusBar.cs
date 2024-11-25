@@ -67,7 +67,7 @@ namespace MS.Internal.AutomationProxies
             {
                 bool isWinforms = WindowsFormsHelper.IsWindowsFormsControl(hwnd);
                 ProxySimple el = isWinforms ? (ProxySimple)WindowsFormsHelper.Create(hwnd, 0, idObject) : (ProxySimple)Create(hwnd, 0);
-                if (el == null)
+                if (el is null)
                 {
                     // WindowsFormsHelper may return null if the MSAA Role for this hwnd isn't handled
                     return;
@@ -335,7 +335,7 @@ namespace MS.Internal.AutomationProxies
         {
             get
             {
-                if (_acc == null)
+                if (_acc is null)
                 {
                     return Misc.ProxySendMessageInt(_hwnd, NativeMethods.SB_GETPARTS, IntPtr.Zero, IntPtr.Zero);
                 }
@@ -565,7 +565,7 @@ namespace MS.Internal.AutomationProxies
                 else
                 {
                     Accessible acc = null;
-                    if (Accessible.AccessibleObjectFromWindow(hwnd, NativeMethods.OBJID_CLIENT, ref acc) != NativeMethods.S_OK || acc == null)
+                    if (Accessible.AccessibleObjectFromWindow(hwnd, NativeMethods.OBJID_CLIENT, ref acc) != NativeMethods.S_OK || acc is null)
                     {
                         return Rect.Empty;
                     }
@@ -576,7 +576,7 @@ namespace MS.Internal.AutomationProxies
                         // Using the "ByIndex" approach avoids having to know what the underlying
                         // object's idChild scheme is.
                         acc = Accessible.GetFullAccessibleChildByIndex(acc, item);
-                        if (acc == null)
+                        if (acc is null)
                         {
                             return Rect.Empty;
                         }
@@ -593,7 +593,7 @@ namespace MS.Internal.AutomationProxies
             {
                 get
                 {
-                    if (_acc == null)
+                    if (_acc is null)
                     {
                         // Get the length of the string
                         int retValue = Misc.ProxySendMessageInt(_hwnd, NativeMethods.SB_GETTEXTLENGTHW, new IntPtr(_item), IntPtr.Zero);

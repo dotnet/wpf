@@ -221,7 +221,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 // We can write if either:
                 // 1. FileVersion doesn't exist - this is normal for a new, empty stream
                 // 2. It does exist and the FormatVersion indicates that we can update it
-                return (_fileVersion == null) ||
+                return (_fileVersion is null) ||
                     _fileVersion.IsUpdatableBy(_codeVersion.UpdaterVersion);
             }
         }
@@ -238,7 +238,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 // We can read if either:
                 // 1. FileVersion doesn't exist - normal for a new, empty stream
                 // 1. FileVersion exists and indicates that we can read it
-                return (_fileVersion == null) ||
+                return (_fileVersion is null) ||
                     _fileVersion.IsReadableBy(_codeVersion.ReaderVersion);
             }
         }
@@ -256,7 +256,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 // first try to read the format version
                 EnsureParsed();
 
-                if (_fileVersion == null)
+                if (_fileVersion is null)
                 {
                     // stream is empty so write our version
                     PersistVersion(_codeVersion);
@@ -311,7 +311,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 // first usage?
                 if (throwIfEmpty || BaseStream.Length > 0)
                 {
-                    if (_fileVersion == null)
+                    if (_fileVersion is null)
                         throw new FileFormatException(SR.VersionStreamMissing);
 
                     // compare versions
@@ -381,7 +381,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         private void EnsureParsed()
         {
             // empty stream cannot have a version in it
-            if ((_fileVersion == null) && (BaseStream.Length > 0))
+            if ((_fileVersion is null) && (BaseStream.Length > 0))
             {
                 Debug.Assert(_dataOffset == 0);
 

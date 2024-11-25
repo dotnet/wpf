@@ -140,7 +140,7 @@ namespace System.Windows.Xps.Serialization
                 language = (XmlLanguage)dependencyObject.GetValue(FrameworkContentElement.LanguageProperty);
             }
 
-            if (language == null)
+            if (language is null)
             {
                 //If the language property is null, assign the language to the default
                 language = XmlLanguage.GetLanguage(XpsS0Markup.XmlLangValue);

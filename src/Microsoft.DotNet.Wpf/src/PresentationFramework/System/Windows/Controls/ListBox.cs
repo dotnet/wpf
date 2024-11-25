@@ -594,7 +594,7 @@ namespace System.Windows.Controls
             {
                 DependencyObject oldFocus = e.OldFocus as DependencyObject;
                 Visual visualOldFocus = oldFocus as Visual;
-                if (visualOldFocus == null)
+                if (visualOldFocus is null)
                 {
                     ContentElement ce = oldFocus as ContentElement;
                     if (ce != null)
@@ -620,8 +620,8 @@ namespace System.Windows.Controls
             // us back and do auto scrolling behavior.
             if (IsMouseCaptured)
             {
-                Debug.Assert(_autoScrollTimer == null, "IsMouseCaptured went from true to true");
-                if (_autoScrollTimer == null)
+                Debug.Assert(_autoScrollTimer is null, "IsMouseCaptured went from true to true");
+                if (_autoScrollTimer is null)
                 {
                     _autoScrollTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
                     _autoScrollTimer.Interval = AutoScrollTimeout;
@@ -820,7 +820,7 @@ namespace System.Windows.Controls
         {
             ItemInfo anchorInfo = AnchorItemInternal;
 
-            if (anchorInfo == null)
+            if (anchorInfo is null)
             {
                 if (_selectedItems.Count > 0)
                 {
@@ -833,7 +833,7 @@ namespace System.Windows.Controls
                     AnchorItemInternal = NewItemInfo(Items[0], null, 0);
                 }
 
-                if ((anchorInfo = AnchorItemInternal) == null)
+                if ((anchorInfo = AnchorItemInternal) is null)
                 {
                     // Can't do anything
                     return;
@@ -909,7 +909,7 @@ namespace System.Windows.Controls
 
         private void MakeKeyboardSelection(ListBoxItem item)
         {
-            if (item == null)
+            if (item is null)
             {
                 return;
             }
@@ -1011,7 +1011,7 @@ namespace System.Windows.Controls
                 {
                     ItemInfo info = NewItemInfo(value);
                     ListBoxItem listBoxItem = info.Container as ListBoxItem;
-                    if (listBoxItem == null)
+                    if (listBoxItem is null)
                     {
                         throw new InvalidOperationException(SR.Format(SR.ListBoxInvalidAnchorItem, value));
                     }

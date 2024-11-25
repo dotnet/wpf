@@ -158,7 +158,7 @@ namespace System.Windows.Automation.Peers
                 int startIndex = 0;
                 if (startAfterItem != null)
                 {
-                    if (startAfterItem.Column == null)
+                    if (startAfterItem.Column is null)
                     {
                         throw new InvalidOperationException(SR.InavalidStartItem);
                     }
@@ -180,7 +180,7 @@ namespace System.Windows.Automation.Peers
                 for (int i = startIndex; i < columns.Count; i++)
                 {
                     currentItemPeer = GetOrCreateCellItemPeer(columns[i]);
-                    if (currentItemPeer == null)
+                    if (currentItemPeer is null)
                         continue;
                     try
                     {
@@ -192,10 +192,10 @@ namespace System.Windows.Automation.Peers
                             continue;
                     }
 
-                    if (value == null || currentValue == null)
+                    if (value is null || currentValue is null)
                     {
                         // Accept null as value corresponding to the property if it finds an item with null as the value of corresponding property else ignore.
-                        if (currentValue == null && value == null)
+                        if (currentValue is null && value is null)
                             return (ProviderFromPeer(currentItemPeer));
                         else
                             continue;
@@ -221,7 +221,7 @@ namespace System.Windows.Automation.Peers
             object item = Item;
 
             AutomationPeer wrapperPeer = GetWrapperPeer();
-            if (wrapperPeer == null)
+            if (wrapperPeer is null)
             {
                 this.OwningDataGrid.ScrollIntoView(item);
             }
@@ -366,7 +366,7 @@ namespace System.Windows.Automation.Peers
         IRawElementProviderSimple[] ISelectionProvider.GetSelection()
         {
             DataGrid dataGrid = this.OwningDataGrid;
-            if (dataGrid == null)
+            if (dataGrid is null)
             {
                 return null;
             }
@@ -480,7 +480,7 @@ namespace System.Windows.Automation.Peers
         {
             // try to reuse old peer if it exists either in Current AT or in WeakRefStorage of Peers being sent to Client
             DataGridCellItemAutomationPeer peer = CellItemPeers[column];
-            if (peer == null)
+            if (peer is null)
             {
                 peer = GetPeerFromWeakRefStorage(column);
                 if (peer != null && !addParentInfo)
@@ -491,7 +491,7 @@ namespace System.Windows.Automation.Peers
                 }
             }
 
-            if (peer == null)
+            if (peer is null)
             {
                 peer = new DataGridCellItemAutomationPeer(Item, column);
                 if (addParentInfo && peer != null)
@@ -521,7 +521,7 @@ namespace System.Windows.Automation.Peers
                 if (provider != null)
                 {
                     returnPeer = PeerFromProvider(provider as IRawElementProviderSimple) as DataGridCellItemAutomationPeer;
-                    if (returnPeer == null)
+                    if (returnPeer is null)
                         WeakRefElementProxyStorage.Remove(column);
                 }
                 else
@@ -537,7 +537,7 @@ namespace System.Windows.Automation.Peers
             IList<DataGridColumn> columns = OwningDataGrid.Columns;
             if (columns != null && columns.Contains(cellItemPeer.Column))
             {
-                if (GetPeerFromWeakRefStorage(cellItemPeer.Column) == null)
+                if (GetPeerFromWeakRefStorage(cellItemPeer.Column) is null)
                     WeakRefElementProxyStorage[cellItemPeer.Column] = wr;
             }
         }

@@ -112,7 +112,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 Console.Write('@');
             }
 
-            if (info.underlay == null)
+            if (info.underlay is null)
             {
                 Console.Write("   ");
             }
@@ -190,7 +190,7 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 GeometryPrimitive gp = p as GeometryPrimitive;
 
-                if ((gp != null) && (gp.Brush != null) && (gp.Pen == null))
+                if ((gp != null) && (gp.Brush != null) && (gp.Pen is null))
                 {
                     Brush b = gp.Brush.Brush;
 
@@ -227,12 +227,12 @@ namespace Microsoft.Internal.AlphaFlattener
 
             if (gp != null)
             {
-                if ((gp.Brush != null) && (gp.Pen == null))
+                if ((gp.Brush != null) && (gp.Pen is null))
                 {
                     return gp.Brush.IsWhite();
                 }
 
-                if ((gp.Pen != null) && (gp.Brush == null))
+                if ((gp.Pen != null) && (gp.Brush is null))
                 {
                     return gp.Pen.StrokeBrush.IsWhite();
                 }
@@ -344,7 +344,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             PrimitiveInfo pi = _commands[one];
 
-            if (pi.overlap == null)
+            if (pi.overlap is null)
             {
                 pi.overlap = new List<int>();
             }
@@ -360,7 +360,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 // if (! qi.primitive.IsOpaque) // Remember primitves covered by a primitive having transparency
                 {
-                    if (qi.underlay == null)
+                    if (qi.underlay is null)
                     {
                         qi.underlay = new List<int>();
                     }
@@ -387,7 +387,7 @@ namespace Microsoft.Internal.AlphaFlattener
 #if UNIT_TEST
         internal void Add(double x0, double x1, double y0, double y1)
         {
-            if (_commands == null)
+            if (_commands is null)
             {
                 _commands = new ArrayList();
             }

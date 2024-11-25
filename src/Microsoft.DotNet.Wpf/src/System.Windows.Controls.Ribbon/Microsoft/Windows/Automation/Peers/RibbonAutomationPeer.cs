@@ -101,7 +101,7 @@ namespace Microsoft.Windows.Automation.Peers
             if (OwningRibbon.TitleHost != null)
             {
                 AutomationPeer peer = CreatePeerForElement(OwningRibbon.TitleHost);
-                if (peer == null)
+                if (peer is null)
                 {
                     FrameworkElement titleHost = OwningRibbon.TitleHost as FrameworkElement;
                     if (titleHost != null)
@@ -209,7 +209,7 @@ namespace Microsoft.Windows.Automation.Peers
             if (helpPaneHost != null)
             {
                 AutomationPeer peer = CreatePeerForElement(helpPaneHost);
-                if (peer == null)
+                if (peer is null)
                 {
                     FrameworkElement helpPaneHostFE = helpPaneHost as FrameworkElement;
                     if (helpPaneHostFE != null)

@@ -77,7 +77,7 @@ namespace System.Windows.Automation.Peers
 
             if (patternInterface == PatternInterface.Text)
             {
-                if (_textPattern == null)
+                if (_textPattern is null)
                 {
                     if (Owner is IServiceProvider)
                     {
@@ -193,7 +193,7 @@ namespace System.Windows.Automation.Peers
                     {
                         UIElement uiScope;
                         Rect boundingRect = CalculateBoundingRect(true, out uiScope);
-                        return (DoubleUtil.AreClose(boundingRect, Rect.Empty) || uiScope == null);
+                        return (DoubleUtil.AreClose(boundingRect, Rect.Empty) || uiScope is null);
                     }
             }
         }

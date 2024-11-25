@@ -140,7 +140,7 @@ namespace MS.Internal.Documents
         /// otherwise.</returns>
         private static DrawingBrush GetDrawingBrushFromStatus(SignatureStatus sigStatus)
         {
-            if (_brushResources == null)
+            if (_brushResources is null)
             {
                 // Get the entire list of SignatureStatus values.
                 SignatureStatus[] statusList = Enum.GetValues<SignatureStatus>();
@@ -161,7 +161,7 @@ namespace MS.Internal.Documents
 
                 // If there is no cached value of the requested DrawingBrush, then find
                 // it in the Resources.
-                if (_brushResources[index] == null)
+                if (_brushResources[index] is null)
                 {
                     // Determine resource name.
                     string resourceName = "PUISignatureStatus"
@@ -188,7 +188,7 @@ namespace MS.Internal.Documents
         /// <returns>A summary message.</returns>
         private static string GetSummaryMessage(DigitalSignature signature, CertificatePriorityStatus certStatus)
         {
-            if (signature == null)
+            if (signature is null)
             {
                 return string.Empty;
             }
@@ -207,7 +207,7 @@ namespace MS.Internal.Documents
                 case SignatureStatus.Unverifiable:
                     // Verify that if the signature is valid, it has a certificate
                     Invariant.Assert(
-                        !(signature.SignatureState == SignatureStatus.Valid && signature.Certificate == null),
+                        !(signature.SignatureState == SignatureStatus.Valid && signature.Certificate is null),
                         SR.SignatureResourceHelperMissingCertificate);
 
                     // Create the signature status message
@@ -325,7 +325,7 @@ namespace MS.Internal.Documents
         {
             string none = SR.SignatureResourceHelperNone;
 
-            return date == null ? 
+            return date is null ? 
                 none : 
                 String.Format(
                     CultureInfo.CurrentCulture,

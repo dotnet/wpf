@@ -68,8 +68,8 @@ namespace MS.Internal.PtsHost
             bool needsUpdate = _ruleWidth != ruleWidth;
             if (!needsUpdate && _rulePositions != rulePositions)
             {
-                int prevSize = _rulePositions == null ? 0 : _rulePositions.Length;
-                int newSize = rulePositions == null ? 0 : rulePositions.Length;
+                int prevSize = _rulePositions is null ? 0 : _rulePositions.Length;
+                int newSize = rulePositions is null ? 0 : rulePositions.Length;
                 if (prevSize == newSize)
                 {
                     for (int index = 0; index < rulePositions.Length; index++)

@@ -91,7 +91,7 @@ namespace System.Windows.Documents
             }
 
             sink = obj as UnsafeNativeMethods.ITextStoreACPSink;
-            if (sink == null)
+            if (sink is null)
             {
                 throw new COMException(SR.TextStore_E_NOINTERFACE, unchecked((int)0x80004002));
             }
@@ -502,7 +502,7 @@ namespace System.Windows.Documents
                 start = start.GetNextInsertionPosition(LogicalDirection.Forward);
             }
 
-            if (start == null)
+            if (start is null)
             {
                 throw new COMException(SR.TextStore_CompositionRejected, NativeMethods.E_FAIL);
             }
@@ -513,7 +513,7 @@ namespace System.Windows.Documents
             }
 
             string filteredText = FilterCompositionString(new string(text), start.GetOffsetToPosition(end)); // does NOT filter MaxLength.
-            if (filteredText == null)
+            if (filteredText is null)
             {
                 throw new COMException(SR.TextStore_CompositionRejected, NativeMethods.E_FAIL);
             }
@@ -633,7 +633,7 @@ namespace System.Windows.Documents
             // The object must have IOldDataObject internface.
             // The obj param of InsertEmbedded is IDataObject in Win32 definition.
             data = obj as IComDataObject;
-            if (data == null)
+            if (data is null)
             {
                 throw new COMException(SR.TextStore_BadObject, NativeMethods.E_INVALIDARG);
             }
@@ -714,7 +714,7 @@ namespace System.Windows.Documents
                     change.oldEnd = selectionEndIndex;
 
                     string filteredText = FilterCompositionString(new string(text), range.Start.GetOffsetToPosition(range.End)); // does NOT filter MaxLength.
-                    if (filteredText == null)
+                    if (filteredText is null)
                     {
                         throw new COMException(SR.TextStore_CompositionRejected, NativeMethods.E_FAIL);
                     }
@@ -830,7 +830,7 @@ namespace System.Windows.Documents
             // The object must have IOldDataObject internface.
             // The obj param of InsertEmbedded is IDataObject in Win32 definition.
             data = obj as IComDataObject;
-            if (data == null)
+            if (data is null)
             {
                 throw new COMException(SR.TextStore_BadObject, NativeMethods.E_INVALIDARG);
             }
@@ -974,7 +974,7 @@ namespace System.Windows.Documents
 
             // Do the hittest.
             position = view.GetTextPositionFromPoint(milPoint, (flags & UnsafeNativeMethods.GetPositionFromPointFlags.GXFPF_NEAREST) != 0 /* snapToText */);
-            if (position == null)
+            if (position is null)
             {
                 // GXFPF_ROUND_NEAREST was clear and we didn't hit a char.
                 throw new COMException(SR.TextStore_TS_E_INVALIDPOINT, UnsafeNativeMethods.TS_E_INVALIDPOINT);
@@ -1374,7 +1374,7 @@ namespace System.Windows.Documents
                 CompositionEventRecord record = new CompositionEventRecord(CompositionStage.UpdateComposition, _previousCompositionStartOffset, _previousCompositionEndOffset, compositionText);
                 CompositionEventRecord previousRecord = (this.CompositionEventList.Count == 0) ? null : this.CompositionEventList[this.CompositionEventList.Count - 1];
 
-                if (_lastCompositionText == null ||
+                if (_lastCompositionText is null ||
                     !string.Equals(compositionText, _lastCompositionText, StringComparison.Ordinal))
                 {
                     // Add the new update event.
@@ -1518,7 +1518,7 @@ namespace System.Windows.Documents
                     }
 
                     string filteredText = FilterCompositionString(result, TextSelection.Start.GetOffsetToPosition(TextSelection.End)); // does NOT filter MaxLength.
-                    if (filteredText == null)
+                    if (filteredText is null)
                     {
                         throw new COMException(SR.TextStore_CompositionRejected, NativeMethods.E_FAIL);
                     }
@@ -1542,7 +1542,7 @@ namespace System.Windows.Documents
         // new mouse sink is registered.
         public int AdviceMouseSink(UnsafeNativeMethods.ITfRangeACP range, UnsafeNativeMethods.ITfMouseSink sink, out int dwCookie)
         {
-            if (_mouseSinks == null)
+            if (_mouseSinks is null)
             {
                 _mouseSinks = new ArrayList(1);
             }
@@ -1916,7 +1916,7 @@ namespace System.Windows.Documents
 
             ITextPointer pointer = this.TextContainer.CreatePointerAtCharOffset(charOffset, direction);
 
-            if (pointer == null)
+            if (pointer is null)
             {
                 // A null pointer means that the ITextContainer has no character offsets.
                 // This happens in an empty TextBox, or in a mal-formed RichTextBox.
@@ -2085,10 +2085,10 @@ namespace System.Windows.Documents
         {
             get
             {
-                 if (this.TextEditor == null)
+                 if (this.TextEditor is null)
                      return null;
 
-                 if (this.TextEditor.TextView == null)
+                 if (this.TextEditor.TextView is null)
                      return null;
 
                  return this.TextEditor.TextView.RenderScope;
@@ -2325,7 +2325,7 @@ namespace System.Windows.Documents
 
             TextEditor textEditor = this.TextEditor;
 
-            if (textEditor == null)
+            if (textEditor is null)
             {
                 // The app shutdown before we got an async callback.
                 hrSession = NativeMethods.E_FAIL;
@@ -2352,8 +2352,8 @@ namespace System.Windows.Documents
                 // See bug 118934.  When this happens, we need to update the composition
                 // here.  Where the IME holds a lock, no one else can modify
                 // the text, and int offsets allow us to use the undo stack internally.
-                _previousCompositionStartOffset = (_previousCompositionStart == null) ? -1 : _previousCompositionStart.Offset;
-                _previousCompositionEndOffset = (_previousCompositionEnd == null) ? -1 : _previousCompositionEnd.Offset;
+                _previousCompositionStartOffset = (_previousCompositionStart is null) ? -1 : _previousCompositionStart.Offset;
+                _previousCompositionEndOffset = (_previousCompositionEnd is null) ? -1 : _previousCompositionEnd.Offset;
 
                 try
                 {
@@ -2461,7 +2461,7 @@ namespace System.Windows.Documents
             bool hitLimit;
 
             Invariant.Assert(navigator.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text);
-            Invariant.Assert(limit == null || navigator.CompareTo(limit) <= 0);
+            Invariant.Assert(limit is null || navigator.CompareTo(limit) <= 0);
 
             hitLimit = false;
 
@@ -2520,7 +2520,7 @@ namespace System.Windows.Documents
             bool hitLimit;
 
             Invariant.Assert(navigator.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.EmbeddedElement);
-            Invariant.Assert(limit == null || navigator.CompareTo(limit) <= 0);
+            Invariant.Assert(limit is null || navigator.CompareTo(limit) <= 0);
 
             if (limit != null && navigator.CompareTo(limit) == 0)
             {
@@ -2562,7 +2562,7 @@ namespace System.Windows.Documents
             bool hitLimit;
 
             Invariant.Assert(navigator.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.ElementStart || navigator.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.ElementEnd);
-            Invariant.Assert(limit == null || navigator.CompareTo(limit) <= 0);
+            Invariant.Assert(limit is null || navigator.CompareTo(limit) <= 0);
 
             // If the caller passed in a non-null limit, we don't do anything and just return true.
             // we've passed it.
@@ -2619,7 +2619,7 @@ namespace System.Windows.Documents
             source = PresentationSource.CriticalFromVisual(RenderScope);
             win32Window = source as IWin32Window;
 
-            if (win32Window == null)
+            if (win32Window is null)
             {
                 throw new COMException(SR.TextStore_TS_E_NOLAYOUT, UnsafeNativeMethods.TS_E_NOLAYOUT);
             }
@@ -2746,7 +2746,7 @@ namespace System.Windows.Documents
         // determine a family name from a FontFamily and XmlLanguage
         private static string GetFontFamilyName(FontFamily fontFamily, XmlLanguage language)
         {
-            if (fontFamily == null)
+            if (fontFamily is null)
                 return null;
 
             // If the font family was constructed from a font name or URI, return that value.
@@ -2755,7 +2755,7 @@ namespace System.Windows.Documents
 
             // Use the dictionary of names provided by the font.
             LanguageSpecificStringDictionary names = fontFamily.FamilyNames;
-            if (names == null)
+            if (names is null)
                 return null;
 
             // try every matching language to most-specific to least specific, including ""
@@ -2773,7 +2773,7 @@ namespace System.Windows.Documents
         // Prepare the app property values and store them into _preparedatribute.
         private void PrepareAttributes(InputScope inputScope, double fontSize, FontFamily fontFamily, XmlLanguage language, Visual visual, int count, Guid[] filterAttributes)
         {
-            if (_preparedattributes == null)
+            if (_preparedattributes is null)
             {
                 _preparedattributes = new ArrayList(count);
             }
@@ -3010,7 +3010,7 @@ namespace System.Windows.Documents
 
             view = TextView;
             // Check if view is available.
-            if (view == null)
+            if (view is null)
             {
                 return false;
             }
@@ -3023,7 +3023,7 @@ namespace System.Windows.Documents
 
             // Do the hittest.
             positionCurrent = view.GetTextPositionFromPoint(point, false);
-            if (positionCurrent == null)
+            if (positionCurrent is null)
             {
                 return false;
             }
@@ -3031,7 +3031,7 @@ namespace System.Windows.Documents
             rectCurrent = view.GetRectangleFromTextPosition(positionCurrent);
 
             positionNext = positionCurrent.CreatePointer();
-            if (positionNext == null)
+            if (positionNext is null)
             {
                 return false;
             }
@@ -3124,7 +3124,7 @@ namespace System.Windows.Documents
         {
             UndoManager undoManager = UndoManager.GetUndoManager(this.TextContainer.Parent);
 
-            if (undoManager == null || !undoManager.IsEnabled)
+            if (undoManager is null || !undoManager.IsEnabled)
             {
                 return null;
             }
@@ -3142,9 +3142,9 @@ namespace System.Windows.Documents
             // start.
             ITextPointer start;
 
-            if (compositionStart == null)
+            if (compositionStart is null)
             {
-                Invariant.Assert(compositionEnd == null);
+                Invariant.Assert(compositionEnd is null);
 
                 GetCompositionPositions(out compositionStart, out compositionEnd);
             }
@@ -3386,7 +3386,7 @@ namespace System.Windows.Documents
 
             // Tables and BlockUIContainers only exist in TextContainers, if
             // we're in some other kind of document no adjustments are needed.
-            if (start == null)
+            if (start is null)
             {
                 return;
             }
@@ -3446,7 +3446,7 @@ namespace System.Windows.Documents
             }
 
             // If we have non-canonical format, give up.
-            if (start == null || start.IsAtRowEnd || TextPointerBase.IsInBlockUIContainer(start))
+            if (start is null || start.IsAtRowEnd || TextPointerBase.IsInBlockUIContainer(start))
             {
                 throw new COMException(SR.TextStore_CompositionRejected, NativeMethods.E_FAIL);
             }
@@ -3474,7 +3474,7 @@ namespace System.Windows.Documents
                 {
                     TextElement element = start.GetAdjacentElement(LogicalDirection.Forward) as TextElement;
 
-                    if (element == null)
+                    if (element is null)
                         break;
                     if (element.IMELeftEdgeCharCount != 0)
                         break;
@@ -4069,7 +4069,7 @@ namespace System.Windows.Documents
         {
             UndoManager undoManager = UndoManager.GetUndoManager(this.TextContainer.Parent);
 
-            if (undoManager == null || !undoManager.IsEnabled)
+            if (undoManager is null || !undoManager.IsEnabled)
             {
                 return;
             }
@@ -4083,7 +4083,7 @@ namespace System.Windows.Documents
             {
                 CompositionParentUndoUnit unit = undoManager.GetUndoUnit(i) as CompositionParentUndoUnit;
 
-                if (unit == null || (unit.IsFirstCompositionUnit && unit.IsLastCompositionUnit)) // what if first/last by chance? Miss preceeding...
+                if (unit is null || (unit.IsFirstCompositionUnit && unit.IsLastCompositionUnit)) // what if first/last by chance? Miss preceeding...
                     break;
 
                 if (!unit.IsFirstCompositionUnit)
@@ -4115,7 +4115,7 @@ namespace System.Windows.Documents
         {
             UndoManager undoManager = UndoManager.GetUndoManager(this.TextContainer.Parent);
 
-            if (undoManager == null || !undoManager.IsEnabled)
+            if (undoManager is null || !undoManager.IsEnabled)
                 return null;
 
             return undoManager.PeekUndoStack() as CompositionParentUndoUnit;
@@ -4159,7 +4159,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_compositionEventList == null)
+                if (_compositionEventList is null)
                 {
                     _compositionEventList = new List<CompositionEventRecord>();
                 }
@@ -4728,7 +4728,7 @@ namespace System.Windows.Documents
             internal static bool SetTarget(object o)
             {
                 FrameworkElement target = o as FrameworkElement;
-                if (target != null || o == null)
+                if (target != null || o is null)
                 {
                     lock (s_TargetToTraceListMap)
                     {
@@ -4790,7 +4790,7 @@ namespace System.Windows.Documents
                     oldcti = null;
                 }
 
-                if (oldcti == null)
+                if (oldcti is null)
                 {
                     TraceList traceList = TraceListForUiScope(uiScope);
                     if (traceList != null)
@@ -4995,7 +4995,7 @@ namespace System.Windows.Documents
                     }
 
                     // otherwise, if target's name matches, add a new entry to the map
-                    if (traceList == null && target.Name == _targetName)
+                    if (traceList is null && target.Name == _targetName)
                     {
                         traceList = AddToMap(target);
                     }

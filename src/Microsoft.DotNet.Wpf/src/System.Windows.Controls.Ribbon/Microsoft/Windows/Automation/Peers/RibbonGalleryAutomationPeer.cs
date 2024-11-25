@@ -95,7 +95,7 @@ namespace Microsoft.Windows.Automation.Peers
                 {
                     foreach (AutomationPeer itemPeer in categoryPeer.GetChildren())
                     {
-                        if (children == null)
+                        if (children is null)
                         {
                             children = new List<AutomationPeer>();
                         }
@@ -127,7 +127,7 @@ namespace Microsoft.Windows.Automation.Peers
 
                 if (filterHost != null)
                 {
-                    if (children == null)
+                    if (children is null)
                     {
                         children = new List<AutomationPeer>(1);
                     }

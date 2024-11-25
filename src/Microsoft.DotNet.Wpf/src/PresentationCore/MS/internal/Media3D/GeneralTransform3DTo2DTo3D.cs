@@ -55,13 +55,13 @@ namespace MS.Internal.Media3D
             Point intermediate2DPoint = new Point();
             result = new Point3D();
             
-            if (_transform3DTo2D == null ||
+            if (_transform3DTo2D is null ||
                 !_transform3DTo2D.TryTransform(inPoint, out intermediate2DPoint))
             {
                 return false;
             }
 
-            if (_transform2DTo3D == null || 
+            if (_transform2DTo3D is null || 
                 !_transform2DTo3D.TryTransform(intermediate2DPoint, out result))
             {
                 return false;

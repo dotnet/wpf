@@ -244,7 +244,7 @@ namespace System.Windows
                 // Verify Context Access
                 VerifyAccess();
 
-                if (_visualTriggers == null)
+                if (_visualTriggers is null)
                 {
                     _visualTriggers = new TriggerCollection();
 
@@ -271,7 +271,7 @@ namespace System.Windows
                 // Verify Context Access
                 VerifyAccess();
 
-                if( _setters == null )
+                if( _setters is null )
                 {
                     _setters = new SetterBaseCollection();
 
@@ -298,7 +298,7 @@ namespace System.Windows
                 // Verify Context Access
                 VerifyAccess();
 
-                if( _resources == null )
+                if( _resources is null )
                 {
                     _resources = new ResourceDictionary();
 
@@ -381,13 +381,13 @@ namespace System.Windows
             switch (propertyName)
             {
                 case "Resources":
-                    if (_resources == null)
+                    if (_resources is null)
                     {
                         return false;
                     }
                     break;
                 case "BasedOn":
-                    if (_basedOn == null)
+                    if (_basedOn is null)
                     {
                         return false;
                     }
@@ -412,7 +412,7 @@ namespace System.Windows
 
             SetterBase sb = value as SetterBase;
 
-            if (sb == null)
+            if (sb is null)
             {
                 throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(SetterBase)), "value");
             }
@@ -509,7 +509,7 @@ namespace System.Windows
 
             // Most parameter checking is done as "upstream" as possible, but some
             //  can't be checked until Style is sealed.
-            if (_targetType == null)
+            if (_targetType is null)
             {
                 throw new InvalidOperationException(SR.Format(SR.NullPropertyIllegal, "TargetType"));
             }
@@ -631,7 +631,7 @@ namespace System.Windows
         private void ProcessSetters(Style style)
         {
             // Walk down to bottom of based-on chain
-            if (style == null)
+            if (style is null)
             {
                 return;
             }
@@ -666,7 +666,7 @@ namespace System.Windows
                     if (style == this)
                     {
                         DynamicResourceExtension dynamicResource = setter.ValueInternal as DynamicResourceExtension;
-                        if (dynamicResource == null)
+                        if (dynamicResource is null)
                         {
                             UpdatePropertyValueList( setter.Property, PropertyValueType.Set, setter.ValueInternal );
                         }
@@ -685,7 +685,7 @@ namespace System.Windows
                     // Add this to the _eventHandlersStore
 
                     EventSetter eventSetter = (EventSetter)setterBase;
-                    if (_eventHandlersStore == null)
+                    if (_eventHandlersStore is null)
                     {
                         _eventHandlersStore = new EventHandlersStore();
                     }
@@ -713,7 +713,7 @@ namespace System.Windows
         private void ProcessSelfStyles(Style style)
         {
             // Walk down to bottom of based-on chain
-            if (style == null)
+            if (style is null)
             {
                 return;
             }
@@ -739,7 +739,7 @@ namespace System.Windows
         private void ProcessVisualTriggers(Style style)
         {
             // Walk down to bottom of based-on chain
-            if (style == null)
+            if (style is null)
             {
                 return;
             }
@@ -947,7 +947,7 @@ namespace System.Windows
         // Special equality check that takes into account 'null'
         private static bool IsEqual(object a, object b)
         {
-            return (a != null) ? a.Equals(b) : (b == null);
+            return (a != null) ? a.Equals(b) : (b is null);
         }
 
         internal bool IsBasedOnModified { get { return IsModified(BasedOnID); } }

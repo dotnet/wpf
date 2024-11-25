@@ -75,7 +75,7 @@ namespace MS.Internal
             if (newInheritanceContext != inheritanceContext &&
                 !hasMultipleInheritanceContexts)
             {
-                if (inheritanceContext == null || newInheritanceContext == null)
+                if (inheritanceContext is null || newInheritanceContext is null)
                 {
                     // Pick up the new context
                     inheritanceContext = newInheritanceContext;

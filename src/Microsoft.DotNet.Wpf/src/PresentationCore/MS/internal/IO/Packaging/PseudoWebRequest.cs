@@ -194,7 +194,7 @@ namespace MS.Internal.IO.Packaging
             get
             {
                 // lazy init
-                if (_headers == null)
+                if (_headers is null)
                     _headers = new WebHeaderCollection();
 
                 return _headers;
@@ -253,7 +253,7 @@ namespace MS.Internal.IO.Packaging
             get
             {
                 // lazy init
-                if (_proxy == null)
+                if (_proxy is null)
                     _proxy = WebRequest.DefaultWebProxy;
 
                 return _proxy;

@@ -41,7 +41,7 @@ namespace System.Windows.Xps.Serialization
 
             _serializationManager = manager as NgcSerializationManagerAsync;
 
-            if(_serializationManager == null)
+            if(_serializationManager is null)
             {
                 throw new XpsSerializationException(SR.ReachSerializationAsync_NoNgcType);
             }
@@ -59,7 +59,7 @@ namespace System.Windows.Xps.Serialization
             NGCSerializerContext context
             )
         {
-            if(context == null)
+            if(context is null)
             {
 
             }
@@ -131,7 +131,7 @@ namespace System.Windows.Xps.Serialization
         {
             ArgumentNullException.ThrowIfNull(serializedProperty);
 
-            if (SerializationManager == null)
+            if (SerializationManager is null)
             {
                 throw new XpsSerializationException(SR.ReachSerialization_MustHaveSerializationManager);
             }
@@ -175,7 +175,7 @@ namespace System.Windows.Xps.Serialization
             )
         {
             ArgumentNullException.ThrowIfNull(serializedObject);
-            if (SerializationManager == null)
+            if (SerializationManager is null)
             {
                 throw new XpsSerializationException(SR.ReachSerialization_MustHaveSerializationManager);
             }
@@ -350,7 +350,7 @@ namespace System.Windows.Xps.Serialization
             //
             // Set the root object to be serialized at the level of the SerializationManager
             //
-            if(SerializationManager.RootSerializableObjectContext == null)
+            if(SerializationManager.RootSerializableObjectContext is null)
             {
                 SerializationManager.RootSerializableObjectContext = serializableObjectContext;
             }
@@ -519,7 +519,7 @@ namespace System.Windows.Xps.Serialization
             NGCSerializerContext context
             )
         {
-            if(context == null)
+            if(context is null)
             {
 
             }
@@ -623,7 +623,7 @@ namespace System.Windows.Xps.Serialization
             NGCSerializerContext context
             )
         {
-            if(context == null)
+            if(context is null)
             {
 
             }
@@ -780,7 +780,7 @@ namespace System.Windows.Xps.Serialization
             NGCSerializerContext context
             )
         {
-            if(context == null)
+            if(context is null)
             {
 
             }
@@ -894,7 +894,7 @@ namespace System.Windows.Xps.Serialization
             NGCSerializerContext context
             )
         {
-            if(context == null)
+            if(context is null)
             {
 
             }
@@ -1084,7 +1084,7 @@ namespace System.Windows.Xps.Serialization
             NGCSerializerContext context
             )
         {
-            if(context == null)
+            if(context is null)
             {
 
             }
@@ -1198,7 +1198,7 @@ namespace System.Windows.Xps.Serialization
             NGCSerializerContext context
             )
         {
-            if(context == null)
+            if(context is null)
             {
 
             }

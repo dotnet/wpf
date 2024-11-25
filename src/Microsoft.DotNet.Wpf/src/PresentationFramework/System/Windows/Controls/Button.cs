@@ -84,7 +84,7 @@ namespace System.Windows.Controls
         { 
             Button b = d as Button;
             KeyboardFocusChangedEventHandler focusChangedEventHandler = FocusChangedEventHandlerField.GetValue(b);
-            if (focusChangedEventHandler == null)
+            if (focusChangedEventHandler is null)
             {
                 focusChangedEventHandler = new KeyboardFocusChangedEventHandler(b.OnFocusChanged);
                 FocusChangedEventHandlerField.SetValue(b, focusChangedEventHandler);
@@ -202,7 +202,7 @@ namespace System.Windows.Controls
         private void UpdateIsDefaulted(IInputElement focus)
         {
             // If it's not a default button, or nothing is focused, or it's disabled then it's not defaulted.
-            if (!IsDefault || focus == null || !IsEnabled)
+            if (!IsDefault || focus is null || !IsEnabled)
             {
                 SetValue(IsDefaultedPropertyKey, BooleanBoxes.FalseBox);
                 return;
@@ -228,7 +228,7 @@ namespace System.Windows.Controls
                 thisScope = e.Scope;
 
                 // Step 3: Compare scopes
-                if (thisScope == focusScope && (focusDO == null || (bool)focusDO.GetValue(KeyboardNavigation.AcceptsReturnProperty) == false))
+                if (thisScope == focusScope && (focusDO is null || (bool)focusDO.GetValue(KeyboardNavigation.AcceptsReturnProperty) == false))
                 {
                     isDefaulted = BooleanBoxes.TrueBox;
                 }
@@ -277,7 +277,7 @@ namespace System.Windows.Controls
                 // When the Button RoutedCommand is null, if it's a Cancel Button, Window.DialogCancelCommand will
                 // be the default command. Do not assign Window.DialogCancelCommand to Button.Command.
                 // If in Button click handler user nulls the Command, we still want to provide the default behavior.
-                if ((Command == null) && IsCancel)
+                if ((Command is null) && IsCancel)
                 {
                     // Can't invoke Window.DialogCancelCommand directly. Have to raise event.
                     // Filed bug 936090: Commanding perf issue: can't directly invoke a command.

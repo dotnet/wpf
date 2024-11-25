@@ -205,7 +205,7 @@ namespace System.Windows.Controls
         /// <returns>Character index at the given point, or -1</returns>
         public int GetCharacterIndexFromPoint(Point point, bool snapToText)
         {
-            if (this.RenderScope == null)
+            if (this.RenderScope is null)
             {
                 return -1;
             }
@@ -233,7 +233,7 @@ namespace System.Windows.Controls
         /// <returns>0-based index of the first character of lineIndex, or -1 if no layout information is available.</returns>
         public int GetCharacterIndexFromLineIndex(int lineIndex)
         {
-            if (this.RenderScope == null)
+            if (this.RenderScope is null)
             {
                 return -1;
             }
@@ -244,7 +244,7 @@ namespace System.Windows.Controls
             TextPointer textPointer = GetStartPositionOfLine(lineIndex);
 
             // textPointer will be null if there is no layout available.
-            return (textPointer == null) ? 0 : textPointer.Offset;
+            return (textPointer is null) ? 0 : textPointer.Offset;
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace System.Windows.Controls
         /// </returns>
         public int GetLineIndexFromCharacterIndex(int charIndex)
         {
-            if (this.RenderScope == null)
+            if (this.RenderScope is null)
             {
                 return -1;
             }
@@ -288,7 +288,7 @@ namespace System.Windows.Controls
         /// <returns>number of characters in the given line, or -1 if no layout information is available</returns>
         public int GetLineLength(int lineIndex)
         {
-            if (this.RenderScope == null)
+            if (this.RenderScope is null)
             {
                 return -1;
             }
@@ -300,7 +300,7 @@ namespace System.Windows.Controls
             TextPointer textPointerEnd = GetEndPositionOfLine(lineIndex);
             int length;
 
-            if (textPointerStart == null || textPointerEnd == null)
+            if (textPointerStart is null || textPointerEnd is null)
             {
                 // No layout available.
                 length = -1;
@@ -319,7 +319,7 @@ namespace System.Windows.Controls
         /// <returns>0-based index of the first visible line, or -1 if no layout information is available</returns>
         public int GetFirstVisibleLineIndex()
         {
-            if (this.RenderScope == null)
+            if (this.RenderScope is null)
             {
                 return -1;
             }
@@ -341,7 +341,7 @@ namespace System.Windows.Controls
         {
             double height;
 
-            if (this.RenderScope == null)
+            if (this.RenderScope is null)
             {
                 return -1;
             }
@@ -364,7 +364,7 @@ namespace System.Windows.Controls
         /// <param name="lineIndex">line to scroll into view</param>
         public void ScrollToLine(int lineIndex)
         {
-            if (this.RenderScope == null)
+            if (this.RenderScope is null)
             {
                 return;
             }
@@ -392,7 +392,7 @@ namespace System.Windows.Controls
             TextPointer startOfLine;
             TextPointer endOfLine;
 
-            if (this.RenderScope == null)
+            if (this.RenderScope is null)
             {
                 return null; // sentinel value
             }
@@ -484,7 +484,7 @@ namespace System.Windows.Controls
             TextPointer position = this.TextContainer.CreatePointerAtOffset(charIndex, LogicalDirection.Forward);
             SpellingError spellingError = this.TextEditor.GetSpellingErrorAtPosition(position, LogicalDirection.Forward);
 
-            if (spellingError == null && charIndex < this.TextContainer.SymbolCount - 1)
+            if (spellingError is null && charIndex < this.TextContainer.SymbolCount - 1)
             {
                 position = this.TextContainer.CreatePointerAtOffset(charIndex + 1, LogicalDirection.Forward);
                 spellingError = this.TextEditor.GetSpellingErrorAtPosition(position, LogicalDirection.Backward);
@@ -508,7 +508,7 @@ namespace System.Windows.Controls
         {
             SpellingError spellingError = GetSpellingError(charIndex);
 
-            return (spellingError == null) ? -1 : spellingError.Start.Offset;
+            return (spellingError is null) ? -1 : spellingError.Start.Offset;
         }
 
         /// <summary>
@@ -525,7 +525,7 @@ namespace System.Windows.Controls
         {
             SpellingError spellingError = GetSpellingError(charIndex);
 
-            return (spellingError == null) ? 0 : spellingError.End.Offset - spellingError.Start.Offset;
+            return (spellingError is null) ? 0 : spellingError.End.Offset - spellingError.Start.Offset;
         }
 
         /// <summary>
@@ -562,7 +562,7 @@ namespace System.Windows.Controls
 
             position = this.TextEditor.GetNextSpellingErrorPosition(position, direction);
 
-            return (position == null) ? -1 : position.Offset;
+            return (position is null) ? -1 : position.Offset;
         }
 
         #endregion Public Methods
@@ -910,7 +910,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (this.RenderScope == null)
+                if (this.RenderScope is null)
                 {
                     return -1;
                 }
@@ -1098,7 +1098,7 @@ namespace System.Windows.Controls
             {
                 // If there is a scrollViewer, we'll listen to the ScrollChanged event and
                 // handle min/maxLines there.
-                if (this.ScrollViewer == null)
+                if (this.ScrollViewer is null)
                 {
                     SetRenderScopeMinMaxHeight();
                 }
@@ -1141,7 +1141,7 @@ namespace System.Windows.Controls
         {
             base.AttachToVisualTree();
 
-            if (this.RenderScope == null)
+            if (this.RenderScope is null)
             {
                 return;
             }
@@ -1408,7 +1408,7 @@ namespace System.Windows.Controls
         // Returns false if no layout is available.
         private bool GetRectangleFromTextPositionInternal(TextPointer position, bool relativeToTextBox, out Rect rect)
         {
-            if (this.RenderScope == null)
+            if (this.RenderScope is null)
             {
                 rect = Rect.Empty;
                 return false;
@@ -1429,7 +1429,7 @@ namespace System.Windows.Controls
         // Returns null if no layout is available.
         private TextPointer GetStartPositionOfLine(int lineIndex)
         {
-            if (this.RenderScope == null)
+            if (this.RenderScope is null)
             {
                 return null;
             }
@@ -1458,7 +1458,7 @@ namespace System.Windows.Controls
 
         private TextPointer GetEndPositionOfLine(int lineIndex)
         {
-            if (this.RenderScope == null)
+            if (this.RenderScope is null)
             {
                 return null;
             }
@@ -1601,7 +1601,7 @@ namespace System.Windows.Controls
             // CoerceText will have already converted null -> String.Empty,
             // but our default CoerceValueCallback could be overridden by a
             // derived class.  So check again here.
-            if (newText == null)
+            if (newText is null)
             {
                 newText = String.Empty;
             }
@@ -1800,7 +1800,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void SetScrollViewerMinMaxHeight()
         {
-            if (this.RenderScope == null)
+            if (this.RenderScope is null)
             {
                 return;
             }
@@ -1838,7 +1838,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void SetRenderScopeMinMaxHeight()
         {
-            if (this.RenderScope == null)
+            if (this.RenderScope is null)
             {
                 return;
             }
@@ -1905,7 +1905,7 @@ namespace System.Windows.Controls
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool ShouldSerializeText(XamlDesignerSerializationManager manager)
         {
-            return manager.XmlWriter == null;
+            return manager.XmlWriter is null;
         }
 
         //
@@ -1921,7 +1921,7 @@ namespace System.Windows.Controls
         // Note we cannot assume value is a string here -- it may be a DeferredTextReference.
         private static object CoerceText(DependencyObject d, object value)
         {
-            if (value == null)
+            if (value is null)
             {
                 return String.Empty;
             }

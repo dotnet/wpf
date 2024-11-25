@@ -104,7 +104,7 @@ namespace System.Windows.Media
         /// </summary>
         private void EnsureRenderData()
         {
-            if (_renderData == null)
+            if (_renderData is null)
             {
                 _renderData = new RenderData();
             }

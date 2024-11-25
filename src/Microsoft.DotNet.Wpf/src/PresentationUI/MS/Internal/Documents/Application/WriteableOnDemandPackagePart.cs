@@ -192,7 +192,7 @@ internal sealed class WriteableOnDemandPackagePart : PackagePart
                 access);
 
             PackagePart writingPart = _getWriteablePartInstance(this);
-            if (writingPart == null)
+            if (writingPart is null)
             {
                 throw new IOException(
                     SR.PackagingWriteableDelegateGaveNullPart);

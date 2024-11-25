@@ -364,7 +364,7 @@ namespace MS.Internal.Telemetry
             {
                 get
                 {
-                    if (_instance == null)
+                    if (_instance is null)
                     {
                         _instance = new EmptyStruct();
                     }

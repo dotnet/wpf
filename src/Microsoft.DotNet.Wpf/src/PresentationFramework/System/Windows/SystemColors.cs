@@ -442,7 +442,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheActiveBorderColor == null)
+                if (_cacheActiveBorderColor is null)
                 {
                     _cacheActiveBorderColor = CreateInstance(SystemResourceKeyID.ActiveBorderColor);
                 }
@@ -458,7 +458,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheActiveCaptionColor == null)
+                if (_cacheActiveCaptionColor is null)
                 {
                     _cacheActiveCaptionColor = CreateInstance(SystemResourceKeyID.ActiveCaptionColor);
                 }
@@ -474,7 +474,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheActiveCaptionTextColor == null)
+                if (_cacheActiveCaptionTextColor is null)
                 {
                     _cacheActiveCaptionTextColor = CreateInstance(SystemResourceKeyID.ActiveCaptionTextColor);
                 }
@@ -490,7 +490,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheAppWorkspaceColor == null)
+                if (_cacheAppWorkspaceColor is null)
                 {
                     _cacheAppWorkspaceColor = CreateInstance(SystemResourceKeyID.AppWorkspaceColor);
                 }
@@ -506,7 +506,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheControlColor == null)
+                if (_cacheControlColor is null)
                 {
                     _cacheControlColor = CreateInstance(SystemResourceKeyID.ControlColor);
                 }
@@ -522,7 +522,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheControlDarkColor == null)
+                if (_cacheControlDarkColor is null)
                 {
                     _cacheControlDarkColor = CreateInstance(SystemResourceKeyID.ControlDarkColor);
                 }
@@ -538,7 +538,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheControlDarkDarkColor == null)
+                if (_cacheControlDarkDarkColor is null)
                 {
                     _cacheControlDarkDarkColor = CreateInstance(SystemResourceKeyID.ControlDarkDarkColor);
                 }
@@ -554,7 +554,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheControlLightColor == null)
+                if (_cacheControlLightColor is null)
                 {
                     _cacheControlLightColor = CreateInstance(SystemResourceKeyID.ControlLightColor);
                 }
@@ -570,7 +570,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheControlLightLightColor == null)
+                if (_cacheControlLightLightColor is null)
                 {
                     _cacheControlLightLightColor = CreateInstance(SystemResourceKeyID.ControlLightLightColor);
                 }
@@ -586,7 +586,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheControlTextColor == null)
+                if (_cacheControlTextColor is null)
                 {
                     _cacheControlTextColor = CreateInstance(SystemResourceKeyID.ControlTextColor);
                 }
@@ -602,7 +602,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheDesktopColor == null)
+                if (_cacheDesktopColor is null)
                 {
                     _cacheDesktopColor = CreateInstance(SystemResourceKeyID.DesktopColor);
                 }
@@ -618,7 +618,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheGradientActiveCaptionColor == null)
+                if (_cacheGradientActiveCaptionColor is null)
                 {
                     _cacheGradientActiveCaptionColor = CreateInstance(SystemResourceKeyID.GradientActiveCaptionColor);
                 }
@@ -634,7 +634,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheGradientInactiveCaptionColor == null)
+                if (_cacheGradientInactiveCaptionColor is null)
                 {
                     _cacheGradientInactiveCaptionColor = CreateInstance(SystemResourceKeyID.GradientInactiveCaptionColor);
                 }
@@ -650,7 +650,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheGrayTextColor == null)
+                if (_cacheGrayTextColor is null)
                 {
                     _cacheGrayTextColor = CreateInstance(SystemResourceKeyID.GrayTextColor);
                 }
@@ -666,7 +666,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheHighlightColor == null)
+                if (_cacheHighlightColor is null)
                 {
                     _cacheHighlightColor = CreateInstance(SystemResourceKeyID.HighlightColor);
                 }
@@ -682,7 +682,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheHighlightTextColor == null)
+                if (_cacheHighlightTextColor is null)
                 {
                     _cacheHighlightTextColor = CreateInstance(SystemResourceKeyID.HighlightTextColor);
                 }
@@ -698,7 +698,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheHotTrackColor == null)
+                if (_cacheHotTrackColor is null)
                 {
                     _cacheHotTrackColor = CreateInstance(SystemResourceKeyID.HotTrackColor);
                 }
@@ -714,7 +714,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheInactiveBorderColor == null)
+                if (_cacheInactiveBorderColor is null)
                 {
                     _cacheInactiveBorderColor = CreateInstance(SystemResourceKeyID.InactiveBorderColor);
                 }
@@ -730,7 +730,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheInactiveCaptionColor == null)
+                if (_cacheInactiveCaptionColor is null)
                 {
                     _cacheInactiveCaptionColor = CreateInstance(SystemResourceKeyID.InactiveCaptionColor);
                 }
@@ -746,7 +746,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheInactiveCaptionTextColor == null)
+                if (_cacheInactiveCaptionTextColor is null)
                 {
                     _cacheInactiveCaptionTextColor = CreateInstance(SystemResourceKeyID.InactiveCaptionTextColor);
                 }
@@ -762,7 +762,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheInfoColor == null)
+                if (_cacheInfoColor is null)
                 {
                     _cacheInfoColor = CreateInstance(SystemResourceKeyID.InfoColor);
                 }
@@ -778,7 +778,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheInfoTextColor == null)
+                if (_cacheInfoTextColor is null)
                 {
                     _cacheInfoTextColor = CreateInstance(SystemResourceKeyID.InfoTextColor);
                 }
@@ -794,7 +794,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMenuColor == null)
+                if (_cacheMenuColor is null)
                 {
                     _cacheMenuColor = CreateInstance(SystemResourceKeyID.MenuColor);
                 }
@@ -810,7 +810,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMenuBarColor == null)
+                if (_cacheMenuBarColor is null)
                 {
                     _cacheMenuBarColor = CreateInstance(SystemResourceKeyID.MenuBarColor);
                 }
@@ -826,7 +826,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMenuHighlightColor == null)
+                if (_cacheMenuHighlightColor is null)
                 {
                     _cacheMenuHighlightColor = CreateInstance(SystemResourceKeyID.MenuHighlightColor);
                 }
@@ -842,7 +842,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMenuTextColor == null)
+                if (_cacheMenuTextColor is null)
                 {
                     _cacheMenuTextColor = CreateInstance(SystemResourceKeyID.MenuTextColor);
                 }
@@ -858,7 +858,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheScrollBarColor == null)
+                if (_cacheScrollBarColor is null)
                 {
                     _cacheScrollBarColor = CreateInstance(SystemResourceKeyID.ScrollBarColor);
                 }
@@ -874,7 +874,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheWindowColor == null)
+                if (_cacheWindowColor is null)
                 {
                     _cacheWindowColor = CreateInstance(SystemResourceKeyID.WindowColor);
                 }
@@ -890,7 +890,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheWindowFrameColor == null)
+                if (_cacheWindowFrameColor is null)
                 {
                     _cacheWindowFrameColor = CreateInstance(SystemResourceKeyID.WindowFrameColor);
                 }
@@ -906,7 +906,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheWindowTextColor == null)
+                if (_cacheWindowTextColor is null)
                 {
                     _cacheWindowTextColor = CreateInstance(SystemResourceKeyID.WindowTextColor);
                 }
@@ -922,7 +922,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheAccentColor == null)
+                if (_cacheAccentColor is null)
                 {
                     _cacheAccentColor = CreateInstance(SystemResourceKeyID.AccentColor);
                 }
@@ -938,7 +938,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheAccentColorLight1 == null)
+                if (_cacheAccentColorLight1 is null)
                 {
                     _cacheAccentColorLight1 = CreateInstance(SystemResourceKeyID.AccentColorLight1);
                 }
@@ -954,7 +954,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheAccentColorLight2 == null)
+                if (_cacheAccentColorLight2 is null)
                 {
                     _cacheAccentColorLight2 = CreateInstance(SystemResourceKeyID.AccentColorLight2);
                 }
@@ -970,7 +970,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheAccentColorLight3 == null)
+                if (_cacheAccentColorLight3 is null)
                 {
                     _cacheAccentColorLight3 = CreateInstance(SystemResourceKeyID.AccentColorLight3);
                 }
@@ -986,7 +986,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheAccentColorDark1 == null)
+                if (_cacheAccentColorDark1 is null)
                 {
                     _cacheAccentColorDark1 = CreateInstance(SystemResourceKeyID.AccentColorDark1);
                 }
@@ -1002,7 +1002,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheAccentColorDark2 == null)
+                if (_cacheAccentColorDark2 is null)
                 {
                     _cacheAccentColorDark2 = CreateInstance(SystemResourceKeyID.AccentColorDark2);
                 }
@@ -1018,7 +1018,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheAccentColorDark3 == null)
+                if (_cacheAccentColorDark3 is null)
                 {
                     _cacheAccentColorDark3 = CreateInstance(SystemResourceKeyID.AccentColorDark3);
                 }
@@ -1562,7 +1562,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheActiveBorderBrush == null)
+                if (_cacheActiveBorderBrush is null)
                 {
                     _cacheActiveBorderBrush = CreateInstance(SystemResourceKeyID.ActiveBorderBrush);
                 }
@@ -1578,7 +1578,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheActiveCaptionBrush == null)
+                if (_cacheActiveCaptionBrush is null)
                 {
                     _cacheActiveCaptionBrush = CreateInstance(SystemResourceKeyID.ActiveCaptionBrush);
                 }
@@ -1594,7 +1594,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheActiveCaptionTextBrush == null)
+                if (_cacheActiveCaptionTextBrush is null)
                 {
                     _cacheActiveCaptionTextBrush = CreateInstance(SystemResourceKeyID.ActiveCaptionTextBrush);
                 }
@@ -1610,7 +1610,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheAppWorkspaceBrush == null)
+                if (_cacheAppWorkspaceBrush is null)
                 {
                     _cacheAppWorkspaceBrush = CreateInstance(SystemResourceKeyID.AppWorkspaceBrush);
                 }
@@ -1626,7 +1626,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheControlBrush == null)
+                if (_cacheControlBrush is null)
                 {
                     _cacheControlBrush = CreateInstance(SystemResourceKeyID.ControlBrush);
                 }
@@ -1642,7 +1642,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheControlDarkBrush == null)
+                if (_cacheControlDarkBrush is null)
                 {
                     _cacheControlDarkBrush = CreateInstance(SystemResourceKeyID.ControlDarkBrush);
                 }
@@ -1658,7 +1658,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheControlDarkDarkBrush == null)
+                if (_cacheControlDarkDarkBrush is null)
                 {
                     _cacheControlDarkDarkBrush = CreateInstance(SystemResourceKeyID.ControlDarkDarkBrush);
                 }
@@ -1674,7 +1674,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheControlLightBrush == null)
+                if (_cacheControlLightBrush is null)
                 {
                     _cacheControlLightBrush = CreateInstance(SystemResourceKeyID.ControlLightBrush);
                 }
@@ -1690,7 +1690,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheControlLightLightBrush == null)
+                if (_cacheControlLightLightBrush is null)
                 {
                     _cacheControlLightLightBrush = CreateInstance(SystemResourceKeyID.ControlLightLightBrush);
                 }
@@ -1706,7 +1706,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheControlTextBrush == null)
+                if (_cacheControlTextBrush is null)
                 {
                     _cacheControlTextBrush = CreateInstance(SystemResourceKeyID.ControlTextBrush);
                 }
@@ -1722,7 +1722,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheDesktopBrush == null)
+                if (_cacheDesktopBrush is null)
                 {
                     _cacheDesktopBrush = CreateInstance(SystemResourceKeyID.DesktopBrush);
                 }
@@ -1738,7 +1738,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheGradientActiveCaptionBrush == null)
+                if (_cacheGradientActiveCaptionBrush is null)
                 {
                     _cacheGradientActiveCaptionBrush = CreateInstance(SystemResourceKeyID.GradientActiveCaptionBrush);
                 }
@@ -1754,7 +1754,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheGradientInactiveCaptionBrush == null)
+                if (_cacheGradientInactiveCaptionBrush is null)
                 {
                     _cacheGradientInactiveCaptionBrush = CreateInstance(SystemResourceKeyID.GradientInactiveCaptionBrush);
                 }
@@ -1770,7 +1770,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheGrayTextBrush == null)
+                if (_cacheGrayTextBrush is null)
                 {
                     _cacheGrayTextBrush = CreateInstance(SystemResourceKeyID.GrayTextBrush);
                 }
@@ -1786,7 +1786,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheHighlightBrush == null)
+                if (_cacheHighlightBrush is null)
                 {
                     _cacheHighlightBrush = CreateInstance(SystemResourceKeyID.HighlightBrush);
                 }
@@ -1802,7 +1802,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheHighlightTextBrush == null)
+                if (_cacheHighlightTextBrush is null)
                 {
                     _cacheHighlightTextBrush = CreateInstance(SystemResourceKeyID.HighlightTextBrush);
                 }
@@ -1818,7 +1818,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheHotTrackBrush == null)
+                if (_cacheHotTrackBrush is null)
                 {
                     _cacheHotTrackBrush = CreateInstance(SystemResourceKeyID.HotTrackBrush);
                 }
@@ -1834,7 +1834,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheInactiveBorderBrush == null)
+                if (_cacheInactiveBorderBrush is null)
                 {
                     _cacheInactiveBorderBrush = CreateInstance(SystemResourceKeyID.InactiveBorderBrush);
                 }
@@ -1850,7 +1850,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheInactiveCaptionBrush == null)
+                if (_cacheInactiveCaptionBrush is null)
                 {
                     _cacheInactiveCaptionBrush = CreateInstance(SystemResourceKeyID.InactiveCaptionBrush);
                 }
@@ -1866,7 +1866,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheInactiveCaptionTextBrush == null)
+                if (_cacheInactiveCaptionTextBrush is null)
                 {
                     _cacheInactiveCaptionTextBrush = CreateInstance(SystemResourceKeyID.InactiveCaptionTextBrush);
                 }
@@ -1882,7 +1882,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheInfoBrush == null)
+                if (_cacheInfoBrush is null)
                 {
                     _cacheInfoBrush = CreateInstance(SystemResourceKeyID.InfoBrush);
                 }
@@ -1898,7 +1898,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheInfoTextBrush == null)
+                if (_cacheInfoTextBrush is null)
                 {
                     _cacheInfoTextBrush = CreateInstance(SystemResourceKeyID.InfoTextBrush);
                 }
@@ -1914,7 +1914,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMenuBrush == null)
+                if (_cacheMenuBrush is null)
                 {
                     _cacheMenuBrush = CreateInstance(SystemResourceKeyID.MenuBrush);
                 }
@@ -1930,7 +1930,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMenuBarBrush == null)
+                if (_cacheMenuBarBrush is null)
                 {
                     _cacheMenuBarBrush = CreateInstance(SystemResourceKeyID.MenuBarBrush);
                 }
@@ -1946,7 +1946,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMenuHighlightBrush == null)
+                if (_cacheMenuHighlightBrush is null)
                 {
                     _cacheMenuHighlightBrush = CreateInstance(SystemResourceKeyID.MenuHighlightBrush);
                 }
@@ -1962,7 +1962,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMenuTextBrush == null)
+                if (_cacheMenuTextBrush is null)
                 {
                     _cacheMenuTextBrush = CreateInstance(SystemResourceKeyID.MenuTextBrush);
                 }
@@ -1978,7 +1978,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheScrollBarBrush == null)
+                if (_cacheScrollBarBrush is null)
                 {
                     _cacheScrollBarBrush = CreateInstance(SystemResourceKeyID.ScrollBarBrush);
                 }
@@ -1994,7 +1994,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheWindowBrush == null)
+                if (_cacheWindowBrush is null)
                 {
                     _cacheWindowBrush = CreateInstance(SystemResourceKeyID.WindowBrush);
                 }
@@ -2010,7 +2010,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheWindowFrameBrush == null)
+                if (_cacheWindowFrameBrush is null)
                 {
                     _cacheWindowFrameBrush = CreateInstance(SystemResourceKeyID.WindowFrameBrush);
                 }
@@ -2026,7 +2026,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheWindowTextBrush == null)
+                if (_cacheWindowTextBrush is null)
                 {
                     _cacheWindowTextBrush = CreateInstance(SystemResourceKeyID.WindowTextBrush);
                 }
@@ -2044,7 +2044,7 @@ namespace System.Windows
             {
                 if (FrameworkCompatibilityPreferences.GetAreInactiveSelectionHighlightBrushKeysSupported())
                 {
-                    if (_cacheInactiveSelectionHighlightBrush == null)
+                    if (_cacheInactiveSelectionHighlightBrush is null)
                     {
                         _cacheInactiveSelectionHighlightBrush = CreateInstance(SystemResourceKeyID.InactiveSelectionHighlightBrush);
                     }
@@ -2067,7 +2067,7 @@ namespace System.Windows
             {
                 if (FrameworkCompatibilityPreferences.GetAreInactiveSelectionHighlightBrushKeysSupported())
                 {
-                    if (_cacheInactiveSelectionHighlightTextBrush == null)
+                    if (_cacheInactiveSelectionHighlightTextBrush is null)
                     {
                         _cacheInactiveSelectionHighlightTextBrush = CreateInstance(SystemResourceKeyID.InactiveSelectionHighlightTextBrush);
                     }
@@ -2088,7 +2088,7 @@ namespace System.Windows
         {
             get
             {
-                if(_cacheAccentColorBrush == null)
+                if(_cacheAccentColorBrush is null)
                 {
                     _cacheAccentColorBrush = CreateInstance(SystemResourceKeyID.AccentColorBrush);
                 }
@@ -2104,7 +2104,7 @@ namespace System.Windows
         {
             get
             {
-                if(_cacheAccentColorLight1Brush == null)
+                if(_cacheAccentColorLight1Brush is null)
                 {
                     _cacheAccentColorLight1Brush = CreateInstance(SystemResourceKeyID.AccentColorLight1Brush);
                 }
@@ -2120,7 +2120,7 @@ namespace System.Windows
         {
             get
             {
-                if(_cacheAccentColorLight2Brush == null)
+                if(_cacheAccentColorLight2Brush is null)
                 {
                     _cacheAccentColorLight2Brush = CreateInstance(SystemResourceKeyID.AccentColorLight2Brush);
                 }
@@ -2136,7 +2136,7 @@ namespace System.Windows
         {
             get
             {
-                if(_cacheAccentColorLight3Brush == null)
+                if(_cacheAccentColorLight3Brush is null)
                 {
                     _cacheAccentColorLight3Brush = CreateInstance(SystemResourceKeyID.AccentColorLight3Brush);
                 }
@@ -2152,7 +2152,7 @@ namespace System.Windows
         {
             get
             {
-                if(_cacheAccentColorDark1Brush == null)
+                if(_cacheAccentColorDark1Brush is null)
                 {
                     _cacheAccentColorDark1Brush = CreateInstance(SystemResourceKeyID.AccentColorDark1Brush);
                 }
@@ -2168,7 +2168,7 @@ namespace System.Windows
         {
             get
             {
-                if(_cacheAccentColorDark2Brush == null)
+                if(_cacheAccentColorDark2Brush is null)
                 {
                     _cacheAccentColorDark2Brush = CreateInstance(SystemResourceKeyID.AccentColorDark2Brush);
                 }
@@ -2184,7 +2184,7 @@ namespace System.Windows
         {
             get
             {
-                if(_cacheAccentColorDark3Brush == null)
+                if(_cacheAccentColorDark3Brush is null)
                 {
                     _cacheAccentColorDark3Brush = CreateInstance(SystemResourceKeyID.AccentColorDark3Brush);
                 }

@@ -72,7 +72,7 @@ namespace System.Windows
         /// <returns>value that is result of conversion</returns>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            if (value == null)
+            if (value is null)
             {
                 throw GetConvertFromException(value);
             }

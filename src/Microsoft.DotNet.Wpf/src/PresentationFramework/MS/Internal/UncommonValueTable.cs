@@ -38,7 +38,7 @@ namespace MS.Internal
             if (index < 0)
             {
                 // new entry - grow the array
-                if (_table == null)
+                if (_table is null)
                 {
                     _table = new object[1];
                     index = 0;

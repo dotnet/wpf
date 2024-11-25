@@ -86,7 +86,7 @@ namespace System.Windows.Markup
         // XmlnsDefinitionAttributes.  Add these to the cache table.
         private void AddReferencedAssemblies()
         {
-            if (_assemblyPathTable == null || _assemblyPathTable.Count == 0)
+            if (_assemblyPathTable is null || _assemblyPathTable.Count == 0)
             {
                 return;
             }
@@ -108,7 +108,7 @@ namespace System.Windows.Markup
                     continue;
                 }
                 assy = ReflectionHelper.GetAlreadyReflectionOnlyLoadedAssembly(assemblyName);
-                if (assy == null)
+                if (assy is null)
                 {
                     string assemblyFullPath = _assemblyPathTable[assemblyName] as string;
 
@@ -163,7 +163,7 @@ namespace System.Windows.Markup
             lock(this)
             {
                 clrNsMapping = _cacheTable[xmlns] as List<ClrNamespaceAssemblyPair>;
-                if (clrNsMapping == null)
+                if (clrNsMapping is null)
                 {
                     if (_uriToAssemblyNameTable[xmlns] != null)
                     {

@@ -68,13 +68,13 @@ namespace System.Windows.Documents
         public bool MoveNext()
         {
             // If _textSegments has been disposed, throw exception
-            ObjectDisposedException.ThrowIf(_textSegments == null, typeof(HostedElements));
+            ObjectDisposedException.ThrowIf(_textSegments is null, typeof(HostedElements));
 
             if (_textSegments.Count == 0)
                 return false;
 
             // Verify that current position matches with current text segment, and set it if it's null.
-            if (_currentPosition == null)
+            if (_currentPosition is null)
             {
                 // We should be at the start
                 Debug.Assert(_currentTextSegment == 0);
@@ -166,14 +166,14 @@ namespace System.Windows.Documents
             {
                 // Disable PRESharp warning 6503: "Property get methods should not throw exceptions".
                 // HostedElements must throw exception if Current property is incorrectly accessed
-                if (_textSegments == null)
+                if (_textSegments is null)
                 {
                     // Collection was modified 
 #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
                     throw new InvalidOperationException(SR.EnumeratorCollectionDisposed);
                 }
 
-                if (_currentPosition == null)
+                if (_currentPosition is null)
                 {
                     // Enumerator not started. Call MoveNext to see if we can move ahead
 #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception

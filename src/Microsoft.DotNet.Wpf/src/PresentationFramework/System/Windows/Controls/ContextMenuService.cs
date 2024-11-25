@@ -400,7 +400,7 @@ namespace System.Windows.Controls
 
         private static void OnContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
-            if (e.TargetElement == null)
+            if (e.TargetElement is null)
             {
                 DependencyObject o = sender as DependencyObject;
                 if (o != null)

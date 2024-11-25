@@ -137,7 +137,7 @@ namespace System.Windows.Input
             }
 
             // If no element is given for focus, use the root of the active source.
-            if(oFocus == null && _activeSource != null)
+            if(oFocus is null && _activeSource != null)
             {
                 oFocus = _activeSource.RootVisual;
                 forceToNullIfFailed = true;
@@ -355,7 +355,7 @@ namespace System.Windows.Input
                     // but if focus is within the desired element we'll assume this
                     // is what happened.
                     IInputElement newFocusElement = newFocus as IInputElement;
-                    if (newFocusElement == null || !newFocusElement.IsKeyboardFocusWithin)
+                    if (newFocusElement is null || !newFocusElement.IsKeyboardFocusWithin)
                     {
                         newFocus = null;
                         changeFocus = true;
@@ -554,7 +554,7 @@ namespace System.Windows.Input
             // the user can change the input device to avoid the infinite loops, or close
             // the app if nothing else works.
             //
-            if(_reevaluateFocusOperation == null)
+            if(_reevaluateFocusOperation is null)
             {
                 _reevaluateFocusOperation = Dispatcher.BeginInvoke(DispatcherPriority.Input, _reevaluateFocusCallback, null);
             }
@@ -574,7 +574,7 @@ namespace System.Windows.Input
         {
             _reevaluateFocusOperation = null;
 
-            if( _focus == null )
+            if( _focus is null )
             {
                 return null;
             }
@@ -692,7 +692,7 @@ namespace System.Windows.Input
                 if((keyboardInput.Actions & RawKeyboardActions.Activate) == RawKeyboardActions.Activate)
                 {
                     //if active source is null, no need to do special-case handling
-                    if(_activeSource == null)
+                    if(_activeSource is null)
                     {
                         // we are now active.
                         _activeSource = keyboardInput.InputSource;
@@ -1025,7 +1025,7 @@ namespace System.Windows.Input
         {
             get
             {
-                if (_focusTreeState == null)
+                if (_focusTreeState is null)
                 {
                     _focusTreeState = new DeferredElementTreeState();
                 }

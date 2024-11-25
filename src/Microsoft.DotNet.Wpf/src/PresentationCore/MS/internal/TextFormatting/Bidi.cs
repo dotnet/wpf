@@ -683,7 +683,7 @@ namespace MS.Internal.TextFormatting
             DirectionClass        endType;
             DirectionClass        resolutionType;
 
-            if ((characterClass == null) || (count == 0))
+            if ((characterClass is null) || (count == 0))
             {
                 return;
             }
@@ -732,7 +732,7 @@ namespace MS.Internal.TextFormatting
             DirectionClass        newClass          // [IN]
         )
         {
-            if ((characterClass == null) || (count == 0))
+            if ((characterClass is null) || (count == 0))
             {
                 return;
             }
@@ -1771,8 +1771,8 @@ namespace MS.Internal.TextFormatting
             cchResolved = 0;
 
             // Verifying input parameters.
-            if(charBuffer == null || (cchText <= 0) || (charBuffer.Count < cchText) ||
-                ((((flags & Flags.ContinueAnalysis)!=0) || ((flags & Flags.IncompleteText)!=0)) && (state == null)))                          
+            if(charBuffer is null || (cchText <= 0) || (charBuffer.Count < cchText) ||
+                ((((flags & Flags.ContinueAnalysis)!=0) || ((flags & Flags.IncompleteText)!=0)) && (state is null)))                          
             {
                 return false;
             }
@@ -2455,7 +2455,7 @@ namespace MS.Internal.TextFormatting
                                                           levels[runStart],
                                                           continuingAnalysis ? stateIn: null,
                                                           incompleteRun ? stateOut: null,
-                                                          ((counter == 0) && (stateIn == null)) ?
+                                                          ((counter == 0) && (stateIn is null)) ?
                                                           ((flags & Flags.PreviousStrongIsArabic)!=0):
                                                           false,
                                                           flags);
@@ -2491,7 +2491,7 @@ namespace MS.Internal.TextFormatting
             cchResolved = cchText - lengthUnresolved;
 
             // if the charBuffer ended with paragraph seperator then we need to reset the Bidi state
-            if (((flags & Flags.IncompleteText) != 0) && (stateOut == null))
+            if (((flags & Flags.IncompleteText) != 0) && (stateOut is null))
             {
                 state.OverrideLevels        = 0;
                 state.Overflow              = 0;

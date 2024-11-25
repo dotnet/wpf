@@ -105,7 +105,7 @@ namespace System.Xaml
         {
             ArgumentNullException.ThrowIfNull(schemaContext);
             MethodInfo accessor = getter ?? setter;
-            if (accessor == null)
+            if (accessor is null)
             {
                 throw new ArgumentNullException(SR.GetterOrSetterRequired, (Exception)null);
             }
@@ -164,7 +164,7 @@ namespace System.Xaml
             get
             {
                 EnsureReflector();
-                if (_reflector.Invoker == null)
+                if (_reflector.Invoker is null)
                 {
                     _reflector.Invoker = LookupInvoker() ?? XamlMemberInvoker.UnknownInvoker;
                 }
@@ -183,12 +183,12 @@ namespace System.Xaml
 
         public bool IsReadPublic
         {
-            get { return IsReadPublicIgnoringType && (_declaringType == null || _declaringType.IsPublic); }
+            get { return IsReadPublicIgnoringType && (_declaringType is null || _declaringType.IsPublic); }
         }
 
         public bool IsWritePublic
         {
-            get { return IsWritePublicIgnoringType && (_declaringType == null || _declaringType.IsPublic); }
+            get { return IsWritePublicIgnoringType && (_declaringType is null || _declaringType.IsPublic); }
         }
 
         public string Name { get { return _name; } }
@@ -227,7 +227,7 @@ namespace System.Xaml
                     return _declaringType;
                 }
                 EnsureReflector();
-                if (_reflector.TargetType == null)
+                if (_reflector.TargetType is null)
                 {
                     if (_reflector.IsUnknown)
                     {
@@ -244,7 +244,7 @@ namespace System.Xaml
             get
             {
                 EnsureReflector();
-                if (_reflector.Type == null)
+                if (_reflector.Type is null)
                 {
                     _reflector.Type = LookupType() ?? XamlLanguage.Object;
                 }
@@ -347,7 +347,7 @@ namespace System.Xaml
             get
             {
                 EnsureReflector();
-                if (_reflector.DependsOn == null)
+                if (_reflector.DependsOn is null)
                 {
                     _reflector.DependsOn = LookupDependsOn() ?? XamlType.EmptyList<XamlMember>.Value;
                 }
@@ -547,7 +547,7 @@ namespace System.Xaml
                 return null;
             }
             List<string> doPropertyNames = _reflector.GetAllAttributeContents<string>(typeof(DependsOnAttribute));
-            if (doPropertyNames == null || doPropertyNames.Count == 0)
+            if (doPropertyNames is null || doPropertyNames.Count == 0)
             {
                 return null;
             }
@@ -608,7 +608,7 @@ namespace System.Xaml
         {
             if (UnderlyingMember != null)
             {
-                return (Setter == null);
+                return (Setter is null);
             }
             return GetDefaultFlag(BoolMemberBits.ReadOnly);
         }
@@ -619,14 +619,14 @@ namespace System.Xaml
             {
                 return _reflector.IsUnknown;
             }
-            return UnderlyingMember == null;
+            return UnderlyingMember is null;
         }
 
         protected virtual bool LookupIsWriteOnly()
         {
             if (UnderlyingMember != null)
             {
-                return (Getter == null);
+                return (Getter is null);
             }
             return GetDefaultFlag(BoolMemberBits.WriteOnly);
         }
@@ -673,7 +673,7 @@ namespace System.Xaml
                     result = SchemaContext.GetValueConverter<TypeConverter>(converterType, null);
                 }
             }
-            if (result == null && Type != null)
+            if (result is null && Type != null)
             {
                 result = Type.TypeConverter;
             }
@@ -692,7 +692,7 @@ namespace System.Xaml
                     result = SchemaContext.GetValueConverter<ValueSerializer>(converterType, null);
                 }
             }
-            if (result == null && Type != null)
+            if (result is null && Type != null)
             {
                 result = Type.ValueSerializer;
             }
@@ -798,7 +798,7 @@ namespace System.Xaml
 
         private static void ValidateGetter(MethodInfo method, string argumentName)
         {
-            if (method == null)
+            if (method is null)
             {
                 return;
             }
@@ -833,7 +833,7 @@ namespace System.Xaml
                 if (!_reflector.CustomAttributeProviderIsSetVolatile)
                 {
                     ICustomAttributeProvider attrProvider = LookupCustomAttributeProvider();
-                    if (attrProvider == null)
+                    if (attrProvider is null)
                     {
                         // Set the member that _reflector will use. Note this also ensures that
                         // _underlyingMember is initialized, so it's safe to access the field directly below.
@@ -892,7 +892,7 @@ namespace System.Xaml
         // We call this method a lot. Keep it really small, to make sure it inlines.
         private void EnsureReflector()
         {
-            if (_reflector == null)
+            if (_reflector is null)
             {
                 CreateReflector();
             }
@@ -991,7 +991,7 @@ namespace System.Xaml
         public override int GetHashCode()
         {
             Debug.Assert(DeclaringType != null, "XamlDirective should not call into base.GetHashCode");
-            return (Name == null ?  0 : Name.GetHashCode()) ^ (int)_memberType ^ DeclaringType.GetHashCode();
+            return (Name is null ?  0 : Name.GetHashCode()) ^ (int)_memberType ^ DeclaringType.GetHashCode();
         }
 
         public bool Equals(XamlMember other)

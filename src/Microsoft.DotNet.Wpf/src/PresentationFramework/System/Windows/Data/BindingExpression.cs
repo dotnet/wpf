@@ -64,7 +64,7 @@ namespace System.Windows.Data
         private BindingExpression(Binding binding, BindingExpressionBase owner)
             : base(binding, owner)
         {
-            UseDefaultValueConverter = (ParentBinding.Converter == null);
+            UseDefaultValueConverter = (ParentBinding.Converter is null);
 
             if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.ShowPath))
             {
@@ -114,7 +114,7 @@ namespace System.Windows.Data
         void IDataBindEngineClient.VerifySourceReference(bool lastChance)
         {
             DependencyObject target = TargetElement;
-            if (target == null)
+            if (target is null)
                 return;     // binding was detached since scheduling this task
 
             ObjectRef sourceRef = ParentBinding.SourceReference;
@@ -166,7 +166,7 @@ namespace System.Windows.Data
             get
             {
                 DependencyObject target = TargetElement;
-                if (target == null)
+                if (target is null)
                     return null;
 
                 // if we're using DataContext, find the source for the DataContext
@@ -221,7 +221,7 @@ namespace System.Windows.Data
             ArgumentNullException.ThrowIfNull(d);
 
             DependencyProperty dp = args.Property;
-            if (dp == null)
+            if (dp is null)
                 throw new InvalidOperationException(SR.Format(SR.ArgumentPropertyMustNotBeNull, "Property", "args"));
 
             // ignore irrelevant notifications.  This test must happen before any marshalling.
@@ -320,11 +320,11 @@ namespace System.Windows.Data
             get
             {
                 WeakReference wr = (WeakReference)GetValue(Feature.CollectionViewSource, null);
-                return (wr == null) ? null : (CollectionViewSource)wr.Target;
+                return (wr is null) ? null : (CollectionViewSource)wr.Target;
             }
             set
             {
-                if (value == null)
+                if (value is null)
                     ClearValue(Feature.CollectionViewSource);
                 else
                     SetValue(Feature.CollectionViewSource, new WeakReference(value));
@@ -412,8 +412,8 @@ namespace System.Windows.Data
             bindExpr.ResolvePropertyDefaultSettings(binding.Mode, binding.UpdateSourceTrigger, fwMetaData);
 
             // Two-way Binding with an empty path makes no sense
-            if (bindExpr.IsReflective && binding.XPath == null &&
-                    (binding.Path == null || String.IsNullOrEmpty(binding.Path.Path)))
+            if (bindExpr.IsReflective && binding.XPath is null &&
+                    (binding.Path is null || String.IsNullOrEmpty(binding.Path.Path)))
                 throw new InvalidOperationException(SR.TwoWayBindingNeedsPath);
 
             return bindExpr;
@@ -440,7 +440,7 @@ namespace System.Windows.Data
                                     TargetProperty.PropertyType, IsReflective);
 
                 // null converter means failure to create one
-                if (converter == null && TraceData.IsEnabled)
+                if (converter is null && TraceData.IsEnabled)
                 {
                      TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Error,
                                     TraceData.CannotCreateDefaultValueConverter(
@@ -519,7 +519,7 @@ namespace System.Windows.Data
                 return false;
 
             // listen for InheritanceContext change (if target is mentored)
-            if (ParentBinding.SourceReference == null || ParentBinding.SourceReference.UsesMentor)
+            if (ParentBinding.SourceReference is null || ParentBinding.SourceReference.UsesMentor)
             {
                 DependencyObject mentor = Helper.FindMentor(target);
                 if (mentor != target)
@@ -587,7 +587,7 @@ namespace System.Windows.Data
             if (ValidatesOnNotifyDataErrors)
             {
                 WeakReference dataErrorWR = (WeakReference)GetValue(Feature.DataErrorValue, null);
-                INotifyDataErrorInfo dataErrorValue = (dataErrorWR == null) ? null : dataErrorWR.Target as INotifyDataErrorInfo;
+                INotifyDataErrorInfo dataErrorValue = (dataErrorWR is null) ? null : dataErrorWR.Target as INotifyDataErrorInfo;
                 if (dataErrorValue != null)
                 {
                     ErrorsChangedEventManager.RemoveHandler(dataErrorValue, OnErrorsChanged);
@@ -610,7 +610,7 @@ namespace System.Windows.Data
         {
             // if the target has been GC'd, just give up
             DependencyObject target = TargetElement;
-            if (target == null)
+            if (target is null)
                 return;     // status will be Detached
 
             bool isExtendedTraceEnabled = TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.AttachToContext);
@@ -654,8 +654,8 @@ namespace System.Windows.Data
             // GetTypeFromName fail if it wants to.
             if (!lastChance && ParentBinding.TreeContextIsRequired)
             {
-                if (target.GetValue(XmlAttributeProperties.XmlnsDictionaryProperty) == null ||
-                    target.GetValue(XmlAttributeProperties.XmlNamespaceMapsProperty) == null)
+                if (target.GetValue(XmlAttributeProperties.XmlnsDictionaryProperty) is null ||
+                    target.GetValue(XmlAttributeProperties.XmlNamespaceMapsProperty) is null)
                 {
                     if (isExtendedTraceEnabled)
                     {
@@ -672,7 +672,7 @@ namespace System.Windows.Data
 
             // if the binding uses a mentor, check that it exists
             DependencyObject mentor = !UsingMentor ? target :  Helper.FindMentor(target);
-            if (mentor == null)
+            if (mentor is null)
             {
                 if (isExtendedTraceEnabled)
                 {
@@ -696,7 +696,7 @@ namespace System.Windows.Data
             // determine the element whose DataContext governs this BindingExpression
             DependencyObject contextElement = null;     // no context element
             bool contextElementFound = true;
-            if (ParentBinding.SourceReference == null)
+            if (ParentBinding.SourceReference is null)
             {
                 contextElement = mentor;    // usually the mentor/target element
 
@@ -770,7 +770,7 @@ namespace System.Windows.Data
                 // layout may change the inherited value.
                 // Ignore this requirement during the last chance, and just let
                 // the binding to null DataContext proceed.
-                if (source == null && !lastChance && !HasLocalDataContext(contextElement))
+                if (source is null && !lastChance && !HasLocalDataContext(contextElement))
                 {
                     if (isExtendedTraceEnabled)
                     {
@@ -833,7 +833,7 @@ namespace System.Windows.Data
             {
                 Converter = ParentBinding.Converter;
 
-                if (Converter == null)
+                if (Converter is null)
                 {
                     throw new InvalidOperationException(SR.MissingValueConverter); // report instead of throw?
                 }
@@ -890,7 +890,7 @@ namespace System.Windows.Data
             if (!CanActivate)
                 return;
 
-            if (_ctxElement == null)
+            if (_ctxElement is null)
             {
                 // only activate once if there's an explicit source
                 if (StatusInternal == BindingStatusInternal.Inactive)
@@ -901,7 +901,7 @@ namespace System.Windows.Data
                         if (UsingMentor)
                         {
                             target = Helper.FindMentor(target);
-                            if (target == null)
+                            if (target is null)
                             {
                                 // mentor is not available
                                 SetStatus(BindingStatusInternal.PathError);
@@ -920,7 +920,7 @@ namespace System.Windows.Data
             else
             {
                 DependencyObject contextElement = ContextElement;
-                if (contextElement == null)
+                if (contextElement is null)
                 {
                     // context element has been GC'd, or unavailable (e.g. no mentor)
                     SetStatus(BindingStatusInternal.PathError);
@@ -944,7 +944,7 @@ namespace System.Windows.Data
         internal void Activate(object item)
         {
             DependencyObject target = TargetElement;
-            if (target == null)
+            if (target is null)
                 return;
 
             if (item == DisconnectedItem)
@@ -997,7 +997,7 @@ namespace System.Windows.Data
                                     this);
             }
 
-            if (Worker == null)
+            if (Worker is null)
                 CreateWorker();
 
             // mark the BindingExpression active
@@ -1062,8 +1062,8 @@ namespace System.Windows.Data
             BindingGroup.ProposedValueEntry entry;
 
             // get the proposed value from the binding group
-            if (bindingGroup == null ||
-                (entry = bindingGroup.GetProposedValueEntry(SourceItem, SourcePropertyName)) == null)
+            if (bindingGroup is null ||
+                (entry = bindingGroup.GetProposedValueEntry(SourceItem, SourcePropertyName)) is null)
             {
                 // no proposed value
                 error = null;
@@ -1140,7 +1140,7 @@ namespace System.Windows.Data
             // disconnect this binding from its former item
             _dataItem = CreateReference(DisconnectedItem);
 
-            if (Worker == null)
+            if (Worker is null)
                 return;
 
             Worker.AttachDataItem();
@@ -1197,7 +1197,7 @@ namespace System.Windows.Data
 
         private void CreateWorker()
         {
-            Invariant.Assert(Worker == null, "duplicate call to CreateWorker");
+            Invariant.Assert(Worker is null, "duplicate call to CreateWorker");
 
             _worker = new ClrBindingWorker(this, Engine);
         }
@@ -1264,11 +1264,11 @@ namespace System.Windows.Data
         {
             // if the target element has been GC'd, do nothing
             DependencyObject target = TargetElement;
-            if (target == null)
+            if (target is null)
                 return;
 
             // if the BindingExpression hasn't activated, do nothing
-            if (Worker == null)
+            if (Worker is null)
                 return;
 
             Type targetType = GetEffectiveTargetType();
@@ -1374,7 +1374,7 @@ namespace System.Windows.Data
                     }
                 #if !TargetNullValueBC   //BreakingChange
                     // For DBNull, unless there's a user converter, we handle it here
-                    else if ((value == DBNull.Value) && (Converter == null || UseDefaultValueConverter))
+                    else if ((value == DBNull.Value) && (Converter is null || UseDefaultValueConverter))
                     {
                         if (targetType.IsGenericType && targetType.GetGenericTypeDefinition() == typeof(Nullable<>))
                         {
@@ -1577,7 +1577,7 @@ namespace System.Windows.Data
                         }
 
                         // lazy-fetch culture (avoids exception when target DP is Language)
-                        if (culture == null)
+                        if (culture is null)
                         {
                             culture = GetCulture();
                         }
@@ -1589,10 +1589,10 @@ namespace System.Windows.Data
                 }
             }
 
-            if (needDataErrorRule && validationError == null)
+            if (needDataErrorRule && validationError is null)
             {
                 // lazy-fetch culture (avoids exception when target DP is Language)
-                if (culture == null)
+                if (culture is null)
                 {
                     culture = GetCulture();
                 }
@@ -1837,7 +1837,7 @@ namespace System.Windows.Data
             if (   !NeedsUpdate                     // nothing to do
                 || !IsReflective                    // no update desired
                 || IsInTransfer                     // in a transfer
-                || Worker == null                   // not activated
+                || Worker is null                   // not activated
                 || !Worker.CanUpdate                // no source (currency moved off end)
                 )
                 return true;
@@ -1910,7 +1910,7 @@ namespace System.Windows.Data
             {
                 if (IsNullValue(value))
                 {
-                    if (value == null || !IsValidValueForUpdate(value, sourceType))
+                    if (value is null || !IsValidValueForUpdate(value, sourceType))
                     {
                         if (Worker.IsDBNullValidForUpdate)
                         {
@@ -1950,7 +1950,7 @@ namespace System.Windows.Data
             // if the conversion failed, signal a validation error
             if (value == DependencyProperty.UnsetValue)
             {
-                if (ValidationError == null)
+                if (ValidationError is null)
                 {
                     ValidationError validationError = new ValidationError(ConversionValidationRule.Instance, this, SR.Format(SR.Validation_ConversionFailed, rawValue), null);
                     UpdateValidationError(validationError);
@@ -2198,7 +2198,7 @@ namespace System.Windows.Data
         {
             // null is always valid, even for value types.  The reflection layer
             // apparently converts null to default(T).
-            if (value == null)
+            if (value is null)
                 return true;
 
             // if direct assignment is possible, the value is valid
@@ -2224,18 +2224,18 @@ namespace System.Windows.Data
             {
                 filteredException = CallDoFilterException(ex);
 
-                if (filteredException == null)
+                if (filteredException is null)
                     return;
 
                 validationError = filteredException as ValidationError;
             }
 
             // See if an ExceptionValidationRule is in effect
-            if (validationError == null && validate)
+            if (validationError is null && validate)
             {
                 ValidationRule exceptionValidationRule = ExceptionValidationRule.Instance;
 
-                if (filteredException == null)
+                if (filteredException is null)
                 {
                     validationError = new ValidationError(exceptionValidationRule, this, ex.Message, ex);
                 }
@@ -2273,14 +2273,14 @@ namespace System.Windows.Data
             // get initial (top-level) item
             object item;
             DependencyObject contextElement = ContextElement;
-            if (contextElement == null)
+            if (contextElement is null)
             {
                 DependencyObject target = TargetElement;
                 if (target != null && UsingMentor)
                 {
                     target = Helper.FindMentor(target);
                 }
-                if (target == null)
+                if (target is null)
                 {
                     return true;
                 }
@@ -2329,7 +2329,7 @@ namespace System.Windows.Data
 
             // replace the value object, if it has changed
             WeakReference dataErrorWR = (WeakReference)GetValue(Feature.DataErrorValue, null);
-            INotifyDataErrorInfo dataErrorValue = (dataErrorWR == null) ? null : dataErrorWR.Target as INotifyDataErrorInfo;
+            INotifyDataErrorInfo dataErrorValue = (dataErrorWR is null) ? null : dataErrorWR.Target as INotifyDataErrorInfo;
             if (value != DependencyProperty.UnsetValue && value != dataErrorValue && IsDynamic)
             {
                 if (dataErrorValue != null)
@@ -2412,9 +2412,9 @@ namespace System.Windows.Data
 
         List<object> MergeErrors(List<object> list1, List<object> list2)
         {
-            if (list1 == null)
+            if (list1 is null)
                 return list2;
-            if (list2 == null)
+            if (list2 is null)
                 return list1;
 
             foreach (object o in list2)

@@ -663,7 +663,7 @@ namespace DrtXaml.Tests
                 for (int i = 0; i < keys.Length; i++)
                 {
                     object key = wrKeys[i].Target;
-                    if (key == null)
+                    if (key is null)
                     {
                         continue;
                     }
@@ -704,7 +704,7 @@ namespace DrtXaml.Tests
                 for (int i = 0; i < keys.Length; i++)
                 {
                     object key = wrKeys[i].Target;
-                    if (key == null)
+                    if (key is null)
                     {
                         // If the key is gone then 
                         Assert.IsFalse(wrValues[i].IsAlive, "If the key is gone then the value should also be gone");
@@ -813,7 +813,7 @@ namespace DrtXaml.Tests
         public override bool Equals(object obj)
         {
             ComplexAttachedProperty other = obj as ComplexAttachedProperty;
-            if (other == null)
+            if (other is null)
             {
                 return false;
             }

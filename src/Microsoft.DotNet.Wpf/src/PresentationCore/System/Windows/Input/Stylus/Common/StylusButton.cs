@@ -43,7 +43,7 @@ namespace System.Windows.Input
             get
             {
                 StylusPointCollection stylusPoints = _stylusDevice.GetStylusPoints(null);
-                if (stylusPoints == null || stylusPoints.Count == 0)
+                if (stylusPoints is null || stylusPoints.Count == 0)
                     return CachedButtonState;
 
                 return (StylusButtonState)stylusPoints[stylusPoints.Count - 1].GetPropertyValue(new StylusPointProperty(Guid, true));

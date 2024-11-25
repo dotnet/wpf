@@ -45,7 +45,7 @@ namespace System.Windows.Markup
         {
             MemberInfo memberInfo = dpOrPiOrMi as PropertyInfo;
 
-            if (memberInfo == null)
+            if (memberInfo is null)
             {
                 MethodInfo methodInfo;
 #if !PBTCOMPILER
@@ -64,7 +64,7 @@ namespace System.Windows.Markup
                     // We failed to get a CLR wrapper for the DependencyProperty, so we
                     // assume that this is an attached property and look for the MethodInfo
                     // for the static getter.
-                    if (memberInfo == null)
+                    if (memberInfo is null)
                     {
                         // Get the method member that defines the DependencyProperty
                         memberInfo = dp.OwnerType.GetMethod(
@@ -445,7 +445,7 @@ namespace System.Windows.Markup
 
             TypeConverter? typeConverter = GetCoreConverterFromCoreType(type);
 
-            if (typeConverter == null)
+            if (typeConverter is null)
             {
                 Type? converterType = GetConverterType(type);
                 if (converterType != null)

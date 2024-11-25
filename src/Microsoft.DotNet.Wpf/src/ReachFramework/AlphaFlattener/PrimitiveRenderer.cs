@@ -23,7 +23,7 @@ namespace Microsoft.Internal.AlphaFlattener
         // External API
         public void RenderImage(ImageProxy image, Rect dest, Geometry clip, Matrix trans, string desp)
         {
-            if (image == null)
+            if (image is null)
             {
                 return;
             }
@@ -31,7 +31,7 @@ namespace Microsoft.Internal.AlphaFlattener
             Geometry bounds;
             bool clipToBounds;
 
-            if (clip == null)
+            if (clip is null)
             {
                 // no clipping needed, draw everything
                 bounds = Utility.TransformGeometry(new RectangleGeometry(dest), trans);
@@ -50,7 +50,7 @@ namespace Microsoft.Internal.AlphaFlattener
         // External API
         public void DrawGeometry(Geometry cur, string desp, GeometryPrimitive gp)
         {
-            if (cur == null)
+            if (cur is null)
             {
                 return;
             }
@@ -63,7 +63,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             if (_pen != null)
             {
-                Debug.Assert(_brush == null, "no brush");
+                Debug.Assert(_brush is null, "no brush");
 
                 if ((_overlapping != null) && FindIntersection(gp.WidenGeometry, ref start, out topPI, out topBounds, out inter))
                 {
@@ -103,7 +103,7 @@ namespace Microsoft.Internal.AlphaFlattener
         // External API
         public bool DrawGlyphs(GlyphRun glyphrun, Rect bounds, Matrix trans, string desp)
         {
-            if (glyphrun == null)
+            if (glyphrun is null)
             {
                 return true;
             }
@@ -321,7 +321,7 @@ namespace Microsoft.Internal.AlphaFlattener
             topBounds = null;
             inter = null;
 
-            if (_overlapping == null)
+            if (_overlapping is null)
             {
                 return false;
             }

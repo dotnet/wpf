@@ -181,7 +181,7 @@ namespace System.Windows.Input.StylusWisp
         /////////////////////////////////////////////////////////////////////
         internal void UpdateTablets()
         {
-            ObjectDisposedException.ThrowIf(_tablets == null, typeof(TabletDeviceCollection));
+            ObjectDisposedException.ThrowIf(_tablets is null, typeof(TabletDeviceCollection));
 
             // This method can be re-entered in a way that can cause deadlock
             // This can happen if multiple WM_DEVICECHANGE
@@ -267,7 +267,7 @@ namespace System.Windows.Input.StylusWisp
                                                         PenThreadPool.GetPenThreadForPenContext(null);
 
             // There was an error acquiring a PenThread, do no work here.
-            if (penThread == null)
+            if (penThread is null)
             {
                 Debug.Assert(false, "Error acquiring PenThread in UpdateTabletsImpl()");
                 return;
@@ -280,7 +280,7 @@ namespace System.Windows.Input.StylusWisp
             for (uint i = 0; i < tabletdevices.Length; i++)
             {
                 // See if this is a bogus entry first.
-                if (tabletdevices[i].PimcTablet == null) continue;
+                if (tabletdevices[i].PimcTablet is null) continue;
 
                 // If it is the mouse tablet device we want to ignore it.
                 if (tabletdevices[i].DeviceType == (TabletDeviceType)(-1))
@@ -303,7 +303,7 @@ namespace System.Windows.Input.StylusWisp
             uint unchangedTabletCount = 0;
             for (uint iTablet = 0; iTablet < tabletdevices.Length; iTablet++)
             {
-                if (tabletdevices[iTablet].PimcTablet == null)
+                if (tabletdevices[iTablet].PimcTablet is null)
                 {
                     continue; // Skip looking at this index (mouse and bogus tablets are ignored).
                 }
@@ -331,7 +331,7 @@ namespace System.Windows.Input.StylusWisp
                         }
                     }
                     // Not found so create it.
-                    if (tablet == null)
+                    if (tablet is null)
                     {
                         try
                         {
@@ -401,7 +401,7 @@ namespace System.Windows.Input.StylusWisp
         /////////////////////////////////////////////////////////////////////
         internal bool HandleTabletAdded(uint wisptisIndex, ref uint tabletIndexChanged)
         {
-            ObjectDisposedException.ThrowIf(_tablets == null, typeof(TabletDeviceCollection));
+            ObjectDisposedException.ThrowIf(_tablets is null, typeof(TabletDeviceCollection));
 
             tabletIndexChanged = UInt32.MaxValue;
 
@@ -415,7 +415,7 @@ namespace System.Windows.Input.StylusWisp
                                                          PenThreadPool.GetPenThreadForPenContext(null);
 
             // There was an error acquiring a PenThread, return true to force a complete tablet refresh
-            if (penThread == null)
+            if (penThread is null)
             {
                 Debug.Assert(false, "Error acquiring PenThread in HandleTabletAdded()");
                 return true;
@@ -424,7 +424,7 @@ namespace System.Windows.Input.StylusWisp
             TabletDeviceInfo tabletInfo = penThread.WorkerGetTabletInfo(wisptisIndex);
 
             // If we failed due to a COM exception on the pen thread then return
-            if (tabletInfo.PimcTablet == null)
+            if (tabletInfo.PimcTablet is null)
             {
                 return true; // make sure we rebuild our tablet collection. (return true + MaxValue).
             }
@@ -504,7 +504,7 @@ namespace System.Windows.Input.StylusWisp
         /////////////////////////////////////////////////////////////////////
         internal uint HandleTabletRemoved(uint wisptisIndex)
         {
-            ObjectDisposedException.ThrowIf(_tablets == null, typeof(TabletDeviceCollection));
+            ObjectDisposedException.ThrowIf(_tablets is null, typeof(TabletDeviceCollection));
 
             // if mouse tabletdevice then ignore it.
             if (wisptisIndex == _indexMouseTablet)
@@ -591,7 +591,7 @@ namespace System.Windows.Input.StylusWisp
         /////////////////////////////////////////////////////////////////////
         internal WispStylusDevice UpdateStylusDevices(int tabletId, int stylusId)
         {
-            ObjectDisposedException.ThrowIf(_tablets == null, typeof(TabletDeviceCollection));
+            ObjectDisposedException.ThrowIf(_tablets is null, typeof(TabletDeviceCollection));
 
             for (int iTablet = 0, cTablets = _tablets.Length; iTablet < cTablets; iTablet++)
             {

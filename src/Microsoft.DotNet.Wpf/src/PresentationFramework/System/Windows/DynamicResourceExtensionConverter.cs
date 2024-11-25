@@ -48,7 +48,7 @@ namespace System.Windows
 
                 DynamicResourceExtension dynamicResource = value as DynamicResourceExtension;
 
-                if (dynamicResource == null)
+                if (dynamicResource is null)
                     throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "DynamicResourceExtension"), "value"); 
 
                 return new InstanceDescriptor(typeof(DynamicResourceExtension).GetConstructor(new Type[] { typeof(object) }), 

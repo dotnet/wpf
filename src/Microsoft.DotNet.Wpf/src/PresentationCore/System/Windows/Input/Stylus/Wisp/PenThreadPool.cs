@@ -47,7 +47,7 @@ namespace System.Windows.Input
         {
             // Create the threadstatic DynamicRendererThreadManager as needed for calling thread.
             // It only creates one 
-            if (_penThreadPool == null)
+            if (_penThreadPool is null)
             {
                 _penThreadPool = new PenThreadPool();
             }
@@ -113,14 +113,14 @@ namespace System.Windows.Input
                         selectedPenThread = candidatePenThread;
                     }
                     // This is an invalid WeakReference and should be removed
-                    else if (candidatePenThread == null)
+                    else if (candidatePenThread is null)
                     {
                         _penThreadWeakRefList.RemoveAt(i);
                     }
                 }
 
                 // If no valid thread was found, create a new one and add to the pool
-                if (selectedPenThread == null)
+                if (selectedPenThread is null)
                 {
                     selectedPenThread = new PenThread();
 
@@ -128,7 +128,7 @@ namespace System.Windows.Input
                 }
 
                 // If we have no context or we can successfully add to it, then end with this thread
-                if (penContext == null || selectedPenThread.AddPenContext(penContext))
+                if (penContext is null || selectedPenThread.AddPenContext(penContext))
                 {
                     break;
                 }
@@ -145,7 +145,7 @@ namespace System.Windows.Input
             }
 
             //  If we're here due to max retries, log errors appropriately
-            if (selectedPenThread == null)
+            if (selectedPenThread is null)
             {
                 StylusTraceLogger.LogReentrancyRetryLimitReached();
 

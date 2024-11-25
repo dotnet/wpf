@@ -159,7 +159,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                if(_bamlLineAndPositionRecord == null)
+                if(_bamlLineAndPositionRecord is null)
                 {
                     _bamlLineAndPositionRecord = new BamlLineAndPositionRecord();
                 }
@@ -171,7 +171,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                if(_bamlLinePositionRecord == null)
+                if(_bamlLinePositionRecord is null)
                 {
                     _bamlLinePositionRecord = new BamlLinePositionRecord();
                 }
@@ -409,7 +409,7 @@ namespace System.Windows.Markup
                 Debug.Assert(_deferComplexPropertyDepth == 0);
                 Debug.Assert(_staticResourceElementDepth == 0);
                 Debug.Assert(_dynamicResourceElementDepth == 0);
-                Debug.Assert(_staticResourceRecordList == null);
+                Debug.Assert(_staticResourceRecordList is null);
                 _deferKeys = null;
                 _deferValues = null;
                 _deferElement = null;
@@ -571,7 +571,7 @@ namespace System.Windows.Markup
                 // WriteKeyElementStart being called.
                 KeyDeferRecord keyRecord = (KeyDeferRecord)(_deferKeys[_deferKeys.Count-1]);
                 BamlDefAttributeKeyStringRecord defKeyRecord = keyRecord.Record as BamlDefAttributeKeyStringRecord;
-                if (defKeyRecord == null)
+                if (defKeyRecord is null)
                 {
                     defKeyRecord =
                         (BamlDefAttributeKeyStringRecord) BamlRecordManager.GetWriteRecord(BamlRecordType.DefAttributeKeyString);
@@ -607,7 +607,7 @@ namespace System.Windows.Markup
                 KeyDeferRecord keyRecord = (KeyDeferRecord)(_deferKeys[_deferKeys.Count-1]);
 
                 IBamlDictionaryKey defKeyRecord = FindBamlDictionaryKey(keyRecord);
-                if (defKeyRecord == null)
+                if (defKeyRecord is null)
                 {
                     BamlDefAttributeKeyStringRecord defStringKeyRecord =
                         (BamlDefAttributeKeyStringRecord) BamlRecordManager.GetWriteRecord(BamlRecordType.DefAttributeKeyString);
@@ -1395,7 +1395,7 @@ namespace System.Windows.Markup
         internal void WriteText(XamlTextNode xamlTextNode)
         {
             BamlTextRecord bamlText;
-            if (xamlTextNode.ConverterType == null)
+            if (xamlTextNode.ConverterType is null)
             {
                 if (!InStaticResourceSection && !InDynamicResourceSection)
                 {
@@ -1572,7 +1572,7 @@ namespace System.Windows.Markup
                 }
                 else
                 {
-                    if (keyRecord.Record == null)
+                    if (keyRecord.Record is null)
                     {
                         XamlParser.ThrowException(nameof(SR.ParserNoDictionaryKey),
                                               keyRecord.LineNumber,
@@ -1788,7 +1788,7 @@ namespace System.Windows.Markup
             {
                 get
                 {
-                    if (_staticResourceRecordList == null)
+                    if (_staticResourceRecordList is null)
                     {
                         _staticResourceRecordList = new List<List<ValueDeferRecord>>(1);
                     }

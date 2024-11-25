@@ -71,7 +71,7 @@ namespace System.Windows.Xps.Serialization
         {
             PrintTicket printTicket = serializedObject as PrintTicket;
 
-            if (printTicket == null)
+            if (printTicket is null)
             {
                 //
                 // Throw a meaningful exception

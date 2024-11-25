@@ -416,9 +416,9 @@ namespace Microsoft.Windows.Themes
                 controlBrush != null && (controlColor = controlBrush.Color) != SystemColors.ControlColor && controlColor.A > 0x00)
             {
                 // If we haven't cached the colors, or if the background color changed, compute the new colors
-                if (decorator._brushCache == null || controlColor != decorator._brushCache.LightBrush.Color)
+                if (decorator._brushCache is null || controlColor != decorator._brushCache.LightBrush.Color)
                 {
-                    if (decorator._brushCache == null)
+                    if (decorator._brushCache is null)
                     {
                         decorator._brushCache = new CustomBrushCache();
                     }
@@ -511,11 +511,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_classicBorderBrush == null)
+                if (_classicBorderBrush is null)
                 {
                     lock (_brushLock)
                     {
-                        if (_classicBorderBrush == null)
+                        if (_classicBorderBrush is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush();
                             temp.Freeze();
@@ -837,7 +837,7 @@ namespace Microsoft.Windows.Themes
             if (SnapsToDevicePixels)
             {
                 DoubleCollection xLines = this.VisualXSnappingGuidelines;
-                if (xLines == null)
+                if (xLines is null)
                 {
                     double width = this.RenderSize.Width;
                     xLines = GetPixelSnappingGuidelines(width, singleThickness.Left, singleThickness.Right, (int)classicThickness);
@@ -845,7 +845,7 @@ namespace Microsoft.Windows.Themes
                 }
 
                 DoubleCollection yLines = this.VisualYSnappingGuidelines;
-                if (yLines == null)
+                if (yLines is null)
                 {
                     double height = this.RenderSize.Height;
                     yLines = GetPixelSnappingGuidelines(height, singleThickness.Top, singleThickness.Bottom, (int)classicThickness);
@@ -901,11 +901,11 @@ namespace Microsoft.Windows.Themes
 
         private Geometry GetBorder(Rect bounds, Thickness borderThickness)
         {
-            if (_borderGeometryCache == null)
+            if (_borderGeometryCache is null)
                 _borderGeometryCache = new BorderGeometryCache();
 
             if (_borderGeometryCache.Bounds != bounds || _borderGeometryCache.BorderThickness != borderThickness 
-                || _borderGeometryCache.BorderGeometry == null)
+                || _borderGeometryCache.BorderGeometry is null)
             {
                 _borderGeometryCache.BorderGeometry = GenerateBorderGeometry(bounds, borderThickness);
                 _borderGeometryCache.Bounds = bounds;
@@ -1128,10 +1128,10 @@ namespace Microsoft.Windows.Themes
         // Get the cache for the Highlight Geometry
         private Geometry GetHighlight1(Rect bounds)
         {
-            if (_tabCache == null)
+            if (_tabCache is null)
                 _tabCache = new TabGeometryCache();
 
-            if (_tabCache.Bounds != bounds || _tabCache.Highlight1 == null)
+            if (_tabCache.Bounds != bounds || _tabCache.Highlight1 is null)
             {
 
                 _tabCache.Highlight1 = GenerateTabTopHighlightGeometry(bounds, true);
@@ -1149,7 +1149,7 @@ namespace Microsoft.Windows.Themes
             // Assumed to always be called after GetHighlight1
             Debug.Assert(_tabCache != null, "_tabCache is null.  GetShadow1 should only be called after GetHighlight1");
 
-            if (_tabCache.Shadow1 == null)
+            if (_tabCache.Shadow1 is null)
             {
                 _tabCache.Shadow1 = GenerateTabTopShadowGeometry(bounds, true);
             }
@@ -1162,7 +1162,7 @@ namespace Microsoft.Windows.Themes
             // Assumed to always be called after GetHighlight1
             Debug.Assert(_tabCache != null, "_tabCache is null.  GetHighlight2 should only be called after GetHighlight1");
             
-            if (_tabCache.Highlight2 == null)
+            if (_tabCache.Highlight2 is null)
             {
                 _tabCache.Highlight2 = GenerateTabTopHighlightGeometry(HelperDeflateRect(bounds, new Thickness(1, 1, 1, 0)), false);
             }
@@ -1175,7 +1175,7 @@ namespace Microsoft.Windows.Themes
             // Assumed to always be called after GetHighlight1
             Debug.Assert(_tabCache != null, "_tabCache is null.  GetHighlight2 should only be called after GetHighlight1");
 
-            if (_tabCache.Shadow2 == null)
+            if (_tabCache.Shadow2 is null)
             {
                 _tabCache.Shadow2 = GenerateTabTopShadowGeometry(HelperDeflateRect(bounds, new Thickness(1, 1, 1, 0)), false);
             }
@@ -1186,10 +1186,10 @@ namespace Microsoft.Windows.Themes
         // Gets the matrix that transforms the top tab geometries for position on left, right, or bottom
         private MatrixTransform GetTabTransform(ClassicBorderStyle style, double xOffset, double yOffset)
         {
-            if (_tabCache == null)
+            if (_tabCache is null)
                 _tabCache = new TabGeometryCache();
 
-            if (_tabCache.Transform == null || xOffset != _tabCache.xOffset || yOffset != _tabCache.yOffset)
+            if (_tabCache.Transform is null || xOffset != _tabCache.xOffset || yOffset != _tabCache.yOffset)
             {
                 switch (style)
                 {
@@ -1385,11 +1385,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_topLeftArcGeometry == null)
+                if (_topLeftArcGeometry is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_topLeftArcGeometry == null)
+                        if (_topLeftArcGeometry is null)
                         {
                             StreamGeometry geometry = new StreamGeometry();
 
@@ -1414,11 +1414,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_bottomRightArcGeometry == null)
+                if (_bottomRightArcGeometry is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_bottomRightArcGeometry == null)
+                        if (_bottomRightArcGeometry is null)
                         {
                             StreamGeometry geometry = new StreamGeometry();
 

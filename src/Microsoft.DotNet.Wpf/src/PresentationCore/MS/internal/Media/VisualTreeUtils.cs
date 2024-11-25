@@ -117,7 +117,7 @@ namespace MS.Internal.Media
                 return visual3D.FindFirstAncestorWithFlagsAnd(flags);
             }
 
-            Debug.Assert(element == null);
+            Debug.Assert(element is null);
 
             return null;
         }
@@ -130,7 +130,7 @@ namespace MS.Internal.Media
         /// </summary>
         internal static PointHitTestResult AsNearestPointHitTestResult(HitTestResult result)
         {
-            if (result == null)
+            if (result is null)
             {
                 return null;
             }
@@ -158,7 +158,7 @@ namespace MS.Internal.Media
 
                     Visual3D parent3D = current.InternalVisualParent as Visual3D;
 
-                    if (parent3D == null)
+                    if (parent3D is null)
                     {
                         break;
                     }
@@ -210,7 +210,7 @@ namespace MS.Internal.Media
         /// </summary>
         private static void EnsureVisual(DependencyObject element, bool allowNull)
         {
-            if (element == null)
+            if (element is null)
             {
                 if (!allowNull)
                 {
@@ -239,7 +239,7 @@ namespace MS.Internal.Media
 
             AsVisual(element, out visual, out visual3D);
 
-            Debug.Assert((visual == null) != (visual3D == null),
+            Debug.Assert((visual is null) != (visual3D is null),
                 "Either visual or visual3D exclusively should be non-null.");
         }
         
@@ -260,14 +260,14 @@ namespace MS.Internal.Media
                     throw new System.InvalidOperationException(SR.Format(SR.Visual_NotAVisual, element.GetType()));
                 }
 
-                Debug.Assert(castSucceeded && ((visual == null) != (visual3D == null)),
+                Debug.Assert(castSucceeded && ((visual is null) != (visual3D is null)),
                     "Either visual or visual3D exclusively should be non-null.");
 
                 element.VerifyAccess();
             }
             else
             {
-                Debug.Assert(!castSucceeded && visual == null && visual3D == null,
+                Debug.Assert(!castSucceeded && visual is null && visual3D is null,
                     "How did the cast succeed if the element was null going in?");
             }
         }
@@ -283,7 +283,7 @@ namespace MS.Internal.Media
         {
             bool castSucceeded = AsVisualHelper(element, out visual, out visual3D);
 
-            if (!(castSucceeded || element == null))
+            if (!(castSucceeded || element is null))
             {
                 Debug.Fail(String.Format(
                                "'{0}' is not a Visual or Visual3D. Caller is responsible for guaranteeing that element is a Visual type.",

@@ -366,7 +366,7 @@ namespace System.Windows.Media
                 (glyphIndices.Count > 0) &&
                 (glyphIndices.Count <= MaxGlyphCount) &&
                 (advanceWidths.Count == glyphIndices.Count) &&
-                ((glyphOffsets == null) || ((glyphOffsets != null) && (glyphOffsets.Count != 0) && (glyphOffsets.Count == glyphIndices.Count))))
+                ((glyphOffsets is null) || ((glyphOffsets != null) && (glyphOffsets.Count != 0) && (glyphOffsets.Count == glyphIndices.Count))))
             {
                 _textFormattingMode = textFormattingMode;
                 // Set member variables here,
@@ -535,7 +535,7 @@ namespace System.Windows.Media
             // Sum up glyph advance widths until the caret code point.
 
             IList<ushort> clusterMap = ClusterMap;
-            if (clusterMap == null)
+            if (clusterMap is null)
                 clusterMap = new DefaultClusterMap(CodepointCount);
 
             int clusterCodepointStart = 0;
@@ -600,7 +600,7 @@ namespace System.Windows.Media
             IList<double> advances = AdvanceWidths;
             IList<bool> caretStops = CaretStops != null && CaretStops.Count != 0 ? CaretStops : new DefaultCaretStopList(CodepointCount);
             IList<ushort> clusterMap = ClusterMap;
-            if (clusterMap == null)
+            if (clusterMap is null)
                 clusterMap = new DefaultClusterMap(CodepointCount);
 
             // The following two variables describe the closest caret stop to the left of the input distance.
@@ -1022,7 +1022,7 @@ namespace System.Windows.Media
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphRun
 
-                if (CaretStops == null || CaretStops.Count == 0)
+                if (CaretStops is null || CaretStops.Count == 0)
                 {
                     // When CaretStops property is omitted, there is a caret stop for every UTF16 code point.
                     return true;
@@ -1216,7 +1216,7 @@ namespace System.Windows.Media
         /// </summary>
         internal Point GetGlyphOffset(int i)
         {
-            if (_glyphOffsets == null || _glyphOffsets.Count == 0)
+            if (_glyphOffsets is null || _glyphOffsets.Count == 0)
                 return new Point(0, 0);
             return _glyphOffsets[i];
         }
@@ -1610,7 +1610,7 @@ namespace System.Windows.Media
                 // transform glyphGeometry to the glyph origin
                 glyphGeometry.Transform = new TranslateTransform(originX + _baselineOrigin.X, originY + _baselineOrigin.Y);
 
-                if (accumulatedGeometry == null)
+                if (accumulatedGeometry is null)
                 {
                     accumulatedGeometry = new GeometryGroup();
                     accumulatedGeometry.FillRule = FillRule.Nonzero;
@@ -1619,7 +1619,7 @@ namespace System.Windows.Media
                 accumulatedGeometry.Children.Add(glyphGeometry.GetOutlinedPathGeometry(RelativeFlatteningTolerance, ToleranceType.Relative));
             }
             // Make sure to always return Geometry.Empty from public methods for empty geometries.
-            if (accumulatedGeometry == null || accumulatedGeometry.IsEmpty())
+            if (accumulatedGeometry is null || accumulatedGeometry.IsEmpty())
                 return Geometry.Empty;
             return accumulatedGeometry;
         }
@@ -2349,8 +2349,8 @@ namespace System.Windows.Media
                 _baselineOrigin,
                 // In case the layout mode is not Ideal then we cannot use ThousandthOfEmReal* since ThousandthOfEmReal* internally stores doubles as integers and hence there is some lost percision
                 // that can result in glyphs that were pixel aligned be not so. This is not important for ideal layout but is of great importance for compatible with layout.
-                (_advanceWidths == null ? null : ((_textFormattingMode != TextFormattingMode.Ideal) ? (IList<double>)(new List<double>()) : (IList<double>)(new ThousandthOfEmRealDoubles(_renderingEmSize, _advanceWidths)))),
-                (_glyphOffsets == null ? null : ((_textFormattingMode != TextFormattingMode.Ideal) ? (IList<Point>)(new List<Point>()) : (IList<Point>)(new ThousandthOfEmRealPoints(_renderingEmSize, _glyphOffsets)))),
+                (_advanceWidths is null ? null : ((_textFormattingMode != TextFormattingMode.Ideal) ? (IList<double>)(new List<double>()) : (IList<double>)(new ThousandthOfEmRealDoubles(_renderingEmSize, _advanceWidths)))),
+                (_glyphOffsets is null ? null : ((_textFormattingMode != TextFormattingMode.Ideal) ? (IList<Point>)(new List<Point>()) : (IList<Point>)(new ThousandthOfEmRealPoints(_renderingEmSize, _glyphOffsets)))),
                 _characters,
                 _deviceFontName,
                 _clusterMap,

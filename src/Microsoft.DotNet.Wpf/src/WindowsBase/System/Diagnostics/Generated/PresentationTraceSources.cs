@@ -17,7 +17,7 @@ namespace System.Diagnostics
 		{
 			get
 			{
-				if (_DependencyPropertySource == null)
+				if (_DependencyPropertySource is null)
 				{
 					_DependencyPropertySource = CreateTraceSource("System.Windows.DependencyProperty");
 				}
@@ -31,7 +31,7 @@ namespace System.Diagnostics
 		{
 			get
 			{
-				if (_FreezableSource == null)
+				if (_FreezableSource is null)
 				{
 					_FreezableSource = CreateTraceSource("System.Windows.Freezable");
 				}
@@ -45,7 +45,7 @@ namespace System.Diagnostics
 		{
 			get
 			{
-				if (_NameScopeSource == null)
+				if (_NameScopeSource is null)
 				{
 					_NameScopeSource = CreateTraceSource("System.Windows.NameScope");
 				}
@@ -59,7 +59,7 @@ namespace System.Diagnostics
 		{
 			get
 			{
-				if (_RoutedEventSource == null)
+				if (_RoutedEventSource is null)
 				{
 					_RoutedEventSource = CreateTraceSource("System.Windows.RoutedEvent");
 				}
@@ -73,7 +73,7 @@ namespace System.Diagnostics
 		{
 			get
 			{
-				if (_AnimationSource == null)
+				if (_AnimationSource is null)
 				{
 					_AnimationSource = CreateTraceSource("System.Windows.Media.Animation");
 				}
@@ -87,7 +87,7 @@ namespace System.Diagnostics
 		{
 			get
 			{
-				if (_DataBindingSource == null)
+				if (_DataBindingSource is null)
 				{
 					_DataBindingSource = CreateTraceSource("System.Windows.Data");
 				}
@@ -101,7 +101,7 @@ namespace System.Diagnostics
 		{
 			get
 			{
-				if (_DocumentsSource == null)
+				if (_DocumentsSource is null)
 				{
 					_DocumentsSource = CreateTraceSource("System.Windows.Documents");
 				}
@@ -115,7 +115,7 @@ namespace System.Diagnostics
 		{
 			get
 			{
-				if (_ResourceDictionarySource == null)
+				if (_ResourceDictionarySource is null)
 				{
 					_ResourceDictionarySource = CreateTraceSource("System.Windows.ResourceDictionary");
 				}
@@ -129,7 +129,7 @@ namespace System.Diagnostics
 		{
 			get
 			{
-				if (_MarkupSource == null)
+				if (_MarkupSource is null)
 				{
 					_MarkupSource = CreateTraceSource("System.Windows.Markup");
 				}
@@ -143,7 +143,7 @@ namespace System.Diagnostics
 		{
 			get
 			{
-				if (_HwndHostSource == null)
+				if (_HwndHostSource is null)
 				{
 					_HwndHostSource = CreateTraceSource("System.Windows.Interop.HwndHost");
 				}
@@ -157,7 +157,7 @@ namespace System.Diagnostics
 		{
 			get
 			{
-				if (_ShellSource == null)
+				if (_ShellSource is null)
 				{
 					_ShellSource = CreateTraceSource("System.Windows.Shell");
 				}

@@ -149,7 +149,7 @@ namespace System.Windows.Diagnostics
 
         public static IEnumerable<ResourceDictionary> GetResourceDictionariesForSource(Uri uri)
         {
-            if (!IsEnabled || _dictionariesFromUri == null)
+            if (!IsEnabled || _dictionariesFromUri is null)
             {
                 return EmptyResourceDictionaries;
             }
@@ -175,7 +175,7 @@ namespace System.Windows.Diagnostics
                     else
                     {
                         // stale entry - mark for removal (can't remove while iterating over list)
-                        if (toRemove == null)
+                        if (toRemove is null)
                         {
                             toRemove = new List<WeakReference<ResourceDictionary>>();
                         }
@@ -208,7 +208,7 @@ namespace System.Windows.Diagnostics
             {
                 List<WeakReference<ResourceDictionary>> list;
 
-                if (_dictionariesFromUri == null)
+                if (_dictionariesFromUri is null)
                 {
                     _dictionariesFromUri = new Dictionary<Uri, List<WeakReference<ResourceDictionary>>>();
                 }
@@ -299,7 +299,7 @@ namespace System.Windows.Diagnostics
         private static IEnumerable<T> GetOwners<T>(WeakReferenceList list, IEnumerable<T> emptyList)
             where T : DispatcherObject
         {
-            if (!IsEnabled || list == null || list.Count == 0)
+            if (!IsEnabled || list is null || list.Count == 0)
             {
                 return emptyList;
             }
@@ -345,7 +345,7 @@ namespace System.Windows.Diagnostics
             // requests can be nested - e.g. when one request resolves to a
             // resource whose value is deferred content that gets inflated.
             // So we need a (thread static) stack of active requests.
-            if (_lookupResultStack == null)
+            if (_lookupResultStack is null)
             {
                 _lookupResultStack = new Stack<LookupResult>();
             }
@@ -379,7 +379,7 @@ namespace System.Windows.Diagnostics
                 // simple case - no deferred content, no lookup optimizations
                 if (result.Requester.GetType() == typeof(StaticResourceExtension))
                 {
-                    Debug.Assert(result.Dictionary == null || result.Dictionary == rd,
+                    Debug.Assert(result.Dictionary is null || result.Dictionary == rd,
                                 "simple lookup resolved more than once");
                     result.Key = key;
                     result.Dictionary = rd;
@@ -436,7 +436,7 @@ namespace System.Windows.Diagnostics
             // complex case (see (1) in remarks in RecordLookupResultImpl above)
             // Maintain a cache mapping requester to the dictionary it used.
             // Use weak references to avoid memory leaks.
-            if (_resultCache == null)
+            if (_resultCache is null)
             {
                 _resultCache = new Dictionary<WeakReferenceKey<StaticResourceExtension>, WeakReference<ResourceDictionary>>();
             }
@@ -491,10 +491,10 @@ namespace System.Windows.Diagnostics
             Dispatcher dispatcher;
 
             // ignore if cleanup is not needed, already requested, or not requestable
-            if (_resultCache == null ||
+            if (_resultCache is null ||
                 _cleanupOperation != null ||
-                (d = targetObject as DispatcherObject) == null ||
-                (dispatcher = d.Dispatcher) == null)
+                (d = targetObject as DispatcherObject) is null ||
+                (dispatcher = d.Dispatcher) is null)
             {
                 return;
             }
@@ -513,9 +513,9 @@ namespace System.Windows.Diagnostics
                         kvp in _resultCache)
             {
                 ResourceDictionary dict;
-                if (kvp.Key.Item == null || !kvp.Value.TryGetTarget(out dict))
+                if (kvp.Key.Item is null || !kvp.Value.TryGetTarget(out dict))
                 {
-                    if (toRemove == null)
+                    if (toRemove is null)
                     {
                         toRemove = new List<WeakReferenceKey<StaticResourceExtension>>();
                     }

@@ -97,7 +97,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private static object CoerceDefaultControlSizeDefinition(DependencyObject d, object baseValue)
         {
-            if (baseValue == null)
+            if (baseValue is null)
             {
                 RibbonControlGroup controlGroup = (RibbonControlGroup)d;
                 RibbonImageSize imageSize = RibbonImageSize.Collapsed;
@@ -116,7 +116,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         if (contentChild != null && contentChild.Visibility != Visibility.Collapsed)
                         {
                             RibbonControlSizeDefinition currentLargeCsd = RibbonControlService.GetDefaultControlSizeDefinition(contentChild);
-                            if (currentLargeCsd == null)
+                            if (currentLargeCsd is null)
                             {
                                 contentChild.CoerceValue(RibbonControlService.DefaultControlSizeDefinitionProperty);
                                 currentLargeCsd = RibbonControlService.GetDefaultControlSizeDefinition(contentChild);

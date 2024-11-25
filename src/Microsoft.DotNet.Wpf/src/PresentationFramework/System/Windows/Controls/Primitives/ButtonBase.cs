@@ -93,7 +93,7 @@ namespace System.Windows.Controls.Primitives
             get
             {
                 Visual focusScope = FocusManager.GetFocusScope(this) as Visual;
-                return focusScope == null || VisualTreeHelper.GetParent(focusScope) == null;
+                return focusScope is null || VisualTreeHelper.GetParent(focusScope) is null;
             }
         }
 
@@ -149,7 +149,7 @@ namespace System.Windows.Controls.Primitives
 
         private static void OnAccessKeyPressed(object sender, AccessKeyPressedEventArgs e)
         {
-            if (!e.Handled && e.Scope == null && e.Target == null)
+            if (!e.Handled && e.Scope is null && e.Target is null)
             {
                 e.Target = (UIElement)sender;
             }

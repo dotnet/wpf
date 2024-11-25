@@ -211,7 +211,7 @@ namespace System.Windows.Interop
 
             // AddDirtyRect is usually what triggers Changed, but AddDirtyRect isn't allowed with
             // no back buffer so we mark for Changed here
-            if (_pInteropDeviceBitmap == null)
+            if (_pInteropDeviceBitmap is null)
             {
                 _isChangePending = true;
             }
@@ -306,7 +306,7 @@ namespace System.Windows.Interop
                 throw new InvalidOperationException(SR.Image_MustBeLocked);
             }
 
-            if (_pInteropDeviceBitmap == null)
+            if (_pInteropDeviceBitmap is null)
             {
                 throw new InvalidOperationException(SR.D3DImage_MustHaveBackBuffer);
             }

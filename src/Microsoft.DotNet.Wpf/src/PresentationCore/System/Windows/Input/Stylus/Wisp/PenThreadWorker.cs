@@ -749,7 +749,7 @@ namespace System.Windows.Input
             if (evt == PenEventPackets)
             {
                 // If no cache then just cache it.
-                if (_cachedMoveData == null)
+                if (_cachedMoveData is null)
                 {
                     _cachedMovePenContext = penContext;
                     _cachedMoveStylusPointerId = stylusPointerId;

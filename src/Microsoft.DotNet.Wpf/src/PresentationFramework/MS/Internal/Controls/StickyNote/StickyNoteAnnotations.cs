@@ -482,7 +482,7 @@ namespace MS.Internal.Controls.StickyNote
             {
                 root = FindRootXmlElement(token, cargo);
                 // Uncommon situation - cargo created without root XmlElement
-                if (root == null)
+                if (root is null)
                 {
                     newRoot = true;
                     XmlDocument xmlDoc = new XmlDocument();
@@ -514,16 +514,16 @@ namespace MS.Internal.Controls.StickyNote
             string name = GetXmlName(token);
 
             XmlNode oldValue = root.GetAttributeNode(name, AnnotationXmlConstants.Namespaces.BaseSchemaNamespace);
-            if (oldValue == null)
+            if (oldValue is null)
             {
-                if (value == null)
+                if (value is null)
                     return;
                 else
                     root.SetAttribute(name, AnnotationXmlConstants.Namespaces.BaseSchemaNamespace, value);
             }
             else
             {
-                if (value == null)
+                if (value is null)
                     root.RemoveAttribute(name, AnnotationXmlConstants.Namespaces.BaseSchemaNamespace);
                 else if (oldValue.Value != value)
                     root.SetAttribute(name, AnnotationXmlConstants.Namespaces.BaseSchemaNamespace, value);
@@ -720,7 +720,7 @@ namespace MS.Internal.Controls.StickyNote
             StickyNoteContentControl contentControl = snc.Content;
 
             // Template hasn't been applied yet.  Once it has the content control will then be setup.
-            if (contentControl == null)
+            if (contentControl is null)
             {
                 return;
             }
@@ -915,7 +915,7 @@ namespace System.Windows.Controls
         {
             ArgumentNullException.ThrowIfNull(attachedAnnotation);
 
-            if (_attachedAnnotation == null)
+            if (_attachedAnnotation is null)
             {
                 //fire trace event
                 EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordAnnotation, EventTrace.Event.AddAttachedSNBegin);
@@ -1384,7 +1384,7 @@ namespace System.Windows.Controls
                 target = host.PageVisual as FrameworkElement;
             }
 
-            if (target == null)
+            if (target is null)
             {
                 //we have nothing to do here
                 return;

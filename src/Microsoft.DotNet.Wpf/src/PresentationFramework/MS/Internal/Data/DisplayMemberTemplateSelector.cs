@@ -40,7 +40,7 @@ namespace MS.Internal.Data
         {
             if (SystemXmlHelper.IsXmlNode(item))
             {
-                if (_xmlNodeContentTemplate == null)
+                if (_xmlNodeContentTemplate is null)
                 {
                     _xmlNodeContentTemplate = new DataTemplate();
                     FrameworkElementFactory text = ContentPresenter.CreateTextBlockFactory();
@@ -55,7 +55,7 @@ namespace MS.Internal.Data
             }
             else
             {
-                if (_clrNodeContentTemplate == null)
+                if (_clrNodeContentTemplate is null)
                 {
                     _clrNodeContentTemplate = new DataTemplate();
                     FrameworkElementFactory text = ContentPresenter.CreateTextBlockFactory();

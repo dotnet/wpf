@@ -37,7 +37,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
         {
             Name = name;
 
-            if ((unmanagedName == null) || unmanagedName.Length == 0)
+            if ((unmanagedName is null) || unmanagedName.Length == 0)
             {
                 UnmanagedName = name;
             }
@@ -143,7 +143,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
         {
             if (doAdvancedParameters)
             {
-                if (_advancedLayout == null)
+                if (_advancedLayout is null)
                 {
                     _advancedLayout = Helpers.CodeGenHelpers.SortStructForAlignment(
                         AllFields,
@@ -156,7 +156,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
             }
             else
             {
-                if (_basicLayout == null)
+                if (_basicLayout is null)
                 {
                     _basicLayout = Helpers.CodeGenHelpers.SortStructForAlignment(
                         BasicFields,
@@ -337,7 +337,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
         /// </summary>
         public McgRenderDataInstruction FindRenderDataInstruction(string name)
         {
-            if (RenderDataInstructionHashTable[name] == null)
+            if (RenderDataInstructionHashTable[name] is null)
             {
                 Helpers.CodeGenHelpers.ThrowValidationException(String.Format(
                     "Invalid instruction: {0}",

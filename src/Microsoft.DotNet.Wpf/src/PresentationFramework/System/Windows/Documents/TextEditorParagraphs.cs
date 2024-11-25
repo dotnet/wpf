@@ -81,7 +81,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null)
+            if (This is null)
             {
                 return;
             }
@@ -96,7 +96,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null)
+            if (This is null)
             {
                 return;
             }
@@ -111,7 +111,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null)
+            if (This is null)
             {
                 return;
             }
@@ -126,7 +126,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null)
+            if (This is null)
             {
                 return;
             }
@@ -184,7 +184,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null)
+            if (This is null)
             {
                 return;
             }

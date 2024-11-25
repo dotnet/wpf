@@ -45,7 +45,7 @@ namespace System.Windows.Automation.Peers
             DependencyObject templatedParent = sv.TemplatedParent;
 
             // If the templatedParent is a ContentPresenter, this ScrollViewer is generated from a DataTemplate
-            if (templatedParent == null || templatedParent is ContentPresenter)
+            if (templatedParent is null || templatedParent is ContentPresenter)
             {
                 return base.IsControlElementCore();
             }
@@ -213,7 +213,7 @@ namespace System.Windows.Automation.Peers
             get
             {
                 ScrollViewer owner = (ScrollViewer)Owner;
-                if (owner.ScrollInfo == null || DoubleUtil.IsZero(owner.ExtentWidth)) { return 100.0; }
+                if (owner.ScrollInfo is null || DoubleUtil.IsZero(owner.ExtentWidth)) { return 100.0; }
                 return Math.Min(100.0, (double)(owner.ViewportWidth * 100.0 / owner.ExtentWidth));
             }
         }
@@ -227,7 +227,7 @@ namespace System.Windows.Automation.Peers
             get
             {
                 ScrollViewer owner = (ScrollViewer)Owner;
-                if (owner.ScrollInfo == null || DoubleUtil.IsZero(owner.ExtentHeight)) { return 100f; }
+                if (owner.ScrollInfo is null || DoubleUtil.IsZero(owner.ExtentHeight)) { return 100f; }
                 return Math.Min(100.0, (double)(owner.ViewportHeight * 100.0 / owner.ExtentHeight));
             }
         }

@@ -309,7 +309,7 @@ namespace System.Windows.Media.Imaging
 
             palette = palettes[key];
 
-            if (palette == null)
+            if (palette is null)
             {
                 lock (palettes)
                 {
@@ -317,7 +317,7 @@ namespace System.Windows.Media.Imaging
                     // Need to check again.
 
                     palette = palettes[key];
-                    if (palette == null)
+                    if (palette is null)
                     {
                         palette = new Imaging.BitmapPalette(type, hasAlpha);
                         palettes[key] = palette;
@@ -332,7 +332,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                if (s_transparentPalettes == null)
+                if (s_transparentPalettes is null)
                 {
                     s_transparentPalettes = new Imaging.BitmapPalette[c_maxPalettes];
                 }
@@ -345,7 +345,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                if (s_opaquePalettes == null)
+                if (s_opaquePalettes is null)
                 {
                     s_opaquePalettes = new Imaging.BitmapPalette[c_maxPalettes];
                 }

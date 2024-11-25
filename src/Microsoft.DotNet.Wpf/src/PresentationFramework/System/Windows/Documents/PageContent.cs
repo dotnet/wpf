@@ -83,7 +83,7 @@ namespace System.Windows.Documents
         public FixedPage GetPageRoot(bool forceReload)
         {
 #if DEBUG
-            DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRoot Source={(Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source)}");
+            DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRoot Source={(Source is null ? new Uri("", UriKind.RelativeOrAbsolute) : Source)}");
 #endif
 
 //             VerifyAccess();
@@ -100,7 +100,7 @@ namespace System.Windows.Documents
                 p = _GetLoadedPage();
             }
 
-            if (p == null)
+            if (p is null)
             {
                 p = _LoadPage();
             }
@@ -115,7 +115,7 @@ namespace System.Windows.Documents
         public void GetPageRootAsync(bool forceReload)
         {
 #if DEBUG
-            DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRootAsync Source={(Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source)}");
+            DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRootAsync Source={(Source is null ? new Uri("", UriKind.RelativeOrAbsolute) : Source)}");
 #endif
 
 //             VerifyAccess();
@@ -155,7 +155,7 @@ namespace System.Windows.Documents
         public void GetPageRootAsyncCancel()
         {
 #if DEBUG
-            DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRootAsyncCancel Source={(Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source)}");
+            DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRootAsyncCancel Source={(Source is null ? new Uri("", UriKind.RelativeOrAbsolute) : Source)}");
 #endif
 //             VerifyAccess();
             // Important: do not throw if no outstanding GetPageRootAsyncCall
@@ -186,7 +186,7 @@ namespace System.Windows.Documents
 
 
             FixedPage fp = value as FixedPage;
-            if (fp == null)
+            if (fp is null)
             {
                 throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(FixedPage)), "value");
             }
@@ -256,7 +256,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_linkTargets == null)
+                if (_linkTargets is null)
                 {
                     _linkTargets = new LinkTargetCollection();
                 }
@@ -304,7 +304,7 @@ namespace System.Windows.Documents
             bool shouldSerialize = false;
             if (manager != null)
             {
-                shouldSerialize = (manager.XmlWriter == null);
+                shouldSerialize = (manager.XmlWriter is null);
             }
             return shouldSerialize;
         }
@@ -384,7 +384,7 @@ namespace System.Windows.Documents
             if (uriToLoad != null)
             {
                 pageStream = WpfWebRequestHelper.CreateRequestAndGetResponseStream(uriToLoad);
-                if (pageStream == null)
+                if (pageStream is null)
                 {
                     throw new ApplicationException(SR.PageContentNotFound);
                 }
@@ -439,7 +439,7 @@ namespace System.Windows.Documents
             {
                 FixedPage[] children;
                 FixedPage child = _child;
-                if (child == null)
+                if (child is null)
                 {
                     child = _GetLoadedPage();
                 }
@@ -448,7 +448,7 @@ namespace System.Windows.Documents
                 // page has been loaded it has the page content as its logical
                 // parent, so this must be consistent.
 
-                if (child == null)
+                if (child is null)
                 {
                     children = Array.Empty<FixedPage>();
                 }
@@ -543,7 +543,7 @@ namespace System.Windows.Documents
                     {
                         _LoadPageImpl(((IUriContext)this).BaseUri, uriToLoad, out p, out pageStream);
 
-                        if (p == null || p.IsInitialized)
+                        if (p is null || p.IsInitialized)
                         {
                             pageStream.Close();
                         }
@@ -599,7 +599,7 @@ namespace System.Windows.Documents
             ContentType mimeType;
             pageStream = WpfWebRequestHelper.CreateRequestAndGetResponseStream(uriToLoad, out mimeType);
             object o = null;
-            if (pageStream == null)
+            if (pageStream is null)
             {
                 throw new ApplicationException(SR.PageContentNotFound);
             }

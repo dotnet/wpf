@@ -72,10 +72,10 @@ namespace MS.Internal.Xaml.Context
 
         public override string ToString()
         {
-            string type = (XamlType == null) ? string.Empty : XamlType.Name;
-            string prop = (Member == null) ? "-" : Member.Name;
-            string inst = (Instance == null) ? "-" : ((Instance is string) ? Instance.ToString() : "*");
-            string coll = (Collection == null) ? "-" : "*";
+            string type = (XamlType is null) ? string.Empty : XamlType.Name;
+            string prop = (Member is null) ? "-" : Member.Name;
+            string inst = (Instance is null) ? "-" : ((Instance is string) ? Instance.ToString() : "*");
+            string coll = (Collection is null) ? "-" : "*";
             string res = string.Create(TypeConverterHelper.InvariantEnglishUS, $"{type}.{prop} inst={inst} coll={coll}");
             return res;
         }
@@ -169,7 +169,7 @@ namespace MS.Internal.Xaml.Context
         {
             get
             {
-                if (_preconstructionPropertyValues == null)
+                if (_preconstructionPropertyValues is null)
                 {
                     _preconstructionPropertyValues = new Dictionary<XamlMember, object>();
                 }
@@ -189,7 +189,7 @@ namespace MS.Internal.Xaml.Context
         {
             get
             {
-                if (_assignedProperties == null)
+                if (_assignedProperties is null)
                 {
                     _assignedProperties = new HashSet<XamlMember>();
                 }

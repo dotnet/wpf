@@ -199,7 +199,7 @@ namespace System.Windows.Annotations
                     writer.WriteAttributeString(AnnotationXmlConstants.Prefixes.XmlnsPrefix, AnnotationXmlConstants.Prefixes.BaseSchemaPrefix, null, AnnotationXmlConstants.Namespaces.BaseSchemaNamespace);
                 }
 
-                if (_typeName == null)
+                if (_typeName is null)
                 {
                     throw new InvalidOperationException(SR.CannotSerializeInvalidInstance);
                 }
@@ -582,7 +582,7 @@ namespace System.Windows.Annotations
         {
             get
             {
-                if (_ResourceSerializer == null)
+                if (_ResourceSerializer is null)
                 {
                     _ResourceSerializer = new Serializer(typeof(AnnotationResource));
                 }
@@ -683,7 +683,7 @@ namespace System.Windows.Annotations
             {
                 throw new XmlException(SR.Format(SR.RequiredAttributeMissing, AnnotationXmlConstants.Attributes.LastModificationTime, AnnotationXmlConstants.Elements.Annotation));
             }
-            if (_typeName == null)
+            if (_typeName is null)
             {
                 throw new XmlException(SR.Format(SR.RequiredAttributeMissing, AnnotationXmlConstants.Attributes.TypeName, AnnotationXmlConstants.Elements.Annotation));
             }

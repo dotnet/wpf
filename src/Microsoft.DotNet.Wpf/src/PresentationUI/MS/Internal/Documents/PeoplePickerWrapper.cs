@@ -266,7 +266,7 @@ namespace MS.Internal.Documents
                 System.Windows.Forms.Control rmPublishingDialog = 
                     System.Windows.Forms.Control.FromHandle(hWndParent) as RMPublishingDialog;
 
-                if (rmPublishingDialog == null)
+                if (rmPublishingDialog is null)
                 {
                     throw new InvalidOperationException(SR.PeoplePickerInvalidParentWindow);
                 }
@@ -360,7 +360,7 @@ namespace MS.Internal.Documents
                 {
                     ThrowIfDisposed();
 
-                    if (_names == null)
+                    if (_names is null)
                     {
                         _names = GetNamesFromDsObjectStruct();
                     }

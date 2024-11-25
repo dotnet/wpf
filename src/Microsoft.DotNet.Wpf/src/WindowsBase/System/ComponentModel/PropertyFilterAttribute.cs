@@ -77,7 +77,7 @@ namespace System.ComponentModel
         public override bool Match(object value) 
         {
             PropertyFilterAttribute a = value as PropertyFilterAttribute;
-            if (a == null) return false;
+            if (a is null) return false;
             return ((_filter & a._filter) == _filter);
         }
 

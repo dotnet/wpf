@@ -75,14 +75,14 @@ namespace System.Windows.Controls
 
         private static void Register(string groupName, RadioButton radioButton)
         {
-            if (_groupNameToElements == null)
+            if (_groupNameToElements is null)
                 _groupNameToElements = new Hashtable(1);
 
             lock (_groupNameToElements)
             {
                 ArrayList elements = (ArrayList)_groupNameToElements[groupName];
 
-                if (elements == null)
+                if (elements is null)
                 {
                     elements = new ArrayList(1);
                     _groupNameToElements[groupName] = elements;
@@ -100,7 +100,7 @@ namespace System.Windows.Controls
 
         private static void Unregister(string groupName, RadioButton radioButton)
         {
-            if (_groupNameToElements == null)
+            if (_groupNameToElements is null)
                 return;
 
             lock (_groupNameToElements)
@@ -126,7 +126,7 @@ namespace System.Windows.Controls
             {
                 WeakReference weakReference = (WeakReference)elements[i];
                 object element = weakReference.Target;
-                if (element == null || element == elementToRemove)
+                if (element is null || element == elementToRemove)
                 {
                     elements.RemoveAt(i);
                 }
@@ -143,7 +143,7 @@ namespace System.Windows.Controls
             if (!string.IsNullOrEmpty(groupName))
             {
                 Visual rootScope = KeyboardNavigation.GetVisualRoot(this);
-                if (_groupNameToElements == null)
+                if (_groupNameToElements is null)
                     _groupNameToElements = new Hashtable(1);
                 lock (_groupNameToElements)
                 {
@@ -153,7 +153,7 @@ namespace System.Windows.Controls
                     {
                         WeakReference weakReference = (WeakReference)elements[i];
                         RadioButton rb = weakReference.Target as RadioButton;
-                        if (rb == null)
+                        if (rb is null)
                         {
                             // Remove dead instances
                             elements.RemoveAt(i);

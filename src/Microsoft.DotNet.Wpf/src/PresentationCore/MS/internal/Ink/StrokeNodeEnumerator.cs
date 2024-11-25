@@ -91,8 +91,8 @@ namespace MS.Internal.Ink
         /// <param name="drawingAttributes">drawing attributes</param>
         internal StrokeNodeIterator(DrawingAttributes drawingAttributes)
             : this( null,   //stylusPoints
-                    StrokeNodeOperations.CreateInstance((drawingAttributes == null ? null : drawingAttributes.StylusShape)),
-                    (drawingAttributes == null ? false : !drawingAttributes.IgnorePressure))  //usePressure
+                    StrokeNodeOperations.CreateInstance((drawingAttributes is null ? null : drawingAttributes.StylusShape)),
+                    (drawingAttributes is null ? false : !drawingAttributes.IgnorePressure))  //usePressure
         {
         }
 
@@ -170,7 +170,7 @@ namespace MS.Internal.Ink
         {
             get
             {
-                if (_stylusPoints == null)
+                if (_stylusPoints is null)
                 {
                     return 0;
                 }
@@ -200,7 +200,7 @@ namespace MS.Internal.Ink
         {
             get
             {
-                if (_stylusPoints == null || index < 0 || index >= _stylusPoints.Count || previousIndex < -1 || previousIndex >= index)
+                if (_stylusPoints is null || index < 0 || index >= _stylusPoints.Count || previousIndex < -1 || previousIndex >= index)
                 {
                     throw new IndexOutOfRangeException();
                 }

@@ -114,7 +114,7 @@ namespace System.Windows.Markup
                 _xamlTypeMapper.GetTypeAndSerializer(namespaceURI, localName, null);
             // If the normal type resolution fails, try the name with "Extension" added
             // so that we'll find MarkupExtension subclasses.
-            if (typeAndSerializer == null)
+            if (typeAndSerializer is null)
             {
                 typeAndSerializer = _xamlTypeMapper.GetTypeAndSerializer(namespaceURI, $"{localName}Extension", null);
             }
@@ -333,7 +333,7 @@ namespace System.Windows.Markup
                                                         0,
                                                         dpOrPi);
 
-            if (data == null)
+            if (data is null)
             {
                 XamlPropertyNode propNode = new XamlPropertyNode(
                                             0,
@@ -641,7 +641,7 @@ namespace System.Windows.Markup
             bool   propertyCanWrite = true;
             
             GetDpOrPi(assemblyName, ownerTypeFullName, propName, out dpOrPi, out ownerType);
-            if (dpOrPi == null)
+            if (dpOrPi is null)
             {
                 MethodInfo mi = GetMi(assemblyName, ownerTypeFullName, propName, out ownerType);
                 if (mi != null)
@@ -673,7 +673,7 @@ namespace System.Windows.Markup
             //        XamlReaderHelper.CompileComplexProperty so that we have
             //        the same property behavior (eg - if something implements
             //        IDictionary and IList, it is treated as an IList)
-            if (propertyType == null)
+            if (propertyType is null)
             {
                 // Unknown complex properties are written out using the string
                 // information passed.  This applies to things like Set.Value
@@ -1073,10 +1073,10 @@ namespace System.Windows.Markup
     private Assembly GetAssembly(string assemblyName)
     {
         Assembly assy = _assemblies[assemblyName] as Assembly;
-        if (assy == null)
+        if (assy is null)
         {
             assy = ReflectionHelper.LoadAssembly(assemblyName, null);
-            if (assy == null)
+            if (assy is null)
             {
                 throw new ArgumentException(SR.Format(SR.BamlWriterBadAssembly, 
                                                    assemblyName));
@@ -1139,7 +1139,7 @@ namespace System.Windows.Markup
         if (ownerType != null)
         {
             dpOrPi = DependencyProperty.FromName(propName, ownerType);
-            if (dpOrPi == null)
+            if (dpOrPi is null)
             {
                 PropertyInfo mostDerived = null;
                 MemberInfo[] infos = ownerType.GetMember(propName, MemberTypes.Property, BindingFlags.Instance | BindingFlags.Public);
@@ -1147,7 +1147,7 @@ namespace System.Windows.Markup
                 {
                     if(pi.GetIndexParameters().Length == 0)
                     {
-                        if(mostDerived == null || mostDerived.DeclaringType.IsAssignableFrom(pi.DeclaringType))
+                        if(mostDerived is null || mostDerived.DeclaringType.IsAssignableFrom(pi.DeclaringType))
                         {
                             mostDerived = pi;
                         }
@@ -1166,7 +1166,7 @@ namespace System.Windows.Markup
                                              null, 
                                              new object[] {propName, ownerType} );
 
-            if (dpOrPi == null)
+            if (dpOrPi is null)
             {
                 dpOrPi = ownerType.GetProperty(propName, 
                                    BindingFlags.Instance | BindingFlags.Public);
@@ -1223,7 +1223,7 @@ namespace System.Windows.Markup
         }
 
         // Try read-only case (Getter only)
-        if (memberInfo == null)
+        if (memberInfo is null)
         {
             memberInfo = ownerType.GetMethod($"Get{propName}",
                                                 BindingFlags.Public |

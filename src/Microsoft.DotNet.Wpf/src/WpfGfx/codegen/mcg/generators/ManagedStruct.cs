@@ -241,7 +241,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
             StringCodeSink cs = new StringCodeSink();
 
-            if (resource.Extends == null)
+            if (resource.Extends is null)
             {
                 string readPreamble = String.Empty;
 
@@ -338,7 +338,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     [[/inline]]
                         );
 
-                if (resource.IsAbstract && (resource.Extends == null))
+                if (resource.IsAbstract && (resource.Extends is null))
                 {
                     cs.Write(
                         [[inline]]
@@ -825,7 +825,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                     /// <param name="value"> The object to convert to an instance of [[resource.Name]]. </param>
                                     public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
                                     {
-                                        if (value == null)
+                                        if (value is null)
                                         {
                                             throw GetConvertFromException(value);
                                         }

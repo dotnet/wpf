@@ -138,7 +138,7 @@ namespace System.Windows
 
             authorizationKey.SetDependencyProperty(property);
 
-            if (typeMetadata == null )
+            if (typeMetadata is null )
             {
                 // No metadata specified, generate one so we can specify the authorized key.
                 typeMetadata = AutoGeneratePropertyMetadata(propertyType,validateValueCallback,name,ownerType);
@@ -173,7 +173,7 @@ namespace System.Windows
             RegisterParameterValidation(name, propertyType, ownerType);
 
             // Establish default metadata for all types, if none is provided
-            if (defaultMetadata == null)
+            if (defaultMetadata is null)
             {
                 defaultMetadata = AutoGeneratePropertyMetadata( propertyType, validateValueCallback, name, ownerType );
             }
@@ -265,7 +265,7 @@ namespace System.Windows
             }
 
             // Establish default metadata for all types, if none is provided
-            if (defaultMetadata == null)
+            if (defaultMetadata is null)
             {
                 defaultMetadata = AutoGeneratePropertyMetadata( propertyType, validateValueCallback, name, ownerType );
             }
@@ -424,7 +424,7 @@ namespace System.Windows
 
                         valueAsISealable.Seal();
 
-                        Invariant.Assert(dispatcherObject.Dispatcher == null,
+                        Invariant.Assert(dispatcherObject.Dispatcher is null,
                             "ISealable.Seal() failed after ISealable.CanSeal returned true");
                     }
                     else
@@ -1003,7 +1003,7 @@ namespace System.Windows
 
         internal static bool IsValidType(object value, Type propertyType)
         {
-            if (value == null)
+            if (value is null)
             {
                 // Null values are invalid for value-types
                 if (propertyType.IsValueType &&

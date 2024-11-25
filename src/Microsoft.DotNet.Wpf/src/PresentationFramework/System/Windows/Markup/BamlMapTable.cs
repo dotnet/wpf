@@ -165,7 +165,7 @@ namespace System.Windows.Markup
         // Return the ID from the type-to-KnownElements for the passed Type
         internal static short GetKnownTypeIdFromType(Type type)
         {
-            if (type == null)
+            if (type is null)
             {
                 return 0;
             }
@@ -550,7 +550,7 @@ namespace System.Windows.Markup
 
                         Debug.Assert(propType.IsEnum);
                         tc = GetConverterFromCache(propType);
-                        if (tc == null)
+                        if (tc is null)
                         {
                             tc = new System.ComponentModel.EnumConverter(propType);
                             ConverterCache.Add(propType, tc);
@@ -561,7 +561,7 @@ namespace System.Windows.Markup
 
                         Debug.Assert(ReflectionHelper.IsNullableType(propType));
                         tc = GetConverterFromCache(propType);
-                        if (tc == null)
+                        if (tc is null)
                         {
                             tc = new System.ComponentModel.NullableConverter(propType);
                             ConverterCache.Add(propType, tc);
@@ -572,7 +572,7 @@ namespace System.Windows.Markup
                     default:
 
                         tc = GetConverterFromCache(typeId);
-                        if (tc == null)
+                        if (tc is null)
                         {
                             tc = CreateKnownTypeFromId(typeId) as TypeConverter;
                             ConverterCache.Add(typeId, tc);
@@ -585,7 +585,7 @@ namespace System.Windows.Markup
             {
                 Type t = GetTypeFromId(typeId);
                 tc = GetConverterFromCache(t);
-                if (tc == null)
+                if (tc is null)
                 {
                     if (ReflectionHelper.IsPublicType(t))
                     {
@@ -596,7 +596,7 @@ namespace System.Windows.Markup
                         tc = XamlTypeMapper.CreateInternalInstance(pc, t) as TypeConverter;
                     }
 
-                    if (tc == null)
+                    if (tc is null)
                     {
                         ThrowException(nameof(SR.ParserNoTypeConv), propType.Name);
                     }
@@ -796,7 +796,7 @@ namespace System.Windows.Markup
         // The owner Type is cached in the info record.
         private Type GetAttributeOwnerType(BamlAttributeInfoRecord bamlAttributeInfoRecord)
         {
-            if (bamlAttributeInfoRecord.OwnerType == null)
+            if (bamlAttributeInfoRecord.OwnerType is null)
             {
                 if (bamlAttributeInfoRecord.OwnerTypeId < 0)
                 {
@@ -835,9 +835,9 @@ namespace System.Windows.Markup
                 propName = string.Empty;
             }
 
-            if (propType == null)
+            if (propType is null)
             {
-                if (propName == null)
+                if (propName is null)
                 {
                     propName = $"{attributeInfo.OwnerType.FullName}.{attributeInfo.Name}";
                 }
@@ -857,7 +857,7 @@ namespace System.Windows.Markup
             declaringType = null;
             DependencyProperty dp = null;
 
-            if (memberName == null)
+            if (memberName is null)
             {
                 Debug.Assert(memberId < 0);
                 KnownProperties knownId = (KnownProperties)(-memberId);
@@ -889,7 +889,7 @@ namespace System.Windows.Markup
                 }
             }
 
-            if (dp == null)
+            if (dp is null)
             {
                 string name;
                 short ownerTypeId;
@@ -1037,7 +1037,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
                 try
                 {
-                    if (bamlAssemblyInfoRecord.Assembly == null)
+                    if (bamlAssemblyInfoRecord.Assembly is null)
                     {
                         // Load the assembly so that we can get the Assembly.FullName to store in Baml.
                         // This will ensure that we are we use the same assembly during compilation and loading.
@@ -1138,7 +1138,7 @@ namespace System.Windows.Markup
             // using a mapping PI.  In that case, add an assembly record to the object cache and
             // populate it with the required data.  Note that it DOES NOT have a valid AssemblyId
             // and this is not written out the the baml stream.
-            if (record == null)
+            if (record is null)
             {
                 record = new BamlAssemblyInfoRecord();
                 record.AssemblyFullName = fullName;
@@ -1194,7 +1194,7 @@ namespace System.Windows.Markup
 
             BamlTypeInfoRecord bamlTypeInfoRecord = (BamlTypeInfoRecord)GetHashTableData(key);
 
-            if (bamlTypeInfoRecord == null)
+            if (bamlTypeInfoRecord is null)
             {
                 return false;
             }
@@ -1324,9 +1324,9 @@ namespace System.Windows.Markup
                 // refered to in the attribute info record and is also part of the key for
                 // seeing if we already have an attribute info record for this attribute.
                 Type serializerType = XamlTypeMapper.GetXamlSerializerForType(owningType);
-                string serializerTypeAssemblyName = serializerType == null ?
+                string serializerTypeAssemblyName = serializerType is null ?
                                          string.Empty : serializerType.Assembly.FullName;
-                string serializerTypeName = serializerType == null ?
+                string serializerTypeName = serializerType is null ?
                                          string.Empty : serializerType.FullName;
 
                 typeId = AddTypeInfoMap(binaryWriter, assemblyFullName, typeFullName,
@@ -1400,7 +1400,7 @@ namespace System.Windows.Markup
                 // Enum prop values are custom serilized if there is no custom convertor for them.
                 // This needs to be done here as GetCustomSerilaizer() does not do this in order to
                 // give precedence to custom TypeConverters first.
-                if (converterOrSerializerType == null && attributeType.IsEnum)
+                if (converterOrSerializerType is null && attributeType.IsEnum)
                 {
                     converterOrSerializerTypeId = (short)KnownElements.EnumConverter;
                     converterOrSerializerType = KnownTypes.Types[(int)converterOrSerializerTypeId];
@@ -1448,7 +1448,7 @@ namespace System.Windows.Markup
 
             BamlStringInfoRecord bamlStringInfoRecord = (BamlStringInfoRecord)GetHashTableData(stringValue);
 
-            if (bamlStringInfoRecord == null)
+            if (bamlStringInfoRecord is null)
             {
                 return false;
             }
@@ -1467,7 +1467,7 @@ namespace System.Windows.Markup
             BinaryWriter binaryWriter,
             string stringValue)
         {
-            Debug.Assert(GetHashTableData(stringValue) == null,
+            Debug.Assert(GetHashTableData(stringValue) is null,
                 "Already have this String in the BamlMapTable string table");
 
             BamlStringInfoRecord stringInfo = new BamlStringInfoRecord();
@@ -1543,13 +1543,13 @@ namespace System.Windows.Markup
             Type attributeType) // Type of the attribute or property itself; not its owner type
         {
             // declaringType could be null/empty for some Style properties such as PropertyPath/Value/Target.
-            if (declaringType == null)
+            if (declaringType is null)
             {
                 return true;
             }
 
             // attributeType could be null for IList/IDictionary/Array complex properties or for events
-            if (attributeType == null)
+            if (attributeType is null)
             {
                 return true;
             }
@@ -1781,7 +1781,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                if (_converterCache == null)
+                if (_converterCache is null)
                 {
                     _converterCache = new Hashtable();
                 }
@@ -1860,7 +1860,7 @@ namespace System.Windows.Markup
 
                 return ((key.AssemblyFullName != null) ?
                                       key.AssemblyFullName.Equals(this.AssemblyFullName) :
-                                      (this.AssemblyFullName == null));
+                                      (this.AssemblyFullName is null));
             }
             else
             {
@@ -1922,10 +1922,10 @@ namespace System.Windows.Markup
 
                 return ((key.DeclaringAssembly != null) ?
                                       key.DeclaringAssembly.Equals(this.DeclaringAssembly) :
-                                      (this.DeclaringAssembly == null)) &&
+                                      (this.DeclaringAssembly is null)) &&
                        ((key.TypeFullName != null) ?
                                       key.TypeFullName.Equals(this.TypeFullName) :
-                                      (this.TypeFullName == null));
+                                      (this.TypeFullName is null));
             }
             else
             {

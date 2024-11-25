@@ -19,7 +19,7 @@ namespace System.Windows
         {
             FrameworkContextData data = (FrameworkContextData)context.Reserved2;
         
-            if (data == null)
+            if (data is null)
             {
                 data = new FrameworkContextData();
                 context.Reserved2 = data;

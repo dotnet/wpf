@@ -218,7 +218,7 @@ namespace System.Windows.Baml2006
                 if (parentType.CanAssignTo(declaringType))
                 {
                     xamlMember = declaringType.GetMember(bamlProperty.Name);
-                    if (xamlMember == null)
+                    if (xamlMember is null)
                     {
                         xamlMember = declaringType.GetAttachableMember(bamlProperty.Name);
                     }
@@ -335,7 +335,7 @@ namespace System.Windows.Baml2006
                 }
             }
 
-            if (result == null)
+            if (result is null)
             {
                 throw new KeyNotFoundException();
             }
@@ -473,7 +473,7 @@ namespace System.Windows.Baml2006
 
             AssemblyName assemblyName = new AssemblyName(bamlAssembly.Name);
             bamlAssembly.Assembly = MS.Internal.WindowsBase.SafeSecurityHelper.GetLoadedAssembly(assemblyName);
-            if (bamlAssembly.Assembly == null)
+            if (bamlAssembly.Assembly is null)
             {
                 byte[] publicKeyToken = assemblyName.GetPublicKeyToken();
                 if (assemblyName.Version != null || assemblyName.CultureInfo != null || publicKeyToken != null)
@@ -485,7 +485,7 @@ namespace System.Windows.Baml2006
                     catch
                     {
                         // Fall back to short name match.
-                        if (bamlAssembly.Assembly == null)
+                        if (bamlAssembly.Assembly is null)
                         {
                             // First try to match the local assembly (which may be in the LoadFrom/LoadFile context)
                             if (MatchesLocalAssembly(assemblyName.Name, publicKeyToken))
@@ -518,7 +518,7 @@ namespace System.Windows.Baml2006
 
         private bool MatchesLocalAssembly(string shortName, byte[] publicKeyToken)
         {
-            if (_localAssembly == null)
+            if (_localAssembly is null)
             {
                 return false;
             }
@@ -527,7 +527,7 @@ namespace System.Windows.Baml2006
             {
                 return false;
             }
-            if (publicKeyToken == null)
+            if (publicKeyToken is null)
             {
                 return true;
             }

@@ -430,7 +430,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             get
             {
-                if (_tabGroupHeaders == null)
+                if (_tabGroupHeaders is null)
                 {
                     _tabGroupHeaders = new ObservableCollection<RibbonContextualTabGroup>();
                     _tabGroupHeaders.CollectionChanged += new NotifyCollectionChangedEventHandler(this.OnContextualTabGroupsCollectionChanged);
@@ -743,13 +743,13 @@ namespace Microsoft.Windows.Controls.Ribbon
             _itemsPresenterPopup = this.GetTemplateChild(ItemsPresenterPopupTemplateName) as Popup;
 
             _tabHeaderItemsControl = this.GetTemplateChild("TabHeaderItemsControl") as RibbonTabHeaderItemsControl;
-            if (_tabHeaderItemsControl != null && _tabHeaderItemsControl.ItemsSource == null)
+            if (_tabHeaderItemsControl != null && _tabHeaderItemsControl.ItemsSource is null)
             {
                 _tabHeaderItemsControl.ItemsSource = _tabHeaderItemsSource;
             }
 
             _groupHeaderItemsControl = this.GetTemplateChild(Ribbon.ContextualTabGroupItemsControlTemplateName) as RibbonContextualTabGroupItemsControl;
-            if (_groupHeaderItemsControl != null && _groupHeaderItemsControl.ItemsSource == null)
+            if (_groupHeaderItemsControl != null && _groupHeaderItemsControl.ItemsSource is null)
             {
                 if (ContextualTabGroupsSource != null && ContextualTabGroups.Count > 0)
                 {
@@ -785,7 +785,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// <param name="e">The event data.</param>
         internal void NotifyMouseClickedOnTabHeader(RibbonTabHeader tabHeader, MouseButtonEventArgs e)
         {
-            if (_tabHeaderItemsControl == null)
+            if (_tabHeaderItemsControl is null)
                 return;
 
             int index = _tabHeaderItemsControl.ItemContainerGenerator.IndexFromContainer(tabHeader);
@@ -968,7 +968,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// <param name="e">The event data.</param>
         protected override void OnPreviewMouseWheel(MouseWheelEventArgs e)
         {
-            if (!this.IsMinimized && (SelectedIndex >= 0) && (Mouse.Captured == this || Mouse.Captured == null))
+            if (!this.IsMinimized && (SelectedIndex >= 0) && (Mouse.Captured == this || Mouse.Captured is null))
             {
                 int selectedTabIndex = SelectedIndex;
                 _mouseWheelCumulativeDelta += e.Delta;
@@ -1523,13 +1523,13 @@ namespace Microsoft.Windows.Controls.Ribbon
             this.Loaded -= new RoutedEventHandler(this.OnLoaded);
 
             // Create default RibbonApplicationMenu if ApplicationMenu is not set
-            if (this.ApplicationMenu == null)
+            if (this.ApplicationMenu is null)
             {
                 this.ApplicationMenu = new RibbonApplicationMenu();
             }
 
             // Create default RibbonQuickAccessToolBar if QuickAccessToolBar is not set
-            if (this.QuickAccessToolBar == null)
+            if (this.QuickAccessToolBar is null)
             {
                 this.QuickAccessToolBar = new RibbonQuickAccessToolBar();
             }
@@ -1681,7 +1681,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 {
                     headerItem = tab.Header;
                 }
-                if (headerItem == null)
+                if (headerItem is null)
                 {
                     headerItem = CreateDefaultHeaderObject();
                 }
@@ -1941,7 +1941,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             get
             {
                 RibbonTabHeaderItemsControl tabHeaderItemsControl = RibbonTabHeaderItemsControl;
-                if (tabHeaderItemsControl == null ||
+                if (tabHeaderItemsControl is null ||
                     !tabHeaderItemsControl.IsVisible)
                 {
                     return null;
@@ -1981,7 +1981,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             bool startFromCurrent,
             bool cycle)
         {
-            if (tab == null)
+            if (tab is null)
             {
                 return false;
             }
@@ -1998,7 +1998,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private int GetFocusedRibbonGroupIndex(RibbonTab tab)
         {
             RibbonGroup ribbonGroup = TreeHelper.FindVisualAncestor<RibbonGroup>(Keyboard.FocusedElement as DependencyObject);
-            if (ribbonGroup == null)
+            if (ribbonGroup is null)
             {
                 return -1;
             }
@@ -2031,7 +2031,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             bool cycle)
         {
             RibbonQuickAccessToolBar quickAccessToolBar = QuickAccessToolBar;
-            if (quickAccessToolBar == null)
+            if (quickAccessToolBar is null)
             {
                 return false;
             }
@@ -2072,7 +2072,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private int GetFocusedQatItemIndex(RibbonQuickAccessToolBar quickAccessToolBar)
         {
             RibbonControl ribbonControl = TreeHelper.FindVisualAncestor<RibbonControl>(Keyboard.FocusedElement as DependencyObject);
-            if (ribbonControl == null)
+            if (ribbonControl is null)
             {
                 return -1;
             }
@@ -2094,7 +2094,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             Func<T, int> getFocusedItemIndex,
             Func<T, int, bool> trySetFocusAtItemIndex) where T : Control
         {
-            if (targetControl == null ||
+            if (targetControl is null ||
                 !targetControl.IsVisible)
             {
                 return false;
@@ -2653,7 +2653,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             // If the cloning has not yet been performed (i.e. by a 
             // user-supplied handler), then perform the cloning ourselves.
 
-            if (e.CloneInstance == null)
+            if (e.CloneInstance is null)
             {
                 RibbonHelper.PopulatePropertyLists();
 

@@ -86,7 +86,7 @@ namespace System.Windows.Controls
              VerifyAccess();
 
              // if content is the first child or being cleared, set directly
-             if (Content == null || obj == null)
+             if (Content is null || obj is null)
              {
                  Content = obj;
              }
@@ -166,7 +166,7 @@ namespace System.Windows.Controls
             get
             {
                 VerifyAccess();
-                if (WindowService == null)
+                if (WindowService is null)
                 {
 #pragma warning disable 6503
                     throw new InvalidOperationException(SR.CannotQueryPropertiesWhenPageNotInTreeWithWindow);
@@ -178,7 +178,7 @@ namespace System.Windows.Controls
             set
             {
                 VerifyAccess();
-                if (WindowService == null)
+                if (WindowService is null)
                 {
                     PageHelperObject._windowTitle = value;
                     PropertyIsSet(SetPropertyFlags.WindowTitle);
@@ -223,7 +223,7 @@ namespace System.Windows.Controls
             get
             {
                 VerifyAccess();
-                if (WindowService == null)
+                if (WindowService is null)
                 {
 #pragma warning disable 6503
                     throw new InvalidOperationException(SR.CannotQueryPropertiesWhenPageNotInTreeWithWindow);
@@ -235,7 +235,7 @@ namespace System.Windows.Controls
             set
             {
                 VerifyAccess();
-                if (WindowService == null)
+                if (WindowService is null)
                 {
                     PageHelperObject._windowHeight = value;
                     PropertyIsSet(SetPropertyFlags.WindowHeight);
@@ -277,7 +277,7 @@ namespace System.Windows.Controls
             get
             {
                 VerifyAccess();
-                if (WindowService == null)
+                if (WindowService is null)
                 {
 #pragma warning disable 6503
                     throw new InvalidOperationException(SR.CannotQueryPropertiesWhenPageNotInTreeWithWindow);
@@ -289,7 +289,7 @@ namespace System.Windows.Controls
             set
             {
                 VerifyAccess();
-                if (WindowService == null)
+                if (WindowService is null)
                 {
                     PageHelperObject._windowWidth = value;
                     PropertyIsSet(SetPropertyFlags.WindowWidth);
@@ -375,7 +375,7 @@ namespace System.Windows.Controls
             get
             {
                 VerifyAccess();
-                if (WindowService == null)
+                if (WindowService is null)
                 {
 #pragma warning disable 6503
                     throw new InvalidOperationException(SR.CannotQueryPropertiesWhenPageNotInTreeWithWindow);
@@ -397,7 +397,7 @@ namespace System.Windows.Controls
             set
             {
                 VerifyAccess();
-                if (WindowService == null)
+                if (WindowService is null)
                 {
                     PageHelperObject._showsNavigationUI = value;
                     PropertyIsSet(SetPropertyFlags.ShowsNavigationUI);
@@ -657,7 +657,7 @@ namespace System.Windows.Controls
             // As a result when OnVisualParentChanged is fired, visualParent is null while the logical Parent is still the old one; Parent getter
             // here will return the illegal one. 
 
-            if ((visualParent == null) || 
+            if ((visualParent is null) || 
                 (Parent is Window) || 
                 ((NavigationService != null) && (NavigationService.Content == this)))
             {
@@ -665,7 +665,7 @@ namespace System.Windows.Controls
             }
 
             // NOTE (Huwang 03/09/2007): The code below walks up the TemplatedParent chain until it finds the first Frame or Window. It does not 
-            // check whether Window.Content or Frame.Content is Page. So it allows the scenario where Page can be in any element’s template and 
+            // check whether Window.Content or Frame.Content is Page. So it allows the scenario where Page can be in any elementï¿½s template and 
             // be parented by any element as long as the template is nested inside a Window or Frame, as demoed below
             //
             // <Window>
@@ -793,7 +793,7 @@ namespace System.Windows.Controls
         {
             Debug.Assert(_currentIws != null, "_currentIws cannot be null here. Caller should always verify it");
 
-            if (_pho == null)
+            if (_pho is null)
             {
                 return;
             }
@@ -921,7 +921,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_pho == null)
+                if (_pho is null)
                 {
                     _pho = new PageHelperObject();
                 }

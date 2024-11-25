@@ -104,7 +104,7 @@ namespace System.Windows.Markup
             if (xmlnsDictionary != null && xmlnsDictionary.Count > 0)
             {
                 _lastDecl = xmlnsDictionary._lastDecl;
-                if (_nsDeclarations == null)
+                if (_nsDeclarations is null)
                 {
                     _nsDeclarations = new NamespaceDeclaration[_lastDecl+1];
                 }
@@ -337,7 +337,7 @@ namespace System.Windows.Markup
         /// <returns>The namespace corresponding to the given prefix if it exists, null otherwise</returns>
         public string LookupNamespace(string prefix)
         {
-            if (prefix == null)
+            if (prefix is null)
             {
                 throw new ArgumentNullException( "prefix" ); 
             }
@@ -368,7 +368,7 @@ namespace System.Windows.Markup
         /// </returns>
         public string LookupPrefix(string xmlNamespace)
         {
-            if (xmlNamespace == null)
+            if (xmlNamespace is null)
             {
                 throw new ArgumentNullException( "xmlNamespace" ); 
             }
@@ -390,7 +390,7 @@ namespace System.Windows.Markup
         public string DefaultNamespace()
         {
              string defaultNs = LookupNamespace(string.Empty);
-             return (defaultNs == null) ? string.Empty : defaultNs;
+             return (defaultNs is null) ? string.Empty : defaultNs;
          }
 #endif
 
@@ -610,10 +610,10 @@ namespace System.Windows.Markup
         {
             CheckSealed();
             
-            if (xmlNamespace == null)
+            if (xmlNamespace is null)
                 throw new ArgumentNullException("xmlNamespace");
 
-            if (prefix == null)
+            if (prefix is null)
                 throw new ArgumentNullException("prefix");
 
             int lastScopeCount = _nsDeclarations[_lastDecl].ScopeCount;
@@ -659,12 +659,12 @@ namespace System.Windows.Markup
             CheckSealed();
             if (_lastDecl > 0)
             {
-                if (xmlNamespace == null)
+                if (xmlNamespace is null)
                 {
                     throw new ArgumentNullException("xmlNamespace");
                 }
 
-                if (prefix == null)
+                if (prefix is null)
                 {
                     throw new ArgumentNullException("prefix");
                 }

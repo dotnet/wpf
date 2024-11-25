@@ -135,7 +135,7 @@ namespace System.Windows.Controls.Primitives
                     dataGridOwner.ScrollIntoView(rowOwner.Item, dataGridOwner.ColumnFromDisplayIndex(0));
                 }
 
-                dataGridOwner.HandleSelectionForRowHeaderAndDetailsInput(rowOwner, /* startDragging = */ Mouse.Captured == null);
+                dataGridOwner.HandleSelectionForRowHeaderAndDetailsInput(rowOwner, /* startDragging = */ Mouse.Captured is null);
             }
         }
 
@@ -209,13 +209,13 @@ namespace System.Windows.Controls.Primitives
             // Remove space from the constraint (since it implicitly includes the GridLine's thickness), 
             // call the base implementation, and add the thickness back for the returned size.
             var row = DataGridRowOwner;
-            if (row == null)
+            if (row is null)
             {
                 return base.MeasureOverride(availableSize);
             }
 
             var dataGrid = row.DataGridOwner;
-            if (dataGrid == null)
+            if (dataGrid is null)
             {
                 return base.MeasureOverride(availableSize);
             }
@@ -243,13 +243,13 @@ namespace System.Windows.Controls.Primitives
             // We don't need to adjust the Arrange position of the content.  By default it is arranged at 0,0 and we're
             // adding a line to the bottom.  All we have to do is compress and extend the size, just like Measure.
             var row = DataGridRowOwner;
-            if (row == null)
+            if (row is null)
             {
                 return base.ArrangeOverride(finalSize);
             }
 
             var dataGrid = row.DataGridOwner;
-            if (dataGrid == null)
+            if (dataGrid is null)
             {
                 return base.ArrangeOverride(finalSize);
             }
@@ -277,13 +277,13 @@ namespace System.Windows.Controls.Primitives
             base.OnRender(drawingContext);
 
             var row = DataGridRowOwner;
-            if (row == null)
+            if (row is null)
             {
                 return;
             }
 
             var dataGrid = row.DataGridOwner;
-            if (dataGrid == null)
+            if (dataGrid is null)
             {
                 return;
             }

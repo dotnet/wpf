@@ -103,7 +103,7 @@ namespace System.Windows.Markup
 
             IXamlSchemaContextProvider ixsc = (serviceProvider.GetService(typeof(IXamlSchemaContextProvider))
                 as IXamlSchemaContextProvider);
-            if (ixsc == null)
+            if (ixsc is null)
             {
                 throw new NotSupportedException(SR.Format(SR.ParserCannotConvertPropertyValue, "Value", typeof(Object).FullName));
             }
@@ -114,7 +114,7 @@ namespace System.Windows.Markup
                 //Get XamlMember from dp
                 System.Xaml.XamlMember xamlProperty = 
                     schemaContext.GetXamlType(property.OwnerType).GetMember(property.Name);
-                if (xamlProperty == null)
+                if (xamlProperty is null)
                     xamlProperty = 
                         schemaContext.GetXamlType(property.OwnerType).GetAttachableMember(property.Name);
 
@@ -132,7 +132,7 @@ namespace System.Windows.Markup
                     {
                         typeConverter = xamlProperty.TypeConverter;
 
-                        if (typeConverter == null)
+                        if (typeConverter is null)
                         {
                             typeConverter = xamlProperty.Type.TypeConverter;
                         }
@@ -145,7 +145,7 @@ namespace System.Windows.Markup
 
 
                 // No Type converter case...
-                if (typeConverter.ConverterType == null)
+                if (typeConverter.ConverterType is null)
                 {
                     return source;
                 }

@@ -141,7 +141,7 @@ namespace System.Windows.Baml2006
             }
         }
 
-        public virtual bool IsDisposed { get { return _baseStream == null; } }
+        public virtual bool IsDisposed { get { return _baseStream is null; } }
 
         public override int ReadByte()
         {
@@ -190,7 +190,7 @@ namespace System.Windows.Baml2006
 #if true
             throw new NotSupportedException();
 #else
-            if(buffer == null)
+            if(buffer is null)
             {
                 throw new ArgumentNullException(nameof(buffer));
             }

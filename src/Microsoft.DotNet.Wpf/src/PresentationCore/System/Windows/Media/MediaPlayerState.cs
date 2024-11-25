@@ -659,7 +659,7 @@ namespace System.Windows.Media
 
                 // According to the spec, setting the Clock to null
                 // should set the Source to null
-                if (newClock == null)
+                if (newClock is null)
                 {
                     Open(null);
                 }
@@ -991,7 +991,7 @@ namespace System.Windows.Media
             //
             _dispatcher.VerifyAccess();
 
-            if (_nativeMedia == null || _nativeMedia.IsInvalid)
+            if (_nativeMedia is null || _nativeMedia.IsInvalid)
             {
                 throw new System.NotSupportedException(SR.Image_BadVersion);
             }

@@ -54,7 +54,7 @@ namespace System.Windows.Media.Media3D
             // cache the children to avoid a repeated DP access
             GeneralTransform3DCollection children = Children;
             
-            if ((children == null) || (children.Count == 0))
+            if ((children is null) || (children.Count == 0))
             {
                 return false;
             }
@@ -86,7 +86,7 @@ namespace System.Windows.Media.Media3D
             // cache the children to avoid a repeated DP access
             GeneralTransform3DCollection children = Children;
                         
-            if ((children == null) || (children.Count == 0))
+            if ((children is null) || (children.Count == 0))
             {
                 return rect;
             }
@@ -110,7 +110,7 @@ namespace System.Windows.Media.Media3D
                 // cache the children to avoid a repeated DP access
                 GeneralTransform3DCollection children = Children;
                             
-                if ((children == null) || (children.Count == 0))
+                if ((children is null) || (children.Count == 0))
                 {
                     return null;
                 }
@@ -122,7 +122,7 @@ namespace System.Windows.Media.Media3D
 
                     // if any of the transforms does not have an inverse,
                     // then the entire group does not have one
-                    if (g == null)
+                    if (g is null)
                         return null;
 
                     group.Children.Add(g);
@@ -142,7 +142,7 @@ namespace System.Windows.Media.Media3D
                 // cache the children to avoid a repeated DP access
                 GeneralTransform3DCollection children = Children;
                 
-                if ((children == null) || (children.Count == 0))
+                if ((children is null) || (children.Count == 0))
                 {
                     return null;
                 }

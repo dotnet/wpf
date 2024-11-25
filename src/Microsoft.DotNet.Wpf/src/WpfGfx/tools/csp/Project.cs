@@ -182,7 +182,7 @@ namespace MS.Internal.Csp
             string[] parameters
             )
         {
-            if (sMainClass == null)
+            if (sMainClass is null)
             {
                 sMainClass = FindMainClass();
             }
@@ -190,7 +190,7 @@ namespace MS.Internal.Csp
             Object returnValue = null;
 
             Type tMainClass = _assembly.GetType(sMainClass);
-            if (tMainClass == null)
+            if (tMainClass is null)
             {
                 throw new CspProjectException(
                     "Error: Project does not contain type '" + sMainClass +"'");

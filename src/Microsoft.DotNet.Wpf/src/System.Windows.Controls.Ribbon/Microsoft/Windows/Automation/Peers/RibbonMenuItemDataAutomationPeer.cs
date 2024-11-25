@@ -75,7 +75,7 @@ namespace Microsoft.Windows.Automation.Peers
             if (owner != null)
             {
                 RibbonMenuItem menuItemOwner = owner as RibbonMenuItem;
-                if (menuItemOwner == null)
+                if (menuItemOwner is null)
                 {
                     AutomationPeer wrapperPeer = GetWrapperPeer();
                     if (wrapperPeer != null)
@@ -140,7 +140,7 @@ namespace Microsoft.Windows.Automation.Peers
                 throw new ElementNotEnabledException();
 
             UIElement owner = GetWrapper();
-            if (owner == null)
+            if (owner is null)
             {
                 throw new ElementNotAvailableException(Microsoft.Windows.Controls.SR.VirtualizedElement);
             }
@@ -171,7 +171,7 @@ namespace Microsoft.Windows.Automation.Peers
                 throw new ElementNotEnabledException();
 
             UIElement owner = GetWrapper();
-            if (owner == null)
+            if (owner is null)
             {
                 throw new ElementNotAvailableException(Microsoft.Windows.Controls.SR.VirtualizedElement);
             }
@@ -201,7 +201,7 @@ namespace Microsoft.Windows.Automation.Peers
             get
             {
                 UIElement owner = GetWrapper();
-                if (owner == null)
+                if (owner is null)
                 {
                     throw new ElementNotAvailableException(Microsoft.Windows.Controls.SR.VirtualizedElement);
                 }
@@ -241,13 +241,13 @@ namespace Microsoft.Windows.Automation.Peers
                 throw new ElementNotEnabledException();
 
             UIElement owner = GetWrapper();
-            if (owner == null)
+            if (owner is null)
             {
                 throw new ElementNotAvailableException(Microsoft.Windows.Controls.SR.VirtualizedElement);
             }
 
             RibbonMenuItem menuItemOwner = owner as RibbonMenuItem;
-            if (menuItemOwner == null)
+            if (menuItemOwner is null)
             {
                 throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
             }
@@ -265,13 +265,13 @@ namespace Microsoft.Windows.Automation.Peers
                 throw new ElementNotEnabledException();
 
             UIElement owner = GetWrapper();
-            if (owner == null)
+            if (owner is null)
             {
                 throw new ElementNotAvailableException(Microsoft.Windows.Controls.SR.VirtualizedElement);
             }
 
             RibbonMenuItem menuItemOwner = owner as RibbonMenuItem;
-            if (menuItemOwner == null || !menuItemOwner.IsCheckable)
+            if (menuItemOwner is null || !menuItemOwner.IsCheckable)
             {
                 throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
             }
@@ -285,13 +285,13 @@ namespace Microsoft.Windows.Automation.Peers
             get
             {
                 UIElement owner = GetWrapper();
-                if (owner == null)
+                if (owner is null)
                 {
                     throw new ElementNotAvailableException(Microsoft.Windows.Controls.SR.VirtualizedElement);
                 }
 
                 RibbonMenuItem menuItemOwner = owner as RibbonMenuItem;
-                if (menuItemOwner == null)
+                if (menuItemOwner is null)
                 {
                     throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
                 }
@@ -339,13 +339,13 @@ namespace Microsoft.Windows.Automation.Peers
                 throw new ElementNotEnabledException();
 
             UIElement owner = GetWrapper();
-            if (owner == null)
+            if (owner is null)
             {
                 throw new ElementNotAvailableException(Microsoft.Windows.Controls.SR.VirtualizedElement);
             }
 
             RibbonMenuItem menuItemOwner = owner as RibbonMenuItem;
-            if (menuItemOwner == null)
+            if (menuItemOwner is null)
             {
                 throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
             }
@@ -391,7 +391,7 @@ namespace Microsoft.Windows.Automation.Peers
             if (wrapper != null)
             {
                 wrapperPeer = UIElementAutomationPeer.CreatePeerForElement(wrapper);
-                if (wrapperPeer == null)
+                if (wrapperPeer is null)
                 {
                     if (wrapper is FrameworkElement)
                         wrapperPeer = new FrameworkElementAutomationPeer((FrameworkElement)wrapper);

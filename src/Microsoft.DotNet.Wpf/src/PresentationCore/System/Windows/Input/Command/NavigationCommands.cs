@@ -340,7 +340,7 @@ namespace System.Windows.Input
             {
                 lock (_internalCommands.SyncRoot)
                 {
-                    if (_internalCommands[(int)idCommand] == null)
+                    if (_internalCommands[(int)idCommand] is null)
                     {
                         RoutedUICommand newCommand = CommandLibraryHelper.CreateUICommand(
                                                             GetPropertyName(idCommand),

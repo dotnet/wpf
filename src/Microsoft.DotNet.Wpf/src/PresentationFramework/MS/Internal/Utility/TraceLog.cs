@@ -56,7 +56,7 @@ namespace MS.Internal.Utility
         // return a printable id for the object
         internal static string IdFor(object o)
         {
-            if (o == null)
+            if (o is null)
                 return "NULL";
             else
                 return string.Create(CultureInfo.InvariantCulture, $"{o.GetType().Name}.{o.GetHashCode()}");

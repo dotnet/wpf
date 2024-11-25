@@ -114,7 +114,7 @@ namespace System.Windows.Xps.Packaging
                 Uri uri = _xpsManager.GenerateUniqueUri(XpsS0Markup.FixedDocumentContentType);
                 _currentFixedDocumentUri = uri;
                 IOpcPartUri partUri = GenerateIOpcPartUri(uri);
-                if (_currentDocumentPrintTicket == null)
+                if (_currentDocumentPrintTicket is null)
                 {
                     _currentDocumentPrintTicket = new PrintTicket();
                 }
@@ -341,7 +341,7 @@ namespace System.Windows.Xps.Packaging
         XmlWriter
         AcquireXmlWriterForPage()
         {
-            if (_currentFixedPageXmlWriter == null)
+            if (_currentFixedPageXmlWriter is null)
             {
                 throw new InvalidOperationException("CurrentFixedPageWriter uninitialized");
             }
@@ -353,7 +353,7 @@ namespace System.Windows.Xps.Packaging
         XmlWriter
         AcquireXmlWriterForResourceDictionary()
         {
-            if (_currentFixedPageXmlWriter == null)
+            if (_currentFixedPageXmlWriter is null)
             {
                 throw new InvalidOperationException("CurrentFixedPageWriter uninitialized");
             }
@@ -443,7 +443,7 @@ namespace System.Windows.Xps.Packaging
             
             ResourceStreamCacheItem resourceStreamCacheItem = (ResourceStreamCacheItem)_fontsCache[resourceId];
 
-            if (resourceStreamCacheItem == null)
+            if (resourceStreamCacheItem is null)
             {
                 resourceStreamCacheItem = new ResourceStreamCacheItem();
 
@@ -877,7 +877,7 @@ namespace System.Windows.Xps.Packaging
                 IStream pageMarkupStream = _currentFixedPagePrintStream.GetManagedIStream();
                 IOpcPartUri partUri = GenerateIOpcPartUri(_currentFixedPageUri);
 
-                if (_currentPagePrintTicket == null)
+                if (_currentPagePrintTicket is null)
                 {
                     _currentPagePrintTicket = new PrintTicket();
                 }

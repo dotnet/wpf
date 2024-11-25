@@ -92,7 +92,7 @@ namespace System.Windows.Documents
 
             // Get the matrix transform out, skip all non affine transforms
             Transform t = transform.AffineTransform;
-            if (t == null)
+            if (t is null)
             {                
                 t = Transform.Identity;                
             }
@@ -128,13 +128,13 @@ namespace System.Windows.Documents
             // Get the matrix from AdornedElement to the visual parent to get the transformed
             // start/end point
             Visual parent2d = VisualTreeHelper.GetParent(this.AdornedElement) as Visual;
-            if (parent2d == null)
+            if (parent2d is null)
             {
                 return;
             }
 
             GeneralTransform transform = AdornedElement.TransformToAncestor(parent2d);
-            if (transform == null)
+            if (transform is null)
             {
                 return;
             }
@@ -361,7 +361,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal void Initialize(ITextView textView)
         {
-            Debug.Assert(_adornerLayer == null, "Attempt to overwrite existing AdornerLayer!");
+            Debug.Assert(_adornerLayer is null, "Attempt to overwrite existing AdornerLayer!");
 
             _adornerLayer = AdornerLayer.GetAdornerLayer(textView.RenderScope);
 

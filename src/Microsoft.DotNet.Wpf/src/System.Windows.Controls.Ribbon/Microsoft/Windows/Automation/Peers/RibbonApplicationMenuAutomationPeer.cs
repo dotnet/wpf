@@ -53,7 +53,7 @@ namespace Microsoft.Windows.Automation.Peers
             UIElement element = menu.FooterPaneHost;
             if (element != null)
             {
-                if (children == null)
+                if (children is null)
                 {
                     children = new List<AutomationPeer>();
                 }
@@ -63,7 +63,7 @@ namespace Microsoft.Windows.Automation.Peers
             element = menu.AuxiliaryPaneHost;
             if (element != null)
             {
-                if (children == null)
+                if (children is null)
                 {
                     children = new List<AutomationPeer>();
                 }

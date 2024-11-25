@@ -84,7 +84,7 @@ namespace System.Windows.Media.Imaging
             // Sanitize inputs
             //
 
-            if (pixelFormat.Palettized && palette == null)
+            if (pixelFormat.Palettized && palette is null)
             {
                 throw new InvalidOperationException(SR.Image_IndexedPixelFormatRequiresPalette);
             }
@@ -408,7 +408,7 @@ namespace System.Windows.Media.Imaging
                                     out elementType);
 
             // We accept arrays of arbitrary value types - but not reference types.
-            if (elementType == null || !elementType.IsValueType)
+            if (elementType is null || !elementType.IsValueType)
             {
                 throw new ArgumentException(SR.Image_InvalidArrayForPixel);
             }
@@ -515,7 +515,7 @@ namespace System.Windows.Media.Imaging
             ArgumentOutOfRangeException.ThrowIfNegative(offset);
 
             // We accept arrays of arbitrary value types - but not reference types.
-            if (elementType == null || !elementType.IsValueType)
+            if (elementType is null || !elementType.IsValueType)
             {
                 throw new ArgumentException(SR.Image_InvalidArrayForPixel);
             }
@@ -609,7 +609,7 @@ namespace System.Windows.Media.Imaging
 
             if (canFreeze && !isChecking)
             {
-                Debug.Assert(_pBackBufferLock == null);
+                Debug.Assert(_pBackBufferLock is null);
 
                 //
                 // By entering 'frozen' mode, we convert from being a 
@@ -975,7 +975,7 @@ namespace System.Windows.Media.Imaging
             // first time being called since the last successful call to OnCommittingBatch.
             // OnCommittingBatch sets _pBackBuffer to null.
             //
-            if (_pBackBuffer == null)
+            if (_pBackBuffer is null)
             {
                 bool shouldGetBackBuffer = true;
                 
@@ -1078,7 +1078,7 @@ namespace System.Windows.Media.Imaging
             //
             // Assure that a valid pixels Array was provided.
             //
-            if (sourceBuffer == null)
+            if (sourceBuffer is null)
             {
                 throw new ArgumentNullException(backwardsCompat ? "pixels" : "sourceBuffer");
             }
@@ -1436,7 +1436,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                if (_committingBatchHandler == null)
+                if (_committingBatchHandler is null)
                 {
                     _committingBatchHandler = OnCommittingBatch;
                 }

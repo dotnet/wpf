@@ -432,7 +432,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                if (s_empty == null)
+                if (s_empty is null)
                 {
                     Point3DCollection collection = new Point3DCollection();
                     collection.Freeze();

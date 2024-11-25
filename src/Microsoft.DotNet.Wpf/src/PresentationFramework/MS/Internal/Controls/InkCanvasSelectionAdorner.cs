@@ -256,7 +256,7 @@ namespace MS.Internal.Controls
 
                     hatchRect.Inflate(HatchBorderMargin / 2, HatchBorderMargin / 2);
 
-                    if (hatchGeometry == null)
+                    if (hatchGeometry is null)
                     {
                         PathFigure path = new PathFigure();
                         path.StartPoint = new Point(hatchRect.Left, hatchRect.Top);

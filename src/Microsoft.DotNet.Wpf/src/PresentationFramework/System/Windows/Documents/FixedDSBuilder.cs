@@ -118,7 +118,7 @@ namespace System.Windows.Documents
             }
             FixedNode fn = (FixedNode)_fixedNodes[index];
 
-            if (e == null)
+            if (e is null)
             {
                 e = _fixedPage.GetElement(fn) as UIElement;
             }

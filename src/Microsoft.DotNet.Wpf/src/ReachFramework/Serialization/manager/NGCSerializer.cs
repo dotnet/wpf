@@ -54,7 +54,7 @@ namespace System.Windows.Xps.Serialization
                 {
                     jobName = inputElement.Name;
                 }
-                if (jobName == null || jobName.Length == 0)
+                if (jobName is null || jobName.Length == 0)
                 {
                     jobName = o.ToString();
                 }
@@ -94,7 +94,7 @@ namespace System.Windows.Xps.Serialization
         {
             ArgumentNullException.ThrowIfNull(serializedObject);
             FixedDocument fd = serializedObject as FixedDocument;
-            if( fd == null )
+            if( fd is null )
             {
 
                throw new ArgumentException(SR.ReachSerialization_ExpectedFixedDocument);
@@ -163,7 +163,7 @@ namespace System.Windows.Xps.Serialization
             ArgumentNullException.ThrowIfNull(serializedObject);
 
             FixedPage fp = serializedObject as FixedPage;
-            if( fp == null )
+            if( fp is null )
             {
 
                throw new ArgumentException(SR.ReachSerialization_ExpectedFixedPage);
@@ -480,7 +480,7 @@ namespace System.Windows.Xps.Serialization
         {
             ArgumentNullException.ThrowIfNull(serializedObject);
             FixedDocumentSequence fds = serializedObject as FixedDocumentSequence;
-            if( fds == null )
+            if( fds is null )
             {
 
                throw new ArgumentException(SR.ReachSerialization_ExpectedFixedDocumentSequence);
@@ -693,7 +693,7 @@ namespace System.Windows.Xps.Serialization
         {
             IEnumerable enumerableObject =  serializedObject as IEnumerable;
 
-            if (enumerableObject == null)
+            if (enumerableObject is null)
             {
                 throw new XpsSerializationException(SR.Format(SR.MustBeOfType, "serializableObjectContext.TargetObject", typeof(IEnumerable)));
             }
@@ -912,7 +912,7 @@ namespace System.Windows.Xps.Serialization
         {
            IEnumerable enumerableObject = serializedObject as IEnumerable;
 
-            if (enumerableObject == null)
+            if (enumerableObject is null)
             {
                 throw new XpsSerializationException(SR.Format(SR.MustBeOfType, "serializableObjectContext.TargetObject", typeof(IEnumerable)));
             }

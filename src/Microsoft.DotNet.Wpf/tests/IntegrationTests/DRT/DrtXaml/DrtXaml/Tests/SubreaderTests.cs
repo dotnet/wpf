@@ -127,7 +127,7 @@ namespace DrtXaml.Tests
 
         private object DoStuffWithSkipper(SkipMode skipMode)
         {
-            if (_removeType == null || _removeProperty == null)
+            if (_removeType is null || _removeProperty is null)
             {
                 throw new Exception("remove something is null");
             }
@@ -162,7 +162,7 @@ namespace DrtXaml.Tests
 
             _mainWriter.Close();
             XamlObjectWriter objectWriter = _mainWriter as XamlObjectWriter;
-            return (objectWriter == null) ? null : objectWriter.Result;
+            return (objectWriter is null) ? null : objectWriter.Result;
         }
 
         public void Process(SkipMode mode)
@@ -211,7 +211,7 @@ namespace DrtXaml.Tests
                 throw new InvalidOperationException("Property Element3 should be nulll");
             }
 
-            if (e3.Element1 == null)
+            if (e3.Element1 is null)
             {
                 throw new InvalidOperationException("Property Element1 should NOT be nulll");
             }
@@ -229,16 +229,16 @@ namespace DrtXaml.Tests
         public void ConfirmStuffIsNotRemoved(object tree)
         {
             var e3 = (Test.Elements.Element10)tree;
-            if (e3.Element2 == null)
+            if (e3.Element2 is null)
             {
                 throw new InvalidOperationException("Property Element2 should NOT be nulll");
             }
-            if (e3.Element3 == null)
+            if (e3.Element3 is null)
             {
                 throw new InvalidOperationException("Property Element3 should NOT be nulll");
             }
 
-            if (e3.Element1 == null)
+            if (e3.Element1 is null)
             {
                 throw new InvalidOperationException("Property Element1 should NOT be nulll");
             }

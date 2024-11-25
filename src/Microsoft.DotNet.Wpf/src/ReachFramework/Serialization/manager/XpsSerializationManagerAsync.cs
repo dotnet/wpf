@@ -83,7 +83,7 @@ namespace System.Windows.Xps.Serialization
                 throw new XpsSerializationException(SR.ReachSerialization_NotSupported);
             }
 
-            if(Simulator == null)
+            if(Simulator is null)
             {
                 Simulator = new ReachHierarchySimulator(this,
                                                          serializedObject);
@@ -458,7 +458,7 @@ namespace System.Windows.Xps.Serialization
                 serializerType = typeof(PrintTicketSerializer);
             }
 
-            if(serializerType == null)
+            if(serializerType is null)
             {
                 base.GetSerializerType(objectType);
             }

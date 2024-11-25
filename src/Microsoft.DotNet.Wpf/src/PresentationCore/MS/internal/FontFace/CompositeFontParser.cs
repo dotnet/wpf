@@ -96,7 +96,7 @@ namespace MS.Internal.FontFace
                 FailAttributeValue();
             }
 
-            if (value == null)
+            if (value is null)
                 FailAttributeValue();
 
             return (double)value;
@@ -119,7 +119,7 @@ namespace MS.Internal.FontFace
                 FailAttributeValue();
             }
 
-            if (value == null)
+            if (value is null)
                 FailAttributeValue();
 
             return (XmlLanguage)value;
@@ -543,7 +543,7 @@ namespace MS.Internal.FontFace
             }
 
             // XAML requires x:Key so we should, too.
-            if (language == null)
+            if (language is null)
             {
                 FailMissingAttribute(LanguageAttribute);
             }
@@ -741,10 +741,10 @@ namespace MS.Internal.FontFace
                 _reader.MoveToElement();
             }
 
-            if (key == null)
+            if (key is null)
                 FailMissingAttribute(KeyAttribute);
 
-            if (metrics == null)
+            if (metrics is null)
                 FailMissingAttribute(MetricsAttribute);
 
             face.DeviceFontCharacterMetrics.Add(

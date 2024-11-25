@@ -84,12 +84,12 @@ namespace DrtXaml.Tests
             var stackPanel35 = new BamlTestClasses35.DeferContMEPV();
             // Test 2
             value = stackPanel35.Test2.Resources["markupextension"];
-            Assert.IsTrue(value == null);
+            Assert.IsTrue(value is null);
             // Test 3
             value = stackPanel35.Test3.Resources["markupextension1"];
-            Assert.IsTrue(value == null);
+            Assert.IsTrue(value is null);
             value = stackPanel35.Test3.Resources["markupextension2"];
-            Assert.IsTrue(value == null);
+            Assert.IsTrue(value is null);
             // Test 4
             value = stackPanel35.Test4.Resources["markupextension1"];
             Assert.IsTrue(value is NullExtension);
@@ -101,17 +101,17 @@ namespace DrtXaml.Tests
             var stackPanel40 = new DeferContMEPV();
             // Test 2
             value = stackPanel40.Test2.Resources["markupextension"];
-            Assert.IsTrue(value == null);
+            Assert.IsTrue(value is null);
             // Test 3
             value = stackPanel40.Test3.Resources["markupextension1"];
-            Assert.IsTrue(value == null);
+            Assert.IsTrue(value is null);
             value = stackPanel40.Test3.Resources["markupextension2"];
-            Assert.IsTrue(value == null);
+            Assert.IsTrue(value is null);
             // Test 4
             value = stackPanel40.Test4.Resources["markupextension1"];
-            Assert.IsTrue(value == null);
+            Assert.IsTrue(value is null);
             value = stackPanel40.Test4.Resources["markupextension2"];
-            Assert.IsTrue(value == null);
+            Assert.IsTrue(value is null);
         }
 #endif
         // Make sure Bindings with non-resolvable types in the path fail silently like in v3.

@@ -98,7 +98,7 @@ namespace System.Windows.Controls
             TextEditor.RegisterCommandHandlers(typeof(RichTextBox), /*acceptsRichContent:*/true, /*readOnly*/false, /*registerEventListeners*/false);
 
             // Create TextContainer and TextEditor associated with it
-            if (document == null)
+            if (document is null)
             {
                 document = new FlowDocument();
                 document.Blocks.Add(new Paragraph());
@@ -204,7 +204,7 @@ namespace System.Windows.Controls
         /// </exception>
         public TextPointer GetPositionFromPoint(Point point, bool snapToText)
         {
-            if (this.RenderScope == null)
+            if (this.RenderScope is null)
             {
                 return null;
             }
@@ -248,7 +248,7 @@ namespace System.Windows.Controls
 
             SpellingError spellingError = this.TextEditor.GetSpellingErrorAtPosition(position, position.LogicalDirection);
 
-            return (spellingError == null) ? null : new TextRange(spellingError.Start, spellingError.End);
+            return (spellingError is null) ? null : new TextRange(spellingError.Start, spellingError.End);
         }
 
         /// <summary>
@@ -375,7 +375,7 @@ namespace System.Windows.Controls
                 }
 
                 // Identify the case for the _document initialization
-                bool initialSetting = _document == null;
+                bool initialSetting = _document is null;
                 
                 // Detach existing FlowDocument
                 if (_document != null)
@@ -469,13 +469,13 @@ namespace System.Windows.Controls
             Block firstBlock = _document.Blocks.FirstBlock;
 
             if (_implicitDocument &&
-                (firstBlock == null
+                (firstBlock is null
                     ||
                     firstBlock == _document.Blocks.LastBlock &&
                     firstBlock is Paragraph))
             {
-                Inline firstInline = (firstBlock == null) ? null : ((Paragraph)firstBlock).Inlines.FirstInline;
-                if (firstInline == null
+                Inline firstInline = (firstBlock is null) ? null : ((Paragraph)firstBlock).Inlines.FirstInline;
+                if (firstInline is null
                         ||
                         firstInline == ((Paragraph)firstBlock).Inlines.LastInline &&
                         firstInline is Run &&
@@ -536,7 +536,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (this._document == null)
+                if (this._document is null)
                 {
                     // Using _document (not .Document),as it can be null on destruction scenarios 
                     // (even though .Document cannot be null) - it is called for property invalidation reasons...
@@ -759,7 +759,7 @@ namespace System.Windows.Controls
 
         private void OnPageSizeChangedHandler(object sender, EventArgs e)
         {
-            if (this.RenderScope == null)
+            if (this.RenderScope is null)
             {
                 return;
             }

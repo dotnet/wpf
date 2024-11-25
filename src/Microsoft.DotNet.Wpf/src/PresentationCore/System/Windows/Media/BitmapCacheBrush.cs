@@ -43,7 +43,7 @@ namespace System.Windows.Media
             get 
             { 
                 // Lazily create the dummy visual instance.
-                if (_dummyVisual == null)
+                if (_dummyVisual is null)
                 {
                     _dummyVisual = new ContainerVisual();
                 }
@@ -213,7 +213,7 @@ namespace System.Windows.Media
             
                         if ((element != null) 
                               && 
-                              ((VisualTreeHelper.GetParent(element) == null && !(element.IsRootElement)) // element is not connected to visual tree, OR
+                              ((VisualTreeHelper.GetParent(element) is null && !(element.IsRootElement)) // element is not connected to visual tree, OR
                                || (VisualTreeHelper.GetParent(element) is Visual3D) // element is a 2D child of a 3D object, OR
                                || (VisualTreeHelper.GetParent(element) == InternalTarget))) // element is only connected to visual tree via our wrapper Visual
                         {
@@ -270,7 +270,7 @@ namespace System.Windows.Media
 
             DependencyObject parent = VisualTreeHelper.GetParent(element);
             if (!(element.IsRootElement)
-                && (parent == null || parent is Visual3D || parent == InternalTarget))
+                && (parent is null || parent is Visual3D || parent == InternalTarget))
             {
                 //
                 // PropagateResumeLayout sets the LayoutSuspended flag to false if it were true.

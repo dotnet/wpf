@@ -23,7 +23,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         internal static void BeginScope(string msg, Category category)
         {
-            if (_instance == null) { _instance = new TextPanelDebug(); }
+            if (_instance is null) { _instance = new TextPanelDebug(); }
             if (_instance._IsEnabled(category))
             {
                 _instance._BeginScope(msg);
@@ -47,7 +47,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         internal static void StartTimer(string name, Category category)
         {
-            if (_instance == null) { _instance = new TextPanelDebug(); }
+            if (_instance is null) { _instance = new TextPanelDebug(); }
             if (_instance._IsEnabled(category))
             {
                 _instance._StartTimer(name);
@@ -71,7 +71,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         internal static void IncrementCounter(string name, Category category)
         {
-            if (_instance == null) { _instance = new TextPanelDebug(); }
+            if (_instance is null) { _instance = new TextPanelDebug(); }
             if (_instance._IsEnabled(category))
             {
                 _instance._IncrementCounter(name);
@@ -84,7 +84,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         internal static void Log(string msg, Category category)
         {
-            if (_instance == null) { _instance = new TextPanelDebug(); }
+            if (_instance is null) { _instance = new TextPanelDebug(); }
             if (_instance._IsEnabled(category))
             {
                 _instance._Log(msg);
@@ -159,12 +159,12 @@ namespace MS.Internal.PtsHost
         private void _StartTimer(string name)
         {
             _IncrementCounter(name);
-            if (_timers == null)
+            if (_timers is null)
             {
                 _timers = new System.Collections.Hashtable();
             }
             Stopwatch stopwatch = _timers.ContainsKey(name) ? (Stopwatch)_timers[name] : null;
-            if (stopwatch == null)
+            if (stopwatch is null)
             {
                 stopwatch = new Stopwatch();
                 _timers[name] = stopwatch;
@@ -188,7 +188,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         private void _IncrementCounter(string eventTag)
         {
-            if (_counters == null)
+            if (_counters is null)
             {
                 _counters = new System.Collections.Hashtable();
             }

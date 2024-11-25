@@ -38,15 +38,15 @@ namespace MS.Internal
 
         public override int GetHashCode()
         {
-            return (_first == null ? 0 : _first.GetHashCode()) ^ (_second == null ? 0 : _second.GetHashCode());
+            return (_first is null ? 0 : _first.GetHashCode()) ^ (_second is null ? 0 : _second.GetHashCode());
         }
 
         public override bool Equals(object o)
         {
             Pair other = o as Pair;
             return other != null &&
-                (_first != null ? _first.Equals(other._first) : other._first == null) &&
-                (_second != null ? _second.Equals(other._second) : other._second == null);
+                (_first != null ? _first.Equals(other._first) : other._first is null) &&
+                (_second != null ? _second.Equals(other._second) : other._second is null);
         }
 
         private object _first;

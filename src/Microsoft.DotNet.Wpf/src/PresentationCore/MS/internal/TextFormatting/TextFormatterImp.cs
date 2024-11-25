@@ -246,7 +246,7 @@ namespace MS.Internal.TextFormatting
             TextLine textLine = null;
 
             if (    !settings.Pap.AlwaysCollapsible
-                &&  previousLineBreak == null
+                &&  previousLineBreak is null
                 &&  lineLength <= 0
                 )
             {
@@ -259,7 +259,7 @@ namespace MS.Internal.TextFormatting
                     ) as TextLine;
             }
 
-            if (textLine == null)
+            if (textLine is null)
             {
                 // content is complex, creating complex line
                 textLine = new TextMetrics.FullTextLine(
@@ -433,7 +433,7 @@ namespace MS.Internal.TextFormatting
                 textRunCache
                 );
 
-            if (textRunCache.Imp == null)
+            if (textRunCache.Imp is null)
             {
                 // No run cache object available, create one
                 textRunCache.Imp = new TextRunCacheImp();
@@ -471,10 +471,10 @@ namespace MS.Internal.TextFormatting
 
             ArgumentNullException.ThrowIfNull(paragraphProperties);
 
-            if (paragraphProperties.DefaultTextRunProperties == null)
+            if (paragraphProperties.DefaultTextRunProperties is null)
                 throw new ArgumentNullException("paragraphProperties.DefaultTextRunProperties");
 
-            if (paragraphProperties.DefaultTextRunProperties.Typeface == null)
+            if (paragraphProperties.DefaultTextRunProperties.Typeface is null)
                 throw new ArgumentNullException("paragraphProperties.DefaultTextRunProperties.Typeface");
 
             ArgumentOutOfRangeException.ThrowIfEqual(paragraphWidth, double.NaN);
@@ -538,7 +538,7 @@ namespace MS.Internal.TextFormatting
 
                 if (ploc == IntPtr.Zero)
                 {
-                    if(context.Owner == null)
+                    if(context.Owner is null)
                         break;
                 }
                 else if (ploc == context.Ploc)
@@ -549,7 +549,7 @@ namespace MS.Internal.TextFormatting
                     // we use the actual PLSC as the context signature so we
                     // locate the one we want.
 
-                    Debug.Assert(context.Owner == null);
+                    Debug.Assert(context.Owner is null);
                     break;
                 }
             }
@@ -770,7 +770,7 @@ namespace MS.Internal.TextFormatting
         {
             get
             {
-                if (_glyphingCache == null)
+                if (_glyphingCache is null)
                 {
                     _glyphingCache = new GlyphingCache(MaxGlyphingCacheCapacity);
                 }
@@ -787,7 +787,7 @@ namespace MS.Internal.TextFormatting
         {
             get
             {
-                if (_textAnalyzer == null)
+                if (_textAnalyzer is null)
                 {
                     _textAnalyzer = DWriteFactory.Instance.CreateTextAnalyzer();
                 }

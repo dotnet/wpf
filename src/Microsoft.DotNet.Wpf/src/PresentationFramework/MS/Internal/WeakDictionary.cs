@@ -204,7 +204,7 @@ namespace MS.Internal
         {
             get
             {
-                if (_keys == null)
+                if (_keys is null)
                 {
                     _keys = new WeakDictionary<TKey, TValue>.KeyCollection<TKey, TValue>(this);
                 }
@@ -237,7 +237,7 @@ namespace MS.Internal
         {
             get
             {
-                if (_values == null)
+                if (_values is null)
                 {
                     _values = new WeakDictionary<TKey, TValue>.ValueCollection<TKey, TValue>(this);
                 }

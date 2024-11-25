@@ -75,7 +75,7 @@ namespace System.Windows.Media
         {
             Color c1 = Color.FromProfile(profileUri);
 
-            if (values == null)
+            if (values is null)
             {
                 throw new ArgumentException(SR.Format(SR.Color_DimensionMismatch, null));
             }
@@ -275,9 +275,9 @@ namespace System.Windows.Media
         /// </returns>
         internal string ConvertToString(string format, IFormatProvider provider)
         {
-            if (context == null)
+            if (context is null)
             {
-                if (format == null)
+                if (format is null)
                 {
                     return string.Create(provider, stackalloc char[128], $"#{this.sRgbColor.a:X2}{this.sRgbColor.r:X2}{this.sRgbColor.g:X2}{this.sRgbColor.b:X2}");
                 }
@@ -342,7 +342,7 @@ namespace System.Windows.Media
             // Alpha is the least likely channel to differ
             bool result = true;
 
-            if (context == null || color.nativeColorValue == null)
+            if (context is null || color.nativeColorValue is null)
             {
                 result = result && FloatUtil.AreClose(scRgbColor.r, color.scRgbColor.r);
                 result = result && FloatUtil.AreClose(scRgbColor.g, color.scRgbColor.g);
@@ -405,7 +405,7 @@ namespace System.Windows.Media
         ///</summary>
         public static Color operator +(Color color1, Color color2)
         {
-            if (color1.context == null && color2.context == null)
+            if (color1.context is null && color2.context is null)
             {
             Color c1 = FromScRgb(
                   color1.scRgbColor.a + color2.scRgbColor.a,
@@ -519,7 +519,7 @@ namespace System.Windows.Media
         /// <returns>Returns the unclamped differnce</returns>
         public static Color operator -(Color color1, Color color2)
         {
-            if (color1.context == null && color2.context == null)
+            if (color1.context is null && color2.context is null)
             {
                 Color c1 = FromScRgb(
                     color1.scRgbColor.a - color2.scRgbColor.a,
@@ -529,7 +529,7 @@ namespace System.Windows.Media
                     );
                 return c1;
             }
-            else if (color1.context == null || color2.context == null)
+            else if (color1.context is null || color2.context is null)
             {
                 throw new ArgumentException(SR.Format(SR.Color_ColorContextTypeMismatch, null));
             }
@@ -639,7 +639,7 @@ namespace System.Windows.Media
         {
             Color c1 = FromScRgb(color.scRgbColor.a * coefficient, color.scRgbColor.r * coefficient, color.scRgbColor.g * coefficient, color.scRgbColor.b * coefficient);
 
-            if (color.context == null)
+            if (color.context is null)
             {
                 return c1;
             }
@@ -710,7 +710,7 @@ namespace System.Windows.Media
         ///</summary>
         public static bool operator ==(Color color1, Color color2)
         {
-            if (color1.context == null && color2.context == null)
+            if (color1.context is null && color2.context is null)
             {
                 if (color1.scRgbColor.r != color2.scRgbColor.r)
                 {
@@ -734,18 +734,18 @@ namespace System.Windows.Media
 
                 return true;
             }
-            else if (color1.context == null || color2.context == null)
+            else if (color1.context is null || color2.context is null)
             {
                 return false;
             }
             else if (color1.context.ColorSpaceFamily == color2.context.ColorSpaceFamily)
             {
-                if (color1.nativeColorValue == null && color2.nativeColorValue == null)
+                if (color1.nativeColorValue is null && color2.nativeColorValue is null)
                 {
                     return true;
                 }
 
-                if (color1.nativeColorValue == null || color2.nativeColorValue == null)
+                if (color1.nativeColorValue is null || color2.nativeColorValue is null)
                 {
                     return false;
                 }
@@ -831,7 +831,7 @@ namespace System.Windows.Media
             }
             set
             {
-                if (context == null || (context.ColorSpaceFamily == ColorContext.StandardColorSpace.Srgb) || (context.ColorSpaceFamily == ColorContext.StandardColorSpace.ScRgb))
+                if (context is null || (context.ColorSpaceFamily == ColorContext.StandardColorSpace.Srgb) || (context.ColorSpaceFamily == ColorContext.StandardColorSpace.ScRgb))
                 {
                     scRgbColor.r = sRgbToScRgb(value);
                     sRgbColor.r = value;
@@ -855,7 +855,7 @@ namespace System.Windows.Media
             }
             set
             {
-                if (context == null || (context.ColorSpaceFamily == ColorContext.StandardColorSpace.Srgb) || (context.ColorSpaceFamily == ColorContext.StandardColorSpace.ScRgb))
+                if (context is null || (context.ColorSpaceFamily == ColorContext.StandardColorSpace.Srgb) || (context.ColorSpaceFamily == ColorContext.StandardColorSpace.ScRgb))
                 {
                     scRgbColor.g = sRgbToScRgb(value);
                     sRgbColor.g = value;
@@ -879,7 +879,7 @@ namespace System.Windows.Media
             }
             set
             {
-                if (context == null || (context.ColorSpaceFamily == ColorContext.StandardColorSpace.Srgb) || (context.ColorSpaceFamily == ColorContext.StandardColorSpace.ScRgb))
+                if (context is null || (context.ColorSpaceFamily == ColorContext.StandardColorSpace.Srgb) || (context.ColorSpaceFamily == ColorContext.StandardColorSpace.ScRgb))
                 {
                     scRgbColor.b = sRgbToScRgb(value);
                     sRgbColor.b = value;
@@ -933,7 +933,7 @@ namespace System.Windows.Media
             }
             set
             {
-                if (context == null || (context.ColorSpaceFamily == ColorContext.StandardColorSpace.Srgb) || (context.ColorSpaceFamily == ColorContext.StandardColorSpace.ScRgb))
+                if (context is null || (context.ColorSpaceFamily == ColorContext.StandardColorSpace.Srgb) || (context.ColorSpaceFamily == ColorContext.StandardColorSpace.ScRgb))
                 {
                     scRgbColor.r = value;
                     sRgbColor.r = ScRgbTosRgb(value);
@@ -958,7 +958,7 @@ namespace System.Windows.Media
             }
             set
             {
-                if (context == null || (context.ColorSpaceFamily == ColorContext.StandardColorSpace.Srgb) || (context.ColorSpaceFamily == ColorContext.StandardColorSpace.ScRgb))
+                if (context is null || (context.ColorSpaceFamily == ColorContext.StandardColorSpace.Srgb) || (context.ColorSpaceFamily == ColorContext.StandardColorSpace.ScRgb))
                 {
                     scRgbColor.g = value;
                     sRgbColor.g = ScRgbTosRgb(value);
@@ -983,7 +983,7 @@ namespace System.Windows.Media
             }
             set
             {
-                if (context == null || (context.ColorSpaceFamily == ColorContext.StandardColorSpace.Srgb) || (context.ColorSpaceFamily == ColorContext.StandardColorSpace.ScRgb))
+                if (context is null || (context.ColorSpaceFamily == ColorContext.StandardColorSpace.Srgb) || (context.ColorSpaceFamily == ColorContext.StandardColorSpace.ScRgb))
                 {
                     scRgbColor.b = value;
                     sRgbColor.b = ScRgbTosRgb(value);

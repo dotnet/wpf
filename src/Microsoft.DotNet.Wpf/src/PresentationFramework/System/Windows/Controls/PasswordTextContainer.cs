@@ -291,7 +291,7 @@ namespace System.Windows.Controls
 
             RemoveUnreferencedPositions();
 
-            if (_positionList == null)
+            if (_positionList is null)
             {
                 _positionList = new ArrayList();
             }
@@ -408,7 +408,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_highlights == null)
+                if (_highlights is null)
                 {
                     _highlights = new Highlights(this);
                 }
@@ -548,7 +548,7 @@ namespace System.Windows.Controls
             _password.Clear();
             OnPasswordChange(0, -symbolCount);
 
-            _password = (value == null) ? new SecureString() : value.Copy();
+            _password = (value is null) ? new SecureString() : value.Copy();
             OnPasswordChange(0, this.SymbolCount);
         }
 
@@ -632,7 +632,7 @@ namespace System.Windows.Controls
             }
 
             // Fire the ChangingEvent now if we haven't already.
-            if (_changes == null)
+            if (_changes is null)
             {
                 _changes = new TextContainerChangedEventArgs();
             }
@@ -697,7 +697,7 @@ namespace System.Windows.Controls
             int backwardGravitySlot;
             PasswordTextPointer position;
 
-            if (_positionList == null)
+            if (_positionList is null)
             {
                 return;
             }
@@ -782,7 +782,7 @@ namespace System.Windows.Controls
             int index;
             PasswordTextPointer position;
 
-            if (_positionList == null)
+            if (_positionList is null)
             {
                 return;
             }
@@ -791,7 +791,7 @@ namespace System.Windows.Controls
             {
                 position = GetPointerAtIndex(index);
 
-                if (position == null)
+                if (position is null)
                 {
                     _positionList.RemoveAt(index);
                 }

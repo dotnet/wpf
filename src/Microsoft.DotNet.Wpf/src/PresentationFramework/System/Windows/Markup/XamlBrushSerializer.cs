@@ -102,7 +102,7 @@ namespace System.Windows.Markup
 #else
         private static bool SerializeOn(BinaryWriter writer, string stringValue)
         {
-            if (writer == null)
+            if (writer is null)
             {
                 throw new ArgumentNullException("writer");
             }

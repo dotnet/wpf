@@ -738,7 +738,7 @@ namespace System.Windows.Baml2006
             int lineNumber = _binaryReader.ReadInt32();
             int lineOffset = _binaryReader.ReadInt32();
 
-            bool shouldInjectContentProperty = _context.CurrentFrame.Member == null;
+            bool shouldInjectContentProperty = _context.CurrentFrame.Member is null;
 
             if (shouldInjectContentProperty)
             {
@@ -782,7 +782,7 @@ namespace System.Windows.Baml2006
             string value = _binaryReader.ReadString();
             short converterId = _binaryReader.ReadInt16();
 
-            bool shouldDropProperty = _context.CurrentFrame.Member == null;
+            bool shouldDropProperty = _context.CurrentFrame.Member is null;
 
             if (shouldDropProperty)
             {
@@ -888,7 +888,7 @@ namespace System.Windows.Baml2006
                     Type memberType;
                     object providedValue;
                     string propertyName = GetStaticExtensionValue(keyId, out memberType, out providedValue);
-                    if (providedValue == null)
+                    if (providedValue is null)
                     {
                         var staticExtension = new System.Windows.Markup.StaticExtension(propertyName);
                         staticExtension.MemberType = memberType;
@@ -992,7 +992,7 @@ namespace System.Windows.Baml2006
             bool isSharedSet = _binaryReader.ReadBoolean();
 
             Type type = Baml2006SchemaContext.KnownTypes.GetKnownType(typeId);
-            if (type == null)
+            if (type is null)
             {
                 type = BamlSchemaContext.GetClrType(typeId);
             }
@@ -1411,7 +1411,7 @@ namespace System.Windows.Baml2006
             RemoveImplicitFrame();
 
             // baml property start is only valid betweeen ElementStart and ElementEnd
-            if (_context.CurrentFrame.XamlType == null)
+            if (_context.CurrentFrame.XamlType is null)
             {
                 throw new XamlParseException(SR.PropertyFoundOutsideStartElement);
             }
@@ -2360,7 +2360,7 @@ namespace System.Windows.Baml2006
 
             if (parentType != null)
             {
-                if (parentProperty == null)
+                if (parentProperty is null)
                 {
                     // We have got two consecutive ElementStart records
                     // We must insert an implicit content property between them
@@ -2743,7 +2743,7 @@ namespace System.Windows.Baml2006
                 {
                     freezable.Freeze();
                 }
-                if (_freezeCache == null)
+                if (_freezeCache is null)
                 {
                     _freezeCache = new Dictionary<string, Freezable>();
                 }

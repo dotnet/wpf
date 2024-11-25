@@ -44,7 +44,7 @@ namespace MS.Internal
         /// </summary>
         internal static Freezable Clone(Freezable freezable)
         {
-            if (freezable == null)
+            if (freezable is null)
             {
                 return null;
             }
@@ -59,7 +59,7 @@ namespace MS.Internal
         /// </summary>
         public static Freezable GetAsFrozen(Freezable freezable)
         {
-            if (freezable == null)
+            if (freezable is null)
             {
                 return null;
             }
@@ -73,7 +73,7 @@ namespace MS.Internal
         /// </summary>
         internal static Freezable GetAsFrozenIfPossible(Freezable freezable)
         {
-            if (freezable == null)
+            if (freezable is null)
             {
                 return null;
             }

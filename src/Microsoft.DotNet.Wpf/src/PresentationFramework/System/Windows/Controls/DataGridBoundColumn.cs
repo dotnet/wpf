@@ -172,7 +172,7 @@ namespace System.Windows.Controls
         private Style PickStyle(bool isEditing, bool defaultToElementStyle)
         {
             Style style = isEditing ? EditingElementStyle : ElementStyle;
-            if (isEditing && defaultToElementStyle && (style == null))
+            if (isEditing && defaultToElementStyle && (style is null))
             {
                 style = ElementStyle;
             }

@@ -34,7 +34,7 @@ namespace System
             // This is our default
             // When TFM cannot be found, it probably means we are running 
             // on .NET Core 2.2 or lower, in which case we will default to .NET Core 3.0
-            if (targetFrameworkMoniker == null)
+            if (targetFrameworkMoniker is null)
             {
                 targetFrameworkMoniker = ".NETCoreApp,Version=v3.0";
             }
@@ -83,7 +83,7 @@ namespace System
             identifier = profile = string.Empty;
             version = 0;
 
-            if (frameworkName == null || frameworkName.Length == 0)
+            if (frameworkName is null || frameworkName.Length == 0)
             {
                 return false;
             }

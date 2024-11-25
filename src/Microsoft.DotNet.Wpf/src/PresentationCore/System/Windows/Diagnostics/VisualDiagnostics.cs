@@ -129,7 +129,7 @@ namespace System.Windows.Diagnostics
                     visualTreeChanged,
                     new VisualTreeChangeEventArgs(parent, child, index, changeType),
                     // see EnableHelper.IsChangePermitted
-                    isPotentialOuterChange: (changeType==VisualTreeChangeType.Add && index==0 && VisualTreeHelper.GetParent(parent) == null));
+                    isPotentialOuterChange: (changeType==VisualTreeChangeType.Add && index==0 && VisualTreeHelper.GetParent(parent) is null));
             }
         }
 
@@ -280,7 +280,7 @@ namespace System.Windows.Diagnostics
 
             internal static bool AllowChangesDuringVisualTreeChanged(DependencyObject d)
             {
-                if (s_AllowChangesDuringVisualTreeChanged == null)
+                if (s_AllowChangesDuringVisualTreeChanged is null)
                 {
                     if (IsChangePermitted(d))
                         return true;

@@ -34,7 +34,7 @@ namespace System.Windows.Automation.Peers
 
         override internal InteropAutomationProvider GetInteropChild()
         {
-            if (_interopProvider == null)
+            if (_interopProvider is null)
             {
                 HostedWindowWrapper wrapper = null;
                 

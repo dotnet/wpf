@@ -76,7 +76,7 @@ namespace Microsoft.Build.Tasks.Windows
         {
             TaskHelper.DisplayLogo(Log, nameof(UidManager));
 
-            if (MarkupFiles == null || MarkupFiles.Length == 0)
+            if (MarkupFiles is null || MarkupFiles.Length == 0)
             {
                 Log.LogErrorWithCodeFromResources(nameof(SR.SourceFileNameNeeded));
                 return false;
@@ -578,7 +578,7 @@ namespace Microsoft.Build.Tasks.Windows
 
                             }
 
-                            if (currentUid.Value == null)
+                            if (currentUid.Value is null)
                             {
                                 // there is no x:Uid found on this element, we need to resolve the
                                 // namespace prefix in order to add the Uid
@@ -679,7 +679,7 @@ namespace Microsoft.Build.Tasks.Windows
             _uids.Add(uid);
 
             // set the uid status according to the raw data
-            if (uid.Value == null)
+            if (uid.Value is null)
             {
                 uid.Status = UidStatus.Absent;
             }
@@ -701,8 +701,8 @@ namespace Microsoft.Build.Tasks.Windows
                 Uid currentUid = _uids[i];
 
                 if ( currentUid.Status == UidStatus.Absent
-                  && currentUid.NamespacePrefix == null
-                  && _namespacePrefixForMissingUid == null)
+                  && currentUid.NamespacePrefix is null
+                  && _namespacePrefixForMissingUid is null)
                 {
                     // there is Uid not in scope of any definition namespace
                     // we will need to generate a new namespace prefix for them
@@ -859,7 +859,7 @@ namespace Microsoft.Build.Tasks.Windows
             prefix = null;
             index  = -1;
 
-            if (uid == null) return;
+            if (uid is null) return;
 
             int separatorIndex = uid.LastIndexOf(UidSeparator);
             if (separatorIndex > 0)
@@ -1281,7 +1281,7 @@ namespace Microsoft.Build.Tasks.Windows
 
             public void SetLine(string line)
             {
-                Content = (line == null) ? string.Empty : line;
+                Content = (line is null) ? string.Empty : line;
                 Index   = 0;
             }
 

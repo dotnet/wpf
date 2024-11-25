@@ -208,7 +208,7 @@ namespace MS.Internal.Tasks
                 }
 
                 // Write the ApplicationFile for Pass2 compilation.
-                if (LocalApplicationFile == null)
+                if (LocalApplicationFile is null)
                 {
                     sw.WriteLine(String.Empty);
                 }

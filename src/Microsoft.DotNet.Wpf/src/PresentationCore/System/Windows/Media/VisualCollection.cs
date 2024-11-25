@@ -351,7 +351,7 @@ namespace System.Windows.Media
 
                 Visual child = _items[index];
 
-                if ((value == null) && (child != null))
+                if ((value is null) && (child != null))
                 {
                     DisconnectChild(index);
                 }
@@ -375,7 +375,7 @@ namespace System.Windows.Media
         /// <summary>
         /// Sets the specified visual at the specified index into the child
         /// collection. It also corrects the parent.
-        /// Note that the function requires that _item[index] == null and it
+        /// Note that the function requires that _item[index] is null and it
         /// also requires that the passed in child is not connected to another Visual.
         /// </summary>
         /// <exception cref="ArgumentException">If the new child has already a parent or if the slot a the specified index is not null.</exception>
@@ -401,8 +401,8 @@ namespace System.Windows.Media
             }
 
             Debug.Assert(value != null);
-            Debug.Assert(_items[index] == null);
-            Debug.Assert(value._parent == null);
+            Debug.Assert(_items[index] is null);
+            Debug.Assert(value._parent is null);
             Debug.Assert(!value.IsRootElement);
 
             value._parentIndex = index;
@@ -469,12 +469,12 @@ namespace System.Windows.Media
             }
 
 
-            if ((_items == null) || (_size == _items.Length))
+            if ((_items is null) || (_size == _items.Length))
             {
                 EnsureCapacity(_size+1);
             }
             int addedPosition = _size++;
-            Debug.Assert(_items[addedPosition] == null);
+            Debug.Assert(_items[addedPosition] is null);
             if (visual != null)
             {
                 ConnectChild(addedPosition, visual);
@@ -496,13 +496,13 @@ namespace System.Windows.Media
         {
             VerifyAPIReadOnly();
 
-            if (visual == null)
+            if (visual is null)
             {
                 // If the passed in argument is null, we find the first index with a null
                 // entry and return it.
                 for (int i = 0; i < _size; i++)
                 {
-                    if (_items[i] == null)
+                    if (_items[i] is null)
                     {
                         return i;
                     }
@@ -560,11 +560,11 @@ namespace System.Windows.Media
             }
             else
             {
-                // This is the case where visual == null. We then remove the first null
+                // This is the case where visual is null. We then remove the first null
                 // entry.
                 for (int i = 0; i < _size; i++)
                 {
-                    if (_items[i] == null)
+                    if (_items[i] is null)
                     {
                         indexToRemove = i;
                         break;
@@ -635,11 +635,11 @@ namespace System.Windows.Media
         {
             VerifyAPIReadOnly(visual);
 
-            if (visual == null)
+            if (visual is null)
             {
                 for (int i=0; i < _size; i++)
                 {
-                    if (_items[i] == null)
+                    if (_items[i] is null)
                     {
                         return true;
                     }
@@ -715,7 +715,7 @@ namespace System.Windows.Media
                 throw new System.ArgumentException(SR.VisualCollection_VisualHasParent);
             }
 
-            if ((_items == null) || (_size == _items.Length))
+            if ((_items is null) || (_size == _items.Length))
             {
                 EnsureCapacity(_size + 1);
             }
@@ -837,7 +837,7 @@ namespace System.Windows.Media
                 newIndex = destination != null ? destination._parentIndex : _size;
 
                 Debug.Assert(visual._parent != null);
-                Debug.Assert(destination == null || destination._parent == visual._parent);
+                Debug.Assert(destination is null || destination._parent == visual._parent);
                 Debug.Assert(newIndex >= 0 && newIndex <= _size, "New index is invalid");
 
                 if (oldIndex != newIndex)

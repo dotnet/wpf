@@ -189,7 +189,7 @@ namespace Microsoft.Internal.AlphaFlattener
             }
             else
             {
-                Debug.Assert(_brush.BrushList == null, "Simple brush expected");
+                Debug.Assert(_brush.BrushList is null, "Simple brush expected");
 
                 Pen p = _pen.CloneCurrentValue();
 
@@ -280,7 +280,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             BrushProxy brush = BrushProxy.CreateBrush(pen.Brush, bounds);
 
-            if (brush == null)
+            if (brush is null)
             {
                 return null;
             }
@@ -313,7 +313,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             BrushProxy brush = BrushProxy.CreateUserBrush(pen.Brush, bounds, brushToWorldTransformHint, treeWalkProgress);
 
-            if (brush == null)
+            if (brush is null)
             {
                 return null;
             }
@@ -333,7 +333,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// </remarks>
         public static bool IsNull(Pen pen)
         {
-            if (pen == null || pen.Thickness == 0)
+            if (pen is null || pen.Thickness == 0)
             {
                 return true;
             }
@@ -650,7 +650,7 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 ImageBrush ib = _brush as ImageBrush;
 
-                if (_image == null)
+                if (_image is null)
                 {
                     _image = new ImageProxy((BitmapSource)ib.ImageSource);
                 }
@@ -662,7 +662,7 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 DrawingBrush db = _brush as DrawingBrush;
 
-                if (db.Drawing == null)
+                if (db.Drawing is null)
                 {
                     return false;
                 }
@@ -729,7 +729,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 DrawingBrush db = _brush as DrawingBrush;
 
-                if (db.Drawing == null)
+                if (db.Drawing is null)
                 {
                     return true;
                 }
@@ -757,12 +757,12 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 ImageBrush ib = _brush as ImageBrush;
 
-                if (ib.ImageSource == null)
+                if (ib.ImageSource is null)
                 {
                     return true;
                 }
 
-                if (_image == null)
+                if (_image is null)
                 {
                     _image = new ImageProxy((BitmapSource)ib.ImageSource);
                 }
@@ -787,7 +787,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     _bounds.Transform(trans);
                 }
 
-                if (_brushList == null)
+                if (_brushList is null)
                 {
                     if (!(_brush is SolidColorBrush))
                     {
@@ -856,7 +856,7 @@ namespace Microsoft.Internal.AlphaFlattener
             }
 
             // If there is no OpacitMask, blend two brushes when possible
-            if ((this._opacityMask == null) && (brushB._opacityMask == null))
+            if ((this._opacityMask is null) && (brushB._opacityMask is null))
             {
                 SolidColorBrush sA = _brush as SolidColorBrush;
 
@@ -1020,7 +1020,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 _beforeDrawing.A != 0 ||            // merge before/after brush color into brush
                 _afterDrawing.A != 0 ||
                 _drawingBrushChanged ||             // drawing Primitive has changed
-                (_brushList != null && _brush == null))   // combine brushlist into one brush
+                (_brushList != null && _brush is null))   // combine brushlist into one brush
             {
                 _brush = BuildBrush();
 
@@ -1118,7 +1118,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 // Calculate base cost of drawing through GDIExporter.
                 bool isOpaque = IsOpaque();
 
-                if (isOpaque && (_brush.Transform == null || Utility.IsScaleTranslate(_brush.Transform.Value)))
+                if (isOpaque && (_brush.Transform is null || Utility.IsScaleTranslate(_brush.Transform.Value)))
                 {
                     LinearGradientBrush linearBrush = _brush as LinearGradientBrush;
 
@@ -1246,13 +1246,13 @@ namespace Microsoft.Internal.AlphaFlattener
         /// </summary>
         public Primitive GetDrawingPrimitive()
         {
-            if (_drawing == null)
+            if (_drawing is null)
             {
                 DrawingBrush drawingBrush = _brush as DrawingBrush;
 
                 if (drawingBrush != null)
                 {
-                    Debug.Assert(drawingBrush.Drawing != null, "DrawingBrush where Drawing == null should've been culled");
+                    Debug.Assert(drawingBrush.Drawing != null, "DrawingBrush where Drawing is null should've been culled");
 
                     // Calculate transformation from Drawing to world space. This is needed to estimate
                     // size of Drawing objects in world space for rasterization bitmap dimensions.
@@ -1383,7 +1383,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             // Remember that a brush list may still have _brush != null, due to building
             // avalon brush from brush list and caching it.
-            if (_brushList == null)
+            if (_brushList is null)
             {
                 if (!(_brush is SolidColorBrush))
                 {
@@ -1454,7 +1454,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     context.PushOpacityMask(new SolidColorBrush(_beforeDrawing));
                 }
 
-                if (_brushList == null)
+                if (_brushList is null)
                 {
                     context.PushOpacityMask(_brush);
                 }
@@ -1504,7 +1504,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 // construct geometry representing brush bounds if needed
                 RectangleGeometry geometry = null;
 
-                if (!Utility.IsTransparent(_beforeDrawing.ScA) || !Utility.IsTransparent(_afterDrawing.ScA) || _brushList == null)
+                if (!Utility.IsTransparent(_beforeDrawing.ScA) || !Utility.IsTransparent(_afterDrawing.ScA) || _brushList is null)
                 {
                     if (bounds.IsEmpty)
                     {
@@ -1527,11 +1527,11 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 bool opacityPushed = false;
 
-                if (_brushList == null)
+                if (_brushList is null)
                 {
                     double inheritedOpacity = _opacity;
 
-                    if (_brushList == null && !Utility.IsTransparent(_brush.Opacity))
+                    if (_brushList is null && !Utility.IsTransparent(_brush.Opacity))
                     {
                         // push only inherited opacity, since brush opacity will be applied
                         // during DrawGeometry.
@@ -1604,7 +1604,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <returns>True if the drawing is definitely opaque within viewbox</returns>
         private bool IsDrawingOpaque(Primitive p, Geometry viewbox, Matrix transform)
         {
-            if (p == null)
+            if (p is null)
             {
                 return false;
             }
@@ -1639,7 +1639,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 shape = Utility.Exclude(viewbox, shape, p.Transform);
 
-                if (shape == null)
+                if (shape is null)
                 {
                     return true;
                 }
@@ -1669,7 +1669,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// </remarks>
         private bool IsDrawingTransparent(Primitive p, Geometry viewbox, Matrix drawingToWorldTransformHint)
         {
-            if (p == null)
+            if (p is null)
             {
                 return true;
             }
@@ -1710,7 +1710,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 shape = Utility.Intersect(viewbox, shape, Matrix.Identity, out empty);
 
-                if (shape == null)
+                if (shape is null)
                 {
                     return true;
                 }
@@ -1792,7 +1792,7 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 Primitive drawing = GetDrawingPrimitive();
 
-                if (drawing == null)
+                if (drawing is null)
                 {
                     return EmptyBrush; // return EmptyBrush instead of null to avoid possible null reference
                 }
@@ -2344,7 +2344,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                     Rect viewport = ib.Viewport;
 
-                    Matrix mat = (ib.Transform == null) ? Matrix.Identity : ib.Transform.Value;
+                    Matrix mat = (ib.Transform is null) ? Matrix.Identity : ib.Transform.Value;
                     mat.Invert();
 
                     mat.Translate(-viewport.Left, -viewport.Top);
@@ -2410,7 +2410,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     GradientStop gsA = gcA[i];
                     GradientStop gsB = gcB[i];
 
-                    if ((gsA == null) || (gsB == null) || !Utility.IsZero(gsA.Offset - gsB.Offset))
+                    if ((gsA is null) || (gsB is null) || !Utility.IsZero(gsA.Offset - gsB.Offset))
                     {
                         return null;
                     }
@@ -2459,7 +2459,7 @@ namespace Microsoft.Internal.AlphaFlattener
             LinearGradientBrush lbA = this._brush as LinearGradientBrush;
             LinearGradientBrush lbB = brushB._brush as LinearGradientBrush;
 
-            if ((lbA == null) || (lbB == null))
+            if ((lbA is null) || (lbB is null))
             {
                 return null;
             }
@@ -2548,7 +2548,7 @@ namespace Microsoft.Internal.AlphaFlattener
             RadialGradientBrush rbA = this._brush as RadialGradientBrush;
             RadialGradientBrush rbB = brushB._brush as RadialGradientBrush;
 
-            if ((rbA == null) || (rbB == null))
+            if ((rbA is null) || (rbB is null))
             {
                 return null;
             }
@@ -2786,7 +2786,7 @@ namespace Microsoft.Internal.AlphaFlattener
             // simplifies empty brushes to null.
             brush = ReduceBrush(brush, bounds, brushToWorldTransformHint, Size.Empty, treeWalkProgress);
 
-            if (brush == null)
+            if (brush is null)
             {
                 return null;
             }
@@ -2811,7 +2811,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <returns></returns>
         public static bool IsEmpty(Brush brush)
         {
-            if (brush == null)
+            if (brush is null)
             {
                 // see remarks for why null brush is not empty
                 return false;
@@ -2847,7 +2847,7 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 GradientStopCollection stops = gradientBrush.GradientStops;
 
-                if (stops == null || stops.Count == 0)
+                if (stops is null || stops.Count == 0)
                 {
                     // gradient contains no stops, treat as empty brush
                     return true;
@@ -2932,7 +2932,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <returns></returns>
         public static Brush ReduceBrush(Brush brush, Rect bounds, Matrix brushToWorldTransformHint, Size pageSize, TreeWalkProgress treeWalkProgress)
         {
-            if (brush == null || IsEmpty(brush))
+            if (brush is null || IsEmpty(brush))
             {
                 return null;
             }
@@ -2988,7 +2988,7 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 Debug.Assert(!bounds.IsEmpty, "Bounds must not be empty for BitmapCacheBrush");
 
-                if (bcb.Target == null)
+                if (bcb.Target is null)
                 {
                     return null;
                 }
@@ -3066,7 +3066,7 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 Debug.Assert(!bounds.IsEmpty, "Bounds must not be empty for VisualBrush");
 
-                if (vb.Visual == null)
+                if (vb.Visual is null)
                 {
                     return null;
                 }
@@ -3210,12 +3210,12 @@ namespace Microsoft.Internal.AlphaFlattener
 
         public static BrushProxy BlendBrush(BrushProxy one, BrushProxy two)
         {
-            if (one == null)
+            if (one is null)
             {
                 return two;
             }
 
-            if (two == null)
+            if (two is null)
             {
                 return one;
             }
@@ -3510,7 +3510,7 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             get
             {
-                if (s_EmptyBrush == null)
+                if (s_EmptyBrush is null)
                 {
                     s_EmptyBrush = new BrushProxy(new SolidColorBrush(Color.FromArgb(0, 0, 0, 0)));
                 }
@@ -3547,7 +3547,7 @@ namespace Microsoft.Internal.AlphaFlattener
         // _brush, the latter of which is used when rasterizing with Avalon. We take notice
         // of desynchronization to force recomposition of DrawingBrush for rasterization.
         //
-        // It may be the case that (_brush is DrawingBrush && _drawing == null), which indicates
+        // It may be the case that (_brush is DrawingBrush && _drawing is null), which indicates
         // _drawing needs to be rebuilt from _brush.
         //
         private Primitive _drawing;    // Temp solution for Drawing within a DrawingBrush
@@ -3999,7 +3999,7 @@ namespace Microsoft.Internal.AlphaFlattener
             _shape = geometry;
             _gradient = new GradientColor(brush.GradientStops, opacity, brush.SpreadMethod, brush.ColorInterpolationMode);
 
-            Matrix brushToWorldTransform = (brush.Transform == null) ? Matrix.Identity : brush.Transform.Value;
+            Matrix brushToWorldTransform = (brush.Transform is null) ? Matrix.Identity : brush.Transform.Value;
 
             if (!Utility.IsRenderVisible(brush.StartPoint) ||
                 !Utility.IsRenderVisible(brush.EndPoint) ||

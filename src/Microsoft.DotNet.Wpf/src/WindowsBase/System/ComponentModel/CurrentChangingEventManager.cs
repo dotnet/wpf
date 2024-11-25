@@ -54,7 +54,7 @@ namespace System.ComponentModel
         public static void RemoveListener(ICollectionView source, IWeakEventListener listener)
         {
             /* for app-compat, allow RemoveListener(null, x) - it's a no-op 
-            if (source == null)
+            if (source is null)
                 throw new ArgumentNullException("source");
             */
             ArgumentNullException.ThrowIfNull(listener);
@@ -133,7 +133,7 @@ namespace System.ComponentModel
                 CurrentChangingEventManager manager = (CurrentChangingEventManager)GetCurrentManager(managerType);
 
                 // at first use, create and register a new manager
-                if (manager == null)
+                if (manager is null)
                 {
                     manager = new CurrentChangingEventManager();
                     SetCurrentManager(managerType, manager);

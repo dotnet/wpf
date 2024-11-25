@@ -69,7 +69,7 @@ namespace MS.Internal.FontCache
         {
             bool res = false;
             string line = ReadLine(sr);
-            if (line == null)
+            if (line is null)
             {
                 Debug.WriteLine(String.Format("Unexpected end-of-file - using default value ({0})",field));
                 return false;
@@ -179,7 +179,7 @@ namespace MS.Internal.FontCache
             for (; ; )
             {
                 string line = reader.ReadLine();
-                if (line == null)
+                if (line is null)
                 {
                     Debug.WriteLine("Unexpected end-of-file - using default value");
                     return null;
@@ -300,7 +300,7 @@ namespace MS.Internal.FontCache
         internal bool ServerIsLocalService { get { return _serverIsLocalService; } }
         internal bool ServerForceCreate { get { return _serverForceCreate; } }
         internal static bool IsServer { get { return _isServer; } set { _isServer = value; } }
-        internal static FontCacheConfig Current { get { if (_config == null) _config = new FontCacheConfig(); return _config; } }
+        internal static FontCacheConfig Current { get { if (_config is null) _config = new FontCacheConfig(); return _config; } }
 
         //Returns the expected SID for the client port
         internal Sid MakeServerPortSid()
@@ -441,10 +441,10 @@ namespace MS.Internal.FontCache
             Marshal.WriteInt32(input, 0, FontCacheConstants.GetCacheNameMessage);
             byte[] output = new byte[MaxCacheNameSize];
 
-            if (_conn == null)
+            if (_conn is null)
             {
                 _conn = _protocol.TryConnectToServer(timeout, out errorCode);
-                if (_conn == null)
+                if (_conn is null)
                     return null;
             }
             errorCode = 0;
@@ -470,7 +470,7 @@ namespace MS.Internal.FontCache
         internal unsafe void SendMissReport(IFontCacheElement e)
         {
             //If we are not connected to the server, there's no one to send the miss report to, so don't.
-            if (_conn == null)
+            if (_conn is null)
                 return;
 
             byte[] request = new byte[Math.Min(MaxMissReportSize, _conn.GetMaxRequestBytes())];

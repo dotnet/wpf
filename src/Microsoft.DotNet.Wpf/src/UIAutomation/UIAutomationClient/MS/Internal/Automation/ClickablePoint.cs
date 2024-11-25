@@ -191,7 +191,7 @@ namespace System.Windows.Automation
             // hitTarget could be something underneth the element.  In this case zorder might be something to 
             // check but this is hwnd specific it may be better for the provider to provide a clickable point.
             AutomationElement hitTargetAncestor = GetTopLevelAncestor(hitTarget);
-            if ( GetTopLevelAncestor(target) == hitTargetAncestor || hitTargetAncestor == null )
+            if ( GetTopLevelAncestor(target) == hitTargetAncestor || hitTargetAncestor is null )
                 return false;
 
             // If this toplevel widow completely covers the element than we are obscured.

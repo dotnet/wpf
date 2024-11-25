@@ -333,7 +333,7 @@ namespace System.Windows.Documents
 
             FixedTextPointer ftp = position as FixedTextPointer;
 
-            if (ftp == null)
+            if (ftp is null)
             {
                 throw new ArgumentException(SR.Format(SR.BadFixedTextPosition, "position"));
             }
@@ -429,13 +429,13 @@ namespace System.Windows.Documents
                     FixedNode fn = elem.FixedNode;
                     // Get the FixedPage if possible
                     FixedPage page = this.FixedDocument.SyncGetPageWithCheck(fn.Page);
-                    if (page == null)
+                    if (page is null)
                     {
                         continue;
                     }
 
                     DependencyObject o = page.GetElement(fn);
-                    if (o == null)
+                    if (o is null)
                     {
                         continue;
                     }
@@ -451,7 +451,7 @@ namespace System.Windows.Documents
                     else
                     {
                         Glyphs g = o as Glyphs;
-                        if (g == null)
+                        if (g is null)
                         {
                             continue;
                         }
@@ -509,7 +509,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_fixedPanel == null)
+                if (_fixedPanel is null)
                 {
                     if (_parent is FixedDocument)
                     {
@@ -546,7 +546,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_highlights == null)
+                if (_highlights is null)
                 {
                     _highlights = new Highlights(this);
                 }

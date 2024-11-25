@@ -224,7 +224,7 @@ namespace System.Windows
                 // Verify Context Access
                 VerifyAccess();
 
-                if ( _resources == null )
+                if ( _resources is null )
                 {
                     _resources = new ResourceDictionary();
 
@@ -284,7 +284,7 @@ namespace System.Windows
             // We want to make sure that StaticResource resolution checks the .Resources
             // Ie.  The Ambient search should look at Resources if it is set.
             // Even if it wasn't set from XAML (eg. the Ctor (or derived Ctor) added stuff)
-            if (propertyName == "Resources" && _resources == null)
+            if (propertyName == "Resources" && _resources is null)
             {
                 return false;
             }
@@ -515,7 +515,7 @@ namespace System.Windows
             if (visualsCreated)
             {
                 string label = container.ID;
-                if (label == null || label.Length == 0)
+                if (label is null || label.Length == 0)
                     label = container.GetHashCode().ToString();
                 Console.WriteLine("  Style.VT created for {0} {1} in {2:f2} msec",
                     container.GetType().Name, label, _timer.TimeOfLastPeriod);
@@ -662,7 +662,7 @@ namespace System.Windows
 
             if (manager != null)
             {
-                shouldSerialize = (manager.XmlWriter == null);
+                shouldSerialize = (manager.XmlWriter is null);
             }
 
             return shouldSerialize;
@@ -733,7 +733,7 @@ namespace System.Windows
             }
 
             //If we're not dealing with a DO or a DP, we cannot set an EffectiveValueEntry
-            if (dependencyProperty == null || dependencyObject == null)
+            if (dependencyProperty is null || dependencyObject is null)
             {
                 return false;
             }
@@ -745,7 +745,7 @@ namespace System.Windows
             // Similarly, if we don't have a templated parent, we're not optimizing, and defer to base
             // (This happens when FrameworkTemplate.LoadContent() is called.)
 
-            if ((fo.TemplatedParent == null) || (templatedParent == null))
+            if ((fo.TemplatedParent is null) || (templatedParent is null))
             {
                 return false;
             }
@@ -900,7 +900,7 @@ namespace System.Windows
             IComponentConnector componentConnector,
             IStyleConnector styleConnector, List<DependencyObject> affectedChildren, UncommonField<Hashtable> templatedNonFeChildrenField)
         {
-            if (Names == null)
+            if (Names is null)
             {
                 Names = new XamlContextStack<Frame>(() => new Frame());
             }
@@ -1116,7 +1116,7 @@ namespace System.Windows
             {
                 // We want to set TemplateChild on the parent if we are dealing with the root
                 // We MUST wait until the object is wired into the Template vis TemplateNameScope.RegisterName
-                if (rootObject == null)
+                if (rootObject is null)
                 {
                     rootObject = WireRootObjectToParent(createdObject, rootObject, container, feContainer, nameScope);
                 }
@@ -1135,7 +1135,7 @@ namespace System.Windows
                 {
                     // Put the root object into FE.Templatechild (must be a UIElement).
                     UIElement rootElement = rootObject as UIElement;
-                    if (rootElement == null)
+                    if (rootElement is null)
                     {
                         throw new InvalidOperationException(SR.Format(SR.TemplateMustBeFE, new object[] { rootObject.GetType().FullName }));
                     }
@@ -1156,7 +1156,7 @@ namespace System.Windows
 
 
                 // Set the TemplateNameScope on the root
-                if (NameScope.GetNameScope(rootObject) == null)
+                if (NameScope.GetNameScope(rootObject) is null)
                 {
                     NameScope.SetNameScope(rootObject, nameScope);
                 }
@@ -1296,7 +1296,7 @@ namespace System.Windows
                                 // StaticResource, wouldn't be able to ProvideValue here, because we don't
                                 // have a ParserContext.
 
-                                if (provideValueServiceProvider == null)
+                                if (provideValueServiceProvider is null)
                                 {
                                     provideValueServiceProvider = new ProvideValueServiceProvider();
                                 }

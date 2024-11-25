@@ -109,7 +109,7 @@ namespace System.Windows.Controls.Primitives
         /// </remarks>
         public void AppendText(string textData)
         {
-            if (textData == null)
+            if (textData is null)
             {
                 return;
             }
@@ -1429,7 +1429,7 @@ namespace System.Windows.Controls.Primitives
                 {
                     undoAction = UndoAction.Undo;
                 }
-                else if (undoManager.OpenedUnit == null)
+                else if (undoManager.OpenedUnit is null)
                 {
                     undoAction = UndoAction.Clear;
                 }
@@ -1476,7 +1476,7 @@ namespace System.Windows.Controls.Primitives
         internal void InitializeTextContainer(TextContainer textContainer)
         {
             Invariant.Assert(textContainer != null);
-            Invariant.Assert(textContainer.TextSelection == null);
+            Invariant.Assert(textContainer.TextSelection is null);
 
             // Uninitialize previous TextEditor
             if (_textContainer != null)
@@ -1631,7 +1631,7 @@ namespace System.Windows.Controls.Primitives
                 // Prevent mouse wheel scrolling from breaking when there's no more content in the direction of the scroll
                 this.ScrollViewer.HandlesMouseWheelScrolling = false;
 
-                if (this.ScrollViewer.Background == null)
+                if (this.ScrollViewer.Background is null)
                 {
                     // prevent hit-testing through padding
                     this.ScrollViewer.Background = Brushes.Transparent;
@@ -1766,7 +1766,7 @@ namespace System.Windows.Controls.Primitives
         {
             get
             {
-                if (_scrollViewer == null)
+                if (_scrollViewer is null)
                 {
                     if (_textEditor != null)
                     {
@@ -1882,7 +1882,7 @@ namespace System.Windows.Controls.Primitives
         // Initializes a new render scope.
         private void InitializeRenderScope()
         {
-            if (_renderScope == null)
+            if (_renderScope is null)
             {
                 return;
             }
@@ -1923,7 +1923,7 @@ namespace System.Windows.Controls.Primitives
             }
             else
             {
-                Invariant.Assert(_renderScope == null, "_renderScope must be null here");
+                Invariant.Assert(_renderScope is null, "_renderScope must be null here");
             }
         }
 
@@ -2048,7 +2048,7 @@ namespace System.Windows.Controls.Primitives
             }
             else
             {
-                Invariant.Assert(_textBoxContentHost == null, "_textBoxContentHost must be null here");
+                Invariant.Assert(_textBoxContentHost is null, "_textBoxContentHost must be null here");
             }
 
             _textBoxContentHost = null;

@@ -125,17 +125,17 @@ namespace System.Windows
 
             // System resource keys can only be of type Type or of type ResourceKey
             typeKey = key as Type;
-            resourceKey = (typeKey == null) ? (key as ResourceKey) : null;
+            resourceKey = (typeKey is null) ? (key as ResourceKey) : null;
 
             if (isTraceEnabled)
             {
                 EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientResourceFindBegin,
                                                     EventTrace.Keyword.KeywordXamlBaml | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose,
-                                                    (key == null) ? "null" : key.ToString());
+                                                    (key is null) ? "null" : key.ToString());
             }
 
 
-            if ((typeKey == null) && (resourceKey == null))
+            if ((typeKey is null) && (resourceKey is null))
             {
                 // Not a valid key
                 if (isTraceEnabled)
@@ -180,7 +180,7 @@ namespace System.Windows
                         resource = FindDictionaryResource(key, typeKey, resourceKey, isTraceEnabled, allowDeferredResourceReference, mustReturnDeferredResourceReference, out canCache);
                     }
 
-                    if ((canCache && !allowDeferredResourceReference) || resource == null)
+                    if ((canCache && !allowDeferredResourceReference) || resource is null)
                     {
                         // Cache the resource
                         CacheResource(key, resource, isTraceEnabled);
@@ -367,7 +367,7 @@ namespace System.Windows
             object resource = null;
             Assembly assembly = (typeKey != null) ? typeKey.Assembly : resourceKey.Assembly;
 
-            if ((assembly == null) || IgnoreAssembly(assembly))
+            if ((assembly is null) || IgnoreAssembly(assembly))
             {
                 // Without an assembly, we can't figure out which dictionary to look at.
                 // Also, ignore some common assemblies we know to not contain resources.
@@ -381,7 +381,7 @@ namespace System.Windows
                 resource = LookupResourceInDictionary(dictionary, key, allowDeferredResourceReference, mustReturnDeferredResourceReference, out canCache);
             }
 
-            if (resource == null)
+            if (resource is null)
             {
                 dictionary = dictionaries.LoadGenericDictionary(isTraceEnabled);
                 if (dictionary != null)
@@ -478,7 +478,7 @@ namespace System.Windows
                 _dictionaries = new Dictionary<Assembly, ResourceDictionaries>(1);
             }
 
-            if (dictionaries == null)
+            if (dictionaries is null)
             {
                 // Ensure the cache slot is created
                 dictionaries = new ResourceDictionaries(assembly);
@@ -497,7 +497,7 @@ namespace System.Windows
         {
             get
             {
-                if (_mscorlib == null)
+                if (_mscorlib is null)
                 {
                     _mscorlib = typeof(string).Assembly;
                 }
@@ -510,7 +510,7 @@ namespace System.Windows
         {
             get
             {
-                if (_presentationFramework == null)
+                if (_presentationFramework is null)
                 {
                     _presentationFramework = typeof(FrameworkElement).Assembly;
                 }
@@ -523,7 +523,7 @@ namespace System.Windows
         {
             get
             {
-                if (_presentationCore == null)
+                if (_presentationCore is null)
                 {
                     _presentationCore = typeof(UIElement).Assembly;
                 }
@@ -536,7 +536,7 @@ namespace System.Windows
         {
             get
             {
-                if (_windowsBase == null)
+                if (_windowsBase is null)
                 {
                     _windowsBase = typeof(DependencyObject).Assembly;
                 }
@@ -643,7 +643,7 @@ namespace System.Windows
                         if (_themedDictionaryAssembly != null)
                         {
                             dictionary = LoadDictionary(_themedDictionaryAssembly, dictionaryAssemblyName, ThemedResourceName, isTraceEnabled, out _themedDictionarySourceUri);
-                            if ((dictionary == null) && !external)
+                            if ((dictionary is null) && !external)
                             {
                                 // Themed resources should have been inside the source assembly, but failed to load.
                                 // Try falling back to external in case this is a theme that shipped later.
@@ -655,7 +655,7 @@ namespace System.Windows
                             }
                         }
 
-                        if ((dictionary == null) && UxThemeWrapper.IsActive)
+                        if ((dictionary is null) && UxThemeWrapper.IsActive)
                         {
                             // If a non-classic dictionary failed to load, then try to load classic.
                             if (external)
@@ -837,7 +837,7 @@ namespace System.Windows
                     // here as well, and are solved with the same techniques
                     string themedResourceName = _themedResourceName;
 
-                    while (themedResourceName == null)
+                    while (themedResourceName is null)
                     {
                         themedResourceName = UxThemeWrapper.ThemedResourceName; // guaranteed not null
 
@@ -1041,10 +1041,10 @@ namespace System.Windows
         private static void EnsureResourceChangeListener()
         {
             // Create a new notify window if we haven't already created any corresponding to ProcessDpiAwarenessContextValue for this thread.
-            if (_hwndNotify == null ||
-                _hwndNotifyHook == null ||
+            if (_hwndNotify is null ||
+                _hwndNotifyHook is null ||
                 _hwndNotify.Count == 0 ||
-                _hwndNotify.Keys.FirstOrDefault((hwndDpiContext) => hwndDpiContext.DpiAwarenessContextValue == ProcessDpiAwarenessContextValue) == null)
+                _hwndNotify.Keys.FirstOrDefault((hwndDpiContext) => hwndDpiContext.DpiAwarenessContextValue == ProcessDpiAwarenessContextValue) is null)
             {
                 _hwndNotify = new Dictionary<DpiUtil.HwndDpiInfo, HwndWrapper>();
                 _hwndNotifyHook = new Dictionary<DpiUtil.HwndDpiInfo, HwndWrapperHook>();
@@ -1831,7 +1831,7 @@ namespace System.Windows
 
         internal virtual void AddInflatedListener(ResourceReferenceExpression listener)
         {
-            if (_inflatedList == null)
+            if (_inflatedList is null)
             {
                 _inflatedList = new WeakReferenceList(this);
             }
@@ -1876,7 +1876,7 @@ namespace System.Windows
 
         internal bool IsInflated
         {
-            get { return (_dictionary == null); }
+            get { return (_dictionary is null); }
         }
 
         #endregion Properties

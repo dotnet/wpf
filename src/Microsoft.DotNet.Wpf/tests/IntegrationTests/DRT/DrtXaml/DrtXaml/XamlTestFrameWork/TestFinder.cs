@@ -320,7 +320,7 @@ namespace DrtXaml.XamlTestFramework
         private static MethodInfo GetXamlLoaderMethod(Type testClass, string methodName)
         {
             MethodInfo method = testClass.GetMethod(methodName, methodBF);
-            if (method == null)
+            if (method is null)
             {
                 // Error rather than return false, so it will get fixed.
                 string err = string.Format("No method named {0} found on class {1}.",
@@ -360,7 +360,7 @@ namespace DrtXaml.XamlTestFramework
         private static MethodInfo GetValidatorMethod(Type testClass, string methodName)
         {
             MethodInfo method = testClass.GetMethod(methodName);
-            if (method == null)
+            if (method is null)
             {
                 // Error rather than return false, so it will get fixed.
                 string err = string.Format("No method named {0} found on class {1}.",

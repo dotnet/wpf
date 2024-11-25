@@ -271,7 +271,7 @@ namespace MS.Internal.FontFace
                 }
 
                 ushort[] glyphArray;
-                if (glyphs == null || glyphs.Count == 0)
+                if (glyphs is null || glyphs.Count == 0)
                     glyphArray = null;
                 else
                 {

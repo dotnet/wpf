@@ -474,7 +474,7 @@ namespace MS.Internal.IO.Packaging
 
         private MemoryStreamBlock GetSearchBlockForOffset(long offset)
         {
-            if (_searchBlock == null)
+            if (_searchBlock is null)
                 _searchBlock = new MemoryStreamBlock(null, offset);
             else
                 _searchBlock.Offset = offset;
@@ -486,7 +486,7 @@ namespace MS.Internal.IO.Packaging
                                                         long length)
         {
             // There was an explicit request by the client not to merge near- by blocks
-            if (!_autoCloseSmallBlockGaps || memStreamBlock == null)
+            if (!_autoCloseSmallBlockGaps || memStreamBlock is null)
             {
                 return false;
             }
@@ -806,7 +806,7 @@ namespace MS.Internal.IO.Packaging
 
         private void EnsureIsolatedStoreStream()
         {
-            if (_isolatedStorageStream == null)
+            if (_isolatedStorageStream is null)
             {
                 _isolatedStorageStream = PackagingUtilities.CreateUserScopedIsolatedStorageFileStreamWithRandomName(
                     3, out _isolatedStorageStreamFileName);
@@ -885,14 +885,14 @@ namespace MS.Internal.IO.Packaging
             {
                 checked
                 {
-                    return _offset + (_stream == null ? 0 : _stream.Length);
+                    return _offset + (_stream is null ? 0 : _stream.Length);
                 }
             }
         }
 
         int IComparable<MemoryStreamBlock>.CompareTo(MemoryStreamBlock other)
         {
-            if (other == null)
+            if (other is null)
                 return 1;
 
             if (_offset == other.Offset)

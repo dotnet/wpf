@@ -677,7 +677,7 @@ namespace System.IO.Packaging
             get
             {
                 CheckDisposed();
-                if (_packageProperties == null)
+                if (_packageProperties is null)
                 {
                     _packageProperties = new StorageBasedPackageProperties(_root);
                 }
@@ -706,7 +706,7 @@ namespace System.IO.Packaging
 
             Invariant.Assert(!_handedOutPackageStream, "Copy of package stream has been already handed out");
 
-            if (_package == null)
+            if (_package is null)
             {
                 //
                 // Open the package on the package stream, again with the same level
@@ -937,7 +937,7 @@ namespace System.IO.Packaging
                 }
             }
 
-            if (rmet == null)
+            if (rmet is null)
             {
                 throw new FileFormatException(SR.RightsManagementEncryptionTransformNotFound);
             }
@@ -977,7 +977,7 @@ namespace System.IO.Packaging
         /// </summary>
         private void EnsurePackageStream()
         {
-            if (_packageStream == null)
+            if (_packageStream is null)
             {
                 StreamInfo siPackage = new StreamInfo(_root, PackageStreamName);
                 if (siPackage.InternalExists())

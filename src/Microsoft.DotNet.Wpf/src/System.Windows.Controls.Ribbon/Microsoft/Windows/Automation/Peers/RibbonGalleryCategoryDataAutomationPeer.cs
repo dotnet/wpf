@@ -110,7 +110,7 @@ namespace Microsoft.Windows.Automation.Peers
             if (wrapper != null)
             {
                 wrapperPeer = UIElementAutomationPeer.CreatePeerForElement(wrapper);
-                if (wrapperPeer == null)
+                if (wrapperPeer is null)
                 {
                     if (wrapper is FrameworkElement)
                         wrapperPeer = new FrameworkElementAutomationPeer((FrameworkElement)wrapper);

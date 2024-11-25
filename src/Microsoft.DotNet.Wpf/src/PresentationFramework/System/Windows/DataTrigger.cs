@@ -102,7 +102,7 @@ namespace System.Windows
                 // Verify Context Access
                 VerifyAccess();
 
-                if( _setters == null )
+                if( _setters is null )
                 {
                     _setters = new SetterBaseCollection();
                 }

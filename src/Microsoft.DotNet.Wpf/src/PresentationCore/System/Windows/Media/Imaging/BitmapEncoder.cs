@@ -257,7 +257,7 @@ namespace System.Windows.Media.Imaging
                 EnsureUnmanagedEncoder();
 
                 // There should always be a codec info.
-                if (_codecInfo == null)
+                if (_codecInfo is null)
                 {
                     SafeMILHandle /* IWICBitmapEncoderInfo */ codecInfoHandle =  new SafeMILHandle();
 
@@ -304,7 +304,7 @@ namespace System.Windows.Media.Imaging
             {
                 VerifyAccess();
                 EnsureBuiltIn();
-                if (_frames == null)
+                if (_frames is null)
                 {
                     _frames = new List<BitmapFrame>(0);
                 }
@@ -346,7 +346,7 @@ namespace System.Windows.Media.Imaging
                 throw new InvalidOperationException(SR.Image_OnlyOneSave);
             }
 
-            if (_frames == null)
+            if (_frames is null)
             {
                 throw new System.NotSupportedException(SR.Format(SR.Image_NoFrames, null));
             }
@@ -533,7 +533,7 @@ namespace System.Windows.Media.Imaging
                 return;
             }
 
-            if (_metadataHandle == null)
+            if (_metadataHandle is null)
             {
                 SafeMILHandle /* IWICMetadataQueryWriter */ metadataHandle = new SafeMILHandle();
 
@@ -553,7 +553,7 @@ namespace System.Windows.Media.Imaging
             }
 
             if (createBitmapMetadata &&
-                _metadata == null &&
+                _metadata is null &&
                 _metadataHandle != null)
             {
                 _metadata = new BitmapMetadata(_metadataHandle, false, IsMetadataFixedSize, _metadataHandle);
@@ -565,7 +565,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         private void EnsureUnmanagedEncoder()
         {
-            if (_encoderHandle == null)
+            if (_encoderHandle is null)
             {
                 using (FactoryMaker myFactory = new FactoryMaker())
                 {

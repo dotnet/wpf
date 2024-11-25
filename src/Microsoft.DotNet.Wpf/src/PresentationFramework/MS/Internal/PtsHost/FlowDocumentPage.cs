@@ -279,7 +279,7 @@ namespace MS.Internal.PtsHost
             // into case when FlowDocument does not have a logical parent. In
             // such case it is better to disable all core services.
             DependencyObject frameworkParent = FrameworkElement.GetFrameworkParent(_structuralCache.FormattingOwner);
-            if (frameworkParent == null)
+            if (frameworkParent is null)
             {
                 return null;
             }
@@ -400,7 +400,7 @@ namespace MS.Internal.PtsHost
         }
 
         /// <summary>
-        /// Called when a UIElement-derived class which is hosted by a IContentHost changes it’s DesiredSize
+        /// Called when a UIElement-derived class which is hosted by a IContentHost changes itï¿½s DesiredSize
         /// </summary>
         /// <param name="child">
         /// Child element whose DesiredSize has changed
@@ -761,7 +761,7 @@ namespace MS.Internal.PtsHost
             }
             set
             {
-                if ((_DependentMax == null) || ((value != null) && (value.CompareTo(_DependentMax) > 0)))
+                if ((_DependentMax is null) || ((value != null) && (value.CompareTo(_DependentMax) > 0)))
                 {
                     _DependentMax = value;
                 }
@@ -853,7 +853,7 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         private void UpdateVisual()
         {
-            if (this.PageVisual == null)
+            if (this.PageVisual is null)
             {
                 SetVisual(new PageVisual(this));
             }
@@ -957,7 +957,7 @@ namespace MS.Internal.PtsHost
                 }
 
                 TextPointer searchPosition = new TextPointer(_structuralCache.TextContainer.Start as TextPointer);
-                while (elementPosition == null && ((ITextPointer)searchPosition).CompareTo(_structuralCache.TextContainer.End) < 0)
+                while (elementPosition is null && ((ITextPointer)searchPosition).CompareTo(_structuralCache.TextContainer.End) < 0)
                 {
                     // Search each position in _structuralCache.TextContainer for the element
                     switch (searchPosition.GetPointerContext(LogicalDirection.Forward))
@@ -1158,7 +1158,7 @@ namespace MS.Internal.PtsHost
 
             if (serviceType == typeof(ITextView))
             {
-                if (_textView == null)
+                if (_textView is null)
                 {
                     _textView = new TextDocumentView(this, _structuralCache.TextContainer);
                 }
@@ -1220,7 +1220,7 @@ namespace MS.Internal.PtsHost
         }
 
         /// <summary>
-        /// Called when a UIElement-derived class which is hosted by a IContentHost changes it’s DesiredSize
+        /// Called when a UIElement-derived class which is hosted by a IContentHost changes itï¿½s DesiredSize
         /// </summary>
         /// <param name="child">
         /// Child element whose DesiredSize has changed

@@ -59,7 +59,7 @@ namespace System.Windows
         internal static ContextLayoutManager From(Dispatcher dispatcher)
         {
             ContextLayoutManager lm = dispatcher.Reserved3 as ContextLayoutManager;
-            if(lm == null)
+            if(lm is null)
             {
                 if(Dispatcher.CurrentDispatcher != dispatcher)
                 {
@@ -83,7 +83,7 @@ namespace System.Windows
             while(true)
             {
                 UIElement p = e.GetUIParentNo3DTraversal() as UIElement;
-                if(p == null) break;
+                if(p is null) break;
                 e = p;
             }
 
@@ -311,7 +311,7 @@ namespace System.Windows
 
                             currentElement = MeasureQueue.GetTopMost();
 
-                            if(currentElement == null) break; //exit if no more Measure candidates
+                            if(currentElement is null) break; //exit if no more Measure candidates
                             
                             currentElement.Measure(currentElement.PreviousConstraint);
 							//not clear why this is needed, remove for now
@@ -379,7 +379,7 @@ namespace System.Windows
 
                             currentElement = ArrangeQueue.GetTopMost();
 
-                            if(currentElement == null) break; //exit if no more Measure candidates
+                            if(currentElement is null) break; //exit if no more Measure candidates
 
                             Rect finalRect = getProperArrangeRect(currentElement);
 
@@ -475,7 +475,7 @@ namespace System.Windows
             // If we arrange the element that is temporarily disconnected
             // so it is not a top-level one, the assumption is that it will be
             // layout-invalidated and/or recomputed by the parent when reconnected.
-            if (element.GetUIParentNo3DTraversal() == null)
+            if (element.GetUIParentNo3DTraversal() is null)
             {
                 arrangeRect.X = arrangeRect.Y = 0;
 
@@ -507,7 +507,7 @@ namespace System.Windows
         {
             get
             {
-                if(_measureQueue == null)
+                if(_measureQueue is null)
                     _measureQueue = new InternalMeasureQueue();
                 return _measureQueue;
             }
@@ -517,7 +517,7 @@ namespace System.Windows
         {
             get
             {
-                if(_arrangeQueue == null)
+                if(_arrangeQueue is null)
                     _arrangeQueue = new InternalArrangeQueue();
                 return _arrangeQueue;
             }
@@ -637,7 +637,7 @@ namespace System.Windows
         {
             get
             {
-                if(_layoutEvents == null)
+                if(_layoutEvents is null)
                     _layoutEvents = new LayoutEventList();
                 return _layoutEvents;
             }
@@ -739,7 +739,7 @@ namespace System.Windows
         {
             get
             {
-                if(_automationEvents == null)
+                if(_automationEvents is null)
                     _automationEvents = new LayoutEventList();
                 return _automationEvents;
             }
@@ -923,7 +923,7 @@ namespace System.Windows
                         }
                         else //root of visual tree or a collapsed node
                         {
-                            if (getRequest(e) == null)
+                            if (getRequest(e) is null)
                             {
                                 RemoveOrphans(e);
                                 _addRequest(e);
@@ -939,7 +939,7 @@ namespace System.Windows
             internal void Remove(UIElement e)
             {
                 Request r = getRequest(e);
-                if(r == null) return;
+                if(r is null) return;
                 _removeRequest(r);
                 setRequest(e, null);
             }
@@ -964,7 +964,7 @@ namespace System.Windows
                 }
             }
 
-            internal bool IsEmpty { get { return (_head == null); }}
+            internal bool IsEmpty { get { return (_head is null); }}
 
             internal UIElement GetTopMost()
             {
@@ -988,7 +988,7 @@ namespace System.Windows
 
             private void _removeRequest(Request entry)
             {
-                if(entry.Prev == null) _head = entry.Next;
+                if(entry.Prev is null) _head = entry.Next;
                 else entry.Prev.Next = entry.Next;
 
                 if(entry.Next != null) entry.Next.Prev = entry.Prev;
@@ -1086,7 +1086,7 @@ namespace System.Windows
             //(once removed by handler and then by firing code)
             if(!t.InUse) return;
 
-            if(t.Prev == null) _head = t.Next;
+            if(t.Prev is null) _head = t.Next;
             else t.Prev.Next = t.Next;
 
             if(t.Next != null) t.Next.Prev = t.Prev;

@@ -179,7 +179,7 @@ namespace System.Windows.Controls
         {
             Label label = sender as Label;
             // ISSUE: if this is handled in Control then we need to check here as well
-            if (!e.Handled && e.Scope == null && (e.Target == null || e.Target == label))
+            if (!e.Handled && e.Scope is null && (e.Target is null || e.Target == label))
             {
                 e.Target = label.Target;
             }

@@ -60,8 +60,8 @@ namespace System.Windows.Media
             /// </summary>
             internal void CreateChannels()
             {
-                Invariant.Assert(_asyncChannel == null);
-                Invariant.Assert(_asyncOutOfBandChannel == null);
+                Invariant.Assert(_asyncChannel is null);
+                Invariant.Assert(_asyncOutOfBandChannel is null);
 
                 // Create a channel into the async composition device.
                 // Pass in a reference to the global mediasystem channel so that it uses
@@ -147,7 +147,7 @@ namespace System.Windows.Media
                         out _pSyncConnection));
                 }
 
-                if (_freeSyncChannels == null)
+                if (_freeSyncChannels is null)
                 {
                     //
                     // Ensure the free sync channels queue...
@@ -172,7 +172,7 @@ namespace System.Windows.Media
                     // synchronous service channel and glyph cache.
                     //
                     
-                    if (_syncServiceChannel == null) 
+                    if (_syncServiceChannel is null) 
                     {
                         _syncServiceChannel  = new DUCE.Channel(
                             null,

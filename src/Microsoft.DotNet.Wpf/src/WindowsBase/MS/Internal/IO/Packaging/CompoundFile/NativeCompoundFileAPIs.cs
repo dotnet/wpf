@@ -359,7 +359,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
                 result = _unsafeStorage.OpenStorage(
                     pwcsName,
-                    pstgPriority == null ? null : ((SafeIStorageImplementation) pstgPriority)._unsafeStorage,
+                    pstgPriority is null ? null : ((SafeIStorageImplementation) pstgPriority)._unsafeStorage,
                     grfMode,
                     snbExclude,
                     reserved,

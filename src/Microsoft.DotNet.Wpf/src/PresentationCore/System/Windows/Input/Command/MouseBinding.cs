@@ -209,7 +209,7 @@ namespace System.Windows.Input
                 _settingGesture = true;
                 try
                 {
-                    if (Gesture == null)
+                    if (Gesture is null)
                     {
                         Gesture = new MouseGesture(mouseAction);
                     }

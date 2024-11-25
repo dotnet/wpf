@@ -115,7 +115,7 @@ namespace System.Windows
         private object TryProvideValueWithDiagnosticEvent(IServiceProvider serviceProvider, bool allowDeferredReference, bool mustReturnDeferredResourceReference)
         {
             IProvideValueTarget provideValueTarget = serviceProvider.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
-            if (provideValueTarget == null || provideValueTarget.TargetObject == null || provideValueTarget.TargetProperty == null
+            if (provideValueTarget is null || provideValueTarget.TargetObject is null || provideValueTarget.TargetProperty is null
                 || ResourceDictionaryDiagnostics.ShouldIgnoreProperty(provideValueTarget.TargetProperty))
             {
                 // if there's no target, or target is ignorable, get the value the quick way.
@@ -173,7 +173,7 @@ namespace System.Windows
             DeferredResourceReference prefetchedValue = PrefetchedValue;
 
             object value;
-            if (prefetchedValue == null)
+            if (prefetchedValue is null)
             {
                 // Do a normal look up.
                 value = FindResourceInEnviroment(serviceProvider, allowDeferredReference, mustReturnDeferredResourceReference);
@@ -202,13 +202,13 @@ namespace System.Windows
         private ResourceDictionary FindTheResourceDictionary(IServiceProvider serviceProvider, bool isDeferredContentSearch)
         {
             var schemaContextProvider = serviceProvider.GetService(typeof(IXamlSchemaContextProvider)) as IXamlSchemaContextProvider;
-            if (schemaContextProvider == null)
+            if (schemaContextProvider is null)
             {
                 throw new InvalidOperationException(SR.Format(SR.MarkupExtensionNoContext, GetType().Name, "IXamlSchemaContextProvider"));
             }
 
             var ambientProvider = serviceProvider.GetService(typeof(IAmbientProvider)) as IAmbientProvider;
-            if (ambientProvider == null)
+            if (ambientProvider is null)
             {
                 throw new InvalidOperationException(SR.Format(SR.MarkupExtensionNoContext, GetType().Name, "IAmbientProvider"));
             }
@@ -335,7 +335,7 @@ namespace System.Windows
 
             // Look at app or themes
             object val = FindResourceInAppOrSystem(serviceProvider, allowDeferredReference, mustReturnDeferredResourceReference);
-            if (val == null)
+            if (val is null)
             {
                 val = DependencyProperty.UnsetValue;
             }

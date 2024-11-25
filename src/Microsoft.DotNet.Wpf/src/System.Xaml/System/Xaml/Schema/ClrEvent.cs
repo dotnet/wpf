@@ -37,7 +37,7 @@ namespace System.Xaml.Schema
 
             MethodInfo mi = ei.GetAddMethod(true);
 
-            if (mi == null)
+            if (mi is null)
             {
                 throw new XamlSchemaException(SR.Format(SR.SetOnlyProperty, declaringType.Name, name));
             }

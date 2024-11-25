@@ -149,7 +149,7 @@ namespace System.Windows.Media
             {
                 // This is the same behavior as 3.*. If we pass, for example, a path to a composite font file then a 
                 // FileFormatException will be thrown!
-                if (fontFaceDWrite == null)
+                if (fontFaceDWrite is null)
                 {
                     throw new System.IO.FileFormatException(typefaceSource);             
                 }
@@ -194,7 +194,7 @@ namespace System.Windows.Media
         {
             CheckInitialized();
             GlyphTypeface t = o as GlyphTypeface;
-            if (t == null)
+            if (t is null)
                 return false;
 
             return StyleSimulations == t.StyleSimulations
@@ -1507,7 +1507,7 @@ namespace System.Windows.Media
         {
             bool releaseIndices = false;
 
-            if (glyphIndices == null)
+            if (glyphIndices is null)
             {
                 glyphIndices = BufferCache.GetUShorts(characterCount);
                 releaseIndices = true;

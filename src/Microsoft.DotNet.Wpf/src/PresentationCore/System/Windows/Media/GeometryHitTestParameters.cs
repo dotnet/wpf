@@ -91,7 +91,7 @@ namespace System.Windows.Media
         {
             get
             {
-                if (_hitGeometryCache == null)
+                if (_hitGeometryCache is null)
                 {
                     _hitGeometryCache = (Geometry) _hitGeometryInternal.GetAsFrozen();
                 }

@@ -60,7 +60,7 @@ namespace MS.Internal.AppModel
                         // The default of this property is null. It demands ControlPolicy permission to be set.
 
 #pragma warning disable SYSLIB0009
-                        if (AuthenticationManager.CredentialPolicy == null)
+                        if (AuthenticationManager.CredentialPolicy is null)
                         {
                             AuthenticationManager.CredentialPolicy = new CustomCredentialPolicy();
                         }
@@ -110,11 +110,11 @@ namespace MS.Internal.AppModel
         {
             // IMPORTANT: See comments in header r.e. IInternetSecurityManager
 
-            if (_securityManager == null)
+            if (_securityManager is null)
             {
                 lock (_lockObj)
                 {
-                    if (_securityManager == null)
+                    if (_securityManager is null)
                     {
                         _securityManager = (UnsafeNativeMethods.IInternetSecurityManager)new InternetSecurityManager();                        
                     }

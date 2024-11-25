@@ -100,7 +100,7 @@ namespace MS.Internal.Annotations.Anchoring
             ArgumentNullException.ThrowIfNull(selection);
 
             UIElement element = selection as UIElement;
-            if (element == null)
+            if (element is null)
             {
                 throw new ArgumentException(SR.WrongSelectionType, nameof(selection));
             }
@@ -121,7 +121,7 @@ namespace MS.Internal.Annotations.Anchoring
 
             Visual element = selection as Visual;
 
-            if (element == null)
+            if (element is null)
                 throw new ArgumentException(SR.WrongSelectionType, nameof(selection));
 
             // get the Visual's bounding rectangle's let, top and store them in a point

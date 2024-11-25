@@ -74,7 +74,7 @@ namespace System.Windows.Automation.Peers
                 // ensures the older behavior as ItemContainer pattern won't be available.
                 if (IsVirtualized)
                 {
-                    if (itemHost == null)
+                    if (itemHost is null)
                         return null;
 
                     childItems = itemHost.Children;
@@ -99,7 +99,7 @@ namespace System.Windows.Automation.Peers
 
                     // try to reuse old peer if it exists either in Current AT or in WeakRefStorage of Peers being sent to Client
                     ItemAutomationPeer peer = oldChildren[dataItem];
-                    if (peer == null)
+                    if (peer is null)
                     {
                         peer = GetPeerFromWeakRefStorage(dataItem);
 
@@ -112,8 +112,8 @@ namespace System.Windows.Automation.Peers
                     }
 
                     // If the peer is null or dataItem.Header has changed, create a new peer.
-                    object dataItemHeader = dataItem == null ? null : dataItem.Header;
-                    if (peer == null ||
+                    object dataItemHeader = dataItem is null ? null : dataItem.Header;
+                    if (peer is null ||
                         !ItemsControl.EqualsEx(peer.Item, dataItemHeader))
                     {
                         peer = CreateItemAutomationPeer(dataItem);
@@ -131,7 +131,7 @@ namespace System.Windows.Automation.Peers
 
                     // protection from indistinguishable items - for example, 2 strings with same value
                     // this scenario does not work in ItemsControl however is not checked for.
-                    if (peer != null && ItemPeers[dataItem] == null)
+                    if (peer != null && ItemPeers[dataItem] is null)
                     {
                         children.Add(peer);
                         ItemPeers[dataItem] = peer;
@@ -178,7 +178,7 @@ namespace System.Windows.Automation.Peers
                 {
                     // get the peer corresponding to this provider
                     startAfterItem = PeerFromProvider(startAfter) as DataGridColumnHeaderItemAutomationPeer;
-                    if (startAfterItem == null)
+                    if (startAfterItem is null)
                         return null;
                 }
 
@@ -186,7 +186,7 @@ namespace System.Windows.Automation.Peers
                 int startIndex = 0;
                 if (startAfterItem != null)
                 {
-                    if (startAfterItem.Item == null)
+                    if (startAfterItem.Item is null)
                     {
                         throw new InvalidOperationException(SR.InavalidStartItem);
                     }
@@ -215,7 +215,7 @@ namespace System.Windows.Automation.Peers
                 for (int i = startIndex; i < items.Count; i++)
                 {
                     currentItemPeer = FindOrCreateItemAutomationPeer(items[i]);
-                    if (currentItemPeer == null)
+                    if (currentItemPeer is null)
                         continue;
                     try
                     {
@@ -227,10 +227,10 @@ namespace System.Windows.Automation.Peers
                             continue;
                     }
 
-                    if (value == null || currentValue == null)
+                    if (value is null || currentValue is null)
                     {
                         // Accept null as value corresponding to the property if it finds an item with null as the value of corresponding property else ignore.
-                        if (currentValue == null && value == null && items.IndexOf(items[i]) == i)
+                        if (currentValue is null && value is null && items.IndexOf(items[i]) == i)
                             return (ProviderFromPeer(currentItemPeer));
                         else
                             continue;

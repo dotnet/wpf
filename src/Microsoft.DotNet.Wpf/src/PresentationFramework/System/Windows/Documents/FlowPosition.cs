@@ -69,7 +69,7 @@ namespace System.Windows.Documents
             ArgumentNullException.ThrowIfNull(o);
 
             FlowPosition flow = o as FlowPosition;
-            if (flow == null)
+            if (flow is null)
             {
                 throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, o.GetType(), typeof(FlowPosition)), "o");
             }
@@ -711,7 +711,7 @@ namespace System.Windows.Documents
         // see if the two FlowPosition are indeed same position
         private bool _IsSamePosition(FlowPosition flow)
         {
-            if (flow == null)
+            if (flow is null)
             {
                 return false;
             }

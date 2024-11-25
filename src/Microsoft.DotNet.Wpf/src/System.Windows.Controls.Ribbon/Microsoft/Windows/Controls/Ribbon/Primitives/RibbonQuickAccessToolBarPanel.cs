@@ -101,7 +101,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         {
             get
             {
-                if (_generator == null &&
+                if (_generator is null &&
                     QAT != null)
                 {
                     IItemContainerGenerator parentGenerator = QAT.ItemContainerGenerator;
@@ -119,7 +119,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         {
             get
             {
-                if (_generatedChildren == null)
+                if (_generatedChildren is null)
                 {
                     RepopulateGeneratedChildren();
                 }
@@ -130,7 +130,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
 
         private void RepopulateGeneratedChildren()
         {
-            if (_generatedChildren == null)
+            if (_generatedChildren is null)
             {
                 _generatedChildren = new List<UIElement>();
             }
@@ -182,7 +182,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             UIElementCollection children = InternalChildren;
             List<UIElement> generatedItems = GeneratedChildren;
             int overflowIndex = 0;
-            RibbonQuickAccessToolBarOverflowPanel overflowPanel = QAT == null ? null : QAT.OverflowPanel;
+            RibbonQuickAccessToolBarOverflowPanel overflowPanel = QAT is null ? null : QAT.OverflowPanel;
 
             for (int i = 0; i < generatedItems.Count; i++)
             {

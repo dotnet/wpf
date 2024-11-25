@@ -152,7 +152,7 @@ namespace System.Windows.Media.Effects
             Point? tl = WorldToUnit(worldRect.TopLeft, worldBounds);
             Point? br = WorldToUnit(worldRect.BottomRight, worldBounds);
             
-            if (tl == null || br == null)
+            if (tl is null || br is null)
             {
                 return null;
             }
@@ -176,7 +176,7 @@ namespace System.Windows.Media.Effects
             {
                 get 
                 {
-                    if (_inverseTransform == null)
+                    if (_inverseTransform is null)
                     {
                         // We can cache the clone because the _worldBounds and
                         // inner transform won't change.
@@ -246,7 +246,7 @@ namespace System.Windows.Media.Effects
                 GeneralTransform result;
                 if (_isInverse)
                 {
-                    if (_innerTransformInverse == null)
+                    if (_innerTransformInverse is null)
                     {
                         // Cache the inverse so it doesn't get new'd up all the
                         // time. 

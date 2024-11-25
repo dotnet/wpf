@@ -158,7 +158,7 @@ namespace System.Windows.Controls
                 if (PendingToolTipTimer?.Tag == BooleanBoxes.TrueBox)
                 {
                     // the pending tooltip is on a short delay (see BeginShowToolTip)
-                    if (CurrentToolTip == null)
+                    if (CurrentToolTip is null)
                     {
                         // the mouse left the safe area - promote the pending tooltip now
                         PendingToolTipTimer.Stop();
@@ -274,7 +274,7 @@ namespace System.Windows.Controls
         private bool OpenOrCloseToolTipViaShortcut()
         {
             DependencyObject owner = FindToolTipOwner(Keyboard.FocusedElement, ToolTipService.TriggerAction.KeyboardShortcut);
-            if (owner == null)
+            if (owner is null)
                 return false;
 
 
@@ -323,7 +323,7 @@ namespace System.Windows.Controls
             }
 
             // ignore a request if no owner, or already showing or pending its tooltip
-            if (o == null || o == GetOwner(PendingToolTip) || o == GetOwner(CurrentToolTip))
+            if (o is null || o == GetOwner(PendingToolTip) || o == GetOwner(CurrentToolTip))
                 return;
 
             // discard the previous pending request
@@ -422,7 +422,7 @@ namespace System.Windows.Controls
         /// <param name="fromKeyboard">True if the tooltip is triggered by keyboard</param>
         private void ShowToolTip(DependencyObject o, bool fromKeyboard)
         {
-            Debug.Assert(_currentToolTip == null);
+            Debug.Assert(_currentToolTip is null);
             ResetCurrentToolTipTimer();
             OnForceClose(null, EventArgs.Empty);
 
@@ -436,7 +436,7 @@ namespace System.Windows.Controls
                 element.RaiseEvent(args);
 
                 // [re-examine _currentToolTip, re-entrancy can change it]
-                show = !args.Handled && (_currentToolTip == null);
+                show = !args.Handled && (_currentToolTip is null);
             }
 
             if (show)
@@ -501,7 +501,7 @@ namespace System.Windows.Controls
         internal void ReplaceCurrentToolTip()
         {
             ToolTip currentToolTip = _currentToolTip;
-            if (currentToolTip == null)
+            if (currentToolTip is null)
                 return;
 
             // get information from the current tooltip, before it goes away
@@ -570,7 +570,7 @@ namespace System.Windows.Controls
         // initiate the process of closing the tooltip's popup.
         private void CloseToolTip(ToolTip tooltip)
         {
-            if (tooltip == null)
+            if (tooltip is null)
                 return;
 
             SetSafeArea(null);
@@ -654,7 +654,7 @@ namespace System.Windows.Controls
 
         private DependencyObject FindToolTipOwner(IInputElement element, ToolTipService.TriggerAction triggerAction)
         {
-            if (element == null)
+            if (element is null)
                 return null;
 
             DependencyObject owner = null;
@@ -690,13 +690,13 @@ namespace System.Windows.Controls
         private bool WithinCurrentToolTip(DependencyObject o)
         {
             // If no current tooltip, then no need to look
-            if (_currentToolTip == null)
+            if (_currentToolTip is null)
             {
                 return false;
             }
 
             DependencyObject v = o as Visual;
-            if (v == null)
+            if (v is null)
             {
                 ContentElement ce = o as ContentElement;
                 if (ce != null)
@@ -826,7 +826,7 @@ namespace System.Windows.Controls
         private ToolTip SentinelToolTip(DependencyObject o, ToolTipService.TriggerAction triggerAction)
         {
             // lazy creation, because we cannot create it in the ctor (infinite loop with FrameworkServices..ctor)
-            if (_sentinelToolTip == null)
+            if (_sentinelToolTip is null)
             {
                 _sentinelToolTip = new ToolTip();
             }
@@ -917,14 +917,14 @@ namespace System.Windows.Controls
         private bool MouseHasLeftSafeArea()
         {
             // if there is no SafeArea, the mouse didn't leave it
-            if (SafeArea == null)
+            if (SafeArea is null)
                 return false;
 
             // if the current tooltip's owner is no longer being displayed, the safe area is no longer valid
             // so the mouse has effectively left it
             DependencyObject owner = GetOwner(CurrentToolTip);
             PresentationSource presentationSource = (owner != null) ? PresentationSource.CriticalFromVisual(owner) : null;
-            if (presentationSource == null)
+            if (presentationSource is null)
                 return true;
 
             // if the safe area is valid, see if it still contains the mouse point
@@ -1067,7 +1067,7 @@ namespace System.Windows.Controls
 
         private static bool IsPresentationSourceNull(DependencyObject uie)
         {
-            return PresentationSource.CriticalFromVisual(uie) == null;
+            return PresentationSource.CriticalFromVisual(uie) is null;
         }
 
         #endregion
@@ -1078,12 +1078,12 @@ namespace System.Windows.Controls
         {
             // see if o is a Visual or a Visual3D
             DependencyObject v = o as Visual;
-            if (v == null)
+            if (v is null)
             {
                 v = o as Visual3D;
             }
 
-            ContentElement ce = (v == null) ? o as ContentElement : null;
+            ContentElement ce = (v is null) ? o as ContentElement : null;
 
             if (ce != null)
             {
@@ -1132,7 +1132,7 @@ namespace System.Windows.Controls
                 if (ce != null)
                 {
                     o = ContentOperations.GetParent(ce);
-                    if (o == null)
+                    if (o is null)
                     {
                         FrameworkContentElement fce = ce as FrameworkContentElement;
                         if (fce != null)
@@ -1155,8 +1155,8 @@ namespace System.Windows.Controls
         {
             bool enabled = true;
             UIElement uie = o as UIElement;
-            ContentElement ce = (uie == null) ? o as ContentElement : null;
-            UIElement3D uie3D = (uie == null && ce == null) ? o as UIElement3D : null;
+            ContentElement ce = (uie is null) ? o as ContentElement : null;
+            UIElement3D uie3D = (uie is null && ce is null) ? o as UIElement3D : null;
 
             if (uie != null)
             {
@@ -1188,7 +1188,7 @@ namespace System.Windows.Controls
         private static UIElement GetTarget(DependencyObject o)
         {
             UIElement uie = o as UIElement;
-            if (uie == null)
+            if (uie is null)
             {
                 ContentElement ce = o as ContentElement;
                 if (ce != null)
@@ -1197,7 +1197,7 @@ namespace System.Windows.Controls
 
                     // attempt to cast to a UIElement
                     uie = ceParent as UIElement;
-                    if (uie == null)
+                    if (uie is null)
                     {
                         // target can't be a UIElement3D - so get the nearest containing UIElement
                         UIElement3D uie3D = ceParent as UIElement3D;
@@ -1318,11 +1318,11 @@ namespace System.Windows.Controls
 
             public void SetValue(T value)
             {
-                if (value == null)
+                if (value is null)
                 {
                     _storage = null;
                 }
-                else if (_storage == null)
+                else if (_storage is null)
                 {
                     _storage = new WeakReference<T>(value);
                 }

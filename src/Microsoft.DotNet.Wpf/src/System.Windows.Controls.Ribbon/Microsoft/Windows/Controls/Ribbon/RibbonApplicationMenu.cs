@@ -453,7 +453,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         TreeHelper.IsVisualAncestorOf(footerPaneHost, element))
                     {
                         DependencyObject nextFocus = RibbonHelper.PredictFocus(element, FocusNavigationDirection.Down);
-                        if (nextFocus == null ||
+                        if (nextFocus is null ||
                             nextFocus == element)
                         {
                             // If the focus is on the last element of footer pane,
@@ -494,7 +494,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                             TreeHelper.IsVisualAncestorOf(auxilaryPaneHost, element))
                         {
                             DependencyObject nextFocus = RibbonHelper.PredictFocus(element, FocusNavigationDirection.Up);
-                            if (nextFocus == null ||
+                            if (nextFocus is null ||
                                 nextFocus == element)
                             {
                                 // If the focus is on last first element of auxiliary pane,
@@ -548,7 +548,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                             // and the focus is in items pane, move the the focus outside teh
                             // items pane if needed.
                             RibbonMenuItem menuItem = element as RibbonMenuItem;
-                            if (menuItem == null)
+                            if (menuItem is null)
                             {
                                 menuItem = TreeHelper.FindVisualAncestor<RibbonMenuItem>(element);
                             }

@@ -61,7 +61,7 @@ namespace System.Windows.Markup
         private CultureInfo _specificCulture;
         private CultureInfo _compatibleCulture;
         private int _specificity;
-        private bool _equivalentCultureFailed;  // only consult after checking _equivalentCulture == null
+        private bool _equivalentCultureFailed;  // only consult after checking _equivalentCulture is null
 
         /// <summary>
         ///     PRIVATE constructor.  It is vital that this constructor be
@@ -89,7 +89,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                if (_empty == null)
+                if (_empty is null)
                 {
                     // We MUST NOT call the private constructor, but instead call GetLanguage()!
                     _empty = GetLanguage(string.Empty);
@@ -124,7 +124,7 @@ namespace System.Windows.Markup
             string lowercase = AsciiToLower(ietfLanguageTag);   // throws on non-ascii
 
             language = (XmlLanguage) _cache[lowercase];
-            if (language == null)
+            if (language is null)
             {
                 ValidateLowerCaseTag(lowercase);            // throws on RFC 3066 validation failure
                 lock (_cache.SyncRoot)
@@ -135,7 +135,7 @@ namespace System.Windows.Markup
                     //  get two different XmlLanguage instances for the same language
                     //  tag.
                     language = (XmlLanguage) _cache[lowercase];
-                    if (language == null)
+                    if (language is null)
                     {
                         _cache[lowercase] = language = new XmlLanguage(lowercase);
                     }
@@ -180,7 +180,7 @@ namespace System.Windows.Markup
         /// </exception>
         public CultureInfo GetEquivalentCulture()
         {
-            if (_equivalentCulture == null)
+            if (_equivalentCulture is null)
             {
                 string lowerCaseTag = _lowerCaseTag;
                 
@@ -226,7 +226,7 @@ namespace System.Windows.Markup
         /// </remarks>
         public CultureInfo GetSpecificCulture()
         {
-            if (_specificCulture == null)
+            if (_specificCulture is null)
             {
                 if (_lowerCaseTag.Length == 0 || string.Equals(_lowerCaseTag, "und", StringComparison.Ordinal))
                 {
@@ -270,7 +270,7 @@ namespace System.Windows.Markup
         /// </summary>
         internal CultureInfo GetCompatibleCulture()
         {
-            if (_compatibleCulture == null)
+            if (_compatibleCulture is null)
             {
                 CultureInfo culture = null;
 
@@ -281,7 +281,7 @@ namespace System.Windows.Markup
                     do
                     {
                         languageTag = Shorten(languageTag);
-                        if (languageTag == null)
+                        if (languageTag is null)
                         {
                             // Should never happen, because GetCultureinfoByIetfLanguageTag("") should
                             //  return InvariantCulture!
@@ -298,7 +298,7 @@ namespace System.Windows.Markup
                             }
                         }
 }
-                    while (culture == null);
+                    while (culture is null);
                 }
                 _compatibleCulture = culture;
             }
@@ -370,7 +370,7 @@ namespace System.Windows.Markup
 
                 CultureInfo parentCulture = culture.Parent;
 
-                if (parentCulture == null
+                if (parentCulture is null
                         || parentCulture.Equals(CultureInfo.InvariantCulture)
                         || parentCulture == culture)
                     break;
@@ -564,7 +564,7 @@ namespace System.Windows.Markup
                         }
                     }
 
-                    if (culture == null)
+                    if (culture is null)
                     {
                         _current = prefixLanguage;
                         _atStart = false;
@@ -641,7 +641,7 @@ namespace System.Windows.Markup
         {
             culture = null;
             
-            if (_equivalentCulture == null && !_equivalentCultureFailed)
+            if (_equivalentCulture is null && !_equivalentCultureFailed)
             {
                 try
                 {

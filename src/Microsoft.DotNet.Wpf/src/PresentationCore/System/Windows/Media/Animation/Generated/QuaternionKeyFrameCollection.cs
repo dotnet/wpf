@@ -57,7 +57,7 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-                if (s_emptyCollection == null)
+                if (s_emptyCollection is null)
                 {
                     QuaternionKeyFrameCollection emptyCollection = new QuaternionKeyFrameCollection();
 
@@ -469,7 +469,7 @@ namespace System.Windows.Media.Animation
             }
             set
             {
-                if (value == null)
+                if (value is null)
                 {
                     throw new ArgumentNullException(String.Format(CultureInfo.InvariantCulture, "QuaternionKeyFrameCollection[{0}]", index));
                 }

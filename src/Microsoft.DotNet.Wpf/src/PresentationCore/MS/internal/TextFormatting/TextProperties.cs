@@ -251,7 +251,7 @@ namespace MS.Internal.TextFormatting
             get 
             {
                 // The non-null value is cached 
-                if (_properties == null)
+                if (_properties is null)
                 {
                     if (_modifierScope != null)
                     {

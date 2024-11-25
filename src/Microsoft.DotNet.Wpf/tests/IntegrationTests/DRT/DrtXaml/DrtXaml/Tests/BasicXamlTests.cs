@@ -137,7 +137,7 @@ namespace DrtXaml.Tests
         public void Dictionary1_TreeValidator(object o)
         {
             var root = (Test.Elements.RoDictionaryProvider)o;
-            if (root == null)
+            if (root is null)
                 throw new NullReferenceException("Load returned null Root");
 
             // check the content
@@ -170,7 +170,7 @@ namespace DrtXaml.Tests
         public void ContentProperty0_TreeValidator(object o)
         {
             var root = (Test.Elements.HoldsOneElement)o;
-            if (root == null)
+            if (root is null)
                 throw new NullReferenceException("Load returned null Root");
             if (((Test.Elements.HasTextCpa)root.Element).Text != "TextPropertyValue")
                 throw new Exception("CPA text value compare failed");
@@ -190,7 +190,7 @@ namespace DrtXaml.Tests
         public void ContentProperty1_TreeValidator(object o)
         {
             var root = (Test.Elements.HoldsOneElement)o;
-            if (root == null)
+            if (root is null)
                 throw new NullReferenceException("Load returned null Root");
             if (((Test.Elements.HasTitleCpa)root.Element).Title != "This is the Title")
                 throw new Exception("CPA Title value compare failed");
@@ -210,7 +210,7 @@ namespace DrtXaml.Tests
         public void ContentProperty2_TreeValidator(object o)
         {
             var root = (Test.Elements.HoldsOneElement)o;
-            if (root == null)
+            if (root is null)
                 throw new NullReferenceException("Load returned null Root");
             if (((Test.Elements.InheritesTitleCP)root.Element).Text != "This is the Title")
                 throw new Exception("CPA text value compare failed");
@@ -288,7 +288,7 @@ namespace DrtXaml.Tests
         public void ContentProperty5_TreeValidator(object o)
         {
             var root = (Test.Elements.HoldsOneElement)o;
-            if (root == null)
+            if (root is null)
                 throw new NullReferenceException("Load returned null Root");
             if (((Test.Elements.ChangesInheritedCPAToText)root.Element).Text != "This is the Text")
                 throw new Exception("CPA text value compare failed");
@@ -307,7 +307,7 @@ namespace DrtXaml.Tests
         public void ContentProperty6_TreeValidator(object o)
         {
             var root = (Test.Elements.ElementListHolder)o;
-            if (root == null)
+            if (root is null)
                 throw new NullReferenceException("Load returned null Root");
             var es = root.Elements[2];
             if (((Test.Elements.InheritedContentType3)es).Content != "This is the Text")
@@ -615,7 +615,7 @@ Text='{t:DuplicateArity 1}'/>";
             XamlObjectWriter objWriter = new XamlObjectWriter(reader.SchemaContext);
             XamlServices.Transform(reader, objWriter);
             object root = objWriter.Result;
-            if (root == null)
+            if (root is null)
                 throw new NullReferenceException("Load returned null Root");
             return root;
         }
@@ -638,7 +638,7 @@ WPF!
             XamlObjectWriter objWriter = new XamlObjectWriter(reader.SchemaContext);
             XamlServices.Transform(reader, objWriter);
             object root = objWriter.Result;
-            if (root == null)
+            if (root is null)
                 throw new NullReferenceException("Load returned null Root");
             return root;
         }

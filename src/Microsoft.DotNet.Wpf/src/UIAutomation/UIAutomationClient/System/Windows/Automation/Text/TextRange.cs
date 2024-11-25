@@ -79,7 +79,7 @@ namespace System.Windows.Automation.Text
 
         internal static TextPatternRange [] Wrap(SafeTextRangeHandle [] hTextRanges, TextPattern pattern)
         {
-            if (hTextRanges == null)
+            if (hTextRanges is null)
                 return null;
 
             TextPatternRange[] ranges = new TextPatternRange[hTextRanges.Length];
@@ -451,7 +451,7 @@ namespace System.Windows.Automation.Text
         void ValidateRangeArgument(TextPatternRange range, string name)
         {
             // check if the argument is null
-            if (range == null)
+            if (range is null)
             {
                 throw new ArgumentNullException(name);
             }

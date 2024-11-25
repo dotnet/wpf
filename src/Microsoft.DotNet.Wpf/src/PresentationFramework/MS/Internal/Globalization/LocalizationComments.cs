@@ -85,7 +85,7 @@ namespace MS.Internal.Globalization
             // Localization comments consist of repeating "[PropertyName]([Value])"
             // e.g. $Content (abc) FontSize(def)
             //
-            if (input == null) return null;
+            if (input is null) return null;
 
             List<PropertyComment> tokens = new List<PropertyComment>(8);
             StringBuilder tokenBuffer = new StringBuilder();
@@ -94,7 +94,7 @@ namespace MS.Internal.Globalization
 
             for (int i = 0; i < input.Length; i++)
             {
-                if (currentPair.PropertyName == null)
+                if (currentPair.PropertyName is null)
                 {
                     // parsing "PropertyName" section
                     if (Char.IsWhiteSpace(input[i]) && !escaped)

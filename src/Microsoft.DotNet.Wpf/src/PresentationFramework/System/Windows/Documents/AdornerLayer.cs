@@ -184,14 +184,14 @@ namespace System.Windows.Documents
             ArgumentNullException.ThrowIfNull(adorner);
 
             ArrayList adornerInfos = ElementMap[adorner.AdornedElement] as ArrayList;
-            if (adornerInfos == null)
+            if (adornerInfos is null)
             {
                 // We currently allow adorners to be added on elements that can't be adorned, then
                 // throw those away later without notifying anyone.  Consequently, Remove() shouldn't throw.
                 return;
             }
             AdornerInfo adornerInfo = GetAdornerInfo(adornerInfos, adorner);
-            if (adornerInfo == null)
+            if (adornerInfo is null)
             {
                 // We currently allow adorners to be added on elements that can't be adorned, then
                 // throw those away later without notifying anyone.  Consequently, Remove() shouldn't throw.
@@ -236,7 +236,7 @@ namespace System.Windows.Documents
 
             ArrayList adornerInfos = ElementMap[element] as ArrayList;
 
-            if (adornerInfos == null)
+            if (adornerInfos is null)
                 throw new InvalidOperationException(SR.AdornedElementNotFound);
 
             int i = 0;
@@ -261,7 +261,7 @@ namespace System.Windows.Documents
 
             ArrayList adornerInfos = ElementMap[element] as ArrayList;
 
-            if (adornerInfos == null || adornerInfos.Count == 0)
+            if (adornerInfos is null || adornerInfos.Count == 0)
                 return null;
 
             Adorner[] adorners = new Adorner[adornerInfos.Count];
@@ -560,12 +560,12 @@ namespace System.Windows.Documents
         internal void SetAdornerZOrder(Adorner adorner, int zOrder)
         {
             ArrayList adornerInfos = ElementMap[adorner.AdornedElement] as ArrayList;
-            if (adornerInfos == null)
+            if (adornerInfos is null)
             {
                 throw new InvalidOperationException(SR.AdornedElementNotFound);
             }
             AdornerInfo adornerInfo = GetAdornerInfo(adornerInfos, adorner);
-            if (adornerInfo == null)
+            if (adornerInfo is null)
             {
                 throw new InvalidOperationException(SR.AdornerNotFound);
             }
@@ -586,12 +586,12 @@ namespace System.Windows.Documents
         internal int GetAdornerZOrder(Adorner adorner)
         {
             ArrayList adornerInfos = ElementMap[adorner.AdornedElement] as ArrayList;
-            if (adornerInfos == null)
+            if (adornerInfos is null)
             {
                 throw new InvalidOperationException(SR.AdornedElementNotFound);
             }
             AdornerInfo adornerInfo = GetAdornerInfo(adornerInfos, adorner);
-            if (adornerInfo == null)
+            if (adornerInfo is null)
             {
                 throw new InvalidOperationException(SR.AdornerNotFound);
             }
@@ -681,7 +681,7 @@ namespace System.Windows.Documents
 
             ArrayList adornerInfos = ElementMap[element] as ArrayList;
 
-            if (adornerInfos == null)
+            if (adornerInfos is null)
                 throw new InvalidOperationException(SR.AdornedElementNotFound);
 
             while (adornerInfos.Count > 0)
@@ -704,14 +704,14 @@ namespace System.Windows.Documents
 
             // we intentionally do not ascend in to a 3D scene
             Visual adornerLayerParent = VisualTreeHelper.GetParent(this) as Visual;
-            if (adornerLayerParent == null)
+            if (adornerLayerParent is null)
             {
                 return;
             }
 
             Debug.Assert(element != null);
             ArrayList adornerInfos = ElementMap[element] as ArrayList;
-            if (adornerInfos == null)
+            if (adornerInfos is null)
             {
                 return;
             }
@@ -732,15 +732,15 @@ namespace System.Windows.Documents
                 if (adornerInfo.Adorner.IsClipEnabled)
                 {
                     clip = GetClipGeometry(adornerInfo.Adorner.AdornedElement, adornerInfo.Adorner);
-                    if (adornerInfo.Clip == null && clip != null || adornerInfo.Clip != null && clip == null ||
+                    if (adornerInfo.Clip is null && clip != null || adornerInfo.Clip != null && clip is null ||
                      (adornerInfo.Clip != null && clip != null && adornerInfo.Clip.Bounds != clip.Bounds))
                     {
                         clipChanged = true;
                     }
                 }
 
-                if (adornerInfo.Adorner.NeedsUpdate(adornerInfo.RenderSize) || adornerInfo.Transform == null ||
-                    transform.AffineTransform == null || adornerInfo.Transform.AffineTransform == null ||
+                if (adornerInfo.Adorner.NeedsUpdate(adornerInfo.RenderSize) || adornerInfo.Transform is null ||
+                    transform.AffineTransform is null || adornerInfo.Transform.AffineTransform is null ||
                     transform.AffineTransform.Value != adornerInfo.Transform.AffineTransform.Value ||
                     clipChanged)
                 {
@@ -766,7 +766,7 @@ namespace System.Windows.Documents
         private void UpdateAdorner(UIElement element)
         {
             Visual adornerLayerParent = VisualTreeHelper.GetParent(this) as Visual;
-            if (adornerLayerParent == null)
+            if (adornerLayerParent is null)
             {
                 // Never update when the adorner layer is not part of a visual tree.
                 return;
@@ -826,7 +826,7 @@ namespace System.Windows.Documents
 
             // we intentionally do not ascend in to a 3D scene            
             Visual adornerLayerParent = VisualTreeHelper.GetParent(this) as Visual;
-            if (adornerLayerParent == null)
+            if (adornerLayerParent is null)
             {
                 return null;
             }
@@ -845,7 +845,7 @@ namespace System.Windows.Documents
                 Geometry geometry = VisualTreeHelper.GetClip(element);
                 if (geometry != null)
                 {
-                    if (combinedGeometry == null)
+                    if (combinedGeometry is null)
                     {
                         combinedGeometry = new CombinedGeometry(geometry, null);
                     }
@@ -867,7 +867,7 @@ namespace System.Windows.Documents
             {
                 // transform the last combined geometry up to the top
                 GeneralTransform transform = oldElement.TransformToAncestor(adornerLayerParent);
-                if (transform == null)
+                if (transform is null)
                 {
                     combinedGeometry = null;
                 }
@@ -878,7 +878,7 @@ namespace System.Windows.Documents
 
                     // Now transform back down to the adorner
                     transform = adornerLayerParent.TransformToDescendant(adorner);
-                    if (transform == null)
+                    if (transform is null)
                     {
                         combinedGeometry = null;
                     }
@@ -942,7 +942,7 @@ namespace System.Windows.Documents
         {
             ArrayList adornerInfos;
 
-            if (infoMap[key] == null)
+            if (infoMap[key] is null)
             {
                 adornerInfos = new ArrayList(1);
                 infoMap[key] = adornerInfos;

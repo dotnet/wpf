@@ -67,7 +67,7 @@ namespace MS.Internal.FontCache
 
             BaseUriHelper.GetAssemblyAndPartNameFromPackAppUri(uri, out uriAssembly, out escapedPath);
 
-            if (uriAssembly == null)
+            if (uriAssembly is null)
                 return null;
 
             // If we added a fake filename to the uri, remove it from the escaped path.

@@ -199,7 +199,7 @@ namespace System.Windows.Input
             {
                 InputBindingCollection inputBindings = _classInputBindings[type] as InputBindingCollection;
 
-                if (inputBindings == null)
+                if (inputBindings is null)
                 {
                     inputBindings = new InputBindingCollection();
                     _classInputBindings[type] = inputBindings;
@@ -228,7 +228,7 @@ namespace System.Windows.Input
             {
                 CommandBindingCollection bindings = _classCommandBindings[type] as CommandBindingCollection;
 
-                if (bindings == null)
+                if (bindings is null)
                 {
                     bindings = new CommandBindingCollection();
                     _classCommandBindings[type] = bindings;
@@ -257,7 +257,7 @@ namespace System.Windows.Input
         {
             get
             {
-                if (_commandManager == null)
+                if (_commandManager is null)
                 {
                     _commandManager = new CommandManager();
                 }
@@ -280,7 +280,7 @@ namespace System.Windows.Input
         /// <param name="inputEventArgs">InputEventArgs to be matched against for gestures</param>
         internal static void TranslateInput(IInputElement targetElement, InputEventArgs inputEventArgs)
         {
-            if ((targetElement == null) || (inputEventArgs == null))
+            if ((targetElement is null) || (inputEventArgs is null))
             {
                 return;
             }
@@ -322,7 +322,7 @@ namespace System.Windows.Input
             }
 
             // Step 2: If no command, check class input bindings
-            if (command == null)
+            if (command is null)
             {
                 lock (_classInputBindings.SyncRoot)
                 {
@@ -347,7 +347,7 @@ namespace System.Windows.Input
             }
 
             // Step 3: If no command, check local command bindings
-            if (command == null)
+            if (command is null)
             {
                 // Check for the instance level ones Next
                 CommandBindingCollection localCommandBindings = null;
@@ -371,7 +371,7 @@ namespace System.Windows.Input
             }
 
             // Step 4: If no command, look at class command bindings
-            if (command == null)
+            if (command is null)
             {
                 lock (_classCommandBindings.SyncRoot)
                 {
@@ -398,9 +398,9 @@ namespace System.Windows.Input
             if (command != null && command != ApplicationCommands.NotACommand)
             {
                 // We currently do not support declaring the element with focus as the target
-                // element by setting target == null.  Instead, we interpret a null target to indicate
+                // element by setting target is null.  Instead, we interpret a null target to indicate
                 // the element that we are routing the event through, e.g. the targetElement parameter.
-                if (target == null)
+                if (target is null)
                 {
                     target = targetElement;
                 }
@@ -707,8 +707,8 @@ namespace System.Windows.Input
             // Get the parent element of the childScope element
             DependencyObject parent = null;
             UIElement element = childScope as UIElement;
-            ContentElement contentElement = (element == null) ? childScope as ContentElement : null;
-            UIElement3D element3D = (element == null && contentElement == null) ? childScope as UIElement3D : null;
+            ContentElement contentElement = (element is null) ? childScope as ContentElement : null;
+            UIElement3D element3D = (element is null && contentElement is null) ? childScope as UIElement3D : null;
 
             if (element != null)
             {
@@ -791,7 +791,7 @@ namespace System.Windows.Input
         /// </summary>
         private void RaiseRequerySuggested()
         {
-            if (_requerySuggestedOperation == null)
+            if (_requerySuggestedOperation is null)
             {
                 Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
                 if ((dispatcher != null) && !dispatcher.HasShutdownStarted && !dispatcher.HasShutdownFinished)
@@ -845,7 +845,7 @@ namespace System.Windows.Input
             /// </summary>
             public static void AddHandler(CommandManager source, EventHandler handler)
             {
-                if (handler == null)
+                if (handler is null)
                     return; // 4.0-compat;  should be:  throw new ArgumentNullException("handler");
 
                 CurrentManager.ProtectedAddHandler(source, handler);
@@ -856,7 +856,7 @@ namespace System.Windows.Input
             /// </summary>
             public static void RemoveHandler(CommandManager source, EventHandler handler)
             {
-                if (handler == null)
+                if (handler is null)
                     return; // 4.0-compat;  should be:  throw new ArgumentNullException("handler");
 
                 CurrentManager.ProtectedRemoveHandler(source, handler);
@@ -913,7 +913,7 @@ namespace System.Windows.Input
                     RequerySuggestedEventManager manager = (RequerySuggestedEventManager)GetCurrentManager(managerType);
 
                     // at first use, create and register a new manager
-                    if (manager == null)
+                    if (manager is null)
                     {
                         manager = new RequerySuggestedEventManager();
                         SetCurrentManager(managerType, manager);

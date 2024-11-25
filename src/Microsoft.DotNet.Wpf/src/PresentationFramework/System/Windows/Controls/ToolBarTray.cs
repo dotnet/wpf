@@ -179,7 +179,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_toolBarsCollection == null)
+                if (_toolBarsCollection is null)
                     _toolBarsCollection = new ToolBarCollection(this);
 
                 return _toolBarsCollection;
@@ -276,7 +276,7 @@ namespace System.Windows.Controls
             ArgumentNullException.ThrowIfNull(value);
 
             ToolBar toolBar = value as ToolBar;
-            if (toolBar == null)
+            if (toolBar is null)
             {
                 throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(ToolBar)), "value");
             }
@@ -463,7 +463,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_toolBarsCollection == null)
+                if (_toolBarsCollection is null)
                 {
                     return 0;
                 }
@@ -479,7 +479,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected override Visual GetVisualChild(int index)
         {
-            if (_toolBarsCollection == null)
+            if (_toolBarsCollection is null)
             {
                 throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }

@@ -46,7 +46,7 @@ namespace System.Windows.Documents
         {
             ImageSource imageSource = Source;
 
-            if (imageSource == null)
+            if (imageSource is null)
             {
                 return new Size();
             }

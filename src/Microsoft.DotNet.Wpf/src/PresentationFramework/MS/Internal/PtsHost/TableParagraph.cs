@@ -99,7 +99,7 @@ namespace MS.Internal.PtsHost
             bool suppressTopSpace,              // IN:  suppress empty space at the top of page
             out int dvr)                        // OUT: dvr, calculated based on margin collapsing state
         {
-            if (suppressTopSpace && (StructuralCache.CurrentFormatContext.FinitePage || mcs == null))
+            if (suppressTopSpace && (StructuralCache.CurrentFormatContext.FinitePage || mcs is null))
                 dvr = 0;
             else
             {
@@ -269,10 +269,10 @@ namespace MS.Internal.PtsHost
             out int fFound,
             out IntPtr pnmFirstRow)
         {            
-            if(_firstChild == null)
+            if(_firstChild is null)
             {
                 TableRow tableRow = null;
-                for(int rowGroupIndex = 0; rowGroupIndex < Table.RowGroups.Count && tableRow == null; rowGroupIndex++)
+                for(int rowGroupIndex = 0; rowGroupIndex < Table.RowGroups.Count && tableRow is null; rowGroupIndex++)
                 {
                     TableRowGroup rowGroup = Table.RowGroups[rowGroupIndex];
                     if(rowGroup.Rows.Count > 0)
@@ -318,7 +318,7 @@ namespace MS.Internal.PtsHost
             BaseParagraph prevParagraph = ((RowParagraph)PtsContext.HandleToObject(nmRow));
             BaseParagraph nextParagraph = prevParagraph.Next;
 
-            if(nextParagraph == null)
+            if(nextParagraph is null)
             {
                 TableRow currentRow = ((RowParagraph)prevParagraph).Row;
                 TableRowGroup currentRowGroup = currentRow.RowGroup;
@@ -335,7 +335,7 @@ namespace MS.Internal.PtsHost
                     tableRow = currentRowGroup.Rows[nextRowIndex];
                 }
 
-                while(tableRow == null)
+                while(tableRow is null)
                 {
                     if(nextRowGroupIndex == Table.RowGroups.Count)
                     {
@@ -558,7 +558,7 @@ namespace MS.Internal.PtsHost
             // - to create dirty text range corresponding to the Table content
             // - notify formatter that Table's content is changed.
             //
-            int charCount = Table.SymbolCount - 2;// This is equivalent to (ContentEndOffset – ContentStartOffset) but is more performant.
+            int charCount = Table.SymbolCount - 2;// This is equivalent to (ContentEndOffset ï¿½ ContentStartOffset) but is more performant.
             if (charCount > 0)
             {
                 DirtyTextRange dtr = new DirtyTextRange(Table.ContentStartOffset, charCount, charCount);

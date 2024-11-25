@@ -67,14 +67,14 @@ namespace MS.Internal.Automation
         //          false if the property map was not created during this call.
         internal static bool AddPropertyNotify(DependencyProperty [] properties)
         {
-            if (properties == null)
+            if (properties is null)
                 return false;
 
             bool createdMap = false;
             using (_propertyLock.WriteLock)
             {
                 // If it doesn't exist, create the property map (key=dp value=listener count)
-                if (_propertyTable == null)
+                if (_propertyTable is null)
                 {
                     // Up to 20 properties before resize and
                     // small load factor optimizes for speed
@@ -87,7 +87,7 @@ namespace MS.Internal.Automation
                 // properties is an array of the properties one listener is interested in
                 foreach (DependencyProperty dp in properties)
                 {
-                    if (dp == null)
+                    if (dp is null)
                         continue;
 
                     int cDP = 0;
@@ -149,7 +149,7 @@ namespace MS.Internal.Automation
                         _propertyTable = null;
                     }
                 }
-                isEmpty = (_propertyTable == null);
+                isEmpty = (_propertyTable is null);
             }
 
             return isEmpty;

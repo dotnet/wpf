@@ -112,9 +112,9 @@ namespace System.Windows.Controls
                 {
                     ExtendedData extData = ExtData;
 
-                    if (    extData == null
-                        ||  (   (extData.ColumnDefinitions == null || extData.ColumnDefinitions.Count == 0)
-                            &&  (extData.RowDefinitions    == null || extData.RowDefinitions.Count    == 0) )
+                    if (    extData is null
+                        ||  (   (extData.ColumnDefinitions is null || extData.ColumnDefinitions.Count == 0)
+                            &&  (extData.RowDefinitions    is null || extData.RowDefinitions.Count    == 0) )
                        )
                     {
                         //  grid is empty
@@ -277,8 +277,8 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_data == null) { _data = new ExtendedData(); }
-                if (_data.ColumnDefinitions == null) { _data.ColumnDefinitions = new ColumnDefinitionCollection(this); }
+                if (_data is null) { _data = new ExtendedData(); }
+                if (_data.ColumnDefinitions is null) { _data.ColumnDefinitions = new ColumnDefinitionCollection(this); }
 
                 return (_data.ColumnDefinitions);
             }
@@ -292,8 +292,8 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_data == null) { _data = new ExtendedData(); }
-                if (_data.RowDefinitions == null) { _data.RowDefinitions = new RowDefinitionCollection(this); }
+                if (_data is null) { _data = new ExtendedData(); }
+                if (_data.RowDefinitions is null) { _data.RowDefinitions = new RowDefinitionCollection(this); }
 
                 return (_data.RowDefinitions);
             }
@@ -324,7 +324,7 @@ namespace System.Windows.Controls
             // argument checking done at the base class
             if(index == base.VisualChildrenCount)
             {
-                if (_gridLinesRenderer == null)
+                if (_gridLinesRenderer is null)
                 {
                     throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
                 }
@@ -366,7 +366,7 @@ namespace System.Windows.Controls
                 ListenToNotifications = true;
                 MeasureOverrideInProgress = true;
 
-                if (extData == null)
+                if (extData is null)
                 {
                     gridDesiredSize = new Size();
                     UIElementCollection children = InternalChildren;
@@ -665,7 +665,7 @@ namespace System.Windows.Controls
 
                 ArrangeOverrideInProgress = true;
 
-                if (_data == null)
+                if (_data is null)
                 {
                     UIElementCollection children = InternalChildren;
 
@@ -694,7 +694,7 @@ namespace System.Windows.Controls
                     for (int currentCell = 0; currentCell < PrivateCells.Length; ++currentCell)
                     {
                         UIElement cell = children[currentCell];
-                        if (cell == null)
+                        if (cell is null)
                         {
                             continue;
                         }
@@ -900,7 +900,7 @@ namespace System.Windows.Controls
             for (int i = PrivateCells.Length - 1; i >= 0; --i)
             {
                 UIElement child = children[i];
-                if (child == null)
+                if (child is null)
                 {
                     continue;
                 }
@@ -1001,9 +1001,9 @@ namespace System.Windows.Controls
             {
                 ExtendedData extData = ExtData;
 
-                if (extData.ColumnDefinitions == null)
+                if (extData.ColumnDefinitions is null)
                 {
-                    if (extData.DefinitionsU == null)
+                    if (extData.DefinitionsU is null)
                     {
                         extData.DefinitionsU = new DefinitionBase[] { new ColumnDefinition() };
                     }
@@ -1048,9 +1048,9 @@ namespace System.Windows.Controls
             {
                 ExtendedData extData = ExtData;
 
-                if (extData.RowDefinitions == null)
+                if (extData.RowDefinitions is null)
                 {
-                    if (extData.DefinitionsV == null)
+                    if (extData.DefinitionsV is null)
                     {
                         extData.DefinitionsV = new DefinitionBase[] { new RowDefinition() };
                     }
@@ -1292,7 +1292,7 @@ namespace System.Windows.Controls
             bool u,
             double value)
         {
-            if (store == null)
+            if (store is null)
             {
                 store = new Hashtable();
             }
@@ -1300,7 +1300,7 @@ namespace System.Windows.Controls
             SpanKey key = new SpanKey(start, count, u);
             object o = store[key];
 
-            if (    o == null
+            if (    o is null
                 ||  value > (double)o   )
             {
                 store[key] = value;
@@ -2915,7 +2915,7 @@ namespace System.Windows.Controls
             //
             //  synchronize the state
             //
-            if (ShowGridLines && (_gridLinesRenderer == null))
+            if (ShowGridLines && (_gridLinesRenderer is null))
             {
                 _gridLinesRenderer = new GridLinesRenderer();
                 this.AddVisualChild(_gridLinesRenderer);
@@ -3024,9 +3024,9 @@ namespace System.Windows.Controls
         {
             result = 2;
 
-            if (x == null)
+            if (x is null)
             {
-                if (y == null)
+                if (y is null)
                 {
                     result = 0;
                 }
@@ -3037,7 +3037,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                if (y == null)
+                if (y is null)
                 {
                     result = 1;
                 }
@@ -3082,11 +3082,11 @@ namespace System.Windows.Controls
                 ExtendedData extData = ExtData;
                 int requiredLength = Math.Max(DefinitionsU.Length, DefinitionsV.Length) * 2;
 
-                if (    extData.TempDefinitions == null
+                if (    extData.TempDefinitions is null
                     ||  extData.TempDefinitions.Length < requiredLength   )
                 {
                     WeakReference tempDefinitionsWeakRef = (WeakReference)Thread.GetData(s_tempDefinitionsDataSlot);
-                    if (tempDefinitionsWeakRef == null)
+                    if (tempDefinitionsWeakRef is null)
                     {
                         extData.TempDefinitions = new DefinitionBase[requiredLength];
                         Thread.SetData(s_tempDefinitionsDataSlot, new WeakReference(extData.TempDefinitions));
@@ -3094,7 +3094,7 @@ namespace System.Windows.Controls
                     else
                     {
                         extData.TempDefinitions = (DefinitionBase[])tempDefinitionsWeakRef.Target;
-                        if (    extData.TempDefinitions == null
+                        if (    extData.TempDefinitions is null
                             ||  extData.TempDefinitions.Length < requiredLength   )
                         {
                             extData.TempDefinitions = new DefinitionBase[requiredLength];
@@ -3115,7 +3115,7 @@ namespace System.Windows.Controls
             {
                 int requiredLength = Math.Max(Math.Max(DefinitionsU.Length, DefinitionsV.Length), 1) * 2;
 
-                if (_definitionIndices == null || _definitionIndices.Length < requiredLength)
+                if (_definitionIndices is null || _definitionIndices.Length < requiredLength)
                 {
                     _definitionIndices = new int[requiredLength];
                 }
@@ -3133,11 +3133,11 @@ namespace System.Windows.Controls
             {
                 int requiredLength = Math.Max(DefinitionsU.Length, DefinitionsV.Length);
 
-                if (_roundingErrors == null && requiredLength == 0)
+                if (_roundingErrors is null && requiredLength == 0)
                 {
                     _roundingErrors = new double[1];
                 }
-                else if (_roundingErrors == null || _roundingErrors.Length < requiredLength)
+                else if (_roundingErrors is null || _roundingErrors.Length < requiredLength)
                 {
                     _roundingErrors = new double[requiredLength];
                 }
@@ -3999,7 +3999,7 @@ namespace System.Windows.Controls
                 using (DrawingContext drawingContext = RenderOpen())
                 {
                     Grid grid = VisualTreeHelper.GetParent(this) as Grid;
-                    if (    grid == null
+                    if (    grid is null
                         ||  grid.ShowGridLines == false )
                     {
                         return;
@@ -4109,7 +4109,7 @@ namespace System.Windows.Controls
             #if GRIDPARANOIA
             if (ID == "CountThis")
             {
-                if (_counters == null)
+                if (_counters is null)
                 {
                     _counters = new Counter[(int)Counters.Count];
                 }

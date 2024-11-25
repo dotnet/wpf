@@ -59,7 +59,7 @@ namespace System.Windows.Media.Media3D
         {    
             Model3DCollection children = Children;
 
-            if (children == null)
+            if (children is null)
             {
                 return;
             }
@@ -77,7 +77,7 @@ namespace System.Windows.Media.Media3D
         {
             Model3DCollection children = Children;
 
-            if (children == null)
+            if (children is null)
             {
                 return Rect3D.Empty;
             }
@@ -110,7 +110,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                if (s_empty == null)
+                if (s_empty is null)
                 {
                     s_empty = new Model3DGroup();
                     s_empty.Freeze();

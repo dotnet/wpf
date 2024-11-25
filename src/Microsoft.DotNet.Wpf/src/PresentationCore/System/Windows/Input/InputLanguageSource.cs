@@ -129,7 +129,7 @@ namespace System.Windows.Input
              {
                 EnsureInputProcessorProfile();
 
-                if (_ipp == null)
+                if (_ipp is null)
                     return new CultureInfo[1] { CurrentInputLanguage };
 
                 return _ipp.InputLanguageList;
@@ -198,7 +198,7 @@ namespace System.Windows.Input
             if (SafeNativeMethods.GetKeyboardLayoutList(0, null) <= 1)
                 return;
 
-            Debug.Assert(_ipp == null, "_EnsureInputProcesoorProfile has been called.");
+            Debug.Assert(_ipp is null, "_EnsureInputProcesoorProfile has been called.");
 
             InputLanguageProfileNotifySink lpns;
             lpns = new InputLanguageProfileNotifySink(this);

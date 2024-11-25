@@ -68,13 +68,13 @@ namespace System.Windows.Annotations
         /// Input segments must be ordered and non overlapping</remarks>
         internal TextAnchor(IList<TextSegment> segments)
         {
-            if (segments == null)
+            if (segments is null)
                 return;
 
             ITextPointer lastPointer = null;
             for (int i = 0; i < segments.Count; i++)
             {
-                Invariant.Assert((lastPointer == null) || (lastPointer.CompareTo(segments[i].Start) <= 0), "overlapped segments found");
+                Invariant.Assert((lastPointer is null) || (lastPointer.CompareTo(segments[i].Start) <= 0), "overlapped segments found");
                 TextSegment newSegment = TextAnchor.Trim(segments[i]);
                 if (newSegment.IsNull)
                     continue;
@@ -167,7 +167,7 @@ namespace System.Windows.Annotations
         {
             TextAnchor other = obj as TextAnchor;
 
-            if (other == null)
+            if (other is null)
                 return false;
 
             if (other._segments.Count != this._segments.Count)

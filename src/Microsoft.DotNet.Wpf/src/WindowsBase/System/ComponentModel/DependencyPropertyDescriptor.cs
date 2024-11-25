@@ -153,7 +153,7 @@ namespace System.ComponentModel
                     _ignorePropertyTypeCache.TryGetValue(dependencyProperty, out dpd);
                 }
 
-                if (dpd == null)
+                if (dpd is null)
                 {
                     // Create a new DPD based on the type information we have.  It 
                     // will fill in the property descriptor by calling TypeDescriptor
@@ -169,8 +169,8 @@ namespace System.ComponentModel
             }
             else
             {
-                if (ownerType.GetMethod("Get" + dependencyProperty.Name) == null &&
-                    ownerType.GetMethod("Set" + dependencyProperty.Name) == null)
+                if (ownerType.GetMethod("Get" + dependencyProperty.Name) is null &&
+                    ownerType.GetMethod("Set" + dependencyProperty.Name) is null)
                 {
                     return null;
                 }
@@ -221,7 +221,7 @@ namespace System.ComponentModel
                     _cache.TryGetValue(dependencyProperty, out dpd);
                 }
 
-                if (dpd == null) 
+                if (dpd is null) 
                 {
                     // Create a new DPD based on the type information we have.  It 
                     // will fill in the property descriptor by calling TypeDescriptor
@@ -576,10 +576,10 @@ namespace System.ComponentModel
         {
             get
             {
-                if (_property == null) 
+                if (_property is null) 
                 {
                     _property = TypeDescriptor.GetProperties(_componentType)[Name];
-                    if (_property == null) 
+                    if (_property is null) 
                     {
                         // This should not normally happen.  If it does, it means
                         // that someone has messed around with metadata and has

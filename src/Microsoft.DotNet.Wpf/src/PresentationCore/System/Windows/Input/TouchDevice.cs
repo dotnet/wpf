@@ -328,7 +328,7 @@ namespace System.Windows.Input
 
             // If the element is null or captureMode is None, ensure
             // that the other parameter is consistent.
-            if ((element == null) || (captureMode == CaptureMode.None))
+            if ((element is null) || (captureMode == CaptureMode.None))
             {
                 element = null;
                 captureMode = CaptureMode.None;
@@ -339,7 +339,7 @@ namespace System.Windows.Input
             UIElement3D uiElement3D;
             CastInputElement(element, out uiElement, out contentElement, out uiElement3D);
 
-            if ((element != null) && (uiElement == null) && (contentElement == null) && (uiElement3D == null))
+            if ((element != null) && (uiElement is null) && (contentElement is null) && (uiElement3D is null))
             {
                 throw new ArgumentException(SR.Format(SR.Invalid_IInputElement, element.GetType()), "element");
             }
@@ -347,7 +347,7 @@ namespace System.Windows.Input
             if (_captured != element)
             {
                 // Ensure that the new element is visible and enabled
-                if ((element == null) ||
+                if ((element is null) ||
                     (((uiElement != null) && uiElement.IsVisible && uiElement.IsEnabled) ||
                     ((contentElement != null) && contentElement.IsEnabled) ||
                     ((uiElement3D != null) && uiElement3D.IsVisible && uiElement3D.IsEnabled)))
@@ -486,7 +486,7 @@ namespace System.Windows.Input
         {
             if (element != null)
             {
-                if (_capturedWithinTreeState == null)
+                if (_capturedWithinTreeState is null)
                 {
                     _capturedWithinTreeState = new DeferredElementTreeState();
                 }
@@ -501,7 +501,7 @@ namespace System.Windows.Input
                 }
             }
 
-            if (_reevaluateCapture == null)
+            if (_reevaluateCapture is null)
             {
                 _reevaluateCapture = Dispatcher.BeginInvoke(DispatcherPriority.Input,
                     (DispatcherOperationCallback)delegate(object args)
@@ -516,7 +516,7 @@ namespace System.Windows.Input
 
         private void OnReevaluateCapturedWithinAsync()
         {
-            if (_captured == null)
+            if (_captured is null)
             {
                 return;
             }
@@ -575,7 +575,7 @@ namespace System.Windows.Input
 
         private bool ValidateVisualForCapture(DependencyObject visual)
         {
-            if (visual == null)
+            if (visual is null)
                 return false;
 
             PresentationSource presentationSource = PresentationSource.CriticalFromVisual(visual);
@@ -588,7 +588,7 @@ namespace System.Windows.Input
             // IsEnabled, IsVisible, and/or IsHitTestVisible became false
             if (!(bool)e.NewValue)
             {
-                if (_reevaluateCapture == null)
+                if (_reevaluateCapture is null)
                 {
                     _reevaluateCapture = Dispatcher.BeginInvoke(DispatcherPriority.Input,
                         (DispatcherOperationCallback)delegate(object args)
@@ -605,8 +605,8 @@ namespace System.Windows.Input
         private static void CastInputElement(IInputElement element, out UIElement uiElement, out ContentElement contentElement, out UIElement3D uiElement3D)
         {
             uiElement = element as UIElement;
-            contentElement = (uiElement == null) ? element as ContentElement : null;
-            uiElement3D = ((uiElement == null) && (contentElement == null)) ? element as UIElement3D : null;
+            contentElement = (uiElement is null) ? element as ContentElement : null;
+            uiElement3D = ((uiElement is null) && (contentElement is null)) ? element as UIElement3D : null;
         }
 
         private void RaiseLostCapture(IInputElement oldCapture)
@@ -828,7 +828,7 @@ namespace System.Windows.Input
         {
             if (element != null)
             {
-                if (_directlyOverTreeState == null)
+                if (_directlyOverTreeState is null)
                 {
                     _directlyOverTreeState = new DeferredElementTreeState();
                 }
@@ -843,7 +843,7 @@ namespace System.Windows.Input
                 }
             }
 
-            if (_reevaluateOver == null)
+            if (_reevaluateOver is null)
             {
                 _reevaluateOver = Dispatcher.BeginInvoke(DispatcherPriority.Input,
                     (DispatcherOperationCallback)delegate(object args)
@@ -930,7 +930,7 @@ namespace System.Windows.Input
         {
             get
             {
-                if (_raiseTouchEnterOrLeaveAction == null)
+                if (_raiseTouchEnterOrLeaveAction is null)
                 {
                     _raiseTouchEnterOrLeaveAction = new Action<DependencyObject, bool>(RaiseTouchEnterOrLeave);
                 }
@@ -1132,7 +1132,7 @@ namespace System.Windows.Input
 
         private static void AddActiveDevice(TouchDevice device)
         {
-            if (_activeDevices == null)
+            if (_activeDevices is null)
             {
                 _activeDevices = new List<TouchDevice>(2);
             }

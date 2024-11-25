@@ -92,7 +92,7 @@ namespace System.Windows.Interop
             add
             {
 
-                if(_hooks == null)
+                if(_hooks is null)
                 {
                     _hooks = new ArrayList(8);
                 }
@@ -422,7 +422,7 @@ namespace System.Windows.Interop
                 DpiScale2 dpi = DpiUtil.GetWindowDpi(Handle, fallbackToNearestMonitorHeuristic: false);
                 DpiScale2 dpiParent = DpiUtil.GetWindowDpi(UnsafeNativeMethods.GetParent(_hwnd), fallbackToNearestMonitorHeuristic: false);
 
-                if (dpi == null || dpiParent == null)
+                if (dpi is null || dpiParent is null)
                 {
                     // if DPI of the window can not be queried directly, then the platform
                     // is too old to support mixed mode DPI. The DPI ratio is 1.0
@@ -995,7 +995,7 @@ namespace System.Windows.Interop
                     }
                     else
                     {
-                        Trace.WriteLineIf(hwnd == null, $"- Warning - Notification Window is null\n{new System.Diagnostics.StackTrace(true).ToString()}");
+                        Trace.WriteLineIf(hwnd is null, $"- Warning - Notification Window is null\n{new System.Diagnostics.StackTrace(true).ToString()}");
                     }
                 }
             }

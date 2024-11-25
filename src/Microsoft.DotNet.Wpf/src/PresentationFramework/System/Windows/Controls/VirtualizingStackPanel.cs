@@ -432,7 +432,7 @@ namespace System.Windows.Controls
             // there are two cases where we can still use the simple approach:
             //  a. first container can't be found - fallback to using current offset
             //  b. there's only one top container - no ambiguity, so no need to work hard
-            if (deepestTopContainer == null || DoubleUtil.IsZero(firstContainerOffsetFromViewport))
+            if (deepestTopContainer is null || DoubleUtil.IsZero(firstContainerOffsetFromViewport))
             {
                 return (isHorizontal ? HorizontalOffset : VerticalOffset) + delta;
             }
@@ -781,7 +781,7 @@ namespace System.Windows.Controls
                                     }
                                 }
 
-                                if (_scrollData._firstContainerInViewport == null)
+                                if (_scrollData._firstContainerInViewport is null)
                                 {
                                     _scrollData._firstContainerInViewport = ComputeFirstContainerInViewport(
                                         itemsControl.GetViewportElement(),
@@ -800,7 +800,7 @@ namespace System.Windows.Controls
                                     {
                                         _scrollData._expectedDistanceBetweenViewports = expectedDistanceBetweenViewports;
 
-                                        Debug.Assert(AnchorOperationField.GetValue(this) == null, "There is already a pending AnchorOperation.");
+                                        Debug.Assert(AnchorOperationField.GetValue(this) is null, "There is already a pending AnchorOperation.");
                                         DispatcherOperation anchorOperation = Dispatcher.BeginInvoke(DispatcherPriority.Render, (Action)OnAnchorOperation);
                                         AnchorOperationField.SetValue(this, anchorOperation);
                                     }
@@ -836,7 +836,7 @@ namespace System.Windows.Controls
 
             ItemsControl itemsControl;
             ItemsControl.GetItemsOwnerInternal(this, out itemsControl);
-            if (itemsControl == null || !VisualTreeHelper.IsAncestorOf(this, _scrollData._firstContainerInViewport))
+            if (itemsControl is null || !VisualTreeHelper.IsAncestorOf(this, _scrollData._firstContainerInViewport))
             {
                 ClearAnchorInformation(isAnchorOperationPending /*shouldAbort*/);
                 return;
@@ -1088,7 +1088,7 @@ namespace System.Windows.Controls
 
         private void ClearAnchorInformation(bool shouldAbort)
         {
-            if (_scrollData == null)
+            if (_scrollData is null)
                 return;
 
             if (_scrollData._firstContainerInViewport != null)
@@ -1148,7 +1148,7 @@ namespace System.Windows.Controls
             firstContainerOffsetFromViewport = 0;
             foundTopContainer = false;
 
-            if (itemsHost == null)
+            if (itemsHost is null)
             {
                 return null;
             }
@@ -1183,7 +1183,7 @@ namespace System.Windows.Controls
                 for (; i<count; i++)
                 {
                     FrameworkElement fe = children[i] as FrameworkElement;
-                    if (fe == null)
+                    if (fe is null)
                         continue;
 
                     if (fe.IsVisible)
@@ -1280,7 +1280,7 @@ namespace System.Windows.Controls
                                 }
                             }
 
-                            if (result == null)
+                            if (result is null)
                             {
                                 result = fe;
                                 foundTopContainer = isTopContainer;
@@ -1421,7 +1421,7 @@ namespace System.Windows.Controls
             WasLastMeasurePassAnchored = (FirstContainerInViewport != null) || (BringIntoViewLeafContainer != null);
 
             DispatcherOperation anchoredInvalidateMeasureOperation = AnchoredInvalidateMeasureOperationField.GetValue(this);
-            if (anchoredInvalidateMeasureOperation == null)
+            if (anchoredInvalidateMeasureOperation is null)
             {
                 anchoredInvalidateMeasureOperation = Dispatcher.BeginInvoke(DispatcherPriority.Render,
                     (Action)delegate()
@@ -1491,7 +1491,7 @@ namespace System.Windows.Controls
             // We can only work on visuals that are us or children.
             // An empty rect has no size or position.  We can't meaningfully use it.
             if (    rectangle.IsEmpty
-                || visual == null
+                || visual is null
                 || visual == (Visual)this
                 ||  !this.IsAncestorOf(visual))
             {
@@ -1654,7 +1654,7 @@ namespace System.Windows.Controls
                             // Item was found somewhere within this CVG hierarchy
                             // Get the GroupItem hosting this CVG.
                             GroupItem groupItem = generator.ContainerFromItem(cvg) as GroupItem;
-                            if (groupItem == null)
+                            if (groupItem is null)
                             {
                                 // Devirtualize container and try 2nd time.
                                 BringContainerIntoView(itemsControl, i);
@@ -1823,7 +1823,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_scrollData == null) { return false; }
+                if (_scrollData is null) { return false; }
                 return _scrollData._allowHorizontal;
             }
             set
@@ -1846,7 +1846,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_scrollData == null) { return false; }
+                if (_scrollData is null) { return false; }
                 return _scrollData._allowVertical;
             }
             set
@@ -1867,7 +1867,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_scrollData == null) { return 0.0; }
+                if (_scrollData is null) { return 0.0; }
                 return _scrollData._extent.Width;
             }
         }
@@ -1879,7 +1879,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_scrollData == null) { return 0.0; }
+                if (_scrollData is null) { return 0.0; }
                 return _scrollData._extent.Height;
             }
         }
@@ -1891,7 +1891,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_scrollData == null) { return 0.0; }
+                if (_scrollData is null) { return 0.0; }
                 return _scrollData._viewport.Width;
             }
         }
@@ -1903,7 +1903,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_scrollData == null) { return 0.0; }
+                if (_scrollData is null) { return 0.0; }
                 return _scrollData._viewport.Height;
             }
         }
@@ -1916,7 +1916,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_scrollData == null) { return 0.0; }
+                if (_scrollData is null) { return 0.0; }
                 return _scrollData._computedOffset.X;
             }
         }
@@ -1929,7 +1929,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_scrollData == null) { return 0.0; }
+                if (_scrollData is null) { return 0.0; }
                 return _scrollData._computedOffset.Y;
             }
         }
@@ -1943,7 +1943,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_scrollData == null) return null;
+                if (_scrollData is null) return null;
                 return _scrollData._scrollOwner;
             }
             set
@@ -2601,7 +2601,7 @@ namespace System.Windows.Controls
                                             // may insert containers at the beginning of the children
                                             // collection, which invalidates firstItemInViewportChildIndex.)
                                             if (!isVSP45Compat &&
-                                                (firstContainerInViewport == null) &&
+                                                (firstContainerInViewport is null) &&
                                                 foundFirstItemInViewport &&
                                                 (i == startIndex))
                                             {
@@ -4103,7 +4103,7 @@ namespace System.Windows.Controls
             if (virtualizingProvider != null)
             {
                 VirtualizingPanel virtualizingPanel = VisualTreeHelper.GetParent(element) as VirtualizingPanel;
-                if (virtualizingPanel == null || !virtualizingPanel.CanHierarchicallyScrollAndVirtualize)
+                if (virtualizingPanel is null || !virtualizingPanel.CanHierarchicallyScrollAndVirtualize)
                 {
                     virtualizingProvider = null;
                 }
@@ -4126,7 +4126,7 @@ namespace System.Windows.Controls
                 isChildHorizontal = (virtualizingChild.ItemsHost.LogicalOrientationPublic == Orientation.Horizontal);
 
                 VirtualizingPanel virtualizingPanel = virtualizingChild.ItemsHost as VirtualizingPanel;
-                if (virtualizingPanel == null || !virtualizingPanel.CanHierarchicallyScrollAndVirtualize)
+                if (virtualizingPanel is null || !virtualizingPanel.CanHierarchicallyScrollAndVirtualize)
                 {
                     virtualizingChild = null;
                 }
@@ -4201,7 +4201,7 @@ namespace System.Windows.Controls
 
             itemStorageProvider = itemsOwner as IContainItemStorage;
             virtualizationInfoProvider = null;
-            parentItemStorageProvider = (IsVSP45Compat || isScrolling || itemsOwner == null) ? null :
+            parentItemStorageProvider = (IsVSP45Compat || isScrolling || itemsOwner is null) ? null :
                 ItemsControl.GetItemsOwnerInternal(VisualTreeHelper.GetParent(itemsOwner)) as IContainItemStorage;
 
             if (groupItem != null)
@@ -4369,7 +4369,7 @@ namespace System.Windows.Controls
                             WasLastMeasurePassAnchored = (_scrollData._firstContainerInViewport != null) || (_scrollData._bringIntoViewLeafContainer != null);
 
                             DispatcherOperation measureCachesOperation = MeasureCachesOperationField.GetValue(this);
-                            if (measureCachesOperation == null)
+                            if (measureCachesOperation is null)
                             {
                                 Action measureCachesAction = null;
                                 int retryCount = 3;
@@ -4433,7 +4433,7 @@ namespace System.Windows.Controls
                                             // the flag.
 
                                             DispatcherOperation anchoredInvalidateMeasureOperation = AnchoredInvalidateMeasureOperationField.GetValue(this);
-                                            if (anchoredInvalidateMeasureOperation == null && (isVSP45Compat || !isLayoutDirty))
+                                            if (anchoredInvalidateMeasureOperation is null && (isVSP45Compat || !isLayoutDirty))
                                             {
                                                 if (isVSP45Compat)
                                                 {
@@ -4467,7 +4467,7 @@ namespace System.Windows.Controls
                     else if (IsScrollActive)
                     {
                         DispatcherOperation clearIsScrollActiveOperation = ClearIsScrollActiveOperationField.GetValue(this);
-                        if (clearIsScrollActiveOperation == null)
+                        if (clearIsScrollActiveOperation is null)
                         {
                             clearIsScrollActiveOperation = Dispatcher.BeginInvoke(DispatcherPriority.Background,
                                 (Action)ClearIsScrollActive);
@@ -5672,7 +5672,7 @@ namespace System.Windows.Controls
             double uniformOrAverageContainerSize,
             long scrollGeneration)
         {
-            if (firstContainer == null || IsViewportEmpty(isHorizontal, viewport))
+            if (firstContainer is null || IsViewportEmpty(isHorizontal, viewport))
             {
                 return -1.0;    // undefined if no children in view
             }
@@ -5710,7 +5710,7 @@ namespace System.Windows.Controls
                 // adjusts to the change in our coordinate system, or calls from
                 // a parent who set its own offset using an older offset from here
                 effectiveOffsetInformation = EffectiveOffsetInformationField.GetValue(container);
-                if (effectiveOffsetInformation == null || effectiveOffsetInformation.ScrollGeneration != scrollGeneration)
+                if (effectiveOffsetInformation is null || effectiveOffsetInformation.ScrollGeneration != scrollGeneration)
                 {
                     effectiveOffsetInformation = new EffectiveOffsetInformation(scrollGeneration);
                     effectiveOffsetInformation.OffsetList.Add(oldOffset);
@@ -6321,7 +6321,7 @@ namespace System.Windows.Controls
                     object oldValue = itemStorageProvider.ReadItemValue(item, ContainerSizeProperty);
                     Size oldSize = (oldValue != null) ? (Size)oldValue : Size.Empty;
 
-                    if (oldValue == null || containerSize != oldSize)
+                    if (oldValue is null || containerSize != oldSize)
                     {
                         if (isTracing)
                         {
@@ -6352,7 +6352,7 @@ namespace System.Windows.Controls
                     ContainerSizeDual oldCSD = (oldValue != null) ? (ContainerSizeDual)oldValue
                         : new ContainerSizeDual(Size.Empty, Size.Empty);
 
-                    if (oldValue == null || containerSize != oldCSD.ItemSize || containerPixelSize != oldCSD.PixelSize)
+                    if (oldValue is null || containerSize != oldCSD.ItemSize || containerPixelSize != oldCSD.PixelSize)
                     {
                         if (isTracing)
                         {
@@ -6411,7 +6411,7 @@ namespace System.Windows.Controls
                 "Caller of GetItemsHostInsetForChild must provide either an ItemsStorageProvider or a container");
 
             // type 2 - get the value directly from the container
-            if (parentItemStorageProvider == null)
+            if (parentItemStorageProvider is null)
             {
                 return (Thickness)container.GetValue(ItemsHostInsetProperty);
             }
@@ -6455,18 +6455,18 @@ namespace System.Windows.Controls
             // this only applies to a hierarchical element with a visible ItemsHost
             bool isChildHorizontal = isHorizontal;
             IHierarchicalVirtualizationAndScrollInfo virtualizingChild = GetVirtualizingChild(child, ref isChildHorizontal);
-            Panel itemsHost = (virtualizingChild == null) ? null : virtualizingChild.ItemsHost;
-            if (itemsHost == null || !itemsHost.IsVisible)
+            Panel itemsHost = (virtualizingChild is null) ? null : virtualizingChild.ItemsHost;
+            if (itemsHost is null || !itemsHost.IsVisible)
                 return;
 
             // get the transformation from child coords to itemsHost coords
             GeneralTransform transform = child.TransformToDescendant(itemsHost);
-            if (transform == null)
+            if (transform is null)
                 return;     // when transform is undefined, ItemsHost is effectively invisible
 
             // build a rect (in child coords) describing the child's extended frame
             FrameworkElement fe = virtualizingChild as FrameworkElement;
-            Thickness margin = (fe == null) ? new Thickness() : fe.Margin;
+            Thickness margin = (fe is null) ? new Thickness() : fe.Margin;
             Rect childRect = new Rect(new Point(), child.DesiredSize);
             childRect.Offset(-margin.Left, -margin.Top);
 
@@ -6492,7 +6492,7 @@ namespace System.Windows.Controls
 
             // see whether inset is changing
             object box = itemStorageProvider.ReadItemValue(item, ItemsHostInsetProperty);
-            bool changed = (box == null);
+            bool changed = (box is null);
             bool remeasure = changed;
             if (!changed)
             {
@@ -6525,7 +6525,7 @@ namespace System.Windows.Controls
             {
                 // re-measure the scrolling panel
                 ItemsControl scrollingItemsControl = GetScrollingItemsControl(child);
-                Panel scrollingPanel = (scrollingItemsControl == null) ? null : scrollingItemsControl.ItemsHost;
+                Panel scrollingPanel = (scrollingItemsControl is null) ? null : scrollingItemsControl.ItemsHost;
                 if (scrollingPanel != null)
                 {
                     VirtualizingStackPanel vsp = scrollingPanel as VirtualizingStackPanel;
@@ -6590,7 +6590,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                Debug.Fail($"Unexpected container type: {((container == null) ? "null" : container.GetType().Name)}");
+                Debug.Fail($"Unexpected container type: {((container is null) ? "null" : container.GetType().Name)}");
             }
 
             return null;
@@ -6608,7 +6608,7 @@ namespace System.Windows.Controls
             // see whether there is more space before the ItemsHost than after, and
             // deem the "header" to belong to the larger area.   Don't count the
             // container margins.
-            Thickness margin = (container == null) ? new Thickness() : container.Margin;
+            Thickness margin = (container is null) ? new Thickness() : container.Margin;
             if (isHorizontal)
             {
                 return DoubleUtil.GreaterThanOrClose(inset.Left - margin.Left, inset.Right - margin.Right);
@@ -8068,7 +8068,7 @@ namespace System.Windows.Controls
                         UniformOrAverageContainerSizeDual oldValue = itemStorageProvider.ReadItemValue(item, UniformOrAverageContainerSizeDualProperty) as UniformOrAverageContainerSizeDual;
                         UniformOrAverageContainerSizeDual newValue = new UniformOrAverageContainerSizeDual(pixelValue, value);
                         itemStorageProvider.StoreItemValue(item, UniformOrAverageContainerSizeDualProperty, newValue);
-                        result = (oldValue == null) || (oldValue.ItemSize != value);
+                        result = (oldValue is null) || (oldValue.ItemSize != value);
                     }
                 }
             }
@@ -8214,7 +8214,7 @@ namespace System.Windows.Controls
                 child = generator.GenerateNext(out newlyRealized) as UIElement;
 
                 ItemContainerGenerator icg;
-                if (child == null && (icg = generator as ItemContainerGenerator) != null)
+                if (child is null && (icg = generator as ItemContainerGenerator) != null)
                 {
                     icg.Verify();
                 }
@@ -8873,7 +8873,7 @@ namespace System.Windows.Controls
                         _cleanupOperation = null;
                     }
                 }
-                if (noPendingOperations && (_cleanupDelay == null))
+                if (noPendingOperations && (_cleanupDelay is null))
                 {
                     _cleanupDelay = new DispatcherTimer();
                     _cleanupDelay.Tick += new EventHandler(OnDelayCleanup);
@@ -8883,7 +8883,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                if ((_cleanupOperation == null) && (_cleanupDelay == null))
+                if ((_cleanupOperation is null) && (_cleanupDelay is null))
                 {
                     _cleanupOperation = Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(OnCleanUp), null);
                 }
@@ -9196,7 +9196,7 @@ namespace System.Windows.Controls
         private void EnsureRealizedChildren()
         {
             Debug.Assert(InRecyclingMode, "This method only applies to recycling mode");
-            if (_realizedChildren == null)
+            if (_realizedChildren is null)
             {
                 UIElementCollection children = InternalChildren;
 
@@ -9400,7 +9400,7 @@ namespace System.Windows.Controls
             ItemsControl itemsControl = null;
             ItemsControl.GetItemsOwnerInternal(this, out itemsControl);
 
-            if (itemsControl == null || !IsVirtualizing || !IsItemsHost)
+            if (itemsControl is null || !IsVirtualizing || !IsItemsHost)
             {
                 // Virtualization is turned off or we aren't hosting children; no need to cleanup.
                 return false;
@@ -9564,7 +9564,7 @@ namespace System.Windows.Controls
 
         private void EnsureScrollData()
         {
-            if (_scrollData == null) { _scrollData = new ScrollData(); }
+            if (_scrollData is null) { _scrollData = new ScrollData(); }
         }
 
         private static void ResetScrolling(VirtualizingStackPanel element)
@@ -10741,7 +10741,7 @@ namespace System.Windows.Controls
                         {
                             bool isAbsoluteMove =
                                 (MeasureCaches && !WasLastMeasurePassAnchored) ||
-                                (_scrollData._firstContainerInViewport == null && computedViewportOffsetChanged && !LayoutDoubleUtil.AreClose(computedViewportOffset.X, _scrollData._computedOffset.X));
+                                (_scrollData._firstContainerInViewport is null && computedViewportOffsetChanged && !LayoutDoubleUtil.AreClose(computedViewportOffset.X, _scrollData._computedOffset.X));
 
                             if (isAbsoluteMove &&
                                 !DoubleUtil.AreClose(_scrollData._extent.Width, 0) &&
@@ -10872,7 +10872,7 @@ namespace System.Windows.Controls
                         {
                             bool isAbsoluteMove =
                                 (MeasureCaches && !WasLastMeasurePassAnchored) ||
-                                (_scrollData._firstContainerInViewport == null && computedViewportOffsetChanged && !LayoutDoubleUtil.AreClose(computedViewportOffset.Y, _scrollData._computedOffset.Y));
+                                (_scrollData._firstContainerInViewport is null && computedViewportOffsetChanged && !LayoutDoubleUtil.AreClose(computedViewportOffset.Y, _scrollData._computedOffset.Y));
 
                             if (isAbsoluteMove &&
                                 !DoubleUtil.AreClose(_scrollData._extent.Height, 0) &&
@@ -10949,7 +10949,7 @@ namespace System.Windows.Controls
             ref List<double> previouslyMeasuredOffsets,
             double offset)
         {
-            if (previouslyMeasuredOffsets == null)
+            if (previouslyMeasuredOffsets is null)
             {
                 previouslyMeasuredOffsets = new List<double>();
             }
@@ -11135,7 +11135,7 @@ namespace System.Windows.Controls
 
         private DependencyObject FindDirectDescendentOfItemsHost(Panel itemsHost, DependencyObject child)
         {
-            if (itemsHost == null || !itemsHost.IsVisible)
+            if (itemsHost is null || !itemsHost.IsVisible)
             {
                 return null;
             }
@@ -11147,7 +11147,7 @@ namespace System.Windows.Controls
             while (parent != itemsHost)
             {
                 child = parent;
-                if (child == null)
+                if (child is null)
                 {
                     break;
                 }
@@ -12075,7 +12075,7 @@ namespace System.Windows.Controls
             internal static bool SetTarget(object o)
             {
                 ItemsControl target = o as ItemsControl;
-                if (target != null || o == null)
+                if (target != null || o is null)
                 {
                     lock (s_TargetToTraceListMap)
                     {
@@ -12158,7 +12158,7 @@ namespace System.Windows.Controls
                 if (parentItem == vsp)
                 {
                     // top level VSP
-                    if (oldsti == null)
+                    if (oldsti is null)
                     {
                         // first time - create an STI for the VSP
                         if (itemsOwner == itemsControl)
@@ -12191,7 +12191,7 @@ namespace System.Windows.Controls
                                 ItemContainerGenerator generator = parent.ItemContainerGenerator as ItemContainerGenerator;
                                 int itemIndex = (generator != null) ? generator.IndexFromContainer(itemsOwner, returnLocalIndex:true) : -1;
 
-                                if (oldsti == null)
+                                if (oldsti is null)
                                 {
                                     // first time - create an STI for the VSP
                                     sti = new ScrollTracingInfo(tracer, _nullInfo.Generation, parentInfo.Depth + 1, itemsOwner as FrameworkElement, parent, parentItem, itemIndex);
@@ -12219,7 +12219,7 @@ namespace System.Windows.Controls
                     }
                 }
 
-                if (oldsti == null)
+                if (oldsti is null)
                 {
                     // install the new STI
                     ScrollTracingInfoField.SetValue(vsp, sti);
@@ -12528,7 +12528,7 @@ namespace System.Windows.Controls
                     }
 
                     // otherwise, if target's name matches, add a new entry to the map
-                    if (traceList == null && target.Name == _targetName)
+                    if (traceList is null && target.Name == _targetName)
                     {
                         traceList = AddToMap(target);
                     }
@@ -12890,7 +12890,7 @@ namespace System.Windows.Controls
 
             internal void Write(BinaryWriter writer, VirtualizingStackPanel vsp)
             {
-                if (_scrollData == null)
+                if (_scrollData is null)
                 {
                     writer.Write(false);
                 }
@@ -13046,11 +13046,11 @@ namespace System.Windows.Controls
 
         private string ContainerPath(DependencyObject container)
         {
-            if (container == null)
+            if (container is null)
                 return String.Empty;
 
             VirtualizingStackPanel vsp = VisualTreeHelper.GetParent(container) as VirtualizingStackPanel;
-            if (vsp == null)
+            if (vsp is null)
             {
                 return "{Disconnected}";
             }
@@ -13064,7 +13064,7 @@ namespace System.Windows.Controls
                 ItemContainerGenerator g = vsp.Generator as ItemContainerGenerator;
                 int localIndex = g.IndexFromContainer(container, returnLocalIndex:true);
                 DependencyObject parentContainer = ItemsControl.ContainerFromElement(null, vsp);
-                if (parentContainer == null)
+                if (parentContainer is null)
                 {
                     return string.Create(CultureInfo.InvariantCulture, $"{localIndex}");
                 }

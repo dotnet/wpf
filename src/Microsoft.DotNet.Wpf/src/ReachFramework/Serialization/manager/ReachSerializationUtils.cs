@@ -409,7 +409,7 @@ namespace System.Windows.Xps.Serialization
             //
             // Write the start element and the namespace
             //
-            if(xmlnsForType == null)
+            if(xmlnsForType is null)
             {
                 xmlWriter.WriteStartElement(XpsS0Markup.FixedDocumentSequence);
             }
@@ -494,7 +494,7 @@ namespace System.Windows.Xps.Serialization
             //
             // Write the start element and the namespace
             //
-            if(xmlnsForType == null)
+            if(xmlnsForType is null)
             {
                 xmlWriter.WriteStartElement("FixedDocument");
             }
@@ -586,7 +586,7 @@ namespace System.Windows.Xps.Serialization
             //
             // Write the start element and the namespace
             //
-            if(xmlnsForType == null)
+            if(xmlnsForType is null)
             {
                 xmlWriter.WriteStartElement(XpsS0Markup.FixedPage);
             }
@@ -968,7 +968,7 @@ namespace System.Windows.Xps.Serialization
                 useID = AddLinkTarget(id);
             }
 
-            if (!useID && navigateUri == null)
+            if (!useID && navigateUri is null)
             {
                 // don't write out this path
                 return;
@@ -982,7 +982,7 @@ namespace System.Windows.Xps.Serialization
                 {
                     XpsPackagingPolicy policy = SerializationManager.PackagingPolicy as XpsPackagingPolicy;
                     XpsOMPackagingPolicy omPolicy = SerializationManager.PackagingPolicy as XpsOMPackagingPolicy;
-                    if (policy == null && omPolicy == null)
+                    if (policy is null && omPolicy is null)
                     {
                         throw new XpsSerializationException(SR.ReachSerialization_WrongPackagingPolicy);
                     }
@@ -1064,7 +1064,7 @@ namespace System.Windows.Xps.Serialization
         {
             get
             {
-                if (_linkXmlWriter == null)
+                if (_linkXmlWriter is null)
                 {
                     _linkStream = new StringWriter(CultureInfo.InvariantCulture);
                     _linkXmlWriter = new XmlTextWriter(_linkStream);
@@ -1083,7 +1083,7 @@ namespace System.Windows.Xps.Serialization
         {
             get
             {
-                if (_linkTargetList == null)
+                if (_linkTargetList is null)
                 {
                     IXpsSerializationManager rsm = SerializationManager as IXpsSerializationManager;
                     if (rsm != null)

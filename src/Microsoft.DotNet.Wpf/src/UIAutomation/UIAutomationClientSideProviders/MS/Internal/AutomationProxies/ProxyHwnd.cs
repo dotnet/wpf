@@ -71,7 +71,7 @@ namespace MS.Internal.AutomationProxies
         internal virtual void AdviseEventAdded (AutomationEvent eventId, AutomationProperty [] aidProps)
         {
             // No RawElementBase creation callback, exit from here
-            if (_createOnEvent == null)
+            if (_createOnEvent is null)
             {
                 return;
             }
@@ -101,7 +101,7 @@ namespace MS.Internal.AutomationProxies
         internal virtual void AdviseEventRemoved(AutomationEvent eventId, AutomationProperty [] aidProps)
         {
             // No RawElementBase creation callback, exit from here
-            if (_createOnEvent == null)
+            if (_createOnEvent is null)
             {
                 return;
             }
@@ -185,7 +185,7 @@ namespace MS.Internal.AutomationProxies
                 // It is valid to set LocalizedName to an empty string.  LocalizedName being an
                 // empty string will prevent the SendMessage(WM_GETTEXT) call.
 #pragma warning suppress 6507
-                if (name == null && GetParent() == null)
+                if (name is null && GetParent() is null)
                 {
                     if (_fControlHasLabel)
                     {
@@ -221,7 +221,7 @@ namespace MS.Internal.AutomationProxies
 
                 // If a control has a LocalizedName, the _controlLabel will not get set.
                 // So look for it now.
-                if (_controlLabel == IntPtr.Zero && name != null && GetParent() == null)
+                if (_controlLabel == IntPtr.Zero && name != null && GetParent() is null)
                 {
                     _controlLabel = Misc.GetLabelhwnd(_hwnd);
                 }

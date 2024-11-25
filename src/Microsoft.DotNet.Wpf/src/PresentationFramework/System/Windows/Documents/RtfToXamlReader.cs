@@ -371,7 +371,7 @@ namespace System.Windows.Documents
             // No shading
             if (shade < 0)
             {
-                if (entryCB == null)
+                if (entryCB is null)
                 {
                     return false;
                 }
@@ -389,7 +389,7 @@ namespace System.Windows.Documents
                 Color cCF = entryCF != null ? entryCF.Color : Color.FromArgb(0xFF, 255, 255, 255);
 
                 // No color specifies means shading is treated as a grey intensity.
-                if (entryCF == null && entryCB == null)
+                if (entryCF is null && entryCB is null)
                 {
                     c = Color.FromArgb(0xff,
                                       (byte)(255 - (255 * shade / 10000)),
@@ -399,7 +399,7 @@ namespace System.Windows.Documents
                 }
 
                 // Only CF means CF fades as shading goes from 10,000 to 0
-                else if (entryCB == null)
+                else if (entryCB is null)
                 {
                     c = Color.FromArgb(0xff,
                                         (byte)(cCF.R + ((255 - cCF.R) * (10000 - shade) / 10000)),
@@ -409,7 +409,7 @@ namespace System.Windows.Documents
                 }
 
                 // Only CB means CB gets larger impact (from black ) as shading goes from 10000 to 0
-                else if (entryCF == null)
+                else if (entryCF is null)
                 {
                     c = Color.FromArgb(0xff,
                                         (byte)(cCB.R - (cCB.R * shade / 10000)),
@@ -938,7 +938,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_fsEmptyState == null)
+                if (_fsEmptyState is null)
                 {
                     _fsEmptyState = new FormatState();
                     _fsEmptyState.FontSize = -1;
@@ -1589,7 +1589,7 @@ namespace System.Windows.Documents
             get
             {
                 // Allocate on access.
-                if (_rowFormat == null)
+                if (_rowFormat is null)
                 {
                     _rowFormat = new RowFormat();
                 }
@@ -1614,7 +1614,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_pb == null)
+                if (_pb is null)
                 {
                     _pb = new ParaBorder();
                 }
@@ -1964,7 +1964,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_emptyBorderFormat == null)
+                if (_emptyBorderFormat is null)
                 {
                     _emptyBorderFormat = new BorderFormat();
                 }
@@ -2999,7 +2999,7 @@ namespace System.Windows.Documents
                 if (cf.Width.Value == 0 && cf.IsCellXSet)
                 {
                     cf.Width.Type = WidthType.WidthTwips;
-                    cf.Width.Value = (cfPrev == null) ? cf.CellX - Trleft : cf.CellX - cfPrev.CellX;
+                    cf.Width.Value = (cfPrev is null) ? cf.CellX - Trleft : cf.CellX - cfPrev.CellX;
                 }
                 else if (cf.Width.Value > 0 && !cf.IsCellXSet)
                 {
@@ -3698,7 +3698,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_fontMappings == null)
+                if (_fontMappings is null)
                 {
                     _fontMappings = new Hashtable();
                     RegistryKey rk = Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\Windows NT\\CurrentVersion\\FontSubstitutes");
@@ -3765,7 +3765,7 @@ namespace System.Windows.Documents
                                     {
                                         // Don't add a new mapping if one exists
                                         string keyname = lhs_name.ToLower(CultureInfo.InvariantCulture);
-                                        if (_fontMappings[keyname] == null)
+                                        if (_fontMappings[keyname] is null)
                                         {
                                             _fontMappings.Add(keyname, rhs_name);
                                         }
@@ -4898,7 +4898,7 @@ namespace System.Windows.Documents
 
         internal string StripInvalidChars(string text)
         {
-            if (text == null || text.Length == 0)
+            if (text is null || text.Length == 0)
             {
                 return text;
             }
@@ -4929,7 +4929,7 @@ namespace System.Windows.Documents
 
                 if (iStart != 0 || i != text.Length)
                 {
-                    if (sb == null)
+                    if (sb is null)
                     {
                         sb = new StringBuilder();
                     }
@@ -5460,7 +5460,7 @@ namespace System.Windows.Documents
                 return false;
 
             DocumentNode dnCell = GetParentOfType(DocumentNodeType.dnCell);
-            if (dnCell == null)
+            if (dnCell is null)
             {
                 return false;
             }
@@ -5882,7 +5882,7 @@ namespace System.Windows.Documents
                     dnPa = dnPa.Parent;
                 }
 
-                if (Type == DocumentNodeType.dnParagraph || dnPa == null)
+                if (Type == DocumentNodeType.dnParagraph || dnPa is null)
                 {
                     return FormatState.EmptyFormatState;
                 }
@@ -5952,7 +5952,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_parent == null && DNA != null)
+                if (_parent is null && DNA != null)
                 {
                     return DNA.GetOpenParentWhileParsing(this);
                 }
@@ -5961,7 +5961,7 @@ namespace System.Windows.Documents
             }
             set
             {
-                Debug.Assert(value == null || !value.IsPending);
+                Debug.Assert(value is null || !value.IsPending);
                 _parent = value;
             }
         }
@@ -6067,7 +6067,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return (Parent == null) ? DirState.DirLTR : Parent.XamlDir;
+                return (Parent is null) ? DirState.DirLTR : Parent.XamlDir;
             }
         }
 
@@ -7072,7 +7072,7 @@ namespace System.Windows.Documents
                 // Track open nodes
                 if (dn.IsTrackedAsOpen)
                 {
-                    if (_dnaOpen == null)
+                    if (_dnaOpen is null)
                     {
                         _dnaOpen = new DocumentNodeArray();
                     }
@@ -7410,7 +7410,7 @@ namespace System.Windows.Documents
             {
                 DocumentNode dnTable = dnaTables.EntryAt(i);
                 ColumnStateArray csa = dnTable.ColumnStateArray;
-                if (csa == null || csa.Count == 0)
+                if (csa is null || csa.Count == 0)
                 {
                     continue;
                 }
@@ -8042,7 +8042,7 @@ namespace System.Windows.Documents
             DocumentNode dnFieldResultBegin = null;
             DocumentNode dnFieldResultEnd = null;
 
-            for (int i = dna.Count - 1; i >= 0 && dnFieldBegin == null; i--)
+            for (int i = dna.Count - 1; i >= 0 && dnFieldBegin is null; i--)
             {
                 DocumentNode dn = dna.EntryAt(i);
 
@@ -8079,7 +8079,7 @@ namespace System.Windows.Documents
             }
 
             // This is anomalous - bad input?
-            if (dnFieldBegin == null || dnFieldEnd == null)
+            if (dnFieldBegin is null || dnFieldEnd is null)
             {
                 return;
             }
@@ -8389,7 +8389,7 @@ namespace System.Windows.Documents
                             sBookmark = param;
                             bBookmarkNext = false;
                         }
-                        else if (sUri == null)
+                        else if (sUri is null)
                             sUri = param;
                         // else eat the string
 
@@ -8972,7 +8972,7 @@ namespace System.Windows.Documents
         {
             FormatState formatState = _converterState.TopFormatState;
 
-            if (formatState == null)
+            if (formatState is null)
             {
                 return;
             }
@@ -8997,7 +8997,7 @@ namespace System.Windows.Documents
         {
             FormatState formatState = _converterState.TopFormatState;
 
-            if (formatState == null)
+            if (formatState is null)
             {
                 return;
             }
@@ -9898,7 +9898,7 @@ namespace System.Windows.Documents
             {
                 DocumentNode dn = dna.EntryAt(i);
 
-                if (dn.IsInline && dn.ClosedParent == null)
+                if (dn.IsInline && dn.ClosedParent is null)
                 {
                     nExcise++;
                 }
@@ -9918,7 +9918,7 @@ namespace System.Windows.Documents
         {
             FormatState fsCur = _converterState.PreviousTopFormatState(0);
             FormatState fsOld = _converterState.PreviousTopFormatState(1);
-            if (fsCur == null || fsOld == null)
+            if (fsCur is null || fsOld is null)
             {
                 return;
             }
@@ -10075,7 +10075,7 @@ namespace System.Windows.Documents
                 {
                     ListOverride lo = lot.CurrentEntry;
 
-                    if (lo.Levels == null)
+                    if (lo.Levels is null)
                     {
                         lo.Levels = new ListLevelTable();
                     }
@@ -10102,7 +10102,7 @@ namespace System.Windows.Documents
 
             FormatState fsCur = _converterState.PreviousTopFormatState(0);
             FormatState fsOld = _converterState.PreviousTopFormatState(1);
-            if (fsCur == null || fsOld == null)
+            if (fsCur is null || fsOld is null)
             {
                 return;
             }
@@ -10270,7 +10270,7 @@ namespace System.Windows.Documents
             DocumentNodeArray dna = _converterState.DocumentNodeArray;
             FormatState fsCur = _converterState.PreviousTopFormatState(0);
             FormatState fsOld = _converterState.PreviousTopFormatState(1);
-            if (fsCur == null || fsOld == null)
+            if (fsCur is null || fsOld is null)
             {
                 return;
             }
@@ -10358,7 +10358,7 @@ namespace System.Windows.Documents
         {
             FormatState fsCur = _converterState.PreviousTopFormatState(0);
             FormatState fsOld = _converterState.PreviousTopFormatState(1);
-            if (fsCur == null || fsOld == null)
+            if (fsCur is null || fsOld is null)
             {
                 return;
             }
@@ -10958,7 +10958,7 @@ namespace System.Windows.Documents
             // Don't start processing fields in non-normal destinatations
             FormatState fsCur = _converterState.PreviousTopFormatState(0);
             FormatState fsOld = _converterState.PreviousTopFormatState(1);
-            if (fsCur == null || fsOld == null)
+            if (fsCur is null || fsOld is null)
             {
                 return;
             }
@@ -11155,7 +11155,7 @@ namespace System.Windows.Documents
             if (lo != null)
             {
                 ListLevelTable levels = lo.Levels;
-                if (levels == null || levels.Count == 0)
+                if (levels is null || levels.Count == 0)
                 {
                     ListTableEntry lte = _converterState.ListTable.FindEntry(lo.ID);
                     if (lte != null)
@@ -11382,7 +11382,7 @@ namespace System.Windows.Documents
             if (entry != null && tokenName.Length > 0 && !entry.IsNameSealed)
             {
                 // If name not yet specified, just set it
-                if (entry.Name == null)
+                if (entry.Name is null)
                 {
                     entry.Name = tokenName;
                 }
@@ -11501,7 +11501,7 @@ namespace System.Windows.Documents
             }
 
             // OK, create a text node if necessary
-            if (dnTop == null || dnTop.Type != DocumentNodeType.dnText)
+            if (dnTop is null || dnTop.Type != DocumentNodeType.dnText)
             {
                 dnTop = new DocumentNode(DocumentNodeType.dnText);
                 dnTop.FormatState = new FormatState(formatState);

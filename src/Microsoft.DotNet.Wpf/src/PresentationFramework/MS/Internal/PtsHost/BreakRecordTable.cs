@@ -353,7 +353,7 @@ namespace MS.Internal.PtsHost
                 if (_breakRecords.Count == 0)
                     return false;
                 Invariant.Assert(_breakRecords[_breakRecords.Count - 1] != null, "Invalid BreakRecordTable entry.");
-                return (_breakRecords[_breakRecords.Count - 1].BreakRecord == null);
+                return (_breakRecords[_breakRecords.Count - 1].BreakRecord is null);
             }
         }
 

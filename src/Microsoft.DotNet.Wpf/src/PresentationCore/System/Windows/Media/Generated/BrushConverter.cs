@@ -110,7 +110,7 @@ namespace System.Windows.Media
         /// <param name="value"> The object to convert to an instance of Brush. </param>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            if (value == null)
+            if (value is null)
             {
                 throw GetConvertFromException(value);
             }

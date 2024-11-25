@@ -253,13 +253,13 @@ namespace MS.Internal.Documents
         /// If the new item has already a parent or if the slot at the specified index is not null.
         /// </exception>
         /// <remarks>
-        /// Note that the function requires that _item[index] == null and
+        /// Note that the function requires that _item[index] is null and
         /// it also requires that the passed in item is not included into another ContentElementCollection.
         /// </remarks>
         internal override void PrivateConnectChild(int index, TElementType item)
         {
             Debug.Assert(item != null && item.Index == -1);
-            Debug.Assert(Items[index] == null);
+            Debug.Assert(Items[index] is null);
 
             // If the TElementType is already parented correctly through a proxy, there's no need
             // to change parentage.  Otherwise, it should be parented to Owner.

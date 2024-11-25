@@ -120,7 +120,7 @@ namespace Microsoft.Windows.Controls
         {
             var propertyTransferEnabledForObject = _propertyTransferEnabledMap[d] as Dictionary<DependencyProperty, bool>;
 
-            if (propertyTransferEnabledForObject == null)
+            if (propertyTransferEnabledForObject is null)
             {
                 propertyTransferEnabledForObject = new Dictionary<DependencyProperty, bool>();
                 _propertyTransferEnabledMap.SetWeak(d, propertyTransferEnabledForObject);

@@ -410,7 +410,7 @@ namespace MS.Internal.Documents
             // Check to see if user is trying to add another signature when
             // request spot are available but they aren't using it.  If there are 
             // no request spots warn user.
-            else if (IsSigned && HasRequests && digitalSignatureRequest == null)
+            else if (IsSigned && HasRequests && digitalSignatureRequest is null)
             {
                 System.Windows.MessageBoxResult dialogResult = System.Windows.MessageBox.Show(
                     SR.DigitalSignatureMessageSignPending,
@@ -425,7 +425,7 @@ namespace MS.Internal.Documents
             }
 
             // Check to see if we are signing a request.
-            if (digitalSignatureRequest == null)
+            if (digitalSignatureRequest is null)
             {
                 //This is not a signing request.  Now Check
                 //to see if document has already been signed.  If it has been signed
@@ -469,7 +469,7 @@ namespace MS.Internal.Documents
                 x509Certificate2 = ShowCertificatePickerDialog(parentWindow);
 
                 // If the certificate is null, the user cancelled the selection, so exit.
-                if (x509Certificate2 == null)
+                if (x509Certificate2 is null)
                 {
                     return;
                 }
@@ -486,15 +486,15 @@ namespace MS.Internal.Documents
                     // DDVSO: 194333 Adding support for CNG certificates. The default certificate template in Windows Server 2008+ is CNG
                     using (RSA rsa = x509Certificate2.GetRSAPrivateKey())
                     {
-                        if(rsa == null)
+                        if(rsa is null)
                         {
                             using (DSA dsa = x509Certificate2.GetDSAPrivateKey())
                             {
-                                if(dsa == null)
+                                if(dsa is null)
                                 {
                                     using (ECDsa ecdsa = x509Certificate2.GetECDsaPrivateKey())
                                     {
-                                        if(ecdsa == null)
+                                        if(ecdsa is null)
                                         {
                                             // Get[Algorithm]PrivateKey methods would always have returned the private key if the PrivateKey property would
                                             // But Get[Algorithm]PrivateKey methods never throw but returns null in case of error during cryptographic operations
@@ -592,7 +592,7 @@ namespace MS.Internal.Documents
             {
                 //Need to check if this is the first Signature applied to this document.  If so then
                 //we need to create a SignatureDefinition before we can sign.
-                if (!IsSigned && digSig.GuidID == null)
+                if (!IsSigned && digSig.GuidID is null)
                 {
                     digSig.GuidID = DigitalSignatureProvider.AddRequestSignature(digSig);
                     _changeLog.Add(new ChangeLogEntity((Guid)digSig.GuidID, true));
@@ -705,7 +705,7 @@ namespace MS.Internal.Documents
         internal void OnSign(SignatureResources? signatureResources, IntPtr parentWindow)
         {
             //Nothing was highlighted in the dialog. So this isn't a request signature.
-            if (signatureResources == null)
+            if (signatureResources is null)
             {
                 ShowSigningDialog(parentWindow);
             }
@@ -835,10 +835,10 @@ namespace MS.Internal.Documents
         internal static void Initialize(IDigitalSignatureProvider provider)
         {
             System.Diagnostics.Debug.Assert(
-                _singleton == null,
+                _singleton is null,
                 "DocumentSignatureManager initialized twice.");
 
-            if (_singleton == null)
+            if (_singleton is null)
             {
                 _singleton = new DocumentSignatureManager(provider);
             }
@@ -1093,13 +1093,13 @@ namespace MS.Internal.Documents
             // Signature requests and invalid signatures with missing certificates
             // both get the certificate status NoCertificate
             if (digitalSignature.SignatureState == SignatureStatus.NotSigned ||
-                digitalSignature.Certificate == null)
+                digitalSignature.Certificate is null)
             {
                 certificatePriorityStatus = CertificatePriorityStatus.NoCertificate;
             }
             // If the certificate status table is null, the certificates are
             // still being verified
-            else if (_certificateStatusTable == null)
+            else if (_certificateStatusTable is null)
             {
                 certificatePriorityStatus = CertificatePriorityStatus.Verifying;
             }
@@ -1269,7 +1269,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_certificateStatusTable == null)
+                if (_certificateStatusTable is null)
                 {
                     return false;
                 }

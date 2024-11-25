@@ -120,7 +120,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
 
         private void EnsureScrollData()
         {
-            if (_scrollData == null) { _scrollData = new ScrollData(); }
+            if (_scrollData is null) { _scrollData = new ScrollData(); }
         }
 
         private static void ResetScrolling(RibbonGalleryCategoriesPanel element)
@@ -267,7 +267,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
 #endif
 
             IContainsStarLayoutManager iContainsStarLayoutManager = (IContainsStarLayoutManager)this;
-            bool isStarLayoutPass = (iContainsStarLayoutManager.StarLayoutManager == null ? true : iContainsStarLayoutManager.StarLayoutManager.IsStarLayoutPass);
+            bool isStarLayoutPass = (iContainsStarLayoutManager.StarLayoutManager is null ? true : iContainsStarLayoutManager.StarLayoutManager.IsStarLayoutPass);
 
 #if IN_RIBBON_GALLERY
             if (isInInRibbonMode)
@@ -314,7 +314,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             {
                 RibbonGalleryCategory child = children[i] as RibbonGalleryCategory;
 
-                if (child == null ||
+                if (child is null ||
                     child.Visibility == Visibility.Collapsed)
                 {
                     continue;
@@ -458,7 +458,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
                 // Get next child.
                 UIElement child = children[i];
 
-                if (child == null) { continue; }
+                if (child is null) { continue; }
 
                 // Measure the child.
                 child.Measure(layoutSlotSize);
@@ -550,7 +550,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             {
                 RibbonGalleryCategory child = children[i] as RibbonGalleryCategory;
 
-                if (child == null ||
+                if (child is null ||
                     child.Visibility == Visibility.Collapsed)
                 {
                     continue;
@@ -599,7 +599,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             {
                 UIElement child = (UIElement)children[i];
 
-                if (child == null) { continue; }
+                if (child is null) { continue; }
 
                 rcChild.Y += previousChildSize;
                 previousChildSize = child.DesiredSize.Height;
@@ -807,7 +807,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             // We can only work on visuals that are us or children.
             // An empty rect has no size or position.  We can't meaningfully use it.
             if (rectangle.IsEmpty
-                || visual == null
+                || visual is null
                 || visual == (Visual)this
                 || !this.IsAncestorOf(visual))
             {
@@ -909,7 +909,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         {
             get
             {
-                if (_scrollData == null) { return 0.0; }
+                if (_scrollData is null) { return 0.0; }
                 return _scrollData._extent.Width;
             }
         }
@@ -921,7 +921,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         {
             get
             {
-                if (_scrollData == null) { return 0.0; }
+                if (_scrollData is null) { return 0.0; }
                 return _scrollData._extent.Height;
             }
         }
@@ -933,7 +933,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         {
             get
             {
-                if (_scrollData == null) { return 0.0; }
+                if (_scrollData is null) { return 0.0; }
                 return _scrollData._viewport.Width;
             }
         }
@@ -945,7 +945,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         {
             get
             {
-                if (_scrollData == null) { return 0.0; }
+                if (_scrollData is null) { return 0.0; }
                 return _scrollData._viewport.Height;
             }
         }
@@ -958,7 +958,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         {
             get
             {
-                if (_scrollData == null) { return 0.0; }
+                if (_scrollData is null) { return 0.0; }
                 return _scrollData._offset.X;
             }
         }
@@ -971,7 +971,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         {
             get
             {
-                if (_scrollData == null) { return 0.0; }
+                if (_scrollData is null) { return 0.0; }
                 return _scrollData._offset.Y;
             }
         }

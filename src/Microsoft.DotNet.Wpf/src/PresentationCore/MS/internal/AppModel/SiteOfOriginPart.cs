@@ -119,7 +119,7 @@ namespace MS.Internal.AppModel
                     return temp;
                 }
 
-                if (_absoluteLocation == null)
+                if (_absoluteLocation is null)
                 {
 #if DEBUG
                     if (SiteOfOriginContainer._traceSwitch.Enabled)

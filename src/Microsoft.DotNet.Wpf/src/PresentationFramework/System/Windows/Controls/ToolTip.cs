@@ -169,7 +169,7 @@ namespace System.Windows.Controls
 
             if ((bool)e.NewValue)
             {
-                if (t._parentPopup == null)
+                if (t._parentPopup is null)
                 {
                     t.HookupParentPopup();
                 }
@@ -212,7 +212,7 @@ namespace System.Windows.Controls
         {
             ToolTip tt = (ToolTip)d;
 
-            if (tt._parentPopup == null || !tt._parentPopup.AllowsTransparency || !SystemParameters.DropShadow)
+            if (tt._parentPopup is null || !tt._parentPopup.AllowsTransparency || !SystemParameters.DropShadow)
             {
                 return BooleanBoxes.FalseBox;
             }
@@ -511,7 +511,7 @@ namespace System.Windows.Controls
 
         private void HookupParentPopup()
         {
-            Debug.Assert(_parentPopup == null, "_parentPopup should be null");
+            Debug.Assert(_parentPopup is null, "_parentPopup should be null");
 
             _parentPopup = new Popup();
 

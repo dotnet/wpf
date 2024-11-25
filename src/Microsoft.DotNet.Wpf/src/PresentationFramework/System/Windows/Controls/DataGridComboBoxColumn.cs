@@ -223,7 +223,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_defaultElementStyle == null)
+                if (_defaultElementStyle is null)
                 {
                     Style style = new Style(typeof(ComboBox));
 
@@ -310,7 +310,7 @@ namespace System.Windows.Controls
         private Style PickStyle(bool isEditing, bool defaultToElementStyle)
         {
             Style style = isEditing ? EditingElementStyle : ElementStyle;
-            if (isEditing && defaultToElementStyle && (style == null))
+            if (isEditing && defaultToElementStyle && (style is null))
             {
                 style = ElementStyle;
             }

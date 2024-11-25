@@ -170,7 +170,7 @@ namespace System.Windows.Controls
             object obj
             )
         {
-            if (obj == null || obj.GetType() != typeof(PageRange))
+            if (obj is null || obj.GetType() != typeof(PageRange))
             {
                 return false;
             }

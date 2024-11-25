@@ -105,7 +105,7 @@ namespace System.Windows.Media
 
         internal override bool IsEmpty()
         {
-            return (Points == null) || (Points.Count < 2);
+            return (Points is null) || (Points.Count < 2);
         }
 
         internal override bool IsCurved()

@@ -110,7 +110,7 @@ namespace System.ComponentModel
                 ErrorsChangedEventManager manager = (ErrorsChangedEventManager)GetCurrentManager(managerType);
 
                 // at first use, create and register a new manager
-                if (manager == null)
+                if (manager is null)
                 {
                     manager = new ErrorsChangedEventManager();
                     SetCurrentManager(managerType, manager);

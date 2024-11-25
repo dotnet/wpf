@@ -294,7 +294,7 @@ namespace System.Windows.Input
                 throw new System.ComponentModel.InvalidEnumArgumentException("captureMode", (int)captureMode, typeof(CaptureMode));
             }
 
-            if (element == null)
+            if (element is null)
             {
                 captureMode = CaptureMode.None;
             }
@@ -478,7 +478,7 @@ namespace System.Windows.Input
                 cursor = _overrideCursor;
             }
 
-            if (cursor == null)
+            if (cursor is null)
             {
                 cursor = Cursors.None;
             }
@@ -585,7 +585,7 @@ namespace System.Windows.Input
             // Verify that we have a valid PresentationSource with a valid RootVisual
             // - if we don't we won't be able to invoke ClientToRoot or TranslatePoint and
             //   we will just return 0,0
-            if (relativePresentationSource == null || relativePresentationSource.RootVisual == null)
+            if (relativePresentationSource is null || relativePresentationSource.RootVisual is null)
             {
                 return new Point(0, 0);
             }
@@ -638,7 +638,7 @@ namespace System.Windows.Input
             // the user can change the input device to avoid the infinite loops, or close
             // the app if nothing else works.
             //
-            if (_reevaluateMouseOverOperation == null)
+            if (_reevaluateMouseOverOperation is null)
             {
                 _reevaluateMouseOverOperation = Dispatcher.BeginInvoke(DispatcherPriority.Input, _reevaluateMouseOverDelegate, null);
             }
@@ -689,7 +689,7 @@ namespace System.Windows.Input
             //
             // See ReevaluateMouseOver for details.
             //
-            if (_reevaluateCaptureOperation == null)
+            if (_reevaluateCaptureOperation is null)
             {
                 _reevaluateCaptureOperation = Dispatcher.BeginInvoke(DispatcherPriority.Input, _reevaluateCaptureDelegate, null);
             }
@@ -704,7 +704,7 @@ namespace System.Windows.Input
         {
             _reevaluateCaptureOperation = null;
 
-            if (_mouseCapture == null )
+            if (_mouseCapture is null )
                 return null;
 
             bool killCapture = false;
@@ -801,12 +801,12 @@ namespace System.Windows.Input
 
         private bool ValidateVisualForCapture(DependencyObject visual)
         {
-            if (visual == null)
+            if (visual is null)
                 return false;
 
             PresentationSource presentationSource = PresentationSource.CriticalFromVisual(visual);
 
-            if (presentationSource == null)
+            if (presentationSource is null)
                 return false;
 
             if (presentationSource != CriticalActiveSource)
@@ -1203,7 +1203,7 @@ namespace System.Windows.Input
                         // property on MouseEventArgs.
                         InputDevice inputDevice = e.StagingItem.GetData(_tagStylusDevice) as StylusDevice;
 
-                        if (inputDevice == null)
+                        if (inputDevice is null)
                         {
                             if (StylusLogic.IsPointerStackEnabled
                                 && StylusLogic.IsPromotedMouseEvent(rawMouseInputReport))
@@ -1420,7 +1420,7 @@ namespace System.Windows.Input
                         _stylusDevice = inputReportEventArgs.Device as StylusDevice;
 
                         // if the existing source is null, no need to do any special-case handling
-                        if (_inputSource == null)
+                        if (_inputSource is null)
                         {
                             _inputSource = rawMouseInputReport.InputSource;
                         }
@@ -1449,7 +1449,7 @@ namespace System.Windows.Input
                         if ((rawMouseInputReport.Actions & RawMouseActions.Deactivate) == RawMouseActions.Deactivate)
                         {
                             // Console.WriteLine("RawMouseActions.Deactivate");
-                            Debug.Assert(_mouseOver == null, "_mouseOver should be null because we have called ChangeMouseOver(null) already.");
+                            Debug.Assert(_mouseOver is null, "_mouseOver should be null because we have called ChangeMouseOver(null) already.");
                             _inputSource = null;
 
                             ChangeMouseCapture(null, null, CaptureMode.None, e.StagingItem.Input.Timestamp);
@@ -1644,7 +1644,7 @@ namespace System.Windows.Input
                                 }
                             }
 
-                            _isPhysicallyOver = mouseOver == null ? false : isPhysicallyOver;
+                            _isPhysicallyOver = mouseOver is null ? false : isPhysicallyOver;
 
                             // Now that we've determine what element the mouse is over now (mouseOver)
                             // - we need to check if it's changed
@@ -1685,7 +1685,7 @@ namespace System.Windows.Input
                                     ChangeMouseOver(mouseOver, e.StagingItem.Input.Timestamp);
                                 }
 
-                                if ((_rawMouseOver == null) && (rawMouseOver != null))
+                                if ((_rawMouseOver is null) && (rawMouseOver != null))
                                 {
                                     _rawMouseOver = new WeakReference(rawMouseOver);
                                 }
@@ -2219,7 +2219,7 @@ namespace System.Windows.Input
         {
             get
             {
-                if (_mouseOverTreeState == null)
+                if (_mouseOverTreeState is null)
                 {
                     _mouseOverTreeState = new DeferredElementTreeState();
                 }
@@ -2232,7 +2232,7 @@ namespace System.Windows.Input
         {
             get
             {
-                if (_mouseCaptureWithinTreeState == null)
+                if (_mouseCaptureWithinTreeState is null)
                 {
                     _mouseCaptureWithinTreeState = new DeferredElementTreeState();
                 }

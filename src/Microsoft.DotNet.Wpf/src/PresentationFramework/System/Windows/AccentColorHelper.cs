@@ -41,7 +41,7 @@ internal static class AccentColorHelper
     {
         get
         {
-            if (_uiSettings == null)
+            if (_uiSettings is null)
             {
                 _uiSettings = new UISettings();
             }

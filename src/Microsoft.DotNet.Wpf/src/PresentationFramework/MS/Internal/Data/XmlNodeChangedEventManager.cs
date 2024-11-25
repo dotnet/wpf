@@ -135,7 +135,7 @@ namespace MS.Internal.Data
                 XmlNodeChangedEventManager manager = (XmlNodeChangedEventManager)GetCurrentManager(managerType);
 
                 // at first use, create and register a new manager
-                if (manager == null)
+                if (manager is null)
                 {
                     manager = new XmlNodeChangedEventManager();
                     SetCurrentManager(managerType, manager);

@@ -25,7 +25,7 @@ namespace System.Windows.Input
             get 
             {
                 StylusDevice stylus = Stylus.CurrentStylusDevice;
-                if (stylus == null)
+                if (stylus is null)
                     return null;
                 return stylus.TabletDevice;
             }

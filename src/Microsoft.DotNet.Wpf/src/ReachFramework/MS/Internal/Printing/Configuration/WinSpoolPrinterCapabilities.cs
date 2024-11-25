@@ -306,7 +306,7 @@ namespace MS.Internal.Printing.Configuration
         {
             defaultPaperSize = new DC_PAPER_SIZE();
 
-            if (defaultDevMode == null)
+            if (defaultDevMode is null)
             {
                 if (paperSizes.Count > 0)
                 {

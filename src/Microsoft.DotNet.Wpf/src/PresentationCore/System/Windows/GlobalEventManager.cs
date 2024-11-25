@@ -23,7 +23,7 @@ namespace System.Windows
             Type handlerType,
             Type ownerType)
         {
-            Debug.Assert(GetRoutedEventFromName(name, ownerType, false) == null, 
+            Debug.Assert(GetRoutedEventFromName(name, ownerType, false) is null, 
                                 "RoutedEvent name must be unique within a given OwnerType");
 
             lock (Synchronized)
@@ -161,7 +161,7 @@ namespace System.Windows
                 // Requires GlobalLock to access _dTypedRoutedEventList
                 object ownerRoutedEventListObj = _dTypedRoutedEventList[dType];
                 FrugalObjectList<RoutedEvent> ownerRoutedEventList;
-                if (ownerRoutedEventListObj == null)
+                if (ownerRoutedEventListObj is null)
                 {
                     // Create an ItemList of RoutedEvents for the 
                     // given OwnerType if one does not already exist
@@ -187,7 +187,7 @@ namespace System.Windows
                 // Requires GlobalLock to access _ownerTypedRoutedEventList
                 object ownerRoutedEventListObj = _ownerTypedRoutedEventList[ownerType];
                 FrugalObjectList<RoutedEvent> ownerRoutedEventList;
-                if (ownerRoutedEventListObj == null)
+                if (ownerRoutedEventListObj is null)
                 {
                     // Create an ItemList of RoutedEvents for the 
                     // given OwnerType if one does not already exist
@@ -403,7 +403,7 @@ namespace System.Windows
                 }
             }
         
-            if (classListenersLists == null)
+            if (classListenersLists is null)
             {
                 if (dType.SystemType == typeof(UIElement) || dType.SystemType == typeof(ContentElement))
                 {

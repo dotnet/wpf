@@ -71,7 +71,7 @@ namespace System.Windows.Documents
         public GlyphRun ToGlyphRun()
         {
             ComputeMeasurementGlyphRunAndOrigin();
-            if (_measurementGlyphRun == null)
+            if (_measurementGlyphRun is null)
                 return null;
             Debug.Assert(_glyphRunProperties != null);
 
@@ -123,7 +123,7 @@ namespace System.Windows.Documents
         /// <param name="context">Drawing context</param>
         protected override void OnRender(DrawingContext context)
         {
-            if (_glyphRunProperties == null || _measurementGlyphRun == null)
+            if (_glyphRunProperties is null || _measurementGlyphRun is null)
                 return;
 
             context.PushGuidelineY1(_glyphRunOrigin.Y);
@@ -146,7 +146,7 @@ namespace System.Windows.Documents
         {
             ComputeMeasurementGlyphRunAndOrigin();
 
-            if (_measurementGlyphRun == null)
+            if (_measurementGlyphRun is null)
                 return new Size();
 
             Rect designRect = _measurementGlyphRun.ComputeAlignmentBox();
@@ -165,12 +165,12 @@ namespace System.Windows.Documents
 
         private void ComputeMeasurementGlyphRunAndOrigin()
         {
-            if (_glyphRunProperties == null)
+            if (_glyphRunProperties is null)
             {
                 _measurementGlyphRun = null;
                 ParseGlyphRunProperties();
 
-                if (_glyphRunProperties == null)
+                if (_glyphRunProperties is null)
                 {
                     return;
                 }
@@ -364,7 +364,7 @@ namespace System.Windows.Documents
                     {
                         // Lazily create glyph offset array. Previous entries will be correctly set to zero
                         // by the default Point ctor.
-                        if (glyphRunProperties.glyphOffsets == null)
+                        if (glyphRunProperties.glyphOffsets is null)
                             glyphRunProperties.glyphOffsets = new Point[glyphCount];
 
                         glyphRunProperties.glyphOffsets[i].X = parsedGlyphData.offsetX * fromEmToMil;
@@ -1023,7 +1023,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_glyphRunProperties == null || _measurementGlyphRun == null)
+                if (_glyphRunProperties is null || _measurementGlyphRun is null)
                 {
                     ComputeMeasurementGlyphRunAndOrigin();
                 }

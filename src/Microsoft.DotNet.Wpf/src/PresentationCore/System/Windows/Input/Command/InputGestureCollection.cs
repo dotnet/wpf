@@ -149,7 +149,7 @@ namespace System.Windows.Input
             set 
             {
                 InputGesture inputGesture = value as InputGesture;
-                if (inputGesture == null)
+                if (inputGesture is null)
                     throw new NotSupportedException(SR.CollectionOnlyAcceptsInputGestures);
 
                 this[index] = inputGesture;
@@ -288,7 +288,7 @@ namespace System.Windows.Input
 
             if ( collection.Count > 0) 
             {
-                if (_innerGestureList == null)
+                if (_innerGestureList is null)
                     _innerGestureList = new System.Collections.Generic.List<InputGesture>(collection.Count);
 
                 IEnumerator collectionEnum = collection.GetEnumerator();
@@ -317,7 +317,7 @@ namespace System.Windows.Input
             if (IsReadOnly)
                  throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);    
 
-            if (inputGesture == null)
+            if (inputGesture is null)
                 throw new NotSupportedException(SR.CollectionOnlyAcceptsInputGestures);
 
             if (_innerGestureList != null)
@@ -417,7 +417,7 @@ namespace System.Windows.Input
 
         private void EnsureList()
         {
-            if (_innerGestureList == null)
+            if (_innerGestureList is null)
                 _innerGestureList = new List<InputGesture>(1);
         }
 #endregion Public

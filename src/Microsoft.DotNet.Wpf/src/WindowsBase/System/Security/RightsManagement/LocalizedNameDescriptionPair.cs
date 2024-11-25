@@ -77,7 +77,7 @@ namespace System.Security.RightsManagement
         public override bool Equals(object obj)
         {
 
-            if ((obj == null) || (obj.GetType() != GetType()))
+            if ((obj is null) || (obj.GetType() != GetType()))
             {
                 return false;
             }

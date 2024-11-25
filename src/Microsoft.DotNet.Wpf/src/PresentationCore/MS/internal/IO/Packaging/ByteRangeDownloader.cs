@@ -108,7 +108,7 @@ namespace MS.Internal.IO.Packaging
                         try
                         {
                             // if there is no mutex, then we own the stream and we should close it
-                            if (FileMutex == null && _tempFileStream != null)
+                            if (FileMutex is null && _tempFileStream != null)
                             {
                                 _tempFileStream.Close();
                             }
@@ -203,7 +203,7 @@ namespace MS.Internal.IO.Packaging
 
                 // _byteRangeInprogress can be cleared out from the worker thread and this method can be called
                 //  from the caller thread; need to lock
-                if (_byteRangesInProgress == null)
+                if (_byteRangesInProgress is null)
                 {
                     _webRequest = CreateHttpWebRequest(byteRanges);
                     _byteRangesInProgress = byteRanges;
@@ -212,7 +212,7 @@ namespace MS.Internal.IO.Packaging
                 else    // cannot make request yet, put the request in the wait queue
                 {
                     // Lazy Init
-                    if (_requestsOnWait == null)
+                    if (_requestsOnWait is null)
                     {
                         // there are currently only ever two of these (one pair)
                         // so optimize
@@ -631,7 +631,7 @@ namespace MS.Internal.IO.Packaging
             // Get the downloaded stream
             using (Stream s = response.GetResponseStream())
             {
-                if (_buffer == null)
+                if (_buffer is null)
                 {
                     _buffer = new byte[WriteBufferSize];
                 }
@@ -758,7 +758,7 @@ namespace MS.Internal.IO.Packaging
             String contentRange = responseHeaders[ContentRangeHeader];
 
             // No Content-Range (condition #1)
-            if (contentRange == null)
+            if (contentRange is null)
             {
                 return false;
             }

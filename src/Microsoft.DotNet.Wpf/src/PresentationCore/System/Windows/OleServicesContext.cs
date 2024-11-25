@@ -81,7 +81,7 @@ namespace System.Windows
                 // Get the ole services context from the Thread data slot.
                 oleServicesContext = (OleServicesContext)Thread.GetData(OleServicesContext._threadDataSlot);
 
-                if (oleServicesContext == null)
+                if (oleServicesContext is null)
                 {
                     // Create OleSErvicesContext instance.
                     oleServicesContext = new OleServicesContext();
@@ -145,7 +145,7 @@ namespace System.Windows
 
         /// <summary>
         /// OleIsCurrentClipboard - OleIsCurrentClipboard only works for the data object 
-        /// used in the OleSetClipboard. This means that it can’t be called by the consumer 
+        /// used in the OleSetClipboard. This means that it canï¿½t be called by the consumer 
         /// of the data object to determine if the object that was on the clipboard at the 
         /// previous OleGetClipboard call is still on the Clipboard.
         /// </summary>

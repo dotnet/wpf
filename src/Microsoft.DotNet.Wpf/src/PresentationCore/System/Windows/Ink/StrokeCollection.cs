@@ -74,7 +74,7 @@ namespace System.Windows.Ink
             }
 
             Stream seekableStream = GetSeekableStream(stream);
-            if (seekableStream == null)
+            if (seekableStream is null)
             {
                 throw new ArgumentException(SR.Invalid_isfData_Length, "stream");
             }
@@ -364,7 +364,7 @@ namespace System.Windows.Ink
         /// <returns></returns>
         public new int IndexOf(Stroke stroke)
         {
-            if (stroke == null)
+            if (stroke is null)
             {
                 //we never allow null strokes
                 return -1;
@@ -396,7 +396,7 @@ namespace System.Windows.Ink
             }
 
             int[] indexes = this.GetStrokeIndexes(strokes);
-            if ( indexes == null )
+            if ( indexes is null )
             {
                 // At least one stroke doesn't exist in our collection. We throw.
                 ArgumentException ae = new ArgumentException(SR.InvalidRemovedStroke, "strokes");
@@ -462,7 +462,7 @@ namespace System.Windows.Ink
         /// <param name="strokesToReplaceWith"></param>
         public void Replace(Stroke strokeToReplace, StrokeCollection strokesToReplaceWith)
         {
-            if ( strokeToReplace == null )
+            if ( strokeToReplace is null )
             {
                 throw new ArgumentNullException(SR.EmptyScToReplace);
             }
@@ -479,11 +479,11 @@ namespace System.Windows.Ink
         /// <param name="strokesToReplaceWith"></param>
         public void Replace(StrokeCollection strokesToReplace, StrokeCollection strokesToReplaceWith)
         {
-            if ( strokesToReplace == null )
+            if ( strokesToReplace is null )
             {
                 throw new ArgumentNullException(SR.EmptyScToReplace);
             }
-            if ( strokesToReplaceWith == null )
+            if ( strokesToReplaceWith is null )
             {
                 throw new ArgumentNullException(SR.EmptyScToReplaceWith);
             }
@@ -501,7 +501,7 @@ namespace System.Windows.Ink
             }
 
             int[] indexes = this.GetStrokeIndexes(strokesToReplace);
-            if ( indexes == null )
+            if ( indexes is null )
             {
                 // At least one stroke doesn't exist in our collection. We throw.
                 ArgumentException ae = new ArgumentException(SR.InvalidRemovedStroke, "strokesToReplace");
@@ -562,7 +562,7 @@ namespace System.Windows.Ink
                 //
                 // internal getter is used by the serialization code
                 //
-                if ( _extendedProperties == null )
+                if ( _extendedProperties is null )
                 {
                     _extendedProperties = new ExtendedPropertyCollection();
                 }

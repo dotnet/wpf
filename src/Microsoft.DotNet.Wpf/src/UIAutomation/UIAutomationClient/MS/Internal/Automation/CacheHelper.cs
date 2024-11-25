@@ -70,16 +70,16 @@ namespace MS.Internal.Automation
             UiaCoreApi.UiaCacheRequest cacheRequest,
             UiaCoreApi.UiaCacheResponse response)
         {
-            if (response.TreeStructure == null)
+            if (response.TreeStructure is null)
             {
-                Debug.Assert(response.RequestedData == null, "both RequestedData and TreeStructure should be null or non-null");
+                Debug.Assert(response.RequestedData is null, "both RequestedData and TreeStructure should be null or non-null");
                 return null;
             }
 
             // FrozenCacheRequest should not be null one new AE code, but may
             // still be null on old code paths - eg. top level window events - where
             // prefetching is not yet enabled.
-            if (cacheRequest == null)
+            if (cacheRequest is null)
             {
                 cacheRequest = CacheRequest.DefaultUiaCacheRequest;
             }
@@ -207,13 +207,13 @@ namespace MS.Internal.Automation
                                                                 ref index, ref propIndex, cacheRequest,
                                                                 askedForDescendants, askedForDescendants);
 
-                if (child == null)
+                if (child is null)
                     break;
 
                 // Then link child node into tree...
                 child.SetCachedParent(node);
 
-                if (prevChild == null)
+                if (prevChild is null)
                 {
                     node.SetCachedFirstChild(child);
                 }

@@ -279,7 +279,7 @@ namespace MS.Internal.Documents.Application
                 fatal = true;
             }
 
-            if (result == null)
+            if (result is null)
             {
                 return null;
             }
@@ -497,7 +497,7 @@ namespace MS.Internal.Documents.Application
                     return null;
             }
 
-            if (result == null)
+            if (result is null)
             {
                 return null;
             }

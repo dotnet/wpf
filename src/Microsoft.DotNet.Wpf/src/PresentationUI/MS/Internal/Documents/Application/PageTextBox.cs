@@ -255,7 +255,7 @@ namespace MS.Internal.Documents.Application
         private void OnPaste(object sender, DataObjectPastingEventArgs e)
         {
             // Validate the parameters, return if data is null.
-            if ((e == null) || (e.DataObject == null) || (String.IsNullOrEmpty(e.FormatToApply)))
+            if ((e is null) || (e.DataObject is null) || (String.IsNullOrEmpty(e.FormatToApply)))
             {
                 return;
             }

@@ -1262,7 +1262,7 @@ namespace System.Windows.Media.Composition
 #if DEBUG
                 else
                 {
-                    Debug.Assert(_others == null, "There shouldn't be anything stored in the others array.");
+                    Debug.Assert(_others is null, "There shouldn't be anything stored in the others array.");
                 }
 #endif
 
@@ -1284,13 +1284,13 @@ namespace System.Windows.Media.Composition
                 {
                     if (index == NOT_FOUND)
                     {
-                        if (_first._key == null)
+                        if (_first._key is null)
                         {
                             _first = new Entry(key, value);
                         }
                         else
                         {
-                            if (_others == null)
+                            if (_others is null)
                             {
                                 _others = new List<Entry>(2); // by default we have two entries in the extra storage.
                             }
@@ -1391,11 +1391,11 @@ namespace System.Windows.Media.Composition
             /// </summary>
             public int Count()
             {
-                if (_first._key == null)
+                if (_first._key is null)
                 {
                     return 0;
                 }
-                else if (_others == null)
+                else if (_others is null)
                 {
                     return 1;
                 }
@@ -1461,7 +1461,7 @@ namespace System.Windows.Media.Composition
 
             public bool IsEmpty()
             {
-                return _head._key == null;
+                return _head._key is null;
             }
 
             /// <summary>
@@ -1517,7 +1517,7 @@ namespace System.Windows.Media.Composition
                     {
                         // The key was not found.
                         // Is the Map empty?
-                        if (_head._key == null)
+                        if (_head._key is null)
                         {
                             _head = new Entry(key, value);
                         }
@@ -1631,7 +1631,7 @@ namespace System.Windows.Media.Composition
             /// </summary>
             public int Count()
             {
-                if (_head._key == null)
+                if (_head._key is null)
                 {
                     return 0;
                 }
@@ -2199,8 +2199,8 @@ namespace System.Windows.Media.Composition
                     DUCE.MILCMD_VISUAL_SETGUIDELINECOLLECTION command;
                     Debug.Assert(!hCompositionNode.IsNull);
 
-                    int countX = guidelinesX == null ? 0 : guidelinesX.Count;
-                    int countY = guidelinesY == null ? 0 : guidelinesY.Count;
+                    int countX = guidelinesX is null ? 0 : guidelinesX.Count;
+                    int countY = guidelinesY is null ? 0 : guidelinesY.Count;
                     int countXY = countX + countY;
 
                     command.Type = MILCMD.MilCmdVisualSetGuidelineCollection;

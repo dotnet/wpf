@@ -51,7 +51,7 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (_ref == null)
+                if (_ref is null)
                 {
                     XamlProperty xamlMember = DeclaringType.GetProperty(_name);
                     // This will throw if the cast doesn't work

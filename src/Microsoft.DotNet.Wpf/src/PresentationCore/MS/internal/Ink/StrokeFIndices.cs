@@ -97,7 +97,7 @@ namespace MS.Internal.Ink
         public override bool Equals(Object obj)
         {
             // Check for null and compare run-time types
-            if (obj == null || GetType() != obj.GetType())
+            if (obj is null || GetType() != obj.GetType())
                 return false;
             return ((StrokeFIndices)obj == this);
         }

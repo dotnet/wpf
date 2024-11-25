@@ -288,11 +288,11 @@ namespace System.Windows.Data
             isPure = true;
 
             DependencyObject mentor = Helper.FindMentor(this);
-            if (mentor == null)
+            if (mentor is null)
                 return false;
 
             superset = Validation.GetErrorsInternal(mentor);
-            if (superset == null || superset.Count == 0)
+            if (superset is null || superset.Count == 0)
                 return false;
 
             for (int i=superset.Count-1; i>=0; --i)
@@ -501,7 +501,7 @@ namespace System.Windows.Data
         bool TryGetValueImpl(object item, string propertyName, out object value)
         {
             GetValueTableEntry entry = _getValueTable[item, propertyName];
-            if (entry == null)
+            if (entry is null)
             {
                 ProposedValueEntry proposedValueEntry = _proposedValueTable[item, propertyName];
                 if (proposedValueEntry != null)
@@ -592,7 +592,7 @@ namespace System.Windows.Data
                                                               ref _hasMultipleInheritanceContexts,
                                                               ref inheritanceContext );
             CheckDetach(inheritanceContext);
-            _inheritanceContext = (inheritanceContext == null) ? NullInheritanceContext : new WeakReference<DependencyObject>(inheritanceContext);
+            _inheritanceContext = (inheritanceContext is null) ? NullInheritanceContext : new WeakReference<DependencyObject>(inheritanceContext);
 
             // if there's a validation rule that should run on data transfer, schedule it to run
             if (property == FrameworkElement.BindingGroupProperty &&
@@ -630,7 +630,7 @@ namespace System.Windows.Data
                                                                   ref _hasMultipleInheritanceContexts,
                                                                   ref inheritanceContext);
             CheckDetach(inheritanceContext);
-            _inheritanceContext = (inheritanceContext == null) ? NullInheritanceContext : new WeakReference<DependencyObject>(inheritanceContext);
+            _inheritanceContext = (inheritanceContext is null) ? NullInheritanceContext : new WeakReference<DependencyObject>(inheritanceContext);
         }
 
         // Says if the current instance has multiple InheritanceContexts
@@ -740,7 +740,7 @@ namespace System.Windows.Data
         internal void AddValidationError(ValidationError validationError)
         {
             DependencyObject mentor = Helper.FindMentor(this);
-            if (mentor == null)
+            if (mentor is null)
                 return;
 
             Validation.AddValidationError(validationError, mentor, NotifyOnValidationError);
@@ -750,7 +750,7 @@ namespace System.Windows.Data
         internal void RemoveValidationError(ValidationError validationError)
         {
             DependencyObject mentor = Helper.FindMentor(this);
-            if (mentor == null)
+            if (mentor is null)
                 return;
 
             Validation.RemoveValidationError(validationError, mentor, NotifyOnValidationError);
@@ -773,11 +773,11 @@ namespace System.Windows.Data
         void ClearValidationErrorsImpl(ValidationStep validationStep, bool allSteps)
         {
             DependencyObject mentor = Helper.FindMentor(this);
-            if (mentor == null)
+            if (mentor is null)
                 return;
 
             ValidationErrorCollection validationErrors = Validation.GetErrorsInternal(mentor);
-            if (validationErrors == null)
+            if (validationErrors is null)
                 return;
 
             for (int i=validationErrors.Count-1; i>=0; --i)
@@ -828,7 +828,7 @@ namespace System.Windows.Data
                     WeakReference itemReference = _itemsRW.Count > 0 ? _itemsRW[0] : null;
                     // 90% case:  the first entry in _itemsRW already points to the item,
                     // so just re-use it.  Otherwise create a new reference.
-                    if (itemReference == null ||
+                    if (itemReference is null ||
                         !ItemsControl.EqualsEx(dataContextItem, itemReference.Target))
                     {
                         itemReference = new WeakReference(dataContextItem);
@@ -957,7 +957,7 @@ namespace System.Windows.Data
             if (!ValidatesOnDataTransfer)
                 return;
             DependencyObject mentor = Helper.FindMentor(this);
-            if (mentor == null || ValidationRules.Count == 0)
+            if (mentor is null || ValidationRules.Count == 0)
                 return;
 
             // get the current validation errors associated with the rules to be run.
@@ -1073,7 +1073,7 @@ namespace System.Windows.Data
         void UpdateNotifyDataErrors(INotifyDataErrorInfo indei, WeakReference itemWR)
         {
             // get the key for the item (its WeakReference from _itemsRW)
-            if (itemWR == null)
+            if (itemWR is null)
             {
                 int index = FindIndexOf(indei, _itemsRW);
                 if (index < 0)
@@ -1117,7 +1117,7 @@ namespace System.Windows.Data
             {
                 ValidationRule rule = NotifyDataErrorValidationRule.Instance;
 
-                if (itemErrors == null)
+                if (itemErrors is null)
                     itemErrors = new List<ValidationError>();
 
                 foreach (object o in toAdd)
@@ -1141,7 +1141,7 @@ namespace System.Windows.Data
             }
 
             // update the cached list of errors for this item
-            if (itemErrors == null)
+            if (itemErrors is null)
             {
                 _notifyDataErrors.Remove(itemWR);
             }
@@ -1288,7 +1288,7 @@ namespace System.Windows.Data
         static int FindIndexOf(WeakReference wr, IList<WeakReference> list)
         {
             object item = wr.Target;
-            if (item == null)
+            if (item is null)
                 return -1;
             return FindIndexOf(item, list);
         }
@@ -1309,7 +1309,7 @@ namespace System.Windows.Data
         // get the culture of the binding group's mentor
         CultureInfo GetCulture()
         {
-            if (_culture == null)
+            if (_culture is null)
             {
                 DependencyObject mentor = Helper.FindMentor(this);
                 if (mentor != null)
@@ -1407,7 +1407,7 @@ namespace System.Windows.Data
         // preserve proposed values
         void PreserveProposedValues(Collection<BindingExpressionBase.ProposedValue> proposedValues)
         {
-            if (proposedValues == null)
+            if (proposedValues is null)
                 return;
 
             for (int i=0, n=proposedValues.Count; i<n; ++i)
@@ -1627,7 +1627,7 @@ namespace System.Windows.Data
             public void EnsureEntry(BindingExpressionBase bindingExpressionBase)
             {
                 GetValueTableEntry entry = this[bindingExpressionBase];
-                if (entry == null)
+                if (entry is null)
                 {
                     _table.Add(new GetValueTableEntry(bindingExpressionBase));
                 }
@@ -1637,7 +1637,7 @@ namespace System.Windows.Data
             public bool Update(BindingExpression bindingExpression)
             {
                 GetValueTableEntry entry = this[bindingExpression];
-                bool newEntry = (entry == null);
+                bool newEntry = (entry is null);
 
                 if (newEntry)
                 {
@@ -1744,11 +1744,11 @@ namespace System.Windows.Data
             public void Update(BindingExpression bindingExpression)
             {
                 object item = bindingExpression.SourceItem;
-                if (item == null)
+                if (item is null)
                 {
                     _itemWR = null;
                 }
-                else if (_itemWR == null)
+                else if (_itemWR is null)
                 {
                     _itemWR = new WeakReference(item);  // WR to avoid leaks
                 }
@@ -1972,7 +1972,7 @@ namespace System.Windows.Data
 
             public void AddDependent(BindingExpressionBase dependent)
             {
-                if (_dependents == null)
+                if (_dependents is null)
                 {
                     _dependents = new Collection<BindingExpressionBase>();
                 }

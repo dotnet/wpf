@@ -181,7 +181,7 @@ namespace MS.Internal
         /// </summary>
         public static Version? GenerateVersionFromPatternAndCurrentTime(DateTime time, Version pattern)
         {
-            if (pattern == null || pattern.Revision != ushort.MaxValue)
+            if (pattern is null || pattern.Revision != ushort.MaxValue)
             {
                 return pattern;
             }

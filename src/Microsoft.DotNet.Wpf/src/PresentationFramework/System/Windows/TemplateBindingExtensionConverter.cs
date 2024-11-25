@@ -51,7 +51,7 @@ namespace System.Windows
 
                 TemplateBindingExtension templateBinding = value as TemplateBindingExtension;
 
-                if(templateBinding == null)
+                if(templateBinding is null)
                     throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "TemplateBindingExtension"), "value");
 
                 return new InstanceDescriptor(typeof(TemplateBindingExtension).GetConstructor(new Type[] { typeof(DependencyProperty) }),

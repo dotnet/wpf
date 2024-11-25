@@ -242,7 +242,7 @@ namespace MS.Internal.Annotations.Component
 
             //get or create AnnotationHighlightLayer in the textContainer
             AnnotationHighlightLayer highlightLayer = textContainer.Highlights.GetLayer(typeof(HighlightComponent)) as AnnotationHighlightLayer;
-            if (highlightLayer == null)
+            if (highlightLayer is null)
             {
                 highlightLayer = new AnnotationHighlightLayer();
                 textContainer.Highlights.AddLayer(highlightLayer);
@@ -324,7 +324,7 @@ namespace MS.Internal.Annotations.Component
                 return;
 
             //get the highlight layer
-            if (_attachedAnnotation == null)
+            if (_attachedAnnotation is null)
             {
                 throw new InvalidOperationException(SR.NoAttachedAnnotationToModify);
             }
@@ -460,7 +460,7 @@ namespace MS.Internal.Annotations.Component
             // framework for all other purposes.
             TextAnchor fullAnchor = _attachedAnnotation.FullyAttachedAnchor as TextAnchor;
             //Debug.Assert(fullAnchor != null, "null TextAnchor");
-            if (fullAnchor == null)
+            if (fullAnchor is null)
                 return false;
 
             return fullAnchor.IsOverlapping(selection.TextSegments);
@@ -516,7 +516,7 @@ namespace MS.Internal.Annotations.Component
             ArgumentNullException.ThrowIfNull(attachedAnnotation);
 
             TextAnchor textAnchor = attachedAnnotation.AttachedAnchor as TextAnchor;
-            if (textAnchor == null)
+            if (textAnchor is null)
             {
                 throw new ArgumentException(SR.InvalidAttachedAnchor, "attachedAnnotation");
             }
@@ -526,7 +526,7 @@ namespace MS.Internal.Annotations.Component
 
             Invariant.Assert(textContainer != null, "TextAnchor does not belong to a TextContainer");
 
-            if (attachedAnnotation.Annotation == null)
+            if (attachedAnnotation.Annotation is null)
             {
                 throw new ArgumentException(SR.AnnotationIsNull, "attachedAnnotation");
             }
@@ -598,7 +598,7 @@ namespace MS.Internal.Annotations.Component
 
                 //get AnnotationHighlightLayer in the textContainer
                 AnnotationHighlightLayer highlightLayer = textContainer.Highlights.GetLayer(typeof(HighlightComponent)) as AnnotationHighlightLayer;
-                if (highlightLayer == null)
+                if (highlightLayer is null)
                 {
                     throw new InvalidDataException(SR.MissingAnnotationHighlightLayer);
                 }

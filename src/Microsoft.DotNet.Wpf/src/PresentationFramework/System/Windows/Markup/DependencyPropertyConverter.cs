@@ -167,7 +167,7 @@ namespace System.Windows.Markup
             }
 
             // We got additional info from either Trigger.SourceName or Setter.TargetName
-            if (type == null && targetName != null)
+            if (type is null && targetName != null)
             {
                 IAmbientProvider ambientProvider = serviceProvider.GetService(typeof(IAmbientProvider))
                     as System.Xaml.IAmbientProvider;
@@ -180,11 +180,11 @@ namespace System.Windows.Markup
 
             // Still don't have a Type so we need to loop up the chain and grab either Style.TargetType,
             // DataTemplate.DataType, or ControlTemplate.TargetType
-            if (type == null)
+            if (type is null)
             {
                 IXamlSchemaContextProvider ixscp = (serviceProvider.GetService(typeof(IXamlSchemaContextProvider))
                     as IXamlSchemaContextProvider);
-                if (ixscp == null)
+                if (ixscp is null)
                 {
                     throw new NotSupportedException(SR.Format(SR.ParserCannotConvertPropertyValue, "Property", typeof(DependencyProperty).FullName));
                 }
@@ -208,7 +208,7 @@ namespace System.Windows.Markup
 
                 IAmbientProvider ambientProvider = serviceProvider.GetService(typeof(IAmbientProvider))
                     as System.Xaml.IAmbientProvider;
-                if (ambientProvider == null)
+                if (ambientProvider is null)
                 {
                     throw new NotSupportedException(SR.Format(SR.ParserCannotConvertPropertyValue, "Property", typeof(DependencyProperty).FullName));
                 }

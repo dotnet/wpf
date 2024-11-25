@@ -85,7 +85,7 @@ namespace System.Windows.Data
         {
             if (IsUninitialized)
                 throw new InvalidOperationException(SR.RelativeSourceNeedsMode);
-            if (_mode == RelativeSourceMode.FindAncestor && (AncestorType == null))
+            if (_mode == RelativeSourceMode.FindAncestor && (AncestorType is null))
                 throw new InvalidOperationException(SR.RelativeSourceNeedsAncestorType);
         }
 
@@ -99,7 +99,7 @@ namespace System.Windows.Data
         {
             get
             {
-                if (s_previousData == null)
+                if (s_previousData is null)
                 {
                     s_previousData = new RelativeSource(RelativeSourceMode.PreviousData);
                 }
@@ -113,7 +113,7 @@ namespace System.Windows.Data
         {
             get
             {
-                if (s_templatedParent == null)
+                if (s_templatedParent is null)
                 {
                     s_templatedParent = new RelativeSource(RelativeSourceMode.TemplatedParent);
                 }
@@ -127,7 +127,7 @@ namespace System.Windows.Data
         {
             get
             {
-                if (s_self == null)
+                if (s_self is null)
                 {
                     s_self = new RelativeSource(RelativeSourceMode.Self);
                 }

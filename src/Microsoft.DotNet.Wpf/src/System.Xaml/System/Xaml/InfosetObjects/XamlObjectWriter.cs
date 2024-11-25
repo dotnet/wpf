@@ -61,7 +61,7 @@ namespace System.Xaml
         internal XamlObjectWriter(XamlSavedContext savedContext, XamlObjectWriterSettings settings)
         {
             ArgumentNullException.ThrowIfNull(savedContext);
-            if (savedContext.SchemaContext == null)
+            if (savedContext.SchemaContext is null)
             {
                 throw new ArgumentException(SR.SavedContextSchemaContextNull, nameof(savedContext));
             }
@@ -129,7 +129,7 @@ namespace System.Xaml
                     result = new PartialTrustTolerantRuntime(runtimeSettings, settings.AccessLevel, schemaContext);
                 }
             }
-            if (result == null)
+            if (result is null)
             {
                 result = new ClrObjectRuntime(runtimeSettings, true /*isWriter*/);
             }
@@ -145,7 +145,7 @@ namespace System.Xaml
                 // null only when we load system resources like themes\generic.xaml. And only for
                 // resources located in RD itself (as opposite to nested RDs). Thus we should never see
                 // different non-null base and source URIs. In any case base URI is preferred.
-                Debug.Assert(_context.SourceBamlUri == null || _context.BaseUri == null || _context.SourceBamlUri == _context.BaseUri,
+                Debug.Assert(_context.SourceBamlUri is null || _context.BaseUri is null || _context.SourceBamlUri == _context.BaseUri,
                     "Source BAML URI and base URI do not agree");
                 _afterBeginInitHandler(this, new XamlObjectEventArgs(value, _context.BaseUri ?? _context.SourceBamlUri, _context.LineNumber_StartObject, _context.LinePosition_StartObject));
             }
@@ -190,7 +190,7 @@ namespace System.Xaml
         {
             get
             {
-                if (_nameFixupGraph == null)
+                if (_nameFixupGraph is null)
                 {
                     _nameFixupGraph = new NameFixupGraph();
                 }
@@ -200,7 +200,7 @@ namespace System.Xaml
 
         private bool HasUnresolvedChildren(object parent)
         {
-            if (_nameFixupGraph == null)
+            if (_nameFixupGraph is null)
             {
                 return false;
             }
@@ -211,7 +211,7 @@ namespace System.Xaml
         {
             get
             {
-                if (_pendingCollectionAdds == null)
+                if (_pendingCollectionAdds is null)
                     _pendingCollectionAdds = new Dictionary<object, List<PendingCollectionAdd>>();
                 return _pendingCollectionAdds;
             }
@@ -221,7 +221,7 @@ namespace System.Xaml
         {
             get
             {
-                if (_pendingKeyConversionContexts == null)
+                if (_pendingKeyConversionContexts is null)
                     _pendingKeyConversionContexts = new Dictionary<object, ObjectWriterContext>();
                 return _pendingKeyConversionContexts;
             }
@@ -234,7 +234,7 @@ namespace System.Xaml
 
         private void TryCreateParentInstance(ObjectWriterContext ctx)
         {
-            if (ctx.ParentInstance == null && ctx.ParentProperty != XamlLanguage.Arguments)
+            if (ctx.ParentInstance is null && ctx.ParentProperty != XamlLanguage.Arguments)
             {
                 ctx.LiftScope();
                 Logic_CreateAndAssignToParentStart(ctx);
@@ -261,12 +261,12 @@ namespace System.Xaml
                 string err = SR.ValueMustBeFollowedByEndMember;
                 throw _context.WithLineInfo(new XamlObjectWriterException(err));
             }
-            XamlMember parentProperty = (_context.CurrentType == null && _context.Depth > 1)
+            XamlMember parentProperty = (_context.CurrentType is null && _context.Depth > 1)
                 ? _context.ParentProperty
                 : _context.CurrentProperty;  // there is a push frame below making this the parent property.
-            if (parentProperty == null)
+            if (parentProperty is null)
             {
-                XamlType xamlType = (_context.CurrentType == null && _context.Depth > 1)
+                XamlType xamlType = (_context.CurrentType is null && _context.Depth > 1)
                     ? _context.ParentType
                     : _context.CurrentType;
 
@@ -336,7 +336,7 @@ namespace System.Xaml
                 throw _context.WithLineInfo(new XamlObjectWriterException(err));
             }
 
-            if (_context.CurrentType != null && _context.CurrentProperty == null)
+            if (_context.CurrentType != null && _context.CurrentProperty is null)
             {
                 string err = SR.Format(SR.NoPropertyInCurrentFrame_SO, xamlType.ToString(),
                                                                     _context.CurrentType.ToString());
@@ -406,7 +406,7 @@ namespace System.Xaml
                 string err = SR.ValueMustBeFollowedByEndMember;
                 throw _context.WithLineInfo(new XamlObjectWriterException(err));
             }
-            if (_context.CurrentType == null)
+            if (_context.CurrentType is null)
             {
                 string err = SR.NoTypeInCurrentFrame_EO;
                 throw _context.WithLineInfo(new XamlObjectWriterException(err));
@@ -430,7 +430,7 @@ namespace System.Xaml
                 // Create From InitText, or Create with parameters.
                 // But, If we got to End Object and still haven't Created it,
                 // then create it now.
-                if (_context.CurrentInstance == null)
+                if (_context.CurrentInstance is null)
                 {
                     Logic_CreateAndAssignToParentStart(_context);
                 }
@@ -589,7 +589,7 @@ namespace System.Xaml
                                                                  _context.CurrentProperty.ToString(),
                                                                  property.ToString());
             }
-            else if (_context.CurrentType == null)
+            else if (_context.CurrentType is null)
             {
                 err = SR.Format(SR.NoTypeInCurrentFrame_SM, property.ToString());
             }
@@ -610,7 +610,7 @@ namespace System.Xaml
 
             // If we haven't created the object yet then consider creating it now.
             // We need an object instance to set property values on.
-            if (_context.CurrentInstance == null)
+            if (_context.CurrentInstance is null)
             {
                 if (!IsConstructionDirective(_context.CurrentProperty)
                     && !IsDirectiveAllowedOnNullInstance(_context.CurrentProperty, _context.CurrentType))
@@ -655,7 +655,7 @@ namespace System.Xaml
             if (property.IsDirective && property != XamlLanguage.Items && property != XamlLanguage.PositionalParameters)
             {
                 // Creates the container for x:Arguments  (possible other future directives)  If this was
-                // just for x:Arguments it could be moved into the (inst == null) case above.
+                // just for x:Arguments it could be moved into the (inst is null) case above.
                 // Note: this sets the "current collection" but does not touch the "current instance".
                 // Note: there is a special case for x:PosParam above because the collection type is not public.
                 // Note: The dictionary check is there because Collection and Dictionary checks go together.
@@ -684,7 +684,7 @@ namespace System.Xaml
             XamlMember property;
             // In the Text value case we will be on the text frame
             // and the property is in the parent.
-            if (_context.CurrentType == null)
+            if (_context.CurrentType is null)
             {
                 property = _context.ParentProperty;
             }
@@ -694,7 +694,7 @@ namespace System.Xaml
                 property = _context.CurrentProperty;
             }
 
-            if (property == null)
+            if (property is null)
             {
                 string err = (_context.CurrentType != null)
                     ? SR.Format(SR.NoPropertyInCurrentFrame_EM, _context.CurrentType.ToString())
@@ -729,16 +729,16 @@ namespace System.Xaml
             else if (property == XamlLanguage.Class)
             {
                 object value = null;
-                if (_context.CurrentType == null)
+                if (_context.CurrentType is null)
                 {
                     value = _context.CurrentInstance;
                     _context.PopScope();
                 }
                 Logic_ValidateXClass(_context, value);
             }
-            else if (_context.CurrentType == null)
+            else if (_context.CurrentType is null)
             {
-                // CurrentType == null means we are in a Value Frame (under a property)
+                // CurrentType is null means we are in a Value Frame (under a property)
                 // [rather than the result of some S0 sub-tree].
                 // For example <Foo.Color>Red</Foo.Color> or <Foo Color="Red"> results in:
                 // SM Color; V "Red"; EM;  // and the type converter for Color will be invoked
@@ -821,7 +821,7 @@ namespace System.Xaml
             // Error Checking
             //
             XamlMember currentProperty = _context.CurrentProperty;
-            if (currentProperty == null)
+            if (currentProperty is null)
             {
                 string err = (_context.CurrentType != null)
                     ? SR.Format(SR.NoPropertyInCurrentFrame_V, value, _context.CurrentType.ToString())
@@ -874,11 +874,11 @@ namespace System.Xaml
         {
             ThrowIfDisposed();
             ArgumentNullException.ThrowIfNull(namespaceDeclaration);
-            if(namespaceDeclaration.Prefix == null)
+            if(namespaceDeclaration.Prefix is null)
             {
                 throw new ArgumentException(SR.NamespaceDeclarationPrefixCannotBeNull);
             }
-            if(namespaceDeclaration.Namespace == null)
+            if(namespaceDeclaration.Namespace is null)
             {
                 throw new ArgumentException(SR.NamespaceDeclarationNamespaceCannotBeNull);
             }
@@ -898,7 +898,7 @@ namespace System.Xaml
                 string err = SR.ValueMustBeFollowedByEndMember;
                 throw _context.WithLineInfo(new XamlObjectWriterException(err));
             }
-            if (_context.CurrentType != null && _context.CurrentProperty == null)
+            if (_context.CurrentType != null && _context.CurrentProperty is null)
             {
                 string err = SR.Format(SR.NoPropertyInCurrentFrame_NS, namespaceDeclaration.Prefix,
                                                                       namespaceDeclaration.Namespace,
@@ -1045,7 +1045,7 @@ namespace System.Xaml
         private object GetKeyFromInstance(object instance, XamlType instanceType, IAddLineInfo lineInfo)
         {
             XamlMember keyProperty = instanceType.GetAliasedProperty(XamlLanguage.Key);
-            if (keyProperty == null || instance == null)
+            if (keyProperty is null || instance is null)
             {
                 throw lineInfo.WithLineInfo(new XamlObjectWriterException(SR.Format(SR.MissingKey, instanceType.Name)));
             }
@@ -1056,7 +1056,7 @@ namespace System.Xaml
         private XamlType GetXamlType(Type clrType)
         {
             XamlType result = SchemaContext.GetXamlType(clrType);
-            if (result == null)
+            if (result is null)
             {
                 throw new InvalidOperationException(SR.Format(SR.ObjectWriterTypeNotAllowed,
                     SchemaContext.GetType(), clrType));
@@ -1096,7 +1096,7 @@ namespace System.Xaml
             }
             if (xamlMember == XamlLanguage.Uid)
             {
-                if (null == xamlType.GetAliasedProperty(XamlLanguage.Uid))
+                if (xamlType.GetAliasedProperty(XamlLanguage.Uid) is null)
                 {
                     return true;
                 }
@@ -1142,21 +1142,21 @@ namespace System.Xaml
             else  // with Factory Method
             {
                 XamlPropertyName propertyName = XamlPropertyName.Parse((string)factoryMethodName);
-                if (propertyName == null)
+                if (propertyName is null)
                 {
                     string errMsg = string.Format(TypeConverterHelper.InvariantEnglishUS, SR.InvalidExpression, factoryMethodName);
                     throw ctx.WithLineInfo(new XamlInternalException(errMsg));
                 }
 
                 XamlType ownerType;
-                if (propertyName.Owner == null)
+                if (propertyName.Owner is null)
                 {
                     ownerType = currentType;
                 }
                 else
                 {
                     ownerType = ctx.GetXamlType(propertyName.Owner);
-                    if (ownerType == null)
+                    if (ownerType is null)
                     {
                         XamlTypeName ownerTypeName = ctx.GetXamlTypeName(propertyName.Owner);
                         throw ctx.WithLineInfo(new XamlObjectWriterException(SR.Format(SR.CannotResolveTypeForFactoryMethod, ownerTypeName, propertyName.Name)));
@@ -1210,7 +1210,7 @@ namespace System.Xaml
             object[] argInstances = new object[rawArgs.Count];
             IList<XamlType> paramTypes = meType.GetPositionalParameters(rawArgs.Count);
 
-            if (null == paramTypes)
+            if (paramTypes is null)
             {
                 // A constructor with the specified number of arguments doesn't exist
                 string msg = string.Format(TypeConverterHelper.InvariantEnglishUS, SR.NoSuchConstructor, rawArgs.Count, meType.Name);
@@ -1248,7 +1248,7 @@ namespace System.Xaml
                 string err = SR.Format(SR.CantCreateUnknownType, xamlType.GetQualifiedName());
                 throw ctx.WithLineInfo(new XamlObjectWriterException(err));
             }
-            if (ts == null)
+            if (ts is null)
             {
                 throw ctx.WithLineInfo(new XamlObjectWriterException(SR.Format(SR.InitializationSyntaxWithoutTypeConverter, xamlType.GetQualifiedName())));
             }
@@ -1413,7 +1413,7 @@ namespace System.Xaml
 
         private static bool IsBuiltInGenericDictionary(Type type)
         {
-            if (type == null || !type.IsGenericType)
+            if (type is null || !type.IsGenericType)
             {
                 return false;
             }
@@ -1775,9 +1775,9 @@ namespace System.Xaml
             }
             else
             {
-                if (currentType == null)
+                if (currentType is null)
                 {
-                    currentType = value == null ? collectionType.ItemType : GetXamlType(value.GetType());
+                    currentType = value is null ? collectionType.ItemType : GetXamlType(value.GetType());
                 }
                 object key = ctx.CurrentKey;
                 bool keyIsSet = ctx.CurrentIsKeySet;
@@ -1864,7 +1864,7 @@ namespace System.Xaml
 
                 // Reproduce the stack as it would have been at the point when the key was originally
                 // read, and run the type converter now.
-                Debug.Assert(ctx.CurrentProperty == null);
+                Debug.Assert(ctx.CurrentProperty is null);
                 ctx.CurrentProperty = XamlLanguage.Key;
                 ctx.PushScope();
                 ctx.CurrentInstance = key;
@@ -1893,7 +1893,7 @@ namespace System.Xaml
             {
                 PendingCollectionAdds.TryGetValue(parentCollection, out pendingCollection);
             }
-            if (pendingCollection == null &&
+            if (pendingCollection is null &&
                 (keyToken != null || valueToken != null ||
                 HasUnresolvedChildren(key) || HasUnresolvedChildren(value)))
             {
@@ -2027,7 +2027,7 @@ namespace System.Xaml
                         }
                     }
                 }
-                else  // when parentInstance == null
+                else  // when parentInstance is null
                 {
                     if (parentProperty.IsDirective)
                     {
@@ -2170,7 +2170,7 @@ namespace System.Xaml
                 throw ctx.WithLineInfo(new XamlObjectWriterException(SR.Format(SR.DirectiveNotAtRoot, XamlLanguage.Class)));
             }
             string className = value as string;
-            if (className == null)
+            if (className is null)
             {
                 throw ctx.WithLineInfo(new XamlObjectWriterException(SR.Format(SR.DirectiveMustBeString, XamlLanguage.Class)));
             }
@@ -2197,7 +2197,7 @@ namespace System.Xaml
             object childThatHasUnresolvedChildren = ctx.CurrentInstance;
             XamlMember property = ctx.ParentProperty;
 
-            if (property != null && property.IsDirective && ctx.ParentInstance == null && property != XamlLanguage.Key)
+            if (property != null && property.IsDirective && ctx.ParentInstance is null && property != XamlLanguage.Key)
             {
                 // The parent instance is null, so we're in a creation directives. Forward refs
                 // aren't allowed here.
@@ -2236,7 +2236,7 @@ namespace System.Xaml
 
         private void CompleteNameReferences()
         {
-            if (_nameFixupGraph == null)
+            if (_nameFixupGraph is null)
             {
                 return;
             }
@@ -2247,9 +2247,9 @@ namespace System.Xaml
             foreach (NameFixupToken token in simpleFixups)
             {
                 object namedObject = token.ResolveName(token.NeededNames[0]);
-                if (namedObject == null)
+                if (namedObject is null)
                 {
-                    if (unresolvedRefs == null)
+                    if (unresolvedRefs is null)
                     {
                         unresolvedRefs = new List<NameFixupToken>();
                     }
@@ -2257,7 +2257,7 @@ namespace System.Xaml
                 }
                 // Only process if we haven't found any unresolved references. If we have,
                 // we're going to throw, so no point in processing.
-                else if (unresolvedRefs == null)
+                else if (unresolvedRefs is null)
                 {
                     token.ReferencedObject = namedObject;
                     token.NeededNames.RemoveAt(0);
@@ -2368,7 +2368,7 @@ namespace System.Xaml
 
         bool ICheckIfInitialized.IsFullyInitialized(object instance)
         {
-            if (instance == null)
+            if (instance is null)
             {
                 return true;
             }
@@ -2379,7 +2379,7 @@ namespace System.Xaml
                 {
                     return false;
                 }
-                return _nameFixupGraph == null || !_nameFixupGraph.HasUnresolvedOrPendingChildren(instance);
+                return _nameFixupGraph is null || !_nameFixupGraph.HasUnresolvedOrPendingChildren(instance);
             }
             else
             {
@@ -2387,7 +2387,7 @@ namespace System.Xaml
                 // and remove those dependencies. But we still want to be able to inform MEs/TCs that
                 // the named objects they're getting aren't actually fully initialized. So we save a list
                 // of incompletely initialized objects at the point we started completing references.
-                return _nameFixupGraph == null || !_nameFixupGraph.WasUninitializedAtEndOfParse(instance);
+                return _nameFixupGraph is null || !_nameFixupGraph.WasUninitializedAtEndOfParse(instance);
             }
         }
 

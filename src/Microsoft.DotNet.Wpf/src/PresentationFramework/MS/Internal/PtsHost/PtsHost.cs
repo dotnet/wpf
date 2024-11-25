@@ -56,7 +56,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         internal void EnterContext(PtsContext ptsContext)
         {
-            Invariant.Assert(_ptsContext == null);
+            Invariant.Assert(_ptsContext is null);
             _ptsContext = ptsContext;
         }
         internal void LeaveContext(PtsContext ptsContext)
@@ -2038,7 +2038,7 @@ namespace MS.Internal.PtsHost
 
                 LineBase lineBase = PtsContext.HandleToObject(pfsline) as LineBase;
 
-                if(lineBase == null)
+                if(lineBase is null)
                 {
                     LineBreakpoint lineBreakpoint = PtsContext.HandleToObject(pfsline) as LineBreakpoint;
                     PTS.ValidateHandle(lineBreakpoint);

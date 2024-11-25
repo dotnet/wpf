@@ -33,7 +33,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             {
                 returnImageSource = GetSmallIconImageSource(imageSource);
 
-                if (returnImageSource == null)
+                if (returnImageSource is null)
                 {
                     returnImageSource = imageSource;
                 }

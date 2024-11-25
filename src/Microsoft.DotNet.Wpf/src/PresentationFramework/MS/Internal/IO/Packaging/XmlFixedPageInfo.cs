@@ -64,7 +64,7 @@ namespace MS.Internal.IO.Packaging
             {
                 return null;
             }
-            if (GlyphRunList[position] == null)
+            if (GlyphRunList[position] is null)
             {
                 GlyphRunList[position] = new XmlGlyphRunInfo(NodeList[position]);
             }
@@ -110,7 +110,7 @@ namespace MS.Internal.IO.Packaging
         {
             get
             {
-                if (_glyphRunList == null)
+                if (_glyphRunList is null)
                 {
                     _glyphRunList = new XmlGlyphRunInfo[NodeList.Count];
                 }
@@ -129,7 +129,7 @@ namespace MS.Internal.IO.Packaging
         {
             get
             {
-                if (_nodeList == null)
+                if (_nodeList is null)
                 {
                     string glyphRunQuery = $".//*[namespace-uri()='{ElementTableKey.FixedMarkupNamespace}' and local-name()='{_glyphRunName}']";
                     _nodeList = _pageNode.SelectNodes(glyphRunQuery);

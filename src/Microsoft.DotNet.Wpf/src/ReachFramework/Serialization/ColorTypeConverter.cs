@@ -156,7 +156,7 @@ namespace System.Windows.Xps.Serialization
 
             string colorString;
 
-            if (color.ColorContext == null)
+            if (color.ColorContext is null)
             {
                 colorString = color.ToString(culture);
 

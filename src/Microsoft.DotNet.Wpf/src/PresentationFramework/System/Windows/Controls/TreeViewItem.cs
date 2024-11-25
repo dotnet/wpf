@@ -685,7 +685,7 @@ namespace System.Windows.Controls
                 if (treeView != null)
                 {
                     FrameworkElement startingContainer = this.HeaderElement;
-                    if (startingContainer == null)
+                    if (startingContainer is null)
                     {
                         startingContainer = this;
                     }
@@ -818,7 +818,7 @@ namespace System.Windows.Controls
 
             // if there's no template yet, return the fallback
             FrameworkTemplate template = TemplateInternal;
-            if (template == null)
+            if (template is null)
                 return this;
 
             // if the template doesn't define the header part, we do something
@@ -1007,7 +1007,7 @@ namespace System.Windows.Controls
         /// </summary>
         private static void ExpandRecursive(TreeViewItem item)
         {
-            if (item == null)
+            if (item is null)
             {
                 return;
             }

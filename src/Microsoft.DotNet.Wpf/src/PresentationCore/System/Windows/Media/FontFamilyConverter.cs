@@ -90,7 +90,7 @@ namespace System.Windows.Media
             {
                 string s = o as string;
 
-                if (s == null || s.Length == 0)
+                if (s is null || s.Length == 0)
                 {
                     throw GetConvertFromException(s);
                 }
@@ -137,7 +137,7 @@ namespace System.Windows.Media
             ArgumentNullException.ThrowIfNull(value);
 
             FontFamily fontFamily = value as FontFamily;
-            if (fontFamily == null)
+            if (fontFamily is null)
             {
                 throw new ArgumentException(SR.Format(SR.General_Expected_Type, "FontFamily"), "value");
             }
@@ -207,7 +207,7 @@ namespace System.Windows.Media
                         }
 
                         // Use global ui as a last resort.
-                        if (name == null)
+                        if (name is null)
                             name = FontFamily.GlobalUI;
                     }
 

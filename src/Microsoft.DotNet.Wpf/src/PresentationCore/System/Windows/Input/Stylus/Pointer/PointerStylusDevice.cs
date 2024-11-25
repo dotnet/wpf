@@ -543,7 +543,7 @@ namespace System.Windows.Input.StylusPointer
                 throw new System.ComponentModel.InvalidEnumArgumentException("captureMode", (int)captureMode, typeof(CaptureMode));
             }
 
-            if (element == null)
+            if (element is null)
             {
                 captureMode = CaptureMode.None;
             }
@@ -679,7 +679,7 @@ namespace System.Windows.Input.StylusPointer
             VerifyAccess();
 
             // Fake up an empty one if we have to.
-            if (_currentStylusPoints == null)
+            if (_currentStylusPoints is null)
             {
                 return new StylusPointCollection(_tabletDevice.StylusPointDescription);
             }
@@ -694,7 +694,7 @@ namespace System.Windows.Input.StylusPointer
         {
             ArgumentNullException.ThrowIfNull(subsetToReformatTo);
             // Fake up an empty one if we have to.
-            if (_currentStylusPoints == null)
+            if (_currentStylusPoints is null)
             {
                 return new StylusPointCollection(subsetToReformatTo);
             }
@@ -737,7 +737,7 @@ namespace System.Windows.Input.StylusPointer
             // Verify that we have a valid PresentationSource with a valid RootVisual
             // - if we don't we won't be able to invoke ClientToRoot or TranslatePoint and 
             //   we will just return 0,0
-            if (relativePresentationSource == null || relativePresentationSource.RootVisual == null)
+            if (relativePresentationSource is null || relativePresentationSource.RootVisual is null)
             {
                 return new Point(0, 0);
             }

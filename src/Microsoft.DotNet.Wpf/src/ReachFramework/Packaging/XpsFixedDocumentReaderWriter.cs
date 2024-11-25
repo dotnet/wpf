@@ -302,7 +302,7 @@ namespace System.Windows.Xps.Packaging
         {
             get
             {
-                if( _printTicket == null )
+                if( _printTicket is null )
                 {
                     _printTicket = CurrentXpsManager.EnsurePrintTicket( Uri );
                 }
@@ -975,7 +975,7 @@ namespace System.Windows.Xps.Packaging
         {
             PackagePart pagePart = CurrentXpsManager.GetPart(pageUri);
 
-            if (pagePart == null)
+            if (pagePart is null)
             {
                  throw new XpsPackagingException(SR.ReachPackaging_PartNotFound);
             }
@@ -1002,7 +1002,7 @@ namespace System.Windows.Xps.Packaging
         void
         EnsureThumbnail()
         {
-            if( _thumbnail == null )
+            if( _thumbnail is null )
             {
                 _thumbnail = CurrentXpsManager.EnsureThumbnail( this, _metroPart );
             }
@@ -1118,7 +1118,7 @@ namespace System.Windows.Xps.Packaging
         {
             PackagePart sigDefPart =
                 CurrentXpsManager.GetSignatureDefinitionPart(Uri);
-            if( sigDefPart == null )
+            if( sigDefPart is null )
             {
                 sigDefPart = CurrentXpsManager.AddSignatureDefinitionPart( _metroPart );
             }

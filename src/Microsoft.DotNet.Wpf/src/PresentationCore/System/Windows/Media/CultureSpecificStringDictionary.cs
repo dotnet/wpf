@@ -256,7 +256,7 @@ namespace System.Windows.Media
             get
             {
                 XmlLanguage language = TryConvertKey(key);
-                if (language == null)
+                if (language is null)
                     return null;
 
                 return _innerDictionary[language];
@@ -292,7 +292,7 @@ namespace System.Windows.Media
         bool SC.IDictionary.Contains(object key)
         {
             XmlLanguage language = TryConvertKey(key);
-            if (language == null)
+            if (language is null)
                 return false;
 
             return _innerDictionary.ContainsKey(language);
@@ -320,7 +320,7 @@ namespace System.Windows.Media
         private string ConvertValue(object value)
         {
             string s = value as string;
-            if (s == null)
+            if (s is null)
             {
                 ArgumentNullException.ThrowIfNull(value);
 
@@ -333,7 +333,7 @@ namespace System.Windows.Media
         private XmlLanguage ConvertKey(object key)
         {
             XmlLanguage language = TryConvertKey(key);
-            if (language == null)
+            if (language is null)
             {
                 ArgumentNullException.ThrowIfNull(key);
 
@@ -404,7 +404,7 @@ namespace System.Windows.Media
                 // If there is no current item a non-generic IEnumerator should throw an exception,
                 // but a generic IEnumerator<T> is not required to. Therefore we need to check for
                 // this case here by checking for a null Key.
-                if (entry.Key == null)
+                if (entry.Key is null)
                     throw new InvalidOperationException(SR.Enumerator_VerifyContext);
 
                 return entry;

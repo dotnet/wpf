@@ -77,7 +77,7 @@ static class WpfWebRequestHelper
 
         // It is not clear whether WebRequest.Create() can ever return null, but v1 code make this check in
         // a couple of places, so it is still done here, just in case.
-        if(request == null)
+        if(request is null)
         {
             // Unfortunately, there is no appropriate exception string in PresentationCore, and for v3.5 
             // we have a total resource freeze. So just report WebExceptionStatus.RequestCanceled:
@@ -125,11 +125,11 @@ static class WpfWebRequestHelper
         if (httpRequest != null)
         {
             // Setting CachePolicy to the default level if it is null.
-            if (request.CachePolicy == null || request.CachePolicy.Level != RequestCacheLevel.Default)
+            if (request.CachePolicy is null || request.CachePolicy.Level != RequestCacheLevel.Default)
             {
                 if (isRefresh)
                 {
-                    if (_httpRequestCachePolicyRefresh == null)
+                    if (_httpRequestCachePolicyRefresh is null)
                     {
                         _httpRequestCachePolicyRefresh = new HttpRequestCachePolicy(HttpRequestCacheLevel.Refresh);
                     }
@@ -137,7 +137,7 @@ static class WpfWebRequestHelper
                 }
                 else
                 {
-                    if (_httpRequestCachePolicy == null)
+                    if (_httpRequestCachePolicy is null)
                     {
                         _httpRequestCachePolicy = new HttpRequestCachePolicy();
                     }
@@ -153,7 +153,7 @@ static class WpfWebRequestHelper
     {
         get
         {
-            if (_defaultUserAgent == null)
+            if (_defaultUserAgent is null)
             {
                 _defaultUserAgent = MS.Win32.UnsafeNativeMethods.ObtainUserAgentString();
             }
@@ -199,7 +199,7 @@ static class WpfWebRequestHelper
         
         // It is not clear whether WebRequest.GetRespone() can ever return null, but some of the v1 code had
         // this check, so it is added here just in case.
-        if (response == null)
+        if (response is null)
         {
             Uri requestUri = BaseUriHelper.PackAppBaseUri.MakeRelativeUri(request.RequestUri);
             throw new IOException(SR.Format(SR.GetResponseFailed, requestUri.ToString()));
@@ -215,7 +215,7 @@ static class WpfWebRequestHelper
             throw new ArgumentException();
         // It is not clear whether WebRequest.GetRespone() can ever return null, but some of the v1 code had
         // this check, so it is added here just in case.
-        if (response == null)
+        if (response is null)
         {
             Uri requestUri = BaseUriHelper.PackAppBaseUri.MakeRelativeUri(request.RequestUri);
             throw new IOException(SR.Format(SR.GetResponseFailed, requestUri.ToString()));

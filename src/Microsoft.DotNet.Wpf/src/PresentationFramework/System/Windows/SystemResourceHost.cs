@@ -22,7 +22,7 @@ namespace System.Windows
         {
             get
             {
-                if (_instance == null)
+                if (_instance is null)
                 {
                     _instance = new SystemResourceHost();
                 }

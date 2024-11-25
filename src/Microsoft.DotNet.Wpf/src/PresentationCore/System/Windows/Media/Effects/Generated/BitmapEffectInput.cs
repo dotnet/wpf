@@ -247,7 +247,7 @@ namespace System.Windows.Media.Effects
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
             // of your app. 
-            Debug.Assert(s_Input == null || s_Input.IsFrozen,
+            Debug.Assert(s_Input is null || s_Input.IsFrozen,
                 "Detected context bound default value BitmapEffectInput.s_Input");
 
 

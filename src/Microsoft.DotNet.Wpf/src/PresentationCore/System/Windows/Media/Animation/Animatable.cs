@@ -313,7 +313,7 @@ namespace System.Windows.Media.Animation
         {
             object reference = StoredWeakReferenceField.GetValue(this);
 
-            if (reference == null)
+            if (reference is null)
             {
                 reference = new WeakReference(this);
 

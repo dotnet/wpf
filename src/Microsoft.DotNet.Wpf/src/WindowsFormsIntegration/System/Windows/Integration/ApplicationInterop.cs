@@ -149,7 +149,7 @@ namespace System.Windows.Forms.Integration
                     }
                 }
             }
-            else if (msg.message != 0xc2a3) /* ControlFromHWnd == null */
+            else if (msg.message != 0xc2a3) /* ControlFromHWnd is null */
             {
                 // We are only letting the hosted control do preprocess message when it
                 // isn't active. All other WF controls will get PreProcessMessage at 
@@ -203,7 +203,7 @@ namespace System.Windows.Forms.Integration
         {
             ModelessWindowFilter windowFilter = null;
 
-            if (window == null)
+            if (window is null)
             {
                 return null;
             }
@@ -262,7 +262,7 @@ namespace System.Windows.Forms.Integration
         bool _inPreFilterMessage;
         public bool PreFilterMessage(ref SWF.Message msg)
         {
-            if (_window == null || !_window.IsActive)
+            if (_window is null || !_window.IsActive)
             {
                 return false;
             }

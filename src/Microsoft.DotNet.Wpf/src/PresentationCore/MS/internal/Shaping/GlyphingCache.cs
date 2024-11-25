@@ -97,7 +97,7 @@ namespace MS.Internal.Shaping
         private TypefaceMap Lookup(Typeface key)
         {
             TypefaceMap typefaceMap = _sizeLimitedCache.Get(key);
-            if (typefaceMap == null)
+            if (typefaceMap is null)
             {                
                 typefaceMap = new TypefaceMap(
                     key.FontFamily, 

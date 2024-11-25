@@ -231,7 +231,7 @@ namespace System.Windows.Controls.Primitives
                 DataGridColumn column = ColumnFromContainer(header);
                 Debug.Assert(column != null, "We shouldn't have generated this column header if we don't have a column.");
 
-                if (header.Column == null)
+                if (header.Column is null)
                 {
                     // A null column means this is a fresh container.  PrepareContainer will also be called simply if the column's
                     // Header property has changed and this container needs to be given a new item.  In that case it'll already be tracked.
@@ -494,7 +494,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         internal void OnHeaderMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            if (ParentDataGrid == null)
+            if (ParentDataGrid is null)
             {
                 return;
             }
@@ -689,7 +689,7 @@ namespace System.Windows.Controls.Primitives
 
             double height = 0.0;
 
-            if (_columnHeaderDragIndicator == null)
+            if (_columnHeaderDragIndicator is null)
             {
                 height = _draggingSrcColumnHeader.RenderSize.Height;
             }
@@ -958,7 +958,7 @@ namespace System.Windows.Controls.Primitives
             {
                 displayIndex++;
                 DataGridColumnHeader currentHeader = dataGrid.ColumnHeaderFromDisplayIndex(i);
-                if (currentHeader == null)
+                if (currentHeader is null)
                 {
                     DataGridColumn column = dataGrid.ColumnFromDisplayIndex(i);
                     if (!column.IsVisible)
@@ -1042,7 +1042,7 @@ namespace System.Windows.Controls.Primitives
         {
             get
             {
-                if (_parentDataGrid == null)
+                if (_parentDataGrid is null)
                 {
                     _parentDataGrid = DataGridHelper.FindParent<DataGrid>(this);
                 }

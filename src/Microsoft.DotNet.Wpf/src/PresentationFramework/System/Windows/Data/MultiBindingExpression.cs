@@ -182,7 +182,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
     void AttachToContext(bool lastChance)
     {
         DependencyObject target = TargetElement;
-        if (target == null)
+        if (target is null)
             return;
 
         Debug.Assert(ParentMultiBinding.Converter != null || !String.IsNullOrEmpty(EffectiveStringFormat),
@@ -191,7 +191,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         bool isExtendedTraceEnabled = TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.AttachToContext);
 
         _converter = ParentMultiBinding.Converter;
-        if (_converter == null && String.IsNullOrEmpty(EffectiveStringFormat) && TraceData.IsEnabled)
+        if (_converter is null && String.IsNullOrEmpty(EffectiveStringFormat) && TraceData.IsEnabled)
         {
             TraceData.TraceAndNotify(TraceEventType.Error, TraceData.MultiBindingHasNoConverter, this,
                 traceParameters: new object[] { ParentMultiBinding });
@@ -277,7 +277,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         {
             ValidationError validationError = base.ValidationError;
 
-            if (validationError == null)
+            if (validationError is null)
             {
                 for ( int i = 0; i < MutableBindingExpressions.Count; i++ )
                 {
@@ -356,7 +356,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
             return false;
 
         DependencyObject target = TargetElement;
-        if (target == null)
+        if (target is null)
             return false;
 
         // listen for lost focus
@@ -508,7 +508,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
     private bool ConvertProposedValueImpl(object value, out object result)
     {
         DependencyObject target = TargetElement;
-        if (target == null)
+        if (target is null)
         {
             result = DependencyProperty.UnsetValue;
             return false;
@@ -529,7 +529,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         }
 
         object[] values = (object[])result;
-        if (values == null)
+        if (values is null)
         {
             if (TraceData.IsEnabled)
             {
@@ -616,7 +616,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
 
     object GetValuesForChildBindings(object rawValue)
     {
-        if (Converter == null)
+        if (Converter is null)
         {
             if (TraceData.IsEnabled)
             {
@@ -890,7 +890,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
 
         // apply conversion
         object conversionResult = GetValuesForChildBindings(rawValue);
-        if (IsDetached || conversionResult == DependencyProperty.UnsetValue || conversionResult == null)
+        if (IsDetached || conversionResult == DependencyProperty.UnsetValue || conversionResult is null)
         {
             return false;
         }
@@ -949,7 +949,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
     // Return the object from which the given value was obtained, if possible
     internal override object GetSourceItem(object newValue)
     {
-        if (newValue == null)
+        if (newValue is null)
             return null;        // this avoids false positive results
 
         // It's impossible to find the source item in the general case - the value
@@ -1000,7 +1000,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
     BindingExpressionBase AttachBindingExpression(int i, bool replaceExisting)
     {
         DependencyObject target = TargetElement;
-        if (target == null)
+        if (target is null)
             return null;
 
         BindingBase binding = ParentMultiBinding.Bindings[i];
@@ -1152,7 +1152,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         NeedsDataTransfer = false;
 
         DependencyObject target = TargetElement;
-        if (target == null)
+        if (target is null)
             goto Done;
 
         bool isExtendedTraceEnabled = TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.Transfer);
@@ -1223,7 +1223,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         }
 
         // apply string formatting
-        if (EffectiveStringFormat == null || preFormattedValue == Binding.DoNothing || preFormattedValue == DependencyProperty.UnsetValue)
+        if (EffectiveStringFormat is null || preFormattedValue == Binding.DoNothing || preFormattedValue == DependencyProperty.UnsetValue)
         {
             value = preFormattedValue;
         }

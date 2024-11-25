@@ -246,7 +246,7 @@ namespace MS.Internal.FontFace
             BasedFriendlyName hashKey = new BasedFriendlyName(_baseUri, _friendlyName);
             CanonicalFontFamilyReference[] canonicalReferences = TypefaceMetricsCache.ReadonlyLookup(hashKey) as CanonicalFontFamilyReference[];
 
-            if (canonicalReferences == null)
+            if (canonicalReferences is null)
             {
                 // We need to construct a new array.
                 canonicalReferences = new CanonicalFontFamilyReference[count];
@@ -371,7 +371,7 @@ namespace MS.Internal.FontFace
             CanonicalFontFamilyReference canonicalReference = TypefaceMetricsCache.ReadonlyLookup(hashKey) as CanonicalFontFamilyReference;
 
             // Do we already have a cached font family reference?
-            if (canonicalReference == null)
+            if (canonicalReference is null)
             {
                 // Not in cache. Construct a new font family reference.
                 canonicalReference = CanonicalFontFamilyReference.Create(_baseUri, normalizedString);

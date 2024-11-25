@@ -22,7 +22,7 @@ namespace System.Windows.Shell
         {
             get
             {
-                if (s_empty == null)
+                if (s_empty is null)
                 {
                     var collection = new ThumbButtonInfoCollection();
                     collection.Freeze();

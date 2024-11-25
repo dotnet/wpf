@@ -117,12 +117,12 @@ namespace System.Windows.Controls
             DateTime? currentDate = requestedDate;
             CalendarDateRange range = null;
 
-            if (requestedDate == null)
+            if (requestedDate is null)
             {
                 return null;
             }
 
-            if ((range = GetContainingDateRange((DateTime)currentDate)) == null)
+            if ((range = GetContainingDateRange((DateTime)currentDate)) is null)
             {
                 return requestedDate;
             }

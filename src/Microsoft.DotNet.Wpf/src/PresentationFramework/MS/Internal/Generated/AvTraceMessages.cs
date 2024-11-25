@@ -20,7 +20,7 @@ namespace MS.Internal
 		static AvTraceDetails _CannotCreateDefaultValueConverter;
         static public AvTraceDetails CannotCreateDefaultValueConverter(params object[] args)
         {
-            if ( _CannotCreateDefaultValueConverter == null )
+            if ( _CannotCreateDefaultValueConverter is null )
             {
                 _CannotCreateDefaultValueConverter = new AvTraceDetails(1, new string[] { "Cannot create default converter to perform '{2}' conversions between types '{0}' and '{1}'. Consider using Converter property of Binding." } );
             }
@@ -32,7 +32,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _NoMentor == null )
+                if ( _NoMentor is null )
                 {
                     _NoMentor = new AvTraceDetails(2, new string[] { "Cannot find governing FrameworkElement or FrameworkContentElement for target element." } );
                 }
@@ -46,7 +46,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _NoDataContext == null )
+                if ( _NoDataContext is null )
                 {
                     _NoDataContext = new AvTraceDetails(3, new string[] { "UpdateCannot find element that provides DataContext." } );
                 }
@@ -58,7 +58,7 @@ namespace MS.Internal
 		static AvTraceDetails _NoSource;
         static public AvTraceDetails NoSource(params object[] args)
         {
-            if ( _NoSource == null )
+            if ( _NoSource is null )
             {
                 _NoSource = new AvTraceDetails(4, new string[] { "Cannot find source for binding with reference '{0}'." } );
             }
@@ -70,7 +70,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _BadValueAtTransfer == null )
+                if ( _BadValueAtTransfer is null )
                 {
                     _BadValueAtTransfer = new AvTraceDetails(5, new string[] { "Value produced by BindingExpression is not valid for target property." } );
                 }
@@ -82,7 +82,7 @@ namespace MS.Internal
 		static AvTraceDetails _BadConverterForTransfer;
         static public AvTraceDetails BadConverterForTransfer(params object[] args)
         {
-            if ( _BadConverterForTransfer == null )
+            if ( _BadConverterForTransfer is null )
             {
                 _BadConverterForTransfer = new AvTraceDetails(6, new string[] { "'{0}' converter failed to convert value '{1}' (type '{2}'); fallback value will be used, if available." } );
             }
@@ -92,7 +92,7 @@ namespace MS.Internal
 		static AvTraceDetails _BadConverterForUpdate;
         static public AvTraceDetails BadConverterForUpdate(params object[] args)
         {
-            if ( _BadConverterForUpdate == null )
+            if ( _BadConverterForUpdate is null )
             {
                 _BadConverterForUpdate = new AvTraceDetails(7, new string[] { "ConvertBack cannot convert value '{0}' (type '{1}')." } );
             }
@@ -104,7 +104,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _WorkerUpdateFailed == null )
+                if ( _WorkerUpdateFailed is null )
                 {
                     _WorkerUpdateFailed = new AvTraceDetails(8, new string[] { "Cannot save value from target back to source." } );
                 }
@@ -118,7 +118,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _RequiresExplicitCulture == null )
+                if ( _RequiresExplicitCulture is null )
                 {
                     _RequiresExplicitCulture = new AvTraceDetails(9, new string[] { "Binding for property cannot use the target element's Language for conversion; if a culture is required, ConverterCulture must be explicitly specified on the Binding." } );
                 }
@@ -132,7 +132,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _NoValueToTransfer == null )
+                if ( _NoValueToTransfer is null )
                 {
                     _NoValueToTransfer = new AvTraceDetails(10, new string[] { "Cannot retrieve value using the binding and no valid fallback value exists; using default instead." } );
                 }
@@ -144,7 +144,7 @@ namespace MS.Internal
 		static AvTraceDetails _FallbackConversionFailed;
         static public AvTraceDetails FallbackConversionFailed(params object[] args)
         {
-            if ( _FallbackConversionFailed == null )
+            if ( _FallbackConversionFailed is null )
             {
                 _FallbackConversionFailed = new AvTraceDetails(11, new string[] { "Fallback value '{0}' (type '{1}') cannot be converted for use in '{2}' (type '{3}')." } );
             }
@@ -154,7 +154,7 @@ namespace MS.Internal
 		static AvTraceDetails _TargetNullValueConversionFailed;
         static public AvTraceDetails TargetNullValueConversionFailed(params object[] args)
         {
-            if ( _TargetNullValueConversionFailed == null )
+            if ( _TargetNullValueConversionFailed is null )
             {
                 _TargetNullValueConversionFailed = new AvTraceDetails(12, new string[] { "TargetNullValue '{0}' (type '{1}') cannot be converted for use in '{2}' (type '{3}')." } );
             }
@@ -164,7 +164,7 @@ namespace MS.Internal
 		static AvTraceDetails _BindingGroupNameMatchFailed;
         static public AvTraceDetails BindingGroupNameMatchFailed(params object[] args)
         {
-            if ( _BindingGroupNameMatchFailed == null )
+            if ( _BindingGroupNameMatchFailed is null )
             {
                 _BindingGroupNameMatchFailed = new AvTraceDetails(13, new string[] { "No BindingGroup found with name matching '{0}'." } );
             }
@@ -174,7 +174,7 @@ namespace MS.Internal
 		static AvTraceDetails _BindingGroupWrongProperty;
         static public AvTraceDetails BindingGroupWrongProperty(params object[] args)
         {
-            if ( _BindingGroupWrongProperty == null )
+            if ( _BindingGroupWrongProperty is null )
             {
                 _BindingGroupWrongProperty = new AvTraceDetails(14, new string[] { "BindingGroup used as a value of property '{0}' on object of type '{1}'.  This may disable its normal behavior." } );
             }
@@ -186,7 +186,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _BindingGroupMultipleInheritance == null )
+                if ( _BindingGroupMultipleInheritance is null )
                 {
                     _BindingGroupMultipleInheritance = new AvTraceDetails(15, new string[] { "BindingGroup used as a value of multiple properties.  This disables its normal behavior." } );
                 }
@@ -198,7 +198,7 @@ namespace MS.Internal
 		static AvTraceDetails _SharesProposedValuesRequriesImplicitBindingGroup;
         static public AvTraceDetails SharesProposedValuesRequriesImplicitBindingGroup(params object[] args)
         {
-            if ( _SharesProposedValuesRequriesImplicitBindingGroup == null )
+            if ( _SharesProposedValuesRequriesImplicitBindingGroup is null )
             {
                 _SharesProposedValuesRequriesImplicitBindingGroup = new AvTraceDetails(16, new string[] { "Binding expression '{0}' with BindingGroupName '{1}' has joined BindingGroup '{2}' with SharesProposedValues='true'.  The SharesProposedValues feature only works for binding expressions that implicitly join a binding group." } );
             }
@@ -208,7 +208,7 @@ namespace MS.Internal
 		static AvTraceDetails _CannotGetClrRawValue;
         static public AvTraceDetails CannotGetClrRawValue(params object[] args)
         {
-            if ( _CannotGetClrRawValue == null )
+            if ( _CannotGetClrRawValue is null )
             {
                 _CannotGetClrRawValue = new AvTraceDetails(17, new string[] { "Cannot get '{0}' value (type '{1}') from '{2}' (type '{3}')." } );
             }
@@ -218,7 +218,7 @@ namespace MS.Internal
 		static AvTraceDetails _CannotSetClrRawValue;
         static public AvTraceDetails CannotSetClrRawValue(params object[] args)
         {
-            if ( _CannotSetClrRawValue == null )
+            if ( _CannotSetClrRawValue is null )
             {
                 _CannotSetClrRawValue = new AvTraceDetails(18, new string[] { "'{3}' is not a valid value for '{0}' of '{2}'." } );
             }
@@ -230,7 +230,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _MissingDataItem == null )
+                if ( _MissingDataItem is null )
                 {
                     _MissingDataItem = new AvTraceDetails(19, new string[] { "BindingExpression has no source data item. This could happen when currency is moved to a null data item or moved off the list." } );
                 }
@@ -244,7 +244,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _MissingInfo == null )
+                if ( _MissingInfo is null )
                 {
                     _MissingInfo = new AvTraceDetails(20, new string[] { "BindingExpression cannot retrieve value due to missing information." } );
                 }
@@ -258,7 +258,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _NullDataItem == null )
+                if ( _NullDataItem is null )
                 {
                     _NullDataItem = new AvTraceDetails(21, new string[] { "BindingExpression cannot retrieve value from null data item. This could happen when binding is detached or when binding to a Nullable type that has no value." } );
                 }
@@ -270,7 +270,7 @@ namespace MS.Internal
 		static AvTraceDetails _DefaultValueConverterFailed;
         static public AvTraceDetails DefaultValueConverterFailed(params object[] args)
         {
-            if ( _DefaultValueConverterFailed == null )
+            if ( _DefaultValueConverterFailed is null )
             {
                 _DefaultValueConverterFailed = new AvTraceDetails(22, new string[] { "Cannot convert '{0}' from type '{1}' to type '{2}' with default conversions; consider using Converter property of Binding." } );
             }
@@ -280,7 +280,7 @@ namespace MS.Internal
 		static AvTraceDetails _DefaultValueConverterFailedForCulture;
         static public AvTraceDetails DefaultValueConverterFailedForCulture(params object[] args)
         {
-            if ( _DefaultValueConverterFailedForCulture == null )
+            if ( _DefaultValueConverterFailedForCulture is null )
             {
                 _DefaultValueConverterFailedForCulture = new AvTraceDetails(23, new string[] { "Cannot convert '{0}' from type '{1}' to type '{2}' for '{3}' culture with default conversions; consider using Converter property of Binding." } );
             }
@@ -290,7 +290,7 @@ namespace MS.Internal
 		static AvTraceDetails _StyleAndStyleSelectorDefined;
         static public AvTraceDetails StyleAndStyleSelectorDefined(params object[] args)
         {
-            if ( _StyleAndStyleSelectorDefined == null )
+            if ( _StyleAndStyleSelectorDefined is null )
             {
                 _StyleAndStyleSelectorDefined = new AvTraceDetails(24, new string[] { "Both '{0}Style' and '{0}StyleSelector' are set;  '{0}StyleSelector' will be ignored." } );
             }
@@ -300,7 +300,7 @@ namespace MS.Internal
 		static AvTraceDetails _TemplateAndTemplateSelectorDefined;
         static public AvTraceDetails TemplateAndTemplateSelectorDefined(params object[] args)
         {
-            if ( _TemplateAndTemplateSelectorDefined == null )
+            if ( _TemplateAndTemplateSelectorDefined is null )
             {
                 _TemplateAndTemplateSelectorDefined = new AvTraceDetails(25, new string[] { "Both '{0}Template' and '{0}TemplateSelector' are set;  '{0}TemplateSelector' will be ignored." } );
             }
@@ -312,7 +312,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _ItemTemplateForDirectItem == null )
+                if ( _ItemTemplateForDirectItem is null )
                 {
                     _ItemTemplateForDirectItem = new AvTraceDetails(26, new string[] { "ItemTemplate and ItemTemplateSelector are ignored for items already of the ItemsControl's container type" } );
                 }
@@ -324,7 +324,7 @@ namespace MS.Internal
 		static AvTraceDetails _BadMultiConverterForUpdate;
         static public AvTraceDetails BadMultiConverterForUpdate(params object[] args)
         {
-            if ( _BadMultiConverterForUpdate == null )
+            if ( _BadMultiConverterForUpdate is null )
             {
                 _BadMultiConverterForUpdate = new AvTraceDetails(27, new string[] { "'{0}' MultiValueConverter failed to convert back value '{1}' (type '{2}'). Check the converter's ConvertBack method." } );
             }
@@ -336,7 +336,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _MultiValueConverterMissingForTransfer == null )
+                if ( _MultiValueConverterMissingForTransfer is null )
                 {
                     _MultiValueConverterMissingForTransfer = new AvTraceDetails(28, new string[] { "MultiBinding failed because it has no valid Converter." } );
                 }
@@ -350,7 +350,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _MultiValueConverterMissingForUpdate == null )
+                if ( _MultiValueConverterMissingForUpdate is null )
                 {
                     _MultiValueConverterMissingForUpdate = new AvTraceDetails(29, new string[] { "MultiBinding cannot update value on source item because there is no valid Converter." } );
                 }
@@ -364,7 +364,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _MultiValueConverterMismatch == null )
+                if ( _MultiValueConverterMismatch is null )
                 {
                     _MultiValueConverterMismatch = new AvTraceDetails(30, new string[] { "MultiValueConverter did not return the same number of values as the count of inner bindings." } );
                 }
@@ -378,7 +378,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _MultiBindingHasNoConverter == null )
+                if ( _MultiBindingHasNoConverter is null )
                 {
                     _MultiBindingHasNoConverter = new AvTraceDetails(31, new string[] { "Cannot set MultiBinding because MultiValueConverter must be specified." } );
                 }
@@ -390,7 +390,7 @@ namespace MS.Internal
 		static AvTraceDetails _UnsetValueInMultiBindingExpressionUpdate;
         static public AvTraceDetails UnsetValueInMultiBindingExpressionUpdate(params object[] args)
         {
-            if ( _UnsetValueInMultiBindingExpressionUpdate == null )
+            if ( _UnsetValueInMultiBindingExpressionUpdate is null )
             {
                 _UnsetValueInMultiBindingExpressionUpdate = new AvTraceDetails(32, new string[] { "'{0}' MultiValueConverter returned UnsetValue after converting '{1}' for source binding '{2}' (type '{3}')." } );
             }
@@ -402,7 +402,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _ObjectDataProviderHasNoSource == null )
+                if ( _ObjectDataProviderHasNoSource is null )
                 {
                     _ObjectDataProviderHasNoSource = new AvTraceDetails(33, new string[] { "ObjectDataProvider needs either an ObjectType or ObjectInstance." } );
                 }
@@ -416,7 +416,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _ObjDPCreateFailed == null )
+                if ( _ObjDPCreateFailed is null )
                 {
                     _ObjDPCreateFailed = new AvTraceDetails(34, new string[] { "ObjectDataProvider cannot create object" } );
                 }
@@ -430,7 +430,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _ObjDPInvokeFailed == null )
+                if ( _ObjDPInvokeFailed is null )
                 {
                     _ObjDPInvokeFailed = new AvTraceDetails(35, new string[] { "ObjectDataProvider: Failure trying to invoke method on type" } );
                 }
@@ -444,7 +444,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _RefPreviousNotInContext == null )
+                if ( _RefPreviousNotInContext is null )
                 {
                     _RefPreviousNotInContext = new AvTraceDetails(36, new string[] { "Cannot find previous element for use as RelativeSource because there is no parent in generated context." } );
                 }
@@ -458,7 +458,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _RefNoWrapperInChildren == null )
+                if ( _RefNoWrapperInChildren is null )
                 {
                     _RefNoWrapperInChildren = new AvTraceDetails(37, new string[] { "Cannot find previous element for use as RelativeSource because children cannot be found for parent element." } );
                 }
@@ -472,7 +472,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _RefAncestorTypeNotSpecified == null )
+                if ( _RefAncestorTypeNotSpecified is null )
                 {
                     _RefAncestorTypeNotSpecified = new AvTraceDetails(38, new string[] { "Reference error: cannot find ancestor element; no AncestorType was specified on RelativeSource." } );
                 }
@@ -486,7 +486,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _RefAncestorLevelInvalid == null )
+                if ( _RefAncestorLevelInvalid is null )
                 {
                     _RefAncestorLevelInvalid = new AvTraceDetails(39, new string[] { "Reference error: cannot find ancestor element; AncestorLevel on RelativeSource must be greater than 0." } );
                 }
@@ -498,7 +498,7 @@ namespace MS.Internal
 		static AvTraceDetails _ClrReplaceItem;
         static public AvTraceDetails ClrReplaceItem(params object[] args)
         {
-            if ( _ClrReplaceItem == null )
+            if ( _ClrReplaceItem is null )
             {
                 _ClrReplaceItem = new AvTraceDetails(40, new string[] { "BindingExpression path error: '{0}' property not found on '{2}' '{1}'." } );
             }
@@ -508,7 +508,7 @@ namespace MS.Internal
 		static AvTraceDetails _NullItem;
         static public AvTraceDetails NullItem(params object[] args)
         {
-            if ( _NullItem == null )
+            if ( _NullItem is null )
             {
                 _NullItem = new AvTraceDetails(41, new string[] { "BindingExpression path error: '{0}' property not found for '{1}' because data item is null. This could happen because the data provider has not produced any data yet." } );
             }
@@ -518,7 +518,7 @@ namespace MS.Internal
 		static AvTraceDetails _PlaceholderItem;
         static public AvTraceDetails PlaceholderItem(params object[] args)
         {
-            if ( _PlaceholderItem == null )
+            if ( _PlaceholderItem is null )
             {
                 _PlaceholderItem = new AvTraceDetails(42, new string[] { "BindingExpression path error: '{0}' property not found for '{1}' because data item is the NewItemPlaceholder." } );
             }
@@ -528,7 +528,7 @@ namespace MS.Internal
 		static AvTraceDetails _DataErrorInfoFailed;
         static public AvTraceDetails DataErrorInfoFailed(params object[] args)
         {
-            if ( _DataErrorInfoFailed == null )
+            if ( _DataErrorInfoFailed is null )
             {
                 _DataErrorInfoFailed = new AvTraceDetails(43, new string[] { "Cannot obtain IDataErrorInfo.Error[{0}] from source of type {1} - {2} '{3}'" } );
             }
@@ -538,7 +538,7 @@ namespace MS.Internal
 		static AvTraceDetails _DisallowTwoWay;
         static public AvTraceDetails DisallowTwoWay(params object[] args)
         {
-            if ( _DisallowTwoWay == null )
+            if ( _DisallowTwoWay is null )
             {
                 _DisallowTwoWay = new AvTraceDetails(44, new string[] { "Binding mode has been changed to OneWay because source property '{0}.{1}' has a non-public setter." } );
             }
@@ -550,7 +550,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _XmlBindingToNonXml == null )
+                if ( _XmlBindingToNonXml is null )
                 {
                     _XmlBindingToNonXml = new AvTraceDetails(45, new string[] { "BindingExpression with XPath cannot bind to non-XML object." } );
                 }
@@ -564,7 +564,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _XmlBindingToNonXmlCollection == null )
+                if ( _XmlBindingToNonXmlCollection is null )
                 {
                     _XmlBindingToNonXmlCollection = new AvTraceDetails(46, new string[] { "BindingExpression with XPath cannot bind to a collection with non-XML objects." } );
                 }
@@ -578,7 +578,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _CannotGetXmlNodeCollection == null )
+                if ( _CannotGetXmlNodeCollection is null )
                 {
                     _CannotGetXmlNodeCollection = new AvTraceDetails(47, new string[] { "XML binding failed. Cannot obtain result node collection because of bad source node or bad Path." } );
                 }
@@ -590,7 +590,7 @@ namespace MS.Internal
 		static AvTraceDetails _BadXPath;
         static public AvTraceDetails BadXPath(params object[] args)
         {
-            if ( _BadXPath == null )
+            if ( _BadXPath is null )
             {
                 _BadXPath = new AvTraceDetails(48, new string[] { "XPath '{0}' returned no results on XmlNode '{1}'" } );
             }
@@ -602,7 +602,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _XmlDPInlineDocError == null )
+                if ( _XmlDPInlineDocError is null )
                 {
                     _XmlDPInlineDocError = new AvTraceDetails(49, new string[] { "XmlDataProvider cannot load inline document because of load or parse error in XML." } );
                 }
@@ -616,7 +616,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _XmlNamespaceNotSet == null )
+                if ( _XmlNamespaceNotSet is null )
                 {
                     _XmlNamespaceNotSet = new AvTraceDetails(50, new string[] { "XmlDataProvider has inline XML that does not explicitly set its XmlNamespace (xmlns='')." } );
                 }
@@ -630,7 +630,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _XmlDPAsyncDocError == null )
+                if ( _XmlDPAsyncDocError is null )
                 {
                     _XmlDPAsyncDocError = new AvTraceDetails(51, new string[] { "XmlDataProvider cannot load asynchronous document from Source because of load or parse error in XML stream." } );
                 }
@@ -644,7 +644,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _XmlDPSelectNodesFailed == null )
+                if ( _XmlDPSelectNodesFailed is null )
                 {
                     _XmlDPSelectNodesFailed = new AvTraceDetails(52, new string[] { "Cannot select nodes because XPath for Binding is not valid" } );
                 }
@@ -658,7 +658,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _CollectionViewIsUnsupported == null )
+                if ( _CollectionViewIsUnsupported is null )
                 {
                     _CollectionViewIsUnsupported = new AvTraceDetails(53, new string[] { "Using CollectionView directly is not fully supported. The basic features work, although with some inefficiencies, but advanced features may encounter known bugs. Consider using a derived class to avoid these problems." } );
                 }
@@ -670,7 +670,7 @@ namespace MS.Internal
 		static AvTraceDetails _CollectionChangedWithoutNotification;
         static public AvTraceDetails CollectionChangedWithoutNotification(params object[] args)
         {
-            if ( _CollectionChangedWithoutNotification == null )
+            if ( _CollectionChangedWithoutNotification is null )
             {
                 _CollectionChangedWithoutNotification = new AvTraceDetails(54, new string[] { "Collection of type '{0}' has been changed without raising a CollectionChanged event. Support for this is incomplete and inconsistent, and will be removed completely in a future version of WPF. Consider either (a) implementing INotifyCollectionChanged, or (b) avoiding changes to this type of collection." } );
             }
@@ -680,7 +680,7 @@ namespace MS.Internal
 		static AvTraceDetails _CannotSort;
         static public AvTraceDetails CannotSort(params object[] args)
         {
-            if ( _CannotSort == null )
+            if ( _CannotSort is null )
             {
                 _CannotSort = new AvTraceDetails(55, new string[] { "Cannot sort by '{0}'" } );
             }
@@ -690,7 +690,7 @@ namespace MS.Internal
 		static AvTraceDetails _CreatedExpression;
         static public AvTraceDetails CreatedExpression(params object[] args)
         {
-            if ( _CreatedExpression == null )
+            if ( _CreatedExpression is null )
             {
                 _CreatedExpression = new AvTraceDetails(56, new string[] { "Created {0} for {1}" } );
             }
@@ -700,7 +700,7 @@ namespace MS.Internal
 		static AvTraceDetails _CreatedExpressionInParent;
         static public AvTraceDetails CreatedExpressionInParent(params object[] args)
         {
-            if ( _CreatedExpressionInParent == null )
+            if ( _CreatedExpressionInParent is null )
             {
                 _CreatedExpressionInParent = new AvTraceDetails(57, new string[] { "Created {0} for {1} within {2}" } );
             }
@@ -710,7 +710,7 @@ namespace MS.Internal
 		static AvTraceDetails _BindingPath;
         static public AvTraceDetails BindingPath(params object[] args)
         {
-            if ( _BindingPath == null )
+            if ( _BindingPath is null )
             {
                 _BindingPath = new AvTraceDetails(58, new string[] { " Path: {0}" } );
             }
@@ -720,7 +720,7 @@ namespace MS.Internal
 		static AvTraceDetails _BindingXPathAndPath;
         static public AvTraceDetails BindingXPathAndPath(params object[] args)
         {
-            if ( _BindingXPathAndPath == null )
+            if ( _BindingXPathAndPath is null )
             {
                 _BindingXPathAndPath = new AvTraceDetails(59, new string[] { " XPath: {0} Path: {1}" } );
             }
@@ -730,7 +730,7 @@ namespace MS.Internal
 		static AvTraceDetails _ResolveDefaultMode;
         static public AvTraceDetails ResolveDefaultMode(params object[] args)
         {
-            if ( _ResolveDefaultMode == null )
+            if ( _ResolveDefaultMode is null )
             {
                 _ResolveDefaultMode = new AvTraceDetails(60, new string[] { "{0}: Default mode resolved to {1}" } );
             }
@@ -740,7 +740,7 @@ namespace MS.Internal
 		static AvTraceDetails _ResolveDefaultUpdate;
         static public AvTraceDetails ResolveDefaultUpdate(params object[] args)
         {
-            if ( _ResolveDefaultUpdate == null )
+            if ( _ResolveDefaultUpdate is null )
             {
                 _ResolveDefaultUpdate = new AvTraceDetails(61, new string[] { "{0}: Default update trigger resolved to {1}" } );
             }
@@ -750,7 +750,7 @@ namespace MS.Internal
 		static AvTraceDetails _AttachExpression;
         static public AvTraceDetails AttachExpression(params object[] args)
         {
-            if ( _AttachExpression == null )
+            if ( _AttachExpression is null )
             {
                 _AttachExpression = new AvTraceDetails(62, new string[] { "{0}: Attach to {1}.{2} (hash={3})" } );
             }
@@ -760,7 +760,7 @@ namespace MS.Internal
 		static AvTraceDetails _DetachExpression;
         static public AvTraceDetails DetachExpression(params object[] args)
         {
-            if ( _DetachExpression == null )
+            if ( _DetachExpression is null )
             {
                 _DetachExpression = new AvTraceDetails(63, new string[] { "{0}: Detach" } );
             }
@@ -770,7 +770,7 @@ namespace MS.Internal
 		static AvTraceDetails _UseMentor;
         static public AvTraceDetails UseMentor(params object[] args)
         {
-            if ( _UseMentor == null )
+            if ( _UseMentor is null )
             {
                 _UseMentor = new AvTraceDetails(64, new string[] { "{0}: Use Framework mentor {1}" } );
             }
@@ -780,7 +780,7 @@ namespace MS.Internal
 		static AvTraceDetails _DeferAttachToContext;
         static public AvTraceDetails DeferAttachToContext(params object[] args)
         {
-            if ( _DeferAttachToContext == null )
+            if ( _DeferAttachToContext is null )
             {
                 _DeferAttachToContext = new AvTraceDetails(65, new string[] { "{0}: Resolve source deferred" } );
             }
@@ -790,7 +790,7 @@ namespace MS.Internal
 		static AvTraceDetails _SourceRequiresTreeContext;
         static public AvTraceDetails SourceRequiresTreeContext(params object[] args)
         {
-            if ( _SourceRequiresTreeContext == null )
+            if ( _SourceRequiresTreeContext is null )
             {
                 _SourceRequiresTreeContext = new AvTraceDetails(66, new string[] { "{0}: {1} requires tree context" } );
             }
@@ -800,7 +800,7 @@ namespace MS.Internal
 		static AvTraceDetails _AttachToContext;
         static public AvTraceDetails AttachToContext(params object[] args)
         {
-            if ( _AttachToContext == null )
+            if ( _AttachToContext is null )
             {
                 _AttachToContext = new AvTraceDetails(67, new string[] { "{0}: Resolving source {1}" } );
             }
@@ -810,7 +810,7 @@ namespace MS.Internal
 		static AvTraceDetails _PathRequiresTreeContext;
         static public AvTraceDetails PathRequiresTreeContext(params object[] args)
         {
-            if ( _PathRequiresTreeContext == null )
+            if ( _PathRequiresTreeContext is null )
             {
                 _PathRequiresTreeContext = new AvTraceDetails(68, new string[] { "{0}: Path '{1}' requires namespace information" } );
             }
@@ -820,7 +820,7 @@ namespace MS.Internal
 		static AvTraceDetails _NoMentorExtended;
         static public AvTraceDetails NoMentorExtended(params object[] args)
         {
-            if ( _NoMentorExtended == null )
+            if ( _NoMentorExtended is null )
             {
                 _NoMentorExtended = new AvTraceDetails(69, new string[] { "{0}: Framework mentor not found" } );
             }
@@ -830,7 +830,7 @@ namespace MS.Internal
 		static AvTraceDetails _ContextElement;
         static public AvTraceDetails ContextElement(params object[] args)
         {
-            if ( _ContextElement == null )
+            if ( _ContextElement is null )
             {
                 _ContextElement = new AvTraceDetails(70, new string[] { "{0}: Found data context element: {1} ({2})" } );
             }
@@ -840,7 +840,7 @@ namespace MS.Internal
 		static AvTraceDetails _NullDataContext;
         static public AvTraceDetails NullDataContext(params object[] args)
         {
-            if ( _NullDataContext == null )
+            if ( _NullDataContext is null )
             {
                 _NullDataContext = new AvTraceDetails(71, new string[] { "{0}: DataContext is null" } );
             }
@@ -850,7 +850,7 @@ namespace MS.Internal
 		static AvTraceDetails _RelativeSource;
         static public AvTraceDetails RelativeSource(params object[] args)
         {
-            if ( _RelativeSource == null )
+            if ( _RelativeSource is null )
             {
                 _RelativeSource = new AvTraceDetails(72, new string[] { " RelativeSource.{0} found {1}" } );
             }
@@ -860,7 +860,7 @@ namespace MS.Internal
 		static AvTraceDetails _AncestorLookup;
         static public AvTraceDetails AncestorLookup(params object[] args)
         {
-            if ( _AncestorLookup == null )
+            if ( _AncestorLookup is null )
             {
                 _AncestorLookup = new AvTraceDetails(73, new string[] { "  Lookup ancestor of type {0}: queried {1}" } );
             }
@@ -870,7 +870,7 @@ namespace MS.Internal
 		static AvTraceDetails _ElementNameQuery;
         static public AvTraceDetails ElementNameQuery(params object[] args)
         {
-            if ( _ElementNameQuery == null )
+            if ( _ElementNameQuery is null )
             {
                 _ElementNameQuery = new AvTraceDetails(74, new string[] { "  Lookup name {0}: queried {1}" } );
             }
@@ -880,7 +880,7 @@ namespace MS.Internal
 		static AvTraceDetails _ElementNameQueryTemplate;
         static public AvTraceDetails ElementNameQueryTemplate(params object[] args)
         {
-            if ( _ElementNameQueryTemplate == null )
+            if ( _ElementNameQueryTemplate is null )
             {
                 _ElementNameQueryTemplate = new AvTraceDetails(75, new string[] { "  Lookup name {0}: queried template of {1}" } );
             }
@@ -890,7 +890,7 @@ namespace MS.Internal
 		static AvTraceDetails _UseCVS;
         static public AvTraceDetails UseCVS(params object[] args)
         {
-            if ( _UseCVS == null )
+            if ( _UseCVS is null )
             {
                 _UseCVS = new AvTraceDetails(76, new string[] { "{0}: Use View from {1}" } );
             }
@@ -900,7 +900,7 @@ namespace MS.Internal
 		static AvTraceDetails _UseDataProvider;
         static public AvTraceDetails UseDataProvider(params object[] args)
         {
-            if ( _UseDataProvider == null )
+            if ( _UseDataProvider is null )
             {
                 _UseDataProvider = new AvTraceDetails(77, new string[] { "{0}: Use Data from {1}" } );
             }
@@ -910,7 +910,7 @@ namespace MS.Internal
 		static AvTraceDetails _ActivateItem;
         static public AvTraceDetails ActivateItem(params object[] args)
         {
-            if ( _ActivateItem == null )
+            if ( _ActivateItem is null )
             {
                 _ActivateItem = new AvTraceDetails(78, new string[] { "{0}: Activate with root item {1}" } );
             }
@@ -920,7 +920,7 @@ namespace MS.Internal
 		static AvTraceDetails _Deactivate;
         static public AvTraceDetails Deactivate(params object[] args)
         {
-            if ( _Deactivate == null )
+            if ( _Deactivate is null )
             {
                 _Deactivate = new AvTraceDetails(79, new string[] { "{0}: Deactivate" } );
             }
@@ -930,7 +930,7 @@ namespace MS.Internal
 		static AvTraceDetails _GetRawValue;
         static public AvTraceDetails GetRawValue(params object[] args)
         {
-            if ( _GetRawValue == null )
+            if ( _GetRawValue is null )
             {
                 _GetRawValue = new AvTraceDetails(80, new string[] { "{0}: TransferValue - got raw value {1}" } );
             }
@@ -940,7 +940,7 @@ namespace MS.Internal
 		static AvTraceDetails _ConvertDBNull;
         static public AvTraceDetails ConvertDBNull(params object[] args)
         {
-            if ( _ConvertDBNull == null )
+            if ( _ConvertDBNull is null )
             {
                 _ConvertDBNull = new AvTraceDetails(81, new string[] { "{0}: TransferValue - converted DBNull to {1}" } );
             }
@@ -950,7 +950,7 @@ namespace MS.Internal
 		static AvTraceDetails _UserConverter;
         static public AvTraceDetails UserConverter(params object[] args)
         {
-            if ( _UserConverter == null )
+            if ( _UserConverter is null )
             {
                 _UserConverter = new AvTraceDetails(82, new string[] { "{0}: TransferValue - user's converter produced {1}" } );
             }
@@ -960,7 +960,7 @@ namespace MS.Internal
 		static AvTraceDetails _NullConverter;
         static public AvTraceDetails NullConverter(params object[] args)
         {
-            if ( _NullConverter == null )
+            if ( _NullConverter is null )
             {
                 _NullConverter = new AvTraceDetails(83, new string[] { "{0}: TransferValue - null-value conversion produced {1}" } );
             }
@@ -970,7 +970,7 @@ namespace MS.Internal
 		static AvTraceDetails _DefaultConverter;
         static public AvTraceDetails DefaultConverter(params object[] args)
         {
-            if ( _DefaultConverter == null )
+            if ( _DefaultConverter is null )
             {
                 _DefaultConverter = new AvTraceDetails(84, new string[] { "{0}: TransferValue - implicit converter produced {1}" } );
             }
@@ -980,7 +980,7 @@ namespace MS.Internal
 		static AvTraceDetails _FormattedValue;
         static public AvTraceDetails FormattedValue(params object[] args)
         {
-            if ( _FormattedValue == null )
+            if ( _FormattedValue is null )
             {
                 _FormattedValue = new AvTraceDetails(85, new string[] { "{0}: TransferValue - string formatting produced {1}" } );
             }
@@ -990,7 +990,7 @@ namespace MS.Internal
 		static AvTraceDetails _FormattingFailed;
         static public AvTraceDetails FormattingFailed(params object[] args)
         {
-            if ( _FormattingFailed == null )
+            if ( _FormattingFailed is null )
             {
                 _FormattingFailed = new AvTraceDetails(86, new string[] { "{0}: TransferValue - string formatting failed, using format '{1}'" } );
             }
@@ -1000,7 +1000,7 @@ namespace MS.Internal
 		static AvTraceDetails _BadValueAtTransferExtended;
         static public AvTraceDetails BadValueAtTransferExtended(params object[] args)
         {
-            if ( _BadValueAtTransferExtended == null )
+            if ( _BadValueAtTransferExtended is null )
             {
                 _BadValueAtTransferExtended = new AvTraceDetails(87, new string[] { "{0}: TransferValue - value {1} is not valid for target" } );
             }
@@ -1010,7 +1010,7 @@ namespace MS.Internal
 		static AvTraceDetails _UseFallback;
         static public AvTraceDetails UseFallback(params object[] args)
         {
-            if ( _UseFallback == null )
+            if ( _UseFallback is null )
             {
                 _UseFallback = new AvTraceDetails(88, new string[] { "{0}: TransferValue - using fallback/default value {1}" } );
             }
@@ -1020,7 +1020,7 @@ namespace MS.Internal
 		static AvTraceDetails _TransferValue;
         static public AvTraceDetails TransferValue(params object[] args)
         {
-            if ( _TransferValue == null )
+            if ( _TransferValue is null )
             {
                 _TransferValue = new AvTraceDetails(89, new string[] { "{0}: TransferValue - using final value {1}" } );
             }
@@ -1030,7 +1030,7 @@ namespace MS.Internal
 		static AvTraceDetails _UpdateRawValue;
         static public AvTraceDetails UpdateRawValue(params object[] args)
         {
-            if ( _UpdateRawValue == null )
+            if ( _UpdateRawValue is null )
             {
                 _UpdateRawValue = new AvTraceDetails(90, new string[] { "{0}: Update - got raw value {1}" } );
             }
@@ -1040,7 +1040,7 @@ namespace MS.Internal
 		static AvTraceDetails _ValidationRuleFailed;
         static public AvTraceDetails ValidationRuleFailed(params object[] args)
         {
-            if ( _ValidationRuleFailed == null )
+            if ( _ValidationRuleFailed is null )
             {
                 _ValidationRuleFailed = new AvTraceDetails(91, new string[] { "{0}: Update - {1} failed" } );
             }
@@ -1050,7 +1050,7 @@ namespace MS.Internal
 		static AvTraceDetails _UserConvertBack;
         static public AvTraceDetails UserConvertBack(params object[] args)
         {
-            if ( _UserConvertBack == null )
+            if ( _UserConvertBack is null )
             {
                 _UserConvertBack = new AvTraceDetails(92, new string[] { "{0}: Update - user's converter produced {1}" } );
             }
@@ -1060,7 +1060,7 @@ namespace MS.Internal
 		static AvTraceDetails _DefaultConvertBack;
         static public AvTraceDetails DefaultConvertBack(params object[] args)
         {
-            if ( _DefaultConvertBack == null )
+            if ( _DefaultConvertBack is null )
             {
                 _DefaultConvertBack = new AvTraceDetails(93, new string[] { "{0}: Update - implicit converter produced {1}" } );
             }
@@ -1070,7 +1070,7 @@ namespace MS.Internal
 		static AvTraceDetails _Update;
         static public AvTraceDetails Update(params object[] args)
         {
-            if ( _Update == null )
+            if ( _Update is null )
             {
                 _Update = new AvTraceDetails(94, new string[] { "{0}: Update - using final value {1}" } );
             }
@@ -1080,7 +1080,7 @@ namespace MS.Internal
 		static AvTraceDetails _GotEvent;
         static public AvTraceDetails GotEvent(params object[] args)
         {
-            if ( _GotEvent == null )
+            if ( _GotEvent is null )
             {
                 _GotEvent = new AvTraceDetails(95, new string[] { "{0}: Got {1} event from {2}" } );
             }
@@ -1090,7 +1090,7 @@ namespace MS.Internal
 		static AvTraceDetails _GotPropertyChanged;
         static public AvTraceDetails GotPropertyChanged(params object[] args)
         {
-            if ( _GotPropertyChanged == null )
+            if ( _GotPropertyChanged is null )
             {
                 _GotPropertyChanged = new AvTraceDetails(96, new string[] { "{0}: Got PropertyChanged event from {1} for {2}" } );
             }
@@ -1100,7 +1100,7 @@ namespace MS.Internal
 		static AvTraceDetails _PriorityTransfer;
         static public AvTraceDetails PriorityTransfer(params object[] args)
         {
-            if ( _PriorityTransfer == null )
+            if ( _PriorityTransfer is null )
             {
                 _PriorityTransfer = new AvTraceDetails(97, new string[] { "{0}: TransferValue '{1}' from child {2} - {3}" } );
             }
@@ -1110,7 +1110,7 @@ namespace MS.Internal
 		static AvTraceDetails _ChildNotAttached;
         static public AvTraceDetails ChildNotAttached(params object[] args)
         {
-            if ( _ChildNotAttached == null )
+            if ( _ChildNotAttached is null )
             {
                 _ChildNotAttached = new AvTraceDetails(98, new string[] { "{0}: One or more children have not resolved sources" } );
             }
@@ -1120,7 +1120,7 @@ namespace MS.Internal
 		static AvTraceDetails _GetRawValueMulti;
         static public AvTraceDetails GetRawValueMulti(params object[] args)
         {
-            if ( _GetRawValueMulti == null )
+            if ( _GetRawValueMulti is null )
             {
                 _GetRawValueMulti = new AvTraceDetails(99, new string[] { "{0}: TransferValue - got raw value {1}: {2}" } );
             }
@@ -1130,7 +1130,7 @@ namespace MS.Internal
 		static AvTraceDetails _UserConvertBackMulti;
         static public AvTraceDetails UserConvertBackMulti(params object[] args)
         {
-            if ( _UserConvertBackMulti == null )
+            if ( _UserConvertBackMulti is null )
             {
                 _UserConvertBackMulti = new AvTraceDetails(100, new string[] { "{0}: Update - multiconverter produced value {1}: {2}" } );
             }
@@ -1140,7 +1140,7 @@ namespace MS.Internal
 		static AvTraceDetails _GetValue;
         static public AvTraceDetails GetValue(params object[] args)
         {
-            if ( _GetValue == null )
+            if ( _GetValue is null )
             {
                 _GetValue = new AvTraceDetails(101, new string[] { "{0}: GetValue at level {1} from {2} using {3}: {4}" } );
             }
@@ -1150,7 +1150,7 @@ namespace MS.Internal
 		static AvTraceDetails _SetValue;
         static public AvTraceDetails SetValue(params object[] args)
         {
-            if ( _SetValue == null )
+            if ( _SetValue is null )
             {
                 _SetValue = new AvTraceDetails(102, new string[] { "{0}: SetValue at level {1} to {2} using {3}: {4}" } );
             }
@@ -1160,7 +1160,7 @@ namespace MS.Internal
 		static AvTraceDetails _ReplaceItemShort;
         static public AvTraceDetails ReplaceItemShort(params object[] args)
         {
-            if ( _ReplaceItemShort == null )
+            if ( _ReplaceItemShort is null )
             {
                 _ReplaceItemShort = new AvTraceDetails(103, new string[] { "{0}: Replace item at level {1} with {2}" } );
             }
@@ -1170,7 +1170,7 @@ namespace MS.Internal
 		static AvTraceDetails _ReplaceItemLong;
         static public AvTraceDetails ReplaceItemLong(params object[] args)
         {
-            if ( _ReplaceItemLong == null )
+            if ( _ReplaceItemLong is null )
             {
                 _ReplaceItemLong = new AvTraceDetails(104, new string[] { "{0}: Replace item at level {1} with {2}, using accessor {3}" } );
             }
@@ -1180,7 +1180,7 @@ namespace MS.Internal
 		static AvTraceDetails _GetInfo_Reuse;
         static public AvTraceDetails GetInfo_Reuse(params object[] args)
         {
-            if ( _GetInfo_Reuse == null )
+            if ( _GetInfo_Reuse is null )
             {
                 _GetInfo_Reuse = new AvTraceDetails(105, new string[] { "{0}:   Item at level {1} has same type - reuse accessor {2}" } );
             }
@@ -1190,7 +1190,7 @@ namespace MS.Internal
 		static AvTraceDetails _GetInfo_Null;
         static public AvTraceDetails GetInfo_Null(params object[] args)
         {
-            if ( _GetInfo_Null == null )
+            if ( _GetInfo_Null is null )
             {
                 _GetInfo_Null = new AvTraceDetails(106, new string[] { "{0}:   Item at level {1} is null - no accessor" } );
             }
@@ -1200,7 +1200,7 @@ namespace MS.Internal
 		static AvTraceDetails _GetInfo_Cache;
         static public AvTraceDetails GetInfo_Cache(params object[] args)
         {
-            if ( _GetInfo_Cache == null )
+            if ( _GetInfo_Cache is null )
             {
                 _GetInfo_Cache = new AvTraceDetails(107, new string[] { "{0}:   At level {1} using cached accessor for {2}.{3}: {4}" } );
             }
@@ -1210,7 +1210,7 @@ namespace MS.Internal
 		static AvTraceDetails _GetInfo_Property;
         static public AvTraceDetails GetInfo_Property(params object[] args)
         {
-            if ( _GetInfo_Property == null )
+            if ( _GetInfo_Property is null )
             {
                 _GetInfo_Property = new AvTraceDetails(108, new string[] { "{0}:   At level {1} - for {2}.{3} found accessor {4}" } );
             }
@@ -1220,7 +1220,7 @@ namespace MS.Internal
 		static AvTraceDetails _GetInfo_Indexer;
         static public AvTraceDetails GetInfo_Indexer(params object[] args)
         {
-            if ( _GetInfo_Indexer == null )
+            if ( _GetInfo_Indexer is null )
             {
                 _GetInfo_Indexer = new AvTraceDetails(109, new string[] { "{0}:   At level {1} - for {2}[{3}] found accessor {4}" } );
             }
@@ -1230,7 +1230,7 @@ namespace MS.Internal
 		static AvTraceDetails _XmlContextNode;
         static public AvTraceDetails XmlContextNode(params object[] args)
         {
-            if ( _XmlContextNode == null )
+            if ( _XmlContextNode is null )
             {
                 _XmlContextNode = new AvTraceDetails(110, new string[] { "{0}: Context for XML binding set to {1}" } );
             }
@@ -1240,7 +1240,7 @@ namespace MS.Internal
 		static AvTraceDetails _XmlNewCollection;
         static public AvTraceDetails XmlNewCollection(params object[] args)
         {
-            if ( _XmlNewCollection == null )
+            if ( _XmlNewCollection is null )
             {
                 _XmlNewCollection = new AvTraceDetails(111, new string[] { "{0}: Building collection from {1}" } );
             }
@@ -1250,7 +1250,7 @@ namespace MS.Internal
 		static AvTraceDetails _XmlSynchronizeCollection;
         static public AvTraceDetails XmlSynchronizeCollection(params object[] args)
         {
-            if ( _XmlSynchronizeCollection == null )
+            if ( _XmlSynchronizeCollection is null )
             {
                 _XmlSynchronizeCollection = new AvTraceDetails(112, new string[] { "{0}: Synchronizing collection with {1}" } );
             }
@@ -1260,7 +1260,7 @@ namespace MS.Internal
 		static AvTraceDetails _SelectNodes;
         static public AvTraceDetails SelectNodes(params object[] args)
         {
-            if ( _SelectNodes == null )
+            if ( _SelectNodes is null )
             {
                 _SelectNodes = new AvTraceDetails(113, new string[] { "{0}: SelectNodes at {1} using XPath {2}: {3}" } );
             }
@@ -1270,7 +1270,7 @@ namespace MS.Internal
 		static AvTraceDetails _BeginQuery;
         static public AvTraceDetails BeginQuery(params object[] args)
         {
-            if ( _BeginQuery == null )
+            if ( _BeginQuery is null )
             {
                 _BeginQuery = new AvTraceDetails(114, new string[] { "{0}: Begin query ({1})" } );
             }
@@ -1280,7 +1280,7 @@ namespace MS.Internal
 		static AvTraceDetails _QueryFinished;
         static public AvTraceDetails QueryFinished(params object[] args)
         {
-            if ( _QueryFinished == null )
+            if ( _QueryFinished is null )
             {
                 _QueryFinished = new AvTraceDetails(115, new string[] { "{0}: Query finished ({1}) with data {2} and error {3}" } );
             }
@@ -1290,7 +1290,7 @@ namespace MS.Internal
 		static AvTraceDetails _QueryResult;
         static public AvTraceDetails QueryResult(params object[] args)
         {
-            if ( _QueryResult == null )
+            if ( _QueryResult is null )
             {
                 _QueryResult = new AvTraceDetails(116, new string[] { "{0}: Update result (on UI thread) with data {1}" } );
             }
@@ -1300,7 +1300,7 @@ namespace MS.Internal
 		static AvTraceDetails _XmlLoadSource;
         static public AvTraceDetails XmlLoadSource(params object[] args)
         {
-            if ( _XmlLoadSource == null )
+            if ( _XmlLoadSource is null )
             {
                 _XmlLoadSource = new AvTraceDetails(117, new string[] { "{0}: Request download ({1}) from {2}" } );
             }
@@ -1310,7 +1310,7 @@ namespace MS.Internal
 		static AvTraceDetails _XmlLoadDoc;
         static public AvTraceDetails XmlLoadDoc(params object[] args)
         {
-            if ( _XmlLoadDoc == null )
+            if ( _XmlLoadDoc is null )
             {
                 _XmlLoadDoc = new AvTraceDetails(118, new string[] { "{0}: Load document from stream" } );
             }
@@ -1320,7 +1320,7 @@ namespace MS.Internal
 		static AvTraceDetails _XmlLoadInline;
         static public AvTraceDetails XmlLoadInline(params object[] args)
         {
-            if ( _XmlLoadInline == null )
+            if ( _XmlLoadInline is null )
             {
                 _XmlLoadInline = new AvTraceDetails(119, new string[] { "{0}: Load inline document" } );
             }
@@ -1330,7 +1330,7 @@ namespace MS.Internal
 		static AvTraceDetails _XmlBuildCollection;
         static public AvTraceDetails XmlBuildCollection(params object[] args)
         {
-            if ( _XmlBuildCollection == null )
+            if ( _XmlBuildCollection is null )
             {
                 _XmlBuildCollection = new AvTraceDetails(120, new string[] { "{0}: Build XmlNode collection" } );
             }
@@ -1414,7 +1414,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _FormatPage == null )
+                if ( _FormatPage is null )
                 {
                     _FormatPage = new AvTraceDetails(1, new string[] { "Formatting page" } );
                 }
@@ -1428,7 +1428,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _PageFormattingError == null )
+                if ( _PageFormattingError is null )
                 {
                     _PageFormattingError = new AvTraceDetails(2, new string[] { "Error. Page formatting engine could not complete the formatting operation." } );
                 }
@@ -1442,7 +1442,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _UnableToFreezeFreezableSubProperty == null )
+                if ( _UnableToFreezeFreezableSubProperty is null )
                 {
                     _UnableToFreezeFreezableSubProperty = new AvTraceDetails(3, new string[] { "CanFreeze is returning false because a DependencyProperty on the Freezable has a value that is a Freezable that has also returned false from CanFreeze" } );
                 }
@@ -1456,7 +1456,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _UnableToFreezeAnimatedProperties == null )
+                if ( _UnableToFreezeAnimatedProperties is null )
                 {
                     _UnableToFreezeAnimatedProperties = new AvTraceDetails(4, new string[] { "CanFreeze is returning false because at least one DependencyProperty on the Freezable is animated." } );
                 }
@@ -1542,7 +1542,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _AddResource == null )
+                if ( _AddResource is null )
                 {
                     _AddResource = new AvTraceDetails(1, new string[] { "Resource has been added to ResourceDictionary" } );
                 }
@@ -1556,7 +1556,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _RealizeDeferContent == null )
+                if ( _RealizeDeferContent is null )
                 {
                     _RealizeDeferContent = new AvTraceDetails(2, new string[] { "Delayed creation of resource" } );
                 }
@@ -1570,7 +1570,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _FoundResourceOnElement == null )
+                if ( _FoundResourceOnElement is null )
                 {
                     _FoundResourceOnElement = new AvTraceDetails(3, new string[] { "Found resource item on an element" } );
                 }
@@ -1584,7 +1584,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _FoundResourceInStyle == null )
+                if ( _FoundResourceInStyle is null )
                 {
                     _FoundResourceInStyle = new AvTraceDetails(4, new string[] { "Found resource item in a style" } );
                 }
@@ -1598,7 +1598,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _FoundResourceInTemplate == null )
+                if ( _FoundResourceInTemplate is null )
                 {
                     _FoundResourceInTemplate = new AvTraceDetails(5, new string[] { "Found resource item in a template" } );
                 }
@@ -1612,7 +1612,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _FoundResourceInThemeStyle == null )
+                if ( _FoundResourceInThemeStyle is null )
                 {
                     _FoundResourceInThemeStyle = new AvTraceDetails(6, new string[] { "Found resource item in a theme style" } );
                 }
@@ -1626,7 +1626,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _FoundResourceInApplication == null )
+                if ( _FoundResourceInApplication is null )
                 {
                     _FoundResourceInApplication = new AvTraceDetails(7, new string[] { "Found resource item in application" } );
                 }
@@ -1640,7 +1640,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _FoundResourceInTheme == null )
+                if ( _FoundResourceInTheme is null )
                 {
                     _FoundResourceInTheme = new AvTraceDetails(8, new string[] { "Found resource item in theme" } );
                 }
@@ -1654,7 +1654,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _ResourceNotFound == null )
+                if ( _ResourceNotFound is null )
                 {
                     _ResourceNotFound = new AvTraceDetails(9, new string[] { "Resource not found", "ResourceKey" } );
                 }
@@ -1668,7 +1668,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _NewResourceDictionary == null )
+                if ( _NewResourceDictionary is null )
                 {
                     _NewResourceDictionary = new AvTraceDetails(10, new string[] { "New resource dictionary set" } );
                 }
@@ -1682,7 +1682,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _FindResource == null )
+                if ( _FindResource is null )
                 {
                     _FindResource = new AvTraceDetails(11, new string[] { "Searching for resource" } );
                 }
@@ -1696,7 +1696,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _SetKey == null )
+                if ( _SetKey is null )
                 {
                     _SetKey = new AvTraceDetails(12, new string[] { "Deferred resource has been added to ResourceDictionary" } );
                 }
@@ -1782,7 +1782,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _AddValueToAddChild == null )
+                if ( _AddValueToAddChild is null )
                 {
                     _AddValueToAddChild = new AvTraceDetails(1, new string[] { "Add value to IAddChild" } );
                 }
@@ -1796,7 +1796,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _AddValueToArray == null )
+                if ( _AddValueToArray is null )
                 {
                     _AddValueToArray = new AvTraceDetails(2, new string[] { "Add value to an array property" } );
                 }
@@ -1810,7 +1810,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _AddValueToDictionary == null )
+                if ( _AddValueToDictionary is null )
                 {
                     _AddValueToDictionary = new AvTraceDetails(3, new string[] { "Add value to a dictionary property" } );
                 }
@@ -1824,7 +1824,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _AddValueToList == null )
+                if ( _AddValueToList is null )
                 {
                     _AddValueToList = new AvTraceDetails(4, new string[] { "CanFreezeAdd value to a collection property" } );
                 }
@@ -1838,7 +1838,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _BeginInit == null )
+                if ( _BeginInit is null )
                 {
                     _BeginInit = new AvTraceDetails(5, new string[] { "Start initialization of object (ISupportInitialize.BeginInit)" } );
                 }
@@ -1852,7 +1852,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _CreateMarkupExtension == null )
+                if ( _CreateMarkupExtension is null )
                 {
                     _CreateMarkupExtension = new AvTraceDetails(6, new string[] { "Create MarkupExtension" } );
                 }
@@ -1866,7 +1866,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _CreateObject == null )
+                if ( _CreateObject is null )
                 {
                     _CreateObject = new AvTraceDetails(7, new string[] { "Create object" } );
                 }
@@ -1880,7 +1880,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _EndInit == null )
+                if ( _EndInit is null )
                 {
                     _EndInit = new AvTraceDetails(8, new string[] { "End initialization of object (ISupportInitialize.EndInit)" } );
                 }
@@ -1894,7 +1894,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _Load == null )
+                if ( _Load is null )
                 {
                     _Load = new AvTraceDetails(9, new string[] { "Load xaml/baml" } );
                 }
@@ -1908,7 +1908,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _ProcessConstructorParameter == null )
+                if ( _ProcessConstructorParameter is null )
                 {
                     _ProcessConstructorParameter = new AvTraceDetails(10, new string[] { "Convert constructor parameter" } );
                 }
@@ -1922,7 +1922,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _ProvideValue == null )
+                if ( _ProvideValue is null )
                 {
                     _ProvideValue = new AvTraceDetails(11, new string[] { "Converted a MarkupExtension" } );
                 }
@@ -1936,7 +1936,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _SetCPA == null )
+                if ( _SetCPA is null )
                 {
                     _SetCPA = new AvTraceDetails(12, new string[] { "Set property value to the ContentProperty" } );
                 }
@@ -1950,7 +1950,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _SetPropertyValue == null )
+                if ( _SetPropertyValue is null )
                 {
                     _SetPropertyValue = new AvTraceDetails(13, new string[] { "Set property value" } );
                 }
@@ -1964,7 +1964,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _ThrowException == null )
+                if ( _ThrowException is null )
                 {
                     _ThrowException = new AvTraceDetails(14, new string[] { "A xaml exception has been thrown" } );
                 }
@@ -1978,7 +1978,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _TypeConvert == null )
+                if ( _TypeConvert is null )
                 {
                     _TypeConvert = new AvTraceDetails(15, new string[] { "Converted value" } );
                 }
@@ -1992,7 +1992,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _TypeConvertFallback == null )
+                if ( _TypeConvertFallback is null )
                 {
                     _TypeConvertFallback = new AvTraceDetails(16, new string[] { "CanFreezeAdd value to a collection property" } );
                 }
@@ -2078,7 +2078,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _HwndHostIn3D == null )
+                if ( _HwndHostIn3D is null )
                 {
                     _HwndHostIn3D = new AvTraceDetails(1, new string[] { "An HwndHost may not be embedded in a 3D scene." } );
                 }
@@ -2164,7 +2164,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _NotOnWindows7 == null )
+                if ( _NotOnWindows7 is null )
                 {
                     _NotOnWindows7 = new AvTraceDetails(1, new string[] { "Shell integration features are not being applied because the host OS does not support the feature." } );
                 }
@@ -2178,7 +2178,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _ExplorerTaskbarTimeout == null )
+                if ( _ExplorerTaskbarTimeout is null )
                 {
                     _ExplorerTaskbarTimeout = new AvTraceDetails(2, new string[] { "Communication with Explorer timed out while trying to update the taskbar item for the window." } );
                 }
@@ -2192,7 +2192,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _ExplorerTaskbarRetrying == null )
+                if ( _ExplorerTaskbarRetrying is null )
                 {
                     _ExplorerTaskbarRetrying = new AvTraceDetails(3, new string[] { "Making another attempt to update the taskbar." } );
                 }
@@ -2206,7 +2206,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _ExplorerTaskbarNotRunning == null )
+                if ( _ExplorerTaskbarNotRunning is null )
                 {
                     _ExplorerTaskbarNotRunning = new AvTraceDetails(4, new string[] { "Halting attempts at Shell integration with the taskbar because it appears that Explorer is not running." } );
                 }
@@ -2218,7 +2218,7 @@ namespace MS.Internal
 		static AvTraceDetails _NativeTaskbarError;
         static public AvTraceDetails NativeTaskbarError(params object[] args)
         {
-            if ( _NativeTaskbarError == null )
+            if ( _NativeTaskbarError is null )
             {
                 _NativeTaskbarError = new AvTraceDetails(5, new string[] { "The native ITaskbarList3 interface failed a method call with error {0}." } );
             }
@@ -2230,7 +2230,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _RejectingJumpItemsBecauseCatastrophicFailure == null )
+                if ( _RejectingJumpItemsBecauseCatastrophicFailure is null )
                 {
                     _RejectingJumpItemsBecauseCatastrophicFailure = new AvTraceDetails(6, new string[] { "Failed to apply items to the JumpList because the native interfaces failed." } );
                 }
@@ -2242,7 +2242,7 @@ namespace MS.Internal
 		static AvTraceDetails _RejectingJumpListCategoryBecauseNoRegisteredHandler;
         static public AvTraceDetails RejectingJumpListCategoryBecauseNoRegisteredHandler(params object[] args)
         {
-            if ( _RejectingJumpListCategoryBecauseNoRegisteredHandler == null )
+            if ( _RejectingJumpListCategoryBecauseNoRegisteredHandler is null )
             {
                 _RejectingJumpListCategoryBecauseNoRegisteredHandler = new AvTraceDetails(7, new string[] { "Rejecting the category {0} from the jump list because this application is not registered for file types contained in the list.  JumpPath items will be removed and the operation will be retried." } );
             }

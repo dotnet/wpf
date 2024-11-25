@@ -318,13 +318,13 @@ namespace MS.Win32
                 Dispatcher dispatcher = Dispatcher.FromThread(Thread.CurrentThread);
                 if(dispatcher != null && !dispatcher.HasShutdownFinished)
                 {
-                    if (_dispatcherOperationCallback == null)
+                    if (_dispatcherOperationCallback is null)
                         _dispatcherOperationCallback = new DispatcherOperationCallback(this.DispatcherCallbackOperation);
 
                     // _paramDispatcherCallbackOperation is a thread static member which should be reused to avoid
                     // creating a new data structure every time we call DispatcherCallbackOperation
                     // Cache the param locally in case of reentrance and set _paramDispatcherCallbackOperation to null so reentrancy calls will create a new param
-                    if (_paramDispatcherCallbackOperation == null)
+                    if (_paramDispatcherCallbackOperation is null)
                         _paramDispatcherCallbackOperation = new DispatcherOperationCallbackParameter();
 
                     DispatcherOperationCallbackParameter param = _paramDispatcherCallbackOperation;

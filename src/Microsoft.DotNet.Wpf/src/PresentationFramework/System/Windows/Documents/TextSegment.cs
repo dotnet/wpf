@@ -133,7 +133,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return _start == null || _end == null;
+                return _start is null || _end is null;
             }
         }
 

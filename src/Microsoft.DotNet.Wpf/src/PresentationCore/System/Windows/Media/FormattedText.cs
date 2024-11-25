@@ -598,7 +598,7 @@ namespace System.Windows.Media
                 }
                 else
                 {
-                    if (runProps.NumberSubstitution == null)
+                    if (runProps.NumberSubstitution is null)
                         continue;
                 }
 
@@ -920,7 +920,7 @@ namespace System.Windows.Media
                 _nextLine = null;
                 _formatter = TextFormatter.FromCurrentDispatcher(text._textFormattingMode);
                 _that = text;
-                if (_that._textSourceImpl == null)
+                if (_that._textSourceImpl is null)
                     _that._textSourceImpl = new TextSourceImplementation(_that);
             }
 
@@ -990,7 +990,7 @@ namespace System.Windows.Media
 
             private double MaxLineLength(int line)
             {
-                if (_that._maxTextWidths == null)
+                if (_that._maxTextWidths is null)
                     return _that._maxTextWidth;
                 return _that._maxTextWidths[Math.Min(line, _that._maxTextWidths.Length - 1)];
             }
@@ -1002,7 +1002,7 @@ namespace System.Windows.Media
             /// false if the enumerator has passed the end of the collection</returns>
             public bool MoveNext()
             {
-                if (_currentLine == null)
+                if (_currentLine is null)
                 {   // this is the first line
                     if (_that._text.Length == 0)
                         return false;
@@ -1022,13 +1022,13 @@ namespace System.Windows.Media
                         _currentLine = null;
                         return false;
                     }
-                    Debug.Assert(_nextLine == null);
+                    Debug.Assert(_nextLine is null);
                 }
                 else
                 {
                     // there is no next line or it didn't fit
                     // either way we're finished
-                    if (_nextLine == null)
+                    if (_nextLine is null)
                         return false;
 
                     _totalHeight += _previousHeight;
@@ -1314,7 +1314,7 @@ namespace System.Windows.Media
         /// <param name="maxTextWidths">The max text width array</param>
         public void SetMaxTextWidths(double [] maxTextWidths)
         {
-            if (maxTextWidths == null || maxTextWidths.Length <= 0)
+            if (maxTextWidths is null || maxTextWidths.Length <= 0)
                 throw new ArgumentNullException("maxTextWidths");
             _maxTextWidths = maxTextWidths;
             InvalidateMetrics();
@@ -1330,7 +1330,7 @@ namespace System.Windows.Media
         /// <returns>The copy of max text width array</returns>
         public double [] GetMaxTextWidths()
         {
-            return (_maxTextWidths == null) ? null : (double [])_maxTextWidths.Clone();
+            return (_maxTextWidths is null) ? null : (double [])_maxTextWidths.Clone();
         }
 
         /// <summary>
@@ -1422,7 +1422,7 @@ namespace System.Windows.Media
         {
             get
             {
-                if (_metrics == null)
+                if (_metrics is null)
                 {
                     // We need to obtain the metrics. DON'T compute black box metrics here because
                     // they probably won't be needed and computing them requires GlyphRun creation. 
@@ -1447,7 +1447,7 @@ namespace System.Windows.Media
         {
             get
             {
-                if (_metrics == null || double.IsNaN(_metrics.Extent))
+                if (_metrics is null || double.IsNaN(_metrics.Extent))
                 {
                     // We need to obtain the metrics, including black box metrics.
 
@@ -1562,7 +1562,7 @@ namespace System.Windows.Media
                 if (_minWidth != double.MinValue)
                     return _minWidth;
 
-                if (_textSourceImpl == null)
+                if (_textSourceImpl is null)
                     _textSourceImpl = new TextSourceImplementation(this);
 
                 _minWidth = TextFormatter.FromCurrentDispatcher(_textFormattingMode).FormatMinMaxParagraphWidth(
@@ -1622,7 +1622,7 @@ namespace System.Windows.Media
             CombineGeometryRecursive(drawing, ref accumulatedGeometry);
 
             // Make sure to always return Geometry.Empty from public methods for empty geometries.
-            if (accumulatedGeometry == null || accumulatedGeometry.IsEmpty())
+            if (accumulatedGeometry is null || accumulatedGeometry.IsEmpty())
                 return Geometry.Empty;
             return accumulatedGeometry;
         }        
@@ -1681,7 +1681,7 @@ namespace System.Windows.Media
                                     rect.Y += lineOrigin.Y;
 
                                     RectangleGeometry rectangleGeometry = new RectangleGeometry(rect);
-                                    if (accumulatedBounds == null)
+                                    if (accumulatedBounds is null)
                                         accumulatedBounds = rectangleGeometry.GetAsPathGeometry();
                                     else
                                         accumulatedBounds = Geometry.Combine(accumulatedBounds, rectangleGeometry, GeometryCombineMode.Union, null);
@@ -1693,7 +1693,7 @@ namespace System.Windows.Media
                 }
             }
 
-            if (accumulatedBounds == null  ||  accumulatedBounds.IsEmpty())
+            if (accumulatedBounds is null  ||  accumulatedBounds.IsEmpty())
                 return null;
 
             return accumulatedBounds;
@@ -1751,7 +1751,7 @@ namespace System.Windows.Media
             // and not changed by adding features to FormattedText. Incase these assumptions were invalidated, the bug fix 
             // should be revised and it will possibly involve alot of changes elsewhere.
             Debug.Assert(_defaultParaProps.Indent == 0.0, "FormattedText was assumed to always have 0 indent. This assumption has changed and thus the calculation of Width and Overhangs should be revised.");
-            Debug.Assert(_defaultParaProps.TextMarkerProperties == null, "FormattedText was assumed to always have no TextMarkerProperties. This assumption has changed and thus the calculation of Width and Overhangs should be revised.");
+            Debug.Assert(_defaultParaProps.TextMarkerProperties is null, "FormattedText was assumed to always have no TextMarkerProperties. This assumption has changed and thus the calculation of Width and Overhangs should be revised.");
             CachedMetrics metrics = new CachedMetrics();
 
             if (_text.Length == 0)
@@ -1956,7 +1956,7 @@ namespace System.Windows.Media
                         
                         if (!glyphRunGeometry.IsEmpty())
                         {
-                            if (accumulatedGeometry == null)
+                            if (accumulatedGeometry is null)
                             {
                                 accumulatedGeometry = new GeometryGroup();
                                 accumulatedGeometry.FillRule = FillRule.Nonzero;
@@ -1996,7 +1996,7 @@ namespace System.Windows.Media
                                 // we lost line cap info here
                                 geometry = new RectangleGeometry(bound);
                             }
-                            if (accumulatedGeometry == null)
+                            if (accumulatedGeometry is null)
                             {
                                 accumulatedGeometry = new GeometryGroup();
                                 accumulatedGeometry.FillRule = FillRule.Nonzero;

@@ -109,7 +109,7 @@ namespace MS.Internal.PtsHost
             }
 
             // If nothing is hit, return the owner of the paragraph.
-            if (ie == null && _rect.Contains(pt))
+            if (ie is null && _rect.Contains(pt))
             {
                 ie = Paragraph.Element as IInputElement;
             }

@@ -237,7 +237,7 @@ namespace MS.Internal.PtsHost
             }
 
             // If nothing is hit, return the owner of the paragraph.
-            if (ie == null)
+            if (ie is null)
             {
                 ie = Paragraph.Element as IInputElement;
             }
@@ -2285,7 +2285,7 @@ namespace MS.Internal.PtsHost
                 {
                     visual = VisualTreeHelper.GetChild(Visual, visualIndex) as LineVisual;
                     //  verify that our assumptions about visual structure is correct...
-                    Invariant.Assert(visual != null || VisualTreeHelper.GetChild(Visual, visualIndex) == null);
+                    Invariant.Assert(visual != null || VisualTreeHelper.GetChild(Visual, visualIndex) is null);
                 }
             }
 
@@ -2314,7 +2314,7 @@ namespace MS.Internal.PtsHost
 
                 visual = VisualTreeHelper.GetChild(temp, visualIndex) as LineVisual;
                 //  verify that our assumptions about visual structure is correct...
-                Invariant.Assert(visual != null || VisualTreeHelper.GetChild(temp, visualIndex) == null);
+                Invariant.Assert(visual != null || VisualTreeHelper.GetChild(temp, visualIndex) is null);
             }
 
             return (visual);

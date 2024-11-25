@@ -180,7 +180,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             get
             {
-                if (_largeImageWithLabel == null)
+                if (_largeImageWithLabel is null)
                 {
                     _largeImageWithLabel = new RibbonControlSizeDefinition();
                     _largeImageWithLabel.ImageSize = RibbonImageSize.Large;
@@ -195,7 +195,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             get
             {
-                if (_smallImageWithLabel == null)
+                if (_smallImageWithLabel is null)
                 {
                     _smallImageWithLabel = new RibbonControlSizeDefinition();
                     _smallImageWithLabel.ImageSize = RibbonImageSize.Small;
@@ -210,7 +210,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             get
             {
-                if (_noImageWithLabel == null)
+                if (_noImageWithLabel is null)
                 {
                     _noImageWithLabel = new RibbonControlSizeDefinition();
                     _noImageWithLabel.ImageSize = RibbonImageSize.Collapsed;
@@ -225,7 +225,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             get
             {
-                if (_largeImageWithoutLabel == null)
+                if (_largeImageWithoutLabel is null)
                 {
                     _largeImageWithoutLabel = new RibbonControlSizeDefinition();
                     _largeImageWithoutLabel.ImageSize = RibbonImageSize.Large;
@@ -240,7 +240,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             get
             {
-                if (_smallImageWithoutLabel == null)
+                if (_smallImageWithoutLabel is null)
                 {
                     _smallImageWithoutLabel = new RibbonControlSizeDefinition();
                     _smallImageWithoutLabel.ImageSize = RibbonImageSize.Small;
@@ -255,7 +255,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             get
             {
-                if (_noImageWithoutLabel == null)
+                if (_noImageWithoutLabel is null)
                 {
                     _noImageWithoutLabel = new RibbonControlSizeDefinition();
                     _noImageWithoutLabel.ImageSize = RibbonImageSize.Collapsed;

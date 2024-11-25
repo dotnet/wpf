@@ -313,7 +313,7 @@ namespace System.Windows.Controls.Primitives
         private static void OnThumbDragStarted(object sender, DragStartedEventArgs e)
         {
             ScrollBar scrollBar = sender as ScrollBar;
-            if (scrollBar == null) { return; }
+            if (scrollBar is null) { return; }
 
             scrollBar._hasScrolled = false;
             scrollBar._previousValue = scrollBar.Value;
@@ -323,7 +323,7 @@ namespace System.Windows.Controls.Primitives
         private static void OnThumbDragDelta(object sender, DragDeltaEventArgs e)
         {
             ScrollBar scrollBar = sender as ScrollBar;
-            if (scrollBar == null) { return; }
+            if (scrollBar is null) { return; }
 
             scrollBar.UpdateValue(e.HorizontalChange + scrollBar._thumbOffset.X, e.VerticalChange + scrollBar._thumbOffset.Y);
         }
@@ -397,7 +397,7 @@ namespace System.Windows.Controls.Primitives
             get
             {
                 IInputElement target = TemplatedParent as IInputElement;
-                if (target == null)
+                if (target is null)
                 {
                     target = this;
                 }
@@ -446,7 +446,7 @@ namespace System.Windows.Controls.Primitives
                     }
                 }
 
-                if (command == null)
+                if (command is null)
                 {
                     // Either we're not dragging or the drag command is not enabled, try the scroll version
                     command = horizontal ? ScrollToHorizontalOffsetCommand : ScrollToVerticalOffsetCommand;

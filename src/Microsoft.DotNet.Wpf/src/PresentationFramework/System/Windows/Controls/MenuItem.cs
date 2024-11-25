@@ -86,7 +86,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_topLevelItemTemplateKey == null)
+                if (_topLevelItemTemplateKey is null)
                 {
                     _topLevelItemTemplateKey = new ComponentResourceKey(typeof(MenuItem), "TopLevelItemTemplateKey");
                 }
@@ -102,7 +102,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_topLevelHeaderTemplateKey == null)
+                if (_topLevelHeaderTemplateKey is null)
                 {
                     _topLevelHeaderTemplateKey = new ComponentResourceKey(typeof(MenuItem), "TopLevelHeaderTemplateKey");
                 }
@@ -118,7 +118,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_submenuItemTemplateKey == null)
+                if (_submenuItemTemplateKey is null)
                 {
                     _submenuItemTemplateKey = new ComponentResourceKey(typeof(MenuItem), "SubmenuItemTemplateKey");
                 }
@@ -134,7 +134,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_submenuHeaderTemplateKey == null)
+                if (_submenuHeaderTemplateKey is null)
                 {
                     _submenuHeaderTemplateKey = new ComponentResourceKey(typeof(MenuItem), "SubmenuHeaderTemplateKey");
                 }
@@ -345,7 +345,7 @@ namespace System.Windows.Controls
             RoutedUICommand uiCommand;
 
             // If no header has been set, use the command's text
-            if (value == null && !menuItem.HasNonDefaultValue(HeaderProperty))
+            if (value is null && !menuItem.HasNonDefaultValue(HeaderProperty))
             {
                 uiCommand = menuItem.Command as RoutedUICommand;
                 if (uiCommand != null)
@@ -446,7 +446,7 @@ namespace System.Windows.Controls
             {
                 // Perf optimization - only raise CanExecute event if the menu is open
                 MenuItem parent = ItemsControl.ItemsControlFromItemContainer(this) as MenuItem;
-                if (parent == null || parent.IsSubmenuOpen)
+                if (parent is null || parent.IsSubmenuOpen)
                 {
                     CanExecute = MS.Internal.Commands.CommandHelpers.CanExecuteCommandSource(this);
                 }
@@ -713,7 +713,7 @@ namespace System.Windows.Controls
                 menuItem.NotifyChildrenToResumeAnimation();
 
                 // No Popup in the style so fire closed now
-                if (menuItem._submenuPopup == null)
+                if (menuItem._submenuPopup is null)
                 {
                     menuItem.OnSubmenuClosed(new RoutedEventArgs(SubmenuClosedEvent, menuItem));
                 }
@@ -1552,10 +1552,10 @@ namespace System.Windows.Controls
             MenuItem menuItem = sender as MenuItem;
             bool isScope = false;
 
-            if (e.Target == null)
+            if (e.Target is null)
             {
                 // MenuItem access key should not work if something else beside MenuBase has capture
-                if (Mouse.Captured == null || Mouse.Captured is MenuBase)
+                if (Mouse.Captured is null || Mouse.Captured is MenuBase)
                 {
                     e.Target = menuItem;
 
@@ -1574,7 +1574,7 @@ namespace System.Windows.Controls
                     e.Handled = true;
                 }
             }
-            else if (e.Scope == null)
+            else if (e.Scope is null)
             {
                 // We want menu items to be a scope, but not for any AKs in its header.
 
@@ -1687,7 +1687,7 @@ namespace System.Windows.Controls
             // Do not enter and highlight this item until the popup has opened
             // This prevents immediately selecting a submenu item when opening the menu
             // because the mouse was already where the menu item appeared
-            if (parent == null || !MenuItem.GetBoolField(parent, BoolField.IgnoreMouseEvents))
+            if (parent is null || !MenuItem.GetBoolField(parent, BoolField.IgnoreMouseEvents))
             {
                 MenuItemRole role = Role;
 
@@ -1742,7 +1742,7 @@ namespace System.Windows.Controls
                         // no hierarchy open, it is safe to select the item immediately.
                         MenuItem sibling = CurrentSibling;
 
-                        if (sibling == null || !sibling.IsSubmenuOpen)
+                        if (sibling is null || !sibling.IsSubmenuOpen)
                         {
                             if (!IsSubmenuOpen)
                             {
@@ -1907,7 +1907,7 @@ namespace System.Windows.Controls
             switch (key)
             {
                 case Key.Tab:
-                    if (role == MenuItemRole.SubmenuHeader && IsSubmenuOpen && CurrentSelection == null)
+                    if (role == MenuItemRole.SubmenuHeader && IsSubmenuOpen && CurrentSelection is null)
                     {
                         if ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
                         {
@@ -1956,7 +1956,7 @@ namespace System.Windows.Controls
                 // item in the submenu (respectively).  If the submenu is not opened, this will be handled by Menu.
                 case Key.Down:
                     {
-                        if (role == MenuItemRole.SubmenuHeader && IsSubmenuOpen && CurrentSelection == null)
+                        if (role == MenuItemRole.SubmenuHeader && IsSubmenuOpen && CurrentSelection is null)
                         {
                             NavigateToStart(new ItemNavigateArgs(e.Device, Keyboard.Modifiers));
                             handled = true;
@@ -1966,7 +1966,7 @@ namespace System.Windows.Controls
 
                 case Key.Up:
                     {
-                        if (role == MenuItemRole.SubmenuHeader && IsSubmenuOpen && CurrentSelection == null)
+                        if (role == MenuItemRole.SubmenuHeader && IsSubmenuOpen && CurrentSelection is null)
                         {
                             NavigateToEnd(new ItemNavigateArgs(e.Device, Keyboard.Modifiers));
                             handled = true;
@@ -2157,9 +2157,9 @@ namespace System.Windows.Controls
                 BindingOperations.SetBinding(this, DefinitionBase.PrivateSharedSizeScopeProperty, binding);
             }
 
-            // visual parent == null
+            // visual parent is null
             // --- Clear binding for DefinitionBase.PrivateSharedSizeScopeProperty
-            if (newParent == null)
+            if (newParent is null)
             {
                 BindingOperations.ClearBinding(this, DefinitionBase.PrivateSharedSizeScopeProperty);
             }
@@ -2314,7 +2314,7 @@ namespace System.Windows.Controls
             {
                 // Verify that the parent of the MenuItem is valid;
                 ItemsControl owner = ItemsControl.ItemsControlFromItemContainer(this);
-                if (owner == null)
+                if (owner is null)
                 {
                     owner = VisualTreeHelper.GetParent(this) as ItemsControl;
                 }
@@ -2538,7 +2538,7 @@ namespace System.Windows.Controls
 
         private void SetTimerToOpenHierarchy()
         {
-            if (_openHierarchyTimer == null)
+            if (_openHierarchyTimer is null)
             {
                 _openHierarchyTimer = new DispatcherTimer(DispatcherPriority.Normal);
                 _openHierarchyTimer.Tick += (EventHandler)delegate(object sender, EventArgs e)
@@ -2557,7 +2557,7 @@ namespace System.Windows.Controls
 
         private void SetTimerToCloseHierarchy()
         {
-            if (_closeHierarchyTimer == null)
+            if (_closeHierarchyTimer is null)
             {
                 _closeHierarchyTimer = new DispatcherTimer(DispatcherPriority.Normal);
                 _closeHierarchyTimer.Tick += (EventHandler)delegate(object sender, EventArgs e)
@@ -2595,7 +2595,7 @@ namespace System.Windows.Controls
 
         private static object OnCoerceAcceleratorKey(DependencyObject d, object value)
         {
-            if (value == null)
+            if (value is null)
             {
                 string inputGestureText = ((MenuItem)d).InputGestureText;
                 if (inputGestureText != String.Empty)

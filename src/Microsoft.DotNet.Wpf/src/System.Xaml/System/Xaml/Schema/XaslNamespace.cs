@@ -44,7 +44,7 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (_types == null)
+                if (_types is null)
                 {
                     _types = new XaslTypeCollection();
                 }
@@ -57,7 +57,7 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (_directiveTypes == null)
+                if (_directiveTypes is null)
                 {
                     _directiveTypes = new XaslTypeCollection();
                 }
@@ -70,7 +70,7 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (_directiveProperties == null)
+                if (_directiveProperties is null)
                 {
                     _directiveProperties = new XaslMemberCollection(null);
                 }

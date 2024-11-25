@@ -45,7 +45,7 @@ namespace MS.Internal
         // identity and change notifications.  We handle these specially.
         internal override bool IsDataSetCollectionProperty(PropertyDescriptor pd)
         {
-            if (s_DataTablePropertyDescriptorType == null)
+            if (s_DataTablePropertyDescriptorType is null)
             {
                 // lazy load the types for the offending PD's.  They're internal, so
                 // we get them indirectly.
@@ -174,8 +174,8 @@ namespace MS.Internal
         {
             DataRowView drv;
             DataRow dr = null;
-            if ((drv = item as DataRowView) == null &&
-                (dr = item as DataRow) == null)
+            if ((drv = item as DataRowView) is null &&
+                (dr = item as DataRow) is null)
             {
                 return false;
             }

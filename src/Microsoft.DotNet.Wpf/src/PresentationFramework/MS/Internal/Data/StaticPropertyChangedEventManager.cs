@@ -129,7 +129,7 @@ namespace MS.Internal.Data
                 StaticPropertyChangedEventManager manager = (StaticPropertyChangedEventManager)GetCurrentManager(managerType);
 
                 // at first use, create and register a new manager
-                if (manager == null)
+                if (manager is null)
                 {
                     manager = new StaticPropertyChangedEventManager();
                     SetCurrentManager(managerType, manager);
@@ -161,7 +161,7 @@ namespace MS.Internal.Data
             {
                 TypeRecord tr = (TypeRecord)this[type];
 
-                if (tr == null)
+                if (tr is null)
                 {
                     // no entry in the hashtable - add a new one
                     tr = new TypeRecord(type, this);
@@ -307,7 +307,7 @@ namespace MS.Internal.Data
             {
                 PropertyRecord pr = (PropertyRecord)_dict[propertyName];
 
-                if (pr == null)
+                if (pr is null)
                 {
                     // no entry in the dictionary - add a new one
                     pr = new PropertyRecord(propertyName, this);
@@ -353,11 +353,11 @@ namespace MS.Internal.Data
                     // source has changed a particular property.  Notify targets
                     // who are listening either for this property or for all properties.
                     PropertyRecord pr = (PropertyRecord)_dict[propertyName];
-                    ListenerList<PropertyChangedEventArgs> listeners = (pr == null) ? null : pr.List;
+                    ListenerList<PropertyChangedEventArgs> listeners = (pr is null) ? null : pr.List;
                     PropertyRecord genericRecord = (PropertyRecord)_dict[String.Empty];
-                    ListenerList<PropertyChangedEventArgs> genericListeners = (genericRecord == null) ? null : genericRecord.List;
+                    ListenerList<PropertyChangedEventArgs> genericListeners = (genericRecord is null) ? null : genericRecord.List;
 
-                    if (genericListeners == null)
+                    if (genericListeners is null)
                     {
                         if (listeners != null)
                         {
@@ -391,9 +391,9 @@ namespace MS.Internal.Data
                     // source has changed all properties.  Notify all targets.
                     // Use previously calculated combined list, if available.
                     PropertyRecord pr = (PropertyRecord)_dict[AllListenersKey];
-                    ListenerList<PropertyChangedEventArgs> pcList = (pr == null) ? null : pr.List;
+                    ListenerList<PropertyChangedEventArgs> pcList = (pr is null) ? null : pr.List;
 
-                    if (pcList == null)
+                    if (pcList is null)
                     {
                         // make one pass to compute the size of the combined list.
                         // This avoids expensive reallocations.

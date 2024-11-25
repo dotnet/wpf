@@ -51,7 +51,7 @@ namespace MS.Internal.Data
         {
             get
             {
-                if (_nsMgr == null && _xds != null)
+                if (_nsMgr is null && _xds != null)
                     _nsMgr = _xds.XmlNamespaceManager;
                 return _nsMgr;
             }
@@ -86,7 +86,7 @@ namespace MS.Internal.Data
         // Update the collection using new query results
         internal void SynchronizeCollection(XmlNodeList nodes)
         {
-            if (nodes == null)
+            if (nodes is null)
             {
                 Items.Clear();
                 return;

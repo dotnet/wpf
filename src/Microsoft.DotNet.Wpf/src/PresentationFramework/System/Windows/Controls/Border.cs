@@ -297,7 +297,7 @@ namespace System.Windows.Controls
 
                 _useComplexRenderCodePath = 
                 //  2. the border brush is origin dependent (the only origin independent brush is a solid color brush)
-                        (originIndependentBrush == null)
+                        (originIndependentBrush is null)
                 //  3. the border brush is semi-transtarent solid color brush AND border thickness is not uniform
                 //     (for uniform semi-transparent border Border.OnRender draws rectangle outline - so it works fine)
                     || ((originIndependentBrush.Color.A < 0xff) && !uniformBorders)
@@ -405,7 +405,7 @@ namespace System.Windows.Controls
                     // and frozen if possible.  Doing this avoids the pen 
                     // being copied when used in the DrawLine methods.
                     Pen pen = LeftPenCache;
-                    if (pen == null)
+                    if (pen is null)
                     {
                         pen = new Pen();
                         pen.Brush = borderBrush;
@@ -468,7 +468,7 @@ namespace System.Windows.Controls
                         if (DoubleUtil.GreaterThanZero(border.Right))
                         {
                             pen = RightPenCache;
-                            if (pen == null)
+                            if (pen is null)
                             {
                                 pen = new Pen();
                                 pen.Brush = borderBrush;
@@ -500,7 +500,7 @@ namespace System.Windows.Controls
                         if (DoubleUtil.GreaterThanZero(border.Top))
                         {
                             pen = TopPenCache;
-                            if (pen == null)
+                            if (pen is null)
                             {
                                 pen = new Pen();
                                 pen.Brush = borderBrush;
@@ -531,7 +531,7 @@ namespace System.Windows.Controls
                         if (DoubleUtil.GreaterThanZero(border.Bottom))
                         {
                             pen = BottomPenCache;
-                            if (pen == null)
+                            if (pen is null)
                             {
                                 pen = new Pen();
                                 pen.Brush = borderBrush;
@@ -809,7 +809,7 @@ namespace System.Windows.Controls
 
             set
             {
-                if (value == null)
+                if (value is null)
                 {
                     BorderGeometryField.ClearValue(this);
                 }
@@ -829,7 +829,7 @@ namespace System.Windows.Controls
 
             set
             {
-                if (value == null)
+                if (value is null)
                 {
                     BackgroundGeometryField.ClearValue(this);
                 }
@@ -849,7 +849,7 @@ namespace System.Windows.Controls
 
             set
             {
-                if (value == null)
+                if (value is null)
                 {
                     LeftPenField.ClearValue(this);
                 }
@@ -869,7 +869,7 @@ namespace System.Windows.Controls
 
             set
             {
-                if (value == null)
+                if (value is null)
                 {
                     RightPenField.ClearValue(this);
                 }
@@ -889,7 +889,7 @@ namespace System.Windows.Controls
 
             set
             {
-                if (value == null)
+                if (value is null)
                 {
                     TopPenField.ClearValue(this);
                 }
@@ -909,7 +909,7 @@ namespace System.Windows.Controls
 
             set
             {
-                if (value == null)
+                if (value is null)
                 {
                     BottomPenField.ClearValue(this);
                 }

@@ -478,7 +478,7 @@ namespace MS.Internal.Controls.StickyNote
                 case StickyNoteType.Text:
                     {
                         RichTextBox rtb = content as RichTextBox;
-                        if (rtb == null)
+                        if (rtb is null)
                             throw new InvalidOperationException(SR.Format(SR.InvalidStickyNoteTemplate, type, typeof(RichTextBox), SNBConstants.c_ContentControlId));
 
                         contentControl = new StickyNoteRichTextBox(rtb);
@@ -487,7 +487,7 @@ namespace MS.Internal.Controls.StickyNote
                 case StickyNoteType.Ink:
                     {
                         InkCanvas canvas = content as InkCanvas;
-                        if (canvas == null)
+                        if (canvas is null)
                             throw new InvalidOperationException(SR.Format(SR.InvalidStickyNoteTemplate, type, typeof(InkCanvas), SNBConstants.c_ContentControlId));
 
                         contentControl = new StickyNoteInkCanvas(canvas);

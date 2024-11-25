@@ -263,7 +263,7 @@ public class Storyboard : ParallelTimeline
         }
         else if( fce != null )
         {
-            Debug.Assert( nameScope == null );
+            Debug.Assert( nameScope is null );
             namedObject = fce.FindName(targetName);
             nameScopeUsed = fce;
         }
@@ -273,14 +273,14 @@ public class Storyboard : ParallelTimeline
                 SR.Format(SR.Storyboard_NoNameScope, targetName));
         }
 
-        if( namedObject == null )
+        if( namedObject is null )
         {
             throw new InvalidOperationException(
                 SR.Format(SR.Storyboard_NameNotFound, targetName, nameScopeUsed.GetType().ToString()));
         }
 
         targetObject = namedObject as DependencyObject;
-        if( targetObject == null )
+        if( targetObject is null )
         {
             throw new InvalidOperationException(SR.Format(SR.Storyboard_TargetNameNotDependencyObject, targetName ));
         }
@@ -315,7 +315,7 @@ public class Storyboard : ParallelTimeline
         if( nameScope != null )
         {
             namedObject = nameScope.FindName(targetName);
-            if( namedObject == null )
+            if( namedObject is null )
             {
                 throw new InvalidOperationException(
                     SR.Format(SR.Storyboard_NameNotFound, targetName, nameScope.GetType().ToString()));
@@ -324,7 +324,7 @@ public class Storyboard : ParallelTimeline
         else if( fe != null )
         {
             namedObject = fe.FindName(targetName);
-            if( namedObject == null )
+            if( namedObject is null )
             {
                 throw new InvalidOperationException(
                     SR.Format(SR.Storyboard_NameNotFound, targetName, fe.GetType().ToString()));
@@ -333,7 +333,7 @@ public class Storyboard : ParallelTimeline
         else if( fce != null )
         {
             namedObject = fce.FindName(targetName);
-            if( namedObject == null )
+            if( namedObject is null )
             {
                 throw new InvalidOperationException(
                     SR.Format(SR.Storyboard_NameNotFound, targetName, fce.GetType().ToString()));
@@ -347,7 +347,7 @@ public class Storyboard : ParallelTimeline
 
         beginStoryboard = namedObject as BeginStoryboard;
 
-        if( beginStoryboard == null )
+        if( beginStoryboard is null )
         {
             throw new InvalidOperationException(SR.Format(SR.Storyboard_BeginStoryboardNameNotFound, targetName));
         }
@@ -421,7 +421,7 @@ public class Storyboard : ParallelTimeline
             DependencyProperty targetProperty = null;
             AnimationClock animationClock = (AnimationClock)currentClock;
 
-            if( targetObject == null )
+            if( targetObject is null )
             {
                 // Resolve the target object name.  If no name specified, use the
                 //  containing object.
@@ -436,12 +436,12 @@ public class Storyboard : ParallelTimeline
                     // The containing object must be either an FE or FCE.
                     // (Not a Storyboard, as used for "shared clocks" mode.)
                     targetObject = containingObject as FrameworkElement;
-                    if(targetObject == null)
+                    if(targetObject is null)
                     {
                         targetObject = containingObject as FrameworkContentElement;
                     }
 
-                    if( targetObject == null )
+                    if( targetObject is null )
                     {
                         // The containing object is not an FE or FCE.
                         throw new InvalidOperationException(SR.Format(SR.Storyboard_NoTarget, currentTimeline.GetType().ToString() ));
@@ -450,7 +450,7 @@ public class Storyboard : ParallelTimeline
             }
 
             // See if we have a property name to use.
-            if( currentPropertyPath == null )
+            if( currentPropertyPath is null )
             {
                 throw new InvalidOperationException(SR.Format(SR.Storyboard_TargetPropertyRequired, currentTimeline.GetType().ToString() ));
             }
@@ -472,7 +472,7 @@ public class Storyboard : ParallelTimeline
                     // We have a simple single-step property.
                     targetProperty = currentPropertyPath.GetAccessor(0) as DependencyProperty;
 
-                    if( targetProperty == null )
+                    if( targetProperty is null )
                     {
                         // Unfortunately it's not a DependencyProperty.
                         throw new InvalidOperationException(SR.Format(SR.Storyboard_PropertyPathMustPointToDependencyProperty, currentPropertyPath.Path ));
@@ -539,7 +539,7 @@ public class Storyboard : ParallelTimeline
             DependencyObject mentor = Helper.FindMentor(containingObject);
             targetMediaElement = ResolveTargetName(currentObjectName, nameScope, mentor ) as MediaElement;
 
-            if( targetMediaElement == null )
+            if( targetMediaElement is null )
             {
                 throw new InvalidOperationException(SR.Format(SR.Storyboard_MediaElementNotFound, currentObjectName ));
             }
@@ -553,7 +553,7 @@ public class Storyboard : ParallelTimeline
             targetMediaElement = containingObject as MediaElement;
         }
 
-        if( targetMediaElement == null )
+        if( targetMediaElement is null )
         {
             throw new InvalidOperationException(SR.Storyboard_MediaElementRequired);
         }
@@ -573,10 +573,10 @@ public class Storyboard : ParallelTimeline
     {
         object mappedObject = clockMappings[mappingKey];
 
-        Debug.Assert( mappedObject == null || mappedObject is AnimationClock || mappedObject is List<AnimationClock>,
-            $"Internal error - clockMappings table contains an unexpected object {((mappedObject == null) ? "" : mappedObject.GetType().ToString())}");
+        Debug.Assert( mappedObject is null || mappedObject is AnimationClock || mappedObject is List<AnimationClock>,
+            $"Internal error - clockMappings table contains an unexpected object {((mappedObject is null) ? "" : mappedObject.GetType().ToString())}");
 
-        if( mappedObject == null )
+        if( mappedObject is null )
         {
             // No clock currently in storage, put this clock in that slot.
             clockMappings[mappingKey] = animationClock;
@@ -686,13 +686,13 @@ public class Storyboard : ParallelTimeline
             intermediateObject = path.GetItem(i);
             intermediateProperty = path.GetAccessor(i);
 
-            if( intermediateObject == null )
+            if( intermediateObject is null )
             {
                 Debug.Assert( i > 0, "The caller should not have set the PropertyPath context to a null object." );
                 throw new InvalidOperationException(SR.Format(SR.Storyboard_PropertyPathObjectNotFound, AccessorName(path, i-1), path.Path ));
             }
 
-            if( intermediateProperty == null )
+            if( intermediateProperty is null )
             {
                 // Would love to throw error with the name of the property we couldn't find,
                 //  but that information is not exposed from the PropertyPath class.
@@ -741,13 +741,13 @@ public class Storyboard : ParallelTimeline
                 DependencyObject intermediateDO = intermediateObject as DependencyObject;
                 DependencyProperty intermediateDP = intermediateProperty as DependencyProperty;
 
-                if( intermediateDO == null )
+                if( intermediateDO is null )
                 {
                     Debug.Assert( i > 0, "The caller should not have set the PropertyPath context to a non DependencyObject." );
                     throw new InvalidOperationException(SR.Format(SR.Storyboard_PropertyPathMustPointToDependencyObject, AccessorName(path, i-1), path.Path));
                 }
 
-                if( intermediateDP == null )
+                if( intermediateDP is null )
                 {
                     throw new InvalidOperationException(SR.Format(SR.Storyboard_PropertyPathMustPointToDependencyProperty, path.Path ));
                 }
@@ -838,9 +838,9 @@ public class Storyboard : ParallelTimeline
         DependencyObject   animatedObject   = path.LastItem as DependencyObject;
         DependencyProperty animatedProperty = path.LastAccessor as DependencyProperty;
 
-        if( animatedObject == null ||
-            animatedProperty == null ||
-            targetProperty == null )
+        if( animatedObject is null ||
+            animatedProperty is null ||
+            targetProperty is null )
         {
             throw new InvalidOperationException(SR.Format(SR.Storyboard_PropertyPathUnresolved, path.Path));
         }
@@ -1217,7 +1217,7 @@ public class Storyboard : ParallelTimeline
             throw new ArgumentException(SR.Storyboard_UnrecognizedHandoffBehavior);
         }
 
-        if (BeginTime == null)
+        if (BeginTime is null)
         {
             // a null BeginTime means to not allocate or start the clock
             return;
@@ -1228,7 +1228,7 @@ public class Storyboard : ParallelTimeline
         //  won't care about its Storyboards, we silently exit.
         // If we don't exit here, we'll need to catch and handle the "no time
         //  manager" exception implemented for bug #1247862
-        if( MediaContext.CurrentMediaContext.TimeManager == null )
+        if( MediaContext.CurrentMediaContext.TimeManager is null )
         {
             return;
         }
@@ -1963,7 +1963,7 @@ public class Storyboard : ParallelTimeline
             clockReference = clocks[this] as WeakReference;
         }
 
-        if (clockReference == null)
+        if (clockReference is null)
         {
             if (throwIfNull)
             {
@@ -2017,7 +2017,7 @@ public class Storyboard : ParallelTimeline
     {
         HybridDictionary clocks = StoryboardClockTreesField.GetValue(o);
 
-        if (clocks == null)
+        if (clocks is null)
         {
             clocks = new HybridDictionary();
             StoryboardClockTreesField.SetValue(o, clocks);

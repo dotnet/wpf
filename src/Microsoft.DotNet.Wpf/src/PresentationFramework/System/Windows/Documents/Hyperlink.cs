@@ -578,7 +578,7 @@ namespace System.Windows.Documents
             Uri cachedUri = Hyperlink.s_cachedNavigateUri;
             // ShouldPreventUriSpoofing is checked last in order to avoid incurring a first-chance SecurityException
             // in common scenarios.
-            if (cachedUri == null || cachedUri.Equals(targetUri) || !ShouldPreventUriSpoofing)
+            if (cachedUri is null || cachedUri.Equals(targetUri) || !ShouldPreventUriSpoofing)
             {
                 // Need to mark as visited
 
@@ -640,7 +640,7 @@ namespace System.Windows.Documents
         private static DependencyProperty GetNavigateUriProperty(object element)
         {
             Hyperlink hl = element as Hyperlink;
-            return (hl == null) ? FixedPage.NavigateUriProperty : NavigateUriProperty;
+            return (hl is null) ? FixedPage.NavigateUriProperty : NavigateUriProperty;
         }
 
         /// <summary>

@@ -58,7 +58,7 @@ namespace MS.Internal.Printing.Configuration
                 result = null;
             }
 
-            if (result == null)
+            if (result is null)
             {
                 result = new FallbackPTProvider(deviceName, maxVersion, clientVersion);
             }

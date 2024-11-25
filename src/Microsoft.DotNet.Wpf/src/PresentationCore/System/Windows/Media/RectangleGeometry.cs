@@ -93,7 +93,7 @@ namespace System.Windows.Media
                 {
                     boundsRect = Rect.Empty;
                 }
-                else if (transform == null || transform.IsIdentity)
+                else if (transform is null || transform.IsIdentity)
                 {
                     boundsRect = currentRect;
                 }
@@ -193,7 +193,7 @@ namespace System.Windows.Media
             {
                 boundingRect = Rect.Empty;
             }
-            else if ( (pen == null || pen.DoesNotContainGaps) &&
+            else if ( (pen is null || pen.DoesNotContainGaps) &&
                 geometryMatrix.IsIdentity && worldMatrix.IsIdentity)
             {
                 double strokeThickness = 0.0;

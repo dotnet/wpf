@@ -119,7 +119,7 @@ namespace System.Windows.Input.StylusWisp
         {
             get
             {
-                if (_storedStagingAreaItems == null)
+                if (_storedStagingAreaItems is null)
                 {
                     _storedStagingAreaItems = new WispLogic.StagingAreaInputItemList();
                 }

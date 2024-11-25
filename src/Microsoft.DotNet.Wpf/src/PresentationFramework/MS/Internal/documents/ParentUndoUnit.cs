@@ -65,7 +65,7 @@ namespace MS.Internal.Documents
             ArgumentNullException.ThrowIfNull(newUnit);
 
             deepestOpen = DeepestOpenUnit;
-            if (deepestOpen == null)
+            if (deepestOpen is null)
             {
                 if (IsInParentUnitChain(newUnit))
                 {
@@ -118,7 +118,7 @@ namespace MS.Internal.Documents
 
             ArgumentNullException.ThrowIfNull(unit);
 
-            if (OpenedUnit == null)
+            if (OpenedUnit is null)
             {
                 throw new InvalidOperationException(SR.UndoNoOpenUnit);
             }
@@ -134,7 +134,7 @@ namespace MS.Internal.Documents
                     closeParent = closeParent.OpenedUnit;
                 }
 
-                if (closeParent.OpenedUnit == null)
+                if (closeParent.OpenedUnit is null)
                 {
                     throw new ArgumentException(SR.UndoUnitNotFound, "unit");
                 }
@@ -389,7 +389,7 @@ namespace MS.Internal.Documents
             }
             set
             {
-                if (value == null)
+                if (value is null)
                 {
                     value = String.Empty;
                 }
@@ -479,7 +479,7 @@ namespace MS.Internal.Documents
         /// </param>
         protected void Init(string description)
         {
-            if (description == null)
+            if (description is null)
             {
                 description = String.Empty;
             }

@@ -214,7 +214,7 @@ namespace System.Windows.Media.Effects
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
             // of your app. 
-            Debug.Assert(s_Children == null || s_Children.IsFrozen,
+            Debug.Assert(s_Children is null || s_Children.IsFrozen,
                 "Detected context bound default value BitmapEffectGroup.s_Children");
 
 

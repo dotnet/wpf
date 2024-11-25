@@ -173,7 +173,7 @@ namespace System.Windows.Media
                 else
                 {
                     // Return an empty, read-only collection of FamilyMaps.
-                    if (_emptyFamilyMaps == null)
+                    if (_emptyFamilyMaps is null)
                     {
                         _emptyFamilyMaps = new FontFamilyMapCollection(null);
                     }
@@ -294,9 +294,9 @@ namespace System.Windows.Media
         public override bool Equals(object o)
         {
             FontFamily f = o as FontFamily;
-            if (f == null)
+            if (f is null)
             {
-                // different types or o == null
+                // different types or o is null
                 return false;
             }
             else if (_familyIdentifier.Source != null)
@@ -319,7 +319,7 @@ namespace System.Windows.Media
         {
             CompositeFontFamily mutableFamily = _firstFontFamily as CompositeFontFamily;
 
-            if (mutableFamily == null)
+            if (mutableFamily is null)
             {
                 throw new NotSupportedException(SR.FontFamily_ReadOnly);
             }
@@ -337,7 +337,7 @@ namespace System.Windows.Media
             {
                 IFontFamily family = _firstFontFamily;
 
-                if (family == null)
+                if (family is null)
                 {
                     // Call Canonicalize() directly so it won't just be called on the boxed object.
                     _familyIdentifier.Canonicalize();
@@ -345,14 +345,14 @@ namespace System.Windows.Media
                     // Look up first font family from cache. If not found, construct a new one.
                     family = TypefaceMetricsCache.ReadonlyLookup(FamilyIdentifier) as IFontFamily;
 
-                    if (family == null)
+                    if (family is null)
                     {
                         FontStyle style     = FontStyles.Normal;
                         FontWeight weight   = FontWeights.Normal;
                         FontStretch stretch = FontStretches.Normal;
                         family = FindFirstFontFamilyAndFace(ref style, ref weight, ref stretch);
 
-                        if (family == null)
+                        if (family is null)
                         {
                             // fall back to null font
                             family = LookupFontFamily(NullFontFamilyCanonicalName);
@@ -381,12 +381,12 @@ namespace System.Windows.Media
 
             // Split limits the number of tokens in a family name.
             FontFamilyIdentifier identifier = new FontFamilyIdentifier(friendlyNameList, null);
-            for (int i = 0, c = identifier.Count; firstFontFamily == null && i < c; i++)
+            for (int i = 0, c = identifier.Count; firstFontFamily is null && i < c; i++)
             {
                 firstFontFamily = LookupFontFamily(identifier[i]);
             }
 
-            if (firstFontFamily == null)
+            if (firstFontFamily is null)
             {
                 // cannot find first font family, assume null font for first font family
                 firstFontFamily = LookupFontFamily(NullFontFamilyCanonicalName);
@@ -412,7 +412,7 @@ namespace System.Windows.Media
 
             IFontFamily fontFamily = LookupFontFamily(canonicalName);
 
-            if(fontFamily == null)
+            if(fontFamily is null)
             {
                 nullFont = true;
                 fontFamily = LookupFontFamily(NullFontFamilyCanonicalName);
@@ -463,7 +463,7 @@ namespace System.Windows.Media
             ref FontStretch stretch
             )
         {
-            if (_familyIdentifier.Source == null)
+            if (_familyIdentifier.Source is null)
             {
                 Invariant.Assert(_firstFontFamily != null, "Unnamed FontFamily should have a non-null first font family");
                 return _firstFontFamily;
@@ -473,7 +473,7 @@ namespace System.Windows.Media
             
             _familyIdentifier.Canonicalize();
 
-            for (int i = 0, c = _familyIdentifier.Count; firstFontFamily == null && i < c; ++i)
+            for (int i = 0, c = _familyIdentifier.Count; firstFontFamily is null && i < c; ++i)
             {
                 firstFontFamily = LookupFontFamilyAndFace(
                     _familyIdentifier[i],
@@ -501,7 +501,7 @@ namespace System.Windows.Media
             ref FontStretch              stretch
             )
         {
-            if (canonicalFamilyReference == null || object.ReferenceEquals(canonicalFamilyReference, CanonicalFontFamilyReference.Unresolved))
+            if (canonicalFamilyReference is null || object.ReferenceEquals(canonicalFamilyReference, CanonicalFontFamilyReference.Unresolved))
             {
                 // no canonical name, e.g., because the friendly name was an empty string
                 // or could not be canonicalized
@@ -512,7 +512,7 @@ namespace System.Windows.Media
             {
                 FamilyCollection familyCollection;
 
-                if (canonicalFamilyReference.LocationUri == null && canonicalFamilyReference.EscapedFileName == null)
+                if (canonicalFamilyReference.LocationUri is null && canonicalFamilyReference.EscapedFileName is null)
                 {
                     // No explicit location; use the default family collection.
                     familyCollection = _defaultFamilyCollection;

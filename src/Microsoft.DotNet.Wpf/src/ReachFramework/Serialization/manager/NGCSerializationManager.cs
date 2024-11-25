@@ -209,7 +209,7 @@ namespace System.Windows.Xps.Serialization
         {
             ReachSerializer reachSerializer = null;
 
-            if((reachSerializer = base.GetSerializer(serializedObject)) == null)
+            if((reachSerializer = base.GetSerializer(serializedObject)) is null)
             {
                 reachSerializer = this.SerializersCacheManager.GetSerializer(serializedObject);
             }
@@ -230,7 +230,7 @@ namespace System.Windows.Xps.Serialization
             Type serializerType = null;
 
 
-            if((serializerType = base.GetSerializerType(objectType)) == null)
+            if((serializerType = base.GetSerializerType(objectType)) is null)
             {
                 if (typeof(System.Windows.Documents.FixedDocumentSequence).IsAssignableFrom(objectType))
                 {
@@ -397,7 +397,7 @@ namespace System.Windows.Xps.Serialization
         {
             set
             {
-                if (_jobName == null)
+                if (_jobName is null)
                 {
                     _jobName = value;
                 }
@@ -445,7 +445,7 @@ namespace System.Windows.Xps.Serialization
             {
                 JobName = _printQueue.CurrentJobSettings.Description;
 
-                if(JobName == null)
+                if(JobName is null)
                 {
                     JobName = NgcSerializerUtil.InferJobName(o);
                 }
@@ -804,7 +804,7 @@ namespace System.Windows.Xps.Serialization
                         _rootPrintTicket = _fdsPrintTicket;
                     }
 
-                    if(_rootPrintTicket == null)
+                    if(_rootPrintTicket is null)
                     {
                         _rootPrintTicket = new PrintTicket(_printQueue.UserPrintTicket.GetXmlStream());
                     }
@@ -823,8 +823,8 @@ namespace System.Windows.Xps.Serialization
 
                         // The NULL check might not be needed but just in case...
                         String printTicketPairXMLStr =
-                            (_rootPrintTicket == null ? "" : _rootPrintTicket.ToXmlString()) +
-                            (_fpPrintTicket == null ? "" : _fpPrintTicket.ToXmlString());
+                            (_rootPrintTicket is null ? "" : _rootPrintTicket.ToXmlString()) +
+                            (_fpPrintTicket is null ? "" : _fpPrintTicket.ToXmlString());
 
                         PrintTicket newActivePrintTicket;
 
@@ -873,8 +873,8 @@ namespace System.Windows.Xps.Serialization
         {
             PrintTicket printTicket = null;
 
-            if (_activePrintTicket == null &&
-               _rootPrintTicket == null)
+            if (_activePrintTicket is null &&
+               _rootPrintTicket is null)
             {
                 _activePrintTicket = new PrintTicket(_printQueue.UserPrintTicket.GetXmlStream());
                 _rootPrintTicket = _activePrintTicket;
@@ -974,7 +974,7 @@ namespace System.Windows.Xps.Serialization
 
             _jobName = _printQueue.CurrentJobSettings.Description;
 
-            if(_jobName == null)
+            if(_jobName is null)
             {
                 _jobName = NgcSerializerUtil.InferJobName(null);
             }

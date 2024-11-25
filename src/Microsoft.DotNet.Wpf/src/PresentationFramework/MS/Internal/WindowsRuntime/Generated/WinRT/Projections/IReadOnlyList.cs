@@ -182,7 +182,7 @@ namespace MS.Internal.WindowsRuntime.ABI.System.Collections.Generic
 
                 EnsureIndexInt32(startIndex, _list.Count);
 
-                if (items == null)
+                if (items is null)
                 {
                     return 0;
                 }

@@ -323,7 +323,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return (_textElement == null) ? -1 : _textElement.IMELeftEdgeCharCount;
+                return (_textElement is null) ? -1 : _textElement.IMELeftEdgeCharCount;
             }
         }
 
@@ -333,7 +333,7 @@ namespace System.Windows.Documents
             get
             {
                 Splay();
-                return (_leftChildNode == null);
+                return (_leftChildNode is null);
             }
         }
 

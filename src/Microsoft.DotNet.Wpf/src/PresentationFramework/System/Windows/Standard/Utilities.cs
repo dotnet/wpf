@@ -227,7 +227,7 @@ namespace Standard
 
         public static void AddDependencyPropertyChangeListener(object component, DependencyProperty property, EventHandler listener)
         {
-            if (component == null)
+            if (component is null)
             {
                 return;
             }
@@ -240,7 +240,7 @@ namespace Standard
 
         public static void RemoveDependencyPropertyChangeListener(object component, DependencyProperty property, EventHandler listener)
         {
-            if (component == null)
+            if (component is null)
             {
                 return;
             }

@@ -176,7 +176,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_anyoneUserInstance == null)
+                if (_anyoneUserInstance is null)
                 {
                     _anyoneUserInstance = CreateUser(AnyoneUser);
                 }

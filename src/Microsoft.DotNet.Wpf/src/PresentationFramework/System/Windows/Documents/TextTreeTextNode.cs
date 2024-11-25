@@ -205,7 +205,7 @@ namespace System.Windows.Documents
                 Invariant.Assert(edge != _referencedEdge, "Splitting at referenced edge!");
 
                 previousNode = (TextTreeNode)GetPreviousNode();
-                Invariant.Assert(previousNode == null || previousNode.SymbolCount > 0 || previousNode.AfterEndReferenceCount,
+                Invariant.Assert(previousNode is null || previousNode.SymbolCount > 0 || previousNode.AfterEndReferenceCount,
                              "Found preceding zero-width text node inside Split!");
             }
             else if (localOffset == _symbolCount)
@@ -216,7 +216,7 @@ namespace System.Windows.Documents
                 Invariant.Assert(edge != _referencedEdge, "Splitting at referenced edge!");
 
                 nextNode = (TextTreeNode)GetNextNode();
-                Invariant.Assert(nextNode == null || nextNode.SymbolCount > 0 || nextNode.BeforeStartReferenceCount,
+                Invariant.Assert(nextNode is null || nextNode.SymbolCount > 0 || nextNode.BeforeStartReferenceCount,
                              "Found following zero-width text node inside Split! (2)");
             }
 #endif // DEBUG

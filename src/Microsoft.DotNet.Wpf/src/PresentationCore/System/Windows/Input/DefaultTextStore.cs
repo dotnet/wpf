@@ -143,7 +143,7 @@ namespace System.Windows.Input
                 string result = StringFromITfRange(rangeResult, ecReadOnly);
                 if (result.Length > 0)
                 {
-                    if (_composition == null)
+                    if (_composition is null)
                     {
                         // We don't have the composition now and we got the result string.
                         // The result text is result and automatic termination is true.
@@ -174,7 +174,7 @@ namespace System.Windows.Input
                 string comp = StringFromITfRange(rangeComposition, ecReadOnly);
                 if (comp.Length > 0)
                 {
-                if (_composition == null)
+                if (_composition is null)
                     {
                         // Start the new composition.
                         _composition = new DefaultTextStoreTextComposition(InputManager.Current, Keyboard.FocusedElement, "", TextCompositionAutoComplete.Off);
@@ -226,7 +226,7 @@ namespace System.Windows.Input
                 // DefaultTextStore is per Dispatcher and the cached referrence is stored in InputMethod class.
                 DefaultTextStore defaulttextstore = InputMethod.Current.DefaultTextStore;
 
-                if(defaulttextstore == null)
+                if(defaulttextstore is null)
                 {
                     defaulttextstore = new DefaultTextStore(Dispatcher.CurrentDispatcher);
                     InputMethod.Current.DefaultTextStore = defaulttextstore;

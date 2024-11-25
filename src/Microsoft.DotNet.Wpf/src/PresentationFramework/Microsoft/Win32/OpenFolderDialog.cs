@@ -108,7 +108,7 @@ namespace Microsoft.Win32
                 // Check to make sure Path.GetFileName does not return null.
                 // If it does, set safeFN to String.Empty instead to accomodate
                 // programmers that fail to check for null when reading strings.
-                if (safeFN == null)
+                if (safeFN is null)
                 {
                     safeFN = String.Empty;
                 }
@@ -139,7 +139,7 @@ namespace Microsoft.Win32
                     // Check to make sure Path.GetFileName does not return null.
                     // If it does, set this filename to String.Empty instead to accomodate
                     // programmers that fail to check for null when reading strings.
-                    if (safeFolderNames[i] == null)
+                    if (safeFolderNames[i] is null)
                     {
                         safeFolderNames[i] = String.Empty;
                     }
@@ -167,7 +167,7 @@ namespace Microsoft.Win32
                 // If null is passed in, we clear the entire list.
                 // If we get a string, we clear the entire list and make a new one-element
                 // array with the new string.
-                if (value == null)
+                if (value is null)
                 {
                     MutableItemNames = null;
                 }

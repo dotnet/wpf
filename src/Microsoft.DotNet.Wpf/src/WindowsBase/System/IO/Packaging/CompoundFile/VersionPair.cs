@@ -126,7 +126,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             bool result = false;
 
             // If both v1 & v2 are null they are same
-            if ((Object) v1 == null && (Object) v2 == null)
+            if ((Object) v1 is null && (Object) v2 is null)
             {
                 result = true;
             }
@@ -163,7 +163,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             bool result = false;
 
-            if ((Object) v1 == null && (Object) v2 != null)
+            if ((Object) v1 is null && (Object) v2 != null)
             {
                 result = true;
             }
@@ -188,7 +188,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             bool result = false;
 
-            if ((Object) v1 != null && (Object) v2 == null)
+            if ((Object) v1 != null && (Object) v2 is null)
             {
                 result = true;
             }
@@ -243,7 +243,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <returns>true if the object is equal to this instance</returns>
         public override bool Equals(Object obj)
         {
-            if (obj == null)
+            if (obj is null)
             {
                 return false;
             }
@@ -286,7 +286,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// Greater than 0 - This instance is greater than obj</returns>
         public int CompareTo(Object obj)
         {
-            if (obj == null)
+            if (obj is null)
             {
                 return 1;
             }

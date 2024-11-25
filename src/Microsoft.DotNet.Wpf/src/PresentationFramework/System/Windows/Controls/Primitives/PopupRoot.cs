@@ -300,12 +300,12 @@ namespace System.Windows.Controls.Primitives
         {
             UIElement child = Child;
 
-            if (child == null)
+            if (child is null)
                 return;
 
             TranslateTransform transform = _adornerDecorator.RenderTransform as TranslateTransform;
 
-            if (transform == null)
+            if (transform is null)
             {
                 transform = new TranslateTransform();
                 _adornerDecorator.RenderTransform = transform;

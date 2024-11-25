@@ -324,7 +324,7 @@ namespace MS.Internal.Ink.GestureRecognition
                 {
                     // Try to read the recognizer path subkey
                     path = recognizerKey.GetValue(GestureRecognizerValueName) as string;
-                    if (path == null)
+                    if (path is null)
                     {
                         return false;
                     } 
@@ -763,11 +763,11 @@ namespace MS.Internal.Ink.GestureRecognition
         {
             get
             {
-                if (s_isSupported && s_hRec == null)
+                if (s_isSupported && s_hRec is null)
                 {
                     lock (_syncRoot)
                     {
-                        if (s_isSupported && s_hRec == null)
+                        if (s_isSupported && s_hRec is null)
                         {
                             if (HRESULT.Failed(MS.Win32.Recognizer.UnsafeNativeMethods.CreateRecognizer(ref s_Gesture, out s_hRec)))
                             {

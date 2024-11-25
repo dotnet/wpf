@@ -32,7 +32,7 @@ namespace System.Windows.Input.StylusPlugIns
             StylusPlugInCollection targetPlugInCollection)
         {
             ArgumentNullException.ThrowIfNull(report);
-            if (tabletToElementTransform.Inverse == null)
+            if (tabletToElementTransform.Inverse is null)
             {
                 throw new ArgumentException(SR.Stylus_MatrixNotInvertable, "tabletToElementTransform");
             }
@@ -73,7 +73,7 @@ namespace System.Windows.Input.StylusPlugIns
         /// </summary>
         internal StylusPointCollection GetStylusPoints(GeneralTransform transform)
         {
-            if (_stylusPoints == null)
+            if (_stylusPoints is null)
             {
                 GeneralTransformGroup group = new GeneralTransformGroup();
                 if ( StylusDeviceId == 0)
@@ -124,11 +124,11 @@ namespace System.Windows.Input.StylusPlugIns
         /// </summary>
         public void NotifyWhenProcessed(object callbackData)
         {
-            if (_currentNotifyPlugIn == null)
+            if (_currentNotifyPlugIn is null)
             {
                 throw new InvalidOperationException(SR.Stylus_CanOnlyCallForDownMoveOrUp);
             }
-            if (_customData == null)
+            if (_customData is null)
             {
                 _customData = new RawStylusInputCustomDataList();
             }
@@ -186,7 +186,7 @@ namespace System.Windows.Input.StylusPlugIns
         {
             get 
             {
-                if (_customData == null)
+                if (_customData is null)
                 {
                     _customData = new RawStylusInputCustomDataList();
                 }

@@ -50,7 +50,7 @@ namespace MS.Internal.MilCodeGen.Generators
         {
             RenderDataInstructionData rdid = _resourceModel.RenderDataInstructionData;
 
-            if (rdid == null)
+            if (rdid is null)
             {
                 return;
             }
@@ -516,8 +516,8 @@ namespace MS.Internal.MilCodeGen.Generators
                                 {
                                     DoubleCollection guidelinesX = guidelines.GuidelinesX;
                                     DoubleCollection guidelinesY = guidelines.GuidelinesY;
-                                    int countX = guidelinesX == null ? 0 : guidelinesX.Count;
-                                    int countY = guidelinesY == null ? 0 : guidelinesY.Count;
+                                    int countX = guidelinesX is null ? 0 : guidelinesX.Count;
+                                    int countY = guidelinesY is null ? 0 : guidelinesY.Count;
 
                                     if (countX == 0 && (countY == 1 || countY == 2)
                                         )
@@ -826,7 +826,7 @@ namespace MS.Internal.MilCodeGen.Generators
                             [[resource.Name]] baseValue,
                             AnimationClock animations)
                         {
-                            if (animations == null)
+                            if (animations is null)
                             {
                                 return 0;
                             }
@@ -1297,11 +1297,11 @@ namespace MS.Internal.MilCodeGen.Generators
                             Debug.Assert((_curOffset > 0) || (_dependentResources.Count == 0));
 
                             // The buffer being null implies that _curOffset must be 0.
-                            // (_buffer == null) -> (_curOffset == 0)
+                            // (_buffer is null) -> (_curOffset == 0)
                             Debug.Assert((_buffer != null) || (_curOffset == 0));
 
                             // The _curOffset must be less than the length, if there is a buffer.
-                            Debug.Assert((_buffer == null) || (_curOffset <= _buffer.Length));
+                            Debug.Assert((_buffer is null) || (_curOffset <= _buffer.Length));
 
                             Stack<PushType> pushStack = new Stack<PushType>();
                             int pushedEffects = 0;
@@ -1369,11 +1369,11 @@ namespace MS.Internal.MilCodeGen.Generators
                         Debug.Assert((_curOffset > 0) || (_dependentResources.Count == 0));
 
                         // The buffer being null implies that _curOffset must be 0.
-                        // (_buffer == null) -> (_curOffset == 0)
+                        // (_buffer is null) -> (_curOffset == 0)
                         Debug.Assert((_buffer != null) || (_curOffset == 0));
 
                         // The _curOffset must be less than the length, if there is a buffer.
-                        Debug.Assert((_buffer == null) || (_curOffset <= _buffer.Length));
+                        Debug.Assert((_buffer is null) || (_curOffset <= _buffer.Length));
 
                         if (_curOffset > 0)
                         {
@@ -1687,7 +1687,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                     ));
                                 if (FAILED(hr))
                                 {
-                                    Assert(pGuidelineCollection == NULL);
+                                    Assert(pGuidelineCollection is null);
                                     if (hr != WGXERR_MALFORMED_GUIDELINE_DATA)
                                         goto Cleanup;
                                     // WGXERR_MALFORMED_GUIDELINE_DATA handling:
@@ -1735,7 +1735,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                     ));
                                 if (FAILED(hr))
                                 {
-                                    Assert(pGuidelineCollection == NULL);
+                                    Assert(pGuidelineCollection is null);
                                     if (hr != WGXERR_MALFORMED_GUIDELINE_DATA)
                                         goto Cleanup;
                                     // WGXERR_MALFORMED_GUIDELINE_DATA handling:
@@ -1912,7 +1912,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 {
                     // Support isn't written for Pop instructions with NoOp groups
                     Debug.Assert(
-                        (instruction.NoOpGroups == null)  ||
+                        (instruction.NoOpGroups is null)  ||
                         (instruction.NoOpGroups.Length == 0)
                         );
 
@@ -1999,7 +1999,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 {
                     if (isManaged)
                     {
-                        list.Append("(" + field.Name + " == null)");
+                        list.Append("(" + field.Name + " is null)");
                     }
                     else
                     {

@@ -32,7 +32,7 @@ namespace System.Windows.Documents
         // Null start/end creates an empty enumerator.
         internal RangeContentEnumerator(TextPointer start, TextPointer end)
         {
-            Invariant.Assert(start != null && end != null || start == null && end == null, "If start is null end should be null!");
+            Invariant.Assert(start != null && end != null || start is null && end is null, "If start is null end should be null!");
 
             _start = start;
             _end = end;
@@ -68,7 +68,7 @@ namespace System.Windows.Documents
                 int runLength;
                 int offset;
 
-                if (_navigator == null)
+                if (_navigator is null)
                 {
                     // Disable presharp 6503: Property get methods should not throw exceptions.
                     // We must throw here -- it's part of the IEnumerator contract.
@@ -163,7 +163,7 @@ namespace System.Windows.Documents
                 throw new InvalidOperationException(SR.EnumeratorVersionChanged);
             }
 
-            if (_start == null || _start.CompareTo(_end) == 0)
+            if (_start is null || _start.CompareTo(_end) == 0)
                 return false;
 
             if (_navigator != null && _navigator.CompareTo(_end) >= 0)
@@ -171,11 +171,11 @@ namespace System.Windows.Documents
                 return false;
             }
 
-            if (_navigator == null)
+            if (_navigator is null)
             {
                 _navigator = new TextPointer(_start);
             }
-            else if (_currentCache == null) // If we have a cache, _navigator is already positioned at the next item.
+            else if (_currentCache is null) // If we have a cache, _navigator is already positioned at the next item.
             {
                 switch (_navigator.GetPointerContext(LogicalDirection.Forward))
                 {
@@ -299,7 +299,7 @@ namespace System.Windows.Documents
         {
             char [] newBuffer;
 
-            if (_buffer == null)
+            if (_buffer is null)
             {
                 _buffer = new char[size];
             }

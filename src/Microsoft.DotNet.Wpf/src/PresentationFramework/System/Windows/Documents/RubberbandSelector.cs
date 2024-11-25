@@ -288,7 +288,7 @@ namespace System.Windows.Documents
                         bool includeEnd; //is the end of this glyphs included in selection?
                         if (IntersectGlyphs(g, top, left, bottom, right, out begin, out end, out includeEnd, out baseline, out height))
                         {
-                            if (textRange == null || begin > 0)
+                            if (textRange is null || begin > 0)
                             {
                                 //begin new text range
                                 textRange = new TextPositionPair();
@@ -477,7 +477,7 @@ namespace System.Windows.Documents
 
             Debug.Assert(end >= begin);
 
-            int characterCount = (run.Characters == null) ? 0 : run.Characters.Count;
+            int characterCount = (run.Characters is null) ? 0 : run.Characters.Count;
             includeEnd = (end == characterCount);
 
             return true;
@@ -579,7 +579,7 @@ namespace System.Windows.Documents
             {
                 DocumentPage dp = mpScope.GetDocumentPageFromPoint(pt);
                 FixedDocumentPage fdp = dp as FixedDocumentPage;
-                if (fdp == null)
+                if (fdp is null)
                 {
                     FixedDocumentSequenceDocumentPage fdsdp = dp as FixedDocumentSequenceDocumentPage;
                     if (fdsdp != null)

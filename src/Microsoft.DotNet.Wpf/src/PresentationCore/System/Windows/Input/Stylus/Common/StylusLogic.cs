@@ -346,13 +346,13 @@ namespace System.Windows.Input
                 if (stylusKey != null)
                 {
                     obj = stylusKey.GetValue(WispDoubleTapDistanceValue);
-                    _stylusDoubleTapDelta = (obj == null) ? _stylusDoubleTapDelta : (Int32)obj;      // The default double tap distance is 15 pixels (value is given in pixels)
+                    _stylusDoubleTapDelta = (obj is null) ? _stylusDoubleTapDelta : (Int32)obj;      // The default double tap distance is 15 pixels (value is given in pixels)
 
                     obj = stylusKey.GetValue(WispDoubleTapTimeValue);
-                    _stylusDoubleTapDeltaTime = (obj == null) ? _stylusDoubleTapDeltaTime : (Int32)obj;      // The default double tap timeout is 800ms
+                    _stylusDoubleTapDeltaTime = (obj is null) ? _stylusDoubleTapDeltaTime : (Int32)obj;      // The default double tap timeout is 800ms
 
                     obj = stylusKey.GetValue(WispCancelDeltaValue);
-                    _cancelDelta = (obj == null) ? _cancelDelta : (Int32)obj;      // The default move delta is 40 (4mm)
+                    _cancelDelta = (obj is null) ? _cancelDelta : (Int32)obj;      // The default move delta is 40 (4mm)
                 }
 
                 touchKey = Registry.CurrentUser.OpenSubKey(WispTouchConfigKey);
@@ -361,10 +361,10 @@ namespace System.Windows.Input
                 {
                     obj = touchKey.GetValue(WispTouchDoubleTapDistanceValue);
                     // min = 70%; max = 130%, these values are taken from Stylus\Biblio.txt - 2
-                    _touchDoubleTapDelta = (obj == null) ? _touchDoubleTapDelta : FitToCplCurve(_touchDoubleTapDelta * DoubleTapMinFactor, _touchDoubleTapDelta, _touchDoubleTapDelta * DoubleTapMaxFactor, (Int32)obj);
+                    _touchDoubleTapDelta = (obj is null) ? _touchDoubleTapDelta : FitToCplCurve(_touchDoubleTapDelta * DoubleTapMinFactor, _touchDoubleTapDelta, _touchDoubleTapDelta * DoubleTapMaxFactor, (Int32)obj);
 
                     obj = touchKey.GetValue(WispTouchDoubleTapTimeValue);
-                    _touchDoubleTapDeltaTime = (obj == null) ? _touchDoubleTapDeltaTime : FitToCplCurve(_touchDoubleTapDeltaTime * DoubleTapMinFactor, _touchDoubleTapDeltaTime, _touchDoubleTapDeltaTime * DoubleTapMaxFactor, (Int32)obj);
+                    _touchDoubleTapDeltaTime = (obj is null) ? _touchDoubleTapDeltaTime : FitToCplCurve(_touchDoubleTapDeltaTime * DoubleTapMinFactor, _touchDoubleTapDeltaTime, _touchDoubleTapDeltaTime * DoubleTapMaxFactor, (Int32)obj);
                 }
             }
             finally
@@ -692,19 +692,19 @@ namespace System.Windows.Input
 
         protected bool ValidateVisualForCapture(DependencyObject visual, StylusDeviceBase currentStylusDevice)
         {
-            if (visual == null)
+            if (visual is null)
                 return false;
 
             PresentationSource presentationSource = PresentationSource.CriticalFromVisual(visual);
 
-            if (presentationSource == null)
+            if (presentationSource is null)
             {
                 return false;
             }
 
             if (currentStylusDevice != null &&
                 currentStylusDevice.CriticalActiveSource != presentationSource &&
-                currentStylusDevice.Captured == null)
+                currentStylusDevice.Captured is null)
             {
                 return false;
             }

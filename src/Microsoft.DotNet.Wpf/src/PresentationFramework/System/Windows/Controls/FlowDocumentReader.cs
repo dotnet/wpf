@@ -685,7 +685,7 @@ namespace System.Windows.Controls
             if (CanShowFindToolBar)
             {
                 // Toggle on the FindToolBar between visible and hidden state.
-                ToggleFindToolBar(FindToolBar == null);
+                ToggleFindToolBar(FindToolBar is null);
             }
         }
 
@@ -1163,7 +1163,7 @@ namespace System.Windows.Controls
             switch (mode)
             {
                 case FlowDocumentReaderViewingMode.Page:
-                    if (_pageViewer == null)
+                    if (_pageViewer is null)
                     {
                         _pageViewer = new ReaderPageViewer();
                         _pageViewer.SetResourceReference(StyleProperty, PageViewStyleKey);
@@ -1173,7 +1173,7 @@ namespace System.Windows.Controls
                     viewer = _pageViewer;
                     break;
                 case FlowDocumentReaderViewingMode.TwoPage:
-                    if (_twoPageViewer == null)
+                    if (_twoPageViewer is null)
                     {
                         _twoPageViewer = new ReaderTwoPageViewer();
                         _twoPageViewer.SetResourceReference(StyleProperty, TwoPageViewStyleKey);
@@ -1183,7 +1183,7 @@ namespace System.Windows.Controls
                     viewer = _twoPageViewer;
                     break;
                 case FlowDocumentReaderViewingMode.Scroll:
-                    if (_scrollViewer == null)
+                    if (_scrollViewer is null)
                     {
                         _scrollViewer = new ReaderScrollViewer();
                         _scrollViewer.SetResourceReference(StyleProperty, ScrollViewStyleKey);
@@ -1307,7 +1307,7 @@ namespace System.Windows.Controls
         /// <param name="enable">Whether to enable/disable FindToolBar.</param>
         private void ToggleFindToolBar(bool enable)
         {
-            Invariant.Assert(enable == (FindToolBar == null));
+            Invariant.Assert(enable == (FindToolBar is null));
 
             // Command event for toggle button is only fired in OnClick - Therefore we just need to change the state
             if(_findButton != null && _findButton.IsChecked.HasValue && _findButton.IsChecked.Value != enable)
@@ -1405,7 +1405,7 @@ namespace System.Windows.Controls
                     }
                     else
                     {
-                        args.CanExecute = (args.Parameter == null);
+                        args.CanExecute = (args.Parameter is null);
                     }
                 }
                 else if (args.Command == ApplicationCommands.Find)
@@ -1499,7 +1499,7 @@ namespace System.Windows.Controls
             // If parameter cannot be converted, the command is ignored.
             if (!ConvertToViewingMode(parameter, out mode))
             {
-                if (parameter == null)
+                if (parameter is null)
                 {
                     mode = (FlowDocumentReaderViewingMode)((((int)ViewingMode) + 1) % 3);
                 }
@@ -2085,7 +2085,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_pageViewStyleKey == null)
+                if (_pageViewStyleKey is null)
                 {
                     _pageViewStyleKey = new ComponentResourceKey(typeof(PresentationUIStyleResources), "PUIPageViewStyleKey");
                 }
@@ -2101,7 +2101,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_twoPageViewStyleKey == null)
+                if (_twoPageViewStyleKey is null)
                 {
                     _twoPageViewStyleKey = new ComponentResourceKey(typeof(PresentationUIStyleResources), "PUITwoPageViewStyleKey");
                 }
@@ -2117,7 +2117,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_scrollViewStyleKey == null)
+                if (_scrollViewStyleKey is null)
                 {
                     _scrollViewStyleKey = new ComponentResourceKey(typeof(PresentationUIStyleResources), "PUIScrollViewStyleKey");
                 }

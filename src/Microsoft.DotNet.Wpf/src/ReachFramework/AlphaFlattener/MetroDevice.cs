@@ -149,7 +149,7 @@ namespace Microsoft.Internal.AlphaFlattener
         public void DrawGeometry(Brush brush, Pen pen, Geometry geometry)
         {
             // Ignore total transparent primitive
-            if (Utility.IsTransparent(_opacity) || ((brush == null) && (pen == null || pen.Brush == null)) || (geometry == null))
+            if (Utility.IsTransparent(_opacity) || ((brush is null) && (pen is null || pen.Brush is null)) || (geometry is null))
             {
                 return;
             }
@@ -199,7 +199,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             if (g.OpacityMask != null)
             {
-                if (g.OpacityMask.BrushList == null && !(g.OpacityMask.Brush is SolidColorBrush))
+                if (g.OpacityMask.BrushList is null && !(g.OpacityMask.Brush is SolidColorBrush))
                 {
                     if (pen != null)
                     {
@@ -249,7 +249,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
         public void DrawImage(ImageSource image, Rect rectangle)
         {
-            if (image == null)
+            if (image is null)
                 return;
 
             AssertState(DeviceState.PageStarted, DeviceState.NoChange);
@@ -268,7 +268,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
         public void DrawGlyphRun(Brush foreground, GlyphRun glyphRun)
         {
-            if (foreground == null)
+            if (foreground is null)
                 return;
 
             AssertState(DeviceState.PageStarted, DeviceState.NoChange);
@@ -317,7 +317,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             bool noTrans = transform.IsIdentity;
 
-            if (onePrimitive && noTrans && (opacityMask == null))
+            if (onePrimitive && noTrans && (opacityMask is null))
             {
                 bool empty;
 
@@ -491,9 +491,9 @@ namespace Microsoft.Internal.AlphaFlattener
         /// </remarks>
         private void CaptureTicketSettings(PrintTicket ticket, String ticketXMLString)
         {
-            if (ticket == null)
+            if (ticket is null)
             {
-                Debug.Assert(ticketXMLString == null);
+                Debug.Assert(ticketXMLString is null);
 
                 // ticket has not changed since last capture; keep existing settings
             }
@@ -533,7 +533,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXStartDocBegin);
 
-            if (ticket == null)
+            if (ticket is null)
             {
                 ticket = m_PrintQueue.UserPrintTicket;
             }
@@ -545,7 +545,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             m_Flattener.StartDocument();
 
-            if (s_TestingHook == null)
+            if (s_TestingHook is null)
             {
                 m_Devmode = GetDevmode(ticket, null/*dont cache*/);
 
@@ -575,7 +575,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 m_Flattener.EndDocument();
             }
 
-            if (s_TestingHook == null)
+            if (s_TestingHook is null)
             {
                 m_GDIExporter.EndDocument();
             }
@@ -588,7 +588,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
         public void CreateDeviceContext(string jobName, PrintTicket ticket)
         {
-            if (ticket == null)
+            if (ticket is null)
             {
                 ticket = m_PrintQueue.UserPrintTicket;
             }
@@ -639,13 +639,13 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXStartPageBegin);
 
-            String printTicketXMLStr = (ticket == null) ? null : ticket.ToXmlString();
+            String printTicketXMLStr = (ticket is null) ? null : ticket.ToXmlString();
 
             CaptureTicketSettings(ticket, printTicketXMLStr);
 
             if (m_Flattener.StartPage())
             {
-                if (s_TestingHook == null)
+                if (s_TestingHook is null)
                 {
                     if (ticket != null)
                     {
@@ -680,7 +680,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             m_Flattener.FlushPage(ioc, m_PageWidth, m_PageHeight, m_OutputQuality);
 
-            if (s_TestingHook == null)
+            if (s_TestingHook is null)
             {
                 Toolbox.EmitEvent(EventTrace.Event.WClientDRXEndPageBegin);
                 m_GDIExporter.EndPage();
@@ -734,7 +734,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
         private byte[] ConvertPrintTicketToDevMode(PrintTicket ticket)
         {
-            if (m_Converter == null)
+            if (m_Converter is null)
             {
                 m_Converter = new PrintTicketConverter(m_PrintQueue.FullName, m_PrintQueue.ClientPrintSchemaVersion);
             }

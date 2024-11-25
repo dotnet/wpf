@@ -65,7 +65,7 @@ namespace MS.Internal.FontFace
             // If it's culture-specific make sure it's in the hash table.
             if (familyMap.Language != null)
             {
-                if (_familyMapRangesByLanguage == null)
+                if (_familyMapRangesByLanguage is null)
                 {
                     _familyMapRangesByLanguage = new Dictionary<XmlLanguage, ushort[]>(InitialCultureCount);
                     _familyMapRangesByLanguage.Add(familyMap.Language, EmptyFamilyMapRanges);
@@ -305,7 +305,7 @@ namespace MS.Internal.FontFace
         /// </summary>
         internal FamilyTypefaceCollection GetFamilyTypefaceList()
         {
-            if (_familyTypefaces == null)
+            if (_familyTypefaces is null)
                 _familyTypefaces = new FamilyTypefaceCollection();
 
             return _familyTypefaces;

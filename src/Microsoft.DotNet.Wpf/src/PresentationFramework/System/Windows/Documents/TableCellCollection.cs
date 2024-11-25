@@ -496,7 +496,7 @@ namespace System.Windows.Documents
         /// If the new item has already a parent or if the slot at the specified index is not null.
         /// </exception>
         /// <remarks>
-        /// Note that the function requires that _item[index] == null and
+        /// Note that the function requires that _item[index] is null and
         /// it also requires that the passed in item is not included into another TableCellCollection.
         /// </remarks>
         private void PrivateConnectChild(int index, TableCell item)

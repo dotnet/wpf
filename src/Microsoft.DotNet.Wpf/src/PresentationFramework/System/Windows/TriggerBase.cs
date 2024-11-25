@@ -54,7 +54,7 @@ namespace System.Windows
                 // Verify Context Access
                 VerifyAccess();
 
-                if( _enterActions == null )
+                if( _enterActions is null )
                 {
                     _enterActions = new TriggerActionCollection();
                     if( IsSealed )
@@ -83,7 +83,7 @@ namespace System.Windows
                 // Verify Context Access
                 VerifyAccess();
 
-                if( _exitActions == null )
+                if( _exitActions is null )
                 {
                     _exitActions = new TriggerActionCollection();
                     if( IsSealed )
@@ -284,7 +284,7 @@ namespace System.Windows
                         object value          = setter.ValueInternal;
                         string target         = setter.TargetName;
 
-                        if( target == null )
+                        if( target is null )
                         {
                             ProcessParametersContainer(dp);
 
@@ -296,7 +296,7 @@ namespace System.Windows
                         }
 
                         DynamicResourceExtension dynamicResource = value as DynamicResourceExtension;
-                        if (dynamicResource == null)
+                        if (dynamicResource is null)
                         {
                             AddToPropertyValues(target, dp, value, PropertyValueType.Trigger);
                         }

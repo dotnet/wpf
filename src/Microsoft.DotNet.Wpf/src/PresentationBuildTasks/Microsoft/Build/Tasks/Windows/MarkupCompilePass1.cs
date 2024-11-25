@@ -122,8 +122,8 @@ namespace Microsoft.Build.Tasks.Windows
                     OutputPath + AssemblyName + (TaskFileService.IsRealBuild? SharedStrings.LocalTypeCacheFile : SharedStrings.IntellisenseLocalTypeCacheFile),
                     TaskFileService);
 
-                if ((PageMarkup == null || PageMarkup.Length == 0) &&
-                    (ApplicationMarkup == null || ApplicationMarkup.Length == 0))
+                if ((PageMarkup is null || PageMarkup.Length == 0) &&
+                    (ApplicationMarkup is null || ApplicationMarkup.Length == 0))
                 {
                     // Don't need to do further work.
                     // stop here.
@@ -605,7 +605,7 @@ namespace Microsoft.Build.Tasks.Windows
         {
             get
             {
-               if (_generatedCodeFiles == null)
+               if (_generatedCodeFiles is null)
                    _generatedCodeFiles = Array.Empty<TaskItem>();
                return _generatedCodeFiles;
             }
@@ -624,7 +624,7 @@ namespace Microsoft.Build.Tasks.Windows
         {
             get
             {
-               if (_generatedBamlFiles == null)
+               if (_generatedBamlFiles is null)
                    _generatedBamlFiles = Array.Empty<TaskItem>();
                return _generatedBamlFiles;
             }
@@ -643,7 +643,7 @@ namespace Microsoft.Build.Tasks.Windows
         {
             get
             {
-                if (_generatedLocalizationFiles == null)
+                if (_generatedLocalizationFiles is null)
                     _generatedLocalizationFiles = Array.Empty<TaskItem>();
 
                 return _generatedLocalizationFiles;

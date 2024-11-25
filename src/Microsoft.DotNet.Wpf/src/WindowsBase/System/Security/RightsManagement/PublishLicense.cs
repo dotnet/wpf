@@ -54,7 +54,7 @@ namespace System.Security.RightsManagement
             _useLicenseAcquisitionUriFromPublishLicense =
                     ClientSession.GetUseLicenseAcquisitionUriFromPublishLicense(_serializedPublishLicense);
 
-            if (_useLicenseAcquisitionUriFromPublishLicense == null)
+            if (_useLicenseAcquisitionUriFromPublishLicense is null)
             {
                 throw new RightsManagementException(RightsManagementFailureCode.InvalidLicense);
             }
@@ -65,7 +65,7 @@ namespace System.Security.RightsManagement
             /////////////////
             String contentIdStr = ClientSession.GetContentIdFromPublishLicense(_serializedPublishLicense);
 
-            if (contentIdStr == null)
+            if (contentIdStr is null)
             {
                 throw new RightsManagementException(RightsManagementFailureCode.InvalidLicense);                
             }

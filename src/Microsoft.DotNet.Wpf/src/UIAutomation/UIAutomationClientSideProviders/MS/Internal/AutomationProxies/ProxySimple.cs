@@ -345,7 +345,7 @@ namespace MS.Internal.AutomationProxies
             // If the control is part of a dialog box or a form,
             // get the accelerator from the static preceding that control
             // on the dialog.
-            if (GetParent() == null && (bool)GetElementProperty(AutomationElement.IsKeyboardFocusableProperty))
+            if (GetParent() is null && (bool)GetElementProperty(AutomationElement.IsKeyboardFocusableProperty))
             {
                 string sRawName = Misc.GetControlName(_hwnd, false);
 
@@ -642,7 +642,7 @@ namespace MS.Internal.AutomationProxies
         {
             get
             {
-                if (_IAccessible == null)
+                if (_IAccessible is null)
                 {
                     Accessible acc = null;
                     // We need to go search for it

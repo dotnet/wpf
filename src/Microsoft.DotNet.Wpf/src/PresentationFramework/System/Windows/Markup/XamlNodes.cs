@@ -431,11 +431,11 @@ namespace System.Windows.Markup
                         linePosition,
                         depth)
             {
-                if (typeFullName == null)
+                if (typeFullName is null)
                 {
                     throw new ArgumentNullException("typeFullName");
                 }
-                if (propertyName == null)
+                if (propertyName is null)
                 {
                     throw new ArgumentNullException("propertyName");
                 }
@@ -486,7 +486,7 @@ namespace System.Windows.Markup
                 { 
                     // Lazy initialize this to avoid addition reflection if it
                     // is not needed.
-                    if (_declaringType == null && _propertyMember != null)
+                    if (_declaringType is null && _propertyMember != null)
                     {
                         _declaringType = XamlTypeMapper.GetDeclaringType(_propertyMember);
                     }
@@ -503,7 +503,7 @@ namespace System.Windows.Markup
                 { 
                     // Lazy initialize this to avoid addition reflection if it
                     // is not needed.
-                    if (_validType == null)
+                    if (_validType is null)
                     {
                         _validType = XamlTypeMapper.GetPropertyType(_propertyMember);
                     }
@@ -764,7 +764,7 @@ namespace System.Windows.Markup
             {
                 get
                 {
-                    if (_valueDeclaringType == null)
+                    if (_valueDeclaringType is null)
                     {
                         return PropDeclaringType;
                     }
@@ -785,7 +785,7 @@ namespace System.Windows.Markup
             {
                 get
                 {
-                    if (_valuePropertyName == null)
+                    if (_valuePropertyName is null)
                     {
                         return PropName;
                     }
@@ -806,7 +806,7 @@ namespace System.Windows.Markup
             {
                 get
                 {
-                    if (_valuePropertyType == null)
+                    if (_valuePropertyType is null)
                     {
                         return PropValidType;
                     }
@@ -828,7 +828,7 @@ namespace System.Windows.Markup
             {
                 get
                 {
-                    if (_valuePropertyMember == null)
+                    if (_valuePropertyMember is null)
                     {
                         return PropertyMember;
                     }
@@ -1177,7 +1177,7 @@ namespace System.Windows.Markup
             {
                 get 
                 { 
-                    return _serializerType == null ? 
+                    return _serializerType is null ? 
                                    string.Empty :
                                    _serializerType.FullName;
                 }
@@ -2210,11 +2210,11 @@ namespace System.Windows.Markup
                         linePosition,
                         depth)
             {
-                if (typeFullName == null)
+                if (typeFullName is null)
                 {
                     throw new ArgumentNullException("typeFullName");
                 }
-                if (propertyName == null)
+                if (propertyName is null)
                 {
                     throw new ArgumentNullException("propertyName");
                 }
@@ -2257,7 +2257,7 @@ namespace System.Windows.Markup
                 {
                     // Lazy initialize this to avoid addition reflection if it
                     // is not needed.
-                    if (_declaringType == null && _propertyMember != null)
+                    if (_declaringType is null && _propertyMember != null)
                     {
                         _declaringType = XamlTypeMapper.GetDeclaringType(_propertyMember);
                     }
@@ -2274,7 +2274,7 @@ namespace System.Windows.Markup
                 {
                     // Lazy initialize this to avoid addition reflection if it
                     // is not needed.
-                    if (_validType == null)
+                    if (_validType is null)
                     {
                         _validType = XamlTypeMapper.GetPropertyType(_propertyMember);
                     }

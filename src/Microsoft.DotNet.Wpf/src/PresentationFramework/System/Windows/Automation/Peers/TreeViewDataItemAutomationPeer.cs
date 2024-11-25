@@ -33,7 +33,7 @@ namespace System.Windows.Automation.Peers
         public TreeViewDataItemAutomationPeer(object item, ItemsControlAutomationPeer itemsControlAutomationPeer, TreeViewDataItemAutomationPeer parentDataItemAutomationPeer)
             : base(item, null)
         {
-            if(itemsControlAutomationPeer.Owner is TreeView || parentDataItemAutomationPeer == null)
+            if(itemsControlAutomationPeer.Owner is TreeView || parentDataItemAutomationPeer is null)
                 ItemsControlAutomationPeer = itemsControlAutomationPeer;
             _parentDataItemAutomationPeer = parentDataItemAutomationPeer;
         }
@@ -110,7 +110,7 @@ namespace System.Windows.Automation.Peers
         // recreated as well. 
         override internal ItemsControlAutomationPeer GetItemsControlAutomationPeer()
         {
-                if(_parentDataItemAutomationPeer == null)
+                if(_parentDataItemAutomationPeer is null)
                     return base.GetItemsControlAutomationPeer();
                 else
                 {
@@ -296,7 +296,7 @@ namespace System.Windows.Automation.Peers
             if (ParentDataItemAutomationPeer != null)
             {
                 // there might be a possibility that it's parent item is itself virtualized so we have to realize it and make a second attempt
-                if (itemsControlAutomationPeer == null)
+                if (itemsControlAutomationPeer is null)
                 {
                     ParentDataItemAutomationPeer.RecursiveScrollIntoView();
                     itemsControlAutomationPeer = ItemsControlAutomationPeer;

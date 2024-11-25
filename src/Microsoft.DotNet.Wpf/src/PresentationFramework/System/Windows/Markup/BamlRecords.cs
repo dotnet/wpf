@@ -736,7 +736,7 @@ namespace System.Windows.Markup
         {
             // Create the cache of records used in writing, on demand
 
-            if( _writeCache == null )
+            if( _writeCache is null )
             {
                 _writeCache = new BamlRecord[(int)BamlRecordType.LastRecordType];
             }
@@ -831,7 +831,7 @@ namespace System.Windows.Markup
         {
             // BamlRecords may be used without a stream, so if you attempt to write when there
             // isn't a writer, just ignore it.
-            if (bamlBinaryWriter == null)
+            if (bamlBinaryWriter is null)
             {
                 return;
             }
@@ -1077,7 +1077,7 @@ namespace System.Windows.Markup
         {
             // BamlRecords may be used without a stream, so if you attempt to write when there
             // isn't a writer, just ignore it.
-            if (bamlBinaryWriter == null)
+            if (bamlBinaryWriter is null)
             {
                 return;
             }
@@ -2735,7 +2735,7 @@ namespace System.Windows.Markup
                 case (short)KnownElements.EnumConverter:
 
                     uint enumBits;
-                    if (_valueObject == null)
+                    if (_valueObject is null)
                     {
                         // if no raw value has been read in yet, read it now
                         // from the baml stream.
@@ -4667,10 +4667,10 @@ namespace System.Windows.Markup
         {
             Type validType = null;
             DependencyProperty dp = DP;
-            if (dp == null)
+            if (dp is null)
             {
                 MethodInfo methodInfo = AttachedPropertySetter;
-                if (methodInfo == null)
+                if (methodInfo is null)
                 {
                     PropertyInfo propInfo = PropInfo;
                     validType = propInfo.PropertyType;
@@ -4709,7 +4709,7 @@ namespace System.Windows.Markup
                         || (KnownTypes.Types[(int)KnownElements.DependencyProperty].IsAssignableFrom(propertyMember.GetType())),
                 "Cache can hold either a MethodInfo and/or a PropertyInfo and/or a DependencyProperty for a given attribute");
 
-            if (PropertyMember == null)
+            if (PropertyMember is null)
             {
                 PropertyMember = propertyMember;
             }
@@ -4717,7 +4717,7 @@ namespace System.Windows.Markup
             {
                 // Cache a additional MemberInfo for the given attribute
                 object[] arr = PropertyMember as object[];
-                if (arr == null)
+                if (arr is null)
                 {
                     arr = new object[3];
                     arr[0] = PropertyMember;
@@ -4747,7 +4747,7 @@ namespace System.Windows.Markup
         /// </remarks>
         internal object GetPropertyMember(bool onlyPropInfo)
         {
-            if (PropertyMember == null ||
+            if (PropertyMember is null ||
                 PropertyMember is MemberInfo ||
                 KnownTypes.Types[(int)KnownElements.DependencyProperty].IsAssignableFrom(PropertyMember.GetType( )) )
             {

@@ -275,7 +275,7 @@ namespace System.Security.RightsManagement
             {
                 CheckDisposed();
 
-                if (_boundGrantReadOnlyCollection == null)
+                if (_boundGrantReadOnlyCollection is null)
                 {
                     // we need to enumerate all the rights and keep the ones that we can translate into enum
                     // we ignore the rights that we can not translate for forward compatibility reasons 
@@ -368,7 +368,7 @@ namespace System.Security.RightsManagement
         {
             Invariant.Assert(serializedPublishLicense != null);
 
-            if ((BoundLicenseOwnerViewRightsHandle == null ) || BoundLicenseOwnerViewRightsHandle.IsInvalid)
+            if ((BoundLicenseOwnerViewRightsHandle is null ) || BoundLicenseOwnerViewRightsHandle.IsInvalid)
             {
                 throw new RightsManagementException(RightsManagementFailureCode.RightNotGranted);
             }            

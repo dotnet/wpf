@@ -56,7 +56,7 @@ namespace System.Windows.Automation.Peers
                 AutomationPeer columnsHeaderPresenterPeer = FrameworkElementAutomationPeer.CreatePeerForElement(columnsHeaderPresenter);
                 if (columnsHeaderPresenterPeer != null)
                 {
-                    if (children == null)
+                    if (children is null)
                     {
                         children = new List<AutomationPeer>(1);
                     }

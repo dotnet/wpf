@@ -536,7 +536,7 @@ namespace MS.Internal.Printing.Configuration
         {
             get
             {
-                if (_presentationDirection == null)
+                if (_presentationDirection is null)
                 {
                     _presentationDirection = new NUpPresentationDirectionSetting(this._ownerPrintTicket);
 

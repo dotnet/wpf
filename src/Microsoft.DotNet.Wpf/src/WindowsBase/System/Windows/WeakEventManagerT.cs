@@ -27,7 +27,7 @@ namespace System.Windows
             _eventName = eventName;
             _eventInfo = typeof(TEventSource).GetEvent(_eventName);
 
-            if (_eventInfo == null)
+            if (_eventInfo is null)
                 throw new ArgumentException(SR.Format(SR.EventNotFound, typeof(TEventSource).FullName, eventName));
 
             _handler = Delegate.CreateDelegate(_eventInfo.EventHandlerType, this, DeliverEventMethodInfo);
@@ -108,7 +108,7 @@ namespace System.Windows
             WeakEventManager<TEventSource, TEventArgs> manager = (WeakEventManager<TEventSource, TEventArgs>)GetCurrentManager(typeof(TEventSource), eventName);
 
             // at first use, create and register a new manager
-            if (manager == null)
+            if (manager is null)
             {
                 manager = new WeakEventManager<TEventSource, TEventArgs>(eventName);
                 SetCurrentManager(typeof(TEventSource), eventName, manager);

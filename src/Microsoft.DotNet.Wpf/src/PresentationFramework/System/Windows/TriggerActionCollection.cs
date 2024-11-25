@@ -279,7 +279,7 @@ namespace System.Windows
             get { return _owner; }
             set
             { 
-                Debug.Assert (Owner == null);
+                Debug.Assert (Owner is null);
                 _owner = value; 
             }
         }
@@ -301,7 +301,7 @@ namespace System.Windows
         {
             TriggerAction action = value as TriggerAction;
 
-            if ( action == null )
+            if ( action is null )
             {
                 ArgumentNullException.ThrowIfNull(value);
 

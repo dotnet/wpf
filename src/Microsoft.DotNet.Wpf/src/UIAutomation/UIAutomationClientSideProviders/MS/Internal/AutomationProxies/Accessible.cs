@@ -222,7 +222,7 @@ namespace MS.Internal.AutomationProxies
                 acc = obj as IAccessible;
             }
 
-            if (hr != NativeMethods.S_OK || acc == null)
+            if (hr != NativeMethods.S_OK || acc is null)
             {
                 return null;
             }
@@ -627,7 +627,7 @@ namespace MS.Internal.AutomationProxies
                 obj = null;
             }
 
-            if (obj == null)
+            if (obj is null)
             {
                 return null;
             }
@@ -678,7 +678,7 @@ namespace MS.Internal.AutomationProxies
                 return null;
             }
 
-            if (scan == null)
+            if (scan is null)
             {
                 return this;
             }
@@ -766,7 +766,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             Accessible rval;
-            if (scan == null)
+            if (scan is null)
             {
                 // point is not on this object or one of its children
                 rval = null;
@@ -903,7 +903,7 @@ namespace MS.Internal.AutomationProxies
 
                 accObject = obj as IAccessible;
 
-                if (hr != NativeMethods.S_OK || accObject == null)
+                if (hr != NativeMethods.S_OK || accObject is null)
                 {
                     return NativeMethods.S_FALSE;
                 }
@@ -981,11 +981,11 @@ namespace MS.Internal.AutomationProxies
             // To avoid the problem we always ask for all of the children and just
             // use the specific one we are interested in.
 
-            if (children == null)
+            if (children is null)
             {
                 children = GetChildren(parent);
             }
-            if (children == null)
+            if (children is null)
             {
                 return null;
             }
@@ -1011,7 +1011,7 @@ namespace MS.Internal.AutomationProxies
             Debug.Assert(_accessibleChildrenIndex < 0);
 
             object [] children = GetChildren(parent);
-            if (children == null)
+            if (children is null)
             {
                 return null;   // unlikely to happen but...
             }
@@ -1024,7 +1024,7 @@ namespace MS.Internal.AutomationProxies
                 int idChild;
                 IAccessible acc;
                 IAccessibleFromObject(children[i], parent, out acc, out idChild);
-                if (acc == null)
+                if (acc is null)
                     continue;   // unlikely to happen but...
 
                 // If this child compares to the member _acc we've [probably] got its index
@@ -1451,7 +1451,7 @@ namespace MS.Internal.AutomationProxies
             {
                 // Only looking for full IAccessible children here - so skip idChild entries....
                 IAccessible accChild = rawChildren[i] as IAccessible;
-                if( accChild == null )
+                if( accChild is null )
                     continue;
 
                 // Use Role+Location to compare the child IAccessible with the original one...
@@ -1479,7 +1479,7 @@ namespace MS.Internal.AutomationProxies
         // This code fixes the issue by truncating the string at the first NUL.
         private static string FixBstr(string bstr)
         {
-            if (bstr == null)
+            if (bstr is null)
                 return null;
             int nulIndex = bstr.IndexOf('\0');
             if (nulIndex == -1)

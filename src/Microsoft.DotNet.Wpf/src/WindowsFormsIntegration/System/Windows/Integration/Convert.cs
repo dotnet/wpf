@@ -31,7 +31,7 @@ namespace System.Windows.Forms.Integration
         {
             get
             {
-                if (_toSystemWindowsInputCursorDictionary == null)
+                if (_toSystemWindowsInputCursorDictionary is null)
                 {
                     _toSystemWindowsInputCursorDictionary = new Dictionary<SWF.Cursor, System.Windows.Input.Cursor>();
                     _toSystemWindowsInputCursorDictionary.Add(SWF.Cursors.AppStarting, SWI.Cursors.AppStarting);
@@ -71,7 +71,7 @@ namespace System.Windows.Forms.Integration
         {
             get
             {
-                if (_toSystemWindowsFormsCursorDictionary == null)
+                if (_toSystemWindowsFormsCursorDictionary is null)
                 {
                     _toSystemWindowsFormsCursorDictionary = new Dictionary<SWI.Cursor, SWF.Cursor>();
                     _toSystemWindowsFormsCursorDictionary.Add(SWI.Cursors.AppStarting, SWF.Cursors.AppStarting);
@@ -138,7 +138,7 @@ namespace System.Windows.Forms.Integration
         /// </summary>
         internal static SWMI.BitmapImage ToSystemWindowsMediaImagingBitmapImage(SD.Image fromImage)
         {
-            if (fromImage == null)
+            if (fromImage is null)
             {
                 return null;
             }

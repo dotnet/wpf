@@ -139,7 +139,7 @@ namespace System.Windows
                 // Verify Context Access
                 VerifyAccess();
 
-                if( _setters == null )
+                if( _setters is null )
                 {
                     _setters = new SetterBaseCollection();
                 }
@@ -183,7 +183,7 @@ namespace System.Windows
 
             Setter setter = o as Setter;
 
-            if (setter == null)
+            if (setter is null)
             {
                 throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, o.GetType(), typeof(Setter)), "o");
             }
@@ -287,7 +287,7 @@ namespace System.Windows
         public static void ReceiveTypeConverter(object targetObject, XamlSetTypeConverterEventArgs eventArgs)
         {
             Trigger trigger = targetObject as Trigger;
-            if (trigger == null)
+            if (trigger is null)
             {
                 throw new ArgumentNullException("targetObject");
             }

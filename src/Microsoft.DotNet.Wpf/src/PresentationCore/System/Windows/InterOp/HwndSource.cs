@@ -370,7 +370,7 @@ namespace System.Windows.Interop
 
             CheckDisposed(true);
 
-            if(_hooks == null)
+            if(_hooks is null)
             {
                 _hwndWrapper.AddHook(_publicHook);
             }
@@ -392,7 +392,7 @@ namespace System.Windows.Interop
             //this.VerifyAccess();
 
             EventHelper.RemoveHandler(ref _hooks, hook);
-            if(_hooks == null)
+            if(_hooks is null)
             {
                 _hwndWrapper.RemoveHook(_publicHook);
             }
@@ -742,7 +742,7 @@ namespace System.Windows.Interop
             IsInExclusiveMenuMode = !_acquireHwndFocusInMenuMode;
             if(IsInExclusiveMenuMode)
             {
-                Debug.Assert(_weakMenuModeMessageHandler == null);
+                Debug.Assert(_weakMenuModeMessageHandler is null);
 
                 // Re-subscribe to the ComponentDispatcher.ThreadPreprocessMessage so we go first.
                 _weakMenuModeMessageHandler = new WeakEventPreprocessMessage(this, true);
@@ -796,7 +796,7 @@ namespace System.Windows.Interop
             if(root != null)
             {
                 Size newSize = root.RenderSize;
-                if (   _previousSize == null
+                if (   _previousSize is null
                     || !DoubleUtil.AreClose(_previousSize.Value.Width, newSize.Width)
                     || !DoubleUtil.AreClose(_previousSize.Value.Height, newSize.Height))
                 {
@@ -1038,7 +1038,7 @@ namespace System.Windows.Interop
 
             UIElement rootUIElement = null;
             rootUIElement = _rootVisual as UIElement;
-            if (rootUIElement == null) return;
+            if (rootUIElement is null) return;
 
             // InvalidateMeasure() call is necessary in the following scenario
             //
@@ -1931,7 +1931,7 @@ namespace System.Windows.Interop
 
             HwndSourceKeyboardInputSite site = new HwndSourceKeyboardInputSite(this, sink);
 
-            if (_keyboardInputSinkChildren == null)
+            if (_keyboardInputSinkChildren is null)
                 _keyboardInputSinkChildren = new List<HwndSourceKeyboardInputSite>();
             _keyboardInputSinkChildren.Add(site);
 
@@ -2080,7 +2080,7 @@ namespace System.Windows.Interop
                         // This is a behavioral breaking change, so we've decided to only do it when IsInExclusiveMenuMode
                         // is true to force the user to opt-in.
                         DependencyObject focusObject = Keyboard.FocusedElement as DependencyObject;
-                        HwndSource mnemonicScope = (focusObject == null ? null : PresentationSource.CriticalFromVisual(focusObject) as HwndSource);
+                        HwndSource mnemonicScope = (focusObject is null ? null : PresentationSource.CriticalFromVisual(focusObject) as HwndSource);
                         if (mnemonicScope != null &&
                             mnemonicScope != this &&
                             IsInExclusiveMenuMode)
@@ -2296,7 +2296,7 @@ namespace System.Windows.Interop
                     throw new ArgumentException(SR.OnlyAcceptsKeyMessages);
             }
 
-            if (_keyboard == null)
+            if (_keyboard is null)
                 return false;
 
             bool handled = false;
@@ -2384,7 +2384,7 @@ namespace System.Windows.Interop
                 // we allow 'split focus', at least for popup windows; that's why check explicitly.
                 // Note that KeyboardDevice.Target will likely be the ForceTarget corresponding to the
                 // container of this HwndSource. That's why we look at the real FocusedElement.
-                if (focusElement == null && hasFocus)
+                if (focusElement is null && hasFocus)
                 {
                     focusElement = Keyboard.PrimaryDevice.FocusedElement;
                     if (focusElement != null &&

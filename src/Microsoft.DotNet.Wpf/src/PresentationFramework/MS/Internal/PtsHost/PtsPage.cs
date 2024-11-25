@@ -87,8 +87,8 @@ namespace MS.Internal.PtsHost
         // make sure that structural cache is in clean state.
         //
         // Following logic is used for to prepare for reformat/update:
-        // a) if _ptsPage == NULL,  full format + clear NameTable(from DTRs) + clear DTRs
-        // b) if NameTable == NULL, full format + clear DTRs (covered by a))
+        // a) if _ptsPage is null,  full format + clear NameTable(from DTRs) + clear DTRs
+        // b) if NameTable is null, full format + clear DTRs (covered by a))
         // c) if ForceReformat,     full format + clear DTRs + clear NameTable
         // e) otherwise,            update
         //
@@ -169,7 +169,7 @@ namespace MS.Internal.PtsHost
                 if (_section.StructuralCache.ForceReformat)
                 {
                     canUpdate = false;
-                    Debug.Assert(breakRecord == null || !_section.StructuralCache.DestroyStructure, "Cannot format from dirty break record unless StructuralCache.DestroyStructure is not set.");
+                    Debug.Assert(breakRecord is null || !_section.StructuralCache.DestroyStructure, "Cannot format from dirty break record unless StructuralCache.DestroyStructure is not set.");
                  
                     _section.InvalidateStructure();
                     // Update structural cache info. The DestroyStructureCache parameter is set to true if
@@ -611,7 +611,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         internal ContainerVisual GetPageVisual()
         {
-            if (_visual == null)
+            if (_visual is null)
             {
                 _visual = new ContainerVisual();
             }
@@ -1193,7 +1193,7 @@ namespace MS.Internal.PtsHost
 
             if(_pageContextOfThisPage.FloatingElementList != null)
             {
-                for(int index = 0; index < _pageContextOfThisPage.FloatingElementList.Count && ie == null; index++)
+                for(int index = 0; index < _pageContextOfThisPage.FloatingElementList.Count && ie is null; index++)
                 {
                     BaseParaClient floatingElement = _pageContextOfThisPage.FloatingElementList[index];
 
@@ -1201,7 +1201,7 @@ namespace MS.Internal.PtsHost
                 }
             }
 
-            if(ie == null)
+            if(ie is null)
             {
                 // Get page details
                 PTS.FSPAGEDETAILS pageDetails;
@@ -1236,7 +1236,7 @@ namespace MS.Internal.PtsHost
                         PtsHelper.SectionListFromPage(PtsContext, _ptsPage, ref pageDetails, out arraySectionDesc);
 
                         // Hittest each section
-                        for (int index = 0; index < arraySectionDesc.Length && ie == null; index++)
+                        for (int index = 0; index < arraySectionDesc.Length && ie is null; index++)
                         {
                             if (arraySectionDesc[index].fsrc.Contains(pt))
                             {
@@ -1551,7 +1551,7 @@ namespace MS.Internal.PtsHost
 
         internal void AddFloatingParaClient(BaseParaClient floatingElement)
         {
-            if(_floatingElementList == null)
+            if(_floatingElementList is null)
             {
                 _floatingElementList = new List<BaseParaClient>();
             }

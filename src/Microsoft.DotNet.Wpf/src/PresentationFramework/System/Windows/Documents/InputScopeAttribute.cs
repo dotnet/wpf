@@ -87,7 +87,7 @@ namespace System.Windows.Documents
         // This returns BSTRs in the array that is allocated by CoTaskMemAlloc.
         public int GetPhrase(out IntPtr ppbstrPhrases, out int count)
         {
-            count = _inputScope == null ? 0 : _inputScope.PhraseList.Count;
+            count = _inputScope is null ? 0 : _inputScope.PhraseList.Count;
             try
             {
                 ppbstrPhrases = Marshal.AllocCoTaskMem(IntPtr.Size * count);

@@ -509,8 +509,8 @@ namespace System.Windows.Input
             // before we go checking the descriptions... check to see if both additionalData's are null
             // we can infer that the SPD's are just X,Y,P and that they are compatible.
             //
-            if (stylusPoint1._additionalValues == null &&
-                stylusPoint2._additionalValues == null)
+            if (stylusPoint1._additionalValues is null &&
+                stylusPoint2._additionalValues is null)
             {
                 Debug.Assert(StylusPointDescription.AreCompatible(stylusPoint1.Description, stylusPoint2.Description));
                 return true;

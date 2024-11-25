@@ -38,7 +38,7 @@ namespace MS.Internal.FontCache
                 string fileName = null;
                 bool resolved = false;
 
-                if (locationString == null || Util.IsReferenceToWindowsFonts(locationString))
+                if (locationString is null || Util.IsReferenceToWindowsFonts(locationString))
                 {
                     // No location (e.g., "#Arial") or file-name-only location (e.g., "arial.ttf#Arial")
                     fileName = locationString;
@@ -129,7 +129,7 @@ namespace MS.Internal.FontCache
 
         public override int GetHashCode()
         {
-            if (_absoluteLocationUri == null && EscapedFileName == null)
+            if (_absoluteLocationUri is null && EscapedFileName is null)
             {
                 // Typical case where no location is specified
                 return _familyName.GetHashCode();

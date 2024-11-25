@@ -72,7 +72,7 @@ namespace System.Windows
                 // type, and then seal it.
 
                 DependencyObject d = fe;
-                if (d == null)
+                if (d is null)
                 {
                     d = fce;
                 }
@@ -108,7 +108,7 @@ namespace System.Windows
             if (newThemeStyle != null)
             {
                 DependencyObject d = fe;
-                if (d == null)
+                if (d is null)
                 {
                     d = fce;
                 }
@@ -169,7 +169,7 @@ namespace System.Windows
         //
         internal static Style GetThemeStyle(FrameworkElement fe, FrameworkContentElement fce)
         {
-            Debug.Assert((fe != null && fce == null)|| (fe == null && fce != null));
+            Debug.Assert((fe != null && fce is null)|| (fe is null && fce != null));
 
             // Fetch the DefaultStyleKey and the self Style for
             // the given Framework[Content]Element
@@ -245,7 +245,7 @@ namespace System.Windows
                     }
                 }
 
-                if (newThemeStyle == null)
+                if (newThemeStyle is null)
                 {
                     // No style in system resources, try to retrieve the default
                     //  style for the target type.
@@ -566,7 +566,7 @@ namespace System.Windows
                             triggerSourceRecordFromChildIndex.EnsureIndex(sourceChildIndex);
                             ItemStructMap<TriggerSourceRecord> triggerSourceRecordMap = triggerSourceRecordFromChildIndex[sourceChildIndex];
 
-                            if (propertyValue.Conditions[i].Property == null)
+                            if (propertyValue.Conditions[i].Property is null)
                             {
                                 throw new InvalidOperationException(SR.MissingTriggerProperty);
                             }
@@ -598,7 +598,7 @@ namespace System.Windows
                 {
                     if( propertyValue.Conditions != null )
                     {
-                        if (dataTriggerRecordFromBinding == null)
+                        if (dataTriggerRecordFromBinding is null)
                         {
                             dataTriggerRecordFromBinding = new HybridDictionary();
                         }
@@ -607,7 +607,7 @@ namespace System.Windows
                         for (int i = 0; i < propertyValue.Conditions.Length; i++)
                         {
                             DataTriggerRecord record = (DataTriggerRecord)dataTriggerRecordFromBinding[propertyValue.Conditions[i].Binding];
-                            if (record == null)
+                            if (record is null)
                             {
                                 record = new DataTriggerRecord();
                                 dataTriggerRecordFromBinding[propertyValue.Conditions[i].Binding] = record;
@@ -682,7 +682,7 @@ namespace System.Windows
                     if (typeof(MarkupExtension).IsAssignableFrom(valueType))
                     {
                         value = deferredReference.GetValue(BaseValueSourceInternal.Style);
-                        if ((markupExtension = value as MarkupExtension) == null)
+                        if ((markupExtension = value as MarkupExtension) is null)
                         {
                             freezable = value as Freezable;
                         }
@@ -694,7 +694,7 @@ namespace System.Windows
                 }
 
             }
-            else if ((markupExtension = value as MarkupExtension) == null)
+            else if ((markupExtension = value as MarkupExtension) is null)
             {
                 freezable = value as Freezable;
             }
@@ -1071,7 +1071,7 @@ namespace System.Windows
             ref EventHandlersStore                  eventHandlersStore,
             ref bool                                hasLoadedChangeHandler)
         {
-            if( eventTrigger == null )
+            if( eventTrigger is null )
             {
                 return;
             }
@@ -1085,7 +1085,7 @@ namespace System.Windows
             FrameworkElementFactory childFef = null;
 
             // Find a ChildID for the EventTrigger.
-            if( eventTrigger.SourceName == null )
+            if( eventTrigger.SourceName is null )
             {
                 eventTrigger.TriggerChildIndex = 0;
             }
@@ -1103,7 +1103,7 @@ namespace System.Windows
 
             // We have at least one EventTrigger - will need triggerActions
             // if it doesn't already exist
-            if (triggerActions == null)
+            if (triggerActions is null)
             {
                 triggerActions = new HybridDictionary();
             }
@@ -1113,7 +1113,7 @@ namespace System.Windows
             }
 
             // Set up TriggerAction list if one doesn't already exist
-            if (actionsList == null)
+            if (actionsList is null)
             {
                 actionsListExisted = false;
                 actionsList = new List<TriggerAction>();
@@ -1201,7 +1201,7 @@ namespace System.Windows
                     FrameworkTemplate.TemplateChildLoadedFlags templateChildLoadedFlags
                         = frameworkTemplate._TemplateChildLoadedDictionary[ eventTrigger.TriggerChildIndex ] as FrameworkTemplate.TemplateChildLoadedFlags;
 
-                    if( templateChildLoadedFlags == null )
+                    if( templateChildLoadedFlags is null )
                     {
                         templateChildLoadedFlags = new FrameworkTemplate.TemplateChildLoadedFlags();
                         frameworkTemplate._TemplateChildLoadedDictionary[ eventTrigger.TriggerChildIndex ] = templateChildLoadedFlags;
@@ -1242,7 +1242,7 @@ namespace System.Windows
         {
             if (childIndex == 0)
             {
-                if (eventHandlersStore == null)
+                if (eventHandlersStore is null)
                 {
                     eventHandlersStore = new EventHandlersStore();
 
@@ -1256,7 +1256,7 @@ namespace System.Windows
             else
             {
                 //FrameworkElementFactory fef = StyleHelper.FindFEF(templateRoot, childIndex);
-                if (childFef.EventHandlersStore == null)
+                if (childFef.EventHandlersStore is null)
                 {
                     childFef.EventHandlersStore = new EventHandlersStore();
 
@@ -1287,7 +1287,7 @@ namespace System.Windows
             Debug.Assert( childIndex != 0 ); // This should go to the other AddDelegateToFireTrigger overload
 
 
-            if (eventHandlersStore == null)
+            if (eventHandlersStore is null)
             {
                 eventHandlersStore = new EventHandlersStore();
             }
@@ -1342,7 +1342,7 @@ namespace System.Windows
             FrameworkTemplate          newFrameworkTemplate,
             InternalFlags              hasGeneratedSubTreeFlag)
         {
-            Debug.Assert((fe != null && fce == null) || (fe == null && fce != null));
+            Debug.Assert((fe != null && fce is null) || (fe is null && fce != null));
 
             DependencyObject container = (fe != null) ? (DependencyObject)fe : (DependencyObject)fce;
 
@@ -1374,7 +1374,7 @@ namespace System.Windows
             Style                       newStyle,
             FrameworkTemplate           newFrameworkTemplate )
         {
-            Debug.Assert((fe != null && fce == null) || (fe == null && fce != null));
+            Debug.Assert((fe != null && fce is null) || (fe is null && fce != null));
             Debug.Assert((fe != null && fe == container) || (fce != null && fce == container));
             Debug.Assert(newStyle != null || newFrameworkTemplate != null );
 
@@ -1438,7 +1438,7 @@ namespace System.Windows
             FrameworkTemplate           oldFrameworkTemplate,
             InternalFlags               hasGeneratedSubTreeFlag)
         {
-            Debug.Assert((fe != null && fce == null) || (fe == null && fce != null));
+            Debug.Assert((fe != null && fce is null) || (fe is null && fce != null));
             Debug.Assert((fe != null && fe == container) || (fce != null && fce == container));
             Debug.Assert(oldStyle != null || oldFrameworkTemplate != null );
 
@@ -1504,13 +1504,13 @@ namespace System.Windows
 
             HybridDictionary[] data = dataField.GetValue(container);
 
-            if (data == null)
+            if (data is null)
             {
                 data = new HybridDictionary[(int)InstanceStyleData.ArraySize];
                 dataField.SetValue(container, data);
             }
 
-            if (data[(int)dataType] == null )
+            if (data[(int)dataType] is null )
             {
                 if( initialSize < 0 )
                 {
@@ -1676,7 +1676,7 @@ namespace System.Windows
         {
             Debug.Assert(oldStyle != null || oldFrameworkTemplate != null );
 
-            if (instanceValues == null)
+            if (instanceValues is null)
                 return;
 
             // the event handler depends only on whether the instance data
@@ -1831,7 +1831,7 @@ namespace System.Windows
                 if (feContainer != null && EventTrace.IsEnabled(EventTrace.Keyword.KeywordXamlBaml, EventTrace.Level.Verbose))
                 {
                     string label = feContainer.Name;
-                    if (label == null || label.Length == 0)
+                    if (label is null || label.Length == 0)
                         label = container.GetHashCode().ToString(System.Globalization.CultureInfo.InvariantCulture);
 
                     EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientParseInstVisTreeEnd, EventTrace.Keyword.KeywordXamlBaml, EventTrace.Level.Verbose,
@@ -1863,7 +1863,7 @@ namespace System.Windows
 
                 treeRoot = frameworkTemplate.LoadContent( container, affectedChildren);
 
-                Debug.Assert(treeRoot == null || treeRoot is FrameworkElement || treeRoot is FrameworkContentElement,
+                Debug.Assert(treeRoot is null || treeRoot is FrameworkElement || treeRoot is FrameworkContentElement,
                     "Root node of tree must be a FrameworkElement or FrameworkContentElement.  This should have been caught by set_VisualTree" );
 
                 visualsCreated = true;
@@ -1871,7 +1871,7 @@ namespace System.Windows
                 if (feContainer != null && EventTrace.IsEnabled(EventTrace.Keyword.KeywordXamlBaml, EventTrace.Level.Verbose))
                 {
                     string label = feContainer.Name;
-                    if (label == null || label.Length == 0)
+                    if (label is null || label.Length == 0)
                         label = container.GetHashCode().ToString(System.Globalization.CultureInfo.InvariantCulture);
 
                     EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientParseInstVisTreeEnd, EventTrace.Keyword.KeywordXamlBaml, EventTrace.Level.Verbose,
@@ -2873,7 +2873,7 @@ namespace System.Windows
 
             // get the binding, creating it if necessary
             BindingExpressionBase bindingExpr = (BindingExpressionBase)instanceValues[binding];
-            if (bindingExpr == null)
+            if (bindingExpr is null)
             {
                 bindingExpr = BindingExpression.CreateUntargetedBindingExpression(container, binding);
                 instanceValues[binding] = bindingExpr;
@@ -2928,7 +2928,7 @@ namespace System.Windows
             object value = (instanceValues != null)? instanceValues[key] : null;
             bool isRequestingExpression = (feChild != null) ? feChild.IsRequestingExpression : fceChild.IsRequestingExpression;
 
-            if (value == null)
+            if (value is null)
             {
                 value = NotYetApplied;
             }
@@ -2944,7 +2944,7 @@ namespace System.Windows
             if (value == NotYetApplied)
             {
                 child = feChild;
-                if (child == null)
+                if (child is null)
                     child = fceChild;
 
                 MarkupExtension me;
@@ -2995,10 +2995,10 @@ namespace System.Windows
             {
                 if (!isRequestingExpression)
                 {
-                    if (child == null)
+                    if (child is null)
                     {
                         child = feChild;
-                        if (child == null)
+                        if (child is null)
                             child = fceChild;
                     }
 
@@ -3426,7 +3426,7 @@ namespace System.Windows
                 if (newFrameworkTemplate != null)
                 {
                     if (feContainer.HasTemplateGeneratedSubTree
-                        && newFrameworkTemplate.VisualTree == null
+                        && newFrameworkTemplate.VisualTree is null
                         && !newFrameworkTemplate.HasXamlNodeContent )
                     {
                         StyleHelper.ClearGeneratedSubTree(oldTemplateData, feContainer /* fe */, null /* fce */,
@@ -3497,11 +3497,11 @@ namespace System.Windows
         {
             Debug.Assert(fe != null || fce != null);
             Debug.Assert(container == fe || container == fce);
-            Debug.Assert( oldTemplate == null || oldTemplate is FrameworkTemplate,
+            Debug.Assert( oldTemplate is null || oldTemplate is FrameworkTemplate,
                 "Existing template is of unknown type." );
-            Debug.Assert( newTemplate == null || newTemplate is FrameworkTemplate,
+            Debug.Assert( newTemplate is null || newTemplate is FrameworkTemplate,
                 "New template is of unknown type.");
-            Debug.Assert( (oldTemplate == null || newTemplate == null ) ||
+            Debug.Assert( (oldTemplate is null || newTemplate is null ) ||
                 (oldTemplate is FrameworkTemplate && newTemplate is FrameworkTemplate),
                 "Old and new template types do not match." );
 
@@ -3556,7 +3556,7 @@ namespace System.Windows
             {
                 if (style._resources != null)
                 {
-                    if (dictionaries == null)
+                    if (dictionaries is null)
                     {
                         dictionaries = new List<ResourceDictionary>(1);
                     }
@@ -4094,7 +4094,7 @@ namespace System.Windows
                         // Locate child to invalidate
                         child = GetChild(styledChildren, childIndex);
 
-                        if (child == null)
+                        if (child is null)
                         {
                             throw new InvalidOperationException(SR.ChildTemplateInstanceDoesNotExist);
                         }
@@ -4509,13 +4509,13 @@ namespace System.Windows
             FrameworkContentElement fce, Style style, UncommonField<HybridDictionary[]> dataField )
         {
             // If the "Style Change" is the style being set to null - exit.
-            if( style == null )
+            if( style is null )
             {
                 return;
             }
             // Note: PropertyTriggersWithActions is a FrugalMap, so its count is checked against zero.
             //  DataTriggersWithActions is a HybridDictionary allocated on demand, so it's checked against null.
-            if( style.PropertyTriggersWithActions.Count == 0 && style.DataTriggersWithActions == null )
+            if( style.PropertyTriggersWithActions.Count == 0 && style.DataTriggersWithActions is null )
             {
                 // Style has no trigger actions at all, exit.
                 return;
@@ -4538,13 +4538,13 @@ namespace System.Windows
             FrameworkTemplate ft )
         {
             // If the "Template Change" is a template being set to null - exit.
-            if( ft == null )
+            if( ft is null )
             {
                 return;
             }
             // Note: PropertyTriggersWithActions is a FrugalMap, so its count is checked against zero.
             //  DataTriggersWithActions is a HybridDictionary allocated on demand, so it's checked against null.
-            if( ft != null && ft.PropertyTriggersWithActions.Count == 0 && ft.DataTriggersWithActions == null )
+            if( ft != null && ft.PropertyTriggersWithActions.Count == 0 && ft.DataTriggersWithActions is null )
             {
                 // FrameworkTemplate has no trigger actions at all, exit.
                 return;
@@ -4613,7 +4613,7 @@ namespace System.Windows
             Trigger trigger = triggerBase as Trigger;
             if( trigger != null )
             {
-                if( trigger.SourceName == null )
+                if( trigger.SourceName is null )
                 {
                     return true;
                 }
@@ -4767,7 +4767,7 @@ namespace System.Windows
             {
                 deferredActions = frameworkTemplate.DeferredActions;
 
-                if( deferredActions == null )
+                if( deferredActions is null )
                 {
                     deferredActions = new ConditionalWeakTable<DependencyObject, List<DeferredAction>>();
                     frameworkTemplate.DeferredActions = deferredActions;
@@ -5079,14 +5079,14 @@ namespace System.Windows
         internal static void AddDataTriggerWithAction(TriggerBase triggerBase,
             BindingBase binding, ref HybridDictionary dataTriggersWithActions )
         {
-            if( dataTriggersWithActions == null )
+            if( dataTriggersWithActions is null )
             {
                 dataTriggersWithActions = new HybridDictionary();
             }
 
             object existing = dataTriggersWithActions[binding];
 
-            if( existing == null )
+            if( existing is null )
             {
                 // No existing trigger, we put given trigger as entry.
                 dataTriggersWithActions[binding] = triggerBase;
@@ -5132,7 +5132,7 @@ namespace System.Windows
             DependencyObject container = bindingExpr.TargetElement;
 
             // if the target has been GC'd, nothing more to do
-            if (container == null)
+            if (container is null)
                 return;
 
             FrameworkElement fe;
@@ -5169,7 +5169,7 @@ namespace System.Windows
             DependencyObject container = bindingExpr.TargetElement;
 
             // if the target has been GC'd, nothing more to do
-            if (container == null)
+            if (container is null)
                 return;
 
             FrameworkElement fe;
@@ -5212,7 +5212,7 @@ namespace System.Windows
             DependencyObject container = bindingExpr.TargetElement;
 
             // if the target has been GC'd, nothing more to do
-            if (container == null)
+            if (container is null)
                 return;
 
             FrameworkElement fe;
@@ -5366,7 +5366,7 @@ namespace System.Windows
 
             // Normal templated child check
             object value = childIndexFromChildName[childName];
-            if (value == null)
+            if (value is null)
             {
                 return -1;
             }
@@ -5437,7 +5437,7 @@ namespace System.Windows
             // invalidating the dependents for a property on a TemplateNode and
             // the dependent properties are meant to be on template nodes that
             // haven't been instantiated yet.
-            if (styledChildren == null || childIndex > styledChildren.Count)
+            if (styledChildren is null || childIndex > styledChildren.Count)
             {
                 return null;
             }
@@ -5468,7 +5468,7 @@ namespace System.Windows
         //
         internal static void RegisterAlternateExpressionStorage()
         {
-            if(_getExpression == null)
+            if(_getExpression is null)
             {
                 DependencyObject.RegisterForAlternativeExpressionStorage(
                                 new AlternativeExpressionStorageCallback(GetExpressionCore),
@@ -5777,15 +5777,15 @@ namespace System.Windows
                     Property        == other.Property &&
                     Value           == other.Value )
                 {
-                    if( Conditions == null &&
-                        other.Conditions == null )
+                    if( Conditions is null &&
+                        other.Conditions is null )
                     {
                         // Both condition arrays are null
                         return true;
                     }
 
-                    if( Conditions == null ||
-                        other.Conditions == null )
+                    if( Conditions is null ||
+                        other.Conditions is null )
                     {
                         // One condition array is null, but not other
                         return false;

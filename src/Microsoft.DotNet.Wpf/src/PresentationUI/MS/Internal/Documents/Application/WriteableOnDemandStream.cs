@@ -283,7 +283,7 @@ internal sealed class WriteableOnDemandStream : Stream
         if (!_isActiveWriteable)
         {
             Stream writer = _writeableStreamFactory(_mode, _access);
-            if (writer == null)
+            if (writer is null)
             {
                 throw new IOException(
                     SR.PackagingWriteableDelegateGaveNullStream);

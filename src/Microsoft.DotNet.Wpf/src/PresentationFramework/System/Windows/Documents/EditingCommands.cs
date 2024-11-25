@@ -454,7 +454,7 @@ namespace System.Windows.Documents
         {
             lock (_synchronize)
             {
-                if (command == null)
+                if (command is null)
                 {
                     // The first parameter should be localized
                     command = new RoutedUICommand(commandPropertyName, commandPropertyName, typeof(EditingCommands));

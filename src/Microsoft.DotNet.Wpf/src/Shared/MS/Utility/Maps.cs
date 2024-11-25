@@ -63,7 +63,7 @@ namespace MS.Utility
                 }
                 else
                 {
-                    if (_overFlow == null)
+                    if (_overFlow is null)
                     {
                         _overFlow = new Hashtable();
                     }

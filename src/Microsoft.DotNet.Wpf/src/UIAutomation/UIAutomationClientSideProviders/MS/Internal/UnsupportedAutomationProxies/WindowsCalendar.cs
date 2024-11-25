@@ -2422,18 +2422,18 @@ namespace MS.Internal.UnsupportedAutomationProxies
 
                 if (HasWeekNumbers)
                 {
-                    while (item < FIRST_WEEKHEADER && nextSibling == null)
+                    while (item < FIRST_WEEKHEADER && nextSibling is null)
                     {
                         nextSibling = CreateCalendarWeekNum(item++);
                     }
                 }
 
-                while (item < 0 && nextSibling == null)
+                while (item < 0 && nextSibling is null)
                 {
                     nextSibling = CreateCalendarWeekHeader(item);
                 }
 
-                while (item < TOTAL_CELLS && nextSibling == null)
+                while (item < TOTAL_CELLS && nextSibling is null)
                 {
                     nextSibling = CreateCalendarDay(item++);
                 }
@@ -2449,19 +2449,19 @@ namespace MS.Internal.UnsupportedAutomationProxies
                 int item = child._item - 1;
                 ProxySimple previousSibling = null;
 
-                while (item >= 0 && previousSibling == null)
+                while (item >= 0 && previousSibling is null)
                 {
                     previousSibling = CreateCalendarDay(item--);
                 }
 
-                while (item >= FIRST_WEEKHEADER && previousSibling == null)
+                while (item >= FIRST_WEEKHEADER && previousSibling is null)
                 {
                     previousSibling = CreateCalendarWeekHeader(item--);
                 }
 
                 if (HasWeekNumbers)
                 {
-                    while (item >= FIRST_WEEKNUM && previousSibling == null)
+                    while (item >= FIRST_WEEKNUM && previousSibling is null)
                     {
                         previousSibling = CreateCalendarWeekNum(item--);
                     }
@@ -2490,7 +2490,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
                 int dayIndex = TOTAL_CELLS - 1;
                 if (_winCalendar._isVersion6)
                 {
-                    while (dayIndex >= 0 && lastChild == null)
+                    while (dayIndex >= 0 && lastChild is null)
                     {
                         lastChild = CreateCalendarDay(dayIndex--);
                     }
@@ -2771,7 +2771,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
                             break;
                     }
                 }
-                if (calendarBits == null)
+                if (calendarBits is null)
                 {
                     calendarBits = (CalendarBits)this;
                 }

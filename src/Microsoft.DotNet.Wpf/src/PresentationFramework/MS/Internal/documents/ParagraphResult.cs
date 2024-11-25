@@ -92,7 +92,7 @@ namespace MS.Internal.Documents
         #region Internal Properties
 
         /// <summary>
-        /// Represents the beginning of the paragraph’s contents.
+        /// Represents the beginning of the paragraphï¿½s contents.
         /// </summary>
         internal ITextPointer StartPosition
         {
@@ -104,7 +104,7 @@ namespace MS.Internal.Documents
         }
 
         /// <summary>
-        /// Represents the end of the paragraph’s contents.
+        /// Represents the end of the paragraphï¿½s contents.
         /// </summary>
         internal ITextPointer EndPosition
         {
@@ -153,7 +153,7 @@ namespace MS.Internal.Documents
         /// </summary>
         private void EnsureTextContentRange()
         {
-            if (_contentRange == null)
+            if (_contentRange is null)
             {
                 _contentRange = _paraClient.GetTextContentRange();
                 Invariant.Assert(_contentRange != null);
@@ -261,7 +261,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_paragraphs == null)
+                if (_paragraphs is null)
                 {
                     // While getting children paragraph results, each paragraph is queried for text content
                     _paragraphs = ((ContainerParaClient)_paraClient).GetChildrenParagraphResults(out _hasTextContent);
@@ -279,7 +279,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_paragraphs == null)
+                if (_paragraphs is null)
                 {
                     // Getting Paragraphs collection queries each paragraph for text content and sets the value
                     ReadOnlyCollection<ParagraphResult> paragraphs = Paragraphs;
@@ -451,7 +451,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_lines == null)
+                if (_lines is null)
                 {
                     _lines = ((TextParaClient)_paraClient).GetLineResults();
                 }
@@ -467,7 +467,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_floaters == null)
+                if (_floaters is null)
                 {
                     _floaters = ((TextParaClient)_paraClient).GetFloaters();
                 }
@@ -482,7 +482,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_figures == null)
+                if (_figures is null)
                 {
                     _figures = ((TextParaClient)_paraClient).GetFigures();
                 }
@@ -717,7 +717,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_paragraphs == null)
+                if (_paragraphs is null)
                 {
                     // While getting children paras, query each one for text content and use the result to set _hasTextContent
                     _paragraphs = ((TableParaClient)_paraClient).GetChildrenParagraphResults(out _hasTextContent);
@@ -735,7 +735,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_paragraphs == null)
+                if (_paragraphs is null)
                 {
                     // Getting Paragraphs collection sets the value of _hasTextContent by checking each child for text content
                     ReadOnlyCollection<ParagraphResult> paragraphs = Paragraphs;
@@ -805,7 +805,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_cells == null)
+                if (_cells is null)
                 {
                     // Check each cell for text content when getting cell paragraph results
                     _cells = ((TableParaClient)_paraClient).GetChildrenParagraphResultsForRow(_index, out _hasTextContent);
@@ -822,7 +822,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_cells == null)
+                if (_cells is null)
                 {
                     // Getting cell paragraph results queries each one for text content
                     ReadOnlyCollection<ParagraphResult> cells = CellParagraphs;
@@ -893,7 +893,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_columns == null)
+                if (_columns is null)
                 {
                     // Check subpage columns for text content
                     _columns = ((SubpageParaClient)_paraClient).GetColumnResults(out _hasTextContent);
@@ -911,7 +911,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_columns == null)
+                if (_columns is null)
                 {
                     ReadOnlyCollection<ColumnResult> columns = Columns;
                 }
@@ -926,7 +926,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_floatingElements == null)
+                if (_floatingElements is null)
                 {
                     _floatingElements = ((SubpageParaClient)_paraClient).FloatingElementResults;
                     Invariant.Assert(_floatingElements != null, "Floating elements collection is null");
@@ -1009,7 +1009,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_columns == null)
+                if (_columns is null)
                 {
                     // Check figure's columns for text content
                     _columns = ((FigureParaClient)_paraClient).GetColumnResults(out _hasTextContent);
@@ -1026,7 +1026,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_columns == null)
+                if (_columns is null)
                 {
                     ReadOnlyCollection<ColumnResult> columns = Columns;
                 }
@@ -1041,7 +1041,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_floatingElements == null)
+                if (_floatingElements is null)
                 {
                     _floatingElements = ((FigureParaClient)_paraClient).FloatingElementResults;
                     Invariant.Assert(_floatingElements != null, "Floating elements collection is null");
@@ -1181,7 +1181,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_columns == null)
+                if (_columns is null)
                 {
                     // Query floater's columns for text content
                     _columns = ((FloaterParaClient)_paraClient).GetColumnResults(out _hasTextContent);
@@ -1198,7 +1198,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_columns == null)
+                if (_columns is null)
                 {
                     ReadOnlyCollection<ColumnResult> columns = Columns;
                 }
@@ -1213,7 +1213,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_floatingElements == null)
+                if (_floatingElements is null)
                 {
                     _floatingElements = ((FloaterParaClient)_paraClient).FloatingElementResults;
                     Invariant.Assert(_floatingElements != null, "Floating elements collection is null");

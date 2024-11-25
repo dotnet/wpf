@@ -52,7 +52,7 @@ namespace System.Windows.Automation.Peers
             TextElement textElement = (TextElement)Owner;
             ITextView textView = textElement.TextContainer.TextView;
 
-            if (textView == null || !textView.IsValid)
+            if (textView is null || !textView.IsValid)
             {
                 return Rect.Empty;
             }
@@ -63,7 +63,7 @@ namespace System.Windows.Automation.Peers
             {
                 PresentationSource presentationSource = PresentationSource.CriticalFromVisual(textView.RenderScope);
 
-                if (presentationSource == null)
+                if (presentationSource is null)
                 {
                     return Rect.Empty;
                 }
@@ -71,7 +71,7 @@ namespace System.Windows.Automation.Peers
                 HwndSource hwndSource = presentationSource as HwndSource;
 
                 // If the source isn't an HwnSource, there's not much we can do, return empty rect
-                if (hwndSource == null)
+                if (hwndSource is null)
                 {
                     return Rect.Empty;
                 }
@@ -98,14 +98,14 @@ namespace System.Windows.Automation.Peers
 
             TextElement textElement = (TextElement)Owner;
             ITextView textView = textElement.TextContainer.TextView;
-            if (textView == null || !textView.IsValid || (!textView.Contains(textElement.ContentStart) && !textView.Contains(textElement.ContentEnd)))
+            if (textView is null || !textView.IsValid || (!textView.Contains(textElement.ContentStart) && !textView.Contains(textElement.ContentEnd)))
             {
                 return pt;
             }
 
             PresentationSource presentationSource = PresentationSource.CriticalFromVisual(textView.RenderScope);
 
-            if (presentationSource == null)
+            if (presentationSource is null)
             {
                 return pt;
             }
@@ -113,13 +113,13 @@ namespace System.Windows.Automation.Peers
             HwndSource hwndSource = presentationSource as HwndSource;
 
             // If the source isn't an HwnSource, there's not much we can do, return empty rect
-            if (hwndSource == null)
+            if (hwndSource is null)
             {
                 return pt;
             }
 
             TextPointer endPosition = textElement.ContentStart.GetNextInsertionPosition(LogicalDirection.Forward);
-            if (endPosition == null || endPosition.CompareTo(textElement.ContentEnd) > 0)
+            if (endPosition is null || endPosition.CompareTo(textElement.ContentEnd) > 0)
                 endPosition = textElement.ContentEnd;
 
             Rect rectElement = CalculateVisibleRect(textView, textElement, textElement.ContentStart, endPosition);
@@ -152,7 +152,7 @@ namespace System.Windows.Automation.Peers
                     {
                         TextElement textElement = (TextElement)Owner;
                         ITextView textView = textElement.TextContainer.TextView;
-                        if (textView == null || !textView.IsValid || (!textView.Contains(textElement.ContentStart) && !textView.Contains(textElement.ContentEnd)))
+                        if (textView is null || !textView.IsValid || (!textView.Contains(textElement.ContentStart) && !textView.Contains(textElement.ContentEnd)))
                         {
                             return true;
                         }

@@ -561,7 +561,7 @@ namespace System.Windows.Media
                 DUCE.ResourceHandle hClipGeometry = vClipGeometry != null ? ((DUCE.IResource)vClipGeometry).GetHandle(channel) : DUCE.ResourceHandle.Null;
                 DUCE.ResourceHandle hOpacityMask = vOpacityMask != null ? ((DUCE.IResource)vOpacityMask).GetHandle(channel) : DUCE.ResourceHandle.Null;
                 DUCE.ResourceHandle hTransform;
-                if (vTransform == null ||
+                if (vTransform is null ||
                     Object.ReferenceEquals(vTransform, Transform.Identity)
                     )
                 {
@@ -577,7 +577,7 @@ namespace System.Windows.Media
                 DUCE.ResourceHandle hOpacityAnimations = GetAnimationResourceHandle(OpacityProperty, channel);
 
                 // Store the count of this resource's contained collections in local variables.
-                int ChildrenCount = (vChildren == null) ? 0 : vChildren.Count;
+                int ChildrenCount = (vChildren is null) ? 0 : vChildren.Count;
 
                 // Pack & send command packet
                 DUCE.MILCMD_DRAWINGGROUP data;
@@ -847,7 +847,7 @@ namespace System.Windows.Media
             // if these get touched by more than one thread in the lifetime
             // of your app.  (Windows OS 
 
-            Debug.Assert(s_Children == null || s_Children.IsFrozen,
+            Debug.Assert(s_Children is null || s_Children.IsFrozen,
                 "Detected context bound default value DrawingGroup.s_Children (See OS Bug #947272).");
 
 

@@ -47,14 +47,14 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-                Debug.Assert(   _animationClocks == null
+                Debug.Assert(   _animationClocks is null
                              || _animationClocks.Count > 0);
 
-                Debug.Assert(   _propertyTriggerLayers == null
+                Debug.Assert(   _propertyTriggerLayers is null
                              || _propertyTriggerLayers.Count > 0);
 
-                return _animationClocks == null
-                    && _propertyTriggerLayers == null
+                return _animationClocks is null
+                    && _propertyTriggerLayers is null
                     && _snapshotValue == DependencyProperty.UnsetValue;
             }
         }
@@ -120,8 +120,8 @@ namespace System.Windows.Media.Animation
 
         internal void Initialize(DependencyObject d, DependencyProperty dp)
         {
-            Debug.Assert(_dependencyObject == null);
-            Debug.Assert(_dependencyProperty == null);
+            Debug.Assert(_dependencyObject is null);
+            Debug.Assert(_dependencyProperty is null);
 
             Animatable a = d as Animatable;
 
@@ -169,7 +169,7 @@ namespace System.Windows.Media.Animation
         {
             DependencyObject d = (DependencyObject)_dependencyObject.Target;
 
-            if (d == null)
+            if (d is null)
             {
                 return;
             }
@@ -322,7 +322,7 @@ namespace System.Windows.Media.Animation
         {
             DependencyObject d = (DependencyObject)_dependencyObject.Target;
 
-            if (d == null)
+            if (d is null)
             {
                 return;
             }
@@ -361,7 +361,7 @@ namespace System.Windows.Media.Animation
         {
             object target = _dependencyObject.Target;
 
-            if (target == null)
+            if (target is null)
             {
                 // If the target has been garbage collected, remove this handler
                 // from the AnimationClock so that this collection can be
@@ -576,7 +576,7 @@ namespace System.Windows.Media.Animation
             AnimationClock animationClock,
             HandoffBehavior handoffBehavior)
         {
-            if (animationClock == null)
+            if (animationClock is null)
             {
                 BeginAnimation(d, dp, null, handoffBehavior);
             }
@@ -608,8 +608,8 @@ namespace System.Windows.Media.Animation
             // that it is the equivalent because we have nothing to compose
             // with.
             if (   handoffBehavior == HandoffBehavior.SnapshotAndReplace
-                || storage == null
-                || storage._animationClocks == null)
+                || storage is null
+                || storage._animationClocks is null)
             {
                 if (storage != null)
                 {
@@ -716,14 +716,14 @@ namespace System.Windows.Media.Animation
 
             AnimationStorage storage = GetStorage(d, dp);
 
-            if (storage == null)
+            if (storage is null)
             {
                 storage = CreateStorage(d, dp);
             }
 
             SortedList<Int64, AnimationLayer> propertyTriggerLayers = storage._propertyTriggerLayers;
 
-            if (propertyTriggerLayers == null)
+            if (propertyTriggerLayers is null)
             {
                 propertyTriggerLayers = new SortedList<Int64, AnimationLayer>(1);
                 storage._propertyTriggerLayers = propertyTriggerLayers;
@@ -781,7 +781,7 @@ namespace System.Windows.Media.Animation
             HandoffBehavior handoffBehavior)
         {
             // Caller should be validating animation.
-            Debug.Assert(animation == null || IsAnimationValid(dp, animation));
+            Debug.Assert(animation is null || IsAnimationValid(dp, animation));
             Debug.Assert(IsPropertyAnimatable(d, dp));
 
             Debug.Assert(HandoffBehaviorEnum.IsDefined(handoffBehavior),
@@ -789,9 +789,9 @@ namespace System.Windows.Media.Animation
 
             AnimationStorage storage = GetStorage(d, dp);
 
-            if (animation == null)
+            if (animation is null)
             {
-                if (   storage == null
+                if (   storage is null
                     || handoffBehavior == HandoffBehavior.Compose)
                 {
                     // Composing with a null animation is a no-op.
@@ -825,7 +825,7 @@ namespace System.Windows.Media.Animation
                 // WritePostscript already so we can just return.
                 return;
             }
-            else if (storage == null)
+            else if (storage is null)
             {
                 //  The user gave us an animation with a BeginTime of null which
                 // means snapshot the current value and throw away all animations
@@ -918,8 +918,8 @@ namespace System.Windows.Media.Animation
                 return storage._snapshotValue;
             }
 
-            if (   storage._animationClocks == null
-                && storage._propertyTriggerLayers == null)
+            if (   storage._animationClocks is null
+                && storage._propertyTriggerLayers is null)
             {
                 Debug.Assert(storage._snapshotValue != DependencyProperty.UnsetValue);
 
@@ -1020,7 +1020,7 @@ namespace System.Windows.Media.Animation
                     SR.Format(
                         SR.Animation_CalculatedValueIsInvalidForProperty,
                         dp.Name,
-                        (currentPropertyValue == null ? "null" : currentPropertyValue.ToString())));
+                        (currentPropertyValue is null ? "null" : currentPropertyValue.ToString())));
             }
         }
 

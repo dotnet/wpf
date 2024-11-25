@@ -55,7 +55,7 @@ namespace System.Windows
         /// </returns>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            if (Property == null)
+            if (Property is null)
             {
                 throw new InvalidOperationException(SR.MarkupExtensionProperty);
             }

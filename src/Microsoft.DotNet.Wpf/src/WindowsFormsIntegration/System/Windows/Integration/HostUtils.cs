@@ -33,7 +33,7 @@ namespace System.Windows.Forms.Integration
         {
             get
             {
-                if (imeModeTraceSwitch == null)
+                if (imeModeTraceSwitch is null)
                 {
                     imeModeTraceSwitch = new TraceSwitch("ImeMode", "ImeMode Trace Switch");
                 }
@@ -148,7 +148,7 @@ namespace System.Windows.Forms.Integration
         internal static void SetBackgroundImage(WinFormsAdapter adapter, Control child, SD.Bitmap image)
         {
             if (child != null &&
-                (child.BackgroundImage == null || child.BackgroundImage == adapter.BackgroundImage))
+                (child.BackgroundImage is null || child.BackgroundImage == adapter.BackgroundImage))
             {
                 child.BackgroundImage = image;
             }
@@ -227,7 +227,7 @@ namespace System.Windows.Forms.Integration
         internal static SD.Bitmap GetBitmapForTransparentWindowsFormsHost(WindowsFormsHost host)
         {
             WinFormsAdapter adapter = WindowsFormsHostPropertyMap.GetAdapter(host);
-            if (adapter == null) { return null; }
+            if (adapter is null) { return null; }
 
             //We need to find our highest-level ancestor that's a FrameworkElement:
             //if it's not a FrameworkElement, we don't know how big it is, and can't
@@ -280,7 +280,7 @@ namespace System.Windows.Forms.Integration
         [ResourceConsumption(ResourceScope.Machine | ResourceScope.Process, ResourceScope.Machine | ResourceScope.Process)]
         internal static SD.Bitmap GetBitmapFromRenderTargetBitmap(Control control, RenderTargetBitmap bmp, Point offset)
         {
-            if (bmp == null)
+            if (bmp is null)
             {
                 return new SD.Bitmap(1, 1);
             }
@@ -330,7 +330,7 @@ namespace System.Windows.Forms.Integration
         internal static SD.Bitmap GetBitmapForOpaqueWindowsFormsHost(WindowsFormsHost host, Brush brush)
         {
             WinFormsAdapter adapter = WindowsFormsHostPropertyMap.GetAdapter(host);
-            if (adapter == null) { return null; }
+            if (adapter is null) { return null; }
 
             DrawingVisual drawingVisual = new DrawingVisual();
             DrawingContext drawingContext = drawingVisual.RenderOpen();

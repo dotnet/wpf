@@ -643,7 +643,7 @@ namespace System.Windows.Media
                 throw new InvalidOperationException(SR.StreamGeometry_NeedBeginFigure);
             }
 
-            if (points == null)
+            if (points is null)
             {
                 return;
             }
@@ -741,7 +741,7 @@ namespace System.Windows.Media
         private static byte[] AcquireChunkFromPool()
         {
             byte[] chunk = ByteStreamGeometryContext._pooledChunk;
-            if (chunk == null)
+            if (chunk is null)
             {
                 // Pooled chunk not available
                 return new byte[c_defaultChunkSize];

@@ -39,7 +39,7 @@ namespace MS.Internal.Documents
 
             XpsDocument = new XpsDocument(package);
             FixedDocumentSequence = XpsDocument.FixedDocumentSequenceReader;
-            if (FixedDocumentSequence == null)
+            if (FixedDocumentSequence is null)
             {
                 throw new ArgumentException(SR.DigitalSignatureNoFixedDocumentSequence);
             }
@@ -132,7 +132,7 @@ namespace MS.Internal.Documents
             }
 
             // a null guid means there was no associated spot, so create a guid
-            if (digitalSignature.GuidID == null)
+            if (digitalSignature.GuidID is null)
             {
                 digitalSignature.GuidID = Guid.NewGuid();
             }
@@ -291,7 +291,7 @@ namespace MS.Internal.Documents
         void IDigitalSignatureProvider.VerifySignatures()
         {
             // If we haven't yet retrieved signatures from the package, do so
-            if (DigitalSignatureList == null)
+            if (DigitalSignatureList is null)
             {
                 DigitalSignatureList = GetSignaturesFromPackage();
             }
@@ -356,12 +356,12 @@ namespace MS.Internal.Documents
             get
             {
                 // If we have not yet read signatures from the package, load them
-                if (DigitalSignatureList == null)
+                if (DigitalSignatureList is null)
                 {
                     DigitalSignatureList = GetSignaturesFromPackage();
                 }
 
-                if (_readOnlySignatureList == null)
+                if (_readOnlySignatureList is null)
                 {
                     _readOnlySignatureList =
                         new ReadOnlyCollection<DigitalSignature>(DigitalSignatureList);

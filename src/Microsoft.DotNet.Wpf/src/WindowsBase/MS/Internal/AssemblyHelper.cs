@@ -110,7 +110,7 @@ namespace MS.Internal
         // load the extension class for System.Drawing
         internal static SystemDrawingExtensionMethods ExtensionsForSystemDrawing(bool force=false)
         {
-            if (_systemDrawingExtensionMethods == null &&
+            if (_systemDrawingExtensionMethods is null &&
                 (force || IsLoaded(UncommonAssembly.System_Drawing_Common)))
             {
                 _systemDrawingExtensionMethods = (SystemDrawingExtensionMethods)LoadExtensionFor("SystemDrawing");
@@ -128,7 +128,7 @@ namespace MS.Internal
         // load the extension class for System.Xml
         internal static SystemXmlExtensionMethods ExtensionsForSystemXml(bool force=false)
         {
-            if (_systemXmlExtensionMethods == null &&
+            if (_systemXmlExtensionMethods is null &&
                 (force || IsLoaded(UncommonAssembly.System_Private_Xml)))
             {
                 _systemXmlExtensionMethods = (SystemXmlExtensionMethods)LoadExtensionFor("SystemXml");
@@ -146,7 +146,7 @@ namespace MS.Internal
         // load the extension class for System.XmlLinq
         internal static SystemXmlLinqExtensionMethods ExtensionsForSystemXmlLinq(bool force=false)
         {
-            if (_systemXmlLinqExtensionMethods == null &&
+            if (_systemXmlLinqExtensionMethods is null &&
                 (force || IsLoaded(UncommonAssembly.System_Private_Xml_Linq)))
             {
                 _systemXmlLinqExtensionMethods = (SystemXmlLinqExtensionMethods)LoadExtensionFor("SystemXmlLinq");
@@ -164,7 +164,7 @@ namespace MS.Internal
         // load the extension class for System.Data
         internal static SystemDataExtensionMethods ExtensionsForSystemData(bool force=false)
         {
-            if (_systemDataExtensionMethods == null &&
+            if (_systemDataExtensionMethods is null &&
                 (force || IsLoaded(UncommonAssembly.System_Data_Common)))
             {
                 _systemDataExtensionMethods = (SystemDataExtensionMethods)LoadExtensionFor("SystemData");
@@ -187,7 +187,7 @@ namespace MS.Internal
             // have been forwarded to System.Runtime (always loaded by default) and 
             // System.Linq.Expressions.  Only load the extension assembly if System.Linq.Expressions 
             // has already been loaded (e.g., a System.Dynamic type has been created).  
-            if (_systemCoreExtensionMethods == null &&
+            if (_systemCoreExtensionMethods is null &&
                 (force || IsLoaded(UncommonAssembly.System_Linq_Expressions)))
             {
                 _systemCoreExtensionMethods = (SystemCoreExtensionMethods)LoadExtensionFor("SystemCore");

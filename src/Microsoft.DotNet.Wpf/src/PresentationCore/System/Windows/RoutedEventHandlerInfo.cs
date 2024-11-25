@@ -88,7 +88,7 @@ namespace System.Windows
         /// </summary>
         public override bool Equals(object obj)
         {
-            if (obj == null || !(obj is RoutedEventHandlerInfo))
+            if (obj is null || !(obj is RoutedEventHandlerInfo))
                 return false;
 
             return Equals((RoutedEventHandlerInfo)obj);

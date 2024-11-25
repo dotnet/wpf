@@ -383,7 +383,7 @@ namespace System.Windows.Media
 
             GlyphTypeface glyphTypeface = TryGetGlyphTypeface();
             
-            if (glyphTypeface == null) return false;
+            if (glyphTypeface is null) return false;
 
             double totalWidth = 0;
             int i = 0;
@@ -691,7 +691,7 @@ namespace System.Windows.Media
         public override bool Equals(object o)
         {
             Typeface t = o as Typeface;
-            if(t == null)
+            if(t is null)
                 return false;
 
             return  _style == t._style 
@@ -704,7 +704,7 @@ namespace System.Windows.Media
 
         internal bool CompareFallbackFontFamily(FontFamily fallbackFontFamily)
         {
-            if (fallbackFontFamily == null || _fallbackFontFamily == null)
+            if (fallbackFontFamily is null || _fallbackFontFamily is null)
                 return fallbackFontFamily == _fallbackFontFamily;
 
             return _fallbackFontFamily.Equals(fallbackFontFamily);
@@ -717,11 +717,11 @@ namespace System.Windows.Media
         {
             get 
             {
-                if (_cachedTypeface == null)
+                if (_cachedTypeface is null)
                 {
                     CachedTypeface cachedTypeface = TypefaceMetricsCache.ReadonlyLookup(this) as CachedTypeface;
                     
-                    if (cachedTypeface == null)
+                    if (cachedTypeface is null)
                     {
                        cachedTypeface = ConstructCachedTypeface();
                        TypefaceMetricsCache.Add(this, cachedTypeface);
@@ -757,7 +757,7 @@ namespace System.Windows.Media
                 ref canonicalStretch
                 );
 
-            if (firstFontFamily == null)
+            if (firstFontFamily is null)
             {
                 if (FallbackFontFamily != null)
                 {
@@ -769,7 +769,7 @@ namespace System.Windows.Media
                         );                  
                 }
 
-                if (firstFontFamily == null)
+                if (firstFontFamily is null)
                 {
                     sourceFontFamily = null;
                     firstFontFamily = FontFamily.LookupFontFamily(FontFamily.NullFontFamilyCanonicalName);
@@ -801,7 +801,7 @@ namespace System.Windows.Media
                 canonicalStretch,
                 firstFontFamily,
                 typefaceMetrics,
-                sourceFontFamily == null
+                sourceFontFamily is null
                 );
         }
     }

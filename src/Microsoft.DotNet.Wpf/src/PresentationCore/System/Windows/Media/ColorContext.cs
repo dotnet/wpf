@@ -442,7 +442,7 @@ namespace System.Windows.Media
             object obj1 = context1;
             object obj2 = context2;
 
-            if (obj1 == null && obj2 == null)
+            if (obj1 is null && obj2 is null)
             {
                 return true;
             }
@@ -529,7 +529,7 @@ namespace System.Windows.Media
                 }
             }
 
-            if (profileStream == null)
+            if (profileStream is null)
             {
                 if (tryProfileFromResource)
                 {

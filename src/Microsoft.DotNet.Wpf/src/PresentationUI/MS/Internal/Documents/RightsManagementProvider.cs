@@ -265,7 +265,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
                 SR.RMProviderExceptionNoPackageToDecrypt);
         }
 
-        if (_useLicense == null)
+        if (_useLicense is null)
         {
             throw new InvalidOperationException(
                 SR.RMProviderExceptionNoUseLicense);
@@ -301,7 +301,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
                 SR.RMProviderExceptionNoPackageToDecrypt);
         }
 
-        if (_useLicense == null)
+        if (_useLicense is null)
         {
             throw new InvalidOperationException(
                 SR.RMProviderExceptionNoUseLicense);
@@ -325,7 +325,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
         // If there is no CryptoProvider set in the envelope, we need to create
         // one and associate it with the envelope now
 
-        if (cryptoProvider == null)
+        if (cryptoProvider is null)
         {
             cryptoProvider = GenerateCryptoProvider();
 
@@ -431,7 +431,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
             }
         }
 
-        if ((defaultUser == null) && (users.Count > 0))
+        if ((defaultUser is null) && (users.Count > 0))
         {
             //If we get here then default doesn't match any available users.
             //Select first user as default.
@@ -494,7 +494,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
     IRightsManagementProvider.GetAllAccessRights()
     {
         if (IsProtected &&
-            _rightsDictionary == null &&
+            _rightsDictionary is null &&
             _rmUseLicense != null &&
             _rmUseLicense.HasPermission(RightsManagementPermissions.AllowOwner) &&
             _unsignedPublishLicense != null)
@@ -569,7 +569,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
     /// </summary>
     Stream IRightsManagementProvider.DecryptPackage()
     {
-        if (_encryptedPackageEnvelope == null)
+        if (_encryptedPackageEnvelope is null)
         {
             throw new InvalidOperationException(
                 SR.RMProviderExceptionNoPackageToDecrypt);
@@ -592,7 +592,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
     EncryptedPackageEnvelope IRightsManagementProvider.EncryptPackage(Stream ciphered)
     {
         // If the publish license is to not encrypt, return null
-        if (CurrentPublishLicense == null)
+        if (CurrentPublishLicense is null)
         {
             return null;
         }
@@ -923,8 +923,8 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
         // If both publish licenses are null, that means the document wasn't
         // protected before and still isn't protected, so the publish license
         // hasn't changed.
-        else if (savedPublishLicense == null &&
-                 _publishLicenseFromEnvelope == null)
+        else if (savedPublishLicense is null &&
+                 _publishLicenseFromEnvelope is null)
         {
             publishLicenseChanged = false;
         }
@@ -1015,7 +1015,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
         // for disposal
         if (cryptoProvider != null)
         {
-            if (_cryptoProviders == null)
+            if (_cryptoProviders is null)
             {
                 IList<CryptoProvider> cryptoProviders = new List<CryptoProvider>();
                 _cryptoProviders = cryptoProviders;
@@ -1048,7 +1048,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
     private void AddReferralInfo(RightsManagementLicense rmLicense)
     {
         // If there is no publish license yet there is no information to add
-        if (CurrentPublishLicense == null)
+        if (CurrentPublishLicense is null)
         {
             return;
         }
@@ -1267,7 +1267,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
     private void InitializeMembers()
     {
         if (_encryptedPackageEnvelope != null &&
-            _publishLicenseFromEnvelope == null)
+            _publishLicenseFromEnvelope is null)
         {
             RightsManagementInformation rmInfo =
                 _encryptedPackageEnvelope.RightsManagementInformation;
@@ -1275,7 +1275,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
 
             publishLicense = rmInfo.LoadPublishLicense();
 
-            if (publishLicense == null)
+            if (publishLicense is null)
             {
                 throw new FileFormatException(
                     SR.RMProviderExceptionNoPublishLicense);

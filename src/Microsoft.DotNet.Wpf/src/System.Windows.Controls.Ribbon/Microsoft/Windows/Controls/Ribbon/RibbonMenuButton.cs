@@ -1283,7 +1283,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             _screenBounds = RibbonDropDownHelper.GetScreenBounds(_itemsPresenter, _popup);
 
             // Also cache the PopupRoot if opened for the first time
-            if (_popupRoot == null && _itemsPresenter != null)
+            if (_popupRoot is null && _itemsPresenter != null)
             {
                 _popupRoot = TreeHelper.FindVisualRoot(_itemsPresenter) as UIElement;
             }
@@ -1668,7 +1668,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             if (e.OriginalSource == this)
             {
-                RibbonHelper.SetKeyTipPlacementForButton(this, e, _partToggleButton == null ? null : _partToggleButton.Image);
+                RibbonHelper.SetKeyTipPlacementForButton(this, e, _partToggleButton is null ? null : _partToggleButton.Image);
             }
         }
 

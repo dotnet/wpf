@@ -39,7 +39,7 @@ namespace System.Windows.Documents.Serialization
         private static string GetNonEmptyRegistryString(RegistryKey key, string value)
         {
             string result = key.GetValue(value) as string;
-            if ( result == null )
+            if ( result is null )
             {
                 throw new KeyNotFoundException();
             }
@@ -67,19 +67,19 @@ namespace System.Windows.Documents.Serialization
         {
 
             ArgumentNullException.ThrowIfNull(factoryInstance);
-            if (factoryInstance.DisplayName == null)
+            if (factoryInstance.DisplayName is null)
             {
                 throw new ArgumentException(SR.SerializerProviderDisplayNameNull);
             }
-            if (factoryInstance.ManufacturerName == null)
+            if (factoryInstance.ManufacturerName is null)
             {
                 throw new ArgumentException(SR.SerializerProviderManufacturerNameNull);
             }
-            if (factoryInstance.ManufacturerWebsite == null)
+            if (factoryInstance.ManufacturerWebsite is null)
             {
                 throw new ArgumentException(SR.SerializerProviderManufacturerWebsiteNull);
             }
-            if (factoryInstance.DefaultFileExtension == null)
+            if (factoryInstance.DefaultFileExtension is null)
             {
                 throw new ArgumentException(SR.SerializerProviderDefaultFileExtensionNull);
             }

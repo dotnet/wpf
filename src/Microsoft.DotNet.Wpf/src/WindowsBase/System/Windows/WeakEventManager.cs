@@ -271,7 +271,7 @@ namespace System.Windows
             {
                 ListenerList list = (ListenerList)Table[this, sourceKey];
 
-                if (list == null)
+                if (list is null)
                 {
                     // no entry in the table - add a new one
                     list = NewListenerList();
@@ -351,7 +351,7 @@ namespace System.Windows
             using (Table.ReadLock)
             {
                 list = (ListenerList)Table[this, sourceKey];
-                if (list == null)
+                if (list is null)
                 {
                     list = ListenerList.Empty;
                 }
@@ -403,7 +403,7 @@ namespace System.Windows
         {
             bool foundDirt = false;
 
-            bool removeList = purgeAll || source == null;
+            bool removeList = purgeAll || source is null;
 
             // remove dead entries from the list
             if (!removeList)
@@ -508,7 +508,7 @@ namespace System.Windows
         {
             public Listener(object target)
             {
-                if (target == null)
+                if (target is null)
                     target = StaticSource;
                 _target = new WeakReference(target);
                 _handler = null;
@@ -624,7 +624,7 @@ namespace System.Windows
                 Invariant.Assert(_users == 0, "Cannot modify a ListenerList that is in use");
 
                 object target = handler.Target;
-                if (target == null)
+                if (target is null)
                     target = StaticSource;
 
                 // add a record to the main list
@@ -649,7 +649,7 @@ namespace System.Windows
                     // 1% case - the target listens multiple times
                     // we store the delegates in a list
                     List<Delegate> list = value as List<Delegate>;
-                    if (list == null)
+                    if (list is null)
                     {
                         // lazily allocate the list, and add the old handler
                         Delegate oldHandler = value as Delegate;
@@ -672,7 +672,7 @@ namespace System.Windows
 
                 object value;
                 object target = handler.Target;
-                if (target == null)
+                if (target is null)
                     target = StaticSource;
 
                 // remove the record from the main list
@@ -689,7 +689,7 @@ namespace System.Windows
                 if (_cwt.TryGetValue(target, out value))
                 {
                     List<Delegate> list = value as List<Delegate>;
-                    if (list == null)
+                    if (list is null)
                     {
                         // 99% case - the target is removing its single handler
                         _cwt.Remove(target);
@@ -723,7 +723,7 @@ namespace System.Windows
 
                 // no need to add if the listener has been GC'd
                 object target = listener.Target;
-                if (target == null)
+                if (target is null)
                     return;
 
                 _list.Add(listener);
@@ -772,7 +772,7 @@ namespace System.Windows
             internal bool DeliverEvent(ref Listener listener, object sender, EventArgs args, Type managerType)
             {
                 object target = listener.Target;
-                bool entryIsStale = (target == null);
+                bool entryIsStale = (target is null);
 
                 if (!entryIsStale)
                 {
@@ -819,7 +819,7 @@ namespace System.Windows
 
                 for (int j=_list.Count-1; j>=0; --j)
                 {
-                    if (_list[j].Target == null)
+                    if (_list[j].Target is null)
                     {
                         _list.RemoveAt(j);
                         foundDirt = true;

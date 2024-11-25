@@ -71,7 +71,7 @@ namespace System.Windows
         /// <returns> the converted value of the input object </returns>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object input)
         {
-            if (input == null)
+            if (input is null)
             {
                 throw GetConvertFromException(input);
             }
@@ -99,7 +99,7 @@ namespace System.Windows
         /// </remarks>
         public static new TextDecorationCollection ConvertFromString(string text)
         {   
-            if (text == null)
+            if (text is null)
             {
                return null;
             }

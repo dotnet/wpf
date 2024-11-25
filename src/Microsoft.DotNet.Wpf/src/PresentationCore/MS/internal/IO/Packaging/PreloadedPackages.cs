@@ -119,7 +119,7 @@ namespace MS.Internal.IO.Packaging
 
             lock (_globalLock)
             {
-                if (_packagePairs == null)
+                if (_packagePairs is null)
                 {
                     _packagePairs = new HybridDictionary(3);
                 }

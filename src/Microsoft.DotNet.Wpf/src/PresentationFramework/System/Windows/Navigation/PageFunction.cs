@@ -268,7 +268,7 @@ namespace System.Windows.Navigation
             {
                 ReturnEventArgs<T> ra = returnEventArgs as ReturnEventArgs<T>;
 
-                Debug.Assert((returnEventArgs == null) || (ra != null));
+                Debug.Assert((returnEventArgs is null) || (ra != null));
 
                 ReturnEventHandler<T> eh = d as ReturnEventHandler<T>;
 

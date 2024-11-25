@@ -35,7 +35,7 @@ namespace System.Xaml
         {
             get
             {
-                if (_reader == null)
+                if (_reader is null)
                 {
                     _reader = new ReaderDelegate(_writer.SchemaContext, Next, _hasLineInfo);
                 }

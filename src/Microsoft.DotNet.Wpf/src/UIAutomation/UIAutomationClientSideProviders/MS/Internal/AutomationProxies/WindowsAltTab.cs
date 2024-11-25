@@ -152,7 +152,7 @@ namespace MS.Internal.AutomationProxies
                     }
                 }
             }
-            if (proxyElement == null)
+            if (proxyElement is null)
             {
                 proxyElement = base.ElementProviderFromPoint(x, y);
             }

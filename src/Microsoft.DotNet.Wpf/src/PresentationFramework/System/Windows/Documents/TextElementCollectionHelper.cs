@@ -33,7 +33,7 @@ namespace System.Windows.Documents
         // Called by the TextContainer.
         internal static void MarkDirty(DependencyObject parent)
         {
-            if (parent == null)
+            if (parent is null)
             {
                 return;
             }
@@ -46,7 +46,7 @@ namespace System.Windows.Documents
                     {
                         ParentCollectionPair pair = (ParentCollectionPair)_cleanParentList[i].Target;
 
-                        if (pair == null || pair.Parent == parent)
+                        if (pair is null || pair.Parent == parent)
                         {
                             _cleanParentList[i] = null;
                         }
@@ -129,7 +129,7 @@ namespace System.Windows.Documents
 
             for (int i = 0; i < _cleanParentList.Length; i++)
             {
-                if (_cleanParentList[i] == null)
+                if (_cleanParentList[i] is null)
                 {
                     if (firstFreeIndex == -1)
                     {
@@ -140,7 +140,7 @@ namespace System.Windows.Documents
                 {
                     ParentCollectionPair pair = (ParentCollectionPair)_cleanParentList[i].Target;
 
-                    if (pair == null)
+                    if (pair is null)
                     {
                         // WeakReference is dead, remove it.
                         _cleanParentList[i] = null;

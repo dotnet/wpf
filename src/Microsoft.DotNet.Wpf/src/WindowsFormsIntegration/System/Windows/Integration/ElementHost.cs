@@ -104,7 +104,7 @@ namespace System.Windows.Forms.Integration
             proposedSize = HostUtils.UnionSizes(proposedSize, MinimumSize);
 
             // Apply the child's scaling, if any
-            Vector scale = (Child == null ? new Vector(1d, 1d) : HostUtils.GetScale(Child));
+            Vector scale = (Child is null ? new Vector(1d, 1d) : HostUtils.GetScale(Child));
 
             Size constraints = Convert.ToSystemWindowsSize(proposedSize, scale);
 
@@ -207,7 +207,7 @@ namespace System.Windows.Forms.Integration
         {
             get
             {
-                if (this.Child == null)
+                if (this.Child is null)
                 {
                     return false;
                 }
@@ -526,7 +526,7 @@ namespace System.Windows.Forms.Integration
         private void InputManager_PostProcessInput(object sender, SWI.ProcessInputEventArgs e)
         {
             IKeyboardInputSink ikis = _hwndSource as IKeyboardInputSink;
-            if (ikis == null || !ikis.HasFocusWithin())
+            if (ikis is null || !ikis.HasFocusWithin())
             {
                 return;
             }
@@ -671,7 +671,7 @@ namespace System.Windows.Forms.Integration
         /// </summary>
         private static void SetChildElementsIsImeEnabled(SW.DependencyObject element, bool isEnabled)
         {
-            if (element == null)
+            if (element is null)
             {
                 return;
             }
@@ -799,7 +799,7 @@ namespace System.Windows.Forms.Integration
                 case NativeMethods.WM_KILLFOCUS:
                     // if focus is being set on the HwndSource then we should prevent LostFocus by
                     // handling this message.
-                    if (this.HwndSource == null || this.HwndSource.Handle != m.WParam)
+                    if (this.HwndSource is null || this.HwndSource.Handle != m.WParam)
                     {
                         base.WndProc(ref m);
 
@@ -1689,7 +1689,7 @@ namespace System.Windows.Forms.Integration
             // shouldn't wrap, since there may be more WPF controls outside of
             // this WinForms hierarchy, only apply this logic if the accessibility
             // flag is set.
-            return (control.Parent == null) &&
+            return (control.Parent is null) &&
                     (CoreAppContextSwitches.UseNetFx471CompatibleAccessibilityFeatures
                     || !(control is WinFormsAdapter));
         }

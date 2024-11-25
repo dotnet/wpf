@@ -179,7 +179,7 @@ namespace System.Windows.Input.StylusPointer
             UnsafeNativeMethods.CreateInteractionContext(out interactionContext);
             _interactionContext = interactionContext;
 
-            if (configuration == null)
+            if (configuration is null)
             {
                 configuration = DefaultConfiguration;
             }

@@ -43,7 +43,7 @@ namespace MS.Internal.Utility
             {
                 T item = this.Item;
                 
-                if (item == null)
+                if (item is null)
                     return false;   // a stale key matches nothing (except itself)
 
                 return this._hashCode == key._hashCode &&

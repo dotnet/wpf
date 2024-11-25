@@ -232,7 +232,7 @@ namespace System.Windows.Controls
 
             Visual3D visual3D = value as Visual3D;
 
-            if (visual3D == null)
+            if (visual3D is null)
             {
                 throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(Visual3D)), "value");
             }

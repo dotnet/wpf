@@ -155,7 +155,7 @@ namespace System.Windows.Threading
                 }
             }
 
-            if(chain == null)            
+            if(chain is null)            
             {
                 if(_cacheReusableChains.Count > 0)
                 {
@@ -179,9 +179,9 @@ namespace System.Windows.Threading
             // looking for an item that is already in the new chain.  We will
             // insert ourselves after the item we found.  We can short-circuit
             // this search if the new chain is empty.
-            if(chain.Head == null)
+            if(chain.Head is null)
             {
-                Debug.Assert(chain.Tail == null, "PriorityQueue.InsertItemInPriorityChain: both the head and the tail should be null.");
+                Debug.Assert(chain.Tail is null, "PriorityQueue.InsertItemInPriorityChain: both the head and the tail should be null.");
                 InsertItemInPriorityChain(item, chain, null);
             }
             else
@@ -207,11 +207,11 @@ namespace System.Windows.Threading
         internal void InsertItemInPriorityChain(PriorityItem<T> item, PriorityChain<T> chain, PriorityItem<T> after)
         {
             Debug.Assert(chain != null, "PriorityQueue.InsertItemInPriorityChain: a chain must be provided.");
-            Debug.Assert(item.Chain == null && item.PriorityPrev == null && item.PriorityNext == null, "PriorityQueue.InsertItemInPriorityChain: item must not already be in a priority chain.");
+            Debug.Assert(item.Chain is null && item.PriorityPrev is null && item.PriorityNext is null, "PriorityQueue.InsertItemInPriorityChain: item must not already be in a priority chain.");
 
             item.Chain = chain;
 
-            if(after == null)
+            if(after is null)
             {
                 // Note: passing null for after means insert at the head.
 
@@ -225,7 +225,7 @@ namespace System.Windows.Threading
                 }
                 else
                 {
-                    Debug.Assert(chain.Tail == null, "PriorityQueue.InsertItemInPriorityChain: both the head and the tail should be null.");
+                    Debug.Assert(chain.Tail is null, "PriorityQueue.InsertItemInPriorityChain: both the head and the tail should be null.");
 
                     chain.Head = chain.Tail = item;
                 }
@@ -310,9 +310,9 @@ namespace System.Windows.Threading
 
         internal void InsertItemInSequentialChain(PriorityItem<T> item, PriorityItem<T> after)
         {
-            Debug.Assert(item.SequentialPrev == null && item.SequentialNext == null, "PriorityQueue.InsertItemInSequentialChain: item must not already be in the sequential chain.");
+            Debug.Assert(item.SequentialPrev is null && item.SequentialNext is null, "PriorityQueue.InsertItemInSequentialChain: item must not already be in the sequential chain.");
 
-            if(after == null)
+            if(after is null)
             {
                 // Note: passing null for after means insert at the head.
 
@@ -326,7 +326,7 @@ namespace System.Windows.Threading
                 }
                 else
                 {
-                    Debug.Assert(_tail == null, "PriorityQueue.InsertItemInSequentialChain: both the head and the tail should be null.");
+                    Debug.Assert(_tail is null, "PriorityQueue.InsertItemInSequentialChain: both the head and the tail should be null.");
 
                     _head = _tail = item;
                 }

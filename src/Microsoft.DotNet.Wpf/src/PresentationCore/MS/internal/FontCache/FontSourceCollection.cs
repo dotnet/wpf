@@ -204,7 +204,7 @@ namespace MS.Internal.FontCache
                 {
                     List<string> resourceEntries = FontResourceCache.LookupFolder(_uri);
 
-                    if (resourceEntries == null)
+                    if (resourceEntries is null)
                         fontSources = new List<Text.TextInterface.IFontSource>(0);
                     else
                     {

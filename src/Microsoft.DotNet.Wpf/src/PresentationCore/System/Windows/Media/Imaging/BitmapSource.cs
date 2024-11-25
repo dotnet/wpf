@@ -245,7 +245,7 @@ namespace System.Windows.Media.Imaging
                 _bitmapInit.EnsureInitializedComplete();
                 CompleteDelayedCreation();
 
-                if (_palette == null)
+                if (_palette is null)
                 {
                     // update the local palette
                     if (_format.Palettized)
@@ -580,7 +580,7 @@ namespace System.Windows.Media.Imaging
             get
             {
                 CompleteDelayedCreation();
-                if (_wicSource == null || _wicSource.IsInvalid)
+                if (_wicSource is null || _wicSource.IsInvalid)
                 {
                     ManagedBitmapSource managedBitmapSource = new ManagedBitmapSource(this);
                     _wicSource = new BitmapSourceSafeMILHandle(Marshal.GetComInterfaceForObject(
@@ -1365,7 +1365,7 @@ namespace System.Windows.Media.Imaging
         // Needs to be internal, called by subclasses to attach handlers when their Source changes
         internal void RegisterDownloadEventSource(BitmapSource eventSource)
         {
-            if (_weakBitmapSourceEventSink == null)
+            if (_weakBitmapSourceEventSink is null)
             {
                 _weakBitmapSourceEventSink = new WeakBitmapSourceEventSink(this);
             }
@@ -1797,7 +1797,7 @@ namespace System.Windows.Media.Imaging
                 if(_bitmapSource.TryGetTarget(out bitmapSource))
                 {
                     BitmapPalette palette = bitmapSource.Palette;
-                    if ((palette == null) || (palette.InternalPalette == null) || palette.InternalPalette.IsInvalid)
+                    if ((palette is null) || (palette.InternalPalette is null) || palette.InternalPalette.IsInvalid)
                     {
                         return (int)WinCodecErrors.WINCODEC_ERR_PALETTEUNAVAILABLE;
                     }

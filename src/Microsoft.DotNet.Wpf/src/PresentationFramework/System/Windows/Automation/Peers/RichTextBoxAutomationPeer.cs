@@ -50,7 +50,7 @@ namespace System.Windows.Automation.Peers
 
             if (patternInterface == PatternInterface.Text)
             {
-                if (_textPattern == null)
+                if (_textPattern is null)
                     _textPattern = new TextAdaptor(this, owner.TextContainer);
 
                 return _textPattern;

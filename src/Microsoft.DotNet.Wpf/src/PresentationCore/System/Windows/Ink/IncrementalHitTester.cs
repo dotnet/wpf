@@ -340,7 +340,7 @@ namespace System.Windows.Ink
             // The points may be filtered out, so if all the points are filtered out, (lastPointIndex == (_lasso.PointCount - 1).
             // For this case, check if the incremental lasso is disabled (i.e., points modified).
             if ((_lasso.IsEmpty) || (lastPointIndex == (_lasso.PointCount - 1) && false == _lasso.IsIncrementalLassoDirty)
-                || (SelectionChanged == null))
+                || (SelectionChanged is null))
             {
                 return;
             }
@@ -554,7 +554,7 @@ namespace System.Windows.Ink
                     // We don't fire these events right away because user is expected to
                     // modify the stroke collection in her event handler, and that would
                     // invalidate this foreach loop.
-                    if (strokeHitEventArgCollection == null)
+                    if (strokeHitEventArgCollection is null)
                     {
                         strokeHitEventArgCollection = new List<StrokeHitEventArgs>();
                     }
@@ -761,7 +761,7 @@ namespace MS.Internal.Ink
         {
             get
             {
-                if (_stylusPoints == null)
+                if (_stylusPoints is null)
                 {
                     if (_stroke.DrawingAttributes.FitToCurve)
                     {
@@ -1017,7 +1017,7 @@ namespace MS.Internal.Ink
 //                if ((strokeInfo.IsHit == false) && erasingBounds.IntersectsWith(strokeInfo.StrokeBounds)
 //                    && _erasingStroke.HitTest(StrokeNodeIterator.GetIterator(strokeInfo.Stroke, strokeInfo.Overrides)))
 //                {
-//                    if (strokesHit == null)
+//                    if (strokesHit is null)
 //                    {
 //                        strokesHit = new StrokeCollection();
 //                    }

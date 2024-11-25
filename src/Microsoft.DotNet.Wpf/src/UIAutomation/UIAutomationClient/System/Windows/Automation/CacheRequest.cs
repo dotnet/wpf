@@ -161,7 +161,7 @@ namespace System.Windows.Automation
 
             // _threadStack is thread local storage (TLS) based, so can be
             // accessed outside of the lock.
-            if (_threadStack == null)
+            if (_threadStack is null)
             {
                 _threadStack = new Stack();
             }
@@ -173,7 +173,7 @@ namespace System.Windows.Automation
                 _refCount++;
 
                 // Generate a new UiaCacheRequest
-                if (_uiaCacheRequest == null)
+                if (_uiaCacheRequest is null)
                 {
                     _uiaCacheRequest = new UiaCoreApi.UiaCacheRequest(_viewCondition, _scope, propertyArray, patternArray, _automationElementMode);
                 }
@@ -196,7 +196,7 @@ namespace System.Windows.Automation
         {
             // ensure that this is top of stack
             // (no lock needed here, since this is per-thread state)
-            if (_threadStack == null || _threadStack.Count == 0 || _threadStack.Peek() != this)
+            if (_threadStack is null || _threadStack.Count == 0 || _threadStack.Peek() != this)
             {
                 throw new InvalidOperationException(SR.CacheReqestCanOnlyPopTop);
             }
@@ -384,7 +384,7 @@ namespace System.Windows.Automation
         {
             get
             {
-                if ( _threadStack == null || _threadStack.Count == 0 )
+                if ( _threadStack is null || _threadStack.Count == 0 )
                     return DefaultCacheRequest;
 
                 return (CacheRequest)_threadStack.Peek();
@@ -407,7 +407,7 @@ namespace System.Windows.Automation
         {
             get
             {
-                if(_defaultUiaCacheRequest == null)
+                if(_defaultUiaCacheRequest is null)
                 {
                     _defaultUiaCacheRequest = new UiaCoreApi.UiaCacheRequest(Automation.ControlViewCondition, TreeScope.Element, new AutomationProperty[] { AutomationElement.RuntimeIdProperty }, new AutomationPattern[] { }, AutomationElementMode.Full);
                 }
@@ -427,7 +427,7 @@ namespace System.Windows.Automation
 
         internal UiaCoreApi.UiaCacheRequest GetUiaCacheRequest()
         {
-            if (_uiaCacheRequest == null)
+            if (_uiaCacheRequest is null)
             {
                 AutomationProperty[] propertiesArray = (AutomationProperty[])_properties.ToArray(typeof(AutomationProperty));
                 AutomationPattern[] patternsArray = (AutomationPattern[])_patterns.ToArray(typeof(AutomationPattern));

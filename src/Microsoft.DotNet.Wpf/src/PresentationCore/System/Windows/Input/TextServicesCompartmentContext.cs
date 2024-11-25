@@ -77,20 +77,20 @@ namespace System.Windows.Input
         {
             // No TextServices are installed so that the compartment won't work.
             if (!TextServicesLoader.ServicesInstalled ||
-                TextServicesContext.DispatcherCurrent == null)
+                TextServicesContext.DispatcherCurrent is null)
                 return null;
 
             UnsafeNativeMethods.ITfThreadMgr threadmgr = TextServicesContext.DispatcherCurrent.ThreadManager;
-            if (threadmgr == null)
+            if (threadmgr is null)
                 return null;
 
-            if (_compartmentTable == null)
+            if (_compartmentTable is null)
                 _compartmentTable = new Hashtable();
 
             TextServicesCompartment compartment;
 
             compartment = _compartmentTable[guid] as TextServicesCompartment;
-            if (compartment == null)
+            if (compartment is null)
             {
                 compartment = new TextServicesCompartment(guid, 
                                                           threadmgr as UnsafeNativeMethods.ITfCompartmentMgr);
@@ -107,17 +107,17 @@ namespace System.Windows.Input
         {
             // No TextServices are installed so that the compartment won't work.
             if (!TextServicesLoader.ServicesInstalled ||
-                TextServicesContext.DispatcherCurrent == null)
+                TextServicesContext.DispatcherCurrent is null)
                 return null;
 
-            if (_globalcompartmentTable == null)
+            if (_globalcompartmentTable is null)
                 _globalcompartmentTable = new Hashtable();
 
-            if (_globalcompartmentmanager == null)
+            if (_globalcompartmentmanager is null)
             {
                 UnsafeNativeMethods.ITfThreadMgr threadmgr = TextServicesContext.DispatcherCurrent.ThreadManager;
 
-                if (threadmgr == null)
+                if (threadmgr is null)
                     return null;
 
                 threadmgr.GetGlobalCompartment(out _globalcompartmentmanager);
@@ -126,7 +126,7 @@ namespace System.Windows.Input
             TextServicesCompartment compartment = null;
 
             compartment = _globalcompartmentTable[guid] as TextServicesCompartment;
-            if (compartment == null)
+            if (compartment is null)
             {
                 compartment = new TextServicesCompartment(guid, _globalcompartmentmanager);
                 _globalcompartmentTable[guid] = compartment;
@@ -152,7 +152,7 @@ namespace System.Windows.Input
             {
                 // TextServicesCompartmentContext for the current Dispatcher is stored in InputMethod of
                 // the current Dispatcher.
-                if (InputMethod.Current.TextServicesCompartmentContext == null)
+                if (InputMethod.Current.TextServicesCompartmentContext is null)
                     InputMethod.Current.TextServicesCompartmentContext = new TextServicesCompartmentContext();
 
                 return InputMethod.Current.TextServicesCompartmentContext;

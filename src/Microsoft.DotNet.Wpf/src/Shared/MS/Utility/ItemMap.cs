@@ -28,7 +28,7 @@ namespace MS.Utility
                 // Not found, add Entry
 
                 // Create initial capacity, if necessary
-                if (Entries == null)
+                if (Entries is null)
                 {
                     Entries = new Entry[SearchTypeThreshold];
                 }

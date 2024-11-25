@@ -65,7 +65,7 @@ namespace System.Windows.Controls
 
                 // Update the visual state when IsVisible changes for performance reasons.
                 // See comment in ChangeVisualState for an explanation.
-                if (_glow == null)
+                if (_glow is null)
                     UpdateVisualState();
             };
         }
@@ -186,7 +186,7 @@ namespace System.Windows.Controls
         // This is used to set the correct brush/opacity mask on the indicator.
         private void SetProgressBarGlowElementBrush()
         {
-            if (_glow == null)
+            if (_glow is null)
                 return;
             
             _glow.InvalidateProperty(UIElement.OpacityMaskProperty);

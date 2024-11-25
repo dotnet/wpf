@@ -269,7 +269,7 @@ namespace System.Windows.Controls
 
             foreach (UIElement child in InternalChildren)
             {
-                if (child == null) { continue; }
+                if (child is null) { continue; }
                 child.Measure(childConstraint);
             }
 
@@ -292,7 +292,7 @@ namespace System.Windows.Controls
 
             foreach (UIElement child in InternalChildren)
             {
-                if (child == null) { continue; }
+                if (child is null) { continue; }
 
                 double x = 0;
                 double y = 0;

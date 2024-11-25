@@ -509,14 +509,14 @@ namespace System.Windows.Ink
         /// objects contain the same drawing attributes</summary>
         public override bool Equals(object o)
         {
-            if (o == null || o.GetType() != this.GetType())
+            if (o is null || o.GetType() != this.GetType())
             {
                 return false;
             }
 
             //use as and check for null instead of casting to DA to make presharp happy
             DrawingAttributes that = o as DrawingAttributes;
-            if (that == null)
+            if (that is null)
             {
                 return false; 
             }
@@ -529,13 +529,13 @@ namespace System.Windows.Ink
         public static bool operator ==(DrawingAttributes first, DrawingAttributes second)
         {
             // compare the GC ptrs for the obvious reference equality
-            if (((object)first == null && (object)second == null) ||
+            if (((object)first is null && (object)second is null) ||
                 ((object)first == (object)second))
             {
                 return true;
             }
                 // otherwise, if one of the ptrs are null, but not the other then return false
-            else if ((object)first == null || (object)second == null)
+            else if ((object)first is null || (object)second is null)
             {
                 return false;
             }
@@ -798,7 +798,7 @@ namespace System.Windows.Ink
             System.Diagnostics.Debug.Assert(args != null);
 
             //see if the EP that changed is a drawingattribute
-            if (args.NewProperty == null)
+            if (args.NewProperty is null)
             {
                 //a property was removed, see if it is a drawing attribute property
                 object defaultValueIfDrawingAttribute
@@ -826,7 +826,7 @@ namespace System.Windows.Ink
                     this.OnPropertyDataChanged(dargs);
 }
             }
-            else if (args.OldProperty == null)
+            else if (args.OldProperty is null)
             {
                 //a property was added, see if it is a drawing attribute property
                 object defaultValueIfDrawingAttribute
@@ -931,7 +931,7 @@ namespace System.Windows.Ink
                 // there is no need to do this
                 //
                 object defaultValue = DrawingAttributes.GetDefaultDrawingAttributeValue(id);
-                if (defaultValue == null || !defaultValue.Equals(value))
+                if (defaultValue is null || !defaultValue.Equals(value))
                 {
                     _extendedProperties[id] = value;
                 }

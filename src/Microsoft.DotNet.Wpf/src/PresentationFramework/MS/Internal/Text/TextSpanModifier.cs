@@ -78,7 +78,7 @@ namespace MS.Internal.Text
         {
             // Get the text decorations applied to the text modifier run. If there are
             // none, we don't change anything.
-            if (properties == null || _modifierDecorations == null || _modifierDecorations.Count == 0)
+            if (properties is null || _modifierDecorations is null || _modifierDecorations.Count == 0)
                 return properties;        
 
             // Let brush be the foreground brush for the text modifier run. Any text
@@ -101,11 +101,11 @@ namespace MS.Internal.Text
 
             // Get the text decorations of the affected run, if any.
             TextDecorationCollection runDecorations = properties.TextDecorations;
-            if (runDecorations == null || runDecorations.Count == 0)
+            if (runDecorations is null || runDecorations.Count == 0)
             {
                 // Only the text modifier run defines text decorations so
                 // we don't need to merge anything.
-                if (brush == null)
+                if (brush is null)
                 {
                     // Use the text decorations of the modifier run.
                     mergedDecorations = _modifierDecorations;
@@ -152,9 +152,9 @@ namespace MS.Internal.Text
 
             foreach (TextDecoration td in textDecorations)
             {
-                if (td.Pen == null && brush != null)
+                if (td.Pen is null && brush != null)
                 {
-                    if (pen == null)
+                    if (pen is null)
                         pen = new Pen(brush, 1);
 
                     TextDecoration copy = td.Clone();

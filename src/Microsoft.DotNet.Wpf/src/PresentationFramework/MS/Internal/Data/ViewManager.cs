@@ -198,8 +198,8 @@ namespace MS.Internal.Data
         // overload operator for ==, to be same as Equal implementation.
         public static bool operator ==(WeakRefKey left, WeakRefKey right)
         {
-            if ((object)left == null)
-                return (object)right == null;
+            if ((object)left is null)
+                return (object)right is null;
 
             return left.Equals(right);
         }
@@ -251,7 +251,7 @@ namespace MS.Internal.Data
             foreach (DictionaryEntry de in this)
             {
                 WeakRefKey key = (WeakRefKey)de.Key;
-                if (key.Target == null)
+                if (key.Target is null)
                 {
                     ViewRecord vr = (ViewRecord)de.Value;
                     CollectionView cv = vr.View as CollectionView;
@@ -360,7 +360,7 @@ namespace MS.Internal.Data
     {
         public SynchronizationInfo(object context, CollectionSynchronizationCallback callback)
         {
-            if (callback == null)
+            if (callback is null)
             {
                 // 80% case:  no callback - use the context as target of lock().
                 // For this case, just store the context directly - we ask people
@@ -395,7 +395,7 @@ namespace MS.Internal.Data
             {
                 // make sure the callback's target is still available
                 object target = _callbackTarget.Target;
-                if (target == null)
+                if (target is null)
                     throw new InvalidOperationException(SR.Format(SR.CollectionView_MissingSynchronizationCallback, collection));
 
                 // invoke the callback
@@ -424,7 +424,7 @@ namespace MS.Internal.Data
             get
             {
                 return (_callbackMethod != null && _callbackTarget.IsAlive) ||
-                        (_callbackMethod == null && _context != null);
+                        (_callbackMethod is null && _context != null);
             }
         }
 
@@ -545,7 +545,7 @@ namespace MS.Internal.Data
             {
                 icv = new CollectionViewProxy(icv);
             }
-            else if (collectionViewType == null)
+            else if (collectionViewType is null)
             {
                 // Caller didn't specify a type for the view.
                 ICollectionViewFactory icvf = collection as ICollectionViewFactory;
@@ -605,7 +605,7 @@ namespace MS.Internal.Data
             {
                 // if the view doesn't derive from CollectionView, create a proxy that does
                 CollectionView cv = icv as CollectionView;
-                if (cv == null)
+                if (cv is null)
                     cv = new CollectionViewProxy(icv);
 
                 if (ilsList != null)    // IListSource's list shares the same view
@@ -625,7 +625,7 @@ namespace MS.Internal.Data
         CollectionRecord EnsureCollectionRecord(object collection, Func<object, object> GetSourceItem = null)
         {
             CollectionRecord cr = this[collection];
-            if (cr == null)
+            if (cr is null)
             {
                 cr = new CollectionRecord();
                 Add(collection, cr);
@@ -691,7 +691,7 @@ namespace MS.Internal.Data
             ViewRecord result;
             CollectionView cv = collection as CollectionView;
 
-            if (cv == null)
+            if (cv is null)
             {
                 // look up cached entry
                 CollectionRecord cr = EnsureCollectionRecord(collection, GetSourceItem);
@@ -735,7 +735,7 @@ namespace MS.Internal.Data
             // create the view table, if necessary
             CollectionRecord cr = this[collection];
             ViewTable vt = cr.ViewTable;
-            if (vt == null)
+            if (vt is null)
             {
                 vt = new ViewTable();
                 cr.ViewTable = vt;
@@ -753,9 +753,9 @@ namespace MS.Internal.Data
 
             // keep the view and the view table alive as long as any view
             // (or the collection itself) is alive
-            if (vr == null)
+            if (vr is null)
                 vr = new ViewRecord(cv);
-            else if (cv == null)
+            else if (cv is null)
                 cv = (CollectionView)vr.View;
             cv.SetViewManagerData(vt);
 
@@ -799,7 +799,7 @@ namespace MS.Internal.Data
                 WeakRefKey key = (WeakRefKey)de.Key;
                 CollectionRecord cr = (CollectionRecord)de.Value;
 
-                if (key.Target == null || !cr.IsAlive)
+                if (key.Target is null || !cr.IsAlive)
                 {
                     al.Add(key);
                 }
@@ -840,7 +840,7 @@ namespace MS.Internal.Data
                 // view, then what we really want to compare is the type of that
                 // other view.
                 CollectionViewProxy cvp = cv as CollectionViewProxy;
-                Type cachedViewType = (cvp == null) ? cv.GetType() : cvp.ProxiedView.GetType();
+                Type cachedViewType = (cvp is null) ? cv.GetType() : cvp.ProxiedView.GetType();
 
                 if (cachedViewType != collectionViewType)
                     throw new ArgumentException(SR.Format(SR.CollectionView_NameTypeDuplicity, collectionViewType, cachedViewType));

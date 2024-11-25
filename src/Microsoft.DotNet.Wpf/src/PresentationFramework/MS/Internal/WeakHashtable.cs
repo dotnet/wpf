@@ -112,7 +112,7 @@ namespace MS.Internal
                     EqualityWeakReference wr = o as EqualityWeakReference;
                     if (wr != null && !wr.IsAlive)
                     {
-                        if (cleanupList == null)
+                        if (cleanupList is null)
                         {
                             cleanupList = new ArrayList();
                         }
@@ -138,9 +138,9 @@ namespace MS.Internal
         {
             bool IEqualityComparer.Equals(object x, object y)
             {
-                if (x == null)
+                if (x is null)
                 {
-                    return y == null;
+                    return y is null;
                 }
 
                 if (y != null && x.GetHashCode() == y.GetHashCode())
@@ -208,7 +208,7 @@ namespace MS.Internal
 
             public override bool Equals(object o)
             {
-                if (o == null)
+                if (o is null)
                 {
                     return false;
                 }

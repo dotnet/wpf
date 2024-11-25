@@ -81,9 +81,9 @@ namespace System.Windows.Diagnostics
             s_elementLinePositionProperty = type.GetProperty("ElementLinePosition", BindingFlags.Public | BindingFlags.Instance);
 
             // Make sure we've got all the properties and do sanity check
-            if (s_sourceBamlUriProperty == null || s_sourceBamlUriProperty.PropertyType != typeof(Uri) ||
-                s_elementLineNumberProperty == null || s_elementLineNumberProperty.PropertyType != typeof(int) ||
-                s_elementLinePositionProperty == null || s_elementLinePositionProperty.PropertyType != typeof(int))
+            if (s_sourceBamlUriProperty is null || s_sourceBamlUriProperty.PropertyType != typeof(Uri) ||
+                s_elementLineNumberProperty is null || s_elementLineNumberProperty.PropertyType != typeof(int) ||
+                s_elementLinePositionProperty is null || s_elementLinePositionProperty.PropertyType != typeof(int))
             {
                 // Old System.Xaml.
                 return false;

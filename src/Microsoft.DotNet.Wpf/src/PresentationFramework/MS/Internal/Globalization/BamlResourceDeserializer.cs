@@ -319,7 +319,7 @@ namespace MS.Internal.Globalization
 
         private void AddChildToCurrentParent(BamlTreeNode node)
         {
-            if (_currentParent == null)
+            if (_currentParent is null)
             {
                 throw new InvalidOperationException(SR.NullParentNode);
             }

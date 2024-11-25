@@ -64,7 +64,7 @@ namespace System.Windows.Automation.Peers
 // Disallow empty catch statements.
 #pragma warning restore 56502
                     
-                    if (name == null)
+                    if (name is null)
                         name = string.Empty;
                 }
             }

@@ -540,7 +540,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal TextLineBreak GetTextLineBreak()
         {
-            if(_line == null)
+            if(_line is null)
             {
                 return null;
             }
@@ -713,7 +713,7 @@ namespace MS.Internal.PtsHost
             while (cchGlyphRuns > cchTextSpans)
             {
                 GlyphRun glyphRun = glyphRunsCollection[0];
-                cchGlyphRuns -= (glyphRun.Characters == null ? 0 : glyphRun.Characters.Count);
+                cchGlyphRuns -= (glyphRun.Characters is null ? 0 : glyphRun.Characters.Count);
                 glyphRunsCollection.RemoveAt(0);
             }
 
@@ -728,7 +728,7 @@ namespace MS.Internal.PtsHost
                     {
                         Invariant.Assert(runIndex < glyphRunsCollection.Count);
                         GlyphRun run = glyphRunsCollection[runIndex];
-                        int characterCount = (run.Characters == null ? 0 : run.Characters.Count);
+                        int characterCount = (run.Characters is null ? 0 : run.Characters.Count);
                         if ((dcp < curDcp + characterCount) && (dcp + cch > curDcp))
                         {
                             glyphRuns.Add(run);
@@ -1089,7 +1089,7 @@ namespace MS.Internal.PtsHost
                     GlyphRun glyphRun = glyphRunDrawing.GlyphRun;
                     if (glyphRun != null)
                     {
-                        cchGlyphRuns += (glyphRun.Characters == null ? 0 : glyphRun.Characters.Count);
+                        cchGlyphRuns += (glyphRun.Characters is null ? 0 : glyphRun.Characters.Count);
                         glyphRunsCollection.Add(glyphRun);
                     }
                 }

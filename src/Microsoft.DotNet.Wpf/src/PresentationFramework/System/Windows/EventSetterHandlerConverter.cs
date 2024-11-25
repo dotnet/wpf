@@ -53,7 +53,7 @@ namespace System.Windows.Markup
         {
             ArgumentNullException.ThrowIfNull(typeDescriptorContext);
             ArgumentNullException.ThrowIfNull(source);
-            if (s_ServiceProviderContextType == null)
+            if (s_ServiceProviderContextType is null)
             {
                 // get typeof(MS.Internal.Xaml.ServiceProviderContext) via reflection
                 Assembly a = typeof(IRootObjectProvider).Assembly;

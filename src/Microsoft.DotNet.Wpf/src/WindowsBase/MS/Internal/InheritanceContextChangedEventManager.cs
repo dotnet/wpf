@@ -136,7 +136,7 @@ namespace MS.Internal
                 InheritanceContextChangedEventManager manager = (InheritanceContextChangedEventManager)GetCurrentManager(managerType);
 
                 // at first use, create and register a new manager
-                if (manager == null)
+                if (manager is null)
                 {
                     manager = new InheritanceContextChangedEventManager();
                     SetCurrentManager(managerType, manager);

@@ -141,7 +141,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_internalList == null)
+                if (_internalList is null)
                 {
                     _internalList = new List<DocumentReference>();
                 }

@@ -28,7 +28,7 @@ namespace MS.Internal.MilCodeGen.Helpers
     {
         public static bool IsEmpty(string s)
         {
-            return (s == null) || (s.Length <= 0);
+            return (s is null) || (s.Length <= 0);
         }
 
         internal static string WriteFieldStatementsWithSeparator(McgField[] fields, 
@@ -212,7 +212,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                 // paddedFields alignment list: padding, animation and normal field entries.
                 // The offset of each field is stored in "position", which is the padding offset of the
                 // entry + the initial position.
-                if (field == null)
+                if (field is null)
                 {
                     Debug.Assert(alignmentEntry.IsPad);
 
@@ -372,7 +372,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                 paramString = type.Name + " " + name;
 
                 // Field is animated -- also pass resource by handle.
-                if (((resourceType == null) || resourceType.IsValueType) && isAnimated)
+                if (((resourceType is null) || resourceType.IsValueType) && isAnimated)
                 {
                     // Field is animated -- also pass resource by handle.
                     animateParamString = "AnimationClock " + name + "Animations";
@@ -383,7 +383,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                 paramString = name;
 
                 // Field is animated -- also pass resource by handle.
-                if (((resourceType == null) || resourceType.IsValueType) && isAnimated)
+                if (((resourceType is null) || resourceType.IsValueType) && isAnimated)
                 {
                     // Field is animated -- also pass resource by handle.
                     animateParamString =  name + "Animations";
@@ -541,7 +541,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                                              string alternateText,
                                              bool managed)
         {
-            if (comment == null)
+            if (comment is null)
             {
                 return alternateText;
             }
@@ -576,7 +576,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                                              int lineBreakLength,
                                              string lineLeader)
         {
-            if (comment == null)
+            if (comment is null)
             {
                 return String.Empty;
             }
@@ -824,7 +824,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                     // This primary if else else block switches between the tree types of entries in the
                     // paddedFields alignment list: padding, animation and normal field entries.
                     //
-                    if (field == null)
+                    if (field is null)
                     {
                         entry.Name = "padQuadAlignment" + padSuffix++;
                         entry.IsPad = true;

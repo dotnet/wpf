@@ -363,7 +363,7 @@ namespace System.Windows.Interop
             _currentStylusDevice = _currentTabletDevice?.GetStylusByCursorId(cursorId);
 
             // Something went wrong when querying the tablet or stylus, attempt a refresh
-            if (_currentTabletDevice == null || _currentStylusDevice == null)
+            if (_currentTabletDevice is null || _currentStylusDevice is null)
             {
                 tablets.Refresh();
 
@@ -372,7 +372,7 @@ namespace System.Windows.Interop
                 _currentStylusDevice = _currentTabletDevice?.GetStylusByCursorId(cursorId);
 
                 // Still can't get the proper devices, just wait for the next message
-                if (_currentTabletDevice == null || _currentStylusDevice == null)
+                if (_currentTabletDevice is null || _currentStylusDevice is null)
                 {
                     return false;
                 }

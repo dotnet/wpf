@@ -448,7 +448,7 @@ namespace System.Windows.Xps.Serialization
         {
             ReachSerializer reachSerializer = null;
 
-            if((reachSerializer = base.GetSerializer(serializedObject)) == null)
+            if((reachSerializer = base.GetSerializer(serializedObject)) is null)
             {
                 reachSerializer = this.SerializersCacheManager.GetSerializer(serializedObject);
             }
@@ -510,7 +510,7 @@ namespace System.Windows.Xps.Serialization
                 serializerType = typeof(NgcReachVisualSerializerAsync);
             }
 
-            if(serializerType == null)
+            if(serializerType is null)
             {
                 serializerType = base.GetSerializerType(objectType);
             }
@@ -637,7 +637,7 @@ namespace System.Windows.Xps.Serialization
         {
             set
             {
-                if (_jobName == null)
+                if (_jobName is null)
                 {
                     _jobName = value;
                 }
@@ -692,7 +692,7 @@ namespace System.Windows.Xps.Serialization
 
                 JobName = PrintQueue.CurrentJobSettings.Description;
 
-                if(JobName == null)
+                if(JobName is null)
                 {
                     JobName = NgcSerializerUtil.InferJobName(o);
                 }

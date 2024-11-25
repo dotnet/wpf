@@ -177,7 +177,7 @@ namespace MS.Internal.Printing.Configuration
         {
             get
             {
-                if (_docCollate == null)
+                if (_docCollate is null)
                 {
                     _docCollate = new DocumentCollateSetting(this);
                 }
@@ -193,7 +193,7 @@ namespace MS.Internal.Printing.Configuration
         {
             get
             {
-                if (_jobDuplex == null)
+                if (_jobDuplex is null)
                 {
                     _jobDuplex = new JobDuplexSetting(this);
                 }
@@ -209,7 +209,7 @@ namespace MS.Internal.Printing.Configuration
         {
             get
             {
-                if (_jobNUp == null)
+                if (_jobNUp is null)
                 {
                     _jobNUp = new JobNUpSetting(this);
                 }
@@ -225,7 +225,7 @@ namespace MS.Internal.Printing.Configuration
         {
             get
             {
-                if (_jobStaple == null)
+                if (_jobStaple is null)
                 {
                     _jobStaple = new JobStapleSetting(this);
                 }
@@ -241,7 +241,7 @@ namespace MS.Internal.Printing.Configuration
         {
             get
             {
-                if (_pageDeviceFontSubst == null)
+                if (_pageDeviceFontSubst is null)
                 {
                     _pageDeviceFontSubst = new PageDeviceFontSubstitutionSetting(this);
                 }
@@ -257,7 +257,7 @@ namespace MS.Internal.Printing.Configuration
         {
             get
             {
-                if (_pageMediaSize == null)
+                if (_pageMediaSize is null)
                 {
                     _pageMediaSize = new PageMediaSizeSetting(this);
                 }
@@ -273,7 +273,7 @@ namespace MS.Internal.Printing.Configuration
         {
             get
             {
-                if (_pageMediaType == null)
+                if (_pageMediaType is null)
                 {
                     _pageMediaType = new PageMediaTypeSetting(this);
                 }
@@ -289,7 +289,7 @@ namespace MS.Internal.Printing.Configuration
         {
             get
             {
-                if (_pageOrientation == null)
+                if (_pageOrientation is null)
                 {
                     _pageOrientation = new PageOrientationSetting(this);
                 }
@@ -305,7 +305,7 @@ namespace MS.Internal.Printing.Configuration
         {
             get
             {
-                if (_pageOutputColor == null)
+                if (_pageOutputColor is null)
                 {
                     _pageOutputColor = new PageOutputColorSetting(this);
                 }
@@ -321,7 +321,7 @@ namespace MS.Internal.Printing.Configuration
         {
             get
             {
-                if (_pageResolution == null)
+                if (_pageResolution is null)
                 {
                     _pageResolution = new PageResolutionSetting(this);
                 }
@@ -337,7 +337,7 @@ namespace MS.Internal.Printing.Configuration
         {
             get
             {
-                if (_pageScaling == null)
+                if (_pageScaling is null)
                 {
                     _pageScaling = new PageScalingSetting(this);
                 }
@@ -353,7 +353,7 @@ namespace MS.Internal.Printing.Configuration
         {
             get
             {
-                if (_pageTrueTypeFontMode == null)
+                if (_pageTrueTypeFontMode is null)
                 {
                     _pageTrueTypeFontMode = new PageTrueTypeFontModeSetting(this);
                 }
@@ -369,7 +369,7 @@ namespace MS.Internal.Printing.Configuration
         {
             get
             {
-                if (_jobPageOrder == null)
+                if (_jobPageOrder is null)
                 {
                     _jobPageOrder = new JobPageOrderSetting(this);
                 }
@@ -385,7 +385,7 @@ namespace MS.Internal.Printing.Configuration
         {
             get
             {
-                if (_pagePhotoIntent == null)
+                if (_pagePhotoIntent is null)
                 {
                     _pagePhotoIntent = new PagePhotoPrintingIntentSetting(this);
                 }
@@ -401,7 +401,7 @@ namespace MS.Internal.Printing.Configuration
         {
             get
             {
-                if (_pageBorderless == null)
+                if (_pageBorderless is null)
                 {
                     _pageBorderless = new PageBorderlessSetting(this);
                 }
@@ -417,7 +417,7 @@ namespace MS.Internal.Printing.Configuration
         {
             get
             {
-                if (_pageOutputQuality == null)
+                if (_pageOutputQuality is null)
                 {
                     _pageOutputQuality = new PageOutputQualitySetting(this);
                 }
@@ -433,7 +433,7 @@ namespace MS.Internal.Printing.Configuration
         {
             get
             {
-                if (_jobInputBin == null)
+                if (_jobInputBin is null)
                 {
                     _jobInputBin = new JobInputBinSetting(this);
                 }
@@ -449,7 +449,7 @@ namespace MS.Internal.Printing.Configuration
         {
             get
             {
-                if (_documentInputBin == null)
+                if (_documentInputBin is null)
                 {
                     _documentInputBin = new DocumentInputBinSetting(this);
                 }
@@ -464,7 +464,7 @@ namespace MS.Internal.Printing.Configuration
         {
             get
             {
-                if (_pageInputBin == null)
+                if (_pageInputBin is null)
                 {
                     _pageInputBin = new PageInputBinSetting(this);
                 }
@@ -480,7 +480,7 @@ namespace MS.Internal.Printing.Configuration
         {
             get
             {
-                if (_jobCopyCount == null)
+                if (_jobCopyCount is null)
                 {
                     _jobCopyCount = new JobCopyCountSetting(this);
                 }

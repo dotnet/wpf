@@ -113,7 +113,7 @@ namespace System.Windows.Documents
             {
                 // create this on demand, but not through the property, only through the
                 // service, so it is only created when it's actually used
-                if (_rubberbandSelector == null)
+                if (_rubberbandSelector is null)
                 {
                     _rubberbandSelector = new RubberbandSelector();
                 }
@@ -142,7 +142,7 @@ namespace System.Windows.Documents
 
             PageContent fp = value as PageContent;
 
-            if (fp == null)
+            if (fp is null)
             {
                 throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(PageContent)), "value");
             }
@@ -154,7 +154,7 @@ namespace System.Windows.Documents
             else
             {
                 DocumentsTrace.FixedFormat.FixedDocument.Trace($"Page {_pages.Count} Deferred");
-                if (_partialPage == null)
+                if (_partialPage is null)
                 {
                     _partialPage = fp;
                     _partialPage.ChangeLogicalParent(this);
@@ -261,7 +261,7 @@ namespace System.Windows.Documents
                             if (fixedPage != null)
                             {
                                 uiElementRet = ((IFixedNavigate)fixedPage).FindElementByID(elementID, out rootFixedPage);
-                                if (uiElementRet == null)
+                                if (uiElementRet is null)
                                 { // return that page if we can't find the named fragment
                                     uiElementRet = fixedPage;
                                 }
@@ -341,7 +341,7 @@ namespace System.Windows.Documents
                 //
                 FixedPage page = SyncGetPage(pageNumber, false/*forceReload*/);
 
-                if (page == null)
+                if (page is null)
                 {
                     return DocumentPage.Missing;
                 }
@@ -410,7 +410,7 @@ namespace System.Windows.Documents
             ArgumentNullException.ThrowIfNull(contentPosition);
 
             FixedTextPointer fixedTextPointer = contentPosition as FixedTextPointer;
-            if (fixedTextPointer == null)
+            if (fixedTextPointer is null)
             {
                 throw new ArgumentException(SR.IDPInvalidContentPosition);
             }
@@ -450,7 +450,7 @@ namespace System.Windows.Documents
 
             DependencyObject element = o as DependencyObject;
 
-            if (element == null)
+            if (element is null)
             {
                 throw new ArgumentException(SR.FixedDocumentExpectsDependencyObject);
             }
@@ -502,7 +502,7 @@ namespace System.Windows.Documents
                     fixedPosition = new FixedPosition(fixedPage.CreateFixedNode(pageIndex, (UIElement)element), 0);
                     flowPosition = FixedContainer.FixedTextBuilder.CreateFlowPosition(fixedPosition);
                 }
-                if (flowPosition == null)
+                if (flowPosition is null)
                 {
                     flowPosition = FixedContainer.FixedTextBuilder.GetPageStartFlowPosition(pageIndex);
                 }
@@ -519,7 +519,7 @@ namespace System.Windows.Documents
         internal ContentPosition GetPagePosition(DocumentPage page)
         {
             FixedDocumentPage docPage = page as FixedDocumentPage;
-            if (docPage == null)
+            if (docPage is null)
             {
                 return ContentPosition.Missing;
             }
@@ -767,7 +767,7 @@ namespace System.Windows.Documents
         //
         internal Size ComputePageSize(FixedPage fp)
         {
-            if (fp == null)
+            if (fp is null)
             {
                 return new Size(_pageWidth, _pageHeight);
             }
@@ -790,7 +790,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_fixedTextContainer == null)
+                if (_fixedTextContainer is null)
                 {
                     _fixedTextContainer = new FixedTextContainer(this);
                     _fixedTextContainer.Highlights.Changed += new HighlightChangedEventHandler(OnHighlightChanged);
@@ -982,7 +982,7 @@ namespace System.Windows.Documents
                     Uri packageUri = PackUriHelper.GetPackageUri(contentUri);
                     Package package = PreloadedPackages.GetPackage(packageUri);
 
-                    if (package == null)
+                    if (package is null)
                     {
                         package = PackageStore.GetPackage(packageUri);
                     }
@@ -1237,7 +1237,7 @@ namespace System.Windows.Documents
                         if (!asyncRequest.Cancelled)
                         {
                             // Do synchronous measure since we have obtained the page
-                            if (!args.Cancelled && (args.Error == null))
+                            if (!args.Cancelled && (args.Error is null))
                             {
                                 FixedPage c = (FixedPage)args.Result;
                                 Size fixedSize = ComputePageSize(c);
@@ -1464,7 +1464,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_textView == null)
+                if (_textView is null)
                 {
                     _textView = new FixedTextView(this);
                 }

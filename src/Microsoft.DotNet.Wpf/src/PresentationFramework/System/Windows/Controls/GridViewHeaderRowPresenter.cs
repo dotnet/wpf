@@ -257,7 +257,7 @@ namespace System.Windows.Controls
                 for (int i = 0; i < columns.Count; ++i)
                 {
                     UIElement child = children[GetVisualIndex(i)];
-                    if (child == null) { continue; }
+                    if (child is null) { continue; }
 
                     double childConstraintWidth = Math.Max(0.0, constraint.Width - accumulatedWidth);
 
@@ -347,7 +347,7 @@ namespace System.Windows.Controls
                 for (int i = 0; i < columns.Count; ++i)
                 {
                     UIElement child = children[GetVisualIndex(i)];
-                    if (child == null) { continue; }
+                    if (child is null) { continue; }
 
                     GridViewColumn column = columns[i];
 
@@ -817,7 +817,7 @@ namespace System.Windows.Controls
                             column.State = ColumnMeasureState.Headered;
                         }
 
-                        if (DesiredWidthList == null || column.ActualIndex >= DesiredWidthList.Count)
+                        if (DesiredWidthList is null || column.ActualIndex >= DesiredWidthList.Count)
                         {
                             // How can this happen?
                             // Between the last measure was called and this update is called, there can be a
@@ -963,7 +963,7 @@ namespace System.Windows.Controls
                 }
             }
 
-            if (headerContainer == null)
+            if (headerContainer is null)
             {
                 headerContainer = new GridViewColumnHeader();
                 headerContainer.IsInternalGenerated = true;
@@ -1393,7 +1393,7 @@ namespace System.Windows.Controls
                 GridViewColumn column = header.Column;
                 if (column != null)
                 {
-                    if (column.Header == null)
+                    if (column.Header is null)
                     {
                         header.ClearValue(ContentControl.ContentProperty);
                     }
@@ -1485,7 +1485,7 @@ namespace System.Windows.Controls
                 value = column.GetValue(columnDP);
             }
 
-            if (value == null)
+            if (value is null)
             {
                 value = this.GetValue(gvDP);
             }
@@ -1597,7 +1597,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_gvHeaders == null || !_gvHeadersValid)
+                if (_gvHeaders is null || !_gvHeadersValid)
                 {
                     _gvHeadersValid = true;
                     _gvHeaders = new List<GridViewColumnHeader>();
@@ -1629,7 +1629,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_headersPositionList == null)
+                if (_headersPositionList is null)
                 {
                     _headersPositionList = new List<Rect>();
                 }

@@ -248,7 +248,7 @@ namespace System.Windows
             {
                 VerifyAccess();
                 InputBindingCollection bindings = InputBindingCollectionField.GetValue(this);
-                if (bindings == null)
+                if (bindings is null)
                 {
                     bindings = new InputBindingCollection(this);
                     InputBindingCollectionField.SetValue(this, bindings);
@@ -298,7 +298,7 @@ namespace System.Windows
             {
                 VerifyAccess();
                 CommandBindingCollection bindings = CommandBindingCollectionField.GetValue(this);
-                if (bindings == null)
+                if (bindings is null)
                 {
                     bindings = new CommandBindingCollection();
                     CommandBindingCollectionField.SetValue(this, bindings);
@@ -717,7 +717,7 @@ namespace System.Windows
         /// </summary>
         internal void EnsureEventHandlersStore()
         {
-            if (EventHandlersStore == null)
+            if (EventHandlersStore is null)
             {
                 EventHandlersStoreField.SetValue(this, new EventHandlersStore());
                 WriteFlag(CoreFlags.ExistsEventHandlersStore, true);

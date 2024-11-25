@@ -216,7 +216,7 @@ namespace System.Windows.Controls
         /// </summary>
         public int IndexOf(ColumnDefinition value)  //  int IList<T>.IndexOf(T item);
         {
-            if (    value == null
+            if (    value is null
                 ||  value.Parent != _owner )
             {
                 return (-1);
@@ -557,7 +557,7 @@ namespace System.Windows.Controls
 
             ColumnDefinition item = value as ColumnDefinition;
 
-            if (item == null)
+            if (item is null)
             {
                 throw new ArgumentException(SR.Format(SR.GridCollection_MustBeCertainType, "ColumnDefinitionCollection", "ColumnDefinition"));
             }
@@ -578,7 +578,7 @@ namespace System.Windows.Controls
 
             ColumnDefinition item = value as ColumnDefinition;
 
-            if (item == null)
+            if (item is null)
             {
                 throw new ArgumentException(SR.Format(SR.GridCollection_MustBeCertainType, "ColumnDefinitionCollection", "ColumnDefinition"));
             }
@@ -592,13 +592,13 @@ namespace System.Windows.Controls
         ///     Notifies the DefinitionBase about the event.
         /// </summary>
         /// <remarks>
-        ///     Note that the function requires that _item[index] == null and
+        ///     Note that the function requires that _item[index] is null and
         ///     it also requires that the passed in value is not included into another ColumnDefinitionCollection.
         /// </remarks>
         private void PrivateConnectChild(int index, DefinitionBase value)
         {
             Debug.Assert(value != null && value.Index == -1);
-            Debug.Assert(_items[index] == null);
+            Debug.Assert(_items[index] is null);
 
             // add the value into collection's array
             _items[index] = value;
@@ -637,7 +637,7 @@ namespace System.Windows.Controls
         {
             PrivateOnModified();
 
-            if (_items == null)
+            if (_items is null)
             {
                 PrivateSetCapacity(c_defaultCapacity);
             }
@@ -711,7 +711,7 @@ namespace System.Windows.Controls
             {
                 _items = null;
             }
-            else if (_items == null || value != _items.Length)
+            else if (_items is null || value != _items.Length)
             {
                 ColumnDefinition[] newItems = new ColumnDefinition[value];
                 if (_size > 0)
@@ -772,7 +772,7 @@ namespace System.Windows.Controls
             /// </summary>
             public bool MoveNext()
             {
-                if (_collection == null)
+                if (_collection is null)
                 {
                     // empty enumerator case.
                     return (false);
@@ -852,7 +852,7 @@ namespace System.Windows.Controls
             /// </summary>
             public void Reset()
             {
-                if (_collection == null)
+                if (_collection is null)
                 {
                     //  empty enumerator case.
                     //  it is Ok to just return here without checking if
@@ -881,7 +881,7 @@ namespace System.Windows.Controls
             /// </summary>
             private void PrivateValidate()
             {
-                if (_currentElement == null)
+                if (_currentElement is null)
                 {
                     throw new InvalidOperationException(SR.EnumeratorCollectionDisposed);
                 }

@@ -216,10 +216,10 @@ namespace System.Windows.Media.Media3D
                 Int32Collection vTriangleIndices = TriangleIndices;
 
                 // Store the count of this resource's contained collections in local variables.
-                int PositionsCount = (vPositions == null) ? 0 : vPositions.Count;
-                int NormalsCount = (vNormals == null) ? 0 : vNormals.Count;
-                int TextureCoordinatesCount = (vTextureCoordinates == null) ? 0 : vTextureCoordinates.Count;
-                int TriangleIndicesCount = (vTriangleIndices == null) ? 0 : vTriangleIndices.Count;
+                int PositionsCount = (vPositions is null) ? 0 : vPositions.Count;
+                int NormalsCount = (vNormals is null) ? 0 : vNormals.Count;
+                int TextureCoordinatesCount = (vTextureCoordinates is null) ? 0 : vTextureCoordinates.Count;
+                int TriangleIndicesCount = (vTriangleIndices is null) ? 0 : vTriangleIndices.Count;
 
                 // Pack & send command packet
                 DUCE.MILCMD_MESHGEOMETRY3D data;
@@ -419,19 +419,19 @@ namespace System.Windows.Media.Media3D
             // if these get touched by more than one thread in the lifetime
             // of your app.
 
-            Debug.Assert(s_Positions == null || s_Positions.IsFrozen,
+            Debug.Assert(s_Positions is null || s_Positions.IsFrozen,
                 "Detected context bound default value MeshGeometry3D.s_Positions (See OS Bug #947272).");
 
 
-            Debug.Assert(s_Normals == null || s_Normals.IsFrozen,
+            Debug.Assert(s_Normals is null || s_Normals.IsFrozen,
                 "Detected context bound default value MeshGeometry3D.s_Normals (See OS Bug #947272).");
 
 
-            Debug.Assert(s_TextureCoordinates == null || s_TextureCoordinates.IsFrozen,
+            Debug.Assert(s_TextureCoordinates is null || s_TextureCoordinates.IsFrozen,
                 "Detected context bound default value MeshGeometry3D.s_TextureCoordinates (See OS Bug #947272).");
 
 
-            Debug.Assert(s_TriangleIndices == null || s_TriangleIndices.IsFrozen,
+            Debug.Assert(s_TriangleIndices is null || s_TriangleIndices.IsFrozen,
                 "Detected context bound default value MeshGeometry3D.s_TriangleIndices (See OS Bug #947272).");
 
 

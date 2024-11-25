@@ -67,7 +67,7 @@ namespace System.Windows.Media
             // string length * _glyphStringBuider.Capacity is an estimate for the whole string
             _indicesStringBuider = new StringBuilder(
                 Math.Max( 
-                    (_characters == null ? 0 : _characters.Count), 
+                    (_characters is null ? 0 : _characters.Count), 
                     _indices.Count
                 ) 
                 * _glyphStringBuider.Capacity
@@ -120,7 +120,7 @@ namespace System.Windows.Media
             else
             {
                 // zero cluster map means 1:1 mapping
-                Debug.Assert(_characters == null || _characters.Count == 0 || _indices.Count == _characters.Count);
+                Debug.Assert(_characters is null || _characters.Count == 0 || _indices.Count == _characters.Count);
                 for (int i = 0; i < _indices.Count; ++i)
                     AddCluster(i, i + 1, i, i + 1);
             }
@@ -129,7 +129,7 @@ namespace System.Windows.Media
             RemoveTrailingCharacters(_indicesStringBuider, GlyphSeparator);
             indices = _indicesStringBuider.ToString();
 
-            if (_characters == null || _characters.Count == 0)
+            if (_characters is null || _characters.Count == 0)
             {
                 characters = string.Empty;
             }
@@ -273,7 +273,7 @@ namespace System.Windows.Media
 
         private string CreateCaretStopsString()
         {
-            if (_caretStops == null)
+            if (_caretStops is null)
                 return String.Empty;
 
             // Since the trailing 0xF (i.e. all true) entries in the caret stop specifications can be omitted,

@@ -94,7 +94,7 @@ namespace System.Windows.Controls
 
             UIElement uie = value as UIElement;
 
-            if (uie == null)
+            if (uie is null)
             {
                 throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(UIElement)), "value");
             }
@@ -344,7 +344,7 @@ namespace System.Windows.Controls
                 }
                 else
                 {
-                    if (_uiElementCollection == null)
+                    if (_uiElementCollection is null)
                     {
                         // First access on a regular panel
                         EnsureEmptyChildren(/* logicalParent = */ this);
@@ -362,7 +362,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_uiElementCollection == null)
+                if (_uiElementCollection is null)
                 {
                     return 0;
                 }
@@ -378,7 +378,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected override Visual GetVisualChild(int index)
         {
-            if (_uiElementCollection == null)
+            if (_uiElementCollection is null)
             {
                 throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
@@ -529,7 +529,7 @@ namespace System.Windows.Controls
 
             if (isItemsHost)
             {
-                if (_itemContainerGenerator == null)
+                if (_itemContainerGenerator is null)
                 {
                     // Transitioning from being unbound to bound
                     ClearChildren();
@@ -568,15 +568,15 @@ namespace System.Windows.Controls
         /// <summary> Used by subclasses to decide whether to call through a profiling stub </summary>
         internal static bool IsAboutToGenerateContent(Panel panel)
         {
-            return panel.IsItemsHost && panel._itemContainerGenerator == null;
+            return panel.IsItemsHost && panel._itemContainerGenerator is null;
         }
 
         private void ConnectToGenerator()
         {
-            Debug.Assert(_itemContainerGenerator == null, "Attempted to connect to a generator when Panel._itemContainerGenerator is non-null.");
+            Debug.Assert(_itemContainerGenerator is null, "Attempted to connect to a generator when Panel._itemContainerGenerator is non-null.");
 
             ItemsControl itemsOwner = ItemsControl.GetItemsOwner(this);
-            if (itemsOwner == null)
+            if (itemsOwner is null)
             {
                 // This can happen if IsItemsHost=true, but the panel is not nested in an ItemsControl
                 throw new InvalidOperationException(SR.Panel_ItemsControlNotFound);
@@ -605,7 +605,7 @@ namespace System.Windows.Controls
 
         private void EnsureEmptyChildren(FrameworkElement logicalParent)
         {
-            if ((_uiElementCollection == null) || (_uiElementCollection.LogicalParent != logicalParent))
+            if ((_uiElementCollection is null) || (_uiElementCollection.LogicalParent != logicalParent))
             {
                 _uiElementCollection = CreateUIElementCollection(logicalParent);
             }
@@ -619,7 +619,7 @@ namespace System.Windows.Controls
         {
             Debug.Assert(IsItemsHost, "Should be invoked only on an ItemsHost panel");
 
-            if (_itemContainerGenerator == null)
+            if (_itemContainerGenerator is null)
             {
                 // First access on an items presenter panel
                 ConnectToGenerator();
@@ -950,11 +950,11 @@ namespace System.Windows.Controls
                 return;
 
             UIElement child = d as UIElement;
-            if (child == null)
+            if (child is null)
                 return;
 
             Panel panel = child.InternalVisualParent as Panel;
-            if (panel == null)
+            if (panel is null)
                 return;
 
 
@@ -1039,7 +1039,7 @@ namespace System.Windows.Controls
             {
                 stableKeyValues.Sort();
 
-                if (_zLut == null || _zLut.Length != count)
+                if (_zLut is null || _zLut.Length != count)
                 {
                     _zLut = new int[count];
                 }

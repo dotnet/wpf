@@ -69,7 +69,7 @@ namespace System.Windows.Media.Media3D
         {
             Geometry3D geometry = Geometry;
             
-            if (geometry == null)
+            if (geometry is null)
             {
                 return Rect3D.Empty;
             }

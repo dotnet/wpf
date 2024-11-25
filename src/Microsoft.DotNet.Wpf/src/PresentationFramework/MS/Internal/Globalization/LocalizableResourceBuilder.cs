@@ -177,7 +177,7 @@ namespace MS.Internal.Globalization
                 case BamlNodeType.StartElement:
                     {
                         BamlStartElementNode elementNode = (BamlStartElementNode)currentNode;
-                        if (elementNode.Content == null)
+                        if (elementNode.Content is null)
                         {
                             StringBuilder contentBuilder = new StringBuilder();
                             foreach (BamlTreeNode child in elementNode.Children)
@@ -353,7 +353,7 @@ namespace MS.Internal.Globalization
             string className = node.OwnerTypeFullName;
             string propertyLocalName = node.PropertyName;
 
-            if (className == null || className.Length == 0)
+            if (className is null || className.Length == 0)
             {
                 // class name can be empty or null. For example, <Set PropertyPath="...">
                 // We will use the parent node's value.
@@ -394,7 +394,7 @@ namespace MS.Internal.Globalization
             LocalizabilityAttribute localizabilityFromSource
             )
         {
-            if (node == null)
+            if (node is null)
             {
                 return localizabilityFromSource;
             }
@@ -426,7 +426,7 @@ namespace MS.Internal.Globalization
             // find out the attribute that is inheritable from above
             LocalizabilityAttribute inheritableAttribute = ancestor.InheritableAttribute;
 
-            if (inheritableAttribute == null)
+            if (inheritableAttribute is null)
             {
                 // if ancestor's inheritable value isn't resolved yet, we recursively
                 // resolve it here.
@@ -567,9 +567,9 @@ namespace MS.Internal.Globalization
             LocalizabilityAttribute second
             )
         {
-            if (first == null || second == null)
+            if (first is null || second is null)
             {
-                return (first == null) ? second : first;
+                return (first is null) ? second : first;
             }
 
             // min of two readability enum. The less the more restrictive.

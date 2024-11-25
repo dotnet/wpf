@@ -26,7 +26,7 @@ namespace DRT
             // This code is paraphrased from Popup.cs.
 
             PresentationSource source = PresentationSource.FromVisual(target);
-            if (source == null) return false;
+            if (source is null) return false;
 
             // Transform (0,0) from the target element up to the root.
             Point ptTarget = new Point(0,0);

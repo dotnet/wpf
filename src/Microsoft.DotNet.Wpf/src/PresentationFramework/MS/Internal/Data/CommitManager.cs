@@ -136,7 +136,7 @@ namespace MS.Internal.Data
         // return true if element is a descendant of ancestor
         bool IsInScope(DependencyObject ancestor, DependencyObject element)
         {
-            bool result = (ancestor == null) || VisualTreeHelper.IsAncestorOf(ancestor, element);
+            bool result = (ancestor is null) || VisualTreeHelper.IsAncestorOf(ancestor, element);
             return result;
         }
 

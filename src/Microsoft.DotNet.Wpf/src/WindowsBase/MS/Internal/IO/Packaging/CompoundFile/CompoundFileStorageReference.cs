@@ -67,7 +67,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <param name="o">the CompoundFileReference to compare to</param>
         public override bool Equals(object o)
         {
-            if (o == null)
+            if (o is null)
                 return false;   // Standard behavior.
 
             // support subclassing - our subclasses can call us and do any additive work themselves
@@ -97,7 +97,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// and greater than zero if this instance is greater than the given reference</returns>
         int IComparable.CompareTo(object o)
         {
-            if (o == null)
+            if (o is null)
                 return 1;   // Standard behavior.
 
             // different type?
@@ -125,7 +125,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <exception cref="ArgumentException">if leading or trailing path delimiter</exception>
         private void SetFullName(string fullName)
         {
-            if (fullName == null || fullName.Length == 0)
+            if (fullName is null || fullName.Length == 0)
             {
                 _fullName = String.Empty;
             }

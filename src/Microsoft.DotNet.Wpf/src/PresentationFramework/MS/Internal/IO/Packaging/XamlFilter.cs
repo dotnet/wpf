@@ -221,7 +221,7 @@ namespace MS.Internal.IO.Packaging
             IndexingContentUnit     contentUnit;
 
             // If client code forgot to load the stream, throw appropriate exception.
-            if (_xamlReader == null)
+            if (_xamlReader is null)
             {
                 throw new COMException(SR.FilterGetChunkNoStream, (int)FilterErrorCode.FILTER_E_ACCESS);
             }
@@ -249,7 +249,7 @@ namespace MS.Internal.IO.Packaging
                 throw new COMException(xmlException.Message, (int)FilterErrorCode.FILTER_E_UNKNOWNFORMAT);
             }
 
-            if (contentUnit == null)
+            if (contentUnit is null)
             {
                 // Update text information.
                 _currentContent = null;
@@ -278,7 +278,7 @@ namespace MS.Internal.IO.Packaging
             //BufferCharacterCount should be non-negative
             Debug.Assert(bufferCharacterCount >= 0);
 
-            if (_currentContent == null)
+            if (_currentContent is null)
             {
                 SecurityHelper.ThrowExceptionForHR((int)FilterErrorCode.FILTER_E_NO_TEXT);
             }
@@ -337,7 +337,7 @@ namespace MS.Internal.IO.Packaging
         {
             // Loop until we are able to return some content or encounter an end of file.
             IndexingContentUnit nextContentUnit = null;
-            while (nextContentUnit == null)
+            while (nextContentUnit is null)
             {
                 // If we have a content extractor delivering content units for us, use it.
                 if (_filterState == FilterState.UseContentExtractor)
@@ -453,7 +453,7 @@ namespace MS.Internal.IO.Packaging
                     text = _paragraphSeparator + text;
             }
 
-            if (_indexingContentUnit == null)
+            if (_indexingContentUnit is null)
             {
                 _indexingContentUnit = new IndexingContentUnit(text, AllocateChunkID(), breakType, _propSpec, lcid);
             }
@@ -529,7 +529,7 @@ namespace MS.Internal.IO.Packaging
 
                 // Handle the semantically incorrect case of a compound property occurring at the root
                 // by ignoring it totally.
-                if (topOfStack == null)
+                if (topOfStack is null)
                 {
                     SkipCurrentElement();
                     return null;
@@ -571,13 +571,13 @@ namespace MS.Internal.IO.Packaging
             {
                 // When HandleFixedFormatTag declines to handle a tag because it is not fixed-format, it
                 // will return null.
-                Invariant.Assert(nextUnit == null);
+                Invariant.Assert(nextUnit is null);
             }
 
             // Obtain a content descriptor for the current element.
             ContentDescriptor   elementDescriptor =
                 (ContentDescriptor) _xamlElementContentDescriptorDictionary[elementFullName];
-            if (elementDescriptor == null)
+            if (elementDescriptor is null)
             {
                 if (elementFullName.XmlNamespace.Equals(ElementTableKey.XamlNamespace, StringComparison.Ordinal))
                 {
@@ -758,7 +758,7 @@ namespace MS.Internal.IO.Packaging
             Debug.Assert(_xamlReader != null);
 
             string textContent = _xamlReader.GetAttribute(_unicodeStringAttribute);
-            if (textContent == null || textContent.Length == 0)
+            if (textContent is null || textContent.Length == 0)
             {
                 SkipCurrentElement();
                 return null;

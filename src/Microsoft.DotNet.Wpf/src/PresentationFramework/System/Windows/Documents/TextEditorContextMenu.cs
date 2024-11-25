@@ -48,7 +48,7 @@ namespace System.Windows.Documents
             TextEditor This = TextEditor._GetTextEditor(sender);
             const double KeyboardInvokedSentinel = -1.0; // e.CursorLeft has this value when the menu is invoked with the keyboard.
 
-            if (This == null || This.TextView == null)
+            if (This is null || This.TextView is null)
             {
                 return;
             }
@@ -113,7 +113,7 @@ namespace System.Windows.Documents
 
                 // Don't update the selection caret if we're bringing up a custom UIElement
                 // ContextMenu.
-                if (contextMenu == null || !(e.TargetElement is UIElement))
+                if (contextMenu is null || !(e.TargetElement is UIElement))
                 {
                     using (This.Selection.DeclareChangeBlock()) // NB: This raises a PUBLIC EVENT.
                     {
@@ -126,10 +126,10 @@ namespace System.Windows.Documents
                 }
             }
 
-            if (contextMenu == null)
+            if (contextMenu is null)
             {
                 // If someone explicitly set it null -- don't mess with it.
-                if (This.UiScope.ReadLocalValue(FrameworkElement.ContextMenuProperty) == null)
+                if (This.UiScope.ReadLocalValue(FrameworkElement.ContextMenuProperty) is null)
                     return;
 
                 // Grab whatever's set to the UiScope's ContextMenu property.
@@ -159,7 +159,7 @@ namespace System.Windows.Documents
             // Complete the composition before creating the editor context menu.
             This.CompleteComposition();
 
-            if (contextMenu == null)
+            if (contextMenu is null)
             {
                 // It's a default null, so spin up a temporary ContextMenu now.
                 contextMenu = new EditorContextMenu();
@@ -481,7 +481,7 @@ namespace System.Windows.Documents
                 MenuItem menuItem;
 
                 spellingError = textEditor.GetSpellingErrorAtSelection();
-                if (spellingError == null)
+                if (spellingError is null)
                     return false;
 
                 bool addedSuggestion = false;
@@ -545,7 +545,7 @@ namespace System.Windows.Documents
                 MenuItem menuItem;
                 TextStore textStore = textEditor.TextStore;
 
-                if (textStore == null)
+                if (textStore is null)
                 {
                     GC.SuppressFinalize(this);
                     return false;
@@ -553,7 +553,7 @@ namespace System.Windows.Documents
 
                 ReleaseCandidateList(null);
                 _candidateList = textStore.GetReconversionCandidateList();
-                if (CandidateList == null)
+                if (CandidateList is null)
                 {
                     GC.SuppressFinalize(this);
                     return false;

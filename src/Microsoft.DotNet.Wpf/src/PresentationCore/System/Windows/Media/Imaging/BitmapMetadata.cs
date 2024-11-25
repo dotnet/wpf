@@ -1242,7 +1242,7 @@ namespace System.Windows.Media.Imaging
             {
                 String[] strAuthors = GetQuery(policy_Author) as String[];
 
-                return (strAuthors == null) ?
+                return (strAuthors is null) ?
                        null
                      : new ReadOnlyCollection<String>(strAuthors);
             }
@@ -1427,7 +1427,7 @@ namespace System.Windows.Media.Imaging
             {
                 String[] strKeywords = GetQuery(policy_Keywords) as String[];
 
-                return (strKeywords == null) ?
+                return (strKeywords is null) ?
                        null
                      : new ReadOnlyCollection<String>(strKeywords);
             }
@@ -1457,13 +1457,13 @@ namespace System.Windows.Media.Imaging
         {
             BitmapMetadataBlockWriter blockWriter = sourceBitmapMetadata.BlockWriter;
 
-            if (blockWriter == null)
+            if (blockWriter is null)
             {
                 // If source is a metadata
                 InitializeFromMetadataWriter(sourceBitmapMetadata._metadataHandle, sourceBitmapMetadata._syncObject);
             }
 
-            if (_metadataHandle == null)
+            if (_metadataHandle is null)
             {
                 if (blockWriter != null)
                 {
@@ -1525,7 +1525,7 @@ namespace System.Windows.Media.Imaging
         {
             ReadPreamble();
 
-            if (_metadataHandle == null)
+            if (_metadataHandle is null)
             {
                 throw new System.InvalidOperationException(SR.Image_MetadataInitializationIncomplete);
             }

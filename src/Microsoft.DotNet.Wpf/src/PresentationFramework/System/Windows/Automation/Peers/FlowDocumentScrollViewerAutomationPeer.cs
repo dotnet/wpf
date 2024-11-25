@@ -102,7 +102,7 @@ namespace System.Windows.Automation.Peers
                     }
                     if (documentPeer != null)
                     {
-                        if (children == null)
+                        if (children is null)
                         {
                             children = new List<AutomationPeer>();
                         }

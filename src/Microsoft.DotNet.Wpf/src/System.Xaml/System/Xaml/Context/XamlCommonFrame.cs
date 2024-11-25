@@ -17,7 +17,7 @@ namespace MS.Internal.Xaml.Context
         {
             get
             {
-                if (_namespaces == null)
+                if (_namespaces is null)
                     _namespaces = new Dictionary<string, string>();
                 return _namespaces;
             }

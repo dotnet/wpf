@@ -97,7 +97,7 @@ namespace System.Windows.Documents
             DependencyObject oldParent = this.Parent;
             TableRow newParentTR = newParent as TableRow;
 
-            if((newParent != null) && (newParentTR == null))
+            if((newParent != null) && (newParentTR is null))
             {
                 throw new InvalidOperationException(SR.Format(SR.TableInvalidParentNodeType, newParent.GetType().ToString()));
             }

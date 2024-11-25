@@ -103,7 +103,7 @@ namespace MS.Internal.Ink
         /// <returns></returns>
         internal static Cursor GetStrokeEraserCursor()
         {
-            if ( s_StrokeEraserCursor == null )
+            if ( s_StrokeEraserCursor is null )
             {
                 // Get Drawing
                 Drawing drawing = CreateStrokeEraserDrawing();

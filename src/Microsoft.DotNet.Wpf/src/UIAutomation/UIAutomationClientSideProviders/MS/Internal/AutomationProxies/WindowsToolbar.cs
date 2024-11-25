@@ -68,7 +68,7 @@ namespace MS.Internal.AutomationProxies
                 }
             }
 
-            if( wtv == null)
+            if( wtv is null)
             {
                 wtv = new WindowsToolbar(hwnd, null, 0);
             }
@@ -508,7 +508,7 @@ namespace MS.Internal.AutomationProxies
             ToolbarItem focused = toolbar.GetFocus() as ToolbarItem;
 
             // ... check for no current focus or currently focused item is not the one we want...
-            if (focused == null || _item != focused._item)
+            if (focused is null || _item != focused._item)
             {
                 //... set the focus
                 /*

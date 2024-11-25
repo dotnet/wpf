@@ -98,7 +98,7 @@ namespace MS.Internal.Globalization
 
         private void PushChildrenToStack(List<BamlTreeNode> children)
         {
-            if (children == null)
+            if (children is null)
                 return;
 
             for (int i = children.Count - 1; i >= 0; i--)

@@ -424,7 +424,7 @@ namespace System.Windows.Controls
         /// </param>
         public static void GoToState(Control control, bool useTransitions, params string[] stateNames)
         {
-            if (stateNames == null)
+            if (stateNames is null)
             {
                 return;
             }

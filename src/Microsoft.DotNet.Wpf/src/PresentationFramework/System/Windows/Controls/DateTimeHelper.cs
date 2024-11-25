@@ -89,7 +89,7 @@ namespace System.Windows.Controls
 
         public static DateTime? DiscardTime(DateTime? d)
         {
-            if (d == null)
+            if (d is null)
             {
                 return null;
             }
@@ -139,7 +139,7 @@ namespace System.Windows.Controls
                     {
                         // Return the first Gregorian calendar with CalendarType == Localized
                         // Otherwise return the first Gregorian calendar
-                        if (foundCal == null)
+                        if (foundCal is null)
                         {
                             foundCal = cal as GregorianCalendar;
                         }
@@ -153,7 +153,7 @@ namespace System.Windows.Controls
                 }
                 
                 
-                if (foundCal == null)
+                if (foundCal is null)
                 {
                     // if there are no GregorianCalendars in the OptionalCalendars list, use the invariant dtfi
                     dtfi = ((CultureInfo)CultureInfo.InvariantCulture.Clone()).DateTimeFormat;

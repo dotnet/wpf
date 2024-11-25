@@ -59,7 +59,7 @@ namespace MS.Internal.FontCache
             {
                 unsafe
                 {
-                    return _family == null;
+                    return _family is null;
                 }
             }
         }

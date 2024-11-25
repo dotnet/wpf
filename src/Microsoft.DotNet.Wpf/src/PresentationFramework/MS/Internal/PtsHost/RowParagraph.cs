@@ -298,7 +298,7 @@ namespace MS.Internal.PtsHost
                 rowPrevious = ((RowParagraph)Previous);
             }
 
-            Invariant.Assert(_cellParagraphs == null);
+            Invariant.Assert(_cellParagraphs is null);
 
             _cellParagraphs = new CellParagraph[Row.Cells.Count];
 
@@ -307,7 +307,7 @@ namespace MS.Internal.PtsHost
                 _cellParagraphs[cellIndex] = new CellParagraph(Row.Cells[cellIndex], StructuralCache);
             }
 
-            Invariant.Assert(_spannedCells == null);
+            Invariant.Assert(_spannedCells is null);
 
             if (Row.SpannedCells != null)
             {

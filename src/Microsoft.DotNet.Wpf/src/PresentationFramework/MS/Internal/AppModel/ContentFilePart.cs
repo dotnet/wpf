@@ -55,7 +55,7 @@ namespace MS.Internal.AppModel
         {
             Stream stream = null;
 
-            if (_fullPath == null)
+            if (_fullPath is null)
             {
                 // File name will be a path relative to the applications directory.
                 // - We do not want to use SiteOfOriginContainer.SiteOfOrigin because
@@ -78,7 +78,7 @@ namespace MS.Internal.AppModel
 
             stream = CriticalOpenFile(_fullPath);
 
-            if (stream == null)
+            if (stream is null)
             {
                 throw new IOException(SR.Format(SR.UnableToLocateResource, Uri.ToString()));
             }

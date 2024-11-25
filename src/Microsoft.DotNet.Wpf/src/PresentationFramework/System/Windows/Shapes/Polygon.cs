@@ -116,7 +116,7 @@ namespace System.Windows.Shapes
 
             // Are we degenerate?
             // Yes, if we don't have data
-            if (pointCollection == null)
+            if (pointCollection is null)
             {
                 _polygonGeometry = Geometry.Empty;
                 return;

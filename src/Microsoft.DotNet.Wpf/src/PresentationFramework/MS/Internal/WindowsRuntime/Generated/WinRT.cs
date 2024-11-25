@@ -171,7 +171,7 @@ namespace WinRT
 
         ~DllModule()
         {
-            System.Diagnostics.Debug.Assert(_CanUnloadNow == null || _CanUnloadNow() == 0); // S_OK
+            System.Diagnostics.Debug.Assert(_CanUnloadNow is null || _CanUnloadNow() == 0); // S_OK
             lock (_cache)
             {
                 _cache.Remove(_fileName);

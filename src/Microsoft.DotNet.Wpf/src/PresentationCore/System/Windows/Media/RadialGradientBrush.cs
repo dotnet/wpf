@@ -82,7 +82,7 @@ namespace System.Windows.Media
                 GradientStopCollection vGradientStops = GradientStops;
 
                 DUCE.ResourceHandle hTransform;
-                if (vTransform == null ||
+                if (vTransform is null ||
                     Object.ReferenceEquals(vTransform, Transform.Identity)
                     )
                 {
@@ -93,7 +93,7 @@ namespace System.Windows.Media
                     hTransform = ((DUCE.IResource)vTransform).GetHandle(channel);
                 }
                 DUCE.ResourceHandle hRelativeTransform;
-                if (vRelativeTransform == null ||
+                if (vRelativeTransform is null ||
                     Object.ReferenceEquals(vRelativeTransform, Transform.Identity)
                     )
                 {
@@ -138,7 +138,7 @@ namespace System.Windows.Media
 
                     // GradientStopCollection:  Need to enforce upper-limit of gradient stop capacity
 
-                    int count = (vGradientStops == null) ? 0 : vGradientStops.Count;
+                    int count = (vGradientStops is null) ? 0 : vGradientStops.Count;
                     data.GradientStopsSize = (UInt32)(sizeof(DUCE.MIL_GRADIENTSTOP)*count);
 
                     channel.BeginCommand(

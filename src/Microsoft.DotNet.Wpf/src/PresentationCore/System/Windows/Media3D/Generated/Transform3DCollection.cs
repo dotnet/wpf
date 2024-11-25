@@ -150,7 +150,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public void Insert(int index, Transform3D value)
         {
-            if (value == null)
+            if (value is null)
             {
                 throw new System.ArgumentException(SR.Collection_NoNull);
             }
@@ -258,7 +258,7 @@ namespace System.Windows.Media.Media3D
             }
             set
             {
-                if (value == null)
+                if (value is null)
                 {
                     throw new System.ArgumentException(SR.Collection_NoNull);
                 }
@@ -482,7 +482,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                if (s_empty == null)
+                if (s_empty is null)
                 {
                     Transform3DCollection collection = new Transform3DCollection();
                     collection.Freeze();
@@ -553,7 +553,7 @@ namespace System.Windows.Media.Media3D
         {
             int index = -1;
 
-            if (value == null)
+            if (value is null)
             {
                 throw new System.ArgumentException(SR.Collection_NoNull);
             }
@@ -971,7 +971,7 @@ namespace System.Windows.Media.Media3D
 
                     foreach (Transform3D item in collection)
                     {
-                        if (item == null)
+                        if (item is null)
                         {
                             throw new System.ArgumentException(SR.Collection_NoNull);
                         }
@@ -989,7 +989,7 @@ namespace System.Windows.Media.Media3D
             {
                 foreach (Transform3D item in collection)
                 {
-                    if (item == null)
+                    if (item is null)
                     {
                         throw new System.ArgumentException(SR.Collection_NoNull);
                     }

@@ -480,7 +480,7 @@ namespace MS.Internal.Data
             for (int k = 0; k < infos.Length; ++k)
             {
                 if (infos[k].Property == dp ||
-                    (dp == null && String.IsNullOrEmpty(infos[k].Path)))
+                    (dp is null && String.IsNullOrEmpty(infos[k].Path)))
                 {
                     return true;
                 }
@@ -668,7 +668,7 @@ namespace MS.Internal.Data
 
         internal bool VerifyLiveSorting(LiveShapingItem lsi)
         {
-            if (lsi == null)
+            if (lsi is null)
             {   // the list should now be fully sorted again
                 _root.CheckSort = true;
                 return _root.Verify(_root.Count);

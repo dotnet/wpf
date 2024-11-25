@@ -114,7 +114,7 @@ namespace System.Windows.Documents
             // glyphs.FontUri, glyphRun.glyphTypeface
 
             gtf.FamilyNames.TryGetValue(run._cultureInfo, out run._fontFamily);
-            if (run._fontFamily == null)
+            if (run._fontFamily is null)
             {
                 //Try getting the English name
                 gtf.FamilyNames.TryGetValue(System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS, out run._fontFamily);
@@ -217,7 +217,7 @@ namespace System.Windows.Documents
             {
                 SolidColorBrush thisBrush = this.Foreground as SolidColorBrush;
                 SolidColorBrush otherBrush = run.Foreground as SolidColorBrush;
-                if ((run.Foreground == null && this.Foreground == null) ||
+                if ((run.Foreground is null && this.Foreground is null) ||
                      thisBrush != null && otherBrush != null && thisBrush.Color == otherBrush.Color && thisBrush.Opacity == otherBrush.Opacity)
                 {
                     return true;    

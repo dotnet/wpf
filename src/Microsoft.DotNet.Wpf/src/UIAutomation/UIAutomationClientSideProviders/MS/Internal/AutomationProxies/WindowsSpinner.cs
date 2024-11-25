@@ -96,7 +96,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             ProxySimple ps = (ProxySimple)Create( hwnd, idChild, idObject );
-            if ( ps == null )
+            if ( ps is null )
                 return;
             ps.DispatchEvents( eventId, idProp, idObject, idChild );
         }

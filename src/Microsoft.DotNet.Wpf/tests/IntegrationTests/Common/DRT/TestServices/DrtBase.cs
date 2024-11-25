@@ -226,7 +226,7 @@ namespace DRT
             _piHasUnhandledExceptionHandler = typeof(Dispatcher).GetProperty("HasUnhandledExceptionHandler",
                 BindingFlags.Instance | BindingFlags.NonPublic);
 
-            if (_piHasUnhandledExceptionHandler == null)
+            if (_piHasUnhandledExceptionHandler is null)
             {
                 throw new InvalidOperationException("Cannot find property Dispatcher.HasUnhandledExceptionHandler");
             }
@@ -255,7 +255,7 @@ namespace DRT
             if (_retcode != 0)
                 return _retcode;
 
-            if (Thread.CurrentThread.Name == null)
+            if (Thread.CurrentThread.Name is null)
             {
                 Thread.CurrentThread.Name = "DRT Main";
             }
@@ -385,7 +385,7 @@ namespace DRT
                 bool handled = false;
                 foreach (DrtTestSuite suite in _suites)
                 {
-                    if (suite == null)
+                    if (suite is null)
                         continue;
                     if (handled = suite.HandleCommandLineArgument(arg, option, args, ref k))
                         break;
@@ -772,7 +772,7 @@ namespace DRT
         {
             get
             {
-                if (_logicalRoot == null)
+                if (_logicalRoot is null)
                 {
                     _logicalRoot = AutomationElement.FromHandle(MainWindow.Handle);
                 }
@@ -1170,8 +1170,8 @@ namespace DRT
         {
             if (!Object.Equals(expected, actual))
             {
-                if (expected == null) expected = "NULL";
-                if (actual == null) actual = "NULL";
+                if (expected is null) expected = "NULL";
+                if (actual is null) actual = "NULL";
                 message += String.Format(" Expected: {0}  Got: {1}", expected, actual);
                 this.Assert(false, message, arg);
             }
@@ -1278,7 +1278,7 @@ namespace DRT
             get
             {
                 string s = Thread.CurrentThread.Name;
-                if (s == null)
+                if (s is null)
                     s = "<No Name>";
 
                 return s;
@@ -1402,7 +1402,7 @@ namespace DRT
         /// <param name="t"></param>
         public void UseType(Type t)
         {
-            if (t == null)
+            if (t is null)
                 throw new ArgumentNullException("t");
 
             UseAssembly(t.Assembly);
@@ -1423,7 +1423,7 @@ namespace DRT
         /// <returns></returns>
         public DependencyObject FindVisualByPropertyValue(DependencyProperty dp, object value, DependencyObject node, bool includeNode)
         {
-            if (node == null)
+            if (node is null)
                 throw new ArgumentNullException("node");
 
             // see if the node itself has the right value
@@ -1584,7 +1584,7 @@ namespace DRT
         /// <returns></returns>
         public DependencyObject FindAncestorByType(Type type, DependencyObject node, bool includeNode)
         {
-            if (node == null)
+            if (node is null)
                 throw new ArgumentNullException("node");
 
             // see if the node itself has the right type
@@ -1616,7 +1616,7 @@ namespace DRT
         /// <returns></returns>
         public DependencyObject FindElementByPropertyValue(DependencyProperty dp, object value, DependencyObject node, bool includeNode)
         {
-            if (node == null)
+            if (node is null)
                 return null;
 
             // see if the node itself has the right value
@@ -1723,7 +1723,7 @@ namespace DRT
         {
             get
             {
-                if (_source == null)
+                if (_source is null)
                 {
                     HwndSourceParameters param = new HwndSourceParameters(WindowTitle);
                     param.SetPosition((int)WindowPosition.X, (int)WindowPosition.Y);
@@ -1847,7 +1847,7 @@ namespace DRT
         {
             int k;
 
-            if (suite == null)
+            if (suite is null)
                 return false;
 
             // if there are selected suites, see if our suite is one of them
@@ -1968,7 +1968,7 @@ namespace DRT
             else
             {
                 // use timer for frequencies other than 0
-                if (_timer == null)
+                if (_timer is null)
                 {
                     _timer = new DispatcherTimer(DispatcherPriority.Normal);
                     _timer.Tick += new EventHandler(RunNextTestTimerTask);
@@ -2251,7 +2251,7 @@ namespace DRT
             int currentColumn = 0;
             foreach (DrtTestSuite suite in _suites)
             {
-                if (suite == null)
+                if (suite is null)
                     continue;
 
                 if (currentColumn == 0)
@@ -2667,7 +2667,7 @@ namespace DRT
                 if (!_isClosed)
                 {
                     const int retries = 10;
-                    for (int i = 0; i < retries && _logFile == null; i++)
+                    for (int i = 0; i < retries && _logFile is null; i++)
                     {
                         var fileName = _drtName + "_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".log";
                         try
@@ -3037,10 +3037,10 @@ namespace DRT
 
             try
             {
-                System.Windows.Markup.XmlLanguage xmlLang = (d == null) ? null :
+                System.Windows.Markup.XmlLanguage xmlLang = (d is null) ? null :
                     (System.Windows.Markup.XmlLanguage)d.GetValue(System.Windows.FrameworkElement.LanguageProperty);
 
-                System.Globalization.CultureInfo culture = (xmlLang == null) ? null :
+                System.Globalization.CultureInfo culture = (xmlLang is null) ? null :
                     xmlLang.GetSpecificCulture();
 
                 result = (o is System.IConvertible) ? (String)System.Convert.ChangeType(o, typeof(String), culture)

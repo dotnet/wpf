@@ -29,7 +29,7 @@ namespace System.Windows.Media
         {
             get
             {
-                if (_solid == null)
+                if (_solid is null)
                 {
                     DashStyle solid = new DashStyle();
                     solid.Freeze();
@@ -47,7 +47,7 @@ namespace System.Windows.Media
         {
             get
             {
-                if (_dash == null)
+                if (_dash is null)
                 {
                     DashStyle style = new DashStyle(new double[] {2, 2}, 1);
                     style.Freeze();
@@ -65,7 +65,7 @@ namespace System.Windows.Media
         {
             get
             {
-                if (_dot == null)
+                if (_dot is null)
                 {
                     DashStyle style = new DashStyle(new double[] {0, 2}, 0);
                     style.Freeze();
@@ -83,7 +83,7 @@ namespace System.Windows.Media
         {
             get
             {
-                if (_dashDot == null)
+                if (_dashDot is null)
                 {
                     DashStyle style = new DashStyle(new double[] {2, 2, 0, 2}, 1);
                     style.Freeze();
@@ -101,7 +101,7 @@ namespace System.Windows.Media
         {
             get
             {
-                if (_dashDotDot == null)
+                if (_dashDotDot is null)
                 {
                     DashStyle style = new DashStyle(new double[] {2, 2, 0, 2, 0, 2}, 1);
                     style.Freeze();

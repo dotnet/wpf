@@ -93,7 +93,7 @@ namespace System.Windows.Media
 
                 Transform transform = Transform;
 
-                if (transform == null || transform.IsIdentity) 
+                if (transform is null || transform.IsIdentity) 
                 {
                     Point currentCenter = Center;
                     Double currentRadiusX = RadiusX;
@@ -159,7 +159,7 @@ namespace System.Windows.Media
         {
             Rect rect;
 
-            if ( (pen == null || pen.DoesNotContainGaps) &&
+            if ( (pen is null || pen.DoesNotContainGaps) &&
                 worldMatrix.IsIdentity && geometryMatrix.IsIdentity)
             {
                 double strokeThickness = 0.0;

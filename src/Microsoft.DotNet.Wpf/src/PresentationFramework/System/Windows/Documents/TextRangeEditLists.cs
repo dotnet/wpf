@@ -50,9 +50,9 @@ namespace System.Windows.Documents
 
             // Store parent list item of a second paragraph -
             // to correct its structure after the merge
-            ListItem secondListItem = secondParagraphOrBlockUIContainer.PreviousBlock == null ? secondParagraphOrBlockUIContainer.Parent as ListItem : null;
+            ListItem secondListItem = secondParagraphOrBlockUIContainer.PreviousBlock is null ? secondParagraphOrBlockUIContainer.Parent as ListItem : null;
 
-            if (secondListItem != null && secondListItem.PreviousListItem == null && secondParagraphOrBlockUIContainer.NextBlock is List)
+            if (secondListItem != null && secondListItem.PreviousListItem is null && secondParagraphOrBlockUIContainer.NextBlock is List)
             {
                 // The second paragraph is a first list item in some list.
                 // It has a sublists in it, so this sublist must be unindented
@@ -217,7 +217,7 @@ namespace System.Windows.Documents
             List precedingList = mergePosition.GetAdjacentElement(LogicalDirection.Backward) as List;
             List followingList = mergePosition.GetAdjacentElement(LogicalDirection.Forward) as List;
 
-            if (precedingList == null || followingList == null)
+            if (precedingList is null || followingList is null)
             {
                 return false;
             }
@@ -280,8 +280,8 @@ namespace System.Windows.Documents
 
             // We assume that a range contains a sequence of one-level paragraphs.
             // Otherwise the operation is disabled.
-            if (firstBlock == null || lastBlock == null || firstBlock.Parent != lastBlock.Parent ||
-                firstBlock.Parent is ListItem && firstBlock.PreviousBlock == null)
+            if (firstBlock is null || lastBlock is null || firstBlock.Parent != lastBlock.Parent ||
+                firstBlock.Parent is ListItem && firstBlock.PreviousBlock is null)
             {
                 // Either the paragraphs belong to different scopes or first of them has a bullet already.
                 // We cannot convert them into bulleted lists.
@@ -340,7 +340,7 @@ namespace System.Windows.Documents
             ListItem lastListItem = TextPointerBase.GetListItem((TextPointer)TextRangeEdit.GetAdjustedRangeEnd(range.Start, range.End));
 
             // The range must be in a sequence of ListItems belonging to one List wrapper
-            if (firstListItem == null || lastListItem == null || firstListItem.Parent != lastListItem.Parent || !(firstListItem.Parent is List))
+            if (firstListItem is null || lastListItem is null || firstListItem.Parent != lastListItem.Parent || !(firstListItem.Parent is List))
             {
                 return;
             }
@@ -398,7 +398,7 @@ namespace System.Windows.Documents
             ListItem lastListItem = TextPointerBase.GetImmediateListItem((TextPointer)TextRangeEdit.GetAdjustedRangeEnd(range.Start, range.End));
 
             // The range must be in a sequence of ListItems belonging to one List wrapper
-            if (firstListItem == null || lastListItem == null || 
+            if (firstListItem is null || lastListItem is null || 
                 firstListItem.Parent != lastListItem.Parent || 
                 !(firstListItem.Parent is List))
             {
@@ -407,7 +407,7 @@ namespace System.Windows.Documents
 
             // Identify a ListItem which will become a leading item for this potential sublist
             ListItem leadingListItem = firstListItem.PreviousListItem;
-            if (leadingListItem == null)
+            if (leadingListItem is null)
             {
                 // There is no leading list item for this group. Indentation is impossible
                 return;
@@ -428,7 +428,7 @@ namespace System.Windows.Documents
             {
                 // Unindenting all items of a sublist - if it is the only following element of a list
                 List nestedListOfLastItem = leadingParagraphOfLastItem.NextBlock as List;
-                if (nestedListOfLastItem != null && nestedListOfLastItem.NextBlock == null)
+                if (nestedListOfLastItem != null && nestedListOfLastItem.NextBlock is null)
                 {
                     lastListItem.Reposition(lastListItem.ContentStart, nestedListOfLastItem.ElementStart);
                     nestedListOfLastItem.Reposition(null, null);
@@ -474,7 +474,7 @@ namespace System.Windows.Documents
                 lastListItem = parent as ListItem;
                 parent = (TextElement)parent.Parent;
             }
-            if (lastListItem == null)
+            if (lastListItem is null)
             {
                 // This can happen if the input is a fragment, a collection
                 // of ListItems not parented by an outer List.
@@ -623,7 +623,7 @@ namespace System.Windows.Documents
         // And all tags must be Sections/Lists/ListItems only.
         internal static bool ParagraphsAreMergeable(Block firstParagraphOrBlockUIContainer, Block secondParagraphOrBlockUIContainer)
         {
-            if (firstParagraphOrBlockUIContainer == null || secondParagraphOrBlockUIContainer == null || 
+            if (firstParagraphOrBlockUIContainer is null || secondParagraphOrBlockUIContainer is null || 
                 firstParagraphOrBlockUIContainer == secondParagraphOrBlockUIContainer)
             {
                 return false; // nothing to merge
@@ -767,7 +767,7 @@ namespace System.Windows.Documents
                 adjustedEnd = adjustedEnd.GetNextInsertionPosition(LogicalDirection.Forward);
             }
 
-            if (adjustedEnd == null)
+            if (adjustedEnd is null)
             {
                 adjustedEnd = list.ElementEnd.TextContainer.End;
             }

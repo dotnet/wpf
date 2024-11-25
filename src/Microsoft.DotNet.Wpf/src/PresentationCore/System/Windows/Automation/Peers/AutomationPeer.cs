@@ -318,7 +318,7 @@ namespace System.Windows.Automation.Peers
         {
             AutomationEvent eventObject = EventMap.GetRegisteredEvent(eventId);
 
-            if (eventObject == null)
+            if (eventObject is null)
             {
                 // nobody is listening to this event
                 return;
@@ -557,7 +557,7 @@ namespace System.Windows.Automation.Peers
 
             List<AutomationPeer> children  = parent.GetChildren();
 
-            if(children == null)
+            if(children is null)
                 return false;
 
             int cnt = children.Count;
@@ -595,7 +595,7 @@ namespace System.Windows.Automation.Peers
             HostedWindowWrapper host = null;
 
             //in normal Avalon subtrees, only root peers should return wrapped HWND
-            if(GetParent() == null)
+            if(GetParent() is null)
             {
                 // this way of creating HostedWindowWrapper does not require FullTrust
                 host = HostedWindowWrapper.CreateInternal(Hwnd);
@@ -1642,7 +1642,7 @@ namespace System.Windows.Automation.Peers
 
             // easy (and frequent) case:  both candidates are the same
             // easy case: custody parent is null (preserve original behavior)
-            if (_parent == caller || _parent == null)
+            if (_parent == caller || _parent is null)
             {
                 iterationParent = _parent;
             }
@@ -1653,12 +1653,12 @@ namespace System.Windows.Automation.Peers
                 // recognize by the fact that the families have different size.
                 //
                 // There's also a funky case when the custody parent's family is null,
-                // even after EnsureChildren.  Like the "custodyParent == null" case above,
+                // even after EnsureChildren.  Like the "custodyParent is null" case above,
                 // I'm not sure this can ever happen, but if it does we choose the
                 // custody parent;  this preserves the original logic that terminates
                 // the iteration at the next call to GetNextSibling.
                 _parent.EnsureChildren();
-                iterationParent = (_parent._children == null || _parent._children.Count == caller._children.Count)
+                iterationParent = (_parent._children is null || _parent._children.Count == caller._children.Count)
                     ? _parent : caller;
             }
 
@@ -1773,13 +1773,13 @@ namespace System.Windows.Automation.Peers
                 if(children != null)
                 {
                     int count = children.Count;
-                    for(int i = count-1; (i >= 0) && (found == null); --i)
+                    for(int i = count-1; (i >= 0) && (found is null); --i)
                     {
                         found = children[i].GetPeerFromPoint(point);
                     }
                 }
 
-                if(found == null)
+                if(found is null)
                 {
                     Rect bounds = GetVisibleBoundingRect();
                     if (bounds.Contains(point))
@@ -1933,7 +1933,7 @@ namespace System.Windows.Automation.Peers
                     }
                     else
                     {
-                        if(addedChildren == null) addedChildren = new List<AutomationPeer>();
+                        if(addedChildren is null) addedChildren = new List<AutomationPeer>();
 
                         //stop accumulatin new children here because the notification
                         //is going to become "bulk anyways and exact set of chidlren is not
@@ -1947,7 +1947,7 @@ namespace System.Windows.Automation.Peers
 
             //now the hs only has "removed" children. If the count does not yet
             //calls for "bulk" notification, use per-child notification, otherwise use "bulk"
-            int removedCount = (hs == null ? 0 : hs.Count);
+            int removedCount = (hs is null ? 0 : hs.Count);
 
             if(removedCount + addedCount > invalidateLimit) //bilk invalidation
             {
@@ -2054,7 +2054,7 @@ namespace System.Windows.Automation.Peers
                         string itemStatus = GetItemStatusCore();
                         if (itemStatus != _itemStatus)
                         {
-                            if(provider == null)
+                            if(provider is null)
                                 provider = ProviderFromPeerNoDelegation(this);
                             RaisePropertyChangedInternal(provider,
                                                          AutomationElementIdentifiers.ItemStatusProperty,
@@ -2066,7 +2066,7 @@ namespace System.Windows.Automation.Peers
                         string name = GetNameCore();
                         if (name != _name)
                         {
-                            if(provider == null)
+                            if(provider is null)
                                 provider = ProviderFromPeerNoDelegation(this);
                             RaisePropertyChangedInternal(provider,
                                                          AutomationElementIdentifiers.NameProperty,
@@ -2078,7 +2078,7 @@ namespace System.Windows.Automation.Peers
                         bool isOffscreen = IsOffscreenCore();
                         if (isOffscreen != _isOffscreen)
                         {
-                            if(provider == null)
+                            if(provider is null)
                                 provider = ProviderFromPeerNoDelegation(this);
                             RaisePropertyChangedInternal(provider,
                                                          AutomationElementIdentifiers.IsOffscreenProperty,
@@ -2090,7 +2090,7 @@ namespace System.Windows.Automation.Peers
                         bool isEnabled = IsEnabledCore();
                         if (isEnabled != _isEnabled)
                         {
-                            if(provider == null)
+                            if(provider is null)
                                 provider = ProviderFromPeerNoDelegation(this);
                             RaisePropertyChangedInternal(provider,
                                                          AutomationElementIdentifiers.IsEnabledProperty,

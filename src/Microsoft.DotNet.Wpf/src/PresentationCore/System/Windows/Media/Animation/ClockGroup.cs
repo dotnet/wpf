@@ -411,9 +411,9 @@ namespace System.Windows.Media.Animation
         internal void MakeRoot(TimeManager timeManager)
         {
             Debug.Assert(!IsTimeManager, "Cannot associate a root with multiple timing trees");
-            Debug.Assert(this._timeManager == null, "Cannot use a timeline already in the timing tree as a root");
+            Debug.Assert(this._timeManager is null, "Cannot use a timeline already in the timing tree as a root");
             Debug.Assert(timeManager.TimeManagerClock == this, "Cannot associate more than one root per timing tree");
-            Debug.Assert(this._parent == null && _children == null, "Cannot use a timeline connected to other timelines as a root");
+            Debug.Assert(this._parent is null && _children is null, "Cannot use a timeline connected to other timelines as a root");
 
             IsTimeManager = true;
             _rootChildren = new List<WeakReference>();

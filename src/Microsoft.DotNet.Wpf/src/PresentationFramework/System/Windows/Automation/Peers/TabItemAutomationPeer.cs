@@ -77,7 +77,7 @@ namespace System.Windows.Automation.Peers
                         List<AutomationPeer> contentChildren = contentHostPeer.GetChildren();
                         if (contentChildren != null)
                         {
-                            if (headerChildren == null)
+                            if (headerChildren is null)
                                 headerChildren = contentChildren;
                             else
                                 headerChildren.AddRange(contentChildren);

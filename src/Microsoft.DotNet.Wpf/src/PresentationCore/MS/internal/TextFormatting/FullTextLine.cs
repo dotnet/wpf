@@ -463,7 +463,7 @@ namespace MS.Internal.TextFormatting
                 FormattedTextSymbols    symbol
                 )
             {
-                Debug.Assert(_collapsingSymbol == null && symbol != null);
+                Debug.Assert(_collapsingSymbol is null && symbol != null);
 
                 _collapsingSymbol = symbol;
                 int symbolIdealWidth = TextFormatterImp.RealToIdeal(symbol.Width);
@@ -559,7 +559,7 @@ namespace MS.Internal.TextFormatting
                     _metrics._formatter.IdealToReal(_metrics._height, PixelsPerDip)
                     );
 
-                if (antiInversion == null)
+                if (antiInversion is null)
                 {
                     DrawTextLine(drawingContext, origin, null);
                 }
@@ -721,7 +721,7 @@ namespace MS.Internal.TextFormatting
                     return this;
                 }
 
-                if (collapsingPropertiesList == null || collapsingPropertiesList.Length == 0)
+                if (collapsingPropertiesList is null || collapsingPropertiesList.Length == 0)
                     throw new ArgumentNullException("collapsingPropertiesList");
 
                 TextCollapsingProperties collapsingProp = collapsingPropertiesList[0];
@@ -828,7 +828,7 @@ namespace MS.Internal.TextFormatting
                     throw new ObjectDisposedException(SR.TextLineHasBeenDisposed);
                 }
 
-                if (_collapsedRange == null)
+                if (_collapsedRange is null)
                     return null;
 
                 Debug.Assert(HasCollapsed);
@@ -1021,7 +1021,7 @@ namespace MS.Internal.TextFormatting
 
                     if (    characterHit.FirstCharacterIndex >= _collapsedRange.TextSourceCharacterIndex + _collapsedRange.Length
                         ||  characterHit.TrailingLength != 0
-                        || _collapsingSymbol == null
+                        || _collapsingSymbol is null
                         )
                     {
                         // The current character hit either hits outside,
@@ -1723,7 +1723,7 @@ namespace MS.Internal.TextFormatting
                     );
                 }
 
-                if (bounds == null)
+                if (bounds is null)
                 {
                     Debug.Assert(boundsList != null);
                     if (boundsList.Count > 0)
@@ -2067,7 +2067,7 @@ namespace MS.Internal.TextFormatting
                     throw new ObjectDisposedException(SR.TextLineHasBeenDisposed);
                 }
 
-                if (_plsrunVector == null)
+                if (_plsrunVector is null)
                 {
                     // return empty textspan when the line doesn't contain text runs.
                     return Array.Empty<TextSpan<TextRun>>();

@@ -22,7 +22,7 @@ namespace System.Windows
         private static T RequireService<T>(IServiceProvider provider) where T : class
         {
             T result = provider.GetService(typeof(T)) as T;
-            if (result == null)
+            if (result is null)
             {
                 throw new InvalidOperationException(SR.Format(SR.DeferringLoaderNoContext,typeof(TemplateContentLoader).Name, typeof(T).Name));
             }

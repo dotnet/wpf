@@ -494,7 +494,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             get
             {
                 RibbonGroupSizeDefinition large = GetLargeGroupSizeDefinition();
-                if (large == null)
+                if (large is null)
                 {
                     return null;
                 }
@@ -518,7 +518,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     while (true)
                     {
                         RibbonGroupSizeDefinition reduced = ReduceGroupSizeDefinition(last, ref lastRepeatStartIndex);
-                        if (reduced == null)
+                        if (reduced is null)
                         {
                             break;
                         }
@@ -868,14 +868,14 @@ namespace Microsoft.Windows.Controls.Ribbon
                     if (contentChild != null)
                     {
                         controlSizeDefinition = RibbonControlService.GetDefaultControlSizeDefinition(contentChild);
-                        if (controlSizeDefinition == null)
+                        if (controlSizeDefinition is null)
                         {
                             contentChild.CoerceValue(RibbonControlService.DefaultControlSizeDefinitionProperty);
                             controlSizeDefinition = RibbonControlService.GetDefaultControlSizeDefinition(contentChild);
                         }
                     }
                 }
-                if (controlSizeDefinition == null)
+                if (controlSizeDefinition is null)
                 {
                     // While there is no container available assume 
                     // the control is in its largest variant.
@@ -1027,9 +1027,9 @@ namespace Microsoft.Windows.Controls.Ribbon
             RibbonGroupSizeDefinitionBaseCollection defaultCollection = 
                 group._defaultGroupSizeDefinitionsRef.Target as RibbonGroupSizeDefinitionBaseCollection;
             RibbonGroupSizeDefinitionBaseCollection returnValue = baseValue as RibbonGroupSizeDefinitionBaseCollection;
-            if (baseValue == null ||
+            if (baseValue is null ||
                 ((baseValue == defaultCollection) &&
-                 (defaultCollection == null || defaultCollection.Count == 0)))
+                 (defaultCollection is null || defaultCollection.Count == 0)))
             {
                 if (group.ItemContainerGenerator.Status != GeneratorStatus.ContainersGenerated)
                 {
@@ -1046,9 +1046,9 @@ namespace Microsoft.Windows.Controls.Ribbon
                 }
             }
 
-            if (returnValue == null)
+            if (returnValue is null)
             {
-                if (defaultCollection == null)
+                if (defaultCollection is null)
                 {
                     defaultCollection = new RibbonGroupSizeDefinitionBaseCollection();
                     group._defaultGroupSizeDefinitionsRef = new WeakReference(defaultCollection);
@@ -1082,7 +1082,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     // If the group is collapsed, then search for an
                     // appropriate control size definition
                     if (IsCollapsed &&
-                        (controlSizeDefinitions == null || controlSizeDefinitions.Count == 0))
+                        (controlSizeDefinitions is null || controlSizeDefinitions.Count == 0))
                     {
                         RibbonControlSizeDefinitionCollection targetControlSizeDefinitions = GetControlDefinitionsForCollapsedGroup(groupDefinition);
                         if (targetControlSizeDefinitions != null && index < targetControlSizeDefinitions.Count)
@@ -1107,7 +1107,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         private void ApplyGroupSizeDefinitionBase(RibbonGroupSizeDefinitionBase definition)
         {
-            if (definition == null)
+            if (definition is null)
             {
                 definition = _defaultGroupSizeDefinition;
             }
@@ -1206,7 +1206,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private void ApplyGroupSizeDefinition(RibbonGroupSizeDefinition groupSizeDefinition)
         {
             RibbonControlSizeDefinitionCollection controlSizeDefinitions = groupSizeDefinition.ControlSizeDefinitions;
-            if (IsCollapsed && (controlSizeDefinitions == null || controlSizeDefinitions.Count == 0))
+            if (IsCollapsed && (controlSizeDefinitions is null || controlSizeDefinitions.Count == 0))
             {
                 controlSizeDefinitions = GetControlDefinitionsForCollapsedGroup(groupSizeDefinition);
             }
@@ -1243,7 +1243,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private void ApplyGroupTemplateSizeDefinition(RibbonGroupTemplateSizeDefinition grouptemplateSizeDefinition)
         {
             DataTemplate contentTemplate = grouptemplateSizeDefinition.ContentTemplate;
-            if (IsCollapsed && contentTemplate == null)
+            if (IsCollapsed && contentTemplate is null)
             {
                 RibbonGroupSizeDefinitionBaseCollection groupSizeDefinitions = GroupSizeDefinitions;
                 int groupSizeDefCount = groupSizeDefinitions.Count;
@@ -1305,7 +1305,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static object CoerceToolTip(DependencyObject d, object value)
         {
             RibbonGroup ribbonGroup = (RibbonGroup)d;
-            if (value == null && ribbonGroup.IsCollapsed && !ribbonGroup.IsDropDownOpen)
+            if (value is null && ribbonGroup.IsCollapsed && !ribbonGroup.IsDropDownOpen)
             {
                 return RibbonHelper.CoerceRibbonToolTip(d, value);
             }
@@ -1677,7 +1677,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             else if (_itemsPresenter != null)
             {
                 UIElement placementTarget = e.PlacementTarget;
-                if (placementTarget == null)
+                if (placementTarget is null)
                 {
                     placementTarget = RibbonHelper.GetContainingUIElement(e.OriginalSource as DependencyObject);
                 }

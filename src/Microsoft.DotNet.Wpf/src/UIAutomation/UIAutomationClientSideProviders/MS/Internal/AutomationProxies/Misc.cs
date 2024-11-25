@@ -60,7 +60,7 @@ namespace MS.Internal.AutomationProxies
             // For the base case, where parent is a hwnd, baseID will be null,
             // so use AppendRuntimeId instead. UIA will then glue that to the ID
             // of the parent HWND.
-            if(baseID == null)
+            if(baseID is null)
                 baseID = new int[] { AutomationInteropProvider.AppendRuntimeId };
 
             int len = baseID.Length;
@@ -73,7 +73,7 @@ namespace MS.Internal.AutomationProxies
 
         internal static double[] RectArrayToDoubleArray(Rect[] rectArray)
         {
-            if (rectArray == null)
+            if (rectArray is null)
                 return null;
             double[] doubles = new double[rectArray.Length * 4];
             int scan = 0;
@@ -988,7 +988,7 @@ namespace MS.Internal.AutomationProxies
         internal static int MsgWaitForMultipleObjects(SafeWaitHandle handle, bool waitAll, int milliseconds, int wakeMask)
         {
             int terminationEvent, lastWin32Error;
-            if (handle == null)
+            if (handle is null)
             {
                 terminationEvent = UnsafeNativeMethods.MsgWaitForMultipleObjects(0, null, waitAll, milliseconds, wakeMask);
                 lastWin32Error = Marshal.GetLastWin32Error();

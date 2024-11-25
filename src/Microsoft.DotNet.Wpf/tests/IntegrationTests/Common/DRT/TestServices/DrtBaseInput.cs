@@ -253,7 +253,7 @@ namespace DRT
 
         private void EnsureResetInputStateHandler()
         {
-            if (_resetInputState == null)
+            if (_resetInputState is null)
             {
                 _resetInputState = new EventHandler(ResetInputStateHandler);
                 ResetInputState += _resetInputState;
@@ -547,7 +547,7 @@ namespace DRT
         /// <exception cref="NoClickablePointException">If there is not clickable point for the element</exception>
         public static void MoveTo( AutomationElement el )
         {
-            if ( el == null )
+            if ( el is null )
             {
                 throw new ArgumentNullException( "el" );
             }
@@ -572,7 +572,7 @@ namespace DRT
         /// <exception cref="NoClickablePointException">If there is not clickable point for the element</exception>
         public static void MoveToAndClick( AutomationElement el )
         {
-            if ( el == null )
+            if ( el is null )
             {
                 throw new ArgumentNullException( "el" );
             }

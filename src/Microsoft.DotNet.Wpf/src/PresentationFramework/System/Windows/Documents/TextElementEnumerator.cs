@@ -33,7 +33,7 @@ namespace System.Windows.Documents
         // Null start/end creates an empty enumerator.
         internal TextElementEnumerator(TextPointer start, TextPointer end)
         {
-            Invariant.Assert(start != null && end != null || start == null && end == null, "If start is null end should be null!");
+            Invariant.Assert(start != null && end != null || start is null && end is null, "If start is null end should be null!");
 
             _start = start;
             _end = end;
@@ -88,13 +88,13 @@ namespace System.Windows.Documents
         {
             get 
             { 
-                if (_navigator == null)
+                if (_navigator is null)
                 {
                     #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
                     throw new InvalidOperationException(SR.EnumeratorNotStarted);
                 }
 
-                if (_current == null)
+                if (_current is null)
                 {
                     #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
                     throw new InvalidOperationException(SR.EnumeratorReachedEnd);
@@ -117,7 +117,7 @@ namespace System.Windows.Documents
             }
 
             // Return false if the collection is empty
-            if (_start == null || _start.CompareTo(_end) == 0)
+            if (_start is null || _start.CompareTo(_end) == 0)
             {
                 return false;
             }
@@ -129,7 +129,7 @@ namespace System.Windows.Documents
             }
 
             // Advance the navigator
-            if (_navigator == null)
+            if (_navigator is null)
             {
                 // Set it to the first element for the very first move
                 _navigator = new TextPointer(_start);

@@ -238,7 +238,7 @@ namespace System.Windows.Media.Animation
 
             IndependentAnimationStorage storage = AnimationStorage.GetStorage(d, dp) as IndependentAnimationStorage;
 
-            if (storage == null)
+            if (storage is null)
             {
                 return DUCE.ResourceHandle.Null;
             }

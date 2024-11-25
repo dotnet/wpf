@@ -197,7 +197,7 @@ namespace MS.Internal.Automation
             AutomationElement[] els = new AutomationElement[objArr.Length];
             for (int i = 0; i < objArr.Length; i++)
             {
-                if (objArr[i] == null)
+                if (objArr[i] is null)
                 {
                     els[i] = null;
                 }

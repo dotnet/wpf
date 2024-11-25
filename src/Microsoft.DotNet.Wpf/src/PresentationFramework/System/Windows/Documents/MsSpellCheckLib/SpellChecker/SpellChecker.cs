@@ -451,7 +451,7 @@ namespace System.Windows.Documents
                     result = new HasErrorsResult(text, HasErrorsImplWithRetries(text, shouldSuppressCOMExceptions));
 
                     // add it to the cache, initializing as needed
-                    if (hasErrorsCache == null)
+                    if (hasErrorsCache is null)
                     {
                         hasErrorsCache = new List<HasErrorsResult>(HasErrorsCacheCapacity);
                         _hasErrorsCache = hasErrorsCache;
@@ -576,7 +576,7 @@ namespace System.Windows.Documents
                 {
                     lock (_changed)
                     {
-                        if (_changed == null)
+                        if (_changed is null)
                         {
                             _eventCookie = add_SpellCheckerChanged(_spellCheckerChangedEventHandler);
                         }
@@ -590,7 +590,7 @@ namespace System.Windows.Documents
                     lock (_changed)
                     {
                         _changed -= value;
-                        if ((_changed == null) && (_eventCookie.HasValue))
+                        if ((_changed is null) && (_eventCookie.HasValue))
                         {
                             remove_SpellCheckerChanged(_eventCookie.Value);
                             _eventCookie = null;

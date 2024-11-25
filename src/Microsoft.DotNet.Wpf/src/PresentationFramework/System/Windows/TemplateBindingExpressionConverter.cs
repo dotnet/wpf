@@ -45,7 +45,7 @@ namespace System.Windows
             if (destinationType == typeof(MarkupExtension))
             {
                 TemplateBindingExpression templateBindingExpression = value as TemplateBindingExpression;
-                if (templateBindingExpression == null)
+                if (templateBindingExpression is null)
                     throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "TemplateBindingExpression"));
                 return templateBindingExpression.TemplateBindingExtension;
             }

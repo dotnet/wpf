@@ -175,7 +175,7 @@ namespace System.Windows.Controls
             {
                 if (value != _owner)
                 {
-                    if (value == null)
+                    if (value is null)
                     {
                         foreach (GridViewColumn c in _columns)
                         {

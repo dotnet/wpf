@@ -917,7 +917,7 @@ namespace System.Windows.Controls
                     if (!intersection.IsEmpty)
                     {
                         // The two regions intersect
-                        if (removeList == null)
+                        if (removeList is null)
                         {
                             removeList = new List<CellRegion>();
                         }
@@ -1540,7 +1540,7 @@ namespace System.Windows.Controls
                 CellRegion region = _regions[i];
                 if (region.Intersects(rowRegion))
                 {
-                    if (columnIndexRanges == null)
+                    if (columnIndexRanges is null)
                     {
                         columnIndexRanges = new List<int>();
                     }

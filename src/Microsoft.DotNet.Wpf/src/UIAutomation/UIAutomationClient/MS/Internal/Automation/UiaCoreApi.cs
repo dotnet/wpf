@@ -195,7 +195,7 @@ namespace MS.Internal.Automation
             private static void ConvertFromComTypesToClrTypes(object[,] data, UiaCacheRequest request)
             {
                 // Handle empty case...
-                if (data == null)
+                if (data is null)
                 {
                     return;
                 }
@@ -229,7 +229,7 @@ namespace MS.Internal.Automation
                         // value - eg. enums are in the array as ints, so need to cast before
                         // returning.
                         object val = data[objIndex, 1 + propertyIndex];
-                        if (val == null || val == AutomationElement.NotSupported || UiaCoreApi.IsErrorMarker(val, false/*throwException*/))
+                        if (val is null || val == AutomationElement.NotSupported || UiaCoreApi.IsErrorMarker(val, false/*throwException*/))
                             continue;
 
                         AutomationPropertyInfo pi;
@@ -388,7 +388,7 @@ namespace MS.Internal.Automation
             object[,] requestedData;
 
             UiaMiniCacheRequest miniCR = new UiaMiniCacheRequest(request, request._condition._safeHandle.DangerousGetHandle());
-            CheckError(RawUiaGetUpdatedCache(hnode, miniCR, normalize, customCondition == null ? SafeConditionMemoryHandle.NullHandle : customCondition._safeHandle, out requestedData, out treeStructure));
+            CheckError(RawUiaGetUpdatedCache(hnode, miniCR, normalize, customCondition is null ? SafeConditionMemoryHandle.NullHandle : customCondition._safeHandle, out requestedData, out treeStructure));
             GC.KeepAlive(request._condition); // keep condition (and associated unmanaged memory) alive during call
 
             return new UiaCacheResponse(requestedData, treeStructure, request);
@@ -405,7 +405,7 @@ namespace MS.Internal.Automation
             CheckError(RawUiaGetPatternProvider(hnode, patternId, out hobj));
             // Whidbey RTM SafeHandle/PInvoke bug workaround - SafeHandles on 64 can come back
             // as null, should be non-null but Invalid. This fixes up to non-null.
-            if (hobj == null)
+            if (hobj is null)
             {
                 hobj = new SafePatternHandle();
             }
@@ -451,9 +451,9 @@ namespace MS.Internal.Automation
             GC.KeepAlive(request._condition); // keep condition (and associated unmanaged memory) alive during call
             GC.KeepAlive(findCondition);
 
-            if (requestedData == null)
+            if (requestedData is null)
             {
-                Debug.Assert(offsets == null && treeStructures == null, "if nothin found, all out params shoud be null");
+                Debug.Assert(offsets is null && treeStructures is null, "if nothin found, all out params shoud be null");
                 return new UiaCacheResponse[] {}; // Return empty cacheresponse, not null.
             }
 
@@ -486,7 +486,7 @@ namespace MS.Internal.Automation
             CheckError(RawUiaNodeFromHandle(hwnd, out hnode));
             // Whidbey RTM SafeHandle/PInvoke bug workaround - SafeHandles on 64 can come back
             // as null, should be non-null but Invalid. This fixes up to non-null.
-            if (hnode == null)
+            if (hnode is null)
             {
                 hnode = new SafeNodeHandle();
             }
@@ -499,7 +499,7 @@ namespace MS.Internal.Automation
             CheckError(RawUiaGetRootNode(out hnode));
             // Whidbey RTM SafeHandle/PInvoke bug workaround - SafeHandles on 64 can come back
             // as null, should be non-null but Invalid. This fixes up to non-null.
-            if (hnode == null)
+            if (hnode is null)
             {
                 hnode = new SafeNodeHandle();
             }
@@ -512,7 +512,7 @@ namespace MS.Internal.Automation
             CheckError(RawUiaNodeFromProvider(provider, out hnode));
             // Whidbey RTM SafeHandle/PInvoke bug workaround - SafeHandles on 64 can come back
             // as null, should be non-null but Invalid. This fixes up to non-null.
-            if (hnode == null)
+            if (hnode is null)
             {
                 hnode = new SafeNodeHandle();
             }
@@ -525,7 +525,7 @@ namespace MS.Internal.Automation
             CheckError(RawUiaHUiaNodeFromVariant(ref var, out hnode));
             // Whidbey RTM SafeHandle/PInvoke bug workaround - SafeHandles on 64 can come back
             // as null, should be non-null but Invalid. This fixes up to non-null.
-            if (hnode == null)
+            if (hnode is null)
             {
                 hnode = new SafeNodeHandle();
             }
@@ -538,7 +538,7 @@ namespace MS.Internal.Automation
             CheckError(RawUiaHPatternObjectFromVariant(ref var, out hobj));
             // Whidbey RTM SafeHandle/PInvoke bug workaround - SafeHandles on 64 can come back
             // as null, should be non-null but Invalid. This fixes up to non-null.
-            if (hobj == null)
+            if (hobj is null)
             {
                 hobj = new SafePatternHandle();
             }
@@ -551,7 +551,7 @@ namespace MS.Internal.Automation
             CheckError(RawUiaHTextRangeFromVariant(ref var, out hobj));
             // Whidbey RTM SafeHandle/PInvoke bug workaround - SafeHandles on 64 can come back
             // as null, should be non-null but Invalid. This fixes up to non-null.
-            if (hobj == null)
+            if (hobj is null)
             {
                 hobj = new SafeTextRangeHandle();
             }
@@ -588,7 +588,7 @@ namespace MS.Internal.Automation
             SafeEventHandle hevent;
 
             UiaMiniCacheRequest miniCR = new UiaMiniCacheRequest(request, request._condition._safeHandle.DangerousGetHandle());
-            CheckError(RawUiaAddEvent(hnode, eventId, callback, scope, properties, properties == null ? 0 : properties.Length, miniCR, out hevent));
+            CheckError(RawUiaAddEvent(hnode, eventId, callback, scope, properties, properties is null ? 0 : properties.Length, miniCR, out hevent));
             GC.KeepAlive(request._condition); // keep condition (and associated unmanaged memory) alive during call
 
             return hevent;
@@ -643,7 +643,7 @@ namespace MS.Internal.Automation
             UiaEventArgs args = Marshal.PtrToStructure<UiaEventArgs>(argsAddr);
 
             AutomationEvent eventId = AutomationEvent.LookupById(args._eventId);
-            if (eventId == null)
+            if (eventId is null)
             {
                 Debug.Assert(false, "Got unknown eventId from core: " + args._eventId);
                 return null;
@@ -661,7 +661,7 @@ namespace MS.Internal.Automation
                         UiaPropertyChangedEventArgs pcargs = Marshal.PtrToStructure<UiaPropertyChangedEventArgs>(argsAddr);
 
                         AutomationProperty propertyId = AutomationProperty.LookupById(pcargs._propertyId);
-                        if (propertyId == null)
+                        if (propertyId is null)
                         {
                             Debug.Assert(false, "Got unknown propertyId from core: " + pcargs._propertyId);
                             return null;
@@ -735,7 +735,7 @@ namespace MS.Internal.Automation
             CheckError(RawGridPattern_GetItem(hobj, row, column, out result));
             // Whidbey RTM SafeHandle/PInvoke bug workaround - SafeHandles on 64 can come back
             // as null, should be non-null but Invalid. This fixes up to non-null.
-            if (result == null)
+            if (result is null)
             {
                 result = new SafeNodeHandle();
             }
@@ -871,7 +871,7 @@ namespace MS.Internal.Automation
         {
             object[] arr;
             CheckError(RawTextPattern_GetSelection(hobj, out arr));
-            if (arr == null)
+            if (arr is null)
             {
                 return new SafeTextRangeHandle[] { };
             }
@@ -887,7 +887,7 @@ namespace MS.Internal.Automation
         {
             object[] arr;
             CheckError(RawTextPattern_GetVisibleRanges(hobj, out arr));
-            if (arr == null)
+            if (arr is null)
             {
                 return new SafeTextRangeHandle[] { };
             }
@@ -905,7 +905,7 @@ namespace MS.Internal.Automation
             CheckError(RawTextPattern_RangeFromChild(hobj, childElement, out result));
             // Whidbey RTM SafeHandle/PInvoke bug workaround - SafeHandles on 64 can come back
             // as null, should be non-null but Invalid. This fixes up to non-null.
-            if (result == null)
+            if (result is null)
             {
                 result = new SafeTextRangeHandle();
             }
@@ -918,7 +918,7 @@ namespace MS.Internal.Automation
             CheckError(RawTextPattern_RangeFromPoint(hobj, point, out result));
             // Whidbey RTM SafeHandle/PInvoke bug workaround - SafeHandles on 64 can come back
             // as null, should be non-null but Invalid. This fixes up to non-null.
-            if (result == null)
+            if (result is null)
             {
                 result = new SafeTextRangeHandle();
             }
@@ -931,7 +931,7 @@ namespace MS.Internal.Automation
             CheckError(RawTextPattern_get_DocumentRange(hobj, out result));
             // Whidbey RTM SafeHandle/PInvoke bug workaround - SafeHandles on 64 can come back
             // as null, should be non-null but Invalid. This fixes up to non-null.
-            if (result == null)
+            if (result is null)
             {
                 result = new SafeTextRangeHandle();
             }
@@ -951,7 +951,7 @@ namespace MS.Internal.Automation
             CheckError(RawTextRange_Clone(hobj, out result));
             // Whidbey RTM SafeHandle/PInvoke bug workaround - SafeHandles on 64 can come back
             // as null, should be non-null but Invalid. This fixes up to non-null.
-            if (result == null)
+            if (result is null)
             {
                 result = new SafeTextRangeHandle();
             }
@@ -983,7 +983,7 @@ namespace MS.Internal.Automation
             CheckError(RawTextRange_FindAttribute(hobj, attributeId, val, backward, out result));
             // Whidbey RTM SafeHandle/PInvoke bug workaround - SafeHandles on 64 can come back
             // as null, should be non-null but Invalid. This fixes up to non-null.
-            if (result == null)
+            if (result is null)
             {
                 result = new SafeTextRangeHandle();
             }
@@ -996,7 +996,7 @@ namespace MS.Internal.Automation
             CheckError(RawTextRange_FindText(hobj, text, backward, ignoreCase, out result));
             // Whidbey RTM SafeHandle/PInvoke bug workaround - SafeHandles on 64 can come back
             // as null, should be non-null but Invalid. This fixes up to non-null.
-            if (result == null)
+            if (result is null)
             {
                 result = new SafeTextRangeHandle();
             }
@@ -1014,7 +1014,7 @@ namespace MS.Internal.Automation
         {
             double[] doubles;
             CheckError(RawTextRange_GetBoundingRectangles(hobj, out doubles));
-            if (doubles == null)
+            if (doubles is null)
             {
                 return null;
             }
@@ -1046,7 +1046,7 @@ namespace MS.Internal.Automation
             CheckError(RawTextRange_GetEnclosingElement(hobj, out result));
             // Whidbey RTM SafeHandle/PInvoke bug workaround - SafeHandles on 64 can come back
             // as null, should be non-null but Invalid. This fixes up to non-null.
-            if (result == null)
+            if (result is null)
             {
                 result = new SafeNodeHandle();
             }
@@ -1118,7 +1118,7 @@ namespace MS.Internal.Automation
             // to int; and the second is an VT_UNKNOWN/IErrorInfo, which
             // maps to object.
             object[] arr = val as object[];
-            if (arr == null || arr.Length != 2)
+            if (arr is null || arr.Length != 2)
                 return false;
             if (!(arr[0] is int))
                 return false;
@@ -1591,7 +1591,7 @@ namespace MS.Internal.Automation
                         break;
                 }
 
-                if (provider == null)
+                if (provider is null)
                     return null;
                 return new IRawElementProviderSimple[] { provider };
             }

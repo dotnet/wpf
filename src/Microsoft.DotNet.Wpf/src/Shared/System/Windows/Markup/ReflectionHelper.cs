@@ -105,7 +105,7 @@ namespace System.Xaml
             }
 
             // If we can't load the assembly, just return null.
-            if (a == null)
+            if (a is null)
             {
                 return null;
             }
@@ -201,11 +201,11 @@ namespace System.Xaml
         /// </summary>
         internal static Type GetReflectionType(object item)
         {
-            if (item == null)
+            if (item is null)
                 return null;
 
             ICustomTypeProvider ictp = item as ICustomTypeProvider;
-            if (ictp == null)
+            if (ictp is null)
                 return item.GetType();
             else
                 return ictp.GetCustomType();
@@ -234,7 +234,7 @@ namespace System.Xaml
         {
             IList<CustomAttributeData> list = CustomAttributeData.GetCustomAttributes(mi);
             string attrValue = GetCustomAttributeData(list, attrType, out typeValue, true, false);
-            return attrValue == null ? string.Empty : attrValue;
+            return attrValue is null ? string.Empty : attrValue;
         }
 
 #if PBTCOMPILER
@@ -339,16 +339,16 @@ namespace System.Xaml
                     CustomAttributeTypedArgument tca = constructorArguments[0];
                     attrValue = tca.Value as String;
 #if PBTCOMPILER
-                    if (attrValue == null && allowTypeAlso && tca.ArgumentType == GetMscorlibType(typeof(Type)))
+                    if (attrValue is null && allowTypeAlso && tca.ArgumentType == GetMscorlibType(typeof(Type)))
 #else
-                    if (attrValue == null && allowTypeAlso && tca.ArgumentType == typeof(Type))
+                    if (attrValue is null && allowTypeAlso && tca.ArgumentType == typeof(Type))
 #endif
                     {
                         typeValue = tca.Value as Type;
                         attrValue = typeValue.AssemblyQualifiedName;
                     }
 
-                    if (attrValue == null)
+                    if (attrValue is null)
                     {
                         throw new ArgumentException(SR.Format(SR.ParserAttributeArgsLow, attrType.Name));
                     }
@@ -440,7 +440,7 @@ namespace System.Xaml
                 if (String.IsNullOrEmpty(assemblyPath))
                     retassem = SafeSecurityHelper.GetLoadedAssembly(assemblyName);
 
-                if (retassem == null)
+                if (retassem is null)
                 {
                     if (!String.IsNullOrEmpty(assemblyPath))
                     {

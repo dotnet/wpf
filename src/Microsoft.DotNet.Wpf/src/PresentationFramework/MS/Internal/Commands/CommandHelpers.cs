@@ -127,7 +127,7 @@ namespace MS.Internal.Commands
                 RoutedCommand routed = command as RoutedCommand;
                 if (routed != null)
                 {
-                    if (target == null)
+                    if (target is null)
                     {
                         target = commandSource as IInputElement;
                     }
@@ -164,7 +164,7 @@ namespace MS.Internal.Commands
                 RoutedCommand routed = command as RoutedCommand;
                 if (routed != null)
                 {
-                    if (target == null)
+                    if (target is null)
                     {
                         target = commandSource as IInputElement;
                     }

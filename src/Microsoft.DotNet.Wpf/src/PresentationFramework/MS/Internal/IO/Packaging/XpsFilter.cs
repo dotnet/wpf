@@ -56,13 +56,13 @@ namespace MS.Internal.IO.Packaging
             [In] uint cAttributes,
             [In, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)] FULLPROPSPEC[] aAttributes)
         {
-            if (_filter == null)
+            if (_filter is null)
             {
                 throw new COMException(SR.FileToFilterNotLoaded,
                     (int)NativeMethods.E_FAIL);
             }
 
-            if (cAttributes > 0 && aAttributes == null)
+            if (cAttributes > 0 && aAttributes is null)
             {
                 // Attributes count and array do not match.
                 throw new COMException(SR.FilterInitInvalidAttributes,
@@ -78,7 +78,7 @@ namespace MS.Internal.IO.Packaging
         /// <returns>Chunk descriptor</returns>
         STAT_CHUNK IFilter.GetChunk()
         {
-            if (_filter == null)
+            if (_filter is null)
             {
                 throw new COMException(SR.FileToFilterNotLoaded,
                     (int)FilterErrorCode.FILTER_E_ACCESS);
@@ -106,7 +106,7 @@ namespace MS.Internal.IO.Packaging
         /// <remarks>Supported for indexing content of Package.</remarks>
         void IFilter.GetText(ref uint bufCharacterCount, IntPtr pBuffer)
         {
-            if (_filter == null)
+            if (_filter is null)
             {
                 throw new COMException(SR.FileToFilterNotLoaded,
                     (int)FilterErrorCode.FILTER_E_ACCESS);
@@ -277,7 +277,7 @@ namespace MS.Internal.IO.Packaging
         /// </remarks>
         IntPtr IFilter.GetValue()
         {
-            if (_filter == null)
+            if (_filter is null)
             {
                 throw new COMException(SR.FileToFilterNotLoaded,
                     (int)FilterErrorCode.FILTER_E_ACCESS);
@@ -319,7 +319,7 @@ namespace MS.Internal.IO.Packaging
         {
             ppszFileName = null;
 
-            if (_filter == null || _xpsFileName == null)
+            if (_filter is null || _xpsFileName is null)
             {
                 ppszFileName = $"*.{PackagingUtilities.ContainerFileExtension}";
                 return NativeMethods.S_FALSE;
@@ -361,7 +361,7 @@ namespace MS.Internal.IO.Packaging
             FileShare fileSharing;
 
             // Check argument.
-            if (pszFileName == null || pszFileName == String.Empty)
+            if (pszFileName is null || pszFileName == String.Empty)
             {
                 throw new ArgumentException(SR.FileNameNullOrEmpty, "pszFileName");
             }
@@ -396,7 +396,7 @@ namespace MS.Internal.IO.Packaging
             fileSharing = FileShare.ReadWrite;
 
             // Only one of _package and _encryptedPackage can be non-null at a time.
-            Invariant.Assert(_package == null || _encryptedPackage == null);
+            Invariant.Assert(_package is null || _encryptedPackage is null);
 
             // If there has been a previous call to Load, reinitialize everything.
             // Note closing a closed stream does not cause any exception.
@@ -436,7 +436,7 @@ namespace MS.Internal.IO.Packaging
             finally
             {
                 // failure?
-                if (_filter == null)
+                if (_filter is null)
                 {
                     // clean up
                     ReleaseResources();
@@ -527,7 +527,7 @@ namespace MS.Internal.IO.Packaging
             ArgumentNullException.ThrowIfNull(stream);
 
             // Only one of _package and _encryptedPackage can be non-null at a time.
-            Invariant.Assert(_package == null || _encryptedPackage == null);
+            Invariant.Assert(_package is null || _encryptedPackage is null);
 
             // If there has been a previous call to Load, reinitialize everything.
             // Note closing a closed stream does not cause any exception.
@@ -565,7 +565,7 @@ namespace MS.Internal.IO.Packaging
             finally
             {
                 // clean-up if we failed
-                if (_filter == null)
+                if (_filter is null)
                 {
                     ReleaseResources();
                 }

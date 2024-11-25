@@ -25,7 +25,7 @@ namespace MS.Internal.Data
         {
             get
             {
-                if (_placeholderBlock == null)
+                if (_placeholderBlock is null)
                 {
                     _placeholderBlock = new LiveShapingBlock(false);
                     _placeholderBlock.Parent = this;

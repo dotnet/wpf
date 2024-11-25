@@ -149,7 +149,7 @@ namespace System.Windows
                                                                         false  /* mustReturnDeferredResourceReference*/);
             }
 
-            if (resource == null)
+            if (resource is null)
             {
                 // Assuming that null means the value doesn't exist in the resources section
                 resource = DependencyProperty.UnsetValue;
@@ -353,7 +353,7 @@ namespace System.Windows
             // VS has a scenario where a TreeWalk invalidates all reference expressions on a DependencyObject.
             // If there is a dependency between RRE's,
             // invalidating one RRE could cause _targetObject to be null on the other RRE. Hence this check.
-            if (_targetObject == null)
+            if (_targetObject is null)
             {
                 return;
             }
@@ -410,7 +410,7 @@ namespace System.Windows
                 Freezable resourceAsFreezable = resource as Freezable;
                 if( resourceAsFreezable != null && !resourceAsFreezable.IsFrozen )
                 {
-                    if (_weakContainerRRE == null)
+                    if (_weakContainerRRE is null)
                     {
                         _weakContainerRRE = new ResourceReferenceExpressionWeakContainer(this);
                     }

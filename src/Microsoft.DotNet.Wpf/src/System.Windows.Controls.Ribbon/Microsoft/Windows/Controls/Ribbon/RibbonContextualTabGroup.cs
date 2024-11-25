@@ -219,7 +219,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             get
             {
-                if (_tabs == null)
+                if (_tabs is null)
                 {
                     _tabs = new TabsEnumerable(this);
                 }
@@ -464,7 +464,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     {
                         if (!clear)
                         {
-                            if (tab.ContextualTabGroup == null)
+                            if (tab.ContextualTabGroup is null)
                             {
                                 tab.ContextualTabGroup = this;
                                 tab.CoerceValue(VisibilityProperty);

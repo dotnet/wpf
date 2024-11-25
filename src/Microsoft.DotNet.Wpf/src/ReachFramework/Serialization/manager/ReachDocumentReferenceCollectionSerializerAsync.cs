@@ -91,7 +91,7 @@ namespace System.Windows.Xps.Serialization
             // get DocumentReferenceCollection
             System.Collections.Generic.IEnumerable<DocumentReference> enumerableObject = serializableObjectContext.TargetObject as System.Collections.Generic.IEnumerable<DocumentReference>;
 
-            if (enumerableObject == null)
+            if (enumerableObject is null)
             {
                 throw new XpsSerializationException(SR.Format(SR.MustBeOfType, "serializableObjectContext.TargetObject", typeof(System.Collections.Generic.IEnumerable<DocumentReference>)));
             }

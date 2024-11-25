@@ -189,7 +189,7 @@ namespace System.Windows.Automation.Peers
                         if (uiElement != null)
                         {
                             AutomationPeer peer = UIElementAutomationPeer.FromElement(uiElement);
-                            if (peer == null)
+                            if (peer is null)
                                 peer = UIElementAutomationPeer.CreatePeerForElement(uiElement);
                             if( peer!= null)
                                 children.Add(peer);

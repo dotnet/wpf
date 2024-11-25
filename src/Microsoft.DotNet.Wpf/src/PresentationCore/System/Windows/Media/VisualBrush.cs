@@ -196,7 +196,7 @@ namespace System.Windows.Media
             
                         if ((element != null) 
                               && 
-                              ((VisualTreeHelper.GetParent(element) == null && !(element.IsRootElement)) 
+                              ((VisualTreeHelper.GetParent(element) is null && !(element.IsRootElement)) 
                                || (VisualTreeHelper.GetParent(element) is Visual3D)))                            
                         {
                             //
@@ -238,7 +238,7 @@ namespace System.Windows.Media
 
             DependencyObject parent = VisualTreeHelper.GetParent(element);
             if (!(element.IsRootElement)
-                && (parent == null || parent is Visual3D))
+                && (parent is null || parent is Visual3D))
             {
                 //
                 // PropagateResumeLayout sets the LayoutSuspended flag to false if it were true.

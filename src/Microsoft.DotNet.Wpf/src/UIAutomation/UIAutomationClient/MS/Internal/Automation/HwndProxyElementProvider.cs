@@ -475,7 +475,7 @@ namespace MS.Internal.Automation
                 //
                 // If the thread wasn't found then this element isn't valid anymore
                 //
-                if ( procThread == null )
+                if ( procThread is null )
                     throw new ElementNotAvailableException();
 
                 if ( procThread.ThreadState == System.Diagnostics.ThreadState.Wait &&

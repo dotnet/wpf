@@ -168,7 +168,7 @@ namespace MS.Internal
         {
             // For now we only know how to use HwndSource.
             HwndSource inputSource = presentationSource as HwndSource;
-            if(inputSource == null)
+            if(inputSource is null)
             {
                 return pointClient;
             }
@@ -190,7 +190,7 @@ namespace MS.Internal
         {
             // For now we only know how to use HwndSource.
             HwndSource inputSource = presentationSource as HwndSource;
-            if(inputSource == null)
+            if(inputSource is null)
             {
                 return pointScreen;
             }

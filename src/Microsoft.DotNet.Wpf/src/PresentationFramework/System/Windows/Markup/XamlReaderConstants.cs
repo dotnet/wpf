@@ -87,7 +87,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                if (_freezeDirective == null)
+                if (_freezeDirective is null)
                 {
                     _freezeDirective = new System.Xaml.XamlDirective(XamlReaderHelper.PresentationOptionsNamespaceURI, XamlReaderHelper.PresentationOptionsFreeze);
                 }

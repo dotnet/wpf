@@ -120,7 +120,7 @@ namespace System.Windows.Documents
         /// <returns></returns>
         public bool Contains(TextElementType item)
         {
-            if (item == null)
+            if (item is null)
             {
                 return false;
             }
@@ -198,7 +198,7 @@ namespace System.Windows.Documents
         /// </returns>
         public bool Remove(TextElementType item)
         {
-            if (item == null)
+            if (item is null)
             {
                 return false;
             }
@@ -319,7 +319,7 @@ namespace System.Windows.Documents
             ArgumentNullException.ThrowIfNull(range);
 
             IEnumerator enumerator = range.GetEnumerator();
-            if (enumerator == null)
+            if (enumerator is null)
             {
                 throw new ArgumentException(SR.TextElementCollection_NoEnumerator, "range");
             }
@@ -331,7 +331,7 @@ namespace System.Windows.Documents
                 {
                     TextElementType element = enumerator.Current as TextElementType;
 
-                    if (element == null)
+                    if (element is null)
                     {
                         // REVIEW: It would be better design if we reviewed all elements in the range before starting an insert.
                         // Otherwise, we might insert half the elements and then throw.
@@ -432,7 +432,7 @@ namespace System.Windows.Documents
         {
             TextElementType item = value as TextElementType;
 
-            if (item == null)
+            if (item is null)
             {
                 return false;
             }
@@ -451,7 +451,7 @@ namespace System.Windows.Documents
 
             TextElementType newItem = value as TextElementType;
 
-            if (newItem == null)
+            if (newItem is null)
             {
                 throw new ArgumentException(SR.Format(SR.TextElementCollection_TextElementTypeExpected, typeof(TextElementType).Name), "value");
             }
@@ -473,7 +473,7 @@ namespace System.Windows.Documents
             {
                 TextPointer position;
 
-                if (this.FirstChild == null)
+                if (this.FirstChild is null)
                 {
                     if (index != 0)
                     {
@@ -486,7 +486,7 @@ namespace System.Windows.Documents
                     bool atCollectionEnd;
                     TextElementType element = GetElementAtIndex(index, out atCollectionEnd);
 
-                    if (!atCollectionEnd && element == null)
+                    if (!atCollectionEnd && element is null)
                     {
                         throw new IndexOutOfRangeException(SR.TextElementCollection_IndexOutOfRange);
                     }
@@ -524,7 +524,7 @@ namespace System.Windows.Documents
         {
             TextElementType item = value as TextElementType;
 
-            if (item == null)
+            if (item is null)
             {
                 return;
             }
@@ -548,7 +548,7 @@ namespace System.Windows.Documents
 
                 TextElementType element = GetElementAtIndex(index);
 
-                if (element == null)
+                if (element is null)
                 {
                     throw new IndexOutOfRangeException(SR.TextElementCollection_IndexOutOfRange);
                 }
@@ -576,7 +576,7 @@ namespace System.Windows.Documents
                     TextElementType nextElement = RemoveAtInternal(index);
 
                     // Insert new element.
-                    TextPointer position = (nextElement == null) ? this.ContentEnd : nextElement.ElementStart;
+                    TextPointer position = (nextElement is null) ? this.ContentEnd : nextElement.ElementStart;
                     position.InsertTextElement((TextElementType)value);
 
                     // Reset the cache.
@@ -600,7 +600,7 @@ namespace System.Windows.Documents
             ArgumentNullException.ThrowIfNull(array);
 
             Type elementType = array.GetType().GetElementType();
-            if (elementType == null || !elementType.IsAssignableFrom(typeof(TextElementType)))
+            if (elementType is null || !elementType.IsAssignableFrom(typeof(TextElementType)))
             {
                 throw new ArgumentException("array");
             }
@@ -722,7 +722,7 @@ namespace System.Windows.Documents
                 else
                 {
                     TextTreeTextElementNode node = this.TextContainer.FirstContainedNode as TextTreeTextElementNode;
-                    firstChild = (TextElementType)(node == null ? null : node.TextElement);
+                    firstChild = (TextElementType)(node is null ? null : node.TextElement);
                 }
 
                 return firstChild;
@@ -745,7 +745,7 @@ namespace System.Windows.Documents
                 else 
                 {
                     TextTreeTextElementNode node = this.TextContainer.LastContainedNode as TextTreeTextElementNode;
-                    lastChild = (TextElementType)(node == null ? null : node.TextElement);
+                    lastChild = (TextElementType)(node is null ? null : node.TextElement);
                 }
 
                 return lastChild;
@@ -773,7 +773,7 @@ namespace System.Windows.Documents
 
             TextElementType element = GetElementAtIndex(index);
 
-            if (element == null)
+            if (element is null)
             {
                 throw new IndexOutOfRangeException(SR.TextElementCollection_IndexOutOfRange);
             }
@@ -792,7 +792,7 @@ namespace System.Windows.Documents
                 // Prepare to reset the cache.
                 // We're about to remove the current cache, so we need to find a neighbor.
                 TextElementType newElementCache = nextElement;
-                if (newElementCache == null)
+                if (newElementCache is null)
                 {
                     newElementCache = (TextElementType)element.PreviousElement;
                     index--;
@@ -860,7 +860,7 @@ namespace System.Windows.Documents
                 index--;
             }
 
-            atCollectionEnd = (index == 0 && element == null);
+            atCollectionEnd = (index == 0 && element is null);
             return element;
         }
 
@@ -881,7 +881,7 @@ namespace System.Windows.Documents
         {
             TextElementType item = value as TextElementType;
 
-            if (value == null)
+            if (value is null)
             {
                 return -1;
             }
@@ -992,7 +992,7 @@ namespace System.Windows.Documents
         {
             internal ElementIndexCache(int index, TextElementType element)
             {
-                // index == -1/element == null means "empty".
+                // index == -1/element is null means "empty".
                 Invariant.Assert(index == -1 || element != null);
 
                 _index = index;

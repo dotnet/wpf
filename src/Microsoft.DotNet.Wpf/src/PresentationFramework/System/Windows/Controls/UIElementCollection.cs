@@ -36,7 +36,7 @@ namespace System.Windows.Controls
         /// </param>
         public UIElementCollection(UIElement visualParent, FrameworkElement logicalParent)
         {
-            if (visualParent == null)
+            if (visualParent is null)
             {
                 throw new ArgumentNullException(SR.Format(SR.Panel_NoNullVisualParent, "visualParent", this.GetType()));
             }
@@ -387,12 +387,12 @@ namespace System.Windows.Controls
 		
         private UIElement Cast(object value)
         {
-            if (value == null)
+            if (value is null)
                 throw new System.ArgumentException(SR.Format(SR.Collection_NoNull, "UIElementCollection"));
 
             UIElement element = value as UIElement;
 
-            if (element == null)
+            if (element is null)
                 throw new System.ArgumentException(SR.Format(SR.Collection_BadType, "UIElementCollection", value.GetType().Name, "UIElement"));
 
             return element;
@@ -521,7 +521,7 @@ namespace System.Windows.Controls
         // Helper function to validate element; will throw exceptions if problems are detected.
         private void ValidateElement(UIElement element)
         {
-            if (element == null)
+            if (element is null)
             {
                 throw new ArgumentNullException(SR.Format(SR.Panel_NoNullChildren, this.GetType()));
             }

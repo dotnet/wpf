@@ -206,7 +206,7 @@ namespace MS.Internal.Annotations.Anchoring
 
             // Get the values from the locator part...
             string id = locatorPart.NameValuePairs[ValueAttributeName];
-            if (id == null)
+            if (id is null)
             {
                 throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, $"{locatorPart.PartType.Namespace}:{locatorPart.PartType.Name}"), "locatorPart");
             }
@@ -409,7 +409,7 @@ namespace MS.Internal.Annotations.Anchoring
 
             // Get values from the node
             string nodeId = GetNodeId(node);
-            if ((nodeId == null) || (nodeId.Length == 0))
+            if ((nodeId is null) || (nodeId.Length == 0))
                 return null;
 
             ContentLocatorPart part = new ContentLocatorPart(DataIdElementName);

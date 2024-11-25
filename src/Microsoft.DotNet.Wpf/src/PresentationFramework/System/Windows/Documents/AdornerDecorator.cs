@@ -168,7 +168,7 @@ namespace System.Windows.Documents
                     return;
                 }
                 
-                if (value == null)
+                if (value is null)
                 {
                     base.Child = null;
                     RemoveVisualChild(_adornerLayer);
@@ -207,7 +207,7 @@ namespace System.Windows.Documents
         /// </summary>
         protected override Visual GetVisualChild(int index)
         {
-            if (base.Child == null)
+            if (base.Child is null)
             {
                 throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }

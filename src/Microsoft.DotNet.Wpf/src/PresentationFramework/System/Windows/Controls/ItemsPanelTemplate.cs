@@ -118,7 +118,7 @@ namespace System.Windows.Controls
 
                 TemplateContent templateHolder = Template as TemplateContent;
                 System.Xaml.XamlType panelType = templateHolder.SchemaContext.GetXamlType(typeof(Panel));
-                if (templateHolder.RootType == null || !templateHolder.RootType.CanAssignTo(panelType))
+                if (templateHolder.RootType is null || !templateHolder.RootType.CanAssignTo(panelType))
                 {
                     throw new InvalidOperationException(SR.Format(SR.ItemsPanelNotAPanel, templateHolder.RootType));
                 }

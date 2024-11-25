@@ -99,7 +99,7 @@ namespace System.Windows.Markup
         {
             // Validate Input Arguments
             ComponentResourceKey key = value as ComponentResourceKey;
-            if (key == null)
+            if (key is null)
             {
                 throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "ComponentResourceKey")); 
             }

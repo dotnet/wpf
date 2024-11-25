@@ -45,7 +45,7 @@ namespace MS.Internal.ComponentModel
 
         internal bool CanClose 
         {
-            get { return Changed == null; }
+            get { return Changed is null; }
         }
 
         internal EventHandler Changed;

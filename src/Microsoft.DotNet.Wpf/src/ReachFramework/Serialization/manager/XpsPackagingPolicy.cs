@@ -855,7 +855,7 @@ namespace System.Windows.Xps.Serialization
 
                 ResourceStreamCacheItem resourceStreamCacheItem = (ResourceStreamCacheItem)_fontsCache[resourceId];
 
-                if(resourceStreamCacheItem == null)
+                if(resourceStreamCacheItem is null)
                 {
                     resourceStreamCacheItem = new ResourceStreamCacheItem();
 
@@ -1292,7 +1292,7 @@ namespace System.Windows.Xps.Serialization
         AcquireXmlWriterForPage(
             )
         {
-            if (_currentFixedPageWriter == null)
+            if (_currentFixedPageWriter is null)
             {
                 throw new InvalidOperationException("CurrentFixedPageWriter uninitialized");
             }
@@ -1308,7 +1308,7 @@ namespace System.Windows.Xps.Serialization
         PreCommitCurrentPage(
             )
         {
-            if (_currentFixedPageWriter == null)
+            if (_currentFixedPageWriter is null)
             {
                 throw new InvalidOperationException("CurrentFixedPageWriter uninitialized");
             }
@@ -1324,7 +1324,7 @@ namespace System.Windows.Xps.Serialization
         AcquireXmlWriterForResourceDictionary(
             )
         {
-            if (_currentFixedPageWriter == null)
+            if (_currentFixedPageWriter is null)
             {
                 throw new InvalidOperationException("CurrentFixedPageWriter uninitialized");
             }
@@ -1340,7 +1340,7 @@ namespace System.Windows.Xps.Serialization
         AcquireStreamForLinkTargets(
             )
         {
-            if (_currentFixedPageWriter == null)
+            if (_currentFixedPageWriter is null)
             {
                 throw new ArgumentNullException("CurrentFixedPageWriter");
             }

@@ -237,7 +237,7 @@ namespace MS.Internal.PtsHost
         internal void GetMainTextSegment(
             out IntPtr nmSegment)           
         {
-            if (_mainTextSegment == null)
+            if (_mainTextSegment is null)
             {
                 // Create the main text segment
                 _mainTextSegment = new ContainerParagraph(Element, _structuralCache);

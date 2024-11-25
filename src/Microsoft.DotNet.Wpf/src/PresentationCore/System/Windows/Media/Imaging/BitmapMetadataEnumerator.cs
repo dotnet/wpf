@@ -59,7 +59,7 @@ namespace System.Windows.Media.Imaging
         /// </returns>
         public bool MoveNext()
         {
-            if (_fStarted && _current == null)
+            if (_fStarted && _current is null)
             {
                 return false;
             }
@@ -132,7 +132,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                if (_current == null)
+                if (_current is null)
                 {
                     if (!_fStarted)
                     {

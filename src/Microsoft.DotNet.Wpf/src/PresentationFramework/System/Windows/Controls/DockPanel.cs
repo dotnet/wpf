@@ -220,7 +220,7 @@ namespace System.Windows.Controls
                 Size   childConstraint;             // Contains the suggested input constraint for this child.
                 Size   childDesiredSize;            // Contains the return size from child measure.
 
-                if (child == null) { continue; }
+                if (child is null) { continue; }
 
                 // Child constraint is the remaining size; this is total size minus size consumed by previous children.
                 childConstraint = new Size(Math.Max(0.0, constraint.Width - accumulatedWidth),
@@ -282,7 +282,7 @@ namespace System.Windows.Controls
             for (int i = 0; i < totalChildrenCount; ++i)
             {
                 UIElement child = children[i];
-                if (child == null) { continue; }
+                if (child is null) { continue; }
 
                 Size childDesiredSize = child.DesiredSize;
                 Rect rcChild = new Rect(

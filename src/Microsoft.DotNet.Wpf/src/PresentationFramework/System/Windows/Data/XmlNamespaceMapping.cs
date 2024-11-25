@@ -85,7 +85,7 @@ namespace System.Windows.Data
         /// </summary>
         public static bool operator == (XmlNamespaceMapping mappingA, XmlNamespaceMapping mappingB)
         {
-            // cannot just compare with (mappingX == null), it'll cause recursion and stack overflow!
+            // cannot just compare with (mappingX is null), it'll cause recursion and stack overflow!
             if (object.ReferenceEquals(mappingA, null))
                 return object.ReferenceEquals(mappingB, null);
             if (object.ReferenceEquals(mappingB, null))
@@ -140,11 +140,11 @@ namespace System.Windows.Data
         /// <summary>End Initialization, verify that internal state is consistent</summary>
         void ISupportInitialize.EndInit()
         {
-            if (_prefix == null)
+            if (_prefix is null)
             {
                 throw new InvalidOperationException(SR.Format(SR.PropertyMustHaveValue, "Prefix", this.GetType().Name));
             }
-            if (_uri == null)
+            if (_uri is null)
             {
                 throw new InvalidOperationException(SR.Format(SR.PropertyMustHaveValue, "Uri", this.GetType().Name));
             }

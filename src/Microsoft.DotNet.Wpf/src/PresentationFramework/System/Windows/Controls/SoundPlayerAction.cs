@@ -94,7 +94,7 @@ namespace System.Windows.Controls
        // to download the content of the stream.
        private void OnSourceChangedHelper(Uri newValue)
        {
-           if (newValue == null || newValue.IsAbsoluteUri)
+           if (newValue is null || newValue.IsAbsoluteUri)
            {
                m_lastRequestedAbsoluteUri = newValue;
            }
@@ -218,7 +218,7 @@ namespace System.Windows.Controls
            }
            else if (newStream != null)  // We loaded the Stream, begin buffering it
            {
-               if (m_player == null)
+               if (m_player is null)
                {
                    m_player = new SoundPlayer((Stream)newStream);
                }

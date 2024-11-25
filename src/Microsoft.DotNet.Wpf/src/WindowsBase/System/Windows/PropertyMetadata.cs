@@ -82,7 +82,7 @@ namespace System.Windows
             get
             {
                 DefaultValueFactory defaultFactory = _defaultValue as DefaultValueFactory;
-                if (defaultFactory == null)
+                if (defaultFactory is null)
                 {
                     return _defaultValue;
                 }
@@ -140,7 +140,7 @@ namespace System.Windows
             // If we are not using a DefaultValueFactory (common case)
             // just return _defaultValue
             DefaultValueFactory defaultFactory = _defaultValue as DefaultValueFactory;
-            if (defaultFactory == null)
+            if (defaultFactory is null)
             {
                 return _defaultValue;
             }
@@ -207,7 +207,7 @@ namespace System.Windows
         {
             FrugalMapBase map = _defaultValueFactoryCache.GetValue(owner);
 
-            if (map == null)
+            if (map is null)
             {
                 return DependencyProperty.UnsetValue;
             }
@@ -219,7 +219,7 @@ namespace System.Windows
         {
             FrugalMapBase map = _defaultValueFactoryCache.GetValue(owner);
 
-            if (map == null)
+            if (map is null)
             {
                 map = new SingleObjectMap();
                 _defaultValueFactoryCache.SetValue(owner, map);
@@ -494,7 +494,7 @@ namespace System.Windows
 
                         if (valueAsDispatcherObject != null)
                         {
-                            if (valueAsDispatcherObject.Dispatcher == null)
+                            if (valueAsDispatcherObject.Dispatcher is null)
                             {
                                 // The property is a free-threaded DispatcherObject; since it's
                                 // already free-threaded it doesn't prevent this Freezable from
@@ -610,13 +610,13 @@ namespace System.Windows
 
             // make sure we don't need these to be combined --- seems like we may want it
             // CoerceValueCallback not combined
-            if (_coerceValueCallback == null)
+            if (_coerceValueCallback is null)
             {
                 _coerceValueCallback = baseMetadata.CoerceValueCallback;
             }
 
             // FreezeValueCallback not combined
-            if (_freezeValueCallback == null)
+            if (_freezeValueCallback is null)
             {
                 _freezeValueCallback = baseMetadata.FreezeValueCallback;
             }

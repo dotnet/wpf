@@ -48,7 +48,7 @@ namespace System.Windows.Documents
         // Dumps a TextContainer.
         internal static void Dump(TextContainer tree)
         {
-            if (tree.RootNode == null)
+            if (tree.RootNode is null)
             {
                 Debug.WriteLine($"<{tree}/>");
             }
@@ -61,7 +61,7 @@ namespace System.Windows.Documents
         // Dumps a TextContainer, xaml style.
         internal static void DumpFlat(TextContainer tree)
         {
-            if (tree.RootNode == null)
+            if (tree.RootNode is null)
             {
                 Debug.WriteLine($"<{tree}/>");
             }
@@ -121,7 +121,7 @@ namespace System.Windows.Documents
             Debug.Write("<");
             Debug.Write(node);
 
-            if (node.ContainedNode == null)
+            if (node.ContainedNode is null)
             {
                 Debug.WriteLine("/>");
             }

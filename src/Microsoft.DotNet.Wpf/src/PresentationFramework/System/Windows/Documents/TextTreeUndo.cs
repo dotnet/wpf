@@ -29,7 +29,7 @@ namespace System.Windows.Documents
             UndoManager undoManager;
 
             undoManager = GetOrClearUndoManager(tree);
-            if (undoManager == null)
+            if (undoManager is null)
                 return;
 
             undoManager.Add(new TextTreeInsertUndoUnit(tree, symbolOffset, symbolCount));
@@ -42,7 +42,7 @@ namespace System.Windows.Documents
             UndoManager undoManager;
 
             undoManager = GetOrClearUndoManager(tree);
-            if (undoManager == null)
+            if (undoManager is null)
                 return;
 
             undoManager.Add(new TextTreeInsertElementUndoUnit(tree, symbolOffset, deep));
@@ -57,7 +57,7 @@ namespace System.Windows.Documents
             TextContainer textContainer = element.TextContainer;
 
             undoManager = GetOrClearUndoManager(textContainer);
-            if (undoManager == null)
+            if (undoManager is null)
                 return;
 
             record = new PropertyRecord();
@@ -78,7 +78,7 @@ namespace System.Windows.Documents
                 return null;
 
             undoManager = GetOrClearUndoManager(tree);
-            if (undoManager == null)
+            if (undoManager is null)
                 return null;
 
             undoUnit = new TextTreeDeleteContentUndoUnit(tree, start, end);
@@ -96,7 +96,7 @@ namespace System.Windows.Documents
             TextTreeExtractElementUndoUnit undoUnit;
 
             undoManager = GetOrClearUndoManager(tree);
-            if (undoManager == null)
+            if (undoManager is null)
                 return null;
 
             undoUnit = new TextTreeExtractElementUndoUnit(tree, elementNode);
@@ -114,13 +114,13 @@ namespace System.Windows.Documents
             UndoManager undoManager;
 
             undoManager = textContainer.UndoManager;
-            if (undoManager == null)
+            if (undoManager is null)
                 return null;
 
             if (!undoManager.IsEnabled)
                 return null;
 
-            if (undoManager.OpenedUnit == null)
+            if (undoManager.OpenedUnit is null)
             {
                 // There's no parent undo unit, so we can't open a child.
                 //

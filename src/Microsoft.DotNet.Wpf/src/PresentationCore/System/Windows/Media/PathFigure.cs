@@ -114,7 +114,7 @@ namespace System.Windows.Media
         {
             PathSegmentCollection segments = Segments;
 
-            if (segments == null)
+            if (segments is null)
             {
                 return false;
             }
@@ -208,7 +208,7 @@ namespace System.Windows.Media
         internal bool CanSerializeToString()
         {
             PathSegmentCollection segments = Segments;
-            return (IsFilled == c_IsFilled) && ((segments == null) || segments.CanSerializeToString());
+            return (IsFilled == c_IsFilled) && ((segments is null) || segments.CanSerializeToString());
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace System.Windows.Media
 
             PathSegmentCollection segments = Segments;
 
-            int pathSegmentCount = segments == null ? 0 : segments.Count;
+            int pathSegmentCount = segments is null ? 0 : segments.Count;
 
             for (int i = 0; i < pathSegmentCount; i++)
             {

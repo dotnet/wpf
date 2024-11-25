@@ -88,7 +88,7 @@ namespace System.Windows.Media.TextFormatting
 
             // maximum offset is one less than CharacterBuffer.Count, except that zero is always a valid offset
             // even in the case of an empty or null character buffer
-            int maxOffset = (charBuffer == null) ? 0 : Math.Max(0, charBuffer.Count - 1);
+            int maxOffset = (charBuffer is null) ? 0 : Math.Max(0, charBuffer.Count - 1);
             ArgumentOutOfRangeException.ThrowIfGreaterThan(offsetToFirstChar, maxOffset);
 
             _charBuffer = charBuffer;

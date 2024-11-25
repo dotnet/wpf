@@ -31,7 +31,7 @@ namespace MS.Internal.TextFormatting
 
         /// <summary>
         /// RequiresNumberSubstitution is true if digit substitution is required (DigitCulture != null)
-        /// and false if digit substitution is not required (DigitCulture == null).
+        /// and false if digit substitution is not required (DigitCulture is null).
         /// </summary>
         internal bool RequiresNumberSubstitution
         {
@@ -121,7 +121,7 @@ namespace MS.Internal.TextFormatting
         {
             ignoreUserOverride = true;
             NumberSubstitution sub = properties.NumberSubstitution;
-            if (sub == null)
+            if (sub is null)
             {
                 method = NumberSubstitutionMethod.AsCulture;
                 return CultureMapper.GetSpecificCulture(properties.CultureInfo);
@@ -149,7 +149,7 @@ namespace MS.Internal.TextFormatting
         {
             contextual = false;
 
-            if (numberCulture == null)
+            if (numberCulture is null)
             {
                 return null;
             }
@@ -459,7 +459,7 @@ namespace MS.Internal.TextFormatting
                     break;
             }
 
-            if (digitCulture == null)
+            if (digitCulture is null)
             {
                 // No hard-coded mapping for this LCID. Use the given culture if it has non-Latin digits,
                 // otherwise return null. Don't cache the number culture because we didn't create it and

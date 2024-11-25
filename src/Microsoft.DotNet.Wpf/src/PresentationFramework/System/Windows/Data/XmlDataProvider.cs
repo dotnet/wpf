@@ -95,7 +95,7 @@ namespace System.Windows.Data
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool ShouldSerializeSource()
         {
-            return (_domSetDocument == null) && (_source != null);
+            return (_domSetDocument is null) && (_source != null);
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace System.Windows.Data
             get { return _document; }
             set
             {
-                if ((_domSetDocument == null) || _source != null || _document != value)
+                if ((_domSetDocument is null) || _source != null || _document != value)
                 {
                     _domSetDocument = value;
 
@@ -214,7 +214,7 @@ namespace System.Windows.Data
         {
             get
             {
-                if (_xmlSerializer == null)
+                if (_xmlSerializer is null)
                 {
                     _xmlSerializer = new XmlIslandSerializer(this);
                 }
@@ -283,7 +283,7 @@ namespace System.Windows.Data
             if (_source != null)
             {
                 // load DOM from external source
-                Debug.Assert(_domSetDocument == null, "Should not be possible to be using Source and user-set Doc at the same time.");
+                Debug.Assert(_domSetDocument is null, "Should not be possible to be using Source and user-set Doc at the same time.");
                 DiscardInline();
                 LoadFromSource(); // will execute synch or asycnh, depends on IsAsynchronous
             }
@@ -370,7 +370,7 @@ namespace System.Windows.Data
             //  by calling Create on PackWebRequest if uri is pack scheme
             WebRequest request = PackWebRequestFactory.CreateWebRequest(sourceUri);
 
-            if (request == null)
+            if (request is null)
             {
                 throw new Exception(SR.WebRequestCreationFailed);
             }
@@ -418,7 +418,7 @@ namespace System.Windows.Data
         /// <param name="xmlReader"></param>
         private void ParseInline(XmlReader xmlReader)
         {
-            if ((_source == null) && (_domSetDocument == null) && _tryInlineDoc)
+            if ((_source is null) && (_domSetDocument is null) && _tryInlineDoc)
             {
                 // load it on a worker thread ?
                 if (IsAsynchronous)
@@ -496,7 +496,7 @@ namespace System.Windows.Data
                     ex = xmle;
                 }
 
-                if (ex == null)
+                if (ex is null)
                 {
                     // Save a copy of the inline document to be used in future
                     // queries, and by serialization.
@@ -524,7 +524,7 @@ namespace System.Windows.Data
                 }
             }
 
-            if (ex == null)
+            if (ex is null)
             {
                 // Load succeeded.  Create the node collection.  (This calls
                 // OnQueryFinished to reset the Document and Data properties).
@@ -576,7 +576,7 @@ namespace System.Windows.Data
                 }
 
                 WebResponse response = WpfWebRequestHelper.GetResponse(request);
-                if (response == null)
+                if (response is null)
                 {
                     throw new InvalidOperationException(SR.GetResponseFailed);
                 }
@@ -753,7 +753,7 @@ namespace System.Windows.Data
 
         private void OnNodeChanged(object sender, XmlNodeChangedEventArgs e)
         {
-            if (XmlDataCollection == null)
+            if (XmlDataCollection is null)
                 return;
 
             UnHook();
@@ -816,7 +816,7 @@ namespace System.Windows.Data
         {
             get
             {
-                if (_onCompletedCallback == null)
+                if (_onCompletedCallback is null)
                     _onCompletedCallback = new DispatcherOperationCallback(OnCompletedCallback);
                 return _onCompletedCallback;
             }
@@ -826,7 +826,7 @@ namespace System.Windows.Data
         {
             get
             {
-                if (_nodeChangedHandler == null)
+                if (_nodeChangedHandler is null)
                     _nodeChangedHandler = new XmlNodeChangedEventHandler(OnNodeChanged);
                 return _nodeChangedHandler;
             }

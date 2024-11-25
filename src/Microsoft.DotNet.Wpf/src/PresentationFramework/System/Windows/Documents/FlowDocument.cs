@@ -860,7 +860,7 @@ namespace System.Windows.Documents
 
                 RichTextBox parentRichTextBox = this.Parent as RichTextBox;
 
-                return (parentRichTextBox == null) ? true : parentRichTextBox.IsDocumentEnabled;
+                return (parentRichTextBox is null) ? true : parentRichTextBox.IsDocumentEnabled;
             }
         }
 
@@ -906,7 +906,7 @@ namespace System.Windows.Documents
                 while (element is FrameworkElement)
                 {
                     parentOfEmbeddedElement = LogicalTreeHelper.GetParent((DependencyObject)element);
-                    if (parentOfEmbeddedElement == null)
+                    if (parentOfEmbeddedElement is null)
                     {
                         parentOfEmbeddedElement = VisualTreeHelper.GetParent((Visual)element);
                     }
@@ -1069,7 +1069,7 @@ namespace System.Windows.Documents
                     _formatter.Suspend();
                     _formatter = null;
                 }
-                if (_formatter == null)
+                if (_formatter is null)
                 {
                     _formatter = new FlowDocumentFormatter(this);
                 }
@@ -1095,7 +1095,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_typographyPropertiesGroup == null)
+                if (_typographyPropertiesGroup is null)
                 {
                     _typographyPropertiesGroup = TextElement.GetTypographyProperties(this);
                 }
@@ -1216,7 +1216,7 @@ namespace System.Windows.Documents
         /// <param name="textContainer"></param>
         private void Initialize(TextContainer textContainer)
         {
-            if (textContainer == null)
+            if (textContainer is null)
             {
                 // Create text tree that contains content of the element.
                 textContainer = new TextContainer(this, false /* plainTextOnly */);
@@ -1409,7 +1409,7 @@ namespace System.Windows.Documents
             {
                 // Invalidate affected pages and break records.
                 // We DTR invalidate if we're using a formatter as well for incremental update.
-                if (_formatter == null || !(_formatter is FlowDocumentFormatter))
+                if (_formatter is null || !(_formatter is FlowDocumentFormatter))
                 {
                     _structuralCache.InvalidateFormatCache(/*Clear structure*/ false);
                 }
@@ -1729,7 +1729,7 @@ namespace System.Windows.Documents
                     _formatter.Suspend();
                     _formatter = null;
                 }
-                if (_formatter == null)
+                if (_formatter is null)
                 {
                     _formatter = new FlowDocumentPaginator(this);
                 }

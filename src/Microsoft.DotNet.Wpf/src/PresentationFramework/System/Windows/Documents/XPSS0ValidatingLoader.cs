@@ -48,7 +48,7 @@ namespace System.Windows.Documents
         }
 
         /// <summary>
-        /// rootElement == null: Load elements, validation of root element will occur in caller by checking object type or casting
+        /// rootElement is null: Load elements, validation of root element will occur in caller by checking object type or casting
         /// rootElement != null: Only perform validation, and expect rootElement at root of markup
         /// </summary>
         /// <param name="stream"></param>

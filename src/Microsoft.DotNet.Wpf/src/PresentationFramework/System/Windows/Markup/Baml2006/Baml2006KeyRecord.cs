@@ -51,7 +51,7 @@ namespace System.Windows.Baml2006
         {
             get
             {
-                if (_resources == null)
+                if (_resources is null)
                 {
                     _resources = new List<Object>();
                 }

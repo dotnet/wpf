@@ -270,7 +270,7 @@ namespace System.Windows.Annotations
             set
             {
                 bool changed = false;
-                if (_name == null)
+                if (_name is null)
                 {
                     if (value != null)
                     {
@@ -348,7 +348,7 @@ namespace System.Windows.Annotations
         {
             get
             {
-                if (s_ListSerializer == null)
+                if (s_ListSerializer is null)
                 {
                     s_ListSerializer = new Serializer(typeof(ContentLocator));
                 }
@@ -374,7 +374,7 @@ namespace System.Windows.Annotations
         {
             get
             {
-                if (_locators == null)
+                if (_locators is null)
                 {
                     _locators = new AnnotationObservableCollection<ContentLocatorBase>();
                     _locators.CollectionChanged += OnLocatorsChanged;
@@ -391,7 +391,7 @@ namespace System.Windows.Annotations
         {
             get
             {
-                if (_contents == null)
+                if (_contents is null)
                 {
                     _contents = new XmlElementCollection();
                     _contents.CollectionChanged += OnContentsChanged;
@@ -408,7 +408,7 @@ namespace System.Windows.Annotations
         {
             get
             {
-                if (s_LocatorGroupSerializer == null)
+                if (s_LocatorGroupSerializer is null)
                 {
                     s_LocatorGroupSerializer = new Serializer(typeof(ContentLocatorGroup));
                 }
@@ -447,7 +447,7 @@ namespace System.Windows.Annotations
 
                 // Skip null values - they will be treated the same as if
                 // they weren't specified at all
-                if (value == null)
+                if (value is null)
                     continue;
 
                 switch (reader.LocalName)

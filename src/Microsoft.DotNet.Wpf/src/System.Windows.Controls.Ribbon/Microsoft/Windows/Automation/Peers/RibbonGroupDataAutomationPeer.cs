@@ -56,7 +56,7 @@ namespace Microsoft.Windows.Automation.Peers
                 }
             }
 
-            if (peer == null)
+            if (peer is null)
             {
                 AutomationPeer wrapperPeer = GetWrapperPeer();
                 if (wrapperPeer != null)
@@ -167,7 +167,7 @@ namespace Microsoft.Windows.Automation.Peers
             if (wrapper != null)
             {
                 wrapperPeer = UIElementAutomationPeer.CreatePeerForElement(wrapper);
-                if (wrapperPeer == null)
+                if (wrapperPeer is null)
                 {
                     if (wrapper is FrameworkElement)
                         wrapperPeer = new FrameworkElementAutomationPeer((FrameworkElement)wrapper);

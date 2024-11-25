@@ -496,13 +496,13 @@ internal class TransactionalPackage : Package, IDisposable
     private void EnsureTempPackage()
     {
         // if we can not edit ask for it
-        if (_tempPackage == null)
+        if (_tempPackage is null)
         {
             DocumentManager.CreateDefault().EnableEdit(null);
         }
 
         // if we still don't have it fail
-        if (_tempPackage == null)
+        if (_tempPackage is null)
         {
             throw new InvalidOperationException(
                 SR.PackagingWriteNotSupported);

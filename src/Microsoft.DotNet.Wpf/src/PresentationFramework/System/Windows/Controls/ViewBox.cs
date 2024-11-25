@@ -155,7 +155,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if(_internalVisual == null) 
+                if(_internalVisual is null) 
                 {
                     _internalVisual = new ContainerVisual();
                     AddVisualChild(_internalVisual);
@@ -252,7 +252,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (InternalChild == null)
+                if (InternalChild is null)
                 {
                     return EmptyEnumerator.Instance;
                 }

@@ -82,7 +82,7 @@ namespace System.Windows
         public override bool Equals(object obj) 
         {
             AttachedPropertyBrowsableForTypeAttribute other = obj as AttachedPropertyBrowsableForTypeAttribute;
-            if (other == null) return false;
+            if (other is null) return false;
             return _targetType == other._targetType;
         }
 

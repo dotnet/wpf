@@ -53,7 +53,7 @@ namespace MS.Internal.Documents
 
         /// <summary>
         /// Closes the given open IParentUndoUnit within the current container or its child
-        /// containers.  If closingUnit == null, IParentUndoUnit's currently open unit (if any)
+        /// containers.  If closingUnit is null, IParentUndoUnit's currently open unit (if any)
         /// is closed instead.  
         /// </summary>
         void Close(IParentUndoUnit closingUnit, UndoCloseAction closeAction);

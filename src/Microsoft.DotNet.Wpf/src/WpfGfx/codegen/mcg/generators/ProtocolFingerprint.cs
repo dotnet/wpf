@@ -323,7 +323,7 @@ namespace MS.Internal.MilCodeGen.Generators
         {
             XmlDocument document = XmlLoader.Load(xmlFile, schemaFile);
 
-            if (document == null)
+            if (document is null)
             {
                 throw new ApplicationException(String.Format("Could not load version file."));
             }

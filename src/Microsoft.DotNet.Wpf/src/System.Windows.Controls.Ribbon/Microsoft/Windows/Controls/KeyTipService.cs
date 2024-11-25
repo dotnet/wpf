@@ -164,7 +164,7 @@ namespace Microsoft.Windows.Controls
             {
                 // Add the element to the new scope data sets.
                 if (!current._scopeToElementMap.ContainsKey(newScope) ||
-                    current._scopeToElementMap[newScope] == null)
+                    current._scopeToElementMap[newScope] is null)
                 {
                     current._scopeToElementMap[newScope] = new WeakHashSet<DependencyObject>();
                 }
@@ -175,7 +175,7 @@ namespace Microsoft.Windows.Controls
         private static void HookKeyTipElementEventHandlers(DependencyObject element)
         {
             FrameworkElement fe = element as FrameworkElement;
-            if (fe == null)
+            if (fe is null)
             {
                 FrameworkContentElement fce = element as FrameworkContentElement;
                 if (fce != null)
@@ -194,7 +194,7 @@ namespace Microsoft.Windows.Controls
         private static void UnhookKeyTipElementEventHandlers(DependencyObject element)
         {
             FrameworkElement fe = element as FrameworkElement;
-            if (fe == null)
+            if (fe is null)
             {
                 FrameworkContentElement fce = element as FrameworkContentElement;
                 if (fce != null)
@@ -227,8 +227,8 @@ namespace Microsoft.Windows.Controls
         private static bool CanUnregisterKeyTipElement(DependencyObject element)
         {
             return (string.IsNullOrEmpty(GetKeyTip(element)) &&
-                GetKeyTipAutoGenerationElements(element) == null &&
-                GetCustomSiblingKeyTipElements(element) == null);
+                GetKeyTipAutoGenerationElements(element) is null &&
+                GetCustomSiblingKeyTipElements(element) is null);
         }
 
         private static void OnKeyTipElementLoaded(object sender, RoutedEventArgs e)
@@ -282,7 +282,7 @@ namespace Microsoft.Windows.Controls
                     // If an element newly became scope then process
                     // all the keytip elements under its parent scope.
                     DependencyObject scopedParent = FindScope(scope);
-                    if (scopedParent == null)
+                    if (scopedParent is null)
                     {
                         scopedParent = scope;
                     }
@@ -312,7 +312,7 @@ namespace Microsoft.Windows.Controls
 
         private static void AddItemToArrayListRef(object item, ref ArrayList list)
         {
-            if (list == null)
+            if (list is null)
             {
                 list = new ArrayList(2);
             }
@@ -325,7 +325,7 @@ namespace Microsoft.Windows.Controls
         /// </summary>
         private void ReevaluateScopes(DependencyObject scopedParent, Dictionary<DependencyObject, bool> processedElements)
         {
-            if (scopedParent == null)
+            if (scopedParent is null)
             {
                 return;
             }
@@ -342,7 +342,7 @@ namespace Microsoft.Windows.Controls
                             DependencyObject newScope = FindScope(element);
                             if (newScope != scopedParent)
                             {
-                                if (elementToScopeMap == null)
+                                if (elementToScopeMap is null)
                                 {
                                     elementToScopeMap = new Dictionary<DependencyObject, DependencyObject>();
                                 }
@@ -376,10 +376,10 @@ namespace Microsoft.Windows.Controls
         private static DependencyObject FindScope(DependencyObject element, bool searchVisualTreeOnly)
         {
             FrameworkElement fe = element as FrameworkElement;
-            if (fe == null)
+            if (fe is null)
             {
                 FrameworkContentElement fce = element as FrameworkContentElement;
-                if (fce == null || !fce.IsLoaded)
+                if (fce is null || !fce.IsLoaded)
                 {
                     return null;
                 }
@@ -397,14 +397,14 @@ namespace Microsoft.Windows.Controls
                 return TreeHelper.FindVisualAncestor(element,
                     delegate(DependencyObject d)
                     {
-                        return ((KeyTipService.GetIsKeyTipScope(d) == true) || (TreeHelper.GetParent(d) == null));
+                        return ((KeyTipService.GetIsKeyTipScope(d) == true) || (TreeHelper.GetParent(d) is null));
                     });
             }
             else
             {
                 return TreeHelper.FindAncestor(element, delegate(DependencyObject d)
                 {
-                    return ((KeyTipService.GetIsKeyTipScope(d) == true) || (TreeHelper.GetParent(d) == null));
+                    return ((KeyTipService.GetIsKeyTipScope(d) == true) || (TreeHelper.GetParent(d) is null));
                 });
             }
         }
@@ -893,7 +893,7 @@ namespace Microsoft.Windows.Controls
                 }
                 else if (keyTip.StartsWith(text, true, culture))
                 {
-                    if (activeKeyTipElements == null)
+                    if (activeKeyTipElements is null)
                     {
                         activeKeyTipElements = new List<DependencyObject>();
                     }
@@ -922,7 +922,7 @@ namespace Microsoft.Windows.Controls
                         if (computedCulture != null)
                         {
                             culture = computedCulture;
-                            if (cultureCache == null)
+                            if (cultureCache is null)
                             {
                                 Current._cultureCache = cultureCache = new Dictionary<XmlLanguage, CultureInfo>();
                             }
@@ -967,7 +967,7 @@ namespace Microsoft.Windows.Controls
                 {
                     throw new InvalidOperationException(Microsoft.Windows.Controls.SR.ElementNotKeyTipScope);
                 }
-                if (newScope == null &&
+                if (newScope is null &&
                     KeyTipService.GetIsKeyTipScope(exactMatchElement))
                 {
                     newScope = exactMatchElement;
@@ -992,7 +992,7 @@ namespace Microsoft.Windows.Controls
 
         private void OnKeyTipPartialMatch(List<DependencyObject> activeKeyTipElements, string text)
         {
-            if (activeKeyTipElements == null ||
+            if (activeKeyTipElements is null ||
                 activeKeyTipElements.Count == 0)
             {
                 // Beep when there are no matches.
@@ -1047,7 +1047,7 @@ namespace Microsoft.Windows.Controls
 
         private DependencyObject GetGlobalScopeForElement(DependencyObject element)
         {
-            if (element == null)
+            if (element is null)
             {
                 return null;
             }
@@ -1096,7 +1096,7 @@ namespace Microsoft.Windows.Controls
 
         private void StartShowKeyTipsTimer()
         {
-            if (_showKeyTipsTimer == null)
+            if (_showKeyTipsTimer is null)
             {
                 _showKeyTipsTimer = new DispatcherTimer(DispatcherPriority.Normal);
                 _showKeyTipsTimer.Interval = TimeSpan.FromMilliseconds(ShowKeyTipsWaitTime);
@@ -1382,7 +1382,7 @@ namespace Microsoft.Windows.Controls
                     if (activatingEventArgs.KeyTipVisibility == Visibility.Visible)
                     {
                         // Create the keytip and add it as the adorner.
-                        UIElement adornedElement = RibbonHelper.GetContainingUIElement(activatingEventArgs.PlacementTarget == null ? element : activatingEventArgs.PlacementTarget);
+                        UIElement adornedElement = RibbonHelper.GetContainingUIElement(activatingEventArgs.PlacementTarget is null ? element : activatingEventArgs.PlacementTarget);
                         if (adornedElement != null && adornedElement.IsVisible)
                         {
                             bool isScrollAdornerLayer = false;
@@ -1528,7 +1528,7 @@ namespace Microsoft.Windows.Controls
                 keyTipControl = current._cachedKeyTipControls[count - 1];
                 current._cachedKeyTipControls.RemoveAt(count - 1);
             }
-            if (keyTipControl == null)
+            if (keyTipControl is null)
             {
                 keyTipControl = new KeyTipControl();
             }
@@ -1543,7 +1543,7 @@ namespace Microsoft.Windows.Controls
             {
                 // Save the unlinked KeyTipControl to cache for reuse.
                 KeyTipService current = Current;
-                if (current._cachedKeyTipControls == null)
+                if (current._cachedKeyTipControls is null)
                 {
                     current._cachedKeyTipControls = new List<KeyTipControl>();
                 }
@@ -1634,7 +1634,7 @@ namespace Microsoft.Windows.Controls
         /// </summary>
         private static void AddKeyTipFocusEventHandler(KeyTipFocusEventHandler handler, ref List<WeakReference> handlerList)
         {
-            if (handlerList == null)
+            if (handlerList is null)
                 handlerList = new List<WeakReference>(1);
 
             lock (handlerList)
@@ -1665,7 +1665,7 @@ namespace Microsoft.Windows.Controls
                     {
                         KeyTipFocusEventHandler current = handlerList[i].Target as KeyTipFocusEventHandler;
 
-                        if (current == null || current == handler)
+                        if (current is null || current == handler)
                         {
                             handlerList.RemoveAt(i);
                             i--;
@@ -1690,7 +1690,7 @@ namespace Microsoft.Windows.Controls
                     {
                         KeyTipFocusEventHandler current = handlerList[i].Target as KeyTipFocusEventHandler;
 
-                        if (current == null)
+                        if (current is null)
                         {
                             handlerList.RemoveAt(i);
                             i--;
@@ -1724,7 +1724,7 @@ namespace Microsoft.Windows.Controls
         {
             get
             {
-                if (_current == null)
+                if (_current is null)
                     _current = new KeyTipService();
                 return _current;
             }

@@ -61,7 +61,7 @@ namespace System.Windows.Threading
             if(numArgs == -1)
             {
                 object[] argsArr = (object[])args;
-                if (argsArr == null || argsArr.Length == 0)
+                if (argsArr is null || argsArr.Length == 0)
                 {
                     numArgsEx = 0;
                 }

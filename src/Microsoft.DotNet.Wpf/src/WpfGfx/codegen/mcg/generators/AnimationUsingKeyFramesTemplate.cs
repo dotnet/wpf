@@ -299,7 +299,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     {
                                         WritePreamble();
 
-                                        if (child == null)
+                                        if (child is null)
                                         {
                                             throw new ArgumentNullException("child");
                                         }
@@ -343,7 +343,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// null.</exception>
                                     void IAddChild.AddText(string childText)
                                     {
-                                        if (childText == null)
+                                        if (childText is null)
                                         {
                                             throw new ArgumentNullException("childText");
                                         }
@@ -419,7 +419,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     {
                                         Debug.Assert(animationClock.CurrentState != ClockState.Stopped);
                                         
-                                        if (_keyFrames == null)
+                                        if (_keyFrames is null)
                                         {
                                             return defaultDestinationValue;
                                         }
@@ -431,7 +431,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                             ResolveKeyTimes();
                                         }
                                         
-                                        if (_sortedResolvedKeyFrames == null)
+                                        if (_sortedResolvedKeyFrames is null)
                                         {
                                             return defaultDestinationValue;
                                         }
@@ -590,7 +590,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                             // them a new unfrozen collection. All subsequent times they will
                                             // get whatever collection is present, whether frozen or unfrozen.
                                             
-                                            if (_keyFrames == null)
+                                            if (_keyFrames is null)
                                             {
                                                 if (this.IsFrozen)
                                                 {
@@ -612,7 +612,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         }
                                         set
                                         {
-                                            if (value == null)
+                                            if (value is null)
                                             {
                                                 throw new ArgumentNullException("value");
                                             }

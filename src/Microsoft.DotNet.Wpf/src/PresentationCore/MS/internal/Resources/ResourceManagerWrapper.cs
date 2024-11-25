@@ -70,7 +70,7 @@ namespace MS.Internal.Resources
                 // from unlocalizable resource set part.
             }
 
-            if (stream == null)
+            if (stream is null)
             {
                 // Try to search the unlocalizable resource from Main assembly only.
                 if (ResourceSet != null)
@@ -126,7 +126,7 @@ namespace MS.Internal.Resources
         {
             get 
             {
-                if (_resourceList == null)
+                if (_resourceList is null)
                 {
                     _resourceList = new ArrayList();
 
@@ -234,7 +234,7 @@ namespace MS.Internal.Resources
         {
             get
             {
-                if (_resourceSet == null)
+                if (_resourceSet is null)
                 {
                     string manifestResourceName;
 
@@ -256,7 +256,7 @@ namespace MS.Internal.Resources
         {
             get
             {
-                if (_resourceManager == null)
+                if (_resourceManager is null)
                 {
                     string baseResourceName;  // Our build system always generate a resource base name "$(AssemblyShortname).g"
 

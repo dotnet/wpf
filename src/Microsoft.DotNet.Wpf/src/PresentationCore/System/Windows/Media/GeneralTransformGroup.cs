@@ -50,7 +50,7 @@ namespace System.Windows.Media
         public override bool TryTransform(Point inPoint, out Point result)
         {
             result = inPoint;
-            if ((Children == null) || (Children.Count == 0))
+            if ((Children is null) || (Children.Count == 0))
             {
                 return false;
             }
@@ -79,7 +79,7 @@ namespace System.Windows.Media
         /// <returns>Transformed bounding rect</returns>
         public override Rect TransformBounds(Rect rect)
         {
-            if ((Children == null) || (Children.Count == 0))
+            if ((Children is null) || (Children.Count == 0))
             {
                 return rect;
             }
@@ -102,7 +102,7 @@ namespace System.Windows.Media
             {
                 ReadPreamble();
 
-                if ((Children == null) || (Children.Count == 0))
+                if ((Children is null) || (Children.Count == 0))
                 {
                     return null;
                 }
@@ -114,7 +114,7 @@ namespace System.Windows.Media
 
                     // if any of the transforms does not have an inverse,
                     // then the entire group does not have one
-                    if (g == null)
+                    if (g is null)
                         return null;
 
                     group.Children.Add(g);
@@ -131,7 +131,7 @@ namespace System.Windows.Media
         {
             get
             {
-                if ((Children == null) || (Children.Count == 0))
+                if ((Children is null) || (Children.Count == 0))
                 {
                     return null;
                 }

@@ -90,7 +90,7 @@ namespace System.Windows.Annotations
             }
 
             // Not a locator part
-            if (part == null)
+            if (part is null)
             {
                 return false;
             }
@@ -364,7 +364,7 @@ namespace System.Windows.Annotations
         {
             string corePrefix = namespaceManager.LookupPrefix(AnnotationXmlConstants.Namespaces.CoreSchemaNamespace);
             string prefix = namespaceManager.LookupPrefix(this.PartType.Namespace);
-            string res = prefix == null ? "" : (prefix + ":");
+            string res = prefix is null ? "" : (prefix + ":");
             res += $"{TextSelectionProcessor.CharacterRangeElementName.Name}/{corePrefix}:{AnnotationXmlConstants.Elements.Item}";
 
             int startOffset;
@@ -391,7 +391,7 @@ namespace System.Windows.Annotations
         {
             string corePrefix = namespaceManager.LookupPrefix(AnnotationXmlConstants.Namespaces.CoreSchemaNamespace);
             string prefix = namespaceManager.LookupPrefix(this.PartType.Namespace);
-            string res = prefix == null ? "" : (prefix + ":");
+            string res = prefix is null ? "" : (prefix + ":");
             res += this.PartType.Name;
 
             bool and = false;

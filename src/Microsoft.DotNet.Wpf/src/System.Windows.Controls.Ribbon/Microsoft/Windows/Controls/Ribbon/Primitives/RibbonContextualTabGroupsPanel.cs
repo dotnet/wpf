@@ -242,7 +242,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         {
             get
             {
-                if (_separatorPen == null)
+                if (_separatorPen is null)
                 {
                     Ribbon ribbon = Ribbon;
                     if (ribbon != null && ribbon.BorderBrush != null)

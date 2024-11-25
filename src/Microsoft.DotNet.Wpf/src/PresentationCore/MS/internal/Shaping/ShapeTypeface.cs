@@ -54,23 +54,23 @@ namespace MS.Internal.Shaping
         public override int GetHashCode()
         {
             return HashFn.HashMultiply(_glyphTypeface.GetHashCode())
-                + (_deviceFont == null ? 0 : _deviceFont.Name.GetHashCode());
+                + (_deviceFont is null ? 0 : _deviceFont.Name.GetHashCode());
         }
 
         public override bool Equals(object o)
         {
             ShapeTypeface t = o as ShapeTypeface;
-            if(t == null)
+            if(t is null)
                 return false;
 
-            if (_deviceFont == null)
+            if (_deviceFont is null)
             {
                 if (t._deviceFont != null)
                     return false;
             }
             else
             {
-                if (t._deviceFont == null || t._deviceFont.Name != _deviceFont.Name)
+                if (t._deviceFont is null || t._deviceFont.Name != _deviceFont.Name)
                     return false;
             }
 
@@ -146,7 +146,7 @@ namespace MS.Internal.Shaping
         public override bool Equals(object o)
         {
             ScaledShapeTypeface t = o as ScaledShapeTypeface;
-            if (t == null)
+            if (t is null)
                 return false;
 
             return

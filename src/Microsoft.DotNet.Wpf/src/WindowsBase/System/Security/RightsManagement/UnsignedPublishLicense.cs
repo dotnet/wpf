@@ -214,7 +214,7 @@ namespace System.Security.RightsManagement
             get 
             { 
 
-                if (_localizedNameDescriptionDictionary == null)
+                if (_localizedNameDescriptionDictionary is null)
                 {
                     _localizedNameDescriptionDictionary  = new Dictionary <int, LocalizedNameDescriptionPair>(10);
                 }
@@ -305,7 +305,7 @@ namespace System.Security.RightsManagement
             get 
             { 
 
-                if (_applicationSpecificDataDictionary == null)
+                if (_applicationSpecificDataDictionary is null)
                 {
                     _applicationSpecificDataDictionary = new Dictionary <string , string>(5);
                 }

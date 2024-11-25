@@ -65,7 +65,7 @@ namespace System.Windows.Markup.Primitives
             // This #if is included to make this implementation easier to test outside the assembly.
             // This is the only place in ElementItem and FrameworkElementItem where internal members
             // are accessed that cannot be easily copied by the host.
-            if (_factory.Type == null)
+            if (_factory.Type is null)
             {
                 if (_factory.Text != null)
                 {
@@ -93,7 +93,7 @@ namespace System.Windows.Markup.Primitives
 
                 if (_factory.FirstChild != null)
                 {
-                    if (_factory.FirstChild.Type == null)
+                    if (_factory.FirstChild.Type is null)
                     {
                         yield return new FrameworkElementFactoryStringContent(_factory.FirstChild, this);
                     }

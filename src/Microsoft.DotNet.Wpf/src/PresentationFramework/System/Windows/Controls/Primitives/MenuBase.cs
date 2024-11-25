@@ -423,7 +423,7 @@ namespace System.Windows.Controls.Primitives
                         curr = popup.Parent;
 
                         // Otherwise fall back to placement target
-                        if (curr == null)
+                        if (curr is null)
                         {
                             curr = popup.PlacementTarget;
                         }
@@ -547,7 +547,7 @@ namespace System.Windows.Controls.Primitives
                 {
                     // If capture is null or it's not below the menu, close.
                     // More workaround for task 22022 -- check if it's a descendant (following Logical links too)
-                    if (Mouse.Captured == null || !MenuBase.IsDescendant(menu, Mouse.Captured as DependencyObject))
+                    if (Mouse.Captured is null || !MenuBase.IsDescendant(menu, Mouse.Captured as DependencyObject))
                     {
                         menu.IsMenuMode = false;
                     }
@@ -557,7 +557,7 @@ namespace System.Windows.Controls.Primitives
                     if (MenuBase.IsDescendant(menu, e.OriginalSource as DependencyObject))
                     {
                         // Take capture if one of our children gave up capture
-                        if (menu.IsMenuMode && Mouse.Captured == null && MS.Win32.SafeNativeMethods.GetCapture() == IntPtr.Zero)
+                        if (menu.IsMenuMode && Mouse.Captured is null && MS.Win32.SafeNativeMethods.GetCapture() == IntPtr.Zero)
                         {
                             Mouse.Capture(menu, CaptureMode.SubTree);
                             e.Handled = true;
@@ -646,7 +646,7 @@ namespace System.Windows.Controls.Primitives
                     // an element in a different top-level window.
 
 					// DependencyObject parent = Parent;
-                    // if (parent == null)
+                    // if (parent is null)
                     // {
                         // If there is no logical parent, use the visual parent.
                     //     parent = VisualTreeHelper.GetParent(this);
@@ -895,7 +895,7 @@ namespace System.Windows.Controls.Primitives
 
         private void PushMenuMode(bool isAcquireFocusMenuMode)
         {
-            Debug.Assert(_pushedMenuMode == null);
+            Debug.Assert(_pushedMenuMode is null);
             _pushedMenuMode = PresentationSource.CriticalFromVisual(this);
             Debug.Assert(_pushedMenuMode != null);
             IsAcquireFocusMenuMode = isAcquireFocusMenuMode;

@@ -78,19 +78,19 @@ namespace MS.Internal.Annotations.Anchoring
             TextAnchor firstAnchor = anchor1 as TextAnchor;
             TextAnchor secondAnchor = anchor2 as TextAnchor;
 
-            if ((anchor1 != null) && (firstAnchor == null))
+            if ((anchor1 != null) && (firstAnchor is null))
                 throw new ArgumentException(SR.WrongSelectionType, $"anchor1: type = {anchor1.GetType()}");
 
-            if ((anchor2 != null) && (secondAnchor == null))
+            if ((anchor2 != null) && (secondAnchor is null))
                 throw new ArgumentException(SR.WrongSelectionType, $"Anchor2: type = {anchor2.GetType()}");
 
-            if (firstAnchor == null)
+            if (firstAnchor is null)
             {
                 newAnchor = secondAnchor;
                 return newAnchor != null;
             }
 
-            if (secondAnchor == null)
+            if (secondAnchor is null)
             {
                 newAnchor = firstAnchor;
                 return newAnchor != null;
@@ -234,7 +234,7 @@ namespace MS.Internal.Annotations.Anchoring
 
             TextAnchor anchor = selection as TextAnchor;
 
-            if (anchor == null)
+            if (anchor is null)
                 throw new ArgumentException(SR.WrongSelectionType, "selection");
 
             return GetAnchorPointForPointer(anchor.Start.CreatePointer(LogicalDirection.Forward));
@@ -376,7 +376,7 @@ namespace MS.Internal.Annotations.Anchoring
             else
             {
                 TextAnchor textAnchor = selection as TextAnchor;
-                if (textAnchor == null)
+                if (textAnchor is null)
                     throw new ArgumentException(SR.WrongSelectionType, "selection");
 
                 start = textAnchor.Start;

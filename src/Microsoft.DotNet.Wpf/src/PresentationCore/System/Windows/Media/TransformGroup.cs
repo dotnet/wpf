@@ -52,7 +52,7 @@ namespace System.Windows.Media
                 ReadPreamble();
 
                 TransformCollection children = Children;
-                if ((children == null) || (children.Count == 0))
+                if ((children is null) || (children.Count == 0))
                 {
                     return new Matrix();
                 }
@@ -78,7 +78,7 @@ namespace System.Windows.Media
             get
             {
                 TransformCollection children = Children;
-                if ((children == null) || (children.Count == 0))
+                if ((children is null) || (children.Count == 0))
                 {
                     return true;
                 }

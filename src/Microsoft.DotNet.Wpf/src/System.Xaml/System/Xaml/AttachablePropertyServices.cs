@@ -16,7 +16,7 @@ namespace System.Xaml
 
         public static int GetAttachedPropertyCount(object instance)
         {
-            if (instance == null)
+            if (instance is null)
             {
                 return 0;
             }
@@ -32,7 +32,7 @@ namespace System.Xaml
 
         public static void CopyPropertiesTo(object instance, KeyValuePair<AttachableMemberIdentifier, object>[] array, int index)
         {
-            if (instance == null)
+            if (instance is null)
             {
                 return;
             }
@@ -50,7 +50,7 @@ namespace System.Xaml
 
         public static bool RemoveProperty(object instance, AttachableMemberIdentifier name)
         {
-            if (instance == null)
+            if (instance is null)
             {
                 return false;
             }
@@ -66,7 +66,7 @@ namespace System.Xaml
 
         public static void SetProperty(object instance, AttachableMemberIdentifier name, object value)
         {
-            if (instance == null)
+            if (instance is null)
             {
                 return;
             }
@@ -91,7 +91,7 @@ namespace System.Xaml
 
         public static bool TryGetProperty<T>(object instance, AttachableMemberIdentifier name, out T value)
         {
-            if (instance == null)
+            if (instance is null)
             {
                 value = default(T);
                 return false;

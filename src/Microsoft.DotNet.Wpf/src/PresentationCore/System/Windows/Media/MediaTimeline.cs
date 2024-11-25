@@ -136,7 +136,7 @@ namespace System.Windows.Media
         /// </remarks>
         protected internal override Clock AllocateClock()
         {
-            if (Source == null)
+            if (Source is null)
             {
                 throw new InvalidOperationException(SR.Media_UriNotSpecified);
             }
@@ -239,7 +239,7 @@ namespace System.Windows.Media
         protected override Duration GetNaturalDurationCore(Clock clock)
         {
             MediaClock mc = (MediaClock)clock;
-            if (mc.Player == null)
+            if (mc.Player is null)
             {
                 return Duration.Automatic;
             }

@@ -140,7 +140,7 @@ namespace MS.Internal.AutomationProxies
         // which would otherwise be treated as a normal submenu.
         private void FixMDIMenuType()
         {
-            if (_type == MenuType.Submenu && GetHierarchyParent(_hwnd) == null && GetSystemPopupParent() != null)
+            if (_type == MenuType.Submenu && GetHierarchyParent(_hwnd) is null && GetSystemPopupParent() != null)
             {
                 _type = MenuType.SystemPopup;
             }
@@ -969,7 +969,7 @@ namespace MS.Internal.AutomationProxies
                 // parent during the ctor if it has not already been cached.
                 MenuParentInfo parentInfo = null;
 
-                while (_expandedMenus.Contains(hwnd) && parent == null)
+                while (_expandedMenus.Contains(hwnd) && parent is null)
                 {
                     // get the parent info
                     parentInfo = (MenuParentInfo) _expandedMenus [hwnd];
@@ -1009,7 +1009,7 @@ namespace MS.Internal.AutomationProxies
 
                 // If could not find cached parent information, check to see if the system menu has been
                 // cached.  If so use the system menu as the parent.
-                if (parent == null && _expandedMenus.Contains(IntPtr.Zero))
+                if (parent is null && _expandedMenus.Contains(IntPtr.Zero))
                 {
                     // get the parent info
                     parentInfo = (MenuParentInfo)_expandedMenus[IntPtr.Zero];
@@ -2180,7 +2180,7 @@ namespace MS.Internal.AutomationProxies
                     // If fShow == true, also make sure last child is present.
                     // (This makes it more certain that the menu is done with initialization.)
                     if ((fShow && firstMenu != null && FirstOrLastChild(false) != null
-                            || !fShow && firstMenu == null)
+                            || !fShow && firstMenu is null)
                         || (dwDelta = SubtractTicks (SafeNativeMethods.GetTickCount (), dwTicks)) >= WindowsMenu.TimeOut)
                     {
                         return dwDelta < WindowsMenu.TimeOut;

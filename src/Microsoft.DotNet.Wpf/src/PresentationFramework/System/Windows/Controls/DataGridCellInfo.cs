@@ -121,13 +121,13 @@ namespace System.Windows.Controls
         {
             Debug.Assert(owner != null, "owner should not be null.");
 
-            if ((item == null) && (column == null))
+            if ((item is null) && (column is null))
             {
                 return Unset;
             }
             else
             {
-                return new DataGridCellInfo(owner, column, (item == null) ? DependencyProperty.UnsetValue : item);
+                return new DataGridCellInfo(owner, column, (item is null) ? DependencyProperty.UnsetValue : item);
             }
         }
 
@@ -186,8 +186,8 @@ namespace System.Windows.Controls
         /// </summary>
         public override int GetHashCode()
         {
-            return ((_info == null) ? 0 : _info.GetHashCode()) ^
-                   ((_column == null) ? 0 : _column.GetHashCode());
+            return ((_info is null) ? 0 : _info.GetHashCode()) ^
+                   ((_column is null) ? 0 : _column.GetHashCode());
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace System.Windows.Controls
         internal bool IsValidForDataGrid(DataGrid dataGrid)
         {
             DataGrid owner = Owner;
-            return (ArePropertyValuesValid && (owner == dataGrid)) || (owner == null);
+            return (ArePropertyValuesValid && (owner == dataGrid)) || (owner is null);
         }
 
         private bool ArePropertyValuesValid

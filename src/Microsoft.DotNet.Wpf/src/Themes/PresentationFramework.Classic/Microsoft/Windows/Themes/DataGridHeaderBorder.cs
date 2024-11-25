@@ -145,7 +145,7 @@ namespace Microsoft.Windows.Themes
 
                 bool ascending = (sortDirection == ListSortDirection.Ascending);
                 PathGeometry arrowGeometry = (PathGeometry)GetCachedFreezable(ascending ? (int)ClassicFreezables.ArrowUpGeometry : (int)ClassicFreezables.ArrowDownGeometry);
-                if (arrowGeometry == null)
+                if (arrowGeometry is null)
                 {
                     arrowGeometry = new PathGeometry();
                     PathFigure arrowFigure = new PathFigure();

@@ -127,7 +127,7 @@ namespace System.Windows.Automation.Provider
             if (e.EventId == AutomationElementIdentifiers.AsyncContentLoadedEvent)
             {
                 AsyncContentLoadedEventArgs asyncArgs = e as AsyncContentLoadedEventArgs;
-                if(asyncArgs == null)
+                if(asyncArgs is null)
                     ThrowInvalidArgument("e");
 
                 UiaCoreProviderApi.UiaRaiseAsyncContentLoadedEvent(provider, asyncArgs.AsyncContentLoadedState, asyncArgs.PercentComplete);
@@ -140,7 +140,7 @@ namespace System.Windows.Automation.Provider
             if (e.EventId == AutomationElementIdentifiers.NotificationEvent)
             {
                 NotificationEventArgs notificationArgs = e as NotificationEventArgs;
-                if (notificationArgs == null)
+                if (notificationArgs is null)
                     ThrowInvalidArgument("e");
 
                 UiaCoreProviderApi.UiaRaiseNotificationEvent(provider,
@@ -157,7 +157,7 @@ namespace System.Windows.Automation.Provider
             if (e.EventId == AutomationElementIdentifiers.ActiveTextPositionChangedEvent)
             {
                 ActiveTextPositionChangedEventArgs activeTextPositionChangedArgs = e as ActiveTextPositionChangedEventArgs;
-                if (activeTextPositionChangedArgs == null)
+                if (activeTextPositionChangedArgs is null)
                     ThrowInvalidArgument("e");
 
                 UiaCoreProviderApi.UiaRaiseActiveTextPositionChangedEvent(provider, activeTextPositionChangedArgs.TextRange);

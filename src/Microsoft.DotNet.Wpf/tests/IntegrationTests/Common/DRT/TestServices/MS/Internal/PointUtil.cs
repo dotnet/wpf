@@ -117,7 +117,7 @@ namespace MS.Internal
         {
             // For now we only know how to use HwndSource.
             HwndSource inputSource = presentationSource as HwndSource;
-            if(inputSource == null)
+            if(inputSource is null)
             {
                 return ptClient;
             }
@@ -166,7 +166,7 @@ namespace MS.Internal
         {
             // For now we only know how to use HwndSource.
             HwndSource inputSource = presentationSource as HwndSource;
-            if(inputSource == null)
+            if(inputSource is null)
             {
                 return ptScreen;
             }

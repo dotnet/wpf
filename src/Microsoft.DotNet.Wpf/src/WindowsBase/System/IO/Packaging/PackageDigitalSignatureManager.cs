@@ -166,7 +166,7 @@ namespace System.IO.Packaging
 
                 // Return a read-only collection referring to them.
                 // This list will be automatically updated when the underlying collection is changed.
-                if (_signatureList == null)
+                if (_signatureList is null)
                     _signatureList = new ReadOnlyCollection<PackageDigitalSignature>(_signatures);
 
                 return _signatureList;
@@ -362,7 +362,7 @@ namespace System.IO.Packaging
         public PackageDigitalSignature Sign(IEnumerable<Uri> parts)
         {
             X509Certificate certificate = PromptForSigningCertificate(ParentWindow);
-            if (certificate == null)
+            if (certificate is null)
                 return null;
             else
                 return Sign(parts, certificate);
@@ -410,7 +410,7 @@ namespace System.IO.Packaging
         {
             // Cannot both be null - need to check here because the similar check in the super-overload cannot
             // distinguish to this level.
-            if (parts == null && relationshipSelectors == null)
+            if (parts is null && relationshipSelectors is null)
             {
                 throw new ArgumentException(SR.NothingToSign);
             }
@@ -496,7 +496,7 @@ namespace System.IO.Packaging
 
             // convert cert to version2 - more functionality
             X509Certificate2 exSigner = certificate as X509Certificate2;
-            if (exSigner == null)
+            if (exSigner is null)
                 exSigner = new X509Certificate2(certificate.Handle);
 
             //PRESHARP: Parameter to this public method must be validated:  A null-dereference can occur here.
@@ -600,7 +600,7 @@ namespace System.IO.Packaging
 
             // prompt for certificate
             X509Certificate certificate = PromptForSigningCertificate(ParentWindow);
-            if (certificate == null)
+            if (certificate is null)
                 return null;
             else
                 return Countersign(certificate);
@@ -1015,7 +1015,7 @@ namespace System.IO.Packaging
         /// <returns>true if enumerator is empty or null</returns>
         private bool EnumeratorEmptyCheck(System.Collections.IEnumerable enumerable)
         {
-            if (enumerable == null)
+            if (enumerable is null)
                 return true;            // null means empty
 
             // see if it's really a collection as this is more efficient than enumerating
@@ -1241,7 +1241,7 @@ namespace System.IO.Packaging
         // load signatures from container
         private void EnsureSignatures()
         {
-            if (_signatures == null)
+            if (_signatures is null)
             {
                 _signatures = new List<PackageDigitalSignature>();
 
@@ -1349,7 +1349,7 @@ namespace System.IO.Packaging
         {
             get
             {
-                if (_originPart == null)
+                if (_originPart is null)
                 {
                     if (!OriginPartExists())
                     {

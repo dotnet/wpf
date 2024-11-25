@@ -63,7 +63,7 @@ namespace System.Windows
             // Get the entry corresponding to the given key
             Delegate existingDelegate = (Delegate)this[key];
 
-            if (existingDelegate == null)
+            if (existingDelegate is null)
             {
                 _entries[key.GlobalIndex] = handler;
             }
@@ -100,7 +100,7 @@ namespace System.Windows
             if (existingDelegate != null)
             {
                 existingDelegate = Delegate.Remove(existingDelegate, handler);
-                if (existingDelegate == null)
+                if (existingDelegate is null)
                 {
                     // last handler for this event was removed -- reclaim space in
                     // underlying FrugalMap by setting value to DependencyProperty.UnsetValue
@@ -161,7 +161,7 @@ namespace System.Windows
 
             // Get the entry corresponding to the given RoutedEvent
             FrugalObjectList<RoutedEventHandlerInfo> handlers = (FrugalObjectList<RoutedEventHandlerInfo>)this[routedEvent];
-            if (handlers == null)
+            if (handlers is null)
             {
                 _entries[routedEvent.GlobalIndex] = handlers = new FrugalObjectList<RoutedEventHandlerInfo>(1);
             }

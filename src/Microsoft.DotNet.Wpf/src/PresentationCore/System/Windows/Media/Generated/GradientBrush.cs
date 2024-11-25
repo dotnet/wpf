@@ -296,7 +296,7 @@ namespace System.Windows.Media
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
             // of your app.
-            Debug.Assert(s_GradientStops == null || s_GradientStops.IsFrozen,
+            Debug.Assert(s_GradientStops is null || s_GradientStops.IsFrozen,
                 "Detected context bound default value GradientBrush.s_GradientStops (See OS Bug #947272).");
 
 

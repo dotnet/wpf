@@ -242,7 +242,7 @@ namespace MS.Internal.Annotations.Anchoring
                 processor = _selectionProcessors[selectionType] as SelectionProcessor;
                 selectionType = selectionType.BaseType;
             }
-            while (processor == null && selectionType != null);
+            while (processor is null && selectionType != null);
 
             return processor;
         }
@@ -295,7 +295,7 @@ namespace MS.Internal.Annotations.Anchoring
                 else
                 {
                     AnnotationService service = AnnotationService.GetService(node);
-                    if (service == null || !service.IsEnabled)
+                    if (service is null || !service.IsEnabled)
                     {
                         throw new InvalidOperationException(SR.AnnotationServiceNotEnabled);
                     }
@@ -383,7 +383,7 @@ namespace MS.Internal.Annotations.Anchoring
             }
 
             // We never return null.  A misbehaved processor might return null so we fix it up.
-            if (returnLocators == null)
+            if (returnLocators is null)
                 returnLocators = new List<ContentLocatorBase>(0);
 
             return returnLocators;
@@ -557,7 +557,7 @@ namespace MS.Internal.Annotations.Anchoring
             if (matched)
             {
                 ContentLocator realLocator = locator as ContentLocator;
-                if (realLocator == null || locatorPartIdx < realLocator.Parts.Count)
+                if (realLocator is null || locatorPartIdx < realLocator.Parts.Count)
                 {
                     // Now we try to resolve.  If any locator parts were matched to the startNode we want to 
                     // start resolving with its children, skipping a revisit to the startNode.
@@ -935,7 +935,7 @@ namespace MS.Internal.Annotations.Anchoring
             // Setup the locators and other inputs before the loop.  Normal locators
             // are put in an array of locators (with one element).  LocatorGroups have
             // their Locators collection used.
-            if (locatorGroup == null)
+            if (locatorGroup is null)
             {
                 Debug.Assert(offset >= 0 && offset < realLocator.Parts.Count, "offset out of range");
 
@@ -1116,14 +1116,14 @@ namespace MS.Internal.Annotations.Anchoring
             DependencyObject node = null;
             SubTreeProcessor processor = null;
             ContentLocatorPart locatorPart = locator.Parts[data.LocatorPartIndex];
-            if (locatorPart == null)
+            if (locatorPart is null)
             {
                 // Can't resolve a null ContentLocatorPart
                 keepResolving = false;
             }
 
             processor = this.GetSubTreeProcessorForLocatorPart(locatorPart);
-            if (processor == null)
+            if (processor is null)
             {
                 // Can't keep resolving if there is no processor for this ContentLocatorBase Part                
                 keepResolving = false;
@@ -1226,7 +1226,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <returns>list of merged locators</returns>
         private IList<ContentLocatorBase> Merge(ContentLocatorBase initialLocator, IList<ContentLocatorBase> additionalLocators)
         {
-            if (additionalLocators == null || additionalLocators.Count == 0)
+            if (additionalLocators is null || additionalLocators.Count == 0)
             {
                 List<ContentLocatorBase> res = new List<ContentLocatorBase>(1);
 

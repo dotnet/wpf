@@ -361,7 +361,7 @@ namespace System.Windows.Interop
         {
             get
             {
-                if (_axSite == null)
+                if (_axSite is null)
                 {
                     _axSite = CreateActiveXSite();
                 }
@@ -373,7 +373,7 @@ namespace System.Windows.Interop
         {
             get
             {
-                if (_axContainer == null)
+                if (_axContainer is null)
                 {
                     _axContainer = new ActiveXContainer(this);
                 }
@@ -568,7 +568,7 @@ namespace System.Windows.Interop
             {
                 //
                 // First, create the ActiveX control
-                Debug.Assert(_axInstance == null, "_axInstance must be null");
+                Debug.Assert(_axInstance is null, "_axInstance must be null");
 
                 _axInstance = CreateActiveXObject(_clsid);
                 Debug.Assert(_axInstance != null, "w/o an exception being thrown we must have an object...");
@@ -924,7 +924,7 @@ namespace System.Windows.Interop
 
         private static void OnAccessKeyPressed(object sender, AccessKeyPressedEventArgs args)
         {
-            if (!args.Handled && args.Scope == null && args.Target == null)
+            if (!args.Handled && args.Scope is null && args.Target is null)
             {
                 args.Target = (UIElement)sender;
             }

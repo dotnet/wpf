@@ -32,7 +32,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_defaultElementStyle == null)
+                if (_defaultElementStyle is null)
                 {
                     Style baseStyle = null;
                     if (ThemeManager.IsFluentThemeEnabled)
@@ -64,7 +64,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_defaultEditingElementStyle == null)
+                if (_defaultEditingElementStyle is null)
                 {
                     Style baseStyle = null;
                     if (ThemeManager.IsFluentThemeEnabled)
@@ -108,7 +108,7 @@ namespace System.Windows.Controls
         private CheckBox GenerateCheckBox(bool isEditing, DataGridCell cell)
         {
             CheckBox checkBox = (cell != null) ? (cell.Content as CheckBox) : null;
-            if (checkBox == null)
+            if (checkBox is null)
             {
                 checkBox = new CheckBox();
             }

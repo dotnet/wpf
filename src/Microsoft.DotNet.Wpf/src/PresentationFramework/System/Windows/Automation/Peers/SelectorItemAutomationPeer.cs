@@ -49,7 +49,7 @@ namespace System.Windows.Automation.Peers
                 throw new ElementNotEnabledException();
 
             Selector parentSelector = (Selector)(ItemsControlAutomationPeer.Owner);
-            if (parentSelector == null)
+            if (parentSelector is null)
             {
                 throw new InvalidOperationException(SR.UIA_OperationCannotBePerformed);
             }
@@ -67,7 +67,7 @@ namespace System.Windows.Automation.Peers
                 throw new ElementNotEnabledException();
 
             Selector parentSelector = (Selector)(ItemsControlAutomationPeer.Owner);
-            if ((parentSelector == null) || (!parentSelector.CanSelectMultiple && parentSelector.SelectedItem != null && parentSelector.SelectedItem != Item))
+            if ((parentSelector is null) || (!parentSelector.CanSelectMultiple && parentSelector.SelectedItem != null && parentSelector.SelectedItem != Item))
             {
                 // Parent must exist and be multi-select
                 // in single-select mode the selected item should be null or Owner

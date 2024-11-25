@@ -165,7 +165,7 @@ namespace MS.Internal.Data
                     newFinger = SearchRight(item, index, comparison);
                 }
             }
-            else // leftItem == null
+            else // leftItem is null
             {
                 if (rightItem != null)  // hence item <= rightItem
                 {
@@ -319,7 +319,7 @@ namespace MS.Internal.Data
             while (stack.Count > 0)
             {
                 block = stack.Pop();
-                if (block == null)
+                if (block is null)
                     continue;
 
                 block.GetFirstAndLastCleanItems(out first, out last, out size);
@@ -400,7 +400,7 @@ namespace MS.Internal.Data
             while (stack.Count > 0)
             {
                 block = stack.Pop();
-                if (block == null)
+                if (block is null)
                     continue;
 
                 block.GetFirstAndLastCleanItems(out first, out last, out size);

@@ -154,7 +154,7 @@ namespace System.Windows.Controls
 
             if ((bool) e.NewValue)
             {
-                if (ctrl._parentPopup == null)
+                if (ctrl._parentPopup is null)
                 {
                     ctrl.HookupParentPopup();
                 }
@@ -254,7 +254,7 @@ namespace System.Windows.Controls
         {
             ContextMenu cm = (ContextMenu)d;
 
-            if (cm._parentPopup == null || !cm._parentPopup.AllowsTransparency || !SystemParameters.DropShadow)
+            if (cm._parentPopup is null || !cm._parentPopup.AllowsTransparency || !SystemParameters.DropShadow)
             {
                 return BooleanBoxes.FalseBox;
             }
@@ -428,7 +428,7 @@ namespace System.Windows.Controls
             switch (key)
             {
                 case Key.Down:
-                    if (CurrentSelection == null)
+                    if (CurrentSelection is null)
                     {
                         NavigateToStart(new ItemNavigateArgs(e.Device, Keyboard.Modifiers));
                         e.Handled = true;
@@ -437,7 +437,7 @@ namespace System.Windows.Controls
                     break;
 
                 case Key.Up:
-                    if (CurrentSelection == null)
+                    if (CurrentSelection is null)
                     {
                         NavigateToEnd(new ItemNavigateArgs(e.Device, Keyboard.Modifiers));
                         e.Handled = true;
@@ -486,7 +486,7 @@ namespace System.Windows.Controls
 
         private void HookupParentPopup()
         {
-            Debug.Assert(_parentPopup == null, "_parentPopup should be null");
+            Debug.Assert(_parentPopup is null, "_parentPopup should be null");
 
             _parentPopup = new Popup();
 

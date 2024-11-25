@@ -66,7 +66,7 @@ namespace System.Windows.Automation.Peers
                 {
                     TextBox tb = owner.TextBox;
                     //The focus should have gone to the TextBox inside DatePicker
-                    if (tb == null || !tb.IsKeyboardFocused)
+                    if (tb is null || !tb.IsKeyboardFocused)
                     {
                         throw new InvalidOperationException(SR.SetFocusFailed);
                     }

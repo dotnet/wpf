@@ -62,7 +62,7 @@ namespace System.Windows.Automation.Peers
             double verticalPercent = -1;
             ScrollBar sb = Owner as ScrollBar;
             ScrollViewer sv = sb.TemplatedParent as ScrollViewer;
-            if (sv == null)
+            if (sv is null)
             {
                 base.SetValueCore(val);
             }

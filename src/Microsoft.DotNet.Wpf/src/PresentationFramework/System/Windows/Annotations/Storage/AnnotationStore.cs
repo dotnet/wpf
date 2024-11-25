@@ -239,7 +239,7 @@ namespace System.Windows.Annotations.Storage
             AnnotationAuthorChangedEventHandler authorChanged = null;
 
             // Ignore null authors added to an annotation
-            if (args.Author == null)
+            if (args.Author is null)
                 return;
 
             lock (SyncRoot)
@@ -269,7 +269,7 @@ namespace System.Windows.Annotations.Storage
             AnnotationResourceChangedEventHandler anchorChanged = null;
 
             // Ignore null resources added to an annotation
-            if (args.Resource == null)
+            if (args.Resource is null)
                 return;
 
             lock (SyncRoot)
@@ -299,7 +299,7 @@ namespace System.Windows.Annotations.Storage
             AnnotationResourceChangedEventHandler cargoChanged = null;
 
             // Ignore null resources added to an annotation
-            if (args.Resource == null)
+            if (args.Resource is null)
                 return;
             
             lock (SyncRoot)

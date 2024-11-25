@@ -53,10 +53,10 @@ namespace MS.Internal.Documents
             if (currentParent != null)
             {
                 ContainerVisual pageVisualHost = currentParent as ContainerVisual;
-                if (pageVisualHost == null)
+                if (pageVisualHost is null)
                     throw new ArgumentException(SR.DocumentPageView_ParentNotDocumentPageHost, "pageVisual");
                 DocumentPageHost docPageHost = VisualTreeHelper.GetParent(pageVisualHost) as DocumentPageHost;
-                if (docPageHost == null)
+                if (docPageHost is null)
                     throw new ArgumentException(SR.DocumentPageView_ParentNotDocumentPageHost, "pageVisual");
                 docPageHost.PageVisual = null;
             }
@@ -121,7 +121,7 @@ namespace MS.Internal.Documents
         /// </summary>
         protected override Visual GetVisualChild(int index)
         {
-            if (index != 0 || _pageVisual == null)
+            if (index != 0 || _pageVisual is null)
             {
                 throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }

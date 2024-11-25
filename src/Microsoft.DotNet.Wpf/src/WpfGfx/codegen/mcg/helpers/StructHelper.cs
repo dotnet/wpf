@@ -33,7 +33,7 @@ namespace MS.Internal.MilCodeGen.Helpers
         {
             string decl =
                 [[inline]]
-                    typedef struct[[(resource.Extends == null)? "" : " : " + resource.Extends.UnmanagedDataType]]
+                    typedef struct[[(resource.Extends is null)? "" : " : " + resource.Extends.UnmanagedDataType]]
                     {
                         [[GetNativeStructMembers(resource)]]
                     } [[resource.UnmanagedDataType]];
@@ -67,7 +67,7 @@ namespace MS.Internal.MilCodeGen.Helpers
         /// </summary>
         public static string FormatManagedStructure(McgResource resource)
         {
-            Debug.Assert(resource.PragmaPack == null, "Pack pragma unsupported for managed types");
+            Debug.Assert(resource.PragmaPack is null, "Pack pragma unsupported for managed types");
 
             //
             // Need to refactor McgType so that we can create a new copy
@@ -79,7 +79,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                 [[inline]]
                     [[GetManagedClassBlockComment(resource)]]
                     [StructLayout(LayoutKind.Sequential, Pack=1)]
-                    internal struct [[resource.UnmanagedDataType]][[(resource.Extends == null)? "" : " : " + resource.Extends.UnmanagedDataType]]
+                    internal struct [[resource.UnmanagedDataType]][[(resource.Extends is null)? "" : " : " + resource.Extends.UnmanagedDataType]]
                     {
                         [[GetManagedStructMembers(resource)]]
                     };

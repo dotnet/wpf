@@ -81,7 +81,7 @@ namespace MS.Win32 {
             {
                 XFORM xform = obj as XFORM;
 
-                if( xform == null )
+                if( xform is null )
                 {
                     return false;
                 }

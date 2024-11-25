@@ -31,7 +31,7 @@ namespace Test.Elements
             }
 
             MySetter setter = targetObject as MySetter;
-            if (setter == null)
+            if (setter is null)
             {
                 throw new Exception("Expected a MySetter but got one of type:" + targetObject.GetType());
             }

@@ -117,7 +117,7 @@ namespace System.Windows.Media
             Pen pen,
             Geometry geometry)
         {
-            if ((geometry == null) || geometry.IsEmpty()) 
+            if ((geometry is null) || geometry.IsEmpty()) 
             {
                 return;
             }
@@ -199,7 +199,7 @@ namespace System.Windows.Media
 
             // 1st case:- No change, keep the old clip
             // 2nd case:- No matter what, the intersection will also be empty
-            if ((clipGeometry == null)  
+            if ((clipGeometry is null)  
                 ||
                 ((_currentClip!=null) && (_currentClip.IsEmpty()))) 
             {
@@ -268,7 +268,7 @@ namespace System.Windows.Media
             Transform transform)
         {
             // Combine the new transform with the current one
-            if ((transform == null) || transform.IsIdentity)
+            if ((transform is null) || transform.IsIdentity)
             {
                 // The new transform does not change the existing one
                 transform = _currentTransform;
@@ -351,7 +351,7 @@ namespace System.Windows.Media
 
                 // Since the drawing context starts out with no transform and no clip,
                 // the first element pushed on the stack will always be null.
-                Debug.Assert((_modifierStack.Count > 0) || (_currentTransform == null));
+                Debug.Assert((_modifierStack.Count > 0) || (_currentTransform is null));
             }
             else if (currentModifier is ClipModifierNode)
             {
@@ -359,11 +359,11 @@ namespace System.Windows.Media
 
                 // Since the drawing context starts out with no transform and no clip,
                 // the first element pushed on the stack will always be null.
-                Debug.Assert((_modifierStack.Count > 0) || (_currentClip == null));
+                Debug.Assert((_modifierStack.Count > 0) || (_currentClip is null));
             }
             else
             {
-                Debug.Assert(currentModifier == null);
+                Debug.Assert(currentModifier is null);
             }
         }
 
@@ -454,7 +454,7 @@ namespace System.Windows.Media
         private void PushModifierStack(ModifierNode modifier)
         {
             // Push the old modifier on the stack
-            if (_modifierStack == null)
+            if (_modifierStack is null)
             {
                 _modifierStack = new Stack();
             }

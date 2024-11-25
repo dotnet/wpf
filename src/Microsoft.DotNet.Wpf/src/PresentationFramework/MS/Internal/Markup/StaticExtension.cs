@@ -43,7 +43,7 @@ namespace MS.Internal.Markup
         /// </returns>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            if (Member == null)
+            if (Member is null)
             {
                 throw new InvalidOperationException(SR.MarkupExtensionStaticMember);
             }
@@ -86,7 +86,7 @@ namespace MS.Internal.Markup
                 ArgumentNullException.ThrowIfNull(serviceProvider);
 
                 IXamlTypeResolver xamlTypeResolver = serviceProvider.GetService(typeof(IXamlTypeResolver)) as IXamlTypeResolver;
-                if (xamlTypeResolver == null)
+                if (xamlTypeResolver is null)
                 {
                     throw new ArgumentException(SR.Format(SR.MarkupExtensionNoContext, GetType().Name, "IXamlTypeResolver"));
                 }

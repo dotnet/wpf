@@ -122,7 +122,7 @@ namespace MS.Internal.Automation
 
             // If our weak reference is still alive, then get it
             AutomationElement elThis = AutomationElement;
-            if (elThis == null)
+            if (elThis is null)
             {
                 return false;   // reference is no longer alive
             }

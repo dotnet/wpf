@@ -36,13 +36,13 @@ namespace System.Windows.Documents
         // Worker for TextBox/RichTextBox.GetSpellingErrorAtPosition.
         internal static SpellingError GetSpellingErrorAtPosition(TextEditor This, ITextPointer position, LogicalDirection direction)
         {
-            return (This.Speller == null) ? null : This.Speller.GetError(position, direction, true /* forceEvaluation */);
+            return (This.Speller is null) ? null : This.Speller.GetError(position, direction, true /* forceEvaluation */);
         }
 
         // Returns the error (if any) at the current selection.
         internal static SpellingError GetSpellingErrorAtSelection(TextEditor This)
         {
-            if (This.Speller == null)
+            if (This.Speller is null)
             {
                 return null;
             }
@@ -61,7 +61,7 @@ namespace System.Windows.Documents
 
             char character;
             ITextPointer position = GetNextTextPosition(This.Selection.Start, null /* limit */, direction, out character);
-            if (position == null)
+            if (position is null)
             {
                 // There is no next character -- flip direction.
                 // This is the end-of-document or end-of-paragraph case.
@@ -87,7 +87,7 @@ namespace System.Windows.Documents
                 {
                     direction = LogicalDirection.Forward;
                     position = GetNextNonWhiteSpacePosition(This.Selection.Start, This.Selection.End);
-                    if (position == null)
+                    if (position is null)
                     {
                         direction = LogicalDirection.Backward;
                         position = GetNextTextPosition(This.Selection.Start, null /* limit */, direction, out character);
@@ -95,13 +95,13 @@ namespace System.Windows.Documents
                 }
             }
 
-            return (position == null) ? null : This.Speller.GetError(position, direction, false /* forceEvaluation */);
+            return (position is null) ? null : This.Speller.GetError(position, direction, false /* forceEvaluation */);
         }
 
         // Worker for TextBox/RichTextBox.GetNextSpellingErrorPosition.
         internal static ITextPointer GetNextSpellingErrorPosition(TextEditor This, ITextPointer position, LogicalDirection direction)
         {
-            return (This.Speller == null) ? null : This.Speller.GetNextSpellingErrorPosition(position, direction);
+            return (This.Speller is null) ? null : This.Speller.GetNextSpellingErrorPosition(position, direction);
         }
 
         #endregion Class Internal Methods
@@ -121,15 +121,15 @@ namespace System.Windows.Documents
         private static void OnCorrectSpellingError(object target, ExecutedRoutedEventArgs args)
         {
             TextEditor This = TextEditor._GetTextEditor(target);
-            if (This == null)
+            if (This is null)
                 return;
 
             string correctedText = args.Parameter as string;
-            if (correctedText == null)
+            if (correctedText is null)
                 return;
 
             SpellingError spellingError = GetSpellingErrorAtSelection(This);
-            if (spellingError == null)
+            if (spellingError is null)
                 return;
 
             using (This.Selection.DeclareChangeBlock())
@@ -223,11 +223,11 @@ namespace System.Windows.Documents
         private static void OnIgnoreSpellingError(object target, ExecutedRoutedEventArgs args)
         {
             TextEditor This = TextEditor._GetTextEditor(target);
-            if (This == null)
+            if (This is null)
                 return;
 
             SpellingError spellingError = GetSpellingErrorAtSelection(This);
-            if (spellingError == null)
+            if (spellingError is null)
                 return;
 
             spellingError.IgnoreAll();
@@ -240,7 +240,7 @@ namespace System.Windows.Documents
         private static void OnQueryStatusSpellingError(object target, CanExecuteRoutedEventArgs args)
         {
             TextEditor This = TextEditor._GetTextEditor(target);
-            if (This == null)
+            if (This is null)
                 return;
 
             SpellingError spellingError = GetSpellingErrorAtSelection(This);
@@ -259,7 +259,7 @@ namespace System.Windows.Documents
 
             while (position != null &&
                    !foundText &&
-                   (limit == null || position.CompareTo(limit) < 0))
+                   (limit is null || position.CompareTo(limit) < 0))
             {
                 switch (position.GetPointerContext(direction))
                 {
@@ -316,7 +316,7 @@ namespace System.Windows.Documents
 
                 position = GetNextTextPosition(position, limit, LogicalDirection.Forward, out character);
 
-                if (position == null)
+                if (position is null)
                     break;
 
                 if (!Char.IsWhiteSpace(character))

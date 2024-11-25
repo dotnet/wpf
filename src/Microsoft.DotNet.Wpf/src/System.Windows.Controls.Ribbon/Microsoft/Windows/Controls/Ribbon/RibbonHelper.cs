@@ -54,7 +54,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static object CoerceRibbonToolTip(DependencyObject d, object value)
         {
-            if (value == null)
+            if (value is null)
             {
                 string toolTipTitle = RibbonControlService.GetToolTipTitle(d);
                 string toolTipDescription = RibbonControlService.GetToolTipDescription(d);
@@ -102,13 +102,13 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// <returns></returns>
         public static bool GetIsContentTooltip(FrameworkElement visualChild, object content)
         {
-            if (content == null || visualChild == null)
+            if (content is null || visualChild is null)
             {
                 return false;
             }
 
             RibbonToolTip ribbonToolTip = visualChild.ToolTip as RibbonToolTip;
-            if (ribbonToolTip == null)
+            if (ribbonToolTip is null)
             {
                 return false;
             }
@@ -128,10 +128,10 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (visualChild != null)
             {
                 // Checks if ToolTip is not already set on the element
-                if (value && element.ToolTip == null && content != null)
+                if (value && element.ToolTip is null && content != null)
                 {
                     RibbonToolTip ribbonToolTip = visualChild.ToolTip as RibbonToolTip;
-                    if (ribbonToolTip == null ||
+                    if (ribbonToolTip is null ||
                         ribbonToolTip.Title != content.ToString())
                     {
                         ribbonToolTip = new RibbonToolTip();
@@ -150,7 +150,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             // Fetch the Popup parent
 
-            if (popup == null)
+            if (popup is null)
             {
                 DependencyObject rootVisual = TreeHelper.FindVisualRoot(element);
                 if (rootVisual != null)
@@ -201,7 +201,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         public static ValueAndValueSource GetValueAndValueSource(DependencyObject d, DependencyProperty property)
         {
-            if (d == null)
+            if (d is null)
             {
                 return null;
             }
@@ -272,7 +272,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             if (itemsControl.ItemTemplate == parentItemsControl.ItemTemplate)
             {
-                if (hTemplate == null || (hTemplate.ItemTemplate == null && string.IsNullOrEmpty(hTemplate.ItemStringFormat) && hTemplate.ItemTemplateSelector == null))
+                if (hTemplate is null || (hTemplate.ItemTemplate is null && string.IsNullOrEmpty(hTemplate.ItemStringFormat) && hTemplate.ItemTemplateSelector is null))
                 {
                     RestoreValue(itemsControl, ItemsControl.ItemTemplateProperty, itemTemplate);
                 }
@@ -280,7 +280,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             if (itemsControl.ItemTemplateSelector == parentItemsControl.ItemTemplateSelector)
             {
-                if (hTemplate == null || (string.IsNullOrEmpty(hTemplate.ItemStringFormat) && hTemplate.ItemTemplateSelector == null))
+                if (hTemplate is null || (string.IsNullOrEmpty(hTemplate.ItemStringFormat) && hTemplate.ItemTemplateSelector is null))
                 {
                     RestoreValue(itemsControl, ItemsControl.ItemTemplateSelectorProperty, itemTemplateSelector);
                 }
@@ -288,7 +288,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             if (itemsControl.ItemStringFormat == parentItemsControl.ItemStringFormat)
             {
-                if (hTemplate == null || string.IsNullOrEmpty(hTemplate.ItemStringFormat))
+                if (hTemplate is null || string.IsNullOrEmpty(hTemplate.ItemStringFormat))
                 {
                     RestoreValue(itemsControl, ItemsControl.ItemStringFormatProperty, itemStringFormat);
                 }
@@ -296,7 +296,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             if (itemsControl.ItemContainerStyle == parentItemsControl.ItemContainerStyle)
             {
-                if (hTemplate == null || (hTemplate.ItemContainerStyleSelector == null && hTemplate.ItemContainerStyle == null))
+                if (hTemplate is null || (hTemplate.ItemContainerStyleSelector is null && hTemplate.ItemContainerStyle is null))
                 {
                     RestoreValue(itemsControl, ItemsControl.ItemContainerStyleProperty, itemContainerStyle);
                 }
@@ -304,7 +304,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             if (itemsControl.ItemContainerStyleSelector == parentItemsControl.ItemContainerStyleSelector)
             {
-                if (hTemplate == null || hTemplate.ItemContainerStyleSelector == null)
+                if (hTemplate is null || hTemplate.ItemContainerStyleSelector is null)
                 {
                     RestoreValue(itemsControl, ItemsControl.ItemContainerStyleSelectorProperty, itemContainerStyleSelector);
                 }
@@ -314,7 +314,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 // Potential issue if 0 is set intentionally, but one can argue if it is explicitly defined on
                 // ItemsControl itself then use that one.
-                if (hTemplate == null || hTemplate.AlternationCount == 0)
+                if (hTemplate is null || hTemplate.AlternationCount == 0)
                 {
                     RestoreValue(itemsControl, ItemsControl.AlternationCountProperty, alternationCount);
                 }
@@ -322,7 +322,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             if (itemsControl.ItemBindingGroup == parentItemsControl.ItemBindingGroup)
             {
-                if (hTemplate == null || hTemplate.ItemBindingGroup == null)
+                if (hTemplate is null || hTemplate.ItemBindingGroup is null)
                 {
                     RestoreValue(itemsControl, ItemsControl.ItemBindingGroupProperty, itemBindingGroup);
                 }
@@ -330,17 +330,17 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             if (hic != null)
             {
-                if (headerTemplate != null && hic.HeaderTemplate == parentItemsControl.ItemTemplate && hTemplate == null)
+                if (headerTemplate != null && hic.HeaderTemplate == parentItemsControl.ItemTemplate && hTemplate is null)
                 {
                     RestoreValue(hic, HeaderedItemsControl.HeaderTemplateProperty, headerTemplate);
                 }
 
-                if (headerTemplateSelector != null && hic.HeaderTemplateSelector == parentItemsControl.ItemTemplateSelector && hTemplate == null)
+                if (headerTemplateSelector != null && hic.HeaderTemplateSelector == parentItemsControl.ItemTemplateSelector && hTemplate is null)
                 {
                     RestoreValue(hic, HeaderedItemsControl.HeaderTemplateSelectorProperty, headerTemplateSelector);
                 }
 
-                if (headerStringFormat != null && hic.HeaderStringFormat == parentItemsControl.ItemStringFormat && hTemplate == null)
+                if (headerStringFormat != null && hic.HeaderStringFormat == parentItemsControl.ItemStringFormat && hTemplate is null)
                 {
                     RestoreValue(hic, HeaderedItemsControl.HeaderStringFormatProperty, headerStringFormat);
                 }
@@ -572,13 +572,13 @@ namespace Microsoft.Windows.Controls.Ribbon
                     FrameworkElement container = itemsControl.ItemContainerGenerator.ContainerFromIndex(startIndex) as FrameworkElement;
 
                     // If container is virtualized, call BringIntoView.
-                    if (container == null && bringIntoViewCallback != null)
+                    if (container is null && bringIntoViewCallback != null)
                     {
                         bringIntoViewCallback(startIndex);
                         container = itemsControl.ItemContainerGenerator.ContainerFromIndex(startIndex) as FrameworkElement;
                     }
 
-                    if (container != null && (additionalCheck == null || additionalCheck(container)))
+                    if (container != null && (additionalCheck is null || additionalCheck(container)))
                     {
                         return container;
                     }
@@ -613,7 +613,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 if (nextElement != null)
                 {
                     RibbonGallery gallery = nextElement as RibbonGallery;
-                    if (gallery == null)
+                    if (gallery is null)
                     {
                         nextElement.Focus();
                         return true;
@@ -642,7 +642,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 if (previousElement != null)
                 {
                     RibbonGallery gallery = previousElement as RibbonGallery;
-                    if (gallery == null)
+                    if (gallery is null)
                     {
                         previousElement.Focus();
                         return true;
@@ -683,7 +683,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     {
                         focusObject = filterContentPane;
                     }
-                    if (focusObject == null)
+                    if (focusObject is null)
                     {
                         RibbonFilterMenuButton filterButton = gallery.FilterMenuButton;
                         if (filterButton != null &&
@@ -794,7 +794,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         incr = 1;
                     }
 
-                    for (int catIndex = startCatIndex; catIndex != endCatIndex && highlightedGalleryItem == null; catIndex += incr)
+                    for (int catIndex = startCatIndex; catIndex != endCatIndex && highlightedGalleryItem is null; catIndex += incr)
                     {
                         category = gallery.ItemContainerGenerator.ContainerFromIndex(catIndex) as RibbonGalleryCategory;
                         RibbonGalleryItemsPanel galleryItemsPanel = category.ItemsHostSite as RibbonGalleryItemsPanel;
@@ -1027,7 +1027,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 IntPtr capturedHwnd = IntPtr.Zero;
                 bool isOurWindowCaptured = false;
-                if (Mouse.Captured == null)
+                if (Mouse.Captured is null)
                 {
                     // If we are losing capture to some other window
                     // then close all the popups.
@@ -1043,10 +1043,10 @@ namespace Microsoft.Windows.Controls.Ribbon
 
                 if (e.OriginalSource == targetCapture)
                 {
-                    if (Mouse.Captured == null)
+                    if (Mouse.Captured is null)
                     {
                         PresentationSource mouseSource = Mouse.PrimaryDevice.ActiveSource;
-                        if (mouseSource == null &&
+                        if (mouseSource is null &&
                             (capturedHwnd == IntPtr.Zero ||
                             isOurWindowCaptured))
                         {
@@ -1078,7 +1078,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 }
                 else if (RibbonHelper.IsAncestorOf(targetCapture, e.OriginalSource as DependencyObject))
                 {
-                    if (Mouse.Captured == null)
+                    if (Mouse.Captured is null)
                     {
                         // If a descendant of targetCapture is losing capture
                         // then take capture on targetCapture
@@ -1112,7 +1112,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         public static bool IsMousePhysicallyOver(UIElement element)
         {
-            if (element == null)
+            if (element is null)
             {
                 return false;
             }
@@ -1143,7 +1143,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     IsCaptureInVisualSubtree(alternateCaptureHost))
                 {
                     UIElement source = Mouse.Captured as UIElement;
-                    if (source == null)
+                    if (source is null)
                     {
                         source = element;
                     }
@@ -1200,7 +1200,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         }
 
                         if (targetCapture != null &&
-                            (Mouse.Captured == null ||
+                            (Mouse.Captured is null ||
                             !IsCaptureInSubtree(targetCapture)))
                         {
                             Mouse.Capture(targetCapture, CaptureMode.SubTree);
@@ -1232,8 +1232,8 @@ namespace Microsoft.Windows.Controls.Ribbon
             UIElement targetCapture,
             UIElement targetFocus)
         {
-            if (targetCapture == null &&
-                targetFocus == null)
+            if (targetCapture is null &&
+                targetFocus is null)
             {
                 return;
             }
@@ -1327,7 +1327,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         public static UIElement TryGetChild(this Popup popup)
         {
-            return (popup == null ? null : popup.Child);
+            return (popup is null ? null : popup.Child);
         }
 
         public static bool IsCaptureInSubtree(UIElement element)
@@ -1344,7 +1344,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         internal static bool IsAncestorOf(DependencyObject ancestor, DependencyObject element)
         {
-            if (ancestor == null || element == null)
+            if (ancestor is null || element is null)
             {
                 return false;
             }
@@ -1387,7 +1387,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (iContainsStarLayoutManager != null)
             {
                 IProvideStarLayoutInfoBase iProvideStarLayoutInfoBase = (IProvideStarLayoutInfoBase)starLayoutProvider;
-                if (starLayoutManager == null && iContainsStarLayoutManager.StarLayoutManager != null)
+                if (starLayoutManager is null && iContainsStarLayoutManager.StarLayoutManager != null)
                 {
                     iContainsStarLayoutManager.StarLayoutManager.UnregisterStarLayoutProvider(iProvideStarLayoutInfoBase);
                     iContainsStarLayoutManager.StarLayoutManager = null;
@@ -1474,7 +1474,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         internal static object OnCoerceQuickAccessToolBarId(DependencyObject d, object baseValue)
         {
             ICommandSource commandSource = d as ICommandSource;
-            if (baseValue == null &&
+            if (baseValue is null &&
                 commandSource != null)
             {
                 return commandSource.Command;
@@ -1632,7 +1632,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             lock (_syncRoot)
             {
-                if (_feProperties == null)
+                if (_feProperties is null)
                 {
                     _automationProperties = new PropertyAndTransferMode[]
                     {
@@ -1878,7 +1878,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 {
                     FrameworkElement feClone = CreateInstance(feOriginal, allowTransformations);
 
-                    if (feOriginal.TemplatedParent == null ||
+                    if (feOriginal.TemplatedParent is null ||
                         feOriginal.TemplatedParent is ContentPresenter)
                     {
                         TransferProperties(feOriginal, feClone, /*cloningForTemplatePart*/ false);
@@ -2246,7 +2246,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private static void TransferItems(ItemsControl originalItemsControl, ItemsControl cloneItemsControl)
         {
-            if (originalItemsControl.ItemsSource == null)
+            if (originalItemsControl.ItemsSource is null)
             {
                 for (int i = 0; i < originalItemsControl.Items.Count; i++)
                 {
@@ -2521,7 +2521,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 #endif
         public static PresentationSource GetPresentationSourceFromVisual(Visual visual)
         {
-            if (visual == null)
+            if (visual is null)
             {
                 return null;
             }
@@ -2564,7 +2564,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             get
             {
-                if (invariantEnglishUS == null)
+                if (invariantEnglishUS is null)
                 {
                     invariantEnglishUS = CultureInfo.ReadOnly(new CultureInfo("en-us", false));
                 }
@@ -2589,7 +2589,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 if (ce != null)
                 {
                     DependencyObject parent = ContentOperations.GetParent(ce);
-                    if (parent == null)
+                    if (parent is null)
                     {
                         parent = LogicalTreeHelper.GetParent(ce);
                     }
@@ -2833,7 +2833,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             // Get the Parent RibbonGroup and open its dropdown if needed.
             RibbonGroup ribbonGroup = TreeHelper.FindAncestor(fe, delegate(DependencyObject element) { return (element is RibbonGroup); }) as RibbonGroup;
-            if (ribbonGroup == null)
+            if (ribbonGroup is null)
             {
                 ribbonGroup = TreeHelper.FindLogicalAncestor<RibbonGroup>(fe);
             }
@@ -2853,7 +2853,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         internal static AutomationPeer CreatePeer(UIElement element)
         {
             AutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(element);
-            if (peer == null)
+            if (peer is null)
             {
                 FrameworkElement elementFE = element as FrameworkElement;
                 if (elementFE != null)

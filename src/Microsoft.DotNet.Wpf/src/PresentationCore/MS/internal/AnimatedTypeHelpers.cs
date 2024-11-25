@@ -243,11 +243,11 @@ namespace MS.Internal.PresentationCore
 
         internal static Rotation3D AddRotation3D(Rotation3D value1, Rotation3D value2)
         {
-            if (value1 == null)
+            if (value1 is null)
             {
                 value1 = Rotation3D.Identity;
             }
-            if (value2 == null)
+            if (value2 is null)
             {
                 value2 = Rotation3D.Identity;
             }

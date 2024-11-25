@@ -47,7 +47,7 @@ namespace System.Windows.Markup
         /// <returns> The object to set on this property.</returns>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            if (_member == null)
+            if (_member is null)
             {
                 throw new InvalidOperationException(SR.MarkupExtensionStaticMember);
             }
@@ -81,7 +81,7 @@ namespace System.Windows.Markup
                 ArgumentNullException.ThrowIfNull(serviceProvider);
 
                 IXamlTypeResolver xamlTypeResolver = serviceProvider.GetService(typeof(IXamlTypeResolver)) as IXamlTypeResolver;
-                if (xamlTypeResolver == null)
+                if (xamlTypeResolver is null)
                 {
                     throw new ArgumentException(SR.Format(SR.MarkupExtensionNoContext, GetType().Name, nameof(IXamlTypeResolver)));
                 }

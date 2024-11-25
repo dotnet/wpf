@@ -41,7 +41,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (this.Parent == null)
+                if (this.Parent is null)
                 {
                     return null;
                 }

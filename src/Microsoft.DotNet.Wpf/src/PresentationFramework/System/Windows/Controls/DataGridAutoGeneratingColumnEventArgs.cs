@@ -101,7 +101,7 @@ namespace System.Windows.Controls
 
             private set
             {
-                if (value == null)
+                if (value is null)
                 {
                     _propertyDescriptor = null;
                 }

@@ -193,7 +193,7 @@ namespace System.Windows.Documents
                 {
                     FixedPage page = _container.FixedDocument.SyncGetPage(pageIndex, false);
 
-                    if (page == null)
+                    if (page is null)
                         return false;
 
                     Size pageSize = _container.FixedDocument.ComputePageSize(page);
@@ -292,7 +292,7 @@ namespace System.Windows.Documents
             if (_IsStartVisual(currentNode[1]))
             {
                 FixedNode[] firstLine = ps.FirstLine;
-                if (firstLine == null)
+                if (firstLine is null)
                 {
                     return null;
                 }
@@ -302,7 +302,7 @@ namespace System.Windows.Documents
             else if (_IsEndVisual(currentNode[1]))
             {
                 FixedNode[] lastLine = ps.LastLine;
-                if (lastLine == null)
+                if (lastLine is null)
                 {
                     return null;
                 }
@@ -312,7 +312,7 @@ namespace System.Windows.Documents
 
             FixedSOMTextRun run = _fixedFlowMap.MappingGetFixedSOMElement(currentNode, 0) as FixedSOMTextRun;
 
-            if (run == null)
+            if (run is null)
             {
                 return null;
             }
@@ -401,7 +401,7 @@ namespace System.Windows.Documents
 
             position.GetFlowNode(textdir, out flow, out flowOffset);
             FixedSOMElement[] fixes = flow.FixedSOMElements;
-            if (fixes == null)
+            if (fixes is null)
             {
                 return false;
             }
@@ -982,7 +982,7 @@ namespace System.Windows.Documents
                     children       = canvas.Children;
                     localTransform = canvas.RenderTransform;
 
-                    if (localTransform == null)
+                    if (localTransform is null)
                     {
                         localTransform = Transform.Identity;
                     }
@@ -995,7 +995,7 @@ namespace System.Windows.Documents
                             // anything more than two level deep, we need to use path array
                             if (nestingLevel == 2)
                             {
-                                Debug.Assert(pathPrefix == null);
+                                Debug.Assert(pathPrefix is null);
                                 Debug.Assert(level1Index >= 0);
                                 newPathPrefix = new int[2];
                                 newPathPrefix[0] = level1Index;
@@ -1012,7 +1012,7 @@ namespace System.Windows.Documents
 #if DEBUG
                         else
                         {
-                            Debug.Assert(pathPrefix == null && newPathPrefix == null);
+                            Debug.Assert(pathPrefix is null && newPathPrefix is null);
                         }
 #endif
                         _GetFixedNodes(
@@ -1277,14 +1277,14 @@ namespace System.Windows.Documents
                 {
                     shadowElement = null;
                     UIElement e = p.GetElement(element.FixedNode) as UIElement;
-                    if (e == null)
+                    if (e is null)
                     {
                         Debug.Assert(false);
                         return null;
                     }
                     LogicalHyperlink logicalHyperlink = null;
                     Uri relUri = FixedPage.GetNavigateUri(e);
-                    if (relUri == null && _hyperlinks.Count > 0)
+                    if (relUri is null && _hyperlinks.Count > 0)
                     {
                         Transform t = e.TransformToAncestor(p) as Transform;
                         Geometry g;
@@ -1313,7 +1313,7 @@ namespace System.Windows.Documents
                             shadowElement = logicalHyperlink.UIElement;
                         }
                     }
-                    if (relUri == null)
+                    if (relUri is null)
                     {
                         return null;
                     }
@@ -1473,7 +1473,7 @@ namespace System.Windows.Documents
                 {
                     // Will add code to get font info for rich copy here
                     FixedSOMTextRun run = element as FixedSOMTextRun;
-                    bool createNewRun = (_currentRun == null) || (!run.HasSameRichProperties(_currentRun))
+                    bool createNewRun = (_currentRun is null) || (!run.HasSameRichProperties(_currentRun))
                         || navUri != _currentNavUri || (navUri != null && navUri.ToString() != _currentNavUri.ToString());
 
                     if (createNewRun)

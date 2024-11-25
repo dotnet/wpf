@@ -79,7 +79,7 @@ namespace DrtXaml.XamlTestFramework
         {
             SimpleTest test = TestDelegate;
 
-            if (ExpectedExceptionType == null)
+            if (ExpectedExceptionType is null)
             {
                 test();
             }
@@ -94,7 +94,7 @@ namespace DrtXaml.XamlTestFramework
                 {
                     if (ExpectedExceptionType == e.GetType())
                     {
-                        //if((ExpectedInnerExceptionType == null && e.InnerException == null) || (ExpectedInnerExceptionType == e.InnerException.GetType()))
+                        //if((ExpectedInnerExceptionType is null && e.InnerException is null) || (ExpectedInnerExceptionType == e.InnerException.GetType()))
                             return;
                     }
                     throw new InvalidOperationException("Wrong Exception was thrown", e);
@@ -110,7 +110,7 @@ namespace DrtXaml.XamlTestFramework
             XamlStringParser loader = StringParserDelegate;
             PostTreeValidator validator = TreeValidatorDelegate;
 
-            if (ExpectedExceptionType == null)
+            if (ExpectedExceptionType is null)
             {
                 LoadAndValidate(loader, xamlString, validator);
             }
@@ -125,7 +125,7 @@ namespace DrtXaml.XamlTestFramework
                 {
                     if (ExpectedExceptionType == e.GetType())
                     {
-                        if((ExpectedInnerExceptionType == null && e.InnerException == null) || (ExpectedInnerExceptionType == e.InnerException.GetType()))
+                        if((ExpectedInnerExceptionType is null && e.InnerException is null) || (ExpectedInnerExceptionType == e.InnerException.GetType()))
                             return;
                     }
                     throw new InvalidOperationException("Wrong Exception was thrown", e);

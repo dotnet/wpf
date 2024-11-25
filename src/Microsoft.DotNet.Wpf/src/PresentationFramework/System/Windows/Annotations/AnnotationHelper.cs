@@ -194,7 +194,7 @@ namespace System.Windows.Annotations
 
             // Determine if we are using a viewer that supports pagination
             DocumentViewerBase viewer = service.Root as DocumentViewerBase;
-            if (viewer == null)
+            if (viewer is null)
             {
                 FlowDocumentReader fdr = service.Root as FlowDocumentReader;
                 if (fdr != null)
@@ -558,7 +558,7 @@ namespace System.Windows.Annotations
 
             for (int page = startPage; page <= endPage; page++)
             {
-                if (FindView(viewer, page) == null)
+                if (FindView(viewer, page) is null)
                 {
                     //there is at least one invisible page
                     pageVisibility = false;
@@ -578,7 +578,7 @@ namespace System.Windows.Annotations
 
             // Determine if we are using a viewer that supports pagination
             DocumentViewerBase viewer = service.Root as DocumentViewerBase;
-            if (viewer == null)
+            if (viewer is null)
             {
                 FlowDocumentReader fdr = service.Root as FlowDocumentReader;
                 if (fdr != null)
@@ -649,7 +649,7 @@ namespace System.Windows.Annotations
                     for (int i = attachedAnnotations.Count - 1; i >= 0; i--)
                     {
                         TextAnchor ta = attachedAnnotations[i].AttachedAnchor as TextAnchor;
-                        if ((ta == null) || !ta.IsOverlapping(textSegments))
+                        if ((ta is null) || !ta.IsOverlapping(textSegments))
                         {
                             //remove this attached annotation - it is out of selection scope
                             attachedAnnotations.RemoveAt(i);
@@ -838,7 +838,7 @@ namespace System.Windows.Annotations
                     // the text selection, we ignore others
 
                     TextAnchor anchor = attachedAnnot.AttachedAnchor as TextAnchor;
-                    if (anchor == null)
+                    if (anchor is null)
                         continue;
 
                     // Remove any annotations that overlap in anyway
@@ -939,7 +939,7 @@ namespace System.Windows.Annotations
             if (highlightBrush != null)
             {
                 SolidColorBrush brush = highlightBrush as SolidColorBrush;
-                if (brush == null)
+                if (brush is null)
                     throw new ArgumentException(SR.InvalidHighlightColor, "highlightBrush");
 
                 // Opacity less than 0 is treated as 0; greater than 1 is treated a 1.
@@ -994,7 +994,7 @@ namespace System.Windows.Annotations
 
                     // If the trimming resulting in no more content being in the anchor,
                     // delete the annotation
-                    if (copy == null || copy.IsEmpty)
+                    if (copy is null || copy.IsEmpty)
                     {
                         service.Store.DeleteAnnotation(attachedAnnotation.Annotation.Id);
                         continue;
@@ -1059,7 +1059,7 @@ namespace System.Windows.Annotations
             }
 
             // Get the selection for the viewer and wrap it in a TextRange
-            return viewer == null ? null : TextEditor.GetTextSelection(viewer);
+            return viewer is null ? null : TextEditor.GetTextSelection(viewer);
         }
 
 
@@ -1100,7 +1100,7 @@ namespace System.Windows.Annotations
             }
 
             DocumentViewerBase viewer = service.Root as DocumentViewerBase;
-            if (viewer == null)
+            if (viewer is null)
             {
                 FlowDocumentScrollViewer scrollViewer = service.Root as FlowDocumentScrollViewer;
                 FlowDocumentReader reader = service.Root as FlowDocumentReader;
@@ -1108,7 +1108,7 @@ namespace System.Windows.Annotations
             }
             else
             {
-                if (viewer.Document == null)
+                if (viewer.Document is null)
                 {
                     throw new InvalidOperationException(SR.OnlyFlowFixedSupported);
                 }

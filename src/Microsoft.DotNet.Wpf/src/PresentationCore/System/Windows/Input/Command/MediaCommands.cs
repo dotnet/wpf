@@ -453,7 +453,7 @@ namespace System.Windows.Input
             {
                 lock (_internalCommands.SyncRoot)
                 {
-                    if (_internalCommands[(int)idCommand] == null)
+                    if (_internalCommands[(int)idCommand] is null)
                     {
                         RoutedUICommand newCommand = new RoutedUICommand(GetPropertyName(idCommand), typeof(MediaCommands), (byte)idCommand);
                         newCommand.AreInputGesturesDelayLoaded = true;

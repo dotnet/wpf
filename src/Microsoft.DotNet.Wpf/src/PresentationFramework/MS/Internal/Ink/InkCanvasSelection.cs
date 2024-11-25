@@ -73,7 +73,7 @@ namespace MS.Internal.Ink
         {
             get
             {
-                if ( _selectedStrokes == null )
+                if ( _selectedStrokes is null )
                 {
                     _selectedStrokes = new StrokeCollection();
                     _areStrokesChanged = true;
@@ -90,7 +90,7 @@ namespace MS.Internal.Ink
         {
             get
             {
-                if ( _selectedElements == null )
+                if ( _selectedElements is null )
                 {
                     _selectedElements = new List<UIElement>();
                 }
@@ -150,7 +150,7 @@ namespace MS.Internal.Ink
             InkCanvasFeedbackAdorner feedbackAdorner = _inkCanvas.FeedbackAdorner;
 
             // The feedback adorner shouldn't have been connected to the adorner layer yet.
-            Debug.Assert(VisualTreeHelper.GetParent(feedbackAdorner) == null,
+            Debug.Assert(VisualTreeHelper.GetParent(feedbackAdorner) is null,
                 "feedbackAdorner shouldn't be added to tree.");
 
             // Now, attach the feedback adorner to the adorner layer. Then update its bounds
@@ -341,7 +341,7 @@ namespace MS.Internal.Ink
         internal void RemoveElement(UIElement removedElement)
         {
             // No selected element. Bail out
-            if ( _selectedElements == null || _selectedElements.Count == 0 )
+            if ( _selectedElements is null || _selectedElements.Count == 0 )
             {
                 return;
             }
@@ -388,7 +388,7 @@ namespace MS.Internal.Ink
                 FrameworkElement frameworkElement = originalElement as FrameworkElement;
                 Size size;
                 Thickness thickness = new Thickness();
-                if ( frameworkElement == null )
+                if ( frameworkElement is null )
                 {
                     // Get the element's render size.
                     size = originalElement.RenderSize;
@@ -407,7 +407,7 @@ namespace MS.Internal.Ink
 
                 if ( !DoubleUtil.AreClose(elementBounds.Width, newBounds.Width) )
                 {
-                    if ( frameworkElement == null )
+                    if ( frameworkElement is null )
                     {
                         Size newSize = originalElement.RenderSize;
                         newSize.Width = newBounds.Width;
@@ -421,7 +421,7 @@ namespace MS.Internal.Ink
 
                 if ( !DoubleUtil.AreClose(elementBounds.Height, newBounds.Height) )
                 {
-                    if ( frameworkElement == null )
+                    if ( frameworkElement is null )
                     {
                         Size newSize = originalElement.RenderSize;
                         newSize.Height = newBounds.Height;
@@ -966,7 +966,7 @@ namespace MS.Internal.Ink
             if ( SelectedElements.Count != 0 )
             {
                 // Make sure we hook up the event handler.
-                if ( _layoutUpdatedHandler == null )
+                if ( _layoutUpdatedHandler is null )
                 {
                     _layoutUpdatedHandler = new EventHandler(OnCanvasLayoutUpdated);
                     _inkCanvas.InnerCanvas.LayoutUpdated += _layoutUpdatedHandler;
@@ -991,7 +991,7 @@ namespace MS.Internal.Ink
         /// </summary>
         private static bool StrokesAreEqual(StrokeCollection strokes1, StrokeCollection strokes2)
         {
-            if ( strokes1 == null && strokes2 == null )
+            if ( strokes1 is null && strokes2 is null )
             {
                 return true;
             }
@@ -1000,7 +1000,7 @@ namespace MS.Internal.Ink
             // not null.  If the other one is, they're not
             // equal
             //
-            if ( strokes1 == null || strokes2 == null )
+            if ( strokes1 is null || strokes2 is null )
             {
                 return false;
             }
@@ -1026,7 +1026,7 @@ namespace MS.Internal.Ink
         /// </summary>
         private static bool FrameworkElementArraysAreEqual(IList<UIElement> elements1, IList<UIElement> elements2)
         {
-            if ( elements1 == null && elements2 == null )
+            if ( elements1 is null && elements2 is null )
             {
                 return true;
             }
@@ -1035,7 +1035,7 @@ namespace MS.Internal.Ink
             // not null.  If the other one is, they're not
             // equal
             //
-            if ( elements1 == null || elements2 == null )
+            if ( elements1 is null || elements2 is null )
             {
                 return false;
             }

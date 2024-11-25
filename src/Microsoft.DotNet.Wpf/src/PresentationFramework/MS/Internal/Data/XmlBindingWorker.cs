@@ -68,7 +68,7 @@ namespace MS.Internal.Data
             {
                 CollectionView = DataItem as CollectionView;
 
-                if (CollectionView == null && DataItem is ICollection)
+                if (CollectionView is null && DataItem is ICollection)
                 {
                     CollectionView = CollectionViewSource.GetDefaultCollectionView(DataItem, TargetElement);
                 }
@@ -134,7 +134,7 @@ namespace MS.Internal.Data
                 return DataItem;
             }
 
-            if (ContextNode == null)    // possibly because currentItem moved off collection
+            if (ContextNode is null)    // possibly because currentItem moved off collection
             {
                 QueriedCollection = null;
                 return null;
@@ -142,7 +142,7 @@ namespace MS.Internal.Data
 
             XmlNodeList nodes = SelectNodes();
 
-            if (nodes == null)
+            if (nodes is null)
             {
                 QueriedCollection = null;
                 return DependencyProperty.UnsetValue;
@@ -209,12 +209,12 @@ namespace MS.Internal.Data
             get
             {
                 DependencyObject target = TargetElement;
-                if (target == null)
+                if (target is null)
                     return null;
 
                 XmlNamespaceManager nsMgr = Binding.GetXmlNamespaceManager(target);
 
-                if (nsMgr == null)
+                if (nsMgr is null)
                 {
                     if (XmlDataProvider != null)
                     {
@@ -233,7 +233,7 @@ namespace MS.Internal.Data
         {
             get
             {
-                if (_xmlDataProvider == null)
+                if (_xmlDataProvider is null)
                 {
                     XmlDataCollection xdc;
                     ItemsControl ic;
@@ -264,7 +264,7 @@ namespace MS.Internal.Data
                             (ic = TargetElement as ItemsControl) != null)
                     {
                         object itemsSource = ic.ItemsSource;
-                        if ((xdc = itemsSource as XmlDataCollection) == null)
+                        if ((xdc = itemsSource as XmlDataCollection) is null)
                         {
                             ICollectionView icv = itemsSource as ICollectionView;
                             xdc = ((icv != null) ? icv.SourceCollection : null) as XmlDataCollection;
@@ -380,7 +380,7 @@ namespace MS.Internal.Data
         private XmlDocument DocumentFor(XmlNode node)
         {
             XmlDocument doc = node.OwnerDocument;
-            if (doc == null)
+            if (doc is null)
             {
                 // this may be a document itself
                 doc = node as XmlDocument;
@@ -431,7 +431,7 @@ namespace MS.Internal.Data
             // By the time this worker is notified, its binding's TargetElement may already be gone.
             // We should first check TargetElement to see if this worker still matters. (Fix 1494812)
             DependencyObject target = ParentBindingExpression.TargetElement;
-            if (target == null)
+            if (target is null)
                 return;
 
             if (IgnoreSourcePropertyChange)
@@ -454,7 +454,7 @@ namespace MS.Internal.Data
                 // DataItem is being used directly; no need to check queries at all.
                 _hostWorker.OnXmlValueChanged();
             }
-            else if (QueriedCollection == null)
+            else if (QueriedCollection is null)
             {
                 // If there was no previous QueryCollection, it's probably because
                 // the previous xpath query failed.  Try again now.
@@ -466,7 +466,7 @@ namespace MS.Internal.Data
 
                 XmlNodeList nodes = SelectNodes();
 
-                if (nodes == null)
+                if (nodes is null)
                 {
                     // Node change has caused the new query to fail.
                     QueriedCollection = null;
@@ -548,7 +548,7 @@ namespace MS.Internal.Data
 
         private string IdentifyNode(XmlNode node)
         {
-            if (node == null)
+            if (node is null)
                 return "<null>";
 
             return $"{node.GetType().Name} ({node.Name})";
@@ -556,7 +556,7 @@ namespace MS.Internal.Data
 
         private string IdentifyNodeList(XmlNodeList nodeList)
         {
-            if (nodeList == null)
+            if (nodeList is null)
                 return "<null>";
 
             return string.Create(TypeConverterHelper.InvariantEnglishUS, $"{nodeList.GetType().Name} (hash={AvTrace.GetHashCodeHelper(nodeList)} Count={nodeList.Count})");
@@ -639,7 +639,7 @@ namespace MS.Internal.Data
                 // node.  This includes value changes directly on the result node,
                 // as well as any change to the descendants of the result node.
                 XmlNode resultNode = _hostWorker.GetResultNode() as XmlNode;
-                if (resultNode == null)
+                if (resultNode is null)
                     return false;
 
                 if (valueNode != null)

@@ -813,7 +813,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_flowNodes == null)
+                if (_flowNodes is null)
                 {
                     List<FlowNode> nodes = new List<FlowNode>();
                     //Find the start of flow nodes

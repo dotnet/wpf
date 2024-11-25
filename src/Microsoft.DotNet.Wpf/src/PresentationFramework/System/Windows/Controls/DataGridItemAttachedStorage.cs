@@ -58,7 +58,7 @@ namespace System.Windows.Controls
 
         private void EnsureItemStorageMap()
         {
-            if (_itemStorageMap == null)
+            if (_itemStorageMap is null)
             {
                 _itemStorageMap = new Dictionary<object, Dictionary<DependencyProperty, object>>();
             }

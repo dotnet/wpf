@@ -44,12 +44,12 @@ namespace System.Windows.Media
         {
             InitializeICM();
 
-            if (srcContext == null)
+            if (srcContext is null)
             {
                 srcContext = new ColorContext(PixelFormats.Bgra32);
             }
 
-            if (dstContext == null)
+            if (dstContext is null)
             {
                 dstContext = new ColorContext(PixelFormats.Bgra32);
             }
@@ -64,11 +64,11 @@ namespace System.Windows.Media
         {
             InitializeICM();
 
-            if (srcContext == null)
+            if (srcContext is null)
             {
                 srcContext = new ColorContext(pixelFormat);
             }
-            if (dstContext == null)
+            if (dstContext is null)
             {
                 dstContext = new ColorContext(pixelFormat);
             }

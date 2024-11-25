@@ -73,7 +73,7 @@ namespace MS.Internal.Printing.Configuration
 
         private SafeModuleHandle EnsureModuleHandle()
         {
-            if (this._compstuiHandle == null)
+            if (this._compstuiHandle is null)
             {
                 // Load library as data - do not execute code
                 this._compstuiHandle = UnsafeNativeMethods.LoadLibraryExW("compstui.dll", IntPtr.Zero, SafeLoadLibraryFlags);

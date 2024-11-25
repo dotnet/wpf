@@ -140,7 +140,7 @@ namespace System.Windows.Media.Effects
         /// </summary>
         public void Insert(int index, BitmapEffect value)
         {
-            if (value == null)
+            if (value is null)
             {
                 throw new System.ArgumentException(SR.Collection_NoNull);
             }
@@ -248,7 +248,7 @@ namespace System.Windows.Media.Effects
             }
             set
             {
-                if (value == null)
+                if (value is null)
                 {
                     throw new System.ArgumentException(SR.Collection_NoNull);
                 }
@@ -470,7 +470,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                if (s_empty == null)
+                if (s_empty is null)
                 {
                     BitmapEffectCollection collection = new BitmapEffectCollection();
                     collection.Freeze();
@@ -541,7 +541,7 @@ namespace System.Windows.Media.Effects
         {
             int index = -1;
 
-            if (value == null)
+            if (value is null)
             {
                 throw new System.ArgumentException(SR.Collection_NoNull);
             }
@@ -932,7 +932,7 @@ namespace System.Windows.Media.Effects
 
                     foreach (BitmapEffect item in collection)
                     {
-                        if (item == null)
+                        if (item is null)
                         {
                             throw new System.ArgumentException(SR.Collection_NoNull);
                         }
@@ -949,7 +949,7 @@ namespace System.Windows.Media.Effects
             {
                 foreach (BitmapEffect item in collection)
                 {
-                    if (item == null)
+                    if (item is null)
                     {
                         throw new System.ArgumentException(SR.Collection_NoNull);
                     }

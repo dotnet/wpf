@@ -132,7 +132,7 @@ namespace System.Windows.Media.Effects
 
                 // Obtain handles for properties that implement DUCE.IResource
                 DUCE.ResourceHandle hTransform;
-                if (vTransform == null ||
+                if (vTransform is null ||
                     Object.ReferenceEquals(vTransform, Transform.Identity)
                     )
                 {
@@ -143,7 +143,7 @@ namespace System.Windows.Media.Effects
                     hTransform = ((DUCE.IResource)vTransform).GetHandle(channel);
                 }
                 DUCE.ResourceHandle hRelativeTransform;
-                if (vRelativeTransform == null ||
+                if (vRelativeTransform is null ||
                     Object.ReferenceEquals(vRelativeTransform, Transform.Identity)
                     )
                 {

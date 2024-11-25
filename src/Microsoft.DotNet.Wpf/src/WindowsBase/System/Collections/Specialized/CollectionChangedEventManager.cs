@@ -53,7 +53,7 @@ namespace System.Collections.Specialized
         public static void RemoveListener(INotifyCollectionChanged source, IWeakEventListener listener)
         {
             /* for app-compat, allow RemoveListener(null, x) - it's a no-op 
-            if (source == null)
+            if (source is null)
                 throw new ArgumentNullException("source");
             */
             ArgumentNullException.ThrowIfNull(listener);
@@ -132,7 +132,7 @@ namespace System.Collections.Specialized
                 CollectionChangedEventManager manager = (CollectionChangedEventManager)GetCurrentManager(managerType);
 
                 // at first use, create and register a new manager
-                if (manager == null)
+                if (manager is null)
                 {
                     manager = new CollectionChangedEventManager();
                     SetCurrentManager(managerType, manager);

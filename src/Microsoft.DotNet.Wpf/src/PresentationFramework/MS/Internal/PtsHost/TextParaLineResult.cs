@@ -171,7 +171,7 @@ namespace MS.Internal.PtsHost
         {
             get
             {
-                if (_startPosition == null)
+                if (_startPosition is null)
                 {
                     _startPosition = _owner.GetTextPosition(_dcp, LogicalDirection.Forward);
                 }
@@ -186,7 +186,7 @@ namespace MS.Internal.PtsHost
         {
             get
             {
-                if (_endPosition == null)
+                if (_endPosition is null)
                 {
                     _endPosition = _owner.GetTextPosition(_dcp + _cch, LogicalDirection.Backward);
                 }

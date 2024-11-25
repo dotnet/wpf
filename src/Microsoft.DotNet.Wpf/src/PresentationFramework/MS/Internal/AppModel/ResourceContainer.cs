@@ -51,7 +51,7 @@ namespace MS.Internal.AppModel
         {
             get
             {
-                if (_applicationResourceManagerWrapper == null)
+                if (_applicationResourceManagerWrapper is null)
                 {
                     // load main excutable assembly
                     Assembly asmApplication = Application.ResourceAssembly;
@@ -338,7 +338,7 @@ namespace MS.Internal.AppModel
                 _registeredResourceManagers.TryGetValue(key.ToLowerInvariant(), out rmwResult);
 
                 // first time. Add this to the hash table
-                if (rmwResult == null)
+                if (rmwResult is null)
                 {
                     Assembly assembly;
 

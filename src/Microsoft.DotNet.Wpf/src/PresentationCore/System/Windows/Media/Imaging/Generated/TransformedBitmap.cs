@@ -334,11 +334,11 @@ namespace System.Windows.Media.Imaging
             // if these get touched by more than one thread in the lifetime
             // of your app. 
 
-            Debug.Assert(s_Source == null || s_Source.IsFrozen,
+            Debug.Assert(s_Source is null || s_Source.IsFrozen,
                 "Detected context bound default value TransformedBitmap.s_Source (See OS Bug #947272).");
 
 
-            Debug.Assert(s_Transform == null || s_Transform.IsFrozen,
+            Debug.Assert(s_Transform is null || s_Transform.IsFrozen,
                 "Detected context bound default value TransformedBitmap.s_Transform (See OS Bug #947272).");
 
 

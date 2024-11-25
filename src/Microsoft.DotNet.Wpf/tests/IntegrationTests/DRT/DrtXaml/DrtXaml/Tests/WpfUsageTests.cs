@@ -45,7 +45,7 @@ namespace DrtXaml.Tests
 
             System.Xaml.XamlReader reader = xamlNodeList.GetReader();
             object root = System.Windows.Markup.XamlReader.Load(reader);
-            if (root == null)
+            if (root is null)
                 throw new NullReferenceException("Load returned null Root");
             return root;
         }

@@ -562,7 +562,7 @@ namespace System.Windows.Media
         #region Verify
         private void Verify()
         {
-            if (this.dataStream == null)
+            if (this.dataStream is null)
             {
                 throw new System.ObjectDisposedException(SR.Media_StreamClosed);
             }

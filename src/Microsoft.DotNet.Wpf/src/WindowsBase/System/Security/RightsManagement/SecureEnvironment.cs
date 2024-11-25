@@ -156,7 +156,7 @@ namespace System.Security.RightsManagement
                         // we get a string which can be parsed to get the ID and type 
                         string userCertificate = genericClientSession.EnumerateLicense(EnumerateLicenseFlags.GroupIdentity, index);
 
-                        if (userCertificate == null)
+                        if (userCertificate is null)
                             break;
 
                         // we need to parse the information out of the string 
@@ -368,7 +368,7 @@ namespace System.Security.RightsManagement
         /// </summary>
         private void CheckDisposed()
         {
-            ObjectDisposedException.ThrowIf(_clientSession == null, typeof(SecureEnvironment));
+            ObjectDisposedException.ThrowIf(_clientSession is null, typeof(SecureEnvironment));
         }
 
         private ContentUser _user;

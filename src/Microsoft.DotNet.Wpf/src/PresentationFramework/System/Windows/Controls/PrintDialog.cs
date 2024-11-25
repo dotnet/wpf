@@ -206,7 +206,7 @@ namespace System.Windows.Controls
             get
             {
 
-                if (_printQueue == null)
+                if (_printQueue is null)
                 {
                     _printQueue = AcquireDefaultPrintQueue();
                 }
@@ -228,7 +228,7 @@ namespace System.Windows.Controls
             get
             {
 
-                if (_printTicket == null)
+                if (_printTicket is null)
                 {
                     _printTicket = AcquireDefaultPrintTicket(this.PrintQueue);
                 }
@@ -431,7 +431,7 @@ namespace System.Windows.Controls
                 if (printQueue != null)
                 {
                     printTicket = printQueue.UserPrintTicket;
-                    if (printTicket == null)
+                    if (printTicket is null)
                     {
                         printTicket = printQueue.DefaultPrintTicket;
                     }
@@ -452,7 +452,7 @@ namespace System.Windows.Controls
             // a failure or because a user/system default was not available, then just
             // create a blank/empty one.
             //
-            if (printTicket == null)
+            if (printTicket is null)
             {
                 printTicket = new PrintTicket();
             }
@@ -561,11 +561,11 @@ namespace System.Windows.Controls
             //        been invoked but the above demand was satisfied.  In this
             //        case we want to just pickup the user defaults.
             //
-            if (_printQueue == null)
+            if (_printQueue is null)
             {
                 _printQueue = AcquireDefaultPrintQueue();
             }
-            if (_printTicket == null)
+            if (_printTicket is null)
             {
                 _printTicket = AcquireDefaultPrintTicket(_printQueue);
             }

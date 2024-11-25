@@ -343,7 +343,7 @@ namespace System.Windows.Markup
                 }
             }
 
-            if (simpleObjectId == null && objectType != null)
+            if (simpleObjectId is null && objectType != null)
             {
                 simpleObjectId = objectType.ToString();
             }

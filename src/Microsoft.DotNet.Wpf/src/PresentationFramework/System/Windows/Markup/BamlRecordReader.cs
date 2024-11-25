@@ -234,7 +234,7 @@ namespace System.Windows.Markup
                     // read.
                     bamlRecord = ReadNextRecordWithDebugExtension(bytesAvailable, recordType);
 
-                    if (bamlRecord == null)
+                    if (bamlRecord is null)
                     {
 #if DEBUG
                         // this case can happen if doing BAML Async and entire record hasn't
@@ -875,7 +875,7 @@ namespace System.Windows.Markup
                     // Create an instance of the object specified by the
                     //  BeginElement, throw if the creation fails.
                     element = CreateInstanceFromType(elementType, typeId, false);
-                    if (element == null)
+                    if (element is null)
                     {
                         ThrowException(nameof(SR.ParserNoElementCreate2), elementType.FullName);
                     }
@@ -919,7 +919,7 @@ namespace System.Windows.Markup
             // An element doesn't need to be added to a tree if in the context of constructor
             // paramters or deferred content
 
-            if (context == null ||
+            if (context is null ||
                 (context.ContextType != ReaderFlags.ConstructorParams &&
                  context.ContextType != ReaderFlags.RealizeDeferContent))
             {
@@ -947,7 +947,7 @@ namespace System.Windows.Markup
             // If the metadata is not null here, we are skipping journaled properties (if the metadata requires it)
             // NOTE: we do not journal expression. So even when the property is journalable but the value is expression,
             // we still want to set the value from parser. See corresponding code for avoiding saving expression in DataStream.SaveSubStreams.
-            if ((metadata == null) || (!metadata.Journal) || (value is Expression))
+            if ((metadata is null) || (!metadata.Journal) || (value is Expression))
             {
                 SetDependencyValueCore(dependencyObject, dependencyProperty, value);
             }
@@ -1011,7 +1011,7 @@ namespace System.Windows.Markup
             ReaderFlags   flags = ReaderFlags.Unknown;
             ReaderContextStackData currentContext = CurrentContext;
 
-            if (_bamlAsForest && currentContext == null)
+            if (_bamlAsForest && currentContext is null)
             {
                 Debug.Assert(_rootElement != null);
                 element = _rootElement;
@@ -1048,7 +1048,7 @@ namespace System.Windows.Markup
             Stream bamlStream = BamlStream;
 
             if (!_bamlAsForest &&
-                currentContext == null &&
+                currentContext is null &&
                 element != null &&
                 bamlStream != null &&
                 !(bamlStream is ReaderStream) &&
@@ -1156,11 +1156,11 @@ namespace System.Windows.Markup
                     BamlTypeInfoRecord typeInfo = MapTable.GetTypeInfoFromId(bamlElementRecord.TypeId);
                     XamlSerializer serializer = CreateSerializer((BamlTypeInfoWithSerializerRecord)typeInfo);
 
-                    if (ParserContext.RootElement == null)
+                    if (ParserContext.RootElement is null)
                     {
                         ParserContext.RootElement = _rootElement;
                     }
-                    if (ParserContext.StyleConnector == null)
+                    if (ParserContext.StyleConnector is null)
                     {
                         ParserContext.StyleConnector = _rootElement as IStyleConnector;
                     }
@@ -1306,7 +1306,7 @@ namespace System.Windows.Markup
                 }
             }
 
-            if (contentProperty == null)
+            if (contentProperty is null)
             {
                 WpfPropertyDefinition propertyDefinition = new WpfPropertyDefinition(this, attributeId, parent is DependencyObject);
 
@@ -1329,7 +1329,7 @@ namespace System.Windows.Markup
                     }
                 }
 
-                if (contentProperty == null)
+                if (contentProperty is null)
                 {
                     // We consider only PropertyInfo case here.
                     // We do not consider AttachedPropertySetter in this case because content property cannot be attached.
@@ -1345,7 +1345,7 @@ namespace System.Windows.Markup
 
                             // if Content Property does not support IList, then see if it is
                             // accessible\allowed as a regular setter.
-                            if (contentProperty == null)
+                            if (contentProperty is null)
                             {
                                 bool isPublicProperty;
                                 bool allowProtected =
@@ -1366,7 +1366,7 @@ namespace System.Windows.Markup
                                 as IList;
                         }
 
-                        if (contentProperty == null)
+                        if (contentProperty is null)
                         {
                             // The property returned null, try setting it directly.
                             contentProperty = propertyDefinition.PropertyInfo;
@@ -1375,7 +1375,7 @@ namespace System.Windows.Markup
                 }
             }
 
-            if (contentProperty == null)
+            if (contentProperty is null)
             {
                 ThrowException(nameof(SR.ParserCantGetDPOrPi), GetPropertyNameFromAttributeId(attributeId));
             }
@@ -1471,7 +1471,7 @@ namespace System.Windows.Markup
                         // string is passed in due to there being other attributes like
                         // converter being set, then that needs to be converted now first.
                         DependencyProperty dp = param as DependencyProperty;
-                        if (dp == null)
+                        if (dp is null)
                         {
                             string paramString = param as string;
                             Type ownerType = ParserContext.TargetType;
@@ -1481,7 +1481,7 @@ namespace System.Windows.Markup
                                                                   paramString.Trim(),
                                                                   ref ownerType);
 
-                            if (dp == null)
+                            if (dp is null)
                             {
                                 ThrowException(nameof(SR.ParserNoDPOnOwner), paramString, ownerType.FullName);
                             }
@@ -1513,7 +1513,7 @@ namespace System.Windows.Markup
 
                         if (paramCount == 1)
                         {
-                            Debug.Assert(param != null && paramList == null, "Must have a single param");
+                            Debug.Assert(param != null && paramList is null, "Must have a single param");
                             ProcessConstructorParameter(paramInfos[0], param, ref paramArray[0]);
 
                             // Fast code path for other markupextensions
@@ -1527,7 +1527,7 @@ namespace System.Windows.Markup
                         }
                         else
                         {
-                            Debug.Assert(param == null && paramList != null, "Must have a paramList");
+                            Debug.Assert(param is null && paramList != null, "Must have a paramList");
 
                             // Check each type and attempt to convert the paramList using
                             // the type converter associated with each parameter type.
@@ -2128,7 +2128,7 @@ namespace System.Windows.Markup
                 // Resolve the attribInfo of the prop value read into ValueIdValueId,
                 // into an actual DP instance to be used as the prop value.
                 dp = MapTable.GetDependencyPropertyValueFromId(dpId, dpName, out declaringType);
-                if (dp == null)
+                if (dp is null)
                 {
                     ThrowException(nameof(SR.ParserCannotConvertPropertyValue), "Property", typeof(DependencyProperty).FullName);
                 }
@@ -2410,7 +2410,7 @@ namespace System.Windows.Markup
                     break;
             }
 
-            if (valueObject == null)
+            if (valueObject is null)
             {
                 string valueTypeName = string.Empty;
 
@@ -2840,7 +2840,7 @@ namespace System.Windows.Markup
                                                               reid.HandlerType,
                                                               ParserContext.RootElement,
                                                               attribValue);
-                            if (d == null)
+                            if (d is null)
                             {
                                 ThrowException(nameof(SR.ParserCantCreateDelegate), reid.HandlerType.Name, attribValue);
                             }
@@ -2874,7 +2874,7 @@ namespace System.Windows.Markup
                                                               ei.EventHandlerType,
                                                               ParserContext.RootElement,
                                                               attribValue);
-                            if (d == null)
+                            if (d is null)
                             {
                                 ThrowException(nameof(SR.ParserCantCreateDelegate), ei.EventHandlerType.Name, attribValue);
                             }
@@ -3009,7 +3009,7 @@ namespace System.Windows.Markup
             // happen if the Array property is read/write, but does not
             // contain a value and there was no array object under the
             // property.
-            if (holder.Collection == null)
+            if (holder.Collection is null)
             {
                 InitPropertyCollection(holder, CurrentContext);
             }
@@ -3109,7 +3109,7 @@ namespace System.Windows.Markup
         {
             BamlCollectionHolder holder = (BamlCollectionHolder)context.ObjectData;
 
-            if (holder.Collection == null)
+            if (holder.Collection is null)
             {
                 // If we don't have a collection yet, then create one now.  This can
                 // happen if the IDictionary property is read/write, but does not
@@ -3135,7 +3135,7 @@ namespace System.Windows.Markup
         private void InitPropertyCollection(BamlCollectionHolder holder, ReaderContextStackData context)
         {
             // this method should only be called to initialize the collection
-            Debug.Assert (holder.Collection == null);
+            Debug.Assert (holder.Collection is null);
 
             if (context.ContextType == ReaderFlags.PropertyArray)
             {
@@ -3166,7 +3166,7 @@ namespace System.Windows.Markup
             BamlCollectionHolder holder = (BamlCollectionHolder)context.ObjectData;
 
             // If we don't have a collection yet, then create one now.
-            if (holder.Collection == null && toInsert)
+            if (holder.Collection is null && toInsert)
             {
                 // if this collection holder has not yet been used, then initialize its collection
                 InitPropertyCollection(holder, context);
@@ -3291,7 +3291,7 @@ namespace System.Windows.Markup
             {
                 object key = XamlTypeMapper.GetDictionaryKey(bamlDefAttributeRecord.Value, ParserContext);
 
-                if (key == null)
+                if (key is null)
                 {
                     ThrowException(nameof(SR.ParserNoResource), bamlDefAttributeRecord.Value);
                 }
@@ -3307,7 +3307,7 @@ namespace System.Windows.Markup
                 //  most of which are meaningless.  Just ignore the useless parts.
 
                 // If we don't have an object to set to - bail.
-                if( CurrentContext == null )
+                if( CurrentContext is null )
                     return;
 
                 CurrentContext.Uid = bamlDefAttributeRecord.Value;
@@ -3362,7 +3362,7 @@ namespace System.Windows.Markup
             // Get the actual type from the TypeId
             Type keyType = MapTable.GetTypeFromId(bamlDefAttributeRecord.TypeId);
 
-            if (keyType == null)
+            if (keyType is null)
             {
                 ThrowException(nameof(SR.ParserNoResource), XamlReaderHelper.DefinitionName);
             }
@@ -3455,7 +3455,7 @@ namespace System.Windows.Markup
                 {
                     if (CurrentContext.CreateUsingTypeConverter)
                     {
-                        Debug.Assert( CurrentContext.ObjectData == null && CurrentContext.ExpectedType != null,
+                        Debug.Assert( CurrentContext.ObjectData is null && CurrentContext.ExpectedType != null,
                             "We had expected to create this object using a TypeConverter - but there's already an instance here.  Who created the instance and broke our ability to use a TypeConverter?");
 
                         // Use a TypeConverter to create an object instance from text.
@@ -3477,7 +3477,7 @@ namespace System.Windows.Markup
                         //  treated as content of object.  GetCurrentObjectData will
                         //  create an instance if one doesn't already exist.
                         object parent = GetCurrentObjectData();
-                        if (parent == null)
+                        if (parent is null)
                         {
                             // GetCurrentObjectData failed to create an object for us to add content to.
                             ThrowException(nameof(SR.ParserCantCreateInstanceType), CurrentContext.ExpectedType.FullName);
@@ -3568,7 +3568,7 @@ namespace System.Windows.Markup
                     BamlCollectionHolder holder = GetCollectionHolderFromContext(CurrentContext, true);
                     IAddChild iaddchild = BamlRecordManager.AsIAddChild(holder.Collection);
 
-                    if (iaddchild == null)
+                    if (iaddchild is null)
                     {
                         ThrowException(nameof(SR.ParserNoMatchingIList), "?");
                     }
@@ -3581,7 +3581,7 @@ namespace System.Windows.Markup
                 {
                     BamlCollectionHolder holder = GetCollectionHolderFromContext(CurrentContext, true);
 
-                    if (holder.List == null)
+                    if (holder.List is null)
                     {
                         ThrowException(nameof(SR.ParserNoMatchingIList), "?");
                     }
@@ -3689,7 +3689,7 @@ namespace System.Windows.Markup
                 else
                 {
                     // Touching reflection information about the setter only now to avoid extra memory allocations
-                    if (attribInfo.AttachedPropertySetter == null)
+                    if (attribInfo.AttachedPropertySetter is null)
                     {
                         XamlTypeMapper.UpdateAttachedPropertySetter(attribInfo);
                     }
@@ -3905,7 +3905,7 @@ namespace System.Windows.Markup
                 o = ProvideValueFromMarkupExtension(me, null, null);
             }
 
-            if (CurrentContext.ObjectData == null)
+            if (CurrentContext.ObjectData is null)
             {
                 CurrentContext.ObjectData = o;
                 CurrentContext.SetFlag(ReaderFlags.SingletonConstructorParam);
@@ -4228,7 +4228,7 @@ namespace System.Windows.Markup
         {
             string  resourceName = resourceNameString.Substring(1, resourceNameString.Length-2);
             object  resourceNameObject = XamlTypeMapper.GetDictionaryKey(resourceName, ParserContext);
-            if (resourceNameObject == null)
+            if (resourceNameObject is null)
             {
                ThrowException(nameof(SR.ParserNoResource), resourceNameString);
             }
@@ -4366,7 +4366,7 @@ namespace System.Windows.Markup
         {
             Uri baseuri = ParserContext.BaseUri;
 
-            if (baseuri == null)
+            if (baseuri is null)
             {
                 baseuri = BindUriHelper.BaseUri;
             }
@@ -4444,15 +4444,15 @@ namespace System.Windows.Markup
             // The second consition is to handle events within standalone dictionaries.
             // We need to setup the component connector correctly in this case. Note
             // that the standalone dictionary is preceded by a DictionaryHolder.
-            if (CurrentContext == null)
+            if (CurrentContext is null)
             {
                 IComponentConnector icc = null;
-                if (_componentConnector == null) // why was this necessary?
+                if (_componentConnector is null) // why was this necessary?
                 {
                     _componentConnector = icc = element as IComponentConnector;
                     if (_componentConnector != null)
                     {
-                        if (ParserContext.RootElement == null)
+                        if (ParserContext.RootElement is null)
                         {
                             ParserContext.RootElement = element;
                         }
@@ -4475,7 +4475,7 @@ namespace System.Windows.Markup
                     {
                         namescope = NameScope.GetNameScope(doRoot) as NameScope;
                     }
-                    if (namescope == null)
+                    if (namescope is null)
                     {
                         namescope = new NameScope();
                         NameScope.SetNameScope(doRoot, namescope);
@@ -4584,7 +4584,7 @@ namespace System.Windows.Markup
             ReaderContextStackData currentContext = CurrentContext;
             ReaderContextStackData parentContext = ParentContext;
 
-            if (currentContext == null ||
+            if (currentContext is null ||
                 !currentContext.NeedToAddToTree ||
                 (ReaderFlags.DependencyObject != currentContext.ContextType &&
                  ReaderFlags.ClrObject != currentContext.ContextType))
@@ -4654,7 +4654,7 @@ namespace System.Windows.Markup
                     {
                         currentObject = GetElementValue(currentObject, dictionary, null /*contentProperty*/, ref isMarkupExtension);
 
-                        if (currentContext.Key == null)
+                        if (currentContext.Key is null)
                         {
                             // throw an exception if this element does not have a key
                             ThrowException(nameof(SR.ParserNoDictionaryKey));
@@ -4773,9 +4773,9 @@ namespace System.Windows.Markup
                 // If we get here there was no way to set the value to the parent, error:
 
                 Type parentType = GetParentType();
-                string typeName = parentType == null ? String.Empty : parentType.FullName;
+                string typeName = parentType is null ? String.Empty : parentType.FullName;
 
-                if( currentObject == null )
+                if( currentObject is null )
                     ThrowException( nameof(SR.ParserCannotAddAnyChildren), typeName );
                 else
                     ThrowException( nameof(SR.ParserCannotAddAnyChildren2), typeName, currentObject.GetType().FullName );
@@ -4791,9 +4791,9 @@ namespace System.Windows.Markup
                 }
 
                 Type parentType = GetParentType();
-                string typeName = parentType == null ? String.Empty : parentType.FullName;
+                string typeName = parentType is null ? String.Empty : parentType.FullName;
 
-                if( currentObject == null )
+                if( currentObject is null )
                     ThrowException( nameof(SR.ParserCannotAddAnyChildren), typeName );
                 else
                     ThrowException( nameof(SR.ParserCannotAddAnyChildren2), typeName, currentObject.GetType().FullName );
@@ -4878,7 +4878,7 @@ namespace System.Windows.Markup
                         // represent the explicit collection and the grandparent is that property's target.
                         element = GetElementValue(element, GrandParentObjectData,
                                                   holder.PropertyDefinition.DependencyProperty, ref isMarkupExtension);
-                        elementType = element == null ? null : element.GetType();
+                        elementType = element is null ? null : element.GetType();
                     }
 
                     // the element is an explicit collection if it is assignable to the expected type of the parent or
@@ -4941,7 +4941,7 @@ namespace System.Windows.Markup
                     if (dp != null)
                     {
                         DependencyObject dpo = container as DependencyObject;
-                        if (dpo == null)
+                        if (dpo is null)
                         {
                             // ?? This appears to be old code, we shouldn't ever get into this path.
                             ThrowException(nameof(SR.ParserParentDO), value.ToString());
@@ -5074,7 +5074,7 @@ namespace System.Windows.Markup
             else
             {
                 // If the serializer type hasn't been determined yet, do it now.
-                if (typeWithSerializerInfo.SerializerType == null)
+                if (typeWithSerializerInfo.SerializerType is null)
                 {
                     typeWithSerializerInfo.SerializerType = MapTable.GetTypeFromId(
                                              typeWithSerializerInfo.SerializerTypeId);
@@ -5102,14 +5102,14 @@ namespace System.Windows.Markup
                 if (null != attribInfo)
                 {
                     info = attribInfo.Event;
-                    if (info == null)
+                    if (info is null)
                     {
                         info = attribInfo.EventInfo;
-                        if (info == null)
+                        if (info is null)
                         {
                             attribInfo.Event = MapTable.GetRoutedEvent(attribInfo);
                             info = attribInfo.Event;
-                            if (info == null)
+                            if (info is null)
                             {
                                 Object currentParent = GetCurrentObjectData();
                                 Type   currentParentType;
@@ -5120,7 +5120,7 @@ namespace System.Windows.Markup
                                     attribInfo.EventInfo = ParserContext.XamlTypeMapper.GetClrEventInfo(currentParentType, attribInfo.Name);
                                 }
 
-                                if (attribInfo.EventInfo == null)
+                                if (attribInfo.EventInfo is null)
                                 {
                                     attribInfo.EventInfo = currentParentType.GetEvent(attribInfo.Name,
                                                                 BindingFlags.Instance |
@@ -5281,7 +5281,7 @@ namespace System.Windows.Markup
                         else
                         {
                             instance = XamlTypeMapper.CreateInternalInstance(ParserContext, type);
-                            if (instance == null && throwOnFail)
+                            if (instance is null && throwOnFail)
                             {
                                 ThrowException(nameof(SR.ParserNotAllowedInternalType), type.Name);
                             }
@@ -5506,7 +5506,7 @@ namespace System.Windows.Markup
             get
             {
                 ReaderContextStackData contextData = ParentContext;
-                return contextData == null ? null : contextData.ObjectData;
+                return contextData is null ? null : contextData.ObjectData;
             }
         }
 
@@ -5520,7 +5520,7 @@ namespace System.Windows.Markup
             get
             {
                 ReaderContextStackData contextData = GrandParentContext;
-                return contextData == null ? null : contextData.ObjectData;
+                return contextData is null ? null : contextData.ObjectData;
             }
         }
 
@@ -5538,7 +5538,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                if( _bamlRecordManager == null )
+                if( _bamlRecordManager is null )
                 {
                     _bamlRecordManager = new BamlRecordManager();
                 }
@@ -5745,7 +5745,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                if (_attributeInfo == null && _reader.MapTable != null)
+                if (_attributeInfo is null && _reader.MapTable != null)
                 {
                     // Either the attribute is not a DP or the record is still needed.
                     // This version of the method makes sure that attributeInfo.OwnerType is calculated.
@@ -5761,12 +5761,12 @@ namespace System.Windows.Markup
         {
             get
             {
-                if (this.AttributeInfo == null)
+                if (this.AttributeInfo is null)
                 {
                     return null;
                 }
 
-                if (_attributeInfo.PropInfo == null)
+                if (_attributeInfo.PropInfo is null)
                 {
                     Object currentParent = _reader.GetCurrentObjectData();
                     Type currentParentType = currentParent.GetType();
@@ -5782,12 +5782,12 @@ namespace System.Windows.Markup
         {
             get
             {
-                if (this.AttributeInfo == null)
+                if (this.AttributeInfo is null)
                 {
                     return null;
                 }
 
-                if (_attributeInfo.AttachedPropertyGetter == null)
+                if (_attributeInfo.AttachedPropertyGetter is null)
                 {
                     _reader.XamlTypeMapper.UpdateAttachedPropertyGetter(_attributeInfo);
                 }
@@ -5800,12 +5800,12 @@ namespace System.Windows.Markup
         {
             get
             {
-                if (this.AttributeInfo == null)
+                if (this.AttributeInfo is null)
                 {
                     return null;
                 }
 
-                if (_attributeInfo.AttachedPropertySetter == null)
+                if (_attributeInfo.AttachedPropertySetter is null)
                 {
                     // Note we update both Setter and Getter in one call; and detect the need of it by Getter==null
                     _reader.XamlTypeMapper.UpdateAttachedPropertySetter(_attributeInfo);
@@ -5819,7 +5819,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                if (this.AttributeInfo == null)
+                if (this.AttributeInfo is null)
                 {
                     return false;
                 }

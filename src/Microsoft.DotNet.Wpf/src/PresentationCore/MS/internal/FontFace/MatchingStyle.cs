@@ -67,7 +67,7 @@ namespace MS.Internal.FontFace
         /// </summary>
         public override bool Equals(Object o)
         {
-            if(o == null)
+            if(o is null)
                 return false;
 
             return o is MatchingStyle && this == (MatchingStyle)o;

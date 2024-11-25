@@ -190,7 +190,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
             return false;
 
         DependencyObject target = TargetElement;
-        if (target == null)
+        if (target is null)
             return false;
 
         SetStatus(BindingStatusInternal.Active);
@@ -513,7 +513,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
     BindingExpressionBase AttachBindingExpression(int i, bool replaceExisting)
     {
         DependencyObject target = TargetElement;
-        if (target == null)
+        if (target is null)
             return null;
 
         BindingBase binding = ParentPriorityBinding.Bindings[i];

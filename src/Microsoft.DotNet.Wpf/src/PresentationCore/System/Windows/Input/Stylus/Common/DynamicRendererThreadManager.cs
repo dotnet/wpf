@@ -108,7 +108,7 @@ namespace System.Windows.Input.StylusPlugIns
                 DispatcherShutdownStartedEventManager manager = (DispatcherShutdownStartedEventManager)GetCurrentManager(managerType);
 
                 // at first use, create and register a new manager
-                if (manager == null)
+                if (manager is null)
                 {
                     manager = new DispatcherShutdownStartedEventManager();
                     SetCurrentManager(managerType, manager);
@@ -150,7 +150,7 @@ namespace System.Windows.Input.StylusPlugIns
         {
             // Create the threadstatic DynamicRendererThreadManager as needed for calling thread.
             // It only creates one
-            if (_tsDRTMWeakRef == null || _tsDRTMWeakRef.Target == null)
+            if (_tsDRTMWeakRef is null || _tsDRTMWeakRef.Target is null)
             {
                 _tsDRTMWeakRef = new WeakReference(new DynamicRendererThreadManager());
             }
@@ -224,7 +224,7 @@ namespace System.Windows.Input.StylusPlugIns
         {
             Dispatcher inkingDispatcher = __inkingDispatcher;
             // Return from here if the inking dispathcer is gone already.
-            if (inkingDispatcher == null)
+            if (inkingDispatcher is null)
                 return;
 
             // Mashal the Dispose call, which will shut down our Dynamic rendering thread, to the inking dispatcher.

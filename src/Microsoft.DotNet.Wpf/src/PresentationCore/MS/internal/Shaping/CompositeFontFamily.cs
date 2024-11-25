@@ -204,7 +204,7 @@ namespace MS.Internal.Shaping
             FontStretch     stretch
             )
         {
-            if (_fontInfo.FamilyTypefaces == null &&
+            if (_fontInfo.FamilyTypefaces is null &&
                 _fontInfo.FamilyMaps.Count == 1 &&
                 _fontInfo.FamilyMaps[0].IsSimpleFamilyMap)
             {
@@ -256,7 +256,7 @@ namespace MS.Internal.Shaping
                 );
 
             // Return the values for the matching FontFamilyMap. If there is none this is
-            // FontFamilyMap.Default which has Target == null and Scale == 1.0.
+            // FontFamilyMap.Default which has Target is null and Scale == 1.0.
             targetFamilyName = familyMap.Target;
             scaleInEm = familyMap.Scale;
 
@@ -366,7 +366,7 @@ namespace MS.Internal.Shaping
         /// </summary>
         private IFontFamily GetFirstFontFamily()
         {
-            if(_firstFontFamily == null)
+            if(_firstFontFamily is null)
             {
                 if (_fontInfo.FamilyMaps.Count != 0)
                 {
@@ -391,7 +391,7 @@ namespace MS.Internal.Shaping
         {
             FamilyTypeface bestFace = FindNearestFamilyTypeface(style, weight, stretch);
 
-            if (bestFace == null)
+            if (bestFace is null)
                 return new CompositeTypefaceMetrics();
             else
                 return bestFace;
@@ -408,7 +408,7 @@ namespace MS.Internal.Shaping
             FontStretch stretch
             )
         {
-            if (_fontInfo.FamilyTypefaces == null || _fontInfo.FamilyTypefaces.Count == 0)
+            if (_fontInfo.FamilyTypefaces is null || _fontInfo.FamilyTypefaces.Count == 0)
             {
                 return null;
             }
@@ -442,7 +442,7 @@ namespace MS.Internal.Shaping
             FontStretch stretch
             )
         {
-            if (_fontInfo.FamilyTypefaces == null || _fontInfo.FamilyTypefaces.Count == 0)
+            if (_fontInfo.FamilyTypefaces is null || _fontInfo.FamilyTypefaces.Count == 0)
             {
                 return null;
             }

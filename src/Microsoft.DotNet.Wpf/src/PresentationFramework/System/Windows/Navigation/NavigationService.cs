@@ -92,7 +92,7 @@ namespace System.Windows.Navigation
 
         #if DEBUG
             // We should only be replacing queue items that aren't already posted
-            Debug.Assert(_navigateQueueItem == null || _navigateQueueItem.IsPosted == false);
+            Debug.Assert(_navigateQueueItem is null || _navigateQueueItem.IsPosted == false);
         #endif
             _navigateQueueItem = null;
             _request = null;
@@ -122,7 +122,7 @@ namespace System.Windows.Navigation
                 IUriContext uc = dobj as IUriContext;
 
                 //Throw an exception if IUriContext is not implemented, any element can raise this event since it is public.
-                if (uc == null)
+                if (uc is null)
                     throw new Exception(SR.Format(SR.MustImplementIUriContext, typeof(IUriContext)));
 
                 bpu = BindUriHelper.GetUriToNavigate(dobj, uc.BaseUri, e.Uri);
@@ -154,12 +154,12 @@ namespace System.Windows.Navigation
                 navigator = this.FindTarget(target);
 
                 // Try the current JournalNavigationScope before the entire window.
-                if ((navigator == null) && (JournalScope != null))
+                if ((navigator is null) && (JournalScope != null))
                 {
                     navigator = JournalScope.FindTarget(target);
                 }
 
-                if (navigator == null)
+                if (navigator is null)
                 {
                     // We should at the very least check current window -if we have one- before we iterate rest of the windows
                     NavigationWindow navWin = FindNavigationWindow();
@@ -169,7 +169,7 @@ namespace System.Windows.Navigation
                     }
 
                     // Didn't find it in the window, try the NavigationWindows in the WindowsCollection in the application
-                    if (navigator == null)
+                    if (navigator is null)
                     {
                         navigator = FindTargetInApplication(target);
 
@@ -216,7 +216,7 @@ namespace System.Windows.Navigation
             {
                 return true;
             }
-            if (a == null || b == null)
+            if (a is null || b is null)
             {
                 return false;
             }
@@ -258,7 +258,7 @@ namespace System.Windows.Navigation
                 Debug.Assert(IsConsistent(navInfo));
                 destinationEntry = navInfo.JournalEntry; // null for new navigation
             }
-            NavigationMode navMode = navInfo == null ? NavigationMode.New : navInfo.NavigationMode;
+            NavigationMode navMode = navInfo is null ? NavigationMode.New : navInfo.NavigationMode;
             // * This method should work with navMode=Refresh.
 
             // Root Viewer state is saved first because the fragment navigation can change view state
@@ -419,7 +419,7 @@ namespace System.Windows.Navigation
         /// <returns> Can be null </returns>
         private JournalNavigationScope EnsureJournal()
         {
-            if (_journalScope == null && _navigatorHost != null)
+            if (_journalScope is null && _navigatorHost != null)
             {
                 _journalScope = _navigatorHost.GetJournal(true/*do create*/);
             }
@@ -429,9 +429,9 @@ namespace System.Windows.Navigation
 
         bool IsConsistent(NavigateInfo navInfo)
         {
-            return navInfo == null
+            return navInfo is null
                 || navInfo.IsConsistent
-                   && (navInfo.JournalEntry == null || navInfo.JournalEntry.NavigationServiceId == _guidId);
+                   && (navInfo.JournalEntry is null || navInfo.JournalEntry.NavigationServiceId == _guidId);
         }
 
         private bool IsJournalNavigation(NavigateInfo navInfo)
@@ -458,7 +458,7 @@ namespace System.Windows.Navigation
         {
             Debug.Assert(!(_bp is Visual));
             Visual v = _navigatorHostImpl.FindRootViewer();
-            if (v == null)
+            if (v is null)
                 return false; // Template may not be applied yet.
             IJournalState ijs = v as IJournalState;
             if (ijs != null)
@@ -484,7 +484,7 @@ namespace System.Windows.Navigation
             // Application has two window collections. One for Application windows (windows
             // created on the same thread as the app) and the other for all other windows.
             // we will try to find target in all of these windows.
-            if (Application.Current == null)
+            if (Application.Current is null)
                 return null;
 
             // WindowsInternal takes a lock to access the storage.  We want to clone it and use the copy.
@@ -497,7 +497,7 @@ namespace System.Windows.Navigation
 
             // if we didn't find the target in one of the App windows, search for it in windows on
             // non app thread
-            if (navigator == null)
+            if (navigator is null)
             {
                 navigator = FindTargetInWindowCollection(Application.Current.NonAppWindowsInternal.Clone(), targetName);
             }
@@ -605,8 +605,8 @@ namespace System.Windows.Navigation
             if (ncChild == this)
                 throw new Exception(SR.Format(SR.LoopDetected, _currentCleanSource));
 
-            Invariant.Assert(ncChild.ParentNavigationService == null);
-            Invariant.Assert(ncChild.JournalScope == null || ncChild.IsJournalLevelContainer,
+            Invariant.Assert(ncChild.ParentNavigationService is null);
+            Invariant.Assert(ncChild.JournalScope is null || ncChild.IsJournalLevelContainer,
                 "Parentless NavigationService has a reference to a JournalNavigationScope its host navigator doesn't own.");
 
             ChildNavigationServices.Add(ncChild);
@@ -747,7 +747,7 @@ namespace System.Windows.Navigation
 
                     // For object navigation, always return true (KeepAlive).
                     bool noUriToReloadFrom = !CanReloadFromUri;
-                    if (pf == null && noUriToReloadFrom)
+                    if (pf is null && noUriToReloadFrom)
                     {
                         keepAlive = true;
                     }
@@ -772,7 +772,7 @@ namespace System.Windows.Navigation
 
             curBaseUri = (Uri)(dobj.GetValue(BaseUriHelper.BaseUriProperty));
 
-            if (curBaseUri == null && fullUri != null)
+            if (curBaseUri is null && fullUri != null)
             {
                 //
                 // Get BaseUri from current Uri, and set it into root element of the new tree.
@@ -874,7 +874,7 @@ namespace System.Windows.Navigation
         /// </returns>
         private bool HookupNewTree(Object newTree, NavigateInfo navInfo, Uri newUri)
         {
-            Debug.Assert(_navigateQueueItem == null && _navStatus == NavigationStatus.Navigated);
+            Debug.Assert(_navigateQueueItem is null && _navStatus == NavigationStatus.Navigated);
 
             // Restore the page state
             if (newTree != null && IsJournalNavigation(navInfo))
@@ -898,7 +898,7 @@ namespace System.Windows.Navigation
             // Then navInfo.NavigationMode may be Back or New.
             // (New iff finishingChildPageFunction.RemoveFromJournal==false).
             PageFunctionBase finishingChildPageFunction = (pfReturnInfo != null) ? pfReturnInfo.FinishingChildPageFunction : null;
-            Debug.Assert(finishingChildPageFunction == null ||
+            Debug.Assert(finishingChildPageFunction is null ||
                 !IsPageFunction(newTree) &&
                 (finishingChildPageFunction.RemoveFromJournal && navInfo.NavigationMode == NavigationMode.Back ||
                  !finishingChildPageFunction.RemoveFromJournal && navInfo.NavigationMode == NavigationMode.New));
@@ -917,7 +917,7 @@ namespace System.Windows.Navigation
                     if (_navigateQueueItem != null)
                     {
                         // Return event handler should not be left attached.
-                        Debug.Assert(finishingChildPageFunction._Return == null);
+                        Debug.Assert(finishingChildPageFunction._Return is null);
 
                         if (pfReturnInfo.JournalEntry != null)
                         {
@@ -948,10 +948,10 @@ namespace System.Windows.Navigation
                 // If a page function is started without attaching a Return event handler to it,
                 // it doesn't know which parent page to return to. So, set it here in this case.
                 // (See also PageFunctionBase._AddEventHandler().)
-                if ((navInfo == null || navInfo.NavigationMode == NavigationMode.New)
+                if ((navInfo is null || navInfo.NavigationMode == NavigationMode.New)
                     && !_doNotJournalCurrentContent) // the current PF may have been RemoveFromJournal'ed
                 {
-                    Debug.Assert(pfReturnInfo == null);
+                    Debug.Assert(pfReturnInfo is null);
                     PageFunctionBase pf = (PageFunctionBase)newTree;
                     // pf._Resume=true when a PF returns and recording a new navigation for the parent PF
                     if (!pf._Resume && pf.ParentPageFunctionId == Guid.Empty && _bp is PageFunctionBase)
@@ -1025,10 +1025,10 @@ namespace System.Windows.Navigation
                 return false;
             }
 
-            Debug.Assert(_navigateQueueItem == null);
+            Debug.Assert(_navigateQueueItem is null);
 
 
-            if (navInfo == null)
+            if (navInfo is null)
             {
                 UpdateJournal(NavigationMode.New, JournalReason.NewContentNavigation, null);
             }
@@ -1119,7 +1119,7 @@ namespace System.Windows.Navigation
         /// <param name="navState"></param>
         void IContentContainer.OnContentReady(ContentType contentType, Object bp, Uri bpu, Object navState)
         {
-            Invariant.Assert(bpu == null || bpu.IsAbsoluteUri, "Content URI must be absolute.");
+            Invariant.Assert(bpu is null || bpu.IsAbsoluteUri, "Content URI must be absolute.");
             if (IsDisposed)
             {
                 return;
@@ -1138,16 +1138,16 @@ namespace System.Windows.Navigation
             ResetPendingNavigationState(NavigationStatus.Navigated);
 
             NavigateInfo navInfo = navState as NavigateInfo;
-            NavigationMode navMode = navInfo == null ? NavigationMode.New : navInfo.NavigationMode;
+            NavigationMode navMode = navInfo is null ? NavigationMode.New : navInfo.NavigationMode;
 
-            Debug.Assert(bpu == null ||
-                         navInfo == null ||
-                         navInfo.Source == null ||
+            Debug.Assert(bpu is null ||
+                         navInfo is null ||
+                         navInfo.Source is null ||
                          IsSameUri(null, navInfo.Source, bpu, false /* withFragment */),
                          "Source in OnContentReady does not match source in NavigateInfo");
-            if (bpu == null)
+            if (bpu is null)
             {
-                bpu = (navInfo == null) ? null : navInfo.Source;
+                bpu = (navInfo is null) ? null : navInfo.Source;
             }
 
             Uri bpuClean = BindUriHelper.GetUriRelativeToPackAppBase(bpu);
@@ -1198,7 +1198,7 @@ namespace System.Windows.Navigation
                 // (See Navigate(Uri, object).)
                 if (navMode != NavigationMode.Refresh)
                 {
-                    if (navInfo == null || navInfo.JournalEntry == null) // new navigation?
+                    if (navInfo is null || navInfo.JournalEntry is null) // new navigation?
                     {
                         _contentId++; // Note: this is done even when bp==null.
                         _journalEntryGroupState = null; // start anew
@@ -1212,7 +1212,7 @@ namespace System.Windows.Navigation
 
                         // The JournalEntryGroupState object from the JE must be reused because other JEs
                         // may have references to it.
-                        Debug.Assert(_journalEntryGroupState == null ||
+                        Debug.Assert(_journalEntryGroupState is null ||
                             _journalEntryGroupState.ContentId != _contentId); // because _bp != bp
                         _journalEntryGroupState = navInfo.JournalEntry.JEGroupState;
                     }
@@ -1279,7 +1279,7 @@ namespace System.Windows.Navigation
             FireNavigationProgress(sourceUri);
 
             // Fire with cumulative totals at the top level container also unless this is the top level one.
-            if (rootNavigationService == null)
+            if (rootNavigationService is null)
                 return;
 
             // Since we are using rootUri, fire with root's INavigatorHost
@@ -1436,7 +1436,7 @@ namespace System.Windows.Navigation
             {
                 return;
             }
-            if (_bp == null)
+            if (_bp is null)
                 throw new InvalidOperationException(SR.InvalidOperation_AddBackEntryNoContent);
 
             _customContentStateToSave = state;
@@ -1450,7 +1450,7 @@ namespace System.Windows.Navigation
             // Since state=null is allowed on input, make sure we get an object either via the
             // IProvideCustomContentState interface or from a Navigating event handler.
             // Otherwise it doesn't make sense to add a journal entry.
-            if (je != null && je.CustomContentState == null)
+            if (je != null && je.CustomContentState is null)
             {
                 RemoveBackEntry();
                 throw new InvalidOperationException(
@@ -1468,7 +1468,7 @@ namespace System.Windows.Navigation
             {
                 return null;
             }
-            if (JournalScope == null)
+            if (JournalScope is null)
                 return null; //(Normally, no exception is thrown if there is no back entry.)
             return JournalScope.RemoveBackEntry();
         }
@@ -1563,7 +1563,7 @@ namespace System.Windows.Navigation
                     // of the current page. Then it's not fragment navigation. The test below
                     // distinguishes back/fwd navigations within the current page from navigations
                     // between two different instances of the same page (URI).
-                    isFragment = (navInfo == null || navInfo.JournalEntry == null
+                    isFragment = (navInfo is null || navInfo.JournalEntry is null
                                    || navInfo.JournalEntry.ContentId == _contentId)
                         && IsSameUri(null, resolvedSource, _currentSource, false /* without Fragment */);
                 }
@@ -1587,7 +1587,7 @@ namespace System.Windows.Navigation
                     // May have delegated back to browser for x-domain case.
                     // (`http:// only, not file--see CreateWebRequest()).
                     //
-                    if (newRequest == null)
+                    if (newRequest is null)
                         return false;
                 }
             }
@@ -1600,7 +1600,7 @@ namespace System.Windows.Navigation
 
             // Short-circuit re-navigating to null. This should be done after HandleNavigating because
             // there might be a pending navigation to cancel first.
-            if (source == null && _bp == null)
+            if (source is null && _bp is null)
             {
                 ResetPendingNavigationState(NavigationStatus.Idle);
                 return true;
@@ -1659,7 +1659,7 @@ namespace System.Windows.Navigation
             Invariant.Assert(IsConsistent(navigateInfo));
 
             // Prevent re-starting the same PageFunction object before it has returned first.
-            if (navigateInfo == null) // not called internally, from NavigateToParentPage()
+            if (navigateInfo is null) // not called internally, from NavigateToParentPage()
             {
                 PageFunctionBase pf = root as PageFunctionBase;
                 // This won't detect the case when no Return event handler was attached, but then
@@ -1668,7 +1668,7 @@ namespace System.Windows.Navigation
                     throw new InvalidOperationException(SR.InvalidOperation_CannotReenterPageFunction);
             }
 
-            Uri source = navigateInfo == null ? null : navigateInfo.Source;
+            Uri source = navigateInfo is null ? null : navigateInfo.Source;
 
             // HandleNavigating will set the pending Uri from navigationState if available
             // See comments in NavigateInfo class
@@ -1683,7 +1683,7 @@ namespace System.Windows.Navigation
             //   - Refresh(). We'll go through the entire navigation sequence.
             //   - Going back/fwd to a journal entry associated with the same object. This is also handled
             //      as fragment navigation.
-            if (object.ReferenceEquals(root, _bp) && (navigateInfo == null || navigateInfo.NavigationMode != NavigationMode.Refresh))
+            if (object.ReferenceEquals(root, _bp) && (navigateInfo is null || navigateInfo.NavigationMode != NavigationMode.Refresh))
             {
                 NavigateToFragmentOrCustomContentState(source, navigationState);
 
@@ -1745,7 +1745,7 @@ namespace System.Windows.Navigation
         /// <value></value>
         public void GoForward()
         {
-            if (JournalScope == null)
+            if (JournalScope is null)
                 throw new InvalidOperationException(SR.NoForwardEntry);
             JournalScope.GoForward();
         }
@@ -1759,7 +1759,7 @@ namespace System.Windows.Navigation
         /// <value></value>
         public void GoBack()
         {
-            if (JournalScope == null)
+            if (JournalScope is null)
                 throw new InvalidOperationException(SR.NoBackEntry);
             JournalScope.GoBack();
         }
@@ -2063,19 +2063,19 @@ namespace System.Windows.Navigation
                              "Encountered unexpected condition in FireNavigating, see comments in the file");
                 // Only allow this navigation to continue if the user has not
                 // reqeusted another navigation in the mean time.
-                return _navigateQueueItem == null;
+                return _navigateQueueItem is null;
             }
 
             CustomContentState customContentState =
                 (navigateInfo != null && navigateInfo.JournalEntry != null) ? navigateInfo.JournalEntry.CustomContentState : null;
             // do not expose navState if it is NavigateInfo
-            object extraData = navigateInfo == null ? navState : null;
+            object extraData = navigateInfo is null ? navState : null;
             NavigatingCancelEventArgs e = new NavigatingCancelEventArgs(
                                                             cleanSource,
                                                             bp,
                                                             customContentState,
                                                             extraData,
-                                                            navigateInfo == null ? NavigationMode.New : navigateInfo.NavigationMode,
+                                                            navigateInfo is null ? NavigationMode.New : navigateInfo.NavigationMode,
                                                             request,
                                                             INavigatorHost,
                                                             IsNavigationInitiator);
@@ -2086,7 +2086,7 @@ namespace System.Windows.Navigation
             }
             if (!e.Cancel && this.Application != null && this.Application.CheckAccess())
             {
-                this.Application.FireNavigating(e, _bp == null);
+                this.Application.FireNavigating(e, _bp is null);
             }
 
             // If this is null, the IProvideCustomContentState callback will be used later on.
@@ -2111,12 +2111,12 @@ namespace System.Windows.Navigation
             if (navigateInfo != null)
             {
                 Debug.Assert(navigateInfo.IsConsistent);
-                Debug.Assert(source == null ||
-                             navigateInfo.Source == null ||
+                Debug.Assert(source is null ||
+                             navigateInfo.Source is null ||
                              IsSameUri(null, navigateInfo.Source, source, false /* withFragment */),
                              "Source argument does not match NavigateInfo.Source");
                 // Don't want to overwrite one passed in
-                if (source == null)
+                if (source is null)
                 {
                     source = navigateInfo.Source;
                 }
@@ -2171,7 +2171,7 @@ namespace System.Windows.Navigation
                 _recursiveNavigateList.Clear();
 
                 // Continue with the navigation
-                Debug.Assert(_navigateQueueItem == null, "Previous nav queue item should be cleared by now.");
+                Debug.Assert(_navigateQueueItem is null, "Previous nav queue item should be cleared by now.");
                 _navigateQueueItem = localNavigateQueueItem;
 
                 _request = newRequest;
@@ -2682,7 +2682,7 @@ namespace System.Windows.Navigation
                 if (_request is PackWebRequest)
                 {
                     response = WpfWebRequestHelper.GetResponse(_request);
-                    if (response == null)
+                    if (response is null)
                     {
                         Uri requestUri = BindUriHelper.GetUriRelativeToPackAppBase(_request.RequestUri);
                         throw new Exception(SR.Format(SR.GetResponseFailed, requestUri.ToString()));
@@ -2798,7 +2798,7 @@ namespace System.Windows.Navigation
                 throw;
             }
 
-            bool isRefresh = navInfo == null ? false : navInfo.NavigationMode == NavigationMode.Refresh;
+            bool isRefresh = navInfo is null ? false : navInfo.NavigationMode == NavigationMode.Refresh;
             WpfWebRequestHelper.ConfigCachePolicy(request, isRefresh);
 
             return request;
@@ -2914,7 +2914,7 @@ namespace System.Windows.Navigation
             {
                 Stream s = response.GetResponseStream();
 
-                if (s == null)
+                if (s is null)
                 {
                     Uri requestUri = BindUriHelper.GetUriRelativeToPackAppBase(_request.RequestUri);
 
@@ -2931,7 +2931,7 @@ namespace System.Windows.Navigation
                 // BindStream overrides Read() and calls icc.OnNavigationProgress every 1k byte read
                 BindStream bindStream = new BindStream(s, contentLength, cleanSource, (IContentContainer)this, Dispatcher.CurrentDispatcher);
 
-                Invariant.Assert((_webResponse == null) && (_asyncObjectConverter == null));
+                Invariant.Assert((_webResponse is null) && (_asyncObjectConverter is null));
                 _webResponse = response;
                 _asyncObjectConverter = null;
 
@@ -2960,7 +2960,7 @@ namespace System.Windows.Navigation
                 {
                     try
                     {
-                        // If o == null, it means we don't know how to convert it.
+                        // If o is null, it means we don't know how to convert it.
                         // Currently that's everything other than xaml, baml and html at site
                         // of origin. If this is not a TopLevelContainer, we will throw an exception
                         // if there is no converter for it, else we will try to launch the
@@ -3085,7 +3085,7 @@ namespace System.Windows.Navigation
             Invariant.Assert(navFlags != NavigationMode.Refresh ^ object.ReferenceEquals(bp, _bp),
                 "Navigating to the same object should be handled as fragment navigation, except for Refresh.");
 
-            Uri source = navigateInfo == null ? null : navigateInfo.Source;
+            Uri source = navigateInfo is null ? null : navigateInfo.Source;
             // The baseUri passed to GetResolvedUri() is null because here we have a new Content
             // object. Its URI is not resolved relative to the URI of the previous Content.
             Uri resolvedSource = BindUriHelper.GetResolvedUri(null, source);
@@ -3113,7 +3113,7 @@ namespace System.Windows.Navigation
                 navigationMode == NavigationMode.Forward, "The journal should not be updated on Refresh.");
             // The point of this assert is that there should be no destinationJournalEntry for
             // navigationMode=New, but it is always required for Back/Fwd.
-            Debug.Assert(destinationJournalEntry == null
+            Debug.Assert(destinationJournalEntry is null
                     ^ (navigationMode == NavigationMode.Back || navigationMode == NavigationMode.Forward));
 
             JournalEntry journalEntry = null;
@@ -3123,7 +3123,7 @@ namespace System.Windows.Navigation
                 journalEntry = MakeJournalEntry(journalReason);
             }
 
-            if (journalEntry == null)
+            if (journalEntry is null)
             {
                 _doNotJournalCurrentContent = false;
 
@@ -3144,7 +3144,7 @@ namespace System.Windows.Navigation
             // is being re-navigated by DataStreams.Load(), because it doesn't yet have access to the
             // parent JournalNavigationScope.
             JournalNavigationScope journalScope = EnsureJournal();
-            if (journalScope == null)
+            if (journalScope is null)
             {
                 return null;
             }
@@ -3157,7 +3157,7 @@ namespace System.Windows.Navigation
                 // This codepath is not executed if this pagefunction finished without launching a child.
                 // That case is handled in HandleFinish
 
-                if (navigationMode == NavigationMode.New && pfBase.Content == null)
+                if (navigationMode == NavigationMode.New && pfBase.Content is null)
                 {
                     journalEntry.EntryType = JournalEntryType.UiLess;
                 }
@@ -3187,14 +3187,14 @@ namespace System.Windows.Navigation
 #pragma warning disable SYSLIB0050
         internal JournalEntry MakeJournalEntry(JournalReason journalReason)
         {
-            if (_bp == null)
+            if (_bp is null)
             {
                 return null;
             }
 
             Debug.Assert(_contentId != 0 &&
-                (_journalEntryGroupState == null || _journalEntryGroupState.ContentId == _contentId));
-            if (_journalEntryGroupState == null) // First journal entry created for the current Content?
+                (_journalEntryGroupState is null || _journalEntryGroupState.ContentId == _contentId));
+            if (_journalEntryGroupState is null) // First journal entry created for the current Content?
             {
                 _journalEntryGroupState = new JournalEntryGroupState(_guidId, _contentId);
             }
@@ -3276,7 +3276,7 @@ namespace System.Windows.Navigation
             // _customContentStateToSave can be preset by AddBackEntry() or FireNavigating().
             // If not, try the IProvideCustomContentState callback.
             CustomContentState ccs = _customContentStateToSave;
-            if (ccs == null)
+            if (ccs is null)
             {
                 IProvideCustomContentState pccs = _bp as IProvideCustomContentState;
                 if (pccs != null)
@@ -3347,7 +3347,7 @@ namespace System.Windows.Navigation
                     // Page.WindowTitle is just a shortcut to Window.Title.
                     // The window title is used as a journal entry name only for a top-level container.
                     NavigationWindow navWin =
-                        JournalScope == null ? null : JournalScope.NavigatorHost as NavigationWindow;
+                        JournalScope is null ? null : JournalScope.NavigatorHost as NavigationWindow;
                     if (navWin != null && this == navWin.NavigationService
                         && !String.IsNullOrEmpty(navWin.Title))
                     {
@@ -3459,7 +3459,7 @@ namespace System.Windows.Navigation
                 // like pack://application,,,/#fragment. (This pseudo-absolute URI is currently
                 // malfored; that's why the complicated check below. The same situation occurs
                 // in Navigate(uri, navState).)
-                return !(_currentCleanSource == null
+                return !(_currentCleanSource is null
                         || BindUriHelper.StartWithFragment(_currentCleanSource)
                         || BindUriHelper.StartWithFragment(BindUriHelper.GetUriRelativeToPackAppBase(_currentCleanSource)));
             }
@@ -3474,7 +3474,7 @@ namespace System.Windows.Navigation
         {
             get
             {
-                if (_finishHandler == null)
+                if (_finishHandler is null)
                 {
                     _finishHandler = new FinishEventHandler(HandleFinish);
                 }
@@ -3515,7 +3515,7 @@ namespace System.Windows.Navigation
             {
                 DependencyObject navigator = INavigatorHost as DependencyObject;
 
-                if (navigator == null)
+                if (navigator is null)
                     return false;
 
                 return (bool)navigator.GetValue(Frame.SandboxExternalContentProperty);
@@ -3660,7 +3660,7 @@ namespace System.Windows.Navigation
 
         static internal bool IsPageFunction(object content)
         {
-            return (content as PageFunctionBase == null ? false : true);
+            return (content as PageFunctionBase is null ? false : true);
         }
         //
         // The pagefunction model works by allowing listeners to attach to events before a navigation occurs.
@@ -3677,7 +3677,7 @@ namespace System.Windows.Navigation
             PageFunctionBase pf = bp as PageFunctionBase;
             // Frame can call this when the tree is being torn down to detach Finish handler on the PF it holds
             // This won't go thru the regular navigation path, so we need to detach everything here.
-            if (bp == null)
+            if (bp is null)
                 return;
 
             pf.FinishHandler = FinishHandler;
@@ -3727,13 +3727,13 @@ namespace System.Windows.Navigation
             // this happens if someone calls Navigate() and then Finishes
             // before we have a chance to navigate.
             // Investigate what this is....
-            Debug.Assert(_navigateQueueItem == null,
+            Debug.Assert(_navigateQueueItem is null,
                     "There's a navigation pending - see kusumav for details");
 
             // NOTE: It is not always that endingPF==_bp. A PF may end itself when its child ends. Then
             // HandleFinish() will be called for the grandparent PF while _bp is still the child PF.
 
-            if (JournalScope == null)
+            if (JournalScope is null)
             {
                 throw new InvalidOperationException(SR.WindowAlreadyClosed);
             }
@@ -3769,7 +3769,7 @@ namespace System.Windows.Navigation
             // Need to determine what happens if the parent requests a navigation AND
             // says it'd done. this should probably be considered a PageFunction bug,
             // but we need to figure out what we want to happen in that case.
-            if (_navigateQueueItem == null)
+            if (_navigateQueueItem is null)
             {
                 // Navigate to the Parent page.
                 // Two cases:
@@ -3802,7 +3802,7 @@ namespace System.Windows.Navigation
                     entry.SaveState(parentPF);
                 }
                 // Return event handler should not be left attached.
-                Debug.Assert(parentPF._Return == null);
+                Debug.Assert(parentPF._Return is null);
                 parentPF.FinishHandler = null;
             }
         }
@@ -4023,7 +4023,7 @@ namespace System.Windows.Navigation
         {
             get
             {
-                if (_journalScope == null && _navigatorHost != null)
+                if (_journalScope is null && _navigatorHost != null)
                 {
                     _journalScope = _navigatorHost.GetJournal(false/*don't create*/);
                 }
@@ -4409,7 +4409,7 @@ namespace System.Windows.Navigation
     #endif
         internal void PostNavigation()
         {
-            Debug.Assert(_postedOp == null);
+            Debug.Assert(_postedOp is null);
             _postedOp = Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Normal, new DispatcherOperationCallback(this.Dispatch), null);
         }
 
@@ -4449,7 +4449,7 @@ namespace System.Windows.Navigation
             // The second check is to cover null content/null source navigations.
             // Null source navigation will be transformed to a null content navigation since we
             // cannot bind to a null source.
-            if (_content != null || _source == null)
+            if (_content != null || _source is null)
             {
                 _nc.DoNavigate(_content, _navigationMode, _navState);
             }

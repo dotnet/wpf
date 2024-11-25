@@ -50,7 +50,7 @@ namespace System.Windows.Data
         protected virtual void AddChild(object value)
         {
             XmlNamespaceMapping mapping = value as XmlNamespaceMapping;
-            if (mapping == null)
+            if (mapping is null)
                 throw new ArgumentException(SR.Format(SR.RequiresXmlNamespaceMapping, value.GetType().FullName), "value");
 
             Add(mapping);
@@ -88,7 +88,7 @@ namespace System.Windows.Data
         {
             ArgumentNullException.ThrowIfNull(mapping);
 
-            if (mapping.Uri == null)
+            if (mapping.Uri is null)
                 throw new ArgumentException(SR.RequiresXmlNamespaceMappingUri, nameof(mapping));
 
             // BUG 983685: change this to take Uri when AddNamespace is fixed to use Uri instead of String.
@@ -122,7 +122,7 @@ namespace System.Windows.Data
         {
             ArgumentNullException.ThrowIfNull(mapping);
 
-            if (mapping.Uri == null)
+            if (mapping.Uri is null)
                 throw new ArgumentException(SR.RequiresXmlNamespaceMappingUri, nameof(mapping));
 
             return (this.LookupNamespace(mapping.Prefix) == mapping.Uri.OriginalString);
@@ -157,7 +157,7 @@ namespace System.Windows.Data
         {
             ArgumentNullException.ThrowIfNull(mapping);
 
-            if (mapping.Uri == null)
+            if (mapping.Uri is null)
                 throw new ArgumentException(SR.RequiresXmlNamespaceMappingUri, nameof(mapping));
 
             if (Contains(mapping))

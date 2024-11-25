@@ -71,7 +71,7 @@ namespace System.Windows.Media.Effects
                 return _imageEffectEmulation;
             }
             
-            if (_imageEffectEmulation == null)
+            if (_imageEffectEmulation is null)
             {
                 _imageEffectEmulation = new BlurEffect();
             }

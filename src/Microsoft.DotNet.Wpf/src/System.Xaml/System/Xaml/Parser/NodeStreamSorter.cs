@@ -209,7 +209,7 @@ namespace MS.Internal.Xaml
                 {
                     // Skip any prefixes in the settings that were already defined
                     // in the XML text (on the root node)
-                    if (_context.FindNamespaceByPrefixInParseStack(prefix) == null)
+                    if (_context.FindNamespaceByPrefixInParseStack(prefix) is null)
                     {
                         string uriString = _xmlnsDictionary[prefix];
                         XamlNode node = new XamlNode(XamlNodeType.NamespaceDeclaration, new NamespaceDeclaration(uriString, prefix));
@@ -401,7 +401,7 @@ namespace MS.Internal.Xaml
                 if (HaveSeenInstancingProperty)
                 {
                     HaveSeenOutOfOrderCtorDirective = true;
-                    if (_moveList == null)
+                    if (_moveList is null)
                     {
                         _moveList = new List<int>();
                     }

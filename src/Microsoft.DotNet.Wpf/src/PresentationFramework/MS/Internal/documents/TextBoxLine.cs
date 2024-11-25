@@ -446,7 +446,7 @@ namespace System.Windows.Controls
 
             if (highlightDecorations != null)
             {
-                if (_spellerErrorProperties == null)
+                if (_spellerErrorProperties is null)
                 {
                     _spellerErrorProperties = new TextProperties((TextProperties)properties, highlightDecorations);
                 }

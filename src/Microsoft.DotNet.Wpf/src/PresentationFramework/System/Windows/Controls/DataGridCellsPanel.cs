@@ -227,7 +227,7 @@ namespace System.Windows.Controls
             Size measureSize = new Size();
 
             DataGrid parentDataGrid = ParentDataGrid;
-            if (parentDataGrid == null)
+            if (parentDataGrid is null)
             {
                 return measureSize;
             }
@@ -541,7 +541,7 @@ namespace System.Windows.Controls
             ref int childIndex,
             out Size childSize)
         {
-            if (generatorState == null)
+            if (generatorState is null)
             {
                 generatorState = generator.StartAt(IndexToGeneratorPositionForStart(generator, childIndex, out childIndex), GeneratorDirection.Forward, true);
             }
@@ -562,7 +562,7 @@ namespace System.Windows.Controls
         {
             bool newlyRealized;
             UIElement child = generator.GenerateNext(out newlyRealized) as UIElement;
-            if (child == null)
+            if (child is null)
             {
                 childSize = new Size();
                 return null;
@@ -884,7 +884,7 @@ namespace System.Windows.Controls
             int frozenColumnCount = ParentDataGrid.FrozenColumnCount;
             int columnCount = Columns.Count;
             ItemsControl parentPresenter = ParentPresenter;
-            if (parentPresenter == null)
+            if (parentPresenter is null)
             {
                 return;
             }
@@ -968,7 +968,7 @@ namespace System.Windows.Controls
                 int columnIndex = dataGrid.ColumnIndexFromDisplayIndex(displayIndex);
 
                 UIElement child = generator.ContainerFromIndex(columnIndex) as UIElement;
-                if (child == null)
+                if (child is null)
                 {
                     int childIndex = columnIndex;
                     Size childSize;
@@ -1840,7 +1840,7 @@ namespace System.Windows.Controls
             get
             {
                 DataGrid parentDataGrid = ParentDataGrid;
-                if (parentDataGrid == null)
+                if (parentDataGrid is null)
                 {
                     return null;
                 }
@@ -1957,7 +1957,7 @@ namespace System.Windows.Controls
         {
             if (IsVirtualizing && InRecyclingMode)
             {
-                if (_realizedChildren == null)
+                if (_realizedChildren is null)
                 {
                     UIElementCollection children = InternalChildren;
 
@@ -2144,7 +2144,7 @@ namespace System.Windows.Controls
         {
             DataGrid parentDataGrid = ParentDataGrid;
 
-            if (parentDataGrid == null)
+            if (parentDataGrid is null)
             {
                 base.BringIndexIntoView(index);
                 return;
@@ -2176,7 +2176,7 @@ namespace System.Windows.Controls
                 }
             }
 
-            if (scrollInfo == null)
+            if (scrollInfo is null)
             {
                 base.BringIndexIntoView(index);
                 return;
@@ -2406,7 +2406,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_parentDataGrid == null)
+                if (_parentDataGrid is null)
                 {
                     DataGridCellsPresenter presenter = ParentPresenter as DataGridCellsPresenter;
 

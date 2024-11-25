@@ -56,7 +56,7 @@ namespace System.Windows.Threading
 
         private static Dispatcher EnsureSentinelDispatcher()
         {
-            if (_sentinelDispatcher == null)
+            if (_sentinelDispatcher is null)
             {
                 // lazy creation - the first thread reaching here creates the sentinel
                 // dispatcher, all other threads use it.

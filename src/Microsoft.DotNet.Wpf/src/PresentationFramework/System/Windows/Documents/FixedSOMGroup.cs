@@ -39,7 +39,7 @@ namespace System.Windows.Documents
             
             Debug.Assert(compared != null);
             
-            if (compared == null)
+            if (compared is null)
             {
                 throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, comparedObj.GetType(), typeof(FixedSOMGroup)), "comparedObj");
             }
@@ -126,7 +126,7 @@ namespace System.Windows.Documents
         public void AddContainer(FixedSOMPageElement pageElement)
         {
             FixedSOMFixedBlock block = pageElement as FixedSOMFixedBlock;
-            if (block == null || (!block.IsFloatingImage && !block.IsWhiteSpace))
+            if (block is null || (!block.IsFloatingImage && !block.IsWhiteSpace))
             {
                 if (pageElement.IsRTL)
                 {

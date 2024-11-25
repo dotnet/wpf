@@ -217,7 +217,7 @@ namespace MS.Internal.FontFace
                 out cchAdvance
                 );
 
-            if (familyMap == null)
+            if (familyMap is null)
             {
                 targetFamilyName = null;
                 scaleInEm = 1;
@@ -383,7 +383,7 @@ namespace MS.Internal.FontFace
         /// </summary>
         private IFontFamily GetFirstFontFamily()
         {
-            if(_firstFontFamily == null)
+            if(_firstFontFamily is null)
             {
                 _firstFontFamily = FontFamily.FindFontFamilyFromFriendlyNameList(GetFirstTargetFamilyName());
                 Debug.Assert(_firstFontFamily != null);

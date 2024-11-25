@@ -154,7 +154,7 @@ namespace MS.Internal.PtsHost
         /// <param name="dtr">New DTR being added.</param>
         internal void AddDirtyTextRange(DirtyTextRange dtr)
         {
-            if (_dtrs == null) 
+            if (_dtrs is null) 
             { 
                 _dtrs = new DtrList(); 
             }
@@ -470,7 +470,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         private void EnsureHyphenator()
         {
-            if (_hyphenator == null)
+            if (_hyphenator is null)
             {
                 _hyphenator = new NaturalLanguageHyphenator();
             }
@@ -481,7 +481,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         private void EnsurePtsContext()
         {
-            if (_ptsContext == null)
+            if (_ptsContext is null)
             {
                 TextFormattingMode textFormattingMode = TextOptions.GetTextFormattingMode(this.PropertyOwner);
                 _ptsContext = new PtsContext(true, textFormattingMode);
@@ -629,7 +629,7 @@ namespace MS.Internal.PtsHost
             {
                 Invariant.Assert(owner != null, "Invalid owner object.");
                 Invariant.Assert(page != null, "Invalid page object.");
-                Invariant.Assert(owner._currentPage == null, "Page formatting reentrancy detected. Trying to create second _DocumentPageContext for the same StructuralCache.");
+                Invariant.Assert(owner._currentPage is null, "Page formatting reentrancy detected. Trying to create second _DocumentPageContext for the same StructuralCache.");
 
                 _owner = owner;
                 _owner._currentPage = page;

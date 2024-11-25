@@ -171,7 +171,7 @@ namespace System.Windows.Markup
         public static object Load(Stream stream, ParserContext parserContext, bool useRestrictiveXamlReader )
         {
             ArgumentNullException.ThrowIfNull(stream);
-            if (parserContext == null)
+            if (parserContext is null)
             {
                 parserContext = new ParserContext();
             }
@@ -299,7 +299,7 @@ namespace System.Windows.Markup
                 throw new InvalidOperationException(SR.ParserCannotReuseXamlReader);
             }
 
-            if (parserContext == null)
+            if (parserContext is null)
             {
                 parserContext = new ParserContext();
             }
@@ -315,7 +315,7 @@ namespace System.Windows.Markup
             if (xpe != null)
             {
                 // If we can set, the BaseUri, rewrap; otherwise we don't need to
-                return (xpe.BaseUri == null && baseUri != null);
+                return (xpe.BaseUri is null && baseUri != null);
             }
             // Not an XPE, so we need to wrap it
             return true;
@@ -330,17 +330,17 @@ namespace System.Windows.Markup
         {
             ArgumentNullException.ThrowIfNull(reader);
 
-            if (parserContext == null)
+            if (parserContext is null)
             {
                 parserContext = new ParserContext();
             }
 
             _xmlReader = reader;
             object rootObject = null;
-            if (parserContext.BaseUri == null ||
+            if (parserContext.BaseUri is null ||
                  String.IsNullOrEmpty(parserContext.BaseUri.ToString()))
             {
-                if (reader.BaseURI == null ||
+                if (reader.BaseURI is null ||
                     String.IsNullOrEmpty(reader.BaseURI.ToString()))
                 {
                     parserContext.BaseUri = BaseUriHelper.PackAppBaseUri;
@@ -368,7 +368,7 @@ namespace System.Windows.Markup
                 System.Xaml.XamlObjectWriterSettings objectSettings = XamlReader.CreateObjectWriterSettings();
                 objectSettings.AfterBeginInitHandler = delegate(object sender, System.Xaml.XamlObjectEventArgs args)
                     {
-                        if (rootObject == null)
+                        if (rootObject is null)
                         {
                             rootObject = args.Instance;
                             _styleConnector = rootObject as IStyleConnector;
@@ -511,7 +511,7 @@ namespace System.Windows.Markup
 
         internal static XamlParseException WrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
         {
-            Exception baseException = (e.InnerException == null) ? e : e.InnerException;
+            Exception baseException = (e.InnerException is null) ? e : e.InnerException;
             if (baseException is System.Windows.Markup.XamlParseException)
             {
                 var xe = ((System.Windows.Markup.XamlParseException)baseException);
@@ -850,7 +850,7 @@ namespace System.Windows.Markup
                 return xamlReader.LoadAsync(reader, parserContext, useRestrictiveXamlReader);
             }
 
-            if (parserContext == null)
+            if (parserContext is null)
             {
                 parserContext = new ParserContext();
             }
@@ -878,10 +878,10 @@ namespace System.Windows.Markup
             object root = null;
             try
             {
-                if (parserContext.BaseUri == null ||
+                if (parserContext.BaseUri is null ||
                     String.IsNullOrEmpty(parserContext.BaseUri.ToString()))
                 {
-                    if (reader.BaseURI == null ||
+                    if (reader.BaseURI is null ||
                         String.IsNullOrEmpty(reader.BaseURI.ToString()))
                     {
                         parserContext.BaseUri = BaseUriHelper.PackAppBaseUri;
@@ -936,7 +936,7 @@ namespace System.Windows.Markup
             System.Xaml.XamlReader xamlReader,
             ParserContext parserContext)
         {
-            if (parserContext == null)
+            if (parserContext is null)
             {
                 parserContext = new ParserContext();
             }
@@ -1062,7 +1062,7 @@ namespace System.Windows.Markup
                 readerSettings.LocalAssembly = streamInfo.Assembly;
                 // We do not set OwnsStream = true so the Baml2006Reader will not close the stream.
                 // Calling code is responsible for disposing the stream
-                if (readerSettings.BaseUri == null || String.IsNullOrEmpty(readerSettings.BaseUri.ToString()))
+                if (readerSettings.BaseUri is null || String.IsNullOrEmpty(readerSettings.BaseUri.ToString()))
                 {
                     readerSettings.BaseUri = BaseUriHelper.PackAppBaseUri;
                 }
@@ -1111,7 +1111,7 @@ namespace System.Windows.Markup
                     app.ApplicationMarkupBaseUri = GetBaseUri(readerSettings.BaseUri);
                 }
 
-                Debug.Assert(parent == null || root == parent);
+                Debug.Assert(parent is null || root == parent);
             }
 
             finally
@@ -1141,7 +1141,7 @@ namespace System.Windows.Markup
 
         static Uri GetBaseUri(Uri uri)
         {
-            if (uri == null)
+            if (uri is null)
             {
                 return MS.Internal.Utility.BindUriHelper.BaseUri;
             }

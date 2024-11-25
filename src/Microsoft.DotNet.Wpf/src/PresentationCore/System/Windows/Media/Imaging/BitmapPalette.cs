@@ -228,7 +228,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                if (_palette == null || _palette.IsInvalid)
+                if (_palette is null || _palette.IsInvalid)
                 {
                     _palette = CreateInternalPalette();
                 }

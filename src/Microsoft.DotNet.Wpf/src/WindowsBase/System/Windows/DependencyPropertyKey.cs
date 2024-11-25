@@ -43,7 +43,7 @@ namespace System.Windows
         /// </summary>
         public void OverrideMetadata( Type forType, PropertyMetadata typeMetadata )
         {
-            if( _dp == null )
+            if( _dp is null )
             {
                 throw new InvalidOperationException();
             }

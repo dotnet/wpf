@@ -250,7 +250,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return _pageVisual == null ? 0 : 1;
+                return _pageVisual is null ? 0 : 1;
             }
         }
 
@@ -354,7 +354,7 @@ namespace MS.Internal.Documents
         private void EnsureFormatter()
         {
             Invariant.Assert(_document != null);
-            if (_formatter == null)
+            if (_formatter is null)
             {
                 _formatter = _document.BottomlessFormatter;
                 _formatter.ContentInvalidated += new EventHandler(HandleContentInvalidated);
@@ -583,7 +583,7 @@ namespace MS.Internal.Documents
         /// </summary>
         Rect IScrollInfo.MakeVisible(Visual visual, Rect rectangle)
         {
-            if (_scrollData == null)
+            if (_scrollData is null)
             {
                 rectangle = Rect.Empty;
             }
@@ -709,7 +709,7 @@ namespace MS.Internal.Documents
 
             set
             {
-                if (_scrollData == null)
+                if (_scrollData is null)
                 {
                     // Create cached scroll info.
                     _scrollData = new ScrollData();
@@ -744,7 +744,7 @@ namespace MS.Internal.Documents
 
             if (serviceType == typeof(ITextView))
             {
-                if (_textView == null && _document != null)
+                if (_textView is null && _document != null)
                 {
                     _textView = new DocumentPageTextView(this, _document.StructuralCache.TextContainer);
                 }

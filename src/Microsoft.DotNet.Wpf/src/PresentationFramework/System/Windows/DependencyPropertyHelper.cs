@@ -202,7 +202,7 @@ namespace System.Windows
             FrameworkObject child = new FrameworkObject(elementInTemplate);
             DependencyObject templatedParent = child.TemplatedParent;
 
-            if (templatedParent == null)
+            if (templatedParent is null)
             {
                 throw new ArgumentException(SR.ElementMustBelongToTemplate, nameof(elementInTemplate));
             }

@@ -37,7 +37,7 @@ namespace System.Windows.Documents
             
             Debug.Assert(compared != null);
             Debug.Assert(This != null);
-            if (compared == null)
+            if (compared is null)
             {
                 throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, comparedObj.GetType(), typeof(FixedSOMContainer)), "comparedObj");
             }
@@ -196,7 +196,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_fixedNodes == null)
+                if (_fixedNodes is null)
                 {
                     _ConstructFixedNodes();
                 }

@@ -70,10 +70,10 @@ namespace MS.Internal.Documents
              Trace.SafeWrite(Trace.Rights, "Initializing RightsManagementManager");
 
              System.Diagnostics.Debug.Assert(
-                 _currentManager == null,
+                 _currentManager is null,
                  "RightsManagementManager initialized twice.");
 
-             if (_currentManager == null)
+             if (_currentManager is null)
              {
                  _currentManager = new DocumentRightsManagementManager(rmProvider);
              }
@@ -155,7 +155,7 @@ namespace MS.Internal.Documents
                 // Get the rights granted from the RM license
                 RightsManagementLicense rmLicense = GetUseLicense();
 
-                if (rmLicense == null)
+                if (rmLicense is null)
                 {
                     calcRMPolicy = RightsManagementPolicy.AllowNothing;
                 }
@@ -220,7 +220,7 @@ namespace MS.Internal.Documents
                 // Get a use license for the new package
                 RightsManagementLicense license = GetUseLicense();
 
-                if (license == null ||
+                if (license is null ||
                     !license.HasPermission(RightsManagementPermissions.AllowView))
                 {
                     throw new XpsViewerException(
@@ -428,7 +428,7 @@ namespace MS.Internal.Documents
             if (_rmProvider.IsProtected)
             {
                 RightsManagementLicense license = GetUseLicense();
-                if (license == null ||
+                if (license is null ||
                     !(license.HasPermission(RightsManagementPermissions.AllowOwner)))
                 {
                     throw new InvalidOperationException(
@@ -908,7 +908,7 @@ namespace MS.Internal.Documents
             bool initialized = false;
 
             //Check to see if we have a user.  If we don't we need to enroll.
-            if (user == null)
+            if (user is null)
             {
                 //Show enrollment UI
                 ShowEnrollment();
@@ -1034,7 +1034,7 @@ namespace MS.Internal.Documents
         private RightsManagementLicense GetUseLicense()
         {            
             if (_rmProvider.IsProtected &&
-                _rmProvider.CurrentUseLicense == null)
+                _rmProvider.CurrentUseLicense is null)
             {
                 Invariant.Assert(
                     _rmProvider.CurrentUser != null,
@@ -1089,7 +1089,7 @@ namespace MS.Internal.Documents
             // If the desired state is that the document will not be protected (i.e. no
             // licenses are specified), we check if the document was already not
             // protected.
-            if (newGrants == null || newGrants.Count == 0)
+            if (newGrants is null || newGrants.Count == 0)
             {
                 return _rmProvider.IsProtected;
             }

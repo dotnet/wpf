@@ -41,7 +41,7 @@ static class CookieHandler
                 string cookies = GetCookie(httpRequest.RequestUri, false/*throwIfNoCookie*/);
                 if(!string.IsNullOrEmpty(cookies))
                 {
-                    if (httpRequest.CookieContainer == null)
+                    if (httpRequest.CookieContainer is null)
                     {
                         httpRequest.CookieContainer = new CookieContainer();
                     }

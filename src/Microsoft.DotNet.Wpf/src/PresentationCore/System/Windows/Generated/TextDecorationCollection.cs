@@ -134,7 +134,7 @@ namespace System.Windows
         /// </summary>
         public void Insert(int index, TextDecoration value)
         {
-            if (value == null)
+            if (value is null)
             {
                 throw new System.ArgumentException(SR.Collection_NoNull);
             }
@@ -242,7 +242,7 @@ namespace System.Windows
             }
             set
             {
-                if (value == null)
+                if (value is null)
                 {
                     throw new System.ArgumentException(SR.Collection_NoNull);
                 }
@@ -464,7 +464,7 @@ namespace System.Windows
         {
             get
             {
-                if (s_empty == null)
+                if (s_empty is null)
                 {
                     TextDecorationCollection collection = new TextDecorationCollection();
                     collection.Freeze();
@@ -535,7 +535,7 @@ namespace System.Windows
         {
             int index = -1;
 
-            if (value == null)
+            if (value is null)
             {
                 throw new System.ArgumentException(SR.Collection_NoNull);
             }
@@ -926,7 +926,7 @@ namespace System.Windows
 
                     foreach (TextDecoration item in collection)
                     {
-                        if (item == null)
+                        if (item is null)
                         {
                             throw new System.ArgumentException(SR.Collection_NoNull);
                         }
@@ -943,7 +943,7 @@ namespace System.Windows
             {
                 foreach (TextDecoration item in collection)
                 {
-                    if (item == null)
+                    if (item is null)
                     {
                         throw new System.ArgumentException(SR.Collection_NoNull);
                     }

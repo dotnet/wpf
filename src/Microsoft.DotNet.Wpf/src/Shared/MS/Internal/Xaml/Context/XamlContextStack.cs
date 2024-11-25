@@ -46,7 +46,7 @@ namespace MS.Internal.Xaml.Context
                 while (iteratorFrame != null)
                 {
                     T newFrame = (T)iteratorFrame.Clone();
-                    if (_currentFrame == null)
+                    if (_currentFrame is null)
                     {
                         _currentFrame = newFrame;
                     }
@@ -98,7 +98,7 @@ namespace MS.Internal.Xaml.Context
         // or we'll grab one from our recycled linked list.
         public void PushScope()
         {
-            if (_recycledFrame == null)
+            if (_recycledFrame is null)
             {
                 Grow();
             }
@@ -144,7 +144,7 @@ namespace MS.Internal.Xaml.Context
             {
                 StringBuilder sb = new StringBuilder();
                 T iteratorFrame = _currentFrame;
-                sb.AppendLine(CultureInfo.InvariantCulture, $"Stack: {(_currentFrame == null ? -1 : _currentFrame.Depth + 1)} frames");
+                sb.AppendLine(CultureInfo.InvariantCulture, $"Stack: {(_currentFrame is null ? -1 : _currentFrame.Depth + 1)} frames");
                 ShowFrame(sb, _currentFrame);
                 return sb.ToString();
             }
@@ -152,7 +152,7 @@ namespace MS.Internal.Xaml.Context
 
         private void ShowFrame(StringBuilder sb, T iteratorFrame)
         {
-            if (iteratorFrame == null)
+            if (iteratorFrame is null)
                 return;
             if (iteratorFrame.Previous != null)
                 ShowFrame(sb, (T)iteratorFrame.Previous);

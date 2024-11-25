@@ -44,7 +44,7 @@ namespace DrtXaml.Tests
             XamlObjectWriter objWriter = new XamlObjectWriter(reader.SchemaContext, settings);
             XamlServices.Transform(reader, objWriter);
             object root = objWriter.Result;
-            if (root == null)
+            if (root is null)
                 throw new NullReferenceException("Load returned null Root");
             return root;
         }
@@ -59,7 +59,7 @@ namespace DrtXaml.Tests
         private void ObjectCreated(object sender, XamlObjectEventArgs e)
         {
             // Make sure event is fired before any properties are set
-            eventHandled = ((EventElement)e.Instance).Foo == null;
+            eventHandled = ((EventElement)e.Instance).Foo is null;
         }
 
         public void VerifyObjectCreatedEvent(object o)

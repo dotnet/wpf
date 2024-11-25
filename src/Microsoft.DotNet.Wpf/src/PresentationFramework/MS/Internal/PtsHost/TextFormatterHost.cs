@@ -23,7 +23,7 @@ namespace MS.Internal.PtsHost
     {
         internal TextFormatterHost(TextFormatter textFormatter, TextFormattingMode textFormattingMode, double pixelsPerDip)
         {
-            if(textFormatter == null)
+            if(textFormatter is null)
             {
                 TextFormatter = TextFormatter.FromCurrentDispatcher(textFormattingMode);
             }

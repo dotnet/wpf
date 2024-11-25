@@ -337,7 +337,7 @@ namespace System.Windows.Controls
                 // 2 Children.  Content is first child, AdornerLayer
 
                 // One for the base.TemplateChild and one for the _adornerlayer.
-                return (base.TemplateChild == null) ? 0 : 2;
+                return (base.TemplateChild is null) ? 0 : 2;
             }
         }
 
@@ -347,7 +347,7 @@ namespace System.Windows.Controls
         protected override Visual GetVisualChild(int index)
         {
             //check if there is a TemplateChild on FrameworkElement
-            if (base.TemplateChild == null)
+            if (base.TemplateChild is null)
             {
                 throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
@@ -381,7 +381,7 @@ namespace System.Windows.Controls
                 UIElement oldTemplate = base.TemplateChild;
                 if (value != oldTemplate)
                 {
-                    if (oldTemplate != null && value == null)
+                    if (oldTemplate != null && value is null)
                     {
                         // If we used to have a template child and we don't have a
                         // new template child disconnect the adorner layer.
@@ -390,7 +390,7 @@ namespace System.Windows.Controls
 
                     base.TemplateChild = value;
 
-                    if(oldTemplate == null && value != null)
+                    if(oldTemplate is null && value != null)
                     {
                         // If we did not use to have a template child, but we have one
                         // now, attach the adorner layer.
@@ -571,7 +571,7 @@ namespace System.Windows.Controls
             // We can only work on visuals that are us or children.
             // An empty rect has no size or position.  We can't meaningfully use it.
             if (rectangle.IsEmpty
-                || visual == null
+                || visual is null
                 || visual == (Visual)this
                 || !this.IsAncestorOf(visual))
             {
@@ -709,7 +709,7 @@ namespace System.Windows.Controls
 
         private ScrollData EnsureScrollData()
         {
-            if (_scrollData == null) { _scrollData = new ScrollData(); }
+            if (_scrollData is null) { _scrollData = new ScrollData(); }
             return _scrollData;
         }
 
@@ -733,14 +733,14 @@ namespace System.Windows.Controls
                     // 1. Try our content...
                     si = Content as IScrollInfo;
 
-                    if (si == null)
+                    if (si is null)
                     {
                         Visual child = Content as Visual;
                         if (child != null)
                         {
                             // 2. Our child might be an ItemsPresenter.  In this case check its child for being an IScrollInfo
                             ItemsPresenter itemsPresenter = child as ItemsPresenter;
-                            if (itemsPresenter == null)
+                            if (itemsPresenter is null)
                             {
                                 // 3. With the change in templates for ClearTypeHint the ItemsPresenter is not guranteed to be the 
                                 // immediate child. We now look for a named element instead of naively walking the descendents.
@@ -764,7 +764,7 @@ namespace System.Windows.Controls
                 }
 
                 // 4. As a final fallback, we use ourself.
-                if (si == null)
+                if (si is null)
                 {
                     si = (IScrollInfo)this;
                     EnsureScrollData();
@@ -854,7 +854,7 @@ namespace System.Windows.Controls
         static private void OnCanContentScrollChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ScrollContentPresenter scp = (ScrollContentPresenter)d;
-            if (scp._scrollInfo == null)
+            if (scp._scrollInfo is null)
             {
                 return;
             }

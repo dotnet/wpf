@@ -40,7 +40,7 @@ namespace MS.Internal
         {
             PresentationTraceLevel result;
 
-            if (element == null || _dictionary.Count == 0)
+            if (element is null || _dictionary.Count == 0)
             {
                 result = PresentationTraceLevel.None;
             }
@@ -64,7 +64,7 @@ namespace MS.Internal
         /// </summary>
         internal static void SetTraceLevel(object element, PresentationTraceLevel traceLevel)
         {
-            if (element == null)
+            if (element is null)
                 return;
 
             lock (_dictionary)

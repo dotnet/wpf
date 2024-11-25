@@ -185,7 +185,7 @@ namespace MS.Internal.Data
             {
                 typeConverter = knownType.TypeConverter.ConverterInstance;
             }
-            if (typeConverter == null)
+            if (typeConverter is null)
             {
                 typeConverter = TypeDescriptor.GetConverter(type);
             }
@@ -264,7 +264,7 @@ namespace MS.Internal.Data
         // for lazy creation of the type converter, since GetConverter is expensive
         protected void EnsureConverter(Type type)
         {
-            if (_typeConverter == null)
+            if (_typeConverter is null)
             {
                 _typeConverter = GetConverter(type);
             }
@@ -325,7 +325,7 @@ namespace MS.Internal.Data
 
             if (needAssignment &&
                 ((o != null && destinationType.IsAssignableFrom(o.GetType())) ||
-                  (o == null && !destinationType.IsValueType)))
+                  (o is null && !destinationType.IsValueType)))
             {
                 value = o;
                 needAssignment = false;
@@ -579,7 +579,7 @@ namespace MS.Internal.Data
         public object ConvertBack(object o, Type type, object parameter, CultureInfo culture)
         {
             // if types are compatible, just pass the value through
-            if (o == null && !_sourceType.IsValueType)
+            if (o is null && !_sourceType.IsValueType)
                 return o;
 
             if (o != null && _sourceType.IsAssignableFrom(o.GetType()))
@@ -621,7 +621,7 @@ namespace MS.Internal.Data
         {
             // if types are compatible, just pass the value through
             if ((o != null && _targetType.IsAssignableFrom(o.GetType())) ||
-                (o == null && !_targetType.IsValueType))
+                (o is null && !_targetType.IsValueType))
                 return o;
 
             // if target type is string, use String.Format (string's type converter doesn't
@@ -746,7 +746,7 @@ namespace MS.Internal.Data
         {
             get
             {
-                if (_cachedBaseUri == null)
+                if (_cachedBaseUri is null)
                 {
                     if (_targetElement != null)
                     {

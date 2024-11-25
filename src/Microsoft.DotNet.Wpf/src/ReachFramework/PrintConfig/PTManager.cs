@@ -81,7 +81,7 @@ namespace System.Printing
         {
             get
             {
-                if (_printTicket == null)
+                if (_printTicket is null)
                 {
                     _printTicket = new PrintTicket(_ptStream);
                 }
@@ -107,7 +107,7 @@ namespace System.Printing
         
         public override bool Equals(object o)
         {
-            if(o == null || !(o is ValidationResult))
+            if(o is null || !(o is ValidationResult))
             {
                 return false;
             }

@@ -280,7 +280,7 @@ namespace System.Windows
             get
             {
                 ResourceDictionary resources = ResourcesField.GetValue(this);
-                if (resources == null)
+                if (resources is null)
                 {
                     resources = new ResourceDictionary();
                     resources.AddOwner(this);
@@ -338,7 +338,7 @@ namespace System.Windows
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool ShouldSerializeResources()
         {
-            if (Resources == null || Resources.Count == 0)
+            if (Resources is null || Resources.Count == 0)
             {
                 return false;
             }
@@ -605,7 +605,7 @@ namespace System.Windows
                                 }
                                 #endregion EventTracing
                                 DependencyObject parentDO = parentFE;
-                                if (parentDO == null)
+                                if (parentDO is null)
                                 {
                                     parentDO = parentFCE;
                                 }
@@ -1059,7 +1059,7 @@ namespace System.Windows
             {
                 KeyboardNavigation.Current.HideFocusVisual();
 
-                if (e.NewFocus == null)
+                if (e.NewFocus is null)
                 {
                     KeyboardNavigation.Current.NotifyFocusChanged(sender, e);
                 }
@@ -1267,7 +1267,7 @@ namespace System.Windows
             if(_parent != null || HasLogicalChildren)
             {
                 DependencyObject logicalSource = args.Source as DependencyObject;
-                if(logicalSource == null || !IsLogicalDescendent(logicalSource))
+                if(logicalSource is null || !IsLogicalDescendent(logicalSource))
                 {
                     args.Source=this;
                     source = this;
@@ -1358,7 +1358,7 @@ namespace System.Windows
             if (!IgnoreModelParentBuildRoute(args))
             {
                 // If there is no visual parent, route via the model tree.
-                if (visualParent == null)
+                if (visualParent is null)
                 {
                     continuePastCoreTree = modelParent != null;
                 }
@@ -1417,7 +1417,7 @@ namespace System.Windows
             }
 
             // If there is no visual parent, route via the model tree.
-            if (visualParent == null)
+            if (visualParent is null)
             {
                 continuePastCoreTree = modelParent != null;
             }
@@ -1678,7 +1678,7 @@ namespace System.Windows
                 object[] loadedPending = LoadedPending;
                 object[] unloadedPending = UnloadedPending;
 
-                if (loadedPending == null && unloadedPending == null)
+                if (loadedPending is null && unloadedPending is null)
                 {
                     // The HasHandler flags are used for validation of the IsLoaded flag
                     if (SubtreeHasLoadedChangeHandler)

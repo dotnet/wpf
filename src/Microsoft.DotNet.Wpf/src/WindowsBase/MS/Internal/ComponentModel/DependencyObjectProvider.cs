@@ -110,7 +110,7 @@ namespace MS.Internal.ComponentModel
             // to dependency object types.  However, in case it
             // does, simply invoke the base and get out.
 
-            if (d == null) 
+            if (d is null) 
             {
                 return base.GetCache(instance);
             }
@@ -123,7 +123,7 @@ namespace MS.Internal.ComponentModel
             // will return null.
 
             IDictionary cache = _cacheSlot.GetValue(d);
-            if (cache == null && !d.IsSealed) 
+            if (cache is null && !d.IsSealed) 
             {
                 cache = new Hashtable();
                 _cacheSlot.SetValue(d, cache);
@@ -188,7 +188,7 @@ namespace MS.Internal.ComponentModel
             // Have we already seen this DP?
             AttachInfo info = (AttachInfo)_attachInfoMap[dp];
 
-            if (info == null) 
+            if (info is null) 
             {
                 info = new AttachInfo(dp);
     

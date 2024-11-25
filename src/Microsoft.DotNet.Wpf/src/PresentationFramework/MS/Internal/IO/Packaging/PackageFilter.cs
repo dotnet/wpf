@@ -410,7 +410,7 @@ namespace MS.Internal.IO.Packaging
 
                         if (BindUriHelper.IsXamlMimeType(contentType))
                         {
-                            if (_currentStream == null)
+                            if (_currentStream is null)
                             {
                                 _currentStream = currentPart.GetSeekableStream();
                             }
@@ -436,7 +436,7 @@ namespace MS.Internal.IO.Packaging
                         }
                     }
 
-                    if (_currentFilter == null)
+                    if (_currentFilter is null)
                     {
                         // Update progress to indicate filtering is completed.
                         _progress = Progress.FilteringCompleted;
@@ -515,7 +515,7 @@ namespace MS.Internal.IO.Packaging
 
             // Get the default value of
             // /HKEY_CLASSES_ROOT/CLSID/<fileTypeGuid>/PersistentAddinsRegistered/<IID_IFilter>.
-            if (fileTypeGuid == null)
+            if (fileTypeGuid is null)
             {
                 return null;
             }
@@ -524,7 +524,7 @@ namespace MS.Internal.IO.Packaging
                     Registry.ClassesRoot,
                     MakeRegistryPath(_IFilterAddinPath, fileTypeGuid));
 
-            if (iFilterIidKey == null)
+            if (iFilterIidKey is null)
             {
                 return null;
             }
@@ -541,7 +541,7 @@ namespace MS.Internal.IO.Packaging
 
             for (int keyNameIndex = 0; keyNameIndex < keyPath.Length; ++keyNameIndex)
             {
-                if (currentKey == null)
+                if (currentKey is null)
                 {
                     return null;
                 }
@@ -560,13 +560,13 @@ namespace MS.Internal.IO.Packaging
 
             // Get the string in value Extension of key \HKEY_CLASSES_ROOT\MIME\Database\Content Type\<MIME type>.
             RegistryKey mimeContentType = FindSubkey(Registry.ClassesRoot, _mimeContentTypeKey);
-            RegistryKey mimeTypeKey = (mimeContentType == null ? null : mimeContentType.OpenSubKey(contentType.ToString()));
-            if (mimeTypeKey == null)
+            RegistryKey mimeTypeKey = (mimeContentType is null ? null : mimeContentType.OpenSubKey(contentType.ToString()));
+            if (mimeTypeKey is null)
             {
                 return null;
             }
             string extension = (string)mimeTypeKey.GetValue(_extension);
-            if (extension == null)
+            if (extension is null)
             {
                 return null;
             }
@@ -589,7 +589,7 @@ namespace MS.Internal.IO.Packaging
                 FindSubkey(
                     Registry.ClassesRoot, 
                     MakeRegistryPath(_persistentHandlerKey, dottedExtensionName));
-            return (persistentHandlerKey == null ? null : (string)persistentHandlerKey.GetValue(null));
+            return (persistentHandlerKey is null ? null : (string)persistentHandlerKey.GetValue(null));
         }
 
 
@@ -617,7 +617,7 @@ namespace MS.Internal.IO.Packaging
 
             for (int i = 0; i < path.Length; ++i)
             {
-                if (path[i] == null)
+                if (path[i] is null)
                 {
                     Debug.Assert(stopGaps.Length > nextStopGapToUse);
 

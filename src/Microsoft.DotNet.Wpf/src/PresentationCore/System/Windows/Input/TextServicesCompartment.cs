@@ -95,7 +95,7 @@ namespace System.Windows.Input
             Debug.Assert(_cookie == UnsafeNativeMethods.TF_INVALID_COOKIE, "cookie is already set.");
 
             UnsafeNativeMethods.ITfCompartment compartment = GetITfCompartment();
-            if (compartment == null)
+            if (compartment is null)
                 return;
 
             UnsafeNativeMethods.ITfSource source = compartment as UnsafeNativeMethods.ITfSource;
@@ -116,7 +116,7 @@ namespace System.Windows.Input
             Debug.Assert(_cookie != UnsafeNativeMethods.TF_INVALID_COOKIE, "cookie is not set.");
 
             UnsafeNativeMethods.ITfCompartment compartment = GetITfCompartment();
-            if (compartment == null)
+            if (compartment is null)
                 return;
 
             UnsafeNativeMethods.ITfSource source = compartment as UnsafeNativeMethods.ITfSource;
@@ -155,7 +155,7 @@ namespace System.Windows.Input
             get
             {
                 object obj = Value;
-                if (obj == null)
+                if (obj is null)
                     return false;
 
                 if ((int)obj != 0)
@@ -177,7 +177,7 @@ namespace System.Windows.Input
             get
             {
                 object obj = Value;
-                if (obj == null)
+                if (obj is null)
                     return 0;
 
                 return (int)obj;
@@ -197,7 +197,7 @@ namespace System.Windows.Input
             {
                 UnsafeNativeMethods.ITfCompartment compartment = GetITfCompartment();
 
-                if (compartment == null)
+                if (compartment is null)
                     return null;
 
                 object obj;
@@ -212,7 +212,7 @@ namespace System.Windows.Input
             {
                 UnsafeNativeMethods.ITfCompartment compartment = GetITfCompartment();
 
-                if (compartment == null)
+                if (compartment is null)
                     return;
 
                 compartment.SetValue(0 /* clientid */, ref value);

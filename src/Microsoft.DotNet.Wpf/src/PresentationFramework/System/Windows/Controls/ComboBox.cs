@@ -237,7 +237,7 @@ namespace System.Windows.Controls
                 if (comboBox.IsEditable && comboBox.EditableTextBoxSite != null)
                     comboBox.EditableTextBoxSite.SelectAll();
 
-                if (comboBox._clonedElement != null && VisualTreeHelper.GetParent(comboBox._clonedElement) == null)
+                if (comboBox._clonedElement != null && VisualTreeHelper.GetParent(comboBox._clonedElement) is null)
                 {
                     comboBox.Dispatcher.BeginInvoke(
                         DispatcherPriority.Loaded,
@@ -308,7 +308,7 @@ namespace System.Windows.Controls
                 }
 
                 // No Popup in the style so fire closed now
-                if (comboBox._dropDownPopup == null)
+                if (comboBox._dropDownPopup is null)
                 {
                     comboBox.OnDropDownClosed(EventArgs.Empty);
                 }
@@ -891,7 +891,7 @@ namespace System.Windows.Controls
                 _clonedElement = null;
             }
 
-            if (itemTemplate == null && ItemTemplateSelector == null && stringFormat == null)
+            if (itemTemplate is null && ItemTemplateSelector is null && stringFormat is null)
             {
                 // if the item is a logical element it cannot be displayed directly in
                 // the selection box because it already belongs to the tree (in the dropdown box).
@@ -930,7 +930,7 @@ namespace System.Windows.Controls
                         // same as it does through the ComboBoxItem's mirror transform.
                         //
                         DependencyObject parent = VisualTreeHelper.GetParent(_clonedElement);
-                        FlowDirection parentFD = parent == null ? FlowDirection.LeftToRight : (FlowDirection)parent.GetValue(FlowDirectionProperty);
+                        FlowDirection parentFD = parent is null ? FlowDirection.LeftToRight : (FlowDirection)parent.GetValue(FlowDirectionProperty);
                         if (this.FlowDirection != parentFD)
                         {
                             visualBrush.Transform = new MatrixTransform(new Matrix(-1.0, 0.0, 0.0, 1.0, _clonedElement.RenderSize.Width, 0.0));
@@ -956,7 +956,7 @@ namespace System.Windows.Controls
             }
 
             // display a null item by an empty string
-            if (item == null)
+            if (item is null)
             {
                 item = String.Empty;
                 itemTemplate = ContentPresenter.StringContentTemplate;
@@ -1139,7 +1139,7 @@ namespace System.Windows.Controls
                 // Here we can just check if something has focus and if it's a child
                 // of ours or is a context menu that opened below us.
                 DependencyObject currentFocus = Keyboard.FocusedElement as DependencyObject;
-                if (currentFocus == null || (!IsContextMenuOpen && ItemsControlFromItemContainer(currentFocus) != this))
+                if (currentFocus is null || (!IsContextMenuOpen && ItemsControlFromItemContainer(currentFocus) != this))
                 {
                     Close();
                 }
@@ -1210,8 +1210,8 @@ namespace System.Windows.Controls
             // us back and do auto scrolling behavior.
             if (IsMouseCaptured)
             {
-                Debug.Assert(_autoScrollTimer == null, "IsMouseCaptured went from true to true");
-                if (_autoScrollTimer == null)
+                Debug.Assert(_autoScrollTimer is null, "IsMouseCaptured went from true to true");
+                if (_autoScrollTimer is null)
                 {
                     _autoScrollTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
                     _autoScrollTimer.Interval = AutoScrollTimeout;
@@ -1592,7 +1592,7 @@ namespace System.Windows.Controls
             DependencyObject d = o as DependencyObject;
             // If o is not a DependencyObject, it is just a plain
             // object and must be selectable and enabled.
-            if (d == null)
+            if (d is null)
             {
                 return true;
             }
@@ -1689,7 +1689,7 @@ namespace System.Windows.Controls
                 {
                     // If capture is null or it's not below the combobox, close.
                     // More workaround for task 22022 -- check if it's a descendant (following Logical links too)
-                    if (Mouse.Captured == null || !MenuBase.IsDescendant(comboBox, Mouse.Captured as DependencyObject))
+                    if (Mouse.Captured is null || !MenuBase.IsDescendant(comboBox, Mouse.Captured as DependencyObject))
                     {
                         comboBox.Close();
                     }
@@ -1699,7 +1699,7 @@ namespace System.Windows.Controls
                     if (MenuBase.IsDescendant(comboBox, e.OriginalSource as DependencyObject))
                     {
                         // Take capture if one of our children gave up capture (by closing their drop down)
-                        if (comboBox.IsDropDownOpen && Mouse.Captured == null && MS.Win32.SafeNativeMethods.GetCapture() == IntPtr.Zero)
+                        if (comboBox.IsDropDownOpen && Mouse.Captured is null && MS.Win32.SafeNativeMethods.GetCapture() == IntPtr.Zero)
                         {
                             Mouse.Capture(comboBox, CaptureMode.SubTree);
                             e.Handled = true;
@@ -1977,7 +1977,7 @@ namespace System.Windows.Controls
 
         private ComboBoxItem HighlightedElement
         {
-            get { return (_highlightedInfo == null) ? null : _highlightedInfo.Container as ComboBoxItem; }
+            get { return (_highlightedInfo is null) ? null : _highlightedInfo.Container as ComboBoxItem; }
         }
 
         private bool IsMouseOverItemsHost

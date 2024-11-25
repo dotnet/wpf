@@ -108,7 +108,7 @@ namespace System.Windows.Automation.Peers
 
         protected override List<AutomationPeer> GetChildrenCore()
         {
-            if (OwningCalendar.MonthControl == null)
+            if (OwningCalendar.MonthControl is null)
             {
                 return null;
             }
@@ -199,7 +199,7 @@ namespace System.Windows.Automation.Peers
                     DateTimeAutomationPeer focusedItem = GetOrCreateDateTimeAutomationPeer(focusedDate, owner.DisplayMode, /*addParentInfo*/ false);
                     FrameworkElement focusedButton = focusedItem.OwningButton;
 
-                    if (focusedButton == null || !focusedButton.IsKeyboardFocused)
+                    if (focusedButton is null || !focusedButton.IsKeyboardFocused)
                     {
                         throw new InvalidOperationException(SR.SetFocusFailed);
                     }
@@ -227,7 +227,7 @@ namespace System.Windows.Automation.Peers
             DateTimeAutomationPeer peer = null;
             DateTimePeers.TryGetValue(key, out peer);
 
-            if (peer == null)
+            if (peer is null)
             {
                 peer = GetPeerFromWeakRefStorage(key);
                 if (peer != null && !addParentInfo)
@@ -238,7 +238,7 @@ namespace System.Windows.Automation.Peers
                 }
             }
 
-            if( peer == null )
+            if( peer is null )
             {
                 peer = new DateTimeAutomationPeer(date, OwningCalendar, buttonMode);
                 
@@ -272,7 +272,7 @@ namespace System.Windows.Automation.Peers
                 if (provider != null)
                 {
                     returnPeer = PeerFromProvider(provider as IRawElementProviderSimple) as DateTimeAutomationPeer;
-                    if (returnPeer == null)
+                    if (returnPeer is null)
                         WeakRefElementProxyStorage.Remove(dateTimeCalendarModePairKey);
                 }
                 else
@@ -287,7 +287,7 @@ namespace System.Windows.Automation.Peers
         {
             DateTimeCalendarModePair key = new DateTimeCalendarModePair(dateTimePeer.Date, dateTimePeer.ButtonMode);
 
-            if (GetPeerFromWeakRefStorage(key) == null)
+            if (GetPeerFromWeakRefStorage(key) is null)
                 WeakRefElementProxyStorage.Add(key, wr);
         }
 
@@ -502,7 +502,7 @@ namespace System.Windows.Automation.Peers
             {
                 startAfterDatePeer = PeerFromProvider(startAfterProvider) as DateTimeAutomationPeer;
                 // if provider is not null, peer must exist
-                if (startAfterDatePeer == null)
+                if (startAfterDatePeer is null)
                 {
                     throw new InvalidOperationException(SR.InavalidStartItem);
                 }

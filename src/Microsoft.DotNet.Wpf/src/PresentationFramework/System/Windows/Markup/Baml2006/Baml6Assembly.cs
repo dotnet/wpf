@@ -45,7 +45,7 @@ namespace System.Windows.Baml2006
 
                 AssemblyName assemblyName = new AssemblyName(Name);
                 _assembly = SafeSecurityHelper.GetLoadedAssembly(assemblyName);
-                if (_assembly == null)
+                if (_assembly is null)
                 {
                     byte[] publicKeyToken = assemblyName.GetPublicKeyToken();
                     if (assemblyName.Version != null || assemblyName.CultureInfo != null || publicKeyToken != null)

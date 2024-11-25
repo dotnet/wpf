@@ -66,7 +66,7 @@ namespace System.Windows
         /// </remarks>        
         internal bool ValueEquals(TextDecoration textDecoration)
         {
-            if (textDecoration == null)
+            if (textDecoration is null)
                 return false; // o is either null or not a TextDecoration object.
 
             if (this == textDecoration) 
@@ -77,7 +77,7 @@ namespace System.Windows
             && PenOffset        == textDecoration.PenOffset 
             && PenOffsetUnit    == textDecoration.PenOffsetUnit 
             && PenThicknessUnit == textDecoration.PenThicknessUnit
-            && (Pen == null ? textDecoration.Pen == null : Pen.Equals( textDecoration.Pen)) 
+            && (Pen is null ? textDecoration.Pen is null : Pen.Equals( textDecoration.Pen)) 
             );
         }
     }

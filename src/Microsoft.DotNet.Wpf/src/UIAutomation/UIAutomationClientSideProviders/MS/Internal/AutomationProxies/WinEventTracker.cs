@@ -64,7 +64,7 @@ namespace MS.Internal.AutomationProxies
             lock (_queueLock)
             {
                 // Create the thread to process the notification if necessary
-                if (_callbackQueue == null)
+                if (_callbackQueue is null)
                 {
                     _callbackQueue = new QueueProcessor();
                     _callbackQueue.StartOnThread();
@@ -376,7 +376,7 @@ namespace MS.Internal.AutomationProxies
                         }
 
                         // If never seens this EventId before. Create the notification object
-                        if (_ahp[evt] == null)
+                        if (_ahp[evt] is null)
                         {
                             // create the hash table the key is the process id
                             _ahp[evt] = new Hashtable(10);
@@ -389,7 +389,7 @@ namespace MS.Internal.AutomationProxies
                         hookParams = (EventHookParams)_ahp[evt][processId];
 
                         // If there is not an entry for the event for the specified process then create one.
-                        if (hookParams == null)
+                        if (hookParams is null)
                         {
                             hookParams = new EventHookParams();
                             hookParams._process = processId;
@@ -400,7 +400,7 @@ namespace MS.Internal.AutomationProxies
 
                         if (eFlag == EventFlag.Add)
                         {
-                            if (eventCreateParams == null)
+                            if (eventCreateParams is null)
                             {
                                 // empty array, create the hwnd arraylist
                                 hookParams._evtId = evtIdProp._evtId;
@@ -438,7 +438,7 @@ namespace MS.Internal.AutomationProxies
                         }
                         else
                         {
-                            if ( eventCreateParams == null )
+                            if ( eventCreateParams is null )
                                 return;
                             
                             // Remove a notification
@@ -450,7 +450,7 @@ namespace MS.Internal.AutomationProxies
                                 // Detect if caller should be removed from notification list
                                 bool remove = false;
 
-                                if (raiseEvents == null)
+                                if (raiseEvents is null)
                                 {
                                     // Not a global wide events                                    
                                     remove = (ecp._hwnd == hwnd && ecp._idProp == evtIdProp._idProp);

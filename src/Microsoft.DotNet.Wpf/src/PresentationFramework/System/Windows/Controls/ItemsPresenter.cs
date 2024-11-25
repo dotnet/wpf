@@ -47,7 +47,7 @@ namespace System.Windows.Controls
         {
             // verify that the template produced a panel with no children
             Panel panel = GetVisualChild(0) as Panel;
-            if (panel == null || VisualTreeHelper.GetChildrenCount(panel) > 0)
+            if (panel is null || VisualTreeHelper.GetChildrenCount(panel) > 0)
                 throw new InvalidOperationException(SR.ItemsPanelNotSingleNode);
 
             OnPanelChanged(this, EventArgs.Empty);
@@ -167,7 +167,7 @@ namespace System.Windows.Controls
 
         internal static ItemsPresenter FromPanel(Panel panel)
         {
-            if (panel == null)
+            if (panel is null)
                 return null;
 
             return panel.TemplatedParent as ItemsPresenter;
@@ -175,11 +175,11 @@ namespace System.Windows.Controls
 
         internal static ItemsPresenter FromGroupItem(GroupItem groupItem)
         {
-            if (groupItem == null)
+            if (groupItem is null)
                 return null;
 
             Visual parent = VisualTreeHelper.GetParent(groupItem) as Visual;
-            if (parent == null)
+            if (parent is null)
                 return null;
 
             return VisualTreeHelper.GetParent(parent) as ItemsPresenter;
@@ -187,7 +187,7 @@ namespace System.Windows.Controls
 
         internal override void OnAncestorChanged()
         {
-            if (TemplatedParent == null)
+            if (TemplatedParent is null)
             {
                 UseGenerator(null);
                 ClearPanel();
@@ -237,7 +237,7 @@ namespace System.Windows.Controls
             {
                 // If GroupStyle.Panel is set then we dont honor ItemsControl.IsVirtualizing
                 template = groupStyle.Panel;
-                if (template == null)
+                if (template is null)
                 {
                     // create default Panels
                     if (VirtualizingPanel.GetIsVirtualizingWhenGrouping(owner))

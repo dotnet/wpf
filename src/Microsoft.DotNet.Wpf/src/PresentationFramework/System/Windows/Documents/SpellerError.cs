@@ -58,7 +58,7 @@ namespace System.Windows.Controls
         /// </remarks>
         public void Correct(string correctedText)
         {
-            if (correctedText == null)
+            if (correctedText is null)
             {
                 correctedText = String.Empty; // Parity with TextBox.Text.
             }

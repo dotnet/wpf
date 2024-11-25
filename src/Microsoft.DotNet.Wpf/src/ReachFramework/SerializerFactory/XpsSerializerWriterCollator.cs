@@ -114,7 +114,7 @@ namespace System.Windows.Xps.Serialization
 
         private void CheckDisposed()
         {
-            if (_collator == null)
+            if (_collator is null)
             {
                 throw new XpsSerializationException(SR.XpsSerializerFactory_WriterIsClosed);
             }

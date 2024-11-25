@@ -227,7 +227,7 @@ namespace System.Windows.Media.Media3D
                 MaterialCollection vChildren = Children;
 
                 // Store the count of this resource's contained collections in local variables.
-                int ChildrenCount = (vChildren == null) ? 0 : vChildren.Count;
+                int ChildrenCount = (vChildren is null) ? 0 : vChildren.Count;
 
                 // Pack & send command packet
                 DUCE.MILCMD_MATERIALGROUP data;
@@ -448,7 +448,7 @@ namespace System.Windows.Media.Media3D
             // if these get touched by more than one thread in the lifetime
             // of your app.
 
-            Debug.Assert(s_Children == null || s_Children.IsFrozen,
+            Debug.Assert(s_Children is null || s_Children.IsFrozen,
                 "Detected context bound default value MaterialGroup.s_Children (See OS Bug #947272).");
 
 

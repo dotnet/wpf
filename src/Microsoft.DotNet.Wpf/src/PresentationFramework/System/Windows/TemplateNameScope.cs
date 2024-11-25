@@ -52,7 +52,7 @@ namespace System.Windows
                                     List<DependencyObject> affectedChildren,
                                     FrameworkTemplate frameworkTemplate )
         {
-            Debug.Assert(templatedParent == null || (templatedParent is FrameworkElement || templatedParent is FrameworkContentElement),
+            Debug.Assert(templatedParent is null || (templatedParent is FrameworkElement || templatedParent is FrameworkContentElement),
                          "Templates are only supported on FE/FCE containers.");
 
             _affectedChildren = affectedChildren;
@@ -100,9 +100,9 @@ namespace System.Windows
             // then we'll just set the properties directly on the element
             // (this is the serialization scenario).
 
-            if( _templatedParent == null )
+            if( _templatedParent is null )
             {
-                if (_nameMap == null)
+                if (_nameMap is null)
                 {
                     _nameMap = new HybridDictionary();
                 }
@@ -122,12 +122,12 @@ namespace System.Windows
 
             // We have a templated parent, but is this not a FE/FCE?
 
-            else if (fe == null && fce == null)
+            else if (fe is null && fce is null)
             {
                 // All we need to do is update the _templatedNonFeChildren list
 
                 Hashtable nonFeChildren = _templatedNonFeChildrenField.GetValue(_templatedParent);
-                if (nonFeChildren == null)
+                if (nonFeChildren is null)
                 {
                     nonFeChildren = new Hashtable(1);
                     _templatedNonFeChildrenField.SetValue(_templatedParent, nonFeChildren);
@@ -225,7 +225,7 @@ namespace System.Windows
             }
             else
             {
-                if (_nameMap == null || name == null || name == String.Empty)
+                if (_nameMap is null || name is null || name == String.Empty)
                     return null;
                 
                 return _nameMap[name];

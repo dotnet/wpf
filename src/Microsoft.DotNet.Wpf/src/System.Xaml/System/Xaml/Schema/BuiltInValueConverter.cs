@@ -172,7 +172,7 @@ namespace System.Xaml.Schema
                         stdConverter = TypeDescriptor.GetConverter(typeof(Uri));
                         // The TypeConverter for Uri, if one is found, should be capable of converting from { String, Uri }
                         // and converting to { String, Uri, System.ComponentModel.Design.Serialization.InstanceDescriptor }
-                        if (stdConverter == null ||
+                        if (stdConverter is null ||
                             !stdConverter.CanConvertFrom(typeof(string)) || !stdConverter.CanConvertFrom(typeof(Uri)) ||
                             !stdConverter.CanConvertTo(typeof(string)) || !stdConverter.CanConvertTo(typeof(Uri)) || !stdConverter.CanConvertTo(typeof(InstanceDescriptor)))
                         {
@@ -183,7 +183,7 @@ namespace System.Xaml.Schema
                     {
                     }
 
-                    if (stdConverter == null)
+                    if (stdConverter is null)
                     {
                         s_Uri = new BuiltInValueConverter<TypeConverter>(typeof(TypeUriConverter), () => new TypeUriConverter());
                     }

@@ -85,8 +85,8 @@ namespace System.Windows.Controls.Primitives
                         DisposeAsyncPage();
                     }
 
-                    Invariant.Assert(_documentPage == null);
-                    Invariant.Assert(_documentPageAsync == null);
+                    Invariant.Assert(_documentPage is null);
+                    Invariant.Assert(_documentPageAsync is null);
                     _documentPaginator = value;
                     _textView = null;
 
@@ -107,7 +107,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         public DocumentPage DocumentPage
         {
-            get { return (_documentPage == null) ? DocumentPage.Missing : _documentPage; }
+            get { return (_documentPage is null) ? DocumentPage.Missing : _documentPage; }
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace System.Windows.Controls.Primitives
 
                 // If the main page or pending async page are not available yet, 
                 // asynchronously request new page from Paginator.
-                if (_documentPage == null && _documentPageAsync == null)
+                if (_documentPage is null && _documentPageAsync is null)
                 {
                     if (PageNumber >= 0)
                     {
@@ -275,7 +275,7 @@ namespace System.Windows.Controls.Primitives
                         else
                         {
                             _documentPageAsync = _documentPaginator.GetPage(PageNumber);
-                            if (_documentPageAsync == null)
+                            if (_documentPageAsync is null)
                             {
                                 _documentPageAsync = DocumentPage.Missing;
                             }
@@ -296,7 +296,7 @@ namespace System.Windows.Controls.Primitives
                     // DisposeCurrentPage raises PageDisposed and DocumentPage.PageDestroyed events.
                     // Handlers for those events may dispose _documentPageAsync. Treat this situation
                     // as missing page.
-                    if (_documentPageAsync == null)
+                    if (_documentPageAsync is null)
                     {
                         _documentPageAsync = DocumentPage.Missing;
                     }
@@ -349,17 +349,17 @@ namespace System.Windows.Controls.Primitives
             
             CheckDisposed();
 
-            if (_pageVisualClone == null)
+            if (_pageVisualClone is null)
             {
-                if (_pageHost == null)
+                if (_pageHost is null)
                 {
                     _pageHost = new DocumentPageHost();
                     this.AddVisualChild(_pageHost);
                 }
                 Invariant.Assert(_pageHost != null);
 
-                pageVisual = (_documentPage == null) ? null : _documentPage.Visual;
-                if (pageVisual == null)
+                pageVisual = (_documentPage is null) ? null : _documentPage.Visual;
+                if (pageVisual is null)
                 {
                     // Remove existing visiual children.
                     _pageHost.PageVisual = null;
@@ -468,7 +468,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         protected override Visual GetVisualChild(int index)
         {
-            if (index != 0 || _pageHost == null)
+            if (index != 0 || _pageHost is null)
             {
                 throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
@@ -493,8 +493,8 @@ namespace System.Windows.Controls.Primitives
                     DisposeCurrentPage();
                     DisposeAsyncPage();                                        
                 }
-                Invariant.Assert(_documentPage == null);
-                Invariant.Assert(_documentPageAsync == null);
+                Invariant.Assert(_documentPage is null);
+                Invariant.Assert(_documentPageAsync is null);
                 _documentPaginator = null;
                 _textView = null;
             }
@@ -521,7 +521,7 @@ namespace System.Windows.Controls.Primitives
                 // (2) TextContainer - the service object is retrieved from DocumentPaginator.
                 if (serviceType == typeof(ITextView))
                 {
-                    if (_textView == null)
+                    if (_textView is null)
                     {
                         ITextContainer tc = ((IServiceProvider)_documentPaginator).GetService(typeof(ITextContainer)) as ITextContainer;
                         if (tc != null)
@@ -626,7 +626,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         internal void DuplicateVisual()
         {
-            if (_documentPage != null && _pageVisualClone == null)
+            if (_documentPage != null && _pageVisualClone is null)
             {
                 _pageVisualClone = DuplicatePageVisual();
                 _visualCloneSize = this.DesiredSize;
@@ -719,7 +719,7 @@ namespace System.Windows.Controls.Primitives
         /// <param name="e">Details about this event.</param>
         private void HandleGetPageCompleted(object sender, GetPageCompletedEventArgs e)
         {
-            if (!_disposed && (e != null) && !e.Cancelled && e.Error == null)
+            if (!_disposed && (e != null) && !e.Cancelled && e.Error is null)
             {
                 if (e.PageNumber == this.PageNumber && e.UserState == this)
                 {
@@ -728,7 +728,7 @@ namespace System.Windows.Controls.Primitives
                         _documentPageAsync.PageDestroyed -= new EventHandler(HandleAsyncPageDestroyed);
                     }
                     _documentPageAsync = e.DocumentPage;
-                    if (_documentPageAsync == null)
+                    if (_documentPageAsync is null)
                     {
                         _documentPageAsync = DocumentPage.Missing;
                     }

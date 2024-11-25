@@ -136,7 +136,7 @@ namespace System.Windows.Media.Composition
         {
             MilMatrix3x2D matrix;
 
-            if (t == null || t.IsIdentity)
+            if (t is null || t.IsIdentity)
             {
                 matrix.S_11 = 1.0;
                 matrix.S_12 = 0.0;

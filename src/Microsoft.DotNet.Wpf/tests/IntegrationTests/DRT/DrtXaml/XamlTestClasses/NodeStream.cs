@@ -75,7 +75,7 @@ namespace Test.NodeStream
 
         public NS(NamespaceDeclaration nd)
         {
-            if (nd == null)
+            if (nd is null)
             {
                 throw new ArgumentNullException("nd");
             }
@@ -84,12 +84,12 @@ namespace Test.NodeStream
 
         public override bool Equals(object o)
         {
-            if (o == null)
+            if (o is null)
             {
                 return false;
             }
             NS ns = o as NS;
-            if (ns == null)
+            if (ns is null)
             {
                 return false;
             }
@@ -118,7 +118,7 @@ namespace Test.NodeStream
 
         public SM(XamlMember xm)
         {
-            if (xm == null)
+            if (xm is null)
             {
                 throw new ArgumentNullException("xm");
             }
@@ -127,12 +127,12 @@ namespace Test.NodeStream
 
         public override bool Equals(Object o)
         {
-            if (o == null)
+            if (o is null)
             {
                 return false;
             }
             SM sm = o as SM;
-            if (sm == null)
+            if (sm is null)
             {
                 return false;
             }
@@ -156,7 +156,7 @@ namespace Test.NodeStream
 
         public SO(XamlType xt)
         {
-            if (xt == null)
+            if (xt is null)
             {
                 throw new ArgumentNullException("xt");
             }
@@ -165,12 +165,12 @@ namespace Test.NodeStream
 
         public override bool Equals(Object o)
         {
-            if (o == null)
+            if (o is null)
             {
                 return false;
             }
             SO so = o as SO;
-            if (so == null)
+            if (so is null)
             {
                 return false;
             }
@@ -194,7 +194,7 @@ namespace Test.NodeStream
 
         public V(object o)
         {
-            if (o == null)
+            if (o is null)
             {
                 throw new ArgumentNullException("o");
             }
@@ -203,12 +203,12 @@ namespace Test.NodeStream
 
         public override bool Equals(Object o)
         {
-            if (o == null)
+            if (o is null)
             {
                 return false;
             }
             V v = o as V;
-            if (v == null)
+            if (v is null)
             {
                 return false;
             }

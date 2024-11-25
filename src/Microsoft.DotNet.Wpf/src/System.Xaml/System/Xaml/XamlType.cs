@@ -97,7 +97,7 @@ namespace System.Xaml
             get
             {
                 EnsureReflector();
-                if (_reflector.Invoker == null)
+                if (_reflector.Invoker is null)
                 {
                     _reflector.Invoker = LookupInvoker() ?? XamlTypeInvoker.UnknownInvoker;
                 }
@@ -197,7 +197,7 @@ namespace System.Xaml
                     return null;
                 }
                 Debug.Assert(_reflector != null, "_reflector should have been initialized by IsDictionary");
-                if (_reflector.KeyType == null)
+                if (_reflector.KeyType is null)
                 {
                     _reflector.KeyType = LookupKeyType() ?? XamlLanguage.Object;
                 }
@@ -214,7 +214,7 @@ namespace System.Xaml
                     return null;
                 }
                 Debug.Assert(_reflector != null, "_reflector should have been initialized by GetCollectionKind");
-                if (_reflector.ItemType == null)
+                if (_reflector.ItemType is null)
                 {
                     _reflector.ItemType = LookupItemType() ?? XamlLanguage.Object;
                 }
@@ -233,7 +233,7 @@ namespace System.Xaml
                     return null;
                 }
                 Debug.Assert(_reflector != null, "_reflector should have been initialized by GetCollectionKind");
-                if (_reflector.AllowedContentTypes == null)
+                if (_reflector.AllowedContentTypes is null)
                 {
                     _reflector.AllowedContentTypes = LookupAllowedContentTypes() ??
                         EmptyList<XamlType>.Value;
@@ -251,7 +251,7 @@ namespace System.Xaml
                     return null;
                 }
                 Debug.Assert(_reflector != null, "_reflector should have been initialized by IsCollection");
-                if (_reflector.ContentWrappers == null)
+                if (_reflector.ContentWrappers is null)
                 {
                     _reflector.ContentWrappers = LookupContentWrappers() ??
                         EmptyList<XamlType>.Value;
@@ -321,7 +321,7 @@ namespace System.Xaml
                     return null;
                 }
                 Debug.Assert(_reflector != null, "_reflector should have been initialized by IsMarkupExtension");
-                if (_reflector.MarkupExtensionReturnType == null)
+                if (_reflector.MarkupExtensionReturnType is null)
                 {
                     _reflector.MarkupExtensionReturnType = LookupMarkupExtensionReturnType() ?? XamlLanguage.Object;
                 }
@@ -456,10 +456,10 @@ namespace System.Xaml
 
         public virtual IList<string> GetXamlNamespaces()
         {
-            if (_namespaces == null)
+            if (_namespaces is null)
             {
                 _namespaces = _schemaContext.GetXamlNamespaces(this);
-                if (_namespaces == null)
+                if (_namespaces is null)
                 {
                     _namespaces = new ReadOnlyCollection<string>(new string[] { string.Empty });
                 }
@@ -490,7 +490,7 @@ namespace System.Xaml
         {
             get
             {
-                if (ItemType == null || UnderlyingType == null)
+                if (ItemType is null || UnderlyingType is null)
                 {
                     return null;
                 }
@@ -541,7 +541,7 @@ namespace System.Xaml
         {
             get
             {
-                if (UnderlyingType == null)
+                if (UnderlyingType is null)
                 {
                     return null;
                 }
@@ -559,7 +559,7 @@ namespace System.Xaml
         {
             get
             {
-                if (GetCollectionKind() == XamlCollectionKind.None || UnderlyingType == null)
+                if (GetCollectionKind() == XamlCollectionKind.None || UnderlyingType is null)
                 {
                     return null;
                 }
@@ -599,7 +599,7 @@ namespace System.Xaml
         internal ICollection<XamlMember> GetAllExcludedReadOnlyMembers()
         {
             EnsureReflector();
-            if (_reflector.ExcludedReadOnlyMembers == null)
+            if (_reflector.ExcludedReadOnlyMembers is null)
             {
                 _reflector.ExcludedReadOnlyMembers = LookupAllExcludedReadOnlyMembers() ?? EmptyList<XamlMember>.Value;
             }
@@ -610,7 +610,7 @@ namespace System.Xaml
         // public and internal constructors.
         internal IEnumerable<ConstructorInfo> GetConstructors()
         {
-            if (UnderlyingType == null)
+            if (UnderlyingType is null)
             {
                 return EmptyList<ConstructorInfo>.Value;
             }
@@ -624,13 +624,13 @@ namespace System.Xaml
         // Looks up a ctor overload from the set provided by GetConstructors.
         internal ConstructorInfo GetConstructor(Type[] paramTypes)
         {
-            if (UnderlyingType == null)
+            if (UnderlyingType is null)
             {
                 return null;
             }
             IEnumerable<ConstructorInfo> ctors = GetConstructors();
             ConstructorInfo[] ctorArray = ctors as ConstructorInfo[];
-            if (ctorArray == null)
+            if (ctorArray is null)
             {
                 ctorArray = new List<ConstructorInfo>(ctors).ToArray();
             }
@@ -706,7 +706,7 @@ namespace System.Xaml
         protected virtual XamlType LookupBaseType()
         {
             Type underlyingType = UnderlyingType;
-            if (underlyingType == null)
+            if (underlyingType is null)
             {
                 return XamlLanguage.Object;
             }
@@ -719,7 +719,7 @@ namespace System.Xaml
 
         protected virtual XamlCollectionKind LookupCollectionKind()
         {
-            if (UnderlyingType == null)
+            if (UnderlyingType is null)
             {
                 return (BaseType != null) ? BaseType.GetCollectionKind() : XamlCollectionKind.None;
             }
@@ -736,7 +736,7 @@ namespace System.Xaml
         protected virtual bool LookupConstructionRequiresArguments()
         {
             Type underlyingType = UnderlyingType;
-            if (underlyingType == null)
+            if (underlyingType is null)
             {
                 return GetDefaultFlag(BoolTypeBits.ConstructionRequiresArguments);
             }
@@ -746,7 +746,7 @@ namespace System.Xaml
                 return false;
             }
             ConstructorInfo defaultCtor = underlyingType.GetConstructor(ConstructorBindingFlags, null, Type.EmptyTypes, null);
-            return (defaultCtor == null) || !TypeReflector.IsPublicOrInternal(defaultCtor);
+            return (defaultCtor is null) || !TypeReflector.IsPublicOrInternal(defaultCtor);
         }
 
         protected virtual XamlMember LookupContentProperty()
@@ -787,7 +787,7 @@ namespace System.Xaml
             if (BaseType != null)
             {
                 IList<XamlType> baseWrappers = BaseType.ContentWrappers;
-                if (contentWrappers == null)
+                if (contentWrappers is null)
                 {
                     return baseWrappers;
                 }
@@ -826,7 +826,7 @@ namespace System.Xaml
         protected virtual bool LookupIsConstructible()
         {
             Type underlyingType = UnderlyingType;
-            if (underlyingType == null)
+            if (underlyingType is null)
             {
                 return GetDefaultFlag(BoolTypeBits.Constructible);
             }
@@ -887,7 +887,7 @@ namespace System.Xaml
             {
                 return _reflector.IsUnknown;
             }
-            return UnderlyingType == null;
+            return UnderlyingType is null;
         }
 
         protected virtual bool LookupIsWhitespaceSignificantCollection()
@@ -923,7 +923,7 @@ namespace System.Xaml
                     return SchemaContext.GetXamlType(addParams[0].ParameterType);
                 }
             }
-            else if (UnderlyingType == null && BaseType != null)
+            else if (UnderlyingType is null && BaseType != null)
             {
                 return BaseType.KeyType;
             }
@@ -981,7 +981,7 @@ namespace System.Xaml
 
         protected virtual IEnumerable<XamlMember> LookupAllAttachableMembers()
         {
-            if (UnderlyingType == null)
+            if (UnderlyingType is null)
             {
                 return (BaseType != null) ? BaseType.GetAllAttachableMembers() : null;
             }
@@ -991,7 +991,7 @@ namespace System.Xaml
 
         protected virtual IEnumerable<XamlMember> LookupAllMembers()
         {
-            if (UnderlyingType == null)
+            if (UnderlyingType is null)
             {
                 return (BaseType != null) ? BaseType.GetAllMembers() : null;
             }
@@ -1026,7 +1026,7 @@ namespace System.Xaml
 
         protected virtual XamlMember LookupMember(string name, bool skipReadOnlyCheck)
         {
-            if (UnderlyingType == null)
+            if (UnderlyingType is null)
             {
                 if (BaseType != null)
                 {
@@ -1059,7 +1059,7 @@ namespace System.Xaml
 
         protected virtual XamlMember LookupAttachableMember(string name)
         {
-            if (UnderlyingType == null)
+            if (UnderlyingType is null)
             {
                 return (BaseType != null) ? BaseType.GetAttachableMember(name) : null;
             }
@@ -1085,7 +1085,7 @@ namespace System.Xaml
 
         protected virtual IList<XamlType> LookupPositionalParameters(int parameterCount)
         {
-            if (UnderlyingType == null)
+            if (UnderlyingType is null)
             {
                 return null;
             }
@@ -1095,7 +1095,7 @@ namespace System.Xaml
             // save the results of our reflection in a separate dictionary, and only surface each item
             // as requested.
             EnsureReflector();
-            if (_reflector.ReflectedPositionalParameters == null)
+            if (_reflector.ReflectedPositionalParameters is null)
             {
                 _reflector.ReflectedPositionalParameters = LookupAllPositionalParameters();
             }
@@ -1112,7 +1112,7 @@ namespace System.Xaml
         protected virtual bool LookupIsPublic()
         {
             Type underlyingType = UnderlyingType;
-            if (underlyingType == null)
+            if (underlyingType is null)
             {
                 return GetDefaultFlag(BoolTypeBits.Public);
             }
@@ -1400,7 +1400,7 @@ namespace System.Xaml
         // We call this method a lot. Keep it really small, to make sure it inlines.
         private void EnsureReflector()
         {
-            if (_reflector == null)
+            if (_reflector is null)
             {
                 CreateReflector();
             }
@@ -1431,7 +1431,7 @@ namespace System.Xaml
         private XamlMember GetPropertyOrUnknown(string propertyName, bool skipReadOnlyCheck)
         {
             XamlMember result = skipReadOnlyCheck ? LookupMember(propertyName, true) : GetMember(propertyName);
-            if (result == null)
+            if (result is null)
             {
                 result = new XamlMember(propertyName, this /*declaringType*/, false /*isAttachable*/);
             }
@@ -1456,7 +1456,7 @@ namespace System.Xaml
 
         internal static ReadOnlyCollection<T> GetReadOnly<T>(IList<T> list)
         {
-            if (list == null)
+            if (list is null)
             {
                 return null;
             }
@@ -1469,13 +1469,13 @@ namespace System.Xaml
 
         private static ReadOnlyCollection<XamlType> GetTypeArguments(IList<XamlType> typeArguments)
         {
-            if (typeArguments == null || typeArguments.Count == 0)
+            if (typeArguments is null || typeArguments.Count == 0)
             {
                 return null;
             }
             foreach (XamlType typeArg in typeArguments)
             {
-                if (typeArg == null)
+                if (typeArg is null)
                 {
                     throw new ArgumentException(SR.Format(SR.CollectionCannotContainNulls, "typeArguments"));
                 }
@@ -1533,7 +1533,7 @@ namespace System.Xaml
 
         private ICollection<XamlMember> LookupAllExcludedReadOnlyMembers()
         {
-            if (UnderlyingType == null)
+            if (UnderlyingType is null)
             {
                 return null;
             }
@@ -1543,7 +1543,7 @@ namespace System.Xaml
 
             // By default, any properties remaining will be excluded read-only members
             IList<PropertyInfo> excludedMembers = _reflector.LookupRemainingProperties();
-            if (excludedMembers == null)
+            if (excludedMembers is null)
             {
                 return null;
             }
@@ -1769,7 +1769,7 @@ namespace System.Xaml
                 {
                     if (xamlType1._namespaces != null)
                     {
-                        if (xamlType2._namespaces == null || xamlType1._namespaces[0] != xamlType2._namespaces[0])
+                        if (xamlType2._namespaces is null || xamlType1._namespaces[0] != xamlType2._namespaces[0])
                         {
                             return false;
                         }

@@ -317,11 +317,11 @@ namespace System.Windows.Input.Manipulations
                     currentManipulatorCount++;
 
                     ManipulatorState state;
-                    if (this.manipulatorStates == null || !this.manipulatorStates.TryGetValue(manipulator.Id, out state) || state == null)
+                    if (this.manipulatorStates is null || !this.manipulatorStates.TryGetValue(manipulator.Id, out state) || state is null)
                     {
                         // Not there, so must be added.
                         state = CreateManipulatorState(manipulator);
-                        if (addedManipulatorList == null)
+                        if (addedManipulatorList is null)
                         {
                             addedManipulatorList = new List<ManipulatorState>(20);
                         }
@@ -398,8 +398,8 @@ namespace System.Windows.Input.Manipulations
                 out updatedManipulatorCount);
 
             if (updatedManipulatorCount == 0 &&
-                (addedManipulatorList == null || addedManipulatorList.Count == 0) &&
-                (removedManipulatorIds == null || removedManipulatorIds.Count == 0))
+                (addedManipulatorList is null || addedManipulatorList.Count == 0) &&
+                (removedManipulatorIds is null || removedManipulatorIds.Count == 0))
             {
                 if (this.processorState != ProcessorState.Waiting && currentManipulatorCount > 0 && this.history.Count > 0)
                 {
@@ -606,7 +606,7 @@ namespace System.Windows.Input.Manipulations
         /// <param name="initialState">the initial state of the manipulator to add</param>
         private void AddManipulator(ManipulatorState initialState)
         {
-            if (this.manipulatorStates == null)
+            if (this.manipulatorStates is null)
             {
                 this.manipulatorStates = new Dictionary<int, ManipulatorState>();
             }

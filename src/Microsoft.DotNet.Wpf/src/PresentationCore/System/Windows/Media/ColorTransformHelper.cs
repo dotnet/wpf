@@ -69,12 +69,12 @@ namespace System.Windows.Media
         /// Retrieves a standard color space profile
         internal void CreateTransform(SafeProfileHandle sourceProfile, SafeProfileHandle destinationProfile)
         {
-            if (sourceProfile == null || sourceProfile.IsInvalid)
+            if (sourceProfile is null || sourceProfile.IsInvalid)
             {
                 throw new ArgumentNullException("sourceProfile");
             }
 
-            if (destinationProfile == null || destinationProfile.IsInvalid)
+            if (destinationProfile is null || destinationProfile.IsInvalid)
             {
                 throw new ArgumentNullException("destinationProfile");
             }
@@ -110,7 +110,7 @@ namespace System.Windows.Media
                 destinationProfile.DangerousRelease();
             }
 
-            if (_transformHandle == null || _transformHandle.IsInvalid)
+            if (_transformHandle is null || _transformHandle.IsInvalid)
             {
                 HRESULT.Check(Marshal.GetHRForLastWin32Error());
             }
@@ -120,7 +120,7 @@ namespace System.Windows.Media
         /// Retrieves a standard color space profile
         internal void TranslateColors(IntPtr paInputColors, UInt32 numColors, UInt32 inputColorType, IntPtr paOutputColors, UInt32 outputColorType)
         {
-            if (_transformHandle == null || _transformHandle.IsInvalid)
+            if (_transformHandle is null || _transformHandle.IsInvalid)
             {
                 throw new InvalidOperationException(SR.Image_ColorTransformInvalid);
             }

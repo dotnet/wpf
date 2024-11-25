@@ -241,7 +241,7 @@ namespace Microsoft.Windows.Shell
                 return;
             }
 
-            if (_chromeInfo == null)
+            if (_chromeInfo is null)
             {
                 _RestoreStandardChromeState(false);
                 return;
@@ -287,7 +287,7 @@ namespace Microsoft.Windows.Shell
             Assert.IsNotNull(_chromeInfo);
             Assert.IsNotNull(_window);
 
-            if (_window.Template == null)
+            if (_window.Template is null)
             {
                 // Nothing to fixup yet.  This will get called again when a template does get set.
                 return;
@@ -1075,7 +1075,7 @@ namespace Microsoft.Windows.Shell
         // agree on the signature.
         private bool GetEffectiveClientArea(ref MS.Win32.NativeMethods.RECT rcClient)
         {
-            if (_window == null || _chromeInfo == null)
+            if (_window is null || _chromeInfo is null)
                 return false;
 
             DpiScale dpi = _window.GetDpi();

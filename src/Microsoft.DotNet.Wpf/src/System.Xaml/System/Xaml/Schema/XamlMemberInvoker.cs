@@ -33,7 +33,7 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (s_Unknown == null)
+                if (s_Unknown is null)
                 {
                     s_Unknown = new XamlMemberInvoker();
                 }
@@ -55,7 +55,7 @@ namespace System.Xaml.Schema
         {
             ArgumentNullException.ThrowIfNull(instance);
             ThrowIfUnknown();
-            if (UnderlyingGetter == null)
+            if (UnderlyingGetter is null)
             {
                 throw new NotSupportedException(SR.Format(SR.CantGetWriteonlyProperty, _member));
             }
@@ -74,7 +74,7 @@ namespace System.Xaml.Schema
         {
             ArgumentNullException.ThrowIfNull(instance);
             ThrowIfUnknown();
-            if (UnderlyingSetter == null)
+            if (UnderlyingSetter is null)
             {
                 throw new NotSupportedException(SR.Format(SR.CantSetReadonlyProperty, _member));
             }
@@ -93,7 +93,7 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (s_Directive == null)
+                if (s_Directive is null)
                 {
                     s_Directive = new DirectiveMemberInvoker();
                 }
@@ -162,7 +162,7 @@ namespace System.Xaml.Schema
 
         private bool IsUnknown
         {
-            get { return _member == null || _member.UnderlyingMember == null; }
+            get { return _member is null || _member.UnderlyingMember is null; }
         }
 
         private void ThrowIfUnknown()

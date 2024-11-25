@@ -196,7 +196,7 @@ namespace System.Windows.Media.Animation
             // if these get touched by more than one thread in the lifetime
             // of your app
 
-            Debug.Assert(s_Children == null || s_Children.IsFrozen,
+            Debug.Assert(s_Children is null || s_Children.IsFrozen,
                 "Detected context bound default value TimelineGroup.s_Children");
 
 

@@ -579,7 +579,7 @@ namespace System.Windows.Documents
 
                 _textSegment.get_Suggestions(out variantEnumerator);
 
-                if (variantEnumerator == null)
+                if (variantEnumerator is null)
                 {
                     // nl6 will return null enum instead of an empty enum.
                     _suggestions = suggestions.AsReadOnly();
@@ -656,7 +656,7 @@ namespace System.Windows.Documents
             {
                 get
                 {
-                    if (_subSegments == null)
+                    if (_subSegments is null)
                     {
                         EnumerateSubSegments();
                     }
@@ -672,7 +672,7 @@ namespace System.Windows.Documents
             {
                 get
                 {
-                    if (_sTextRange == null)
+                    if (_sTextRange is null)
                     {
                         STextRange sTextRange;
                         _textSegment.get_Range(out sTextRange);
@@ -694,7 +694,7 @@ namespace System.Windows.Documents
             {
                 get
                 {
-                    if (_suggestions == null)
+                    if (_suggestions is null)
                     {
                         EnumerateSuggestions();
                     }
@@ -781,7 +781,7 @@ namespace System.Windows.Documents
             {
                 get
                 {
-                    if (_rangeRole == null)
+                    if (_rangeRole is null)
                     {
                         RangeRole role;
                         _textSegment.get_Role(out role);

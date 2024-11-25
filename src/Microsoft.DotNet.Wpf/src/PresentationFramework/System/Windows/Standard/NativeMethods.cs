@@ -1457,7 +1457,7 @@ namespace Standard
                     hPtr = hdc.handle;
                 }
                 dc = NativeMethods.CreateCompatibleDC(hPtr);
-                if (dc == null)
+                if (dc is null)
                 {
                     HRESULT.ThrowLastError();
                 }
@@ -2392,7 +2392,7 @@ namespace Standard
         {
             const int DIB_RGB_COLORS = 0;
             SafeHBITMAP hBitmap = null;
-            if (hdc == null)
+            if (hdc is null)
             {
                 hBitmap = _CreateDIBSectionIntPtr(IntPtr.Zero, ref bitmapInfo, DIB_RGB_COLORS, out ppvBits, hSection, dwOffset);
             }

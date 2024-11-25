@@ -169,7 +169,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return (_textContainer == null);
+                return (_textContainer is null);
             }
         }
 

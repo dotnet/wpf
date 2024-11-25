@@ -143,12 +143,12 @@ namespace System.Windows.Controls
         /// </param>
         public static void GoToState(Control control, bool useTransitions, params string[] stateNames)
         {
-            if (control == null)
+            if (control is null)
             {
                 throw new ArgumentNullException("control");
             }
 
-            if (stateNames == null)
+            if (stateNames is null)
             {
                 return;
             }

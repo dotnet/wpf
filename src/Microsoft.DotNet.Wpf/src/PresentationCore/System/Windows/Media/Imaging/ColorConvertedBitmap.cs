@@ -151,7 +151,7 @@ namespace System.Windows.Media.Imaging
 
         internal override bool IsValidForFinalizeCreation(bool throwIfInvalid)
         {
-            if (Source == null)
+            if (Source is null)
             {
                 if (throwIfInvalid)
                 {
@@ -160,7 +160,7 @@ namespace System.Windows.Media.Imaging
                 return false;
             }
 
-            if (SourceColorContext == null)
+            if (SourceColorContext is null)
             {
                 if (throwIfInvalid)
                 {
@@ -169,7 +169,7 @@ namespace System.Windows.Media.Imaging
                 return false;
             }
 
-            if (DestinationColorContext == null)
+            if (DestinationColorContext is null)
             {
                 if (throwIfInvalid)
                 {

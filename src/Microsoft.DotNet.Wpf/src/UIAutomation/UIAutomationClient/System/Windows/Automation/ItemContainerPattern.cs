@@ -138,7 +138,7 @@ namespace System.Windows.Automation
             // type must be assignable from expected type.
             Type expectedType = info.Type;
             if (value != AutomationElement.NotSupported &&
-                ((value == null && expectedType.IsValueType)
+                ((value is null && expectedType.IsValueType)
                 || (value != null && !expectedType.IsAssignableFrom(value.GetType()))))
             {
                 throw new ArgumentException(SR.Format(SR.PropertyConditionIncorrectType, property.ProgrammaticName, expectedType.Name));

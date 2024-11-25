@@ -44,7 +44,7 @@ namespace Microsoft.Windows.Automation.Peers
             AutomationPeer headerPeer = HeaderPeer;
             if (headerPeer != null)
             {
-                if (children == null)
+                if (children is null)
                 {
                     children = new List<AutomationPeer>(1);
                 }
@@ -102,7 +102,7 @@ namespace Microsoft.Windows.Automation.Peers
             get
             {
                 // Header could be replaced if RibbonGroup Template is replaced while resizing
-                if (_headerPeer == null || !_headerPeer.Owner.IsDescendantOf(OwningGroup))
+                if (_headerPeer is null || !_headerPeer.Owner.IsDescendantOf(OwningGroup))
                 {
                     // Header is either a ContentPresenter or a DropDownButton 
                     if (OwningGroup.IsCollapsed)

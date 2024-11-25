@@ -205,7 +205,7 @@ namespace MS.Internal.Data
         //      }
         internal IDisposable SetContext(object rootItem)
         {
-            if (_contextHelper == null)
+            if (_contextHelper is null)
                 _contextHelper = new ContextHelper(this);
 
             _contextHelper.SetContext(rootItem);
@@ -252,7 +252,7 @@ namespace MS.Internal.Data
                     else if (dp != null)
                     {
                         DependencyObject d = (DependencyObject)item;
-                        if (level != Length - 1 || _host == null || _host.TransfersDefaultValue)
+                        if (level != Length - 1 || _host is null || _host.TransfersDefaultValue)
                             value = d.GetValue(dp);
                         else if (!Helper.HasDefaultValue(d, dp))
                             value = d.GetValue(dp);
@@ -597,7 +597,7 @@ namespace MS.Internal.Data
             if (_host != null)
             {
                 target = _host.CheckTarget();
-                if (_rootItem != BindingExpression.NullDataItem && target == null)
+                if (_rootItem != BindingExpression.NullDataItem && target is null)
                     return;
             }
 
@@ -607,7 +607,7 @@ namespace MS.Internal.Data
             // don't do a data transfer if there's no one to do it, or if this is
             // a (re-)activation with a new source item.   In the latter case,
             // the host binding decides whether to do a transfer.
-            bool suppressTransfer = (_host == null) || (k < 0);
+            bool suppressTransfer = (_host is null) || (k < 0);
 
             // optimistically assume the new value will fix previous path errors
             _status = PropertyPathStatus.Active;
@@ -742,7 +742,7 @@ namespace MS.Internal.Data
             // clear the IsDBNullValid cache
             _isDBNullValidForUpdate = null;
 
-            if (newO == null ||
+            if (newO is null ||
                 parent == DependencyProperty.UnsetValue ||
                 parent == BindingExpression.NullDataItem ||
                 parent == BindingExpressionBase.DisconnectedItem)
@@ -792,7 +792,7 @@ namespace MS.Internal.Data
                 }
 
                 // if that fails, look for information on the view itself
-                if (svs.info == null)
+                if (svs.info is null)
                 {
                     view = CollectionViewSource.GetDefaultCollectionView(parent, TreeContext,
                         (x) =>
@@ -808,7 +808,7 @@ namespace MS.Internal.Data
                 }
 
                 // if that fails, drill in to the current item
-                if (svs.info == null && drillIn != DrillIn.Never && view != null)
+                if (svs.info is null && drillIn != DrillIn.Never && view != null)
                 {
                     newO = view.CurrentItem;
                     if (newO != null)
@@ -830,7 +830,7 @@ namespace MS.Internal.Data
                             // otherwise it's not an error - currency is simply
                             // off the collection
                             svs.item = BindingExpression.ReplaceReference(svs.item, BindingExpression.NullDataItem);
-                            if (svs.info == null)
+                            if (svs.info is null)
                                 svs.info = DependencyProperty.UnsetValue;
                         }
                     }
@@ -838,7 +838,7 @@ namespace MS.Internal.Data
             }
 
             // update info about new item
-            if (svs.info == null)
+            if (svs.info is null)
             {
                 svs.item = BindingExpression.ReplaceReference(svs.item, BindingExpression.NullDataItem);
                 _arySVS[k] = svs;
@@ -932,7 +932,7 @@ namespace MS.Internal.Data
             if (TraceData.IsEnabled)
             {
                 BindingExpression bindingExpression = (_host != null) ? _host.ParentBindingExpression : null;
-                if (bindingExpression == null || !bindingExpression.IsInPriorityBindingExpression)
+                if (bindingExpression is null || !bindingExpression.IsInPriorityBindingExpression)
                 {
                     if (!SystemXmlHelper.IsEmptyXmlDataCollection(parent))
                     {
@@ -946,7 +946,7 @@ namespace MS.Internal.Data
                         // data provider hasn't produced any data yet.  When it does,
                         // the binding will try again and probably succeed.  Give milder
                         // feedback for this special case, so as not to alarm users unduly.
-                        if (parent == null)
+                        if (parent is null)
                         {
                             TraceData.TraceAndNotify(TraceEventType.Information, TraceData.NullItem(cs, os), bindingExpression);
                         }
@@ -1019,7 +1019,7 @@ namespace MS.Internal.Data
         bool IsNonIdempotentProperty(int level)
         {
             PropertyDescriptor pd;
-            if (level < 0 || (pd = _arySVS[level].info as PropertyDescriptor) == null)
+            if (level < 0 || (pd = _arySVS[level].info as PropertyDescriptor) is null)
                 return false;
 
             return SystemXmlLinqHelper.IsXLinqNonIdempotentProperty(pd);
@@ -1060,7 +1060,7 @@ namespace MS.Internal.Data
             }
 
             // if the new item is null, we won't find a property/indexer on it
-            if (newType == null && SVI[k].type != SourceValueType.Direct)
+            if (newType is null && SVI[k].type != SourceValueType.Direct)
             {
                 svs.info = null;
                 svs.args = null;
@@ -1182,7 +1182,7 @@ namespace MS.Internal.Data
                     // Check if we should treat the indexer as a property instead.
                     // (See ShouldConvertIndexerToProperty for why we might do that.)
                     if (aryInfo.Length == 1 &&
-                        (aryInfo[0].type == null || aryInfo[0].type == typeof(string)))
+                        (aryInfo[0].type is null || aryInfo[0].type == typeof(string)))
                     {
                         string name = (string)aryInfo[0].value;
                         if (ShouldConvertIndexerToProperty(item, ref name))
@@ -1200,9 +1200,9 @@ namespace MS.Internal.Data
                     if (isIList)
                         aryMembers[1] = typeof(IList).GetDefaultMembers();
 
-                    for (int ii = 0; info == null && ii < aryMembers.Length; ++ii)
+                    for (int ii = 0; info is null && ii < aryMembers.Length; ++ii)
                     {
-                        if (aryMembers[ii] == null)
+                        if (aryMembers[ii] is null)
                             continue;
 
                         MemberInfo[] defaultMembers = aryMembers[ii];
@@ -1216,7 +1216,7 @@ namespace MS.Internal.Data
                                 {
                                     info = pi;
                                     sourceType = newType.GetElementType();
-                                    if (sourceType == null)
+                                    if (sourceType is null)
                                         sourceType = pi.PropertyType;
                                     break;
                                 }
@@ -1224,7 +1224,7 @@ namespace MS.Internal.Data
                         }
                     }
 
-                    if (info == null && SystemCoreHelper.IsIDynamicMetaObjectProvider(item))
+                    if (info is null && SystemCoreHelper.IsIDynamicMetaObjectProvider(item))
                     {
                         if (MatchIndexerParameters(null, aryInfo, args, false))
                         {
@@ -1248,7 +1248,7 @@ namespace MS.Internal.Data
                     break;
 
                 case SourceValueType.Direct:
-                    if (!(item is ICollectionView) || _host == null || _host.IsValidValue(item))
+                    if (!(item is ICollectionView) || _host is null || _host.IsValidValue(item))
                     {
                         info = DependencyProperty.UnsetValue;
                         sourceType = newType;
@@ -1419,7 +1419,7 @@ namespace MS.Internal.Data
                         }
                     }
 
-                    if (arg == null && paramType.IsAssignableFrom(typeof(string)))
+                    if (arg is null && paramType.IsAssignableFrom(typeof(string)))
                     {
                         arg = pInfo.value;
                     }
@@ -1526,7 +1526,7 @@ namespace MS.Internal.Data
             // try to get the value, unless (a) binding is being detached,
             // (b) no info - e.g. Nullable with no value, or (c) item expected
             // but not present - e.g. currency moved off the end.
-            if (item != BindingExpression.NullDataItem && info != null && !(item == null && info != DependencyProperty.UnsetValue))
+            if (item != BindingExpression.NullDataItem && info != null && !(item is null && info != DependencyProperty.UnsetValue))
             {
                 object o = DependencyProperty.UnsetValue;
                 DependencyProperty dp = info as DependencyProperty;
@@ -1599,14 +1599,14 @@ namespace MS.Internal.Data
             dpa = null;
             dp = info as DependencyProperty;
 
-            if (dp == null)
+            if (dp is null)
             {
                 pi = info as PropertyInfo;
-                if (pi == null)
+                if (pi is null)
                 {
                     pd = info as PropertyDescriptor;
 
-                    if (pd == null)
+                    if (pd is null)
                         dpa = info as DynamicPropertyAccessor;
                 }
             }
@@ -1675,7 +1675,7 @@ namespace MS.Internal.Data
                     throw;
             }
 
-            if (setter == null || setter.IsPublic)
+            if (setter is null || setter.IsPublic)
             {
                 // If there's no setter at all (including the case where GetSetMethod fails),
                 // SetValue presumably works some other way.  For example,

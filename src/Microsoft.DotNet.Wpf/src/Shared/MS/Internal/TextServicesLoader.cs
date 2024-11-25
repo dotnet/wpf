@@ -266,7 +266,7 @@ namespace MS.Internal
             // Open the local machine assembly key.
             subKey = key.OpenSubKey(subKeyName);
 
-            if (subKey == null)
+            if (subKey is null)
                 return EnableState.Error;
 
             // Try to read the "Enable" value.
@@ -289,7 +289,7 @@ namespace MS.Internal
 
             key = keyBase.OpenSubKey(subKey, false);
 
-            if (key == null)
+            if (key is null)
                 return EnableState.Error;
 
             subKeyNames = key.GetSubKeyNames();

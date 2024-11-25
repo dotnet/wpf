@@ -77,7 +77,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         {
             get
             {
-                if (_perStarValueComparer == null)
+                if (_perStarValueComparer is null)
                 {
                     _perStarValueComparer = new PerStarComparerImpl();
                 }
@@ -89,7 +89,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         {
             get
             {
-                if (_potentialPerStarValueComparer == null)
+                if (_potentialPerStarValueComparer is null)
                 {
                     _potentialPerStarValueComparer = new PotentialPerStarComparerImpl();
                 }

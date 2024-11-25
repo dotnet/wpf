@@ -55,7 +55,7 @@ namespace MS.Internal.AutomationProxies
                 case NativeMethods.OBJID_WINDOW:
                     lock (_classLock)
                     {
-                        if (_objectIdWindow == null)
+                        if (_objectIdWindow is null)
                             InitObjectIdWindow();
                     }
                     
@@ -65,7 +65,7 @@ namespace MS.Internal.AutomationProxies
                 case NativeMethods.OBJID_CLIENT:
                     lock (_classLock)
                     {
-                        if (_objectIdClient == null)
+                        if (_objectIdClient is null)
                             InitObjectIdClient();
                     }
 
@@ -76,7 +76,7 @@ namespace MS.Internal.AutomationProxies
                 case NativeMethods.OBJID_HSCROLL:
                     lock (_classLock)
                     {
-                        if (_objectIdScroll == null)
+                        if (_objectIdScroll is null)
                             InitObjectIdScroll();
                     }
 
@@ -86,7 +86,7 @@ namespace MS.Internal.AutomationProxies
                 case NativeMethods.OBJID_CARET:
                     lock (_classLock)
                     {
-                        if (_objectIdCaret == null)
+                        if (_objectIdCaret is null)
                             InitObjectIdCaret();
                     }
 
@@ -97,7 +97,7 @@ namespace MS.Internal.AutomationProxies
                 case NativeMethods.OBJID_MENU:
                     lock (_classLock)
                     {
-                        if (_objectIdMenu == null)
+                        if (_objectIdMenu is null)
                             InitObjectIdMenu();
                     }
 
@@ -121,7 +121,7 @@ namespace MS.Internal.AutomationProxies
                 // If there is no delegate then we need to handle this property genericly by just getting the property value
                 // and raising the a property changed event.
                 AutomationProperty property = idProp as AutomationProperty;
-                if (property == null)
+                if (property is null)
                 {
                     System.Diagnostics.Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "Unexpected idProp {0} for idOject 0x{1:x8} on element {2} for event {3}", idProp, idObject, el, eventId));
                     return;
@@ -190,7 +190,7 @@ namespace MS.Internal.AutomationProxies
         private static void HandleValueProperty(ProxySimple el, IntPtr hwnd, int eventId)
         {
             IValueProvider value = el.GetPatternProvider(ValuePattern.Pattern) as IValueProvider;
-            if (value == null)
+            if (value is null)
                 return;
             
             RaisePropertyChangedEvent(el, ValuePattern.ValueProperty, value.Value);
@@ -199,7 +199,7 @@ namespace MS.Internal.AutomationProxies
         private static void HandleRangeValueProperty(ProxySimple el, IntPtr hwnd, int eventId)
         {
             IRangeValueProvider rangeValue = el.GetPatternProvider(RangeValuePattern.Pattern) as IRangeValueProvider;
-            if (rangeValue == null)
+            if (rangeValue is null)
                 return;
 
             RaisePropertyChangedEvent(el, RangeValuePattern.ValueProperty, rangeValue.Value);
@@ -208,7 +208,7 @@ namespace MS.Internal.AutomationProxies
         private static void HandleIsSelectedProperty(ProxySimple el, IntPtr hwnd, int eventId)
         {
             ISelectionItemProvider selectionItem = el.GetPatternProvider(SelectionItemPattern.Pattern) as ISelectionItemProvider;
-            if (selectionItem == null)
+            if (selectionItem is null)
                 return;
 
             RaisePropertyChangedEvent(el, SelectionItemPattern.IsSelectedProperty, selectionItem.IsSelected);
@@ -217,7 +217,7 @@ namespace MS.Internal.AutomationProxies
         private static void HandleExpandCollapseStateProperty(ProxySimple el, IntPtr hwnd, int eventId)
         {
             IExpandCollapseProvider expandCollapse = el.GetPatternProvider(ExpandCollapsePattern.Pattern) as IExpandCollapseProvider;
-            if (expandCollapse == null)
+            if (expandCollapse is null)
                 return;
             
             RaisePropertyChangedEvent(el, ExpandCollapsePattern.ExpandCollapseStateProperty, expandCollapse.ExpandCollapseState);
@@ -226,7 +226,7 @@ namespace MS.Internal.AutomationProxies
         private static void HandleColumnCountProperty(ProxySimple el, IntPtr hwnd, int eventId)
         {
             IGridProvider grid = el.GetPatternProvider(GridPattern.Pattern) as IGridProvider;
-            if (grid == null)
+            if (grid is null)
                 return;
 
             RaisePropertyChangedEvent(el, GridPattern.ColumnCountProperty, grid.ColumnCount);
@@ -235,7 +235,7 @@ namespace MS.Internal.AutomationProxies
         private static void HandleRowCountProperty(ProxySimple el, IntPtr hwnd, int eventId)
         {
             IGridProvider grid = el.GetPatternProvider(GridPattern.Pattern) as IGridProvider;
-            if (grid == null)
+            if (grid is null)
                 return;
 
             RaisePropertyChangedEvent(el, GridPattern.RowCountProperty,  grid.RowCount);
@@ -244,7 +244,7 @@ namespace MS.Internal.AutomationProxies
         private static void HandleColumnProperty(ProxySimple el, IntPtr hwnd, int eventId)
         {
             IGridItemProvider gridItem = el.GetPatternProvider(GridItemPattern.Pattern) as IGridItemProvider;
-            if (gridItem == null)
+            if (gridItem is null)
                 return;
 
             RaisePropertyChangedEvent(el, GridItemPattern.ColumnProperty, gridItem.Column);
@@ -253,7 +253,7 @@ namespace MS.Internal.AutomationProxies
         private static void HandleRowProperty(ProxySimple el, IntPtr hwnd, int eventId)
         {
             IGridItemProvider gridItem = el.GetPatternProvider(GridItemPattern.Pattern) as IGridItemProvider;
-            if (gridItem == null)
+            if (gridItem is null)
                 return;
 
             RaisePropertyChangedEvent(el, GridItemPattern.RowProperty, gridItem.Row);
@@ -262,7 +262,7 @@ namespace MS.Internal.AutomationProxies
         private static void HandleColumnHeadersProperty(ProxySimple el, IntPtr hwnd, int eventId)
         {
             ITableProvider table = el.GetPatternProvider(TablePattern.Pattern) as ITableProvider;
-            if (table == null)
+            if (table is null)
                 return;
 
             RaisePropertyChangedEvent(el, TablePattern.ColumnHeadersProperty, table.GetColumnHeaders());
@@ -271,7 +271,7 @@ namespace MS.Internal.AutomationProxies
         private static void HandleRowHeadersProperty(ProxySimple el, IntPtr hwnd, int eventId)
         {
             ITableProvider table = el.GetPatternProvider(TablePattern.Pattern) as ITableProvider;
-            if (table == null)
+            if (table is null)
                 return;
 
             RaisePropertyChangedEvent(el, TablePattern.RowHeadersProperty, table.GetRowHeaders());
@@ -280,7 +280,7 @@ namespace MS.Internal.AutomationProxies
         private static void HandleIsSelectionRequiredProperty(ProxySimple el, IntPtr hwnd, int eventId)
         {
             ISelectionProvider selection = el.GetPatternProvider(SelectionPattern.Pattern) as ISelectionProvider;
-            if (selection == null)
+            if (selection is null)
                 return;
 
             RaisePropertyChangedEvent(el, SelectionPattern.IsSelectionRequiredProperty, selection.IsSelectionRequired);
@@ -289,7 +289,7 @@ namespace MS.Internal.AutomationProxies
         private static void HandleVerticalViewSizeProperty(ProxySimple el, IntPtr hwnd, int eventId)
         {
             IScrollProvider scroll = el.GetPatternProvider(ScrollPattern.Pattern) as IScrollProvider;
-            if (scroll == null)
+            if (scroll is null)
                 return;
 
             RaisePropertyChangedEvent(el, ScrollPattern.VerticalViewSizeProperty, scroll.VerticalViewSize);
@@ -298,7 +298,7 @@ namespace MS.Internal.AutomationProxies
         private static void HandleHorizontalViewSizeProperty(ProxySimple el, IntPtr hwnd, int eventId)
         {
             IScrollProvider scroll = el.GetPatternProvider(ScrollPattern.Pattern) as IScrollProvider;
-            if (scroll == null)
+            if (scroll is null)
                 return;
 
             RaisePropertyChangedEvent(el, ScrollPattern.HorizontalViewSizeProperty, scroll.HorizontalViewSize);
@@ -307,7 +307,7 @@ namespace MS.Internal.AutomationProxies
         private static void HandleToggleStateProperty(ProxySimple el, IntPtr hwnd, int eventId)
         {
             IToggleProvider toggle = el.GetPatternProvider(TogglePattern.Pattern) as IToggleProvider;
-            if (toggle == null)
+            if (toggle is null)
                 return;
 
             RaisePropertyChangedEvent(el, TogglePattern.ToggleStateProperty, toggle.ToggleState);
@@ -316,7 +316,7 @@ namespace MS.Internal.AutomationProxies
         private static void HandleInvokedEvent(ProxySimple el, IntPtr hwnd, int eventId)
         {
             IInvokeProvider invoke = el.GetPatternProvider(InvokePattern.Pattern) as IInvokeProvider;
-            if (invoke == null)
+            if (invoke is null)
                 return;
 
             if (eventId == NativeMethods.EventObjectInvoke ||
@@ -330,7 +330,7 @@ namespace MS.Internal.AutomationProxies
         private static void HandleScrollInvokedEvent(ProxySimple el, IntPtr hwnd, int eventId)
         {
             IInvokeProvider invoke = el.GetPatternProvider(InvokePattern.Pattern) as IInvokeProvider;
-            if (invoke == null)
+            if (invoke is null)
                 return;
 
             if (eventId == NativeMethods.EventObjectStateChange)
@@ -342,7 +342,7 @@ namespace MS.Internal.AutomationProxies
         private static void HandleWindowInvokedEvent(ProxySimple el, IntPtr hwnd, int eventId)
         {
             IInvokeProvider invoke = el.GetPatternProvider(InvokePattern.Pattern) as IInvokeProvider;
-            if (invoke == null)
+            if (invoke is null)
                 return;
 
             if (eventId == NativeMethods.EventSystemCaptureEnd )
@@ -365,7 +365,7 @@ namespace MS.Internal.AutomationProxies
         private static void HandleElementSelectedEvent(ProxySimple el, IntPtr hwnd, int eventId)
         {
             ISelectionItemProvider selProvider = el.GetPatternProvider(SelectionItemPattern.Pattern) as ISelectionItemProvider;
-            if (selProvider == null)
+            if (selProvider is null)
                 return;
 
             if (eventId == NativeMethods.EventObjectSelection ||
@@ -378,7 +378,7 @@ namespace MS.Internal.AutomationProxies
         private static void HandleElementAddedToSelectionEvent(ProxySimple el, IntPtr hwnd, int eventId)
         {
             ISelectionItemProvider selProvider = el.GetPatternProvider(SelectionItemPattern.Pattern) as ISelectionItemProvider;
-            if (selProvider == null)
+            if (selProvider is null)
                 return;
 
             if (eventId == NativeMethods.EventObjectSelectionAdd)
@@ -390,7 +390,7 @@ namespace MS.Internal.AutomationProxies
         private static void HandleElementRemovedFromSelectionEvent(ProxySimple el, IntPtr hwnd, int eventId)
         {
             ISelectionItemProvider selProvider = el.GetPatternProvider(SelectionItemPattern.Pattern) as ISelectionItemProvider;
-            if (selProvider == null)
+            if (selProvider is null)
                 return;
 
             if (eventId == NativeMethods.EventObjectSelectionRemove)
@@ -412,7 +412,7 @@ namespace MS.Internal.AutomationProxies
             else if ( eventId == NativeMethods.EventObjectReorder )
             {
                 IGridProvider grid = el.GetPatternProvider(GridPattern.Pattern) as IGridProvider;
-                if ( grid == null )
+                if ( grid is null )
                     return;
                 AutomationInteropProvider.RaiseStructureChangedEvent( el, new StructureChangedEventArgs( StructureChangeType.ChildrenInvalidated, el.MakeRuntimeId() ) );
             }
@@ -421,7 +421,7 @@ namespace MS.Internal.AutomationProxies
         private static void HandleVerticalScrollPercentProperty(ProxySimple el, IntPtr hwnd, int eventId)
         {
             IScrollProvider scroll = el.GetPatternProvider (ScrollPattern.Pattern) as IScrollProvider;
-            if (scroll == null || scroll.VerticalScrollPercent == ScrollPattern.NoScroll)
+            if (scroll is null || scroll.VerticalScrollPercent == ScrollPattern.NoScroll)
                 return;
             
             RaisePropertyChangedEvent(el, ScrollPattern.VerticalScrollPercentProperty, scroll.VerticalScrollPercent);
@@ -430,7 +430,7 @@ namespace MS.Internal.AutomationProxies
         private static void HandleHorizontalScrollPercentProperty(ProxySimple el, IntPtr hwnd, int eventId)
         {
             IScrollProvider scroll = el.GetPatternProvider (ScrollPattern.Pattern) as IScrollProvider;
-            if (scroll == null || scroll.HorizontalScrollPercent == ScrollPattern.NoScroll)
+            if (scroll is null || scroll.HorizontalScrollPercent == ScrollPattern.NoScroll)
                 return;
             
             RaisePropertyChangedEvent(el, ScrollPattern.HorizontalScrollPercentProperty, scroll.HorizontalScrollPercent);
@@ -472,7 +472,7 @@ namespace MS.Internal.AutomationProxies
         private static void HandleTextSelectionChangedEvent(ProxySimple el, IntPtr hwnd, int eventId)
         {
             ITextProvider textProvider = el.GetPatternProvider(TextPattern.Pattern) as ITextProvider;
-            if (textProvider == null)
+            if (textProvider is null)
                 return;
 
             if (eventId == NativeMethods.EventObjectLocationChange)

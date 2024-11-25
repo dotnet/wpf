@@ -41,7 +41,7 @@ namespace System.Windows
         {
             get
             {
-                if (_iconFontFamily == null)
+                if (_iconFontFamily is null)
                 {
                     _iconFontFamily = new FontFamily(SystemParameters.IconMetrics.lfFont.lfFaceName);
                 }
@@ -79,7 +79,7 @@ namespace System.Windows
         {
             get
             {
-                if (_iconFontTextDecorations == null)
+                if (_iconFontTextDecorations is null)
                 {
                     _iconFontTextDecorations = new TextDecorationCollection();
 
@@ -119,7 +119,7 @@ namespace System.Windows
         {
             get
             {
-                if (_captionFontFamily == null)
+                if (_captionFontFamily is null)
                 {
                     _captionFontFamily = new FontFamily(SystemParameters.NonClientMetrics.lfCaptionFont.lfFaceName);
                 }
@@ -160,7 +160,7 @@ namespace System.Windows
         {
             get
             {
-                if (_captionFontTextDecorations == null)
+                if (_captionFontTextDecorations is null)
                 {
                     _captionFontTextDecorations = new TextDecorationCollection();
 
@@ -199,7 +199,7 @@ namespace System.Windows
         {
             get
             {
-                if (_smallCaptionFontFamily == null)
+                if (_smallCaptionFontFamily is null)
                 {
                     _smallCaptionFontFamily = new FontFamily(SystemParameters.NonClientMetrics.lfSmCaptionFont.lfFaceName);
                 }
@@ -240,7 +240,7 @@ namespace System.Windows
         {
             get
             {
-                if (_smallCaptionFontTextDecorations == null)
+                if (_smallCaptionFontTextDecorations is null)
                 {
                    _smallCaptionFontTextDecorations = new TextDecorationCollection();
 
@@ -279,7 +279,7 @@ namespace System.Windows
         {
             get
             {
-                if (_menuFontFamily == null)
+                if (_menuFontFamily is null)
                 {
                     _menuFontFamily = new FontFamily(SystemParameters.NonClientMetrics.lfMenuFont.lfFaceName);
                 }
@@ -317,7 +317,7 @@ namespace System.Windows
         {
             get
             {
-                if (_menuFontTextDecorations == null)
+                if (_menuFontTextDecorations is null)
                 {
                    _menuFontTextDecorations = new TextDecorationCollection();
 
@@ -356,7 +356,7 @@ namespace System.Windows
         {
             get
             {
-                if (_statusFontFamily == null)
+                if (_statusFontFamily is null)
                 {
                     _statusFontFamily = new FontFamily(SystemParameters.NonClientMetrics.lfStatusFont.lfFaceName);
                 }
@@ -398,7 +398,7 @@ namespace System.Windows
             get
             {
 
-                if (_statusFontTextDecorations == null)
+                if (_statusFontTextDecorations is null)
                 {
                    _statusFontTextDecorations = new TextDecorationCollection();
 
@@ -452,7 +452,7 @@ namespace System.Windows
         {
             get
             {
-                if (_messageFontFamily == null)
+                if (_messageFontFamily is null)
                 {
                     _messageFontFamily = new FontFamily(SystemParameters.NonClientMetrics.lfMessageFont.lfFaceName);
                 }
@@ -491,7 +491,7 @@ namespace System.Windows
         {
             get
             {
-                if (_messageFontTextDecorations == null)
+                if (_messageFontTextDecorations is null)
                 {
                     _messageFontTextDecorations = new TextDecorationCollection();
 
@@ -538,7 +538,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheIconFontSize == null)
+                if (_cacheIconFontSize is null)
                 {
                     _cacheIconFontSize = CreateInstance(SystemResourceKeyID.IconFontSize);
                 }
@@ -554,7 +554,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheIconFontFamily == null)
+                if (_cacheIconFontFamily is null)
                 {
                     _cacheIconFontFamily = CreateInstance(SystemResourceKeyID.IconFontFamily);
                 }
@@ -570,7 +570,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheIconFontStyle == null)
+                if (_cacheIconFontStyle is null)
                 {
                     _cacheIconFontStyle = CreateInstance(SystemResourceKeyID.IconFontStyle);
                 }
@@ -586,7 +586,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheIconFontWeight == null)
+                if (_cacheIconFontWeight is null)
                 {
                     _cacheIconFontWeight = CreateInstance(SystemResourceKeyID.IconFontWeight);
                 }
@@ -602,7 +602,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheIconFontTextDecorations == null)
+                if (_cacheIconFontTextDecorations is null)
                 {
                     _cacheIconFontTextDecorations = CreateInstance(SystemResourceKeyID.IconFontTextDecorations);
                 }
@@ -621,7 +621,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheCaptionFontSize == null)
+                if (_cacheCaptionFontSize is null)
                 {
                     _cacheCaptionFontSize = CreateInstance(SystemResourceKeyID.CaptionFontSize);
                 }
@@ -637,7 +637,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheCaptionFontFamily == null)
+                if (_cacheCaptionFontFamily is null)
                 {
                     _cacheCaptionFontFamily = CreateInstance(SystemResourceKeyID.CaptionFontFamily);
                 }
@@ -653,7 +653,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheCaptionFontStyle == null)
+                if (_cacheCaptionFontStyle is null)
                 {
                     _cacheCaptionFontStyle = CreateInstance(SystemResourceKeyID.CaptionFontStyle);
                 }
@@ -669,7 +669,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheCaptionFontWeight == null)
+                if (_cacheCaptionFontWeight is null)
                 {
                     _cacheCaptionFontWeight = CreateInstance(SystemResourceKeyID.CaptionFontWeight);
                 }
@@ -685,7 +685,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheCaptionFontTextDecorations == null)
+                if (_cacheCaptionFontTextDecorations is null)
                 {
                     _cacheCaptionFontTextDecorations = CreateInstance(SystemResourceKeyID.CaptionFontTextDecorations);
                 }
@@ -701,7 +701,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheSmallCaptionFontSize == null)
+                if (_cacheSmallCaptionFontSize is null)
                 {
                     _cacheSmallCaptionFontSize = CreateInstance(SystemResourceKeyID.SmallCaptionFontSize);
                 }
@@ -717,7 +717,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheSmallCaptionFontFamily == null)
+                if (_cacheSmallCaptionFontFamily is null)
                 {
                     _cacheSmallCaptionFontFamily = CreateInstance(SystemResourceKeyID.SmallCaptionFontFamily);
                 }
@@ -733,7 +733,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheSmallCaptionFontStyle == null)
+                if (_cacheSmallCaptionFontStyle is null)
                 {
                     _cacheSmallCaptionFontStyle = CreateInstance(SystemResourceKeyID.SmallCaptionFontStyle);
                 }
@@ -749,7 +749,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheSmallCaptionFontWeight == null)
+                if (_cacheSmallCaptionFontWeight is null)
                 {
                     _cacheSmallCaptionFontWeight = CreateInstance(SystemResourceKeyID.SmallCaptionFontWeight);
                 }
@@ -765,7 +765,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheSmallCaptionFontTextDecorations == null)
+                if (_cacheSmallCaptionFontTextDecorations is null)
                 {
                     _cacheSmallCaptionFontTextDecorations = CreateInstance(SystemResourceKeyID.SmallCaptionFontTextDecorations);
                 }
@@ -781,7 +781,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMenuFontSize == null)
+                if (_cacheMenuFontSize is null)
                 {
                     _cacheMenuFontSize = CreateInstance(SystemResourceKeyID.MenuFontSize);
                 }
@@ -797,7 +797,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMenuFontFamily == null)
+                if (_cacheMenuFontFamily is null)
                 {
                     _cacheMenuFontFamily = CreateInstance(SystemResourceKeyID.MenuFontFamily);
                 }
@@ -813,7 +813,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMenuFontStyle == null)
+                if (_cacheMenuFontStyle is null)
                 {
                     _cacheMenuFontStyle = CreateInstance(SystemResourceKeyID.MenuFontStyle);
                 }
@@ -829,7 +829,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMenuFontWeight == null)
+                if (_cacheMenuFontWeight is null)
                 {
                     _cacheMenuFontWeight = CreateInstance(SystemResourceKeyID.MenuFontWeight);
                 }
@@ -845,7 +845,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMenuFontTextDecorations == null)
+                if (_cacheMenuFontTextDecorations is null)
                 {
                     _cacheMenuFontTextDecorations = CreateInstance(SystemResourceKeyID.MenuFontTextDecorations);
                 }
@@ -861,7 +861,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheStatusFontSize == null)
+                if (_cacheStatusFontSize is null)
                 {
                     _cacheStatusFontSize = CreateInstance(SystemResourceKeyID.StatusFontSize);
                 }
@@ -877,7 +877,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheStatusFontFamily == null)
+                if (_cacheStatusFontFamily is null)
                 {
                     _cacheStatusFontFamily = CreateInstance(SystemResourceKeyID.StatusFontFamily);
                 }
@@ -893,7 +893,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheStatusFontStyle == null)
+                if (_cacheStatusFontStyle is null)
                 {
                     _cacheStatusFontStyle = CreateInstance(SystemResourceKeyID.StatusFontStyle);
                 }
@@ -909,7 +909,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheStatusFontWeight == null)
+                if (_cacheStatusFontWeight is null)
                 {
                     _cacheStatusFontWeight = CreateInstance(SystemResourceKeyID.StatusFontWeight);
                 }
@@ -925,7 +925,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheStatusFontTextDecorations == null)
+                if (_cacheStatusFontTextDecorations is null)
                 {
                     _cacheStatusFontTextDecorations = CreateInstance(SystemResourceKeyID.StatusFontTextDecorations);
                 }
@@ -941,7 +941,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMessageFontSize == null)
+                if (_cacheMessageFontSize is null)
                 {
                     _cacheMessageFontSize = CreateInstance(SystemResourceKeyID.MessageFontSize);
                 }
@@ -957,7 +957,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMessageFontFamily == null)
+                if (_cacheMessageFontFamily is null)
                 {
                     _cacheMessageFontFamily = CreateInstance(SystemResourceKeyID.MessageFontFamily);
                 }
@@ -973,7 +973,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMessageFontStyle == null)
+                if (_cacheMessageFontStyle is null)
                 {
                     _cacheMessageFontStyle = CreateInstance(SystemResourceKeyID.MessageFontStyle);
                 }
@@ -989,7 +989,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMessageFontWeight == null)
+                if (_cacheMessageFontWeight is null)
                 {
                     _cacheMessageFontWeight = CreateInstance(SystemResourceKeyID.MessageFontWeight);
                 }
@@ -1005,7 +1005,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMessageFontTextDecorations == null)
+                if (_cacheMessageFontTextDecorations is null)
                 {
                     _cacheMessageFontTextDecorations = CreateInstance(SystemResourceKeyID.MessageFontTextDecorations);
                 }

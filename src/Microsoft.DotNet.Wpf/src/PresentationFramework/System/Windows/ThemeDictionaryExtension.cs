@@ -76,7 +76,7 @@ namespace System.Windows
             }
 
             IProvideValueTarget provideValueTarget = serviceProvider.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
-            if( provideValueTarget == null )
+            if( provideValueTarget is null )
             {
                 throw new InvalidOperationException(SR.Format(SR.MarkupExtensionNoContext, GetType().Name, "IProvideValueTarget" ));
             }
@@ -88,7 +88,7 @@ namespace System.Windows
             PropertyInfo propertyInfo = targetProperty as PropertyInfo;
 
             // Allow targetProperty to be null or ResourceDictionary.Source
-            if (dictionary == null || (targetProperty != null && propertyInfo != SourceProperty))
+            if (dictionary is null || (targetProperty != null && propertyInfo != SourceProperty))
             {
                 throw new InvalidOperationException(SR.ThemeDictionaryExtension_Source);
             }
@@ -165,7 +165,7 @@ namespace System.Windows
         {
             get
             {
-                if (_sourceProperty == null)
+                if (_sourceProperty is null)
                 {
                     _sourceProperty = typeof(ResourceDictionary).GetProperty("Source");
                 }
@@ -190,7 +190,7 @@ namespace System.Windows
             Debug.Assert(dictionary != null, "dictionary should not be null");
             Debug.Assert(assemblyName != null, "assemblyName should not be null");
 
-            if (_themeDictionaryInfos == null)
+            if (_themeDictionaryInfos is null)
             {
                 _themeDictionaryInfos = new List<ThemeDictionaryInfo>();
             }

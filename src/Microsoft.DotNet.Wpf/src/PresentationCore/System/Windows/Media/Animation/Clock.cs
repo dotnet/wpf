@@ -249,11 +249,11 @@ namespace System.Windows.Media.Animation
 
 
         /// <summary>
-        /// Gets a value indicating whether the Clock’s current time is inside the Active period
+        /// Gets a value indicating whether the Clockï¿½s current time is inside the Active period
         /// (meaning properties may change frame to frame), inside the Fill period, or Stopped.
         /// </summary>
         /// <remarks>
-        /// You can tell whether you’re in FillBegin or FillEnd by the value of CurrentProgress
+        /// You can tell whether youï¿½re in FillBegin or FillEnd by the value of CurrentProgress
         /// (0 for FillBegin, 1 for FillEnd).
         /// </remarks>
         public ClockState CurrentState
@@ -534,7 +534,7 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-                if (_timeManager == null)
+                if (_timeManager is null)
                 {
                     return TimeSpan.Zero;
                 }
@@ -891,7 +891,7 @@ namespace System.Windows.Media.Animation
             Debug.Assert(IsRoot);
 
             // This is a no-op with a null TimeManager or when all durations have not yet been resolved
-            if (_timeManager == null || HasDescendantsWithUnresolvedDuration)
+            if (_timeManager is null || HasDescendantsWithUnresolvedDuration)
             {
                 return;
             }
@@ -977,7 +977,7 @@ namespace System.Windows.Media.Animation
             effectiveDuration = ComputeEffectiveDuration();
 
             // Throw an exception if the active period extends forever.
-            if (effectiveDuration == null)
+            if (effectiveDuration is null)
             {
                 // Can't seek to the end if the simple duration is not resolved
                 throw new InvalidOperationException(SR.Timing_SkipToFillDestinationIndefinite);
@@ -1448,7 +1448,7 @@ namespace System.Windows.Media.Animation
             {
                 WeakReference reference = _weakReference;
 
-                if (reference == null)
+                if (reference is null)
                 {
                     reference = new WeakReference(this);
                     _weakReference = reference;
@@ -1841,7 +1841,7 @@ namespace System.Windows.Media.Animation
                 RootBeginPending = false;
             }
             else if ((IsInteractivelyPaused || _rootData.InteractiveSpeedRatio == 0) &&
-                     (_syncData == null || !_syncData.IsInSyncPeriod))
+                     (_syncData is null || !_syncData.IsInSyncPeriod))
             // We were paused at the last tick, so move _beginTime by the delta from last tick to this one
             // Only perform this iff we are *continuously* moving, e.g. if we haven't seeked between ticks.
             // SYNC NOTE: If we are syncing, then the sync code should be the one to make this adjustment
@@ -2741,7 +2741,7 @@ namespace System.Windows.Media.Animation
             if (IsInteractivelyStopped)
             {
                 // If we are disabled, no other interactive state is kept
-                Debug.Assert(_beginTime == null);
+                Debug.Assert(_beginTime is null);
                 Debug.Assert(_currentClockState == ClockState.Stopped);
 
                 ResetCachedStateToStopped();
@@ -3094,7 +3094,7 @@ namespace System.Windows.Media.Animation
                 HasSeekOccuredAfterLastTick = seekedAlignedToLastTick || (_rootData.PendingSeekDestination != null);  // We may have a seek request pending
 
                 // We don't have a TimeManager that is on, so we are off, nothing more to compute
-                if (_timeManager == null || _timeManager.InternalIsStopped)
+                if (_timeManager is null || _timeManager.InternalIsStopped)
                 {
                     ResetCachedStateToStopped();
                     parentTime = null;  // Assign parentTime to avoid compiler error
@@ -3448,7 +3448,7 @@ namespace System.Windows.Media.Animation
         {
             Debug.Assert(!IsTimeManager);
 
-            if (_eventHandlersStore == null)
+            if (_eventHandlersStore is null)
             {
                 _eventHandlersStore = new EventHandlersStore();
             }
@@ -3579,12 +3579,12 @@ namespace System.Windows.Media.Animation
         private void AddToTimeManager()
         {
             Debug.Assert(!IsTimeManager);
-            Debug.Assert(_parent == null);
-            Debug.Assert(_timeManager == null);
+            Debug.Assert(_parent is null);
+            Debug.Assert(_timeManager is null);
 
             TimeManager timeManager = MediaContext.From(Dispatcher).TimeManager;
 
-            if (timeManager == null)
+            if (timeManager is null)
             {
                 // The time manager has not been created or has been released
                 // This occurs when we are shutting down. Simply return.
@@ -3654,7 +3654,7 @@ namespace System.Windows.Media.Animation
 
             // Adding is an implicit begin, so do that here.  This is done after
             // ComputeLocalState so that the begin will be picked up on the 
-            // next tick.  Note that if _timeline.BeginTime == null we won't
+            // next tick.  Note that if _timeline.BeginTime is null we won't
             // start the clock.
             if (_timeline.BeginTime != null)
             {
@@ -3829,7 +3829,7 @@ namespace System.Windows.Media.Animation
             // We should only need to set this when 
             // CurrentTimeInvalidated is set. 
 
-            if (_eventHandlersStore == null)
+            if (_eventHandlersStore is null)
             {
                 NeedsTicksWhenActive = false;
             }
@@ -4371,7 +4371,7 @@ namespace System.Windows.Media.Animation
                 {
                     WeakReference weakRef = (WeakReference)handleReference;
                     clock = (Clock)weakRef.Target;
-                    if (clock == null)
+                    if (clock is null)
                     {
                         // Object has been destroyed, so remove the weakRef.
                         _objectTable.Remove(id);
@@ -4396,7 +4396,7 @@ namespace System.Windows.Media.Animation
                 foreach (DictionaryEntry e in _objectTable)
                 {
                     WeakReference weakRef = (WeakReference) e.Value;
-                    if (weakRef.Target == null)
+                    if (weakRef.Target is null)
                     {
                         removeTable[e.Key] = weakRef;
                     }

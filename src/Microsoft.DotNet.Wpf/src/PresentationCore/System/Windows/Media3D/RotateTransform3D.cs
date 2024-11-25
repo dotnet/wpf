@@ -105,7 +105,7 @@ namespace System.Windows.Media.Media3D
 
                 Rotation3D rotation = _cachedRotationValue;
 
-                if (rotation == null)
+                if (rotation is null)
                 {
                     return Matrix3D.Identity;
                 }

@@ -168,7 +168,7 @@ namespace MS.Internal
         {
             XmlNamespaceManager nsmgr = Binding.GetXmlNamespaceManager(target);
 
-            if (nsmgr == null)
+            if (nsmgr is null)
             {
                 XmlDataProvider xdp = Helper.XmlDataProviderForElement(target);
                 nsmgr = (xdp != null) ? xdp.XmlNamespaceManager : null;

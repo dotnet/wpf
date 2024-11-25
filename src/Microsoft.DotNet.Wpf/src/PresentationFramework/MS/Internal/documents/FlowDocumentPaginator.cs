@@ -108,7 +108,7 @@ namespace MS.Internal.Documents
                     page = GetPage(pageNumber);
                 }
 
-                if (page == null)
+                if (page is null)
                 {
                     _asyncRequests.Add(new GetPageAsyncRequest(pageNumber, userState, this));
                     InitiateNextAsyncOperation();
@@ -177,7 +177,7 @@ namespace MS.Internal.Documents
                     {
                         // If the DocumentPage is cached in the BreakRecordTable, use it.
                         page = _brt.GetCachedDocumentPage(pageNumber);
-                        if (page == null)
+                        if (page is null)
                         {
                             // If requested page number does not have pre-calculated BreakRecord,
                             // do synchronous pagination up to the requested page number.
@@ -212,7 +212,7 @@ namespace MS.Internal.Documents
         /// <param name="userState">Unique identifier for the asynchronous task.</param>
         /// <exception cref="ArgumentException">
         /// Throws ArgumentException if the ContentPosition does not exist within
-        /// this element’s tree.
+        /// this elementï¿½s tree.
         /// </exception>
         public override void GetPageNumberAsync(ContentPosition contentPosition, object userState)
         {
@@ -227,7 +227,7 @@ namespace MS.Internal.Documents
             // ContentPosition must be of appropriate type and must be part of
             // the content.
             TextPointer flowContentPosition = contentPosition as TextPointer;
-            if (flowContentPosition == null)
+            if (flowContentPosition is null)
             {
                 throw new ArgumentException(SR.IDPInvalidContentPosition, "contentPosition");
             }
@@ -284,7 +284,7 @@ namespace MS.Internal.Documents
             // ContentPosition must be of appropriate type and must be part of
             // the content.
             flowContentPosition = contentPosition as TextPointer;
-            if (flowContentPosition == null)
+            if (flowContentPosition is null)
             {
                 throw new ArgumentException(SR.IDPInvalidContentPosition, "contentPosition");
             }
@@ -361,7 +361,7 @@ namespace MS.Internal.Documents
             ArgumentNullException.ThrowIfNull(page);
             // DocumentPage must be of appropriate type.
             flowDocumentPage = page as FlowDocumentPage;
-            if (flowDocumentPage == null || flowDocumentPage.IsDisposed)
+            if (flowDocumentPage is null || flowDocumentPage.IsDisposed)
             {
                 return ContentPosition.Missing;
             }
@@ -394,7 +394,7 @@ namespace MS.Internal.Documents
             }
 
             position = textView.GetTextPositionFromPoint(point, true);
-            if (position == null)
+            if (position is null)
             {
                 position = textView.TextSegments[0].Start;
             }
@@ -428,7 +428,7 @@ namespace MS.Internal.Documents
         /// <param name="userState">Unique identifier for the asynchronous task.</param>
         public override void CancelAsync(object userState)
         {
-            if (userState == null)
+            if (userState is null)
             {
                 CancelAllAsyncOperations();
             }
@@ -611,7 +611,7 @@ namespace MS.Internal.Documents
         internal void InitiateNextAsyncOperation()
         {
             // Do background pagination if it is enabled and BreakRecordTable is not clean or async requests are pending
-            if (_backgroundPagination && _backgroundPaginationOperation == null && (!_brt.IsClean || _asyncRequests.Count > 0))
+            if (_backgroundPagination && _backgroundPaginationOperation is null && (!_brt.IsClean || _asyncRequests.Count > 0))
             {
                 _backgroundPaginationOperation = _document.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(OnBackgroundPagination), this);
             }

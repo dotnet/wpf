@@ -51,7 +51,7 @@ namespace System.Windows.Controls
 
         private static void OnAccessKeyPressed(object sender, AccessKeyPressedEventArgs e)
         {
-            if (!e.Handled && e.Scope == null && e.Target == null)
+            if (!e.Handled && e.Scope is null && e.Target is null)
             {
                 e.Target = sender as GroupBox;
             }

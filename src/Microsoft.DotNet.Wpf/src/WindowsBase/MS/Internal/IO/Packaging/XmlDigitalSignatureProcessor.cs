@@ -171,7 +171,7 @@ namespace MS.Internal.IO.Packaging
                                 hashAlgorithm = GetHashAlgorithm(currentHashAlgorithmName);
 
                                 // not a supported or recognized algorithm?
-                                if (hashAlgorithm == null)
+                                if (hashAlgorithm is null)
                                 {
                                     // return invalid result instead of throwing exception
                                     result = false;
@@ -226,7 +226,7 @@ namespace MS.Internal.IO.Packaging
             }
 
             // never return null - an empty list is better form
-            if (transformList == null)
+            if (transformList is null)
                 transformList = new List<String>();
 
             return transformList;
@@ -299,7 +299,7 @@ namespace MS.Internal.IO.Packaging
             get
             {
                 // lazy init when loading existing cert - Sign may have assigned this for us
-                if (_certificate == null)
+                if (_certificate is null)
                 {
                     // first look for cert part
                     if (PackageSignature.GetCertificatePart() != null)
@@ -465,7 +465,7 @@ namespace MS.Internal.IO.Packaging
                     // convert the transform names into objects (if defined)
                     Transform transform = StringToTransform(transformName);
 
-                    if (transform == null)
+                    if (transform is null)
                     {
                         // throw XmlException so the outer loop knows the signature is invalid
                         throw new XmlException(SR.UnsupportedTransformAlgorithm);
@@ -534,7 +534,7 @@ namespace MS.Internal.IO.Packaging
 
             // In the case that we get a valid crypto object that is not a hash algorithm
             // we should attempt to dispose it if it offers IDisposable.
-            if (algorithm == null && o != null)
+            if (algorithm is null && o != null)
             {
                 IDisposable disposable = o as IDisposable;
                 if (disposable != null)
@@ -600,7 +600,7 @@ namespace MS.Internal.IO.Packaging
         private SignedXml EnsureXmlSignatureParsed()
         {
             // lazy init
-            if (_signedXml == null)
+            if (_signedXml is null)
             {
                 _signedXml = new CustomSignedXml();
 
@@ -633,7 +633,7 @@ namespace MS.Internal.IO.Packaging
                         // tags are allowed to exist within the non-OPC Object tags within an OPC signature.
                         // This is common for XAdES signatures and must be explicitly allowed.
                         XmlNodeList nodeList = xmlDocument.ChildNodes;
-                        if (nodeList == null || nodeList.Count == 0 || nodeList.Count > 2)
+                        if (nodeList is null || nodeList.Count == 0 || nodeList.Count > 2)
                             throw new XmlException(SR.PackageSignatureCorruption);
 
                         XmlNode node = nodeList[0];
@@ -779,7 +779,7 @@ namespace MS.Internal.IO.Packaging
                 using (HashAlgorithm hashAlgorithm = GetHashAlgorithm(_hashAlgorithmName))
                 {
                     // inform caller if hash algorithm is unknown
-                    if (hashAlgorithm == null)
+                    if (hashAlgorithm is null)
                         throw new InvalidOperationException(SR.UnsupportedHashAlgorithm);
 
                     _signedXml.AddObject(GenerateObjectTag(hashAlgorithm, parts, relationshipSelectors, signatureId));

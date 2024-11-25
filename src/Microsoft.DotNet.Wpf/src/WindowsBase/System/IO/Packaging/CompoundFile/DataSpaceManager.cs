@@ -390,7 +390,7 @@ internal class DataSpaceManager
 
         private void CheckDisposed()
         {
-            if (_baseStream == null)
+            if (_baseStream is null)
             {
                 throw new ObjectDisposedException(null, SR.StreamObjectDisposed);            
             }
@@ -689,7 +689,7 @@ internal class DataSpaceManager
     {
         string dataSpaces = this.DataSpaceOf(streamInfo.StreamReference);
 
-        if (dataSpaces == null) // No datas pace is associated with the stream
+        if (dataSpaces is null) // No datas pace is associated with the stream
         {
             return new List<IDataTransform>(0);     // return an empty list
         }
@@ -884,7 +884,7 @@ internal class DataSpaceManager
     {
         TransformInstance transformInstance = _transformDefinitions[transformLabel] as TransformInstance;
 
-        if (transformInstance == null)
+        if (transformInstance is null)
         {
             //
             // There is no transform instance with the specified name.
@@ -893,7 +893,7 @@ internal class DataSpaceManager
         }
 
         IDataTransform transformObject = transformInstance.transformReference;
-        if (transformObject == null)
+        if (transformObject is null)
         {
             //
             // There is a transform instance with the specified name, but its transform
@@ -1601,7 +1601,7 @@ internal class DataSpaceManager
     /// </exception>
     private void ReadDataSpaceVersionInformation(StorageInfo dataSpaceStorage)
     {      
-        if (_fileFormatVersion == null)
+        if (_fileFormatVersion is null)
         {
             if (dataSpaceStorage.StreamExists( DataSpaceVersionName ))
             {
@@ -1635,7 +1635,7 @@ internal class DataSpaceManager
     /// </summary>
     private void EnsureDataSpaceVersionInformation()
     {
-        if (_fileFormatVersion == null)
+        if (_fileFormatVersion is null)
         {
             _fileFormatVersion = new FormatVersion(
                                         DataSpaceVersionIdentifier,

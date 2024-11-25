@@ -117,7 +117,7 @@ namespace System.Windows.Markup
         {
             // Validate Input Arguments
             ResourceReferenceExpression expr = value as ResourceReferenceExpression;
-            if (expr == null)
+            if (expr is null)
             {
                 throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "ResourceReferenceExpression"));
             }

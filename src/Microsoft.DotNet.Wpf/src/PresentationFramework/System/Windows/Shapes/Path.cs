@@ -80,7 +80,7 @@ namespace System.Windows.Shapes
             {
                 Geometry data = Data;
 
-                if (data == null)
+                if (data is null)
                 {
                     data = Geometry.Empty;
                 }

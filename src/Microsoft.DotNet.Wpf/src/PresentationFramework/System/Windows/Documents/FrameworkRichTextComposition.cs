@@ -46,7 +46,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return _ResultStart == null ? null : (TextPointer)_ResultStart.GetFrozenPointer(LogicalDirection.Backward);
+                return _ResultStart is null ? null : (TextPointer)_ResultStart.GetFrozenPointer(LogicalDirection.Backward);
             }
         }
 
@@ -57,7 +57,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return _ResultEnd == null ? null : (TextPointer)_ResultEnd.GetFrozenPointer(LogicalDirection.Forward);
+                return _ResultEnd is null ? null : (TextPointer)_ResultEnd.GetFrozenPointer(LogicalDirection.Forward);
             }
         }
 
@@ -68,7 +68,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return _CompositionStart == null ? null : (TextPointer)_CompositionStart.GetFrozenPointer(LogicalDirection.Backward);
+                return _CompositionStart is null ? null : (TextPointer)_CompositionStart.GetFrozenPointer(LogicalDirection.Backward);
             }
         }
 
@@ -79,7 +79,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return _CompositionEnd == null ? null : (TextPointer)_CompositionEnd.GetFrozenPointer(LogicalDirection.Forward);
+                return _CompositionEnd is null ? null : (TextPointer)_CompositionEnd.GetFrozenPointer(LogicalDirection.Forward);
             }
         }
     }

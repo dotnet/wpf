@@ -905,7 +905,7 @@ namespace System.Windows.Controls
 
             // ContextMenu may capture the inputdevice in front.
             // If the device is captured by an element other than StickyNote, we should not try to bring note to front.
-            if ( snc != null && ( captured == snc || captured == null ) )
+            if ( snc != null && ( captured == snc || captured is null ) )
             {
                 snc.OnPreviewDeviceDown(sender, args);
             }
@@ -1722,7 +1722,7 @@ namespace System.Windows.Controls
             {
                 StickyNoteContentControl content = snc.Content;
 
-                if (content == null || content.Type != StickyNoteType.Ink)
+                if (content is null || content.Type != StickyNoteType.Ink)
                 {
                     throw new InvalidOperationException(SR.CannotProcessInkCommand);
                 }
@@ -1773,7 +1773,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void UpdateInkDrawingAttributes()
         {
-            if ( Content == null || Content.Type != StickyNoteType.Ink )
+            if ( Content is null || Content.Type != StickyNoteType.Ink )
             {
                 // Return now if there is no InkCanvas.
                 return;
@@ -1784,7 +1784,7 @@ namespace System.Windows.Controls
             SolidColorBrush foreground = Foreground as SolidColorBrush;
 
             // Make sure the foreground is type of SolidColorBrush.
-            if ( foreground == null )
+            if ( foreground is null )
             {
                 throw new ArgumentException(SR.InvalidInkForeground);
             }
@@ -1862,7 +1862,7 @@ namespace System.Windows.Controls
             get
             {
                 // Check if we have create a helper. If not, we go ahead create one.
-                if (_lockHelper == null)
+                if (_lockHelper is null)
                 {
                     _lockHelper = new LockHelper();
                 }

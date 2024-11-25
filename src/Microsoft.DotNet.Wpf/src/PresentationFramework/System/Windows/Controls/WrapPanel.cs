@@ -237,7 +237,7 @@ namespace System.Windows.Controls
             for(int i=0, count = children.Count; i<count; i++)
             {
                 UIElement child = children[i] as UIElement;
-                if(child == null) continue;
+                if(child is null) continue;
 
                 //Flow passes its own constrint to children
                 child.Measure(childConstraint);
@@ -297,7 +297,7 @@ namespace System.Windows.Controls
             for(int i=0, count = children.Count; i<count; i++)
             {
                 UIElement child = children[i] as UIElement;
-                if(child == null) continue;
+                if(child is null) continue;
                 
                 UVSize sz = new UVSize(
                     Orientation,

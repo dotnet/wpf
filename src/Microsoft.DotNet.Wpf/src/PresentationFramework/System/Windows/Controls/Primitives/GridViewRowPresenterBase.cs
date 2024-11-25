@@ -109,7 +109,7 @@ namespace System.Windows.Controls.Primitives
         {
             get
             {
-                if (_uiElementCollection == null)
+                if (_uiElementCollection is null)
                 {
                     return 0;
                 }
@@ -125,7 +125,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         protected override Visual GetVisualChild(int index)
         {
-            if (_uiElementCollection == null)
+            if (_uiElementCollection is null)
             {
                 throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
@@ -189,7 +189,7 @@ namespace System.Windows.Controls.Primitives
             {
                 int count = columns.Count;
 
-                if (DesiredWidthList == null)
+                if (DesiredWidthList is null)
                 {
                     DesiredWidthList = new List<double>(count);
                 }
@@ -227,7 +227,7 @@ namespace System.Windows.Controls.Primitives
         {
             get
             {
-                if (_uiElementCollection == null) //nobody used it yet
+                if (_uiElementCollection is null) //nobody used it yet
                 {
                     _uiElementCollection = new UIElementCollection(this /* visual parent */, this /* logical parent */);
                 }
@@ -277,7 +277,7 @@ namespace System.Windows.Controls.Primitives
                 InternalCollectionChangedEventManager.AddHandler(newCollection, c.ColumnCollectionChanged);
 
                 // Similar to what we do to oldCollection. But, of course, in a reverse way.
-                if (!newCollection.InViewMode && newCollection.Owner == null)
+                if (!newCollection.InViewMode && newCollection.Owner is null)
                 {
                     newCollection.Owner = c.GetStableAncester();
                 }
@@ -472,7 +472,7 @@ namespace System.Windows.Controls.Primitives
                 InternalCollectionChangedEventManager manager = (InternalCollectionChangedEventManager)GetCurrentManager(managerType);
 
                 // at first use, create and register a new manager
-                if (manager == null)
+                if (manager is null)
                 {
                     manager = new InternalCollectionChangedEventManager();
                     SetCurrentManager(managerType, manager);

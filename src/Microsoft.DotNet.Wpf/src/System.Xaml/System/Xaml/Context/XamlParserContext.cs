@@ -111,7 +111,7 @@ namespace MS.Internal.Xaml.Context
         // Only pass rootObjectType if the member is being looked up on the root object
         internal override bool IsVisible(XamlMember member, XamlType rootObjectType)
         {
-            if (member == null)
+            if (member is null)
             {
                 return false;
             }

@@ -34,7 +34,7 @@ namespace MS.Internal.Documents.Application
         /// </summary>
         internal DocumentPropertiesDialog() : base()
         {
-            if (DocumentProperties.Current == null)
+            if (DocumentProperties.Current is null)
             {
                 throw new NotSupportedException(SR.DocumentPropertiesDialogDocumentPropertiesMustExist);
             }
@@ -126,7 +126,7 @@ namespace MS.Internal.Documents.Application
             SetTextProperty(_filename, DocumentProperties.Current.Filename);
 
             // If Image is not set, create it from the current form icon.
-            if (DocumentProperties.Current.Image == null)
+            if (DocumentProperties.Current.Image is null)
             {
                 DocumentProperties.Current.Image = this.Icon.ToBitmap();
             }

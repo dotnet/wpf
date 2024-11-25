@@ -101,7 +101,7 @@ namespace MS.Internal.FontFace
         {
             get
             {
-                if (_familyNames == null)
+                if (_familyNames is null)
                 {
                     _familyNames = ConvertDictionary(_family.FamilyNames);
                 }
@@ -199,7 +199,7 @@ namespace MS.Internal.FontFace
                         smallestInvalid = invalid;
                     }
 
-                    if (bestStyleTypeface == null)
+                    if (bestStyleTypeface is null)
                     {
                         bestStyleTypeface = font;
                     }

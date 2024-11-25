@@ -64,7 +64,7 @@ namespace System.Windows.Threading
 
                 // Auto-create the dispatcher if there is no dispatcher for
                 // this thread (if we are allowed to).
-                if(currentDispatcher == null)
+                if(currentDispatcher is null)
                 {
                     currentDispatcher = new Dispatcher();
                 }
@@ -97,7 +97,7 @@ namespace System.Windows.Threading
                     // CurrentDispatcher is expensive, but then the rest are fast
                     // again.
                     dispatcher = _possibleDispatcher.Target as Dispatcher;
-                    if(dispatcher == null || dispatcher.Thread != thread)
+                    if(dispatcher is null || dispatcher.Thread != thread)
                     {
                         // The "possible" dispatcher either was null or belongs to
                         // the a different thread.
@@ -367,7 +367,7 @@ namespace System.Windows.Threading
             ValidatePriority(priority, "priority");
 
             Dispatcher currentDispatcher = FromThread(Thread.CurrentThread);;
-            if(currentDispatcher == null)
+            if(currentDispatcher is null)
             {
                 throw new InvalidOperationException(SR.DispatcherYieldNoAvailableDispatcher);
             }
@@ -1585,7 +1585,7 @@ namespace System.Windows.Threading
 
                 lock(_instanceLock)
                 {
-                    if(_hooks == null)
+                    if(_hooks is null)
                     {
                         _hooks = new DispatcherHooks();
                     }
@@ -1702,7 +1702,7 @@ namespace System.Windows.Threading
                 if (!_hasRequestProcessingFailed)
                     return _reservedPtsCache;
                 Tuple<Object, List<String>> tuple = _reservedPtsCache as Tuple<Object, List<String>>;
-                if (tuple == null)
+                if (tuple is null)
                     return _reservedPtsCache;
                 else
                     return tuple.Item1;
@@ -2140,7 +2140,7 @@ namespace System.Windows.Threading
             UnsafeNativeMethods.ITfMessagePump messagePump = GetMessagePump();
             try
             {
-                if (messagePump == null)
+                if (messagePump is null)
                 {
                     // We have foreground items to process.
                     // By posting a message, Win32 will service us fairly promptly.
@@ -2820,7 +2820,7 @@ namespace System.Windows.Threading
 
         private object[] CombineParameters(object arg, object[] args)
         {
-            object[] parameters = new object[1 + (args == null ? 1 : args.Length)];
+            object[] parameters = new object[1 + (args is null ? 1 : args.Length)];
             parameters[0] = arg;
             if (args != null)
             {

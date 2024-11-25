@@ -1206,7 +1206,7 @@ public class StorageInfo
         // If the underlying IStorage pointer is null, we never did anything
         //  with this storage or anything under it.  We can halt our recursion
         //  here.
-        if( startCore.safeIStorage == null )
+        if( startCore.safeIStorage is null )
             return;
 
         try

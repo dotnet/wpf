@@ -207,7 +207,7 @@ namespace System.Windows.Documents
             if (stream != null || wpfPayload._images != null)
             {
                 // There are images in the content. Need to create a package
-                if (stream == null)
+                if (stream is null)
                 {
                     stream = new MemoryStream();
                 }
@@ -233,7 +233,7 @@ namespace System.Windows.Documents
                     wpfPayload.CreateComponentParts(xamlEntryPart);
                 }
 
-                Invariant.Assert(wpfPayload._images == null); // must have beed cleared in CreateComponentParts
+                Invariant.Assert(wpfPayload._images is null); // must have beed cleared in CreateComponentParts
             }
 
             return xamlText;
@@ -367,7 +367,7 @@ namespace System.Windows.Documents
         {
             // Get the WPF entry part
             PackagePart xamlEntryPart = this.GetWpfEntryPart();
-            if (xamlEntryPart == null)
+            if (xamlEntryPart is null)
             {
                 throw new XamlParseException(SR.TextEditorCopyPaste_EntryPartIsMissingInXamlPackage);
             }
@@ -484,7 +484,7 @@ namespace System.Windows.Documents
         {
             ArgumentNullException.ThrowIfNull(image);
 
-            if (image.Source == null)
+            if (image.Source is null)
             {
                 throw new ArgumentNullException("image.Source");
             }
@@ -494,7 +494,7 @@ namespace System.Windows.Documents
                 throw new ArgumentException(SR.WpfPayload_InvalidImageSource);
             }
 
-            if (_images == null)
+            if (_images is null)
             {
                 _images = new List<Image>();
             }
@@ -519,7 +519,7 @@ namespace System.Windows.Documents
             }
 
             // If this is new unique image, add it to our collection
-            if (imagePartUriString == null)
+            if (imagePartUriString is null)
             {
                 // Generate a new unique image part name
                 imagePartUriString = GetImageName(_images.Count, imageContentType);
@@ -717,7 +717,7 @@ namespace System.Windows.Documents
 
         private Package CreatePackage(Stream stream)
         {
-            Invariant.Assert(_package == null, "Package has been already created or open for this WpfPayload");
+            Invariant.Assert(_package is null, "Package has been already created or open for this WpfPayload");
 
             _package = Package.Open(stream, FileMode.Create, FileAccess.ReadWrite);
 

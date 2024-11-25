@@ -69,7 +69,7 @@ namespace Microsoft.Windows.Themes
                 // This is a highlight that can be drawn by just filling the background with the color.
                 // It will be seen through the gab between the border and the background.
                 LinearGradientBrush bevel = (LinearGradientBrush)GetCachedFreezable((int)AeroFreezables.NormalBevel);
-                if (bevel == null)
+                if (bevel is null)
                 {
                     bevel = new LinearGradientBrush();
                     bevel.StartPoint = new Point();
@@ -102,7 +102,7 @@ namespace Microsoft.Windows.Themes
             }
 
             LinearGradientBrush background = (LinearGradientBrush)GetCachedFreezable((int)backgroundType);
-            if (background == null)
+            if (background is null)
             {
                 background = new LinearGradientBrush();
                 background.StartPoint = new Point();
@@ -173,7 +173,7 @@ namespace Microsoft.Windows.Themes
                     else
                     {
                         sideBrush = (Brush)GetCachedFreezable((int)sideType);
-                        if (sideBrush == null)
+                        if (sideBrush is null)
                         {
                             LinearGradientBrush lgBrush = null;
                             if (sideType != AeroFreezables.SortedSides)
@@ -227,7 +227,7 @@ namespace Microsoft.Windows.Themes
             {
                 // When pressed, there are added borders on the left and top
                 LinearGradientBrush topBrush = (LinearGradientBrush)GetCachedFreezable((int)AeroFreezables.PressedTop);
-                if (topBrush == null)
+                if (topBrush is null)
                 {
                     topBrush = new LinearGradientBrush();
                     topBrush.StartPoint = new Point();
@@ -244,7 +244,7 @@ namespace Microsoft.Windows.Themes
                 dc.DrawRectangle(topBrush, null, new Rect(0.0, 0.0, size.Width, 2.0));
 
                 LinearGradientBrush pressedBevel = (LinearGradientBrush)GetCachedFreezable((int)AeroFreezables.PressedBevel);
-                if (pressedBevel == null)
+                if (pressedBevel is null)
                 {
                     pressedBevel = new LinearGradientBrush();
                     pressedBevel.StartPoint = new Point();
@@ -280,7 +280,7 @@ namespace Microsoft.Windows.Themes
                 }
 
                 SolidColorBrush bottomBrush = (SolidColorBrush)GetCachedFreezable((int)bottomType);
-                if (bottomBrush == null)
+                if (bottomBrush is null)
                 {
                     switch (bottomType)
                     {
@@ -314,7 +314,7 @@ namespace Microsoft.Windows.Themes
 
                 bool ascending = (sortDirection == ListSortDirection.Ascending);
                 PathGeometry arrowGeometry = (PathGeometry)GetCachedFreezable(ascending ? (int)AeroFreezables.ArrowUpGeometry : (int)AeroFreezables.ArrowDownGeometry);
-                if (arrowGeometry == null)
+                if (arrowGeometry is null)
                 {
                     arrowGeometry = new PathGeometry();
                     PathFigure arrowFigure = new PathFigure();
@@ -355,7 +355,7 @@ namespace Microsoft.Windows.Themes
 
                 // Draw two arrows, one inset in the other. This is to achieve a double gradient over both the border and the fill.
                 LinearGradientBrush arrowBorder = (LinearGradientBrush)GetCachedFreezable((int)AeroFreezables.ArrowBorder);
-                if (arrowBorder == null)
+                if (arrowBorder is null)
                 {
                     arrowBorder = new LinearGradientBrush();
                     arrowBorder.StartPoint = new Point();
@@ -370,7 +370,7 @@ namespace Microsoft.Windows.Themes
                 dc.DrawGeometry(arrowBorder, null, arrowGeometry);
 
                 LinearGradientBrush arrowFill = (LinearGradientBrush)GetCachedFreezable((int)AeroFreezables.ArrowFill);
-                if (arrowFill == null)
+                if (arrowFill is null)
                 {
                     arrowFill = new LinearGradientBrush();
                     arrowFill.StartPoint = new Point();
@@ -384,7 +384,7 @@ namespace Microsoft.Windows.Themes
 
                 // Inset the fill arrow inside the border arrow
                 ScaleTransform arrowScale = (ScaleTransform)GetCachedFreezable((int)AeroFreezables.ArrowFillScale);
-                if (arrowScale == null)
+                if (arrowScale is null)
                 {
                     arrowScale = new ScaleTransform(0.75, 0.75, 3.5, 4.0);
                     arrowScale.Freeze();

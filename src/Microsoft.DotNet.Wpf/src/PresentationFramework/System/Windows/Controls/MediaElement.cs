@@ -735,7 +735,7 @@ namespace System.Windows.Controls
         {
             // if nobody set a source on us, then the clock will be null, so we don't render
             // anything
-            if (_helper.Player == null)
+            if (_helper.Player is null)
             {
                 return;
             }
@@ -781,7 +781,7 @@ namespace System.Windows.Controls
         {
             MediaPlayer mediaPlayer = _helper.Player;
 
-            if (mediaPlayer == null)
+            if (mediaPlayer is null)
             {
                 return new Size();
             }

@@ -186,7 +186,7 @@ namespace System.Windows.Controls.Primitives
             {
                 // If the user does not provide a Content value in template, we provide a helper text that can be used in Accessibility
                 // this text is not shown on the UI, just used for Accessibility purposes
-                if (this._previousButton.Content == null)
+                if (this._previousButton.Content is null)
                 {
                     this._previousButton.Content = SR.Calendar_PreviousButtonName;
                 }
@@ -198,7 +198,7 @@ namespace System.Windows.Controls.Primitives
             {
                 // If the user does not provide a Content value in template, we provide a helper text that can be used in Accessibility
                 // this text is not shown on the UI, just used for Accessibility purposes
-                if (this._nextButton.Content == null)
+                if (this._nextButton.Content is null)
                 {
                     this._nextButton.Content = SR.Calendar_NextButtonName;
                 }
@@ -549,7 +549,7 @@ namespace System.Windows.Controls.Primitives
         {
             Debug.Assert(e != null);
 
-            if (this.Owner == null)
+            if (this.Owner is null)
             {
                 return;
             }
@@ -559,7 +559,7 @@ namespace System.Windows.Controls.Primitives
 
         private void Cell_Clicked(object sender, RoutedEventArgs e)
         {
-            if (this.Owner == null)
+            if (this.Owner is null)
             {
                 return;
             }
@@ -656,12 +656,12 @@ namespace System.Windows.Controls.Primitives
         {
             CalendarDayButton b = sender as CalendarDayButton;
 
-            if (b == null)
+            if (b is null)
             {
                 return;
             }
 
-            if (this.Owner == null || !(b.DataContext is DateTime))
+            if (this.Owner is null || !(b.DataContext is DateTime))
             {
                 return;
             }
@@ -754,7 +754,7 @@ namespace System.Windows.Controls.Primitives
         private void Cell_MouseEnter(object sender, MouseEventArgs e)
         {
             CalendarDayButton b = sender as CalendarDayButton;
-            if (b == null)
+            if (b is null)
             {
                 return;
             }
@@ -768,7 +768,7 @@ namespace System.Windows.Controls.Primitives
             {
                 b.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
 
-                if (this.Owner == null || !(b.DataContext is DateTime))
+                if (this.Owner is null || !(b.DataContext is DateTime))
                 {
                     return;
                 }
@@ -804,12 +804,12 @@ namespace System.Windows.Controls.Primitives
         private void Cell_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             CalendarDayButton b = sender as CalendarDayButton;
-            if (b == null)
+            if (b is null)
             {
                 return;
             }
 
-            if (this.Owner == null)
+            if (this.Owner is null)
             {
                 return;
             }
@@ -1141,7 +1141,7 @@ namespace System.Windows.Controls.Primitives
         private void AddMonthModeHighlight()
         {
             var owner = this.Owner;
-            if (owner == null)
+            if (owner is null)
             {
                 return;
             }
@@ -1425,7 +1425,7 @@ namespace System.Windows.Controls.Primitives
         {
             get
             {
-                if (_dayTitleTemplateResourceKey == null)
+                if (_dayTitleTemplateResourceKey is null)
                 {
                     _dayTitleTemplateResourceKey = new ComponentResourceKey(typeof(CalendarItem), ElementDayTitleTemplate);
                 }

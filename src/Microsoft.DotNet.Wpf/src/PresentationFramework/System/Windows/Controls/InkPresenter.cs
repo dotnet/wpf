@@ -581,7 +581,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if ( _cachedBounds == null )
+                if ( _cachedBounds is null )
                 {
                     _cachedBounds = Strokes.GetBounds();
                 }

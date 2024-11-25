@@ -100,7 +100,7 @@ namespace MS.Internal.IO.Packaging
             Uri owningPartUri = null;
             foreach (PackageRelationshipSelector selector in relationshipSelectors)
             {
-                if (owningPartUri == null)
+                if (owningPartUri is null)
                 {
                     owningPartUri = selector.SourceUri;
                 }

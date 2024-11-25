@@ -59,7 +59,7 @@ internal static class ThemeManager
         {
             foreach (Window window in FluentEnabledWindows)
             {
-                if (window == null || window.IsDisposed)
+                if (window is null || window.IsDisposed)
                     continue;
 
                 if (window.ThemeMode == ThemeMode.None)
@@ -216,7 +216,7 @@ internal static class ThemeManager
 
     private static void RemoveFluentFromApplication()
     {
-        if (Application.Current == null)
+        if (Application.Current is null)
             return;
 
         IEnumerable<int> indices = FindAllFluentThemeResourceDictionaryIndices(Application.Current.Resources);
@@ -237,7 +237,7 @@ internal static class ThemeManager
 
     private static void RemoveFluentFromWindow(Window window)
     {
-        if (window == null || window.IsDisposed)
+        if (window is null || window.IsDisposed)
             return;
 
         IEnumerable<int> indices = FindAllFluentThemeResourceDictionaryIndices(window.Resources);
@@ -253,7 +253,7 @@ internal static class ThemeManager
 
     private static void ApplyFluentOnWindow(Window window)
     {
-        if (window == null || window.IsDisposed)
+        if (window is null || window.IsDisposed)
             return;
 
         bool useLightColors = GetUseLightColors(window.ThemeMode);
@@ -268,7 +268,7 @@ internal static class ThemeManager
 
     private static void RemoveStyleFromWindow(Window window)
     {
-        if (window == null || window.IsDisposed)
+        if (window is null || window.IsDisposed)
             return;
 
         if (IsFluentThemeEnabled || window.ThemeMode != ThemeMode.None)
@@ -288,11 +288,11 @@ internal static class ThemeManager
 
     private static void ApplyStyleOnWindow(Window window, bool useLightColors)
     {
-        if (window == null || window.IsDisposed)
+        if (window is null || window.IsDisposed)
             return;
 
         // We only apply Style on window, if the Window.Style has not already been set to avoid overriding users setting. 
-        if (window.Style == null)
+        if (window.Style is null)
         {
             window.SetResourceReference(FrameworkElement.StyleProperty, typeof(Window));
         }
@@ -318,7 +318,7 @@ internal static class ThemeManager
     {
         get
         {
-            if (Application.Current == null)
+            if (Application.Current is null)
                 return false;
             return Application.Current.ThemeMode != ThemeMode.None;
         }
@@ -353,7 +353,7 @@ internal static class ThemeManager
     {
         ThemeMode themeMode = ThemeMode.None;
 
-        if (rd == null)
+        if (rd is null)
             return themeMode;
 
         int index = LastIndexOfFluentThemeDictionary(rd);
@@ -368,7 +368,7 @@ internal static class ThemeManager
 
     private static ThemeMode GetThemeModeFromSourceUri(Uri source)
     {
-        if (source == null)
+        if (source is null)
             return ThemeMode.None;
 
         string sourceString = source.ToString();
@@ -388,7 +388,7 @@ internal static class ThemeManager
 
     private static void AddOrUpdateThemeResources(ResourceDictionary rd, ResourceDictionary newDictionary)
     {
-        if (rd == null)
+        if (rd is null)
             return;
 
         ArgumentNullException.ThrowIfNull(newDictionary);
@@ -455,7 +455,7 @@ internal static class ThemeManager
         var useLightTheme = Registry.GetValue(RegPersonalizeKeyPath,
             "AppsUseLightTheme", null) as int?;
 
-        if (useLightTheme == null)
+        if (useLightTheme is null)
         {
             useLightTheme = Registry.GetValue(RegPersonalizeKeyPath,
                 "SystemUsesLightTheme", null) as int?;

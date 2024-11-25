@@ -381,7 +381,7 @@ namespace System.Windows.Input
         internal static bool IsFocusable(DependencyObject element)
         {
             // This should really be its own property, but it is hard to do efficiently.
-            if (element == null)
+            if (element is null)
             {
                 return false;
             }
@@ -420,7 +420,7 @@ namespace System.Windows.Input
                     // the Focusable property is false.
                     return true;
                 }
-                else if(uie != null && uie.InternalVisualParent == null)
+                else if(uie != null && uie.InternalVisualParent is null)
                 {
                     PresentationSource presentationSource = PresentationSource.CriticalFromVisual(uie);
                     if(presentationSource != null)

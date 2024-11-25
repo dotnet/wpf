@@ -91,11 +91,11 @@ namespace MS.Internal
         public void Add(K key, V resource, bool isPermanent)
         {
 
-            if ( (object)key == null)
+            if ( (object)key is null)
             {
                 throw new ArgumentNullException("key");
             }
-            if ( (object)resource == null)
+            if ( (object)resource is null)
             {
                 throw new ArgumentNullException("resource");
             }
@@ -156,7 +156,7 @@ namespace MS.Internal
         /// </param>
         public void Remove(K key)
         {
-            if ( (object)key == null)
+            if ( (object)key is null)
             {
                 throw new ArgumentNullException("key");
             }
@@ -192,7 +192,7 @@ namespace MS.Internal
         /// </returns>
         public V Get(K key)
         {
-            if ( (object)key == null)
+            if ( (object)key is null)
             {
                 throw new ArgumentNullException("key");
             }

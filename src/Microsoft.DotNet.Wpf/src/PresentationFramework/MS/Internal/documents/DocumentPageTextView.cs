@@ -410,7 +410,7 @@ namespace MS.Internal.Documents
             FlowDocumentView owner = _owner as FlowDocumentView;
             bool isValid;
 
-            if (owner == null || owner.Document == null)
+            if (owner is null || owner.Document is null)
             {
                 isValid = base.Validate(position);
             }
@@ -493,7 +493,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (!_owner.IsMeasureValid || !_owner.IsArrangeValid || _page == null)
+                if (!_owner.IsMeasureValid || !_owner.IsArrangeValid || _page is null)
                 {
                     return false;
                 }
@@ -574,7 +574,7 @@ namespace MS.Internal.Documents
             Invariant.Assert(IsValid && !IsPageMissing);
             // NOTE: TransformToAncestor is safe (will never throw an exception).
             Transform transform = _page.Visual.TransformToAncestor(_owner) as Transform;
-            if (transform == null)
+            if (transform is null)
             {
                 transform = Transform.Identity;
             }

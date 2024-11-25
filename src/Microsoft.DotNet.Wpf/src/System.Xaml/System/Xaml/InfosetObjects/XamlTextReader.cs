@@ -65,12 +65,12 @@ namespace System.Xaml
         {
             XmlReader myXmlReader;
 
-            if (givenXmlReader == null)
+            if (givenXmlReader is null)
             {
                 throw new ArgumentNullException("XmlReader is null");
             }
 
-            _mergedSettings = (settings == null) ? new XamlTextReaderSettings() : new XamlTextReaderSettings(settings);
+            _mergedSettings = (settings is null) ? new XamlTextReaderSettings() : new XamlTextReaderSettings(settings);
 
             //Wrap the xmlreader with a XmlCompatReader instance to apply MarkupCompat rules.
             if (!_mergedSettings.SkipXmlCompatibilityProcessing)
@@ -103,7 +103,7 @@ namespace System.Xaml
                 _mergedSettings.XmlLang = myXmlReader.XmlLang;
             }
 
-            if (schemaContext == null)
+            if (schemaContext is null)
             {
                 schemaContext = new XamlSchemaContext();
             }

@@ -406,7 +406,7 @@ namespace System.Windows
             // Lock the data format list to obtains the mutual-exclusion.
             lock (_formatListlock)
             {
-                if (_formatList == null)
+                if (_formatList is null)
                 {
                     // Create format list for the default formats.
                     _formatList = new ArrayList(19);

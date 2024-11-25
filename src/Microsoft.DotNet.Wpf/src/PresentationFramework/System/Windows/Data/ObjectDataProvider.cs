@@ -102,7 +102,7 @@ namespace System.Windows.Data
                 // To change "mode", the user must null the other property first.
                 if (_mode == SourceMode.FromInstance)
                     throw new InvalidOperationException(SR.ObjectDataProviderCanHaveOnlyOneSource);
-                _mode = (value == null) ? SourceMode.NoSource : SourceMode.FromType;
+                _mode = (value is null) ? SourceMode.NoSource : SourceMode.FromType;
 
                 _constructorParameters.SetReadOnly(false);
 
@@ -155,13 +155,13 @@ namespace System.Windows.Data
                 // To change mode, the user must null the property first.
                 if (_mode == SourceMode.FromType)
                     throw new InvalidOperationException(SR.ObjectDataProviderCanHaveOnlyOneSource);
-                _mode = (value == null) ? SourceMode.NoSource : SourceMode.FromInstance;
+                _mode = (value is null) ? SourceMode.NoSource : SourceMode.FromInstance;
 
                 if (ObjectInstance == value)   // instance or provider has not changed, do nothing
                 {
                     // debug-only sanity check, since GetType() isn't that cheap;
                     // using _objectInstance because we're not trying to check the type of the provider!
-                    Debug.Assert((_objectInstance == null) ? (_objectType == null) : (_objectType == _objectInstance.GetType()));
+                    Debug.Assert((_objectInstance is null) ? (_objectType is null) : (_objectType == _objectInstance.GetType()));
                     return;
                 }
 
@@ -382,7 +382,7 @@ namespace System.Windows.Data
             object      data    = null;
             Exception   e       = null; // exception to pass back to main thread
 
-            if (_mode == SourceMode.NoSource || _objectType == null)
+            if (_mode == SourceMode.NoSource || _objectType is null)
             {
                 if (TraceData.IsEnabled)
                     TraceData.TraceAndNotify(TraceEventType.Error, TraceData.ObjectDataProviderHasNoSource);
@@ -509,7 +509,7 @@ namespace System.Windows.Data
 
                 // in async mode we pass all exceptions to main thread;
                 // in sync mode we don't handle unknown exceptions.
-                if (!IsAsynchronous && error == null)
+                if (!IsAsynchronous && error is null)
                     throw e;
             }
 
@@ -599,7 +599,7 @@ namespace System.Windows.Data
 
                 // in async mode we pass all exceptions to main thread;
                 // in sync mode we don't handle unknown exceptions.
-                if (!IsAsynchronous && error == null)
+                if (!IsAsynchronous && error is null)
                     throw e;
             }
 

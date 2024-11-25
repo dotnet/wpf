@@ -180,11 +180,11 @@ namespace MS.Internal.Data
             object o = GetValue(ParentGroupsProperty);
             List<CollectionViewGroupInternal> list;
 
-            if (o == null)
+            if (o is null)
             {   // no parents yet, store a singleton
                 SetValue(ParentGroupsProperty, group);
             }
-            else if ((list = o as List<CollectionViewGroupInternal>) == null)
+            else if ((list = o as List<CollectionViewGroupInternal>) is null)
             {   // one parent, store a list
                 list = new List<CollectionViewGroupInternal>(2);
                 list.Add(o as CollectionViewGroupInternal);
@@ -202,7 +202,7 @@ namespace MS.Internal.Data
             object o = GetValue(ParentGroupsProperty);
             List<CollectionViewGroupInternal> list = o as List<CollectionViewGroupInternal>;
 
-            if (list == null)
+            if (list is null)
             {   // one parent, remove it
                 if (o == group)
                 {

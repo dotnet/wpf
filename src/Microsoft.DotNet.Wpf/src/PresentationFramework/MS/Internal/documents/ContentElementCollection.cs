@@ -411,7 +411,7 @@ namespace MS.Internal.Documents
             TItem item = value as TItem;
 
             // <CR NOTE>: This chunk is moved to the correcponding override in TableCollumnCollection, to keep same behavior
-            //if (item == null)
+            //if (item is null)
             //{
             //    throw new ArgumentException(SR.Format(SR.TableCollectionElementTypeExpected, typeof(TItem).Name), "value");
             //}
@@ -430,7 +430,7 @@ namespace MS.Internal.Documents
         {
             TItem item = value as TItem;
 
-            if (item == null)
+            if (item is null)
             {
                 return false;
             }
@@ -442,7 +442,7 @@ namespace MS.Internal.Documents
         {
             TItem item = value as TItem;
 
-            if (item == null)
+            if (item is null)
             {
                 return -1;
             }
@@ -456,7 +456,7 @@ namespace MS.Internal.Documents
 
             TItem newItem = value as TItem;
 
-            if (newItem == null)
+            if (newItem is null)
             {
                 throw new ArgumentException(SR.Format(SR.TableCollectionElementTypeExpected, typeof(TItem).Name), "value");
             }
@@ -484,7 +484,7 @@ namespace MS.Internal.Documents
         {
             TItem item = value as TItem;
 
-            if (item == null)
+            if (item is null)
             {
                 return;
             }
@@ -510,7 +510,7 @@ namespace MS.Internal.Documents
 
                 TItem item = value as TItem;
 
-                if (item == null)
+                if (item is null)
                 {
                     throw new ArgumentException(SR.Format(SR.TableCollectionElementTypeExpected, typeof(TItem).Name), "value");
                 }
@@ -681,7 +681,7 @@ namespace MS.Internal.Documents
         /// If the new item has already a parent or if the slot at the specified index is not null.
         /// </exception>
         /// <remarks>
-        /// Note that the function requires that _item[index] == null and
+        /// Note that the function requires that _item[index] is null and
         /// it also requires that the passed in item is not included into another ContentElementCollection.
         /// </remarks>
         abstract internal void PrivateConnectChild(int index, TItem item);
@@ -723,7 +723,7 @@ namespace MS.Internal.Documents
         // helper method: return true if the item belongs to the collection's owner
         internal bool BelongsToOwner(TItem item)
         {
-            if (item == null)
+            if (item is null)
                 return false;
 
             DependencyObject node = item.Parent;

@@ -80,7 +80,7 @@ namespace System.Windows.Media
         {
             ReadPreamble();
 
-            if ((_data == null) || (_data.Length <= 0))
+            if ((_data is null) || (_data.Length <= 0))
             {
                 return true;
             }
@@ -326,7 +326,7 @@ namespace System.Windows.Media
         {
             Transform transform = Transform;
 
-            return (((transform == null) || transform.IsIdentity) &&
+            return (((transform is null) || transform.IsIdentity) &&
                     !HasHollows() && !HasGaps());
         }
 
@@ -384,7 +384,7 @@ namespace System.Windows.Media
         private unsafe int GetFigureSize(byte* pbPathData)
         {
             MIL_PATHGEOMETRY* pPathGeometryData = (MIL_PATHGEOMETRY*)pbPathData;
-            return pPathGeometryData == null ? 0 : (int)pPathGeometryData->Size;
+            return pPathGeometryData is null ? 0 : (int)pPathGeometryData->Size;
         }
 
         internal override void UpdateResource(DUCE.Channel channel, bool skipOnChannelCheck)
@@ -400,7 +400,7 @@ namespace System.Windows.Media
 
                     // Obtain handles for properties that implement DUCE.IResource
                     DUCE.ResourceHandle hTransform;
-                    if (vTransform == null ||
+                    if (vTransform is null ||
                         Object.ReferenceEquals(vTransform, Transform.Identity)
                        )
                     {
@@ -417,7 +417,7 @@ namespace System.Windows.Media
                     data.hTransform = hTransform;
                     data.FillRule = FillRule;
 
-                    byte[] pathDataToMarshal = _data == null ?
+                    byte[] pathDataToMarshal = _data is null ?
                         Geometry.GetEmptyPathGeometryData().SerializedData :
                         _data;
 

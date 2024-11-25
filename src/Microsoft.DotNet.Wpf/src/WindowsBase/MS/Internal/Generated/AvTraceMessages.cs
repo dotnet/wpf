@@ -22,7 +22,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _ApplyTemplateContent == null )
+                if ( _ApplyTemplateContent is null )
                 {
                     _ApplyTemplateContent = new AvTraceDetails(1, new string[] { "Apply template" } );
                 }
@@ -36,7 +36,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _Register == null )
+                if ( _Register is null )
                 {
                     _Register = new AvTraceDetails(2, new string[] { "Registered DependencyProperty" } );
                 }
@@ -50,7 +50,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _UpdateEffectiveValueStart == null )
+                if ( _UpdateEffectiveValueStart is null )
                 {
                     _UpdateEffectiveValueStart = new AvTraceDetails(3, new string[] { "Update effective DP value (Start)" } );
                 }
@@ -64,7 +64,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _UpdateEffectiveValueStop == null )
+                if ( _UpdateEffectiveValueStop is null )
                 {
                     _UpdateEffectiveValueStop = new AvTraceDetails(4, new string[] { "Update effective DP value (Stop)" } );
                 }
@@ -150,7 +150,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _UnableToFreezeExpression == null )
+                if ( _UnableToFreezeExpression is null )
                 {
                     _UnableToFreezeExpression = new AvTraceDetails(1, new string[] { "CanFreeze is returning false because a DependencyProperty on the Freezable has a value that is an expression" } );
                 }
@@ -164,7 +164,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _UnableToFreezeDispatcherObjectWithThreadAffinity == null )
+                if ( _UnableToFreezeDispatcherObjectWithThreadAffinity is null )
                 {
                     _UnableToFreezeDispatcherObjectWithThreadAffinity = new AvTraceDetails(2, new string[] { "CanFreeze is returning false because a DependencyProperty on the Freezable has a value that is a DispatcherObject with thread affinity" } );
                 }
@@ -178,7 +178,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _UnableToFreezeFreezableSubProperty == null )
+                if ( _UnableToFreezeFreezableSubProperty is null )
                 {
                     _UnableToFreezeFreezableSubProperty = new AvTraceDetails(3, new string[] { "CanFreeze is returning false because a DependencyProperty on the Freezable has a value that is a Freezable that has also returned false from CanFreeze" } );
                 }
@@ -192,7 +192,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _UnableToFreezeAnimatedProperties == null )
+                if ( _UnableToFreezeAnimatedProperties is null )
                 {
                     _UnableToFreezeAnimatedProperties = new AvTraceDetails(4, new string[] { "CanFreeze is returning false because at least one DependencyProperty on the Freezable is animated." } );
                 }
@@ -278,7 +278,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _RegisterName == null )
+                if ( _RegisterName is null )
                 {
                     _RegisterName = new AvTraceDetails(1, new string[] { "Name has been registered on INameScope" } );
                 }
@@ -292,7 +292,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _UnregisterName == null )
+                if ( _UnregisterName is null )
                 {
                     _UnregisterName = new AvTraceDetails(2, new string[] { "Name has been un-registered on INameScope" } );
                 }

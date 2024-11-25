@@ -282,7 +282,7 @@ namespace MS.Internal.PtsHost
                 {
                     // paginated case - if first row of a given rowgroup for this para client has foreign cells, they need to
                     // be rendered regardless of merge state
-                    if(rowParagraph.Row.HasForeignCells && (rowPrevious == null || rowPrevious.RowGroup != row.RowGroup))
+                    if(rowParagraph.Row.HasForeignCells && (rowPrevious is null || rowPrevious.RowGroup != row.RowGroup))
                     {
                         ValidateRowVisualComplex(
                             (RowVisual)(rowVisualsCollection[iR]),
@@ -413,7 +413,7 @@ namespace MS.Internal.PtsHost
                 }
             }
 
-            if(element == null && _rect.Contains(pt))
+            if(element is null && _rect.Contains(pt))
             {
                 element = TableParagraph.Table;
             }
@@ -585,7 +585,7 @@ namespace MS.Internal.PtsHost
                         elementOwner, ElementEdge.AfterEnd));
             }
 
-            if (range == null)
+            if (range is null)
             {
                 // if table has no rows or no cells
                 range = TextContainerHelper.GetTextContentRangeForTextElement(TableParagraph.Table);
@@ -619,7 +619,7 @@ namespace MS.Internal.PtsHost
 
             if (QueryTableDetails(out arrayTableRowDesc, out fskupdTable, out rectTable))
             {
-                for (int iR = 0; iR < arrayTableRowDesc.Length && cpcFound == null; ++iR)
+                for (int iR = 0; iR < arrayTableRowDesc.Length && cpcFound is null; ++iR)
                 {
                     PTS.FSKUPDATE[] arrayUpdate;
                     IntPtr[] arrayFsCell;
@@ -631,7 +631,7 @@ namespace MS.Internal.PtsHost
                         out arrayUpdate,
                         out arrayTableCellMerge);
 
-                    for (int iC = 0; iC < arrayFsCell.Length && cpcFound == null; ++iC)
+                    for (int iC = 0; iC < arrayFsCell.Length && cpcFound is null; ++iC)
                     {
                         if (arrayFsCell[iC] == IntPtr.Zero)
                         {
@@ -662,7 +662,7 @@ namespace MS.Internal.PtsHost
                 }
             }
 
-            if(snapToText && cpcFound == null)
+            if(snapToText && cpcFound is null)
             {
                 cpcFound = cpcClosest;
             }
@@ -1576,7 +1576,7 @@ namespace MS.Internal.PtsHost
 
                     if (    fskupdCell == PTS.FSKUPDATE.fskupdNew
                         //  PTS bug is a suspect here - this is a temp workaround:
-                        ||  VisualTreeHelper.GetParent(cellParaClient.Visual) == null   )
+                        ||  VisualTreeHelper.GetParent(cellParaClient.Visual) is null   )
                     {
                         Visual currentParent = VisualTreeHelper.GetParent(cellParaClient.Visual) as Visual;
                         if(currentParent != null)
@@ -1699,7 +1699,7 @@ namespace MS.Internal.PtsHost
                 PTS.FSKUPDATE fskupdCell;
 
                 cellParaClient = arrayCellParaClients[columnIndex].cellParaClient;
-                if (cellParaClient == null)
+                if (cellParaClient is null)
                 {
                     //  paginated case - cell may be null
                     continue;
@@ -1920,7 +1920,7 @@ namespace MS.Internal.PtsHost
             double totalPadding;
             int columns = Table.ColumnCount;
 
-            if (_calculatedColumns == null)
+            if (_calculatedColumns is null)
             {
                 _calculatedColumns = new CalculatedColumn[columns];
             }

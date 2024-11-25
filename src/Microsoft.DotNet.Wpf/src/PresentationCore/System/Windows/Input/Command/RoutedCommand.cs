@@ -134,7 +134,7 @@ namespace System.Windows.Input
                 throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, target.GetType()));
             }
 
-            if (target == null)
+            if (target is null)
             {
                 target = FilterInputElement(Keyboard.FocusedElement);
             }
@@ -170,7 +170,7 @@ namespace System.Windows.Input
                 throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, target.GetType()));
             }
 
-            if (target == null)
+            if (target is null)
             {
                 target = FilterInputElement(Keyboard.FocusedElement);
             }
@@ -226,7 +226,7 @@ namespace System.Windows.Input
         {
             get
             {
-                if(InputGesturesInternal == null)
+                if(InputGesturesInternal is null)
                 {
                     _inputGestureCollection = new InputGestureCollection();
                 }
@@ -238,7 +238,7 @@ namespace System.Windows.Input
         {
             get
             {
-                if(_inputGestureCollection == null && AreInputGesturesDelayLoaded)
+                if(_inputGestureCollection is null && AreInputGesturesDelayLoaded)
                 {
                     _inputGestureCollection = GetInputGestures();
                     AreInputGesturesDelayLoaded = false;
@@ -370,7 +370,7 @@ namespace System.Windows.Input
         }
         internal bool ExecuteCore(object parameter, IInputElement target, bool userInitiated)
         {
-            if (target == null)
+            if (target is null)
             {
                 target = FilterInputElement(Keyboard.FocusedElement);
             }

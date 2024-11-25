@@ -116,7 +116,7 @@ namespace System.Windows.Input
         /// </summary>
         internal static bool AreCompatible(StylusPointPropertyInfo stylusPointPropertyInfo1, StylusPointPropertyInfo stylusPointPropertyInfo2)
         {
-            if (stylusPointPropertyInfo1 == null || stylusPointPropertyInfo2 == null)
+            if (stylusPointPropertyInfo1 is null || stylusPointPropertyInfo2 is null)
             {
                 throw new ArgumentNullException("stylusPointPropertyInfo");
             }

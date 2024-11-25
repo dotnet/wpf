@@ -221,7 +221,7 @@ namespace MS.Internal.Annotations.Anchoring
                 if (dpv != null)
                 {
                     page = dpv.DocumentPage as FixedDocumentPage;
-                    if (page == null)
+                    if (page is null)
                     {
                         FixedDocumentSequenceDocumentPage sequencePage = dpv.DocumentPage as FixedDocumentSequenceDocumentPage;
                         if (sequencePage != null)

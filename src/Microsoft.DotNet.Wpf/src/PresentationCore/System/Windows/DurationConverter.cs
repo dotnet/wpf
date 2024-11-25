@@ -81,7 +81,7 @@ namespace System.Windows
             }
 
             TimeSpan duration = TimeSpan.Zero;
-            if(_timeSpanConverter == null)
+            if(_timeSpanConverter is null)
             {
                  _timeSpanConverter = new TimeSpanConverter();
             }

@@ -81,7 +81,7 @@ namespace System.Windows.Documents
                 if (_GetFixedPosition(this.End, out fixedp))
                 {
                     textPos = _CreateTextPointer(fixedp, LogicalDirection.Backward);
-                    if (textPos == null)
+                    if (textPos is null)
                     {
                         textPos = this.End;
                     }
@@ -117,14 +117,14 @@ namespace System.Windows.Documents
                 }
             }
 
-            if (snapToText && pos == null)
+            if (snapToText && pos is null)
             {
                 pos = _SnapToText(point);
                 Debug.Assert(pos != null);
             }
 
 
-            DocumentsTrace.FixedTextOM.TextView.Trace($"GetTextPositionFromPoint P{point}, STT={snapToText}, CP={(pos == null ? "null" : ((FixedTextPointer)pos).ToString())}");
+            DocumentsTrace.FixedTextOM.TextView.Trace($"GetTextPositionFromPoint P{point}, STT={snapToText}, CP={(pos is null ? "null" : ((FixedTextPointer)pos).ToString())}");
             return pos;
         }
 
@@ -276,7 +276,7 @@ namespace System.Windows.Documents
                     GeneralTransform transform = fh.Element.TransformToAncestor(this.FixedPage);
 
                     Transform t = transform.AffineTransform;
-                    if (t == null)
+                    if (t is null)
                     {
                         t = Transform.Identity;
                     }
@@ -451,7 +451,7 @@ namespace System.Windows.Documents
                 if (element is Glyphs)
                 {
                     Glyphs g = (Glyphs)element;
-                    int characterCount = (g.UnicodeString == null ? 0 : g.UnicodeString.Length);
+                    int characterCount = (g.UnicodeString is null ? 0 : g.UnicodeString.Length);
                     if (fixedp.Offset == characterCount)
                     {   //end of line -- allow caret
                         return true;
@@ -459,7 +459,7 @@ namespace System.Windows.Documents
                     else
                     {
                         GlyphRun run = g.MeasurementGlyphRun;
-                        return run.CaretStops == null || run.CaretStops[fixedp.Offset];
+                        return run.CaretStops is null || run.CaretStops[fixedp.Offset];
                     }
                 }
                 else if (element is Image || element is Path)
@@ -524,7 +524,7 @@ namespace System.Windows.Documents
                     Glyphs g = (Glyphs)element;
                     GlyphRun run = g.ToGlyphRun();
 
-                    int characterCount = (run.Characters == null) ? 0 : run.Characters.Count;
+                    int characterCount = (run.Characters is null) ? 0 : run.Characters.Count;
                     CharacterHit start = (fixedp.Offset == characterCount) ?
                         new CharacterHit(fixedp.Offset - 1, 1) :
                         new CharacterHit(fixedp.Offset, 0);
@@ -600,7 +600,7 @@ namespace System.Windows.Documents
             int count = 0;
             FixedNode[] fixedNodes = Container.FixedTextBuilder.GetNextLine(fixedp.Node, true, ref count);
 
-            if (fixedNodes == null)
+            if (fixedNodes is null)
             {
                 // This will happen in the case of images
                 fixedNodes = new FixedNode[] { fixedp.Node };
@@ -726,7 +726,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_textSegments == null)
+                if (_textSegments is null)
                 {
                     List<TextSegment> list = new List<TextSegment>(1);
                     list.Add(new TextSegment(this.Start, this.End, true));
@@ -740,7 +740,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_start == null)
+                if (_start is null)
                 {
                     FlowPosition flowStart = Container.FixedTextBuilder.GetPageStartFlowPosition(this.PageIndex);
                     _start = new FixedTextPointer(false, LogicalDirection.Forward, flowStart);
@@ -753,7 +753,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_end == null)
+                if (_end is null)
                 {
                     FlowPosition flowEnd = Container.FixedTextBuilder.GetPageEndFlowPosition(this.PageIndex);
                     _end = new FixedTextPointer(false, LogicalDirection.Backward, flowEnd);
@@ -849,7 +849,7 @@ namespace System.Windows.Documents
                     double verticalDistance = Math.Max(0, (transformedPt.Y > alignmentRect.Y) ? (transformedPt.Y - alignmentRect.Bottom) : (alignmentRect.Y - transformedPt.Y));
                     double manhattanDistance = horizontalDistance + verticalDistance;
 
-                    if (closestGlyphs == null || manhattanDistance < closestDistance)
+                    if (closestGlyphs is null || manhattanDistance < closestDistance)
                     {
                         closestDistance = manhattanDistance;
                         closestGlyphs = startGlyphs;
@@ -978,7 +978,7 @@ namespace System.Windows.Documents
         {
             int firstChar = charOffset, trailingLength = 0;
 
-            int characterCount = (run.Characters == null) ? 0 : run.Characters.Count;
+            int characterCount = (run.Characters is null) ? 0 : run.Characters.Count;
             if (firstChar == characterCount)
             {
                 // place carat at end of previous character to make sure it works at end of line
@@ -993,7 +993,7 @@ namespace System.Windows.Documents
         internal static Rect _GetGlyphRunDesignRect(Glyphs g, int charStart, int charEnd)
         {
             GlyphRun run = g.ToGlyphRun();
-            if (run == null)
+            if (run is null)
             {
                 return Rect.Empty;
             }

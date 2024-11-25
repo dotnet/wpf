@@ -364,11 +364,11 @@ namespace MS.Internal.AppModel
         {
             // IMPORTANT: See comments in header r.e. IInternetSecurityManager
 
-            if (_secMgr == null)
+            if (_secMgr is null)
             {
                 lock (_lockObj)
                 {
-                    if (_secMgr == null) // null check again - now that we're in the lock. 
+                    if (_secMgr is null) // null check again - now that we're in the lock. 
                     {
                         _secMgr = (UnsafeNativeMethods.IInternetSecurityManager)new InternetSecurityManager();
 

@@ -1158,7 +1158,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             Debug.Assert(IsSynchronizedWithCurrentItemInternal, "We shouldn't be listening for currency changes if IsSynchronizedWithCurrentItemInternal is false");
 
-            if (CollectionView == null || IsSelectionChangeActive)
+            if (CollectionView is null || IsSelectionChangeActive)
             {
                 return;
             }
@@ -1223,7 +1223,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         // for Groups collection that the Gallery is bound to.
         internal static CollectionView GetSourceCollectionView(ItemsControl itemsControl)
         {
-            if (itemsControl == null)
+            if (itemsControl is null)
                 return null;
 
             CollectionViewSource cvs = null;
@@ -1785,8 +1785,8 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (rg != null &&
                 rg.CanUserFilter &&
                 rg._filterMenuButton != null &&
-                rg.FilterPaneContent == null &&
-                rg.FilterPaneContentTemplate == null)
+                rg.FilterPaneContent is null &&
+                rg.FilterPaneContentTemplate is null)
             {
                 args.CanExecute = true;
             }
@@ -1906,7 +1906,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static object OnCoerceFilterItemContainerStyleSelector(DependencyObject d, object baseValue)
         {
             RibbonGallery gallery = (RibbonGallery)d;
-            if (baseValue == null ||
+            if (baseValue is null ||
                 gallery.FilterItemContainerStyle != null ||
                 gallery.AllFilterItemContainerStyle != null)
             {
@@ -2064,7 +2064,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static object OnCoerceFilterItemTemplateSelector(DependencyObject d, object baseValue)
         {
             RibbonGallery gallery = (RibbonGallery)d;
-            if (baseValue == null ||
+            if (baseValue is null ||
                 gallery.FilterItemTemplate != null ||
                 gallery.AllFilterItemTemplate != null)
             {
@@ -2144,7 +2144,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             RibbonGalleryCategory category = (RibbonGalleryCategory)element;
             category.RibbonGallery = this;
 
-            if (SelectedValue != null && SelectedItem == null)
+            if (SelectedValue != null && SelectedItem is null)
             {
                 // Synchronize SelectedItem with SelectedValue
                 ForceCoerceSelectedValue();
@@ -2716,7 +2716,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         // right of focused element, then assume that we are at the left boundary
                         // (any maybe trying to cycle) and hence make the
                         // ancestor RibbonMenuItem handle the event.
-                        if (predictedFocus == null ||
+                        if (predictedFocus is null ||
                             predictedFocus == focusedElement)
                         {
                             callRibbonMenuItemHandler = true;

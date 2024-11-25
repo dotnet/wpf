@@ -79,7 +79,7 @@ namespace MS.Internal
                                          null, null, null) as XamlSerializer;
                  }
 
-                 if (serializer == null)
+                 if (serializer is null)
                  {
                     ThrowException(nameof(SR.ParserNoSerializer),
                                    xamlObjectNode.TypeFullName,
@@ -149,7 +149,7 @@ namespace MS.Internal
                 string attributeValue = xamlPropertyNode.Value;
                 if (!_pass2)
                 {
-                    Debug.Assert(_name == null && _nameField == null, "Name has already been set");
+                    Debug.Assert(_name is null && _nameField is null, "Name has already been set");
                     _nameField = _compiler.AddNameField(attributeValue, xamlPropertyNode.LineNumber, xamlPropertyNode.LinePosition);
                     _name = attributeValue;
                  }
@@ -294,7 +294,7 @@ namespace MS.Internal
                                 BindingFlags.Public | BindingFlags.Static  |
                                 BindingFlags.FlattenHierarchy);
 
-                            if (miKnownEvent == null)
+                            if (miKnownEvent is null)
                             {
                                 // Not an attached event, so try for a clr event.
                                 miKnownEvent = ownerTagType.GetEvent(localAttribName,
@@ -303,7 +303,7 @@ namespace MS.Internal
 
                             if (miKnownEvent != null)
                             {
-                                if (_events == null)
+                                if (_events is null)
                                     _events = new ArrayList();
 
                                 _events.Add(new MarkupCompiler.MarkupEventInfo(xamlUnknownAttributeNode.Value,
@@ -330,7 +330,7 @@ namespace MS.Internal
                         }
                     }
 
-                    if (typeAndSerializer == null)
+                    if (typeAndSerializer is null)
                     {
                         localAttribName = localAttribName.Substring(lastIndex + 1);
                     }
@@ -344,7 +344,7 @@ namespace MS.Internal
                 {
                     string attributeValue = xamlUnknownAttributeNode.Value;
 
-                    Debug.Assert(_name == null && _nameField == null, "Name has already been set");
+                    Debug.Assert(_name is null && _nameField is null, "Name has already been set");
                     _nameField = _compiler.AddNameField(attributeValue, xamlUnknownAttributeNode.LineNumber, xamlUnknownAttributeNode.LinePosition);
                     _name = attributeValue;
 
@@ -364,7 +364,7 @@ namespace MS.Internal
                                                      xamlUnknownAttributeNode.LineNumber);
                     return;
                 }
-                else if (miKnownEvent == null)
+                else if (miKnownEvent is null)
                 {
                     // This may or may not be a local event, but there is no way to know in Pass1.
                     // So we prepare for the worst case sceanrio and assume it may be one so that
@@ -511,7 +511,7 @@ namespace MS.Internal
                 }
                 else
                 {
-                    if (attrName == null)
+                    if (attrName is null)
                         xmlReader.MoveToFirstAttribute();
                     else
                         xmlReader.MoveToAttribute(attrName);
@@ -578,7 +578,7 @@ namespace MS.Internal
                     // validate the event handler name per CLS grammar for identifiers
                     _compiler.ValidateEventHandlerName(xamlClrEventNode.EventName, xamlClrEventNode.Value);
 
-                    if (_events == null)
+                    if (_events is null)
                         _events = new ArrayList();
 
                     _events.Add(new MarkupCompiler.MarkupEventInfo(xamlClrEventNode.Value,
@@ -651,7 +651,7 @@ namespace MS.Internal
 
             if (!_pass2)
             {
-                if (_nameField == null)
+                if (_nameField is null)
                 {
                     if (_isFieldModifierSet)
                     {
@@ -755,7 +755,7 @@ namespace MS.Internal
             }
 
             // Local assembly!
-            if ((xamlPIMappingNode.AssemblyName == null) || (xamlPIMappingNode.AssemblyName.Length == 0))
+            if ((xamlPIMappingNode.AssemblyName is null) || (xamlPIMappingNode.AssemblyName.Length == 0))
             {
                 xamlPIMappingNode.AssemblyName = _compiler.AssemblyName;
                 bool addMapping = !XamlTypeMapper.PITable.Contains(xamlPIMappingNode.XmlNamespace)
@@ -790,7 +790,7 @@ namespace MS.Internal
 
                 if (!_pass2)
                 {
-                    Debug.Assert(_name == null && _nameField == null, "Name definition has already been set");
+                    Debug.Assert(_name is null && _nameField is null, "Name definition has already been set");
                     _nameField = _compiler.AddNameField(attributeValue, xamlDefAttributeNode.LineNumber, xamlDefAttributeNode.LinePosition);
                     _name = attributeValue;
                 }

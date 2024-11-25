@@ -36,7 +36,7 @@ namespace MS.Internal.IO.Packaging
             XmlElement elem = base.GetIdElement(document, idValue);
 
             // If not found then we will try to find it ourselves
-            if (elem == null)
+            if (elem is null)
             {
                 // Require the id to be an NCName (to avoid side-effects when it's
                 // used in an XPath query).  The base class does this check, but
@@ -91,7 +91,7 @@ namespace MS.Internal.IO.Packaging
             }
 
             // now search for XAdES specific references
-            if (node == null)
+            if (node is null)
             {
                 // For XAdES we implement special case where the reference may
                 // be to an internal tag with matching "Id" attribute.

@@ -114,7 +114,7 @@ namespace System.IO
             }
 
             FileStream stream = null;
-            while (stream == null)
+            while (stream is null)
             {
                 // build a candidate path name for the temp file
                 string path = Path.Combine(folderPath, Path.GetRandomFileName());

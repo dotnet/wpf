@@ -296,7 +296,7 @@ namespace System.Windows.Media
             // if these get touched by more than one thread in the lifetime
             // of your app. 
 
-            Debug.Assert(s_Figures == null || s_Figures.IsFrozen,
+            Debug.Assert(s_Figures is null || s_Figures.IsFrozen,
                 "Detected context bound default value PathGeometry.s_Figures (See OS Bug #947272).");
 
 

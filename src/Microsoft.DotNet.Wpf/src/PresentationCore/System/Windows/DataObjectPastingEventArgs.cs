@@ -133,7 +133,7 @@ namespace System.Windows
                 ArgumentNullException.ThrowIfNull(value);
 
                 availableFormats = value.GetFormats(/*autoConvert:*/false);
-                if (availableFormats == null || availableFormats.Length == 0)
+                if (availableFormats is null || availableFormats.Length == 0)
                 {
                     throw new ArgumentException(SR.DataObject_DataObjectMustHaveAtLeastOneFormat);
                 }

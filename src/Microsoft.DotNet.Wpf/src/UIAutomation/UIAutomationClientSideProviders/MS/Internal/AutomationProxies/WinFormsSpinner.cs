@@ -180,7 +180,7 @@ namespace MS.Internal.AutomationProxies
 
                 // Use IAccessible implementation to confirm the spinner & children
                 Accessible acc = null;
-                if (Accessible.AccessibleObjectFromWindow(hwndSpin, NativeMethods.OBJID_CLIENT, ref acc) != NativeMethods.S_OK || acc == null)
+                if (Accessible.AccessibleObjectFromWindow(hwndSpin, NativeMethods.OBJID_CLIENT, ref acc) != NativeMethods.S_OK || acc is null)
                 {
                     return null;
                 }

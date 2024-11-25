@@ -62,7 +62,7 @@ namespace MS.Internal
                 return true;
             }
             
-            if (a == null || b == null)
+            if (a is null || b is null)
             {
                 return false;
             }
@@ -81,13 +81,13 @@ namespace MS.Internal
         /// </return>
         public int GetHashCode(Uri uri)
         {
-            if (uri == null)
+            if (uri is null)
             {
                 return _nullHashcode;
             }
 
             string uriAsString = uri.ToString();
-            if(uriAsString == null)
+            if(uriAsString is null)
             {
                 return _nullHashcode;
             }

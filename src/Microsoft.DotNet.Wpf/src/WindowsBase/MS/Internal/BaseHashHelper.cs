@@ -42,7 +42,7 @@ namespace MS.Internal
             // called with a representative item from a collection - if the
             // representative is null, we'll be pessimistic and assume the
             // items in the collection should not be hashed.
-            if (item == null)
+            if (item is null)
                 return false;
 
             Type type = item.GetType();
@@ -54,7 +54,7 @@ namespace MS.Internal
                 dictionary = (HybridDictionary)_table[assembly];
             }
 
-            if (dictionary == null)
+            if (dictionary is null)
             {
                 dictionary = new HybridDictionary();
 

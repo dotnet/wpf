@@ -273,7 +273,7 @@ namespace System.Windows.Controls
             // if the adorner is currently visible, move it to the new site
             if (GetHasError(d))
             {
-                if (oldSite == null)
+                if (oldSite is null)
                 {
                     oldSite = d;
                 }
@@ -345,7 +345,7 @@ namespace System.Windows.Controls
             {
                 // redirect the adorner to the designated site, if any
                 DependencyObject adornerSite = GetValidationAdornerSite(targetElement);
-                if (adornerSite == null)
+                if (adornerSite is null)
                 {
                     adornerSite = targetElement;
                 }
@@ -429,7 +429,7 @@ namespace System.Windows.Controls
             adornerSite.IsVisibleChanged -= ShowValidationAdornerWhenAdornerSiteGetsVisible;
 
             DependencyObject targetElement = GetValidationAdornerSiteFor(adornerSite);
-            if (targetElement == null)
+            if (targetElement is null)
             {
                 targetElement = adornerSite;
             }
@@ -511,13 +511,13 @@ namespace System.Windows.Controls
         // add a validation error to the given element
         internal static void AddValidationError(ValidationError validationError, DependencyObject targetElement, bool shouldRaiseEvent)
         {
-            if (targetElement == null)
+            if (targetElement is null)
                 return;
 
             bool wasValid;
             ValidationErrorCollection validationErrors = GetErrorsInternal(targetElement);
 
-            if (validationErrors == null)
+            if (validationErrors is null)
             {
                 wasValid = true;
                 validationErrors = new ValidationErrorCollection();
@@ -549,11 +549,11 @@ namespace System.Windows.Controls
         // remove a validation error from the given element
         internal static void RemoveValidationError(ValidationError validationError, DependencyObject targetElement, bool shouldRaiseEvent)
         {
-            if (targetElement == null)
+            if (targetElement is null)
                 return;
 
             ValidationErrorCollection validationErrors = GetErrorsInternal(targetElement);
-            if (validationErrors == null || validationErrors.Count == 0 || !validationErrors.Contains(validationError))
+            if (validationErrors is null || validationErrors.Count == 0 || !validationErrors.Contains(validationError))
                 return;
 
             bool isValid = (validationErrors.Count == 1);   // about to remove the last error

@@ -43,13 +43,13 @@ namespace Test.Elements
     {
         public override object Load(XamlReader xamlReader, IServiceProvider context)
         {
-            if (xamlReader == null)
+            if (xamlReader is null)
             {
                 throw new ArgumentNullException("xamlReader");
             }
 
             var factory = context.GetService(typeof(IXamlObjectWriterFactory)) as IXamlObjectWriterFactory;
-            if (factory == null)
+            if (factory is null)
             {
                 throw new InvalidOperationException("Missing Service Provider Service 'IXamlObjectWriterFactory'");
             }
@@ -85,7 +85,7 @@ namespace Test.Elements
         {
             var resolver = context.GetService(typeof(IXamlNameResolver)) as IXamlNameResolver;
 
-            if (resolver == null)
+            if (resolver is null)
             {
                 throw new InvalidOperationException("Missing Name Resolving Service 'IXamlNameResolver'");
             }

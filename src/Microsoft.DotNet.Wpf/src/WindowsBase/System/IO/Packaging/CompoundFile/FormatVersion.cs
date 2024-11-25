@@ -67,13 +67,13 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                                 VersionPair readerVersion,
                                 VersionPair updaterVersion)
         {
-            if (featureId == null)
+            if (featureId is null)
                 throw new ArgumentNullException("featureId");
-            if (writerVersion == null)
+            if (writerVersion is null)
                 throw new ArgumentNullException("writerVersion");
-            if (readerVersion == null)
+            if (readerVersion is null)
                 throw new ArgumentNullException("readerVersion");
-            if (updaterVersion == null)
+            if (updaterVersion is null)
                 throw new ArgumentNullException("updaterVersion");
 
             if (featureId.Length == 0)
@@ -110,7 +110,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             set
             {
-                if (value == null)
+                if (value is null)
                 {
                     throw new ArgumentNullException("value");
                 }
@@ -130,7 +130,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             }
             set
             {
-                if (value == null)
+                if (value is null)
                 {
                     throw new ArgumentNullException("value");
                 }
@@ -151,7 +151,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             set
             {
-                if (value == null)
+                if (value is null)
                 {
                     throw new ArgumentNullException("value");
                 }
@@ -186,9 +186,9 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             // We have to cast v1 and v2 to Object
             //  to ensure that the == operator on Ojbect class is used not the == operator on FormatVersion
-            if ((Object) v1 == null || (Object) v2 == null)
+            if ((Object) v1 is null || (Object) v2 is null)
             {
-                return ((Object) v1 == null && (Object) v2 == null);
+                return ((Object) v1 is null && (Object) v2 is null);
             }
 
             // Do comparison only if both v1 and v2 are not null
@@ -212,7 +212,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <returns>ture if the object is equal to this instance</returns>
         public override bool Equals(Object obj)
         {
-            if (obj == null)
+            if (obj is null)
             {
                 return false;
             }
@@ -374,7 +374,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// </remarks>
         public bool IsReadableBy(VersionPair version)
         {
-            if (version == null)
+            if (version is null)
             {
                 throw new ArgumentNullException("version");
             }
@@ -393,7 +393,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// </remarks>
         public bool IsUpdatableBy(VersionPair version)
         {
-            if (version == null)
+            if (version is null)
             {
                 throw new ArgumentNullException("version");
             }
@@ -443,7 +443,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             checked
             {
-                if (reader == null)
+                if (reader is null)
                 {
                     throw new ArgumentNullException("reader");
                 }
@@ -515,7 +515,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// </remarks>
         internal static FormatVersion LoadFromStream(Stream stream, out Int32 bytesRead)
         {
-            if (stream == null)
+            if (stream is null)
             {
                 throw new ArgumentNullException("stream");
             }

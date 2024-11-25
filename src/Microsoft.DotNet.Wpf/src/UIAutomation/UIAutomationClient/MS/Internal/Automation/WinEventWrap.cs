@@ -84,7 +84,7 @@ namespace MS.Internal.Automation
 
         internal bool RemoveCallback(object clientCallback)
         {
-            if (clientCallback == null)
+            if (clientCallback is null)
                 return true;    // temp until cleanup of WinEvent code is complete
 
             bool listIsEmpty = true;

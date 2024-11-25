@@ -423,7 +423,7 @@ namespace MS.Internal.Ink
         {
             get
             {
-                if ( s_InkCanvasDType == null )
+                if ( s_InkCanvasDType is null )
                 {
                     s_InkCanvasDType = DependencyObjectType.FromSystemTypeInternal(typeof(InkCanvas));
                 }

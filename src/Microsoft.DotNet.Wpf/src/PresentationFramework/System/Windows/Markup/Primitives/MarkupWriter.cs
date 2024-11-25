@@ -324,7 +324,7 @@ namespace System.Windows.Markup.Primitives
                 Entry keyEntry = _entries[keyIndex];
 
                 // add the constraint
-                if (keyEntry.Predecessors == null)
+                if (keyEntry.Predecessors is null)
                 {
                     keyEntry.Predecessors = new List<int>();
                 }
@@ -520,7 +520,7 @@ namespace System.Windows.Markup.Primitives
 
                 if (!property.IsComposite)
                 {
-                    if (property.IsAttached || property.PropertyDescriptor == null)
+                    if (property.IsAttached || property.PropertyDescriptor is null)
                     {
                         if (property.IsValueAsString)
                         {
@@ -611,13 +611,13 @@ namespace System.Windows.Markup.Primitives
                     else if (property.IsConstructorArgument)
                     {
                         scope.MakeAddressable(NamespaceCache.XamlNamespace);
-                        if (argumentCompositeIndexes == null)
+                        if (argumentCompositeIndexes is null)
                         {
                             argumentCompositeIndexes = new List<int>();
                         }
                         argumentCompositeIndexes.Add(++argumentCount);
                     }
-                    if (composites == null)
+                    if (composites is null)
                     {
                         composites = new List<MarkupProperty>();
                     }
@@ -686,7 +686,7 @@ namespace System.Windows.Markup.Primitives
                         {
                             propertyTagWritten = true;
                             // uri is made addressable above so it is not necessary here
-                            if (property.IsAttached || property.PropertyDescriptor == null)
+                            if (property.IsAttached || property.PropertyDescriptor is null)
                             {
                                 Debug.Assert(!property.IsValueAsString, "Problem with MarkupObject implementation: String values cannnot be composite");
 
@@ -748,7 +748,7 @@ namespace System.Windows.Markup.Primitives
                     {
                         bool lastWasString = false;
                         List<Type> wrapperTypes = GetWrapperTypes(contentProperty.PropertyType);
-                        if (wrapperTypes == null)
+                        if (wrapperTypes is null)
                         {
                             foreach (MarkupObject subItem in contentProperty.Items)
                             {
@@ -771,7 +771,7 @@ namespace System.Windows.Markup.Primitives
                             foreach (MarkupObject subItem in contentProperty.Items)
                             {
                                 MarkupProperty wrappedProperty = GetWrappedProperty(wrapperTypes, subItem);
-                                if (wrappedProperty == null)
+                                if (wrappedProperty is null)
                                 {
                                     WriteItem(subItem, new Scope(scope));
                                     lastWasString = false;
@@ -812,7 +812,7 @@ namespace System.Windows.Markup.Primitives
                 else
                 {
                     string stringContent = contentProperty.Value as string;
-                    if (stringContent == null)
+                    if (stringContent is null)
                     {
                         stringContent = contentProperty.StringValue;
                     }
@@ -882,7 +882,7 @@ namespace System.Windows.Markup.Primitives
                 }
 
                 if (cpa != null &&
-                    contentProperty == null &&
+                    contentProperty is null &&
                     descriptor != null &&
                     descriptor.Name == cpa.Name)
                 {
@@ -892,7 +892,7 @@ namespace System.Windows.Markup.Primitives
                         // content because some IAddChild implementation do not
                         // recognize the collection itself as content, just the
                         // collection's elements.
-                        if (descriptor == null ||
+                        if (descriptor is null ||
                             descriptor.IsReadOnly ||
                             !typeof(IList).IsAssignableFrom(descriptor.PropertyType))
                         {
@@ -945,7 +945,7 @@ namespace System.Windows.Markup.Primitives
                         if (!writtenAttributes.ContainsKey(dependsOn.Name))
                         {
                             // This property depends on a property that hasn't been written yet.
-                            if (deferredProperties == null)
+                            if (deferredProperties is null)
                             {
                                 deferredProperties = new PartiallyOrderedList<string, MarkupProperty>();
                             }
@@ -988,7 +988,7 @@ namespace System.Windows.Markup.Primitives
             // using this verbose syntax for returning, because we may need to add additional logic later
             if (property.IsCollectionProperty)
             {
-                if (_nullDefaultValueAttribute == null)
+                if (_nullDefaultValueAttribute is null)
                 {
                     // if this hasn't been instantiated yet, instantiate it.
                     _nullDefaultValueAttribute = new DefaultValueAttribute(null);
@@ -1086,7 +1086,7 @@ namespace System.Windows.Markup.Primitives
         private List<Type> GetWrapperTypes(Type type)
         {
             AttributeCollection attributes = TypeDescriptor.GetAttributes(type);
-            if (attributes[typeof(ContentWrapperAttribute)] == null)
+            if (attributes[typeof(ContentWrapperAttribute)] is null)
                 return null;
             else
             {
@@ -1343,12 +1343,12 @@ namespace System.Windows.Markup.Primitives
             {
                 get
                 {
-                    if( _containingScope == null )
+                    if( _containingScope is null )
                     {
                         // Topmost element is top of a scope by definition.
                         return true;
                     }
-                    else if( _xmlnsSpacePreserve == null )
+                    else if( _xmlnsSpacePreserve is null )
                     {
                         // Most common case - this scope inherits the parent's
                         //  scope, so it's not a top level preservation scope.
@@ -1391,9 +1391,9 @@ namespace System.Windows.Markup.Primitives
 
             public void RecordMapping(string prefix, string uri)
             {
-                if (_uriToPrefix == null)
+                if (_uriToPrefix is null)
                     _uriToPrefix = new Dictionary<string, string>();
-                if (_prefixToUri == null)
+                if (_prefixToUri is null)
                     _prefixToUri = new Dictionary<string, string>();
                 _uriToPrefix[uri] = prefix;
                 _prefixToUri[prefix] = uri;
@@ -1413,7 +1413,7 @@ namespace System.Windows.Markup.Primitives
 
             public string MakeAddressable(string uri)
             {
-                if (GetPrefixOf(uri) == null)
+                if (GetPrefixOf(uri) is null)
                 {
                     string basePrefix = NamespaceCache.GetDefaultPrefixFor(uri);
                     string prefix = basePrefix;
@@ -1527,11 +1527,11 @@ namespace System.Windows.Markup.Primitives
             public override string ConvertToString(object value, IValueSerializerContext context)
             {
                 Type type = value as Type;
-                if (type == null)
+                if (type is null)
                     throw new InvalidOperationException();
                 string uri = _scope.MakeAddressable(type);
                 string prefix = _scope.GetPrefixOf(uri);
-                if (prefix == null || prefix == "")
+                if (prefix is null || prefix == "")
                     return type.Name;
                 else
                     return $"{prefix}:{type.Name}";
@@ -1572,7 +1572,7 @@ namespace System.Windows.Markup.Primitives
                         Object[] customAttrs = assembly.GetCustomAttributes(typeof(XmlnsDefinitionAttribute), true);
                         foreach (XmlnsDefinitionAttribute definition in customAttrs)
                         {
-                            if (definition.AssemblyName == null)
+                            if (definition.AssemblyName is null)
                             {
                                 string previousBestNamespace = null;
                                 string previousBestPrefix = null;
@@ -1613,7 +1613,7 @@ namespace System.Windows.Markup.Primitives
                 string result;
                 lock (SyncObject)
                 {
-                    if (type.Namespace == null)
+                    if (type.Namespace is null)
                     {
                         result = $"{clrUriPrefix};assembly={type.Assembly.GetName().Name}";
                     }
@@ -1635,7 +1635,7 @@ namespace System.Windows.Markup.Primitives
                 lock (SyncObject)
                 {
                     DefaultPrefixes.TryGetValue(uri, out result);
-                    if (result == null)
+                    if (result is null)
                     {
                         result = "assembly";
                         if (uri.StartsWith(clrUriPrefix, StringComparison.Ordinal))

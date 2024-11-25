@@ -555,7 +555,7 @@ namespace System.Windows.Documents
             // Initialize hashtable
             lock (_rtfControlTableMutex)
             {
-                if (_rtfControlTable == null)
+                if (_rtfControlTable is null)
                 {
                     RtfControlWordInfo[] controlWordInfoTable = RtfControls.ControlTable;
                     _rtfControlTable = new Hashtable(controlWordInfoTable.Length);
@@ -568,7 +568,7 @@ namespace System.Windows.Documents
             }
 
             RtfControlWordInfo cwi = (RtfControlWordInfo)_rtfControlTable[controlName];
-            if (cwi == null)
+            if (cwi is null)
             {
                 // OK, then canonicalize it
                 controlName = controlName.ToLower(CultureInfo.InvariantCulture);

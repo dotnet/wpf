@@ -58,7 +58,7 @@ namespace System.Windows
         {
             Debug.Assert(d != null, "Must have non-null current node");
             
-            if (parent == null)
+            if (parent is null)
             {
                 return new FrugalObjectList<DependencyProperty>(0);
             }
@@ -205,7 +205,7 @@ namespace System.Windows
         {
             get 
             { 
-                if (_inheritablePropertiesStack == null)
+                if (_inheritablePropertiesStack is null)
                 {
                     _inheritablePropertiesStack = new Stack<FrugalObjectList<DependencyProperty>>(1);
                 }

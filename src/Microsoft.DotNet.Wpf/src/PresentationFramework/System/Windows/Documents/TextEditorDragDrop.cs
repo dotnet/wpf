@@ -292,7 +292,7 @@ namespace System.Windows.Documents
             // Creates DropCaret
             internal void TargetEnsureDropCaret()
             {
-                if (_caretDragDrop == null)
+                if (_caretDragDrop is null)
                 {
                     //  We never delete drop caret, never detach it from view. Not a big deal, but not clear...
 
@@ -369,7 +369,7 @@ namespace System.Windows.Documents
                         // Get the ScrollInfo to scroll a line or page up/down
                         IScrollInfo scrollInfo = scroller as IScrollInfo;
 
-                        if (scrollInfo == null && scroller is ScrollViewer)
+                        if (scrollInfo is null && scroller is ScrollViewer)
                         {
                             scrollInfo = ((ScrollViewer)scroller).ScrollInfo;
                         }
@@ -525,7 +525,7 @@ namespace System.Windows.Documents
                 ITextSelection selection = _textEditor.Selection;
                 Invariant.Assert(selection != null);
 
-                if (e.Data == null || e.AllowedEffects == DragDropEffects.None)
+                if (e.Data is null || e.AllowedEffects == DragDropEffects.None)
                 {
                     e.Effects = DragDropEffects.None;
                     return;
@@ -645,7 +645,7 @@ namespace System.Windows.Documents
                 if (!_textEditor.IsReadOnly && _textEditor.TextView != null && _textEditor.TextView.RenderScope != null)
                 {
                     Window window = Window.GetWindow(_textEditor.TextView.RenderScope);
-                    if (window == null)
+                    if (window is null)
                     {
                         return true;
                     }
@@ -716,7 +716,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null)
+            if (This is null)
             {
                 return;
             }
@@ -749,7 +749,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null)
+            if (This is null)
             {
                 return;
             }
@@ -777,21 +777,21 @@ namespace System.Windows.Documents
 
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null)
+            if (This is null)
             {
                 e.Effects = DragDropEffects.None;
                 return;
             }
 
             // Ignore the event if the editor has been detached from its scope
-            if (!This._IsEnabled || This.TextView == null || This.TextView.RenderScope == null)
+            if (!This._IsEnabled || This.TextView is null || This.TextView.RenderScope is null)
             {
                 e.Effects = DragDropEffects.None;
                 return;
             }
 
             // If there's no supported data available, don't allow the drag-and-drop.
-            if (e.Data == null)
+            if (e.Data is null)
             {
                 e.Effects = DragDropEffects.None;
                 return;
@@ -825,21 +825,21 @@ namespace System.Windows.Documents
 
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null)
+            if (This is null)
             {
                 e.Effects = DragDropEffects.None;
                 return;
             }
 
             // Ignore the event if the editor has been detached from its scope
-            if (!This._IsEnabled || This.TextView == null || This.TextView.RenderScope == null)
+            if (!This._IsEnabled || This.TextView is null || This.TextView.RenderScope is null)
             {
                 e.Effects = DragDropEffects.None;
                 return;
             }
 
             // If there's no supported data available, don't allow the drag-and-drop.
-            if (e.Data == null)
+            if (e.Data is null)
             {
                 e.Effects = DragDropEffects.None;
                 return;
@@ -872,7 +872,7 @@ namespace System.Windows.Documents
 
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null)
+            if (This is null)
             {
                 return;
             }
@@ -901,7 +901,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null)
+            if (This is null)
             {
                 return;
             }
@@ -929,7 +929,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null)
+            if (This is null)
             {
                 return;
             }

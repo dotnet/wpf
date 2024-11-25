@@ -450,8 +450,8 @@ namespace MS.Internal.Ink
         /// <returns></returns>
         internal InputDevice GetInputDeviceForReset()
         {
-            Debug.Assert((_capturedStylus != null && _capturedMouse == null) 
-                            || (_capturedStylus == null && _capturedMouse != null),
+            Debug.Assert((_capturedStylus != null && _capturedMouse is null) 
+                            || (_capturedStylus is null && _capturedMouse != null),
                             "There must be one and at most one device being captured.");
             
             if ( _capturedStylus != null && !_capturedStylus.InAir )
@@ -482,7 +482,7 @@ namespace MS.Internal.Ink
         {
             get
             {
-                if ( _lassoSelectionBehavior == null )
+                if ( _lassoSelectionBehavior is null )
                 {
                     _lassoSelectionBehavior = new LassoSelectionBehavior(this, _inkCanvas);
                 }
@@ -498,7 +498,7 @@ namespace MS.Internal.Ink
         {
             get
             {
-                if ( _selectionEditingBehavior == null )
+                if ( _selectionEditingBehavior is null )
                 {
                     _selectionEditingBehavior = new SelectionEditingBehavior(this, _inkCanvas);
                 }
@@ -529,7 +529,7 @@ namespace MS.Internal.Ink
         {
             get
             {
-                if ( _selectionEditor == null )
+                if ( _selectionEditor is null )
                 {
                     _selectionEditor = new SelectionEditor(this, _inkCanvas);
                 }
@@ -784,7 +784,7 @@ namespace MS.Internal.Ink
             if ( IsInputDeviceCaptured(args.Device) )
             {
                 IStylusEditing stylusEditingBehavior = ActiveEditingBehavior as IStylusEditing;
-                Debug.Assert(stylusEditingBehavior != null || ActiveEditingBehavior == null,
+                Debug.Assert(stylusEditingBehavior != null || ActiveEditingBehavior is null,
                     "The ActiveEditingBehavior should be either null (The None mode) or type of IStylusEditing.");
 
                 if ( stylusEditingBehavior != null )
@@ -867,7 +867,7 @@ namespace MS.Internal.Ink
             if (IsInputDeviceCaptured(args.Device) 
                 || (stylusDevice != null && IsInputDeviceCaptured(stylusDevice)))
             {
-                Debug.Assert(ActiveEditingBehavior == null || ActiveEditingBehavior is IStylusEditing,
+                Debug.Assert(ActiveEditingBehavior is null || ActiveEditingBehavior is IStylusEditing,
                     "The ActiveEditingBehavior should be either null (The None mode) or type of IStylusEditing.");
 
                 // Make sure we only look at mouse left button events if watching mouse events. 
@@ -1067,7 +1067,7 @@ namespace MS.Internal.Ink
         /// <returns></returns>
         private bool IsInputDeviceCaptured(InputDevice inputDevice)
         {
-            Debug.Assert(_capturedStylus == null || _capturedMouse == null, "InkCanvas cannot capture both stylus and mouse at the same time.");
+            Debug.Assert(_capturedStylus is null || _capturedMouse is null, "InkCanvas cannot capture both stylus and mouse at the same time.");
             return (inputDevice == _capturedStylus && ((StylusDevice)inputDevice).Captured == _inkCanvas)
                 || (inputDevice == _capturedMouse && ( (MouseDevice)inputDevice).Captured == _inkCanvas);
         }
@@ -1080,7 +1080,7 @@ namespace MS.Internal.Ink
         {
             EditingBehavior behavior = ActiveEditingBehavior;
 
-            if ( behavior == null )
+            if ( behavior is null )
             {
                 // Return the default Arrow cursor for the None mode.
                 return Cursors.Arrow;
@@ -1332,7 +1332,7 @@ namespace MS.Internal.Ink
         {
             get
             {
-                if ( _inkCollectionBehavior == null )
+                if ( _inkCollectionBehavior is null )
                 {
                     _inkCollectionBehavior = new InkCollectionBehavior(this, _inkCanvas);
                 }
@@ -1348,7 +1348,7 @@ namespace MS.Internal.Ink
         {
             get
             {
-                if ( _eraserBehavior == null )
+                if ( _eraserBehavior is null )
                 {
                     _eraserBehavior = new EraserBehavior(this, _inkCanvas);
                 }

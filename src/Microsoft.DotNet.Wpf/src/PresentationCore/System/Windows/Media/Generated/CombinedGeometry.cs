@@ -272,7 +272,7 @@ namespace System.Windows.Media
 
                 // Obtain handles for properties that implement DUCE.IResource
                 DUCE.ResourceHandle hTransform;
-                if (vTransform == null ||
+                if (vTransform is null ||
                     Object.ReferenceEquals(vTransform, Transform.Identity)
                     )
                 {
@@ -444,11 +444,11 @@ namespace System.Windows.Media
             // if these get touched by more than one thread in the lifetime
             // of your app.  (Windows OS 
 
-            Debug.Assert(s_Geometry1 == null || s_Geometry1.IsFrozen,
+            Debug.Assert(s_Geometry1 is null || s_Geometry1.IsFrozen,
                 "Detected context bound default value CombinedGeometry.s_Geometry1 (See OS Bug #947272).");
 
 
-            Debug.Assert(s_Geometry2 == null || s_Geometry2.IsFrozen,
+            Debug.Assert(s_Geometry2 is null || s_Geometry2.IsFrozen,
                 "Detected context bound default value CombinedGeometry.s_Geometry2 (See OS Bug #947272).");
 
 

@@ -61,7 +61,7 @@ namespace MS.Internal.Controls
         {
             get
             {
-                if (_sort == null)
+                if (_sort is null)
                     SetSortDescriptions(new SortDescriptionCollection());
                 return _sort;
             }
@@ -513,7 +513,7 @@ namespace MS.Internal.Controls
             if (SortDescriptions.Count > 0 || Filter != null)
             {
                 // filter the view list
-                if (Filter == null)
+                if (Filter is null)
                 {
                     _viewList = new ArrayList(_rawList);
                 }
@@ -702,7 +702,7 @@ namespace MS.Internal.Controls
         DependencyObject AssertPristineModelChild(object item)
         {
             DependencyObject node = item as DependencyObject;
-            if (node == null)
+            if (node is null)
             {
                 return null;
             }

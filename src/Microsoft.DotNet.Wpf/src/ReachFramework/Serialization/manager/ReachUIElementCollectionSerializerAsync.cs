@@ -64,7 +64,7 @@ namespace System.Windows.Xps.Serialization
             ReachSerializerContext context
             )
         {
-            if(context == null)
+            if(context is null)
             {
 
             }
@@ -136,7 +136,7 @@ namespace System.Windows.Xps.Serialization
 
             IEnumerable enumerableObject = serializableObjectContext.TargetObject as IEnumerable;
 
-            if (enumerableObject == null)
+            if (enumerableObject is null)
             {
                 throw new XpsSerializationException(SR.Format(SR.MustBeOfType, "serializableObjectContext.TargetObject", typeof(IEnumerable)));
             }

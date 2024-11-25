@@ -257,7 +257,7 @@ namespace System.Windows
                 IEnumerator children = LogicalChildren;
 
                 // if null, there are no children.
-                if (children == null)
+                if (children is null)
                 {
                     HasLogicalChildren = false;
                 }
@@ -446,7 +446,7 @@ namespace System.Windows
 
             InVisibilityCollapsedTree = false;  // False == we don't know whether we're in a visibility collapsed tree.
 
-            if (parentTreeState.TopmostCollapsedParentNode == null)
+            if (parentTreeState.TopmostCollapsedParentNode is null)
             {
                 // There is no ancestor node with Visibility=Collapsed.
                 //  See if "fe" is the root of a collapsed subtree.
@@ -703,11 +703,11 @@ namespace System.Windows
         internal void FireLoadedOnDescendentsInternal()
         {
             // This is to prevent duplicate Broadcasts for the Loaded event
-            if (LoadedPending == null)
+            if (LoadedPending is null)
             {
                 DependencyObject parent = Parent;
 
-                if (parent == null)
+                if (parent is null)
                 {
                     parent = VisualTreeHelper.GetParent(this);
                 }
@@ -717,7 +717,7 @@ namespace System.Windows
                 // Note that if the Loaded and the Unloaded do not change the position of
                 // the node within the loagical tree they are considered to cancel each other out.
                 object[] unloadedPending = UnloadedPending;
-                if (unloadedPending == null || unloadedPending[2] != parent)
+                if (unloadedPending is null || unloadedPending[2] != parent)
                 {
                     // Add a callback to the MediaContext which will be called
                     // before the first render after this point
@@ -737,11 +737,11 @@ namespace System.Windows
         internal void FireUnloadedOnDescendentsInternal()
         {
             // This is to prevent duplicate Broadcasts for the Unloaded event
-            if (UnloadedPending == null)
+            if (UnloadedPending is null)
             {
                 DependencyObject parent = Parent;
 
-                if (parent == null)
+                if (parent is null)
                 {
                     parent = VisualTreeHelper.GetParent(this);
                 }
@@ -751,7 +751,7 @@ namespace System.Windows
                 // Note that if the Loaded and the Unloaded do not change the position of
                 // the node within the loagical tree they are considered to cancel each other out.
                 object[] loadedPending = LoadedPending;
-                if (loadedPending == null)
+                if (loadedPending is null)
                 {
                     // Add a callback to the MediaContext which will be called
                     // before the first render after this point
@@ -801,12 +801,12 @@ namespace System.Windows
             // b) this element has no visual or logical parent
             // c) the context does not introduce a cycle
             if ((property == VisualBrush.VisualProperty || property == BitmapCacheBrush.TargetProperty)
-                && FrameworkElement.GetFrameworkParent(this) == null
+                && FrameworkElement.GetFrameworkParent(this) is null
                  //!FrameworkObject.IsEffectiveAncestor(this, context, property))
                 && !FrameworkObject.IsEffectiveAncestor(this, context))
             {
                 //FrameworkObject.Log("+ {0}", FrameworkObject.LogIC(context, property, this));
-                if (!HasMultipleInheritanceContexts && InheritanceContext == null)
+                if (!HasMultipleInheritanceContexts && InheritanceContext is null)
                 {
                     // first request - accept the new inheritance context
                     InheritanceContextField.SetValue(this, context);

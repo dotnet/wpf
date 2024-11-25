@@ -248,7 +248,7 @@ namespace System.Windows.Annotations
         {            
             // If no errors, not cancelled, and page isn't missing, create a new page
             // with annotations and create a new event args for that page.
-            if (!e.Cancelled && e.Error == null && e.DocumentPage != DocumentPage.Missing) 
+            if (!e.Cancelled && e.Error is null && e.DocumentPage != DocumentPage.Missing) 
             {      
                 // Since we can't change the page the args is holding we create a new
                 // args object with the page we produce.

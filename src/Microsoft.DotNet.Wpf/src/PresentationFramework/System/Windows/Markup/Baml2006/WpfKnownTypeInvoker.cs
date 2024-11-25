@@ -21,7 +21,7 @@ namespace System.Windows.Baml2006
 
         public override object CreateInstance(object[] arguments)
         {
-            if ((arguments == null || arguments.Length == 0) && _type.DefaultConstructor != null)
+            if ((arguments is null || arguments.Length == 0) && _type.DefaultConstructor != null)
             {
                 return _type.DefaultConstructor.Invoke();
             }

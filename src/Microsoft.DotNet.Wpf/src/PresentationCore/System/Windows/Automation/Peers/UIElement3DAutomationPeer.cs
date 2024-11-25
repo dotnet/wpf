@@ -72,7 +72,7 @@ namespace System.Windows.Automation.Peers
             iterate(_owner,
                     (IteratorCallback)delegate(AutomationPeer peer)
                     {
-                        if (children == null)
+                        if (children is null)
                             children = new List<AutomationPeer>();
 
                         children.Add(peer);
@@ -126,7 +126,7 @@ namespace System.Windows.Automation.Peers
             if (patternInterface == PatternInterface.SynchronizedInput)
             {
                 // Adaptor object is used here to avoid loading UIA assemblies in non-UIA scenarios.
-                if (_synchronizedInputPattern == null)
+                if (_synchronizedInputPattern is null)
                     _synchronizedInputPattern = new SynchronizedInputAdaptor(_owner);
                 return _synchronizedInputPattern;
             }
@@ -184,13 +184,13 @@ namespace System.Windows.Automation.Peers
             PresentationSource presentationSource = PresentationSource.CriticalFromVisual(_owner);
 
             // If there's no source, the element is not visible, return empty rect
-            if(presentationSource == null)
+            if(presentationSource is null)
                 return false;
 
             HwndSource hwndSource = presentationSource as HwndSource;
 
             // If the source isn't an HwndSource, there's not much we can do, return empty rect
-            if(hwndSource == null)
+            if(hwndSource is null)
                 return false;
 
             Rect rectElement    =  _owner.Visual2DContentBounds;            

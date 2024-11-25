@@ -167,7 +167,7 @@ namespace MS.Internal.Data
 
             SourceValueInfo[] result;
 
-            if (_error == null)
+            if (_error is null)
             {
                 result = new SourceValueInfo[_al.Count];
                 _al.CopyTo(result);

@@ -204,7 +204,7 @@ namespace MS.Internal.PtsHost
                 if (inlineFlowDirection != parentFlowDirection)
                 {
                     // Inline's flow direction is different from its parent. Need to create new TextSpanModifier with flow direction
-                    if (inlineTextDecorations == null || inlineTextDecorations.Count == 0)
+                    if (inlineTextDecorations is null || inlineTextDecorations.Count == 0)
                     {
                         run = new TextSpanModifier(
                             _elementEdgeCharacterLength,
@@ -225,7 +225,7 @@ namespace MS.Internal.PtsHost
                 }
                 else
                 {
-                    if (inlineTextDecorations == null || inlineTextDecorations.Count == 0)
+                    if (inlineTextDecorations is null || inlineTextDecorations.Count == 0)
                     {
                         run = new TextHidden(_elementEdgeCharacterLength);
                     }
@@ -282,7 +282,7 @@ namespace MS.Internal.PtsHost
                 else
                 {
                     TextDecorationCollection textDecorations = DynamicPropertyReader.GetTextDecorations(inline);
-                    if (textDecorations == null || textDecorations.Count == 0)
+                    if (textDecorations is null || textDecorations.Count == 0)
                     {
                         // (2) End of inline element, hide CloseEdge character and continue
                         run = new TextHidden(_elementEdgeCharacterLength);

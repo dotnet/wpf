@@ -121,7 +121,7 @@ namespace System.Windows.Media.Media3D
         {
             PointCollection tx = TextureCoordinates;
  
-            int count = (tx == null) ? 0 : tx.Count;
+            int count = (tx is null) ? 0 : tx.Count;
 
             if (count > 0)
             {
@@ -173,7 +173,7 @@ namespace System.Windows.Media.Media3D
                 "Caller should make sure we're trying to hit something");
 
             Point3DCollection positions = Positions;
-            if (positions == null)
+            if (positions is null)
             {
                 return;
             }
@@ -208,7 +208,7 @@ namespace System.Windows.Media.Media3D
             // as JIT produces different, faster code than NGEN.
             //
             
-            if (indices == null || indices.Count == 0)
+            if (indices is null || indices.Count == 0)
             {
                 FrugalStructList<Point3D> ps = positions._collection; 
                 int count = ps.Count - (ps.Count % 3);

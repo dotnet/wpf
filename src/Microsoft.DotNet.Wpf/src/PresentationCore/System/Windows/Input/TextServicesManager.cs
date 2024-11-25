@@ -72,7 +72,7 @@ namespace System.Windows.Input
         // Track the focus of KeyboardDevice. KeyboardDevice.ChangeFocus() this.
         internal void Focus(DependencyObject focus)
         {
-            if (focus == null)
+            if (focus is null)
             {
                 // Don't grab keyboard events from Text Services Framework without keyboard focus.
                 this.Dispatcher.IsTSFMessagePumpEnabled = false;
@@ -137,7 +137,7 @@ namespace System.Windows.Input
                 return;
 
             DependencyObject element = Keyboard.FocusedElement as DependencyObject;
-            if ((element == null) || (bool)element.GetValue(InputMethod.IsInputMethodSuspendedProperty))
+            if ((element is null) || (bool)element.GetValue(InputMethod.IsInputMethodSuspendedProperty))
             {
                 // The focus is on the element that suspending IME's input (such as menu).
                 // we don't do anything.
@@ -173,7 +173,7 @@ namespace System.Windows.Input
                 return;
 
             DependencyObject element = Keyboard.FocusedElement as DependencyObject;
-            if ((element == null) || (bool)element.GetValue(InputMethod.IsInputMethodSuspendedProperty))
+            if ((element is null) || (bool)element.GetValue(InputMethod.IsInputMethodSuspendedProperty))
             {
                 // The focus is on the element that suspending IME's input (such as menu).
                 // we don't do anything.

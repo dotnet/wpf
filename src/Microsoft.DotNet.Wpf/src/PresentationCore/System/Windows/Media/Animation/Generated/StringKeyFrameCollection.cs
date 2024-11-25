@@ -57,7 +57,7 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-                if (s_emptyCollection == null)
+                if (s_emptyCollection is null)
                 {
                     StringKeyFrameCollection emptyCollection = new StringKeyFrameCollection();
 
@@ -469,7 +469,7 @@ namespace System.Windows.Media.Animation
             }
             set
             {
-                if (value == null)
+                if (value is null)
                 {
                     throw new ArgumentNullException(String.Format(CultureInfo.InvariantCulture, "StringKeyFrameCollection[{0}]", index));
                 }

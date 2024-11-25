@@ -888,7 +888,7 @@ namespace MS.Internal.Data
                     return cvls.LiveSortingProperties;
 
                 // use a dummy collection.  Its elements are ignored, but at least it won't crash.
-                if (_liveSortingProperties == null)
+                if (_liveSortingProperties is null)
                     _liveSortingProperties = new ObservableCollection<string>();
                 return _liveSortingProperties;
             }
@@ -914,7 +914,7 @@ namespace MS.Internal.Data
                     return cvls.LiveFilteringProperties;
 
                 // use a dummy collection.  Its elements are ignored, but at least it won't crash.
-                if (_liveFilteringProperties == null)
+                if (_liveFilteringProperties is null)
                     _liveFilteringProperties = new ObservableCollection<string>();
                 return _liveFilteringProperties;
             }
@@ -944,7 +944,7 @@ namespace MS.Internal.Data
                     return cvls.LiveGroupingProperties;
 
                 // use a dummy collection.  Its elements are ignored, but at least it won't crash.
-                if (_liveGroupingProperties == null)
+                if (_liveGroupingProperties is null)
                     _liveGroupingProperties = new ObservableCollection<string>();
                 return _liveGroupingProperties;
             }
@@ -1055,7 +1055,7 @@ namespace MS.Internal.Data
         {
             get
             {
-                if (_indexer == null)
+                if (_indexer is null)
                 {
                     IndexedEnumerable newIndexer = new IndexedEnumerable(ProxiedView, new Predicate<object>(this.PassesFilter));
                     Interlocked.CompareExchange(ref _indexer, newIndexer, null);

@@ -114,7 +114,7 @@ namespace System.Windows.Baml2006
         {
             get
             {
-                if (_asContentProperty == null)
+                if (_asContentProperty is null)
                 {
                     _asContentProperty = GetAsContentProperty();
                 }
@@ -124,7 +124,7 @@ namespace System.Windows.Baml2006
 
         protected virtual WpfXamlMember GetAsContentProperty()
         {
-            if (DependencyProperty == null)
+            if (DependencyProperty is null)
             {
                 // Not a DP, no fallback needed
                 return this;
@@ -134,7 +134,7 @@ namespace System.Windows.Baml2006
             if (_underlyingMemberIsKnown)
             {
                 PropertyInfo underlyingProperty = UnderlyingMember as PropertyInfo;
-                if (underlyingProperty == null)
+                if (underlyingProperty is null)
                 {
                     // No underlying CLR property, no fallback needed
                     return this;
@@ -182,7 +182,7 @@ namespace System.Windows.Baml2006
         protected override MemberInfo LookupUnderlyingMember()
         {
             MemberInfo member = base.LookupUnderlyingMember();
-            if (member == null)
+            if (member is null)
             {
                 if (BaseUnderlyingMember != null)
                 {
@@ -197,7 +197,7 @@ namespace System.Windows.Baml2006
         {
             // Want to look up the base's UnderlyingSetter in case it's already there
             MethodInfo setter = base.LookupUnderlyingSetter();
-            if (setter == null)
+            if (setter is null)
             {
                 if (BaseUnderlyingMember != null)
                 {
@@ -212,7 +212,7 @@ namespace System.Windows.Baml2006
         {
             // Want to look up the base's UnderlyingSetter in case it's already there
             MethodInfo getter = base.LookupUnderlyingGetter();
-            if (getter == null)
+            if (getter is null)
             {
                 if (BaseUnderlyingMember != null)
                 {
@@ -308,13 +308,13 @@ namespace System.Windows.Baml2006
         {
             get
             {
-                if (_baseUnderlyingMember == null)
+                if (_baseUnderlyingMember is null)
                 {
                     WpfXamlType wpfXType = DeclaringType as WpfXamlType;
 
                     _baseUnderlyingMember = wpfXType.FindBaseXamlMember(Name, IsAttachable);
 
-                    if (_baseUnderlyingMember == null)
+                    if (_baseUnderlyingMember is null)
                     {
                         // Find the attached or regular property
                         _baseUnderlyingMember = wpfXType.FindBaseXamlMember(Name, !IsAttachable);

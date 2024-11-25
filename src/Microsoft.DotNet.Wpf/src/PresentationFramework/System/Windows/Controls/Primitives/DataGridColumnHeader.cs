@@ -328,13 +328,13 @@ namespace System.Windows.Controls.Primitives
             Debug.Assert(header != null, "Header should not be null");
 
             DataGridColumn resizingColumn = header.Column;
-            if (resizingColumn == null)
+            if (resizingColumn is null)
             {
                 return;
             }
 
             DataGrid dataGrid = resizingColumn.DataGridOwner;
-            if (dataGrid == null)
+            if (dataGrid is null)
             {
                 return;
             }
@@ -489,7 +489,7 @@ namespace System.Windows.Controls.Primitives
 
         private void SetLeftGripperVisibility()
         {
-            if (_leftGripper == null || Column == null)
+            if (_leftGripper is null || Column is null)
             {
                 return;
             }
@@ -510,7 +510,7 @@ namespace System.Windows.Controls.Primitives
 
         private void SetLeftGripperVisibility(bool canPreviousColumnResize)
         {
-            if (_leftGripper == null || Column == null)
+            if (_leftGripper is null || Column is null)
             {
                 return;
             }
@@ -528,7 +528,7 @@ namespace System.Windows.Controls.Primitives
 
         private void SetRightGripperVisibility()
         {
-            if (_rightGripper == null || Column == null)
+            if (_rightGripper is null || Column is null)
             {
                 return;
             }
@@ -679,7 +679,7 @@ namespace System.Windows.Controls.Primitives
             DataGrid dataGrid = null;
 
             // Propagate style changes to any filler column headers.
-            if (column == null)
+            if (column is null)
             {
                 DataGridColumnHeadersPresenter presenter = columnHeader.TemplatedParent as DataGridColumnHeadersPresenter;
                 if (presenter != null)
@@ -789,7 +789,7 @@ namespace System.Windows.Controls.Primitives
             DataGrid dataGrid = null;
 
             // Propagate style changes to any filler column headers.
-            if (column == null)
+            if (column is null)
             {
                 DataGridColumnHeadersPresenter presenter = columnHeader.TemplatedParent as DataGridColumnHeadersPresenter;
                 if (presenter != null)
@@ -912,7 +912,7 @@ namespace System.Windows.Controls.Primitives
             Geometry frozenGeometry = DataGridHelper.GetFrozenClipForCell(header);
             if (frozenGeometry != null)
             {
-                if (geometry == null)
+                if (geometry is null)
                 {
                     return frozenGeometry;
                 }
@@ -931,7 +931,7 @@ namespace System.Windows.Controls.Primitives
         {
             get
             {
-                if (_parentPresenter == null)
+                if (_parentPresenter is null)
                 {
                     _parentPresenter = ItemsControl.ItemsControlFromItemContainer(this) as DataGridColumnHeadersPresenter;
                 }

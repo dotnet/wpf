@@ -42,7 +42,7 @@ namespace System.Windows
         /// </remarks>        
         internal bool ValueEquals(TextDecorationCollection textDecorations)
         {
-            if (textDecorations == null) 
+            if (textDecorations is null) 
                 return false;   // o is either null or not TextDecorations object
 
             if (this == textDecorations) 

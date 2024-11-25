@@ -140,7 +140,7 @@ namespace System.Windows.Media.Animation
                 }
             }
 
-            // Need to perform parameter validation in the list == null case
+            // Need to perform parameter validation in the list is null case
         }
 
         #endregion // Methods
@@ -295,7 +295,7 @@ namespace System.Windows.Media.Animation
                     list = clockGroup.InternalChildren;
                 }
 
-                if (list == null)
+                if (list is null)
                 {
                     throw new ArgumentOutOfRangeException("index");
                 }

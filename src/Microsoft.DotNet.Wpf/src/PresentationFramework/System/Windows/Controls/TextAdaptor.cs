@@ -92,7 +92,7 @@ namespace MS.Internal.Automation
         internal Rect[] GetBoundingRectangles(ITextPointer start, ITextPointer end, bool clipToView, bool transformToScreen)
         {
             ITextView textView = GetUpdatedTextView();
-            if (textView == null)
+            if (textView is null)
             {
                 return Array.Empty<Rect>();
             }
@@ -289,7 +289,7 @@ namespace MS.Internal.Automation
         internal ITextRangeProvider TextRangeFromTextPointers(ITextPointer rangeStart, ITextPointer rangeEnd)
         {
             // special case for the entire range
-            if (rangeStart == null && rangeEnd == null)
+            if (rangeStart is null && rangeEnd is null)
                 return null;
 
             // map null into the appropriate endpoint
@@ -495,7 +495,7 @@ namespace MS.Internal.Automation
         ITextRangeProvider[] ITextProvider.GetSelection()
         {
             ITextRange selection = _textContainer.TextSelection;
-            if (selection == null)
+            if (selection is null)
             {
                 throw new InvalidOperationException(SR.TextProvider_TextSelectionNotSupported);
             }
@@ -557,7 +557,7 @@ namespace MS.Internal.Automation
             }
             // If no text is visible in the control, return the degenerate text range 
             // (empty range) at the beginning of the document.
-            if (ranges == null)
+            if (ranges is null)
             {
                 ranges = new ITextRangeProvider[] { new TextRangeAdaptor(this, _textContainer.Start, _textContainer.Start, _textPeer) };
             }
@@ -646,7 +646,7 @@ namespace MS.Internal.Automation
                     range = new TextRangeAdaptor(this, rangeStart, rangeEnd, _textPeer);
                 }
             }
-            if (range == null)
+            if (range is null)
             {
                 throw new InvalidOperationException(SR.TextProvider_InvalidChildElement);
             }
@@ -675,7 +675,7 @@ namespace MS.Internal.Automation
                     range = new TextRangeAdaptor(this, position, position, _textPeer);
                 }
             }
-            if (range == null)
+            if (range is null)
             {
                 throw new ArgumentException(SR.TextProvider_InvalidPoint);
             }
@@ -703,7 +703,7 @@ namespace MS.Internal.Automation
         {
             get
             {
-                return (_textContainer.TextSelection == null) ? SupportedTextSelection.None : SupportedTextSelection.Single;
+                return (_textContainer.TextSelection is null) ? SupportedTextSelection.None : SupportedTextSelection.Single;
             }
         }
 

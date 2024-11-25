@@ -523,7 +523,7 @@ namespace System.Windows.Controls
             if (CanShowFindToolBar)
             {
                 // Toggle on the FindToolBar between visible and hidden state.
-                ToggleFindToolBar(FindToolBar == null);
+                ToggleFindToolBar(FindToolBar is null);
             }
         }
 
@@ -930,7 +930,7 @@ namespace System.Windows.Controls
         /// <param name="enable">Whether to enable/disable FindToolBar.</param>
         private void ToggleFindToolBar(bool enable)
         {
-            Invariant.Assert(enable == (FindToolBar == null));
+            Invariant.Assert(enable == (FindToolBar is null));
             DocumentViewerHelper.ToggleFindToolBar(_findToolBarHost, new EventHandler(OnFindInvoked), enable);
             // FindToolBar is embedded inside the toolbar, so event if the ToolBar is not visible
             // it needs to be shown when showing FindToolBar.
@@ -990,7 +990,7 @@ namespace System.Windows.Controls
             if (IsSelectionEnabled &&
                 Document != null &&
                 RenderScope != null &&
-                Document.StructuralCache.TextContainer.TextSelection == null)
+                Document.StructuralCache.TextContainer.TextSelection is null)
             {
                 _textEditor = new TextEditor(Document.StructuralCache.TextContainer, this, false);
                 _textEditor.IsReadOnly = !IsEditingEnabled;
@@ -1004,7 +1004,7 @@ namespace System.Windows.Controls
             }
 
             // If TextEditor is not enabled, FindToolBar cannot be visible.
-            if (_textEditor == null && FindToolBar != null)
+            if (_textEditor is null && FindToolBar != null)
             {
                 ToggleFindToolBar(false);
             }
@@ -1408,7 +1408,7 @@ namespace System.Windows.Controls
             // b) Find command is enabled only when FindToolBar is enabled.
             // c) Print command is enabled when Document is attached.
             // d) CancelPrint command is enabled only during printing.
-            if (viewer._printingState == null)
+            if (viewer._printingState is null)
             {
                 if (args.Command == ApplicationCommands.Find)
                 {
@@ -1553,7 +1553,7 @@ namespace System.Windows.Controls
                 // It is possible, because RenderScope is inside ScrollViewer.
 
                 // If we did not find anything, alert the user.
-                if ((findResult == null) || findResult.IsEmpty)
+                if ((findResult is null) || findResult.IsEmpty)
                 {
                     DocumentViewerHelper.ShowFindUnsuccessfulMessage(findToolBar);
                 }

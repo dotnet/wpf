@@ -1030,7 +1030,7 @@ namespace System.Windows.Documents
             ChildDocumentBlock cdb = thisTp.ChildBlock;
             bool isNavigator = true;
             ITextPointer childTn = thisTp.ChildPointer;
-            if (childTn == null)
+            if (childTn is null)
             {
                 isNavigator = false;
                 childTn = thisTp.ChildPointer.CreatePointer();

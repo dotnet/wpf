@@ -104,7 +104,7 @@ namespace System.Windows
         
         internal void Seal()
         {
-            Debug.Assert (Owner == null);
+            Debug.Assert (Owner is null);
 
             _sealed = true;
 

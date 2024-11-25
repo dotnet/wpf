@@ -381,7 +381,7 @@ namespace MS.Internal.Printing.Configuration
         {
             get
             {
-                if (this._printTicketNamespace == null)
+                if (this._printTicketNamespace is null)
                 {
                     string deviceNamepace = string.Format(
                             CultureInfo.InvariantCulture,
@@ -573,7 +573,7 @@ namespace MS.Internal.Printing.Configuration
                 }
             }
 
-            if (result == null)
+            if (result is null)
             {
                 throw new PrintSystemException();
             }

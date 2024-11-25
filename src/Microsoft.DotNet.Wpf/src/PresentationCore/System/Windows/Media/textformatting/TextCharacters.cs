@@ -29,7 +29,7 @@ namespace System.Windows.Media.TextFormatting
 {
     /// <summary>
     /// A specialized TextSymbols implemented by TextFormatter to produces 
-    /// a collection of TextCharacterShape – each represents a collection of 
+    /// a collection of TextCharacterShape ï¿½ each represents a collection of 
     /// character glyphs from distinct physical typeface.
     /// </summary>
     public class TextCharacters : TextRun, ITextSymbols, IShapeableTextCollector
@@ -67,7 +67,7 @@ namespace System.Windows.Media.TextFormatting
             this(
                 characterString,
                 0,  // offserToFirstChar
-                (characterString == null) ? 0 : characterString.Length,
+                (characterString is null) ? 0 : characterString.Length,
                 textRunProperties
                 )
         {}
@@ -119,12 +119,12 @@ namespace System.Windows.Media.TextFormatting
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(length);
             ArgumentNullException.ThrowIfNull(textRunProperties);
 
-            if (textRunProperties.Typeface == null)
+            if (textRunProperties.Typeface is null)
             {
                 throw new ArgumentNullException("textRunProperties.Typeface");
             }
 
-            if (textRunProperties.CultureInfo == null)
+            if (textRunProperties.CultureInfo is null)
             {
                 throw new ArgumentNullException("textRunProperties.CultureInfo");
             }
@@ -191,7 +191,7 @@ namespace System.Windows.Media.TextFormatting
             bool                        isSideways
             )
         {
-            if (characterBufferReference.CharacterBuffer == null)
+            if (characterBufferReference.CharacterBuffer is null)
             {
                 throw new ArgumentNullException("characterBufferReference.CharacterBuffer");
             }

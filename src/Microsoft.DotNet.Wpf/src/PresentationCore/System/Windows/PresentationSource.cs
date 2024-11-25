@@ -217,7 +217,7 @@ namespace System.Windows
                     {
                         info = store[SourceChangedEvent];
                     }
-                    if (info == null || info.Count == 0)
+                    if (info is null || info.Count == 0)
                     {
                         uie.VisualAncestorChanged -= new Visual.AncestorChangedEventHandler(uie.OnVisualAncestorChanged);
                         RemoveElementFromWatchList(uie);
@@ -231,7 +231,7 @@ namespace System.Windows
                     {
                         info = store[SourceChangedEvent];
                     }
-                    if (info == null || info.Count == 0)
+                    if (info is null || info.Count == 0)
                     {
                         uie3D.VisualAncestorChanged -= new Visual.AncestorChangedEventHandler(uie3D.OnVisualAncestorChanged);
                         RemoveElementFromWatchList(uie3D);
@@ -245,7 +245,7 @@ namespace System.Windows
                     {
                         info = store[SourceChangedEvent];
                     }
-                    if (info == null || info.Count == 0)
+                    if (info is null || info.Count == 0)
                     {
                         RemoveElementFromWatchList(ce);
                     }
@@ -596,7 +596,7 @@ namespace System.Windows
         /// </summary>
         internal static bool UnderSamePresentationSource(params DependencyObject[] visuals)
         {
-            if (visuals == null || visuals.Length == 0)
+            if (visuals is null || visuals.Length == 0)
             {
                 return true;
             }

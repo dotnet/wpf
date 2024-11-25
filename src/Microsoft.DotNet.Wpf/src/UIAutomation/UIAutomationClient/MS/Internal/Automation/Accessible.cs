@@ -30,7 +30,7 @@ namespace MS.Internal.Automation
         {
             IAccessible acc = null;
             object child = null;
-            if( UnsafeNativeMethods.AccessibleObjectFromEvent( hwnd, idObject, idChild, ref acc, ref child ) != 0 /*S_OK*/ || acc == null )
+            if( UnsafeNativeMethods.AccessibleObjectFromEvent( hwnd, idObject, idChild, ref acc, ref child ) != 0 /*S_OK*/ || acc is null )
                 return null;
 
             // Per SDK must use the ppacc and pvarChild from AccessibleObjectFromEvent

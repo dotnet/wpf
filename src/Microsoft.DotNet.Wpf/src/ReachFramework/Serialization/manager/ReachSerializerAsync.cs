@@ -52,7 +52,7 @@ namespace System.Windows.Xps.Serialization
 
             _serializationManager = manager as IXpsSerializationManagerAsync;
 
-            if(_serializationManager == null)
+            if(_serializationManager is null)
             {
                 throw new XpsSerializationException(SR.ReachSerialization_NotXpsSerializationManagerAsync);
             }
@@ -72,7 +72,7 @@ namespace System.Windows.Xps.Serialization
             ReachSerializerContext context
             )
         {
-            if(context == null)
+            if(context is null)
             {
 
             }
@@ -144,7 +144,7 @@ namespace System.Windows.Xps.Serialization
         {
             ArgumentNullException.ThrowIfNull(serializedProperty);
 
-            if (SerializationManager == null)
+            if (SerializationManager is null)
             {
                 throw new XpsSerializationException(SR.ReachSerialization_MustHaveSerializationManager);
             }
@@ -188,7 +188,7 @@ namespace System.Windows.Xps.Serialization
             )
         {
             ArgumentNullException.ThrowIfNull(serializedObject);
-            if (SerializationManager == null)
+            if (SerializationManager is null)
             {
                 throw new XpsSerializationException(SR.ReachSerialization_MustHaveSerializationManager);
             }
@@ -363,7 +363,7 @@ namespace System.Windows.Xps.Serialization
             //
             // Set the root object to be serialized at the level of the SerializationManager
             //
-            if(SerializationManager.RootSerializableObjectContext == null)
+            if(SerializationManager.RootSerializableObjectContext is null)
             {
                 SerializationManager.RootSerializableObjectContext = serializableObjectContext;
             }

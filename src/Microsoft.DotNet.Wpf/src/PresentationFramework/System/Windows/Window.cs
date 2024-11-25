@@ -354,7 +354,7 @@ namespace System.Windows
                 }
             }
 
-            Debug.Assert(_threadWindowHandles == null, "_threadWindowHandles must be null before enumerating the thread windows");
+            Debug.Assert(_threadWindowHandles is null, "_threadWindowHandles must be null before enumerating the thread windows");
 
             // NOTE:
             // _threadWindowHandles is created here. This reference is nulled out in EnableThreadWindows
@@ -744,7 +744,7 @@ namespace System.Windows
             }
 
             // Defer any sub-property changes until the native ITaskbarList3 has been set up.
-            if (_taskbarList == null)
+            if (_taskbarList is null)
             {
                 return;
             }
@@ -1332,7 +1332,7 @@ namespace System.Windows
         {
             get
             {
-                return (_ownerWindow == null);
+                return (_ownerWindow is null);
             }
 }
         /// <summary>
@@ -3700,7 +3700,7 @@ namespace System.Windows
                     // add to window collection
                     // use internal version since we want to update the underlying collection
                     App.WindowsInternal.Add(this);
-                    if (App.MainWindow == null)
+                    if (App.MainWindow is null)
                     {
                         App.MainWindow = this;
                     }
@@ -3761,7 +3761,7 @@ namespace System.Windows
         /// </summary>
         private void SetIWindowService()
         {
-            if (GetValue(IWindowServiceProperty) == null)
+            if (GetValue(IWindowServiceProperty) is null)
             {
                 SetValue(IWindowServiceProperty, (IWindowService)this);
             }
@@ -3955,7 +3955,7 @@ namespace System.Windows
                 Debug.Assert(IsSourceWindowNull == false, "_swh should not be null here");
 
                 // if Owner is null, we cannot CenterOwner
-                if (Owner == null)
+                if (Owner is null)
                 {
                     return false;
                 }
@@ -4110,7 +4110,7 @@ namespace System.Windows
                 // these both should be null before we've queried that exe for icons.
                 // Once, we looked in the exe, these are no longer null and hence we
                 // don't want to re-query in the exe anymore
-                if (_defaultLargeIconHandle == null && _defaultSmallIconHandle == null)
+                if (_defaultLargeIconHandle is null && _defaultSmallIconHandle is null)
                 {
                      // sets the default small and large icon handles
                      IconHelper.GetDefaultIconHandles(out largeIconHandle, out smallIconHandle);
@@ -4283,7 +4283,7 @@ namespace System.Windows
             // we need to process WM_GETMINMAXINFO before _swh is assigned to
             // b/c we want to store the max/min size allowed by win32 for the hwnd
             // which is later used in GetWindowMinMax.  WmGetMinMaxInfo can handle
-            // _swh == null case.
+            // _swh is null case.
             switch (message)
             {
                 case WindowMessage.WM_GETMINMAXINFO:
@@ -4479,7 +4479,7 @@ namespace System.Windows
             // As such, we coerce it to be false.  Furthermore, we don't use the DialogResult property
             // to update _dialogResult here since that does more than just updating the underlying
             // variable
-            if (_dialogResult == null)
+            if (_dialogResult is null)
             {
                 _dialogResult = false;
             }
@@ -4990,7 +4990,7 @@ namespace System.Windows
             // uses RTL.  Also, we need to make sure it works for
             // multi-mon case
 
-            if ((_resizeGripControl == null) || (ResizeMode != ResizeMode.CanResizeWithGrip))
+            if ((_resizeGripControl is null) || (ResizeMode != ResizeMode.CanResizeWithGrip))
             {
                 return false;
             }
@@ -5020,7 +5020,7 @@ namespace System.Windows
 
             GeneralTransform transfromFromWindow = this.TransformToDescendant(_resizeGripControl);
             Point mousePositionWRTResizeGripControl = ptLogicalUnits;
-            if (transfromFromWindow == null || transfromFromWindow.TryTransform(ptLogicalUnits, out mousePositionWRTResizeGripControl) == false)
+            if (transfromFromWindow is null || transfromFromWindow.TryTransform(ptLogicalUnits, out mousePositionWRTResizeGripControl) == false)
             {
                 return false;
             }
@@ -5613,7 +5613,7 @@ namespace System.Windows
                 // we enter it before returning even if there is an
                 // exception
                 //
-                Debug.Assert(_dispatcherFrame == null, "_dispatcherFrame must be null here");
+                Debug.Assert(_dispatcherFrame is null, "_dispatcherFrame must be null here");
 
                 try
                 {
@@ -6341,7 +6341,7 @@ namespace System.Windows
         {
             Transform renderTransformValue = (Transform)value;
 
-            if ((value == null) ||
+            if ((value is null) ||
                 (renderTransformValue != null && renderTransformValue.Value.IsIdentity == true))
             {
                 // setting this value is allowed.
@@ -6377,7 +6377,7 @@ namespace System.Windows
         /// </summary>
         private HwndWrapper EnsureHiddenWindow()
         {
-            if (_hiddenWindow == null)
+            if (_hiddenWindow is null)
             {
                 _hiddenWindow = new HwndWrapper(
                     0, // classStyle
@@ -6469,10 +6469,10 @@ namespace System.Windows
             }
 
             HRESULT hr = HRESULT.S_OK;
-            if (_taskbarList == null)
+            if (_taskbarList is null)
             {
                 // If we don't have a handle and there isn't a TaskbarItemInfo, then we don't have anything to apply or remove.
-                if (TaskbarItemInfo == null)
+                if (TaskbarItemInfo is null)
                 {
                     return;
                 }
@@ -6509,7 +6509,7 @@ namespace System.Windows
 
                 // When we detect that Explorer is nonresponsive, use this to defer further attempts
                 // at updating the TaskbarList until a specified amount of time (1 minute)
-                if (_taskbarRetryTimer == null)
+                if (_taskbarRetryTimer is null)
                 {
                     _taskbarRetryTimer = new DispatcherTimer { Interval = new TimeSpan(0, 1, 0) };
                     // Explorer being non-responsive should be a transient issue.  Post back to apply the full TaskbarItemInfo.
@@ -6598,7 +6598,7 @@ namespace System.Windows
             TaskbarItemInfo taskbarInfo = TaskbarItemInfo;
 
             // If we're not attached then don't modify this.
-            if (taskbarInfo == null
+            if (taskbarInfo is null
                 || taskbarInfo.ProgressState == TaskbarItemProgressState.None
                 || taskbarInfo.ProgressState == TaskbarItemProgressState.Indeterminate)
             {
@@ -6657,7 +6657,7 @@ namespace System.Windows
         private HRESULT UpdateTaskbarThumbnailClipping()
         {
             // If TaskbarItemInfo isn't attached and active then there's nothing to do here.
-            if (_taskbarList == null)
+            if (_taskbarList is null)
             {
                 return HRESULT.S_OK;
             }
@@ -7060,7 +7060,7 @@ namespace System.Windows
 
             if (!e.Handled)
             {
-                if (_currentPanningTarget == null ||
+                if (_currentPanningTarget is null ||
                     !_currentPanningTarget.IsAlive ||
                     _currentPanningTarget.Target != e.OriginalSource)
                 {
@@ -7116,7 +7116,7 @@ namespace System.Windows
 
             if (_swh != null)
             {
-                if (_currentPanningTarget == null)
+                if (_currentPanningTarget is null)
                 {
                     // Provide feedback for this source's events
                     _currentPanningTarget = new WeakReference(originalSource);
@@ -7216,7 +7216,7 @@ namespace System.Windows
         {
             get
             {
-                if (_ownedWindows == null)
+                if (_ownedWindows is null)
                 {
                     _ownedWindows = new WindowCollection();
                 }
@@ -7250,7 +7250,7 @@ namespace System.Windows
         {
             get
             {
-                if (_events == null)
+                if (_events is null)
                 {
                     _events = new EventHandlerList();
                 }
@@ -7411,7 +7411,7 @@ namespace System.Windows
                 {
                     get
                     {
-                        return ( _sourceWindow == null );
+                        return ( _sourceWindow is null );
                     }
                 }
 
@@ -7419,7 +7419,7 @@ namespace System.Windows
                 {
                     get
                     {
-                        return (CompositionTarget == null);
+                        return (CompositionTarget is null);
                     }
                 }
 
@@ -7679,7 +7679,7 @@ namespace System.Windows
                 /// <param name="animate">Whether to animate to the new feedback position.</param>
                 internal void UpdatePanningFeedback(Vector totalOverpanOffset, bool animate)
                 {
-                    if ((_panningFeedback == null) && (_sourceWindow != null))
+                    if ((_panningFeedback is null) && (_sourceWindow != null))
                     {
                         _panningFeedback = new HwndPanningFeedback(_sourceWindow);
                     }
@@ -7714,7 +7714,7 @@ namespace System.Windows
         {
             static internal HwndStyleManager StartManaging(Window w, int Style, int StyleEx )
             {
-                if (w.Manager == null)
+                if (w.Manager is null)
                 {
                     return new HwndStyleManager(w, Style, StyleEx);
                 }
@@ -8119,7 +8119,7 @@ namespace System.Windows
         internal SingleChildEnumerator(object Child)
         {
             _child = Child;
-            _count = Child == null ? 0 : 1;
+            _count = Child is null ? 0 : 1;
         }
 
         object IEnumerator.Current

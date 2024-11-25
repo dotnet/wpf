@@ -157,7 +157,7 @@ namespace MS.Internal.AutomationProxies
                     // Return an empty string instead of null to prevent the default HWND proxy
                     // from using the window text as the name - since the window text for this owner-
                     // draw trident combo is garbage.
-                    return result == null ? "" : (string)result;
+                    return result is null ? "" : (string)result;
                 }
             }
             // EventManager.DispatchEvent() genericaly uses GetElementProperty()

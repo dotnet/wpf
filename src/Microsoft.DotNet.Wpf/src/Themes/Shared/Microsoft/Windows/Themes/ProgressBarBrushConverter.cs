@@ -32,7 +32,7 @@ namespace Microsoft.Windows.Themes
             //
             // Parameter Validation
             //
-            if (values == null ||
+            if (values is null ||
                 values.Length != 5 ||
                 values[0] is not Brush ||
                 values[1] is not bool ||

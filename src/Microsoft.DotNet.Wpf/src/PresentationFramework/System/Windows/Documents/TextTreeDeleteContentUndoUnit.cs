@@ -197,7 +197,7 @@ namespace System.Windows.Documents
                     }
                 }
 
-                if (container == null)
+                if (container is null)
                 {
                     firstContainer = nextContainer;
                 }
@@ -378,7 +378,7 @@ namespace System.Windows.Documents
 
                 // When we cannot parse the object back, we loose it and substitute by an empty Grid
                 // as an embeddedElement placeholder.
-                if (embeddedObject == null)
+                if (embeddedObject is null)
                 {
                     embeddedObject = new Grid();
                 }

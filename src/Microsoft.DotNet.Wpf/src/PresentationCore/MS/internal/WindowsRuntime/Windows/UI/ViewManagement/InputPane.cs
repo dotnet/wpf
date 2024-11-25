@@ -62,7 +62,7 @@ namespace MS.Internal.WindowsRuntime
                 {
                     // If we cannot get a new activation factory, then we cannot support
                     // this platform.  As such, null out the type to guard instantiations.
-                    if (GetWinRtActivationFactory(forceInitialization: true) == null)
+                    if (GetWinRtActivationFactory(forceInitialization: true) is null)
                     {
                         _isSupported = false;
                     }
@@ -120,7 +120,7 @@ namespace MS.Internal.WindowsRuntime
                     // but it is possible that is not the case).
                 }
 
-                if (_inputPane == null)
+                if (_inputPane is null)
                 {
                     throw new PlatformNotSupportedException();
                 }
@@ -192,7 +192,7 @@ namespace MS.Internal.WindowsRuntime
             /// <returns>An IActivationFactory of InputPane or null if it fails to instantiate.</returns>
             private static object GetWinRtActivationFactory(bool forceInitialization = false)
             {
-                if (forceInitialization || _winRtActivationFactory == null)
+                if (forceInitialization || _winRtActivationFactory is null)
                 {
                     try
                     {

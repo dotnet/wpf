@@ -149,7 +149,7 @@ namespace MS.Internal.Printing.Configuration
             bool complete = false;
 
             // All PageMediaSize options must have an option name
-            if (option._optionName == null)
+            if (option._optionName is null)
                 return complete;
 
             int enumValue = PrintSchemaMapper.SchemaNameToEnumValueWithArray(

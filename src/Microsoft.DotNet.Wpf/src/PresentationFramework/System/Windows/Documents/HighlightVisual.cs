@@ -125,7 +125,7 @@ namespace System.Windows.Documents
         {
             AdornerLayer al = AdornerLayer.GetAdornerLayer(_page);
 
-            if (al == null)
+            if (al is null)
             {
                 return;
             }
@@ -146,7 +146,7 @@ namespace System.Windows.Documents
             AdornerLayer al = AdornerLayer.GetAdornerLayer(page);
             HighlightVisual hv;
 
-            if (al == null)
+            if (al is null)
             {
                 return null;
             }
@@ -204,7 +204,7 @@ namespace System.Windows.Documents
                 GeneralTransform transform = fh.Element.TransformToAncestor(_page);
                 // This is a workaround. We should really look into changing 
                 Transform t = transform.AffineTransform;
-                if (t == null)
+                if (t is null)
                 {
                     t = Transform.Identity;
                 }
@@ -216,7 +216,7 @@ namespace System.Windows.Documents
 
                 if (fh.HighlightType == FixedHighlightType.TextSelection)
                 {
-                    bg = (g == null) ? SelectionHighlightInfo.ObjectMaskBrush : SelectionHighlightInfo.BackgroundBrush;
+                    bg = (g is null) ? SelectionHighlightInfo.ObjectMaskBrush : SelectionHighlightInfo.BackgroundBrush;
                 } 
                 else if (fh.HighlightType == FixedHighlightType.AnnotationHighlight)
                 {
@@ -289,7 +289,7 @@ namespace System.Windows.Documents
                 }
 
                 Glyphs g = fh.Glyphs;
-                if (g == null)
+                if (g is null)
                 {
                     continue;
                 }
@@ -328,7 +328,7 @@ namespace System.Windows.Documents
 
                 GlyphRun gr = g.ToGlyphRun();
 
-                if (fg == null)
+                if (fg is null)
                 {
                     fg = g.Fill;
                 }

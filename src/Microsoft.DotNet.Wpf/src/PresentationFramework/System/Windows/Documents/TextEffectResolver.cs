@@ -162,7 +162,7 @@ namespace System.Windows.Documents
         public void Enable()
         {
             TextEffectCollection textEffects = DynamicPropertyReader.GetTextEffects(_element);
-            if (textEffects == null)
+            if (textEffects is null)
             {
                 textEffects = new TextEffectCollection();
                         

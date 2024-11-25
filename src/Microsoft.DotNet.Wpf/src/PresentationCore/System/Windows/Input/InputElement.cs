@@ -171,7 +171,7 @@ namespace System.Windows.Input
                 {
                     v = o as Visual;
 
-                    if (v == null)
+                    if (v is null)
                     {
                         v = o as Visual3D;
                     }
@@ -228,7 +228,7 @@ namespace System.Windows.Input
             
             Visual vFrom = vFromAsDO as Visual;
 
-            if (vFromAsDO != null && vFrom == null)
+            if (vFromAsDO != null && vFrom is null)
             {
                 // must be a Visual3D - get it's 2D visual parent
                 vFrom = VisualTreeHelper.GetContainingVisual2D(vFromAsDO);
@@ -303,7 +303,7 @@ namespace System.Windows.Input
                         Matrix mDown;
 
                         Visual vToAsVisual = vTo as Visual;
-                        if (vToAsVisual == null)
+                        if (vToAsVisual is null)
                         {
                             // must be a Visual3D
                             vToAsVisual = VisualTreeHelper.GetContainingVisual2D(vTo);

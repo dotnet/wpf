@@ -169,7 +169,7 @@ namespace MS.Internal.Text
         {
             get
             {
-                if (_startPosition == null)
+                if (_startPosition is null)
                 {
                     _startPosition = _owner.TextContainer.CreatePointerAtOffset(_dcp, LogicalDirection.Forward);
                 }
@@ -184,7 +184,7 @@ namespace MS.Internal.Text
         {
             get
             {
-                if (_endPosition == null)
+                if (_endPosition is null)
                 {
                     _endPosition = _owner.TextContainer.CreatePointerAtOffset(_dcp + _cch, LogicalDirection.Backward);
                 }

@@ -33,7 +33,7 @@ namespace System.Windows
             // instead of each using their own device.  Worse, all of these will end up
             // writing to the same bits in the UIElement.  They are going to step all over
             // each other.
-            if(Stylus.CurrentStylusDevice == null)
+            if(Stylus.CurrentStylusDevice is null)
             {
                 return;
             }

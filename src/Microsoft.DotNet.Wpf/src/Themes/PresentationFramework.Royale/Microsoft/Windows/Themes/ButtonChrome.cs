@@ -466,11 +466,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonDisabledBorderPen == null)
+                if (_commonDisabledBorderPen is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonDisabledBorderPen == null)
+                        if (_commonDisabledBorderPen is null)
                         {
                             SolidColorBrush brush = new SolidColorBrush(Color.FromArgb(0xFF,0xC6,0xC5,0xC9));
 
@@ -498,11 +498,11 @@ namespace Microsoft.Windows.Themes
                 Brush brush = BorderBrush;
                 if (brush != null)
                 {
-                    if (_commonBorderPen == null)   // Common case, if non-null, avoid the lock
+                    if (_commonBorderPen is null)   // Common case, if non-null, avoid the lock
                     {
                         lock (_resourceAccess)   // If non-null, lock to create the pen for thread safety
                         {
-                            if (_commonBorderPen == null)   // Check again in case _commonBorderPen was created within the last line
+                            if (_commonBorderPen is null)   // Check again in case _commonBorderPen was created within the last line
                             {
                                 // Assume that the first render of Button uses the most common brush for the app.
                                 // This breaks down if (a) the first Button is disabled, (b) the first Button is
@@ -560,11 +560,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonOuterHighlight == null)
+                if (_commonOuterHighlight is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonOuterHighlight == null)
+                        if (_commonOuterHighlight is null)
                         {
                             LinearGradientBrush brush = new LinearGradientBrush();
                             brush.StartPoint = new Point(0,0);
@@ -600,11 +600,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonDefaultedInnerHighlight == null)
+                if (_commonDefaultedInnerHighlight is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonDefaultedInnerHighlight == null)
+                        if (_commonDefaultedInnerHighlight is null)
                         {
                             LinearGradientBrush brush = new LinearGradientBrush();
                             brush.StartPoint = new Point(0.5, 0);
@@ -632,11 +632,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonHoverInnerHighlight == null)
+                if (_commonHoverInnerHighlight is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonHoverInnerHighlight == null)
+                        if (_commonHoverInnerHighlight is null)
                         {
                             LinearGradientBrush brush = new LinearGradientBrush();
                             brush.StartPoint = new Point(0.5, 0);
@@ -685,11 +685,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonBottomShade == null)
+                if (_commonBottomShade is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonBottomShade == null)
+                        if (_commonBottomShade is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0.5,0);
@@ -711,11 +711,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonPressedBottomShade == null)
+                if (_commonPressedBottomShade is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonPressedBottomShade == null)
+                        if (_commonPressedBottomShade is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0.5, 0);
@@ -750,11 +750,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonRightShade == null)
+                if (_commonRightShade is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonRightShade == null)
+                        if (_commonRightShade is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0.5);
@@ -788,11 +788,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonPressedTopShade == null)
+                if (_commonPressedTopShade is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonPressedTopShade == null)
+                        if (_commonPressedTopShade is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0.5, 1);
@@ -826,11 +826,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonLeftShade == null)
+                if (_commonLeftShade is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonLeftShade == null)
+                        if (_commonLeftShade is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(1, 0.5);
@@ -852,11 +852,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonPressedLeftShade == null)
+                if (_commonPressedLeftShade is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonPressedLeftShade == null)
+                        if (_commonPressedLeftShade is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(1, 0.5);
@@ -901,11 +901,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonPressedFill == null)
+                if (_commonPressedFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonPressedFill == null)
+                        if (_commonPressedFill is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0.5, 1);

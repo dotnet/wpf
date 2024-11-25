@@ -141,7 +141,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         public void Insert(int index, Timeline value)
         {
-            if (value == null)
+            if (value is null)
             {
                 throw new System.ArgumentException(SR.Collection_NoNull);
             }
@@ -249,7 +249,7 @@ namespace System.Windows.Media.Animation
             }
             set
             {
-                if (value == null)
+                if (value is null)
                 {
                     throw new System.ArgumentException(SR.Collection_NoNull);
                 }
@@ -474,7 +474,7 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-                if (s_empty == null)
+                if (s_empty is null)
                 {
                     TimelineCollection collection = new TimelineCollection();
                     collection.Freeze();
@@ -545,7 +545,7 @@ namespace System.Windows.Media.Animation
         {
             int index = -1;
 
-            if (value == null)
+            if (value is null)
             {
                 throw new System.ArgumentException(SR.Collection_NoNull);
             }
@@ -945,7 +945,7 @@ namespace System.Windows.Media.Animation
 
                         foreach (Timeline item in collection)
                         {
-                            if (item == null)
+                            if (item is null)
                             {
                                 throw new System.ArgumentException(SR.Collection_NoNull);
                             }
@@ -963,7 +963,7 @@ namespace System.Windows.Media.Animation
                 {
                     foreach (Timeline item in collection)
                     {
-                        if (item == null)
+                        if (item is null)
                         {
                             throw new System.ArgumentException(SR.Collection_NoNull);
                         }

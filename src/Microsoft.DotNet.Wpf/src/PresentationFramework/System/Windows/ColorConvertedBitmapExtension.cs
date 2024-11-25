@@ -50,15 +50,15 @@ namespace System.Windows
             {
                 if (str.Length > 0)
                 {
-                    if (_image == null)
+                    if (_image is null)
                     {
                         _image = str;
                     }
-                    else if (_sourceProfile == null)
+                    else if (_sourceProfile is null)
                     {
                         _sourceProfile = str;
                     }
-                    else if (_destinationProfile == null)
+                    else if (_destinationProfile is null)
                     {
                         _destinationProfile = str;
                     }
@@ -80,11 +80,11 @@ namespace System.Windows
         /// </returns>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            if (_image == null)
+            if (_image is null)
             {
                 throw new InvalidOperationException(SR.ColorConvertedBitmapExtensionNoSourceImage);
             }
-            if (_sourceProfile == null)
+            if (_sourceProfile is null)
             {
                 throw new InvalidOperationException(SR.ColorConvertedBitmapExtensionNoSourceProfile);
             }
@@ -95,7 +95,7 @@ namespace System.Windows
 
             // Save away the BaseUri.
             IUriContext uriContext = serviceProvider.GetService(typeof(IUriContext)) as IUriContext;
-            if( uriContext == null )
+            if( uriContext is null )
             {
                 throw new InvalidOperationException(SR.Format(SR.MarkupExtensionNoContext, GetType().Name, "IUriContext" ));
             }
@@ -139,7 +139,7 @@ namespace System.Windows
 
         private Uri GetResolvedUri(string uri)
         {
-            if (uri == null)
+            if (uri is null)
             {
                 return null;
             }

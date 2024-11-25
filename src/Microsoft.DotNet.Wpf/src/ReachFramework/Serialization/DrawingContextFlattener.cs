@@ -117,7 +117,7 @@ namespace System.Windows.Xps.Serialization
             _fullTransform.Add(mat);
 
             // transform clip to world space, intersect with current clip, and push
-            if (clip == null)
+            if (clip is null)
             {
                 // push current clipping
                 clip = Clip;
@@ -231,7 +231,7 @@ namespace System.Windows.Xps.Serialization
 
             Brush b = ReduceBrush(pen.Brush, bounds);
 
-            if (b == null)
+            if (b is null)
             {
                 return null;
             }
@@ -403,7 +403,7 @@ namespace System.Windows.Xps.Serialization
             // We also don't need Transform or Clip to be updated.
             //
             _dc.Push(
-                visualTransform == null ? Matrix.Identity : visualTransform.Value,
+                visualTransform is null ? Matrix.Identity : visualTransform.Value,
                 clip,
                 1.0,
                 null,

@@ -80,7 +80,7 @@ namespace System.Windows.Media
 
         internal override void SetFigureCount(int figureCount)
         {
-            Debug.Assert(_figures == null, "It is illegal to call SetFigureCount multiple times or after BeginFigure.");
+            Debug.Assert(_figures is null, "It is illegal to call SetFigureCount multiple times or after BeginFigure.");
             Debug.Assert(figureCount > 0);
 
             _figures = new PathFigureCollection(figureCount);
@@ -91,7 +91,7 @@ namespace System.Windows.Media
         {
             Debug.Assert(_figures != null, "It is illegal to call SetSegmentCount before BeginFigure.");
             Debug.Assert(_currentFigure != null, "It is illegal to call SetSegmentCount before BeginFigure.");
-            Debug.Assert(_segments == null, "It is illegal to call SetSegmentCount multiple times per BeginFigure or after a *To method.");
+            Debug.Assert(_segments is null, "It is illegal to call SetSegmentCount multiple times per BeginFigure or after a *To method.");
             Debug.Assert(segmentCount > 0);
 
             _segments = new PathSegmentCollection(segmentCount);
@@ -118,13 +118,13 @@ namespace System.Windows.Media
         public override void BeginFigure(Point startPoint, bool isFilled, bool isClosed)
         {
             // _currentFigure != null -> _figures != null
-            Debug.Assert(_currentFigure == null || _figures != null);
+            Debug.Assert(_currentFigure is null || _figures != null);
 
             // Is this the first figure?
-            if (_currentFigure == null)
+            if (_currentFigure is null)
             {
                 // If so, have we not yet allocated the collection?
-                if (_figures == null)
+                if (_figures is null)
                 {
                     // While we could always just retrieve _pathGeometry.Figures (which would auto-promote)
                     // it's more efficient to create the collection ourselves and set it explicitly.
@@ -251,7 +251,7 @@ namespace System.Windows.Media
             FinishSegment();
 
             // Is this the first segment?
-            if (_segments == null)
+            if (_segments is null)
             {
                 // While we could always just retrieve _currentFigure.Segments (which would auto-promote)
                 // it's more efficient to create the collection ourselves and set it explicitly.
@@ -314,7 +314,7 @@ namespace System.Windows.Media
         {
             FinishSegment();
 
-            Debug.Assert(_currentSegmentPoints == null);
+            Debug.Assert(_currentSegmentPoints is null);
 
             return _pathGeometry;
         }
@@ -357,7 +357,7 @@ namespace System.Windows.Media
                 _currentSegmentIsSmoothJoin = isSmoothJoin;
             }
 
-            if (_currentSegmentPoints == null)
+            if (_currentSegmentPoints is null)
             {
                 _currentSegmentPoints = new PointCollection();
             }
@@ -377,7 +377,7 @@ namespace System.Windows.Media
                 Debug.Assert(count > 0);
                
                 // Is this the first segment?
-                if (_segments == null)
+                if (_segments is null)
                 {
                     // While we could always just retrieve _currentFigure.Segments (which would auto-promote)
                     // it's more efficient to create the collection ourselves and set it explicitly.

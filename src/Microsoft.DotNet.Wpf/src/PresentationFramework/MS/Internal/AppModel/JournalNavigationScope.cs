@@ -191,7 +191,7 @@ namespace MS.Internal.AppModel
                 // If je is null it indicates that we are going going "forward" to the currently
                 // displayed page which has no journal entry. The comment in BeginForwardNavigation
                 // explains how this can happen.
-                if (je == null)
+                if (je is null)
                 {
                     _rootNavSvc.StopLoading();
                     return;
@@ -210,7 +210,7 @@ namespace MS.Internal.AppModel
             if (!_host.GoBackOverride())
             {
                 JournalEntry je = Journal.BeginBackNavigation();
-                if (je == null) // See comment in GoForwardInternal().
+                if (je is null) // See comment in GoForwardInternal().
                 {
                     _rootNavSvc.StopLoading();
                     return;
@@ -229,7 +229,7 @@ namespace MS.Internal.AppModel
         public JournalEntry RemoveBackEntry()
         {
             _host.VerifyContextAndObjectState();
-            return _journal == null ? null : _journal.RemoveBackEntry();
+            return _journal is null ? null : _journal.RemoveBackEntry();
         }
 
         public System.Collections.IEnumerable BackStack
@@ -281,7 +281,7 @@ namespace MS.Internal.AppModel
         {
             // _journal could be null for .deploy apps since the main (second) app is created after a delay
             // (the first app is created to show the progress UI and the main app is created when bits are ready)
-            if (_journal == null)
+            if (_journal is null)
                 return false;
 
             int realIndex = _journal.FindIndexForEntryWithId(entryId);
@@ -301,7 +301,7 @@ namespace MS.Internal.AppModel
 
         internal bool NavigateToEntry(JournalEntry entry)
         {
-            if (entry == null)
+            if (entry is null)
             {
                 Debug.Fail("Tried to navigate to a null JournalEntry.");
                 return false;
@@ -409,7 +409,7 @@ namespace MS.Internal.AppModel
         {
             get
             {
-                if (_journal == null)
+                if (_journal is null)
                 {
                     Journal = new Journal();
                 }
@@ -418,7 +418,7 @@ namespace MS.Internal.AppModel
             // Used by the getter; also by RootBrowserWindow and Frame to install a deserialized Journal.
             set
             {
-                Debug.Assert(_journal == null && value != null,
+                Debug.Assert(_journal is null && value != null,
                     "The Journal should be set only once and never removed."); // see bug 1367999
                 _journal = value;
                 _journal.Filter = new JournalEntryFilter(this.IsEntryNavigable);
@@ -483,7 +483,7 @@ namespace MS.Internal.AppModel
         /// </summary>
         private bool IsEntryNavigable(JournalEntry entry)
         {
-            if (entry == null || !entry.IsNavigable())
+            if (entry is null || !entry.IsNavigable())
                 return false;
             // If the entry is associated with a child frame, the frame has to be currently available.
             // For a given journal entry group, only the "exit" entry is made visible. Effectively, 

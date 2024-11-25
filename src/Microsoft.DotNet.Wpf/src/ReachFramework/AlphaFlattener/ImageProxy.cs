@@ -119,7 +119,7 @@ namespace Microsoft.Internal.AlphaFlattener
         
         private void Decode()
         {
-            if (_pixels == null)
+            if (_pixels is null)
             {
                 _pixels = GetDecodedPixels(new Int32Rect(0, 0, _pixelWidth, _pixelHeight));
             }
@@ -356,12 +356,12 @@ namespace Microsoft.Internal.AlphaFlattener
         
         public bool IsOpaque()
         {
-            if (_image == null)
+            if (_image is null)
             {
                 return false;
             }
 
-            if (_pixels == null) // Not decoded yet
+            if (_pixels is null) // Not decoded yet
             {
                 int hasAlpha = HasAlpha(_image);
 
@@ -397,7 +397,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <returns></returns>
         public bool IsTransparent()
         {
-            if (_image == null)
+            if (_image is null)
             {
                 return true;
             }
@@ -421,7 +421,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
         public BitmapSource GetImage()
         {
-            if (_pixels == null)
+            if (_pixels is null)
             {
                 return _image;
             }
@@ -497,7 +497,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     {
                         byte[] pixels;
 
-                        if (_pixels == null)
+                        if (_pixels is null)
                         {
                             // not decoded yet, we perform clipping while decoding
                             pixels = GetDecodedPixels(new Int32Rect(x0, y0, width, height));

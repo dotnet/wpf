@@ -320,7 +320,7 @@ namespace System.Windows.Baml2006
         {
             get
             {
-                if (_constructors == null)
+                if (_constructors is null)
                 {
                     _constructors = new Dictionary<int, Baml6ConstructorInfo>();
                 }
@@ -372,7 +372,7 @@ namespace System.Windows.Baml2006
                 {
                     return new Attribute[] { result };
                 }
-                if (s_EmptyAttributes == null)
+                if (s_EmptyAttributes is null)
                 {
                     s_EmptyAttributes = Array.Empty<Attribute>();
                 }
@@ -390,23 +390,23 @@ namespace System.Windows.Baml2006
             bool known = true;
             if (attributeType == typeof(ContentPropertyAttribute))
             {
-                result = (_contentPropertyName == null) ? null : new ContentPropertyAttribute(_contentPropertyName);
+                result = (_contentPropertyName is null) ? null : new ContentPropertyAttribute(_contentPropertyName);
             }
             else if (attributeType == typeof(RuntimeNamePropertyAttribute))
             {
-                result = (_runtimeNamePropertyName == null) ? null : new RuntimeNamePropertyAttribute(_runtimeNamePropertyName);
+                result = (_runtimeNamePropertyName is null) ? null : new RuntimeNamePropertyAttribute(_runtimeNamePropertyName);
             }
             else if (attributeType == typeof(DictionaryKeyPropertyAttribute))
             {
-                result = (_dictionaryKeyPropertyName == null) ? null : new DictionaryKeyPropertyAttribute(_dictionaryKeyPropertyName);
+                result = (_dictionaryKeyPropertyName is null) ? null : new DictionaryKeyPropertyAttribute(_dictionaryKeyPropertyName);
             }
             else if (attributeType == typeof(XmlLangPropertyAttribute))
             {
-                result = (_xmlLangPropertyName == null) ? null : new XmlLangPropertyAttribute(_xmlLangPropertyName);
+                result = (_xmlLangPropertyName is null) ? null : new XmlLangPropertyAttribute(_xmlLangPropertyName);
             }
             else if (attributeType == typeof(UidPropertyAttribute))
             {
-                result = (_uidPropertyName == null) ? null : new UidPropertyAttribute(_uidPropertyName);
+                result = (_uidPropertyName is null) ? null : new UidPropertyAttribute(_uidPropertyName);
             }
             else
             {

@@ -41,7 +41,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         ///                    don't, we immediately fail</param>
         internal Compressor(byte[] data, ref uint size)
         {
-            if (data == null || data.Length != size)
+            if (data is null || data.Length != size)
             {
                 //we don't raise any information that could be used to attack our ISF code
                 //a simple 'ISF Operation Failed' is sufficient since the user can't do 
@@ -93,9 +93,9 @@ namespace MS.Internal.Ink.InkSerializedFormat
             lock (_compressSync)
             {
 #endif
-                if (compressedInput == null ||
+                if (compressedInput is null ||
                     size > compressedInput.Length ||
-                    decompressedPackets == null)
+                    decompressedPackets is null)
                 {
                     //we don't raise any information that could be used to attack our ISF code
                     //a simple 'ISF Operation Failed' is sufficient since the user can't do 
@@ -109,7 +109,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 size = AlgoModule.DecompressPacketData(compressedInput, decompressedPackets);
 
 #if OLD_ISF
-                MS.Win32.Penimc.CompressorSafeHandle safeCompressorHandle = (compressor == null) ?
+                MS.Win32.Penimc.CompressorSafeHandle safeCompressorHandle = (compressor is null) ?
                                                     MS.Win32.Penimc.CompressorSafeHandle.Null :
                                                     compressor._compressorHandle;
 
@@ -164,7 +164,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             lock (_compressSync)
             {
 #endif
-                if (input == null)
+                if (input is null)
                 {
                     //we don't raise any information that could be used to attack our ISF code
                     //a simple 'ISF Operation Failed' is sufficient since the user can't do 
@@ -294,7 +294,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             lock (_compressSync)
             {
 #endif
-                if (input == null)
+                if (input is null)
                 {
                     //we don't raise any information that could be used to attack our ISF code
                     //a simple 'ISF Operation Failed' is sufficient since the user can't do 
@@ -305,7 +305,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 byte[] data = AlgoModule.CompressPacketData(input, algorithm);
 #if OLD_ISF
                 uint cbOutSize = 0;
-                MS.Win32.Penimc.CompressorSafeHandle safeCompressorHandle = (compressor == null) ?
+                MS.Win32.Penimc.CompressorSafeHandle safeCompressorHandle = (compressor is null) ?
                     MS.Win32.Penimc.CompressorSafeHandle.Null : compressor._compressorHandle;
                 int hr = MS.Win32.Penimc.UnsafeNativeMethods.IsfCompressPacketData(safeCompressorHandle, input, (uint)input.Length, ref algorithm, ref cbOutSize, null);
                 if (0 == hr)
@@ -351,7 +351,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         {
             get
             {
-                if (_algoModule == null)
+                if (_algoModule is null)
                 {
                     _algoModule = new AlgoModule();
                 }

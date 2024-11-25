@@ -113,7 +113,7 @@ namespace System.Windows.Input.StylusPointer
                     // that have been removed from the visual tree and we haven't been notified yet of
                     // that change.  In this case just ignore this plugincollection element and go to 
                     // the next.
-                    if (commonParent == null)
+                    if (commonParent is null)
                         continue;
                     // If curV is the commonParent we find then we're done.  This new plugin should be
                     // above this one.
@@ -286,7 +286,7 @@ namespace System.Windows.Input.StylusPointer
 
                 // See if we need to build up an RSI to send to the plugincollection (due to a mistarget).
                 bool sendRawStylusInput = false;
-                if (targetPIC != null && rawStylusInputReport.RawStylusInput == null)
+                if (targetPIC != null && rawStylusInputReport.RawStylusInput is null)
                 {
                     // NOTE: (This applies when RTI is back in) Info will not change (it gets rebuilt instead so keeping ref is fine)
                     //    The transformTabletToView matrix and plugincollection rects though can change based
@@ -310,7 +310,7 @@ namespace System.Windows.Input.StylusPointer
                     if (currentTarget != null)
                     {
                         // Fire leave event.  If we never had a plugin for this event then create a temp one.
-                        if (originalRSI == null)
+                        if (originalRSI is null)
                         {
                             GeneralTransformGroup transformTabletToView = new GeneralTransformGroup();
                             transformTabletToView.Children.Add(stylusDevice.GetTabletToElementTransform(null)); // this gives matrix in measured units (not device)
@@ -520,7 +520,7 @@ namespace System.Windows.Input.StylusPointer
                 // If not then we just return and do nothing.
                 if (e.StagingItem.Input.RoutedEvent == InputManager.InputReportEvent)
                 {
-                    if (_activeMousePlugInCollection?.Element == null)
+                    if (_activeMousePlugInCollection?.Element is null)
                         return;
 
                     InputReportEventArgs input = e.StagingItem.Input as InputReportEventArgs;
@@ -536,7 +536,7 @@ namespace System.Windows.Input.StylusPointer
                     mouseDevice = InputManager.UnsecureCurrent.PrimaryMouseDevice;
 
                     // Mouse set directly over to null when truly deactivating.
-                    if (mouseDevice == null || mouseDevice.DirectlyOver != null)
+                    if (mouseDevice is null || mouseDevice.DirectlyOver != null)
                         return;
 
                     leftButtonDown = mouseDevice.LeftButton == MouseButtonState.Pressed;
@@ -582,7 +582,7 @@ namespace System.Windows.Input.StylusPointer
                     timestamp = mouseEventArgs.Timestamp;
 
                     Visual directlyOverVisual = mouseDevice.DirectlyOver as Visual;
-                    if (directlyOverVisual == null)
+                    if (directlyOverVisual is null)
                     {
                         return;
                     }
@@ -638,7 +638,7 @@ namespace System.Windows.Input.StylusPointer
         {
             get
             {
-                if (_mousePointDescription == null)
+                if (_mousePointDescription is null)
                 {
                     _mousePointDescription = new StylusPointDescription(
                                                     new StylusPointPropertyInfo[] {

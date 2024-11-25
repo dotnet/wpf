@@ -86,7 +86,7 @@ namespace MS.Internal.FontCache
         {
             get
             {
-                if (_userCompositeFonts == null)
+                if (_userCompositeFonts is null)
                 {
                     _userCompositeFonts = GetCompositeFontList(new FontSourceCollection(_folderUri, false, true));
                 }
@@ -115,11 +115,11 @@ namespace MS.Internal.FontCache
             {
                 get
                 {
-                    if (_legacyArabicFontCollection == null)
+                    if (_legacyArabicFontCollection is null)
                     {
                         lock (_staticLock)
                         {
-                            if (_legacyArabicFontCollection == null)
+                            if (_legacyArabicFontCollection is null)
                             {
                                 Uri criticalSxSFontsLocation = new Uri(FamilyCollection.SxSFontsResourcePrefix);
                                 _legacyArabicFontCollection = DWriteFactory.GetFontCollectionFromFolder(criticalSxSFontsLocation);
@@ -242,11 +242,11 @@ namespace MS.Internal.FontCache
             /// </summary>
             internal static CompositeFontFamily GetCompositeFontFamilyAtIndex(int index)
             {
-                if (_systemCompositeFonts[index] == null)
+                if (_systemCompositeFonts[index] is null)
                 {
                     lock (_systemCompositeFontsLock)
                     {
-                        if (_systemCompositeFonts[index] == null)
+                        if (_systemCompositeFonts[index] is null)
                         {
                             FontSource fontSource = new FontSource(new Uri(Path.Combine(FamilyCollection.SxSFontsResourcePrefix, _systemCompositeFontsFileNames[index] + Util.CompositeFontExtension), UriKind.RelativeOrAbsolute),
                                                                    skipDemand:true,
@@ -341,7 +341,7 @@ namespace MS.Internal.FontCache
             ref FontStretch fontStretch
             )
         {
-            if (familyName == null || familyName.Length == 0)
+            if (familyName is null || familyName.Length == 0)
                 return null;
 
             familyName = familyName.Trim();
@@ -361,7 +361,7 @@ namespace MS.Internal.FontCache
             Text.TextInterface.FontFamily fontFamilyDWrite = _fontCollection[familyName];
 
             // A font family was not found in DWrite's font collection.
-            if (fontFamilyDWrite == null)
+            if (fontFamilyDWrite is null)
             {
                 // Having user defined composite fonts is not very common. So we defer looking into them to looking DWrite 
                 // (which is opposite to what we do for system fonts).
@@ -398,10 +398,10 @@ namespace MS.Internal.FontCache
                     }
 
                     fontFamilyDWrite = _fontCollection[familyName];
-                } while (fontFamilyDWrite == null);
+                } while (fontFamilyDWrite is null);
 
 
-                if (fontFamilyDWrite == null)
+                if (fontFamilyDWrite is null)
                 {
                     return null;
                 }
@@ -429,7 +429,7 @@ namespace MS.Internal.FontCache
                 && LegacyArabicFonts.IsLegacyArabicFont(familyName))
             {
                 fontFamilyDWrite = LegacyArabicFonts.LegacyArabicFontCollection[familyName];
-                if (fontFamilyDWrite == null)
+                if (fontFamilyDWrite is null)
                 {
                     return SystemCompositeFonts.GetFallbackFontForArabicLegacyFonts();
                 }

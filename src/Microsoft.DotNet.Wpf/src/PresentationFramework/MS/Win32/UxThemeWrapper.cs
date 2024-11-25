@@ -205,7 +205,7 @@ namespace MS.Win32
                 {
                     // when called outside of ThemeChange, only update if we
                     // need the name of an active theme
-                    if (themeState.IsActive && themeState.ThemeName == null)
+                    if (themeState.IsActive && themeState.ThemeName is null)
                     {
                         GetThemeNameAndColor(out themeName, out themeColor);
                         newState = new ThemeState(themeState.IsActive, themeName, themeColor);
@@ -230,7 +230,7 @@ namespace MS.Win32
                     }
                     else if (currentState.IsActive == newState.IsActive &&
                                 (!newState.IsActive ||
-                                 newState.ThemeName == null ||
+                                 newState.ThemeName is null ||
                                  currentState.ThemeName != null)
                             )
                     {
@@ -363,7 +363,7 @@ namespace MS.Win32
         {
             // we never set _themeName to non-null, so it can only be non-null
             // if the app has set it by private reflection => unsupported
-            get { return (_themeName == null); }
+            get { return (_themeName is null); }
         }
 
         private static bool IsActiveCompatWrapper

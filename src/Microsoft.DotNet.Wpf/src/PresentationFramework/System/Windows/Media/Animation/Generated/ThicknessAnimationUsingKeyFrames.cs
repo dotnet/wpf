@@ -326,7 +326,7 @@ namespace System.Windows.Media.Animation
         {
             Debug.Assert(animationClock.CurrentState != ClockState.Stopped);
 
-            if (_keyFrames == null)
+            if (_keyFrames is null)
             {
                 return defaultDestinationValue;
             }
@@ -338,7 +338,7 @@ namespace System.Windows.Media.Animation
                 ResolveKeyTimes();
             }
 
-            if (_sortedResolvedKeyFrames == null)
+            if (_sortedResolvedKeyFrames is null)
             {
                 return defaultDestinationValue;
             }
@@ -508,7 +508,7 @@ namespace System.Windows.Media.Animation
                 // them a new unfrozen collection. All subsequent times they will
                 // get whatever collection is present, whether frozen or unfrozen.
 
-                if (_keyFrames == null)
+                if (_keyFrames is null)
                 {
                     if (this.IsFrozen)
                     {

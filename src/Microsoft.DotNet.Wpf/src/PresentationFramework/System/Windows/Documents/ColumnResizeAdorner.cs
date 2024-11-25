@@ -138,7 +138,7 @@ namespace System.Windows.Documents.Internal
 
         internal void Initialize(UIElement renderScope, double xPos, double yPos, double height)
         {
-            Debug.Assert(_adornerLayer == null, "Attempt to overwrite existing AdornerLayer!");
+            Debug.Assert(_adornerLayer is null, "Attempt to overwrite existing AdornerLayer!");
 
             _adornerLayer = AdornerLayer.GetAdornerLayer(renderScope);
 

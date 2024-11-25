@@ -153,7 +153,7 @@ namespace System.Windows.Navigation
 
         public IEnumerator GetEnumerator()
         {
-            if (_items == null)
+            if (_items is null)
             {
                 // Reserve space so this will not have to reallocate. The most it will ever be is
                 // 9 for the forward stack, 9 for the back stack, 1 for the title bar

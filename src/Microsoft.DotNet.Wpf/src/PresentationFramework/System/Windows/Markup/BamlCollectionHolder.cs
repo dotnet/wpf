@@ -128,7 +128,7 @@ namespace System.Windows.Markup
                 else if (PropertyDefinition.DependencyProperty != null)
                 {
                     DependencyObject dpParent = Parent as DependencyObject;
-                    if (dpParent == null)
+                    if (dpParent is null)
                     {
                         _reader.ThrowException(nameof(SR.ParserParentDO), Parent.ToString());
                     }
@@ -182,7 +182,7 @@ namespace System.Windows.Markup
                                                                                  PropertyDefinition.PropertyInfo,
                                                                                  Parent);
                     
-                    if (_defaultCollection == null)
+                    if (_defaultCollection is null)
                     {
                         _reader.ThrowException(nameof(SR.ParserCantGetProperty), PropertyDefinition.Name);
                     }
@@ -203,12 +203,12 @@ namespace System.Windows.Markup
 
         private void CheckReadOnly()
         {
-            if (_resourcesParent == null &&
-                (PropertyDefinition.DependencyProperty == null || PropertyDefinition.DependencyProperty.ReadOnly) &&
-                (PropertyDefinition.PropertyInfo == null || !PropertyDefinition.PropertyInfo.CanWrite) &&
-                PropertyDefinition.AttachedPropertySetter == null)
+            if (_resourcesParent is null &&
+                (PropertyDefinition.DependencyProperty is null || PropertyDefinition.DependencyProperty.ReadOnly) &&
+                (PropertyDefinition.PropertyInfo is null || !PropertyDefinition.PropertyInfo.CanWrite) &&
+                PropertyDefinition.AttachedPropertySetter is null)
             {
-                if (DefaultCollection == null)
+                if (DefaultCollection is null)
                 {
                     // if the property is read-only and has a null default value, throw an exception
                     _reader.ThrowException(nameof(SR.ParserReadOnlyNullProperty), PropertyDefinition.Name);

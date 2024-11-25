@@ -82,7 +82,7 @@ namespace System.Windows.Documents
 
         internal static void _OnApplyProperty(TextEditor This, DependencyProperty formattingProperty, object propertyValue, bool applyToParagraphs, PropertyValueAction propertyValueAction)
         {
-            if (This == null || !This._IsEnabled || This.IsReadOnly || !This.AcceptsRichContent || !(This.Selection is TextSelection))
+            if (This is null || !This._IsEnabled || This.IsReadOnly || !This.AcceptsRichContent || !(This.Selection is TextSelection))
             {
                 return;
             }
@@ -135,7 +135,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || This.IsReadOnly || !This.AcceptsRichContent || !(This.Selection.Start is TextPointer))
+            if (This is null || !This._IsEnabled || This.IsReadOnly || !This.AcceptsRichContent || !(This.Selection.Start is TextPointer))
             {
                 return;
             }
@@ -180,7 +180,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || This.IsReadOnly || !This.AcceptsRichContent || !(This.Selection is TextSelection))
+            if (This is null || !This._IsEnabled || This.IsReadOnly || !This.AcceptsRichContent || !(This.Selection is TextSelection))
             {
                 return;
             }
@@ -200,7 +200,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || This.IsReadOnly || !This.AcceptsRichContent || !(This.Selection is TextSelection))
+            if (This is null || !This._IsEnabled || This.IsReadOnly || !This.AcceptsRichContent || !(This.Selection is TextSelection))
             {
                 return;
             }
@@ -223,7 +223,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || This.IsReadOnly || !This.AcceptsRichContent || !(This.Selection is TextSelection))
+            if (This is null || !This._IsEnabled || This.IsReadOnly || !This.AcceptsRichContent || !(This.Selection is TextSelection))
             {
                 return;
             }
@@ -252,7 +252,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null || !This._IsEnabled || This.IsReadOnly || !This.AcceptsRichContent || !(This.Selection is TextSelection))
+            if (This is null || !This._IsEnabled || This.IsReadOnly || !This.AcceptsRichContent || !(This.Selection is TextSelection))
             {
                 return;
             }
@@ -271,7 +271,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null || !This._IsEnabled || This.IsReadOnly || !This.AcceptsRichContent || !(This.Selection is TextSelection))
+            if (This is null || !This._IsEnabled || This.IsReadOnly || !This.AcceptsRichContent || !(This.Selection is TextSelection))
             {
                 return;
             }
@@ -299,7 +299,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || This.IsReadOnly || !This.AcceptsRichContent || !(This.Selection is TextSelection))
+            if (This is null || !This._IsEnabled || This.IsReadOnly || !This.AcceptsRichContent || !(This.Selection is TextSelection))
             {
                 return;
             }
@@ -341,7 +341,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || This.IsReadOnly || !This.AcceptsRichContent || !(This.Selection is TextSelection))
+            if (This is null || !This._IsEnabled || This.IsReadOnly || !This.AcceptsRichContent || !(This.Selection is TextSelection))
             {
                 return;
             }
@@ -380,7 +380,7 @@ namespace System.Windows.Documents
         /// </summary>
         private static void OnApplyFontSize(object target, ExecutedRoutedEventArgs args)
         {
-            if (args.Parameter == null)
+            if (args.Parameter is null)
             {
                 return; // Ignore the command if no argument provided
             }
@@ -393,7 +393,7 @@ namespace System.Windows.Documents
         /// </summary>
         private static void OnApplyFontFamily(object target, ExecutedRoutedEventArgs args)
         {
-            if (args.Parameter == null)
+            if (args.Parameter is null)
             {
                 return; // Ignore the command if no argument provided
             }
@@ -406,7 +406,7 @@ namespace System.Windows.Documents
         /// </summary>
         private static void OnApplyForeground(object target, ExecutedRoutedEventArgs args)
         {
-            if (args.Parameter == null)
+            if (args.Parameter is null)
             {
                 return; // Ignore the command if no argument provided
             }
@@ -419,7 +419,7 @@ namespace System.Windows.Documents
         /// </summary>
         private static void OnApplyBackground(object target, ExecutedRoutedEventArgs args)
         {
-            if (args.Parameter == null)
+            if (args.Parameter is null)
             {
                 return; // Ignore the command if no argument provided
             }
@@ -434,7 +434,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || This.IsReadOnly)
+            if (This is null || !This._IsEnabled || This.IsReadOnly)
             {
                 return;
             }
@@ -475,7 +475,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null)
+            if (This is null)
             {
                 return;
             }

@@ -148,7 +148,7 @@ namespace MS.Internal.Xaml.Parser
             string ns = context.GetAttributeNamespace(propName, tagNamespace);
 
             // No Namespace, == Unknown Property
-            if (ns == null)
+            if (ns is null)
             {
                 XamlMember unknownProperty;
                 if (propName.IsDotted)

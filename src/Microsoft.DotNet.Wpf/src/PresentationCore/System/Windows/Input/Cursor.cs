@@ -182,7 +182,7 @@ namespace System.Windows.Input
                                                                 (_scaleWithDpi? NativeMethods.LR_DEFAULTSIZE : 0x0000));
 
             int errorCode = Marshal.GetLastWin32Error();
-            if (_cursorHandle == null || _cursorHandle.IsInvalid)
+            if (_cursorHandle is null || _cursorHandle.IsInvalid)
             {
                 // LoadImage returns a null handle but does not set
                 // the error condition when icon file is of an incorrect type (e.g., .bmp)
@@ -257,7 +257,7 @@ namespace System.Windows.Input
                                                                     NativeMethods.LR_DEFAULTCOLOR |
                                                                     NativeMethods.LR_LOADFROMFILE |
                                                                     (_scaleWithDpi? NativeMethods.LR_DEFAULTSIZE : 0x0000));
-                if (_cursorHandle == null || _cursorHandle.IsInvalid)
+                if (_cursorHandle is null || _cursorHandle.IsInvalid)
                 {
                      throw new ArgumentException(SR.Cursor_InvalidStream);
                 }
@@ -303,7 +303,7 @@ namespace System.Windows.Input
                                                                     NativeMethods.LR_DEFAULTCOLOR |
                                                                     NativeMethods.LR_LOADFROMFILE |
                                                                     (_scaleWithDpi? NativeMethods.LR_DEFAULTSIZE : 0x0000));
-                if (_cursorHandle == null || _cursorHandle.IsInvalid)
+                if (_cursorHandle is null || _cursorHandle.IsInvalid)
                 {
                      throw new ArgumentException(SR.Cursor_InvalidStream);
                 }

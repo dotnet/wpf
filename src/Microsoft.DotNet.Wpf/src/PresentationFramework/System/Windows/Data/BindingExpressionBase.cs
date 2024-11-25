@@ -158,7 +158,7 @@ namespace System.Windows.Data
 
             if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.CreateExpression))
             {
-                if (parent == null)
+                if (parent is null)
                 {
                     TraceData.TraceAndNotify(TraceEventType.Warning,
                                         TraceData.CreatedExpression(
@@ -210,7 +210,7 @@ namespace System.Windows.Data
             {
                 BindingExpressionBase root = RootBindingExpression;
                 WeakReference<BindingGroup> wr = (WeakReference<BindingGroup>)root.GetValue(Feature.BindingGroup, null);
-                if (wr == null)
+                if (wr is null)
                     return null;
                 else
                 {
@@ -293,7 +293,7 @@ namespace System.Windows.Data
                     }
                     else
                     {
-                        if (NotifyDataErrors == null)
+                        if (NotifyDataErrors is null)
                         {
                             list = new List<ValidationError>();
                         }
@@ -869,7 +869,7 @@ namespace System.Windows.Data
 
         internal bool UsesLanguage
         {
-            get { return (ParentBindingBase.ConverterCultureInternal == null); }
+            get { return (ParentBindingBase.ConverterCultureInternal is null); }
         }
 
         internal bool IsEligibleForCommit
@@ -911,7 +911,7 @@ namespace System.Windows.Data
 
             // get the engine
             DataBindEngine engine = DataBindEngine.CurrentDataBindEngine;
-            if (engine == null || engine.IsShutDown)
+            if (engine is null || engine.IsShutDown)
             {
                 return false;   // don't even think about doing any work if the DBE is shut down
 
@@ -1267,7 +1267,7 @@ namespace System.Windows.Data
                 _culture = ParentBindingBase.ConverterCultureInternal;
 
                 // if that doesn't work, use target element's xml:lang property
-                if (_culture == null)
+                if (_culture is null)
                 {
                     DependencyObject target = TargetElement;
                     if (target != null)
@@ -1322,7 +1322,7 @@ namespace System.Windows.Data
                 // When the target is a TextBox with a composition in effect,
                 // do this asynchronously, to avoid confusing the composition's Undo stack
                 System.Windows.Controls.Primitives.TextBoxBase tbb = Target as System.Windows.Controls.Primitives.TextBoxBase;
-                MS.Internal.Documents.UndoManager undoManager = (tbb == null) ? null :
+                MS.Internal.Documents.UndoManager undoManager = (tbb is null) ? null :
                     tbb.TextContainer.UndoManager;
                 if (undoManager != null &&
                     undoManager.OpenedUnit != null &&
@@ -1595,7 +1595,7 @@ namespace System.Windows.Data
         // determine if the given value is "null" (in a general sense)
         internal static bool IsNullValue(object value)
         {
-            if (value == null)
+            if (value is null)
                 return true;
 
             if (Convert.IsDBNull(value))
@@ -1610,7 +1610,7 @@ namespace System.Windows.Data
         // determine a "null" value appropriate for the given type
         internal object NullValueForType(Type type)
         {
-            if (type == null)
+            if (type is null)
                 return null;
 
             if (SystemDataHelper.IsSqlNullableType(type))
@@ -1630,7 +1630,7 @@ namespace System.Windows.Data
         {
             ValidationRule result = ParentBindingBase.GetValidationRule(type);
 
-            if (result == null && HasValue(Feature.ParentBindingExpressionBase))
+            if (result is null && HasValue(Feature.ParentBindingExpressionBase))
             {
                 result = ParentBindingExpressionBase.LookupValidationRule(type);
             }
@@ -1708,7 +1708,7 @@ namespace System.Windows.Data
             string groupName = ParentBindingBase.BindingGroupName;
 
             // a null group name means "don't join any group".
-            if (groupName == null)
+            if (groupName is null)
             {
                 MarkAsNonGrouped();
                 return null;
@@ -1719,7 +1719,7 @@ namespace System.Windows.Data
             {
                 // check further preconditions:
                 if (!isReflective ||                // must have target-to-source data flow
-                    contextElement == null)         // must use data context
+                    contextElement is null)         // must use data context
                 {
                     // later child bindings might pass this test, so don't mark
                     // this root binding as non-grouped yet
@@ -1728,7 +1728,7 @@ namespace System.Windows.Data
 
                 // only the innermost binding group is eligible
                 bg = (BindingGroup)contextElement.GetValue(FrameworkElement.BindingGroupProperty);
-                if (bg == null)
+                if (bg is null)
                 {
                     MarkAsNonGrouped();
                     return null;
@@ -1737,7 +1737,7 @@ namespace System.Windows.Data
                 // the context element must share data context with the group
                 DependencyProperty dataContextDP = FrameworkElement.DataContextProperty;
                 DependencyObject groupContextElement = bg.InheritanceContext;
-                if (groupContextElement == null ||
+                if (groupContextElement is null ||
                     !ItemsControl.EqualsEx( contextElement.GetValue(dataContextDP),
                                     groupContextElement.GetValue(dataContextDP)))
                 {
@@ -1758,7 +1758,7 @@ namespace System.Windows.Data
                 while (fo.DO != null)
                 {
                     BindingGroup bgCandidate = (BindingGroup)fo.DO.GetValue(bindingGroupDP);
-                    if (bgCandidate == null)
+                    if (bgCandidate is null)
                     {
                         MarkAsNonGrouped();
                         return null;
@@ -1874,7 +1874,7 @@ namespace System.Windows.Data
 
                 root.UpdateCommitState();
 
-                if (bg == null)
+                if (bg is null)
                 {
                     if (root != this && !shouldStore)
                     {
@@ -2314,7 +2314,7 @@ namespace System.Windows.Data
                 ValidationRule rule = NotifyDataErrorValidationRule.Instance;
                 List<ValidationError> notifyDataErrors = NotifyDataErrors;
 
-                if (notifyDataErrors == null)
+                if (notifyDataErrors is null)
                 {
                     notifyDataErrors = new List<ValidationError>();
                     SetValue(Feature.NotifyDataErrors, notifyDataErrors);
@@ -2346,12 +2346,12 @@ namespace System.Windows.Data
         {
             // determine the errors to add and the validation results to remove,
             // taking duplicates into account
-            if (previousErrors == null || previousErrors.Count == 0)
+            if (previousErrors is null || previousErrors.Count == 0)
             {
                 toAdd = errors;
                 toRemove = null;
             }
-            else if (errors == null || errors.Count == 0)
+            else if (errors is null || errors.Count == 0)
             {
                 toAdd = null;
                 toRemove = new List<ValidationError>(previousErrors);
@@ -2422,7 +2422,7 @@ namespace System.Windows.Data
         internal ValidationError GetValidationErrors(ValidationStep validationStep)
         {
             ValidationError validationError = BaseValidationError;
-            if (validationError == null || validationError.RuleInError.ValidationStep != validationStep)
+            if (validationError is null || validationError.RuleInError.ValidationStep != validationStep)
                 return null;
 
             return validationError;
@@ -2477,7 +2477,7 @@ namespace System.Windows.Data
                 WeakDependencySource[] sources = (i==index) ? newSources :
                                             (bindExpr != null) ? bindExpr.WeakSources :
                                             null;
-                int m = (sources == null) ? 0 : sources.Length;
+                int m = (sources is null) ? 0 : sources.Length;
                 for (int j = 0; j < m; ++j)
                 {
                     WeakDependencySource candidate = sources[j];
@@ -2611,7 +2611,7 @@ namespace System.Windows.Data
                     targetType = typeof(Object);
                     break;
                 }
-                else if (stringFormat == null && be is PriorityBindingExpression)
+                else if (stringFormat is null && be is PriorityBindingExpression)
                 {
                     // use a PriorityBinding's string format, unless we already
                     // have a more specific one
@@ -2643,7 +2643,7 @@ namespace System.Windows.Data
                 // GroupItem is defined in the theme, but needs to pick up formatting
                 // from the app's markup.
 
-                if (stringFormat == null)   // (d)
+                if (stringFormat is null)   // (d)
                 {
                     FrameworkObject fo = new FrameworkObject(Helper.FindMentor(TargetElement));
                     ContentPresenter cp = fo.TemplatedParent as ContentPresenter;
@@ -2841,7 +2841,7 @@ namespace System.Windows.Data
 
         internal static object GetReference(object reference)
         {
-            if (reference == null)
+            if (reference is null)
                 return null;
 
 #if USE_ITEM_REFERENCE

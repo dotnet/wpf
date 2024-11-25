@@ -1070,7 +1070,7 @@ namespace MS.Internal.Shaping
                                  );
                 }
 
-                if (gsubComplexLanguages == null && gposComplexLanguages == null)
+                if (gsubComplexLanguages is null && gposComplexLanguages is null)
                 {
                     complexLanguages = null;
                     return OpenTypeLayoutResult.Success;
@@ -1212,7 +1212,7 @@ namespace MS.Internal.Shaping
 
             int requiredLookupUsageArraySize = lookupCount * _bytesPerLookup;
 
-            if ( _lookupUsageFlags == null ||
+            if ( _lookupUsageFlags is null ||
                  _lookupUsageFlags.Length < requiredLookupUsageArraySize)
             {
                 _lookupUsageFlags = new byte[requiredLookupUsageArraySize];

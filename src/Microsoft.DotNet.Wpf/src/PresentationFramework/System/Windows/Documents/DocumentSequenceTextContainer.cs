@@ -365,7 +365,7 @@ namespace System.Windows.Documents
             }
 
             DocumentSequenceTextPointer tp = position as DocumentSequenceTextPointer;
-            if (tp == null)
+            if (tp is null)
             {
                 throw new ArgumentException(SR.Format(SR.BadFixedTextPosition, "position"));
             }
@@ -468,7 +468,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_highlights == null)
+                if (_highlights is null)
                 {
                     _highlights = new DocumentSequenceHighlights(this);
                 }
@@ -564,7 +564,7 @@ namespace System.Windows.Documents
                 }
 
                 // Fire the ChangingEvent now if we haven't already.
-                if (_changes == null)
+                if (_changes is null)
                 {
                     _changes = new TextContainerChangedEventArgs();
                 }
@@ -736,11 +736,11 @@ namespace System.Windows.Documents
                 ITextPointer tpChildStart, tpChildEnd;
                 ChildDocumentBlock lastBlock;
 
-                // If tsScan == null, we were done with previous range,
+                // If tsScan is null, we were done with previous range,
                 // so we are going to set tsScan to begining of this range.
                 // Otherwise the previous range was split so we will simply
                 // start from what was left over from previous loop.
-                if (tsScan == null)
+                if (tsScan is null)
                 {
                     tsScan = (DocumentSequenceTextPointer)ts.Start;
                 }
@@ -792,7 +792,7 @@ namespace System.Windows.Documents
             }
 
             // Fire change notification for the last child block.
-            if (rangeArray.Count > 0 && (!(cdbScan == null || cdbScan.ChildContainer is NullTextContainer)))
+            if (rangeArray.Count > 0 && (!(cdbScan is null || cdbScan.ChildContainer is NullTextContainer)))
             {
                 cdbScan.ChildHighlightLayer.RaiseHighlightChangedEvent(new ReadOnlyCollection<TextSegment>(rangeArray));
             }

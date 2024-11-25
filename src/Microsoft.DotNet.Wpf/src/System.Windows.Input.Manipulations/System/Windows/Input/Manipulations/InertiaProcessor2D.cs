@@ -493,8 +493,8 @@ namespace System.Windows.Input.Manipulations
             // (in which case ignoring it doesn't matter), or else an exception
             // will get thrown when they try to start the processor (in which case
             // it doesn't matter, either).
-            this.initialExpansion.AbsoluteOffset = (behavior == null) ? float.NaN : behavior.DesiredExpansionX;
-            this.initialExpansion.Velocity = (behavior == null) ? float.NaN : behavior.InitialVelocityX;
+            this.initialExpansion.AbsoluteOffset = (behavior is null) ? float.NaN : behavior.DesiredExpansionX;
+            this.initialExpansion.Velocity = (behavior is null) ? float.NaN : behavior.InitialVelocityX;
         }
 
         /// <summary>
@@ -507,7 +507,7 @@ namespace System.Windows.Input.Manipulations
         private static TBehavior GetBehavior<TBehavior>(
             InertiaParameters2D parameters) where TBehavior : InertiaParameters2D, new()
         {
-            if (parameters == null)
+            if (parameters is null)
             {
                 return new TBehavior();
             }

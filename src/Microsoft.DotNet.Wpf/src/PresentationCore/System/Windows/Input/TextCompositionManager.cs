@@ -315,7 +315,7 @@ namespace System.Windows.Input
         {
             ArgumentNullException.ThrowIfNull(composition);
 
-            if (composition._InputManager == null)
+            if (composition._InputManager is null)
             {
                 throw new ArgumentException(SR.Format(SR.TextCompositionManager_NoInputManager, "composition"));
             }
@@ -336,7 +336,7 @@ namespace System.Windows.Input
         {
             ArgumentNullException.ThrowIfNull(composition);
 
-            if (composition._InputManager == null)
+            if (composition._InputManager is null)
             {
                 throw new ArgumentException(SR.Format(SR.TextCompositionManager_NoInputManager, "composition"));
             }
@@ -361,7 +361,7 @@ namespace System.Windows.Input
         {
             ArgumentNullException.ThrowIfNull(composition);
 
-            if (composition._InputManager == null)
+            if (composition._InputManager is null)
             {
                 throw new ArgumentException(SR.Format(SR.TextCompositionManager_NoInputManager, "composition"));
             }
@@ -434,7 +434,7 @@ namespace System.Windows.Input
                     {
                         if (HandleAltNumpadEntry(keyArgs.RealKey, keyArgs.ScanCode, keyArgs.IsExtendedKey))
                         {
-                            if (_altNumpadcomposition == null)
+                            if (_altNumpadcomposition is null)
                             {
                                 _altNumpadcomposition = new TextComposition(_inputManager, (IInputElement)keyArgs.Source, "", TextCompositionAutoComplete.Off, keyArgs.Device);
                                 keyArgs.Handled = UnsafeStartComposition(_altNumpadcomposition);

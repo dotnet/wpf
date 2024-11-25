@@ -77,7 +77,7 @@ namespace System.Windows.Documents
         {
             int charsCopied;
 
-            if (limit == null)
+            if (limit is null)
             {
                 // No limit, just call GetText.
                 charsCopied = thisPointer.GetTextInRun(direction, textBuffer, startIndex, count);
@@ -760,7 +760,7 @@ namespace System.Windows.Documents
 
             Block paragraphOrBlockUIContainer = pointer.ParagraphOrBlockUIContainer;
 
-            return paragraphOrBlockUIContainer == null ? null : (paragraphOrBlockUIContainer.Parent as ListItem);
+            return paragraphOrBlockUIContainer is null ? null : (paragraphOrBlockUIContainer.Parent as ListItem);
         }
 
         // Returns a ListItem if it exists and the current paragraph is the first block in it.
@@ -889,7 +889,7 @@ namespace System.Windows.Documents
                 {
                     //  Need a cleaner way of working with FlowDocument in RichTextBox
                     templatedParent = ((FlowDocumentView)textView.RenderScope).TemplatedParent as Visual;
-                    if (templatedParent == null && ((FlowDocumentView)textView.RenderScope).Parent is FrameworkElement)
+                    if (templatedParent is null && ((FlowDocumentView)textView.RenderScope).Parent is FrameworkElement)
                     {
                         templatedParent = ((FrameworkElement)((FlowDocumentView)textView.RenderScope).Parent).TemplatedParent as Visual;
                     }
@@ -1116,7 +1116,7 @@ namespace System.Windows.Documents
         /// <see cref="ITextPointer.ValidateLayout"/>
         internal static bool ValidateLayout(ITextPointer thisPointer, ITextView textView)
         {
-            if (textView == null)
+            if (textView is null)
             {
                 return false;
             }
@@ -1514,7 +1514,7 @@ namespace System.Windows.Documents
         // If lineBreakType is null, any line break element is considered valid.
         private static bool IsNextToRichBreak(ITextPointer thisPosition, LogicalDirection direction, Type lineBreakType)
         {
-            Invariant.Assert(lineBreakType == null || lineBreakType == typeof(LineBreak) || lineBreakType == typeof(Paragraph));
+            Invariant.Assert(lineBreakType is null || lineBreakType == typeof(LineBreak) || lineBreakType == typeof(Paragraph));
 
             bool result = false;
 
@@ -1522,7 +1522,7 @@ namespace System.Windows.Documents
             {
                 Type neighbor = thisPosition.GetElementType(direction);
 
-                if (lineBreakType == null)
+                if (lineBreakType is null)
                 {
                     if (typeof(LineBreak).IsAssignableFrom(neighbor) ||
                         typeof(Paragraph).IsAssignableFrom(neighbor))

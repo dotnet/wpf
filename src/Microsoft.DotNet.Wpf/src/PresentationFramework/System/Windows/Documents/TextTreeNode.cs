@@ -277,7 +277,7 @@ namespace System.Windows.Documents
             while (true)
             {
                 containingNode = node.GetContainingNode();
-                if (containingNode == null)
+                if (containingNode is null)
                     break;
                 node = containingNode;
             }
@@ -307,7 +307,7 @@ namespace System.Windows.Documents
                 }
 
                 containingNode = node.GetContainingNode();
-                if (containingNode == null)
+                if (containingNode is null)
                 {
                     parent = ((TextTreeRootNode)node).TextContainer.Parent; // This may be null.
                     break;
@@ -350,7 +350,7 @@ namespace System.Windows.Documents
                 }
 
                 containingNode = node.GetContainingNode();
-                if (containingNode == null)
+                if (containingNode is null)
                 {
                     logicalTreeNode = ((TextTreeRootNode)node).TextContainer.Parent;
                     break;

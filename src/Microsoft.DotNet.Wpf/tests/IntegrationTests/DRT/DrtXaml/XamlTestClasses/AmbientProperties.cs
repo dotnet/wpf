@@ -132,7 +132,7 @@ namespace Test.Elements
             XamlType ambientSP = xscProvider.SchemaContext.GetXamlType(typeof(FooAmbient));
             XamlMember textProp = ambientSP.GetMember("AmbientTC");
             AmbientPropertyValue ambientPropVal = iAmbient.GetFirstAmbientValue(null, textProp);
-            if (ambientPropVal == null)
+            if (ambientPropVal is null)
             {
                 atc.Text = s;
             }

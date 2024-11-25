@@ -65,8 +65,8 @@ namespace System.Windows.Shell
         public JumpItemsRejectedEventArgs(IList<JumpItem> rejectedItems, IList<JumpItemRejectionReason> reasons)
         {
             // If one of the collections is null then the other has to be, too.
-            if ((rejectedItems == null && reasons != null)
-                || (reasons == null && rejectedItems != null)
+            if ((rejectedItems is null && reasons != null)
+                || (reasons is null && rejectedItems != null)
                 || (rejectedItems != null && reasons != null && rejectedItems.Count != reasons.Count))
             {
                 throw new ArgumentException(SR.JumpItemsRejectedEventArgs_CountMismatch);
@@ -345,7 +345,7 @@ namespace System.Windows.Shell
         {
             get
             {
-                return _initializing == null
+                return _initializing is null
                     && JumpItems.Count == 0
                     && !ShowRecentCategory
                     && !ShowFrequentCategory;
@@ -519,7 +519,7 @@ namespace System.Windows.Shell
                 // We're traversing the original list so we're vulnerable to another thread modifying it during the enumeration.
                 foreach (var jumpItem in JumpItems)
                 {
-                    if (jumpItem == null)
+                    if (jumpItem is null)
                     {
                         // App added a null jump item?  Just go through the normal failure mechanisms.
                         rejectedList.Add(new _RejectedJumpItemPair{ JumpItem = jumpItem, Reason = JumpItemRejectionReason.InvalidItem });
@@ -531,7 +531,7 @@ namespace System.Windows.Shell
                     {
                         shellObject = GetShellObjectForJumpItem(jumpItem);
                         // If for some reason we couldn't create the item add it to the rejected list.
-                        if (shellObject == null)
+                        if (shellObject is null)
                         {
                             rejectedList.Add(new _RejectedJumpItemPair { Reason = JumpItemRejectionReason.InvalidItem, JumpItem = jumpItem });
                             continue;
@@ -1106,7 +1106,7 @@ namespace System.Windows.Shell
         private void RejectEverything()
         {
             EventHandler<JumpItemsRejectedEventArgs> handler = JumpItemsRejected;
-            if (handler == null)
+            if (handler is null)
             {
                 _jumpItems.Clear();
                 return;

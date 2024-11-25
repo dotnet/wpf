@@ -246,7 +246,7 @@ namespace System.Windows.Media.Imaging
 
         internal void Init(object value)
         {
-            if (value == null)
+            if (value is null)
             {
                 varType = (ushort)VarEnum.VT_EMPTY;
             }
@@ -429,7 +429,7 @@ namespace System.Windows.Media.Imaging
 
                     SafeMILHandle metadataHandle = metadata.InternalMetadataHandle;
 
-                    if (metadataHandle == null || metadataHandle.IsInvalid)
+                    if (metadataHandle is null || metadataHandle.IsInvalid)
                     {
                         throw new NotImplementedException();
                     }

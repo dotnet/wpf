@@ -104,7 +104,7 @@ namespace System.Windows
 
             foreach (T item in collection)
             {
-                if (item == null)
+                if (item is null)
                 {
                     throw new System.ArgumentException(SR.Collection_NoNull);
                 }
@@ -216,7 +216,7 @@ namespace System.Windows
         /// </summary>
         public void Insert(int index, T value)
         {
-            if (value == null)
+            if (value is null)
             {
                 throw new System.ArgumentException(SR.Collection_NoNull);
             }
@@ -333,7 +333,7 @@ namespace System.Windows
             }
             set
             {
-                if (value == null)
+                if (value is null)
                 {
                     throw new System.ArgumentException(SR.Collection_NoNull);
                 }
@@ -718,7 +718,7 @@ namespace System.Windows
 
         internal int AddWithoutFiringPublicEvents(T value)
         {
-            if (value == null)
+            if (value is null)
             {
                 throw new System.ArgumentException(SR.Collection_NoNull);
             }
@@ -743,7 +743,7 @@ namespace System.Windows
                                             int newIndex,
                                             T newValue)
         {
-            if (PrivatePropertyChanged == null && CollectionChanged == null)
+            if (PrivatePropertyChanged is null && CollectionChanged is null)
                 return;
 
             using (BlockReentrancy())
@@ -849,7 +849,7 @@ namespace System.Windows
                         break;
                     }
 
-                    if (newValue == null)
+                    if (newValue is null)
                     {
                         throw new InvalidOperationException(SR.Format(SR.Freezable_CloneInvalidType, typeof(T).Name));
                     }
@@ -925,7 +925,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    canFreeze &= (item.Dispatcher == null);
+                    canFreeze &= (item.Dispatcher is null);
                 }
             }
 

@@ -227,7 +227,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             fragment = fromPoint as ProxyFragment;
-            if (fragment == null)
+            if (fragment is null)
             {
                 // we got back a simple element                
                 return fromPoint;

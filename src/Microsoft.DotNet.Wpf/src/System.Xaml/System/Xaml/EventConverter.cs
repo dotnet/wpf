@@ -44,20 +44,20 @@ namespace System.Xaml
             rootObject = null;
             delegateType = null;
 
-            if (context == null)
+            if (context is null)
             {
                 return;
             }
 
             IRootObjectProvider? rootObjectService = context.GetService(typeof(IRootObjectProvider)) as IRootObjectProvider;
-            if (rootObjectService == null)
+            if (rootObjectService is null)
             {
                 return;
             }
             rootObject = rootObjectService.RootObject;
 
             IDestinationTypeProvider? targetService = context.GetService(typeof(IDestinationTypeProvider)) as IDestinationTypeProvider;
-            if (targetService == null)
+            if (targetService is null)
             {
                 return;
             }

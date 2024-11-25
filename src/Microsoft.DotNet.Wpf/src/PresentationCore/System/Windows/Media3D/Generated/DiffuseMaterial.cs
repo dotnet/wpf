@@ -378,7 +378,7 @@ namespace System.Windows.Media.Media3D
             // if these get touched by more than one thread in the lifetime
             // of your app.
 
-            Debug.Assert(s_Brush == null || s_Brush.IsFrozen,
+            Debug.Assert(s_Brush is null || s_Brush.IsFrozen,
                 "Detected context bound default value DiffuseMaterial.s_Brush (See OS Bug #947272).");
 
 

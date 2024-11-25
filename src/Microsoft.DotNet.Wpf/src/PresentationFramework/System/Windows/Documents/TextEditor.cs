@@ -256,7 +256,7 @@ namespace System.Windows.Documents
         {
             value = value && !this.IsReadOnly && this._IsEnabled;
 
-            if (value && _speller == null)
+            if (value && _speller is null)
             {
                 // Start up the speller.
                 _speller = new Speller(this);
@@ -279,7 +279,7 @@ namespace System.Windows.Documents
         {
             TextBoxBase textBoxBase = _uiScope as TextBoxBase;
             // We want CustomDictionaries to take effect only on TextBoxBase derived classes.
-            if (textBoxBase == null)
+            if (textBoxBase is null)
             {
                 return;
             }
@@ -313,7 +313,7 @@ namespace System.Windows.Documents
         {
             TextEditor textEditor = TextEditor._GetTextEditor(frameworkElement);
 
-            return (textEditor == null) ? null : textEditor.Selection;
+            return (textEditor is null) ? null : textEditor.Selection;
         }
 
         // Registers all text editing command handlers for a given control type
@@ -514,7 +514,7 @@ namespace System.Windows.Documents
 
         internal void RequestExtendSelection(Point point)
         {
-            if (_mouseSelectionState == null)
+            if (_mouseSelectionState is null)
             {
                 _mouseSelectionState = new MouseSelectionState();
                 _mouseSelectionState.Timer = new DispatcherTimer(DispatcherPriority.Normal);
@@ -932,7 +932,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return _uiScope == null ? true : (bool)_uiScope.GetValue(KeyboardNavigation.AcceptsReturnProperty);
+                return _uiScope is null ? true : (bool)_uiScope.GetValue(KeyboardNavigation.AcceptsReturnProperty);
             }
         }
 
@@ -944,7 +944,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return _uiScope == null ? true : (bool)_uiScope.GetValue(TextBoxBase.AcceptsTabProperty);
+                return _uiScope is null ? true : (bool)_uiScope.GetValue(TextBoxBase.AcceptsTabProperty);
             }
             set
             {
@@ -974,7 +974,7 @@ namespace System.Windows.Documents
                 }
                 else
                 {
-                    return _uiScope == null ? false : (bool)_uiScope.GetValue(TextEditor.IsReadOnlyProperty);
+                    return _uiScope is null ? false : (bool)_uiScope.GetValue(TextEditor.IsReadOnlyProperty);
                 }
             }
             set
@@ -997,7 +997,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return _uiScope == null ? false : (bool)_uiScope.GetValue(SpellCheck.IsEnabledProperty);
+                return _uiScope is null ? false : (bool)_uiScope.GetValue(SpellCheck.IsEnabledProperty);
             }
             set
             {
@@ -1029,7 +1029,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return _uiScope == null ? true : (bool)_uiScope.GetValue(TextEditor.AllowOvertypeProperty);
+                return _uiScope is null ? true : (bool)_uiScope.GetValue(TextEditor.AllowOvertypeProperty);
             }
         }
 
@@ -1042,7 +1042,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return _uiScope == null ? 0 : (int)_uiScope.GetValue(TextBox.MaxLengthProperty);
+                return _uiScope is null ? 0 : (int)_uiScope.GetValue(TextBox.MaxLengthProperty);
             }
         }
 
@@ -1054,7 +1054,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return _uiScope == null ? CharacterCasing.Normal : (CharacterCasing)_uiScope.GetValue(TextBox.CharacterCasingProperty);
+                return _uiScope is null ? CharacterCasing.Normal : (CharacterCasing)_uiScope.GetValue(TextBox.CharacterCasingProperty);
             }
         }
 
@@ -1066,7 +1066,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return _uiScope == null ? false : (bool)_uiScope.GetValue(RichTextBox.AutoWordSelectionProperty);
+                return _uiScope is null ? false : (bool)_uiScope.GetValue(RichTextBox.AutoWordSelectionProperty);
             }
         }
 
@@ -1078,7 +1078,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return _uiScope == null ? false : (bool)_uiScope.GetValue(TextBoxBase.IsReadOnlyCaretVisibleProperty);
+                return _uiScope is null ? false : (bool)_uiScope.GetValue(TextBoxBase.IsReadOnlyCaretVisibleProperty);
             }
         }
 
@@ -1315,7 +1315,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return _uiScope == null ? false : _uiScope.IsEnabled;
+                return _uiScope is null ? false : _uiScope.IsEnabled;
             }
         }
 
@@ -1336,7 +1336,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                FrameworkElement scroller = this.TextView == null ? null : (this.TextView.RenderScope as FrameworkElement);
+                FrameworkElement scroller = this.TextView is null ? null : (this.TextView.RenderScope as FrameworkElement);
 
                 while (scroller != null && scroller != this.UiScope)
                 {
@@ -1368,7 +1368,7 @@ namespace System.Windows.Documents
 
                 store = (TextEditorThreadLocalStore)Thread.GetData(_threadLocalStoreSlot);
 
-                if (store == null)
+                if (store is null)
                 {
                     store = new TextEditorThreadLocalStore();
                     Thread.SetData(_threadLocalStoreSlot, store);
@@ -1497,13 +1497,13 @@ namespace System.Windows.Documents
             // already released. It may happen when there is delay in view transitions
             // (i.e. page transition in DocumentViewerBase).
             // In such case ignore this event.
-            if (_mouseSelectionState == null)
+            if (_mouseSelectionState is null)
             {
                 return;
             }
             _mouseSelectionState.BringIntoViewInProgress = false;
 
-            if (e != null && !e.Cancelled && e.Error == null)
+            if (e != null && !e.Cancelled && e.Error is null)
             {
                 Invariant.Assert(e.UserState == this && this.TextView == sender);
 
@@ -1512,7 +1512,7 @@ namespace System.Windows.Documents
                 if (cursorPosition != null)
                 {
                     // Check end-of-container condition
-                    if (cursorPosition.GetNextInsertionPosition(LogicalDirection.Forward) == null &&
+                    if (cursorPosition.GetNextInsertionPosition(LogicalDirection.Forward) is null &&
                         cursorPosition.ParentType != null) //  This check is a work around of bug that Parent can be null for some text boxes.
                     {
                         // We are at the end of text container. Check whether mouse is farther than a last character
@@ -1555,7 +1555,7 @@ namespace System.Windows.Documents
                 if (threadManager != null)
                 {
                     // Demand create the TextStore.
-                    if (_textstore == null)
+                    if (_textstore is null)
                     {
                         _textstore = new TextStore(this);
                         _weakThis = new TextEditorShutDownListener(this);
@@ -1613,7 +1613,7 @@ namespace System.Windows.Documents
         private object OnTextViewUpdatedWorker(object o)
         {
             // Ignore the event if the editor has been detached from its scope
-            if (this.TextView == null)
+            if (this.TextView is null)
             {
                 return null;
             }
@@ -1640,7 +1640,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor((FrameworkElement)sender);
 
-            if (This == null)
+            if (This is null)
             {
                 return;
             }
@@ -1656,13 +1656,13 @@ namespace System.Windows.Documents
         private static void OnIsReadOnlyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             FrameworkElement frameworkElement = sender as FrameworkElement;
-            if (frameworkElement == null)
+            if (frameworkElement is null)
             {
                 return;
             }
 
             TextEditor This = TextEditor._GetTextEditor(frameworkElement);
-            if (This == null)
+            if (This is null)
             {
                 return;
             }
@@ -1694,7 +1694,7 @@ namespace System.Windows.Documents
 
             TextEditor This = TextEditor._GetTextEditor((FrameworkElement)sender);
 
-            if (This == null)
+            if (This is null)
             {
                 return;
             }
@@ -1749,7 +1749,7 @@ namespace System.Windows.Documents
 
             TextEditor This = TextEditor._GetTextEditor((FrameworkElement)sender);
 
-            if (This == null)
+            if (This is null)
             {
                 return;
             }
@@ -1789,7 +1789,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor((FrameworkElement)sender);
 
-            if (This == null)
+            if (This is null)
             {
                 return;
             }
@@ -1832,7 +1832,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor((FrameworkElement)target);
 
-            if (This == null)
+            if (This is null)
             {
                 return;
             }
@@ -1858,7 +1858,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor((FrameworkElement)target);
 
-            if (This == null)
+            if (This is null)
             {
                 return;
             }
@@ -1884,7 +1884,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor((FrameworkElement)sender);
 
-            if (This == null)
+            if (This is null)
             {
                 return;
             }
@@ -1904,7 +1904,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor((FrameworkElement)sender);
 
-            if (This == null)
+            if (This is null)
             {
                 return;
             }

@@ -70,7 +70,7 @@ namespace System.Windows.Input
 
             // Get the position with respect to root
             Point rootPoint;
-            if (elementToRoot == null ||
+            if (elementToRoot is null ||
                 !elementToRoot.TryTransform(position, out rootPoint))
             {
                 rootPoint = position;

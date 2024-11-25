@@ -63,7 +63,7 @@ namespace System.Windows
                 Debug.Assert(false, "Invalid allowedEffects");
             }
 
-            if (target == null)
+            if (target is null)
             {
                 Debug.Assert(false, "Invalid target");
             }

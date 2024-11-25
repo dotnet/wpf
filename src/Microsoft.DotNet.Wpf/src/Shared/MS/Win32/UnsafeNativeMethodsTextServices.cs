@@ -1926,7 +1926,7 @@ namespace MS.Win32
             //typedef [uuid(49930d51-7d93-448c-a48c-fea5dac192b1)] struct  TF_HALTCOND
             //{
             //  ITfRange *pHaltRange; // halt shift if anchor encountered
-            //  TfAnchor aHaltPos;    // ignored if pHaltRange == NULL
+            //  TfAnchor aHaltPos;    // ignored if pHaltRange is null
             //  DWORD dwFlags;        // TF_HF_*
             //} TF_HALTCOND;
 

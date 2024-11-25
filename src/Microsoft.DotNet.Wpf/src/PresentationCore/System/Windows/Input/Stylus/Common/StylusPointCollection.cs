@@ -329,7 +329,7 @@ namespace System.Windows.Input
         /// <param name="stylusPoints">stylusPoints</param>
         public static explicit operator Point[](StylusPointCollection stylusPoints)
         {
-            if (stylusPoints == null)
+            if (stylusPoints is null)
             {
                 return null;
             }

@@ -575,7 +575,7 @@ namespace MS.Internal.FontCache
                 if (!_tryToConnect)
                     return _serverCache;
 
-                if (_fc == null)
+                if (_fc is null)
                 {
                     _fc = FontCacheConfig.Current;
                     _ipcMngr = new IPCCacheManager(_fc);
@@ -635,7 +635,7 @@ namespace MS.Internal.FontCache
                         }
                     }
                 }
-                if (serverSectionName == null)
+                if (serverSectionName is null)
                 {
                     // keep using the old cache if the new name can't be obtained (or null if there is no old cache)
                     _ipcMngr.CloseConnection();
@@ -661,7 +661,7 @@ namespace MS.Internal.FontCache
         internal static ElementCacher GetCurrentCache()
         {
             ElementCacher c = _currentCache;
-            if (c == null || c.IsObsolete())
+            if (c is null || c.IsObsolete())
                 c = RenewCache(c);
 
             Debug.Assert(c != null);
@@ -682,7 +682,7 @@ namespace MS.Internal.FontCache
                 // Whether to copy the contents of the old cache into the new cache.
                 bool copyOldCache = false;
 
-                if (oldCache == null)
+                if (oldCache is null)
                     newCacheSize = FontCacheConstants.InitialLocalCacheSize;
                 else
                 {

@@ -146,7 +146,7 @@ namespace System.Windows.Media.TextFormatting
                     ThrowExceptionFromLsError(SR.Format(SR.CreateContextFailure, lserr), lserr);
                 }
 
-                if (_specialCharacters == null)
+                if (_specialCharacters is null)
                 {
                     SetSpecialCharacters(ref contextInfo);
                 }

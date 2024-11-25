@@ -120,7 +120,7 @@ namespace System.Windows.Controls.Primitives
         {
             if (oldValue != newValue)
             {
-                if (_visualChildren == null)
+                if (_visualChildren is null)
                 {
                     _visualChildren = new Visual[3];
                 }
@@ -136,7 +136,7 @@ namespace System.Windows.Controls.Primitives
                 while (i < 3) 
                 {
                     // Array isn't full, break
-                    if (_visualChildren[i] == null)
+                    if (_visualChildren[i] is null)
                         break;
 
                     // found the old value
@@ -375,7 +375,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         protected override Visual GetVisualChild(int index)
         {
-            if (_visualChildren == null || _visualChildren[index] == null)
+            if (_visualChildren is null || _visualChildren[index] is null)
             {
                 throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
@@ -395,20 +395,20 @@ namespace System.Windows.Controls.Primitives
         {
             get 
             {
-                if (_visualChildren == null || _visualChildren[0] == null)
+                if (_visualChildren is null || _visualChildren[0] is null)
                 {
-                    Debug.Assert(_visualChildren == null || _visualChildren[1] == null, "Child[1] should be null if Child[0] == null)");
-                    Debug.Assert(_visualChildren == null || _visualChildren[2] == null, "Child[2] should be null if Child[0] == null)");
+                    Debug.Assert(_visualChildren is null || _visualChildren[1] is null, "Child[1] should be null if Child[0] is null)");
+                    Debug.Assert(_visualChildren is null || _visualChildren[2] is null, "Child[2] should be null if Child[0] is null)");
                     return 0;
                 }
-                else if (_visualChildren[1] == null)
+                else if (_visualChildren[1] is null)
                 {
-                    Debug.Assert(_visualChildren[2] == null, "Child[2] should be null if Child[1] == null)");
+                    Debug.Assert(_visualChildren[2] is null, "Child[2] should be null if Child[1] is null)");
                     return 1;
                 }
                 else
                 {
-                    return _visualChildren[2] == null ? 2 : 3;
+                    return _visualChildren[2] is null ? 2 : 3;
                 }
             }
         }
@@ -587,12 +587,12 @@ namespace System.Windows.Controls.Primitives
             if (isVertical)
             {
                 trackLength = arrangeSize.Height;
-                thumbLength = Thumb == null ? 0 : Thumb.DesiredSize.Height;
+                thumbLength = Thumb is null ? 0 : Thumb.DesiredSize.Height;
             }
             else
             {
                 trackLength = arrangeSize.Width;
-                thumbLength = Thumb == null ? 0 : Thumb.DesiredSize.Width;
+                thumbLength = Thumb is null ? 0 : Thumb.DesiredSize.Width;
             }
 
             CoerceLength(ref thumbLength, trackLength);

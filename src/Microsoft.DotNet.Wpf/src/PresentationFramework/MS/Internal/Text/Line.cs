@@ -287,7 +287,7 @@ namespace MS.Internal.Text
         /// </summary>
         internal TextLineBreak GetTextLineBreak()
         {
-            if(_line == null)
+            if(_line is null)
             {
                 return null;
             }

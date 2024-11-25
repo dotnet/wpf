@@ -127,7 +127,7 @@ namespace MS.Internal.ComponentModel
             DependencyObject filterValue;
             if (filter == PropertyFilterOptions.SetValues) 
             {
-                if (_instance == null) return PropertyDescriptorCollection.Empty;
+                if (_instance is null) return PropertyDescriptorCollection.Empty;
                 filterValue = (DependencyObject)TypeDescriptor.GetAssociation(_objectType, _instance);
             }
             else 
@@ -149,7 +149,7 @@ namespace MS.Internal.ComponentModel
 
             PropertyDescriptorCollection properties = (PropertyDescriptorCollection)_typeProperties[_objectType];
 
-            if (properties == null) 
+            if (properties is null) 
             {
                 properties = CreateProperties();
                 
@@ -186,7 +186,7 @@ namespace MS.Internal.ComponentModel
                 {
                     // Property should be removed.  Make sure our newDescriptors array is
                     // up to date for where we need to be
-                    if (newDescriptors == null) 
+                    if (newDescriptors is null) 
                     {
                         newDescriptors = new List<PropertyDescriptor>(cnt);
                         for (int i = 0; i < idx; i++) 
@@ -320,7 +320,7 @@ namespace MS.Internal.ComponentModel
                     }
                 }
 
-                if (dpProp == null) 
+                if (dpProp is null) 
                 {
                     // Either the property wasn't in the map or the one that was in there
                     // can't work for this type.  Make a new property if this property is
@@ -333,7 +333,7 @@ namespace MS.Internal.ComponentModel
 
                     if (dp != null || typeof(DependencyObject).IsAssignableFrom(prop.ComponentType))
                     {
-                        if (dp == null) 
+                        if (dp is null) 
                         {
                             dp = DependencyProperty.FromName(prop.Name, _objectType);
                         }

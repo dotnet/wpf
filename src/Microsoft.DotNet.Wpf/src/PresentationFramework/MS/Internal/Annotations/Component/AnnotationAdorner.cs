@@ -71,10 +71,10 @@ namespace MS.Internal.Annotations.Component
             // if the annotated element is null this component must be unloaded.
             //Temporary return null until the PageViewer Load/Unload bug is fixed
             //Convert it to an exception after that.
-            if (_annotationComponent.AnnotatedElement == null)
+            if (_annotationComponent.AnnotatedElement is null)
                 return null;
 
-            if (compTransform == null)
+            if (compTransform is null)
             {
                 // We need to store the element we are registering on.  It may not
                 // be available from the annotation component later.
@@ -103,7 +103,7 @@ namespace MS.Internal.Annotations.Component
         /// </summary>
         protected override Visual GetVisualChild(int index)
         {
-            if (index != 0 || _annotationComponent == null)
+            if (index != 0 || _annotationComponent is null)
             {
                 throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }

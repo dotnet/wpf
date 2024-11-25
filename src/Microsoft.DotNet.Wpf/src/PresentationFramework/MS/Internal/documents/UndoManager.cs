@@ -117,7 +117,7 @@ namespace MS.Internal.Documents
             scope.SetValue(UndoManager.UndoManagerInstanceProperty, undoManager);
             if (undoManager is UndoManager)
             {
-                Debug.Assert(((UndoManager)undoManager)._scope == null);
+                Debug.Assert(((UndoManager)undoManager)._scope is null);
                 ((UndoManager)undoManager)._scope = scope;
             }
 
@@ -168,7 +168,7 @@ namespace MS.Internal.Documents
         /// <returns></returns>
         internal static UndoManager GetUndoManager(DependencyObject target)
         {
-            if (target == null)
+            if (target is null)
             {
                 return null;
             }
@@ -208,7 +208,7 @@ namespace MS.Internal.Documents
                 throw new InvalidOperationException(SR.UndoUnitCantBeOpenedTwice);
             }
 
-            if (deepestOpen == null)
+            if (deepestOpen is null)
             {
                 if (unit != LastUnit)
                 {
@@ -327,7 +327,7 @@ namespace MS.Internal.Documents
 
             ArgumentNullException.ThrowIfNull(unit);
 
-            if (OpenedUnit == null)
+            if (OpenedUnit is null)
             {
                 throw new InvalidOperationException(SR.UndoNoOpenUnit);
             }
@@ -344,7 +344,7 @@ namespace MS.Internal.Documents
                     closeParent = closeParent.OpenedUnit;
                 }
 
-                if (closeParent.OpenedUnit == null)
+                if (closeParent.OpenedUnit is null)
                 {
                     throw new ArgumentException(SR.UndoUnitNotFound, nameof(unit));
                 }
@@ -440,7 +440,7 @@ namespace MS.Internal.Documents
                     {
                         _topUndoIndex = 0;
                     }
-                    if (!(_topUndoIndex < UndoStack.Count && PeekUndoStack() == null) // Non-null topmost stack item
+                    if (!(_topUndoIndex < UndoStack.Count && PeekUndoStack() is null) // Non-null topmost stack item
                         && (UndoLimit == -1 || UndoStack.Count < UndoLimit))
                     {
                         UndoStack.Add(unit);
@@ -657,7 +657,7 @@ namespace MS.Internal.Documents
         {
             Stack previousValue = _redoStack;
 
-            if (value == null)
+            if (value is null)
             {
                 value = new Stack(2);
             }
@@ -876,7 +876,7 @@ namespace MS.Internal.Documents
                 {
                     count = 0;
                 }
-                else if (_topUndoIndex == _bottomUndoIndex - 1 && PeekUndoStack() == null)
+                else if (_topUndoIndex == _bottomUndoIndex - 1 && PeekUndoStack() is null)
                 {
                     count = 0;
                 }

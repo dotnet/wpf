@@ -72,7 +72,7 @@ namespace System.Windows
         public override bool Equals(object obj) 
         {
             AttachedPropertyBrowsableForChildrenAttribute other = obj as AttachedPropertyBrowsableForChildrenAttribute;
-            if (other == null) return false;
+            if (other is null) return false;
             return _includeDescendants == other._includeDescendants;
         }
 

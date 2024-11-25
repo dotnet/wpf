@@ -90,7 +90,7 @@ namespace System.Windows
         {
             get
             {
-                if (_triggers == null)
+                if (_triggers is null)
                 {
                     _triggers = new TriggerCollection();
 

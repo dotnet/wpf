@@ -82,7 +82,7 @@ namespace MS.Internal.PtsHost
             GetParaProperties(ref fspap, false);
             fspap.idobj = PtsHost.SubpageParagraphId;
             // Create the main text segment
-            if (_mainTextSegment == null)
+            if (_mainTextSegment is null)
             {
                 _mainTextSegment = new ContainerParagraph(_element, _structuralCache);
             }
@@ -149,7 +149,7 @@ namespace MS.Internal.PtsHost
             // So when the next paragraph is continued from BR, it has MCS.
             // This problem is currently investigated by PTS team: PTSLS bug 915.
             // For now, MCS gets ignored here.
-            //Debug.Assert(pbrkrecIn == IntPtr.Zero || mcs == null, "Broken paragraph cannot have margin collapsing state.");
+            //Debug.Assert(pbrkrecIn == IntPtr.Zero || mcs is null, "Broken paragraph cannot have margin collapsing state.");
             if (mcs != null && pbrkrecIn != IntPtr.Zero)
             {
                 mcs = null;
@@ -670,7 +670,7 @@ namespace MS.Internal.PtsHost
                     _mainTextSegment = null;
                 }
             }
-            return (_mainTextSegment == null);
+            return (_mainTextSegment is null);
         }
         
         // ------------------------------------------------------------------

@@ -88,7 +88,7 @@ namespace System.Windows.Media.Imaging
             WritePreamble();
             _bitmapInit.EndInit();
 
-            if (UriSource == null && StreamSource == null)
+            if (UriSource is null && StreamSource is null)
             {
                 throw new InvalidOperationException(SR.Format(SR.Image_NeitherArgument, "UriSource", "StreamSource"));
             }
@@ -172,14 +172,14 @@ namespace System.Windows.Media.Imaging
                 UriSource != null &&
 
                 // But rest are defaults
-                StreamSource == null &&
+                StreamSource is null &&
                 SourceRect.IsEmpty &&
                 DecodePixelWidth == 0 &&
                 DecodePixelHeight == 0 &&
                 Rotation == Rotation.Rotate0 &&
                 CreateOptions == BitmapCreateOptions.None &&
                 CacheOption == BitmapCacheOption.Default &&
-                UriCachePolicy == null
+                UriCachePolicy is null
                );
         }
 
@@ -347,7 +347,7 @@ namespace System.Windows.Media.Imaging
             }
 
             BitmapDecoder decoder = null;
-            if (_decoder == null)
+            if (_decoder is null)
             {
                 // Note: We do not want to insert in the cache if there is a chance that
                 //       the decode pixel width/height may cause the decoder LOD to change

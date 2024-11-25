@@ -76,14 +76,14 @@ namespace MS.Internal.Xaml
         /// <returns></returns>
         public XamlMember GetDottedProperty(XamlType tagType, string tagNamespace, XamlPropertyName propName, bool tagIsRoot)
         {
-            if (tagType == null)
+            if (tagType is null)
             {
                 throw new XamlInternalException(SR.Format(SR.ParentlessPropertyElement, propName.ScopedName));
             }
             XamlMember property = null;
             XamlType ownerType = null;
             string ns = ResolveXamlNameNS(propName);
-            if (ns == null)
+            if (ns is null)
             {
                 throw new XamlParseException(SR.Format(SR.PrefixNotFound, propName.Prefix));
             }
@@ -119,7 +119,7 @@ namespace MS.Internal.Xaml
             {
                 property = GetXamlAttachableProperty(ownerType, propName.Name);
             }
-            if (property == null)
+            if (property is null)
             {
                 // This is an unknown property.
                 // We don't know for sure whether or not it's attachable, so we go with our best guess.
@@ -165,7 +165,7 @@ namespace MS.Internal.Xaml
             // Second line of if just handles tagNamespace always being null from MEScanner
             // Correct fix is to fix MEScanner and remove second line
             if ((propUsageNamespace == tagNamespace)
-                || (tagNamespace == null && propUsageNamespace != null && tagType.GetXamlNamespaces().Contains(propUsageNamespace)))
+                || (tagNamespace is null && propUsageNamespace != null && tagType.GetXamlNamespaces().Contains(propUsageNamespace)))
             {
                 XamlType rootTagType = tagIsRoot ? tagType : null;
                 property = GetXamlProperty(tagType, propName.Name, rootTagType);
@@ -173,13 +173,13 @@ namespace MS.Internal.Xaml
                 // Sometimes Attached properties look like normal properties.
                 // [Attribute case] The above lookup fails and fall into here.
                 // <Grid> <Grid Row="0"/> </Grid>
-                if (property == null)
+                if (property is null)
                 {
                     property = GetXamlAttachableProperty(tagType, propName.Name);
                 }
             }
             // Not Simple, not Attachable, look for Directives.
-            if (property == null && propUsageNamespace != null)
+            if (property is null && propUsageNamespace != null)
             {
                 // A processing attribute like;  x:Key  x:Name
                 XamlDirective directive = SchemaContext.GetXamlDirective(propUsageNamespace, propName.Name);
@@ -194,7 +194,7 @@ namespace MS.Internal.Xaml
                     property = directive;
                 }
             }
-            if (property == null)
+            if (property is null)
             {
                 if (tagNamespace == propUsageNamespace)
                 {
@@ -236,7 +236,7 @@ namespace MS.Internal.Xaml
         internal XamlTypeName GetXamlTypeName(XamlName typeName)
         {
             string xamlNs = ResolveXamlNameNS(typeName);
-            if (xamlNs == null)
+            if (xamlNs is null)
             {
                 throw new XamlParseException(SR.Format(SR.PrefixNotFound, typeName.Prefix));
             }
@@ -265,7 +265,7 @@ namespace MS.Internal.Xaml
                 xamlType = null;
             }
 
-            if (xamlType == null && returnUnknownTypesOnFailure)
+            if (xamlType is null && returnUnknownTypesOnFailure)
             {
                 XamlType[] typeArgs = null;
                 if (typeName.HasTypeArgs)
@@ -286,7 +286,7 @@ namespace MS.Internal.Xaml
         {
             get
             {
-                if (_resolvePrefixCachedDelegate == null)
+                if (_resolvePrefixCachedDelegate is null)
                 {
                     _resolvePrefixCachedDelegate = new Func<string, string>(FindNamespaceByPrefix);
                 }
@@ -303,7 +303,7 @@ namespace MS.Internal.Xaml
         {
             string error;
             XamlTypeName typeName = XamlTypeName.ParseInternal(qName, ResolvePrefixCachedDelegate, out error);
-            if (typeName == null)
+            if (typeName is null)
             {
                 throw new XamlParseException(error);
             }
@@ -355,7 +355,7 @@ namespace MS.Internal.Xaml
         private XamlMember GetInstanceOrAttachableProperty(XamlType tagType, string propName, XamlType rootTagType)
         {
             XamlMember property = GetXamlProperty(tagType, propName, rootTagType);
-            if (property == null)
+            if (property is null)
             {
                 // Sometimes Attached properties look like normal properties.
                 // The above lookup fails and fall into here.

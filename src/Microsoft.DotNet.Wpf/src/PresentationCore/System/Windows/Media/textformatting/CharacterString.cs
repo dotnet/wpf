@@ -260,7 +260,7 @@ namespace System.Windows.Media.TextFormatting
         /// </summary>
         internal bool IsEmpty
         {
-            get { return _charBufferRef.CharacterBuffer == null || _length <= 0; }
+            get { return _charBufferRef.CharacterBuffer is null || _length <= 0; }
         }
 
 

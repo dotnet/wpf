@@ -70,7 +70,7 @@ namespace MS.Internal.Annotations.Anchoring
         public override bool Equals(Object obj)
         {
             PathNode otherNode = obj as PathNode;
-            if (otherNode == null)
+            if (otherNode is null)
                 return false;
 
             return _node.Equals(otherNode.Node);
@@ -83,7 +83,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <returns>a hash value for this instance based on its tree node</returns>
         public override int GetHashCode()
         {
-            if (_node == null)
+            if (_node is null)
                 return base.GetHashCode();
 
             return _node.GetHashCode();
@@ -160,7 +160,7 @@ namespace MS.Internal.Annotations.Anchoring
             foreach (DependencyObject node in nodes)
             {
                 PathNode branch = BuildPathForElement(node);
-                if (firstPathNode == null)
+                if (firstPathNode is null)
                     firstPathNode = branch;
                 else
                     AddBranchToPath(firstPathNode, branch);
@@ -234,7 +234,7 @@ namespace MS.Internal.Annotations.Anchoring
                 // Try for hidden parent first above all others
                 parent = (DependencyObject)current.GetValue(PathNode.HiddenParentProperty);
 
-                if (parent == null)
+                if (parent is null)
                 {
                     // Try for Visual parent
                     Visual visual = current as Visual;
@@ -246,7 +246,7 @@ namespace MS.Internal.Annotations.Anchoring
                     }
                 }
 
-                if (parent == null)
+                if (parent is null)
                 {
                     // Try for Model parent
                     parent = LogicalTreeHelper.GetParent(current);

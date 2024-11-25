@@ -201,7 +201,7 @@ namespace System.Windows.Controls.Primitives
                             overflowNeedsInvalidation = true;
                         }
                         // If the child isnt connected to the visual tree, notify the overflow panel to pick it up.
-                        else if (visualParent == null)
+                        else if (visualParent is null)
                         {
                             overflowNeedsInvalidation = true;
                         }
@@ -354,7 +354,7 @@ namespace System.Windows.Controls.Primitives
             // This could re-enter InternalChildren, but after base.GenerateChildren, the collection
             // should be fully instantiated and ready to go.
             UIElementCollection children = InternalChildren;
-            if (_generatedItemsCollection == null)
+            if (_generatedItemsCollection is null)
             {
                 _generatedItemsCollection = new List<UIElement>(children.Count);
             }
@@ -532,7 +532,7 @@ namespace System.Windows.Controls.Primitives
             get
             {
                 ToolBar tb = ToolBar;
-                return tb == null ? null : tb.ToolBarOverflowPanel;
+                return tb is null ? null : tb.ToolBarOverflowPanel;
             }
         }
 

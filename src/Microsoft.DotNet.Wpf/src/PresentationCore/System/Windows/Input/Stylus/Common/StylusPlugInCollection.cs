@@ -285,7 +285,7 @@ namespace System.Windows.Input.StylusPlugIns
                 _rc = new Rect(); // empty rect so we don't hittest it.
             }
 
-            if (_viewToElement == null)
+            if (_viewToElement is null)
             {
                 _viewToElement = Transform.Identity;
             }
@@ -450,7 +450,7 @@ namespace System.Windows.Input.StylusPlugIns
                 }
                 else
                 {
-                    if (_renderTransformChangedEventHandler == null)
+                    if (_renderTransformChangedEventHandler is null)
                     {
                         _renderTransformChangedEventHandler = new EventHandler(OnRenderTransformChanged);
                         _lastRenderTransform.Changed += _renderTransformChangedEventHandler;
@@ -531,7 +531,7 @@ namespace System.Windows.Input.StylusPlugIns
                 if (_element.RenderTransform != null &&
                     !_element.RenderTransform.IsFrozen)
                 {
-                    if (_renderTransformChangedEventHandler == null)
+                    if (_renderTransformChangedEventHandler is null)
                     {
                         _renderTransformChangedEventHandler = new EventHandler(OnRenderTransformChanged);
                         _element.RenderTransform.Changed += _renderTransformChangedEventHandler;

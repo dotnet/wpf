@@ -132,7 +132,7 @@ namespace System.Windows
 
             set
             {
-                if (_routedEvent == null)
+                if (_routedEvent is null)
                 {
                     throw new InvalidOperationException(SR.RoutedEventArgsMustHaveRoutedEvent);
                 }
@@ -188,14 +188,14 @@ namespace System.Windows
                 if (InvokingHandler && UserInitiated)
                     throw new InvalidOperationException(SR.RoutedEventCannotChangeWhileRouting);
 
-                if (_routedEvent == null)
+                if (_routedEvent is null)
                 {
                     throw new InvalidOperationException(SR.RoutedEventArgsMustHaveRoutedEvent);
                 }
 
 
                 object source = value ;
-                if (_source == null && _originalSource == null)
+                if (_source is null && _originalSource is null)
                 {
                     // Gets here when it is the first time that the source is set.
                     // This implies that this is also the original source of the event
@@ -282,7 +282,7 @@ namespace System.Windows
 
             ArgumentNullException.ThrowIfNull(genericTarget);
 
-            if (_routedEvent == null)
+            if (_routedEvent is null)
             {
                 throw new InvalidOperationException(SR.RoutedEventArgsMustHaveRoutedEvent);
             }

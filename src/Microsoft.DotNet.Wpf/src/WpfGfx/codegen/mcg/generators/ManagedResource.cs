@@ -513,7 +513,7 @@ namespace MS.Internal.MilCodeGen.Generators
             if (status == "LocalPropertyStatus.Invalid")
             {
                 // When setting the cached status to Invalid you cannot specify a new value.
-                Debug.Assert( value == null );
+                Debug.Assert( value is null );
                 if (field.Type.IsValueType)
                 {
                     return prefix + "SetLocalPropertyStatus("+field.PropertyFlag+", LocalPropertyStatus.Invalid);";
@@ -1042,7 +1042,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 _staticCtorText.Write(
                     [[inline]]
                                                /* isIndependentlyAnimated  = */ [[isIndependentlyAnimated]],
-                                               /* coerceValueCallback */ [[field.CoerceValueCallback == null ? "null" : "new CoerceValueCallback(" + field.CoerceValueCallback + ")"]]);
+                                               /* coerceValueCallback */ [[field.CoerceValueCallback is null ? "null" : "new CoerceValueCallback(" + field.CoerceValueCallback + ")"]]);
                     [[/inline]]
                     );
             }
@@ -1086,7 +1086,7 @@ namespace MS.Internal.MilCodeGen.Generators
             McgResource fieldResource = field.Type as McgResource;
 
             // If the field's type can be stored in a const var, we'll do so.
-            if (fieldResource == null || fieldResource.CanBeConst)
+            if (fieldResource is null || fieldResource.CanBeConst)
             {
                 return "c_" + field.PropertyName;
             }
@@ -1162,7 +1162,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     McgResource fieldResource = field.Type as McgResource;
 
                     // If the field's type can be stored in a const var, we'll do so.
-                    if (fieldResource == null || fieldResource.CanBeConst)
+                    if (fieldResource is null || fieldResource.CanBeConst)
                     {
                         modifier = "const";
                     }
@@ -1202,7 +1202,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     {
                         cs.WriteBlock(
                             [[inline]]
-                                Debug.Assert([[GetDefaultFieldName(field)]] == null || [[GetDefaultFieldName(field)]].IsFrozen,
+                                Debug.Assert([[GetDefaultFieldName(field)]] is null || [[GetDefaultFieldName(field)]].IsFrozen,
                                     "Detected context bound default value [[resource.Name]].[[GetDefaultFieldName(field)]].");
 
                             [[/inline]]
@@ -1388,7 +1388,7 @@ namespace MS.Internal.MilCodeGen.Generators
             string serializationVisibility = field.SerializationVisibility ? "" :
                     "[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]\n\n";
 
-            string typeConverter = field.TypeConverter == null ? "" :
+            string typeConverter = field.TypeConverter is null ? "" :
                     "[TypeConverter(typeof(" + field.TypeConverter + "))]\n\n";
 
             string getValue = String.Empty;
@@ -1769,7 +1769,7 @@ namespace MS.Internal.MilCodeGen.Generators
                             duceUpdate.Write(
                                 [[inline]]
                                     DUCE.ResourceHandle h[[resourceField.PropertyName]];
-                                    if (v[[resourceField.PropertyName]] == null ||
+                                    if (v[[resourceField.PropertyName]] is null ||
                                         Object.ReferenceEquals(v[[resourceField.PropertyName]], [[resourceField.Type.MarshalledIdentity]])
                                         )
                                     {
@@ -1850,8 +1850,8 @@ namespace MS.Internal.MilCodeGen.Generators
                 McgField[] containedCollectionFields = ResourceModel.Filter(resource.AllManagedFields, ResourceModel.IsCollectionAndDoesntHaveUnmanagedResource);
                 if (containedCollectionFields.Length > 0)
                 {
-                    // E.g., pointsCount = (vPoints == null) ? 0 : vPoints.Count;
-                    string collectionCountstring = "int {localName}Count = (v{propertyName} == null) ? 0 : v{propertyName}.Count;";
+                    // E.g., pointsCount = (vPoints is null) ? 0 : vPoints.Count;
+                    string collectionCountstring = "int {localName}Count = (v{propertyName} is null) ? 0 : v{propertyName}.Count;";
 
                     duceUpdate.WriteBlock(
                         [[inline]]
@@ -2752,7 +2752,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
         private string WriteVirtualModifier(McgResource resource)
         {
-            if (resource.Extends == null)
+            if (resource.Extends is null)
             {
                 if (resource.IsSealed)
                 {

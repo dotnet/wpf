@@ -58,7 +58,7 @@ namespace MS.Internal
         {
             _flags = ((PrivateFlags)events) | PrivateFlags.Listening;
 
-            if (target == null)
+            if (target is null)
             {
                 _flags |= PrivateFlags.Static;
             }

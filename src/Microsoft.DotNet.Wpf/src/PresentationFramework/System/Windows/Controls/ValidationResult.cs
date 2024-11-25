@@ -116,7 +116,7 @@ namespace System.Windows.Controls
         /// <returns>hash code for the current ValidationResult</returns>
         public override int GetHashCode()
         {
-            return IsValid.GetHashCode() ^ ((ErrorContent == null) ? int.MinValue : ErrorContent).GetHashCode();
+            return IsValid.GetHashCode() ^ ((ErrorContent is null) ? int.MinValue : ErrorContent).GetHashCode();
         }
 
         private bool _isValid;

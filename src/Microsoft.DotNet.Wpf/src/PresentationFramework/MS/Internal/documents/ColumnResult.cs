@@ -111,7 +111,7 @@ namespace MS.Internal.Documents
         #region Internal Properties
 
         /// <summary>
-        /// Represents the beginning of the column’s contents.
+        /// Represents the beginning of the columnï¿½s contents.
         /// </summary>
         internal ITextPointer StartPosition
         {
@@ -123,7 +123,7 @@ namespace MS.Internal.Documents
         }
 
         /// <summary>
-        /// Represents the end of the column’s contents.
+        /// Represents the end of the columnï¿½s contents.
         /// </summary>
         internal ITextPointer EndPosition
         {
@@ -141,13 +141,13 @@ namespace MS.Internal.Documents
         internal Rect LayoutBox { get { return _layoutBox; } }
 
         /// <summary>
-        /// Collection of ParagraphResults for the column’s contents.
+        /// Collection of ParagraphResults for the columnï¿½s contents.
         /// </summary>
         internal ReadOnlyCollection<ParagraphResult> Paragraphs
         {
             get
             {
-                if (_paragraphs == null)
+                if (_paragraphs is null)
                 {
                     // Set _hasTextContent to true when getting paragraph collections if any paragraph has text content.
                     _hasTextContent = false;
@@ -190,7 +190,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_paragraphs == null)
+                if (_paragraphs is null)
                 {
                     // Creating paragraph results will query the page/subpage about text content in the paragrph collection and
                     // set _hasTextContent appropriately
@@ -200,7 +200,7 @@ namespace MS.Internal.Documents
             }
         }
         /// <summary>
-        /// Represents the column’s contents.
+        /// Represents the columnï¿½s contents.
         /// </summary>
         internal TextContentRange TextContentRange
         {
@@ -226,7 +226,7 @@ namespace MS.Internal.Documents
         /// </summary>
         private void EnsureTextContentRange()
         {
-            if (_contentRange == null)
+            if (_contentRange is null)
             {
                 if (_page != null)
                 {

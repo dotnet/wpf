@@ -220,7 +220,7 @@ namespace System.Windows.Controls
         protected override Size MeasureOverride(Size availableSize)
         {
             // No need to invoke VerifyAccess since _localAdornerDecorator.Measure should check it.
-            if ( _localAdornerDecorator == null )
+            if ( _localAdornerDecorator is null )
             {
                 ApplyTemplate();
             }
@@ -239,7 +239,7 @@ namespace System.Windows.Controls
         {
             // No need to invoke VerifyAccess since _localAdornerDecorator.Arrange should check it.
 
-            if ( _localAdornerDecorator == null )
+            if ( _localAdornerDecorator is null )
             {
                 ApplyTemplate();
             }
@@ -347,7 +347,7 @@ namespace System.Windows.Controls
             //     </AdornerDecorator>
             //  </InkCanvas>
 
-            if ( _localAdornerDecorator == null )
+            if ( _localAdornerDecorator is null )
             {
                 //
                 _localAdornerDecorator = new AdornerDecorator();
@@ -368,7 +368,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected override int VisualChildrenCount
         {
-            get { return (_localAdornerDecorator == null) ? 0 : 1; }
+            get { return (_localAdornerDecorator is null) ? 0 : 1; }
         }
 
         /// <summary>
@@ -376,7 +376,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected override Visual GetVisualChild(int index)
         {
-            if (    (_localAdornerDecorator == null)
+            if (    (_localAdornerDecorator is null)
                 ||  (index != 0))
             {
                 throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
@@ -637,7 +637,7 @@ namespace System.Windows.Controls
             get
             {
                 // We have to create our visual at this point.
-                if ( _selectionAdorner == null )
+                if ( _selectionAdorner is null )
                 {
                     // Create the selection Adorner.
                     _selectionAdorner = new InkCanvasSelectionAdorner(InnerCanvas);
@@ -665,7 +665,7 @@ namespace System.Windows.Controls
             {
                 VerifyAccess();
 
-                if ( _feedbackAdorner == null )
+                if ( _feedbackAdorner is null )
                 {
                     _feedbackAdorner = new InkCanvasFeedbackAdorner(this);
                 }
@@ -757,7 +757,7 @@ namespace System.Windows.Controls
             get
             {
                 VerifyAccess();
-                if (_eraserShape == null)
+                if (_eraserShape is null)
                 {
                     _eraserShape = new RectangleStylusShape(8f, 8f);
                 }
@@ -1776,7 +1776,7 @@ namespace System.Windows.Controls
             VerifyAccess();
 
             // Ensure the visual tree.
-            if ( _localAdornerDecorator == null )
+            if ( _localAdornerDecorator is null )
             {
                 ApplyTemplate();
             }
@@ -2025,7 +2025,7 @@ namespace System.Windows.Controls
             get
             {
                 VerifyAccess();
-                if ( _inkPresenter == null )
+                if ( _inkPresenter is null )
                 {
                     _inkPresenter = new InkPresenter();
 
@@ -2191,7 +2191,7 @@ namespace System.Windows.Controls
             get
             {
                 // We have to create our visual at this point.
-                if (_innerCanvas == null)
+                if (_innerCanvas is null)
                 {
                     // Create our InnerCanvas to change the logical parent of Canvas' children.
                     _innerCanvas = new InkCanvasInnerCanvas(this);
@@ -2215,7 +2215,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if ( _selection == null )
+                if ( _selection is null )
                 {
                     _selection = new InkCanvasSelection(this);
                 }
@@ -2488,7 +2488,7 @@ namespace System.Windows.Controls
             //
             //  null is a valid input
             //
-            if (strokes == null)
+            if (strokes is null)
             {
                 return new StrokeCollection();
             }
@@ -2504,7 +2504,7 @@ namespace System.Windows.Controls
         /// </summary>
         private UIElement[] ValidateSelectedElements(IEnumerable<UIElement> selectedElements)
         {
-            if (selectedElements == null)
+            if (selectedElements is null)
             {
                 return new UIElement[]{};
             }
@@ -2633,7 +2633,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if ( _clipboardProcessor == null )
+                if ( _clipboardProcessor is null )
                 {
                     _clipboardProcessor = new ClipboardProcessor(this);
                 }
@@ -2647,7 +2647,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_gestureRecognizer == null)
+                if (_gestureRecognizer is null)
                 {
                     _gestureRecognizer = new GestureRecognizer();
                 }

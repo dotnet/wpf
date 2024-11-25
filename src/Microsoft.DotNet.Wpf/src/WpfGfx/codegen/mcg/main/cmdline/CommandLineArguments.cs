@@ -173,7 +173,7 @@ namespace Utilities
                     CommandLineArgumentAttribute attribute = GetAttribute(field);
                     if (attribute is DefaultCommandLineArgumentAttribute)
                     {
-                        Debug.Assert(this.defaultArgument == null);
+                        Debug.Assert(this.defaultArgument is null);
                         this.defaultArgument = new Argument(attribute, field, reporter);
                     }
                     else
@@ -257,7 +257,7 @@ namespace Utilities
                             }
                                 
                             Argument arg = (Argument) this.argumentMap[option];
-                            if (arg == null)
+                            if (arg is null)
                             {
                                 ReportUnrecognizedArgument(argument);
                                 hadError = true;
@@ -513,7 +513,7 @@ namespace Utilities
         
         private static string LongName(CommandLineArgumentAttribute attribute, FieldInfo field)
         {
-            return (attribute == null || attribute.DefaultLongName) ? field.Name : attribute.LongName;
+            return (attribute is null || attribute.DefaultLongName) ? field.Name : attribute.LongName;
         }
         
         private static string ShortName(CommandLineArgumentAttribute attribute, FieldInfo field)
@@ -584,7 +584,7 @@ namespace Utilities
                 Debug.Assert(IsValidElementType(Type) ||
                              IsCollectionType(Type));
                 Debug.Assert((IsCollection && IsValidElementType(elementType)) ||
-                             (!IsCollection && elementType == null));
+                             (!IsCollection && elementType is null));
             }
             
             public bool Finish(object destination)
@@ -661,7 +661,7 @@ namespace Utilities
             {
                 // null is only valid for bool variables
                 // empty string is never valid
-                if ((stringData != null || type == typeof(bool)) && (stringData == null || stringData.Length > 0))
+                if ((stringData != null || type == typeof(bool)) && (stringData is null || stringData.Length > 0))
                 {
                     try
                     {
@@ -672,7 +672,7 @@ namespace Utilities
                         }
                         else if (type == typeof(bool))
                         {
-                            if (stringData == null || stringData == "+")
+                            if (stringData is null || stringData == "+")
                             {
                                 value = true;
                                 return true;

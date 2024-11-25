@@ -242,7 +242,7 @@ namespace System.Windows
             // properties change.
 
             DependencyObject parent = null;
-            if (e.OldParent == null)
+            if (e.OldParent is null)
             {
                 // We were plugged into something.
 
@@ -597,7 +597,7 @@ namespace System.Windows
                 // Find element's FocusScope and set its FocusedElement if not already set
                 // If FocusedElement is already set we don't want to steal focus for that scope
                 DependencyObject focusScope = FocusManager.GetFocusScope(this);
-                if (FocusManager.GetFocusedElement(focusScope) == null)
+                if (FocusManager.GetFocusedElement(focusScope) is null)
                 {
                     FocusManager.SetFocusedElement(focusScope, (IInputElement)this);
                 }
@@ -880,12 +880,12 @@ namespace System.Windows
                 // "logical" links lead to a content tree.
                 //
                 DependencyObject parent = uie.GetUIParentCore() as ContentElement;
-                if (parent == null)
+                if (parent is null)
                 {
                     parent = InputElement.GetContainingUIElement(uie.InternalVisualParent);
                 }
 
-                if (parent == null || (bool)parent.GetValue(UIElement.IsEnabledProperty))
+                if (parent is null || (bool)parent.GetValue(UIElement.IsEnabledProperty))
                 {
                     return BooleanBoxes.Box(uie.IsEnabledCore);
                 }
@@ -986,7 +986,7 @@ namespace System.Windows
                 //
                 DependencyObject parent = InputElement.GetContainingUIElement(uie.InternalVisualParent);
 
-                if (parent == null || UIElementHelper.IsHitTestVisible(parent))
+                if (parent is null || UIElementHelper.IsHitTestVisible(parent))
                 {
                     return BooleanBoxes.TrueBox;
                 }

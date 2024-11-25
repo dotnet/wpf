@@ -730,7 +730,7 @@ namespace System.Windows.Markup
         {
             if (BamlRecordWriter != null)
             {
-                if (xamlPropertyNode.ValueElementType == null)
+                if (xamlPropertyNode.ValueElementType is null)
                 {
                     ThrowException(nameof(SR.ParserNoType),
                                    xamlPropertyNode.ValueTypeFullName,

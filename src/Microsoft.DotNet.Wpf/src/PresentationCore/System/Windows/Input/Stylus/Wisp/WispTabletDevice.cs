@@ -138,7 +138,7 @@ namespace System.Windows.Input
             {
                 VerifyAccess();
                 StylusDevice stylusDevice = Stylus.CurrentStylusDevice;
-                if (stylusDevice == null)
+                if (stylusDevice is null)
                     return null;
                 return stylusDevice.Target;
             }
@@ -157,7 +157,7 @@ namespace System.Windows.Input
             {
                 VerifyAccess();
                 StylusDevice stylusDevice = Stylus.CurrentStylusDevice;
-                if (stylusDevice == null)
+                if (stylusDevice is null)
                     return null;
                 return stylusDevice.ActiveSource;  // This also does a security demand.
             }

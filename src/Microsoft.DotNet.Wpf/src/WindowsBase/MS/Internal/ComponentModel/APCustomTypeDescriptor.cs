@@ -263,7 +263,7 @@ namespace MS.Internal.ComponentModel
                 int cacheCnt = _dpCacheCount;
                 int currentCnt = DependencyProperty.RegisteredPropertyCount;
 
-                if (_dpCacheArray == null || cacheCnt != currentCnt) 
+                if (_dpCacheArray is null || cacheCnt != currentCnt) 
                 {
                     List<DependencyProperty> dpList = new List<DependencyProperty>(currentCnt);
                     lock(DependencyProperty.Synchronized) 

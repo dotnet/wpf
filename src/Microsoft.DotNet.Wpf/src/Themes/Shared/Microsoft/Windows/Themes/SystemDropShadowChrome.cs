@@ -430,11 +430,11 @@ namespace Microsoft.Windows.Themes
 
         private Brush[] GetBrushes(Color c, CornerRadius cornerRadius)
         {
-            if (_commonBrushes == null)
+            if (_commonBrushes is null)
             {
                 lock (_resourceAccess)
                 {
-                    if (_commonBrushes == null)
+                    if (_commonBrushes is null)
                     {
                         // Assume that the first render of DropShadow uses the most common color for the app.
                         // This breaks down if (a) the first Shadow is customized, or 
@@ -451,7 +451,7 @@ namespace Microsoft.Windows.Themes
                 _brushes = null;  // clear local brushes - use common
                 return _commonBrushes;
             }
-            else if (_brushes == null)
+            else if (_brushes is null)
             {
                 // need to create local brushes
                 _brushes = CreateBrushes(c, cornerRadius); 

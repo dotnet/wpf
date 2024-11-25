@@ -334,7 +334,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             }
 
             // We have to allocate in two cases:
-            // 1. We were called with buffer == null
+            // 1. We were called with buffer is null
             // 2. The original buffer was too small
             buffer = new byte[size];                                // managed source buffer
             gcHandle = GCHandle.Alloc(buffer, GCHandleType.Pinned); // pinned so unmanaged code can read/write it

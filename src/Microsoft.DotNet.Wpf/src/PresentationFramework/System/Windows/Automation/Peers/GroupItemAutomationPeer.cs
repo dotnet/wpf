@@ -147,9 +147,9 @@ namespace System.Windows.Automation.Peers
                     }
                     Panel itemsHost = owner.ItemsHost;
 
-                    if (itemsHost == null)
+                    if (itemsHost is null)
                     {
-                        if (_expanderPeer == null)
+                        if (_expanderPeer is null)
                         {
                             return null;
                         }
@@ -258,7 +258,7 @@ namespace System.Windows.Automation.Peers
                                 if (wrapperPeer != null)
                                 {
                                     wrapperPeer.EventsSource = peer;
-                                    if (peer.ChildrenValid && peer.Children == null && this.AncestorsInvalid)
+                                    if (peer.ChildrenValid && peer.Children is null && this.AncestorsInvalid)
                                     {
                                         peer.AncestorsInvalid = true;
                                         wrapperPeer.AncestorsInvalid = true;
@@ -272,10 +272,10 @@ namespace System.Windows.Automation.Peers
                             // this would cause us to report 0 children, if the peer is already in the collection
                             // check its parent, if it has been set to us, we should add it to the return collection,
                             // but only if we haven't added a peer for this item during this GetChildrenCore call.
-                            bool itemMissingPeerInGlobalStorage = itemsControlAP.ItemPeers[item] == null;
+                            bool itemMissingPeerInGlobalStorage = itemsControlAP.ItemPeers[item] is null;
 
                             if (peer != null && (itemMissingPeerInGlobalStorage
-                                || (peer.GetParent() == this && addedChildren[item] == null)))
+                                || (peer.GetParent() == this && addedChildren[item] is null)))
                             {
                                 children.Add(peer);
                                 addedChildren[item] = peer;

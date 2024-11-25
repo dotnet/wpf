@@ -109,7 +109,7 @@ namespace System.Windows.Media
         /// </param>
         public static PathGeometry CreateFromGeometry(Geometry geometry)
         {
-            if (geometry == null)
+            if (geometry is null)
             {
                 return null;
             }
@@ -347,7 +347,7 @@ namespace System.Windows.Media
             {
                 // There is no need to transform, return the figure collection
                 result = Figures;
-                if (result == null)
+                if (result is null)
                 {
                     result = new PathFigureCollection();
                 }
@@ -388,7 +388,7 @@ namespace System.Windows.Media
 
             PathFigureCollection figures = Figures;
 
-            if (figures == null)
+            if (figures is null)
             {
                 figures = Figures = new PathFigureCollection();
             }
@@ -798,7 +798,7 @@ namespace System.Windows.Media
                     fixed (double *pDashArray = dashArray)
                     {
                         int hr = UnsafeNativeMethods.MilCoreApi.MilUtility_PathGeometryBounds(
-                            (pen == null) ? null : &penData,
+                            (pen is null) ? null : &penData,
                             pDashArray,
                             &worldMatrix3X2,
                             pathData.FillRule,
@@ -896,7 +896,7 @@ namespace System.Windows.Media
         public override bool IsEmpty()
         {
             PathFigureCollection figures = Figures;
-            return (figures == null) || (figures.Count <= 0);
+            return (figures is null) || (figures.Count <= 0);
         }
 
         #endregion
@@ -986,7 +986,7 @@ namespace System.Windows.Media
 
             PathFigureCollection figures = Figures;
 
-            int figureCount = figures == null ? 0 : figures.Count;
+            int figureCount = figures is null ? 0 : figures.Count;
 
             for (int i = 0; i < figureCount; i++)
             {
@@ -1012,7 +1012,7 @@ namespace System.Windows.Media
 
                     // Obtain handles for properties that implement DUCE.IResource
                     DUCE.ResourceHandle hTransform;
-                    if (vTransform == null ||
+                    if (vTransform is null ||
                         Object.ReferenceEquals(vTransform, Transform.Identity)
                        )
                     {

@@ -167,7 +167,7 @@ namespace System.Windows.Input.StylusWisp
             // Due to changes both in WISP and in the underlying PenIMC code, it is possible that
             // the stylus device here could be null.  If this is the case, the lookups will fail
             // with an exception.
-            if (stylusDevice == null)
+            if (stylusDevice is null)
             {
                 return;
             }
@@ -198,7 +198,7 @@ namespace System.Windows.Input.StylusWisp
                 if (inputReport.Actions == RawStylusActions.Move)
                 {
                     // Start a new coalescing report if none exists
-                    if (coalescedMove == null)
+                    if (coalescedMove is null)
                     {
                         _coalescedMoves[stylusDevice] = inputReport;
                         coalescedMove = inputReport;
@@ -418,7 +418,7 @@ namespace System.Windows.Input.StylusWisp
             {
 #if !MULTICAPTURE
                 // See if a stylus is now in range.
-                if ((CurrentStylusDevice == null || !CurrentStylusDevice.InRange))
+                if ((CurrentStylusDevice is null || !CurrentStylusDevice.InRange))
                 {
                     SendDeferredMouseEvent(true);
                 }
@@ -490,7 +490,7 @@ namespace System.Windows.Input.StylusWisp
                         if (input.Report.Type == InputType.Mouse)
                         {
                             // If we see a non stylus mouse event (not triggered from stylus event)
-                            if ((input.Device as StylusDevice) == null)
+                            if ((input.Device as StylusDevice) is null)
                             {
                                 // And we only do work if we are enabled for stylus input (ie - have tablet devices)
                                 // and the tablet device collection hasnt been disposed yet.
@@ -520,7 +520,7 @@ namespace System.Windows.Input.StylusWisp
                                             PenContexts penContexts = GetPenContextsFromHwnd(mouseInputReport.InputSource);
 
                                             // If we are inRange still then defer the Deactivate call till we are OutOfRange.
-                                            if (_stylusDeviceInRange && !_inDragDrop && (penContexts == null || !penContexts.IsWindowDisabled))
+                                            if (_stylusDeviceInRange && !_inDragDrop && (penContexts is null || !penContexts.IsWindowDisabled))
                                             {
                                                 _mouseDeactivateInputReport = mouseInputReport;
                                                 e.Cancel();
@@ -890,13 +890,13 @@ namespace System.Windows.Input.StylusWisp
 
                             if (stylusInputReport.InputSource != null && stylusInputReport.PenContext != null)
                             {
-                                if (stylusDevice == null)
+                                if (stylusDevice is null)
                                 {
                                     // look up stylus device, select it in the Stylus, and claim input for it
                                     stylusDevice = FindStylusDevice(stylusInputReport.StylusDeviceId);
 
                                     // Try refreshing tablets if we failed to find this stylus device.
-                                    if (stylusDevice == null)
+                                    if (stylusDevice is null)
                                     {
                                         stylusDevice = WispTabletDevices.UpdateStylusDevices(
                                                                     stylusInputReport.TabletDeviceId,
@@ -910,7 +910,7 @@ namespace System.Windows.Input.StylusWisp
 
                                 // See if this is the special InRange input report that we use to track queued inrange
                                 // events so that we can better filter out bogus mouse input.
-                                if (stylusInputReport.Actions == RawStylusActions.InRange && stylusInputReport.Data == null)
+                                if (stylusInputReport.Actions == RawStylusActions.InRange && stylusInputReport.Data is null)
                                 {
                                     stylusInputReport.PenContext.DecrementQueuedInRangeCount();
                                     e.Cancel();
@@ -1036,7 +1036,7 @@ namespace System.Windows.Input.StylusWisp
                         // If this is a stylus down and we don't have a valid target then the stylus went down
                         // on the wrong window (a transparent window handling bug in wisptis).  In this case
                         // we want to ignore all stylus input until after the next stylus up.
-                        if (rawStylusInputReport.Actions == RawStylusActions.Down && stylusDevice.Target == null)
+                        if (rawStylusInputReport.Actions == RawStylusActions.Down && stylusDevice.Target is null)
                         {
                             stylusDevice.IgnoreStroke = true;
                         }
@@ -1464,7 +1464,7 @@ namespace System.Windows.Input.StylusWisp
         {
             StagingAreaInputItem stagingItem = e.StagingItem;
             StylusEventArgs stylusEventArgs = stagingItem.Input as StylusEventArgs;
-            if (stylusEventArgs == null)
+            if (stylusEventArgs is null)
             {
                 return;
             }
@@ -1698,7 +1698,7 @@ namespace System.Windows.Input.StylusWisp
 
         private bool ShouldPromoteToMouse(WispStylusDevice stylusDevice)
         {
-            if (CurrentMousePromotionStylusDevice == null ||
+            if (CurrentMousePromotionStylusDevice is null ||
                 CurrentMousePromotionStylusDevice == stylusDevice)
             {
                 return true;
@@ -1821,7 +1821,7 @@ namespace System.Windows.Input.StylusWisp
                 // If not then we just return and do nothing.
                 if (e.StagingItem.Input.RoutedEvent == InputManager.InputReportEvent)
                 {
-                    if (_activeMousePlugInCollection == null || _activeMousePlugInCollection.Element == null)
+                    if (_activeMousePlugInCollection is null || _activeMousePlugInCollection.Element is null)
                         return;
 
                     InputReportEventArgs input = e.StagingItem.Input as InputReportEventArgs;
@@ -1837,7 +1837,7 @@ namespace System.Windows.Input.StylusWisp
                     mouseDevice = _inputManager.PrimaryMouseDevice;
 
                     // Mouse set directly over to null when truly deactivating.
-                    if (mouseDevice == null || mouseDevice.DirectlyOver != null)
+                    if (mouseDevice is null || mouseDevice.DirectlyOver != null)
                         return;
 
                     leftButtonDown = mouseDevice.LeftButton == MouseButtonState.Pressed;
@@ -1883,7 +1883,7 @@ namespace System.Windows.Input.StylusWisp
                     timestamp = mouseEventArgs.Timestamp;
 
                     Visual directlyOverVisual = mouseDevice.DirectlyOver as Visual;
-                    if (directlyOverVisual == null)
+                    if (directlyOverVisual is null)
                     {
                         return;
                     }
@@ -1931,7 +1931,7 @@ namespace System.Windows.Input.StylusWisp
         {
             get
             {
-                if (_mousePointDescription == null)
+                if (_mousePointDescription is null)
                 {
                     _mousePointDescription = new StylusPointDescription(
                                                     new StylusPointPropertyInfo[] {
@@ -2316,7 +2316,7 @@ namespace System.Windows.Input.StylusWisp
             // the user can change the input device to avoid the infinite loops, or close
             // the app if nothing else works.
             //
-            if (_reevaluateStylusOverOperation == null)
+            if (_reevaluateStylusOverOperation is null)
             {
                 _reevaluateStylusOverOperation = Dispatcher.BeginInvoke(DispatcherPriority.Input, _reevaluateStylusOverDelegate, null);
             }
@@ -2387,7 +2387,7 @@ namespace System.Windows.Input.StylusWisp
             //
             // See ReevaluateStylusOver for details.
             //
-            if (_reevaluateCaptureOperation == null)
+            if (_reevaluateCaptureOperation is null)
             {
                 _reevaluateCaptureOperation = Dispatcher.BeginInvoke(DispatcherPriority.Input, _reevaluateCaptureDelegate, null);
             }
@@ -2413,7 +2413,7 @@ namespace System.Windows.Input.StylusWisp
         {
             _reevaluateCaptureOperation = null;
 
-            if (_stylusCapture == null)
+            if (_stylusCapture is null)
                 return null;
 
             bool killCapture = false;
@@ -2683,7 +2683,7 @@ namespace System.Windows.Input.StylusWisp
 
                 // See if we need to build up an RSI to send to the plugincollection (due to a mistarget).
                 bool sendRawStylusInput = false;
-                if (targetPIC != null && rawStylusInputReport.RawStylusInput == null)
+                if (targetPIC != null && rawStylusInputReport.RawStylusInput is null)
                 {
                     // NOTE: PenContext info will not change (it gets rebuilt instead so keeping ref is fine)
                     //    The transformTabletToView matrix and plugincollection rects though can change based
@@ -2705,7 +2705,7 @@ namespace System.Windows.Input.StylusWisp
                     if (currentTarget != null)
                     {
                         // Fire leave event.  If we never had a plugin for this event then create a temp one.
-                        if (originalRSI == null)
+                        if (originalRSI is null)
                         {
                             GeneralTransformGroup transformTabletToView = new GeneralTransformGroup();
                             transformTabletToView.Children.Add(new MatrixTransform(GetTabletToViewTransform(rawStylusInputReport.InputSource, stylusDevice.TabletDevice))); // this gives matrix in measured units (not device)
@@ -2975,7 +2975,7 @@ namespace System.Windows.Input.StylusWisp
         {
             get
             {
-                if (_tabletDeviceCollection == null)
+                if (_tabletDeviceCollection is null)
                 {
                     _tabletDeviceCollection = new WispTabletDeviceCollection();
 
@@ -3065,9 +3065,9 @@ namespace System.Windows.Input.StylusWisp
             // before we update _currentStylusDevice or else the over property will not update
             // correctly!
 #if !MULTICAPTURE
-            if (updateOver && wispStylusDevice == null && stylusDeviceChange)
+            if (updateOver && wispStylusDevice is null && stylusDeviceChange)
 #else
-            if (updateOver && wispStylusDevice == null && stylusDeviceChange && newOver == null)
+            if (updateOver && wispStylusDevice is null && stylusDeviceChange && newOver is null)
 #endif
             {
                 // This will cause UpdateOverProperty() to be called.
@@ -3132,7 +3132,7 @@ namespace System.Windows.Input.StylusWisp
 
             // Keep track so we don't bother looking for changes if someone happened to query this before
             // an Avalon window was created where we get TabletAdd/Removed notification.
-            bool initializedTablets = (_tabletDeviceCollection == null);
+            bool initializedTablets = (_tabletDeviceCollection is null);
 
             // This causes EnableCore to be called on TabletPC systems which enabled stylus input!
             WispTabletDeviceCollection tablets = WispTabletDevices;
@@ -3208,7 +3208,7 @@ namespace System.Windows.Input.StylusWisp
                 }
 
                 // If we failed to find penContexts for this window above then throw an error now.
-                if (penContexts == null)
+                if (penContexts is null)
                 {
                     throw new InvalidOperationException(SR.PenService_WindowNotRegistered);
                 }
@@ -3615,7 +3615,7 @@ namespace System.Windows.Input.StylusWisp
         {
             get
             {
-                if (_stylusOverTreeState == null)
+                if (_stylusOverTreeState is null)
                 {
                     _stylusOverTreeState = new DeferredElementTreeState();
                 }
@@ -3628,7 +3628,7 @@ namespace System.Windows.Input.StylusWisp
         {
             get
             {
-                if (_stylusCaptureWithinTreeState == null)
+                if (_stylusCaptureWithinTreeState is null)
                 {
                     _stylusCaptureWithinTreeState = new DeferredElementTreeState();
                 }

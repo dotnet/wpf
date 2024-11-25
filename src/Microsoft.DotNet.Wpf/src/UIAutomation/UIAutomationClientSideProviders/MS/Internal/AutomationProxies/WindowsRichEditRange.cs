@@ -245,7 +245,7 @@ namespace MS.Internal.AutomationProxies
                     // An empty strings is desirable, not a null string.  Cannot use IsNullOrEmpty().
                     // Suppress the warning.
 #pragma warning suppress 6507
-                    Debug.Assert(text == null || text.Length == maxLength);
+                    Debug.Assert(text is null || text.Length == maxLength);
                 }
             }
 

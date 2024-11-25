@@ -88,7 +88,7 @@ namespace System.Windows.Documents
                 {
                     immComposition = (ImmComposition)_list[source];
 
-                    if (immComposition == null)
+                    if (immComposition is null)
                     {
                         immComposition = new ImmComposition(source);
                         _list[source] = immComposition;
@@ -157,7 +157,7 @@ namespace System.Windows.Documents
         //
         internal void OnLostFocus()
         {
-            if (_editor == null)
+            if (_editor is null)
                 return;
 
             _losingFocus = true;
@@ -191,7 +191,7 @@ namespace System.Windows.Documents
         {
             UnregisterMouseListeners();
 
-            if (_source == null)
+            if (_source is null)
             {
                 // Do nothing if HwndSource is already gone(disposed) or disconnected.
                 return;
@@ -301,7 +301,7 @@ namespace System.Windows.Documents
             // Fortunately this can't happen - the visual tree doesn't support re-parenting
             // in one step (you have to detach child, then reattach it to a new parent).
             // If that should change, this method will need some rethinking.
-            Debug.Assert(oldSource == null || newSource == null,
+            Debug.Assert(oldSource is null || newSource is null,
                         "ImmComposition doesn't support changing source directly");
 
             // Detach the TextEditor.  This avoids leaks and crashes (DevDiv2 1162020, 1201925).
@@ -309,7 +309,7 @@ namespace System.Windows.Documents
 
             if (_source != null)
             {
-                Debug.Assert((oldSource == null) || (oldSource == _source));
+                Debug.Assert((oldSource is null) || (oldSource == _source));
 
                 _source.RemoveHook(new HwndSourceHook(ImmCompositionFilterMessage));
 
@@ -524,7 +524,7 @@ namespace System.Windows.Documents
                 int resultLength;
                 string compositionString = BuildCompositionString(null, new char[] { (char)wParam }, out resultLength);
 
-                if (compositionString == null)
+                if (compositionString is null)
                 {
                     CompleteComposition();
                 }
@@ -732,7 +732,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            if (_source == null)
+            if (_source is null)
             {
                 return;
             }
@@ -759,7 +759,7 @@ namespace System.Windows.Documents
             compositionTarget = _source.CompositionTarget;
 
             // HwndSource.CompositionTarget may return null if the target hwnd is being destroyed and disposed.
-            if (compositionTarget == null || compositionTarget.RootVisual == null)
+            if (compositionTarget is null || compositionTarget.RootVisual is null)
             {
                 return;
             }
@@ -854,7 +854,7 @@ namespace System.Windows.Documents
                 int resultLength;
                 string compositionString = BuildCompositionString(resultChars, compositionChars, out resultLength);
 
-                if (compositionString == null)
+                if (compositionString is null)
                 {
                     CompleteComposition();
                     return;
@@ -868,9 +868,9 @@ namespace System.Windows.Documents
                 FrameworkTextComposition composition = TextStore.CreateComposition(_editor, this);
                 _compositionModifiedByEventListener = false;
 
-                if (_startComposition == null)
+                if (_startComposition is null)
                 {
-                    Invariant.Assert(_endComposition == null);
+                    Invariant.Assert(_endComposition is null);
 
                     //
                     // Raise TextInputStart.
@@ -897,7 +897,7 @@ namespace System.Windows.Documents
                     }
                 }
 
-                if (compositionChars == null)
+                if (compositionChars is null)
                 {
                     //
                     // Raise TextInput.
@@ -932,15 +932,15 @@ namespace System.Windows.Documents
         /// <returns></returns>
         private string BuildCompositionString(char[] resultChars, char[] compositionChars, out int resultLength)
         {
-            int compositionLength = compositionChars == null ? 0 : compositionChars.Length;
-            resultLength = resultChars == null ? 0 : resultChars.Length;
+            int compositionLength = compositionChars is null ? 0 : compositionChars.Length;
+            resultLength = resultChars is null ? 0 : resultChars.Length;
             char[] compositionText;
 
-            if (resultChars == null)
+            if (resultChars is null)
             {
                 compositionText = compositionChars;
             }
-            else if (compositionChars == null)
+            else if (compositionChars is null)
             {
                 compositionText = resultChars;
             }
@@ -953,7 +953,7 @@ namespace System.Windows.Documents
 
             string compositionString = new string(compositionText);
 
-            int originalLength = (compositionText == null) ? 0 : compositionText.Length;
+            int originalLength = (compositionText is null) ? 0 : compositionText.Length;
             return (compositionString.Length == originalLength) ? compositionString : null;
         }
 
@@ -1188,7 +1188,7 @@ namespace System.Windows.Documents
                     ITextPointer startAttribute = _startComposition.CreatePointer(startOffset, LogicalDirection.Backward);
                     ITextPointer endAttribute = _startComposition.CreatePointer(i + 1, LogicalDirection.Forward);
 
-                    if (_compositionAdorner == null)
+                    if (_compositionAdorner is null)
                     {
                         _compositionAdorner = new CompositionAdorner(_editor.TextView);
                         _compositionAdorner.Initialize(_editor.TextView);
@@ -1233,7 +1233,7 @@ namespace System.Windows.Documents
 
 #if UNUSED_IME_HIGHLIGHT_LAYER
                                 // Demand create the highlight layer.
-                                if (_highlightLayer == null)
+                                if (_highlightLayer is null)
                                 {
                                     _highlightLayer = new DisplayAttributeHighlightLayer();
                                 }
@@ -1655,7 +1655,7 @@ namespace System.Windows.Documents
 
             // Do the hittest.
             positionCurrent = view.GetTextPositionFromPoint(point, false);
-            if (positionCurrent == null)
+            if (positionCurrent is null)
             {
                 return false;
             }
@@ -1663,7 +1663,7 @@ namespace System.Windows.Documents
             rectCurrent = view.GetRectangleFromTextPosition(positionCurrent);
 
             positionNext = positionCurrent.CreatePointer();
-            if (positionNext == null)
+            if (positionNext is null)
             {
                 return false;
             }
@@ -1774,7 +1774,7 @@ namespace System.Windows.Documents
             parent = _editor.TextContainer.Parent;
             undoManager = UndoManager.GetUndoManager(parent);
 
-            if (undoManager != null && undoManager.IsEnabled && undoManager.OpenedUnit == null)
+            if (undoManager != null && undoManager.IsEnabled && undoManager.OpenedUnit is null)
             {
                 if (_compositionUndoUnit != null && _compositionUndoUnit == undoManager.LastUnit && !_compositionUndoUnit.Locked)
                 {
@@ -1867,12 +1867,12 @@ namespace System.Windows.Documents
 
         private UIElement RenderScope
         {
-            get { return _editor.TextView == null ? null : _editor.TextView.RenderScope; }
+            get { return _editor.TextView is null ? null : _editor.TextView.RenderScope; }
         }
 
         private FrameworkElement UiScope
         {
-            get { return (_editor == null) ? null : _editor.UiScope; }
+            get { return (_editor is null) ? null : _editor.UiScope; }
         }
 
         private bool IsReadOnly
@@ -1887,12 +1887,12 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_editor == null)
+                if (_editor is null)
                 {
                     return false;
                 }
 
-                if (UiScope == null)
+                if (UiScope is null)
                 {
                     return false;
                 }

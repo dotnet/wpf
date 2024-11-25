@@ -60,7 +60,7 @@ namespace MS.Internal.Automation
 
         internal static void UiaRaiseStructureChangedEvent(IRawElementProviderSimple provider, StructureChangeType structureChangeType, int[] runtimeId)
         {
-            CheckError(RawUiaRaiseStructureChangedEvent(provider, structureChangeType, runtimeId, runtimeId == null ? 0 : runtimeId.Length));
+            CheckError(RawUiaRaiseStructureChangedEvent(provider, structureChangeType, runtimeId, runtimeId is null ? 0 : runtimeId.Length));
         }
 
         internal static void UiaRaiseAsyncContentLoadedEvent(IRawElementProviderSimple provider, AsyncContentLoadedState asyncContentLoadedState, double PercentComplete)

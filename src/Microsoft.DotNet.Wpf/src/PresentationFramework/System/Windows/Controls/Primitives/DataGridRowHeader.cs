@@ -188,7 +188,7 @@ namespace System.Windows.Controls.Primitives
             var baseSize = base.MeasureOverride(availableSize);
 
             DataGrid dataGridOwner = DataGridOwner;
-            if (dataGridOwner == null)
+            if (dataGridOwner is null)
             {
                 return baseSize;
             }

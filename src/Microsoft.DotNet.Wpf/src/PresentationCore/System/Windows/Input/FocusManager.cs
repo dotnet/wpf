@@ -238,7 +238,7 @@ namespace System.Windows.Input
                 //  c) the new element is within the same focus scope as the current
                 //      holder (if any) of Keyboard focus
                 if (oldFocus == newFocus && newVisual != newFocus &&
-                        (newFocus == null || GetRoot(newVisual) == GetRoot(newFocus)))
+                        (newFocus is null || GetRoot(newVisual) == GetRoot(newFocus)))
                 {
                     Keyboard.Focus(newFocusedElement);
                 }
@@ -284,7 +284,7 @@ namespace System.Windows.Input
 
                     // Set Keyboard focus to the element if not already focused && current focus is within the current focus scope
                     DependencyObject currentFocus = Keyboard.FocusedElement as DependencyObject;
-                    if ((currentFocus == null) &&
+                    if ((currentFocus is null) &&
                         (newVisual != currentFocus) &&
                         (GetRoot(newVisual) == GetRoot(currentFocus)))
                     {
@@ -303,7 +303,7 @@ namespace System.Windows.Input
             if (value != null)
             {
                 visual = value as Visual;
-                if (visual == null)
+                if (visual is null)
                 {
                     ContentElement ce = value as ContentElement;
                     if (ce != null)
@@ -318,7 +318,7 @@ namespace System.Windows.Input
 
         private static DependencyObject GetRoot(DependencyObject element)
         {
-            if (element == null)
+            if (element is null)
                 return null;
 
             DependencyObject parent = null;
@@ -340,7 +340,7 @@ namespace System.Windows.Input
         // Walk up the parent chain to find the closest element with IsFocusScope=true
         private static DependencyObject _GetFocusScope(DependencyObject d)
         {
-            if (d == null)
+            if (d is null)
                 return null;
 
             if ((bool)d.GetValue(IsFocusScopeProperty))

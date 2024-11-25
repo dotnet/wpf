@@ -1006,7 +1006,7 @@ namespace MS.Internal.AutomationProxies
             WindowsTab tab = (WindowsTab)_parent;
             ProxySimple focused = tab.GetFocus();
 
-            if (focused == null || _item != focused._item)
+            if (focused is null || _item != focused._item)
             {
                 Misc.ProxySendMessage(_hwnd, NativeMethods.TCM_SETCURFOCUS, new IntPtr(_item), IntPtr.Zero);
             }

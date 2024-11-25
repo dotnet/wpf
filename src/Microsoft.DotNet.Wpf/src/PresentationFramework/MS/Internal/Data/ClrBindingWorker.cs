@@ -43,12 +43,12 @@ namespace MS.Internal.Data
                 path = PrepareXmlBinding(path);
             }
 
-            if (path == null)
+            if (path is null)
             {
                 path = new PropertyPath(String.Empty);
             }
 
-            if (ParentBinding.Path == null)
+            if (ParentBinding.Path is null)
             {
                 ParentBinding.UsePath(path);
             }
@@ -61,7 +61,7 @@ namespace MS.Internal.Data
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
         PropertyPath PrepareXmlBinding(PropertyPath path)
         {
-            if (path == null)
+            if (path is null)
             {
                 DependencyProperty targetDP = TargetProperty;
                 Type targetType = targetDP.PropertyType;
@@ -168,12 +168,12 @@ namespace MS.Internal.Data
                     return false;
 
                 object item = ppw.GetItem(k);
-                if (item == null || item == BindingExpression.NullDataItem)
+                if (item is null || item == BindingExpression.NullDataItem)
                     return false;
 
                 object accessor = ppw.GetAccessor(k);
-                if (accessor == null ||
-                    (accessor == DependencyProperty.UnsetValue && XmlWorker == null))
+                if (accessor is null ||
+                    (accessor == DependencyProperty.UnsetValue && XmlWorker is null))
                     return false;
 
                 return true;
@@ -184,7 +184,7 @@ namespace MS.Internal.Data
         {
             object item;
 
-            if (XmlWorker == null)
+            if (XmlWorker is null)
             {
                 item = DataItem;
             }
@@ -245,7 +245,7 @@ namespace MS.Internal.Data
         {
             int k = PW.Length - 1;
             object item = PW.GetItem(k);
-            if (item == null || item == BindingExpression.NullDataItem)
+            if (item is null || item == BindingExpression.NullDataItem)
                 return;
 
             // if the binding is async, post a request to set the value
@@ -277,7 +277,7 @@ namespace MS.Internal.Data
 
         internal override bool IsPathCurrent()
         {
-            object item = (XmlWorker == null) ? DataItem : XmlWorker.RawValue();
+            object item = (XmlWorker is null) ? DataItem : XmlWorker.RawValue();
             return PW.IsPathCurrent(item);
         }
 
@@ -516,7 +516,7 @@ namespace MS.Internal.Data
         {
             if (TraceData.IsEnabled)
             {
-                if (item == null)
+                if (item is null)
                 {
                     // There is probably no data item; e.g. we've moved currency off of a list.
                     // the type of the missing item is supposed to be _arySVS[k].info.DeclaringType
@@ -524,7 +524,7 @@ namespace MS.Internal.Data
                     TraceData.TraceAndNotify(TraceEventType.Information, TraceData.MissingDataItem, ParentBindingExpression);
                 }
 
-                if (info == null)
+                if (info is null)
                 {
                     // this no info problem should have been error reported at ReplaceItem already.
 
@@ -691,7 +691,7 @@ namespace MS.Internal.Data
                 int k = (int)request.Args[1];
 
                 // if the target has gone away, ignore the request
-                if (CheckTarget() == null)
+                if (CheckTarget() is null)
                     return;
 
                 switch (request.Status)
@@ -772,7 +772,7 @@ namespace MS.Internal.Data
                 ClearValue(Feature.PendingSetValueRequest);
 
                 // if the target has gone away, ignore the request
-                if (CheckTarget() == null)
+                if (CheckTarget() is null)
                     return;
 
                 switch (request.Status)

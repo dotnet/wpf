@@ -78,7 +78,7 @@ namespace System.Windows.Media
         /// </exception>
         public override object ConvertFrom(ITypeDescriptorContext td, CultureInfo cultureInfo, object value)
         {
-            if (value == null)
+            if (value is null)
             {
                 throw GetConvertFromException(value);
             }

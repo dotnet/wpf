@@ -179,7 +179,7 @@ namespace MS.Internal.IO.Packaging
                 hashAlgorithm = reader.GetAttribute(XTable.Get(XTable.ID.AlgorithmAttrName));
             }
 
-            if (hashAlgorithm == null || hashAlgorithm.Length == 0)
+            if (hashAlgorithm is null || hashAlgorithm.Length == 0)
                 throw new XmlException(SR.UnsupportedHashAlgorithm);
 
             return hashAlgorithm;
@@ -230,7 +230,7 @@ namespace MS.Internal.IO.Packaging
             }
 
             // will be null if we had no success
-            if (partUri == null)
+            if (partUri is null)
                 throw new XmlException(SR.Format(SR.RequiredXmlAttributeMissing, XTable.Get(XTable.ID.UriAttrName)));
 
             return partUri;
@@ -268,7 +268,7 @@ namespace MS.Internal.IO.Packaging
                 }
 
                 // DigestMethod?
-                if (hashAlgorithm == null &&
+                if (hashAlgorithm is null &&
                     string.Equals(reader.LocalName, XTable.Get(XTable.ID.DigestMethodTagName), StringComparison.Ordinal))
                 {
                     hashAlgorithm = ParseDigestAlgorithmTag(reader);
@@ -276,7 +276,7 @@ namespace MS.Internal.IO.Packaging
                 }
 
                 // DigestValue?
-                if (hashValue == null &&
+                if (hashValue is null &&
                     string.Equals(reader.LocalName, XTable.Get(XTable.ID.DigestValueTagName), StringComparison.Ordinal))
                 {
                     hashValue = ParseDigestValueTag(reader);
@@ -364,7 +364,7 @@ namespace MS.Internal.IO.Packaging
                             // relationship transform
                             ParseRelationshipsTransform(reader, partUri, ref relationshipSelectors);
 
-                            if (transforms == null)
+                            if (transforms is null)
                                 transforms = new List<String>();
 
                             transforms.Add(transformName);
@@ -381,7 +381,7 @@ namespace MS.Internal.IO.Packaging
                         // non-Relationship transform should have no children
                         if (reader.IsEmptyElement)
                         {
-                            if (transforms == null)
+                            if (transforms is null)
                                 transforms = new List<String>();
 
                             if (XmlDigitalSignatureProcessor.IsValidXmlCanonicalizationTransform(transformName))
@@ -440,7 +440,7 @@ namespace MS.Internal.IO.Packaging
                         string id = reader.GetAttribute(XTable.Get(XTable.ID.SourceIdAttrName));
                         if (id != null && id.Length > 0)
                         {
-                            if (relationshipSelectors == null)
+                            if (relationshipSelectors is null)
                                 relationshipSelectors = new List<PackageRelationshipSelector>();
 
                             // we found a legal SourceId so create a selector and continue searching
@@ -455,7 +455,7 @@ namespace MS.Internal.IO.Packaging
                         if (type != null && type.Length > 0)
                         {
                             // lazy init
-                            if (relationshipSelectors == null)
+                            if (relationshipSelectors is null)
                                 relationshipSelectors = new List<PackageRelationshipSelector>();
 
                             // got a legal SourceType attribute
@@ -519,7 +519,7 @@ namespace MS.Internal.IO.Packaging
             }
 
             // did we sign anything? Manifest can NOT be empty
-            if (parts == null && relationshipCount == 0)
+            if (parts is null && relationshipCount == 0)
                 throw new ArgumentException(SR.NothingToSign);
 
             return manifest;
@@ -717,7 +717,7 @@ namespace MS.Internal.IO.Packaging
 
                 //Currently we only support two transforms and so we validate whether its
                 //one of those
-                if (transformName == null || 
+                if (transformName is null || 
                     transformName.Length == 0 ||
                     !XmlDigitalSignatureProcessor.IsValidXmlCanonicalizationTransform(transformName))
                     throw new InvalidOperationException(SR.UnsupportedTransformAlgorithm);

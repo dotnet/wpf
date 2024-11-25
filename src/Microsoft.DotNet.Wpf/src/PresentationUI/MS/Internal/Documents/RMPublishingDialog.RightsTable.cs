@@ -499,7 +499,7 @@ namespace MS.Internal.Documents
                     DataGridViewDisableCheckBoxCell cell = Rows[e.RowIndex].Cells[e.ColumnIndex] as DataGridViewDisableCheckBoxCell;
 
                     // If the cell is not enabled then cancel the edit.
-                    if ((cell == null) || (!cell.Enabled))
+                    if ((cell is null) || (!cell.Enabled))
                     {
                         e.Cancel = true;
                     }
@@ -522,7 +522,7 @@ namespace MS.Internal.Documents
                 EndEdit();
 
                 // If there is no currently marked cell, then return.
-                if (CurrentCell == null)
+                if (CurrentCell is null)
                 {
                     return;
                 }
@@ -758,7 +758,7 @@ namespace MS.Internal.Documents
                 DataGridViewDisableCheckBoxCell cell =
                     row.Cells[RightsTableColumnToIndex(RightsTableColumn.AllowOwner)]
                     as DataGridViewDisableCheckBoxCell;
-                if (cell == null)
+                if (cell is null)
                 {
                     return;
                 }

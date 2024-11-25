@@ -442,7 +442,7 @@ namespace System.Windows.Interop
                 }
             }
 
-            if (dpiScale == null)
+            if (dpiScale is null)
             {
                 // The Window DPI could not be found likely because HwndTarget statics have not
                 // been initialized yet. Fall back to legacy logic.
@@ -1426,7 +1426,7 @@ namespace System.Windows.Interop
                 peer = UIElementAutomationPeer.CreatePeerForElement(uiroot);
 
                 //there is no specific peer for this UIElement, create a generic root
-                if(peer == null)
+                if(peer is null)
                     peer = uiroot.CreateGenericRootAutomationPeer();
 
                 if(peer != null)
@@ -1435,7 +1435,7 @@ namespace System.Windows.Interop
 
             // This can happen if the root visual is not UIElement. In this case,
             // attempt to find one in the visual tree.
-            if (peer == null)
+            if (peer is null)
             {
                 peer = UIElementAutomationPeer.GetRootAutomationPeer(root, handle);
             }
@@ -1452,7 +1452,7 @@ namespace System.Windows.Interop
         {
             try
             {
-                if (root == null)
+                if (root is null)
                 {
                     // Valid case, but need to handle separately. For now, return 0 to avoid exceptions
                     // in referencing this later on. Real solution is more complex, see WindowsClient#873800.
@@ -1460,7 +1460,7 @@ namespace System.Windows.Interop
                 }
 
                 AutomationPeer peer = EnsureAutomationPeer(root, handle);
-                if (peer == null)
+                if (peer is null)
                 {
                     return IntPtr.Zero;
                 }
@@ -2222,7 +2222,7 @@ namespace System.Windows.Interop
             }
             isLayered = (flags != MILTransparencyFlags.Opaque);
 
-            if (channelSet == null)
+            if (channelSet is null)
             {
                 channelSet = mctx.GetChannels();
             }
@@ -2388,7 +2388,7 @@ namespace System.Windows.Interop
 
                     DUCE.ChannelSet channelSet = mctx.GetChannels();
                     DUCE.Channel channel = channelSet.Channel;
-                    if (channel == null)
+                    if (channel is null)
                     {
                         // MediaContext is in disconnected state, so we will send
                         // the clear color when CreateUCEResources gets called
@@ -2501,7 +2501,7 @@ namespace System.Windows.Interop
 
         private void EnsureNotificationWindow()
         {
-            if (_notificationWindowHelper == null)
+            if (_notificationWindowHelper is null)
             {
                 _notificationWindowHelper = new NotificationWindowHelper();
             }

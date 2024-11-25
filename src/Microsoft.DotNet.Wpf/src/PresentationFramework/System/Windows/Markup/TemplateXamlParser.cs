@@ -468,7 +468,7 @@ namespace System.Windows.Markup
             else if (_setterTargetNameOrConditionSourceName != null)
             {
                 targetType = _IDTypes[_setterTargetNameOrConditionSourceName] as Type;
-                if (targetType == null
+                if (targetType is null
 #if PBTCOMPILER
                     && !IsLocalPass1
 #endif
@@ -751,7 +751,7 @@ namespace System.Windows.Markup
             {
                 XamlSerializer serializer = XamlTypeMapper.CreateInstance(xamlElementStartNode.SerializerType)
                                                           as XamlSerializer;
-                 if (serializer == null)
+                 if (serializer is null)
                  {
                      ThrowException(nameof(SR.ParserNoSerializer),
                                    xamlElementStartNode.TypeFullName,
@@ -765,7 +765,7 @@ namespace System.Windows.Markup
 
                      #if PBTCOMPILER
                          serializer.ConvertXamlToBaml(TokenReader,
-                                       BamlRecordWriter == null ? ParserContext : BamlRecordWriter.ParserContext,
+                                       BamlRecordWriter is null ? ParserContext : BamlRecordWriter.ParserContext,
                                        xamlElementStartNode, BamlRecordWriter);
                      #else
 
@@ -793,7 +793,7 @@ namespace System.Windows.Markup
                          // </DataTemplate>
 
                          if ( _styleModeStack.Mode == StyleMode.VisualTree ||
-                              TreeBuilder == null )
+                              TreeBuilder is null )
                          {
                              serializer.ConvertXamlToBaml(TokenReader,
                                                           BamlRecordWriter.ParserContext,
@@ -838,7 +838,7 @@ namespace System.Windows.Markup
                 if (_templateRootCount++ > 0)
                 {
                     ThrowException(nameof(SR.TemplateNoMultipleRoots),
-                                   (elementType == null ? "Unknown tag" : elementType.Name),
+                                   (elementType is null ? "Unknown tag" : elementType.Name),
                                    xamlNode.LineNumber,
                                    xamlNode.LinePosition);
                 }
@@ -1764,14 +1764,14 @@ namespace System.Windows.Markup
         /// </summary>
         bool IsLocalPass1
         {
-            get { return BamlRecordWriter == null; }
+            get { return BamlRecordWriter is null; }
         }
         
         private Type ItemContainerTemplateType
         {
             get
             {
-                if (_itemContainerTemplateType == null)
+                if (_itemContainerTemplateType is null)
                 {
                     _itemContainerTemplateType = XamlTypeMapper.AssemblyPF.GetType(_itemContainerTemplateTypeName);
                 }
@@ -1783,7 +1783,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                if (_itemContainerTemplateKeyType == null)
+                if (_itemContainerTemplateKeyType is null)
                 {
                     _itemContainerTemplateKeyType = XamlTypeMapper.AssemblyPF.GetType(_itemContainerTemplateKeyTypeName);
                 }

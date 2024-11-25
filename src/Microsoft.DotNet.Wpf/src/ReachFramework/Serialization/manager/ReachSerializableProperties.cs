@@ -168,12 +168,12 @@ namespace System.Windows.Xps.Serialization
             // o clr properties
             // o dependency properties
             //
-            if (_simplePropertyCollection == null)
+            if (_simplePropertyCollection is null)
             {
                 _simplePropertyCollection = new Queue();
             }
 
-            if (_complexPropertyCollection == null)
+            if (_complexPropertyCollection is null)
             {
                 _complexPropertyCollection = new Queue();
             }

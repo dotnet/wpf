@@ -123,7 +123,7 @@ namespace System.Windows.Documents
             {
                 // Ensure that Dispose is called from the UI thread
                 // If it is not, then make it so
-                if (BeginInvokeOnUIThread((Action<bool>)Dispose, DispatcherPriority.Normal, disposing) == null)
+                if (BeginInvokeOnUIThread((Action<bool>)Dispose, DispatcherPriority.Normal, disposing) is null)
                 {
                     // Already on UI thread
                     // Continue with core Dispose logic
@@ -275,7 +275,7 @@ namespace System.Windows.Documents
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         private bool EnsureWordBreakerAndSpellCheckerForCulture(CultureInfo culture, bool throwOnError = false)
         {
-            if (_isDisposed || (culture == null))
+            if (_isDisposed || (culture is null))
             {
                 return false;
             }
@@ -302,7 +302,7 @@ namespace System.Windows.Documents
 
                 // Even if wordBreaker.ResolvedLanguage == WordsSegmenter.Undetermined, we will use it
                 // as an appropriate fallback wordbreaker as long as a corresponding ISpellChecker is found.
-                if (wordBreaker == null)
+                if (wordBreaker is null)
                 {
                     _spellCheckers[culture] = null;
                     return false;
@@ -332,7 +332,7 @@ namespace System.Windows.Documents
                     }
                 }
 
-                if (spellChecker == null)
+                if (spellChecker is null)
                 {
                     _spellCheckers[culture] = null;
                 }
@@ -342,7 +342,7 @@ namespace System.Windows.Documents
                 }
             }
 
-            return (_spellCheckers[culture] == null ? false : true);
+            return (_spellCheckers[culture] is null ? false : true);
         }
 
         /// <summary>
@@ -378,7 +378,7 @@ namespace System.Windows.Documents
             var spellChecker = CurrentSpellChecker;
 
             bool spellCheckerNeeded = _mode.HasFlag(SpellerMode.SpellingErrors) || _mode.HasFlag(SpellerMode.Suggestions);
-            if ((wordBreaker == null) || (spellCheckerNeeded && spellChecker == null)) return 0;
+            if ((wordBreaker is null) || (spellCheckerNeeded && spellChecker is null)) return 0;
 
             int segmentCount = 0;
             bool continueIteration = true;
@@ -567,7 +567,7 @@ namespace System.Windows.Documents
 
             CultureInfo result = CultureInfo.InvariantCulture;
 
-            if (line == null)
+            if (line is null)
             {
                 return result;
             }
@@ -658,7 +658,7 @@ namespace System.Windows.Documents
 
             try
             {
-                if (BeginInvokeOnUIThread((Action<bool>)ClearDictionaries, DispatcherPriority.Normal, disposing) == null)
+                if (BeginInvokeOnUIThread((Action<bool>)ClearDictionaries, DispatcherPriority.Normal, disposing) is null)
                 {
                     // Already on UI thread
                     ClearDictionaries(disposing);
@@ -742,9 +742,9 @@ namespace System.Windows.Documents
         {
             Dispatcher dispatcher = null;
 
-            if (_dispatcher == null ||
+            if (_dispatcher is null ||
                 !_dispatcher.TryGetTarget(out dispatcher) ||
-                dispatcher == null)
+                dispatcher is null)
             {
                 throw new InvalidOperationException();
             }
@@ -779,7 +779,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (Culture == null)
+                if (Culture is null)
                 {
                     return null;
                 }
@@ -795,7 +795,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_defaultCulture == null)
+                if (_defaultCulture is null)
                 {
                     return null;
                 }
@@ -810,7 +810,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (Culture == null)
+                if (Culture is null)
                 {
                     return null;
                 }
@@ -925,7 +925,7 @@ namespace System.Windows.Documents
                 List<string> result = new List<string>();
                 _isClean = true;
 
-                if (_spellChecker == null)
+                if (_spellChecker is null)
                 {
                     _suggestions = result.AsReadOnly();
                     return;
@@ -938,7 +938,7 @@ namespace System.Windows.Documents
                     spellingErrors = Text != null ? _spellChecker.ComprehensiveCheck(Text) : null;
                 }
 
-                if (spellingErrors == null)
+                if (spellingErrors is null)
                 {
                     _suggestions = result.AsReadOnly();
                     return;
@@ -989,7 +989,7 @@ namespace System.Windows.Documents
             {
                 get
                 {
-                    if (_suggestions == null)
+                    if (_suggestions is null)
                     {
                         EnumerateSuggestions();
                     }
@@ -1002,7 +1002,7 @@ namespace System.Windows.Documents
             {
                 get
                 {
-                    if (_isClean == null)
+                    if (_isClean is null)
                     {
                         EnumerateSuggestions();
                     }
@@ -1064,7 +1064,7 @@ namespace System.Windows.Documents
             {
                 get
                 {
-                    if (_segments == null)
+                    if (_segments is null)
                     {
                         _segments = _wordBreaker.ComprehensiveGetTokens(_sentence, _spellChecker, _owner);
                     }

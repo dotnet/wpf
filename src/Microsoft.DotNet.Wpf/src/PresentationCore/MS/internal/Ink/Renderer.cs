@@ -216,7 +216,7 @@ namespace System.Windows.Ink
             get
             {
                 // We should never return a null value.
-                if ( _strokes == null )
+                if ( _strokes is null )
                 {
                     _strokes = new StrokeCollection();
 
@@ -329,7 +329,7 @@ namespace System.Windows.Ink
             ArgumentNullException.ThrowIfNull(visual);
 
             // Remove the visual in the list of attached via AttachIncrementalRendering
-            if ((_attachedVisuals == null) || (_attachedVisuals.Remove(visual) == false))
+            if ((_attachedVisuals is null) || (_attachedVisuals.Remove(visual) == false))
             {
                 throw new System.InvalidOperationException(SR.VisualCannotBeDetached);
             }
@@ -344,7 +344,7 @@ namespace System.Windows.Ink
         /// </summary>
         internal bool ContainsAttachedIncrementalRenderingVisual(Visual visual)
         {
-            if (visual == null || _attachedVisuals == null)
+            if (visual is null || _attachedVisuals is null)
             {
                 return false;
             }
@@ -357,7 +357,7 @@ namespace System.Windows.Ink
         /// </summary>
         internal bool AttachedVisualIsPositionedCorrectly(Visual visual, DrawingAttributes drawingAttributes)
         {
-            if (visual == null || drawingAttributes == null || _attachedVisuals == null || !_attachedVisuals.Contains(visual))
+            if (visual is null || drawingAttributes is null || _attachedVisuals is null || !_attachedVisuals.Contains(visual))
             {
                 return false;
             }
@@ -368,7 +368,7 @@ namespace System.Windows.Ink
             ContainerVisual currentParent 
                 = VisualTreeHelper.GetParent(visual) as ContainerVisual;
 
-            if (currentParent == null || correctParent != currentParent)
+            if (currentParent is null || correctParent != currentParent)
             {
                 return false;
             }
@@ -659,9 +659,9 @@ namespace System.Windows.Ink
             {
                 // For a highlighter stroke, the color.A is neglected.
                 Color color = StrokeRenderer.GetHighlighterColor(drawingAttributes.Color);
-                if ((_highlighters == null) || (_highlighters.TryGetValue(color, out hcVisual) == false))
+                if ((_highlighters is null) || (_highlighters.TryGetValue(color, out hcVisual) == false))
                 {
-                    if (_highlighters == null)
+                    if (_highlighters is null)
                     {
                         _highlighters = new Dictionary<Color, HighlighterContainerVisual>();
                     }
@@ -672,7 +672,7 @@ namespace System.Windows.Ink
 
                     _highlighters.Add(color, hcVisual);
                 }
-                else if (VisualTreeHelper.GetParent(hcVisual) == null)
+                else if (VisualTreeHelper.GetParent(hcVisual) is null)
                 {
                     _highlightersRoot.Children.Add(hcVisual);
                 }

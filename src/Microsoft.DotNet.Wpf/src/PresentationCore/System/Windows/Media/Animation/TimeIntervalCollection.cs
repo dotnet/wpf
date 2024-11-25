@@ -1774,10 +1774,10 @@ namespace System.Windows.Media.Animation
 
         private void EnsureAllocatedCapacity(int requiredCapacity)
         {
-            if (_nodeTime == null)
+            if (_nodeTime is null)
             {
-                Debug.Assert(_nodeIsPoint == null);
-                Debug.Assert(_nodeIsInterval == null);
+                Debug.Assert(_nodeIsPoint is null);
+                Debug.Assert(_nodeIsInterval is null);
 
                 _nodeTime = new TimeSpan[requiredCapacity];
                 _nodeIsPoint = new bool[requiredCapacity];

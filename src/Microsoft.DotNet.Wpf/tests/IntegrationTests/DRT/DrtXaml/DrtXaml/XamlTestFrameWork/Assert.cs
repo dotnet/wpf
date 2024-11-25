@@ -279,7 +279,7 @@ namespace DrtXaml.XamlTestFramework
 
         public static void IsNotNull(object o, string message)
         {
-            if (o == null)
+            if (o is null)
             {
                 Assert.Fail(message);
             }

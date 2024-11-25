@@ -94,7 +94,7 @@ public abstract class ControllableStoryboardAction : TriggerAction
     //  its Storyboard object reference.
     private Storyboard GetStoryboard( FrameworkElement fe, FrameworkContentElement fce, INameScope nameScope )
     {
-        if( BeginStoryboardName == null )
+        if( BeginStoryboardName is null )
         {
             throw new InvalidOperationException(SR.Storyboard_BeginStoryboardNameRequired);
         }
@@ -103,7 +103,7 @@ public abstract class ControllableStoryboardAction : TriggerAction
         
         Storyboard storyboard = keyedBeginStoryboard.Storyboard;
 
-        if( storyboard == null )
+        if( storyboard is null )
         {
             throw new InvalidOperationException(SR.Format(SR.Storyboard_BeginStoryboardNoStoryboard, BeginStoryboardName));
         }

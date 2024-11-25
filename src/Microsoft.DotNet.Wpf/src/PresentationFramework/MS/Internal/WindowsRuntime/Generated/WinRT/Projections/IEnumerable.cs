@@ -387,7 +387,7 @@ namespace MS.Internal.WindowsRuntime.ABI.System.Collections.Generic
 
             public uint GetMany(ref T[] items)
             {
-                if (items == null)
+                if (items is null)
                 {
                     return 0;
                 }

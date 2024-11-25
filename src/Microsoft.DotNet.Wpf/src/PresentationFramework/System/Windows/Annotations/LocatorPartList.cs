@@ -100,7 +100,7 @@ namespace System.Windows.Annotations
                 ContentLocatorPart right = this.Parts[locatorPartIndex];
 
                 // ContentLocator parts can be null so check for that case here
-                if (left == null && right != null)
+                if (left is null && right != null)
                 {
                     return false;
                 }
@@ -161,12 +161,12 @@ namespace System.Windows.Annotations
             ArgumentNullException.ThrowIfNull(writer);
 
             string prefix = writer.LookupPrefix(AnnotationXmlConstants.Namespaces.CoreSchemaNamespace);
-            if (prefix == null)
+            if (prefix is null)
             {
                 writer.WriteAttributeString(AnnotationXmlConstants.Prefixes.XmlnsPrefix, AnnotationXmlConstants.Prefixes.CoreSchemaPrefix, null, AnnotationXmlConstants.Namespaces.CoreSchemaNamespace);
             }
             prefix = writer.LookupPrefix(AnnotationXmlConstants.Namespaces.BaseSchemaNamespace);
-            if (prefix == null)
+            if (prefix is null)
             {
                 writer.WriteAttributeString(AnnotationXmlConstants.Prefixes.XmlnsPrefix, AnnotationXmlConstants.Prefixes.BaseSchemaPrefix, null, AnnotationXmlConstants.Namespaces.BaseSchemaNamespace);
             }
@@ -264,11 +264,11 @@ namespace System.Windows.Annotations
                                     }
                                 }
 
-                                if (name == null)
+                                if (name is null)
                                 {
                                     throw new XmlException(SR.Format(SR.RequiredAttributeMissing, AnnotationXmlConstants.Attributes.ItemName, AnnotationXmlConstants.Elements.Item));
                                 }
-                                if (value == null)
+                                if (value is null)
                                 {
                                     throw new XmlException(SR.Format(SR.RequiredAttributeMissing, AnnotationXmlConstants.Attributes.ItemValue, AnnotationXmlConstants.Elements.Item));
                                 }
@@ -371,7 +371,7 @@ namespace System.Windows.Annotations
             List<ContentLocatorBase> results = null;
 
             // If there aren't any additional locator parts - this is basically a no-op
-            if (additionalLocatorParts == null || additionalLocatorParts.Count == 0)
+            if (additionalLocatorParts is null || additionalLocatorParts.Count == 0)
             {
                 results = new List<ContentLocatorBase>(1);
                 results.Add(this);
@@ -405,7 +405,7 @@ namespace System.Windows.Annotations
         /// <returns>a ContentLocatorBase containing the final merged product</returns>
         internal override ContentLocatorBase Merge(ContentLocatorBase other)
         {
-            if (other == null)
+            if (other is null)
                 return this;
 
             ContentLocatorGroup locatorGroup = other as ContentLocatorGroup;
@@ -419,7 +419,7 @@ namespace System.Windows.Annotations
                 // new ContentLocatorGroup
                 foreach (ContentLocator loc in locatorGroup.Locators)
                 {
-                    if (temp == null)
+                    if (temp is null)
                     {
                         temp = loc;
                     }

@@ -116,7 +116,7 @@ namespace MS.Internal.Data
 
         internal void Initialize()
         {
-            if (_topLevelGroupDescription == null)
+            if (_topLevelGroupDescription is null)
             {
                 _topLevelGroupDescription = new TopLevelGroupDescription();
             }
@@ -171,7 +171,7 @@ namespace MS.Internal.Data
 
         internal void MoveWithinSubgroups(object item, LiveShapingItem lsi, IList list, int oldIndex, int newIndex)
         {
-            if (lsi == null)
+            if (lsi is null)
             {
                 // recursively descend through the groups, moving the item within
                 // groups it belongs to
@@ -248,12 +248,12 @@ namespace MS.Internal.Data
                 if (name != UseAsItemDirectly)
                 {
                     ICollection ic = name as ICollection;
-                    ArrayList names = (ic == null) ? null : new ArrayList(ic);
+                    ArrayList names = (ic is null) ? null : new ArrayList(ic);
 
                     // find subgroups whose names still match
                     for (GroupTreeNode child = node.FirstChild; child != null; child = child.Sibling)
                     {
-                        if (names == null)
+                        if (names is null)
                         {
                             if (Object.Equals(name, child.Group.Name))
                             {
@@ -273,7 +273,7 @@ namespace MS.Internal.Data
                     }
 
                     // for names that don't match, add the item to the new subgroup
-                    if (names == null)
+                    if (names is null)
                     {
                         if (name != DependencyProperty.UnsetValue)
                         {
@@ -321,7 +321,7 @@ namespace MS.Internal.Data
                 {
                     CollectionViewGroupInternal group = parentGroup;
                     parentGroup = group.Parent;
-                    if (parentGroup == null)
+                    if (parentGroup is null)
                         break;
 
                     GroupTreeNode parentNode = new GroupTreeNode()
@@ -354,7 +354,7 @@ namespace MS.Internal.Data
                     GroupTreeNode parentNode = null;
 
                     // special case for the root
-                    if (parentGroup == null)
+                    if (parentGroup is null)
                     {
                         root = node;
                         continue;
@@ -370,7 +370,7 @@ namespace MS.Internal.Data
                         }
                     }
 
-                    if (parentNode == null)
+                    if (parentNode is null)
                     {
                         // no existing parent node - create one now
                         parentNode = new GroupTreeNode()
@@ -453,7 +453,7 @@ namespace MS.Internal.Data
 
 #if GROUPDESCRIPTION_HAS_SELECTOR
                 // b. Call the parent description's selector
-                if (result == null && parentDescription.SubgroupSelector != null)
+                if (result is null && parentDescription.SubgroupSelector != null)
                 {
                     result = parentDescription.SubgroupSelector(group, level);
                 }
@@ -461,13 +461,13 @@ namespace MS.Internal.Data
             }
 
             // c. Call the global chooser
-            if (result == null && GroupBySelector != null)
+            if (result is null && GroupBySelector != null)
             {
                 result = GroupBySelector(group, level);
             }
 
             // d. Use the global array
-            if (result == null && level < GroupDescriptions.Count)
+            if (result is null && level < GroupDescriptions.Count)
             {
                 result = GroupDescriptions[level];
             }
@@ -500,7 +500,7 @@ namespace MS.Internal.Data
                     OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, index));
                 }
             }
-            else if ((nameList = name as ICollection) == null)
+            else if ((nameList = name as ICollection) is null)
             {
                 // the item belongs to one subgroup
                 AddToSubgroup(item, lsi, group, level, name, loading);
@@ -539,7 +539,7 @@ namespace MS.Internal.Data
             for (int n = group.Items.Count; index < n; ++index)
             {
                 subgroup = group.Items[index] as CollectionViewGroupInternal;
-                if (subgroup == null)
+                if (subgroup is null)
                     continue;           // skip children that are not groups
 
                 if (group.GroupBy.NamesMatch(subgroup.Name, name))
@@ -587,7 +587,7 @@ namespace MS.Internal.Data
                 // the item belongs to the group itself (not to any subgroups)
                 MoveWithinSubgroup(item, group, list, oldIndex, newIndex);
             }
-            else if ((nameList = name as ICollection) == null)
+            else if ((nameList = name as ICollection) is null)
             {
                 // the item belongs to one subgroup
                 MoveWithinSubgroup(item, group, level, name, list, oldIndex, newIndex);
@@ -621,7 +621,7 @@ namespace MS.Internal.Data
             for (int index = 0, n = group.Items.Count; index < n; ++index)
             {
                 subgroup = group.Items[index] as CollectionViewGroupInternal;
-                if (subgroup == null)
+                if (subgroup is null)
                     continue;           // skip children that are not groups
 
                 if (group.GroupBy.NamesMatch(subgroup.Name, name))
@@ -695,7 +695,7 @@ namespace MS.Internal.Data
                 // the item belongs to the group itself (not to any subgroups)
                 itemIsMissing = RemoveFromGroupDirectly(group, item);
             }
-            else if ((nameList = name as ICollection) == null)
+            else if ((nameList = name as ICollection) is null)
             {
                 // the item belongs to one subgroup
                 if (RemoveFromSubgroup(item, group, level, name))
@@ -734,7 +734,7 @@ namespace MS.Internal.Data
             for (int index = 0, n = group.Items.Count; index < n; ++index)
             {
                 subgroup = group.Items[index] as CollectionViewGroupInternal;
-                if (subgroup == null)
+                if (subgroup is null)
                     continue;           // skip children that are not groups
 
                 if (group.GroupBy.NamesMatch(subgroup.Name, name))

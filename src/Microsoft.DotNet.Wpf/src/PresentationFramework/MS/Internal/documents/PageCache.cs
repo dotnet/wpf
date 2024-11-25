@@ -338,7 +338,7 @@ namespace MS.Internal.Documents
         {
             PaginationProgressEventArgs args = parameter as PaginationProgressEventArgs;
 
-            if (args == null)
+            if (args is null)
             {
                 throw new InvalidOperationException("parameter");
             }
@@ -464,7 +464,7 @@ namespace MS.Internal.Documents
         {
             EventArgs args = parameter as EventArgs;
 
-            if (args == null)
+            if (args is null)
             {
                 throw new ArgumentOutOfRangeException("parameter");
             }
@@ -505,7 +505,7 @@ namespace MS.Internal.Documents
         {
             PagesChangedEventArgs args = parameter as PagesChangedEventArgs;
 
-            if (args == null)
+            if (args is null)
             {
                 throw new ArgumentOutOfRangeException("parameter");
             }
@@ -563,7 +563,7 @@ namespace MS.Internal.Documents
         /// <param name="args"></param>
         private void OnGetPageCompleted(object sender, GetPageCompletedEventArgs args)
         {
-            if (!args.Cancelled && args.Error == null && args.DocumentPage != DocumentPage.Missing)
+            if (!args.Cancelled && args.Error is null && args.DocumentPage != DocumentPage.Missing)
             {
                 //Add the page to the Watcher so we can determine if the page has been
                 //destroyed in our Delegate.
@@ -588,7 +588,7 @@ namespace MS.Internal.Documents
         {
             GetPageCompletedEventArgs args = parameter as GetPageCompletedEventArgs;
 
-            if (args == null)
+            if (args is null)
             {
                 throw new ArgumentOutOfRangeException("parameter");
             }
@@ -606,7 +606,7 @@ namespace MS.Internal.Documents
             //We only update the entry if the GetPageAsync call was not canceled,
             //points to a valid page (i.e. is not DocumentPage.Missing)
             //and did not result in an Error condition.
-            if (!args.Cancelled && args.Error == null && args.DocumentPage != DocumentPage.Missing)
+            if (!args.Cancelled && args.Error is null && args.DocumentPage != DocumentPage.Missing)
             {
                 if (args.DocumentPage.Size == Size.Empty)
                 {

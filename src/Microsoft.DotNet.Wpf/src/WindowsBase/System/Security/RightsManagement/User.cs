@@ -124,7 +124,7 @@ namespace System.Security.RightsManagement
         public override bool Equals(object obj)
         {
 
-            if (obj == null)
+            if (obj is null)
                 return false;   // Standard behavior.
 
             if (GetType() != obj.GetType())
@@ -148,7 +148,7 @@ namespace System.Security.RightsManagement
             get
             {
 
-                if (_anyoneUser == null)
+                if (_anyoneUser is null)
                 {
                     _anyoneUser = new ContentUser(AnyoneUserName, AuthenticationType.Internal);
                 }
@@ -167,7 +167,7 @@ namespace System.Security.RightsManagement
             get
             {
 
-                if (_ownerUser == null)
+                if (_ownerUser is null)
                 {
                     _ownerUser = new ContentUser(OwnerUserName, AuthenticationType.Internal);
                 }
@@ -219,7 +219,7 @@ namespace System.Security.RightsManagement
         internal bool GenericEquals(ContentUser userObj)
         {
             // this checks for null argument
-            if (userObj == null)
+            if (userObj is null)
             {
                 return false;
             }

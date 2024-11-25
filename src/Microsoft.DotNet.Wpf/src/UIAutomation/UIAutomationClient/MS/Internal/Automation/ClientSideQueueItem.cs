@@ -49,7 +49,7 @@ namespace MS.Internal.Automation
         {
             // Grab properties for cache request here...
             AutomationElement src;
-            if (_srcEl == null)
+            if (_srcEl is null)
             {
                 src = null;
             }
@@ -61,7 +61,7 @@ namespace MS.Internal.Automation
 
             // We need to find out why this situation should occur at (aside from a window closed event) and
             // handle the cause.
-            if (!(src == null && _e.EventId == AutomationElement.AutomationFocusChangedEvent))
+            if (!(src is null && _e.EventId == AutomationElement.AutomationFocusChangedEvent))
                 InvokeHandlers.InvokeClientHandler(_clientCallback, src, _e);
         }
 

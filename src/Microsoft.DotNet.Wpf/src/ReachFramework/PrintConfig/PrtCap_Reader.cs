@@ -72,7 +72,7 @@ namespace MS.Internal.Printing.Configuration
             string version = _xmlReader.GetAttribute(PrintSchemaTags.Framework.RootVersionAttr,
                                                      PrintSchemaNamespaces.FrameworkAttrForXmlReader);
 
-            if (version == null)
+            if (version is null)
             {
                 throw NewPrintCapFormatException(String.Format(CultureInfo.CurrentCulture,
                                                  PTUtility.GetTextFromResource("FormatException.RootMissingAttribute"),
@@ -200,7 +200,7 @@ namespace MS.Internal.Printing.Configuration
                                                                PrintSchemaNamespaces.FrameworkAttrForXmlReader);
 
                         // Only <Option> element is allowed not to have the "name" XML attribute
-                        if (QName == null)
+                        if (QName is null)
                         {
                             if (CurrentElementNodeType != PrintSchemaNodeTypes.Option)
                             {
@@ -253,7 +253,7 @@ namespace MS.Internal.Printing.Configuration
                         _currentElementTextValue = _xmlReader.ReadElementString();
 
                         // Our schema requires that <Value> element should always have non-empty value.
-                        if ((_currentElementTextValue == null) || (_currentElementTextValue.Length == 0))
+                        if ((_currentElementTextValue is null) || (_currentElementTextValue.Length == 0))
                         {
                             #if _DEBUG
                             Trace.WriteLine("-Warning- skip element " + CurrentElementNodeType +

@@ -59,7 +59,7 @@ namespace MS.Internal.Ink
             System.Diagnostics.Debug.Assert((path != null) && (IEnumerablePointHelper.GetCount(path) != 0));
             Point[] points = IEnumerablePointHelper.GetPointArray(path);
 
-            if (_erasingStrokeNodes == null)
+            if (_erasingStrokeNodes is null)
             {
                 _erasingStrokeNodes = new List<StrokeNode>(points.Length);
             }
@@ -99,7 +99,7 @@ namespace MS.Internal.Ink
         {
             System.Diagnostics.Debug.Assert(iterator != null);
 
-            if ((_erasingStrokeNodes == null) || (_erasingStrokeNodes.Count == 0))
+            if ((_erasingStrokeNodes is null) || (_erasingStrokeNodes.Count == 0))
             {
                 return false;
             }
@@ -142,7 +142,7 @@ namespace MS.Internal.Ink
 
             List<StrokeFIndices> eraseAt = new List<StrokeFIndices>();
 
-            if ((_erasingStrokeNodes == null) || (_erasingStrokeNodes.Count == 0))
+            if ((_erasingStrokeNodes is null) || (_erasingStrokeNodes.Count == 0))
             {
                 return false;
             }

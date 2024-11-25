@@ -429,7 +429,7 @@ namespace System.Windows
         /// <returns>true if value is a Duration and is equal to this instance; otherwise false.</returns>
         public override bool Equals(Object value)
         {
-            if (value == null)
+            if (value is null)
             {
                 return false;
             }

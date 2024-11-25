@@ -529,14 +529,14 @@ namespace System.Windows
         private ModifiedValue EnsureModifiedValue(bool useWeakReferenceForBaseValue=false)
         {
             ModifiedValue modifiedValue = null;
-            if (_value == null)
+            if (_value is null)
             {
                 _value = modifiedValue = new ModifiedValue();
             }
             else
             {
                 modifiedValue = _value as ModifiedValue;
-                if (modifiedValue == null)
+                if (modifiedValue is null)
                 {
                     modifiedValue = new ModifiedValue();
                     modifiedValue.SetBaseValue(_value, useWeakReferenceForBaseValue);

@@ -316,7 +316,7 @@ namespace System.Windows.Media.Imaging
             // if these get touched by more than one thread in the lifetime
             // of your app. 
 
-            Debug.Assert(s_Source == null || s_Source.IsFrozen,
+            Debug.Assert(s_Source is null || s_Source.IsFrozen,
                 "Detected context bound default value CroppedBitmap.s_Source (See OS Bug #947272).");
 
 

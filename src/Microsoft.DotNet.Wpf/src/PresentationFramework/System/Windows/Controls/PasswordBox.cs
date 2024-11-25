@@ -186,7 +186,7 @@ namespace System.Windows.Controls
 
             set
             {
-                if (value == null)
+                if (value is null)
                 {
                     value = String.Empty;
                 }
@@ -799,7 +799,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_scrollViewer == null)
+                if (_scrollViewer is null)
                 {
                     if (_textEditor != null)
                     {
@@ -1023,7 +1023,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                Invariant.Assert(_passwordBoxContentHost == null, "_passwordBoxContentHost must be null here");
+                Invariant.Assert(_passwordBoxContentHost is null, "_passwordBoxContentHost must be null here");
             }
 
             _passwordBoxContentHost = null;
@@ -1032,7 +1032,7 @@ namespace System.Windows.Controls
         // Initializes a new render scope.
         private void InitializeRenderScope()
         {
-            if (_renderScope == null)
+            if (_renderScope is null)
             {
                 return;
             }
@@ -1165,7 +1165,7 @@ namespace System.Windows.Controls
                 this.ScrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Disabled;
                 this.ScrollViewer.Focusable = false;
 
-                if (this.ScrollViewer.Background == null)
+                if (this.ScrollViewer.Background is null)
                 {
                     // prevent hit-testing through padding
                     this.ScrollViewer.Background = Brushes.Transparent;

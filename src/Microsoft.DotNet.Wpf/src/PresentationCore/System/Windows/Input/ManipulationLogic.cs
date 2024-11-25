@@ -304,7 +304,7 @@ namespace System.Windows.Input
         private void PushEvent(InputEventArgs e)
         {
             // We only expect to generate one event at a time and should never need a queue.
-            Debug.Assert(_generatedEvent == null, "There is already a generated event waiting to be pushed.");
+            Debug.Assert(_generatedEvent is null, "There is already a generated event waiting to be pushed.");
             _generatedEvent = e;
         }
 
@@ -596,7 +596,7 @@ namespace System.Windows.Input
         {
             add
             {
-                bool wasNull = _containerLayoutUpdated == null;
+                bool wasNull = _containerLayoutUpdated is null;
                 _containerLayoutUpdated += value;
 
                 // if this is the first handler, try to subscribe to LayoutUpdated event
@@ -607,11 +607,11 @@ namespace System.Windows.Input
             }
             remove
             {
-                bool wasNull = _containerLayoutUpdated == null;
+                bool wasNull = _containerLayoutUpdated is null;
                 _containerLayoutUpdated -= value;
 
                 // if this is the last handler, unsubscribe from LayoutUpdated event
-                if (!wasNull && _containerLayoutUpdated == null)
+                if (!wasNull && _containerLayoutUpdated is null)
                 {
                     UnsubscribeFromLayoutUpdated();
                 }
@@ -661,13 +661,13 @@ namespace System.Windows.Input
             // this is not accurate because rotation over PivotPoint won't be detected but the PivotPoint is selected far outside
             // of the Window bounds, so practically that should be a very rare case.
             // The more accurate solution would require 2 or 3 points which is more expensive.
-            if (_root == null)
+            if (_root is null)
             {
                 return false;
             }
 
             UIElement container = _currentContainer as UIElement;
-            if (container == null)
+            if (container is null)
             {
                 return false;
             }

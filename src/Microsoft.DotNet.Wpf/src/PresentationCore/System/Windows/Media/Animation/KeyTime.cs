@@ -176,7 +176,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         public override bool Equals(object value)
         {
-            if (   value == null
+            if (   value is null
                 || !(value is KeyTime))
             {
                 return false;

@@ -120,7 +120,7 @@ namespace System.Windows
         {
             get
             {
-                if (_mergedDictionaries == null)
+                if (_mergedDictionaries is null)
                 {
                     _mergedDictionaries = new ResourceDictionaryCollection(this);
                     _mergedDictionaries.CollectionChanged += OnMergedDictionariesChanged;
@@ -142,9 +142,9 @@ namespace System.Windows
             }
             set
             {
-                if (value == null || String.IsNullOrEmpty(value.OriginalString))
+                if (value is null || String.IsNullOrEmpty(value.OriginalString))
                 {
-                    throw new ArgumentException(SR.Format(SR.ResourceDictionaryLoadFromFailure, value == null ? "''" : value.ToString()));
+                    throw new ArgumentException(SR.Format(SR.ResourceDictionaryLoadFromFailure, value is null ? "''" : value.ToString()));
                 }
 
                 ResourceDictionaryDiagnostics.RemoveResourceDictionaryForUri(_source, this);
@@ -159,7 +159,7 @@ namespace System.Windows
                 // to resolve, and the set _source to the OriginalUri so we don't change the return of Source property.
                 // The versioned Uri is not stored, if the version info is needed while debugging, once this method
                 // returns _reader should be set, from there BamlSchemaContext.LocalAssembly contains the version info.
-                if (uriWrapper == null)
+                if (uriWrapper is null)
                 {
                     _source = value;
                     sourceUri = _source;
@@ -229,7 +229,7 @@ namespace System.Windows
                 ResourceDictionary loadedRD = MimeObjectFactory.GetObjectAndCloseStreamCore(s, contentType, uri, false, false, false /*allowAsync*/, false /*isJournalNavigation*/, out asyncObjectConverter, IsUnsafe)
                                             as ResourceDictionary;
 
-                if (loadedRD == null)
+                if (loadedRD is null)
                 {
                     throw new InvalidOperationException(SR.Format(SR.ResourceDictionaryLoadFromFailure, _source.ToString()));
                 }
@@ -1015,7 +1015,7 @@ namespace System.Windows
 
             // If the value is not a key record then
             // it has already been realized, is not deferred and is a "ready to go" value.
-            if (keyRecord == null)
+            if (keyRecord is null)
             {
                 canCache = true;
                 return;   /* Not deferred content */
@@ -1114,9 +1114,9 @@ namespace System.Windows
 
             // If we already have the Source set then we can ignore
             // this deferable content section
-            if (_source == null)
+            if (_source is null)
             {
-                if (_reader == null)
+                if (_reader is null)
                 {
                     _reader = reader;
                     SetKeys(keys, deferrableContent.ServiceProvider);
@@ -1378,7 +1378,7 @@ namespace System.Windows
             // content with keys but no values.  We need to allow returning
             // null in this scenario to match v3 compat and not throw an
             // error.
-            if (xamlReader == null)
+            if (xamlReader is null)
                 return null;
 
             Uri baseUri = (_rootElement is IUriContext) ? ((IUriContext)_rootElement).BaseUri : _baseUri;
@@ -1416,7 +1416,7 @@ namespace System.Windows
         // Add an owner for this dictionary
         internal void AddOwner(DispatcherObject owner)
         {
-            if (_inheritanceContext == null)
+            if (_inheritanceContext is null)
             {
                 // the first owner gets to be the InheritanceContext for
                 // all the values in the dictionary that want one.
@@ -1445,7 +1445,7 @@ namespace System.Windows
             FrameworkElement fe = owner as FrameworkElement;
             if (fe != null)
             {
-                if (_ownerFEs == null)
+                if (_ownerFEs is null)
                 {
                     _ownerFEs = new WeakReferenceList(1);
                 }
@@ -1467,7 +1467,7 @@ namespace System.Windows
                 FrameworkContentElement fce = owner as FrameworkContentElement;
                 if (fce != null)
                 {
-                    if (_ownerFCEs == null)
+                    if (_ownerFCEs is null)
                     {
                         _ownerFCEs = new WeakReferenceList(1);
                     }
@@ -1489,7 +1489,7 @@ namespace System.Windows
                     Application app = owner as Application;
                     if (app != null)
                     {
-                        if (_ownerApps == null)
+                        if (_ownerApps is null)
                         {
                             _ownerApps = new WeakReferenceList(1);
                         }
@@ -1801,7 +1801,7 @@ namespace System.Windows
                     foreach (Object o in _weakDeferredResourceReferences)
                     {
                         DeferredResourceReference deferredResourceReference = o as DeferredResourceReference;
-                        if (deferredResourceReference != null && (resourceKey == null || Object.Equals(resourceKey, deferredResourceReference.Key)))
+                        if (deferredResourceReference != null && (resourceKey is null || Object.Equals(resourceKey, deferredResourceReference.Key)))
                         {
                             // This will inflate the deferred reference, causing it
                             // to be removed from the list.  The list may also be
@@ -1982,7 +1982,7 @@ namespace System.Windows
             {
                 Invariant.Assert(_ownerFEs.Count > 0);
 
-                if (mergedDictionary._ownerFEs == null)
+                if (mergedDictionary._ownerFEs is null)
                 {
                     mergedDictionary._ownerFEs = new WeakReferenceList(_ownerFEs.Count);
                 }
@@ -1999,7 +1999,7 @@ namespace System.Windows
             {
                 Invariant.Assert(_ownerFCEs.Count > 0);
 
-                if (mergedDictionary._ownerFCEs == null)
+                if (mergedDictionary._ownerFCEs is null)
                 {
                     mergedDictionary._ownerFCEs = new WeakReferenceList(_ownerFCEs.Count);
                 }
@@ -2016,7 +2016,7 @@ namespace System.Windows
             {
                 Invariant.Assert(_ownerApps.Count > 0);
 
-                if (mergedDictionary._ownerApps == null)
+                if (mergedDictionary._ownerApps is null)
                 {
                     mergedDictionary._ownerApps = new WeakReferenceList(_ownerApps.Count);
                 }

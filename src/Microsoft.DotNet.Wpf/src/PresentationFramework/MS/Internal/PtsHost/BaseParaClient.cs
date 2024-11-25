@@ -190,7 +190,7 @@ namespace MS.Internal.PtsHost
         {
             get
             {
-                if (_visual == null)
+                if (_visual is null)
                 {
                     _visual = new ParagraphVisual();
                 }

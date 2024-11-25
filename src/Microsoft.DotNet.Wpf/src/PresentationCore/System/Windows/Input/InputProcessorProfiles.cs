@@ -66,11 +66,11 @@ namespace System.Windows.Input
         {
             Debug.Assert(Thread.CurrentThread.GetApartmentState() == ApartmentState.STA, "Initialize called on MTA thread!");
 
-            Debug.Assert(_ipp == null, "Initialize called twice");
+            Debug.Assert(_ipp is null, "Initialize called twice");
 
             _ipp = InputProcessorProfilesLoader.Load();
 
-            if (_ipp == null)
+            if (_ipp is null)
             {
                 return false;
             }

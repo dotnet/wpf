@@ -94,7 +94,7 @@ namespace MS.Internal.Utility
         {
             Uri newUri;
             
-            if (orgUri == null)
+            if (orgUri is null)
             {
                 newUri = null;
             }

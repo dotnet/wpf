@@ -242,7 +242,7 @@ namespace MS.Internal.AutomationProxies
                 // ((selection.Flags & TomSelectionFlags.tomSelStartActive) == TomSelectionFlags.tomSelStartActive) ? TextPatternRangeEndpoint.Start : TextPatternRangeEndpoint.End;
             }
 
-            if (range == null)
+            if (range is null)
                 return new ITextRangeProvider[] { };
             else
                 return new ITextRangeProvider[] { new WindowsRichEditRange(range, this) };
@@ -252,7 +252,7 @@ namespace MS.Internal.AutomationProxies
         {
             ITextRange range = GetVisibleRange();
 
-            if (range == null)
+            if (range is null)
                 return new ITextRangeProvider[] { };
             else
                 return new ITextRangeProvider[] { new WindowsRichEditRange(range, this) };
@@ -481,7 +481,7 @@ namespace MS.Internal.AutomationProxies
         {
             // if we don't have a document pointer yet then get one by sending richedit a WM_GETOBJECT message
             // with object id asking for the native OM.
-            if (_document == null)
+            if (_document is null)
             {
                 object obj = null;
 
@@ -494,7 +494,7 @@ namespace MS.Internal.AutomationProxies
                 // when we cannot obtain the ITextDocument from a RichEdit control
                 // The direct cast does not work for RichEdit20w controls used in MS Office
                 _document = obj as ITextDocument;
-                if (_document == null)
+                if (_document is null)
                 {
                     throw new System.NotImplementedException(SR.NoITextDocumentFromRichEdit);
                 }
@@ -599,7 +599,7 @@ namespace MS.Internal.AutomationProxies
                 dataObject = embeddedObject as IDataObject;
             }
 
-            if (dataObject == null)
+            if (dataObject is null)
             {
                 return;
             }

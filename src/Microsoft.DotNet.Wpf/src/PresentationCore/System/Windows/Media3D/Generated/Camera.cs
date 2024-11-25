@@ -348,7 +348,7 @@ namespace System.Windows.Media.Media3D
             // if these get touched by more than one thread in the lifetime
             // of your app.
 
-            Debug.Assert(s_Transform == null || s_Transform.IsFrozen,
+            Debug.Assert(s_Transform is null || s_Transform.IsFrozen,
                 "Detected context bound default value Camera.s_Transform (See OS Bug #947272).");
 
 

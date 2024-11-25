@@ -492,7 +492,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || This.IsReadOnly)
+            if (This is null || !This._IsEnabled || This.IsReadOnly)
             {
                 return;
             }
@@ -516,7 +516,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || This.IsReadOnly)
+            if (This is null || !This._IsEnabled || This.IsReadOnly)
             {
                 return;
             }
@@ -537,7 +537,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled)
+            if (This is null || !This._IsEnabled)
             {
                 return;
             }
@@ -562,7 +562,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled)
+            if (This is null || !This._IsEnabled)
             {
                 return;
             }
@@ -583,7 +583,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || This.IsReadOnly)
+            if (This is null || !This._IsEnabled || This.IsReadOnly)
             {
                 return;
             }
@@ -613,7 +613,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || This.IsReadOnly)
+            if (This is null || !This._IsEnabled || This.IsReadOnly)
             {
                 return;
             }
@@ -628,7 +628,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled)
+            if (This is null || !This._IsEnabled)
             {
                 return;
             }
@@ -650,7 +650,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || This.IsReadOnly)
+            if (This is null || !This._IsEnabled || This.IsReadOnly)
             {
                 return;
             }
@@ -816,7 +816,7 @@ namespace System.Windows.Documents
             if (formatToApply == DataFormats.UnicodeText)
             {
                 object pastedData = GetPasteData(dataObjectToApply, DataFormats.UnicodeText);
-                if (pastedData == null)
+                if (pastedData is null)
                 {
                     if (dataObjectToApply.GetDataPresent(DataFormats.Text))
                     {
@@ -926,7 +926,7 @@ namespace System.Windows.Documents
                     object xamlObject = XamlReader.Load(new XmlTextReader(new System.IO.StringReader(pasteXaml)), useRestrictiveXamlReader: true);
                     TextElement flowContent = xamlObject as TextElement;
 
-                    success = flowContent == null ? false : PasteTextElement(This, flowContent);
+                    success = flowContent is null ? false : PasteTextElement(This, flowContent);
                 }
                 catch (XamlParseException e)
                 {

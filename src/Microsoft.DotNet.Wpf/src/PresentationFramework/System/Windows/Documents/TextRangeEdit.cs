@@ -128,7 +128,7 @@ namespace System.Windows.Documents
         {
             Invariant.Assert(firstElement != null, "null check: firstElement");
 
-            if (secondElement == null)
+            if (secondElement is null)
             {
                 return false;
             }
@@ -336,7 +336,7 @@ namespace System.Windows.Documents
 
                     Span parentSpan = (Span)inline.Parent;                  
 
-                    if (parentSpan.Parent == null)
+                    if (parentSpan.Parent is null)
                     {
                         break;
                     }
@@ -499,7 +499,7 @@ namespace System.Windows.Documents
 
                 if (!TextSchema.ValuesAreEqual(value, outerContextValue))
                 {
-                    if (span == null)
+                    if (span is null)
                     {
                         span = new Span();
                     }
@@ -591,13 +591,13 @@ namespace System.Windows.Documents
         /// </returns>
         internal static TextPointer InsertParagraphBreak(TextPointer position, bool moveIntoSecondParagraph)
         {
-            Invariant.Assert(position.TextContainer.Parent == null || TextSchema.IsValidChildOfContainer(position.TextContainer.Parent.GetType(), typeof(Paragraph)));
+            Invariant.Assert(position.TextContainer.Parent is null || TextSchema.IsValidChildOfContainer(position.TextContainer.Parent.GetType(), typeof(Paragraph)));
 
             bool structuralBoundaryCrossed = TextPointerBase.IsAtRowEnd(position) ||
                 TextPointerBase.IsBeforeFirstTable(position) ||
                 TextPointerBase.IsInBlockUIContainer(position);
 
-            if (position.Paragraph == null)
+            if (position.Paragraph is null)
             {
                 // Ensure insertion position, in case original position is not in text content.
                 position = TextRangeEditTables.EnsureInsertionPosition(position);
@@ -615,10 +615,10 @@ namespace System.Windows.Documents
             }
 
             Paragraph paragraph = position.Paragraph;
-            if (paragraph == null)
+            if (paragraph is null)
             {
                 // At this point, we expect we're working in a fragment of Inlines only.
-                Invariant.Assert(position.TextContainer.Parent == null);
+                Invariant.Assert(position.TextContainer.Parent is null);
 
                 // Add a parent Paragraph to split.
                 paragraph = new Paragraph();
@@ -953,7 +953,7 @@ namespace System.Windows.Documents
                         {
                             nextChild = (Inline)lastChild.NextElement;
 
-                            if (nextChild == null)
+                            if (nextChild is null)
                                 break;
                             if (!TextSchema.ValuesAreEqual(nextChild.GetValue(property), firstChildValue))
                                 break;
@@ -981,7 +981,7 @@ namespace System.Windows.Documents
                                 {
                                     Span span = firstChild.Parent as Span;
 
-                                    if (span == null || span.Inlines.FirstInline != firstChild || span.Inlines.LastInline != lastChild)
+                                    if (span is null || span.Inlines.FirstInline != firstChild || span.Inlines.LastInline != lastChild)
                                     {
                                         span = new Span(firstChild.ElementStart, lastChild.ElementEnd);
                                     }
@@ -1250,7 +1250,7 @@ namespace System.Windows.Documents
             if (rangeStart.CompareTo(rangeEnd) < 0 && rangeEnd.GetPointerContext(LogicalDirection.Backward) == TextPointerContext.ElementStart)
             {
                 rangeEnd = rangeEnd.GetNextInsertionPosition(LogicalDirection.Backward);
-                if (rangeEnd == null)
+                if (rangeEnd is null)
                 {
                     rangeEnd = rangeStart; // Recover position for container start case - we never return null from this method.
                 }
@@ -1313,7 +1313,7 @@ namespace System.Windows.Documents
             }
             Run nextRun = nextPosition.Parent as Run;
 
-            if (previousRun == null || previousRun.IsEmpty || nextRun == null || nextRun.IsEmpty)
+            if (previousRun is null || previousRun.IsEmpty || nextRun is null || nextRun.IsEmpty)
             {
                 // No text to make the merge meaningful.
                 return;
@@ -1461,13 +1461,13 @@ namespace System.Windows.Documents
                     // If startPosition and/or endPosition is parented by an empty ListItem, create an implicit paragraph in it.
                     // This will enable the following code to merge paragraphs in list items.
 
-                    if (firstParagraphOrBlockUIContainer == null && TextPointerBase.IsInEmptyListItem(startPosition))
+                    if (firstParagraphOrBlockUIContainer is null && TextPointerBase.IsInEmptyListItem(startPosition))
                     {
                         startPosition = TextRangeEditTables.EnsureInsertionPosition(startPosition);
                         firstParagraphOrBlockUIContainer = startPosition.Paragraph;
                         Invariant.Assert(firstParagraphOrBlockUIContainer != null, "EnsureInsertionPosition must create a paragraph inside list item - 1");
                     }
-                    if (secondParagraphOrBlockUIContainer == null && TextPointerBase.IsInEmptyListItem(endPosition))
+                    if (secondParagraphOrBlockUIContainer is null && TextPointerBase.IsInEmptyListItem(endPosition))
                     {
                         endPosition = TextRangeEditTables.EnsureInsertionPosition(endPosition);
                         secondParagraphOrBlockUIContainer = endPosition.Paragraph;
@@ -1752,7 +1752,7 @@ namespace System.Windows.Documents
                 Run run = splitPosition.Parent as Run;
                 if (run != null && run != limitingAncestor && 
                     ((run.Parent != null && HasLocalInheritableStructuralPropertyValue(run)) || 
-                    (run.Parent == null && HasLocalStructuralPropertyValue(run))))
+                    (run.Parent is null && HasLocalStructuralPropertyValue(run))))
                 {
                     // This Run has a structural property set on it (eg, FlowDirection) which cannot simply be split
                     // (two adjacent Runs with the same FlowDirection will render differently than a single Run with
@@ -1768,7 +1768,7 @@ namespace System.Windows.Documents
             while (splitPosition.Parent != null && TextSchema.IsMergeableInline(splitPosition.Parent.GetType()) && splitPosition.Parent != limitingAncestor && 
                 (!preserveStructuralFormatting || 
                    ((((Inline)splitPosition.Parent).Parent != null && !HasLocalInheritableStructuralPropertyValue((Inline)splitPosition.Parent)) ||
-                   (((Inline)splitPosition.Parent).Parent == null && !HasLocalStructuralPropertyValue((Inline)splitPosition.Parent)))))
+                   (((Inline)splitPosition.Parent).Parent is null && !HasLocalStructuralPropertyValue((Inline)splitPosition.Parent)))))
             {
                 splitPosition = SplitFormattingElement(splitPosition, keepEmptyFormatting);
             }

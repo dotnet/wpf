@@ -65,7 +65,7 @@ public sealed class ZoomPercentageConverter : IValueConverter
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         // Check if the targetType has been defined correctly.
-        if (targetType == null)
+        if (targetType is null)
         {
             return DependencyProperty.UnsetValue;
         }

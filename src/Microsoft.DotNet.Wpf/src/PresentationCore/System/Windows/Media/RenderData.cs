@@ -100,7 +100,7 @@ namespace System.Windows.Media
 
             // Do we need to increase the buffer size?
             // Yes, if there's no buffer or if the buffer is too small.
-            if ((_buffer == null) || (newOffset > _buffer.Length))
+            if ((_buffer is null) || (newOffset > _buffer.Length))
             {
                 EnsureBuffer(newOffset);
             }
@@ -277,7 +277,7 @@ namespace System.Windows.Media
                     {
                         // if it is a clock, it better not be a Freezable too or we'll
                         // end up firing the handler twice
-                        Debug.Assert(_dependentResources[i] as Freezable == null);
+                        Debug.Assert(_dependentResources[i] as Freezable is null);
 
                         clockResource.PropagateChangedHandlersCore(handler, adding);
                     }
@@ -437,7 +437,7 @@ namespace System.Windows.Media
         public uint AddDependentResource(Object o)
         {
             // Append the resource to the internal array.
-            if (o == null)
+            if (o is null)
             {
                 return 0;
             }
@@ -469,7 +469,7 @@ namespace System.Windows.Media
             Debug.Assert(cbRequiredSize >= 0);
 
             // If we don't have a buffer, this is easy: we simply allocate a new one of the appropriate size.
-            if (_buffer == null)
+            if (_buffer is null)
             {
                 _buffer = ArrayPool<byte>.Shared.Rent(cbRequiredSize);
             }

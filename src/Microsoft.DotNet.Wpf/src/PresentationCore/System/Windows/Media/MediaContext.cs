@@ -207,7 +207,7 @@ namespace System.Windows.Media
         {
             // We create exactly one MediaContext per thread. This is the one
             // for this thread
-            Debug.Assert(dispatcher.Reserved0 == null);
+            Debug.Assert(dispatcher.Reserved0 is null);
 
             // Initialize frame time information
             if (IsClockSupported)
@@ -577,7 +577,7 @@ namespace System.Windows.Media
                 // as having an active animation so we know that we'll need to
                 // render another frame.
                 //
-                if (Rendering == null)
+                if (Rendering is null)
                 {
                     nextTickNeeded = _timeManager.GetNextTickNeeded();
                 }
@@ -599,7 +599,7 @@ namespace System.Windows.Media
                 // We need to tick in the distant future, schedule a far way message
                 if (nextTickNeeded > TimeSpan.FromSeconds(1))
                 {
-                    if (_currentRenderOp == null)
+                    if (_currentRenderOp is null)
                     {
                         _currentRenderOp = Dispatcher.BeginInvoke(DispatcherPriority.Inactive, _animRenderMessage, null);
 
@@ -612,7 +612,7 @@ namespace System.Windows.Media
                 {
                     // Only create a new render op if we don't have one
                     // scheduled
-                    if (_currentRenderOp == null)
+                    if (_currentRenderOp is null)
                     {
                         _currentRenderOp = Dispatcher.BeginInvoke(DispatcherPriority.Inactive, _animRenderMessage, null);
 
@@ -637,7 +637,7 @@ namespace System.Windows.Media
                     // input has been blocked for.  If it's blocked for too long we should schedule our render
                     // at Input priority so that input can flush before we start another render.
                     //
-                    if (_inputMarkerOp == null)
+                    if (_inputMarkerOp is null)
                     {
                         _inputMarkerOp = Dispatcher.BeginInvoke(DispatcherPriority.Input, _inputMarkerMessage, null);
                         _lastInputMarkerTime = CurrentTicks;
@@ -648,7 +648,7 @@ namespace System.Windows.Media
                     }
 
                     // Schedule an operation to happen immediately.
-                    if (_currentRenderOp == null)
+                    if (_currentRenderOp is null)
                     {
                         _currentRenderOp = Dispatcher.BeginInvoke(priority, _animRenderMessage, null);
                     }
@@ -1390,7 +1390,7 @@ namespace System.Windows.Media
         {
             Debug.Assert(dispatcher != null, "Dispatcher required");
             MediaContext cm = (MediaContext)dispatcher.Reserved0;
-            if (cm == null)
+            if (cm is null)
             {
                 cm = new MediaContext(dispatcher);
                 Debug.Assert(dispatcher.Reserved0 == cm);
@@ -1512,7 +1512,7 @@ namespace System.Windows.Media
                 // channel which we are currently rendering. If _currentRenderingChannel
                 // is null, we just get the target channels for this ICompositionTarget and add
                 // there.
-                DUCE.ChannelSet channelSet = (_currentRenderingChannel == null) ? GetChannels() : _currentRenderingChannel.Value;
+                DUCE.ChannelSet channelSet = (_currentRenderingChannel is null) ? GetChannels() : _currentRenderingChannel.Value;
                 iv.AddRefOnChannel(channelSet.Channel, channelSet.OutOfBandChannel);
             }
 
@@ -1558,7 +1558,7 @@ namespace System.Windows.Media
                 // channel which we are currently rendering. If _currentRenderingChannel
                 // is null, we just get the target channels for this ICompositionTarget and release
                 // there.
-                DUCE.ChannelSet channelSet = (_currentRenderingChannel == null) ? GetChannels() : _currentRenderingChannel.Value;
+                DUCE.ChannelSet channelSet = (_currentRenderingChannel is null) ? GetChannels() : _currentRenderingChannel.Value;
                 iv.ReleaseOnChannel(channelSet.Channel, channelSet.OutOfBandChannel);
             }
 
@@ -1595,7 +1595,7 @@ namespace System.Windows.Media
             // process and should never be null.
             Debug.Assert(arg != null);
 
-            if (_invokeOnRenderCallbacks == null)
+            if (_invokeOnRenderCallbacks is null)
             {
                 _invokeOnRenderCallbacks = new FrugalObjectList<InvokeOnRenderCallback>();
             }
@@ -1617,7 +1617,7 @@ namespace System.Windows.Media
         {
             LoadedOrUnloadedOperation op = new LoadedOrUnloadedOperation(callback, target);
 
-            if (_loadedOrUnloadedPendingOperations == null)
+            if (_loadedOrUnloadedPendingOperations is null)
             {
                 _loadedOrUnloadedPendingOperations = new FrugalObjectList<LoadedOrUnloadedOperation>(1);
             }
@@ -1789,14 +1789,14 @@ namespace System.Windows.Media
             )
         {
             // if the media system is disconnected bail.
-            if (Channel == null)
+            if (Channel is null)
             {
                 return;
             }
 
             Debug.Assert(CheckAccess());
             Debug.Assert(
-                (resizedCompositionTarget == null) ||
+                (resizedCompositionTarget is null) ||
                 (resizedCompositionTarget is ICompositionTarget));
 
             _isRendering = true;
@@ -2494,7 +2494,7 @@ namespace System.Windows.Media
         /// </summary>
         internal BoundsDrawingContextWalker AcquireBoundsDrawingContextWalker()
         {
-            if (_cachedBoundsDrawingContextWalker == null)
+            if (_cachedBoundsDrawingContextWalker is null)
             {
                 return new BoundsDrawingContextWalker();
             }

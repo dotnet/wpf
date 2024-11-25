@@ -50,7 +50,7 @@ namespace Test.Elements
 
         private static double GetValue(Number n)
         {
-            return (n == null) ? 0 : n.Value;
+            return (n is null) ? 0 : n.Value;
         }
     }
 
@@ -83,12 +83,12 @@ namespace Test.Elements
         public override object ConvertFrom(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value)
         {
             string text = (string)value;
-            if (text == null)
+            if (text is null)
             {
                 throw new ArgumentException("Missing String Value", "value");
             }
             var nameResolver = (IXamlNameResolver)context;
-            if (nameResolver == null)
+            if (nameResolver is null)
             {
                 throw new ArgumentException("Missing IXamlNameResolver", "context");
             }
@@ -143,12 +143,12 @@ namespace Test.Elements
 
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            if (Expression == null)
+            if (Expression is null)
             {
                 return 0.0;
             }
             var nameResolver = (IXamlNameResolver)serviceProvider;
-            if (nameResolver == null)
+            if (nameResolver is null)
             {
                 throw new ArgumentException("Missing IXamlNameResolver", "context");
             }
@@ -194,7 +194,7 @@ namespace Test.Elements
 
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            if (Expression == null)
+            if (Expression is null)
             {
                 return 0.0;
             }
@@ -250,7 +250,7 @@ namespace Test.Elements
             {
                 bool isFullyInit;
                 object obj = nameResolver.Resolve(name, out isFullyInit);
-                if (obj == null)
+                if (obj is null)
                 {
                     if (nameResolver.IsFixupTokenAvailable)
                     {
@@ -268,7 +268,7 @@ namespace Test.Elements
                 else
                 {
                     var num = obj as Number;
-                    if (num == null)
+                    if (num is null)
                     {
                         throw new InvalidOperationException(String.Format("The Name {0} is of type {1} does not resolve to a Number", name, obj.GetType()));
                     }
@@ -335,7 +335,7 @@ namespace Test.Elements
         {
             MathExpressionToken returnToken = null;
 
-            while(_currentOffset < _expression.Length && returnToken == null)
+            while(_currentOffset < _expression.Length && returnToken is null)
             {
                 char cur = _expression[_currentOffset++];
                 if (cur != ' ')

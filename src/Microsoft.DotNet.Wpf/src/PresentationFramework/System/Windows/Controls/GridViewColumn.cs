@@ -695,7 +695,7 @@ namespace System.Windows.Controls
         internal override void AddInheritanceContext(DependencyObject context, DependencyProperty property)
         {
             // reinforce that no one can compete to be mentor of this element.
-            if (_inheritanceContext == null && context != null)
+            if (_inheritanceContext is null && context != null)
             {
                 // Pick up the new context
                 _inheritanceContext = context;

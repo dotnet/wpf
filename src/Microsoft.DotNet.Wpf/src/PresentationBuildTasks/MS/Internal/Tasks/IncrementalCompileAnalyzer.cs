@@ -484,7 +484,7 @@ namespace MS.Internal.Tasks
             if (!_mcPass1.IsApplicationTarget)
                 return;
 
-            if (_contentFiles == null)
+            if (_contentFiles is null)
             {
                 if (ListIsNotEmpty(_mcPass1.ContentFiles))
                 {

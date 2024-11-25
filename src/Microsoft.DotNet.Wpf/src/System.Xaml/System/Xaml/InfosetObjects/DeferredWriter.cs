@@ -312,7 +312,7 @@ namespace System.Xaml
         private void StartDeferredList()
         {
             // the list may have been created already by SetLineInfo
-            if (_deferredList == null)
+            if (_deferredList is null)
             {
                 _deferredList = new XamlNodeList(_context.SchemaContext);
                 _deferredWriter = _deferredList.Writer;

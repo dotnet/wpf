@@ -252,7 +252,7 @@ namespace Microsoft.Internal.AlphaFlattener
         // Check if transform is null, identity or close enough to identity
         public static bool IsIdentity(Transform transform)
         {
-            if (transform == null)
+            if (transform is null)
             {
                 return true;
             }
@@ -308,12 +308,12 @@ namespace Microsoft.Internal.AlphaFlattener
 
         public static Transform MultiplyTransform(Transform trans1, Transform trans2)
         {
-            if ((trans1 == null) || trans1.Value.IsIdentity)
+            if ((trans1 is null) || trans1.Value.IsIdentity)
             {
                 return trans2;
             }
 
-            if ((trans2 == null) || trans2.Value.IsIdentity)
+            if ((trans2 is null) || trans2.Value.IsIdentity)
             {
                 return trans1;
             }
@@ -366,7 +366,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// </summary>
         static public Geometry TransformGeometry(Geometry g, Matrix t)
         {
-            if (g == null)
+            if (g is null)
             {
                 return null;
             }
@@ -388,7 +388,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// </summary>
         static public Geometry TransformGeometry(Geometry g, Transform t)
         {
-            if (g == null)
+            if (g is null)
             {
                 return null;
             }
@@ -407,7 +407,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
         static public Geometry InverseTransformGeometry(Geometry g, Matrix mat)
         {
-            if ((g == null) || mat.IsIdentity)
+            if ((g is null) || mat.IsIdentity)
             {
                 return g;
             }
@@ -428,7 +428,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// </remarks>
         static public bool IsEmpty(Geometry shape, Matrix mat)
         {
-            if (shape == null)
+            if (shape is null)
             {
                 return true;
             }
@@ -459,7 +459,7 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             PathGeometry pg = geo as PathGeometry;
 
-            if (pg == null)
+            if (pg is null)
             {
                 pg = PathGeometry.CreateFromGeometry(geo);
             }
@@ -521,7 +521,7 @@ namespace Microsoft.Internal.AlphaFlattener
         // Check if a PathGeometry is a normal rectangle
         private static bool IsRectangle(PathGeometry geometry)
         {
-            if ((geometry == null) || (geometry.Figures.Count != 1))
+            if ((geometry is null) || (geometry.Figures.Count != 1))
             {
                 return false;
             }
@@ -545,11 +545,11 @@ namespace Microsoft.Internal.AlphaFlattener
 
                         int count = 1;
 
-                        if (seg == null)
+                        if (seg is null)
                         {
                             pseg = segment as PolyLineSegment;
 
-                            if ((pseg == null) || (pseg.Points == null) || (pseg.Points.Count != 3))
+                            if ((pseg is null) || (pseg.Points is null) || (pseg.Points.Count != 3))
                             {
                                 return false;
                             }
@@ -767,12 +767,12 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             empty = false;
 
-            if (one == null) // null is whole
+            if (one is null) // null is whole
             {
                 return two;
             }
 
-            if (two == null)
+            if (two is null)
             {
                 return one;
             }
@@ -796,7 +796,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 one = null;
             }
 
-            empty = one == null;
+            empty = one is null;
 
             return one;
         }
@@ -815,7 +815,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// </remarks>
         static public Geometry Exclude(Geometry one, Geometry two, Matrix mat)
         {
-            if ((one == null) || (two == null))
+            if ((one is null) || (two is null))
             {
                 return one;
             }
@@ -832,7 +832,7 @@ namespace Microsoft.Internal.AlphaFlattener
         static public bool Disjoint(Geometry clip, Rect rect)
         {
             // Null clip means no clipping
-            if (clip == null)
+            if (clip is null)
             {
                 return false;
             }
@@ -1061,7 +1061,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <returns></returns>
         public static double GetOpacity(Brush brush)
         {
-            if (brush == null)
+            if (brush is null)
             {
                 return 0;   // transparent
             }
@@ -1790,7 +1790,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             if (!IsZero(offset.X) || !IsZero(offset.Y))
             {
-                if (transform == null)
+                if (transform is null)
                 {
                     transform = new TranslateTransform(offset.X, offset.Y);
                 }
@@ -2130,7 +2130,7 @@ namespace Microsoft.Internal.AlphaFlattener
             if (Utility.IsTransparent(Utility.NormalizeOpacity(drawing.Opacity)))
                 return false;
 
-            if (drawing.Children == null || drawing.Children.Count == 0)
+            if (drawing.Children is null || drawing.Children.Count == 0)
                 return false;
 
             if (drawing.ClipGeometry != null && !Utility.IsRenderVisible(drawing.ClipGeometry.Bounds))

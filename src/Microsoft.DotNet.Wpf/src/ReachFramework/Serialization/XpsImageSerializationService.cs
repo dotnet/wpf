@@ -80,7 +80,7 @@ namespace System.Windows.Xps.Serialization
             // a BitmapImage.  If it is not then we assume Png and use
             // that encoder.
             //
-            if (encoder == null)
+            if (encoder is null)
             {
                 if (Microsoft.Internal.AlphaFlattener.Utility.NeedPremultiplyAlpha(bitmapSource))
                 {

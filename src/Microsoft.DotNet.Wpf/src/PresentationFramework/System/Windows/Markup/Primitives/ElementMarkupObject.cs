@@ -92,7 +92,7 @@ namespace System.Windows.Markup.Primitives
                         int i = 0;
                         foreach (object value in arguments)
                         {
-                            if (constructorArguments == null)
+                            if (constructorArguments is null)
                             {
                                 constructorArguments = new Dictionary<string, string>();
                             }
@@ -116,7 +116,7 @@ namespace System.Windows.Markup.Primitives
                         {
                             // Ensure the collection has content
                             object value = descriptor.GetValue(_instance);
-                            if (value == null)
+                            if (value is null)
                             {
                                 continue;
                             }
@@ -226,13 +226,13 @@ namespace System.Windows.Markup.Primitives
                     string methodName = $"ShouldSerialize{propertyName}";
                     shouldSerializeMethod = ownerType.GetMethod(methodName, BindingFlags.Static |
                         BindingFlags.NonPublic | BindingFlags.Public, null, _shouldSerializeArgsObject, null);
-                    if (shouldSerializeMethod == null)
+                    if (shouldSerializeMethod is null)
                         shouldSerializeMethod = ownerType.GetMethod(methodName, BindingFlags.Static |
                         BindingFlags.NonPublic | BindingFlags.Public, null, _shouldSerializeArgsManager, null);
-                    if (shouldSerializeMethod == null)
+                    if (shouldSerializeMethod is null)
                         shouldSerializeMethod = ownerType.GetMethod(methodName, BindingFlags.Static |
                         BindingFlags.NonPublic | BindingFlags.Public, null, _shouldSerializeArgsMode, null);
-                    if (shouldSerializeMethod == null)
+                    if (shouldSerializeMethod is null)
                         shouldSerializeMethod = ownerType.GetMethod(methodName, BindingFlags.Static |
                         BindingFlags.NonPublic | BindingFlags.Public, null, _shouldSerializeArgsObjectManager, null);
                     if (shouldSerializeMethod != null && shouldSerializeMethod.ReturnType != typeof(bool))
@@ -249,13 +249,13 @@ namespace System.Windows.Markup.Primitives
                     string methodName = $"ShouldSerialize{pd.Name}";
                     shouldSerializeMethod = instanceType.GetMethod(methodName, BindingFlags.Instance | BindingFlags.Static |
                         BindingFlags.NonPublic | BindingFlags.Public, null, _shouldSerializeArgsObject, null);
-                    if (shouldSerializeMethod == null)
+                    if (shouldSerializeMethod is null)
                         shouldSerializeMethod = instanceType.GetMethod(methodName, BindingFlags.Instance | BindingFlags.Static |
                         BindingFlags.NonPublic | BindingFlags.Public, null, _shouldSerializeArgsManager, null);
-                    if (shouldSerializeMethod == null)
+                    if (shouldSerializeMethod is null)
                         shouldSerializeMethod = instanceType.GetMethod(methodName, BindingFlags.Instance | BindingFlags.Static |
                         BindingFlags.NonPublic | BindingFlags.Public, null, _shouldSerializeArgsMode, null);
-                    if (shouldSerializeMethod == null)
+                    if (shouldSerializeMethod is null)
                         shouldSerializeMethod = instanceType.GetMethod(methodName, BindingFlags.Instance | BindingFlags.Static |
                         BindingFlags.NonPublic | BindingFlags.Public, null, _shouldSerializeArgsObjectManager, null);
                     if (shouldSerializeMethod != null && shouldSerializeMethod.ReturnType != typeof(bool))
@@ -336,7 +336,7 @@ namespace System.Windows.Markup.Primitives
         private static bool TryGetShouldSerializeMethod(ShouldSerializeKey key, out MethodInfo methodInfo)
         {
             object value = _shouldSerializeCache[key];
-            if (value == null || value == _shouldSerializeCacheLock)
+            if (value is null || value == _shouldSerializeCacheLock)
             {
                 // The _shouldSerializeCacheLock is used as a sentinal for null
                 methodInfo = null;
@@ -353,7 +353,7 @@ namespace System.Windows.Markup.Primitives
         {
             // The instance stored in _shouldSerializeCacheLock is used as a sentinal for null
             // The avoids having to perform two lookups in the Hashtable to detect a cached null value.
-            object value = methodInfo == null ? _shouldSerializeCacheLock : methodInfo;
+            object value = methodInfo is null ? _shouldSerializeCacheLock : methodInfo;
             lock (_shouldSerializeCacheLock)
             {
                 _shouldSerializeCache[key] = value;
@@ -436,7 +436,7 @@ namespace System.Windows.Markup.Primitives
                     _isCompositeCalculated = true;
                     object value = Value;
                     
-                    if (value == null)
+                    if (value is null)
                     {
                         _isComposite = true;
                     }
@@ -474,7 +474,7 @@ namespace System.Windows.Markup.Primitives
                 }
 
                 ValueSerializer serializer = GetValueSerializer();
-                if (serializer == null)
+                if (serializer is null)
                 {
                     return String.Empty;
                 }
@@ -612,7 +612,7 @@ namespace System.Windows.Markup.Primitives
         {
             get
             {
-                if (_context == null)
+                if (_context is null)
                 {
                     _context = new ElementPropertyContext(this, GetItemContext());
                 }
@@ -632,7 +632,7 @@ namespace System.Windows.Markup.Primitives
             get
             {
                 ValueSerializer serializer = GetValueSerializer();
-                if (serializer == null)
+                if (serializer is null)
                     return EmptyTypes;
                 else
                     return serializer.TypeReferences(Value, Context);
@@ -643,7 +643,7 @@ namespace System.Windows.Markup.Primitives
         {
             // See if this value can be converted to a string by a value serializer or type converter
             
-            if( value == null )
+            if( value is null )
             {
                 return false;
             }
@@ -677,7 +677,7 @@ namespace System.Windows.Markup.Primitives
         private ValueSerializer GetValueSerializer()
         {
             PropertyDescriptor descriptor = this.PropertyDescriptor;
-            if (descriptor == null)
+            if (descriptor is null)
             {
                 DependencyProperty property = this.DependencyProperty;
                 if (property != null)
@@ -696,7 +696,7 @@ namespace System.Windows.Markup.Primitives
             Type type = value.GetType();
             Type result;
 
-            if (_keyTypeMap == null)
+            if (_keyTypeMap is null)
                 _keyTypeMap = new Dictionary<Type, Type>();
             if (!_keyTypeMap.TryGetValue(type, out result))
             {
@@ -900,7 +900,7 @@ namespace System.Windows.Markup.Primitives
         {
             // null => NullExtension
             
-            if (value == null)
+            if (value is null)
             {
                 return new NullExtension();
             }

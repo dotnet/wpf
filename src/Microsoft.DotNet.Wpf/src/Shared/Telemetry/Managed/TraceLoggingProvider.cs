@@ -30,11 +30,11 @@ namespace MS.Internal.Telemetry
         /// <returns>EventSource logger if successful, null otherwise</returns>
         internal static EventSource GetProvider()
         {
-            if (_logger == null)
+            if (_logger is null)
             {
                 lock (_lockObject)
                 {
-                    if (_logger == null)
+                    if (_logger is null)
                     {
                         try
                         {

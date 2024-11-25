@@ -256,7 +256,7 @@ namespace System.Windows.Controls
         {
             ImageSource imageSource = Source;
 
-            if (imageSource == null)
+            if (imageSource is null)
             {
                 return;
             }
@@ -318,7 +318,7 @@ namespace System.Windows.Controls
             ImageSource imageSource = Source;
             Size naturalSize = new Size();
 
-            if (imageSource == null)
+            if (imageSource is null)
             {
                 return naturalSize;
             }
@@ -477,7 +477,7 @@ namespace System.Windows.Controls
 
         private static void UpdateBaseUri(DependencyObject d, ImageSource source)
         {
-            if ((source is IUriContext) && (!source.IsFrozen) && (((IUriContext)source).BaseUri == null))
+            if ((source is IUriContext) && (!source.IsFrozen) && (((IUriContext)source).BaseUri is null))
             {
                 Uri baseUri = BaseUriHelper.GetBaseUriCore(d);
                 if (baseUri != null)
@@ -614,7 +614,7 @@ namespace System.Windows.Controls
                     DownloadCompletedEventManager manager = (DownloadCompletedEventManager)GetCurrentManager(managerType);
 
                     // at first use, create and register a new manager
-                    if (manager == null)
+                    if (manager is null)
                     {
                         manager = new DownloadCompletedEventManager();
                         SetCurrentManager(managerType, manager);
@@ -738,7 +738,7 @@ namespace System.Windows.Controls
                     DownloadFailedEventManager manager = (DownloadFailedEventManager)GetCurrentManager(managerType);
 
                     // at first use, create and register a new manager
-                    if (manager == null)
+                    if (manager is null)
                     {
                         manager = new DownloadFailedEventManager();
                         SetCurrentManager(managerType, manager);
@@ -862,7 +862,7 @@ namespace System.Windows.Controls
                     DecodeFailedEventManager manager = (DecodeFailedEventManager)GetCurrentManager(managerType);
 
                     // at first use, create and register a new manager
-                    if (manager == null)
+                    if (manager is null)
                     {
                         manager = new DecodeFailedEventManager();
                         SetCurrentManager(managerType, manager);

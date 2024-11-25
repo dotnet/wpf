@@ -117,7 +117,7 @@ namespace MS.Internal.Documents
         /// <param name="viewport">Viewport for visible content.</param>
         internal void Arrange(Size arrangeSize, Rect viewport)
         {
-            Invariant.Assert(_document.StructuralCache.DtrList == null || _document.StructuralCache.DtrList.Length == 0 ||
+            Invariant.Assert(_document.StructuralCache.DtrList is null || _document.StructuralCache.DtrList.Length == 0 ||
                              (_document.StructuralCache.DtrList.Length == 1 && _document.StructuralCache.BackgroundFormatInfo.DoesFinalDTRCoverRestOfText));
 
             // Arrange the content and create visual tree.

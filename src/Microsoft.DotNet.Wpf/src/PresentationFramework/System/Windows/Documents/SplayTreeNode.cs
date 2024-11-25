@@ -135,7 +135,7 @@ namespace System.Windows.Documents
 
             containedNode = this.ContainedNode;
 
-            if (containedNode == null)
+            if (containedNode is null)
                 return null;
 
             return containedNode.GetMinSibling();
@@ -150,7 +150,7 @@ namespace System.Windows.Documents
 
             containedNode = this.ContainedNode;
 
-            if (containedNode == null)
+            if (containedNode is null)
                 return null;
 
             return containedNode.GetMaxSibling();
@@ -190,7 +190,7 @@ namespace System.Windows.Documents
                 while (true)
                 {
                     walkerNode = previousNode.RightChildNode;
-                    if (walkerNode == null)
+                    if (walkerNode is null)
                         break;
                     previousNode = walkerNode;
                 }
@@ -243,7 +243,7 @@ namespace System.Windows.Documents
                 while (true)
                 {
                     walkerNode = nextNode.LeftChildNode;
-                    if (walkerNode == null)
+                    if (walkerNode is null)
                         break;
                     nextNode = walkerNode;
                 }
@@ -338,7 +338,7 @@ namespace System.Windows.Documents
                 charOffset += node.LeftCharCount;
 
                 node = node.ParentNode;
-                if (node == null)
+                if (node is null)
                     break;
 
                 // Add the parent start edge.
@@ -378,13 +378,13 @@ namespace System.Windows.Documents
                     insertBefore = false;
                 }
 
-                if (locationNode == null)
+                if (locationNode is null)
                 {
                     // Inserting the first contained node.
                     positionNode.ContainedNode = this;
                     this.ParentNode = positionNode;
-                    Invariant.Assert(this.LeftChildNode == null);
-                    Invariant.Assert(this.RightChildNode == null);
+                    Invariant.Assert(this.LeftChildNode is null);
+                    Invariant.Assert(this.RightChildNode is null);
                     Invariant.Assert(this.LeftSymbolCount == 0);
                 }
                 else
@@ -402,9 +402,9 @@ namespace System.Windows.Documents
             SplayTreeNode rightSubTree;
             SplayTreeNode containingNode;
 
-            Invariant.Assert(this.ParentNode == null, "Can't insert child node!");
-            Invariant.Assert(this.LeftChildNode == null, "Can't insert node with left children!");
-            Invariant.Assert(this.RightChildNode == null, "Can't insert node with right children!");
+            Invariant.Assert(this.ParentNode is null, "Can't insert child node!");
+            Invariant.Assert(this.LeftChildNode is null, "Can't insert node with left children!");
+            Invariant.Assert(this.RightChildNode is null, "Can't insert node with right children!");
 
             leftSubTree = insertBefore ? location.GetPreviousNode() : location;
             if (leftSubTree != null)
@@ -506,8 +506,8 @@ namespace System.Windows.Documents
         {
             SplayTreeNode maxNode;
 
-            Invariant.Assert(leftSubTree == null || leftSubTree.ParentNode == null);
-            Invariant.Assert(rightSubTree == null || rightSubTree.ParentNode == null);
+            Invariant.Assert(leftSubTree is null || leftSubTree.ParentNode is null);
+            Invariant.Assert(rightSubTree is null || rightSubTree.ParentNode is null);
 
             if (leftSubTree != null)
             {
@@ -516,7 +516,7 @@ namespace System.Windows.Documents
 
                 maxNode.Splay();
                 Invariant.Assert(maxNode.Role == SplayTreeNodeRole.LocalRoot);
-                Invariant.Assert(maxNode.RightChildNode == null);
+                Invariant.Assert(maxNode.RightChildNode is null);
 
                 // Then merge the two trees.
                 // No change to any LeftSymbolCounts.
@@ -570,7 +570,7 @@ namespace System.Windows.Documents
             while (true)
             {
                 leftChildNode = node.LeftChildNode;
-                if (leftChildNode == null)
+                if (leftChildNode is null)
                     break;
                 node = leftChildNode;
             }
@@ -592,7 +592,7 @@ namespace System.Windows.Documents
             while (true)
             {
                 rightChildNode = node.RightChildNode;
-                if (rightChildNode == null)
+                if (rightChildNode is null)
                     break;
                 node = rightChildNode;
             }
@@ -785,7 +785,7 @@ namespace System.Windows.Documents
 
                 parentNode = this.ParentNode;
 
-                if (parentNode == null || parentNode.ContainedNode == this)
+                if (parentNode is null || parentNode.ContainedNode == this)
                 {
                     role = SplayTreeNodeRole.LocalRoot;
                 }
@@ -854,7 +854,7 @@ namespace System.Windows.Documents
             parentNode = this.ParentNode;
             rightChildNode.ParentNode = parentNode;
 
-            if (parentNode == null)
+            if (parentNode is null)
             {
                 // rightChildNode is the new local root.
                 // But the local root isn't parented.
@@ -919,7 +919,7 @@ namespace System.Windows.Documents
             parentNode = this.ParentNode;
             leftChildNode.ParentNode = parentNode;
 
-            if (parentNode == null)
+            if (parentNode is null)
             {
                 // leftChildNode is the new local root.
                 // But the local root isn't parented.

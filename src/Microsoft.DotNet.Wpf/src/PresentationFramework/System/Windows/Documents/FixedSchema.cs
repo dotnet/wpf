@@ -349,7 +349,7 @@ namespace System.Windows.Documents
 
         public override XmlReaderSettings GetXmlReaderSettings()
         {
-            if (_xmlReaderSettings == null)
+            if (_xmlReaderSettings is null)
             {
                 _xmlReaderSettings = new XmlReaderSettings();
 
@@ -751,7 +751,7 @@ namespace System.Windows.Documents
 
         public override XmlReaderSettings GetXmlReaderSettings()
         {
-            if (_xmlReaderSettings == null)
+            if (_xmlReaderSettings is null)
             {
                 _xmlReaderSettings = new XmlReaderSettings();
 

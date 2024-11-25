@@ -37,7 +37,7 @@ namespace System.Windows
         {
             get
             {
-                if (_states == null)
+                if (_states is null)
                 {
                     _states = new FreezableCollection<VisualState>();
                 }
@@ -53,7 +53,7 @@ namespace System.Windows
         {
             get
             {
-                if (_transitions == null)
+                if (_transitions is null)
                 {
                     _transitions = new FreezableCollection<VisualTransition>();
                 }
@@ -89,7 +89,7 @@ namespace System.Windows
         {
             get
             {
-                if (_currentStoryboards == null)
+                if (_currentStoryboards is null)
                 {
                     _currentStoryboards = new Collection<Storyboard>();
                 }
@@ -104,7 +104,7 @@ namespace System.Windows
             // handoff to the new storyboard is unaffected.
             for (int index = 0; index < CurrentStoryboards.Count; ++index)
             {
-                if (CurrentStoryboards[index] == null)
+                if (CurrentStoryboards[index] is null)
                 {
                     continue;
                 }
@@ -116,7 +116,7 @@ namespace System.Windows
             // Start the new Storyboards
             for (int index = 0; index < newStoryboards.Length; ++index)
             {
-                if (newStoryboards[index] == null)
+                if (newStoryboards[index] is null)
                 {
                     continue;
                 }

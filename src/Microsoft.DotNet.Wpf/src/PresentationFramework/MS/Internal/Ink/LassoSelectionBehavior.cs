@@ -278,13 +278,13 @@ namespace MS.Internal.Ink
                 // If we have a pre-selected object, we should select it now.
                 if ( tappedStroke != null )
                 {
-                    Debug.Assert(tappedElement == null);
+                    Debug.Assert(tappedElement is null);
                     selectedStrokes = new StrokeCollection();
                     selectedStrokes.Add(tappedStroke);
                 }
                 else if ( tappedElement != null )
                 {
-                    Debug.Assert(tappedStroke == null);
+                    Debug.Assert(tappedStroke is null);
                     elementsToSelect.Add(tappedElement);
                 }
             }
@@ -593,7 +593,7 @@ namespace MS.Internal.Ink
         /// <param name="points"></param>
         private void StartLasso(List<Point> points)
         {
-            Debug.Assert(!_disableLasso && _lassoHelper == null, "StartLasso is called unexpectedly.");
+            Debug.Assert(!_disableLasso && _lassoHelper is null, "StartLasso is called unexpectedly.");
 
             if ( InkCanvas.ClearSelectionRaiseSelectionChanging() // If user cancels clearing the selection, we shouldn't initiate Lasso.
                 // 

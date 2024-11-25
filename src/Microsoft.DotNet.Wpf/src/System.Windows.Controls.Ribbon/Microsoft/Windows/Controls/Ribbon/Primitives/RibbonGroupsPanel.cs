@@ -56,7 +56,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         {
             ArgumentNullException.ThrowIfNull(starLayoutInfoProvider);
             IProvideStarLayoutInfo provider = starLayoutInfoProvider as IProvideStarLayoutInfo;
-            if (provider == null)
+            if (provider is null)
             {
                 throw new ArgumentException(Microsoft.Windows.Controls.SR.RibbonGroupsPanel_InvalidRegistrationParameter, "starLayoutInfoProvider");
             }
@@ -71,7 +71,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         {
             ArgumentNullException.ThrowIfNull(starLayoutInfoProvider);
             IProvideStarLayoutInfo provider = starLayoutInfoProvider as IProvideStarLayoutInfo;
-            if (provider == null)
+            if (provider is null)
             {
                 throw new ArgumentException(Microsoft.Windows.Controls.SR.RibbonGroupsPanel_InvalidRegistrationParameter, "starLayoutInfoProvider");
             }
@@ -377,7 +377,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             // creates a list of appropriate candidates for star allocation
             foreach (IProvideStarLayoutInfo starLayoutInfoProvider in _registeredStarLayoutProviders)
             {
-                bool considerForAllocation = ((ribbonGroup == null && starLayoutInfoProvider.TargetElement is RibbonGroup) ||
+                bool considerForAllocation = ((ribbonGroup is null && starLayoutInfoProvider.TargetElement is RibbonGroup) ||
                                               ribbonGroup == starLayoutInfoProvider.TargetElement);
                 bool added = false;
                 IEnumerable<StarLayoutInfo> starLayoutCombinations = starLayoutInfoProvider.StarLayoutCombinations;

@@ -179,7 +179,7 @@ namespace MS.Internal.Automation
         // Wrap arguments that are being returned, assuming they're not null or already wrapped.
         static internal ITextRangeProvider WrapArgument(ITextRangeProvider argument, AutomationPeer peer)
         {
-            if (argument == null)
+            if (argument is null)
                 return null;
 
             if (argument is TextRangeProviderWrapper)
@@ -190,7 +190,7 @@ namespace MS.Internal.Automation
 
         static internal ITextRangeProvider [] WrapArgument(ITextRangeProvider [] argument, AutomationPeer peer)
         {
-            if (argument == null)
+            if (argument is null)
                 return null;
 
             if (argument is TextRangeProviderWrapper [])

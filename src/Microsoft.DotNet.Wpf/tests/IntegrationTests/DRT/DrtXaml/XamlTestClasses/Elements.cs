@@ -113,7 +113,7 @@ namespace Test.Elements
         {
             get
             {
-                if (_elements == null)
+                if (_elements is null)
                 {
                     _elements = new ElementList();
                 }

@@ -98,7 +98,7 @@ namespace System.Windows.Documents
         /// </summary>
         protected override int VisualChildrenCount
         {
-            get { return (_caretElement == null) ? 0 : 1; }
+            get { return (_caretElement is null) ? 0 : 1; }
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace System.Windows.Documents
                 FrameworkElement owner = GetOwnerElement();
                 Brush selectionBrush = (Brush)owner.GetValue(TextBoxBase.SelectionBrushProperty);
 
-                if (selectionBrush == null)
+                if (selectionBrush is null)
                 {
                     return;
                 }
@@ -482,7 +482,7 @@ namespace System.Windows.Documents
         {
             if (addedGeometry != null)
             {
-                if (geometry == null)
+                if (geometry is null)
                 {
                     geometry = addedGeometry;
                 }
@@ -506,7 +506,7 @@ namespace System.Windows.Documents
         {
             if (targetGeometry != null && transformToAdd != null)
             {
-                targetGeometry.Transform = (targetGeometry.Transform == null || targetGeometry.Transform.IsIdentity)
+                targetGeometry.Transform = (targetGeometry.Transform is null || targetGeometry.Transform.IsIdentity)
                     ? transformToAdd
                     : new MatrixTransform(targetGeometry.Transform.Value * transformToAdd.Value);
             }
@@ -860,7 +860,7 @@ namespace System.Windows.Documents
         private void EnsureAttachedToView()
         {
             AdornerLayer layer = AdornerLayer.GetAdornerLayer(_textEditor.TextView.RenderScope);
-            if (layer == null)
+            if (layer is null)
             {
                 // There is no AdornerLayer available.  Clear cached value and exit.
                 if (_adornerLayer != null)
@@ -907,7 +907,7 @@ namespace System.Windows.Documents
             {
                 Duration blinkDuration = new Duration(TimeSpan.FromMilliseconds(blinkInterval * 2));
 
-                if (_blinkAnimationClock == null || _blinkAnimationClock.Timeline.Duration != blinkDuration)
+                if (_blinkAnimationClock is null || _blinkAnimationClock.Timeline.Duration != blinkDuration)
                 {
                     DoubleAnimationUsingKeyFrames blinkAnimation = new DoubleAnimationUsingKeyFrames();
                     blinkAnimation.BeginTime = null;

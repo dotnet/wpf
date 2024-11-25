@@ -73,7 +73,7 @@ namespace MS.Internal.Documents
             // Retrieve position from line array.
             position = GetTextPositionFromPoint(Lines, point, snapToText);
 
-            Invariant.Assert(position == null || position.HasValidLayout);
+            Invariant.Assert(position is null || position.HasValidLayout);
             return position;
         }
 
@@ -184,7 +184,7 @@ namespace MS.Internal.Documents
                 positionOut = lines[lineIndex].StartPosition.CreatePointer(LogicalDirection.Forward);
             }
 
-            Invariant.Assert(positionOut == null || positionOut.HasValidLayout);
+            Invariant.Assert(positionOut is null || positionOut.HasValidLayout);
             return positionOut;
         }
 
@@ -225,7 +225,7 @@ namespace MS.Internal.Documents
 
             ITextPointer positionOut = _owner.GetNextCaretUnitPosition(position, direction, dcp, lineIndex);
 
-            Invariant.Assert(positionOut == null || positionOut.HasValidLayout);
+            Invariant.Assert(positionOut is null || positionOut.HasValidLayout);
 
             return positionOut;
         }
@@ -248,7 +248,7 @@ namespace MS.Internal.Documents
 
             ITextPointer positionOut = _owner.GetBackspaceCaretUnitPosition(position, dcp, lineIndex);
 
-            Invariant.Assert(positionOut == null || positionOut.HasValidLayout);
+            Invariant.Assert(positionOut is null || positionOut.HasValidLayout);
 
             return positionOut;
         }
@@ -495,7 +495,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_lines == null)
+                if (_lines is null)
                 {
                     _lines = _owner.GetLineResults();
                 }

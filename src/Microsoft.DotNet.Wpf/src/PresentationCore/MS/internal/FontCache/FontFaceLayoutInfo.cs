@@ -599,11 +599,11 @@ namespace MS.Internal.FontCache
             {
                 get
                 {
-                    if (_cmap == null)
+                    if (_cmap is null)
                     {
                         lock (this)
                         {
-                            if (_cmap == null)
+                            if (_cmap is null)
                             {
                                 _cmap = new Dictionary<int, ushort>();
                                 ushort glyphIndex;
@@ -972,7 +972,7 @@ namespace MS.Internal.FontCache
         /// <returns> true if it is a major language </returns>
         internal static bool Contains(CultureInfo culture)
         {
-            if (culture == null) return false;
+            if (culture is null) return false;
 
             // explicitly check for InvariantCulture. We don't need to check for its parent.
             if (culture == CultureInfo.InvariantCulture) return true;

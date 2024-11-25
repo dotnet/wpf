@@ -43,7 +43,7 @@ namespace System.Windows
 
         public bool IsCloseTo(MeasureData other)
         {
-            if (other == null)
+            if (other is null)
             {
                 return false;
             }

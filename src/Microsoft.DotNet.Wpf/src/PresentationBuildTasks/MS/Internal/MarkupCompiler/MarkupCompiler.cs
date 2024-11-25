@@ -296,8 +296,8 @@ namespace MS.Internal
                 GenerateLooseContentAttributes();
             }
 
-            Debug.Assert(!cu.Pass2 || _pendingLocalFiles == null);
-            Debug.Assert(_pendingLocalFiles == null || _pendingLocalFiles.Count == 0);
+            Debug.Assert(!cu.Pass2 || _pendingLocalFiles is null);
+            Debug.Assert(_pendingLocalFiles is null || _pendingLocalFiles.Count == 0);
             _pendingLocalFiles = null;
 
             if (cu.Pass2)
@@ -322,7 +322,7 @@ namespace MS.Internal
             set
             {
                 _ci = value;
-                if (value == null)
+                if (value is null)
                 {
                     _codeProvider = null;
                 }
@@ -364,7 +364,7 @@ namespace MS.Internal
 
         internal bool ProcessingRootContext
         {
-            get { return _ccRoot == null; }
+            get { return _ccRoot is null; }
         }
 
         internal bool IsRootNameScope
@@ -391,7 +391,7 @@ namespace MS.Internal
         {
             get
             {
-                if (_localAssembly == null)
+                if (_localAssembly is null)
                 {
                     if (LocalAssemblyFile != null)
                     {
@@ -462,7 +462,7 @@ namespace MS.Internal
                 SourceFileInfo = OnSourceFileResolve(sourceFile);
 
                 // Process the input file
-                if (sourceFile.Path == null || !SourceFileInfo.IsXamlFile)
+                if (sourceFile.Path is null || !SourceFileInfo.IsXamlFile)
                 {
                     ThrowCompilerException(nameof(SR.InvalidMarkupFile));
                 }
@@ -551,10 +551,10 @@ namespace MS.Internal
             finally
             {
                 if (!error &&
-                    xamlParser.BamlRecordWriter == null &&
+                    xamlParser.BamlRecordWriter is null &&
                     IsBamlNeeded)
                 {
-                    if (_pendingLocalFiles == null)
+                    if (_pendingLocalFiles is null)
                     {
                         _pendingLocalFiles = new ArrayList(10);
                     }
@@ -883,7 +883,7 @@ namespace MS.Internal
 
         private CodeMemberMethod EnsureStyleConnector()
         {
-            if (_ccRoot.StyleConnectorFn == null)
+            if (_ccRoot.StyleConnectorFn is null)
             {
                 _ccRoot.StyleConnectorFn = new CodeMemberMethod();
                 _ccRoot.StyleConnectorFn.Name = CONNECT;
@@ -1115,7 +1115,7 @@ namespace MS.Internal
         {
             // void IComponentConnector.Connect
             //
-            if (_ccRoot.HookupFn == null)
+            if (_ccRoot.HookupFn is null)
             {
                 _ccRoot.HookupFn = new CodeMemberMethod();
                 _ccRoot.HookupFn.Name = CONNECT;
@@ -1156,7 +1156,7 @@ namespace MS.Internal
                 cc.IsAllowedNameScope = false;
             }
 
-            if ((elementName == null || !isAllowedNameScope) && (events == null || events.Count == 0))
+            if ((elementName is null || !isAllowedNameScope) && (events is null || events.Count == 0))
             {
                 return;
             }
@@ -1338,15 +1338,15 @@ namespace MS.Internal
             }
 
             string asmMissing = string.Empty;
-            if (XamlTypeMapper.AssemblyWB == null)
+            if (XamlTypeMapper.AssemblyWB is null)
             {
                 asmMissing = "WindowsBase";
             }
-            if (XamlTypeMapper.AssemblyPC == null)
+            if (XamlTypeMapper.AssemblyPC is null)
             {
                 asmMissing += $"{(asmMissing.Length > 0 ? ", " : string.Empty)}PresentationCore";
             }
-            if (XamlTypeMapper.AssemblyPF == null)
+            if (XamlTypeMapper.AssemblyPF is null)
             {
                 asmMissing += $"{(asmMissing.Length > 0 ? ", " : string.Empty)}PresentationFramework";
             }
@@ -1371,7 +1371,7 @@ namespace MS.Internal
         {
             get
             {
-                return CompilerInfo == null || !string.Equals(CompilerInfo.GetLanguages()[0], JSHARP, StringComparison.OrdinalIgnoreCase);
+                return CompilerInfo is null || !string.Equals(CompilerInfo.GetLanguages()[0], JSHARP, StringComparison.OrdinalIgnoreCase);
             }
         }
 
@@ -1805,13 +1805,13 @@ namespace MS.Internal
 
             if (converter != null)
             {
-                if (value == null)
+                if (value is null)
                 {
                     if (attributeValue != null)
                     {
                         value = converter.ConvertFromString(ctx, TypeConverterHelper.InvariantEnglishUS, attributeValue);
 
-                        if (value == null)
+                        if (value is null)
                         {
                             return null;
                         }
@@ -1912,7 +1912,7 @@ namespace MS.Internal
         private CodeFieldReferenceExpression GetEvent(MemberInfo miEvent, string eventName, string eventHandler)
         {
             FieldInfo fiEvent = miEvent.DeclaringType.GetField(eventName + EVENT, BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
-            if (fiEvent == null || fiEvent.FieldType != KnownTypes.Types[(int)KnownElements.RoutedEvent])
+            if (fiEvent is null || fiEvent.FieldType != KnownTypes.Types[(int)KnownElements.RoutedEvent])
             {
                 ThrowCompilerException(nameof(SR.RoutedEventNotRegistered), miEvent.DeclaringType.FullName, eventName, eventHandler);
             }
@@ -1983,7 +1983,7 @@ namespace MS.Internal
                 // _element.FooEvent += new FooEventHandlerDelegate(OnFoo);
                 csEvent = new CodeAttachEventStatement(ce, mei.eventName, cDelExp);
             }
-            else if (eventTarget == null || // for known attached events on unknown local tags
+            else if (eventTarget is null || // for known attached events on unknown local tags
                      KnownTypes.Types[(int)KnownElements.UIElement].IsAssignableFrom(eventTarget) ||
                      KnownTypes.Types[(int)KnownElements.ContentElement].IsAssignableFrom(eventTarget))
             {
@@ -2100,7 +2100,7 @@ namespace MS.Internal
 
         private CodeDomProvider EnsureCodeProvider()
         {
-            if (_codeProvider == null)
+            if (_codeProvider is null)
             {
                 Debug.Assert(CompilerInfo != null && CompilerInfo.IsCodeDomProviderTypeValid);
                 _codeProvider = CompilerInfo.CreateProvider();
@@ -2234,7 +2234,7 @@ namespace MS.Internal
 
         private void AddCodeSnippet(string codeText, int lineNum)
         {
-            if (codeText == null || codeText.Trim().Length == 0)
+            if (codeText is null || codeText.Trim().Length == 0)
                 return;
 
             CodeSnippetTypeMember snippet = new CodeSnippetTypeMember();
@@ -2258,7 +2258,7 @@ namespace MS.Internal
                                                                                     out localTypeArgClassName,
                                                                                     out localTypeArgNamespace);
 
-                    if (currTypeArg == null)
+                    if (currTypeArg is null)
                     {
                         bool error = false;
                         if (localTypeArgNamespace.Length == 0 && localTypeArgClassName.Length == 0)
@@ -2372,9 +2372,9 @@ namespace MS.Internal
                     if (typeParam.IsGenericParameter)
                     {
                         // get the generic params of the containing\reference Type, only once
-                        if (refTypeParams == null)
+                        if (refTypeParams is null)
                         {
-                            if (refType == null || !refType.IsGenericType || !refType.IsGenericTypeDefinition || typeArgsList == null)
+                            if (refType is null || !refType.IsGenericType || !refType.IsGenericTypeDefinition || typeArgsList is null)
                             {
                                 ThrowCompilerException(nameof(SR.ContainingTagNotGeneric), eventName, ctrConstructedType.BaseType, refTypeFullName);
                             }
@@ -2404,7 +2404,7 @@ namespace MS.Internal
                         }
 
                         // no match!
-                        if (ctrTypeArg == null)
+                        if (ctrTypeArg is null)
                         {
                             ThrowCompilerException(nameof(SR.MatchingTypeArgsNotFoundInRefType),
                                                    eventName,
@@ -2432,7 +2432,7 @@ namespace MS.Internal
 
         private static void AddGeneratedCodeAttribute(CodeTypeMember ctmTarget)
         {
-            if (s_generatedCode_ToolName == null || s_generatedCode_ToolVersion == null)
+            if (s_generatedCode_ToolName is null || s_generatedCode_ToolVersion is null)
             {
                 AssemblyName assemblyName = new AssemblyName(Assembly.GetExecutingAssembly().FullName);
                 s_generatedCode_ToolName = assemblyName.Name;
@@ -2457,7 +2457,7 @@ namespace MS.Internal
             if (baseClass != null)
             {
                 // At this point, we should only have fully open generic types if there is a typeargs list.
-                Debug.Assert(_typeArgsList == null || (baseClass.IsGenericType && baseClass.IsGenericTypeDefinition));
+                Debug.Assert(_typeArgsList is null || (baseClass.IsGenericType && baseClass.IsGenericTypeDefinition));
                 Debug.Assert(_typeArgsList != null || !baseClass.IsGenericType);
 
                 ctrBaseClass = GenerateConstructedTypeReference(baseClass, _typeArgsList, string.Empty);
@@ -2531,8 +2531,8 @@ namespace MS.Internal
 
             // namespace MyNamespace
             // {
-            Debug.Assert(_ccRoot == null);
-            Debug.Assert(_codeContexts == null || _codeContexts.Count == 0, "mismatched CodeContexts");
+            Debug.Assert(_ccRoot is null);
+            Debug.Assert(_codeContexts is null || _codeContexts.Count == 0, "mismatched CodeContexts");
             CodeNamespace cns = new CodeNamespace();
             cns.Name = ns;
             cns.Types.Clear();
@@ -2589,7 +2589,7 @@ namespace MS.Internal
             //
             CodeMemberMethod cmmLC = _ccRoot.InitializeComponentFn;
 
-            if (cmmLC == null)
+            if (cmmLC is null)
             {
                 cmmLC = _ccRoot.EnsureInitializeComponentFn;
                 if (!isApp)
@@ -2968,7 +2968,7 @@ namespace MS.Internal
             string classFullName = null;
             CodeContext cc = null;
 
-            if (_ccRoot == null)
+            if (_ccRoot is null)
             {
                 if (className.Length > 0)
                 {
@@ -3075,7 +3075,7 @@ namespace MS.Internal
                         }
                         else
                         {
-                            Debug.Assert(_ccRoot.HookupFn == null);
+                            Debug.Assert(_ccRoot.HookupFn is null);
                         }
 
                         EndHookups();
@@ -3094,7 +3094,7 @@ namespace MS.Internal
                 return;
             }
 
-            if (_usingNS == null)
+            if (_usingNS is null)
             {
                 _usingNS = new ArrayList();
             }
@@ -3130,7 +3130,7 @@ namespace MS.Internal
         internal void AddApplicationProperty(MemberInfo memberInfo, string attributeValue, int lineNumber)
         {
             Debug.Assert(_ccRoot == (_codeContexts.Peek() as CodeContextRoot));
-            Debug.Assert(_ccRoot.ElementType == null ||
+            Debug.Assert(_ccRoot.ElementType is null ||
                          (memberInfo.DeclaringType.IsAssignableFrom(_ccRoot.ElementType) && (memberInfo is PropertyInfo)));
 
             TypeConvertContext ctx = new TypeConvertContext(_parserContext, attributeValue);
@@ -3371,7 +3371,7 @@ namespace MS.Internal
             {
                 get
                 {
-                    if (_ctrElemTypeRef == null)
+                    if (_ctrElemTypeRef is null)
                     {
                         _ctrElemTypeRef = MarkupCompiler.GenerateConstructedTypeReference(_elementType, _typeArgsList, _localElementFullName);
                     }
@@ -3423,7 +3423,7 @@ namespace MS.Internal
             {
                 get
                 {
-                    if (_initializeComponentFn == null)
+                    if (_initializeComponentFn is null)
                     {
                         _initializeComponentFn = new CodeMemberMethod();
                         _initializeComponentFn.Name = INITIALIZE_COMPONENT;

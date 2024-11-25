@@ -60,7 +60,7 @@ namespace System.Windows.Documents
             this._getpageStatus = GetPageStatus.Loading;
             this._child  = child;
             this._baseUri = baseUri;
-            Debug.Assert(source == null || source.IsAbsoluteUri);
+            Debug.Assert(source is null || source.IsAbsoluteUri);
             this._source = source;
         }
         #endregion Ctor
@@ -152,13 +152,13 @@ namespace System.Windows.Documents
                         }
 
                         //
-                        // Note if _source == null, exception will 
+                        // Note if _source is null, exception will 
                         // be thrown.
                         //
                         Stream responseStream;
                         PageContent._LoadPageImpl(this._baseUri, this._source, out _result, out responseStream);
             
-                        if (_result == null || _result.IsInitialized)
+                        if (_result is null || _result.IsInitialized)
                         {
                             responseStream.Close();
                         }

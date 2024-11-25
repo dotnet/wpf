@@ -271,7 +271,7 @@ namespace System.Windows.Documents
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool ShouldSerializeInlines(XamlDesignerSerializationManager manager)
         {
-            return manager != null && manager.XmlWriter == null;
+            return manager != null && manager.XmlWriter is null;
         }
 
         #endregion Internal Methods

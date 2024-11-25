@@ -87,7 +87,7 @@ namespace System.Windows.Automation.Peers
                         if (treeViewItem != null)
                         {
                             ItemAutomationPeer peer = oldChildren[items[i]];
-                            if (peer == null)
+                            if (peer is null)
                                 peer = CreateItemAutomationPeer(items[i]);
 
                             // perform hookup so the events sourced from wrapper peer are fired as if from the data item
@@ -101,7 +101,7 @@ namespace System.Windows.Automation.Peers
                             }
 
                             // Not to add same Item again
-                            if (ItemPeers[items[i]] == null)
+                            if (ItemPeers[items[i]] is null)
                             {
                                 children.Add(peer);
                                ItemPeers[items[i]] = peer;
@@ -181,7 +181,7 @@ namespace System.Windows.Automation.Peers
                 }
             }
 
-            if (selection == null)
+            if (selection is null)
             {
                 selection = Array.Empty<IRawElementProviderSimple>();
             }

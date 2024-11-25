@@ -194,7 +194,7 @@ namespace System.Windows
             {
                 case ValueLookupType.Trigger:
                 case ValueLookupType.PropertyTriggerResource:
-                    if (_property == null)
+                    if (_property is null)
                     {
                         throw new InvalidOperationException(SR.Format(SR.NullPropertyIllegal, "Property"));
                     }
@@ -207,7 +207,7 @@ namespace System.Windows
 
                 case ValueLookupType.DataTrigger:
                 case ValueLookupType.DataTriggerResource:
-                    if (_binding == null)
+                    if (_binding is null)
                     {
                         throw new InvalidOperationException(SR.Format(SR.NullPropertyIllegal, "Binding"));
                     }
@@ -278,7 +278,7 @@ namespace System.Windows
         public static void ReceiveTypeConverter(object targetObject, XamlSetTypeConverterEventArgs eventArgs)
         {
             Condition condition = targetObject as Condition;
-            if (condition == null)
+            if (condition is null)
             {
                 throw new ArgumentNullException(nameof(targetObject));
             }

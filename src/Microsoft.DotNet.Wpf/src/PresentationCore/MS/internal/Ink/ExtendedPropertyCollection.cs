@@ -37,7 +37,7 @@ namespace System.Windows.Ink
         /// objects contain equivalent key/value pairs</summary>
         public override bool Equals(object o)
         {
-            if (o == null || o.GetType() != GetType())
+            if (o is null || o.GetType() != GetType())
             {
                 return false;
             }
@@ -79,13 +79,13 @@ namespace System.Windows.Ink
         public static bool operator ==(ExtendedPropertyCollection first, ExtendedPropertyCollection second)
         {
             // compare the GC ptrs for the obvious reference equality
-            if (((object)first == null && (object)second == null) ||
+            if (((object)first is null && (object)second is null) ||
                 ((object)first == (object)second))
             {
                 return true;
             }
             // otherwise, if one of the ptrs are null, but not the other then return false
-            else if ((object)first == null || (object)second == null)
+            else if ((object)first is null || (object)second is null)
             {
                 return false;
             }
@@ -239,7 +239,7 @@ namespace System.Windows.Ink
             get
             {
                 ExtendedProperty ep = GetExtendedPropertyById(attributeId);
-                if (ep == null)
+                if (ep is null)
                 {
                     throw new ArgumentException(SR.EPNotFound, "attributeId");
                 }

@@ -160,7 +160,7 @@ namespace MS.Internal.Data
                 for (int i = keys.Length - 1; i >= 0; --i)
                 {
                     // for each key, remove dead entries in its list
-                    bool removeList = purgeAll || source == null;
+                    bool removeList = purgeAll || source is null;
 
                     ValueChangedRecord record = (ValueChangedRecord)dict[keys[i]];
 
@@ -198,7 +198,7 @@ namespace MS.Internal.Data
                 while (ide.MoveNext())
                 {
                     // for each key, remove dead entries in its list
-                    bool removeList = purgeAll || source == null;
+                    bool removeList = purgeAll || source is null;
 
                     ValueChangedRecord record = (ValueChangedRecord)ide.Value;
 
@@ -277,7 +277,7 @@ namespace MS.Internal.Data
                 ValueChangedEventManager manager = (ValueChangedEventManager)GetCurrentManager(managerType);
 
                 // at first use, create and register a new manager
-                if (manager == null)
+                if (manager is null)
                 {
                     manager = new ValueChangedEventManager();
                     SetCurrentManager(managerType, manager);
@@ -329,7 +329,7 @@ namespace MS.Internal.Data
             {
                 HybridDictionary dict = (HybridDictionary)this[source];
 
-                if (dict == null)
+                if (dict is null)
                 {
                     // no entry in the hashtable - add a new one
                     dict = new HybridDictionary();
@@ -339,7 +339,7 @@ namespace MS.Internal.Data
 
                 ValueChangedRecord record = (ValueChangedRecord)dict[pd];
 
-                if (record == null)
+                if (record is null)
                 {
                     // no entry in the dictionary - add a new one
                     record = new ValueChangedRecord(this, source, pd);

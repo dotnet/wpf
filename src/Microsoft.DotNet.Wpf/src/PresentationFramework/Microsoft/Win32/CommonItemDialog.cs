@@ -132,7 +132,7 @@ namespace Microsoft.Win32
             get
             {
                 // Avoid returning a null string - return String.Empty instead.
-                return _defaultDirectory == null ? String.Empty : _defaultDirectory;
+                return _defaultDirectory is null ? String.Empty : _defaultDirectory;
             }
             set
             {
@@ -171,7 +171,7 @@ namespace Microsoft.Win32
             get
             {
                 // Avoid returning a null string - return String.Empty instead.
-                return _initialDirectory == null ? String.Empty : _initialDirectory;
+                return _initialDirectory is null ? String.Empty : _initialDirectory;
             }
             set
             {
@@ -190,7 +190,7 @@ namespace Microsoft.Win32
             get
             {
                 // Avoid returning a null string - return String.Empty instead.
-                return _rootDirectory == null ? String.Empty : _rootDirectory;
+                return _rootDirectory is null ? String.Empty : _rootDirectory;
             }
             set
             {
@@ -229,7 +229,7 @@ namespace Microsoft.Win32
             get
             {
                 // Avoid returning a null string - return String.Empty instead.
-                return _title == null ? String.Empty : _title;
+                return _title is null ? String.Empty : _title;
             }
             set
             {
@@ -499,7 +499,7 @@ namespace Microsoft.Win32
         /// </summary>
         private protected string[] CloneItemNames()
         {
-            if (_itemNames == null)
+            if (_itemNames is null)
             {
                 return Array.Empty<string>();
             }
@@ -609,7 +609,7 @@ namespace Microsoft.Win32
 
         private static string[] GetParsingNames(IShellItem[] items)
         {
-            if (items == null)
+            if (items is null)
             {
                 return null;
             }

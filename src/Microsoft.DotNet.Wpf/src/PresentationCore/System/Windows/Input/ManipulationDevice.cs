@@ -86,9 +86,9 @@ namespace System.Windows.Input
             element.VerifyAccess();
 
             ManipulationDevice device = GetManipulationDevice(element);
-            if (device == null)
+            if (device is null)
             {
-                if (_manipulationDevices == null)
+                if (_manipulationDevices is null)
                 {
                     _manipulationDevices = new Dictionary<UIElement, ManipulationDevice>(2);
                 }
@@ -159,7 +159,7 @@ namespace System.Windows.Input
             VerifyAccess();
             _manipulationEnded = false;
 
-            if (_manipulators == null)
+            if (_manipulators is null)
             {
                 _manipulators = new List<IManipulator>(2);
             }
@@ -186,7 +186,7 @@ namespace System.Windows.Input
             OnManipulatorUpdated(manipulator, EventArgs.Empty);
             if (!_manipulationEnded)
             {
-                if (_manipulators == null || _manipulators.Count == 0)
+                if (_manipulators is null || _manipulators.Count == 0)
                 {
                     // cache the last removed manipulator
                     _removedManipulator = manipulator;
@@ -455,7 +455,7 @@ namespace System.Windows.Input
             {
                 if (_removedManipulator != null)
                 {
-                    Debug.Assert(_manipulators == null || _manipulators.Count == 0);
+                    Debug.Assert(_manipulators is null || _manipulators.Count == 0);
                     // Report Manipulation Cancel to last removed manipulator
                     _removedManipulator.ManipulationEnded(true);
                 }

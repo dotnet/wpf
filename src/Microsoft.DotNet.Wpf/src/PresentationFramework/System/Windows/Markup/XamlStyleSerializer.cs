@@ -131,7 +131,7 @@ namespace System.Windows.Markup
                 record = record.Next;
             }
 
-            if (targetType == null)
+            if (targetType is null)
             {
                 if (!styleTargetTypeSet)
                 {

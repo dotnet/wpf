@@ -569,7 +569,7 @@ namespace System.Windows.Media
             // if these get touched by more than one thread in the lifetime
             // of your app.  
 
-            Debug.Assert(s_DashStyle == null || s_DashStyle.IsFrozen,
+            Debug.Assert(s_DashStyle is null || s_DashStyle.IsFrozen,
                 "Detected context bound default value Pen.s_DashStyle (See OS Bug #947272).");
 
 

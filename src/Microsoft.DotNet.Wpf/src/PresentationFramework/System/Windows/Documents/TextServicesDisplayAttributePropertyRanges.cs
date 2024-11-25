@@ -143,13 +143,13 @@ namespace System.Windows.Documents
                         {
 #if UNUSED_IME_HIGHLIGHT_LAYER
                         // Demand create the highlight layer.
-                        if (_highlightLayer == null)
+                        if (_highlightLayer is null)
                         {
                             _highlightLayer = new DisplayAttributeHighlightLayer();
                         }
 #endif
 
-                            if (_compositionAdorner == null)
+                            if (_compositionAdorner is null)
                             {
                                 _compositionAdorner = new CompositionAdorner(this.TextStore.TextView);
                                 _compositionAdorner.Initialize(this.TextStore.TextView);
@@ -218,7 +218,7 @@ namespace System.Windows.Documents
             TextServicesDisplayAttribute attr = null;
 
             // Demand create the cache.
-            if (_attributes == null)
+            if (_attributes is null)
             {
                 _attributes = new Hashtable();
             }
@@ -235,7 +235,7 @@ namespace System.Windows.Documents
             if (UnsafeNativeMethods.TF_CreateCategoryMgr(out catmgr) != NativeMethods.S_OK)
                 return null;
 
-            if (catmgr == null)
+            if (catmgr is null)
                 return null;
         
             Guid guid;
@@ -255,7 +255,7 @@ namespace System.Windows.Documents
             if (UnsafeNativeMethods.TF_CreateDisplayAttributeMgr(out dam) != NativeMethods.S_OK)
                 return null;
 
-            if (dam == null)
+            if (dam is null)
                 return null;
 
             Guid clsid;
@@ -279,7 +279,7 @@ namespace System.Windows.Documents
         private Int32 GetInt32Value(int ecReadOnly, UnsafeNativeMethods.ITfProperty property, UnsafeNativeMethods.ITfRange range)
         {
             Object obj = GetValue(ecReadOnly, property, range);
-            if (obj == null)
+            if (obj is null)
                 return 0;
 
             return (Int32)obj;

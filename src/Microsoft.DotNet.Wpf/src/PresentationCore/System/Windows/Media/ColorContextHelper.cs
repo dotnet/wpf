@@ -93,7 +93,7 @@ namespace System.Windows.Media
         /// Retrieves the color profile from handle
         internal void GetColorProfileFromHandle(byte[] buffer, ref uint bufferSize)
         {
-            Invariant.Assert(buffer == null || bufferSize <= buffer.Length);
+            Invariant.Assert(buffer is null || bufferSize <= buffer.Length);
             
             if (IsInvalid)
             {
@@ -112,7 +112,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return _profileHandle == null || _profileHandle.IsInvalid;
+                return _profileHandle is null || _profileHandle.IsInvalid;
             }
         }
 

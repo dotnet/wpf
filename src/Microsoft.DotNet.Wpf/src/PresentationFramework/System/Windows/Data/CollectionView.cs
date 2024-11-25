@@ -1358,7 +1358,7 @@ namespace System.Windows.Data
                 if (IsCurrentInView)
                     return GetItemAt(CurrentPosition) == CurrentItem;
                 else
-                    return CurrentItem == null;
+                    return CurrentItem is null;
             }
         }
 
@@ -1384,12 +1384,12 @@ namespace System.Windows.Data
         {
             object[] array;
 
-            if (_vmData == null)
+            if (_vmData is null)
             {
                 // 90% case - store a single value directly
                 _vmData = value;
             }
-            else if ((array = _vmData as object[]) == null)
+            else if ((array = _vmData as object[]) is null)
             {
                 // BindingListCollectionView appears in the table for both
                 // DataTable and DataView - keep both references (bug 1745899)
@@ -1448,7 +1448,7 @@ namespace System.Windows.Data
         internal ReadOnlyCollection<ItemPropertyInfo> GetItemProperties()
         {
             IEnumerable collection = SourceCollection;
-            if (collection == null)
+            if (collection is null)
                 return null;
 
             IEnumerable properties = null;
@@ -1476,7 +1476,7 @@ namespace System.Windows.Data
                 // TypeDescriptorProvider), they don't show up on the type -
                 // only on the item.
                 ICustomTypeProvider ictp = item as ICustomTypeProvider;
-                if (ictp == null)
+                if (ictp is null)
                 {
                     properties = TypeDescriptor.GetProperties(item);
                 }
@@ -1486,7 +1486,7 @@ namespace System.Windows.Data
                 }
             }
 
-            if (properties == null)
+            if (properties is null)
                 return null;
 
             // convert the properties to ItemPropertyInfo
@@ -1751,7 +1751,7 @@ namespace System.Windows.Data
         {
             get
             {
-                if (_enumerableWrapper == null)
+                if (_enumerableWrapper is null)
                 {
                     IndexedEnumerable newWrapper = new IndexedEnumerable(SourceCollection, new Predicate<object>(this.PassesFilter));
                     Interlocked.CompareExchange(ref _enumerableWrapper, newWrapper, null);
@@ -1829,7 +1829,7 @@ namespace System.Windows.Data
             {
                 lock(_changeLog.SyncRoot)
                 {
-                    if (_changeLog == null)
+                    if (_changeLog is null)
                     {
                         _changeLog = new ArrayList(changeLog);
                     }
@@ -1936,7 +1936,7 @@ namespace System.Windows.Data
                         // wrong thread.  Marshal it to the UI thread.
                         _changeLog.Add(args);
 
-                        if(_databindOperation == null)
+                        if(_databindOperation is null)
                         {
                             _databindOperation = _engine.Marshal(
                                 new DispatcherOperationCallback(ProcessInvoke),

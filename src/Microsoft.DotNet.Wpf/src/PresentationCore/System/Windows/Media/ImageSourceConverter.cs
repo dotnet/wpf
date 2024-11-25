@@ -101,7 +101,7 @@ namespace System.Windows.Media
         {
             try
             {
-                if (value == null)
+                if (value is null)
                 {
                     throw GetConvertFromException(value);
                 }
@@ -131,7 +131,7 @@ namespace System.Windows.Media
                         //
                         memStream = GetBitmapStream(bytes);
 
-                        if (memStream == null)
+                        if (memStream is null)
                         {
                             //
                             // guess not.  Try plain memory.
@@ -163,7 +163,7 @@ namespace System.Windows.Media
             {
                 if (!CriticalExceptions.IsCriticalException(e))
                 {
-                    if (context == null && CoreAppContextSwitches.OverrideExceptionWithNullReferenceException)
+                    if (context is null && CoreAppContextSwitches.OverrideExceptionWithNullReferenceException)
                     {
                         throw new NullReferenceException();
                     }

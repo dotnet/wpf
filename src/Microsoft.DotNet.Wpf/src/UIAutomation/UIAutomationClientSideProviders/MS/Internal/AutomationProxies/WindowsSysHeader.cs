@@ -235,7 +235,7 @@ namespace MS.Internal.AutomationProxies
                 if (!isOffscreen)
                 {
                     // Header item is visible.
-                    if (firstVisibleHeaderItem == null)
+                    if (firstVisibleHeaderItem is null)
                     {
                         firstVisibleHeaderItem = headerItem;
                     }

@@ -110,7 +110,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     public [[instance.ClassName.Name]](IEnumerable<Point> points, bool isStroked)
                                     {
-                                        if (points == null)
+                                        if (points is null)
                                         {
                                             throw new System.ArgumentNullException("points");
                                         }
@@ -124,7 +124,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     internal [[instance.ClassName.Name]](IEnumerable<Point> points, bool isStroked, bool isSmoothJoin)
                                     {
-                                        if (points == null)
+                                        if (points is null)
                                         {
                                             throw new System.ArgumentNullException("points");
                                         }
@@ -172,7 +172,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
 
                                     internal override bool IsEmpty()
                                     {
-                                        return (Points == null) || (Points.Count < [[instance.VerifyCount]]);
+                                        return (Points is null) || (Points.Count < [[instance.VerifyCount]]);
                                     }
 
                                     internal override bool IsCurved()

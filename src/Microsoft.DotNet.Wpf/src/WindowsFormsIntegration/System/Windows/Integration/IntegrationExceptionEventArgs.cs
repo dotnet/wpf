@@ -17,7 +17,7 @@ namespace System.Windows.Forms.Integration
         /// </summary>
         public IntegrationExceptionEventArgs(bool throwException, Exception exception)
         {
-            if (exception == null)
+            if (exception is null)
             {
                 throw new ArgumentNullException(string.Format(CultureInfo.CurrentCulture, SR.WFI_NullArgument, "exception"));
             }

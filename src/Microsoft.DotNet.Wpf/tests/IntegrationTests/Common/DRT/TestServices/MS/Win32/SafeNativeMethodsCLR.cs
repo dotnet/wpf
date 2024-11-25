@@ -97,7 +97,7 @@ namespace MS.Win32
         public static NativeMethods.CursorHandle LoadCursor(HandleRef hInst, IntPtr iconId)
         {
             NativeMethods.CursorHandle cursorHandle = SafeNativeMethodsPrivate.LoadCursor(hInst, iconId);
-            if(cursorHandle == null || cursorHandle.IsInvalid)
+            if(cursorHandle is null || cursorHandle.IsInvalid)
             {
                 throw new Win32Exception();
             }

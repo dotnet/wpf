@@ -196,7 +196,7 @@ namespace System.Windows.Documents
 #endif
             if (_type == ElementType.InlineUIContainer)
             {
-                Debug.Assert(_object == null && e._type == ElementType.Object);
+                Debug.Assert(_object is null && e._type == ElementType.Object);
                 _object = e._object; // To generate InlineUIContainer with child with object;
             }
         }
@@ -206,7 +206,7 @@ namespace System.Windows.Documents
             if (_type == ElementType.Hyperlink || _type == ElementType.Paragraph ||
                 (_type >= ElementType.Table && _type <= ElementType.TableCell))
             {
-                if (_object == null)
+                if (_object is null)
                 {
                     _object = BuildObjectTree();
                 }

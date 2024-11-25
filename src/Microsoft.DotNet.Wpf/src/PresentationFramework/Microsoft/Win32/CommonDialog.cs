@@ -142,7 +142,7 @@ namespace Microsoft.Win32
             // If a valid window wasn't passed into this function, we'll
             // call ShowDialog() to use the active window instead of 
             // throwing an exception
-            if (owner == null)
+            if (owner is null)
             {
                 return ShowDialog();
             }

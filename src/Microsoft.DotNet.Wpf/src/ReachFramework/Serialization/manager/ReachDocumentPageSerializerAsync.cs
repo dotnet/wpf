@@ -72,7 +72,7 @@ namespace System.Windows.Xps.Serialization
             ReachSerializerContext context
             )
         {
-            if(context == null)
+            if(context is null)
             {
 
             }
@@ -88,7 +88,7 @@ namespace System.Windows.Xps.Serialization
                 case SerializerAction.endSerializeDocumentPage:
                 {
                     ReachFixedPageSerializerContext thisContext = context as ReachFixedPageSerializerContext;
-                    if(thisContext == null)
+                    if(thisContext is null)
                     {
 
                     }
@@ -115,7 +115,7 @@ namespace System.Windows.Xps.Serialization
         {
             get
             {
-                if (base.XmlWriter == null)
+                if (base.XmlWriter is null)
                 {
                     base.XmlWriter = SerializationManager.AcquireXmlWriter(typeof(FixedPage));
                 }

@@ -38,7 +38,7 @@ namespace mcwpf.Util
                     lastCommand = s.Substring(1);
                     dic[lastCommand] = string.Empty;
                 }
-                else if (lastCommand == null)
+                else if (lastCommand is null)
                 {
                     dic[s] = string.Empty;
                 }

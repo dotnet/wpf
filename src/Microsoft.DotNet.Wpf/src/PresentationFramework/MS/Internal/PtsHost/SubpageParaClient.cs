@@ -158,7 +158,7 @@ namespace MS.Internal.PtsHost
 
             if(_pageContextOfThisPage.FloatingElementList != null)
             {
-                for(int index = 0; index < _pageContextOfThisPage.FloatingElementList.Count && ie == null; index++)
+                for(int index = 0; index < _pageContextOfThisPage.FloatingElementList.Count && ie is null; index++)
                 {
                     BaseParaClient floatingElement = _pageContextOfThisPage.FloatingElementList[index];
 
@@ -166,7 +166,7 @@ namespace MS.Internal.PtsHost
                 }
             }
 
-            if(ie == null)
+            if(ie is null)
             {
                 if(Rect.Contains(pt))
                 {
@@ -197,7 +197,7 @@ namespace MS.Internal.PtsHost
                                 PtsHelper.TrackListFromSubpage(PtsContext, _paraHandle, ref subpageDetails, out arrayColumnDesc);
 
                                 // Arrange each track
-                                for (int index = 0; index < arrayColumnDesc.Length && ie == null; index++)
+                                for (int index = 0; index < arrayColumnDesc.Length && ie is null; index++)
                                 {
                                     ie = PtsHelper.InputHitTestTrack(PtsContext, pt, ref arrayColumnDesc[index]);
                                 }
@@ -205,7 +205,7 @@ namespace MS.Internal.PtsHost
                         }
                     }
 
-                    if(ie == null)
+                    if(ie is null)
                     {
                         ie = Paragraph.Element as IInputElement;
                     }

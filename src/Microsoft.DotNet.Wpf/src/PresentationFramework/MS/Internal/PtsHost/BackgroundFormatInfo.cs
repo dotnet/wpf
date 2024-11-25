@@ -86,7 +86,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal void ThrottleBackgroundFormatting()
         {
-            if (_throttleBackgroundTimer == null)
+            if (_throttleBackgroundTimer is null)
             {
                 // Start up a timer.  Until the timer fires, we'll disable
                 // all background layout.  This leaves the control responsive
@@ -110,7 +110,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal void BackgroundFormat(IFlowDocumentFormatter formatter, bool ignoreThrottle)
         {
-            if (_throttleBackgroundTimer == null)
+            if (_throttleBackgroundTimer is null)
             {
                 formatter.OnContentInvalidated(true);
             }

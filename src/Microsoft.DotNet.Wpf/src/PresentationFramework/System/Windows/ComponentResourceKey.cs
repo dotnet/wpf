@@ -105,8 +105,8 @@ namespace System.Windows
 
             if (key != null)
             {
-                return ((key._typeInTargetAssembly != null) ? key._typeInTargetAssembly.Equals(this._typeInTargetAssembly) : (this._typeInTargetAssembly == null)) &&
-                    ((key._resourceId != null) ? key._resourceId.Equals(this._resourceId) : (this._resourceId == null));
+                return ((key._typeInTargetAssembly != null) ? key._typeInTargetAssembly.Equals(this._typeInTargetAssembly) : (this._typeInTargetAssembly is null)) &&
+                    ((key._resourceId != null) ? key._resourceId.Equals(this._resourceId) : (this._resourceId is null));
             }
 
             return false;

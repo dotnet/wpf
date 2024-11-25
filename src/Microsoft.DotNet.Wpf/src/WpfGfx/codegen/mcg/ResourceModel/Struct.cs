@@ -236,7 +236,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                 // callers that are not union-aware will fail if they encounter
                 // a union.
                 //
-                if (_localFields == null)
+                if (_localFields is null)
                 {
                     _localFields = McgField.StructChildArrayToFieldArray(LocalChildren);
                 }

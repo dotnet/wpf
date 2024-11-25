@@ -48,7 +48,7 @@ namespace System.Windows.Documents
         internal XamlToRtfError Parse()
         {
             // Need callbacks
-            if (_xamlContent == null || _xamlError == null)
+            if (_xamlContent is null || _xamlError is null)
             {
                 return XamlToRtfError.Unknown;
             }

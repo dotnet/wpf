@@ -145,7 +145,7 @@ namespace System.Windows.Controls.Primitives
             {
                 // Because Nullable<bool> unboxing is very slow (uses reflection) first we cast to bool
                 object value = GetValue(IsCheckedProperty);
-                if (value == null)
+                if (value is null)
                     return new Nullable<bool>();
                 else
                     return new Nullable<bool>((bool)value);
@@ -341,7 +341,7 @@ namespace System.Windows.Controls.Primitives
             // If IsChecked == true && IsThreeState == true   --->  IsChecked = null
             // If IsChecked == true && IsThreeState == false  --->  IsChecked = false
             // If IsChecked == false                          --->  IsChecked = true
-            // If IsChecked == null                           --->  IsChecked = false
+            // If IsChecked is null                           --->  IsChecked = false
             bool? isChecked;
             if (IsChecked == true)
                 isChecked = IsThreeState ? (bool?)null : (bool?)false;

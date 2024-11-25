@@ -284,7 +284,7 @@ namespace MS.Internal.Text
         {
             get
             {
-                if (_firstLineProperties == null)
+                if (_firstLineProperties is null)
                 {
                     _firstLineProperties = new FirstLineProperties(this);
                 }

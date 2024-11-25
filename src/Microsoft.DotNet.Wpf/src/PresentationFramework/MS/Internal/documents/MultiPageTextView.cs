@@ -1083,7 +1083,7 @@ namespace MS.Internal.Documents
                 }
             }
 
-            if (textView == null && snap)
+            if (textView is null && snap)
             {
                 // For each TextView calculate 'proximity' function.
                 double[] textViewProximities = new double[_pageTextViews.Count];
@@ -1249,7 +1249,7 @@ namespace MS.Internal.Documents
         {
             // NOTE: TransformToAncestor is safe (will never throw an exception).
             Transform transform = innerScope.TransformToAncestor(_renderScope) as Transform;
-            if (transform == null)
+            if (transform is null)
             {
                 transform = Transform.Identity;
             }
@@ -1401,10 +1401,10 @@ namespace MS.Internal.Documents
 
                         // If still have some lines to be moved, do another BringLineIntoView request.
                         // Otherwise the goal has been reached and fire completed event.
-                        if (newPosition == null)
+                        if (newPosition is null)
                         {
                             // New position cannot be found, return best result so far.
-                            if (lineRequest.NewPosition == null)
+                            if (lineRequest.NewPosition is null)
                             {
                                 lineRequest.NewPosition = lineRequest.Position;
                                 lineRequest.NewCount = lineRequest.Count;
@@ -1448,10 +1448,10 @@ namespace MS.Internal.Documents
 
                         // If still have some lines to be moved, do another BringLineIntoView request.
                         // Otherwise the goal has been reached and fire completed event.
-                        if (newPosition == null)
+                        if (newPosition is null)
                         {
                             // New position cannot be found, return best result so far.
-                            if (pageRequest.NewPosition == null)
+                            if (pageRequest.NewPosition is null)
                             {
                                 pageRequest.NewPosition = pageRequest.Position;
                                 pageRequest.NewCount = pageRequest.Count;
@@ -1509,14 +1509,14 @@ namespace MS.Internal.Documents
             }
 
             IDocumentPaginatorSource document = _viewer.Document;
-            if (document == null)
+            if (document is null)
             {
                 return true;
             }
 
             DocumentPaginator documentPaginator = document.DocumentPaginator;
 
-            if (documentPaginator == null)
+            if (documentPaginator is null)
             {
                 return true;
             }

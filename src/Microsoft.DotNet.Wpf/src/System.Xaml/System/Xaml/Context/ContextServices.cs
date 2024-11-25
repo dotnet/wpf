@@ -28,7 +28,7 @@ namespace MS.Internal.Xaml.Context
             //
             // We should never have a null ParentProperty here but
             // protect against null refs since we are going to dereference it
-            if (parentProperty == null)
+            if (parentProperty is null)
             {
                 return null;
             }

@@ -83,7 +83,7 @@ namespace MS.Internal.Shaping
 
             unsafe
             {
-                if (cacheArray == null)
+                if (cacheArray is null)
                 {
                     workspace.TableCacheData = null;
                 }
@@ -107,7 +107,7 @@ namespace MS.Internal.Shaping
         {
             unsafe
             {
-                if (workspace.TableCacheData == null)
+                if (workspace.TableCacheData is null)
                 {
                     return;
                 }
@@ -125,7 +125,7 @@ namespace MS.Internal.Shaping
         private static unsafe ushort GetCacheLookupCount(OpenTypeLayoutWorkspace workspace)
         {
             // If there is no chache, just exit
-            if (workspace.TableCacheData == null)
+            if (workspace.TableCacheData is null)
             {
                 return 0;
             }
@@ -255,7 +255,7 @@ namespace MS.Internal.Shaping
             fixed (byte* pCache = &workspace.TableCacheData[0])
             {
                 // If there is no chache, just exit
-                if (pCache == null)
+                if (pCache is null)
                 {
                     return;
                 }
@@ -594,7 +594,7 @@ namespace MS.Internal.Shaping
             unsafe 
             {
                 byte[] cache = font.AllocateTableCache(tableTag, cacheSize);
-                if (cache == null)
+                if (cache is null)
                 {
                     // We failed to allocate cache of requested size, 
                     // exit without created cache.

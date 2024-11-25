@@ -93,10 +93,10 @@ namespace System.Windows.Documents
             CultureInfo cultureInfo)
         {
             //  throw exceptions here
-            if (findContainerStartPosition == null
-                || findContainerEndPosition == null
+            if (findContainerStartPosition is null
+                || findContainerEndPosition is null
                 || findContainerStartPosition.CompareTo(findContainerEndPosition) == 0
-                || findPattern == null
+                || findPattern is null
                 || findPattern == string.Empty )
             {
                 return (null);
@@ -325,7 +325,7 @@ namespace System.Windows.Documents
         {
             ITextPointer nextPosition = position.GetNextInsertionPosition(direction);
 
-            if (nextPosition == null)
+            if (nextPosition is null)
             {
                 return true;
             }

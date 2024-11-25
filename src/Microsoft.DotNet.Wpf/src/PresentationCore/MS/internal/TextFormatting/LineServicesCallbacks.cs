@@ -126,7 +126,7 @@ namespace MS.Internal.TextFormatting
                 fIsBufferUsed = 0;
                 pwchText = lsrun.CharacterBuffer.GetCharacterPointer();
 
-                if (pwchText == null)
+                if (pwchText is null)
                 {
                     // Unable to obtain the raw character pointer of the associated run character string,
                     // avoid pinning the managed memory by using the specified local buffer.
@@ -1376,7 +1376,7 @@ namespace MS.Internal.TextFormatting
                     // However, this will not be very common.
                     //
 
-                    if (textDecoration.Pen == null)
+                    if (textDecoration.Pen is null)
                     {
                         // Draw text decoration by DrawRectangle. It avoids the overhead of creating a new Pen.
                         drawingContext.DrawRectangle(
@@ -1558,7 +1558,7 @@ namespace MS.Internal.TextFormatting
         internal static CultureInfo GetNumberCulture(TextRunProperties properties, out NumberSubstitutionMethod method)
         {
             NumberSubstitution sub = properties.NumberSubstitution;
-            if (sub == null)
+            if (sub is null)
             {
                 method = NumberSubstitutionMethod.AsCulture;
                 return CultureMapper.GetSpecificCulture(properties.CultureInfo);
@@ -2538,7 +2538,7 @@ namespace MS.Internal.TextFormatting
 
                     try 
                     {                    
-                        if (Draw.AntiInversion == null)
+                        if (Draw.AntiInversion is null)
                         {
                             // Draw at XY origin
                             textObject.Draw(
@@ -3387,7 +3387,7 @@ namespace MS.Internal.TextFormatting
             {
                 unsafe
                 {
-                    if (_pfnInlineFormat == null)
+                    if (_pfnInlineFormat is null)
                         _pfnInlineFormat = new InlineFormat(this.InlineFormat);
                     return _pfnInlineFormat;
                 }
@@ -3399,7 +3399,7 @@ namespace MS.Internal.TextFormatting
         {
             get
             {
-                if (_pfnInlineDraw == null)
+                if (_pfnInlineDraw is null)
                     _pfnInlineDraw = new InlineDraw(this.InlineDraw);
                 return _pfnInlineDraw;
             }
@@ -3516,7 +3516,7 @@ namespace MS.Internal.TextFormatting
         {
             get 
             {
-                if (_indexedGlyphRuns == null)
+                if (_indexedGlyphRuns is null)
                 {
                     _indexedGlyphRuns = new List<IndexedGlyphRun>(8);                    
                 }

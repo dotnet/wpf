@@ -160,7 +160,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
+            if (This is null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
             {
                 return;
             }
@@ -195,7 +195,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
+            if (This is null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
             {
                 return;
             }
@@ -211,7 +211,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
+            if (This is null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
             {
                 return;
             }
@@ -227,7 +227,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
+            if (This is null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
             {
                 return;
             }
@@ -243,7 +243,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
+            if (This is null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
             {
                 return;
             }
@@ -257,7 +257,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
+            if (This is null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
             {
                 return;
             }
@@ -294,7 +294,7 @@ namespace System.Windows.Documents
                 double suggestedX = TextEditorSelection.GetSuggestedX(This, out originalMovingPosition);
 
                 // Continue only if we have a moving position with valid layout
-                if (originalMovingPosition == null)
+                if (originalMovingPosition is null)
                 {
                     return;
                 }
@@ -349,7 +349,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
+            if (This is null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
             {
                 return;
             }
@@ -383,7 +383,7 @@ namespace System.Windows.Documents
                 double suggestedX = TextEditorSelection.GetSuggestedX(This, out originalMovingPosition);
 
                 // Continue only if we have a moving position with valid layout
-                if (originalMovingPosition == null)
+                if (originalMovingPosition is null)
                 {
                     return;
                 }
@@ -439,7 +439,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
+            if (This is null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
             {
                 return;
             }
@@ -494,7 +494,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
+            if (This is null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
             {
                 return;
             }
@@ -548,7 +548,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
+            if (This is null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
             {
                 return;
             }
@@ -580,7 +580,7 @@ namespace System.Windows.Documents
                 double suggestedX = TextEditorSelection.GetSuggestedX(This, out movingPosition);
 
                 // Continue only if we have a moving position with valid layout
-                if (movingPosition == null)
+                if (movingPosition is null)
                 {
                     return;
                 }
@@ -632,7 +632,7 @@ namespace System.Windows.Documents
                     Point targetPoint = new Point(GetViewportXOffset(This.TextView, suggestedX), targetRect.Top + pageHeight);
                     targetPosition = This.TextView.GetTextPositionFromPoint(targetPoint, /*snapToText:*/true);
 
-                    if (targetPosition == null)
+                    if (targetPosition is null)
                     {
                         return;
                     }
@@ -668,7 +668,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
+            if (This is null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
             {
                 return;
             }
@@ -697,7 +697,7 @@ namespace System.Windows.Documents
                 double suggestedX = TextEditorSelection.GetSuggestedX(This, out movingPosition);
 
                 // Continue only if we have a moving position with valid layout
-                if (movingPosition == null)
+                if (movingPosition is null)
                 {
                     return;
                 }
@@ -746,7 +746,7 @@ namespace System.Windows.Documents
                     Point targetPoint = new Point(GetViewportXOffset(This.TextView, suggestedX), targetRect.Bottom - pageHeight);
                     targetPosition = This.TextView.GetTextPositionFromPoint(targetPoint, /*snapToText:*/true);
 
-                    if (targetPosition == null)
+                    if (targetPosition is null)
                     {
                         return;
                     }
@@ -785,7 +785,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
+            if (This is null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
             {
                 return;
             }
@@ -837,7 +837,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
+            if (This is null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
             {
                 return;
             }
@@ -889,7 +889,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
+            if (This is null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
             {
                 return;
             }
@@ -917,7 +917,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
+            if (This is null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
             {
                 return;
             }
@@ -953,7 +953,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
+            if (This is null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
             {
                 return;
             }
@@ -969,7 +969,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
+            if (This is null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
             {
                 return;
             }
@@ -984,7 +984,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
+            if (This is null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
             {
                 return;
             }
@@ -1000,7 +1000,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
+            if (This is null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
             {
                 return;
             }
@@ -1014,7 +1014,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
+            if (This is null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
             {
                 return;
             }
@@ -1036,7 +1036,7 @@ namespace System.Windows.Documents
                     double suggestedX = TextEditorSelection.GetSuggestedX(This, out originalMovingPosition);
 
                     // Continue only if we have a moving position with valid layout
-                    if (originalMovingPosition == null)
+                    if (originalMovingPosition is null)
                     {
                         return;
                     }
@@ -1096,7 +1096,7 @@ namespace System.Windows.Documents
                             else
                             {
                                 // Remember where we were so that we can return if a line up follows.
-                                if (This._NextLineAdvanceMovingPosition == null)
+                                if (This._NextLineAdvanceMovingPosition is null)
                                 {
                                     This._NextLineAdvanceMovingPosition = originalMovingPosition;
                                     This._IsNextLineAdvanceMovingPositionAtDocumentHead = false;
@@ -1135,7 +1135,7 @@ namespace System.Windows.Documents
                 // If the destination exactly preceeds a line break, expand to include
                 // the line break if we haven't reached our desired suggestedX.
                 if (TextPointerBase.IsNextToAnyBreak(newMovingPosition, LogicalDirection.Forward) ||
-                    newMovingPosition.GetNextInsertionPosition(LogicalDirection.Forward) == null)
+                    newMovingPosition.GetNextInsertionPosition(LogicalDirection.Forward) is null)
                 {
                     double newPositionX = GetAbsoluteXOffset(This.TextView, newMovingPosition);
                     FlowDirection paragraphFlowDirection = GetScopingParagraphFlowDirection(newMovingPosition);
@@ -1149,7 +1149,7 @@ namespace System.Windows.Documents
 
                         // If we're at the last Paragraph, move to document end to include
                         // the final paragraph break.
-                        if (newMovingPosition == null)
+                        if (newMovingPosition is null)
                         {
                             newMovingPosition = originalMovingPosition.TextContainer.End;
                         }
@@ -1163,7 +1163,7 @@ namespace System.Windows.Documents
             else
             {
                 // Remember where we were so that we can return if a line up follows.
-                if (This._NextLineAdvanceMovingPosition == null)
+                if (This._NextLineAdvanceMovingPosition is null)
                 {
                     This._NextLineAdvanceMovingPosition = originalMovingPosition;
                     This._IsNextLineAdvanceMovingPositionAtDocumentHead = false;
@@ -1172,7 +1172,7 @@ namespace System.Windows.Documents
                 // No more lines in this direction. Move to end of current line.
                 newMovingPosition = GetPositionAtLineEnd(originalMovingPosition);
 
-                if (newMovingPosition.GetNextInsertionPosition(LogicalDirection.Forward) == null)
+                if (newMovingPosition.GetNextInsertionPosition(LogicalDirection.Forward) is null)
                 {
                     // Move to the final implicit line at end-of-doc.
                     newMovingPosition = newMovingPosition.TextContainer.End;
@@ -1186,7 +1186,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
+            if (This is null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
             {
                 return;
             }
@@ -1208,7 +1208,7 @@ namespace System.Windows.Documents
                     double suggestedX = TextEditorSelection.GetSuggestedX(This, out originalMovingPosition);
 
                     // Continue only if we have a moving position with valid layout
-                    if (originalMovingPosition == null)
+                    if (originalMovingPosition is null)
                     {
                         return;
                     }
@@ -1286,7 +1286,7 @@ namespace System.Windows.Documents
                             else
                             {
                                 // Remember where we were so that we can return if a line down follows.
-                                if (This._NextLineAdvanceMovingPosition == null)
+                                if (This._NextLineAdvanceMovingPosition is null)
                                 {
                                     This._NextLineAdvanceMovingPosition = originalMovingPosition;
                                     This._IsNextLineAdvanceMovingPositionAtDocumentHead = true;
@@ -1310,7 +1310,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
+            if (This is null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
             {
                 return;
             }
@@ -1351,7 +1351,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
+            if (This is null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
             {
                 return;
             }
@@ -1395,7 +1395,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
+            if (This is null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
             {
                 return;
             }
@@ -1406,7 +1406,7 @@ namespace System.Windows.Documents
             double suggestedX = TextEditorSelection.GetSuggestedX(This, out movingPosition);
 
             // Continue only if we have a moving position with valid layout.
-            if (movingPosition == null)
+            if (movingPosition is null)
             {
                 return;
             }
@@ -1460,7 +1460,7 @@ namespace System.Windows.Documents
                     Point targetPoint = new Point(GetViewportXOffset(This.TextView, suggestedX), targetRect.Top + pageHeight);
                     targetPosition = This.TextView.GetTextPositionFromPoint(targetPoint, /*snapToText:*/true);
 
-                    if (targetPosition == null)
+                    if (targetPosition is null)
                     {
                         return;
                     }
@@ -1491,7 +1491,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
+            if (This is null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
             {
                 return;
             }
@@ -1502,7 +1502,7 @@ namespace System.Windows.Documents
             double suggestedX = TextEditorSelection.GetSuggestedX(This, out movingPosition);
 
             // Continue only if we have a moving position with valid layout.
-            if (movingPosition == null)
+            if (movingPosition is null)
             {
                 return;
             }
@@ -1556,7 +1556,7 @@ namespace System.Windows.Documents
                     Point targetPoint = new Point(GetViewportXOffset(This.TextView, suggestedX), targetRect.Bottom - pageHeight);
                     targetPosition = This.TextView.GetTextPositionFromPoint(targetPoint, /*snapToText:*/true);
 
-                    if (targetPosition == null)
+                    if (targetPosition is null)
                     {
                         return;
                     }
@@ -1589,7 +1589,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
+            if (This is null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
             {
                 return;
             }
@@ -1634,7 +1634,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
+            if (This is null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
             {
                 return;
             }
@@ -1688,7 +1688,7 @@ namespace System.Windows.Documents
 
                     ITextPointer newDestination = destination.GetNextInsertionPosition(LogicalDirection.Forward);
 
-                    if (newDestination == null)
+                    if (newDestination is null)
                     {
                         // We are at the end of container - extend to include position after last paragraph
                         destination = destination.TextContainer.End;
@@ -1722,7 +1722,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
+            if (This is null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
             {
                 return;
             }
@@ -1750,7 +1750,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
+            if (This is null || !This._IsEnabled || !This._IsSourceInScope(args.Source))
             {
                 return;
             }
@@ -1780,11 +1780,11 @@ namespace System.Windows.Documents
             Invariant.Assert(sender is ITextView);
             ((ITextView)sender).BringLineIntoViewCompleted -= new BringLineIntoViewCompletedEventHandler(HandleMoveByLineCompleted);
 
-            if (e != null && !e.Cancelled && e.Error == null)
+            if (e != null && !e.Cancelled && e.Error is null)
             {
                 TextEditor This = e.UserState as TextEditor;
 
-                if (This == null || !This._IsEnabled)
+                if (This is null || !This._IsEnabled)
                 {
                     return;
                 }
@@ -1810,11 +1810,11 @@ namespace System.Windows.Documents
             Invariant.Assert(sender is ITextView);
             ((ITextView)sender).BringPageIntoViewCompleted -= new BringPageIntoViewCompletedEventHandler(HandleMoveByPageCompleted);
 
-            if (e != null && !e.Cancelled && e.Error == null)
+            if (e != null && !e.Cancelled && e.Error is null)
             {
                 TextEditor This = e.UserState as TextEditor;
 
-                if (This == null || !This._IsEnabled)
+                if (This is null || !This._IsEnabled)
                 {
                     return;
                 }
@@ -1842,11 +1842,11 @@ namespace System.Windows.Documents
             Invariant.Assert(sender is ITextView);
             ((ITextView)sender).BringLineIntoViewCompleted -= new BringLineIntoViewCompletedEventHandler(HandleSelectByLineCompleted);
 
-            if (e != null && !e.Cancelled && e.Error == null)
+            if (e != null && !e.Cancelled && e.Error is null)
             {
                 This = e.UserState as TextEditor;
 
-                if (This == null || !This._IsEnabled)
+                if (This is null || !This._IsEnabled)
                 {
                     return;
                 }
@@ -1877,7 +1877,7 @@ namespace System.Windows.Documents
                         else
                         {
                             // Remember where we were so that we can return if a line down follows.
-                            if (This._NextLineAdvanceMovingPosition == null)
+                            if (This._NextLineAdvanceMovingPosition is null)
                             {
                                 This._NextLineAdvanceMovingPosition = e.Position;
                                 This._IsNextLineAdvanceMovingPositionAtDocumentHead = true;
@@ -1905,11 +1905,11 @@ namespace System.Windows.Documents
             Invariant.Assert(sender is ITextView);
             ((ITextView)sender).BringPageIntoViewCompleted -= new BringPageIntoViewCompletedEventHandler(HandleSelectByPageCompleted);
 
-            if (e != null && !e.Cancelled && e.Error == null)
+            if (e != null && !e.Cancelled && e.Error is null)
             {
                 This = e.UserState as TextEditor;
 
-                if (This == null || !This._IsEnabled)
+                if (This is null || !This._IsEnabled)
                 {
                     return;
                 }
@@ -1969,7 +1969,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled)
+            if (This is null || !This._IsEnabled)
             {
                 return;
             }
@@ -1984,7 +1984,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled)
+            if (This is null || !This._IsEnabled)
             {
                 return;
             }

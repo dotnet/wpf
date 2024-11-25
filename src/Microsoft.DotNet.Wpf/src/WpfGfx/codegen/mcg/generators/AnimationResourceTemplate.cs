@@ -102,7 +102,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         DependencyObject dobj = ((DependencyObject) _dependencyObject.Target);
 
                                         // The dependency object was GCed, nothing to do here
-                                        if (dobj == null)
+                                        if (dobj is null)
                                         {
                                             return;
                                         }

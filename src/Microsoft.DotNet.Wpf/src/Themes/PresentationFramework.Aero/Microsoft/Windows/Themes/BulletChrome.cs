@@ -118,7 +118,7 @@ namespace Microsoft.Windows.Themes
                 {
                     AnimateToHover(chrome);
                 }
-                else if (chrome._localResources == null)
+                else if (chrome._localResources is null)
                 {
                     chrome.InvalidateVisual();
                 }
@@ -134,7 +134,7 @@ namespace Microsoft.Windows.Themes
                     GradientStopCollection stops;
                     ColorAnimation ca = new ColorAnimation();
 
-                    if (chrome.IsChecked == null)
+                    if (chrome.IsChecked is null)
                     {
                         AnimateToIndeterminate(chrome);
                     }
@@ -169,7 +169,7 @@ namespace Microsoft.Windows.Themes
 
         private static void AnimateToHover(BulletChrome chrome)
         {
-            if (chrome._localResources == null)
+            if (chrome._localResources is null)
             {
                 chrome._localResources = new LocalResources();
                 chrome.InvalidateVisual();
@@ -191,7 +191,7 @@ namespace Microsoft.Windows.Themes
             GradientStopCollection stops;
 
 
-            if (chrome.IsChecked == null)
+            if (chrome.IsChecked is null)
             {
                 // InnerBorder 
                 stops = ((GradientBrush)chrome.InnerBorderPen.Brush).GradientStops;
@@ -338,7 +338,7 @@ namespace Microsoft.Windows.Themes
             {
                 if (((bool)e.NewValue))
                 {
-                    if (chrome._localResources == null)
+                    if (chrome._localResources is null)
                     {
                         chrome._localResources = new LocalResources();
                         chrome.InvalidateVisual();
@@ -352,7 +352,7 @@ namespace Microsoft.Windows.Themes
                     ca = new ColorAnimation(Color.FromRgb(0xC2, 0xE4, 0xF6), duration);
                     chrome.BackgroundOverlay.BeginAnimation(SolidColorBrush.ColorProperty, ca);
 
-                    if (chrome.IsChecked == null)
+                    if (chrome.IsChecked is null)
                     {
                         // InnerBorderPen
                         GradientStopCollection stops = ((GradientBrush)chrome.InnerBorderPen.Brush).GradientStops;
@@ -429,7 +429,7 @@ namespace Microsoft.Windows.Themes
                         stops[2].BeginAnimation(GradientStop.ColorProperty, ca);
                     }
                 }
-                else if (chrome._localResources == null)
+                else if (chrome._localResources is null)
                 {
                     chrome.InvalidateVisual();
                 }
@@ -492,7 +492,7 @@ namespace Microsoft.Windows.Themes
 
             if (chrome.Animates)
             {
-                if (chrome._localResources == null)
+                if (chrome._localResources is null)
                 {
                     chrome._localResources = new LocalResources();
                     chrome.InvalidateVisual();
@@ -500,7 +500,7 @@ namespace Microsoft.Windows.Themes
 
                 Duration duration = new Duration(TimeSpan.FromSeconds(0.3));
 
-                if (chrome.IsChecked == null)
+                if (chrome.IsChecked is null)
                 {
                     AnimateToIndeterminate(chrome);
                 }
@@ -778,11 +778,11 @@ namespace Microsoft.Windows.Themes
 
             if (border != null)
             {
-                if (_commonBorderPen == null)   // Common case, if non-null, avoid the lock
+                if (_commonBorderPen is null)   // Common case, if non-null, avoid the lock
                 {
                     lock (_resourceAccess)   // If non-null, lock to create the pen for thread safety
                     {
-                        if (_commonBorderPen == null)   // Check again in case _pen was created within the last line
+                        if (_commonBorderPen is null)   // Check again in case _pen was created within the last line
                         {
                             // Assume that the first render of Button uses the most common brush for the app.
                             // This breaks down if (a) the first Button is disabled, (b) the first Button is
@@ -867,11 +867,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_checkMarkGeometry == null)
+                if (_checkMarkGeometry is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_checkMarkGeometry == null)
+                        if (_checkMarkGeometry is null)
                         {
                             PathFigure figure = new PathFigure();
                             figure.StartPoint = new Point(9.0, 1.833);
@@ -902,11 +902,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonCheckMarkStroke == null)
+                if (_commonCheckMarkStroke is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonCheckMarkStroke == null)
+                        if (_commonCheckMarkStroke is null)
                         {
                             Pen temp = new Pen();
                             temp.Thickness = 1.5;
@@ -926,11 +926,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonCheckMarkPressedStroke == null)
+                if (_commonCheckMarkPressedStroke is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonCheckMarkPressedStroke == null)
+                        if (_commonCheckMarkPressedStroke is null)
                         {
                             Pen temp = new Pen();
                             temp.Thickness = 1.5;
@@ -949,11 +949,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonRadioButtonDisabledGlyphStroke == null)
+                if (_commonRadioButtonDisabledGlyphStroke is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonRadioButtonDisabledGlyphStroke == null)
+                        if (_commonRadioButtonDisabledGlyphStroke is null)
                         {
                             Pen temp = new Pen();
                             temp.Thickness = 1;
@@ -972,11 +972,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonRadioButtonGlyphStroke == null)
+                if (_commonRadioButtonGlyphStroke is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonRadioButtonGlyphStroke == null)
+                        if (_commonRadioButtonGlyphStroke is null)
                         {
                             Pen temp = new Pen();
                             temp.Thickness = 1;
@@ -994,11 +994,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonIndeterminateHighlight == null)
+                if (_commonIndeterminateHighlight is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonIndeterminateHighlight == null)
+                        if (_commonIndeterminateHighlight is null)
                         {
                             Pen temp = new Pen();
                             temp.Thickness = 1;
@@ -1027,11 +1027,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonIndeterminateHoverHighlight == null)
+                if (_commonIndeterminateHoverHighlight is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonIndeterminateHoverHighlight == null)
+                        if (_commonIndeterminateHoverHighlight is null)
                         {
                             Pen temp = new Pen();
                             temp.Thickness = 1;
@@ -1059,11 +1059,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonIndeterminatePressedHighlight == null)
+                if (_commonIndeterminatePressedHighlight is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonIndeterminatePressedHighlight == null)
+                        if (_commonIndeterminatePressedHighlight is null)
                         {
                             Pen temp = new Pen();
                             temp.Thickness = 1;
@@ -1091,7 +1091,7 @@ namespace Microsoft.Windows.Themes
             {
                 if (_localResources != null)
                 {
-                    if (_localResources.HighlightStroke == null)
+                    if (_localResources.HighlightStroke is null)
                     {
                         _localResources.HighlightStroke = CommonIndeterminateHighlight.Clone();
                         _localResources.HighlightStroke.Brush.Opacity = 0;
@@ -1099,7 +1099,7 @@ namespace Microsoft.Windows.Themes
                     return _localResources.HighlightStroke;
                 }
 
-                if (!IsRound && IsChecked == null)
+                if (!IsRound && IsChecked is null)
                 {
                     if (RenderPressed)
                     {
@@ -1123,11 +1123,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonCheckMarkDisabledFill == null)
+                if (_commonCheckMarkDisabledFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonCheckMarkDisabledFill == null)
+                        if (_commonCheckMarkDisabledFill is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromRgb(0xAE, 0xB7, 0xCF));
                             temp.Freeze();
@@ -1143,11 +1143,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonCheckMarkFill == null)
+                if (_commonCheckMarkFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonCheckMarkFill == null)
+                        if (_commonCheckMarkFill is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromRgb(0x31, 0x34, 0x7C));
                             temp.Freeze();
@@ -1165,11 +1165,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonCheckMarkPressedFill == null)
+                if (_commonCheckMarkPressedFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonCheckMarkPressedFill == null)
+                        if (_commonCheckMarkPressedFill is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromRgb(0x31, 0x34, 0x7C));
                             temp.Opacity = 0.7;
@@ -1186,11 +1186,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonRadioButtonGlyphDisabledFill == null)
+                if (_commonRadioButtonGlyphDisabledFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonRadioButtonGlyphDisabledFill == null)
+                        if (_commonRadioButtonGlyphDisabledFill is null)
                         {
                             RadialGradientBrush temp = new RadialGradientBrush();
 
@@ -1217,11 +1217,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonRadioButtonGlyphFill == null)
+                if (_commonRadioButtonGlyphFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonRadioButtonGlyphFill == null)
+                        if (_commonRadioButtonGlyphFill is null)
                         {
                             RadialGradientBrush temp = new RadialGradientBrush();
 
@@ -1247,11 +1247,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonRadioButtonGlyphHoverFill == null)
+                if (_commonRadioButtonGlyphHoverFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonRadioButtonGlyphHoverFill == null)
+                        if (_commonRadioButtonGlyphHoverFill is null)
                         {
                             RadialGradientBrush temp = new RadialGradientBrush();
 
@@ -1279,11 +1279,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonRadioButtonGlyphPressedFill == null)
+                if (_commonRadioButtonGlyphPressedFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonRadioButtonGlyphPressedFill == null)
+                        if (_commonRadioButtonGlyphPressedFill is null)
                         {
                             RadialGradientBrush temp = new RadialGradientBrush();
 
@@ -1309,11 +1309,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonHoverBackgroundOverlay == null)
+                if (_commonHoverBackgroundOverlay is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonHoverBackgroundOverlay == null)
+                        if (_commonHoverBackgroundOverlay is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromRgb(0xDE, 0xF9, 0xFA));
                             temp.Freeze();
@@ -1329,11 +1329,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonPressedBackgroundOverlay == null)
+                if (_commonPressedBackgroundOverlay is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonPressedBackgroundOverlay == null)
+                        if (_commonPressedBackgroundOverlay is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromRgb(0xC2, 0xE4, 0xF6));
                             temp.Freeze();
@@ -1349,11 +1349,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonDisabledBackgroundOverlay == null)
+                if (_commonDisabledBackgroundOverlay is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonDisabledBackgroundOverlay == null)
+                        if (_commonDisabledBackgroundOverlay is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromRgb(0xF4, 0xF4, 0xF4));
                             temp.Freeze();
@@ -1369,11 +1369,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonHoverBorderOverlay == null)
+                if (_commonHoverBorderOverlay is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonHoverBorderOverlay == null)
+                        if (_commonHoverBorderOverlay is null)
                         {
                             Pen temp = new Pen();
                             temp.Thickness = 1;
@@ -1391,11 +1391,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonPressedBorderOverlay == null)
+                if (_commonPressedBorderOverlay is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonPressedBorderOverlay == null)
+                        if (_commonPressedBorderOverlay is null)
                         {
                             Pen temp = new Pen();
                             temp.Thickness = 1;
@@ -1413,11 +1413,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonDisabledBorderOverlay == null)
+                if (_commonDisabledBorderOverlay is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonDisabledBorderOverlay == null)
+                        if (_commonDisabledBorderOverlay is null)
                         {
                             Pen temp = new Pen();
                             temp.Thickness = 1;
@@ -1435,11 +1435,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonCheckBoxDisabledInnerBorderPen == null)
+                if (_commonCheckBoxDisabledInnerBorderPen is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonCheckBoxDisabledInnerBorderPen == null)
+                        if (_commonCheckBoxDisabledInnerBorderPen is null)
                         {
                             Pen temp = new Pen();
 
@@ -1467,11 +1467,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonCheckBoxInnerBorderPen == null)
+                if (_commonCheckBoxInnerBorderPen is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonCheckBoxInnerBorderPen == null)
+                        if (_commonCheckBoxInnerBorderPen is null)
                         {
                             Pen temp = new Pen();
 
@@ -1499,11 +1499,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonCheckBoxHoverInnerBorderPen == null)
+                if (_commonCheckBoxHoverInnerBorderPen is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonCheckBoxHoverInnerBorderPen == null)
+                        if (_commonCheckBoxHoverInnerBorderPen is null)
                         {
                             Pen temp = new Pen();
 
@@ -1531,11 +1531,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonCheckBoxPressedInnerBorderPen == null)
+                if (_commonCheckBoxPressedInnerBorderPen is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonCheckBoxPressedInnerBorderPen == null)
+                        if (_commonCheckBoxPressedInnerBorderPen is null)
                         {
                             Pen temp = new Pen();
 
@@ -1563,11 +1563,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonIndeterminateDisabledInnerBorderPen == null)
+                if (_commonIndeterminateDisabledInnerBorderPen is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonIndeterminateDisabledInnerBorderPen == null)
+                        if (_commonIndeterminateDisabledInnerBorderPen is null)
                         {
                             Pen temp = new Pen();
 
@@ -1595,11 +1595,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonIndeterminateInnerBorderPen == null)
+                if (_commonIndeterminateInnerBorderPen is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonIndeterminateInnerBorderPen == null)
+                        if (_commonIndeterminateInnerBorderPen is null)
                         {
                             Pen temp = new Pen();
 
@@ -1627,11 +1627,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonIndeterminateHoverInnerBorderPen == null)
+                if (_commonIndeterminateHoverInnerBorderPen is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonIndeterminateHoverInnerBorderPen == null)
+                        if (_commonIndeterminateHoverInnerBorderPen is null)
                         {
                             Pen temp = new Pen();
 
@@ -1659,11 +1659,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonIndeterminatePressedInnerBorderPen == null)
+                if (_commonIndeterminatePressedInnerBorderPen is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonIndeterminatePressedInnerBorderPen == null)
+                        if (_commonIndeterminatePressedInnerBorderPen is null)
                         {
                             Pen temp = new Pen();
 
@@ -1692,11 +1692,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonRadioButtonInnerBorderPen == null)
+                if (_commonRadioButtonInnerBorderPen is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonRadioButtonInnerBorderPen == null)
+                        if (_commonRadioButtonInnerBorderPen is null)
                         {
                             Pen temp = new Pen();
 
@@ -1723,11 +1723,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonRadioButtonHoverInnerBorderPen == null)
+                if (_commonRadioButtonHoverInnerBorderPen is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonRadioButtonHoverInnerBorderPen == null)
+                        if (_commonRadioButtonHoverInnerBorderPen is null)
                         {
                             Pen temp = new Pen();
 
@@ -1754,11 +1754,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonRadioButtonPressedInnerBorderPen == null)
+                if (_commonRadioButtonPressedInnerBorderPen is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonRadioButtonPressedInnerBorderPen == null)
+                        if (_commonRadioButtonPressedInnerBorderPen is null)
                         {
                             Pen temp = new Pen();
 
@@ -1808,7 +1808,7 @@ namespace Microsoft.Windows.Themes
 
                 if (_localResources != null)
                 {
-                    if (_localResources.BackgroundOverlay == null)
+                    if (_localResources.BackgroundOverlay is null)
                     {
                         _localResources.BackgroundOverlay = CommonHoverBackgroundOverlay.Clone();
                         _localResources.BackgroundOverlay.Opacity = 0;
@@ -1827,11 +1827,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonCheckBoxInnerFill == null)
+                if (_commonCheckBoxInnerFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonCheckBoxInnerFill == null)
+                        if (_commonCheckBoxInnerFill is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -1853,11 +1853,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonCheckBoxHoverInnerFill == null)
+                if (_commonCheckBoxHoverInnerFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonCheckBoxHoverInnerFill == null)
+                        if (_commonCheckBoxHoverInnerFill is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -1879,11 +1879,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonCheckBoxPressedInnerFill == null)
+                if (_commonCheckBoxPressedInnerFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonCheckBoxPressedInnerFill == null)
+                        if (_commonCheckBoxPressedInnerFill is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -1908,11 +1908,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonIndeterminateDisabledFill == null)
+                if (_commonIndeterminateDisabledFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonIndeterminateDisabledFill == null)
+                        if (_commonIndeterminateDisabledFill is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -1935,11 +1935,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonIndeterminateFill == null)
+                if (_commonIndeterminateFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonIndeterminateFill == null)
+                        if (_commonIndeterminateFill is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -1961,11 +1961,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonIndeterminateHoverFill == null)
+                if (_commonIndeterminateHoverFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonIndeterminateHoverFill == null)
+                        if (_commonIndeterminateHoverFill is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -1987,11 +1987,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonIndeterminatePressedFill == null)
+                if (_commonIndeterminatePressedFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonIndeterminatePressedFill == null)
+                        if (_commonIndeterminatePressedFill is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -2015,7 +2015,7 @@ namespace Microsoft.Windows.Themes
             {
                 if (!IsEnabled)
                 {
-                    if (IsChecked == null)
+                    if (IsChecked is null)
                     {
                         return CommonIndeterminateDisabledFill;
                     }
@@ -2027,14 +2027,14 @@ namespace Microsoft.Windows.Themes
 
                 if (_localResources != null)
                 {
-                    if (_localResources.InnerFill == null)
+                    if (_localResources.InnerFill is null)
                     {
                         _localResources.InnerFill = CommonCheckBoxInnerFill.Clone();
                     }
                     return _localResources.InnerFill;
                 }
 
-                if (IsChecked == null)
+                if (IsChecked is null)
                 {
                     if (RenderPressed)
                     {
@@ -2084,7 +2084,7 @@ namespace Microsoft.Windows.Themes
 
                 if (_localResources != null)
                 {
-                    if (_localResources.GlyphStroke == null)
+                    if (_localResources.GlyphStroke is null)
                     {
                         if (!IsRound)
                         {
@@ -2163,7 +2163,7 @@ namespace Microsoft.Windows.Themes
 
                 if (_localResources != null)
                 {
-                    if (_localResources.GlyphFill == null)
+                    if (_localResources.GlyphFill is null)
                     {
                         if (!IsRound)
                         {
@@ -2242,7 +2242,7 @@ namespace Microsoft.Windows.Themes
 
                 if (_localResources != null)
                 {
-                    if (_localResources.BorderOverlayPen == null)
+                    if (_localResources.BorderOverlayPen is null)
                     {
                         _localResources.BorderOverlayPen = CommonHoverBorderOverlay.Clone();
                         _localResources.BorderOverlayPen.Brush.Opacity = 0;
@@ -2274,7 +2274,7 @@ namespace Microsoft.Windows.Themes
             {
                 if (!IsEnabled)
                 {
-                    if (IsChecked == null)
+                    if (IsChecked is null)
                     {
                         return CommonIndeterminateDisabledInnerBorderPen;
                     }
@@ -2286,7 +2286,7 @@ namespace Microsoft.Windows.Themes
 
                 if (_localResources != null)
                 {
-                    if (_localResources.InnerBorderPen == null)
+                    if (_localResources.InnerBorderPen is null)
                     {
                         _localResources.InnerBorderPen = CommonCheckBoxInnerBorderPen.Clone();
                     }
@@ -2297,7 +2297,7 @@ namespace Microsoft.Windows.Themes
                 {
                     if (!IsRound)
                     {
-                        if (IsChecked == null)
+                        if (IsChecked is null)
                         {
                             return CommonIndeterminatePressedInnerBorderPen;
                         }
@@ -2315,7 +2315,7 @@ namespace Microsoft.Windows.Themes
                 {
                     if (!IsRound)
                     {
-                        if (IsChecked == null)
+                        if (IsChecked is null)
                         {
                             return CommonIndeterminateHoverInnerBorderPen;
                         }
@@ -2333,7 +2333,7 @@ namespace Microsoft.Windows.Themes
                 {
                     if (!IsRound)
                     {
-                        if (IsChecked == null)
+                        if (IsChecked is null)
                         {
                             return CommonIndeterminateInnerBorderPen;
                         }

@@ -60,7 +60,7 @@ namespace System.Windows.Automation.Peers
             {
                 if(VirtualizedItemPatternIdentifiers.Pattern != null)
                 {
-                    if(GetWrapperPeer() == null)
+                    if(GetWrapperPeer() is null)
                         return this;
                     else
                     {
@@ -71,7 +71,7 @@ namespace System.Windows.Automation.Peers
                             return this;
                         }
 
-                        if(ItemsControlAutomationPeer == null)
+                        if(ItemsControlAutomationPeer is null)
                             return this;
                     }
                 }
@@ -118,7 +118,7 @@ namespace System.Windows.Automation.Peers
             if(wrapper != null)
             {
                 wrapperPeer = UIElementAutomationPeer.CreatePeerForElement(wrapper);
-                if(wrapperPeer == null) //fall back to default peer if there is no specific one
+                if(wrapperPeer is null) //fall back to default peer if there is no specific one
                 {
                     if(wrapper is FrameworkElement)
                         wrapperPeer = new FrameworkElementAutomationPeer((FrameworkElement)wrapper);
@@ -687,7 +687,7 @@ namespace System.Windows.Automation.Peers
                 if (iwr != null)
                 {
                     object item = iwr.Target;
-                    return (item == null) ? DependencyProperty.UnsetValue : item;
+                    return (item is null) ? DependencyProperty.UnsetValue : item;
                 }
                 else
                 {

@@ -255,7 +255,7 @@ namespace MS.Internal.Annotations
 
                 // If the new value is actually different, then we add it and fire
                 // a change notification
-                if ((oldValue == null) || (oldValue != value))
+                if ((oldValue is null) || (oldValue != value))
                 {
                     _nameValues[key] = value;
                     FireDictionaryChanged();

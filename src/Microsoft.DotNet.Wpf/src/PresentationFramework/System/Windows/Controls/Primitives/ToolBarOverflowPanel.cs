@@ -200,7 +200,7 @@ namespace System.Windows.Controls.Primitives
         protected override UIElementCollection CreateUIElementCollection(FrameworkElement logicalParent)
         {
             // we ignore the Logical Parent (this) if we have ToolBar as our TemplatedParent
-            return new UIElementCollection(this, TemplatedParent == null ? logicalParent : null);
+            return new UIElementCollection(this, TemplatedParent is null ? logicalParent : null);
         }
 
         private void arrangeLine(double y, double lineHeight, int start, int end)
@@ -228,7 +228,7 @@ namespace System.Windows.Controls.Primitives
             get
             {
                 ToolBar tb = ToolBar;
-                return tb == null ? null : tb.ToolBarPanel;
+                return tb is null ? null : tb.ToolBarPanel;
             }
         }
 

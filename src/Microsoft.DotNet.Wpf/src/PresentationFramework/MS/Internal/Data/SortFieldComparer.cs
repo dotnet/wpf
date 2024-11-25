@@ -37,7 +37,7 @@ namespace MS.Internal.Data
             _fields = CreatePropertyInfo(_sortFields);
 
             // create the comparer
-            _comparer = (culture == null || culture == CultureInfo.InvariantCulture) ? Comparer.DefaultInvariant
+            _comparer = (culture is null || culture == CultureInfo.InvariantCulture) ? Comparer.DefaultInvariant
                         : (culture == CultureInfo.CurrentCulture) ? Comparer.Default
                         : new Comparer(culture);
         }
@@ -80,7 +80,7 @@ namespace MS.Internal.Data
         internal static void SortHelper(ArrayList al, IComparer comparer)
         {
             SortFieldComparer sfc = comparer as SortFieldComparer;
-            if (sfc == null)
+            if (sfc is null)
             {
                 // sort the usual way
                 al.Sort(comparer);
@@ -173,7 +173,7 @@ namespace MS.Internal.Data
             object GetValueCore(object o)
             {
                 object value;
-                if (info == null)
+                if (info is null)
                 {
                     value = o;
                 }

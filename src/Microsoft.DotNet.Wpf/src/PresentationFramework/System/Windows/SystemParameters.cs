@@ -245,7 +245,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheFocusBorderWidth == null)
+                if (_cacheFocusBorderWidth is null)
                 {
                     _cacheFocusBorderWidth = CreateInstance(SystemResourceKeyID.FocusBorderWidth);
                 }
@@ -261,7 +261,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheFocusBorderHeight == null)
+                if (_cacheFocusBorderHeight is null)
                 {
                     _cacheFocusBorderHeight = CreateInstance(SystemResourceKeyID.FocusBorderHeight);
                 }
@@ -277,7 +277,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheHighContrast == null)
+                if (_cacheHighContrast is null)
                 {
                     _cacheHighContrast = CreateInstance(SystemResourceKeyID.HighContrast);
                 }
@@ -409,7 +409,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheDropShadow == null)
+                if (_cacheDropShadow is null)
                 {
                     _cacheDropShadow = CreateInstance(SystemResourceKeyID.DropShadow);
                 }
@@ -425,7 +425,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheFlatMenu == null)
+                if (_cacheFlatMenu is null)
                 {
                     _cacheFlatMenu = CreateInstance(SystemResourceKeyID.FlatMenu);
                 }
@@ -441,7 +441,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheWorkArea == null)
+                if (_cacheWorkArea is null)
                 {
                     _cacheWorkArea = CreateInstance(SystemResourceKeyID.WorkArea);
                 }
@@ -527,7 +527,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheIconHorizontalSpacing == null)
+                if (_cacheIconHorizontalSpacing is null)
                 {
                     _cacheIconHorizontalSpacing = CreateInstance(SystemResourceKeyID.IconHorizontalSpacing);
                 }
@@ -543,7 +543,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheIconVerticalSpacing == null)
+                if (_cacheIconVerticalSpacing is null)
                 {
                     _cacheIconVerticalSpacing = CreateInstance(SystemResourceKeyID.IconVerticalSpacing);
                 }
@@ -559,7 +559,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheIconTitleWrap == null)
+                if (_cacheIconTitleWrap is null)
                 {
                     _cacheIconTitleWrap = CreateInstance(SystemResourceKeyID.IconTitleWrap);
                 }
@@ -852,7 +852,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheKeyboardCues == null)
+                if (_cacheKeyboardCues is null)
                 {
                     _cacheKeyboardCues = CreateInstance(SystemResourceKeyID.KeyboardCues);
                 }
@@ -868,7 +868,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheKeyboardDelay == null)
+                if (_cacheKeyboardDelay is null)
                 {
                     _cacheKeyboardDelay = CreateInstance(SystemResourceKeyID.KeyboardDelay);
                 }
@@ -884,7 +884,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheKeyboardPreference == null)
+                if (_cacheKeyboardPreference is null)
                 {
                     _cacheKeyboardPreference = CreateInstance(SystemResourceKeyID.KeyboardPreference);
                 }
@@ -900,7 +900,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheKeyboardSpeed == null)
+                if (_cacheKeyboardSpeed is null)
                 {
                     _cacheKeyboardSpeed = CreateInstance(SystemResourceKeyID.KeyboardSpeed);
                 }
@@ -916,7 +916,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheSnapToDefaultButton == null)
+                if (_cacheSnapToDefaultButton is null)
                 {
                     _cacheSnapToDefaultButton = CreateInstance(SystemResourceKeyID.SnapToDefaultButton);
                 }
@@ -932,7 +932,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheWheelScrollLines == null)
+                if (_cacheWheelScrollLines is null)
                 {
                     _cacheWheelScrollLines = CreateInstance(SystemResourceKeyID.WheelScrollLines);
                 }
@@ -948,7 +948,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMouseHoverTime == null)
+                if (_cacheMouseHoverTime is null)
                 {
                     _cacheMouseHoverTime = CreateInstance(SystemResourceKeyID.MouseHoverTime);
                 }
@@ -964,7 +964,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMouseHoverHeight == null)
+                if (_cacheMouseHoverHeight is null)
                 {
                     _cacheMouseHoverHeight = CreateInstance(SystemResourceKeyID.MouseHoverHeight);
                 }
@@ -980,7 +980,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMouseHoverWidth == null)
+                if (_cacheMouseHoverWidth is null)
                 {
                     _cacheMouseHoverWidth = CreateInstance(SystemResourceKeyID.MouseHoverWidth);
                 }
@@ -1088,7 +1088,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMenuDropAlignment == null)
+                if (_cacheMenuDropAlignment is null)
                 {
                     _cacheMenuDropAlignment = CreateInstance(SystemResourceKeyID.MenuDropAlignment);
                 }
@@ -1104,7 +1104,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMenuFade == null)
+                if (_cacheMenuFade is null)
                 {
                     _cacheMenuFade = CreateInstance(SystemResourceKeyID.MenuFade);
                 }
@@ -1120,7 +1120,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMenuShowDelay == null)
+                if (_cacheMenuShowDelay is null)
                 {
                     _cacheMenuShowDelay = CreateInstance(SystemResourceKeyID.MenuShowDelay);
                 }
@@ -1547,7 +1547,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheComboBoxAnimation == null)
+                if (_cacheComboBoxAnimation is null)
                 {
                     _cacheComboBoxAnimation = CreateInstance(SystemResourceKeyID.ComboBoxAnimation);
                 }
@@ -1563,7 +1563,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheClientAreaAnimation == null)
+                if (_cacheClientAreaAnimation is null)
                 {
                     _cacheClientAreaAnimation = CreateInstance(SystemResourceKeyID.ClientAreaAnimation);
                 }
@@ -1579,7 +1579,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheCursorShadow == null)
+                if (_cacheCursorShadow is null)
                 {
                     _cacheCursorShadow = CreateInstance(SystemResourceKeyID.CursorShadow);
                 }
@@ -1595,7 +1595,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheGradientCaptions == null)
+                if (_cacheGradientCaptions is null)
                 {
                     _cacheGradientCaptions = CreateInstance(SystemResourceKeyID.GradientCaptions);
                 }
@@ -1611,7 +1611,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheHotTracking == null)
+                if (_cacheHotTracking is null)
                 {
                     _cacheHotTracking = CreateInstance(SystemResourceKeyID.HotTracking);
                 }
@@ -1627,7 +1627,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheListBoxSmoothScrolling == null)
+                if (_cacheListBoxSmoothScrolling is null)
                 {
                     _cacheListBoxSmoothScrolling = CreateInstance(SystemResourceKeyID.ListBoxSmoothScrolling);
                 }
@@ -1643,7 +1643,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMenuAnimation == null)
+                if (_cacheMenuAnimation is null)
                 {
                     _cacheMenuAnimation = CreateInstance(SystemResourceKeyID.MenuAnimation);
                 }
@@ -1659,7 +1659,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheSelectionFade == null)
+                if (_cacheSelectionFade is null)
                 {
                     _cacheSelectionFade = CreateInstance(SystemResourceKeyID.SelectionFade);
                 }
@@ -1675,7 +1675,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheStylusHotTracking == null)
+                if (_cacheStylusHotTracking is null)
                 {
                     _cacheStylusHotTracking = CreateInstance(SystemResourceKeyID.StylusHotTracking);
                 }
@@ -1691,7 +1691,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheToolTipAnimation == null)
+                if (_cacheToolTipAnimation is null)
                 {
                     _cacheToolTipAnimation = CreateInstance(SystemResourceKeyID.ToolTipAnimation);
                 }
@@ -1707,7 +1707,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheToolTipFade == null)
+                if (_cacheToolTipFade is null)
                 {
                     _cacheToolTipFade = CreateInstance(SystemResourceKeyID.ToolTipFade);
                 }
@@ -1723,7 +1723,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheUIEffects == null)
+                if (_cacheUIEffects is null)
                 {
                     _cacheUIEffects = CreateInstance(SystemResourceKeyID.UIEffects);
                 }
@@ -1739,7 +1739,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheComboBoxPopupAnimation == null)
+                if (_cacheComboBoxPopupAnimation is null)
                 {
                     _cacheComboBoxPopupAnimation = CreateInstance(SystemResourceKeyID.ComboBoxPopupAnimation);
                 }
@@ -1755,7 +1755,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMenuPopupAnimation == null)
+                if (_cacheMenuPopupAnimation is null)
                 {
                     _cacheMenuPopupAnimation = CreateInstance(SystemResourceKeyID.MenuPopupAnimation);
                 }
@@ -1771,7 +1771,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheToolTipPopupAnimation == null)
+                if (_cacheToolTipPopupAnimation is null)
                 {
                     _cacheToolTipPopupAnimation = CreateInstance(SystemResourceKeyID.ToolTipPopupAnimation);
                 }
@@ -2091,7 +2091,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMinimizeAnimation == null)
+                if (_cacheMinimizeAnimation is null)
                 {
                     _cacheMinimizeAnimation = CreateInstance(SystemResourceKeyID.MinimizeAnimation);
                 }
@@ -2107,7 +2107,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheBorder == null)
+                if (_cacheBorder is null)
                 {
                     _cacheBorder = CreateInstance(SystemResourceKeyID.Border);
                 }
@@ -2123,7 +2123,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheCaretWidth == null)
+                if (_cacheCaretWidth is null)
                 {
                     _cacheCaretWidth = CreateInstance(SystemResourceKeyID.CaretWidth);
                 }
@@ -2139,7 +2139,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheForegroundFlashCount == null)
+                if (_cacheForegroundFlashCount is null)
                 {
                     _cacheForegroundFlashCount = CreateInstance(SystemResourceKeyID.ForegroundFlashCount);
                 }
@@ -2155,7 +2155,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheDragFullWindows == null)
+                if (_cacheDragFullWindows is null)
                 {
                     _cacheDragFullWindows = CreateInstance(SystemResourceKeyID.DragFullWindows);
                 }
@@ -2171,7 +2171,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheBorderWidth == null)
+                if (_cacheBorderWidth is null)
                 {
                     _cacheBorderWidth = CreateInstance(SystemResourceKeyID.BorderWidth);
                 }
@@ -2187,7 +2187,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheScrollWidth == null)
+                if (_cacheScrollWidth is null)
                 {
                     _cacheScrollWidth = CreateInstance(SystemResourceKeyID.ScrollWidth);
                 }
@@ -2203,7 +2203,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheScrollHeight == null)
+                if (_cacheScrollHeight is null)
                 {
                     _cacheScrollHeight = CreateInstance(SystemResourceKeyID.ScrollHeight);
                 }
@@ -2219,7 +2219,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheCaptionWidth == null)
+                if (_cacheCaptionWidth is null)
                 {
                     _cacheCaptionWidth = CreateInstance(SystemResourceKeyID.CaptionWidth);
                 }
@@ -2235,7 +2235,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheCaptionHeight == null)
+                if (_cacheCaptionHeight is null)
                 {
                     _cacheCaptionHeight = CreateInstance(SystemResourceKeyID.CaptionHeight);
                 }
@@ -2251,7 +2251,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheSmallCaptionWidth == null)
+                if (_cacheSmallCaptionWidth is null)
                 {
                     _cacheSmallCaptionWidth = CreateInstance(SystemResourceKeyID.SmallCaptionWidth);
                 }
@@ -2267,7 +2267,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMenuWidth == null)
+                if (_cacheMenuWidth is null)
                 {
                     _cacheMenuWidth = CreateInstance(SystemResourceKeyID.MenuWidth);
                 }
@@ -2283,7 +2283,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMenuHeight == null)
+                if (_cacheMenuHeight is null)
                 {
                     _cacheMenuHeight = CreateInstance(SystemResourceKeyID.MenuHeight);
                 }
@@ -3804,7 +3804,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheThinHorizontalBorderHeight == null)
+                if (_cacheThinHorizontalBorderHeight is null)
                 {
                     _cacheThinHorizontalBorderHeight = CreateInstance(SystemResourceKeyID.ThinHorizontalBorderHeight);
                 }
@@ -3820,7 +3820,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheThinVerticalBorderWidth == null)
+                if (_cacheThinVerticalBorderWidth is null)
                 {
                     _cacheThinVerticalBorderWidth = CreateInstance(SystemResourceKeyID.ThinVerticalBorderWidth);
                 }
@@ -3836,7 +3836,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheCursorWidth == null)
+                if (_cacheCursorWidth is null)
                 {
                     _cacheCursorWidth = CreateInstance(SystemResourceKeyID.CursorWidth);
                 }
@@ -3852,7 +3852,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheCursorHeight == null)
+                if (_cacheCursorHeight is null)
                 {
                     _cacheCursorHeight = CreateInstance(SystemResourceKeyID.CursorHeight);
                 }
@@ -3868,7 +3868,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheThickHorizontalBorderHeight == null)
+                if (_cacheThickHorizontalBorderHeight is null)
                 {
                     _cacheThickHorizontalBorderHeight = CreateInstance(SystemResourceKeyID.ThickHorizontalBorderHeight);
                 }
@@ -3884,7 +3884,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheThickVerticalBorderWidth == null)
+                if (_cacheThickVerticalBorderWidth is null)
                 {
                     _cacheThickVerticalBorderWidth = CreateInstance(SystemResourceKeyID.ThickVerticalBorderWidth);
                 }
@@ -3900,7 +3900,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheFixedFrameHorizontalBorderHeight == null)
+                if (_cacheFixedFrameHorizontalBorderHeight is null)
                 {
                     _cacheFixedFrameHorizontalBorderHeight = CreateInstance(SystemResourceKeyID.FixedFrameHorizontalBorderHeight);
                 }
@@ -3916,7 +3916,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheFixedFrameVerticalBorderWidth == null)
+                if (_cacheFixedFrameVerticalBorderWidth is null)
                 {
                     _cacheFixedFrameVerticalBorderWidth = CreateInstance(SystemResourceKeyID.FixedFrameVerticalBorderWidth);
                 }
@@ -3932,7 +3932,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheFocusHorizontalBorderHeight == null)
+                if (_cacheFocusHorizontalBorderHeight is null)
                 {
                     _cacheFocusHorizontalBorderHeight = CreateInstance(SystemResourceKeyID.FocusHorizontalBorderHeight);
                 }
@@ -3948,7 +3948,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheFocusVerticalBorderWidth == null)
+                if (_cacheFocusVerticalBorderWidth is null)
                 {
                     _cacheFocusVerticalBorderWidth = CreateInstance(SystemResourceKeyID.FocusVerticalBorderWidth);
                 }
@@ -3964,7 +3964,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheFullPrimaryScreenWidth == null)
+                if (_cacheFullPrimaryScreenWidth is null)
                 {
                     _cacheFullPrimaryScreenWidth = CreateInstance(SystemResourceKeyID.FullPrimaryScreenWidth);
                 }
@@ -3980,7 +3980,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheFullPrimaryScreenHeight == null)
+                if (_cacheFullPrimaryScreenHeight is null)
                 {
                     _cacheFullPrimaryScreenHeight = CreateInstance(SystemResourceKeyID.FullPrimaryScreenHeight);
                 }
@@ -3996,7 +3996,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheHorizontalScrollBarButtonWidth == null)
+                if (_cacheHorizontalScrollBarButtonWidth is null)
                 {
                     _cacheHorizontalScrollBarButtonWidth = CreateInstance(SystemResourceKeyID.HorizontalScrollBarButtonWidth);
                 }
@@ -4012,7 +4012,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheHorizontalScrollBarHeight == null)
+                if (_cacheHorizontalScrollBarHeight is null)
                 {
                     _cacheHorizontalScrollBarHeight = CreateInstance(SystemResourceKeyID.HorizontalScrollBarHeight);
                 }
@@ -4028,7 +4028,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheHorizontalScrollBarThumbWidth == null)
+                if (_cacheHorizontalScrollBarThumbWidth is null)
                 {
                     _cacheHorizontalScrollBarThumbWidth = CreateInstance(SystemResourceKeyID.HorizontalScrollBarThumbWidth);
                 }
@@ -4044,7 +4044,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheIconWidth == null)
+                if (_cacheIconWidth is null)
                 {
                     _cacheIconWidth = CreateInstance(SystemResourceKeyID.IconWidth);
                 }
@@ -4060,7 +4060,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheIconHeight == null)
+                if (_cacheIconHeight is null)
                 {
                     _cacheIconHeight = CreateInstance(SystemResourceKeyID.IconHeight);
                 }
@@ -4076,7 +4076,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheIconGridWidth == null)
+                if (_cacheIconGridWidth is null)
                 {
                     _cacheIconGridWidth = CreateInstance(SystemResourceKeyID.IconGridWidth);
                 }
@@ -4092,7 +4092,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheIconGridHeight == null)
+                if (_cacheIconGridHeight is null)
                 {
                     _cacheIconGridHeight = CreateInstance(SystemResourceKeyID.IconGridHeight);
                 }
@@ -4108,7 +4108,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMaximizedPrimaryScreenWidth == null)
+                if (_cacheMaximizedPrimaryScreenWidth is null)
                 {
                     _cacheMaximizedPrimaryScreenWidth = CreateInstance(SystemResourceKeyID.MaximizedPrimaryScreenWidth);
                 }
@@ -4124,7 +4124,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMaximizedPrimaryScreenHeight == null)
+                if (_cacheMaximizedPrimaryScreenHeight is null)
                 {
                     _cacheMaximizedPrimaryScreenHeight = CreateInstance(SystemResourceKeyID.MaximizedPrimaryScreenHeight);
                 }
@@ -4140,7 +4140,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMaximumWindowTrackWidth == null)
+                if (_cacheMaximumWindowTrackWidth is null)
                 {
                     _cacheMaximumWindowTrackWidth = CreateInstance(SystemResourceKeyID.MaximumWindowTrackWidth);
                 }
@@ -4156,7 +4156,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMaximumWindowTrackHeight == null)
+                if (_cacheMaximumWindowTrackHeight is null)
                 {
                     _cacheMaximumWindowTrackHeight = CreateInstance(SystemResourceKeyID.MaximumWindowTrackHeight);
                 }
@@ -4172,7 +4172,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMenuCheckmarkWidth == null)
+                if (_cacheMenuCheckmarkWidth is null)
                 {
                     _cacheMenuCheckmarkWidth = CreateInstance(SystemResourceKeyID.MenuCheckmarkWidth);
                 }
@@ -4188,7 +4188,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMenuCheckmarkHeight == null)
+                if (_cacheMenuCheckmarkHeight is null)
                 {
                     _cacheMenuCheckmarkHeight = CreateInstance(SystemResourceKeyID.MenuCheckmarkHeight);
                 }
@@ -4204,7 +4204,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMenuButtonWidth == null)
+                if (_cacheMenuButtonWidth is null)
                 {
                     _cacheMenuButtonWidth = CreateInstance(SystemResourceKeyID.MenuButtonWidth);
                 }
@@ -4220,7 +4220,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMenuButtonHeight == null)
+                if (_cacheMenuButtonHeight is null)
                 {
                     _cacheMenuButtonHeight = CreateInstance(SystemResourceKeyID.MenuButtonHeight);
                 }
@@ -4236,7 +4236,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMinimumWindowWidth == null)
+                if (_cacheMinimumWindowWidth is null)
                 {
                     _cacheMinimumWindowWidth = CreateInstance(SystemResourceKeyID.MinimumWindowWidth);
                 }
@@ -4252,7 +4252,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMinimumWindowHeight == null)
+                if (_cacheMinimumWindowHeight is null)
                 {
                     _cacheMinimumWindowHeight = CreateInstance(SystemResourceKeyID.MinimumWindowHeight);
                 }
@@ -4268,7 +4268,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMinimizedWindowWidth == null)
+                if (_cacheMinimizedWindowWidth is null)
                 {
                     _cacheMinimizedWindowWidth = CreateInstance(SystemResourceKeyID.MinimizedWindowWidth);
                 }
@@ -4284,7 +4284,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMinimizedWindowHeight == null)
+                if (_cacheMinimizedWindowHeight is null)
                 {
                     _cacheMinimizedWindowHeight = CreateInstance(SystemResourceKeyID.MinimizedWindowHeight);
                 }
@@ -4300,7 +4300,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMinimizedGridWidth == null)
+                if (_cacheMinimizedGridWidth is null)
                 {
                     _cacheMinimizedGridWidth = CreateInstance(SystemResourceKeyID.MinimizedGridWidth);
                 }
@@ -4316,7 +4316,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMinimizedGridHeight == null)
+                if (_cacheMinimizedGridHeight is null)
                 {
                     _cacheMinimizedGridHeight = CreateInstance(SystemResourceKeyID.MinimizedGridHeight);
                 }
@@ -4332,7 +4332,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMinimumWindowTrackWidth == null)
+                if (_cacheMinimumWindowTrackWidth is null)
                 {
                     _cacheMinimumWindowTrackWidth = CreateInstance(SystemResourceKeyID.MinimumWindowTrackWidth);
                 }
@@ -4348,7 +4348,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMinimumWindowTrackHeight == null)
+                if (_cacheMinimumWindowTrackHeight is null)
                 {
                     _cacheMinimumWindowTrackHeight = CreateInstance(SystemResourceKeyID.MinimumWindowTrackHeight);
                 }
@@ -4364,7 +4364,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cachePrimaryScreenWidth == null)
+                if (_cachePrimaryScreenWidth is null)
                 {
                     _cachePrimaryScreenWidth = CreateInstance(SystemResourceKeyID.PrimaryScreenWidth);
                 }
@@ -4380,7 +4380,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cachePrimaryScreenHeight == null)
+                if (_cachePrimaryScreenHeight is null)
                 {
                     _cachePrimaryScreenHeight = CreateInstance(SystemResourceKeyID.PrimaryScreenHeight);
                 }
@@ -4396,7 +4396,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheWindowCaptionButtonWidth == null)
+                if (_cacheWindowCaptionButtonWidth is null)
                 {
                     _cacheWindowCaptionButtonWidth = CreateInstance(SystemResourceKeyID.WindowCaptionButtonWidth);
                 }
@@ -4412,7 +4412,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheWindowCaptionButtonHeight == null)
+                if (_cacheWindowCaptionButtonHeight is null)
                 {
                     _cacheWindowCaptionButtonHeight = CreateInstance(SystemResourceKeyID.WindowCaptionButtonHeight);
                 }
@@ -4428,7 +4428,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheResizeFrameHorizontalBorderHeight == null)
+                if (_cacheResizeFrameHorizontalBorderHeight is null)
                 {
                     _cacheResizeFrameHorizontalBorderHeight = CreateInstance(SystemResourceKeyID.ResizeFrameHorizontalBorderHeight);
                 }
@@ -4444,7 +4444,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheResizeFrameVerticalBorderWidth == null)
+                if (_cacheResizeFrameVerticalBorderWidth is null)
                 {
                     _cacheResizeFrameVerticalBorderWidth = CreateInstance(SystemResourceKeyID.ResizeFrameVerticalBorderWidth);
                 }
@@ -4460,7 +4460,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheSmallIconWidth == null)
+                if (_cacheSmallIconWidth is null)
                 {
                     _cacheSmallIconWidth = CreateInstance(SystemResourceKeyID.SmallIconWidth);
                 }
@@ -4476,7 +4476,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheSmallIconHeight == null)
+                if (_cacheSmallIconHeight is null)
                 {
                     _cacheSmallIconHeight = CreateInstance(SystemResourceKeyID.SmallIconHeight);
                 }
@@ -4492,7 +4492,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheSmallWindowCaptionButtonWidth == null)
+                if (_cacheSmallWindowCaptionButtonWidth is null)
                 {
                     _cacheSmallWindowCaptionButtonWidth = CreateInstance(SystemResourceKeyID.SmallWindowCaptionButtonWidth);
                 }
@@ -4508,7 +4508,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheSmallWindowCaptionButtonHeight == null)
+                if (_cacheSmallWindowCaptionButtonHeight is null)
                 {
                     _cacheSmallWindowCaptionButtonHeight = CreateInstance(SystemResourceKeyID.SmallWindowCaptionButtonHeight);
                 }
@@ -4524,7 +4524,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheVirtualScreenWidth == null)
+                if (_cacheVirtualScreenWidth is null)
                 {
                     _cacheVirtualScreenWidth = CreateInstance(SystemResourceKeyID.VirtualScreenWidth);
                 }
@@ -4540,7 +4540,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheVirtualScreenHeight == null)
+                if (_cacheVirtualScreenHeight is null)
                 {
                     _cacheVirtualScreenHeight = CreateInstance(SystemResourceKeyID.VirtualScreenHeight);
                 }
@@ -4556,7 +4556,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheVerticalScrollBarWidth == null)
+                if (_cacheVerticalScrollBarWidth is null)
                 {
                     _cacheVerticalScrollBarWidth = CreateInstance(SystemResourceKeyID.VerticalScrollBarWidth);
                 }
@@ -4572,7 +4572,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheVerticalScrollBarButtonHeight == null)
+                if (_cacheVerticalScrollBarButtonHeight is null)
                 {
                     _cacheVerticalScrollBarButtonHeight = CreateInstance(SystemResourceKeyID.VerticalScrollBarButtonHeight);
                 }
@@ -4588,7 +4588,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheWindowCaptionHeight == null)
+                if (_cacheWindowCaptionHeight is null)
                 {
                     _cacheWindowCaptionHeight = CreateInstance(SystemResourceKeyID.WindowCaptionHeight);
                 }
@@ -4604,7 +4604,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheKanjiWindowHeight == null)
+                if (_cacheKanjiWindowHeight is null)
                 {
                     _cacheKanjiWindowHeight = CreateInstance(SystemResourceKeyID.KanjiWindowHeight);
                 }
@@ -4620,7 +4620,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheMenuBarHeight == null)
+                if (_cacheMenuBarHeight is null)
                 {
                     _cacheMenuBarHeight = CreateInstance(SystemResourceKeyID.MenuBarHeight);
                 }
@@ -4636,7 +4636,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheSmallCaptionHeight == null)
+                if (_cacheSmallCaptionHeight is null)
                 {
                     _cacheSmallCaptionHeight = CreateInstance(SystemResourceKeyID.SmallCaptionHeight);
                 }
@@ -4652,7 +4652,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheVerticalScrollBarThumbHeight == null)
+                if (_cacheVerticalScrollBarThumbHeight is null)
                 {
                     _cacheVerticalScrollBarThumbHeight = CreateInstance(SystemResourceKeyID.VerticalScrollBarThumbHeight);
                 }
@@ -4668,7 +4668,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheIsImmEnabled == null)
+                if (_cacheIsImmEnabled is null)
                 {
                     _cacheIsImmEnabled = CreateInstance(SystemResourceKeyID.IsImmEnabled);
                 }
@@ -4684,7 +4684,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheIsMediaCenter == null)
+                if (_cacheIsMediaCenter is null)
                 {
                     _cacheIsMediaCenter = CreateInstance(SystemResourceKeyID.IsMediaCenter);
                 }
@@ -4700,7 +4700,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheIsMenuDropRightAligned == null)
+                if (_cacheIsMenuDropRightAligned is null)
                 {
                     _cacheIsMenuDropRightAligned = CreateInstance(SystemResourceKeyID.IsMenuDropRightAligned);
                 }
@@ -4716,7 +4716,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheIsMiddleEastEnabled == null)
+                if (_cacheIsMiddleEastEnabled is null)
                 {
                     _cacheIsMiddleEastEnabled = CreateInstance(SystemResourceKeyID.IsMiddleEastEnabled);
                 }
@@ -4732,7 +4732,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheIsMousePresent == null)
+                if (_cacheIsMousePresent is null)
                 {
                     _cacheIsMousePresent = CreateInstance(SystemResourceKeyID.IsMousePresent);
                 }
@@ -4748,7 +4748,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheIsMouseWheelPresent == null)
+                if (_cacheIsMouseWheelPresent is null)
                 {
                     _cacheIsMouseWheelPresent = CreateInstance(SystemResourceKeyID.IsMouseWheelPresent);
                 }
@@ -4764,7 +4764,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheIsPenWindows == null)
+                if (_cacheIsPenWindows is null)
                 {
                     _cacheIsPenWindows = CreateInstance(SystemResourceKeyID.IsPenWindows);
                 }
@@ -4780,7 +4780,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheIsRemotelyControlled == null)
+                if (_cacheIsRemotelyControlled is null)
                 {
                     _cacheIsRemotelyControlled = CreateInstance(SystemResourceKeyID.IsRemotelyControlled);
                 }
@@ -4796,7 +4796,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheIsRemoteSession == null)
+                if (_cacheIsRemoteSession is null)
                 {
                     _cacheIsRemoteSession = CreateInstance(SystemResourceKeyID.IsRemoteSession);
                 }
@@ -4812,7 +4812,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheShowSounds == null)
+                if (_cacheShowSounds is null)
                 {
                     _cacheShowSounds = CreateInstance(SystemResourceKeyID.ShowSounds);
                 }
@@ -4828,7 +4828,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheIsSlowMachine == null)
+                if (_cacheIsSlowMachine is null)
                 {
                     _cacheIsSlowMachine = CreateInstance(SystemResourceKeyID.IsSlowMachine);
                 }
@@ -4844,7 +4844,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheSwapButtons == null)
+                if (_cacheSwapButtons is null)
                 {
                     _cacheSwapButtons = CreateInstance(SystemResourceKeyID.SwapButtons);
                 }
@@ -4860,7 +4860,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheIsTabletPC == null)
+                if (_cacheIsTabletPC is null)
                 {
                     _cacheIsTabletPC = CreateInstance(SystemResourceKeyID.IsTabletPC);
                 }
@@ -4876,7 +4876,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheVirtualScreenLeft == null)
+                if (_cacheVirtualScreenLeft is null)
                 {
                     _cacheVirtualScreenLeft = CreateInstance(SystemResourceKeyID.VirtualScreenLeft);
                 }
@@ -4892,7 +4892,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheVirtualScreenTop == null)
+                if (_cacheVirtualScreenTop is null)
                 {
                     _cacheVirtualScreenTop = CreateInstance(SystemResourceKeyID.VirtualScreenTop);
                 }
@@ -4912,7 +4912,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheFocusVisualStyle == null)
+                if (_cacheFocusVisualStyle is null)
                 {
                     _cacheFocusVisualStyle = new SystemThemeKey(SystemResourceKeyID.FocusVisualStyle);
                 }
@@ -4929,7 +4929,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheNavigationChromeStyle == null)
+                if (_cacheNavigationChromeStyle is null)
                 {
                     _cacheNavigationChromeStyle = new SystemThemeKey(SystemResourceKeyID.NavigationChromeStyle);
                 }
@@ -4946,7 +4946,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cacheNavigationChromeDownLevelStyle == null)
+                if (_cacheNavigationChromeDownLevelStyle is null)
                 {
                     _cacheNavigationChromeDownLevelStyle = new SystemThemeKey(SystemResourceKeyID.NavigationChromeDownLevelStyle);
                 }
@@ -5000,7 +5000,7 @@ namespace System.Windows
         {
             get
             {
-                if (_cachePowerLineStatus == null)
+                if (_cachePowerLineStatus is null)
                 {
                     _cachePowerLineStatus = CreateInstance(SystemResourceKeyID.PowerLineStatus);
                 }

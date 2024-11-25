@@ -176,7 +176,7 @@ namespace System.Windows.Controls
         // Code taken from ASP.NET file xsp\System\Web\httpserverutility.cs; same in DataGridViewCell.cs
         private static void FormatPlainTextAsHtml(string s, TextWriter output)
         {
-            if (s == null)
+            if (s is null)
             {
                 return;
             }

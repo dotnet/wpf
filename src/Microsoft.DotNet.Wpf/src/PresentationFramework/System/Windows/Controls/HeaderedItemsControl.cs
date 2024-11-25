@@ -386,7 +386,7 @@ namespace System.Windows.Controls
             {
                 object header = Header;
 
-                if (ReadControlFlag(ControlBoolFlags.HeaderIsNotLogical) || header == null)
+                if (ReadControlFlag(ControlBoolFlags.HeaderIsNotLogical) || header is null)
                 {
                     return base.LogicalChildren;
                 }
@@ -407,7 +407,7 @@ namespace System.Windows.Controls
             // get the effective header template
             DataTemplate headerTemplate = HeaderTemplate;
 
-            if (headerTemplate == null)
+            if (headerTemplate is null)
             {
                 DataTemplateSelector selector = HeaderTemplateSelector;
                 if (selector != null)
@@ -415,7 +415,7 @@ namespace System.Windows.Controls
                     headerTemplate = selector.SelectTemplate(item, this);
                 }
 
-                if (headerTemplate == null)
+                if (headerTemplate is null)
                 {
                     headerTemplate = (DataTemplate)FindTemplateResourceInternal(this, item, typeof(DataTemplate));
                 }

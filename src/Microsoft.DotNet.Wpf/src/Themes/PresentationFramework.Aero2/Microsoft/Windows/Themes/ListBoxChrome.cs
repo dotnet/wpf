@@ -135,7 +135,7 @@ namespace Microsoft.Windows.Themes
             {
                 if (((bool)e.NewValue))
                 {
-                    if (chrome._localResources == null)
+                    if (chrome._localResources is null)
                     {
                         chrome._localResources = new LocalResources();
                         chrome.InvalidateVisual();
@@ -147,7 +147,7 @@ namespace Microsoft.Windows.Themes
 
                     chrome.BorderOverlayPen.Brush.BeginAnimation(Brush.OpacityProperty, da);
                 }
-                else if (chrome._localResources == null)
+                else if (chrome._localResources is null)
                 {
                     chrome.InvalidateVisual();
                 }
@@ -418,11 +418,11 @@ namespace Microsoft.Windows.Themes
 
             if (border != null)
             {
-                if (_commonBorderPen == null)   // Common case, if non-null, avoid the lock
+                if (_commonBorderPen is null)   // Common case, if non-null, avoid the lock
                 {
                     lock (_resourceAccess)   // If non-null, lock to create the pen for thread safety
                     {
-                        if (_commonBorderPen == null)   // Check again in case _pen was created within the last line
+                        if (_commonBorderPen is null)   // Check again in case _pen was created within the last line
                         {
                             // Assume that the first render of Button uses the most common brush for the app.
                             // This breaks down if (a) the first Button is disabled, (b) the first Button is
@@ -506,11 +506,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonDisabledBackgroundOverlay == null)
+                if (_commonDisabledBackgroundOverlay is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonDisabledBackgroundOverlay == null)
+                        if (_commonDisabledBackgroundOverlay is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromRgb(0xF4, 0xF4, 0xF4));
                             temp.Freeze();
@@ -528,11 +528,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonHoverBorderOverlay == null)
+                if (_commonHoverBorderOverlay is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonHoverBorderOverlay == null)
+                        if (_commonHoverBorderOverlay is null)
                         {
                             Pen temp = new Pen();
 
@@ -562,11 +562,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonFocusedBorderOverlay == null)
+                if (_commonFocusedBorderOverlay is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonFocusedBorderOverlay == null)
+                        if (_commonFocusedBorderOverlay is null)
                         {
                             Pen temp = new Pen();
                             
@@ -597,11 +597,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonDisabledBorderOverlay == null)
+                if (_commonDisabledBorderOverlay is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonDisabledBorderOverlay == null)
+                        if (_commonDisabledBorderOverlay is null)
                         {
                             Pen temp = new Pen();
                             temp.Thickness = 1;
@@ -645,7 +645,7 @@ namespace Microsoft.Windows.Themes
 
                 if (_localResources != null)
                 {
-                    if (_localResources.BorderOverlayPen == null)
+                    if (_localResources.BorderOverlayPen is null)
                     {
                         _localResources.BorderOverlayPen = CommonHoverBorderOverlay.Clone();
                         _localResources.BorderOverlayPen.Brush.Opacity = 0;

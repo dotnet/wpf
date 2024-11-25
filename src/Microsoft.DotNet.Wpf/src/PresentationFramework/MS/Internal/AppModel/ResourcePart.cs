@@ -44,7 +44,7 @@ namespace MS.Internal.AppModel
         public ResourcePart(Package container, Uri uri, string name, ResourceManagerWrapper rmWrapper) :
             base(container, uri)
         {
-            if (rmWrapper == null)
+            if (rmWrapper is null)
             {
                 throw new ArgumentNullException("rmWrapper");
             }
@@ -70,13 +70,13 @@ namespace MS.Internal.AppModel
             stream = EnsureResourceLocationSet();
             // in order to find the resource we might have to open a stream.
             // rather than waste the stream it is returned here and we can use it.
-            if (stream == null)
+            if (stream is null)
             {
                 // Start looking for resources using the current ui culture.
                 // The resource manager will fall back to invariant culture automatically.
                 stream = _rmWrapper.GetStream(_name);
 
-                if (stream == null)
+                if (stream is null)
                 {
                     throw new IOException(SR.Format(SR.UnableToLocateResource, _name));
                 }

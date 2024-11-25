@@ -132,7 +132,7 @@ namespace MS.Internal
         /// <returns>a string that describes the object</returns>
         static public void Describe(AvTraceBuilder traceBuilder, object o)
         {
-            if (o == null)
+            if (o is null)
             {
                 traceBuilder.Append("null");
             }
@@ -185,7 +185,7 @@ namespace MS.Internal
         /// <returns>a string that describes the object</returns>
         static public void DescribeSourceObject(AvTraceBuilder traceBuilder, object o)
         {
-            if (o == null)
+            if (o is null)
             {
                 traceBuilder.Append("null");
             }
@@ -248,7 +248,7 @@ namespace MS.Internal
 
         static public string Identify(object o)
         {
-            if (o == null)
+            if (o is null)
                 return "<null>";
 
             Type type = o.GetType();
@@ -292,7 +292,7 @@ namespace MS.Internal
 
         static public string IdentifyException(Exception ex)
         {
-            if (ex == null)
+            if (ex is null)
                 return "<no error>";
 
             return $"{ex.GetType().Name} ({AvTrace.AntiFormat(ex.Message)})";

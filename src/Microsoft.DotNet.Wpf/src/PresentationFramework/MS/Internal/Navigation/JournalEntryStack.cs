@@ -43,7 +43,7 @@ namespace System.Windows.Navigation
 
         internal IEnumerable GetLimitedJournalEntryStackEnumerable()
         {
-            if (_ljese == null)
+            if (_ljese is null)
             {
                 _ljese = new LimitedJournalEntryStackEnumerable(this);
             }
@@ -122,7 +122,7 @@ namespace System.Windows.Navigation
             {
                 _current = _journal[_next];
                 _next += _delta;
-                if ((_filter == null) || _filter(_current))
+                if ((_filter is null) || _filter(_current))
                 {
                     Debug.Assert(_current != null, "If we are returning true, our current cannot be null");
                     return true;

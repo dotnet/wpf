@@ -454,7 +454,7 @@ namespace System.Windows.Controls
             // our ContentProperty invalidated.  This would mean that when we go
             // to reparent our content, we'll be looking at a stale cache.  Make
             // sure to invalidate the Content property in this case.
-            if (TemplatedParent == null)
+            if (TemplatedParent is null)
             {
                 // call GetValueCore to get this value from its TemplatedParent
                 InvalidateProperty(ContentProperty);
@@ -533,7 +533,7 @@ namespace System.Windows.Controls
             template = ContentTemplate;
 
             // no ContentTemplate set, try ContentTemplateSelector
-            if (template == null)
+            if (template is null)
             {
                 if (ContentTemplateSelector != null)
                 {
@@ -542,7 +542,7 @@ namespace System.Windows.Controls
             }
 
             // if that failed, try the default TemplateSelector
-            if (template == null)
+            if (template is null)
             {
                 template = DefaultTemplateSelector.SelectTemplate(content, this);
             }
@@ -631,7 +631,7 @@ namespace System.Windows.Controls
 
         internal static object DataTypeForItem(object item, DependencyObject target, out Type type)
         {
-            if (item == null)
+            if (item is null)
             {
                 type = null;
                 return null;
@@ -706,7 +706,7 @@ namespace System.Windows.Controls
             get
             {
                 DataTemplate template = AccessTextFormattingTemplateField.GetValue(this);
-                if (template == null)
+                if (template is null)
                 {
                     Binding binding = new Binding();
                     binding.StringFormat = ContentStringFormat;
@@ -729,7 +729,7 @@ namespace System.Windows.Controls
             get
             {
                 DataTemplate template = StringFormattingTemplateField.GetValue(this);
-                if (template == null)
+                if (template is null)
                 {
                     Binding binding = new Binding();
                     binding.StringFormat = ContentStringFormat;
@@ -752,7 +752,7 @@ namespace System.Windows.Controls
             get
             {
                 DataTemplate template = XMLFormattingTemplateField.GetValue(this);
-                if (template == null)
+                if (template is null)
                 {
                     Binding binding = new Binding();
                     binding.XPath = ".";
@@ -1008,7 +1008,7 @@ namespace System.Windows.Controls
             {
                 object content = ((ContentPresenter)container).Content;
                 UIElement e = content as UIElement;
-                if (e == null)
+                if (e is null)
                 {
                     TypeConverter tc = TypeDescriptor.GetConverter(ReflectionHelper.GetReflectionType(content));
                     Debug.Assert(tc.CanConvertTo(typeof(UIElement)));
@@ -1060,7 +1060,7 @@ namespace System.Windows.Controls
 
             private UIElement DefaultExpansion(object content, ContentPresenter container)
             {
-                if (content == null)
+                if (content is null)
                     return null;
 
                 TextBlock textBlock = CreateTextBlock(container);
@@ -1167,7 +1167,7 @@ namespace System.Windows.Controls
                 }
 
                 // default templates for well known types:
-                if (template == null)
+                if (template is null)
                 {
                     TypeConverter tc = null;
                     string s;

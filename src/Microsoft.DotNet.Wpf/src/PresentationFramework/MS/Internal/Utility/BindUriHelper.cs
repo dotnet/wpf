@@ -92,7 +92,7 @@ namespace MS.Internal.Utility
         {
             Uri uriToNavigate = inputUri;
 
-            if ((inputUri == null) || (inputUri.IsAbsoluteUri == true))
+            if ((inputUri is null) || (inputUri.IsAbsoluteUri == true))
             {
                 return uriToNavigate;
             }
@@ -134,7 +134,7 @@ namespace MS.Internal.Utility
                     {
                         NavigationService ns = null;
                         ns = element.GetValue(NavigationService.NavigationServiceProperty) as NavigationService;
-                        currentSource = (ns == null) ? null : ns.CurrentSource;
+                        currentSource = (ns is null) ? null : ns.CurrentSource;
                     }
                 }
 
@@ -192,7 +192,7 @@ namespace MS.Internal.Utility
         // Source property or any event arguments.
         static internal Uri GetUriRelativeToPackAppBase(Uri original)
         {
-            if (original == null)
+            if (original is null)
             {
                 return null;
             }

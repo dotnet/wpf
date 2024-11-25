@@ -310,7 +310,7 @@ namespace System.Windows.Markup
             // if it is simple.  Do this by tokenizing now and extracting the simple
             // type string.
             ArrayList tokens = TokenizeAttributes(args, lineNumber, linePosition, targetType);
-            if (tokens == null)
+            if (tokens is null)
             {
                 return false;
             }
@@ -373,7 +373,7 @@ namespace System.Windows.Markup
                 {
                     // If there is no string builder, then we haven't encountered the
                     // first non-whitespace character after '{'.
-                    if (stringBuilder == null)
+                    if (stringBuilder is null)
                     {
                         // Always escape the first '\'
                         if (!gotEscape && attrValue[i] == '\\')
@@ -509,7 +509,7 @@ namespace System.Windows.Markup
             // propIdName is an empty string only for the case when args is a ctor param of a MarkupExtension
             if (resolvedTag && propIdName != string.Empty)
             {
-                if (propIdName == null)
+                if (propIdName is null)
                 {
                     // If propIdName is null, then we are looking for nested simple extensions and
                     // we allow only Type\StaticExtension.
@@ -985,7 +985,7 @@ namespace System.Windows.Markup
                     // attributes and delimiters.  These are lazily
                     // created so that simple cases that have no parameters do not
                     // create any extra objects.
-                    if (stringBuilder == null)
+                    if (stringBuilder is null)
                     {
                         stringBuilder = new StringBuilder(length);
                         list = new ArrayList(1);
@@ -1277,7 +1277,7 @@ namespace System.Windows.Markup
                                                                           data.LinePosition,
                                                                           data.Depth,
                                                                           null);
-                    if (nestedData == null)
+                    if (nestedData is null)
                     {
                         RemoveEscapes(ref value);
 
@@ -1622,7 +1622,7 @@ namespace System.Windows.Markup
             {
                 if (noEscape && value[i] == '\\')
                 {
-                    if (builder == null)
+                    if (builder is null)
                     {
                         builder = new StringBuilder(value.Length);
                         builder.Append(value.Substring(0,i));

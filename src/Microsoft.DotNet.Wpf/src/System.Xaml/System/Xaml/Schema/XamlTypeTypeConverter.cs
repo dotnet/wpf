@@ -56,7 +56,7 @@ namespace System.Xaml.Schema
         internal static string ConvertXamlTypeToString(ITypeDescriptorContext context, XamlType xamlType)
         {
             var prefixLookup = GetService<INamespacePrefixLookup>(context);
-            if (prefixLookup == null)
+            if (prefixLookup is null)
             {
                 return null;
             }
@@ -67,17 +67,17 @@ namespace System.Xaml.Schema
         private static XamlType ConvertStringToXamlType(ITypeDescriptorContext context, string typeName)
         {
             var namespaceResolver = GetService<IXamlNamespaceResolver>(context);
-            if (namespaceResolver == null)
+            if (namespaceResolver is null)
             {
                 return null;
             }
             XamlTypeName xamlTypeName = XamlTypeName.Parse(typeName, namespaceResolver);
             var schemaContextProvider = GetService<IXamlSchemaContextProvider>(context);
-            if (schemaContextProvider == null)
+            if (schemaContextProvider is null)
             {
                 return null;
             }
-            if (schemaContextProvider.SchemaContext == null)
+            if (schemaContextProvider.SchemaContext is null)
             {
                 return null;
             }

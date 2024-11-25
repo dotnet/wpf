@@ -295,7 +295,7 @@ namespace System.Windows.Controls
 
         private BindingExpression PrepareSelectedValuePathBindingExpression(object item)
         {
-            if (item == null)
+            if (item is null)
             {
                 return null;
             }
@@ -316,7 +316,7 @@ namespace System.Windows.Controls
                 }
             }
 
-            if (bindingExpr == null)
+            if (bindingExpr is null)
             {
                 // create the binding
                 binding = new Binding();
@@ -539,7 +539,7 @@ namespace System.Windows.Controls
                     {
                         case Key.Up:
                         case Key.Down:
-                            if ((_selectedContainer == null) && FocusFirstItem())
+                            if ((_selectedContainer is null) && FocusFirstItem())
                             {
                                 e.Handled = true;
                             }
@@ -561,7 +561,7 @@ namespace System.Windows.Controls
 
                         case Key.PageUp:
                         case Key.PageDown:
-                            if (_selectedContainer == null)
+                            if (_selectedContainer is null)
                             {
                                 if (FocusFirstItem())
                                 {
@@ -709,7 +709,7 @@ namespace System.Windows.Controls
                 : null;
 
             FrameworkElement startingContainer = _selectedContainer.HeaderElement;
-            if (startingContainer == null)
+            if (startingContainer is null)
             {
                 startingContainer = _selectedContainer;
             }
@@ -811,7 +811,7 @@ namespace System.Windows.Controls
         private static DependencyObject FindParent(DependencyObject o)
         {
             Visual v = o as Visual;
-            ContentElement ce = (v == null) ? o as ContentElement : null;
+            ContentElement ce = (v is null) ? o as ContentElement : null;
 
             if (ce != null)
             {

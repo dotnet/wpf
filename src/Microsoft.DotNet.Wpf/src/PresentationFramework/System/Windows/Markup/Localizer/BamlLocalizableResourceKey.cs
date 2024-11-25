@@ -99,7 +99,7 @@ namespace System.Windows.Markup.Localizer
         /// <returns>True if they are equal. False otherwise</returns>        
         public bool Equals(BamlLocalizableResourceKey other)
         {
-            if (other == null)
+            if (other is null)
             {
                 return false;
             }

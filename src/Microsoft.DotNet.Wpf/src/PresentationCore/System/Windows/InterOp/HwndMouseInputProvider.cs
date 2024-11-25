@@ -794,7 +794,7 @@ namespace System.Windows.Interop
 
                 case WindowMessage.WM_SETCURSOR:
                 {
-                    if (_queryCursorOperation == null)
+                    if (_queryCursorOperation is null)
                     {
                         // It is possible that a WM_SETCURSOR is not followed by a WM_MOUSEMOVE, in which
                         // case we need a backup mechanism to query the cursor and update it. So we post to
@@ -1061,7 +1061,7 @@ namespace System.Windows.Interop
             DependencyObject rootVisual = hwndSource.RootVisual;
 
             DependencyObject windowChromeWorker = rootVisual?.GetValue(WindowChromeWorkerProperty) as DependencyObject;
-            if (windowChromeWorker == null)
+            if (windowChromeWorker is null)
             {
                 return false;
             }
@@ -1091,12 +1091,12 @@ namespace System.Windows.Interop
             // get a reference to PresentationFramework, either from our own
             // HwndSource, or (as a fallback) from the target HwndSource
             Assembly presentationFramework = GetPresentationFrameworkFromHwndSource(_source);
-            if (presentationFramework == null)
+            if (presentationFramework is null)
             {
                 presentationFramework = GetPresentationFrameworkFromHwndSource(hwndSource);
             }
 
-            if (presentationFramework == null)
+            if (presentationFramework is null)
             {
                 return false;
             }
@@ -1241,7 +1241,7 @@ namespace System.Windows.Interop
             CompositionTarget ct = source.CompositionTarget;
 
             // Input reports should only be generated if the window is still valid.
-            if(_site == null || source.IsDisposed || ct == null )
+            if(_site is null || source.IsDisposed || ct is null )
             {
                 if(_active)
                 {

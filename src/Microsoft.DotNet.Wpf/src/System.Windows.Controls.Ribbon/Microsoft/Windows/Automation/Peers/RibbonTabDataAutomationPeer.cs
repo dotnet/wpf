@@ -59,7 +59,7 @@ namespace Microsoft.Windows.Automation.Peers
                 peer = this;
             }
 
-            if (peer == null)
+            if (peer is null)
             {
                 AutomationPeer wrapperPeer = GetWrapperPeer();
                 if (wrapperPeer != null)
@@ -163,7 +163,7 @@ namespace Microsoft.Windows.Automation.Peers
                 throw new ElementNotEnabledException();
 
             Selector parentSelector = (Selector)(ItemsControlAutomationPeer.Owner);
-            if ((parentSelector == null) || (parentSelector.SelectedItem != null && parentSelector.SelectedItem != Item))
+            if ((parentSelector is null) || (parentSelector.SelectedItem != null && parentSelector.SelectedItem != Item))
             {
                 throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
             }
@@ -224,7 +224,7 @@ namespace Microsoft.Windows.Automation.Peers
             if (wrapper != null)
             {
                 wrapperPeer = UIElementAutomationPeer.CreatePeerForElement(wrapper);
-                if (wrapperPeer == null)
+                if (wrapperPeer is null)
                 {
                     if (wrapper is FrameworkElement)
                         wrapperPeer = new FrameworkElementAutomationPeer((FrameworkElement)wrapper);

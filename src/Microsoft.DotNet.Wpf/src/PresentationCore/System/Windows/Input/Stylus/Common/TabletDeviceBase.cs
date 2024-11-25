@@ -257,7 +257,7 @@ namespace System.Windows.Input
         {
             get
             {
-                if (_stylusPointDescription == null)
+                if (_stylusPointDescription is null)
                 {
                     ReadOnlyCollection<StylusPointProperty> properties = SupportedStylusPointProperties;
 

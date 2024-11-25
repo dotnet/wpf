@@ -368,7 +368,7 @@ namespace System.Printing
 
                 AddSetterEnumValueToCache<Collation>(
                     CapabilityName.DocumentCollate,
-                    (value == null) ? (Collation)PrintSchema.EnumUnspecifiedValue : (Collation)value);
+                    (value is null) ? (Collation)PrintSchema.EnumUnspecifiedValue : (Collation)value);
 
                 // Raise PropertyChanged event for IPropertyChange implementation
                 NotifyPropertyChanged("Collation");
@@ -400,7 +400,7 @@ namespace System.Printing
             }
             set
             {
-                if (value == null)
+                if (value is null)
                 {
                     _printTicket.JobCopyCount.ClearSetting();
                 }
@@ -458,7 +458,7 @@ namespace System.Printing
 
                 AddSetterEnumValueToCache<DeviceFontSubstitution>(
                     CapabilityName.PageDeviceFontSubstitution,
-                    (value == null) ? (DeviceFontSubstitution)PrintSchema.EnumUnspecifiedValue : (DeviceFontSubstitution)value);
+                    (value is null) ? (DeviceFontSubstitution)PrintSchema.EnumUnspecifiedValue : (DeviceFontSubstitution)value);
 
                 // Raise PropertyChanged event for IPropertyChange implementation
                 NotifyPropertyChanged("DeviceFontSubstitution");
@@ -502,7 +502,7 @@ namespace System.Printing
 
                 AddSetterEnumValueToCache<Duplexing>(
                     CapabilityName.JobDuplex,
-                    (value == null) ? (Duplexing)PrintSchema.EnumUnspecifiedValue : (Duplexing)value);
+                    (value is null) ? (Duplexing)PrintSchema.EnumUnspecifiedValue : (Duplexing)value);
 
                 // Raise PropertyChanged event for IPropertyChange implementation
                 NotifyPropertyChanged("Duplexing");
@@ -573,7 +573,7 @@ namespace System.Printing
                 // always set the job-scope input bin setting to increase portability
                 AddSetterEnumValueToCache<InputBin>(
                     CapabilityName.JobInputBin,
-                    (value == null) ? (InputBin)PrintSchema.EnumUnspecifiedValue : (InputBin)value);
+                    (value is null) ? (InputBin)PrintSchema.EnumUnspecifiedValue : (InputBin)value);
 
                 // need to remove document-scope and page-scope input bin setting so only job-scope
                 // input bin setting will be persisted
@@ -624,7 +624,7 @@ namespace System.Printing
 
                 AddSetterEnumValueToCache<OutputColor>(
                     CapabilityName.PageOutputColor,
-                    (value == null) ? (OutputColor)PrintSchema.EnumUnspecifiedValue : (OutputColor)value);
+                    (value is null) ? (OutputColor)PrintSchema.EnumUnspecifiedValue : (OutputColor)value);
 
                 // Raise PropertyChanged event for IPropertyChange implementation
                 NotifyPropertyChanged("OutputColor");
@@ -668,7 +668,7 @@ namespace System.Printing
 
                 AddSetterEnumValueToCache<OutputQuality>(
                     CapabilityName.PageOutputQuality,
-                    (value == null) ? (OutputQuality)PrintSchema.EnumUnspecifiedValue : (OutputQuality)value);
+                    (value is null) ? (OutputQuality)PrintSchema.EnumUnspecifiedValue : (OutputQuality)value);
 
                 // Raise PropertyChanged event for IPropertyChange implementation
                 NotifyPropertyChanged("OutputQuality");
@@ -712,7 +712,7 @@ namespace System.Printing
 
                 AddSetterEnumValueToCache<PageBorderless>(
                     CapabilityName.PageBorderless,
-                    (value == null) ? (PageBorderless)PrintSchema.EnumUnspecifiedValue : (PageBorderless)value);
+                    (value is null) ? (PageBorderless)PrintSchema.EnumUnspecifiedValue : (PageBorderless)value);
 
                 // Raise PropertyChanged event for IPropertyChange implementation
                 NotifyPropertyChanged("PageBorderless");
@@ -789,8 +789,8 @@ namespace System.Printing
                 if (value != null)
                 {
                     // either media name or the width/height values need to be specified
-                    if ((value.PageMediaSizeName == null) &&
-                        (value.Width == null || value.Height == null))
+                    if ((value.PageMediaSizeName is null) &&
+                        (value.Width is null || value.Height is null))
                     {
                         throw new ArgumentOutOfRangeException("value");
                     }
@@ -867,7 +867,7 @@ namespace System.Printing
 
                 AddSetterEnumValueToCache<PageMediaType>(
                     CapabilityName.PageMediaType,
-                    (value == null) ? (PageMediaType)PrintSchema.EnumUnspecifiedValue : (PageMediaType)value);
+                    (value is null) ? (PageMediaType)PrintSchema.EnumUnspecifiedValue : (PageMediaType)value);
 
                 // Raise PropertyChanged event for IPropertyChange implementation
                 NotifyPropertyChanged("PageMediaType");
@@ -911,7 +911,7 @@ namespace System.Printing
 
                 AddSetterEnumValueToCache<PageOrder>(
                     CapabilityName.JobPageOrder,
-                    (value == null) ? (PageOrder)PrintSchema.EnumUnspecifiedValue : (PageOrder)value);
+                    (value is null) ? (PageOrder)PrintSchema.EnumUnspecifiedValue : (PageOrder)value);
 
                 // Raise PropertyChanged event for IPropertyChange implementation
                 NotifyPropertyChanged("PageOrder");
@@ -955,7 +955,7 @@ namespace System.Printing
 
                 AddSetterEnumValueToCache<PageOrientation>(
                     CapabilityName.PageOrientation,
-                    (value == null) ? (PageOrientation)PrintSchema.EnumUnspecifiedValue : (PageOrientation)value);
+                    (value is null) ? (PageOrientation)PrintSchema.EnumUnspecifiedValue : (PageOrientation)value);
 
                 // Raise PropertyChanged event for IPropertyChange implementation
                 NotifyPropertyChanged("PageOrientation");
@@ -1031,8 +1031,8 @@ namespace System.Printing
                 // first performing input parameter validation
                 if (value != null)
                 {
-                    if ((value.QualitativeResolution == null) &&
-                        (value.X == null || value.Y == null))
+                    if ((value.QualitativeResolution is null) &&
+                        (value.X is null || value.Y is null))
                     {
                         throw new ArgumentOutOfRangeException("value");
                     }
@@ -1103,7 +1103,7 @@ namespace System.Printing
             }
             set
             {
-                if (value == null)
+                if (value is null)
                 {
                     _printTicket.PageScaling.ClearSetting();
                 }
@@ -1150,7 +1150,7 @@ namespace System.Printing
             }
             set
             {
-                if (value == null)
+                if (value is null)
                 {
                     _printTicket.JobNUp.ClearSetting();
                 }
@@ -1209,7 +1209,7 @@ namespace System.Printing
 
                 AddSetterEnumValueToCache<PagesPerSheetDirection>(
                     CapabilityName.JobNUp,
-                    (value == null) ? (PagesPerSheetDirection)PrintSchema.EnumUnspecifiedValue : (PagesPerSheetDirection)value);
+                    (value is null) ? (PagesPerSheetDirection)PrintSchema.EnumUnspecifiedValue : (PagesPerSheetDirection)value);
 
                 // Raise PropertyChanged event for IPropertyChange implementation
                 NotifyPropertyChanged("PagesPerSheetDirection");
@@ -1253,7 +1253,7 @@ namespace System.Printing
 
                 AddSetterEnumValueToCache<PhotoPrintingIntent>(
                     CapabilityName.PagePhotoPrintingIntent,
-                    (value == null) ? (PhotoPrintingIntent)PrintSchema.EnumUnspecifiedValue : (PhotoPrintingIntent)value);
+                    (value is null) ? (PhotoPrintingIntent)PrintSchema.EnumUnspecifiedValue : (PhotoPrintingIntent)value);
 
                 // Raise PropertyChanged event for IPropertyChange implementation
                 NotifyPropertyChanged("PhotoPrintingIntent");
@@ -1297,7 +1297,7 @@ namespace System.Printing
 
                 AddSetterEnumValueToCache<Stapling>(
                     CapabilityName.JobStaple,
-                    (value == null) ? (Stapling)PrintSchema.EnumUnspecifiedValue : (Stapling)value);
+                    (value is null) ? (Stapling)PrintSchema.EnumUnspecifiedValue : (Stapling)value);
 
                 // Raise PropertyChanged event for IPropertyChange implementation
                 NotifyPropertyChanged("Stapling");
@@ -1341,7 +1341,7 @@ namespace System.Printing
 
                 AddSetterEnumValueToCache<TrueTypeFontMode>(
                     CapabilityName.PageTrueTypeFontMode,
-                    (value == null) ? (TrueTypeFontMode)PrintSchema.EnumUnspecifiedValue : (TrueTypeFontMode)value);
+                    (value is null) ? (TrueTypeFontMode)PrintSchema.EnumUnspecifiedValue : (TrueTypeFontMode)value);
 
                 // Raise PropertyChanged event for IPropertyChange implementation
                 NotifyPropertyChanged("TrueTypeFontMode");
@@ -1451,7 +1451,7 @@ namespace System.Printing
 
         private void ExecuteMediaSizeSetter(object cacheValue)
         {
-            if (cacheValue == null)
+            if (cacheValue is null)
             {
                 _printTicket.PageMediaSize.ClearSetting();
             }
@@ -1498,7 +1498,7 @@ namespace System.Printing
 
         private void ExecuteResolutionSetter(object cacheValue)
         {
-            if (cacheValue == null)
+            if (cacheValue is null)
             {
                 _printTicket.PageResolution.ClearSetting();
             }

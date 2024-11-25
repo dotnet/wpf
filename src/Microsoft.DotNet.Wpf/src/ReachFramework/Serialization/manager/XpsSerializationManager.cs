@@ -129,7 +129,7 @@ namespace System.Windows.Xps.Serialization
                 }
             }
 
-            if(_simulator == null)
+            if(_simulator is null)
             {
                 _simulator = new ReachHierarchySimulator(this,
                                                          serializedObject);
@@ -291,7 +291,7 @@ namespace System.Windows.Xps.Serialization
         {
             ReachSerializer reachSerializer = null;
 
-            if((reachSerializer = base.GetSerializer(serializedObject)) == null)
+            if((reachSerializer = base.GetSerializer(serializedObject)) is null)
             {
                 reachSerializer = this.SerializersCacheManager.GetSerializer(serializedObject);
             }
@@ -312,7 +312,7 @@ namespace System.Windows.Xps.Serialization
             Type serializerType = null;
 
 
-            if((serializerType = base.GetSerializerType(objectType)) == null)
+            if((serializerType = base.GetSerializerType(objectType)) is null)
             {
                 if (typeof(System.Windows.Documents.FixedDocument).IsAssignableFrom(objectType))
                 {
@@ -1244,7 +1244,7 @@ namespace System.Windows.Xps.Serialization
             Size pageSize
             )
         {
-            if(_visualTreeFlattener == null)
+            if(_visualTreeFlattener is null)
             {
                 _visualTreeFlattener = new VisualTreeFlattener(resWriter,
                                                                bodyWriter,
@@ -1294,7 +1294,7 @@ namespace System.Windows.Xps.Serialization
         RegisterNameSpacesForTypes(
             )
         {
-            if(_typesXmlNSMapping == null)
+            if(_typesXmlNSMapping is null)
             {
                 _typesXmlNSMapping = new Hashtable(11);
 
@@ -1313,7 +1313,7 @@ namespace System.Windows.Xps.Serialization
         RegisterSerializableDependencyPropertiesForReachTypes(
             )
         {
-            if(_typeSerializableDependencyProperties == null)
+            if(_typeSerializableDependencyProperties is null)
             {
                 _typeSerializableDependencyProperties = new Hashtable(11);
                 //
@@ -1377,7 +1377,7 @@ namespace System.Windows.Xps.Serialization
         RegisterNoneSerializableClrPropertiesForReachTypes(
             )
         {
-            if(_typeNoneSerializableClrProperties == null)
+            if(_typeNoneSerializableClrProperties is null)
             {
                 _typeNoneSerializableClrProperties = new Hashtable(11);
                 //

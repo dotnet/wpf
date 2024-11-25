@@ -353,7 +353,7 @@ namespace System.Windows.Media
             if (_pageTable != null)
             {
                 page = _pageTable[i];
-                if (page == null)
+                if (page is null)
                 {
                     _pageTable[i] = page = new CharacterMetrics[PageSize];
                 }
@@ -408,7 +408,7 @@ namespace System.Windows.Media
                     int i = key & PageMask;
                     CharacterMetrics metrics = page[i];
 
-                    if (metrics != null && (value == null || metrics.Equals(value)))
+                    if (metrics != null && (value is null || metrics.Equals(value)))
                     {
                         page[i] = null;
                         _count = 0;

@@ -40,7 +40,7 @@ namespace System.Windows.Controls
 
         protected override void InsertItem(int index, DataGridColumn item)
         {
-            if (item == null)
+            if (item is null)
             {
                 throw new ArgumentNullException("item", SR.DataGrid_NullColumn);
             }
@@ -61,7 +61,7 @@ namespace System.Windows.Controls
 
         protected override void SetItem(int index, DataGridColumn item)
         {
-            if (item == null)
+            if (item is null)
             {
                 throw new ArgumentNullException("item", SR.DataGrid_NullColumn);
             }
@@ -1054,7 +1054,7 @@ namespace System.Windows.Controls
 
             // changing a column width should also invalidate the maximum desired
             // size of the row presenter
-            VirtualizingStackPanel vsp = (DataGridOwner == null) ? null :
+            VirtualizingStackPanel vsp = (DataGridOwner is null) ? null :
                     DataGridOwner.InternalItemsHost as VirtualizingStackPanel;
             if (vsp != null)
             {

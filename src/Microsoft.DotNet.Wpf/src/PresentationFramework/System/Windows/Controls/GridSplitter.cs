@@ -125,7 +125,7 @@ namespace System.Windows.Controls
 
             bool hasModifiers;
             BaseValueSourceInternal vs = splitter.GetValueSource(CursorProperty, null, out hasModifiers);
-            if (value == null && vs == BaseValueSourceInternal.Default)
+            if (value is null && vs == BaseValueSourceInternal.Default)
             {
                 switch (splitter.GetEffectiveResizeDirection())
                 {
@@ -593,7 +593,7 @@ namespace System.Windows.Controls
                 AdornerLayer adornerlayer = AdornerLayer.GetAdornerLayer(_resizeData.Grid);
 
                 // Can't display preview
-                if (adornerlayer == null)
+                if (adornerlayer is null)
                 {
                     return;
                 }
@@ -632,7 +632,7 @@ namespace System.Windows.Controls
         // Thumb Mouse Down
         private void OnDragStarted(DragStartedEventArgs e)
         {
-            Debug.Assert(_resizeData == null, "_resizeData is not null, DragCompleted was not called");
+            Debug.Assert(_resizeData is null, "_resizeData is not null, DragCompleted was not called");
 
             InitializeData(ShowsPreview);
         }
@@ -774,7 +774,7 @@ namespace System.Windows.Controls
         {
             ColumnDefinition column = definition as ColumnDefinition;
 
-            return column == null ? ((RowDefinition)definition).ActualHeight : column.ActualWidth;
+            return column is null ? ((RowDefinition)definition).ActualHeight : column.ActualWidth;
         }
 
         // Gets Column or Row definition at index from grid based on resize direction
@@ -951,7 +951,7 @@ namespace System.Windows.Controls
             InitializeData(false);  // don't show preview
 
             // Check that we are actually able to resize
-            if (_resizeData == null)
+            if (_resizeData is null)
             {
                 return false;  // don't handle the event
             }

@@ -58,10 +58,10 @@ namespace MS.Internal.Documents
         public DocumentApplicationDocumentViewer() : base()
         {
             System.Diagnostics.Debug.Assert(
-                _singletonInstance == null,
+                _singletonInstance is null,
                 "DocumentApplicationDocumentViewer constructor called twice.");
 
-            if (_singletonInstance == null)
+            if (_singletonInstance is null)
             {
                 _singletonInstance = this;
 
@@ -191,7 +191,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_rootBrowserWindow == null)
+                if (_rootBrowserWindow is null)
                 {
                     WindowInteropHelper helper =
                         new WindowInteropHelper(
@@ -464,11 +464,11 @@ namespace MS.Internal.Documents
 
                 while (skip> 0)
                 {
-                    if (fd == null)
+                    if (fd is null)
                     {
                         fd = fds.References[docIndex++].GetDocument(false);
                         pageInDoc = 0;
-                        if (fd == null)
+                        if (fd is null)
                         {
                             break;
                         }
@@ -489,11 +489,11 @@ namespace MS.Internal.Documents
                 int pages = pageRange.PageTo - pageRange.PageFrom + 1;
                 while ( pages > 0 )
                 {
-                    if (fd == null)
+                    if (fd is null)
                     {
                         fd = fds.References[docIndex++].GetDocument(false);
                         pageInDoc = 0;
-                        if (fd == null)
+                        if (fd is null)
                         {
                             break;
                         }
@@ -693,7 +693,7 @@ namespace MS.Internal.Documents
             get
             {
                 // find control if the reference is not set.
-                if (_toolBar == null)
+                if (_toolBar is null)
                 {
                   _toolBar = GetTemplateChild(_toolBarName) as Grid;
                 }
@@ -709,7 +709,7 @@ namespace MS.Internal.Documents
             get
             {
                 // find control if the reference is not set.
-                if (_zoomComboBox == null)
+                if (_zoomComboBox is null)
                 {
                     // Find ContentControl to host the ZoomComboBox.
                     ContentControl host = GetTemplateChild("ZoomComboBoxHost") as ContentControl;
@@ -745,7 +745,7 @@ namespace MS.Internal.Documents
             get
             {
                 // find control if the reference is not set.
-                if (_pageUpButton == null)
+                if (_pageUpButton is null)
                 {
                     _pageUpButton = GetTemplateChild(_pageUpButtonName) as Button;
                 }
@@ -761,7 +761,7 @@ namespace MS.Internal.Documents
             get
             {
                 // find control if the reference is not set.
-                if (_pageTextBox == null)
+                if (_pageTextBox is null)
                 {
                     // Find ContentControl to host the PageTextBox.
                     ContentControl host = GetTemplateChild("PageTextBoxHost") as ContentControl;
@@ -797,7 +797,7 @@ namespace MS.Internal.Documents
             get
             {
                 // find control if the reference is not set.
-                if (_pageDownButton == null)
+                if (_pageDownButton is null)
                 {
                     _pageDownButton = GetTemplateChild(_pageDownButtonName) as Button;
                 }
@@ -813,7 +813,7 @@ namespace MS.Internal.Documents
             get
             {
                 // find control if the reference is not set.
-                if (_actualSizeButton == null)
+                if (_actualSizeButton is null)
                 {
                     _actualSizeButton = GetTemplateChild(_actualSizeButtonName) as Button;
                 }
@@ -829,7 +829,7 @@ namespace MS.Internal.Documents
             get
             {
                 // find control if the reference is not set.
-                if (_pageWidthButton == null)
+                if (_pageWidthButton is null)
                 {
                     _pageWidthButton = GetTemplateChild(_pageWidthButtonName) as Button;
                 }
@@ -845,7 +845,7 @@ namespace MS.Internal.Documents
             get
             {
                 // find control if the reference is not set.
-                if (_wholePageButton == null)
+                if (_wholePageButton is null)
                 {
                     _wholePageButton = GetTemplateChild(_wholePageButtonName) as Button;
                 }
@@ -862,7 +862,7 @@ namespace MS.Internal.Documents
             get
             {
                 // find control if the reference is not set.
-                if (_twoPageButton == null)
+                if (_twoPageButton is null)
                 {
                     _twoPageButton = GetTemplateChild(_twoPageButtonName) as Button;
                 }
@@ -878,7 +878,7 @@ namespace MS.Internal.Documents
             get
             {
                 // find control if the reference is not set.
-                if (_thumbnailButton == null)
+                if (_thumbnailButton is null)
                 {
                     _thumbnailButton = GetTemplateChild(_thumbnailButtonName) as Button;
                 }
@@ -894,7 +894,7 @@ namespace MS.Internal.Documents
             get
             {
                 // find control if the reference is not set.
-                if (_rmButton == null)
+                if (_rmButton is null)
                 {
                     _rmButton = GetTemplateChild(_rmButtonName) as Button;
                 }
@@ -910,7 +910,7 @@ namespace MS.Internal.Documents
             get
             {
                 // find control if the reference is not set.
-                if (_saveAsButton == null)
+                if (_saveAsButton is null)
                 {
                     _saveAsButton = GetTemplateChild(_saveAsButtonName) as Button;
                 }
@@ -926,7 +926,7 @@ namespace MS.Internal.Documents
             get
             {
                 // find control if the reference is not set.
-                if (_digitalSignaturesMenuItem == null)
+                if (_digitalSignaturesMenuItem is null)
                 {
                     _digitalSignaturesMenuItem = GetTemplateChild(_digitalSignaturesMenuItemName) as MenuItem;
                 }
@@ -942,7 +942,7 @@ namespace MS.Internal.Documents
             get
             {
                 // find control if the reference is not set.
-                if (_infoBar == null)
+                if (_infoBar is null)
                 {
                     _infoBar = GetTemplateChild(_infoBarName) as FrameworkElement;
                 }
@@ -958,7 +958,7 @@ namespace MS.Internal.Documents
             get
             {
                 // find control if the reference is not set.
-                if (_infoBarCloseButton == null)
+                if (_infoBarCloseButton is null)
                 {
                     // Setup InfoBar Close Button
                     _infoBarCloseButton = GetTemplateChild(_infoBarCloseButtonName)
@@ -981,7 +981,7 @@ namespace MS.Internal.Documents
             get
             {
                 // find control if the reference is not set.
-                if (_infoBarDigSigButton == null)
+                if (_infoBarDigSigButton is null)
                 {
                     // Setup Digital Signature Status Changes
                     _infoBarDigSigButton = GetTemplateChild(_infoBarSignaturesButtonName) as Button;
@@ -1006,7 +1006,7 @@ namespace MS.Internal.Documents
             get
             {
                 // find control if the reference is not set.
-                if (_infoBarRMButton == null)
+                if (_infoBarRMButton is null)
                 {
                     // Setup Rights Management Status Changes
                     _infoBarRMButton = GetTemplateChild(_infoBarRMButtonName) as Button;
@@ -1030,7 +1030,7 @@ namespace MS.Internal.Documents
             get
             {
                 // Locate the FindToolBar to set styling properties (to match main ToolBar).
-                if (_findToolBar == null)
+                if (_findToolBar is null)
                 {
                     // Find ContentControl to host the FindToolBar.
 
@@ -1054,7 +1054,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_scrollViewer == null)
+                if (_scrollViewer is null)
                 {
                     _scrollViewer = GetTemplateChild(_contentHostName) as ScrollViewer;
                 }
@@ -2407,7 +2407,7 @@ namespace MS.Internal.Documents
                     fixedPage = fd.Pages[pageNumber].GetPageRoot(false) as FixedPage;
                 }
 
-                if (fixedPage == null)
+                if (fixedPage is null)
                 {
                     page = _documentPaginator.GetPage(pageNumber);
 

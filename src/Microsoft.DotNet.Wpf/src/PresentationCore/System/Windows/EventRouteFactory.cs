@@ -24,7 +24,7 @@ namespace System.Windows
         {
             EventRoute eventRoute = Pop();
 
-            if (eventRoute == null)
+            if (eventRoute is null)
             {
                 eventRoute = new EventRoute(routedEvent);
             }
@@ -61,7 +61,7 @@ namespace System.Windows
             {
                 // In a normal scenario it is extremely rare to 
                 // require more than 2 EventRoutes at the same time
-                if (_eventRouteStack == null)
+                if (_eventRouteStack is null)
                 {
                     _eventRouteStack = new EventRoute[2];
                     _stackTop = 0;

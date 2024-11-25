@@ -94,14 +94,14 @@ namespace MS.Internal.Globalization
                 // get the baml tree node from the tree
                 BamlTreeNode node = treeMap.MapKeyToBamlTreeNode(key);
 
-                if (node == null)
+                if (node is null)
                 {
                     if (key.PropertyName == BamlConst.ContentSuffix)
                     {
                         // see if there is already a Baml node with the Uid. If so
                         // ignore this entry
                         node = treeMap.MapUidToBamlTreeElementNode(key.Uid);
-                        if (node == null)
+                        if (node is null)
                         {
                             // create new Baml element node
                             BamlStartElementNode newNode = new BamlStartElementNode(
@@ -161,8 +161,8 @@ namespace MS.Internal.Globalization
             BamlTreeUpdateMap treeMap
             )
         {
-            if (resource == null
-                || resource.Content == null
+            if (resource is null
+                || resource.Content is null
                 || !resource.Modifiable)
             {
                 // Invalid translation or the resource is marked as non-modifiable.
@@ -193,7 +193,7 @@ namespace MS.Internal.Globalization
                         literalNode.Content = BamlResourceContentUtil.UnescapeString(resource.Content);
 
                         // now try to link this node into the parent.
-                        if (literalNode.Parent == null)
+                        if (literalNode.Parent is null)
                         {
                             BamlTreeNode parent = treeMap.MapUidToBamlTreeElementNode(key.Uid);
                             if (parent != null)
@@ -216,7 +216,7 @@ namespace MS.Internal.Globalization
                         propertyNode.Value = BamlResourceContentUtil.UnescapeString(resource.Content);
 
                         // now try to link this node into the parent
-                        if (propertyNode.Parent == null)
+                        if (propertyNode.Parent is null)
                         {
                             BamlStartElementNode parent = (BamlStartElementNode)treeMap.MapUidToBamlTreeElementNode(key.Uid);
                             if (parent != null)
@@ -282,7 +282,7 @@ namespace MS.Internal.Globalization
             IList<BamlTreeNode> newChildren
             )
         {
-            if (newChildren == null) return;
+            if (newChildren is null) return;
 
             List<BamlTreeNode> oldChildren = parent.Children;
 
@@ -535,7 +535,7 @@ namespace MS.Internal.Globalization
                     bamlNode = bamlTreeMap.MapUidToBamlTreeElementNode(tagUid);
                 }
 
-                if (bamlNode == null)
+                if (bamlNode is null)
                 {
                     bamlNode = new BamlStartElementNode(
                         assemblyName,
@@ -623,7 +623,7 @@ namespace MS.Internal.Globalization
         {
             BamlStringToken[] tokens = BamlResourceContentUtil.ParseChildPlaceholder(content);
 
-            if (tokens == null)
+            if (tokens is null)
             {
                 bamlTreeMap.Resolver.RaiseErrorNotifyEvent(
                     new BamlLocalizerErrorNotifyEventArgs(
@@ -727,7 +727,7 @@ namespace MS.Internal.Globalization
             {
                 BamlTreeNode node = _originalMap.MapKeyToBamlTreeNode(key, _tree);
 
-                if (node == null)
+                if (node is null)
                 {
                     // find it in the new nodes
                     if (_keyToNewBamlNodeIndexMap.Contains(key))
@@ -747,7 +747,7 @@ namespace MS.Internal.Globalization
             internal BamlStartElementNode MapUidToBamlTreeElementNode(string uid)
             {
                 BamlStartElementNode node = _originalMap.MapUidToBamlTreeElementNode(uid, _tree);
-                if (node == null)
+                if (node is null)
                 {
                     // find it in the new nodes
                     if (_uidToNewBamlNodeIndexMap.Contains(uid))
@@ -844,7 +844,7 @@ namespace MS.Internal.Globalization
                         contentProperty = contentPropertyAttribute.Name;
 
                         // Cach the value for future use.
-                        if (_contentPropertyTable == null)
+                        if (_contentPropertyTable is null)
                         {
                             _contentPropertyTable = new Dictionary<string, string>(8);
                         }

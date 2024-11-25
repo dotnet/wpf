@@ -524,7 +524,7 @@ namespace Test.Elements
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
             string s = value as string;
-            if (s == null)
+            if (s is null)
             {
                 throw new ArgumentException();
             }
@@ -542,7 +542,7 @@ namespace Test.Elements
             if (destinationType == typeof(string))
             {
                 ClassWithStringConverter c = value as ClassWithStringConverter;
-                if (c == null)
+                if (c is null)
                 {
                     throw new ArgumentException();
                 }

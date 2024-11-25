@@ -45,7 +45,7 @@ namespace System.Windows.Input
             {
                 ArrayList elements = (ArrayList)akm._keyToElements[key];
 
-                if (elements == null)
+                if (elements is null)
                 {
                     elements = new ArrayList(1);
                     akm._keyToElements[key] = elements;
@@ -187,7 +187,7 @@ namespace System.Windows.Input
         {
             get 
             {
-                if (_accessKeyManager == null)
+                if (_accessKeyManager is null)
                     _accessKeyManager = new AccessKeyManager();
                 return _accessKeyManager;
             }
@@ -254,7 +254,7 @@ namespace System.Windows.Input
                     if (!target.IsEnabled)
                         continue;
 
-                    if (invokeUIElement == null)
+                    if (invokeUIElement is null)
                     {
                         invokeUIElement = target;
                         chosenIndex = i;
@@ -297,7 +297,7 @@ namespace System.Windows.Input
         {
             // AccessKeyManager handles both text and system text.
             string text = e.Text;
-            if ((text == null) || (text.Length == 0))
+            if ((text is null) || (text.Length == 0))
             {
                 text = e.SystemText;
             }
@@ -354,12 +354,12 @@ namespace System.Windows.Input
         private List<IInputElement> GetTargetsForScope(object scope, string key, IInputElement sender, AccessKeyInformation senderInfo)
         {
             // null scope defaults to the active window
-            if (scope == null)
+            if (scope is null)
             {
                 scope = CriticalGetActiveSource();
 
                 // if there is no active scope then give up
-                if (scope == null)
+                if (scope is null)
                 {
                     return null;
                 }
@@ -385,7 +385,7 @@ namespace System.Windows.Input
                 possibleElements = CopyAndPurgeDead(_keyToElements[key] as ArrayList);
             }
 
-            if (possibleElements == null) return null;
+            if (possibleElements is null) return null;
 
             List<IInputElement> finalTargets = new List<IInputElement>(1);
 
@@ -399,7 +399,7 @@ namespace System.Windows.Input
                     {
                         AccessKeyInformation elementInfo = GetInfoForElement(element, key);
 
-                        if (elementInfo.target == null) continue;
+                        if (elementInfo.target is null) continue;
 
                         if (scope == elementInfo.Scope)
                         {
@@ -437,7 +437,7 @@ namespace System.Windows.Input
                 element.RaiseEvent(args);
                 info.Scope = args.Scope;
                 info.target = args.Target;
-                if (info.Scope == null)
+                if (info.Scope is null)
                 {
                     info.Scope = GetSourceForElement(element);
                 }
@@ -577,7 +577,7 @@ namespace System.Windows.Input
                 WeakReference weakReference = (WeakReference)elements[i];
                 object element = weakReference.Target;
 
-                if (element == null || element == elementToRemove)
+                if (element is null || element == elementToRemove)
                 {
                     elements.RemoveAt(i);
                 }
@@ -594,7 +594,7 @@ namespace System.Windows.Input
         /// </summary>
         private static List<IInputElement> CopyAndPurgeDead(ArrayList elements)
         {
-            if (elements == null)
+            if (elements is null)
             {
                 return null;
             }
@@ -606,7 +606,7 @@ namespace System.Windows.Input
                 WeakReference weakReference = (WeakReference)elements[i];
                 object element = weakReference.Target;
 
-                if (element == null)
+                if (element is null)
                 {
                     elements.RemoveAt(i);
                 }

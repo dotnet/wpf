@@ -113,7 +113,7 @@ namespace MS.Internal.Documents
         /// <returns>A DrawingBrush on success (valid status, DrawingBrush found), null otherwise.</returns>
         private static DrawingBrush GetDrawingBrushFromStatus(RightsManagementStatus status)
         {
-            if (_brushResources == null)
+            if (_brushResources is null)
             {
                 // Get the entire list of RightsManagementStatus values.
                 RightsManagementStatus[] statusList = Enum.GetValues<RightsManagementStatus>();
@@ -134,7 +134,7 @@ namespace MS.Internal.Documents
 
                 // If there is no cached value of the requested DrawingBrush, then find
                 // it in the Resources.
-                if (_brushResources[index] == null)
+                if (_brushResources[index] is null)
                 {
                     // Determine resource name.
                     string resourceName = "PUIRMStatus"

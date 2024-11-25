@@ -370,7 +370,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         {
             get
             {
-                if (_huffModule == null)
+                if (_huffModule is null)
                 {
                     _huffModule = new HuffModule();
                 }
@@ -385,7 +385,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         {
             get
             {
-                if (_multiByteCodec == null)
+                if (_multiByteCodec is null)
                 {
                     _multiByteCodec = new MultiByteCodec();
                 }
@@ -400,7 +400,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         {
             get
             {
-                if (_deltaDelta == null)
+                if (_deltaDelta is null)
                 {
                     _deltaDelta = new DeltaDelta();
                 }
@@ -415,7 +415,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         {
             get
             {
-                if (_gorillaCodec == null)
+                if (_gorillaCodec is null)
                 {
                     _gorillaCodec = new GorillaCodec();
                 }
@@ -430,7 +430,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         {
             get
             {
-                if (_lzCodec == null)
+                if (_lzCodec is null)
                 {
                     _lzCodec = new LZCodec();
                 }

@@ -516,7 +516,7 @@ namespace MS.Internal.IO.Packaging
         private static ReliableIsolatedStorageFileFolder GetDefaultIsolatedStorageFile()
         {
             // Cache and re-use the same object for multiple requests - resurrect if disposed
-            if (_defaultFile == null || _defaultFile.IsDisposed())
+            if (_defaultFile is null || _defaultFile.IsDisposed())
             {
                 _defaultFile = new ReliableIsolatedStorageFileFolder();
             }

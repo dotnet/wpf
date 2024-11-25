@@ -592,7 +592,7 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         private void EnsureDownloader()
         {
-            if (_byteRangeDownloader == null)
+            if (_byteRangeDownloader is null)
             {
                 _byteRangeDownloader = new ByteRangeDownloader(_uri,
                                                                _tempFileStream,
@@ -1067,14 +1067,14 @@ namespace MS.Internal.IO.Packaging
                         // 1. _allowByteRangeRequests - protocol is http and we know the full stream length
                         // 2. !_inAdditionalRequest - there is no outstanding request - we currently only support one at a time
                         // 3. block.Offset > _highWaterMark + _additionalRequestThreshold - heuristic that says it's "worth it" to spawn a separate request
-                        // 4. ((_byteRangeDownloader == null) || !_byteRangeDownloader.ErroredOut) - either there is no
+                        // 4. ((_byteRangeDownloader is null) || !_byteRangeDownloader.ErroredOut) - either there is no
                         //    existing ByteRangeDownloader (this is our first byte-range request), or the downloader is non-null and has not Errored out.
                         // 5. The block we were asked to retrieve was not satisfied by existing data
                         if (_allowByteRangeRequests
                             && !_inAdditionalRequest
                             && (_highWaterMark <= Int64.MaxValue - (long) _additionalRequestThreshold) // Ensure that we don't get overflow from the next line
                             && (block.Offset > _highWaterMark + (long) _additionalRequestThreshold)
-                            && ((_byteRangeDownloader == null) || !_byteRangeDownloader.ErroredOut) && (block.Length > 0))
+                            && ((_byteRangeDownloader is null) || !_byteRangeDownloader.ErroredOut) && (block.Length > 0))
                         {
                             MakeByteRangeRequest(block);            // request data
                         }

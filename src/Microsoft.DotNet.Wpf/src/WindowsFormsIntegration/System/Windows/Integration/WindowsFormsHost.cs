@@ -237,7 +237,7 @@ namespace System.Windows.Forms.Integration
         /// </internalonly>
         protected override SW.Size MeasureOverride(SW.Size constraint)
         {
-            if (this.Visibility == Visibility.Collapsed || Child == null)
+            if (this.Visibility == Visibility.Collapsed || Child is null)
             {
                 //Child takes up no space
                 return new Size(0, 0);
@@ -268,7 +268,7 @@ namespace System.Windows.Forms.Integration
         /// <returns></returns>
         protected override Size ArrangeOverride(Size finalSize)
         {
-            if (this.Visibility == Visibility.Collapsed || Child == null)
+            if (this.Visibility == Visibility.Collapsed || Child is null)
             {
                 //Child takes up no space
                 return new Size(0, 0);
@@ -388,7 +388,7 @@ namespace System.Windows.Forms.Integration
         /// <returns></returns>
         private static SWM.Brush FindBackgroundParent(SW.DependencyObject dependencyObject)
         {
-            if (dependencyObject == null)
+            if (dependencyObject is null)
             {
                 return defaultBrush;
             }
@@ -396,7 +396,7 @@ namespace System.Windows.Forms.Integration
             Brush backgroundBrush = null;
             backgroundBrush = (Brush)dependencyObject.GetValue(SWC.Control.BackgroundProperty);
 
-            if (backgroundBrush == null)
+            if (backgroundBrush is null)
             {
                 SW.FrameworkElement frameworkElement = dependencyObject as SW.FrameworkElement;
                 if (frameworkElement != null)
@@ -796,7 +796,7 @@ namespace System.Windows.Forms.Integration
         {
             get
             {
-                if (_host == null) { return base.Cursor; }
+                if (_host is null) { return base.Cursor; }
 
                 if (!_host.PropertyMap.PropertyMappedToEmptyTranslator("Cursor"))
                 { return base.Cursor; }
@@ -804,7 +804,7 @@ namespace System.Windows.Forms.Integration
                 bool forceCursorMapped = _host.PropertyMap.PropertyMappedToEmptyTranslator("ForceCursor");
 
                 FrameworkElement cursorSource = HostUtils.GetCursorSource(_host, forceCursorMapped);
-                if (cursorSource == null) { return base.Cursor; }
+                if (cursorSource is null) { return base.Cursor; }
 
                 return Convert.ToSystemWindowsFormsCursor(cursorSource.Cursor);
             }
@@ -1006,7 +1006,7 @@ namespace System.Windows.Forms.Integration
         {
             // Should return immediately if this WFH is not in the active Window
             PresentationSource presentationSource = PresentationSource.FromVisual(this._host);
-            if (presentationSource == null)
+            if (presentationSource is null)
             {
                 return;
             }
@@ -1014,7 +1014,7 @@ namespace System.Windows.Forms.Integration
 
             //CSS This active window check may not work for multiple levels of nesting...
             // RootVisual isn't top level window.  Should we traverse upward through nested levels?
-            if (presentationSourceWindow == null || !presentationSourceWindow.IsActive)
+            if (presentationSourceWindow is null || !presentationSourceWindow.IsActive)
                 return;
 
             // Now check for unhandled WM_CHAR messages and process them as mnemonics

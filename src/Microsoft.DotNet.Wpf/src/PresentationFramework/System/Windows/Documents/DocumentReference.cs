@@ -78,7 +78,7 @@ namespace System.Windows.Documents
         /// <returns>The document tree</returns>
         public FixedDocument GetDocument(bool forceReload)
         {
-            DocumentsTrace.FixedDocumentSequence.IDF.Trace($"DocumentReference.GetDocument ({(Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source)}, {forceReload})");
+            DocumentsTrace.FixedDocumentSequence.IDF.Trace($"DocumentReference.GetDocument ({(Source is null ? new Uri("", UriKind.RelativeOrAbsolute) : Source)}, {forceReload})");
              VerifyAccess();
 
             FixedDocument idp = null;
@@ -93,7 +93,7 @@ namespace System.Windows.Documents
                      idp = CurrentlyLoadedDoc;
                 }
 
-                if (idp == null)
+                if (idp is null)
                 {
                     FixedDocument idpReloaded = _LoadDocument();
                     if (idpReloaded != null)
@@ -158,7 +158,7 @@ namespace System.Windows.Documents
             {
                 Uri oldSource = (Uri) e.OldValue;
                 Uri newSource = (Uri) e.NewValue;
-                DocumentsTrace.FixedDocumentSequence.IDF.Trace($"====Replace old doc {(oldSource == null ? "null" : oldSource.ToString())} with new {(newSource == null ? "null" : newSource.ToString())}");
+                DocumentsTrace.FixedDocumentSequence.IDF.Trace($"====Replace old doc {(oldSource is null ? "null" : oldSource.ToString())} with new {(newSource is null ? "null" : newSource.ToString())}");
                 // drop loaded document if source changed
                 docRef._doc = null;
                 //
@@ -212,7 +212,7 @@ namespace System.Windows.Documents
             DocumentsTrace.FixedDocumentSequence.Content.Trace(
                 $"""
                       This {this.GetHashCode()}
-                          Source {(this.Source == null ? "null" : this.Source.ToString())}
+                          Source {(this.Source is null ? "null" : this.Source.ToString())}
                           _doc   {_doc?.GetHashCode() ?? 0}
                           _docIdentity {_docIdentity?.GetHashCode() ?? 0}
                  """);
@@ -282,7 +282,7 @@ namespace System.Windows.Documents
                 Stream docStream = null;
 
                 docStream = WpfWebRequestHelper.CreateRequestAndGetResponseStream(uriToLoad, out mimeType);
-                if (docStream == null)
+                if (docStream is null)
                 {
                     throw new ApplicationException(SR.DocumentReferenceNotFound);
                 }

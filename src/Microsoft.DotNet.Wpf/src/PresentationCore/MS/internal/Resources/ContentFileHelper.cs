@@ -21,7 +21,7 @@ namespace MS.Internal.Resources
     {
         internal static bool IsContentFile(string partName)
         {
-            if (_contentFiles == null)
+            if (_contentFiles is null)
             {
                 _contentFiles = GetContentFiles(BaseUriHelper.ResourceAssembly);
             }
@@ -46,10 +46,10 @@ namespace MS.Internal.Resources
 
             Attribute[] assemblyAttributes;
 
-            if (asm == null)
+            if (asm is null)
             {
                 asm = BaseUriHelper.ResourceAssembly;
-                if (asm == null)
+                if (asm is null)
                 {
                     // If we have no entry assembly return an empty list because
                     // we can't have any content files.

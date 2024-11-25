@@ -477,7 +477,7 @@ namespace System.Windows.Xps.Serialization
 
         private void CheckDisposed()
         {
-            if (_xpsDocumentWriter == null)
+            if (_xpsDocumentWriter is null)
             {
                 throw new XpsSerializationException(SR.XpsSerializerFactory_WriterIsClosed);
             }

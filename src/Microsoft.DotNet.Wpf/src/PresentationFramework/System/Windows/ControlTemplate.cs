@@ -107,7 +107,7 @@ namespace System.Windows.Controls
         {
             get 
             { 
-                if (_triggers == null)
+                if (_triggers is null)
                 {
                     _triggers = new TriggerCollection();
 
@@ -131,7 +131,7 @@ namespace System.Windows.Controls
         //  2. targetType must be a Control or a subclass of it
         private void ValidateTargetType(Type targetType, string argName)
         {
-            if (targetType == null)
+            if (targetType is null)
             {
                 throw new ArgumentNullException(argName);
             }

@@ -208,7 +208,7 @@ namespace MS.Internal.Annotations.Anchoring
             int endOffset = 0;
 
             string stringCount = locatorPart.NameValuePairs[CountAttribute];
-            if (stringCount == null)
+            if (stringCount is null)
                 throw new ArgumentException(SR.Format(SR.InvalidLocatorPart, TextSelectionProcessor.CountAttribute));
             int count = Int32.Parse(stringCount, NumberFormatInfo.InvariantInfo);
 
@@ -278,7 +278,7 @@ namespace MS.Internal.Annotations.Anchoring
 
                 anchor = TextAnchor.TrimToIntersectionWith(anchor, textView.TextSegments);
 
-                if (anchor == null)
+                if (anchor is null)
                 {
                     attachmentLevel = AttachmentLevel.Unresolved;
                 }
@@ -364,7 +364,7 @@ namespace MS.Internal.Annotations.Anchoring
             ArgumentNullException.ThrowIfNull(locatorPart);
 
             string stringCount = locatorPart.NameValuePairs[CountAttribute];
-            if (stringCount == null)
+            if (stringCount is null)
                 throw new ArgumentException(SR.Format(SR.InvalidLocatorPart, TextSelectionProcessor.CountAttribute));
             int count = Int32.Parse(stringCount, NumberFormatInfo.InvariantInfo);
 
@@ -471,7 +471,7 @@ namespace MS.Internal.Annotations.Anchoring
                 textContainer = serviceProvider.GetService(typeof(ITextContainer)) as ITextContainer;
             }
 
-            if (textContainer == null)
+            if (textContainer is null)
             {
                 // Special case for TextBox which doesn't implement IServiceProvider
                 TextBoxBase textBox = startNode as TextBoxBase;

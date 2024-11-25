@@ -53,7 +53,7 @@ namespace MS.Internal.AppModel
 
         internal void _Detach(PageFunctionBase pf)
         {
-            if (pf._Return != null && pf._Saver == null)
+            if (pf._Return != null && pf._Saver is null)
             {
                 ReturnEventSaverInfo[] list = null;
 

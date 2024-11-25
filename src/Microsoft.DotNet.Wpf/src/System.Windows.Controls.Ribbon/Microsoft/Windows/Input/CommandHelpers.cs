@@ -38,7 +38,7 @@ namespace Microsoft.Windows.Input
                 {
                     IInputElement target = commandSource.CommandTarget;
 
-                    if (target == null)
+                    if (target is null)
                     {
                         target = commandSource as IInputElement;
                     }
@@ -100,7 +100,7 @@ namespace Microsoft.Windows.Input
                 {
                     IInputElement target = commandSource.CommandTarget;
 
-                    if (target == null)
+                    if (target is null)
                     {
                         target = commandSource as IInputElement;
                     }

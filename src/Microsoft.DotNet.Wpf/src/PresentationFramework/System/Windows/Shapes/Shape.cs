@@ -70,7 +70,7 @@ namespace System.Windows.Shapes
                 EnsureRenderedGeometry();
 
                 Geometry geometry = _renderedGeometry.CloneCurrentValue();
-                if (geometry == null ||  geometry == Geometry.Empty)
+                if (geometry is null ||  geometry == Geometry.Empty)
                 {
                     return Geometry.Empty;
                 }
@@ -96,7 +96,7 @@ namespace System.Windows.Shapes
             {
                 BoxedMatrix stretchMatrix = StretchMatrixField.GetValue(this);
 
-                if (stretchMatrix == null)
+                if (stretchMatrix is null)
                 {
                     return Transform.Identity;
                 }
@@ -455,7 +455,7 @@ namespace System.Windows.Shapes
             get
             {
                 double strokeThickness = StrokeThickness;
-                return (Stroke == null) || double.IsNaN(strokeThickness) || DoubleUtil.IsZero(strokeThickness);
+                return (Stroke is null) || double.IsNaN(strokeThickness) || DoubleUtil.IsZero(strokeThickness);
             }
         }
 
@@ -478,7 +478,7 @@ namespace System.Windows.Shapes
                 return null;
             }
 
-            if (_pen == null)
+            if (_pen is null)
             {
                 double thickness = 0.0;
                 double strokeThickness = StrokeThickness;
@@ -730,7 +730,7 @@ namespace System.Windows.Shapes
 
         internal void EnsureRenderedGeometry()
         {
-            if (_renderedGeometry == null)
+            if (_renderedGeometry is null)
             {
                 _renderedGeometry = DefiningGeometry;
 
@@ -751,8 +751,8 @@ namespace System.Windows.Shapes
                     Transform renderedTransform  = _renderedGeometry.Transform;
 
                     BoxedMatrix boxedStretchMatrix = StretchMatrixField.GetValue(this);
-                    Matrix stretchMatrix = (boxedStretchMatrix == null) ? Matrix.Identity : boxedStretchMatrix.Value;
-                    if (renderedTransform == null || renderedTransform.IsIdentity)
+                    Matrix stretchMatrix = (boxedStretchMatrix is null) ? Matrix.Identity : boxedStretchMatrix.Value;
+                    if (renderedTransform is null || renderedTransform.IsIdentity)
                     {
                         _renderedGeometry.Transform = new MatrixTransform(stretchMatrix);
                     }

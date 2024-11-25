@@ -39,7 +39,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             IContainsStarLayoutManager iContainsStarLayoutManager = (IContainsStarLayoutManager)this;
 
             RibbonHelper.InitializeStarLayoutManager(this);
-            bool isStarLayoutPass = (iContainsStarLayoutManager.StarLayoutManager == null ? false : iContainsStarLayoutManager.StarLayoutManager.IsStarLayoutPass);
+            bool isStarLayoutPass = (iContainsStarLayoutManager.StarLayoutManager is null ? false : iContainsStarLayoutManager.StarLayoutManager.IsStarLayoutPass);
 
             if (!isStarLayoutPass)
             {
@@ -128,7 +128,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
 
         private static double GetStarChildMinWidth(FrameworkElement child, ref double maxStarColumnWidth)
         {
-            if (child == null)
+            if (child is null)
             {
                 return 0;
             }
@@ -409,7 +409,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         /// </summary>
         private static void AddItemToList<T>(T item, ref List<T> list)
         {
-            if (list == null)
+            if (list is null)
             {
                 list = new List<T>();
             }

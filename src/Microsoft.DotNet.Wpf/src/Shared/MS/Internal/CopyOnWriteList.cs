@@ -37,7 +37,7 @@ namespace MS.Internal
 
         public CopyOnWriteList(object syncRoot)
         {
-            if(syncRoot == null)
+            if(syncRoot is null)
             {
                 syncRoot = new Object();
             }

@@ -135,7 +135,7 @@ namespace System.Windows.Xps.Packaging
             Package package =  PackageStore.GetPackage( _uri );
             // Consider collapsing these since we don't have streaming anymore.
             bool streaming = false;
-            if( package == null )
+            if( package is null )
             {
                 if( packageAccess == FileAccess.Write )
                 {
@@ -569,7 +569,7 @@ namespace System.Windows.Xps.Packaging
             //
             PackagePart sigDefPart = GetSignatureDefinitionPart(documentPart.Uri);
 
-            if( sigDefPart == null )
+            if( sigDefPart is null )
             {
                 sigDefPart = GenerateUniquePart(XpsS0Markup.SignatureDefintionType );
                 documentPart.CreateRelationship(
@@ -588,7 +588,7 @@ namespace System.Windows.Xps.Packaging
             PackagePart documentPart = _metroPackage.GetPart( documentUri );
             PackagePart sigDefPart = null;
 
-            if( documentPart == null )
+            if( documentPart is null )
             {
               throw new InvalidDataException(SR.ReachPackaging_InvalidDocUri);
             }
@@ -680,7 +680,7 @@ namespace System.Windows.Xps.Packaging
             PackagePart documentPart = _metroPackage.GetPart( documentUri );
             PackagePart printTicketPart = null;
 
-            if( documentPart == null )
+            if( documentPart is null )
             {
               throw new InvalidDataException(SR.ReachPackaging_InvalidDocUri);
             }
@@ -716,7 +716,7 @@ namespace System.Windows.Xps.Packaging
             //
             PackagePart propertiesPart = GetDocumentPropertiesPart();
 
-            if( propertiesPart == null )
+            if( propertiesPart is null )
             {
                 propertiesPart = GenerateUniquePart(XpsS0Markup.CoreDocumentPropertiesType );
                 _metroPackage.CreateRelationship(propertiesPart.Uri, TargetMode.Internal, XpsS0Markup.CorePropertiesRelationshipType );

@@ -71,7 +71,7 @@ namespace MS.Internal.FontCache
             {
                 unsafe
                 {
-                    return (_pointer == null);
+                    return (_pointer is null);
                 }
             }
         }
@@ -89,7 +89,7 @@ namespace MS.Internal.FontCache
             byte[] b = new byte[_size];
             unsafe
             {
-                if (_pointer == null)
+                if (_pointer is null)
                     throw new ArgumentOutOfRangeException();
 
                 Marshal.Copy((IntPtr)_pointer, b, 0, Size);
@@ -101,7 +101,7 @@ namespace MS.Internal.FontCache
         {
             unsafe
             {
-                if (_pointer == null)
+                if (_pointer is null)
                     throw new ArgumentOutOfRangeException();
 
                 byte* s = (byte*)_pointer;
@@ -120,7 +120,7 @@ namespace MS.Internal.FontCache
         internal unsafe int OffsetOf(void * pointer)
         {
             long offset = (byte*)pointer - (byte*)_pointer;
-            if (offset < 0 || offset > _size || _pointer == null || pointer == null)
+            if (offset < 0 || offset > _size || _pointer is null || pointer is null)
                 throw new ArgumentOutOfRangeException();
             return (int)offset;//no truncation possible since _size is an int
         }
@@ -142,7 +142,7 @@ namespace MS.Internal.FontCache
             // In future I'll just use checked context. That'll require modifying callers to expect integer overflow exceptions.
             unsafe
             {
-                if (offset < 0 || offset > rhs._size || rhs._pointer == null)
+                if (offset < 0 || offset > rhs._size || rhs._pointer is null)
                     throw new ArgumentOutOfRangeException();
                 rhs._pointer = (byte*)rhs._pointer + offset;
             }
@@ -152,7 +152,7 @@ namespace MS.Internal.FontCache
 
         internal unsafe void * Probe(int offset, int length)
         {
-            if (_pointer == null || offset < 0 || offset > _size || offset + length > _size || offset + length < 0)
+            if (_pointer is null || offset < 0 || offset > _size || offset + length > _size || offset + length < 0)
                 throw new ArgumentOutOfRangeException();
             return (byte *)_pointer + offset;
         }
@@ -167,7 +167,7 @@ namespace MS.Internal.FontCache
         {
             unsafe
             {
-                if (_pointer == null || offset < 0 || offset > _size || offset + length > _size || offset + length < 0)
+                if (_pointer is null || offset < 0 || offset > _size || offset + length > _size || offset + length < 0)
                     throw new ArgumentOutOfRangeException();
 
                 return new CheckedPointer((byte*)_pointer + offset, length);

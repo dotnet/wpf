@@ -637,7 +637,7 @@ namespace System.Windows.Controls
             if (CanShowFindToolBar)
             {
                 // Toggle on the FindToolBar between visible and hidden state.
-                ToggleFindToolBar(FindToolBar == null);
+                ToggleFindToolBar(FindToolBar is null);
             }
         }
 
@@ -960,13 +960,13 @@ namespace System.Windows.Controls
             DynamicDocumentPaginator documentPaginator;
 
             // Ignore LayoutUpdated during printing.
-            if (this.Document != null && _printingState == null)
+            if (this.Document != null && _printingState is null)
             {
                 documentPaginator = this.Document.DocumentPaginator as DynamicDocumentPaginator;
                 if (documentPaginator != null)
                 {
                     // Update ContentPosition, if not cached.
-                    if (_contentPosition == null)
+                    if (_contentPosition is null)
                     {
                         masterPageView = GetMasterPageView();
                         if (masterPageView != null && masterPageView.DocumentPage != null)
@@ -994,7 +994,7 @@ namespace System.Windows.Controls
         {
             if (Document != null && sender == Document.DocumentPaginator && e != null)
             {
-                if (!e.Cancelled && e.Error == null && e.UserState == _bringContentPositionIntoViewToken)
+                if (!e.Cancelled && e.Error is null && e.UserState == _bringContentPositionIntoViewToken)
                 {
                     int newMasterPageNumber = e.PageNumber + 1;
 
@@ -1142,7 +1142,7 @@ namespace System.Windows.Controls
         /// <param name="enable">Whether to enable/disable FindToolBar.</param>
         private void ToggleFindToolBar(bool enable)
         {
-            Invariant.Assert(enable == (FindToolBar == null));
+            Invariant.Assert(enable == (FindToolBar is null));
             DocumentViewerHelper.ToggleFindToolBar(_findToolBarHost, new EventHandler(OnFindInvoked), enable);
         }
 

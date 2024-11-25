@@ -432,7 +432,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                if (s_empty == null)
+                if (s_empty is null)
                 {
                     Vector3DCollection collection = new Vector3DCollection();
                     collection.Freeze();

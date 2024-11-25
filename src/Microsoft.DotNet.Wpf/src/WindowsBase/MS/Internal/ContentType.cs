@@ -269,7 +269,7 @@ namespace MS.Internal
         /// <returns></returns>
         public override string ToString()
         {   
-            if (_contentType == null)
+            if (_contentType is null)
             {
                 //This is needed so that while debugging we get the correct 
                 //string
@@ -325,9 +325,9 @@ namespace MS.Internal
             /// </summary>
             public bool Equals(ContentType x, ContentType y)
             {
-                if (x == null)
+                if (x is null)
                 {
-                    return (y == null);
+                    return (y is null);
                 }
                 else
                 {
@@ -354,9 +354,9 @@ namespace MS.Internal
             /// </summary>
             public bool Equals(ContentType x, ContentType y)
             {
-                if (x == null)
+                if (x is null)
                 {
-                    return (y == null); 
+                    return (y is null); 
                 }
                 else
                 {
@@ -642,7 +642,7 @@ namespace MS.Internal
         /// </summary>
         private void EnsureParameterDictionary()
         {
-            if (_parameterDictionary == null)
+            if (_parameterDictionary is null)
             {
                 _parameterDictionary = new Dictionary<string, string>(); //initial size 0
             }

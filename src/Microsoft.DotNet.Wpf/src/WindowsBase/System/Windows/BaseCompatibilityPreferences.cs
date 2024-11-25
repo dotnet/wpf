@@ -233,7 +233,7 @@ namespace System.Windows
 
         static void SetMatchPackageSignatureMethodToPackagePartDigestMethod(NameValueCollection appSettings)
         {
-            if (appSettings == null || !SetMatchPackageSignatureMethodToPackagePartDigestMethodFromAppSettings(appSettings))
+            if (appSettings is null || !SetMatchPackageSignatureMethodToPackagePartDigestMethodFromAppSettings(appSettings))
             {
                 SetMatchPackageSignatureMethodToPackagePartDigestMethodFromRegistry();
             }

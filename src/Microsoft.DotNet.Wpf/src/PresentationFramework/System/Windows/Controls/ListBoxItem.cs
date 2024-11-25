@@ -336,7 +336,7 @@ namespace System.Windows.Controls
         {
             ItemsControl oldItemsControl = null;
 
-            if (VisualTreeHelper.GetParent(this) == null)
+            if (VisualTreeHelper.GetParent(this) is null)
             {
                 if (IsKeyboardFocusWithin)
                 {

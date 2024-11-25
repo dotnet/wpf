@@ -21,7 +21,7 @@ namespace MS.Internal.Text.TextInterface
             if (_dwrite == IntPtr.Zero)
                 throw new DllNotFoundException("dwrite.dll", new Win32Exception());
 
-            if (dwriteCreateFactory == null)
+            if (dwriteCreateFactory is null)
                 throw new InvalidOperationException();
 
             _dwriteCreateFactory = dwriteCreateFactory;

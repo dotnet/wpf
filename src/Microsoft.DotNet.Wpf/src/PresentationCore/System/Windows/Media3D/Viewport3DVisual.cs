@@ -338,7 +338,7 @@ namespace System.Windows.Media.Media3D
             VisualDiagnostics.VerifyVisualTreeChange(this);
 
             Debug.Assert(child != null);
-            Debug.Assert(child.InternalVisualParent == null);
+            Debug.Assert(child.InternalVisualParent is null);
 
             child.SetParent(this);
 
@@ -548,7 +548,7 @@ namespace System.Windows.Media.Media3D
         {
             Camera camera = Camera;
 
-            if (camera == null)
+            if (camera is null)
             {
                 return Rect.Empty;
             }
@@ -743,7 +743,7 @@ namespace System.Windows.Media.Media3D
                         ((DUCE.IResource)camera).AddRefOnChannel(channel),
                         channel);
                 }
-                else if (isOnChannel) /* camera == null */
+                else if (isOnChannel) /* camera is null */
                 {
                     DUCE.Viewport3DVisualNode.SetCamera(
                         ((DUCE.IResource)this).GetHandle(channel),

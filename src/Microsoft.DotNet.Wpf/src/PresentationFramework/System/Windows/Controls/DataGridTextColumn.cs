@@ -34,7 +34,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_defaultElementStyle == null)
+                if (_defaultElementStyle is null)
                 {
                     Style style = new Style(typeof(TextBlock));
 
@@ -57,7 +57,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_defaultEditingElementStyle == null)
+                if (_defaultEditingElementStyle is null)
                 {
                     Style style = new Style(typeof(TextBox));
 
@@ -186,7 +186,7 @@ namespace System.Windows.Controls
                 {
                     // If a mouse click started the edit, then place the caret under the mouse.
                     MouseButtonEventArgs mouseArgs = editingEventArgs as MouseButtonEventArgs;
-                    if ((mouseArgs == null) || !PlaceCaretOnTextBox(textBox, Mouse.GetPosition(textBox)))
+                    if ((mouseArgs is null) || !PlaceCaretOnTextBox(textBox, Mouse.GetPosition(textBox)))
                     {
                         // If the mouse isn't over the textbox or something else started the edit, then select the text.
                         textBox.SelectAll();

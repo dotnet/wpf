@@ -406,7 +406,7 @@ namespace System.Windows.Controls.Primitives
         private static object CoerceSelectedItem(DependencyObject d, object value)
         {
             Selector s = (Selector) d;
-            if (value == null || s.SkipCoerceSelectedItemCheck)
+            if (value is null || s.SkipCoerceSelectedItemCheck)
                  return value;
 
             int selectedIndex = s.SelectedIndex;
@@ -579,7 +579,7 @@ namespace System.Windows.Controls.Primitives
             // use a representative item to determine which kind of binding to use (XML vs. CLR)
             BindingExpression bindingExpr = PrepareItemValueBinding(Items.GetRepresentativeItem());
 
-            if (bindingExpr == null)
+            if (bindingExpr is null)
                 return DependencyProperty.UnsetValue;   // no suitable item found
 
             // optimize for case where there is no SelectedValuePath (meaning
@@ -732,7 +732,7 @@ namespace System.Windows.Controls.Primitives
         /// <param name="item"></param>
         private BindingExpression PrepareItemValueBinding(object item)
         {
-            if (item == null)
+            if (item is null)
                 return null;
 
             Binding binding;
@@ -752,7 +752,7 @@ namespace System.Windows.Controls.Primitives
                 }
             }
 
-            if (bindingExpr == null)
+            if (bindingExpr is null)
             {
                 // create the binding
                 binding = new Binding();
@@ -1226,7 +1226,7 @@ namespace System.Windows.Controls.Primitives
                             LocateSelectedItems(deselectMissingItems:true);
 
                             // Select everything in Items that is selected but isn't in the _selectedItems.
-                            if (ItemsSource == null)
+                            if (ItemsSource is null)
                             {
                                 for (int i = 0; i < Items.Count; i++)
                                 {
@@ -1815,7 +1815,7 @@ namespace System.Windows.Controls.Primitives
 
         private void ItemSetIsSelected(ItemInfo info, bool value)
         {
-            if (info == null) return;
+            if (info is null) return;
 
             DependencyObject container = info.Container;
 
@@ -1942,7 +1942,7 @@ namespace System.Windows.Controls.Primitives
         {
             get
             {
-                if (_selectionChangeInstance == null)
+                if (_selectionChangeInstance is null)
                 {
                     _selectionChangeInstance = new SelectionChanger(this);
                 }
@@ -2486,7 +2486,7 @@ namespace System.Windows.Controls.Primitives
                     object firstSelection = _owner._selectedItems[0];
 
                     // This check is only just to slightly improve perf by checking if it's in selected items before doing a reverse lookup
-                    if (selectedItem == null || firstSelection != selectedItem)
+                    if (selectedItem is null || firstSelection != selectedItem)
                     {
                         _owner.SelectedIndex = _owner.Items.IndexOf(firstSelection);
                     }
@@ -2811,7 +2811,7 @@ namespace System.Windows.Controls.Primitives
             // the removal can be done more efficiently.
             public IDisposable DeferRemove()
             {
-                if (_batchRemove == null)
+                if (_batchRemove is null)
                 {
                     _batchRemove = new BatchRemoveHelper(this);
                 }
@@ -2865,7 +2865,7 @@ namespace System.Windows.Controls.Primitives
                 get { return _set != null; }
                 set
                 {
-                    if (value == true && _set == null)
+                    if (value == true && _set is null)
                     {
                         _set = new Dictionary<ItemInfo, ItemInfo>(_list.Count);
                         for (int i=0; i<_list.Count; ++i)
@@ -2970,7 +2970,7 @@ namespace System.Windows.Controls.Primitives
             {
                 if (Object.ReferenceEquals(x, y))
                     return true;
-                return (x == null) ? (y == null) : x.Equals(y, _matchUnresolved);
+                return (x is null) ? (y is null) : x.Equals(y, _matchUnresolved);
             }
 
             int IEqualityComparer<ItemInfo>.GetHashCode(ItemInfo x)

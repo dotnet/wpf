@@ -73,7 +73,7 @@ namespace System.Windows
 
         internal bool IsDefault
         {
-            get { return From == null && To == null; }
+            get { return From is null && To is null; }
         }
 
         internal bool DynamicStoryboardCompleted

@@ -198,7 +198,7 @@ namespace System.Windows.Annotations
                 bool isFixed = viewer.Document is FixedDocument || viewer.Document is FixedDocumentSequence;
                 bool isFlow = !isFixed && viewer.Document is FlowDocument;
 
-                if (isFixed || isFlow || viewer.Document == null)
+                if (isFixed || isFlow || viewer.Document is null)
                 {
                     // Take care of some special processors here
                     if (isFixed)
@@ -812,7 +812,7 @@ namespace System.Windows.Annotations
             _asyncLoadFromListOperation = null;
 
             List<IAttachedAnnotation> annotations = obj as List<IAttachedAnnotation>;
-            if (annotations == null)
+            if (annotations is null)
                 return null;
 
             if (annotations.Count > _maxAnnotationsBatch)
@@ -1257,7 +1257,7 @@ namespace System.Windows.Annotations
             VerifyAccess();
 
             // Ignore null resources added to an annotation
-            if (args.Resource == null)
+            if (args.Resource is null)
                 return;
 
             AttachedAnnotationChangedEventArgs newArgs = null;
@@ -1496,7 +1496,7 @@ namespace System.Windows.Annotations
 
             List<IAttachedAnnotation> list = element.GetValue(AnnotationService.AttachedAnnotationsProperty) as List<IAttachedAnnotation>;
 
-            if (list == null)
+            if (list is null)
             {
                 list = new List<IAttachedAnnotation>(1);
                 element.SetValue(AnnotationService.AttachedAnnotationsProperty, list);

@@ -82,11 +82,11 @@ namespace System.Windows.Markup
         /// null otherwise</returns>
         public static string LookupNamespace(DependencyObject elem, string prefix)
         {
-            if (elem == null)
+            if (elem is null)
             {
                 throw new ArgumentNullException( "elem" ); 
             }
-            if (prefix == null)
+            if (prefix is null)
             {
                 throw new ArgumentNullException( "prefix" ); 
             }
@@ -126,11 +126,11 @@ namespace System.Windows.Markup
         public static string LookupPrefix(DependencyObject elem, string uri)
         {
             DependencyObject oldElem = elem;
-            if (elem == null)
+            if (elem is null)
             {
                 throw new ArgumentNullException( "elem" ); 
             }
-            if (uri == null)
+            if (uri is null)
             {
                 throw new ArgumentNullException( "uri" ); 
             }
@@ -189,7 +189,7 @@ namespace System.Windows.Markup
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static string GetXmlSpace(DependencyObject dependencyObject)
         {
-            if (dependencyObject == null)
+            if (dependencyObject is null)
             {
                 throw new ArgumentNullException( "dependencyObject" );
             }
@@ -202,7 +202,7 @@ namespace System.Windows.Markup
         /// </summary>
         public static void SetXmlSpace(DependencyObject dependencyObject, string value)
         {
-            if (dependencyObject == null)
+            if (dependencyObject is null)
             {
                 throw new ArgumentNullException( "dependencyObject" );
             }
@@ -223,7 +223,7 @@ namespace System.Windows.Markup
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static XmlnsDictionary GetXmlnsDictionary(DependencyObject dependencyObject)
         {
-            if (dependencyObject == null)
+            if (dependencyObject is null)
             {
                 throw new ArgumentNullException( "dependencyObject" );
             }
@@ -236,7 +236,7 @@ namespace System.Windows.Markup
         /// </summary>
         public static void SetXmlnsDictionary(DependencyObject dependencyObject, XmlnsDictionary value)
         {
-            if (dependencyObject == null)
+            if (dependencyObject is null)
             {
                 throw new ArgumentNullException( "dependencyObject" );
             }
@@ -261,7 +261,7 @@ namespace System.Windows.Markup
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static string GetXmlnsDefinition(DependencyObject dependencyObject)
         {
-            if (dependencyObject == null)
+            if (dependencyObject is null)
             {
                 throw new ArgumentNullException( "dependencyObject" );
             }
@@ -274,7 +274,7 @@ namespace System.Windows.Markup
         /// </summary>
         public static void SetXmlnsDefinition(DependencyObject dependencyObject, string value)
         {
-            if (dependencyObject == null)
+            if (dependencyObject is null)
             {
                 throw new ArgumentNullException( "dependencyObject" );
             }
@@ -298,7 +298,7 @@ namespace System.Windows.Markup
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static Hashtable GetXmlNamespaceMaps(DependencyObject dependencyObject)
         {
-            if (dependencyObject == null)
+            if (dependencyObject is null)
             {
                 throw new ArgumentNullException( "dependencyObject" );
             }
@@ -314,7 +314,7 @@ namespace System.Windows.Markup
         /// </remarks>
         public static void SetXmlNamespaceMaps(DependencyObject dependencyObject, Hashtable value)
         {
-            if (dependencyObject == null)
+            if (dependencyObject is null)
             {
                 throw new ArgumentNullException( "dependencyObject" );
             }
@@ -338,7 +338,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                if (_xmlSpaceSetter == null)
+                if (_xmlSpaceSetter is null)
                 {
                     _xmlSpaceSetter = typeof(XmlAttributeProperties).GetMethod("SetXmlSpace",
                                                      BindingFlags.Public | BindingFlags.Static);

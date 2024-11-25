@@ -111,7 +111,7 @@ namespace System.Windows.Input
 
             _inputDevice = inputDevice;
 
-            if (resultText == null)
+            if (resultText is null)
             {
                 throw new ArgumentException(SR.TextComposition_NullResultText);
             }

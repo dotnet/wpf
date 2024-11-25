@@ -203,7 +203,7 @@ namespace System.Windows.Documents
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeText(XamlDesignerSerializationManager manager) 
         {
-            return manager != null && manager.XmlWriter == null;
+            return manager != null && manager.XmlWriter is null;
         }
 
         #endregion Internal Methods
@@ -240,7 +240,7 @@ namespace System.Windows.Documents
             // CoerceText will have already converted null -> String.Empty, but our default 
             // CoerceValueCallback could be overridden by a derived class.  So check again here.
             string newText = (string)e.NewValue;
-            if (newText == null)
+            if (newText is null)
             {
                 newText = String.Empty;
             }
@@ -299,7 +299,7 @@ namespace System.Windows.Documents
         /// </remarks>
         private static object CoerceText(DependencyObject d, object baseValue)
         {
-            if (baseValue == null)
+            if (baseValue is null)
             {
                 baseValue = string.Empty;
             }

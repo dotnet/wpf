@@ -100,7 +100,7 @@ namespace System.Windows.Input
         {
             get
             {
-                if (_manipulators == null)
+                if (_manipulators is null)
                 {
                     _manipulators = ((ManipulationDevice)Device).GetManipulatorsReadOnly();
                 }
@@ -130,7 +130,7 @@ namespace System.Windows.Input
         [Browsable(false)]
         public void SetManipulationParameter(ManipulationParameters2D parameter)
         {
-            if (_parameters == null)
+            if (_parameters is null)
             {
                 _parameters = new List<ManipulationParameters2D>(1);
             }

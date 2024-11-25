@@ -102,7 +102,7 @@ namespace MS.Internal.PtsHost
 #pragma warning restore 6518
 
             // Create the main text segment
-            if (_mainTextSegment == null)
+            if (_mainTextSegment is null)
             {
                 _mainTextSegment = new ContainerParagraph(Element, StructuralCache);
             }
@@ -447,7 +447,7 @@ namespace MS.Internal.PtsHost
                     _mainTextSegment = null;
                 }
             }
-            return (_mainTextSegment == null);
+            return (_mainTextSegment is null);
         }
         
         // ------------------------------------------------------------------

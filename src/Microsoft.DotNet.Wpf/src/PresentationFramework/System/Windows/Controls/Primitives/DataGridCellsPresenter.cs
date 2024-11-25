@@ -72,7 +72,7 @@ namespace System.Windows.Controls.Primitives
             }
             
 #if BindingGroups
-            if (ItemBindingGroup == null)
+            if (ItemBindingGroup is null)
             {
                 ItemBindingGroup = new BindingGroup();
             }
@@ -101,7 +101,7 @@ namespace System.Windows.Controls.Primitives
         internal void SyncProperties(bool forcePrepareCells)
         {
             var dataGridOwner = DataGridOwner;
-            if (dataGridOwner == null)
+            if (dataGridOwner is null)
             {
                 return;
             }
@@ -257,7 +257,7 @@ namespace System.Windows.Controls.Primitives
                 // Either update or create a collection that will return the row's data item
                 // n number of times, where n is the number of columns.
                 MultipleCopiesCollection cellItems = ItemsSource as MultipleCopiesCollection;
-                if (cellItems == null)
+                if (cellItems is null)
                 {
                     cellItems = new MultipleCopiesCollection(newItem, columns.Count);
                     ItemsSource = cellItems;
@@ -469,13 +469,13 @@ namespace System.Windows.Controls.Primitives
             base.OnRender(drawingContext);
 
             var row = DataGridRowOwner;
-            if (row == null)
+            if (row is null)
             {
                 return;
             }
 
             var dataGrid = row.DataGridOwner;
-            if (dataGrid == null)
+            if (dataGrid is null)
             {
                 return;
             }

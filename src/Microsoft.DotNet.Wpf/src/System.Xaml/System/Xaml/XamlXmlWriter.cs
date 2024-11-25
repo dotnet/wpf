@@ -100,7 +100,7 @@ namespace System.Xaml
             this.schemaContext = schemaContext ?? throw new ArgumentNullException(nameof(schemaContext));
 
             output = xmlWriter;
-            this.settings = settings == null ? new XamlXmlWriterSettings() : settings.Copy() as XamlXmlWriterSettings;
+            this.settings = settings is null ? new XamlXmlWriterSettings() : settings.Copy() as XamlXmlWriterSettings;
 
             currentState = Start.State;
 
@@ -206,7 +206,7 @@ namespace System.Xaml
         public override void WriteValue(object value)
         {
             CheckIsDisposed();
-            if (value == null)
+            if (value is null)
             {
                 WriteStartObject(XamlLanguage.Null);
                 WriteEndObject();
@@ -214,7 +214,7 @@ namespace System.Xaml
             else
             {
                 string s = value as string;
-                if (s == null)
+                if (s is null)
                 {
                     throw new ArgumentException(SR.XamlXmlWriterCannotWriteNonstringValue, nameof(value));
                 }
@@ -228,12 +228,12 @@ namespace System.Xaml
 
             ArgumentNullException.ThrowIfNull(namespaceDeclaration);
 
-            if (namespaceDeclaration.Prefix == null)
+            if (namespaceDeclaration.Prefix is null)
             {
                 throw new ArgumentException(SR.NamespaceDeclarationPrefixCannotBeNull, nameof(namespaceDeclaration));
             }
 
-            if (namespaceDeclaration.Namespace == null)
+            if (namespaceDeclaration.Namespace is null)
             {
                 throw new ArgumentException(SR.NamespaceDeclarationNamespaceCannotBeNull, nameof(namespaceDeclaration));
             }
@@ -348,7 +348,7 @@ namespace System.Xaml
                 if (enumerator.Current.AllocatingNodeType == XamlNodeType.StartMember
                     && enumerator.Current.Member != XamlLanguage.Items)
                 {
-                    containingXamlType = (enumerator.Current.Member == null) || enumerator.Current.Member.IsUnknown ? null : enumerator.Current.Member.Type;
+                    containingXamlType = (enumerator.Current.Member is null) || enumerator.Current.Member.IsUnknown ? null : enumerator.Current.Member.Type;
                     break;
                 }
                 else if (enumerator.Current.AllocatingNodeType == XamlNodeType.StartObject)
@@ -405,7 +405,7 @@ namespace System.Xaml
         {
             string prefix = LookupPrefix(namespaces, out chosenNamespace);
 
-            if (prefix == null)
+            if (prefix is null)
             {
                 chosenNamespace = namespaces[0];
                 prefix = DefinePrefix(chosenNamespace);
@@ -502,7 +502,7 @@ namespace System.Xaml
                 Debug.Assert(objectFrame.AllocatingNodeType == XamlNodeType.StartObject ||
                              objectFrame.AllocatingNodeType == XamlNodeType.GetObject);
 
-                if (objectFrame.Members == null)
+                if (objectFrame.Members is null)
                 {
                     objectFrame.Members = new XamlPropertySet();
                 }
@@ -551,7 +551,7 @@ namespace System.Xaml
             var namespaces = type.GetXamlNamespaces();
             string prefix = LookupPrefix(namespaces, out chosenNamespace);
 
-            if (prefix == null)
+            if (prefix is null)
             {
                 chosenNamespace = namespaces[0];
                 prefix = DefinePrefix(chosenNamespace);
@@ -577,7 +577,7 @@ namespace System.Xaml
             string chosenNamespace;
             string prefix = LookupPrefix(type.GetXamlNamespaces(), out chosenNamespace);
 
-            if (prefix == null || IsShadowed(chosenNamespace, prefix))
+            if (prefix is null || IsShadowed(chosenNamespace, prefix))
             {
                 // if we found a namespace that is not previously defined,
                 // or a namespace with prefix that is shadowed
@@ -1130,7 +1130,7 @@ namespace System.Xaml
                     string chosenNamespace;
                     string prefix = writer.LookupPrefix(property.GetXamlNamespaces(), out chosenNamespace);
 
-                    if (prefix == null || writer.IsShadowed(chosenNamespace, prefix))
+                    if (prefix is null || writer.IsShadowed(chosenNamespace, prefix))
                     {
                         // if the property's prefix is not already defined, or it's shadowed
                         // we need to write this property as an element so that the prefix can be defined in the property's scope.
@@ -1888,7 +1888,7 @@ namespace System.Xaml
                 Debug.Assert(objectXamlType != null);
 
                 Type objectClrType = objectXamlType.UnderlyingType;
-                if (objectClrType == null)
+                if (objectClrType is null)
                 {
                     throw new XamlXmlWriterException(SR.Format(
                         SR.ExpandPositionalParametersWithoutUnderlyingType, objectXamlType.GetQualifiedName()));
@@ -1920,7 +1920,7 @@ namespace System.Xaml
                         }
                     }
 
-                    if (matchingProperty == null)
+                    if (matchingProperty is null)
                     {
                         throw new XamlXmlWriterException(SR.ConstructorNotFoundForGivenPositionalParameters);
                     }
@@ -1941,7 +1941,7 @@ namespace System.Xaml
             {
                 IList<XamlType> paramXamlTypes = objectXamlType.GetPositionalParameters(numOfParameters);
 
-                if (paramXamlTypes == null)
+                if (paramXamlTypes is null)
                 {
                     throw new XamlXmlWriterException(SR.ConstructorNotFoundForGivenPositionalParameters);
                 }
@@ -1964,7 +1964,7 @@ namespace System.Xaml
 
                 ConstructorInfo constructor = objectXamlType.GetConstructor(paramClrTypes);
 
-                if (constructor == null)
+                if (constructor is null)
                 {
                     throw new XamlXmlWriterException(SR.ConstructorNotFoundForGivenPositionalParameters);
                 }

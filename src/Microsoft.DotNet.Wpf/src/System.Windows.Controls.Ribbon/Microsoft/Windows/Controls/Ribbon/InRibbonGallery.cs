@@ -322,7 +322,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             me.CoerceValue(IsCollapsedProperty);
             if (me.IsInInRibbonMode)
             {
-                if (me._ribbonControl == null)
+                if (me._ribbonControl is null)
                 {
                     me._ribbonControl = TreeHelper.FindAncestor(me, delegate(DependencyObject element)
                     {
@@ -607,7 +607,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 _scrollUpButton.SetValue(AutomationProperties.NameProperty, _scrollUpButtonAutomationName);
                 _scrollUpButton.SetBinding(RepeatButton.IsEnabledProperty, new Binding("CanLineUp") { Source = this });
-                if (_scrollUpButton.CommandTarget == null)
+                if (_scrollUpButton.CommandTarget is null)
                 {
                     _scrollUpButton.SetBinding(RepeatButton.CommandTargetProperty, new Binding("CommandTarget") { Source = this });
                 }
@@ -618,7 +618,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 _scrollDownButton.SetValue(AutomationProperties.NameProperty, _scrollDownButtonAutomationName);
                 _scrollDownButton.SetBinding(RepeatButton.IsEnabledProperty, new Binding("CanLineDown") { Source = this });
-                if (_scrollDownButton.CommandTarget == null)
+                if (_scrollDownButton.CommandTarget is null)
                 {
                     _scrollDownButton.SetBinding(RepeatButton.CommandTargetProperty, new Binding("CommandTarget") { Source = this });
                 }

@@ -235,7 +235,7 @@ namespace System.Windows.Input
             {
                 // InputLanguageManager for the current Dispatcher is stored in InputMethod of
                 // the current Dispatcher.
-                if(InputMethod.Current.InputLanguageManager == null)
+                if(InputMethod.Current.InputLanguageManager is null)
                 {
                     InputMethod.Current.InputLanguageManager = new InputLanguageManager();
                 }
@@ -282,7 +282,7 @@ namespace System.Windows.Input
         {
             get
             {
-                if (_source == null)
+                if (_source is null)
                 {
                     return null;
                 }
@@ -306,8 +306,8 @@ namespace System.Windows.Input
             {
                 ArgumentNullException.ThrowIfNull(value);
 
-                if ((_InputLanguageChanged == null) && 
-                    (_InputLanguageChanging == null) &&
+                if ((_InputLanguageChanged is null) && 
+                    (_InputLanguageChanging is null) &&
                     IsMultipleKeyboardLayout &&
                     (_source != null))
                     _source.Initialize();
@@ -319,8 +319,8 @@ namespace System.Windows.Input
                 ArgumentNullException.ThrowIfNull(value);
 
                 _InputLanguageChanged -= value;
-                if ((_InputLanguageChanged == null) && 
-                    (_InputLanguageChanging == null) &&
+                if ((_InputLanguageChanged is null) && 
+                    (_InputLanguageChanging is null) &&
                     IsMultipleKeyboardLayout &&
                     (_source != null))
                     _source.Uninitialize();
@@ -336,8 +336,8 @@ namespace System.Windows.Input
             {
                 ArgumentNullException.ThrowIfNull(value);
 
-                if ((_InputLanguageChanged == null) && 
-                    (_InputLanguageChanging == null) &&
+                if ((_InputLanguageChanged is null) && 
+                    (_InputLanguageChanging is null) &&
                     IsMultipleKeyboardLayout &&
                     (_source != null))
                     _source.Initialize();
@@ -349,8 +349,8 @@ namespace System.Windows.Input
                 ArgumentNullException.ThrowIfNull(value);
 
                 _InputLanguageChanging -= value;
-                if ((_InputLanguageChanged == null) && 
-                    (_InputLanguageChanging == null) &&
+                if ((_InputLanguageChanged is null) && 
+                    (_InputLanguageChanging is null) &&
                     IsMultipleKeyboardLayout &&
                     (_source != null))
                     _source.Uninitialize();
@@ -389,7 +389,7 @@ namespace System.Windows.Input
                 culture = (CultureInfo)focus.GetValue(InputLanguageProperty);
             }
             
-            if ((culture == null) ||
+            if ((culture is null) ||
                 (culture.Equals(CultureInfo.InvariantCulture)))
             {
                 //
@@ -468,7 +468,7 @@ namespace System.Windows.Input
 
         private void SetSourceCurrentLanguageId(CultureInfo languageId)
         {
-            if (_source == null)
+            if (_source is null)
             {
                 throw new InvalidOperationException(SR.InputLanguageManager_NotReadyToChangeCurrentLanguage);
             }

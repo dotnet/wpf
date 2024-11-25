@@ -110,7 +110,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null)
+            if (This is null)
             {
                 return;
             }
@@ -123,7 +123,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || This.IsReadOnly || !This.AcceptsRichContent || !(This.Selection is TextSelection))
+            if (This is null || !This._IsEnabled || This.IsReadOnly || !This.AcceptsRichContent || !(This.Selection is TextSelection))
             {
                 return;
             }
@@ -141,7 +141,7 @@ namespace System.Windows.Documents
 
                 ListItem parentListItem = TextPointerBase.GetListItem(thisSelection.Start);
                 ListItem immediateListItem = TextPointerBase.GetImmediateListItem(thisSelection.Start);
-                List list = parentListItem == null ? null : (List)parentListItem.Parent;
+                List list = parentListItem is null ? null : (List)parentListItem.Parent;
 
                 // Forget previously suggested horizontal position
                 TextEditorSelection._ClearSuggestedX(This);
@@ -356,7 +356,7 @@ namespace System.Windows.Documents
 
         private static bool HasBulletMarker(List list)
         {
-            if (list == null)
+            if (list is null)
             {
                 return false;
             }
@@ -367,7 +367,7 @@ namespace System.Windows.Documents
 
         private static bool HasNumericMarker(List list)
         {
-            if (list == null)
+            if (list is null)
             {
                 return false;
             }

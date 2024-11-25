@@ -116,7 +116,7 @@ namespace MS.Internal
                 //
                 // If the stream is not set for the file, get it from file system in Disk.
                 //
-                if ( _stream == null)
+                if ( _stream is null)
                 {
                     _stream = File.OpenRead(_filePath);
                 }

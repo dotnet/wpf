@@ -83,13 +83,13 @@ namespace MS.Internal.Text
             }
 
             // see if the two text decorations are equal.
-            bool textDecorationsEqual = (textDecorations == null) ?
-                                         parentTextDecorations == null
+            bool textDecorationsEqual = (textDecorations is null) ?
+                                         parentTextDecorations is null
                                        : textDecorations.ValueEquals(parentTextDecorations);
 
             if (!textDecorationsEqual)
             {
-                if (parentTextDecorations == null)
+                if (parentTextDecorations is null)
                 {
                     textDecorations = null;
                 }
@@ -236,7 +236,7 @@ namespace MS.Internal.Text
             // If 'element' is FrameworkElement, it is the host of the text content.
             // If 'element' is Block, the content is directly hosted by a block paragraph.
             // In such cases ignore background brush, because it is handled outside as paragraph's background.
-            while (backgroundBrush == null && CanApplyBackgroundBrush(element))
+            while (backgroundBrush is null && CanApplyBackgroundBrush(element))
             {
                 backgroundBrush = (Brush)element.GetValue(TextElement.BackgroundProperty);
                 Invariant.Assert(element is FrameworkContentElement);

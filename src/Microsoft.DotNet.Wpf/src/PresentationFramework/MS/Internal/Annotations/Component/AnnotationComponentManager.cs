@@ -60,7 +60,7 @@ namespace MS.Internal.Annotations.Component
             Debug.Assert(attachedAnnotation != null, "AttachedAnnotation should not be null");
 
             IAnnotationComponent component = FindComponent(attachedAnnotation);
-            if (component == null) return;
+            if (component is null) return;
             AddComponent(attachedAnnotation, component, reorder);
         }
 
@@ -172,9 +172,9 @@ namespace MS.Internal.Annotations.Component
 
             // otherwise host in the appropriate adorner layer
             AdornerLayer layer = AdornerLayer.GetAdornerLayer(annotatedElement); // note, GetAdornerLayer requires UIElement
-            if (layer == null)
+            if (layer is null)
             {
-                if (PresentationSource.FromVisual(annotatedElement) == null)
+                if (PresentationSource.FromVisual(annotatedElement) is null)
                 {
                     // The annotated element is no longer part of the application tree.
                     // This probably means we are out of sync - trying to add an annotation
@@ -228,7 +228,7 @@ namespace MS.Internal.Annotations.Component
             // 2- if it returned a different component, then we treat it as a remove/add
             // 3- if it returned the same component then we call ModifyAttachedAnnotation on the component
             IAnnotationComponent newComponent = FindComponent(attachedAnnotation);
-            if (newComponent == null)
+            if (newComponent is null)
             {
                 RemoveAttachedAnnotation(attachedAnnotation, true);
             }

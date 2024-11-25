@@ -123,7 +123,7 @@ namespace System.Windows.Markup
                 result = (ValueSerializer?)Activator.CreateInstance(attribute.ValueSerializerType);
             }
 
-            if (result == null)
+            if (result is null)
             {
                 if (type == typeof(string))
                 {
@@ -238,7 +238,7 @@ namespace System.Windows.Markup
             ArgumentNullException.ThrowIfNull(destinationType);
 
             string? text;
-            if (value == null)
+            if (value is null)
             {
                 text = SR.ToStringNull;
             }
@@ -255,7 +255,7 @@ namespace System.Windows.Markup
         protected Exception GetConvertFromException(object? value)
         {
             string? text;
-            if (value == null)
+            if (value is null)
             {
                 text = SR.ToStringNull;
             }

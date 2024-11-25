@@ -54,7 +54,7 @@ namespace MS.Internal.Data
         internal RBNode<T> GetSuccessor()
         {
             RBNode<T> node, parent;
-            if (RightChild == null)
+            if (RightChild is null)
             {   // go up
                 for (node = this, parent = node.Parent; parent.RightChild == node; node = parent, parent = node.Parent)
                     ;
@@ -71,7 +71,7 @@ namespace MS.Internal.Data
         internal RBNode<T> GetPredecessor()
         {
             RBNode<T> node, parent;
-            if (LeftChild == null)
+            if (LeftChild is null)
             {   // go up
                 for (node = this, parent = node.Parent; parent != null && parent.LeftChild == node; node = parent, parent = node.Parent)
                     ;
@@ -91,7 +91,7 @@ namespace MS.Internal.Data
             int delta = exists ? 1 : 0;
             if (index + delta <= LeftSize)
             {
-                if (LeftChild == null)
+                if (LeftChild is null)
                     result = new RBFinger<T>() { Node = this, Offset = 0, Index = 0, Found = false };
                 else
                 {
@@ -104,7 +104,7 @@ namespace MS.Internal.Data
             }
             else
             {
-                if (RightChild == null)
+                if (RightChild is null)
                     result = new RBFinger<T>() { Node = this, Offset = Size, Index = LeftSize + Size, Found = false };
                 else
                 {
@@ -122,7 +122,7 @@ namespace MS.Internal.Data
             int compR;
             if (compL <= 0)
             {
-                if (LeftChild == null)
+                if (LeftChild is null)
                     result = new RBFinger<T>() { Node = this, Offset = 0, Index = 0, Found = (compL == 0) };
                 else
                 {
@@ -139,7 +139,7 @@ namespace MS.Internal.Data
             }
             else
             {
-                if (RightChild == null)
+                if (RightChild is null)
                     result = new RBFinger<T>() { Node = this, Offset = Size, Index = LeftSize + Size };
                 else
                 {
@@ -176,7 +176,7 @@ namespace MS.Internal.Data
 
             if (compL <= 0)
             {   // x is in the left subtree, or at the leftmost position in this node
-                if (leftChild == null)
+                if (leftChild is null)
                     result = new RBFinger<T>() { Node = this, Offset = left, Index = left, Found = (compL == 0) };
                 else
                 {
@@ -207,7 +207,7 @@ namespace MS.Internal.Data
 
             if (compR > 0)
             {   // x is in the right subtree, or after the rightmost position in this node
-                if (rightChild == null)
+                if (rightChild is null)
                     result = new RBFinger<T>() { Node = this, Offset = right, Index = LeftSize + right, Found = false };
                 else
                 {
@@ -275,7 +275,7 @@ namespace MS.Internal.Data
                 while (parent != null && node == parent.LeftChild)
                 { node = parent; parent = node.Parent; }    // find left-parent
 
-                if (parent == null || comparison(x, parent.GetItemAt(parent.Size - 1)) >= 0)
+                if (parent is null || comparison(x, parent.GetItemAt(parent.Size - 1)) >= 0)
                     break;      // x belongs in startingNode's left subtree
 
                 nodeIndex = nodeIndex - startingNode.LeftSize - parent.Size;
@@ -423,7 +423,7 @@ namespace MS.Internal.Data
                 Debug.Assert(successor != null && successor.Size < MaxSize, "InsertAt: successor should have room");
                 if (successor.Size == 0)
                 {
-                    if (succsucc == null)
+                    if (succsucc is null)
                     {   // special case for insertion at the right - keep this node full
                         if (offset < MaxSize)
                         {
@@ -505,7 +505,7 @@ namespace MS.Internal.Data
 
         protected RBNode<T> InsertNode(RBTree<T> root, RBNode<T> parent, RBNode<T> node, int index, out RBNode<T> newNode)
         {
-            if (node == null)
+            if (node is null)
             {
                 newNode = root.NewNode();
                 newNode.Parent = parent;
@@ -579,7 +579,7 @@ namespace MS.Internal.Data
                     node = node.RotateRight();
                     deleteHere = false;
                 }
-                if (deleteHere && node.RightChild == null)
+                if (deleteHere && node.RightChild is null)
                     return null;
                 if (!IsNodeRed(node.RightChild) && !IsNodeRed(node.RightChild.LeftChild))
                 {
@@ -603,7 +603,7 @@ namespace MS.Internal.Data
 
         RBNode<T> DeleteLeftmost(RBNode<T> node, out RBNode<T> leftmost)
         {
-            if (node.LeftChild == null)
+            if (node.LeftChild is null)
             {
                 leftmost = node;
                 return null;
@@ -707,7 +707,7 @@ namespace MS.Internal.Data
         {
             bool result = true;
 
-            if (node == null)
+            if (node is null)
             {
                 if (BlackHeight < 0) BlackHeight = blackDepth;
                 size = 0;
@@ -773,7 +773,7 @@ namespace MS.Internal.Data
 
         protected void SaveTree(RBNode<T> node, StringBuilder sb)
         {
-            if (node == null)
+            if (node is null)
             {
                 sb.Append("()");
             }

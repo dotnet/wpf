@@ -66,7 +66,7 @@ namespace System.Windows.Documents
         {
             FixedHighlight fh = oCompare as FixedHighlight;
 
-            if (fh == null)
+            if (fh is null)
             {
                 return false;
             }
@@ -80,7 +80,7 @@ namespace System.Windows.Documents
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
-            return _element == null ? 0 : _element.GetHashCode() + _gBeginOffset + _gEndOffset + (int)_type;
+            return _element is null ? 0 : _element.GetHashCode() + _gBeginOffset + _gEndOffset + (int)_type;
         }
         #endregion Public Methods
 
@@ -110,7 +110,7 @@ namespace System.Windows.Documents
         internal Rect ComputeDesignRect()
         {
             Glyphs g = _element as Glyphs;
-            if (g == null)
+            if (g is null)
             {
                 Image im = _element as Image;
                 if (im != null && im.Source != null)
@@ -130,7 +130,7 @@ namespace System.Windows.Documents
             }
 
             GlyphRun run = g.MeasurementGlyphRun; // g.ToGlyphRun();
-            if (run == null || _gBeginOffset >= _gEndOffset)
+            if (run is null || _gBeginOffset >= _gEndOffset)
             {
                 return Rect.Empty;
             }
@@ -138,7 +138,7 @@ namespace System.Windows.Documents
             Rect designRect = run.ComputeAlignmentBox();
             designRect.Offset(g.OriginX, g.OriginY);
 
-            int chrct = (run.Characters == null ? 0 : run.Characters.Count);
+            int chrct = (run.Characters is null ? 0 : run.Characters.Count);
 
             Debug.Assert(_gBeginOffset >= 0);
             Debug.Assert(_gEndOffset <= chrct);

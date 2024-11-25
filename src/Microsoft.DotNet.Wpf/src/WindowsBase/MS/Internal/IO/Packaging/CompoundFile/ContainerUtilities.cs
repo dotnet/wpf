@@ -268,7 +268,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         static internal void CheckAgainstNull(object paramRef,
             string testStringIdentifier)
         {
-            if (paramRef == null)
+            if (paramRef is null)
                 throw new ArgumentNullException(testStringIdentifier);
         }
 
@@ -413,7 +413,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         static internal void CheckStringAgainstNullAndEmpty(string testString,
             string testStringIdentifier)
         {
-            if (testString == null)
+            if (testString is null)
                 throw new ArgumentNullException(testStringIdentifier);
 
             if (testString.Length == 0)

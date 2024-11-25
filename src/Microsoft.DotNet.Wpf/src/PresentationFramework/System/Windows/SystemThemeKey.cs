@@ -40,7 +40,7 @@ namespace System.Windows
         {
             get
             {
-                if (_presentationFrameworkAssembly == null)
+                if (_presentationFrameworkAssembly is null)
                 {
                     _presentationFrameworkAssembly = typeof(FrameworkElement).Assembly;
                 }

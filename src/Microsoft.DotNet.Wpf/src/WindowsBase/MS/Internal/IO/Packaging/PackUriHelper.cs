@@ -147,7 +147,7 @@ namespace MS.Internal.IO.Packaging
         {
             partUriString = String.Empty;
 
-            if (partUri == null)
+            if (partUri is null)
                 return new ArgumentNullException("partUri");
 
             Exception argumentException = null;
@@ -399,7 +399,7 @@ namespace MS.Internal.IO.Packaging
             {
                 get
                 {
-                    if (_normalizedPartUriString == null)
+                    if (_normalizedPartUriString is null)
                         _normalizedPartUriString = GetNormalizedPartUriString();
 
                     return _normalizedPartUriString;
@@ -411,7 +411,7 @@ namespace MS.Internal.IO.Packaging
             {
                 get
                 {
-                    if (_normalizedPartUri == null)
+                    if (_normalizedPartUri is null)
                         _normalizedPartUri = GetNormalizedPartUri();
 
                     return _normalizedPartUri;
@@ -559,7 +559,7 @@ namespace MS.Internal.IO.Packaging
             private int Compare(ValidatedPartUri otherPartUri)
             {
                 //If otherPartUri is null then we return 1
-                if (otherPartUri == null)
+                if (otherPartUri is null)
                     return 1;
 
                 //Compare the normalized uri strings for the two part uris.

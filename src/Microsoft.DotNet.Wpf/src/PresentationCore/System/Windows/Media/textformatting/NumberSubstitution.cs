@@ -113,7 +113,7 @@ namespace System.Windows.Media
         {
             // Null culture override is OK, but otherwise it must be a specific culture.
             return
-                (culture == null) ||
+                (culture is null) ||
                 !(culture.IsNeutralCulture || culture.Equals(CultureInfo.InvariantCulture));
         }
 
@@ -268,7 +268,7 @@ namespace System.Windows.Media
             return sub != null &&
                 _source == sub._source &&
                 _substitution == sub._substitution &&
-                (_cultureOverride == null ? (sub._cultureOverride == null) : (_cultureOverride.Equals(sub._cultureOverride)));
+                (_cultureOverride is null ? (sub._cultureOverride is null) : (_cultureOverride.Equals(sub._cultureOverride)));
             #pragma warning restore 6506
         }
 

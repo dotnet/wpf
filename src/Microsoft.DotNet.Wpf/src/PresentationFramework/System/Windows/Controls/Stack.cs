@@ -243,7 +243,7 @@ namespace System.Windows.Controls
             // We can only work on visuals that are us or children.
             // An empty rect has no size or position.  We can't meaningfully use it.
             if (    rectangle.IsEmpty
-                ||  visual == null
+                ||  visual is null
                 ||  visual == (Visual)this
                 ||  !this.IsAncestorOf(visual))
             {
@@ -351,7 +351,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_scrollData == null) { return false; }
+                if (_scrollData is null) { return false; }
                 return _scrollData._allowHorizontal;
             }
             set
@@ -374,7 +374,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_scrollData == null) { return false; }
+                if (_scrollData is null) { return false; }
                 return _scrollData._allowVertical;
             }
             set
@@ -395,7 +395,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_scrollData == null) { return 0.0; }
+                if (_scrollData is null) { return 0.0; }
                 return _scrollData._extent.Width;
             }
         }
@@ -407,7 +407,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_scrollData == null) { return 0.0; }
+                if (_scrollData is null) { return 0.0; }
                 return _scrollData._extent.Height;
             }
         }
@@ -419,7 +419,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_scrollData == null) { return 0.0; }
+                if (_scrollData is null) { return 0.0; }
                 return _scrollData._viewport.Width;
             }
         }
@@ -431,7 +431,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_scrollData == null) { return 0.0; }
+                if (_scrollData is null) { return 0.0; }
                 return _scrollData._viewport.Height;
             }
         }
@@ -444,7 +444,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_scrollData == null) { return 0.0; }
+                if (_scrollData is null) { return 0.0; }
                 return _scrollData._computedOffset.X;
             }
         }
@@ -457,7 +457,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_scrollData == null) { return 0.0; }
+                if (_scrollData is null) { return 0.0; }
                 return _scrollData._computedOffset.Y;
             }
         }
@@ -591,7 +591,7 @@ namespace System.Windows.Controls
                 // Get next child.
                 UIElement child = children[i];
 
-                if (child == null) { continue; }
+                if (child is null) { continue; }
 
                 // Measure the child.
                 child.Measure(layoutSlotSize);
@@ -751,7 +751,7 @@ namespace System.Windows.Controls
             {
                 UIElement child = (UIElement)children[i];
 
-                if (child == null) { continue; }
+                if (child is null) { continue; }
 
                 if (fHorizontal)
                 {
@@ -786,7 +786,7 @@ namespace System.Windows.Controls
 
         private void EnsureScrollData()
         {
-            if (_scrollData == null) { _scrollData = new ScrollData(); }
+            if (_scrollData is null) { _scrollData = new ScrollData(); }
         }
 
         private static void ResetScrolling(StackPanel element)
@@ -858,7 +858,7 @@ namespace System.Windows.Controls
             {
                 dependencyObjectChild = parent;
                 parent = VisualTreeHelper.GetParent(dependencyObjectChild);
-                if (parent == null)
+                if (parent is null)
                 {
                     throw new ArgumentException(SR.Stack_VisualInDifferentSubTree,"child");
                 }

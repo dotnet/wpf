@@ -90,7 +90,7 @@ namespace System.Windows.Documents.MsSpellCheckLib
                 {
                     ISpellingError iSpellingError = spellingErrors.Next();
 
-                    if (iSpellingError == null)
+                    if (iSpellingError is null)
                     {
                         // no more ISpellingError objects left in the enum
                         break;
@@ -157,7 +157,7 @@ namespace System.Windows.Documents.MsSpellCheckLib
                 {
                     ISpellingError iSpellingError = spellingErrors.Next();
 
-                    if (iSpellingError == null)
+                    if (iSpellingError is null)
                     {
                         // no more ISpellingError objects left in the enum
                         break;

@@ -40,12 +40,12 @@ namespace MS.Internal.Documents
             Invariant.Assert(other != null);
 
             // Skip merge operation if we're merging an empty text content range.
-            if (other._textContainer == null)
+            if (other._textContainer is null)
             {
                 return;
             }
 
-            if (_textContainer == null)
+            if (_textContainer is null)
             {
                 _cpFirst = other._cpFirst;
                 _cpLast = other._cpLast;
@@ -82,7 +82,7 @@ namespace MS.Internal.Documents
         internal ReadOnlyCollection<TextSegment> GetTextSegments()
         {
             List<TextSegment> segments;
-            if (_textContainer == null)
+            if (_textContainer is null)
             {
                 segments = new List<TextSegment>();
             }
@@ -332,7 +332,7 @@ namespace MS.Internal.Documents
                         // And skip entire element.
                         if (peer != null)
                         {
-                            if (ownerContentStart == null || IsImmediateAutomationChild(start, ownerContentStart))
+                            if (ownerContentStart is null || IsImmediateAutomationChild(start, ownerContentStart))
                             {
                                 peers.Add(peer);
                             }
@@ -348,7 +348,7 @@ namespace MS.Internal.Documents
                     element = start.GetAdjacentElement(LogicalDirection.Forward);
                     if (element is UIElement)
                     {
-                        if (ownerContentStart == null || IsImmediateAutomationChild(start, ownerContentStart))
+                        if (ownerContentStart is null || IsImmediateAutomationChild(start, ownerContentStart))
                         {
                             peer = UIElementAutomationPeer.CreatePeerForElement((UIElement)element);
                             // If AutomationPeer has been retrieved, add it to the collection.
@@ -368,7 +368,7 @@ namespace MS.Internal.Documents
                         // If AutomationPeer has been retrieved, add it to the collection.
                         if (peer != null)
                         {
-                            if (ownerContentStart == null || IsImmediateAutomationChild(start, ownerContentStart))
+                            if (ownerContentStart is null || IsImmediateAutomationChild(start, ownerContentStart))
                             {
                                 peers.Add(peer);
                             }

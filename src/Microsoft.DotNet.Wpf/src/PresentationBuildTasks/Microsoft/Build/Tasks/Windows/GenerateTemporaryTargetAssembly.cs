@@ -593,7 +593,7 @@ namespace Microsoft.Build.Tasks.Windows
         private void RemoveEntityByName(XmlDocument xmlProjectDoc, string sItemName, string groupName)
         {
 
-            if (xmlProjectDoc == null || String.IsNullOrEmpty(sItemName))
+            if (xmlProjectDoc is null || String.IsNullOrEmpty(sItemName))
             {
                 // When the parameters are not valid, simply return it, instead of throwing exceptions.
                 return;
@@ -712,7 +712,7 @@ namespace Microsoft.Build.Tasks.Windows
         //
         private void AddNewItems(XmlDocument xmlProjectDoc, string sItemName, ITaskItem[] pItemList)
         {
-            if (xmlProjectDoc == null || String.IsNullOrEmpty(sItemName) || pItemList == null)
+            if (xmlProjectDoc is null || String.IsNullOrEmpty(sItemName) || pItemList is null)
             {
                 // When the parameters are not valid, simply return it, instead of throwing exceptions.
                 return;
@@ -767,7 +767,7 @@ namespace Microsoft.Build.Tasks.Windows
 
         private void AddNewProperties(XmlDocument xmlProjectDoc, List<(string PropertyName, string PropertyValue)> properties )
         {
-            if (xmlProjectDoc == null || properties == null )
+            if (xmlProjectDoc is null || properties is null )
             {
                 // When the parameters are not valid, simply return it, instead of throwing exceptions.
                 return;
@@ -800,7 +800,7 @@ namespace Microsoft.Build.Tasks.Windows
         //
         private static void ReplaceImplicitImports(XmlDocument xmlProjectDoc)
         {
-            if (xmlProjectDoc == null)
+            if (xmlProjectDoc is null)
             {
                 // When the parameters are not valid, simply return it, instead of throwing exceptions.
                 return;
@@ -846,7 +846,7 @@ namespace Microsoft.Build.Tasks.Windows
                         XmlNode nodeImportProps = CreateImportProjectSdkNode(xmlProjectDoc, "Sdk.props", sdkReference);
 
                         // Prepend this Import to the root of the XML document
-                        if (previousNodeImportProps == null)
+                        if (previousNodeImportProps is null)
                         {
                             previousNodeImportProps = root.PrependChild(nodeImportProps);
                         }
@@ -865,7 +865,7 @@ namespace Microsoft.Build.Tasks.Windows
                         XmlNode nodeImportTargets = CreateImportProjectSdkNode(xmlProjectDoc, "Sdk.targets", sdkReference);
 
                         // Append this Import to the end of the XML document
-                        if (previousNodeImportTargets == null)
+                        if (previousNodeImportTargets is null)
                         {
                             previousNodeImportTargets = root.AppendChild(nodeImportTargets);
                         }

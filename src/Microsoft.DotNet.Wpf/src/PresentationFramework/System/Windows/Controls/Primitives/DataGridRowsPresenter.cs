@@ -87,7 +87,7 @@ namespace System.Windows.Controls.Primitives
             if (dataGrid != null)
             {
                 ScrollContentPresenter scrollContentPresenter = dataGrid.InternalScrollContentPresenter;
-                if (scrollContentPresenter == null || scrollContentPresenter.CanContentScroll)
+                if (scrollContentPresenter is null || scrollContentPresenter.CanContentScroll)
                 {
                     dataGrid.OnViewportSizeChanged(oldViewportSize, newViewportSize);
                 }
@@ -146,7 +146,7 @@ namespace System.Windows.Controls.Primitives
         {
             get
             {
-                if (_owner == null)
+                if (_owner is null)
                 {
                     _owner = ItemsControl.GetItemsOwner(this) as DataGrid;
                 }

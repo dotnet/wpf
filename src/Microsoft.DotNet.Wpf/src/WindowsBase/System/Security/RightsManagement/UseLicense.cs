@@ -51,7 +51,7 @@ namespace System.Security.RightsManagement
             string contentIdType;
             ClientSession.GetContentIdFromLicense(_serializedUseLicense, out contentId, out contentIdType);
 
-            if (contentId == null)
+            if (contentId is null)
             {
                 throw new RightsManagementException(RightsManagementFailureCode.InvalidLicense);
             }
@@ -144,7 +144,7 @@ namespace System.Security.RightsManagement
         public override bool Equals(object x)
         {
 
-            if (x == null)
+            if (x is null)
                 return false;   // Standard behavior.
 
             if (x.GetType() != GetType())

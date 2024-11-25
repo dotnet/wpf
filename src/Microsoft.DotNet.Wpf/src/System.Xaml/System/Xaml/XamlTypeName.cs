@@ -57,7 +57,7 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (_typeArguments == null)
+                if (_typeArguments is null)
                 {
                     _typeArguments = new List<XamlTypeName>();
                 }
@@ -74,7 +74,7 @@ namespace System.Xaml.Schema
 
         public string ToString(INamespacePrefixLookup prefixLookup)
         {
-            if (prefixLookup == null)
+            if (prefixLookup is null)
             {
                 return ConvertToStringInternal(null);
             }
@@ -98,7 +98,7 @@ namespace System.Xaml.Schema
 
             string error;
             XamlTypeName result = ParseInternal(typeName, namespaceResolver.GetNamespace, out error);
-            if (result == null)
+            if (result is null)
             {
                 throw new FormatException(error);
             }
@@ -112,7 +112,7 @@ namespace System.Xaml.Schema
 
             string error;
             IList<XamlTypeName> result = ParseListInternal(typeNameList, namespaceResolver.GetNamespace, out error);
-            if (result == null)
+            if (result is null)
             {
                 throw new FormatException(error);
             }
@@ -203,7 +203,7 @@ namespace System.Xaml.Schema
 
         internal void ConvertToStringInternal(StringBuilder result, Func<string, string> prefixGenerator)
         {
-            if (Namespace == null)
+            if (Namespace is null)
             {
                 throw new InvalidOperationException(SR.XamlTypeNameNamespaceIsNull);
             }
@@ -211,7 +211,7 @@ namespace System.Xaml.Schema
             {
                 throw new InvalidOperationException(SR.XamlTypeNameNameIsNullOrEmpty);
             }
-            if (prefixGenerator == null)
+            if (prefixGenerator is null)
             {
                 result.Append('{');
                 result.Append(Namespace);
@@ -220,7 +220,7 @@ namespace System.Xaml.Schema
             else
             {
                 string prefix = prefixGenerator.Invoke(Namespace);
-                if (prefix == null)
+                if (prefix is null)
                 {
                     throw new InvalidOperationException(SR.Format(SR.XamlTypeNameCannotGetPrefix, Namespace));
                 }

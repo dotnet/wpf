@@ -129,7 +129,7 @@ namespace MS.Internal.TextFormatting
                 );
 
 
-            if(run == null)
+            if(run is null)
             {
                 // fail to create run e.g. complex content encountered
                 return null;
@@ -152,7 +152,7 @@ namespace MS.Internal.TextFormatting
                     pixelsPerDip
                     );
 
-                if(run == null)
+                if(run is null)
                 {
                     return null;
                 }
@@ -209,7 +209,7 @@ namespace MS.Internal.TextFormatting
                     pixelsPerDip
                     );
 
-                if(    run == null
+                if(    run is null
                     || (   run.Underline != null
                         && prev != null
                         && prev.Underline != null
@@ -495,7 +495,7 @@ namespace MS.Internal.TextFormatting
                 _height
                 );
 
-            if (antiInversion == null)
+            if (antiInversion is null)
             {
                 DrawTextLine(drawingContext, origin);
             }
@@ -884,7 +884,7 @@ namespace MS.Internal.TextFormatting
                         _height
                         ),
                     FlowDirection.LeftToRight,
-                    (boundsList == null || boundsList.Count == 0 ? null : boundsList)
+                    (boundsList is null || boundsList.Count == 0 ? null : boundsList)
                 )
             };
         }
@@ -1556,7 +1556,7 @@ namespace MS.Internal.TextFormatting
                     pixelsPerDip
                     );
 
-                if (run == null)
+                if (run is null)
                 {
                     // fail to create simple text run, the run content is too complex
                     return null;
@@ -1594,7 +1594,7 @@ namespace MS.Internal.TextFormatting
             double pixelsPerDip
             )
         {
-            if (settings == null || textRun == null || textRun.Properties == null || textRun.Properties.Typeface == null)
+            if (settings is null || textRun is null || textRun.Properties is null || textRun.Properties.Typeface is null)
             {
                 return null;
             }
@@ -1606,7 +1606,7 @@ namespace MS.Internal.TextFormatting
             // We are not calling CreateSimpleTextRun() because CheckFastPathNominalGlyphs()
             // can fail if a font has TypographicAvailabilities. We are simply rendering a space
             // so we don't realy care about TypographicFeatures. This is a perf optimization.
-            if (glyphTypeface == null || !glyphTypeface.HasCharacter(' '))
+            if (glyphTypeface is null || !glyphTypeface.HasCharacter(' '))
             {
                 return null;
             }
@@ -1651,7 +1651,7 @@ namespace MS.Internal.TextFormatting
             TextFormattingMode textFormattingMode
             )
         {
-            return (textParagraphProperties.Tabs == null && textParagraphProperties.DefaultIncrementalTab > 0);
+            return (textParagraphProperties.Tabs is null && textParagraphProperties.DefaultIncrementalTab > 0);
         }
 
         /// <summary>

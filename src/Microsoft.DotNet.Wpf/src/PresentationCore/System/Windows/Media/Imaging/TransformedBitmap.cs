@@ -51,7 +51,7 @@ namespace System.Windows.Media.Imaging
         {
             ArgumentNullException.ThrowIfNull(source);
 
-            if (newTransform == null)
+            if (newTransform is null)
             {
                 throw new InvalidOperationException(SR.Format(SR.Image_NoArgument, "Transform"));
             }
@@ -290,7 +290,7 @@ namespace System.Windows.Media.Imaging
 
         internal override bool IsValidForFinalizeCreation(bool throwIfInvalid)
         {
-            if (Source == null)
+            if (Source is null)
             {
                 if (throwIfInvalid)
                 {
@@ -300,7 +300,7 @@ namespace System.Windows.Media.Imaging
             }
 
             Transform transform = Transform;
-            if (transform == null)
+            if (transform is null)
             {
                 if (throwIfInvalid)
                 {

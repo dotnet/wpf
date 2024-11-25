@@ -106,7 +106,7 @@ namespace System.IO.Packaging
 
             lock (_globalLock)
             {
-                if (_packages == null)
+                if (_packages is null)
                 {
                     _packages = new HybridDictionary(2);
                 }

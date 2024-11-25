@@ -92,7 +92,7 @@ namespace System.Windows.Documents
 
             // Start counting tags needed to be closed.
             // EmptyDocumentDepth==1 - counts FlowDocument opened in WriteRootFlowDocument above.
-            int elementLevel = EmptyDocumentDepth + WriteOpeningTags(range, range.Start, commonAncestor, xmlWriter, xamlTypeMapper, /*reduceElement:*/wpfPayload == null, out ignoreWriteHyperlinkEnd, ref ignoreList, preserveTextElements);
+            int elementLevel = EmptyDocumentDepth + WriteOpeningTags(range, range.Start, commonAncestor, xmlWriter, xamlTypeMapper, /*reduceElement:*/wpfPayload is null, out ignoreWriteHyperlinkEnd, ref ignoreList, preserveTextElements);
 
             if (range.IsTableCellRange)
             {
@@ -259,7 +259,7 @@ namespace System.Windows.Documents
 
                         elementLevel++;
                         textReader.MoveToNextContextPosition(LogicalDirection.Forward);
-                        WriteStartXamlElement(/*range:*/null, textReader, xmlWriter, xamlTypeMapper, /*reduceElement:*/wpfPayload == null, preserveTextElements);
+                        WriteStartXamlElement(/*range:*/null, textReader, xmlWriter, xamlTypeMapper, /*reduceElement:*/wpfPayload is null, preserveTextElements);
 
                         break;
 
@@ -367,7 +367,7 @@ namespace System.Windows.Documents
 
                     ITextRange textRange = new TextRange(textSegment.Start, textSegment.End);
 
-                    elementLevel += WriteOpeningTags(textRange, textSegment.Start, pointer, xmlWriter, xamlTypeMapper, /*reduceElement:*/wpfPayload == null, out ignoreWriteHyperlinkEnd, ref ignoreList, preserveTextElements);
+                    elementLevel += WriteOpeningTags(textRange, textSegment.Start, pointer, xmlWriter, xamlTypeMapper, /*reduceElement:*/wpfPayload is null, out ignoreWriteHyperlinkEnd, ref ignoreList, preserveTextElements);
                 }
 
                 // Output the cell segment for one row
@@ -552,8 +552,8 @@ namespace System.Windows.Documents
                 InlineUIContainer inlineUIContainer = textReader.GetAdjacentElement(LogicalDirection.Backward) as InlineUIContainer;
                 BlockUIContainer blockUIContainer = textReader.GetAdjacentElement(LogicalDirection.Backward) as BlockUIContainer;
 
-                if ((inlineUIContainer == null || !(inlineUIContainer.Child is Image)) &&
-                    (blockUIContainer == null || !(blockUIContainer.Child is Image)))
+                if ((inlineUIContainer is null || !(inlineUIContainer.Child is Image)) &&
+                    (blockUIContainer is null || !(blockUIContainer.Child is Image)))
                 {
                     // Even when we serialize for DataFormats.XamlPackage we strip out UIElement
                     // different from Images.
@@ -661,7 +661,7 @@ namespace System.Windows.Documents
             else
             {
                 Type contextType = context.ParentType;
-                if (contextType == null ||
+                if (contextType is null ||
                     typeof(Paragraph).IsAssignableFrom(contextType) ||
                     typeof(Inline).IsAssignableFrom(contextType) && !typeof(AnchoredBlock).IsAssignableFrom(contextType))
                 {
@@ -784,7 +784,7 @@ namespace System.Windows.Documents
                 DependencyProperty property = inheritableProperties[i];
 
                 object innerValue = context.GetValue(property);
-                if (innerValue == null)
+                if (innerValue is null)
                 {
                     // Some properties like Foreground may have null as default value.
                     // Skip them.
@@ -862,7 +862,7 @@ namespace System.Windows.Documents
                     // Get property value from its ancestors if the property is not set.
                     // TextDecorationCollection is special-cased as its default is empty collection,
                     // and its value source cannot be distinguished from ITextPointer.
-                    if (propertyValue == null || TextDecorationCollection.Empty.ValueEquals(propertyValue as TextDecorationCollection))
+                    if (propertyValue is null || TextDecorationCollection.Empty.ValueEquals(propertyValue as TextDecorationCollection))
                     {
                         if (property == Inline.BaselineAlignmentProperty || property == TextElement.TextEffectsProperty)
                         {
@@ -871,7 +871,7 @@ namespace System.Windows.Documents
                         }
 
                         parentContext.MoveToPosition(context);
-                        while ((propertyValue == null || TextDecorationCollection.Empty.ValueEquals(propertyValue as TextDecorationCollection))
+                        while ((propertyValue is null || TextDecorationCollection.Empty.ValueEquals(propertyValue as TextDecorationCollection))
                             && typeof(Inline).IsAssignableFrom(parentContext.ParentType))
                         {
                             parentContext.MoveToElementEdge(ElementEdge.BeforeStart);
@@ -925,7 +925,7 @@ namespace System.Windows.Documents
                 {
                     PropertyMetadata metadata = property.GetMetadata(propertyOwnerType);
 
-                    write = (metadata == null) || !(TextSchema.ValuesAreEqual(propertyValue, /*defaultValue*/metadata.DefaultValue) && localValue == DependencyProperty.UnsetValue);
+                    write = (metadata is null) || !(TextSchema.ValuesAreEqual(propertyValue, /*defaultValue*/metadata.DefaultValue) && localValue == DependencyProperty.UnsetValue);
                 }
             }
 
@@ -954,7 +954,7 @@ namespace System.Windows.Documents
         private static void WriteLocallySetProperties(Type elementTypeStandardized, ITextPointer context, XmlWriter xmlWriter, DependencyObject complexProperties)
         {
             TextPointer textPointer = context as TextPointer;
-            if (textPointer == null)
+            if (textPointer is null)
             {
                 // We can't have custom properties if we're not a TextPointer
                 return;
@@ -1379,7 +1379,7 @@ namespace System.Windows.Documents
             while (list != null)
             {
                 ListItem listItem = list.ListItems.FirstListItem;
-                if (listItem == null)
+                if (listItem is null)
                 {
                     return;
                 }
@@ -1390,7 +1390,7 @@ namespace System.Windows.Documents
                 }
 
                 List nestedList = listItem.Blocks.FirstBlock as List;
-                if (nestedList == null)
+                if (nestedList is null)
                 {
                     return;
                 }
@@ -1560,7 +1560,7 @@ namespace System.Windows.Documents
         // Applies a whole property bag to a range from start to end to simulate inheritance of this property from source conntext
         private static void ApplyContextualProperties(TextPointer start, TextPointer end, TextElement propertyBag)
         {
-            Invariant.Assert(propertyBag.IsEmpty && propertyBag.Parent == null, "propertyBag is supposed to be an empty element outside any tree");
+            Invariant.Assert(propertyBag.IsEmpty && propertyBag.Parent is null, "propertyBag is supposed to be an empty element outside any tree");
 
             LocalValueEnumerator contextualProperties = propertyBag.GetLocalValueEnumerator();
 

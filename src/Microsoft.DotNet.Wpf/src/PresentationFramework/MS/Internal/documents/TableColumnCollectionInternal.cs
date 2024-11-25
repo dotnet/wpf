@@ -46,7 +46,7 @@ namespace MS.Internal.Documents
             }
 
             int index = Size++;
-            Debug.Assert(Items[index] == null);
+            Debug.Assert(Items[index] is null);
 
             PrivateConnectChild(index, item);
         }
@@ -132,13 +132,13 @@ namespace MS.Internal.Documents
         /// If the new item has already a parent or if the slot at the specified index is not null.
         /// </exception>
         /// <remarks>
-        /// Note that the function requires that _item[index] == null and
+        /// Note that the function requires that _item[index] is null and
         /// it also requires that the passed in item is not included into another ContentElementCollection.
         /// </remarks>
         internal override void PrivateConnectChild(int index, TableColumn item)
         {
             Debug.Assert(item != null && item.Index == -1);
-            Debug.Assert(Items[index] == null);
+            Debug.Assert(Items[index] is null);
 
             // If the TItem is already parented correctly through a proxy, there's no need
             // to change parentage.  Otherwise, it should be parented to Owner.
@@ -187,7 +187,7 @@ namespace MS.Internal.Documents
             // If the item is parented through a proxy then the parent link of the item is 
             // not to Owner and we should not change the parentage.
             DummyProxy proxy = item.Parent as DummyProxy;
-            if (proxy == null)
+            if (proxy is null)
             {
                 Owner.RemoveLogicalChild(item);
             }

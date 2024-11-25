@@ -116,7 +116,7 @@ namespace MS.Internal.ReachFramework
                 }
             }
 
-            if (encoder == null)
+            if (encoder is null)
             {
                 if (Microsoft.Internal.AlphaFlattener.Utility.NeedPremultiplyAlpha(value as BitmapSource))
                 {
@@ -250,7 +250,7 @@ namespace MS.Internal.ReachFramework
             }
             else if (typeof(BitmapSource).IsAssignableFrom(objType))
             {
-                if (m_imageConverter == null)
+                if (m_imageConverter is null)
                 {
                     m_imageConverter = new LooseImageSourceTypeConverter(m_mainFile);
                 }
@@ -384,7 +384,7 @@ namespace System.Windows.Xps.Serialization
         /// </summary>
         static int Complexity(System.Windows.Media.Drawing drawing)
         {
-            if (drawing == null)
+            if (drawing is null)
             {
                 return 0;
             }
@@ -480,7 +480,7 @@ namespace System.Windows.Xps.Serialization
                 // Skip total transparent subtree
                 // An Effect can overwrite content, including opacity, so
                 // do not skip transparent opacity if effect applied.
-                if (effect == null && (Utility.IsTransparent(opacity) || BrushProxy.IsEmpty(mask)))
+                if (effect is null && (Utility.IsTransparent(opacity) || BrushProxy.IsEmpty(mask)))
                 {
                     return false;
                 }
@@ -500,9 +500,9 @@ namespace System.Windows.Xps.Serialization
             // 3. It is not from template. TemplatedParent is null.
             if (fe != null && !String.IsNullOrEmpty(fe.Name) &&
                 !(visual is System.Windows.Documents.FixedPage) &&
-                 fe.TemplatedParent == null)
+                 fe.TemplatedParent is null)
             {
-                if (_nameList == null)
+                if (_nameList is null)
                 {
                     _nameList = new Dictionary<String, int>();
                 }
@@ -544,7 +544,7 @@ namespace System.Windows.Xps.Serialization
                 bool empty;
                 Geometry inheritedClipping = _dcf.Clip;
 
-                if (inheritedClipping == null || !inheritedClipping.IsEmpty())
+                if (inheritedClipping is null || !inheritedClipping.IsEmpty())
                 {
                     // transform current clip to world space
                     if (clip != null)
@@ -669,7 +669,7 @@ namespace System.Windows.Xps.Serialization
         /// <param name="drawingToWorldTransform"></param>
         internal void DrawingWalk(System.Windows.Media.Drawing d, Matrix drawingToWorldTransform)
         {
-            if (d == null || !Utility.IsRenderVisible(d.Bounds))
+            if (d is null || !Utility.IsRenderVisible(d.Bounds))
             {
                 return;
             }

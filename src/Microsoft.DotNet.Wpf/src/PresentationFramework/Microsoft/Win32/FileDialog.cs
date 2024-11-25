@@ -118,7 +118,7 @@ namespace Microsoft.Win32
                 // Check to make sure Path.GetFileName does not return null.
                 // If it does, set safeFN to String.Empty instead to accomodate
                 // programmers that fail to check for null when reading strings.
-                if (safeFN == null)
+                if (safeFN is null)
                 {
                     safeFN = String.Empty;
                 }
@@ -149,7 +149,7 @@ namespace Microsoft.Win32
                     // Check to make sure Path.GetFileName does not return null.
                     // If it does, set this filename to String.Empty instead to accomodate
                     // programmers that fail to check for null when reading strings.
-                    if (safeFileNames[i] == null)
+                    if (safeFileNames[i] is null)
                     {
                         safeFileNames[i] = String.Empty;
                     }
@@ -177,7 +177,7 @@ namespace Microsoft.Win32
                 // If null is passed in, we clear the entire list.
                 // If we get a string, we clear the entire list and make a new one-element
                 // array with the new string.
-                if (value == null)
+                if (value is null)
                 {
                     MutableItemNames = null;
                 }
@@ -266,7 +266,7 @@ namespace Microsoft.Win32
             {
                 // For string properties, it's important to not return null, as an empty
                 // string tends to make more sense to beginning developers.
-                return _defaultExtension == null ? String.Empty : _defaultExtension;
+                return _defaultExtension is null ? String.Empty : _defaultExtension;
             }
 
             set
@@ -311,7 +311,7 @@ namespace Microsoft.Win32
             {
                 // For string properties, it's important to not return null, as an empty
                 // string tends to make more sense to beginning developers.
-                return _filter == null ? String.Empty : _filter;
+                return _filter is null ? String.Empty : _filter;
             }
 
             set

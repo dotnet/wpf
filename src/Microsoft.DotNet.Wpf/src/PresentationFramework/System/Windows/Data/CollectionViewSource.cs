@@ -133,7 +133,7 @@ namespace System.Windows.Data
 
         private static bool IsSourceValid(object o)
         {
-            return (o == null ||
+            return (o is null ||
                         o is IEnumerable ||
                         o is IListSource ||
                         o is DataSourceProvider) &&
@@ -202,7 +202,7 @@ namespace System.Windows.Data
         {
             Type type = (Type)o;
 
-            return type == null ||
+            return type is null ||
                 typeof(ICollectionView).IsAssignableFrom(type);
         }
 
@@ -349,7 +349,7 @@ namespace System.Windows.Data
         {
             get
             {
-                if (_liveSortingProperties == null)
+                if (_liveSortingProperties is null)
                 {
                     _liveSortingProperties = new ObservableCollection<string>();
                     ((INotifyCollectionChanged)_liveSortingProperties).CollectionChanged += new NotifyCollectionChangedEventHandler(OnForwardedCollectionChanged);
@@ -470,7 +470,7 @@ namespace System.Windows.Data
         {
             get
             {
-                if (_liveFilteringProperties == null)
+                if (_liveFilteringProperties is null)
                 {
                     _liveFilteringProperties = new ObservableCollection<string>();
                     ((INotifyCollectionChanged)_liveFilteringProperties).CollectionChanged += new NotifyCollectionChangedEventHandler(OnForwardedCollectionChanged);
@@ -591,7 +591,7 @@ namespace System.Windows.Data
         {
             get
             {
-                if (_liveGroupingProperties == null)
+                if (_liveGroupingProperties is null)
                 {
                     _liveGroupingProperties = new ObservableCollection<string>();
                     ((INotifyCollectionChanged)_liveGroupingProperties).CollectionChanged += new NotifyCollectionChangedEventHandler(OnForwardedCollectionChanged);
@@ -635,7 +635,7 @@ namespace System.Windows.Data
                 {
                     // Remove the given handler
                     handlers = (FilterEventHandler)Delegate.Remove(handlers, value);
-                    if (handlers == null)
+                    if (handlers is null)
                     {
                         // Clear the value for the uncommon field
                         // cause there are no more handlers
@@ -825,7 +825,7 @@ namespace System.Windows.Data
 
             // at first use of a view, set its culture from the xml:lang of the
             // element that's using the view
-            if (view != null && view.Culture == null)
+            if (view != null && view.Culture is null)
             {
                 XmlLanguage language = (d != null) ? (XmlLanguage)d.GetValue(FrameworkElement.LanguageProperty) : null;
                 if (language != null)
@@ -855,7 +855,7 @@ namespace System.Windows.Data
             // remember which property caused the context - BindingExpression wants to know
             // (this must happen before calling AddInheritanceContext, so that the answer
             // is ready during the InheritanceContextChanged event)
-            if (!_hasMultipleInheritanceContexts && _inheritanceContext == null)
+            if (!_hasMultipleInheritanceContexts && _inheritanceContext is null)
             {
                 _propertyForInheritanceContext = property;
             }
@@ -974,7 +974,7 @@ namespace System.Windows.Data
         // Forward properties from the CollectionViewSource to the CollectionView
         void ApplyPropertiesToView(ICollectionView view)
         {
-            if (view == null || _deferLevel > 0)
+            if (view is null || _deferLevel > 0)
                 return;
 
             ICollectionViewLiveShaping liveView = view as ICollectionViewLiveShaping;
@@ -1122,7 +1122,7 @@ namespace System.Windows.Data
         {
             get
             {
-                if (_filterStub == null)
+                if (_filterStub is null)
                 {
                     _filterStub = new FilterStub(this);
                 }

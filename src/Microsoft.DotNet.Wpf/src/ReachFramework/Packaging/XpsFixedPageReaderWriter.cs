@@ -501,7 +501,7 @@ namespace System.Windows.Xps.Packaging
         {
             get
             {
-                if( _printTicket == null )
+                if( _printTicket is null )
                 {
                     _printTicket = CurrentXpsManager.EnsurePrintTicket( Uri );
                 }
@@ -795,7 +795,7 @@ namespace System.Windows.Xps.Packaging
             if( resourceUri != null )
             {
                 metroPart = this.CurrentXpsManager.GetPart(resourceUri);
-                if (metroPart == null)
+                if (metroPart is null)
                 {
                     metroPart = GeneratePartForResourceType(resourceType, resourceUri);
                 }
@@ -820,9 +820,9 @@ namespace System.Windows.Xps.Packaging
              }
             else
             {
-                if (metroPart == null)
+                if (metroPart is null)
                 {
-                    if( resourceUri == null )
+                    if( resourceUri is null )
                     {
                         metroPart = this.CurrentXpsManager.GenerateUniquePart(XpsS0Markup.ResourceContentType);
                     }
@@ -1605,7 +1605,7 @@ namespace System.Windows.Xps.Packaging
         void
         EnsureThumbnail()
         {
-            if( _thumbnail == null )
+            if( _thumbnail is null )
             {
                 _thumbnail = CurrentXpsManager.EnsureThumbnail( this, _metroPart );
                 if( _thumbnail != null )
@@ -1622,7 +1622,7 @@ namespace System.Windows.Xps.Packaging
             )
         {
             PackagePart metroPart;
-            if (packagePart == null)
+            if (packagePart is null)
             {
                 //default to png type
                 metroPart = this.CurrentXpsManager.GenerateUniquePart(XpsS0Markup.PngContentType);
@@ -1663,7 +1663,7 @@ namespace System.Windows.Xps.Packaging
             )
        {
             PackagePart metroPart;
-            if (packagePart == null)
+            if (packagePart is null)
             {
                 //default to ObfuscatedFontPart
                 metroPart = this.CurrentXpsManager.GenerateObfuscatedFontPart();
@@ -1737,7 +1737,7 @@ namespace System.Windows.Xps.Packaging
             )
         {
             PackagePart metroPart;
-            if (packagePart == null)
+            if (packagePart is null)
             {
                 metroPart = this.CurrentXpsManager.GenerateUniquePart(XpsS0Markup.ColorContextContentType);
             }
@@ -1774,7 +1774,7 @@ namespace System.Windows.Xps.Packaging
             )
         {
             PackagePart metroPart;
-            if (packagePart == null)
+            if (packagePart is null)
             {
                 metroPart = this.CurrentXpsManager.GenerateUniquePart(XpsS0Markup.ResourceDictionaryContentType);
             }
@@ -1812,7 +1812,7 @@ namespace System.Windows.Xps.Packaging
             Uri         resourceUri
             )
         {
-            if (resourceUri == null)
+            if (resourceUri is null)
             {
                 return null;
             }

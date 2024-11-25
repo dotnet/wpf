@@ -462,11 +462,11 @@ namespace System.Windows.Controls
 
         private static void OnAccessKeyPressed(object sender, AccessKeyPressedEventArgs e)
         {
-            if (!e.Handled && e.Scope == null)
+            if (!e.Handled && e.Scope is null)
             {
                 TabItem tabItem = sender as TabItem;
 
-                if (e.Target == null)
+                if (e.Target is null)
                 {
                     e.Target = tabItem;
                 }
@@ -488,7 +488,7 @@ namespace System.Windows.Controls
 
                 // If current focus was another TabItem in the same TabControl - dont set focus on content
                 bool setFocusOnContent = (FrameworkAppContextSwitches.SelectionPropertiesCanLagBehindSelectionChangedEvent || !IsKeyboardFocusWithin)
-                                            && ((currentFocus == this) || (currentFocus == null) || (currentFocus.TabControlParent != this.TabControlParent));
+                                            && ((currentFocus == this) || (currentFocus is null) || (currentFocus.TabControlParent != this.TabControlParent));
                 SetBoolField(BoolField.SettingFocus, true);
                 SetBoolField(BoolField.SetFocusOnContent, setFocusOnContent);
                 try

@@ -144,7 +144,7 @@ namespace System.Windows
             }
 
             PropertyPath path = value as PropertyPath;
-            if (path == null)
+            if (path is null)
             {
                 throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(PropertyPath)), "value");
             }
@@ -159,12 +159,12 @@ namespace System.Windows
                 // if the path used parameters, convert them to (NamespacePrefix:OwnerType.DependencyPropertyName) syntax
                 string originalPath = path.Path;
                 Collection<object> parameters = path.PathParameters;
-                XamlDesignerSerializationManager manager = typeDescriptorContext == null ?
+                XamlDesignerSerializationManager manager = typeDescriptorContext is null ?
                                                                 null :
                                                                 typeDescriptorContext.GetService(typeof(XamlDesignerSerializationManager)) as XamlDesignerSerializationManager;
                 ValueSerializer typeSerializer = null;
                 IValueSerializerContext serializerContext = null;
-                if (manager == null)
+                if (manager is null)
                 {
                     serializerContext = typeDescriptorContext as IValueSerializerContext;
                     if (serializerContext != null)
@@ -267,7 +267,7 @@ namespace System.Windows
                                 builder.Append(')');
 
                                 name = pathPart as string;
-                                if (name == null)
+                                if (name is null)
                                 {
                                     // convert the parameter into string
                                     TypeConverter converter = TypeDescriptor.GetConverter(type);

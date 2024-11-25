@@ -144,7 +144,7 @@ namespace System.Windows.Controls
                 templateSelector = CellEditingTemplateSelector;
             }
 
-            if (template == null && templateSelector == null)
+            if (template is null && templateSelector is null)
             {
                 template = CellTemplate;
                 templateSelector = CellTemplateSelector;

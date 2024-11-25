@@ -181,7 +181,7 @@ namespace System.Windows.Media
         /// <param name="queue"></param>
         public PrintContext(PrintQueue queue)
         {
-            if( queue == null )
+            if( queue is null )
             {
                throw new ArgumentNullException("queue");
             }
@@ -201,7 +201,7 @@ namespace System.Windows.Media
         {
             try
             {
-                if (getPage == null)
+                if (getPage is null)
                 {
                     throw new ArgumentNullException("getPage");
                 }
@@ -267,7 +267,7 @@ namespace System.Windows.Media
             }
             set
             {
-                if( value == null )
+                if( value is null )
                 {
                     throw new ArgumentNullException("value");
                 }
@@ -501,7 +501,7 @@ namespace System.Windows.Media
         /// </summary>
         private void Render(Visual visual, string uri)
         {
-            if (visual == null)
+            if (visual is null)
             {
                 throw new ArgumentNullException("visual");
             }

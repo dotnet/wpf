@@ -143,7 +143,7 @@ namespace System.Windows.Controls
 
         private void SetupMainMenu()
         {
-            if (_enterMenuModeHandler == null)
+            if (_enterMenuModeHandler is null)
             {
                 _enterMenuModeHandler = new KeyboardNavigation.EnterMenuModeEventHandler(OnEnterMenuMode);
                 KeyboardNavigation.Current.EnterMenuMode += _enterMenuModeHandler;
@@ -243,7 +243,7 @@ namespace System.Windows.Controls
             if (e.UserInitiated &&
                 e.Text == " " &&
                 IsMainMenu &&
-                (CurrentSelection == null || !CurrentSelection.IsSubmenuOpen))
+                (CurrentSelection is null || !CurrentSelection.IsSubmenuOpen))
             {
                 // We need to exit menu mode because it holds capture and prevents
                 // the system menu from showing.

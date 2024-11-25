@@ -48,7 +48,7 @@ namespace System.Xaml.Schema
         protected ClrProperty(string name, XamlType declaringType)
         {
 #if DEBUG
-            if (declaringType == null)
+            if (declaringType is null)
             {
                 throw new XamlInternalException("Asserting that the declaringType should never be null");
             }
@@ -69,13 +69,13 @@ namespace System.Xaml.Schema
             Debug.Assert(pi != null);
             Debug.Assert(pi.Name == name);
 #if DEBUG
-            if (declaringType == null)
+            if (declaringType is null)
             {
                 throw new XamlInternalException("Asserting that the declaringType should never be null");
             }
 #endif
             MethodInfo mi = pi.GetGetMethod(true);
-            if (mi == null)
+            if (mi is null)
             {
                 throw new XamlSchemaException(SR.Format(SR.SetOnlyProperty, declaringType.Name, name));
             }
@@ -148,7 +148,7 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (_xamlTypeOfProperty == null)
+                if (_xamlTypeOfProperty is null)
                 {
                     _xamlTypeOfProperty = LookupTypeOfProperty();
                 }
@@ -161,7 +161,7 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (_textSyntax == null)
+                if (_textSyntax is null)
                 {
                     _textSyntax = LookupTextSyntax();
                 }
@@ -279,7 +279,7 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (_systemTypeOfProperty == null)
+                if (_systemTypeOfProperty is null)
                 {
                     _systemTypeOfProperty = LookupSystemTypeOfProperty();
                 }
@@ -365,7 +365,7 @@ namespace System.Xaml.Schema
                 XamlType xamlType = this.Type;
                 representer = xamlType.TextSyntax;
             }
-            if (representer == null)
+            if (representer is null)
             {
                 representer = XamlTextSyntax.NoSyntax;
             }
@@ -375,7 +375,7 @@ namespace System.Xaml.Schema
         private XamlProperty LookupDependsOn()
         {
             object obj = LookupCustomAttribute(typeof(DependsOnAttribute));
-            if (obj == null)
+            if (obj is null)
             {
                 return null;
             }
@@ -401,7 +401,7 @@ namespace System.Xaml.Schema
         private bool LookupIsAmbient()
         {
             object obj = LookupCustomAttribute(typeof(AmbientAttribute));
-            return (obj == null) ? false : true;
+            return (obj is null) ? false : true;
         }
 
         // ===========================

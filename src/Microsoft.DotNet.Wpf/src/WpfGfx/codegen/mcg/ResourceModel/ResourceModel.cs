@@ -358,7 +358,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
         {
             McgResource resource = field.Type as McgResource;
 
-            if (resource == null)
+            if (resource is null)
             {
                 return false;
             }
@@ -391,7 +391,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
 
             // This if block tests to see if the field's type is a collection (which implies that
             // it is an McgResource), and that this type has an unmanaged resource.
-            if ((resource == null) ||
+            if ((resource is null) ||
                 !resource.IsCollection ||
                 resource.HasUnmanagedResource)
             {
@@ -414,7 +414,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
         {
             McgResource resource = field.Type as McgResource;
 
-            if (resource == null)
+            if (resource is null)
             {
                 return field.Type.IsFreezable;
             }
@@ -598,7 +598,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
         {
             get
             {
-                if (_realizations == null)
+                if (_realizations is null)
                 {
                     // We use a hashtable to filter the realizations attached to the resources
                     // down to a unique set.  (e.g., one D3DLIGHT entry)
@@ -676,7 +676,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
         /// </summary>
         internal McgType FindType(string name)
         {
-            if (_types[name] == null)
+            if (_types[name] is null)
             {
                 Helpers.CodeGenHelpers.ThrowValidationException(String.Format(
                     "Invalid type: {0}",
@@ -1253,7 +1253,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
         {
             Debug.Assert((GenerationControl != null) && (iSection < GenerationControl.Length));
 
-            if (GenerationControl[iSection] == null)
+            if (GenerationControl[iSection] is null)
             {
                 GenerationControl[iSection] = new List<McgType>(1);
             }
@@ -1473,7 +1473,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                 ThrowValidationException(fieldNode, "Duplicate type descriptions");
                 return null;
             }
-            else if (typeAttribute == null && typeNodes.Count == 0)
+            else if (typeAttribute is null && typeNodes.Count == 0)
             {
                 ThrowValidationException(fieldNode, "Missing type description");
                 return null;
@@ -1684,7 +1684,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
         {
             object command = _commandLookupTable[fullName];
 
-            if (command == null)
+            if (command is null)
             {
                 Helpers.CodeGenHelpers.ThrowValidationException(
                     String.Format(
@@ -1807,7 +1807,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
         /// </summary>
         internal static bool ToBoolean(XmlNode xn, string attr, bool defaultValue)
         {
-            if (xn.Attributes[attr] == null)
+            if (xn.Attributes[attr] is null)
             {
                 return defaultValue;
             }
@@ -1836,7 +1836,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
         /// </summary>
         internal static int ToInt32(XmlNode xn, string attr)
         {
-            if (xn.Attributes[attr] == null)
+            if (xn.Attributes[attr] is null)
             {
                 Helpers.CodeGenHelpers.ThrowValidationException(xn, "Missing attribute: " + attr);
             }
@@ -1865,7 +1865,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
         /// </summary>
         internal static int ToInt32(XmlNode xn, string attr, int defaultValue)
         {
-            if (xn.Attributes[attr] == null)
+            if (xn.Attributes[attr] is null)
             {
                 return defaultValue;
             }
@@ -1875,7 +1875,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
 
         private static T ToEnum<T>(XmlNode xn, string attr, T defaultValue)
         {
-            if (xn.Attributes[attr] == null)
+            if (xn.Attributes[attr] is null)
             {
                 return defaultValue;
             }

@@ -94,7 +94,7 @@ namespace System.Windows.Documents
             // When snapToText is true, ChildTextView.GetTextPositionFromPoint will guranttee to
             // return a non-null position.
             // In current code, ChildTextView can't be null.
-            return tp == null ? null : DocumentSequenceTextPointer.CreatePointer(tp, edge);
+            return tp is null ? null : DocumentSequenceTextPointer.CreatePointer(tp, edge);
         }
 
         /// <summary>
@@ -555,7 +555,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_textSegments == null)
+                if (_textSegments is null)
                 {
                     ReadOnlyCollection<TextSegment> childSegments = ChildTextView.TextSegments;
                     if (childSegments != null)
@@ -587,7 +587,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_childTextView == null)
+                if (_childTextView is null)
                 {
                     IServiceProvider isp = _docPage.ChildDocumentPage as IServiceProvider;
                     if (isp != null)
@@ -604,7 +604,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_childBlock == null)
+                if (_childBlock is null)
                 {
                     _childBlock = _docPage.FixedDocumentSequence.TextContainer.FindChildBlock(_docPage.ChildDocumentReference);
                 }

@@ -378,7 +378,7 @@ namespace System.Windows.Xps.Serialization
 
                 ResourceStreamCacheItem resourceStreamCacheItem = (ResourceStreamCacheItem)_fontsCache[resourceId];
 
-                if(resourceStreamCacheItem == null)
+                if(resourceStreamCacheItem is null)
                 {
                     resourceStreamCacheItem = new ResourceStreamCacheItem();
 

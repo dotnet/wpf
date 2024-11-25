@@ -276,7 +276,7 @@ namespace System.Windows.Documents
         {
             TableColumn item = value as TableColumn;
 
-            if (item == null)
+            if (item is null)
             {
                 throw new ArgumentException(SR.Format(SR.TableCollectionElementTypeExpected, typeof(TableColumn).Name), "value");
             }

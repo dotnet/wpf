@@ -59,7 +59,7 @@ namespace System.Xaml.Schema
                 return null;
             }
 
-            if (typeArgs == null || typeArgs.Length == 0)
+            if (typeArgs is null || typeArgs.Length == 0)
             {
                 return TryGetXamlType(typeName) ?? TryGetXamlType(GetTypeExtensionName(typeName));
             }
@@ -79,14 +79,14 @@ namespace System.Xaml.Schema
 
             // Otherwise, look up the type via reflection
             Type type = TryGetType(typeName);
-            if (type == null)
+            if (type is null)
             {
                 return null;
             }
 
             // And save it in our cache
             xamlType = SchemaContext.GetXamlType(type);
-            if (xamlType == null)
+            if (xamlType is null)
             {
                 return null;
             }
@@ -107,7 +107,7 @@ namespace System.Xaml.Schema
             // Get the open generic type.
             XamlType openXamlType = TryGetXamlType(typeName);
             Type openType = openXamlType?.UnderlyingType;
-            if (openType == null)
+            if (openType is null)
             {
                 return null;
             }
@@ -117,7 +117,7 @@ namespace System.Xaml.Schema
             if (!string.IsNullOrEmpty(subscript))
             {
                 closedType = MakeArrayType(closedType, subscript);
-                if (closedType == null)
+                if (closedType is null)
                 {
                     // Invalid array subscript.
                     return null;
@@ -175,12 +175,12 @@ namespace System.Xaml.Schema
         private Type TryGetType(string typeName)
         {
             Type type = SearchAssembliesForShortName(typeName);
-            if (type == null && IsClrNamespace)
+            if (type is null && IsClrNamespace)
             {
                 Debug.Assert(_assemblyNamespaces.Count == 1);
                 type = XamlLanguage.LookupClrNamespaceType(_assemblyNamespaces[0], typeName);
             }
-            if (type == null)
+            if (type is null)
             {
                 return null;
             }
@@ -206,7 +206,7 @@ namespace System.Xaml.Schema
                 foreach (AssemblyNamespacePair assemblyNamespacePair in _assemblyNamespaces)
                 {
                     Assembly asm = assemblyNamespacePair.Assembly;
-                    if (asm == null)
+                    if (asm is null)
                     {
                         // This is a dynamic assembly that got unloaded; ignore it
                         continue;
@@ -231,7 +231,7 @@ namespace System.Xaml.Schema
         private List<AssemblyNamespacePair> GetClrNamespacePair(string clrNs, string assemblyName)
         {
             Assembly asm = SchemaContext.OnAssemblyResolve(assemblyName);
-            if (asm == null)
+            if (asm is null)
             {
                 return null;
             }
@@ -246,7 +246,7 @@ namespace System.Xaml.Schema
             foreach(AssemblyNamespacePair assemblyNamespacePair in _assemblyNamespaces)
             {
                 Assembly asm = assemblyNamespacePair.Assembly;
-                if (asm == null)
+                if (asm is null)
                 {
                     // This is a dynamic assembly that got unloaded; ignore it
                     continue;
@@ -269,7 +269,7 @@ namespace System.Xaml.Schema
             // then assign it back to the original variable.  Assignments are assured to be atomic.
 
             List<AssemblyNamespacePair> assemblyNamespacesCopy;
-            if (_assemblyNamespaces == null)
+            if (_assemblyNamespaces is null)
             {
                 assemblyNamespacesCopy = new List<AssemblyNamespacePair>();
                 Initialize();

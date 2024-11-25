@@ -374,7 +374,7 @@ namespace System.Windows.Documents
 
         private List<FixedSOMElement> _GetEntry(FixedNode node)
         {
-            if (_cachedEntry == null || node != _cachedFixedNode)
+            if (_cachedEntry is null || node != _cachedFixedNode)
             {
                 _cachedEntry = (List<FixedSOMElement>)_mapping[node]; 
                 _cachedFixedNode = node;

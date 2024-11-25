@@ -206,7 +206,7 @@ namespace System.Windows.Media.Media3D
         {
             VerifyAPIReadOnly(value);
 
-            if (value == null || (value.InternalVisualParent != _owner))
+            if (value is null || (value.InternalVisualParent != _owner))
             {
                 return -1;
             }
@@ -471,7 +471,7 @@ namespace System.Windows.Media.Media3D
 
         private void VerifyAPIForAdd(Visual3D value)
         {
-            if (value == null)
+            if (value is null)
             {
                 throw new System.ArgumentException(SR.Collection_NoNull);
             }

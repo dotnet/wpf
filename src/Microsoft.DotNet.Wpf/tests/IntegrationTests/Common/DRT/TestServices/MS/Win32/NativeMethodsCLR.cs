@@ -79,7 +79,7 @@ namespace MS.Win32 {
             {
                 XFORM xform = obj as XFORM;
 
-                if( xform == null )
+                if( xform is null )
                 {
                     return false;
                 }
@@ -3592,7 +3592,7 @@ namespace MS.Win32 {
             }
             public LOGFONT( LOGFONT lf )
             {
-                if (lf == null)
+                if (lf is null)
                 {
                     throw new ArgumentNullException("lf");
                 }
@@ -4138,10 +4138,10 @@ namespace MS.Win32 {
                         connectionPoint = null;
                     }
 
-                    if (connectionPoint == null) {
+                    if (connectionPoint is null) {
                         ex = new ArgumentException(SR.GetString(SR.ConnPointSourceIF, eventInterface.Name ));
                     }
-                    else if (sink == null || !eventInterface.IsInstanceOfType(sink)) {
+                    else if (sink is null || !eventInterface.IsInstanceOfType(sink)) {
                         ex = new InvalidCastException(SR.GetString(SR.ConnPointSinkIF));
                     }
                     else {
@@ -4162,12 +4162,12 @@ namespace MS.Win32 {
                 }
 
 
-                if (throwException && (connectionPoint == null || cookie == 0)) {
+                if (throwException && (connectionPoint is null || cookie == 0)) {
                     if (connectionPoint != null) {
                         Marshal.ReleaseComObject(connectionPoint);
                     }
 
-                    if (ex == null) {
+                    if (ex is null) {
                         throw new ArgumentException(SR.GetString(SR.ConnPointCouldNotCreate, eventInterface.Name ));
                     }
                     else {
@@ -4210,7 +4210,7 @@ namespace MS.Win32 {
             /// <include file='doc\NativeMethods.uex' path='docs/doc[@for="NativeMethods.ConnectionPointCookie.Finalize"]/*' />
             /// <internalonly/>
             ~ConnectionPointCookie(){
-                //System.Diagnostics.Debug.Assert(connectionPoint == null || cookie == 0, "We should never finalize an active connection point");
+                //System.Diagnostics.Debug.Assert(connectionPoint is null || cookie == 0, "We should never finalize an active connection point");
                 //Disconnect();
             }
         }
@@ -4430,7 +4430,7 @@ namespace MS.Win32 {
             public static VARIANT FromObject(Object var) {
                 VARIANT v = new VARIANT();
 
-                if (var == null) {
+                if (var is null) {
                     v.vt = (int)tagVT.VT_EMPTY;
                 }
                 else if (Convert.IsDBNull(var)) {
@@ -6250,7 +6250,7 @@ namespace MS.Win32 {
             ///     This will be the character count under NT, and the ubyte count for Windows 95.
             /// </devdoc>
             public static int GetPInvokeStringLength(String s) {
-                if (s == null) {
+                if (s is null) {
                     return 0;
                 }
 

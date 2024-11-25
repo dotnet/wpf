@@ -94,7 +94,7 @@ namespace System.Windows.Controls
         /// </remarks>
         internal void PrepareCell(object item, DataGridRow ownerRow, int index)
         {
-            Debug.Assert(_owner == null || _owner == ownerRow, "_owner should be null before PrepareCell is called or the same value as the ownerRow.");
+            Debug.Assert(_owner is null || _owner == ownerRow, "_owner should be null before PrepareCell is called or the same value as the ownerRow.");
 
             _owner = ownerRow;
 
@@ -116,7 +116,7 @@ namespace System.Windows.Controls
                     // Setting this property will result in BuildVisualTree being called.
                     IsEditing = false;
                 }
-                else if ((Content as FrameworkElement) == null)
+                else if ((Content as FrameworkElement) is null)
                 {
                     // If there isn't already a visual tree, then create one.
                     BuildVisualTree();
@@ -315,7 +315,7 @@ namespace System.Windows.Controls
 
         internal override void ChangeVisualState(bool useTransitions)
         {
-            if (DataGridOwner == null)
+            if (DataGridOwner is null)
             {
                 return;
             }
@@ -404,7 +404,7 @@ namespace System.Windows.Controls
                     if (oldContent != null && oldContent != newContent)
                     {
                         ContentPresenter cp = oldContent as ContentPresenter;
-                        if (cp == null)
+                        if (cp is null)
                         {
                             oldContent.SetValue(FrameworkElement.DataContextProperty, BindingExpressionBase.DisconnectedItem);
                         }
@@ -425,7 +425,7 @@ namespace System.Windows.Controls
 
         private void RemoveBindingExpressions(BindingGroup bindingGroup, DependencyObject element)
         {
-            if (element == null)
+            if (element is null)
                 return; // no content, hence no bindings to remove
 
             var bindingExpressions = bindingGroup.BindingExpressions;
@@ -939,7 +939,7 @@ namespace System.Windows.Controls
                 if (dataGridOwner != null)
                 {
                     // Let the DataGrid process selection
-                    dataGridOwner.HandleSelectionForCellInput(this, /* startDragging = */ Mouse.Captured == null, /* allowsExtendSelect = */ true, /* allowsMinimalSelect = */ true);
+                    dataGridOwner.HandleSelectionForCellInput(this, /* startDragging = */ Mouse.Captured is null, /* allowsExtendSelect = */ true, /* allowsMinimalSelect = */ true);
                 }
 
                 e.Handled = true;
@@ -1062,7 +1062,7 @@ namespace System.Windows.Controls
             Geometry frozenGeometry = DataGridHelper.GetFrozenClipForCell(cell);
             if (frozenGeometry != null)
             {
-                if (geometry == null)
+                if (geometry is null)
                 {
                     return frozenGeometry;
                 }
@@ -1084,7 +1084,7 @@ namespace System.Windows.Controls
                 if (_owner != null)
                 {
                     DataGrid dataGridOwner = _owner.DataGridOwner;
-                    if (dataGridOwner == null)
+                    if (dataGridOwner is null)
                     {
                         dataGridOwner = ItemsControl.ItemsControlFromItemContainer(_owner) as DataGrid;
                     }
@@ -1135,7 +1135,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (ContentTemplate == null) && (ContentTemplateSelector == null);
+                return (ContentTemplate is null) && (ContentTemplateSelector is null);
             }
         }
 

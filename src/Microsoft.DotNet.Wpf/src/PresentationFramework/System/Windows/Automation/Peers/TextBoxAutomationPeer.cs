@@ -52,7 +52,7 @@ namespace System.Windows.Automation.Peers
 
             if (patternInterface == PatternInterface.Text)
             {
-                if(_textPattern == null)
+                if(_textPattern is null)
                     _textPattern = new TextAdaptor(this, ((TextBoxBase)Owner).TextContainer);
 
                 return _textPattern;

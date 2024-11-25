@@ -91,7 +91,7 @@ namespace System.Windows.Navigation
             // Manipulate BaseUri after tree searching is done.
             //
 
-            if (baseUri == null)
+            if (baseUri is null)
             {
                 // If no BaseUri information is found from the current tree,
                 // just take the Application's BaseUri.
@@ -226,7 +226,7 @@ namespace System.Windows.Navigation
 
             assembly = SafeSecurityHelper.GetLoadedAssembly(asmName);
 
-            if (assembly == null)
+            if (assembly is null)
             {
                 // The assembly is not yet loaded to the AppDomain, try to load it with information specified in resource Uri.
                 assembly = Assembly.Load(asmName);
@@ -420,7 +420,7 @@ namespace System.Windows.Navigation
         {
             get
             {
-                if (_resourceAssembly == null)
+                if (_resourceAssembly is null)
                 {
                     _resourceAssembly = Assembly.GetEntryAssembly();
                 }

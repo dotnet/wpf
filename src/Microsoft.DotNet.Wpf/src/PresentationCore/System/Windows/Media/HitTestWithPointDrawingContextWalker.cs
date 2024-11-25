@@ -80,7 +80,7 @@ namespace System.Windows.Media
             Pen pen,
             Geometry geometry)
         {
-            if (IsCurrentLayerNoOp ||(geometry == null) || geometry.IsEmpty())
+            if (IsCurrentLayerNoOp ||(geometry is null) || geometry.IsEmpty())
             {
                 return;
             }
@@ -201,7 +201,7 @@ namespace System.Windows.Media
         {
             if (!IsPushNoOp())
             {
-                if (transform == null || transform.IsIdentity)
+                if (transform is null || transform.IsIdentity)
                 {
                     PushPointStack(_point);
                 }
@@ -325,7 +325,7 @@ namespace System.Windows.Media
         /// <param name="point"> The new Point to push. </param>
         private void PushPointStack(Point point)
         {
-            if (_pointStack == null)
+            if (_pointStack is null)
             {
                 _pointStack = new Stack<Point>(2);
             }

@@ -64,7 +64,7 @@ namespace System.Windows.Xps.Serialization
             NGCSerializerContext context
             )
         {
-            if(context == null)
+            if(context is null)
             {
 
             }

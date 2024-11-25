@@ -141,7 +141,7 @@ namespace MS.Internal
             Visual parentVisual;
             bool bDone = false;
 
-            if (currentRoot == null)
+            if (currentRoot is null)
             {
                 return null;
             }
@@ -578,14 +578,14 @@ namespace MS.Internal
             targetDependencyProperty = null;
 
             IProvideValueTarget provideValueTarget = serviceProvider.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
-            if (provideValueTarget == null)
+            if (provideValueTarget is null)
             {
                 return;
             }
 
             object targetObject = provideValueTarget.TargetObject;
 
-            if (targetObject == null)
+            if (targetObject is null)
             {
                 return;
             }
@@ -861,7 +861,7 @@ namespace MS.Internal
             WeakDictionary<object, List<KeyValuePair<int, object>>> itemValueStorage = EnsureItemValueStorage(owner);
             List<KeyValuePair<int, object>> itemValues = GetItemValues(owner, item, itemValueStorage);
 
-            if (itemValues == null && HashHelper.HasReliableHashCode(item))
+            if (itemValues is null && HashHelper.HasReliableHashCode(item))
             {
                 itemValues = new List<KeyValuePair<int, object>>(3);    // So far the only use of this is to store three values.
                 itemValueStorage[item] = itemValues;
@@ -875,7 +875,7 @@ namespace MS.Internal
         {
             WeakDictionary<object, List<KeyValuePair<int, object>>> itemValueStorage = ItemValueStorageField.GetValue(owner);
 
-            if (itemValueStorage == null)
+            if (itemValueStorage is null)
             {
                 itemValueStorage = new WeakDictionary<object, List<KeyValuePair<int, object>>>();
                 ItemValueStorageField.SetValue(owner, itemValueStorage);
@@ -914,7 +914,7 @@ namespace MS.Internal
                     if (value != DependencyProperty.UnsetValue)
                     {
                         ModifiedItemValue modifiedItemValue = value as ModifiedItemValue;
-                        if (modifiedItemValue == null)
+                        if (modifiedItemValue is null)
                         {
                             // for real properties, call SetValue so that the property's
                             // change-callback is called
@@ -1280,7 +1280,7 @@ namespace MS.Internal
             T found = null;
             // Do a DFS among templated children
             int count = VisualTreeHelper.GetChildrenCount(searchStart);
-            for (int i = 0; (i < count) && (found == null); i++)
+            for (int i = 0; (i < count) && (found is null); i++)
             {
                 descendant = VisualTreeHelper.GetChild(searchStart, i) as FrameworkElement;
                 if (descendant != null && descendant.TemplatedParent == templatedParent)
@@ -1419,7 +1419,7 @@ namespace MS.Internal
         /// <returns></returns>
         internal static bool IsAnyAncestorOf(DependencyObject ancestor, DependencyObject element)
         {
-            if (ancestor == null || element == null)
+            if (ancestor is null || element is null)
             {
                 return false;
             }
@@ -1455,7 +1455,7 @@ namespace MS.Internal
             {
                 parent = VisualTreeHelper.GetParent(element);
             }
-            if (parent == null)
+            if (parent is null)
             {
                 parent = LogicalTreeHelper.GetParent(element);
             }
@@ -1487,15 +1487,15 @@ namespace MS.Internal
 
         internal static bool IsComposing(TextBoxBase tbb)
         {
-            if (tbb == null)
+            if (tbb is null)
                 return false;
 
             System.Windows.Documents.TextEditor te = tbb.TextEditor;
-            if (te == null)
+            if (te is null)
                 return false;
 
             System.Windows.Documents.TextStore ts = te.TextStore;
-            if (ts == null)
+            if (ts is null)
                 return false;
 
             return ts.IsEffectivelyComposing;

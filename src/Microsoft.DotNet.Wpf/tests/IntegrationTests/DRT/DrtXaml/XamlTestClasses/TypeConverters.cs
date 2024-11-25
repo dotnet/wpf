@@ -61,7 +61,7 @@ namespace Test.Elements
             XamlType ambientLabel = schemaContextProvider.SchemaContext.GetXamlType(typeof(HasAmbientLabel));
             XamlMember label = ambientLabel.GetMember("Label");
             AmbientPropertyValue apVal = iAmbient.GetFirstAmbientValue(null, label);
-            if (apVal == null)
+            if (apVal is null)
             {
                 e.ColorName = color;
             }
@@ -111,7 +111,7 @@ namespace Test.Elements
             XamlType ambientLabel = schemaContextProvider.SchemaContext.GetXamlType(typeof(DerivedFromHasAmbientLabel));
             XamlMember label = ambientLabel.GetMember("Num");
             AmbientPropertyValue apVal = iAmbient.GetFirstAmbientValue(null, label);
-            if (apVal == null)
+            if (apVal is null)
             {
                 e.ColorName = s;
             }

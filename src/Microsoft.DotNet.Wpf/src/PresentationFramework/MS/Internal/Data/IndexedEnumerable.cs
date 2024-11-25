@@ -60,7 +60,7 @@ namespace MS.Internal.Data
             // observe source collection for changes to invalidate enumerators
             // for IList we can get all information directly from the source collection,
             // no need to track changes, no need to hook notification
-            if (List == null)
+            if (List is null)
             {
                 INotifyCollectionChanged icc = collection as INotifyCollectionChanged;
                 if (icc != null)
@@ -96,7 +96,7 @@ namespace MS.Internal.Data
                     return _cachedIndex;
             }
 
-            // If item != cached item, that doesn’t mean that the enumerator
+            // If item != cached item, that doesnï¿½t mean that the enumerator
             // is `blown, it just means we have to go find the item represented by item.
             index = -1;
             // only ask for fresh enumerator if current enumerator already was moved before
@@ -341,7 +341,7 @@ namespace MS.Internal.Data
             ClearAllCaches();
 
             // only track changes if source collection isn't already of type IList
-            if (List == null)
+            if (List is null)
             {
                 INotifyCollectionChanged icc = Enumerable as INotifyCollectionChanged;
                 if (icc != null)
@@ -415,7 +415,7 @@ namespace MS.Internal.Data
         // whether any cached values may be valid.
         private int EnsureEnumerator()
         {
-            if (_enumerator == null)
+            if (_enumerator is null)
             {
                 UseNewEnumerator();
             }
@@ -486,7 +486,7 @@ namespace MS.Internal.Data
             _collectionView = collection as CollectionView;
 
             // try finding Count, IndexOf and indexer members via reflection
-            if ((List == null) && (CollectionView == null))
+            if ((List is null) && (CollectionView is null))
             {
                 Type srcType = collection.GetType();
                 // try reflection for IndexOf(object)
@@ -515,7 +515,7 @@ namespace MS.Internal.Data
                     }
                 }
 
-                if (Collection == null)
+                if (Collection is null)
                 {
                     // try reflection for Count property
                     PropertyInfo pi = srcType.GetProperty("Count", typeof(int));
@@ -600,7 +600,7 @@ namespace MS.Internal.Data
         {
             bool isNativeValue = false;
             value = -1;
-            if ((List != null) && (FilterCallback == null))
+            if ((List != null) && (FilterCallback is null))
             {
                 value = List.IndexOf(item);
                 isNativeValue = true;
@@ -733,7 +733,7 @@ namespace MS.Internal.Data
 
             void IEnumerator.Reset()
             {
-                if (_indexedEnumerable._enumerable == null)
+                if (_indexedEnumerable._enumerable is null)
                     throw new InvalidOperationException(SR.EnumeratorVersionChanged);
 
                 Dispose();
@@ -744,10 +744,10 @@ namespace MS.Internal.Data
             {
                 bool returnValue;
 
-                if (_indexedEnumerable._enumerable == null)
+                if (_indexedEnumerable._enumerable is null)
                     throw new InvalidOperationException(SR.EnumeratorVersionChanged);
 
-                if (_filterCallback == null)
+                if (_filterCallback is null)
                 {
                     returnValue = _enumerator.MoveNext();
                 }

@@ -73,7 +73,7 @@ namespace MS.Internal.Annotations.Storage
         /// <param name="dirty">the initial dirty flag of the annotation in the map</param>
         public void AddAnnotation(Annotation annotation, bool dirty)
         {
-            Debug.Assert(FindAnnotation(annotation.Id) == null, "annotation  not found");
+            Debug.Assert(FindAnnotation(annotation.Id) is null, "annotation  not found");
             annotation.AuthorChanged += OnAuthorChanged;
             annotation.AnchorChanged += OnAnchorChanged;
             annotation.CargoChanged += OnCargoChanged;

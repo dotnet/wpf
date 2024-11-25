@@ -56,7 +56,7 @@ namespace System.Windows
         protected virtual void AddChild(object value)
         {
             TriggerAction action = value as TriggerAction;
-            if (action == null)
+            if (action is null)
             {
                 throw new ArgumentException(SR.Format(SR.EventTriggerBadAction, value.GetType().Name));
             }
@@ -161,7 +161,7 @@ namespace System.Windows
         {
             get
             {
-                if( _actions == null )
+                if( _actions is null )
                 {
                     _actions = new TriggerActionCollection();
 
@@ -181,7 +181,7 @@ namespace System.Windows
         {
             base.OnInheritanceContextChangedCore(args);
 
-            if (_actions == null)
+            if (_actions is null)
             {
                 return;
             }
@@ -305,7 +305,7 @@ namespace System.Windows
             EventTrigger eventTrigger = triggerBase as EventTrigger;
             if( eventTrigger != null )
             {
-                Debug.Assert( eventTrigger._routedEventHandler == null && eventTrigger._source == null);
+                Debug.Assert( eventTrigger._routedEventHandler is null && eventTrigger._source is null);
                 
                 // PERF: Cache this result if it turns out we're doing a lot of lookups on the same name.
                 eventTrigger._source = FrameworkElement.FindNamedFrameworkElement( triggersHost, eventTrigger.SourceName );

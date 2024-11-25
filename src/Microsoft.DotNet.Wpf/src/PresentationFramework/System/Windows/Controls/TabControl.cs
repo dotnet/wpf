@@ -525,7 +525,7 @@ namespace System.Windows.Controls
             {
                 // Check if the selected item is a TabItem
                 TabItem tabItem = selectedItem as TabItem;
-                if (tabItem == null)
+                if (tabItem is null)
                 {
                     // It is a data item, get its TabItem container
                     tabItem = ItemContainerGenerator.ContainerFromIndex(SelectedIndex) as TabItem;
@@ -533,7 +533,7 @@ namespace System.Windows.Controls
                     // Due to event leapfrogging, we may have the wrong container.
                     // If so, re-fetch the right container using a more expensive method.
                     // (BTW, the previous line will cause a debug assert in this case) 
-                    if (tabItem == null ||
+                    if (tabItem is null ||
                         !ItemsControl.EqualsEx(selectedItem, ItemContainerGenerator.ItemFromContainer(tabItem)))
                     {
                         tabItem = ItemContainerGenerator.ContainerFromItem(selectedItem) as TabItem;

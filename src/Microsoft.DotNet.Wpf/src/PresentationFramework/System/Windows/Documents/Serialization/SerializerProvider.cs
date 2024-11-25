@@ -115,7 +115,7 @@ namespace System.Windows.Documents.Serialization
             RegistryKey plugIns = _rootKey.CreateSubKey(_registryPath);
             string serializerKey = $"{serializerDescriptor.DisplayName}/{serializerDescriptor.AssemblyName}/{serializerDescriptor.AssemblyVersion}/{serializerDescriptor.WinFXVersion}";
 
-            if (plugIns.OpenSubKey(serializerKey) == null)
+            if (plugIns.OpenSubKey(serializerKey) is null)
             {
                 throw new ArgumentException(SR.SerializerProviderNotRegistered, serializerKey);
             }

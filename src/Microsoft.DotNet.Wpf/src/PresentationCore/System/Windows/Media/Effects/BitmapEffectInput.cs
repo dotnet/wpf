@@ -61,7 +61,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                if (s_defaultInputSource == null)
+                if (s_defaultInputSource is null)
                 {
                     BitmapSource source = new UnmanagedBitmapWrapper(true);
                     source.Freeze();

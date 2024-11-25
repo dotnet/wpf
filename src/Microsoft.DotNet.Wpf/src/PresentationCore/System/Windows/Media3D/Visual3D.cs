@@ -174,10 +174,10 @@ namespace System.Windows.Media.Media3D
 
             // Stop over-invalidating _bboxSubgraph
             //
-            // We currently maintain a cache of both a ModelVisual3D’s content
+            // We currently maintain a cache of both a ModelVisual3Dï¿½s content
             // and subgraph bounds.  A better solution that would be both a 2D
             // and 3D win would be to stop invalidating _bboxSubgraph when a
-            // visual’s transform changes.
+            // visualï¿½s transform changes.
             owner.RenderChanged(/* sender = */ owner, EventArgs.Empty);
         }
 
@@ -243,7 +243,7 @@ namespace System.Windows.Media.Media3D
             VisualDiagnostics.VerifyVisualTreeChange(this);
 
             Debug.Assert(child != null);
-            Debug.Assert(child.InternalVisualParent == null);
+            Debug.Assert(child.InternalVisualParent is null);
 
             child.SetParent(this);
 
@@ -461,7 +461,7 @@ namespace System.Windows.Media.Media3D
 
             // If we are attaching to a tree then
             // send the bit up if we need to.
-            if (oldParent == null)
+            if (oldParent is null)
             {
                 Debug.Assert(VisualTreeHelper.GetParent(this) != null, "If oldParent is null, current parent should != null.");
 
@@ -503,7 +503,7 @@ namespace System.Windows.Media.Media3D
             {
                 Visual.AncestorChangedEventHandler newHandler = AncestorChangedEventField.GetValue(this);
 
-                if (newHandler == null)
+                if (newHandler is null)
                 {
                     newHandler = value;
                 }
@@ -539,7 +539,7 @@ namespace System.Windows.Media.Media3D
                 {
                     newHandler -= value;
 
-                    if(newHandler == null)
+                    if(newHandler is null)
                     {
                         AncestorChangedEventField.ClearValue(this);
                     }
@@ -845,7 +845,7 @@ namespace System.Windows.Media.Media3D
         {
             Model3D model = _visual3DModel;
 
-            if (model == null)
+            if (model is null)
             {
                 return Rect3D.Empty;
             }
@@ -1206,7 +1206,7 @@ namespace System.Windows.Media.Media3D
                         ((DUCE.IResource)_zeroScale).AddRefOnChannel(channel),
                         channel);
                 }
-                else if (!isOnChannel) /* Transform == null */
+                else if (!isOnChannel) /* Transform is null */
                 {
                     DUCE.Visual3DNode.SetTransform(
                         handle,
@@ -1285,7 +1285,7 @@ namespace System.Windows.Media.Media3D
 
                 SetFlags(channel, true, VisualProxyFlags.IsContentConnected);
             }
-            else if (isOnChannel) /* Model == null */
+            else if (isOnChannel) /* Model is null */
             {
                 DUCE.Visual3DNode.SetContent(
                     ((DUCE.IResource)this).GetHandle(channel),
@@ -1330,7 +1330,7 @@ namespace System.Windows.Media.Media3D
             while (current != null && current != ancestor)
             {
                 // If our 3D parent is null then continue walk in 2D
-                if (current._3DParent == null)
+                if (current._3DParent is null)
                 {
                     DependencyObject parent2D = current.InternalVisualParent;
 
@@ -1360,7 +1360,7 @@ namespace System.Windows.Media.Media3D
             {
                 current.SetFlags(value, flag);
 
-                if (current._3DParent == null)
+                if (current._3DParent is null)
                 {
                     VisualTreeUtils.SetFlagsToRoot(InternalVisualParent, value, flag);
                     return;
@@ -1388,7 +1388,7 @@ namespace System.Windows.Media.Media3D
                     return current;
                 }
 
-                if (current._3DParent == null)
+                if (current._3DParent is null)
                 {
                     return VisualTreeUtils.FindFirstAncestorWithFlagsAnd(InternalVisualParent, flag);
                 }
@@ -1694,7 +1694,7 @@ namespace System.Windows.Media.Media3D
                 }
                 else
                 {
-                    if (group == null)
+                    if (group is null)
                     {
                         group = new GeneralTransform3DGroup();
                     }
@@ -1711,7 +1711,7 @@ namespace System.Windows.Media.Media3D
 
                     // if containing3DParent is null, then the ancestor parameter is not really an ancestor
                     // break out of the loop to allow it to fail
-                    if (containing3DParent == null)
+                    if (containing3DParent is null)
                     {
                         break;
                     }
@@ -1719,7 +1719,7 @@ namespace System.Windows.Media.Media3D
                     GeneralTransform2DTo3D transform2DTo3D = gAsVisual.TransformToAncestor(containing3DParent);
 
                     // if either transform ends up being null then we don't have a transform
-                    if (transform3DTo2D == null || transform2DTo3D == null)
+                    if (transform3DTo2D is null || transform2DTo3D is null)
                     {
                         // we don't want to break here because although we own't be able to create a valid transformation
                         // we also want to throw an exception if the ancestor passed in is not a valid ancestor.  We then
@@ -1840,7 +1840,7 @@ namespace System.Windows.Media.Media3D
             {
                 if (_3DParent != null)
                 {
-                    Debug.Assert(_2DParent.GetValue(this) == null,
+                    Debug.Assert(_2DParent.GetValue(this) is null,
                         "Only one parent pointer should be set at a time.");
 
                     return _3DParent;
@@ -1848,7 +1848,7 @@ namespace System.Windows.Media.Media3D
 
                 DependencyObject parent2D = _2DParent.GetValue(this);
 
-                Debug.Assert(parent2D == null || parent2D is Viewport3DVisual,
+                Debug.Assert(parent2D is null || parent2D is Viewport3DVisual,
                     "The only acceptable 2D parent for a Visual3D is a Viewport3DVisual.");
 
                 return parent2D;
@@ -2062,11 +2062,11 @@ namespace System.Windows.Media.Media3D
 
                 // If our 3D parent is null call back into VisualTreeUtils to potentially
                 // continue the walk in 2D.
-                if (e._3DParent == null)
+                if (e._3DParent is null)
                 {
                     Viewport3DVisual viewport = e.InternalVisualParent as Viewport3DVisual;
 
-                    Debug.Assert((viewport == null) == (e.InternalVisualParent == null),
+                    Debug.Assert((viewport is null) == (e.InternalVisualParent is null),
                         "Viewport3DVisual is the only supported 2D parent of a 3D visual.");
 
                     if(viewport != null)

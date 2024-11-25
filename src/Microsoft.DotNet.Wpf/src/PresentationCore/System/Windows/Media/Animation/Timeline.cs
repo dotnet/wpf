@@ -889,7 +889,7 @@ namespace System.Windows.Media.Animation
 
             EventHandlersStore store = EventHandlersStoreField.GetValue(this);
 
-            if (store == null)
+            if (store is null)
             {
                 store = new EventHandlersStore();
                 EventHandlersStoreField.SetValue(this, store);
@@ -1143,7 +1143,7 @@ namespace System.Windows.Media.Animation
                 {
                     WeakReference weakRef = (WeakReference)handleReference;
                     timeline = (Timeline)weakRef.Target;
-                    if (timeline == null)
+                    if (timeline is null)
                     {
                         // Object has been destroyed, so remove the weakRef.
                         _objectTable.Remove(id);
@@ -1168,7 +1168,7 @@ namespace System.Windows.Media.Animation
                 foreach (DictionaryEntry e in _objectTable)
                 {
                     WeakReference weakRef = (WeakReference) e.Value;
-                    if (weakRef.Target == null)
+                    if (weakRef.Target is null)
                     {
                         removeTable[e.Key] = weakRef;
                     }

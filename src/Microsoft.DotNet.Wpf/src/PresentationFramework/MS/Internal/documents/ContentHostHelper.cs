@@ -42,7 +42,7 @@ namespace MS.Internal.Documents
             DependencyObject parent;
             TextContainer textContainer;
 
-            if (contentElement == null) { return null; }
+            if (contentElement is null) { return null; }
 
             // If the ContentElement is a TextElement, retrieve IContentHost form the owner
             // of TextContainer.

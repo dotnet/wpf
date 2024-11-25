@@ -156,7 +156,7 @@ namespace System.Windows.Input
             set
             {
                 InputBinding inputBinding = value as InputBinding;
-                if (inputBinding == null)
+                if (inputBinding is null)
                    throw new NotSupportedException(SR.CollectionOnlyAcceptsInputBindings);
 
                 this[index] = inputBinding;
@@ -220,7 +220,7 @@ namespace System.Windows.Input
         {
             if (inputBinding != null)
             {
-                if (_innerBindingList == null)
+                if (_innerBindingList is null)
                     _innerBindingList = new System.Collections.Generic.List<InputBinding>(1);
 
                 _innerBindingList.Add(inputBinding);
@@ -269,7 +269,7 @@ namespace System.Windows.Input
 
             if ( collection.Count > 0)
             {
-                if (_innerBindingList == null)
+                if (_innerBindingList is null)
                     _innerBindingList = new System.Collections.Generic.List<InputBinding>(collection.Count);
 
                 IEnumerator collectionEnum = collection.GetEnumerator();
@@ -296,7 +296,7 @@ namespace System.Windows.Input
         /// <param name="inputBinding">inputBinding to insert</param>
         public void Insert(int index, InputBinding inputBinding)
         {
-            if (inputBinding == null)
+            if (inputBinding is null)
             {
                 throw new NotSupportedException(SR.CollectionOnlyAcceptsInputBindings);
             }

@@ -90,7 +90,7 @@ namespace System.Windows.Documents
         {
             get 
             {
-                if (_start == null)
+                if (_start is null)
                 {
                     _start = new List<double>();
                 }
@@ -102,7 +102,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_end == null)
+                if (_end is null)
                 {
                     _end = new List<double>();
                 }

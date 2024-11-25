@@ -152,7 +152,7 @@ namespace System.Windows.Media
         /// </summary>
         internal override bool ContainsInternal(Pen pen, Point hitPoint, double tolerance, ToleranceType type)
         {
-            if (pen == null)
+            if (pen is null)
             {
                 ReadPreamble();
 
@@ -262,11 +262,11 @@ namespace System.Windows.Media
             // Get the operands, interpreting null as empty PathGeometry
             Geometry g1 = Geometry1;
             Geometry g2 = Geometry2;
-            PathGeometry geometry1 = (g1 == null) ?
+            PathGeometry geometry1 = (g1 is null) ?
                 new PathGeometry() :
                 g1.GetAsPathGeometry();
 
-            Geometry geometry2 = (g2 == null) ?
+            Geometry geometry2 = (g2 is null) ?
                 new PathGeometry() :
                 g2.GetAsPathGeometry();
 
@@ -291,8 +291,8 @@ namespace System.Windows.Media
             // See which operand is obviously empty
             Geometry geometry1 = Geometry1;
             Geometry geometry2 = Geometry2;
-            bool empty1 = geometry1 == null || geometry1.IsObviouslyEmpty();
-            bool empty2 = geometry2 == null || geometry2.IsObviouslyEmpty();
+            bool empty1 = geometry1 is null || geometry1.IsObviouslyEmpty();
+            bool empty2 = geometry2 is null || geometry2.IsObviouslyEmpty();
             
             // Depending on the operation -- 
             if (GeometryCombineMode == GeometryCombineMode.Intersect)

@@ -99,7 +99,7 @@ namespace System.Windows.Automation.Peers
             iterate(parent,
                     (IteratorCallback)delegate(AutomationPeer peer)
                     {
-                        if (children == null)
+                        if (children is null)
                             children = new List<AutomationPeer>();
 
                         children.Add(peer);

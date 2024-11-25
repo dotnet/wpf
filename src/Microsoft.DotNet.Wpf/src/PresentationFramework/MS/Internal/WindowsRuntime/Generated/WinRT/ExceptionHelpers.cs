@@ -272,7 +272,7 @@ namespace WinRT
 
                 // Keep the error object alive so that user could retrieve error information
                 // using Data["RestrictedErrorReference"]
-                dict.Add("__RestrictedErrorObjectReference", restrictedErrorObject == null ? null : new __RestrictedErrorObject(restrictedErrorObject));
+                dict.Add("__RestrictedErrorObjectReference", restrictedErrorObject is null ? null : new __RestrictedErrorObject(restrictedErrorObject));
                 dict.Add("__HasRestrictedLanguageErrorObject", hasRestrictedLanguageErrorObject);
             }
         }

@@ -156,7 +156,7 @@ namespace MS.Internal.Ink
         private void OnAdornerMouseButtonDownEvent(object sender, MouseButtonEventArgs args)
         {
             // If the ButtonDown is raised by RightMouse, we should just bail out.
-            if ( (args.StylusDevice == null && args.LeftButton != MouseButtonState.Pressed) )
+            if ( (args.StylusDevice is null && args.LeftButton != MouseButtonState.Pressed) )
             {
                 return;
             }

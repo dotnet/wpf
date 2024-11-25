@@ -455,7 +455,7 @@ namespace MS.Internal.Xaml.Parser
                 // on Content Property in before the PrefixDef's and then the ObjectType.
                 while (nodeType == ScannerNodeType.PREFIXDEFINITION)
                 {
-                    if (savedPrefixDefinitions == null)
+                    if (savedPrefixDefinitions is null)
                     {
                         savedPrefixDefinitions = new List<XamlNode>();
                     }
@@ -656,7 +656,7 @@ namespace MS.Internal.Xaml.Parser
                 // in before the PrefixDef's and then the ObjectType.
                 while (nodeType == ScannerNodeType.PREFIXDEFINITION)
                 {
-                    if (_savedPrefixDefinitions == null)
+                    if (_savedPrefixDefinitions is null)
                     {
                         _savedPrefixDefinitions = new List<XamlNode>();
                     }
@@ -853,7 +853,7 @@ namespace MS.Internal.Xaml.Parser
 
         private XamlNode Logic_StartContentProperty(XamlMember property)
         {
-            if (property == null)
+            if (property is null)
             {
                 property = XamlLanguage.UnknownContent;
             }
@@ -892,7 +892,7 @@ namespace MS.Internal.Xaml.Parser
                 // OR the previous element was "TrimSurroundingWhitespace"
                 // then trim leading Whitespace.
                 XamlType previousObject = _context.CurrentPreviousChildType;
-                if (previousObject == null || previousObject.TrimSurroundingWhitespace)
+                if (previousObject is null || previousObject.TrimSurroundingWhitespace)
                 {
                     trimmed = XamlText.TrimLeadingWhitespace(trimmed);
                 }
@@ -938,7 +938,7 @@ namespace MS.Internal.Xaml.Parser
         {
             get
             {
-                if (_arrayExtensionType == null)
+                if (_arrayExtensionType is null)
                 {
                     _arrayExtensionType = _context.GetXamlType(arrayType);
                 }
@@ -951,7 +951,7 @@ namespace MS.Internal.Xaml.Parser
         {
             get
             {
-                if (_arrayTypeMember == null)
+                if (_arrayTypeMember is null)
                 {
                     _arrayTypeMember = _context.GetXamlProperty(ArrayExtensionType, @"Type", null);
                 }
@@ -964,7 +964,7 @@ namespace MS.Internal.Xaml.Parser
         {
             get
             {
-                if (_itemsTypeMember == null)
+                if (_itemsTypeMember is null)
                 {
                     _itemsTypeMember = _context.GetXamlProperty(ArrayExtensionType, @"Items", null);
                 }
@@ -1030,7 +1030,7 @@ namespace MS.Internal.Xaml.Parser
                 }
                 // Or if the Value (this is the first value in the collection)
                 // isn't assignable to the Collection then "Get" the collection.
-                else if (valueElementType == null || !valueElementType.CanAssignTo(propertyType))
+                else if (valueElementType is null || !valueElementType.CanAssignTo(propertyType))
                 {
                     if (valueElementType != null)
                     {
@@ -1101,7 +1101,7 @@ namespace MS.Internal.Xaml.Parser
                     XamlMember prop = _context.CurrentMember;
                     if (_xamlScanner.PeekNodeType == ScannerNodeType.ELEMENT)
                     {
-                        if (prop == null)
+                        if (prop is null)
                         {
                             prop = _context.CurrentType.ContentProperty;
                         }
@@ -1109,7 +1109,7 @@ namespace MS.Internal.Xaml.Parser
                         {
                             return false;
                         }
-                        if (prop == null && _context.CurrentType.IsWhitespaceSignificantCollection)
+                        if (prop is null && _context.CurrentType.IsWhitespaceSignificantCollection)
                         {
                             return false;
                         }
@@ -1120,7 +1120,7 @@ namespace MS.Internal.Xaml.Parser
                         // ...it's by itself in a PE with no other children
                         if (prop != null)
                         {
-                            if (_context.CurrentPreviousChildType == null)
+                            if (_context.CurrentPreviousChildType is null)
                             {
                                 return false;
                             }
@@ -1156,7 +1156,7 @@ namespace MS.Internal.Xaml.Parser
 
         private static bool CanAcceptString(XamlMember property)
         {
-            if (property == null)
+            if (property is null)
             {
                 return false;
             }

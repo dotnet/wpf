@@ -72,7 +72,7 @@ namespace System.Windows.Input.StylusPointer
                     unhook = false;
 
                     // Are we currently hooked up?  If not then hook up.
-                    if (_manager == null)
+                    if (_manager is null)
                     {
                         _manager = StylusLogic.GetCurrentStylusLogicAs<PointerLogic>().PlugInManagers[presentationSource];
 

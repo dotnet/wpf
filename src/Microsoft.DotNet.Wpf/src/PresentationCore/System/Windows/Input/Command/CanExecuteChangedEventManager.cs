@@ -96,7 +96,7 @@ namespace System.Windows.Input
             List<HandlerSink> toRemove = null;
 
             bool foundDirt = false;
-            bool removeList = purgeAll || source == null;
+            bool removeList = purgeAll || source is null;
 
             // find dead entries to be removed from the list
             if (!removeList)
@@ -105,7 +105,7 @@ namespace System.Windows.Input
                 {
                     if (sink.IsInactive)
                     {
-                        if (toRemove == null)
+                        if (toRemove is null)
                         {
                             toRemove = new List<HandlerSink>();
                         }
@@ -169,7 +169,7 @@ namespace System.Windows.Input
                 CanExecuteChangedEventManager manager = (CanExecuteChangedEventManager)GetCurrentManager(managerType);
 
                 // at first use, create and register a new manager
-                if (manager == null)
+                if (manager is null)
                 {
                     manager = new CanExecuteChangedEventManager();
                     SetCurrentManager(managerType, manager);
@@ -191,7 +191,7 @@ namespace System.Windows.Input
         {
             // get the list of sinks for this source, creating if necessary
             List<HandlerSink> list = (List<HandlerSink>)this[source];
-            if (list == null)
+            if (list is null)
             {
                 list = new List<HandlerSink>();
                 this[source] = list;
@@ -251,7 +251,7 @@ namespace System.Windows.Input
         {
             object value;
             object target = handler.Target;
-            if (target == null)
+            if (target is null)
                 target = StaticSource;
 
             if (!cwt.TryGetValue(target, out value))
@@ -264,7 +264,7 @@ namespace System.Windows.Input
                 // 1% case - the target listens multiple times
                 // we store the delegates in a list
                 List<Delegate> list = value as List<Delegate>;
-                if (list == null)
+                if (list is null)
                 {
                     // lazily allocate the list, and add the old handler
                     Delegate oldHandler = value as Delegate;
@@ -285,13 +285,13 @@ namespace System.Windows.Input
         {
             object value;
             object target = handler.Target;
-            if (target == null)
+            if (target is null)
                 target = StaticSource;
 
             if (_cwt.TryGetValue(target, out value))
             {
                 List<Delegate> list = value as List<Delegate>;
-                if (list == null)
+                if (list is null)
                 {
                     // 99% case - the target is removing its single handler
                     _cwt.Remove(target);
@@ -404,8 +404,8 @@ namespace System.Windows.Input
             {
                 get
                 {
-                    return  _source == null || !_source.IsAlive
-                        ||  _originalHandler == null || !_originalHandler.IsAlive;
+                    return  _source is null || !_source.IsAlive
+                        ||  _originalHandler is null || !_originalHandler.IsAlive;
                 }
             }
 
@@ -445,7 +445,7 @@ namespace System.Windows.Input
             {
                 // this protects against re-entrancy:  a purge happening
                 // while a CanExecuteChanged event is being delivered
-                if (_source == null)
+                if (_source is null)
                     return;
 
                 // if the sender is our own CommandManager, the original

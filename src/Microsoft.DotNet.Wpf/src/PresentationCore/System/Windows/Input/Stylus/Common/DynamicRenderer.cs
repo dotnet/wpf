@@ -207,7 +207,7 @@ namespace System.Windows.Input.StylusPlugIns
             {
                 get 
                 { 
-                    if (_visualTarget == null)
+                    if (_visualTarget is null)
                     {
                         _visualTarget = new VisualTarget(this);
                         _visualTarget.RootVisual = new ContainerVisual();
@@ -242,10 +242,10 @@ namespace System.Windows.Input.StylusPlugIns
         /// <param name="stylusPoints"></param>
         public virtual void Reset(StylusDevice stylusDevice, StylusPointCollection stylusPoints)
         {
-            // NOTE: stylusDevice == null means the mouse device.
+            // NOTE: stylusDevice is null means the mouse device.
 
             // Nothing to do if root visual not queried or not hookup up to element yet.
-            if (_mainContainerVisual == null || _applicationDispatcher == null || !IsActiveForInput)
+            if (_mainContainerVisual is null || _applicationDispatcher is null || !IsActiveForInput)
                 return;
             
             // Ensure on UIContext.
@@ -295,7 +295,7 @@ namespace System.Windows.Input.StylusPlugIns
                 // NOTE: We don't create any visuals (real time or non real time) until someone
                 //  queries for this property since we can't display anything until this is done and
                 // they hook the returned visual up to their visual tree.
-                if (_mainContainerVisual == null)
+                if (_mainContainerVisual is null)
                 {
                     CreateInkingVisuals(); // ensure at least the app dispatcher visuals are created.
                 }
@@ -514,7 +514,7 @@ namespace System.Windows.Input.StylusPlugIns
             if (si != null)
             {
                 // See if we are done transitioning this stroke!!
-                if (si.StrokeHV.Clip == null)
+                if (si.StrokeHV.Clip is null)
                 {
                     // Getting _applicationDispatcher is safe, because this runs in main UI thread.
                     TransitionComplete(si, _applicationDispatcher);
@@ -543,7 +543,7 @@ namespace System.Windows.Input.StylusPlugIns
                         if (si.StrokeRTICV != null)
                         {
                             // Now wait till this is rendered and then notify UI thread.
-                            if (_onDRThreadRenderComplete == null)
+                            if (_onDRThreadRenderComplete is null)
                             {
                                 _onDRThreadRenderComplete = new EventHandler(OnDRThreadRenderComplete);
                             }
@@ -669,7 +669,7 @@ namespace System.Windows.Input.StylusPlugIns
         {
             StrokeInfo si = callbackData as StrokeInfo;
 
-            if (si == null)
+            if (si is null)
                 return;
             
             // See if we need to abort this stroke or reset the HostVisual clipping rect to null.
@@ -687,7 +687,7 @@ namespace System.Windows.Input.StylusPlugIns
         {
             StrokeInfo si = callbackData as StrokeInfo;
 
-            if (si == null)
+            if (si is null)
                 return;
 
             // clean up stroke visuals (and move to transitional VisualTarget as needed)
@@ -716,13 +716,13 @@ namespace System.Windows.Input.StylusPlugIns
         private void NotifyOnNextRenderComplete()
         {
             // Nothing to do if not hooked up to plugin collection.
-            if (_applicationDispatcher == null)
+            if (_applicationDispatcher is null)
                 return;
 
             // Ensure on application Dispatcher.
             _applicationDispatcher.VerifyAccess();
 
-            if (_onRenderComplete == null)
+            if (_onRenderComplete is null)
             {
                 _onRenderComplete = new EventHandler(OnInternalRenderComplete);
             }
@@ -771,7 +771,7 @@ namespace System.Windows.Input.StylusPlugIns
         void RenderPackets(StylusPointCollection stylusPoints,  StrokeInfo si)
         {
             // If no points or not hooked up to element then do nothing.
-            if (stylusPoints.Count == 0 || _applicationDispatcher == null)
+            if (stylusPoints.Count == 0 || _applicationDispatcher is null)
                 return;
 
             // Get a collection of ink nodes built from the new stylusPoints.
@@ -797,7 +797,7 @@ namespace System.Windows.Input.StylusPlugIns
                 if (_applicationDispatcher.CheckAccess())
                 {
                     // See if we need to create a new container visual for the stroke.
-                    if (si.StrokeCV == null)
+                    if (si.StrokeCV is null)
                     {
                         // Create new container visual for this stroke and add our incremental rendering visual to it.
                         si.StrokeCV = new ContainerVisual();
@@ -851,7 +851,7 @@ namespace System.Windows.Input.StylusPlugIns
                             if (fillBrush != null)
                             {
                                 // See if we need to create a new container visual for the stroke.
-                                if (si.StrokeRTICV == null)
+                                if (si.StrokeRTICV is null)
                                 {
                                     // Create new container visual for this stroke and add our incremental rendering visual to it.
                                     si.StrokeRTICV = new ContainerVisual();
@@ -944,13 +944,13 @@ namespace System.Windows.Input.StylusPlugIns
             si.FillBrush = null;
 
             // Nothing to do if we've destroyed our host visuals.
-            if (_rawInkHostVisual1 == null)
+            if (_rawInkHostVisual1 is null)
                 return;
 
             bool doRenderComplete = false;
             
             // See if we can do full transition (only when none in progress and not abort)
-            if (!abortStroke && _renderCompleteStrokeInfo == null)
+            if (!abortStroke && _renderCompleteStrokeInfo is null)
             {
                 // make sure lock does not cause reentrancy on application thread!
                 using (_applicationDispatcher.DisableProcessing())
@@ -960,9 +960,9 @@ namespace System.Windows.Input.StylusPlugIns
                         // We can transition the host visual only if a single reference is on it.
                         if (si.StrokeHV.HasSingleReference)
                         {
-                            Debug.Assert(si.StrokeHV.Clip == null);
+                            Debug.Assert(si.StrokeHV.Clip is null);
                             si.StrokeHV.Clip = _zeroSizedFrozenRect;
-                            Debug.Assert(_renderCompleteStrokeInfo == null);
+                            Debug.Assert(_renderCompleteStrokeInfo is null);
                             _renderCompleteStrokeInfo = si;
                             doRenderComplete = true;
                         }
@@ -985,7 +985,7 @@ namespace System.Windows.Input.StylusPlugIns
         private DynamicRendererHostVisual GetCurrentHostVisual()
         {
             // Find which of the two host visuals to use as current.
-            if (_currentHostVisual == null)
+            if (_currentHostVisual is null)
             {
                 _currentHostVisual = _rawInkHostVisual1;
             }
@@ -1079,7 +1079,7 @@ namespace System.Windows.Input.StylusPlugIns
 
         private void CreateInkingVisuals()
         {
-            if (_mainContainerVisual == null)
+            if (_mainContainerVisual is null)
             {
                 _mainContainerVisual = new ContainerVisual();
                 _mainRawInkContainerVisual = new ContainerVisual();
@@ -1103,7 +1103,7 @@ namespace System.Windows.Input.StylusPlugIns
         private void CreateRealTimeVisuals()
         {
             // Only create if we have a root visual and have not already created them.
-            if (_mainContainerVisual != null && _rawInkHostVisual1 == null)
+            if (_mainContainerVisual != null && _rawInkHostVisual1 is null)
             {
                 // Create new VisualTarget and hook up in apps visuals under element.
                 _rawInkHostVisual1 = new DynamicRendererHostVisual();

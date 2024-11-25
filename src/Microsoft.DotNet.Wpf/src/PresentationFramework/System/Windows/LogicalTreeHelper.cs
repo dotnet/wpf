@@ -81,7 +81,7 @@ public static class LogicalTreeHelper
             }
         }
 
-        if( namedElement == null )
+        if( namedElement is null )
         {
             // Nope, the given node isn't it.  See if we can check children.
             IEnumerator childEnumerator = null;
@@ -92,7 +92,7 @@ public static class LogicalTreeHelper
             if( childEnumerator != null )
             {
                 childEnumerator.Reset();
-                while( namedElement == null &&
+                while( namedElement is null &&
                        childEnumerator.MoveNext() == true)
                 {
                     childNode = childEnumerator.Current as DependencyObject;
@@ -228,7 +228,7 @@ public static class LogicalTreeHelper
     /// </summary>
     public static bool WalkUpLogicalTree(FrameworkElement startNode, ParentTraversalCallback callback, bool skipStart, in out object data)
     {
-        if (callback == null)
+        if (callback is null)
         {
             return false;
         }
@@ -271,7 +271,7 @@ public static class LogicalTreeHelper
     /// </summary>
     public static bool WalkUpLogicalTree(FrameworkContentElement startNode, ParentTraversalCallback callback, bool skipStart, in out object data)
     {
-        if (callback == null)
+        if (callback is null)
         {
             return false;
         }
@@ -489,7 +489,7 @@ public static class LogicalTreeHelper
         {
             get
             {
-                if (_emptyInstance == null)
+                if (_emptyInstance is null)
                 {
                     _emptyInstance = new EnumeratorWrapper(null);
                 }

@@ -116,7 +116,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         private void StartTimer()
         {
-            if (_timer == null)
+            if (_timer is null)
             {
                 _timer = new DispatcherTimer();
                 _timer.Tick += new EventHandler(OnTimeout);

@@ -33,13 +33,13 @@ namespace System.Windows
         {
             ArgumentNullException.ThrowIfNull(stateName);
 
-            if (stateGroupsRoot == null)
+            if (stateGroupsRoot is null)
             {
                 return false; // Ignore state changes if a stateGroupsRoot doesn't exist yet
             }
 
             IList<VisualStateGroup> groups = VisualStateManager.GetVisualStateGroupsInternal(stateGroupsRoot);
-            if (groups == null)
+            if (groups is null)
             {
                 return false;
             }
@@ -193,7 +193,7 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(stateGroupsRoot);
             ArgumentNullException.ThrowIfNull(state);
 
-            if (group == null)
+            if (group is null)
             {
                 throw new InvalidOperationException();
             }
@@ -215,8 +215,8 @@ namespace System.Windows
             // consist of everything that is being moved back to the default state.
             // If the transition.Duration and explicit storyboard duration is zero, then we want both the dynamic 
             // and state Storyboards to happen in the same tick, so we start them at the same time.
-            if (transition == null || (transition.GeneratedDuration == DurationZero &&
-                                            (transition.Storyboard == null || transition.Storyboard.Duration == DurationZero)))
+            if (transition is null || (transition.GeneratedDuration == DurationZero &&
+                                            (transition.Storyboard is null || transition.Storyboard.Duration == DurationZero)))
             {
                 // Start new state Storyboard and stop any previously running Storyboards
                 if (transition != null && transition.Storyboard != null)
@@ -244,7 +244,7 @@ namespace System.Windows
                 // Hook up generated Storyboard's Completed event handler
                 dynamicTransition.Completed += delegate(object sender, EventArgs e)
                 {
-                    if (transition.Storyboard == null || transition.ExplicitStoryboardCompleted)
+                    if (transition.Storyboard is null || transition.ExplicitStoryboardCompleted)
                     {
                         if (ShouldRunStateStoryboard(control, stateGroupsRoot, state, group))
                         {
@@ -334,7 +334,7 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(stateGroup);
             ArgumentNullException.ThrowIfNull(newState);
 
-            if (stateGroupsRoot == null)
+            if (stateGroupsRoot is null)
             {
                 return; // Ignore if a ControlTemplate hasn't been applied
             }
@@ -347,7 +347,7 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(stateGroup);
             ArgumentNullException.ThrowIfNull(newState);
 
-            if (stateGroupsRoot == null)
+            if (stateGroupsRoot is null)
             {
                 return; // Ignore if a ControlTemplate hasn't been applied
             }
@@ -461,7 +461,7 @@ namespace System.Windows
                 result = ca;
             }
 
-            if (result == null)
+            if (result is null)
             {
                 double? targetDouble = GetTargetDouble(timeline, isEntering);
                 if (targetDouble.HasValue)
@@ -471,7 +471,7 @@ namespace System.Windows
                 }
             }
 
-            if (result == null)
+            if (result is null)
             {
                 Point? targetPoint = GetTargetPoint(timeline, isEntering);
                 if (targetPoint.HasValue)
@@ -498,7 +498,7 @@ namespace System.Windows
                 DependencyObject target = Storyboard.GetTarget(source);
                 PropertyPath path = Storyboard.GetTargetProperty(source);
                 
-                if (target == null && !string.IsNullOrEmpty(targetName))
+                if (target is null && !string.IsNullOrEmpty(targetName))
                 {
                     target = root.FindName(targetName) as DependencyObject;
                 }
@@ -545,7 +545,7 @@ namespace System.Windows
             {
                 foreach (VisualTransition transition in transitions)
                 {
-                    if (defaultTransition == null && transition.IsDefault)
+                    if (defaultTransition is null && transition.IsDefault)
                     {
                         defaultTransition = transition;
                         continue;
@@ -691,7 +691,7 @@ namespace System.Windows
 
         private static void FlattenTimelines(Storyboard storyboard, Dictionary<TimelineDataToken, Timeline> result)
         {
-            if (storyboard == null)
+            if (storyboard is null)
             {
                 return;
             }
@@ -734,7 +734,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    targetsEqual = (other._target == null && other._targetName == null);
+                    targetsEqual = (other._target is null && other._targetName is null);
                 }
 
                 if (targetsEqual && 

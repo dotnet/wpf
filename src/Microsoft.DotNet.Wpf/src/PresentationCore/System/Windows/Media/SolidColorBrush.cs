@@ -227,7 +227,7 @@ namespace System.Windows.Media
             // The BamlReader.GetPropertyCustomRecordId() calls ConvertToString() with format=null && 
             // provider = System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS, so we use that
             // to decide which string objects to cache.  
-            if ((format == null) && (provider == System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS) && KnownColors.IsKnownSolidColorBrush(this))
+            if ((format is null) && (provider == System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS) && KnownColors.IsKnownSolidColorBrush(this))
             {
                 lock (s_knownSolidColorBrushStringCache)
                 {

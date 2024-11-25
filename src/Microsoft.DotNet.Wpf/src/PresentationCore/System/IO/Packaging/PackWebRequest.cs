@@ -167,7 +167,7 @@ namespace System.IO.Packaging
             {
                 // only return a real WebRequest instance - throw on a PseudoWebRequest
                 WebRequest request = GetRequest(false);
-                if (_webRequest == null || _webRequest is PseudoWebRequest)
+                if (_webRequest is null || _webRequest is PseudoWebRequest)
                     throw new InvalidOperationException(SR.SchemaInvalidForTransport);
 
 #if DEBUG
@@ -203,7 +203,7 @@ namespace System.IO.Packaging
             }
             set
             {
-                if (value == null)
+                if (value is null)
                     _cachePolicy = _defaultCachePolicy;
                 else
                 {
@@ -269,7 +269,7 @@ namespace System.IO.Packaging
             get
             {
                 string contentType = GetRequest().ContentType;
-                if (contentType == null)
+                if (contentType is null)
                     return contentType;
                 else
                     //We call the ContentType constructor to validate the grammar for
@@ -440,7 +440,7 @@ namespace System.IO.Packaging
         public WebRequest GetInnerRequest()
         {
             WebRequest request = GetRequest(false);
-            if (request == null || request is PseudoWebRequest)
+            if (request is null || request is PseudoWebRequest)
                 return null;
 
             return request;
@@ -480,7 +480,7 @@ namespace System.IO.Packaging
         /// <exception cref="NotSupportedException">protocol does not have a registered handler</exception>
         private WebRequest GetRequest(bool allowPseudoRequest)
         {
-            if (_webRequest == null)
+            if (_webRequest is null)
             {
                 // Don't even attempt to create if we know it will fail.  This does not eliminate all failure cases
                 // but most and is very common so let's save an expensive exception.
@@ -514,7 +514,7 @@ namespace System.IO.Packaging
                 }
 
                 // Just return null if caller cannot accept a PseudoWebRequest
-                if (_webRequest == null && allowPseudoRequest)
+                if (_webRequest is null && allowPseudoRequest)
                 {
                     // We get here if the caller can accept a PseudoWebRequest (based on argument to the function)
                     // and one of these two cases is true:

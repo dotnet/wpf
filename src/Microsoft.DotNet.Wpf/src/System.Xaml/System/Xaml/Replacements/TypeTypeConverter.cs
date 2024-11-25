@@ -53,17 +53,17 @@ namespace System.Xaml.Replacements
         private static string ConvertTypeToString(ITypeDescriptorContext context, Type type)
         {
             IXamlSchemaContextProvider schemaContextProvider = GetService<IXamlSchemaContextProvider>(context);
-            if (schemaContextProvider == null)
+            if (schemaContextProvider is null)
             {
                 return null;
             }
-            if (schemaContextProvider.SchemaContext == null)
+            if (schemaContextProvider.SchemaContext is null)
             {
                 return null;
             }
 
             XamlType xamlType = schemaContextProvider.SchemaContext.GetXamlType(type);
-            if (xamlType == null)
+            if (xamlType is null)
             {
                 return null;
             }

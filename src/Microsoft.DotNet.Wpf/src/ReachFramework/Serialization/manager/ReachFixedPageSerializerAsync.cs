@@ -79,7 +79,7 @@ namespace System.Windows.Xps.Serialization
                     case SerializerAction.endSerializeReachFixedPage:
                     {
                         ReachFixedPageSerializerContext thisContext = context as ReachFixedPageSerializerContext;
-                        if(thisContext == null)
+                        if(thisContext is null)
                         {
 
                         }
@@ -186,7 +186,7 @@ namespace System.Windows.Xps.Serialization
 
             String xmlnsForType = SerializationManager.GetXmlNSForType(serializableObjectContext.TargetObject.GetType());
 
-            if(xmlnsForType == null)
+            if(xmlnsForType is null)
             {
                 XmlWriter.WriteStartElement(serializableObjectContext.Name);
             }
@@ -198,7 +198,7 @@ namespace System.Windows.Xps.Serialization
                 XmlWriter.WriteAttributeString(XpsS0Markup.XmlnsX, XpsS0Markup.XmlnsXSchema);
 
                 XmlLanguage language = fixedPage.Language;
-                if (language == null)
+                if (language is null)
                 {
                     //If the language property is null, assign the language to the default
                     language = XmlLanguage.GetLanguage(XpsS0Markup.XmlLangValue);
@@ -344,7 +344,7 @@ namespace System.Windows.Xps.Serialization
         {
             get
             {
-                if(base.XmlWriter == null)
+                if(base.XmlWriter is null)
                 {
                     base.XmlWriter = SerializationManager.AcquireXmlWriter(typeof(FixedPage));
                 }

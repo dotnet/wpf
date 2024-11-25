@@ -70,7 +70,7 @@ namespace System.Windows.Navigation
         /// <param name="genericTarget"></param>
         protected override void InvokeEventHandler(Delegate genericHandler, object genericTarget)
         {
-            if (RoutedEvent == null)
+            if (RoutedEvent is null)
             {
                 throw new InvalidOperationException(SR.RequestNavigateEventMustHaveRoutedEvent);
             }

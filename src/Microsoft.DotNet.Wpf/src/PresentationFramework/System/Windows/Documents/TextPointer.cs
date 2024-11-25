@@ -122,7 +122,7 @@ namespace System.Windows.Documents
     ///         }
     ///
     ///         // Return a result
-    ///         return position == null ? null : position.Parent as Run;
+    ///         return position is null ? null : position.Parent as Run;
     ///     }
     /// </code>
     /// <para>Example 2. This code shows how to use TextPointer for finding a particular
@@ -782,7 +782,7 @@ namespace System.Windows.Documents
 
             textNode = GetAdjacentTextNodeSibling(direction);
 
-            return textNode == null ? 0 : GetTextInRun(_tree, GetSymbolOffset(), textNode, -1, direction, textBuffer, startIndex, count);
+            return textNode is null ? 0 : GetTextInRun(_tree, GetSymbolOffset(), textNode, -1, direction, textBuffer, startIndex, count);
         }
 
         /// <summary>
@@ -847,7 +847,7 @@ namespace System.Windows.Documents
         ///     {
         ///         Paragraph paragraph = position.Paragraph;
         ///
-        ///         if (paragraph == null)
+        ///         if (paragraph is null)
         ///         {
         ///             return 0; // Some positions may be not within any Paragraph,
         ///             // so we need to return something; or throw exception.
@@ -1519,7 +1519,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return _tree.TextView == null ? false : _tree.TextView.IsValid && _tree.TextView.Contains(this);
+                return _tree.TextView is null ? false : _tree.TextView.IsValid && _tree.TextView.Contains(this);
             }
         }
 
@@ -2173,7 +2173,7 @@ namespace System.Windows.Documents
             SyncToTreeGeneration();
 
             elementNode = GetAdjacentTextElementNodeSibling(direction);
-            return (elementNode == null) ? null : elementNode.TextElement;
+            return (elementNode is null) ? null : elementNode.TextElement;
         }
 
         /// <summary>
@@ -2510,7 +2510,7 @@ namespace System.Windows.Documents
 
             parent = GetDependencyParent();
 
-            if (parent == null)
+            if (parent is null)
             {
                 val = DependencyProperty.UnsetValue;
             }
@@ -2533,7 +2533,7 @@ namespace System.Windows.Documents
             SyncToTreeGeneration();
 
             element = this.Parent as TextElement;
-            if (element == null)
+            if (element is null)
             {
                 throw new InvalidOperationException(SR.Format(SR.NoScopingElement, "This TextPointer"));
             }
@@ -2550,7 +2550,7 @@ namespace System.Windows.Documents
             SyncToTreeGeneration();
 
             element = this.Parent as TextElement;
-            if (element == null)
+            if (element is null)
             {
                 //  Look into adding an empty ctor to LocalValueEnumerator.
                 return (new DependencyObject()).GetLocalValueEnumerator();
@@ -2632,7 +2632,7 @@ namespace System.Windows.Documents
 
             TextTreeNode scopingNode = GetScopingNode();
             elementNode = scopingNode as TextTreeTextElementNode;
-            if (elementNode == null)
+            if (elementNode is null)
             {
                 // if we're at the root of the tree, the pointer is
                 // already at the element edge, and nothing more need be done.
@@ -2987,7 +2987,7 @@ namespace System.Windows.Documents
                 while (true)
                 {
                     parentNode = searchNode.ParentNode;
-                    if (parentNode == null) // The root node is always valid.
+                    if (parentNode is null) // The root node is always valid.
                         break;
 
                     fixup = parentNode as TextTreeFixupNode;
@@ -3002,7 +3002,7 @@ namespace System.Windows.Documents
                     searchNode = parentNode;
                 }
 
-                if (parentNode == null)
+                if (parentNode is null)
                     break; // Checked all the way to the root, position is valid.
 
                 // If we make it here we've found a fixup node.  Our gravity
@@ -3548,7 +3548,7 @@ namespace System.Windows.Documents
             // Now, it is safe to assume that !isValidChild will be the case of incomplete content.
             if (!isValidChild)
             {
-                if (position.Parent == null)
+                if (position.Parent is null)
                 {
                     // We should try to fix up the schema by adding elements instead of throwing here.
                     throw new InvalidOperationException(SR.TextSchema_CannotInsertContentInThisPosition);
@@ -3584,11 +3584,11 @@ namespace System.Windows.Documents
 
             DependencyObject commonAncestor;
 
-            if (element1 == null)
+            if (element1 is null)
             {
                 commonAncestor = position1.Parent;
             }
-            else if (element2 == null)
+            else if (element2 is null)
             {
                 commonAncestor = position2.Parent;
             }
@@ -3969,8 +3969,8 @@ namespace System.Windows.Documents
             TextTreeNode node;
 
             // This test should walk the tree upwards to catch all errors...probably not worth the slowdown though.
-            Invariant.Assert(oldNode.ParentNode == null || oldNode.IsChildOfNode(oldNode.ParentNode), "Trying to add ref a dead node!");
-            Invariant.Assert(newNode.ParentNode == null || newNode.IsChildOfNode(newNode.ParentNode), "Trying to add ref a dead node!");
+            Invariant.Assert(oldNode.ParentNode is null || oldNode.IsChildOfNode(oldNode.ParentNode), "Trying to add ref a dead node!");
+            Invariant.Assert(newNode.ParentNode is null || newNode.IsChildOfNode(newNode.ParentNode), "Trying to add ref a dead node!");
 
             node = newNode;
 
@@ -4002,7 +4002,7 @@ namespace System.Windows.Documents
                     {
                         newNode = node.GetPreviousNode();
                         newEdge = ElementEdge.AfterEnd;
-                        if (newNode == null)
+                        if (newNode is null)
                         {
                             newNode = node.GetContainingNode();
                             newEdge = ElementEdge.AfterStart;
@@ -4015,7 +4015,7 @@ namespace System.Windows.Documents
                     {
                         newNode = node.GetFirstContainedNode();
                         newEdge = ElementEdge.BeforeStart;
-                        if (newNode == null)
+                        if (newNode is null)
                         {
                             newNode = node;
                             newEdge = ElementEdge.BeforeEnd;
@@ -4028,7 +4028,7 @@ namespace System.Windows.Documents
                     {
                         newNode = node.GetLastContainedNode();
                         newEdge = ElementEdge.AfterEnd;
-                        if (newNode == null)
+                        if (newNode is null)
                         {
                             newNode = node;
                             newEdge = ElementEdge.AfterStart;
@@ -4041,7 +4041,7 @@ namespace System.Windows.Documents
                     {
                         newNode = node.GetNextNode();
                         newEdge = ElementEdge.BeforeStart;
-                        if (newNode == null)
+                        if (newNode is null)
                         {
                             newNode = node.GetContainingNode();
                             newEdge = ElementEdge.BeforeEnd;
@@ -4081,7 +4081,7 @@ namespace System.Windows.Documents
 
             adjacentNode = GetAdjacentSiblingNode(node, edge, direction);
 
-            if (adjacentNode == null)
+            if (adjacentNode is null)
             {
                 // We're the first or last child, try the parent.
                 if (edge == ElementEdge.AfterStart || edge == ElementEdge.BeforeEnd)
@@ -4127,7 +4127,7 @@ namespace System.Windows.Documents
 
             elementNode = GetAdjacentTextElementNode(direction);
 
-            return (elementNode == null) ? null : elementNode.TextElement;
+            return (elementNode is null) ? null : elementNode.TextElement;
         }
 
         // Invariant.Strict only.  Asserts this position has good state.
@@ -4173,7 +4173,7 @@ namespace System.Windows.Documents
 
                 int count;
 
-                if (_tree.RootTextBlock == null)
+                if (_tree.RootTextBlock is null)
                 {
                     count = 2; // Empty tree has two implicit edge symbols.
                 }
@@ -4190,7 +4190,7 @@ namespace System.Windows.Documents
                 }
                 Invariant.Assert(_tree.InternalSymbolCount == count, "Bad root symbol count!");
 
-                Invariant.Assert((_tree.RootNode == null && count == 2) || count == GetNodeSymbolCountSlow(_tree.RootNode), "TextNode symbol count not in synch with tree!");
+                Invariant.Assert((_tree.RootNode is null && count == 2) || count == GetNodeSymbolCountSlow(_tree.RootNode), "TextNode symbol count not in synch with tree!");
 
                 if (_tree.RootNode != null)
                 {
@@ -4247,7 +4247,7 @@ namespace System.Windows.Documents
             }
             else
             {
-                Invariant.Assert(node.ContainedNode == null, "Expected leaf node!");
+                Invariant.Assert(node.ContainedNode is null, "Expected leaf node!");
                 count = node.SymbolCount;
             }
 

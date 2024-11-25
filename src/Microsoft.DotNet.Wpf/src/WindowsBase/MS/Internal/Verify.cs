@@ -50,7 +50,7 @@ namespace MS.Internal
             Debug.Assert(!string.IsNullOrEmpty(name));
 
             // Notice that ArgumentNullException and ArgumentException take the parameters in opposite order :P
-            if (value == null)
+            if (value is null)
             {
                 throw new ArgumentNullException(name, SR.Verify_NeitherNullNorEmpty);
             }
@@ -66,7 +66,7 @@ namespace MS.Internal
         /// <param name="name">The name of the parameter that will be presented if an exception is thrown.</param>
         public static void IsNotNull<T>(T obj, string name) where T : class
         {
-            if (obj == null)
+            if (obj is null)
             {
                 throw new ArgumentNullException(name);
             }
@@ -95,10 +95,10 @@ namespace MS.Internal
         /// <param name="message">The message to include in the ArgumentException.</param>
         public static void AreNotEqual<T>(T actual, T notExpected, string parameterName, string message)
         {
-            if (notExpected == null)
+            if (notExpected is null)
             {
                 // Two nulls are considered equal, regardless of type semantics.
-                if (actual == null || actual.Equals(notExpected))
+                if (actual is null || actual.Equals(notExpected))
                 {
                     throw new ArgumentException(SR.Format(SR.Verify_AreNotEqual, notExpected), parameterName);
                 }

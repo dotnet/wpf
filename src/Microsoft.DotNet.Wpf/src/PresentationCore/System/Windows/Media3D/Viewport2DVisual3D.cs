@@ -65,7 +65,7 @@ namespace System.Windows.Media.Media3D
 
             if (positions != null && textureCoords != null)
             {
-                if (triIndices == null || triIndices.Count == 0)
+                if (triIndices is null || triIndices.Count == 0)
                 {
                     int texCoordCount = textureCoords.Count;
                 
@@ -340,7 +340,7 @@ namespace System.Windows.Media.Media3D
                 if (viewport2DVisual3D.CacheMode as BitmapCache != null)
                 {
                     viewport2DVisual3D.InternalBitmapCacheBrush.Target = newValue;
-                    Debug.Assert((newValue == null || newValue.InheritanceContext == null), 
+                    Debug.Assert((newValue is null || newValue.InheritanceContext is null), 
                                  "Expected BitmapCacheBrush to remove the InheritanceContext on newValue");
                 }
                 else
@@ -349,14 +349,14 @@ namespace System.Windows.Media.Media3D
                     viewport2DVisual3D.RemoveVisualChild(oldValue);
                     viewport2DVisual3D.AddVisualChild(newValue);
 
-                    Debug.Assert((newValue == null || newValue.InheritanceContext == null), 
+                    Debug.Assert((newValue is null || newValue.InheritanceContext is null), 
                                  "Expected AddVisualChild to remove the InheritanceContext on newValue");
 
                     // Change the brush's target
                     viewport2DVisual3D.InternalVisualBrush.Visual = newValue;
 
                     // setting the visual brush to use this new child should not invalidate our previous condition
-                    Debug.Assert((newValue == null || newValue.InheritanceContext == null), 
+                    Debug.Assert((newValue is null || newValue.InheritanceContext is null), 
                                  "Expected the InternalVisualBrush not to set the InheritanceContext");
                 }
             }
@@ -370,7 +370,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         private void AddVisualChild(Visual child)
         {
-            if (child == null)
+            if (child is null)
             {
                 return;
             }
@@ -401,7 +401,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         private void RemoveVisualChild(Visual child)
         {
-            if (child == null || child._parent == null)
+            if (child is null || child._parent is null)
             {
                 return;
             }
@@ -590,9 +590,9 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                if (_positionsCache == null)
+                if (_positionsCache is null)
                 {
-                    Debug.Assert(Geometry == null || Geometry is MeshGeometry3D);
+                    Debug.Assert(Geometry is null || Geometry is MeshGeometry3D);
                     
                     MeshGeometry3D geometry = Geometry as MeshGeometry3D;
                     if (geometry != null)
@@ -618,9 +618,9 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                if (_textureCoordinatesCache == null)
+                if (_textureCoordinatesCache is null)
                 {
-                    Debug.Assert(Geometry == null || Geometry is MeshGeometry3D);
+                    Debug.Assert(Geometry is null || Geometry is MeshGeometry3D);
                     
                     MeshGeometry3D geometry = Geometry as MeshGeometry3D;
                     if (geometry != null)
@@ -648,7 +648,7 @@ namespace System.Windows.Media.Media3D
             {
                 if (_triangleIndicesCache== null)
                 {
-                    Debug.Assert(Geometry == null || Geometry is MeshGeometry3D);
+                    Debug.Assert(Geometry is null || Geometry is MeshGeometry3D);
                     
                     MeshGeometry3D geometry = Geometry as MeshGeometry3D;
                     if (geometry != null)
@@ -764,7 +764,7 @@ namespace System.Windows.Media.Media3D
                 // node with the brush instead.
                 //
                 
-                if (oldValue == null)
+                if (oldValue is null)
                 {
                     //
                     // If we are swapping from using the VisualBrush to using the BitmapCacheBrush...
@@ -774,8 +774,8 @@ namespace System.Windows.Media.Media3D
                     viewport2DVisual3D.RemoveVisualChild(viewport2DVisual3D.Visual);
                     viewport2DVisual3D.AddVisualChild(viewport2DVisual3D.InternalBitmapCacheBrush.InternalTarget);
 
-                    Debug.Assert(  (viewport2DVisual3D.InternalBitmapCacheBrush.InternalTarget == null 
-                                 || viewport2DVisual3D.InternalBitmapCacheBrush.InternalTarget.InheritanceContext == null), 
+                    Debug.Assert(  (viewport2DVisual3D.InternalBitmapCacheBrush.InternalTarget is null 
+                                 || viewport2DVisual3D.InternalBitmapCacheBrush.InternalTarget.InheritanceContext is null), 
                                 "Expected AddVisualChild to remove the InheritanceContext on InternalTarget");
 
                     // Swap the brush pointing to the visual.  The cache brush will re-parent the visual to the dummy.
@@ -783,12 +783,12 @@ namespace System.Windows.Media.Media3D
                     viewport2DVisual3D.InternalBitmapCacheBrush.Target = viewport2DVisual3D.Visual;
 
                     // setting the cache brush to use this new child should not invalidate our previous condition
-                    Debug.Assert(  (viewport2DVisual3D.InternalBitmapCacheBrush.InternalTarget == null 
-                                 || viewport2DVisual3D.InternalBitmapCacheBrush.InternalTarget.InheritanceContext == null), 
+                    Debug.Assert(  (viewport2DVisual3D.InternalBitmapCacheBrush.InternalTarget is null 
+                                 || viewport2DVisual3D.InternalBitmapCacheBrush.InternalTarget.InheritanceContext is null), 
                                  "Expected the InternalBitmapCacheBrush not to set the InheritanceContext");
                 }
 
-                if (newValue == null)
+                if (newValue is null)
                 {
                     //
                     // If we are swapping from using the BitmapCacheBrush to using the VisualBrush...
@@ -803,12 +803,12 @@ namespace System.Windows.Media.Media3D
                     viewport2DVisual3D.RemoveVisualChild(viewport2DVisual3D.InternalBitmapCacheBrush.InternalTarget);
                     viewport2DVisual3D.AddVisualChild(viewport2DVisual3D.Visual);
                     
-                    Debug.Assert((viewport2DVisual3D.Visual == null || viewport2DVisual3D.Visual.InheritanceContext == null), 
+                    Debug.Assert((viewport2DVisual3D.Visual is null || viewport2DVisual3D.Visual.InheritanceContext is null), 
                                  "Expected AddVisualChild to remove the InheritanceContext on Visual");
                 }
 
                 // If we changed from using one brush to the other we need to regenerate the Material.
-                if (oldValue == null || newValue == null)
+                if (oldValue is null || newValue is null)
                 {
                     viewport2DVisual3D.GenerateMaterial();
                 }
@@ -874,7 +874,7 @@ namespace System.Windows.Media.Media3D
         {
             Visual visualChild = Visual;
 
-            if (index != 0 || visualChild == null)
+            if (index != 0 || visualChild is null)
             {
                 throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }

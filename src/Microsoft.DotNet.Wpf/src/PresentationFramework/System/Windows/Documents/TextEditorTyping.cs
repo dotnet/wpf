@@ -98,7 +98,7 @@ namespace System.Windows.Documents
         {
             TextEditorThreadLocalStore threadLocalStore;
 
-            Invariant.Assert(This._dispatcher == null);
+            Invariant.Assert(This._dispatcher is null);
             This._dispatcher = Dispatcher.CurrentDispatcher;
             Invariant.Assert(This._dispatcher != null);
 
@@ -252,14 +252,14 @@ namespace System.Windows.Documents
 
             RichTextBox richTextBox = sender as RichTextBox;
 
-            if (richTextBox == null)
+            if (richTextBox is null)
             {
                 return;
             }
 
             TextEditor This = richTextBox.TextEditor;
 
-            if (This == null || !This._IsEnabled || This.IsReadOnly || !This._IsSourceInScope(e.OriginalSource))
+            if (This is null || !This._IsEnabled || This.IsReadOnly || !This._IsSourceInScope(e.OriginalSource))
             {
                 return;
             }
@@ -270,7 +270,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            if (This.TextStore == null || 
+            if (This.TextStore is null || 
                 This.TextStore.IsComposing)
             {
                 return;
@@ -291,7 +291,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null || !This._IsEnabled || (This.IsReadOnly && !This.IsReadOnlyCaretVisible) || !This._IsSourceInScope(e.OriginalSource))
+            if (This is null || !This._IsEnabled || (This.IsReadOnly && !This.IsReadOnlyCaretVisible) || !This._IsSourceInScope(e.OriginalSource))
             {
                 return;
             }
@@ -337,7 +337,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null || !This._IsEnabled || (This.IsReadOnly && !This.IsReadOnlyCaretVisible) || !This._IsSourceInScope(e.OriginalSource))
+            if (This is null || !This._IsEnabled || (This.IsReadOnly && !This.IsReadOnlyCaretVisible) || !This._IsSourceInScope(e.OriginalSource))
             {
                 return;
             }
@@ -366,7 +366,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null || !This._IsEnabled || This.IsReadOnly || !This._IsSourceInScope(e.OriginalSource))
+            if (This is null || !This._IsEnabled || This.IsReadOnly || !This._IsSourceInScope(e.OriginalSource))
             {
                 return;
             }
@@ -376,8 +376,8 @@ namespace System.Windows.Documents
             // Ignore any event with an empty Text property.
             // The public TextCompositionEventArgs ctor allows null Text values.
             // Also it's possible to have non-null ControlText or AltText with String.Empty Text values.
-            if (composition == null &&
-                (e.Text == null || e.Text.Length == 0))
+            if (composition is null &&
+                (e.Text is null || e.Text.Length == 0))
             {
                 return;
             }
@@ -435,7 +435,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null)
+            if (This is null)
             {
                 return;
             }
@@ -459,7 +459,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null)
+            if (This is null)
             {
                 return;
             }
@@ -477,7 +477,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null || !This._IsEnabled || This.IsReadOnly)
+            if (This is null || !This._IsEnabled || This.IsReadOnly)
             {
                 return;
             }
@@ -531,7 +531,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null || !This._IsEnabled || This.IsReadOnly || !This._IsSourceInScope(args.Source))
+            if (This is null || !This._IsEnabled || This.IsReadOnly || !This._IsSourceInScope(args.Source))
             {
                 return;
             }
@@ -551,7 +551,7 @@ namespace System.Windows.Documents
                 {
                     ITextPointer deletePosition = position.GetNextInsertionPosition(LogicalDirection.Forward);
 
-                    if (deletePosition == null)
+                    if (deletePosition is null)
                     {
                         // Nothing to delete.
                         return;
@@ -584,7 +584,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null || !This._IsEnabled || This.IsReadOnly || !This._IsSourceInScope(args.Source))
+            if (This is null || !This._IsEnabled || This.IsReadOnly || !This._IsSourceInScope(args.Source))
             {
                 return;
             }
@@ -628,7 +628,7 @@ namespace System.Windows.Documents
                         // Find a preceding position.
                         ITextPointer deletePosition = position.GetNextInsertionPosition(LogicalDirection.Backward);
 
-                        if (deletePosition == null)
+                        if (deletePosition is null)
                         {
                             // Nothing to delete.
                             ((TextSelection)This.Selection).ClearSpringloadFormatting();
@@ -899,7 +899,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null || !This._IsEnabled || This.IsReadOnly)
+            if (This is null || !This._IsEnabled || This.IsReadOnly)
             {
                 return;
             }
@@ -957,7 +957,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null || !This._IsEnabled || This.IsReadOnly)
+            if (This is null || !This._IsEnabled || This.IsReadOnly)
             {
                 return;
             }
@@ -1032,7 +1032,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null || !This._IsEnabled || This.IsReadOnly)
+            if (This is null || !This._IsEnabled || This.IsReadOnly)
             {
                 args.ContinueRouting = true;
                 return;
@@ -1052,7 +1052,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null || !This._IsEnabled || This.IsReadOnly)
+            if (This is null || !This._IsEnabled || This.IsReadOnly)
             {
                 return;
             }
@@ -1273,7 +1273,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null || !This._IsEnabled || This.IsReadOnly || !This._IsSourceInScope(e.OriginalSource))
+            if (This is null || !This._IsEnabled || This.IsReadOnly || !This._IsSourceInScope(e.OriginalSource))
             {
                 return;
             }
@@ -1343,7 +1343,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null || !This._IsEnabled || This.IsReadOnly || !This.UiScope.IsKeyboardFocused)
+            if (This is null || !This._IsEnabled || This.IsReadOnly || !This.UiScope.IsKeyboardFocused)
             {
                 return;
             }
@@ -1374,7 +1374,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
 
-            if (This == null || !This._IsEnabled || This.IsReadOnly || !This.UiScope.IsKeyboardFocused)
+            if (This is null || !This._IsEnabled || This.IsReadOnly || !This.UiScope.IsKeyboardFocused)
             {
                 return;
             }
@@ -1602,7 +1602,7 @@ namespace System.Windows.Documents
 
                 threadLocalStore = TextEditor._ThreadLocalStore;
 
-                if (threadLocalStore.PendingInputItems == null)
+                if (threadLocalStore.PendingInputItems is null)
                 {
                     threadLocalStore.PendingInputItems = new ArrayList(1);
                     Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(BackgroundInputCallback), This);
@@ -1719,7 +1719,7 @@ namespace System.Windows.Documents
             // Inserts event content into the document.
             internal override void Do()
             {
-                if (TextEditor.UiScope == null)
+                if (TextEditor.UiScope is null)
                 {
                     // We dont want to process the input item if the editor has already been detached from its UiScope.
                     return;
@@ -1747,7 +1747,7 @@ namespace System.Windows.Documents
             // Fires the command associated with a keystroke.
             internal override void Do()
             {
-                if (TextEditor.UiScope == null)
+                if (TextEditor.UiScope is null)
                 {
                     // We dont want to process the input item if the editor has already been detached from its UiScope.
                     return;
@@ -1849,7 +1849,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(target);
 
-            if (This == null)
+            if (This is null)
             {
                 return;
             }

@@ -163,7 +163,7 @@ namespace System.Windows.Xps.Serialization
         {
             get
             {
-                if (base.XmlWriter == null)
+                if (base.XmlWriter is null)
                 {
                     base.XmlWriter = SerializationManager.AcquireXmlWriter(typeof(FixedPage));
                 }

@@ -436,7 +436,7 @@ namespace System.Windows.Media
         {
             get
             {
-                if (s_empty == null)
+                if (s_empty is null)
                 {
                     Int32Collection collection = new Int32Collection();
                     collection.Freeze();

@@ -41,7 +41,7 @@ namespace System.Xaml.Schema
             // Dictionaries and Collections must implement IEnumerable or have method
             // GetEnumerator() where return type is assignable to IEnumerator
             bool isIEnumerable = typeof(IEnumerable).IsAssignableFrom(type);
-            if (!isIEnumerable && LookupEnumeratorMethod(type) == null)
+            if (!isIEnumerable && LookupEnumeratorMethod(type) is null)
             {
                 return XamlCollectionKind.None;
             }
@@ -85,14 +85,14 @@ namespace System.Xaml.Schema
             {
                 case XamlCollectionKind.Collection:
                     bool isCollection = TryGetCollectionAdder(type, true /*mayBeICollection*/, out result);
-                    if (isCollection && result == null)
+                    if (isCollection && result is null)
                     {
                         throw new XamlSchemaException(SR.Format(SR.AmbiguousCollectionItemType, type));
                     }
                     break;
                 case XamlCollectionKind.Dictionary:
                     bool isDictionary = TryGetDictionaryAdder(type, true /*mayBeIDictionary*/, out result);
-                    if (isDictionary && result == null)
+                    if (isDictionary && result is null)
                     {
                         throw new XamlSchemaException(SR.Format(SR.AmbiguousDictionaryItemType, type));
                     }
@@ -144,7 +144,7 @@ namespace System.Xaml.Schema
             // Else if it implements IList, the item type is Object
             bool hasMoreThanOneAddMethod = false;
             addMethod = GetAddMethod(type, 1, out hasMoreThanOneAddMethod);
-            if (addMethod == null && typeof(IList).IsAssignableFrom(type))
+            if (addMethod is null && typeof(IList).IsAssignableFrom(type))
             {
                 addMethod = IListAddMethod;
             }
@@ -208,7 +208,7 @@ namespace System.Xaml.Schema
             // Else if it implements non-generic IDictionary, key and item types are Object
             bool hasMoreThanOneAddMethod = false;
             addMethod = GetAddMethod(type, 2, out hasMoreThanOneAddMethod);
-            if (addMethod == null && typeof(IDictionary).IsAssignableFrom(type))
+            if (addMethod is null && typeof(IDictionary).IsAssignableFrom(type))
             {
                 addMethod = IDictionaryAddMethod;
             }
@@ -305,7 +305,7 @@ namespace System.Xaml.Schema
                         continue;
                     }
                     ParameterInfo[] paramInfos = method.GetParameters();
-                    if (paramInfos == null || paramInfos.Length != paramCount)
+                    if (paramInfos is null || paramInfos.Length != paramCount)
                     {
                         continue;
                     }
@@ -362,7 +362,7 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (s_typeOfObjectArray == null)
+                if (s_typeOfObjectArray is null)
                 {
                     s_typeOfObjectArray = new Type[] { typeof(object) };
                 }
@@ -374,7 +374,7 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (s_typeOfTwoObjectArray == null)
+                if (s_typeOfTwoObjectArray is null)
                 {
                     s_typeOfTwoObjectArray = new Type[] { typeof(object), typeof(object) };
                 }
@@ -386,7 +386,7 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (s_getEnumeratorMethod == null)
+                if (s_getEnumeratorMethod is null)
                 {
                     s_getEnumeratorMethod = typeof(IEnumerable).GetMethod(KnownStrings.GetEnumerator);
                 }
@@ -398,7 +398,7 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (s_listAddMethod == null)
+                if (s_listAddMethod is null)
                 {
                     s_listAddMethod = typeof(IList).GetMethod(KnownStrings.Add);
                 }
@@ -410,7 +410,7 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (s_dictionaryAddMethod == null)
+                if (s_dictionaryAddMethod is null)
                 {
                     s_dictionaryAddMethod = typeof(IDictionary).GetMethod(KnownStrings.Add);
                 }

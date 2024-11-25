@@ -190,7 +190,7 @@ namespace MS.Internal.IO.Packaging
         {
             get
             {
-                if (_corePropertyEnumerator == null)
+                if (_corePropertyEnumerator is null)
                 {
                     _corePropertyEnumerator = new CorePropertyEnumerator(
                         _coreProperties, _grfFlags, _aAttributes);
@@ -332,7 +332,7 @@ namespace MS.Internal.IO.Packaging
         /// <returns></returns>
         internal bool MoveNext()
         {
-            if (_attributes == null)
+            if (_attributes is null)
             {
                 return false;
             }

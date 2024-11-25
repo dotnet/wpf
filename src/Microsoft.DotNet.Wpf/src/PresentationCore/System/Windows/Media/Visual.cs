@@ -837,7 +837,7 @@ namespace System.Windows.Media
             //
             Dictionary<DUCE.Channel, int> channelsToCyclicBrushMap =
                 ChannelsToCyclicBrushMapField.GetValue(this);
-            if (channelsToCyclicBrushMap == null)
+            if (channelsToCyclicBrushMap is null)
             {
                 channelsToCyclicBrushMap = new Dictionary<DUCE.Channel, int>();
                 ChannelsToCyclicBrushMapField.SetValue(this, channelsToCyclicBrushMap);
@@ -868,7 +868,7 @@ namespace System.Windows.Media
             Dictionary<ICyclicBrush, int> cyclicBrushToChannelsMap =
                 CyclicBrushToChannelsMapField.GetValue(this);
 
-            if (cyclicBrushToChannelsMap == null)
+            if (cyclicBrushToChannelsMap is null)
             {
                 cyclicBrushToChannelsMap = new Dictionary<ICyclicBrush, int>();
                 CyclicBrushToChannelsMapField.SetValue(this, cyclicBrushToChannelsMap);
@@ -958,7 +958,7 @@ namespace System.Windows.Media
                 // the parent and we are also not the root then we need to clear out
                 // the tree.
                 //
-                if ( (_parent == null
+                if ( (_parent is null
                       || !CheckFlagsAnd(channel, VisualProxyFlags.IsConnectedToParent))
                     && !IsRootElement)
                 {
@@ -1374,7 +1374,7 @@ namespace System.Windows.Media
                         ((DUCE.IResource)opacityMask).AddRefOnChannel(channel),
                         channel);
                 }
-                else if (isOnChannel) /* opacityMask == null */
+                else if (isOnChannel) /* opacityMask is null */
                 {
                     DUCE.CompositionNode.SetAlphaMask(
                         handle,
@@ -1417,7 +1417,7 @@ namespace System.Windows.Media
                         ((DUCE.IResource)transform).AddRefOnChannel(channel),
                         channel);
                 }
-                else if (isOnChannel) /* transform == null */
+                else if (isOnChannel) /* transform is null */
                 {
                     DUCE.CompositionNode.SetTransform(
                         handle,
@@ -1459,7 +1459,7 @@ namespace System.Windows.Media
                         ((DUCE.IResource)effect).AddRefOnChannel(channel),
                         channel);
                 }
-                else if (isOnChannel) /* effect == null */
+                else if (isOnChannel) /* effect is null */
                 {
                     DUCE.CompositionNode.SetEffect(
                         handle,
@@ -1498,7 +1498,7 @@ namespace System.Windows.Media
                         ((DUCE.IResource)cacheMode).AddRefOnChannel(channel),
                         channel);
                 }
-                else if (isOnChannel) /* cacheMode == null */
+                else if (isOnChannel) /* cacheMode is null */
                 {
                     DUCE.CompositionNode.SetCacheMode(
                         handle,
@@ -1541,7 +1541,7 @@ namespace System.Windows.Media
                         ((DUCE.IResource)clip).AddRefOnChannel(channel),
                         channel);
                 }
-                else if (isOnChannel) /* clip == null */
+                else if (isOnChannel) /* clip is null */
                 {
                     DUCE.CompositionNode.SetClip(
                         handle,
@@ -2228,7 +2228,7 @@ namespace System.Windows.Media
             }
             m.Translate(_offset.X, _offset.Y); // Consider having a bit that indicates that we have a non-null offset.
 
-            if (group == null)
+            if (group is null)
             {
                 result = new MatrixTransform(m);
             }
@@ -2588,7 +2588,7 @@ namespace System.Windows.Media
         /// </summary>
         protected void AddVisualChild(Visual child)
         {
-            if (child == null)
+            if (child is null)
             {
                 return;
             }
@@ -2657,7 +2657,7 @@ namespace System.Windows.Media
         /// </summary>
         protected void RemoveVisualChild(Visual child)
         {
-            if (child == null || child._parent == null)
+            if (child is null || child._parent is null)
             {
                 return;
             }
@@ -3016,7 +3016,7 @@ namespace System.Windows.Media
 
                 Effect imageEffect = EffectField.GetValue(this);
                 BitmapEffectState bed = UserProvidedBitmapEffectData.GetValue(this);
-                if (   (bed == null)
+                if (   (bed is null)
                     && (imageEffect != null))
 
                 {
@@ -3039,7 +3039,7 @@ namespace System.Windows.Media
                 // To enable emulation of the legacy effects on top of the new effects pipeline, store the
                 // bitmap effect information in our staging uncommon field: UserProvidedBitmapEffectData.
 
-                BitmapEffect oldBitmapEffect = (bed == null) ? null : bed.BitmapEffect;
+                BitmapEffect oldBitmapEffect = (bed is null) ? null : bed.BitmapEffect;
                 if (oldBitmapEffect == value) // If new and old value are the same, this set call can be treated as a no-op.
                 {
                     return;
@@ -3047,7 +3047,7 @@ namespace System.Windows.Media
 
                 BitmapEffect newBitmapEffect = value;
 
-                if (newBitmapEffect == null)
+                if (newBitmapEffect is null)
                 {
                     Debug.Assert(bed != null, "Must be non-null because otherwise the code would have earlied out where new value is compared against old value.");
                     // The following line of code will effectively set the BitmapEffectInput property to null. This is strange behavior for WPF properties, but follows the
@@ -3056,7 +3056,7 @@ namespace System.Windows.Media
                 }
                 else
                 {
-                    if (bed == null)
+                    if (bed is null)
                     {
                         bed = new BitmapEffectState();
                         UserProvidedBitmapEffectData.SetValue(this, bed);
@@ -3115,7 +3115,7 @@ namespace System.Windows.Media
 
                 Effect imageEffect = EffectField.GetValue(this);
                 BitmapEffectState bed = UserProvidedBitmapEffectData.GetValue(this);
-                if ((bed == null) && (imageEffect != null))
+                if ((bed is null) && (imageEffect != null))
                 {
                     if (value != null) // Allowing null because parser and UIElement tend to set this property to null
                                        // even if it has never been set to non-null.
@@ -3136,7 +3136,7 @@ namespace System.Windows.Media
                 // To enable emulation of the legacy effects on top of the new effects pipeline, store the
                 // bitmap effect input information in our staging uncommon field: UserProvidedBitmapEffectData.
 
-                BitmapEffectInput oldBitmapEffectInput = (bed == null) ? null : bed.BitmapEffectInput;
+                BitmapEffectInput oldBitmapEffectInput = (bed is null) ? null : bed.BitmapEffectInput;
                 BitmapEffectInput newBitmapEffectInput = value;
 
                 if (oldBitmapEffectInput == newBitmapEffectInput) // If new and old value are the same, this set call can be treated as a no-op.
@@ -3145,7 +3145,7 @@ namespace System.Windows.Media
                 }
 
                 // Make sure there is a BitmapEffectData instance allocated.
-                if (bed == null)
+                if (bed is null)
                 {
                     bed = new BitmapEffectState();
                     UserProvidedBitmapEffectData.SetValue(this, bed);
@@ -3177,14 +3177,14 @@ namespace System.Windows.Media
         internal void BitmapEffectEmulationChanged(object sender, EventArgs e)
         {
             BitmapEffectState bed = UserProvidedBitmapEffectData.GetValue(this);
-            BitmapEffect currentBitmapEffect = (bed == null) ? null : bed.BitmapEffect;
-            BitmapEffectInput currentBitmapEffectInput = (bed == null) ? null : bed.BitmapEffectInput;
+            BitmapEffect currentBitmapEffect = (bed is null) ? null : bed.BitmapEffect;
+            BitmapEffectInput currentBitmapEffectInput = (bed is null) ? null : bed.BitmapEffectInput;
 
             // Note that when this method is called, a legacy BitmapEffect has been set or reset on
             // the Visual by the user. The next step is to try to emulate the effect in case the current
             // effect is non null or reset the emulation layer if the user has set the effect to null.
 
-            if (currentBitmapEffect == null)
+            if (currentBitmapEffect is null)
             {
                 // This means the effect has been disconnected from this Visual. Setting the internal
                 // bitmap effect property and the image effect property to null to disconnect all the
@@ -3270,7 +3270,7 @@ namespace System.Windows.Media
             {
                 BitmapEffectState bitmapEffectState = BitmapEffectStateField.GetValue(this);
 
-                BitmapEffect bitmapEffect = (bitmapEffectState == null) ? null : bitmapEffectState.BitmapEffect;
+                BitmapEffect bitmapEffect = (bitmapEffectState is null) ? null : bitmapEffectState.BitmapEffect;
                 if (bitmapEffect == value)
                 {
                     return;
@@ -3278,7 +3278,7 @@ namespace System.Windows.Media
 
                 BitmapEffect newBitmapEffect = value;
 
-                if (newBitmapEffect == null)
+                if (newBitmapEffect is null)
                 {
                     Debug.Assert(bitmapEffectState != null);
 
@@ -3286,7 +3286,7 @@ namespace System.Windows.Media
                 }
                 else
                 {
-                    if (bitmapEffectState == null)
+                    if (bitmapEffectState is null)
                     {
                         bitmapEffectState = new BitmapEffectState();
                         BitmapEffectStateField.SetValue(this, bitmapEffectState);
@@ -3294,7 +3294,7 @@ namespace System.Windows.Media
 
                     bitmapEffectState.BitmapEffect = newBitmapEffect;
 
-                    Debug.Assert(EffectField.GetValue(this) == null, "Not expecting both BitmapEffect and Effect to be set on the same node");
+                    Debug.Assert(EffectField.GetValue(this) is null, "Not expecting both BitmapEffect and Effect to be set on the same node");
                 }
             }
         }
@@ -3321,7 +3321,7 @@ namespace System.Windows.Media
                 VerifyAPIReadWrite();
                 BitmapEffectState bitmapEffectState = BitmapEffectStateField.GetValue(this);
 
-                BitmapEffectInput bitmapEffectInput = (bitmapEffectState == null) ? null : bitmapEffectState.BitmapEffectInput;
+                BitmapEffectInput bitmapEffectInput = (bitmapEffectState is null) ? null : bitmapEffectState.BitmapEffectInput;
                 if (bitmapEffectInput == value)
                 {
                     return;
@@ -3329,7 +3329,7 @@ namespace System.Windows.Media
 
                 BitmapEffectInput newBitmapEffectInput = value;
 
-                if (bitmapEffectState == null)
+                if (bitmapEffectState is null)
                 {
                     bitmapEffectState = new BitmapEffectState();
                     BitmapEffectStateField.SetValue(this, bitmapEffectState);
@@ -3967,7 +3967,7 @@ namespace System.Windows.Media
 
             // If we are attaching to a tree then
             // send the bit up if we need to.
-            if(oldParent == null)
+            if(oldParent is null)
             {
                 Debug.Assert(_parent != null, "If oldParent is null, current parent should != null.");
 
@@ -4037,7 +4037,7 @@ namespace System.Windows.Media
             {
                 AncestorChangedEventHandler newHandler = AncestorChangedEventField.GetValue(this);
 
-                if (newHandler == null)
+                if (newHandler is null)
                 {
                     newHandler = value;
                 }
@@ -4073,7 +4073,7 @@ namespace System.Windows.Media
                 {
                     newHandler -= value;
 
-                    if(newHandler == null)
+                    if(newHandler is null)
                     {
                         AncestorChangedEventField.ClearValue(this);
                     }
@@ -4209,7 +4209,7 @@ namespace System.Windows.Media
 
                 // if the cast to currentParent failed and yet current._parent is not null then
                 // we have a 3D element.  Call SetFlagsToRoot on it instead.
-                if (current._parent != null && currentParent == null)
+                if (current._parent != null && currentParent is null)
                 {
                     ((Visual3D)current._parent).SetFlagsToRoot(value, flag);
                     return;
@@ -4243,7 +4243,7 @@ namespace System.Windows.Media
                 // first attempt to see if parent is a Visual, in which case we continue the loop.
                 // Otherwise see if it's a Visual3D, and call the similar method on it.
                 current = parent as Visual;
-                if (current == null)
+                if (current is null)
                 {
                     Visual3D parentAsVisual3D = parent as Visual3D;
                     if (parentAsVisual3D != null)
@@ -4378,7 +4378,7 @@ namespace System.Windows.Media
             DependencyObject ancestor = FindCommonVisualAncestor(visual);
             Visual ancestorAsVisual = ancestor as Visual;
 
-            if (ancestorAsVisual == null)
+            if (ancestorAsVisual is null)
             {
                 throw new System.InvalidOperationException(SR.Visual_NoCommonAncestor);
             }
@@ -4532,7 +4532,7 @@ namespace System.Windows.Media
                             }
                             else
                             {
-                                if (group == null)
+                                if (group is null)
                                 {
                                     group = new GeneralTransformGroup();
                                 }
@@ -4562,7 +4562,7 @@ namespace System.Windows.Media
                     // Visual3D that can have a 2D child.
                     Viewport2DVisual3D gAsVisual3D = g as Viewport2DVisual3D;
 
-                    if (group == null)
+                    if (group is null)
                     {
                         group = new GeneralTransformGroup();
                     }
@@ -4598,7 +4598,7 @@ namespace System.Windows.Media
             // we will simply use the Matrix.
 
             // Assert that a non-null group implies at least one child
-            Debug.Assert((group == null) || (group.Children.Count > 0));
+            Debug.Assert((group is null) || (group.Children.Count > 0));
 
             // Do we have a group?
             if (group != null)
@@ -4683,7 +4683,7 @@ namespace System.Windows.Media
             Viewport2DVisual3D containingVisual3D = VisualTreeHelper.GetContainingVisual3D(this) as Viewport2DVisual3D;
 
             // if containingVisual3D is null then ancestor is not the ancestor
-            if (containingVisual3D == null)
+            if (containingVisual3D is null)
             {
                 throw new System.InvalidOperationException(SR.Visual_NotAnAncestor);
             }
@@ -4740,14 +4740,14 @@ namespace System.Windows.Media
 
             PresentationSource inputSource = PresentationSource.FromVisual(this);
 
-            if (inputSource == null)
+            if (inputSource is null)
             {
                 throw new InvalidOperationException(SR.Visual_NoPresentationSource);
             }
 
             // Translate the point from the visual to the root.
             GeneralTransform gUp = this.TransformToAncestor(inputSource.RootVisual);
-            if (gUp == null || !gUp.TryTransform(point, out point))
+            if (gUp is null || !gUp.TryTransform(point, out point))
             {
                 throw new InvalidOperationException(SR.Visual_CannotTransformPoint);
             }
@@ -4769,7 +4769,7 @@ namespace System.Windows.Media
 
             PresentationSource inputSource = PresentationSource.FromVisual(this);
 
-            if (inputSource == null)
+            if (inputSource is null)
             {
                 throw new InvalidOperationException(SR.Visual_NoPresentationSource);
             }
@@ -4780,7 +4780,7 @@ namespace System.Windows.Media
 
             // Translate the point from the root to the visual.
             GeneralTransform gDown = inputSource.RootVisual.TransformToDescendant(this);
-            if (gDown == null || !gDown.TryTransform(point, out point))
+            if (gDown is null || !gDown.TryTransform(point, out point))
             {
                 throw new InvalidOperationException(SR.Visual_CannotTransformPoint);
             }
@@ -5254,14 +5254,14 @@ namespace System.Windows.Media
                 e.SetFlags(true, flags);
                 e.SetFlagsOnAllChannels(true, proxyFlags);
 
-                if (e._parent == null)
+                if (e._parent is null)
                 {
                     // Stop propagating.  We are at the root of the 2D subtree.
                     return;
                 }
 
                 Visual parentAsVisual = e._parent as Visual;
-                if (parentAsVisual == null)
+                if (parentAsVisual is null)
                 {
                     // if the parent is not null (saw this with earlier null check) and is not a Visual
                     // it must be a Visual3D - continue the propagation

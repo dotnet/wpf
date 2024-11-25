@@ -305,8 +305,8 @@ namespace System.Windows.Controls
                         // Reverse the arg order so that parms read naturally after IDispatch. (WinForms bug 187662)
                         Array.Reverse(args);
                     }
-                    dp.rgvarg = (args == null) ? IntPtr.Zero : UnsafeNativeMethods.ArrayToVARIANTHelper.ArrayToVARIANTVector(args);
-                    dp.cArgs = (uint)((args == null) ? 0 : args.Length);
+                    dp.rgvarg = (args is null) ? IntPtr.Zero : UnsafeNativeMethods.ArrayToVARIANTHelper.ArrayToVARIANTVector(args);
+                    dp.cArgs = (uint)((args is null) ? 0 : args.Length);
                     dp.rgdispidNamedArgs = IntPtr.Zero;
                     dp.cNamedArgs = 0;
 
@@ -650,7 +650,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_axIWebBrowser2 == null)
+                if (_axIWebBrowser2 is null)
                 {
                     ObjectDisposedException.ThrowIf(IsDisposed, this);
 
@@ -660,7 +660,7 @@ namespace System.Windows.Controls
                     TransitionUpTo(ActiveXHelper.ActiveXState.Running);
                 }
                 // We still don't have _axIWebBrowser2. Throw an exception.
-                if (_axIWebBrowser2 == null)
+                if (_axIWebBrowser2 is null)
                 {
                     throw new InvalidOperationException(SR.WebBrowserNoCastToIWebBrowser2);
                 }
@@ -867,7 +867,7 @@ namespace System.Windows.Controls
             LastNavigation = Guid.NewGuid();
 
             // When source set to null or navigating to stream/string, we navigate to "about:blank" internally.
-            if (source == null)
+            if (source is null)
             {
                 NavigatingToAboutBlank = true;
                 source = new Uri(AboutBlankUriString);

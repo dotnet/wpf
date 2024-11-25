@@ -74,7 +74,7 @@ namespace MS.Internal.Xaml.Runtime
         public override object CreateWithFactoryMethod(XamlType xamlType, string methodName, object[] args)
         {
             Type type = xamlType.UnderlyingType;
-            if (type == null)
+            if (type is null)
             {
                 throw CreateException((SR.Format(SR.CannotResolveTypeForFactoryMethod, xamlType, methodName)));
             }
@@ -94,7 +94,7 @@ namespace MS.Internal.Xaml.Runtime
                 throw CreateException(SR.Format(SR.MethodInvocation, qMethodName), UnwrapTargetInvocationException(e));
             }
 
-            if (instance == null)
+            if (instance is null)
             {
                 string qMethodName = $"{type}.{methodName}";
                 throw CreateException(SR.Format(SR.FactoryReturnedNull, qMethodName));
@@ -111,16 +111,16 @@ namespace MS.Internal.Xaml.Runtime
         protected MethodInfo GetFactoryMethod(Type type, string methodName, object[] args, BindingFlags flags)
         {
             MethodInfo factory = null;
-            if (args == null || args.Length == 0)
+            if (args is null || args.Length == 0)
             {
                 factory = type.GetMethod(methodName, flags, null, Type.EmptyTypes, null);
             }
-            if (factory == null)
+            if (factory is null)
             {
                 // We go down this path even if there are no args, because we might match a params array
                 MemberInfo[] members = type.GetMember(methodName, MemberTypes.Method, flags);
                 MethodBase[] methods = members as MethodBase[];
-                if (methods == null)
+                if (methods is null)
                 {
                     methods = new MethodBase[members.Length];
                     Array.Copy(members, methods, members.Length);
@@ -526,13 +526,13 @@ namespace MS.Internal.Xaml.Runtime
         {
             object propInstance = GetValue(inst, property, true);
             IXmlSerializable iXmlSerial = propInstance as IXmlSerializable;
-            if(iXmlSerial == null)
+            if(iXmlSerial is null)
             {
                 throw CreateException((SR.Format(SR.XmlDataNull, property.Name)));
             }
 
             XmlReader reader = xData.XmlReader as XmlReader;
-            if(reader == null)
+            if(reader is null)
             {
                 throw new XamlInternalException(SR.Format(SR.XmlValueNotReader, property.Name));
             }
@@ -562,7 +562,7 @@ namespace MS.Internal.Xaml.Runtime
             try
             {
                 XamlDeferringLoader converter = GetConverterInstance(deferringLoader);
-                if(converter == null)
+                if(converter is null)
                 {
                     throw new XamlObjectWriterException(SR.Format(SR.DeferringLoaderInstanceNull, deferringLoader));
                 }
@@ -591,7 +591,7 @@ namespace MS.Internal.Xaml.Runtime
             try
             {
                 XamlDeferringLoader converter = GetConverterInstance(deferringLoader);
-                if (converter == null)
+                if (converter is null)
                 {
                     throw new XamlObjectWriterException(SR.Format(SR.DeferringLoaderInstanceNull, deferringLoader));
                 }
@@ -702,7 +702,7 @@ namespace MS.Internal.Xaml.Runtime
                 }
                 throw CreateException(SR.Format(SR.GetItemsException, collectionType), UnwrapTargetInvocationException(ex));
             }
-            if (result == null)
+            if (result is null)
             {
                 throw CreateException(SR.Format(SR.GetItemsReturnedNull, collectionType));
             }

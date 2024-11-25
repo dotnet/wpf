@@ -227,7 +227,7 @@ namespace System.Windows.Documents
         /// <param name="lastBlock"></param>
         internal void Apply(Block firstBlock, Block lastBlock)
         {
-            Invariant.Assert(this.Parent == null, "Cannot Apply List Because It Is Inserted In The Tree Already.");
+            Invariant.Assert(this.Parent is null, "Cannot Apply List Because It Is Inserted In The Tree Already.");
             Invariant.Assert(this.IsEmpty, "Cannot Apply List Because It Is Not Empty.");
             Invariant.Assert(firstBlock.Parent == lastBlock.Parent, "Cannot Apply List Because Block Are Not Siblings.");
 

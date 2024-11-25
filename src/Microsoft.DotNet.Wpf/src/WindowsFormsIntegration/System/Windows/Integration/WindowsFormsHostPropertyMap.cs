@@ -58,7 +58,7 @@ namespace System.Windows.Forms.Integration
         {
             SWM.Brush brush = value as SWM.Brush;
 
-            if (value == null)
+            if (value is null)
             {
                 //If they passed null (not to be confused with "passed us a non-null non-Brush"),
                 //we should look up our parent chain.
@@ -67,7 +67,7 @@ namespace System.Windows.Forms.Integration
                 {
                     brush = (Brush)parent.GetValue(SWC.Control.BackgroundProperty);
                     parent = VisualTreeHelper.GetParent(parent);
-                } while (parent != null && brush == null);
+                } while (parent != null && brush is null);
             }
 
             WinFormsAdapter adapter = GetAdapter(host);
@@ -297,7 +297,7 @@ namespace System.Windows.Forms.Integration
         private SWF.Control GetChildControl(object host, PropertyTranslator translator, object value)
         {
             WindowsFormsHost windowsFormsHost = host as WindowsFormsHost;
-            if (windowsFormsHost == null || windowsFormsHost.Child == null)
+            if (windowsFormsHost is null || windowsFormsHost.Child is null)
             {
                 return null;
             }
@@ -311,7 +311,7 @@ namespace System.Windows.Forms.Integration
         internal static WinFormsAdapter GetAdapter(object host)
         {
             WindowsFormsHost windowsFormsHost = host as WindowsFormsHost;
-            if (windowsFormsHost == null)
+            if (windowsFormsHost is null)
             {
                 return null;
             }

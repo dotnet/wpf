@@ -54,7 +54,7 @@ namespace System.Windows.Ink
         public GestureRecognizer(IEnumerable<ApplicationGesture> enabledApplicationGestures)
         {
             _nativeRecognizer = NativeRecognizer.CreateInstance();
-            if (_nativeRecognizer == null)
+            if (_nativeRecognizer is null)
             {
                 //just verify the gestures
                 NativeRecognizer.GetApplicationGestureArrayAndVerify(enabledApplicationGestures);
@@ -128,7 +128,7 @@ namespace System.Windows.Ink
             VerifyRecognizerAvailable();
 
             //can be null if the call to SetEnabledGestures failed
-            if (_enabledGestures == null)
+            if (_enabledGestures is null)
             {
                 _enabledGestures = Array.Empty<ApplicationGesture>();
             }
@@ -206,7 +206,7 @@ namespace System.Windows.Ink
                 VerifyAccess();
                 VerifyDisposed();
 
-                if (_nativeRecognizer == null)
+                if (_nativeRecognizer is null)
                 {
                     return false;
                 }
@@ -262,7 +262,7 @@ namespace System.Windows.Ink
         //verify that there is a recognizer available, throw if not
         private void VerifyRecognizerAvailable()
         {
-            if (_nativeRecognizer == null)
+            if (_nativeRecognizer is null)
             {
                 throw new InvalidOperationException(SR.GestureRecognizerNotAvailable);
             }

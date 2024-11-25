@@ -501,7 +501,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 if (ItemContainerGenerator.Status == GeneratorStatus.ContainersGenerated)
                 {
-                    if (RibbonGallery != null && RibbonGallery.SelectedItem == null)
+                    if (RibbonGallery != null && RibbonGallery.SelectedItem is null)
                     {
                         // Since there isn't already a SelectedItem 
                         // synchronize it to match CurrentItem
@@ -513,9 +513,9 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private void OnCurrentItemChanged()
         {
-            Debug.Assert(RibbonGallery == null || RibbonGallery.IsSynchronizedWithCurrentItemInternal, "We shouldn't be listening for currency changes if IsSynchronizedWithCurrentItemInternal is false");
+            Debug.Assert(RibbonGallery is null || RibbonGallery.IsSynchronizedWithCurrentItemInternal, "We shouldn't be listening for currency changes if IsSynchronizedWithCurrentItemInternal is false");
 
-            if (RibbonGallery == null || CollectionView == null || RibbonGallery.IsSelectionChangeActive)
+            if (RibbonGallery is null || CollectionView is null || RibbonGallery.IsSelectionChangeActive)
             {
                 return;
             }

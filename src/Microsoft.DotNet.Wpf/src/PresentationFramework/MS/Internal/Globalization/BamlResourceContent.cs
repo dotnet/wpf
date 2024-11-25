@@ -27,7 +27,7 @@ namespace MS.Internal.Globalization
         /// </summary>
         internal static string EscapeString(string content)
         {
-            if (content == null) return null;
+            if (content is null) return null;
 
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < content.Length; i++)
@@ -133,7 +133,7 @@ namespace MS.Internal.Globalization
         /// </summary>
         internal static BamlStringToken[] ParseChildPlaceholder(string input)
         {
-            if (input == null) return null;
+            if (input is null) return null;
 
             List<BamlStringToken> tokens = new List<BamlStringToken>(8);
             int tokenStart = 0; bool inPlaceHolder = false;

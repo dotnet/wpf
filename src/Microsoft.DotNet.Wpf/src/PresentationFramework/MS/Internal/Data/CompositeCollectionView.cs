@@ -108,7 +108,7 @@ namespace MS.Internal.Data
                     for (int i = 0; i < _collection.Count; ++i)
                     {
                         CollectionContainer cc = _collection[i] as CollectionContainer;
-                        if (cc == null || cc.ViewCount != 0)    // single item or non-empty sub-collection
+                        if (cc is null || cc.ViewCount != 0)    // single item or non-empty sub-collection
                         {
                             return false;
                         }
@@ -421,7 +421,7 @@ namespace MS.Internal.Data
                                         args.Action, TraceLog.IdFor(item));
 
                         CollectionContainer cc = item as CollectionContainer;
-                        if (cc == null) // if a single item was added/removed
+                        if (cc is null) // if a single item was added/removed
                         {
                             // translate the index into one that makes sense for the flat view
                             for (int k = index - 1; k >= 0; --k)
@@ -498,7 +498,7 @@ namespace MS.Internal.Data
                         CollectionContainer oldCollectionContainer = args.OldItems[0] as CollectionContainer;
                         int startingIndex = args.OldStartingIndex;
 
-                        if (newCollectionContainer == null && oldCollectionContainer == null) // if a single item was added/removed
+                        if (newCollectionContainer is null && oldCollectionContainer is null) // if a single item was added/removed
                         {
                             // translate the index into one that makes sense for the flat view
                             for (int k = startingIndex - 1; k >= 0; --k)
@@ -520,8 +520,8 @@ namespace MS.Internal.Data
                         {
                             if (_count >= 0)
                             {
-                                _count -= oldCollectionContainer == null ? 1 : oldCollectionContainer.ViewCount;
-                                _count += newCollectionContainer == null ? 1 : newCollectionContainer.ViewCount;
+                                _count -= oldCollectionContainer is null ? 1 : oldCollectionContainer.ViewCount;
+                                _count += newCollectionContainer is null ? 1 : newCollectionContainer.ViewCount;
                             }
 
                             if (startingIndex < _currentPositionX)
@@ -545,7 +545,7 @@ namespace MS.Internal.Data
                         int oldStartingIndex = args.OldStartingIndex;
                         int newStartingIndex = args.NewStartingIndex;
 
-                        if (oldCollectionContainer == null) // if a single item was added/removed
+                        if (oldCollectionContainer is null) // if a single item was added/removed
                         {
                             // no change to count for a move operation.
 
@@ -880,7 +880,7 @@ namespace MS.Internal.Data
             {
                 CollectionContainer cc = _collection[positionX] as CollectionContainer;
 
-                if (cc == null) // flat item
+                if (cc is null) // flat item
                 {
                     if (ItemsControl.EqualsEx(_collection[positionX], item))
                     {
@@ -966,7 +966,7 @@ namespace MS.Internal.Data
             {
                 CollectionContainer cc = _collection[i] as CollectionContainer;
 
-                if (cc == null)                 // flat item
+                if (cc is null)                 // flat item
                 {
                     if (searchIndex == flatIndex)
                     {
@@ -1014,7 +1014,7 @@ namespace MS.Internal.Data
             for (; positionX < _collection.Count; ++positionX)
             {
                 CollectionContainer cc = _collection[positionX] as CollectionContainer;
-                if (cc == null)
+                if (cc is null)
                 {
                     item = _collection[positionX];
                     positionY = 0;
@@ -1056,7 +1056,7 @@ namespace MS.Internal.Data
             {
                 CollectionContainer cc = _collection[i] as CollectionContainer;
 
-                if (cc == null) // flat item
+                if (cc is null) // flat item
                 {
                     ++count;
                 }
@@ -1389,7 +1389,7 @@ namespace MS.Internal.Data
                 for (; positionX >= 0; --positionX)
                 {
                     CollectionContainer cc = _collection[positionX] as CollectionContainer;
-                    if (cc == null)
+                    if (cc is null)
                     {
                         lastItem = _collection[positionX];
                         break;

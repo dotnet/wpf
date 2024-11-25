@@ -80,7 +80,7 @@ namespace System.Windows.Documents
             {
                 // create this on demand, but not through the property, only through the
                 // service, so it is only created when it's actually used
-                if (_rubberbandSelector == null)
+                if (_rubberbandSelector is null)
                 {
                     _rubberbandSelector = new RubberbandSelector();
                 }
@@ -108,7 +108,7 @@ namespace System.Windows.Documents
 
             DocumentReference docRef = value as DocumentReference;
 
-            if (docRef == null)
+            if (docRef is null)
             {
                 throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(DocumentReference)), "value");
             }
@@ -120,7 +120,7 @@ namespace System.Windows.Documents
             else
             {
                 DocumentsTrace.FixedDocumentSequence.Content.Trace($"Doc {_references.Count} Deferred");
-                if (_partialRef == null)
+                if (_partialRef is null)
                 {
                     _partialRef = docRef;
                     _partialRef.Initialized += new EventHandler(_OnDocumentReferenceInitialized);
@@ -333,7 +333,7 @@ namespace System.Windows.Documents
                 childContentPosition = dsTextPointer.ChildPointer as ContentPosition;
             }
 
-            if (childContentPosition == null)
+            if (childContentPosition is null)
             {
                 throw new ArgumentException(SR.IDPInvalidContentPosition);
             }
@@ -396,7 +396,7 @@ namespace System.Windows.Documents
         internal ContentPosition GetPagePosition(DocumentPage page)
         {
             FixedDocumentSequenceDocumentPage docPage = page as FixedDocumentSequenceDocumentPage;
-            if (docPage == null)
+            if (docPage is null)
             {
                 return ContentPosition.Missing;
             }
@@ -416,7 +416,7 @@ namespace System.Windows.Documents
                     foreach (DocumentReference docRef in References)
                     {
                         DynamicDocumentPaginator paginator = GetPaginator(docRef);
-                        if (paginator == null || !paginator.IsPageCountValid)
+                        if (paginator is null || !paginator.IsPageCountValid)
                         {
                             documentSequencePageCountFinal = false;
                             break;
@@ -645,7 +645,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_textContainer == null)
+                if (_textContainer is null)
                 {
                     _textContainer = new DocumentSequenceTextContainer(this);
                 }
@@ -681,7 +681,7 @@ namespace System.Windows.Documents
             foreach (DocumentReference docRef in References)
             {
                 DynamicDocumentPaginator paginator = GetPaginator(docRef);
-                if (paginator == null || !paginator.IsPageCountValid)
+                if (paginator is null || !paginator.IsPageCountValid)
                 {
                     documentSequencePageCountFinal = false;
                     break;
@@ -743,7 +743,7 @@ namespace System.Windows.Documents
 
                     int pageCount = this.PageCount;
                     DynamicDocumentPaginator paginator = GetPaginator((DocumentReference)item);
-                    if (paginator == null)
+                    if (paginator is null)
                     {
                         throw new ApplicationException(SR.DocumentReferenceHasInvalidDocument);
                     }
@@ -894,7 +894,7 @@ namespace System.Windows.Documents
             // wrap the returned result into FixedDocumentSequenceDocumentPage
             DocumentPage sdp = DocumentPage.Missing;
             int pageNumber = completedRequest.Page.PageNumber;
-            if (!args.Cancelled && (args.Error == null) && (args.DocumentPage != DocumentPage.Missing))
+            if (!args.Cancelled && (args.Error is null) && (args.DocumentPage != DocumentPage.Missing))
             {
                 sdp = new FixedDocumentSequenceDocumentPage(this, (DynamicDocumentPaginator)sender, args.DocumentPage);
                 _SynthesizeGlobalPageNumber((DynamicDocumentPaginator)sender, args.PageNumber, out pageNumber);
@@ -1093,7 +1093,7 @@ namespace System.Windows.Documents
 
             if (serviceType == typeof(ITextView))
             {
-                if (_textView == null)
+                if (_textView is null)
                 {
                     _textView = new DocumentSequenceTextView(this);
                 }

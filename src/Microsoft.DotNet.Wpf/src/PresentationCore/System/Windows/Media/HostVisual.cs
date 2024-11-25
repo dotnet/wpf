@@ -476,13 +476,13 @@ namespace System.Windows.Media
             }
 
             // if no match found, do nothing
-            if (disconnectData == null)
+            if (disconnectData is null)
             {
                 return false;
             }
 
             // remove the matching entry from the list
-            if (previous == null)
+            if (previous is null)
             {
                 _disconnectData = disconnectData.Next;
             }

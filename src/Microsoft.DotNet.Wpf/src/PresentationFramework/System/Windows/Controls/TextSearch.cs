@@ -62,7 +62,7 @@ namespace System.Windows.Controls
         {
             TextSearch instance = (TextSearch)itemsControl.GetValue(TextSearchInstanceProperty);
 
-            if (instance == null)
+            if (instance is null)
             {
                 instance = new TextSearch(itemsControl);
                 itemsControl.SetValue(TextSearchInstancePropertyKey, instance);
@@ -294,8 +294,8 @@ namespace System.Windows.Controls
         /// <summary>
         /// Gets the length of the prefix (the prefix of matchedText matched by newText) and the rest of the string from the matchedText
         /// It takes care of compressions or expansions in both matchedText and newText  which could be impacting the length of the string
-        /// For example: length of prefix would be 5 and the rest would be 2 if matchedText is "Grosses" and newText is ""Groß"
-        /// length of prefix would be 4 and the rest would be 2 if matchedText is ""Großes" and newText is "Gross" as "ß" = "ss"
+        /// For example: length of prefix would be 5 and the rest would be 2 if matchedText is "Grosses" and newText is ""Groï¿½"
+        /// length of prefix would be 4 and the rest would be 2 if matchedText is ""Groï¿½es" and newText is "Gross" as "ï¿½" = "ss"
         /// </summary>
         /// /// <param name="matchedText">string that is assumed to contain prefix which matches newText</param>
         /// <param name="newText">string that is assumed to match a prefix of matchedText</param>
@@ -514,9 +514,9 @@ namespace System.Windows.Controls
 
             // There could be compressions or expansions in either matched text or inputted text which means
             // length of the prefix in the matched text and length of the inputted text could be different
-            // for example: "Grosses" would match for the input text "Groß" where the prefix length in matched text is 5
+            // for example: "Grosses" would match for the input text "Groï¿½" where the prefix length in matched text is 5
             // whereas the length of the inputted text is 4. Same matching rule applies for the other way as well with
-            // "Groß" in matched text for the inputted text "Gross"
+            // "Groï¿½" in matched text for the inputted text "Gross"
             if (matchedItemIndex >= 0)
             {
                 int matchedPrefixLength;
@@ -540,7 +540,7 @@ namespace System.Windows.Controls
         {
             // Called when we get some input. Start or reset the timer.
             // Queue an inactive priority work item and set its deadline.
-            if (_timeoutTimer == null)
+            if (_timeoutTimer is null)
             {
                 _timeoutTimer = new DispatcherTimer(DispatcherPriority.Normal);
                 _timeoutTimer.Tick += new EventHandler(OnTimeout);
@@ -638,7 +638,7 @@ namespace System.Windows.Controls
         /// <returns></returns>
         internal static string GetPrimaryTextFromItem(ItemsControl itemsControl, object item)
         {
-            if (item == null)
+            if (item is null)
                 return String.Empty;
 
             BindingExpression primaryTextBinding = CreateBindingExpression(itemsControl, item, GetPrimaryTextPath(itemsControl));
@@ -682,7 +682,7 @@ namespace System.Windows.Controls
             IsActive = false;
             Prefix = String.Empty;
             MatchedItemIndex = -1;
-            if (_charsEntered == null)
+            if (_charsEntered is null)
             {
                 _charsEntered = new List<string>(10);
             }

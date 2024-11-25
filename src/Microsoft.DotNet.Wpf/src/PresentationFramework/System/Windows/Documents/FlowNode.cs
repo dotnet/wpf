@@ -70,7 +70,7 @@ namespace System.Windows.Documents
         // force object comparision
         public static bool IsNull(FlowNode flow)
         {
-            return (object)flow == null;
+            return (object)flow is null;
         }
 
 
@@ -90,7 +90,7 @@ namespace System.Windows.Documents
         /// <returns>bool - true if the FlowNodes are equal, false otherwise</returns>
         public override bool Equals(object o)
         {
-            if (o == null || this.GetType() != o.GetType())
+            if (o is null || this.GetType() != o.GetType())
             {
                 return false;
             }
@@ -112,7 +112,7 @@ namespace System.Windows.Documents
             ArgumentNullException.ThrowIfNull(o);
 
             FlowNode fp = o as FlowNode;
-            if (fp == null)
+            if (fp is null)
             {
                 throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, o.GetType(), typeof(FlowNode)), "o");
             }

@@ -74,7 +74,7 @@ namespace System.Windows
 
             // If there was no InputElement parent in the visual ancestry,
             // check along the logical branch.
-            if(e == null && continuePastVisualTree)
+            if(e is null && continuePastVisualTree)
             {
                 DependencyObject doParent = GetUIParentCore();
                 e = InputElement.GetContainingInputElement(doParent) as DependencyObject;
@@ -672,7 +672,7 @@ namespace System.Windows
 
                 DependencyObject parent = ce.GetUIParentCore();
 
-                if(parent == null || (bool)parent.GetValue(IsEnabledProperty))
+                if(parent is null || (bool)parent.GetValue(IsEnabledProperty))
                 {
                     return BooleanBoxes.Box(ce.IsEnabledCore);
                 }

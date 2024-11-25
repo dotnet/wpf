@@ -5539,7 +5539,7 @@ namespace System.Windows.Markup
             case KnownElements.UriTypeConverter: t = typeof(UriTypeConverter); break;
             }
 
-            if(t == null)
+            if(t is null)
             {
                 MarkupCompiler.ThrowCompilerException(nameof(SR.ParserInvalidKnownType), ((int)knownElement).ToString(CultureInfo.InvariantCulture), knownElement.ToString());
             }

@@ -583,7 +583,7 @@ namespace System.Windows.Input
             ArgumentNullException.ThrowIfNull(element);
             object boolValue = element.GetValue(IsPressAndHoldEnabledProperty);
 
-            if (boolValue == null)
+            if (boolValue is null)
                 return false;  // If we don't find property then return false.
             else
                 return (bool)boolValue;
@@ -623,7 +623,7 @@ namespace System.Windows.Input
             ArgumentNullException.ThrowIfNull(element);
             object boolValue = element.GetValue(IsFlicksEnabledProperty);
 
-            if (boolValue == null)
+            if (boolValue is null)
                 return false;  // If we don't find property then return false.
             else
                 return (bool)boolValue;
@@ -663,7 +663,7 @@ namespace System.Windows.Input
             ArgumentNullException.ThrowIfNull(element);
             object boolValue = element.GetValue(IsTapFeedbackEnabledProperty);
 
-            if (boolValue == null)
+            if (boolValue is null)
                 return false;  // If we don't find property then return false.
             else
                 return (bool)boolValue;
@@ -702,7 +702,7 @@ namespace System.Windows.Input
             ArgumentNullException.ThrowIfNull(element);
             object boolValue = element.GetValue(IsTouchFeedbackEnabledProperty);
 
-            if (boolValue == null)
+            if (boolValue is null)
                 return false;  // If we don't find property then return false.
             else
                 return (bool)boolValue;

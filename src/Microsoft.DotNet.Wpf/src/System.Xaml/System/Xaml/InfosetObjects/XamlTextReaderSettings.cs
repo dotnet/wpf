@@ -34,7 +34,7 @@ namespace System.Xaml
 
         public XamlTextReaderSettings(XamlTextReaderSettings settings) : base(settings)
         {
-            if (settings == null)
+            if (settings is null)
             {
                 _xmlnsDictionary = new Dictionary<string, string>();
             }

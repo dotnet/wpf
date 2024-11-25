@@ -549,11 +549,11 @@ namespace System.Windows.Media
                 Debug.Assert((_curOffset > 0) || (_dependentResources.Count == 0));
 
                 // The buffer being null implies that _curOffset must be 0.
-                // (_buffer == null) -> (_curOffset == 0)
+                // (_buffer is null) -> (_curOffset == 0)
                 Debug.Assert((_buffer != null) || (_curOffset == 0));
 
                 // The _curOffset must be less than the length, if there is a buffer.
-                Debug.Assert((_buffer == null) || (_curOffset <= _buffer.Length));
+                Debug.Assert((_buffer is null) || (_curOffset <= _buffer.Length));
 
                 Stack<PushType> pushStack = new Stack<PushType>();
                 int pushedEffects = 0;
@@ -1118,11 +1118,11 @@ namespace System.Windows.Media
             Debug.Assert((_curOffset > 0) || (_dependentResources.Count == 0));
 
             // The buffer being null implies that _curOffset must be 0.
-            // (_buffer == null) -> (_curOffset == 0)
+            // (_buffer is null) -> (_curOffset == 0)
             Debug.Assert((_buffer != null) || (_curOffset == 0));
 
             // The _curOffset must be less than the length, if there is a buffer.
-            Debug.Assert((_buffer == null) || (_curOffset <= _buffer.Length));
+            Debug.Assert((_buffer is null) || (_curOffset <= _buffer.Length));
 
             if (_curOffset > 0)
             {
@@ -1458,11 +1458,11 @@ namespace System.Windows.Media
             Debug.Assert((_curOffset > 0) || (_dependentResources.Count == 0));
 
             // The buffer being null implies that _curOffset must be 0.
-            // (_buffer == null) -> (_curOffset == 0)
+            // (_buffer is null) -> (_curOffset == 0)
             Debug.Assert((_buffer != null) || (_curOffset == 0));
 
             // The _curOffset must be less than the length, if there is a buffer.
-            Debug.Assert((_buffer == null) || (_curOffset <= _buffer.Length));
+            Debug.Assert((_buffer is null) || (_curOffset <= _buffer.Length));
 
             if (_curOffset > 0)
             {

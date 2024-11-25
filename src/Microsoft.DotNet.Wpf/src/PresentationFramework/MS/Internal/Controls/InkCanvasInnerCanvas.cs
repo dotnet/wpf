@@ -84,7 +84,7 @@ namespace MS.Internal.Controls
             Size newSize = new Size();
             foreach (UIElement child in InternalChildren)
             {
-                if (child == null) { continue; }
+                if (child is null) { continue; }
                 child.Measure(childConstraint);
 
                 // NOTICE-2006/02/03-WAYNEZEN,
@@ -132,7 +132,7 @@ namespace MS.Internal.Controls
 
             foreach (UIElement child in InternalChildren)
             {
-                if (child == null) { continue; }
+                if (child is null) { continue; }
 
                 double x = 0;
                 double y = 0;

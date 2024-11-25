@@ -111,7 +111,7 @@ namespace System.Windows.Ink
         public override bool Equals(Object obj)
         {
             // Check for null and compare run-time types
-            if (obj == null || GetType() != obj.GetType())
+            if (obj is null || GetType() != obj.GetType())
                 return false;
             return ((StrokeIntersection)obj == this);
         }

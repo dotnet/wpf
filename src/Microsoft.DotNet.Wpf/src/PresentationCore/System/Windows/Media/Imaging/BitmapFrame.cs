@@ -68,7 +68,7 @@ namespace System.Windows.Media.Imaging
             // Create a decoder and return the first frame
             if (uri != null)
             {
-                Debug.Assert((stream == null), "Both stream and uri are non-null");
+                Debug.Assert((stream is null), "Both stream and uri are non-null");
 
                 BitmapDecoder decoder = BitmapDecoder.CreateFromUriOrStream(
                     baseUri,

@@ -460,7 +460,7 @@ namespace System.Windows.Controls
                     }
                     break;
                 case JournalOwnership.UsesParentJournal:
-                    Debug.Assert(_ownJournalScope == null);
+                    Debug.Assert(_ownJournalScope is null);
                     switch (newValue)
                     {
                         case JournalOwnership.Automatic:
@@ -859,7 +859,7 @@ namespace System.Windows.Controls
         /// <exception cref="InvalidOperationException"> The frame doesn't own a journal. </exception>
         public JournalEntry RemoveBackEntry()
         {
-            if (_ownJournalScope == null)
+            if (_ownJournalScope is null)
                 throw new InvalidOperationException(SR.InvalidOperation_NoJournal);
             return _ownJournalScope.RemoveBackEntry();
         }
@@ -933,7 +933,7 @@ namespace System.Windows.Controls
         /// <exception cref="InvalidOperationException"> There is no forward journal entry to go to. </exception>
         public void GoForward()
         {
-            if (_ownJournalScope == null)
+            if (_ownJournalScope is null)
                 throw new InvalidOperationException(SR.InvalidOperation_NoJournal);
             _ownJournalScope.GoForward();
         }
@@ -947,7 +947,7 @@ namespace System.Windows.Controls
         /// <exception cref="InvalidOperationException"> There is no back journal entry to go to. </exception>
         public void GoBack()
         {
-            if(_ownJournalScope == null)
+            if(_ownJournalScope is null)
                 throw new InvalidOperationException(SR.InvalidOperation_NoJournal);
             _ownJournalScope.GoBack();
         }
@@ -993,7 +993,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                IEnumerable backStack = _ownJournalScope == null ? null : _ownJournalScope.BackStack;
+                IEnumerable backStack = _ownJournalScope is null ? null : _ownJournalScope.BackStack;
                 Debug.Assert(backStack == GetValue(BackStackProperty));
                 return backStack;
             }
@@ -1005,7 +1005,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                IEnumerable fwdStack = _ownJournalScope == null ? null : _ownJournalScope.ForwardStack;
+                IEnumerable fwdStack = _ownJournalScope is null ? null : _ownJournalScope.ForwardStack;
                 Debug.Assert(fwdStack == GetValue(ForwardStackProperty));
                 return fwdStack;
             }
@@ -1338,8 +1338,8 @@ namespace System.Windows.Controls
         /// <remarks> Does not update the JournalOwnershipProperty. </remarks>
         private void SwitchToOwnJournal()
         {
-            Debug.Assert(_ownJournalScope == null ^ _journalOwnership == JournalOwnership.OwnsJournal);
-            if (_ownJournalScope == null)
+            Debug.Assert(_ownJournalScope is null ^ _journalOwnership == JournalOwnership.OwnsJournal);
+            if (_ownJournalScope is null)
             {
                 // Entries created for this frame in the parent's journal have to be removed.
                 JournalNavigationScope parentJns = GetParentJournal(false/*don't create*/);
@@ -1371,7 +1371,7 @@ namespace System.Windows.Controls
         /// <remarks> Does not update the JournalOwnershipProperty. </remarks>
         private void SwitchToParentJournal()
         {
-            Debug.Assert(_ownJournalScope == null ^ _journalOwnership == JournalOwnership.OwnsJournal);
+            Debug.Assert(_ownJournalScope is null ^ _journalOwnership == JournalOwnership.OwnsJournal);
             if (_ownJournalScope != null)
             {
                 _ownJournalScope = null;
@@ -1394,7 +1394,7 @@ namespace System.Windows.Controls
 
             // Store the CommandBinding reference so that it can be removed in case the frame loses
             // its JournalNavigationScope.
-            if (_commandBindings == null)
+            if (_commandBindings is null)
             {
                 _commandBindings = new List<CommandBinding>(6);
             }

@@ -212,7 +212,7 @@ namespace MS.Internal.Xaml.Parser
         {
             get
             {
-                if (_accumulatedText == null)
+                if (_accumulatedText is null)
                 {
                     _accumulatedText = new XamlText(_scannerStack.CurrentXmlSpacePreserve);
                 }
@@ -247,7 +247,7 @@ namespace MS.Internal.Xaml.Parser
             {
                 Debug.Assert(_xmlReader.NodeType == XmlNodeType.Element);
                 XamlPropertyName name = XamlPropertyName.Parse(_xmlReader.Name, _xmlReader.NamespaceURI);
-                if (_scannerStack.CurrentType == null)
+                if (_scannerStack.CurrentType is null)
                 {
                     throw LineInfo(new XamlParseException(SR.Format(SR.ParentlessPropertyElement, _xmlReader.Name)));
                 }
@@ -283,7 +283,7 @@ namespace MS.Internal.Xaml.Parser
             // See app Paperboy
             Debug.Assert(_xmlReader.NodeType == XmlNodeType.Element);
             string xamlNs = _xmlReader.NamespaceURI;
-            if (xamlNs == null)
+            if (xamlNs is null)
             {
                 ReadObjectElement_NoNamespace(name, node);
             }
@@ -377,7 +377,7 @@ namespace MS.Internal.Xaml.Parser
             {
                 string error;
                 typeArgs = XamlTypeName.ParseListInternal(_typeArgumentAttribute.Value, _parserContext.FindNamespaceByPrefix, out error);
-                if (typeArgs == null)
+                if (typeArgs is null)
                 {
                     throw new XamlParseException(_typeArgumentAttribute.LineNumber, _typeArgumentAttribute.LinePosition, error);
                 }
@@ -558,7 +558,7 @@ namespace MS.Internal.Xaml.Parser
 
                 XamlPropertyName propName = XamlPropertyName.Parse(xmlName);
 
-                if (propName == null)
+                if (propName is null)
                 {
                     throw new XamlParseException(SR.Format(SR.InvalidXamlMemberName, xmlName));
                 }
@@ -616,7 +616,7 @@ namespace MS.Internal.Xaml.Parser
 
         private void PostprocessAttributes(XamlScannerNode node)
         {
-            if (_attributes == null)
+            if (_attributes is null)
             {
                 return;
             }
@@ -625,7 +625,7 @@ namespace MS.Internal.Xaml.Parser
 
             // Attributes on Properties are errors
             // and don't need this detailed processing.
-            if (node.Type == null)
+            if (node.Type is null)
             {
                 if (_settings.IgnoreUidsOnPropertyElements)
                 {
@@ -658,7 +658,7 @@ namespace MS.Internal.Xaml.Parser
                         break;
 
                 case ScannerAttributeKind.CtorDirective:
-                    if (ctorDirectivesList == null)
+                    if (ctorDirectivesList is null)
                     {
                         ctorDirectivesList = new List<XamlAttribute>();
                     }
@@ -672,7 +672,7 @@ namespace MS.Internal.Xaml.Parser
                         _hasKeyAttribute = true;
                     }
 
-                    if (otherDirectivesList == null)
+                    if (otherDirectivesList is null)
                     {
                         otherDirectivesList = new List<XamlAttribute>();
                     }
@@ -680,7 +680,7 @@ namespace MS.Internal.Xaml.Parser
                     break;
 
                 default:
-                    if (otherPropertiesList == null)
+                    if (otherPropertiesList is null)
                     {
                         otherPropertiesList = new List<XamlAttribute>();
                     }

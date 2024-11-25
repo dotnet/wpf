@@ -32,7 +32,7 @@ internal class FileController : IDocumentController
     {
         FileDocument doc = (FileDocument)document;
 
-        if (doc.WorkspaceProxy == null)
+        if (doc.WorkspaceProxy is null)
         {
             // Try to obtain an exclusive lock on the source file. If this
             // fails, we can still create a temporary file and Save As to a
@@ -49,7 +49,7 @@ internal class FileController : IDocumentController
 
             doc.WorkspaceProxy = doc.SourceProxy.CreateTemporary(false);
 
-            if (doc.WorkspaceProxy == null)
+            if (doc.WorkspaceProxy is null)
             {
                 FilePresentation.ShowNoTemporaryFileAccess();
             }
@@ -65,7 +65,7 @@ internal class FileController : IDocumentController
     {
         FileDocument doc = (FileDocument)document;
 
-        if (doc.Source == null)
+        if (doc.Source is null)
         {
             try
             {
@@ -186,7 +186,7 @@ internal class FileController : IDocumentController
                     Trace.File, "We don't have a save location, prompting user.");
 
                 // by default set the same file
-                if (saveToken == null)
+                if (saveToken is null)
                 {
                     saveToken = sourceToken;
                 }
@@ -320,7 +320,7 @@ internal class FileController : IDocumentController
                         // ensure we have enough quota to be as large as the sum
                         doc.DestinationProxy.SetLength(
                             doc.SourceProxy.Length +
-                            (doc.WorkspaceProxy == null ? 0 : doc.WorkspaceProxy.Length));
+                            (doc.WorkspaceProxy is null ? 0 : doc.WorkspaceProxy.Length));
                         // set it back as we don't do the copy
                         doc.DestinationProxy.SetLength(0);
                     }

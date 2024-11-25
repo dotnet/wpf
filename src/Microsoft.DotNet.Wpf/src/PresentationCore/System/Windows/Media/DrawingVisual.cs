@@ -239,7 +239,7 @@ namespace System.Windows.Media
                     true, 
                     VisualProxyFlags.IsContentConnected);
             }
-            else if (isOnChannel) /*_content == null*/
+            else if (isOnChannel) /*_content is null*/
             {
                 DUCE.CompositionNode.SetContent(
                     _proxy.GetHandle(channel),

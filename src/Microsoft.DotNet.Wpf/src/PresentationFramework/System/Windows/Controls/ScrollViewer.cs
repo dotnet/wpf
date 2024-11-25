@@ -197,7 +197,7 @@ namespace System.Windows.Controls
 
         private void EnsureLayoutUpdatedHandler()
         {
-            if (_layoutUpdatedHandler == null)
+            if (_layoutUpdatedHandler is null)
             {
                 _layoutUpdatedHandler = new EventHandler(OnLayoutUpdated);
                 LayoutUpdated += _layoutUpdatedHandler;
@@ -225,7 +225,7 @@ namespace System.Windows.Controls
             IScrollInfo isi = this.ScrollInfo;
 
             //STRESS 1627654: anybody can call this method even if we don't have ISI...
-            if(isi == null)
+            if(isi is null)
                 return;
 
             // This is a public API, and is expected to be called by the
@@ -943,7 +943,7 @@ namespace System.Windows.Controls
                 {
                     ScrollContentPresenter viewPort = GetTemplateChild(ScrollContentPresenterTemplateName) as ScrollContentPresenter;
                     // If style changes and ConentSite cannot be found - just scroll and exit
-                    if (viewPort == null)
+                    if (viewPort is null)
                     {
                         ScrollInDirection(e);
                         return;
@@ -984,7 +984,7 @@ namespace System.Windows.Controls
                         predictedFocus = viewPort.PredictFocus(direction);
                     }
 
-                    if (predictedFocus == null)
+                    if (predictedFocus is null)
                     {
                         // predictedFocus is null - just scroll
                         ScrollInDirection(e);
@@ -1031,19 +1031,19 @@ namespace System.Windows.Controls
             // parent of root of element and try with it instead and so on.
             while (baseRoot != elementRoot)
             {
-                if (elementRoot == null)
+                if (elementRoot is null)
                 {
                     return false;
                 }
 
                 FrameworkElement fe = elementRoot as FrameworkElement;
-                if (fe == null)
+                if (fe is null)
                 {
                     return false;
                 }
 
                 element = fe.Parent;
-                if (element == null)
+                if (element is null)
                 {
                     return false;
                 }
@@ -1659,7 +1659,7 @@ namespace System.Windows.Controls
                 return false;
             }
 
-            if (viewport == null)
+            if (viewport is null)
             {
                 // If there is no ScrollContentPresenter, then always start Manipulation
                 return true;
@@ -2214,7 +2214,7 @@ namespace System.Windows.Controls
         private bool ExecuteNextCommand()
         {
             IScrollInfo isi = ScrollInfo;
-            if(isi == null) return false;
+            if(isi is null) return false;
 
             Command cmd = _queue.Fetch();
             switch(cmd.Code)

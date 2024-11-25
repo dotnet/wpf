@@ -76,14 +76,14 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             // Contextmenu raises DismissPopup event on the source only
             // if it is in a popup and is in a Ribbon.
-            if (dismissPopupSource == null ||
-                RibbonControlService.GetRibbon(dismissPopupSource) == null)
+            if (dismissPopupSource is null ||
+                RibbonControlService.GetRibbon(dismissPopupSource) is null)
             {
                 return false;
             }
 
             Popup ancestorPopup = TreeHelper.FindAncestor(dismissPopupSource, delegate(DependencyObject element) { return (element is Popup); }) as Popup;
-            if (ancestorPopup == null ||
+            if (ancestorPopup is null ||
                 !ancestorPopup.IsOpen)
             {
                 return false;
@@ -128,12 +128,12 @@ namespace Microsoft.Windows.Controls.Ribbon
         private void RestoreFocusToRibbon()
         {
             DependencyObject current = GetDismissPopupSource();
-            if (current == null)
+            if (current is null)
             {
                 return;
             }
             Ribbon ribbon = RibbonControlService.GetRibbon(current);
-            if (ribbon == null)
+            if (ribbon is null)
             {
                 return;
             }
@@ -183,19 +183,19 @@ namespace Microsoft.Windows.Controls.Ribbon
         private UIElement GetDismissPopupSource()
         {
             UIElement placementTarget = PlacementTarget;
-            if (placementTarget == null)
+            if (placementTarget is null)
             {
                 return null;
             }
             Ribbon ribbon = RibbonControlService.GetRibbon(placementTarget);
-            if (ribbon == null)
+            if (ribbon is null)
             {
                 return null;
             }
             // The original source for corresponding ContextMenuOpening will
             // be the original source for DismissPopup event.
             UIElement returnValue = ribbon.ContextMenuOriginalSource;
-            if (returnValue == null)
+            if (returnValue is null)
             {
                 returnValue = placementTarget;
             }
@@ -277,7 +277,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private static RibbonContextMenu GetDefaultRibbonClientAreaContextMenu()
         {
-            if (_defaultRibbonClientAreaContextMenu == null)
+            if (_defaultRibbonClientAreaContextMenu is null)
             {
                 _defaultRibbonClientAreaContextMenu = new RibbonContextMenu();
                 _defaultRibbonClientAreaContextMenu.Items.Add(GenerateQATPlacementMenuItem(_defaultRibbonClientAreaContextMenu));
@@ -290,7 +290,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private static RibbonContextMenu GetRibbonControlContextMenu()
         {
-            if (_ribbonControlContextMenu == null)
+            if (_ribbonControlContextMenu is null)
             {
                 _ribbonControlContextMenu = new RibbonContextMenu();
                 _ribbonControlContextMenu.Items.Add(GenerateAddToOrRemoveFromQATItem(false, _ribbonControlContextMenu));
@@ -305,7 +305,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private static RibbonContextMenu GetQATControlContextMenu()
         {
-            if (_qatControlContextMenu == null)
+            if (_qatControlContextMenu is null)
             {
                 _qatControlContextMenu = new RibbonContextMenu();
                 _qatControlContextMenu.Items.Add(GenerateAddToOrRemoveFromQATItem(true, _qatControlContextMenu));
@@ -322,7 +322,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private static RibbonContextMenu GetGalleryContextMenu()
         {
-            if (_galleryContextMenu == null)
+            if (_galleryContextMenu is null)
             {
                 _galleryContextMenu = new RibbonContextMenu();
                 RibbonMenuItem addGalleryToQATItem = GenerateAddGalleryToQATItem(_galleryContextMenu);

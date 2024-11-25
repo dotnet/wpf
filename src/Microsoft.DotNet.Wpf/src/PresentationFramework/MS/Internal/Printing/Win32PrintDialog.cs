@@ -69,7 +69,7 @@ namespace MS.Internal.Printing
 
             try
             {
-                if (this._printQueue == null || this._printTicket == null)
+                if (this._printQueue is null || this._printTicket is null)
                 {
                     // Normally printDlgEx.SyncToStruct() probes the printer if both the print queue and print
                     // ticket are not null.

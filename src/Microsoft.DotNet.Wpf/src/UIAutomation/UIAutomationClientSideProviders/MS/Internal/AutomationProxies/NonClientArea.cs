@@ -44,7 +44,7 @@ namespace MS.Internal.AutomationProxies
             // we need to create the menu proxy so that the global event for menu will be listened for.
             // This proxy will get advise of events needed for menus
             ProxyHwnd menuProxy = CreateNonClientMenu();
-            if (menuProxy == null)
+            if (menuProxy is null)
             {
                 // If the window does not have a menu, it at least has a system menu.
                 WindowsTitleBar titleBar = (WindowsTitleBar)CreateNonClientChild(NonClientItem.TitleBar);
@@ -67,7 +67,7 @@ namespace MS.Internal.AutomationProxies
             // we need to create the menu proxy so that the global event for menu will be listened for.
             // This proxy will get advise of events needed for menus
             ProxyHwnd menuProxy = CreateNonClientMenu();
-            if (menuProxy == null)
+            if (menuProxy is null)
             {
                 // If the window does not have a menu, it at least has a system menu.
                 WindowsTitleBar titleBar = (WindowsTitleBar)CreateNonClientChild(NonClientItem.TitleBar);
@@ -681,7 +681,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             ProxyFragment el = new NonClientArea(hwnd);
-            if (el == null)
+            if (el is null)
                 return;
 
             if (idProp == InvokePattern.InvokedEvent)

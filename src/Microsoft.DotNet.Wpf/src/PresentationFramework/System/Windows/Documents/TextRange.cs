@@ -809,7 +809,7 @@ namespace System.Windows.Documents
             {
                 // We exclude checking thcickness values because we have special treatment for negative values
                 // in TextRangeEdit.SetParagraphProperty - negative values mean: "leave the value as is".
-                throw new ArgumentException(SR.Format(SR.TextEditorTypeOfParameterIsNotAppropriateForFormattingProperty, value == null ? "null" : value.GetType().Name, formattingProperty.Name), "value");
+                throw new ArgumentException(SR.Format(SR.TextEditorTypeOfParameterIsNotAppropriateForFormattingProperty, value is null ? "null" : value.GetType().Name, formattingProperty.Name), "value");
             }
 
             // Check propertyValueAction validity

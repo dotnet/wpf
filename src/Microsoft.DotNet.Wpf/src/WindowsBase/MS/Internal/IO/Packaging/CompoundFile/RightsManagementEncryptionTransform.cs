@@ -441,12 +441,12 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <para>
         /// Returns true when the transform expects no further changes to its state.
         /// The contract is that if FixedSettings is false, an application can change
-        /// any of the transform’s properties with the promise that an exception will
+        /// any of the transformï¿½s properties with the promise that an exception will
         /// not be thrown.
         /// </para>
         /// <para>
         /// For the RightsManagementEncryptionTransform, FixedSettings becomes true the
-        /// first time the compound file code calls the object’s GetTransformedStream method.
+        /// first time the compound file code calls the objectï¿½s GetTransformedStream method.
         /// After that, any attempt to set the CryptoProvider property, or to call
         /// SavePublicLicense, throws InvalidOperationException.
         /// </para>
@@ -773,7 +773,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             )
         {
             LoadUseLicenseForUserParams lulfup = param as LoadUseLicenseForUserParams;
-            if (lulfup == null)
+            if (lulfup is null)
             {
                 throw new ArgumentException(SR.CallbackParameterInvalid, "param");
             }
@@ -828,7 +828,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             )
         {
             ContentUser userToDelete = param as ContentUser;
-            if (userToDelete == null)
+            if (userToDelete is null)
             {
                 throw new ArgumentException(SR.CallbackParameterInvalid, "param");
             }

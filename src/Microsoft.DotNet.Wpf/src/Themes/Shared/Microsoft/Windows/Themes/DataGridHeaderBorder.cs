@@ -253,7 +253,7 @@ namespace Microsoft.Windows.Themes
             {
                 Thickness padding = new Thickness(3.0); // The default padding
                 Thickness? themePadding = ThemeDefaultPadding;
-                if (themePadding == null)
+                if (themePadding is null)
                 {
                     if (Orientation == Orientation.Vertical)
                     {
@@ -311,12 +311,12 @@ namespace Microsoft.Windows.Themes
         private static void EnsureCache(int size)
         {
             // Quick check to avoid locking
-            if (_freezableCache == null)
+            if (_freezableCache is null)
             {
                 lock (_cacheAccess)
                 {
                     // Re-check in case another thread created the cache
-                    if (_freezableCache == null)
+                    if (_freezableCache is null)
                     {
                         _freezableCache = new List<Freezable>(size);
                         for (int i = 0; i < size; i++)
@@ -354,7 +354,7 @@ namespace Microsoft.Windows.Themes
             lock (_cacheAccess)
             {
                 Freezable freezable = _freezableCache[index];
-                Debug.Assert((freezable == null) || freezable.IsFrozen, "Cached Freezables should have been frozen.");
+                Debug.Assert((freezable is null) || freezable.IsFrozen, "Cached Freezables should have been frozen.");
                 return freezable;
             }
         }
@@ -368,7 +368,7 @@ namespace Microsoft.Windows.Themes
 
             lock (_cacheAccess)
             {
-                if (_freezableCache[index] == null)
+                if (_freezableCache[index] is null)
                 {
                     _freezableCache[index] = freezable;
                 }

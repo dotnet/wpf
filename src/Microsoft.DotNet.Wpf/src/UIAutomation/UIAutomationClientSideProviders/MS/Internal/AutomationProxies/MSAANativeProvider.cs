@@ -81,7 +81,7 @@ namespace MS.Internal.AutomationProxies
         private static MsaaNativeProvider Wrap(Accessible acc, IntPtr hwnd, MsaaNativeProvider parent, MsaaNativeProvider knownRoot, RootStatus isRoot)
         {
             // if acc is null then return null.
-            if (acc == null)
+            if (acc is null)
                 return null;
 
             // check that parent is actually our parent - sometimes hit-test and navigation skip layers, so we
@@ -97,7 +97,7 @@ namespace MS.Internal.AutomationProxies
                     if (Accessible.Compare(scan, parent._acc))
                         break; // found actual parent
                     // found intermediate ancestor - add to list...
-                    if (actualParentChain == null)
+                    if (actualParentChain is null)
                         actualParentChain = new ArrayList();
                     actualParentChain.Add(scan);
                     scan = scan.Parent;
@@ -174,7 +174,7 @@ namespace MS.Internal.AutomationProxies
             // and we'll return null.
 
             Accessible acc = Accessible.CreateNativeFromEvent(hwnd, idObject, idChild);
-            if (acc == null)
+            if (acc is null)
                 return null;
 
             if (isWinForms)
@@ -574,7 +574,7 @@ namespace MS.Internal.AutomationProxies
             //Debug.WriteLine.WriteLine(string.Format(CultureInfo.CurrentCulture, "{0} ISelectionProvider.Selection", this));
 
             Accessible[] accessibles = _acc.GetSelection();
-            if (accessibles == null)
+            if (accessibles is null)
                 return new IRawElementProviderSimple[] {};
 
             IRawElementProviderSimple [] rawEPS= new IRawElementProviderSimple[accessibles.Length];
@@ -993,7 +993,7 @@ namespace MS.Internal.AutomationProxies
             get
             {
                 // cache the value the first time
-                if (_controlType == null)
+                if (_controlType is null)
                 {
                     // control type is primarily dependent upon role
                     AccessibleRole role = _acc.Role;
@@ -1039,7 +1039,7 @@ namespace MS.Internal.AutomationProxies
 
             // if we get a null parent (Accessible.Parent will return null for IAccessible's
             // when we detect bad navigation) then we have no idea where we are. bail.
-            if (parentAccessible == null)
+            if (parentAccessible is null)
             {
                 throw new ElementNotAvailableException();
             }
@@ -1078,13 +1078,13 @@ namespace MS.Internal.AutomationProxies
             get
             {
                 // compute the answer on the first call and cache it.
-                if (_knownRoot == null)
+                if (_knownRoot is null)
                 {
                     Debug.Assert(_hwnd != IntPtr.Zero);
 
                     // ask the window for its OBJID_CLIENT object
                     _knownRoot = (MsaaNativeProvider)Create(_hwnd, NativeMethods.CHILD_SELF, NativeMethods.OBJID_CLIENT);
-                    if (_knownRoot == null)
+                    if (_knownRoot is null)
                     {
                         // PerSharp/PreFast will flag this as a warning, 6503/56503: Property get methods should not throw exceptions.
                         // When failing to create the element, the correct this to do is to throw an ElementNotAvailableException.
@@ -1145,7 +1145,7 @@ namespace MS.Internal.AutomationProxies
                 // the use of the problematic IAccessible.get_accParent. This won't save us in instances where we jump
                 // directly to an element as the result of a WinEvent or of IAccessible.get_accFocus.
 
-                if (_parent == null)
+                if (_parent is null)
                 {
                     _parent = Wrap(GetParent(), _hwnd, null/*grandparent unknown*/, _knownRoot, RootStatus.Unknown);
                 }
@@ -1164,7 +1164,7 @@ namespace MS.Internal.AutomationProxies
 
             // there are three possible results: null, 'this', or a child.
             MsaaNativeProvider rval;
-            if (childAcc == null)
+            if (childAcc is null)
             {
                 rval = nullMeansThis ? this : null;
             }

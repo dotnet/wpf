@@ -48,7 +48,7 @@ namespace Microsoft.Windows.Automation.Peers
             RibbonMenuButton customizeMenuButton = OwningToolBar.CustomizeMenuButton;
             if (customizeMenuButton != null)
             {
-                if (children == null)
+                if (children is null)
                 {
                     children = new List<AutomationPeer>();
                 }

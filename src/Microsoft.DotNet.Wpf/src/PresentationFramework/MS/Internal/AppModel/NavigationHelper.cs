@@ -22,7 +22,7 @@ namespace MS.Internal.AppModel
         internal static Visual FindRootViewer(ContentControl navigator, string contentPresenterName)
         {
             object content = navigator.Content;
-            if (content == null || content is Visual)
+            if (content is null || content is Visual)
                 return content as Visual;
 
             ContentPresenter cp = null;
@@ -33,7 +33,7 @@ namespace MS.Internal.AppModel
 
             // If null, either <contentPresenterName> is not defined in the current template or the template 
             // has not been applied yet. 
-            if (cp == null || cp.InternalVisualChildrenCount == 0/*Layout not done yet*/)
+            if (cp is null || cp.InternalVisualChildrenCount == 0/*Layout not done yet*/)
                 return null;
             Visual v = cp.InternalGetVisualChild(0);
             return v;

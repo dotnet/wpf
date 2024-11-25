@@ -258,7 +258,7 @@ namespace System.Windows.Media.Animation
 
             PathGeometry pathGeometry = PathGeometry;
             
-            if (pathGeometry == null)
+            if (pathGeometry is null)
             {
                 return defaultDestinationValue;
             }

@@ -124,7 +124,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             // Clear binding for DefinitionBase.PrivateSharedSizeScopeProperty as it 
             // is being detached from a visual parent.
-            if (newParent == null)
+            if (newParent is null)
             {
                 BindingOperations.ClearBinding(this, PrivateSharedSizeScopeProperty);
             }
@@ -139,7 +139,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             // In a gist this is a hack to capture a reference to the 
             // PrivateSharedSizeScopeProperty.
 
-            if (_privateSharedSizeScopeProperty == null &&
+            if (_privateSharedSizeScopeProperty is null &&
                 e.Property.OwnerType == typeof(DefinitionBase) &&
                 e.Property.Name == "PrivateSharedSizeScope")
             {
@@ -151,7 +151,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             get
             {
-                if (_privateSharedSizeScopeProperty == null)
+                if (_privateSharedSizeScopeProperty is null)
                 {
                     // See OnVisualParentChanged method for the elaborate explanation. 
                     // In a gist this is a hack to trigger a PropertyChanged 

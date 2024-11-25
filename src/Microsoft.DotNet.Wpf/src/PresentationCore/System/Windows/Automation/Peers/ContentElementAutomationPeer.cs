@@ -76,7 +76,7 @@ namespace System.Windows.Automation.Peers
             if (patternInterface == PatternInterface.SynchronizedInput)
             {
                 // Adaptor object is used here to avoid loading UIA assemblies in non-UIA scenarios.
-                if (_synchronizedInputPattern == null)
+                if (_synchronizedInputPattern is null)
                     _synchronizedInputPattern = new SynchronizedInputAdaptor(_owner);
                 return _synchronizedInputPattern;
             }

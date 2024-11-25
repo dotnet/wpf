@@ -56,12 +56,12 @@ namespace MS.Internal.Xaml.Context
         public void AddDependency(NameFixupToken fixupToken)
         {
             // Need to special case a deferred ProvideValue at the root, because it has no parent
-            if (fixupToken.Target.Property == null)
+            if (fixupToken.Target.Property is null)
             {
-                Debug.Assert(fixupToken.Target.Instance == null &&
-                    fixupToken.Target.InstanceType == null &&
+                Debug.Assert(fixupToken.Target.Instance is null &&
+                    fixupToken.Target.InstanceType is null &&
                     fixupToken.FixupType == FixupType.MarkupExtensionFirstRun);
-                Debug.Assert(_deferredRootProvideValue == null);
+                Debug.Assert(_deferredRootProvideValue is null);
                 _deferredRootProvideValue = fixupToken;
                 return;
             }
@@ -99,7 +99,7 @@ namespace MS.Internal.Xaml.Context
 
         public bool HasUnresolvedChildren(object parent)
         {
-            if (parent == null)
+            if (parent is null)
             {
                 return false;
             }
@@ -422,7 +422,7 @@ namespace MS.Internal.Xaml.Context
             }
             alreadyTraversed.Add(inEdge);
             FrugalObjectList<NameFixupToken> outEdges;
-            if (inEdge.ReferencedObject == null ||
+            if (inEdge.ReferencedObject is null ||
                 !_dependenciesByParentObject.TryGetValue(inEdge.ReferencedObject, out outEdges))
             {
                 // No dependencies, we're done with this subgraph

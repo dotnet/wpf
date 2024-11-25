@@ -273,7 +273,7 @@ namespace System.Windows.Data
         /// </summary>
         public override bool PassesFilter(object item)
         {
-            return ActiveFilter == null || ActiveFilter(item);
+            return ActiveFilter is null || ActiveFilter(item);
         }
 
         /// <summary> Return the index where the given item belongs, or -1 if this index is unknown.
@@ -393,7 +393,7 @@ namespace System.Windows.Data
         {
             get
             {
-                if (_sort == null)
+                if (_sort is null)
                     SetSortDescriptions(new SortDescriptionCollection());
                 return _sort;
             }
@@ -1196,7 +1196,7 @@ namespace System.Windows.Data
                 throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringTransaction, "CommitEdit", "AddNew"));
             VerifyRefreshNotDeferred();
 
-            if (_editItem == null)
+            if (_editItem is null)
                 return;
 
             object editItem = _editItem;
@@ -1226,7 +1226,7 @@ namespace System.Windows.Data
                 if (isInView)
                 {
                     LiveShapingList lsList = InternalList as LiveShapingList;
-                    LiveShapingItem lsi = (lsList == null) ? null : lsList.ItemAt(lsList.IndexOf(editItem));
+                    LiveShapingItem lsi = (lsList is null) ? null : lsList.ItemAt(lsList.IndexOf(editItem));
                     AddItemToGroups(editItem, lsi);
                 }
                 return;
@@ -1307,7 +1307,7 @@ namespace System.Windows.Data
                 throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringTransaction, "CancelEdit", "AddNew"));
             VerifyRefreshNotDeferred();
 
-            if (_editItem == null)
+            if (_editItem is null)
                 return;
 
             IEditableObject ieo = _editItem as IEditableObject;
@@ -1413,7 +1413,7 @@ namespace System.Windows.Data
             get { return _isLiveSorting; }
             set
             {
-                if (value == null)
+                if (value is null)
                     throw new ArgumentNullException("value");
 
                 if (value != _isLiveSorting)
@@ -1437,7 +1437,7 @@ namespace System.Windows.Data
             get { return _isLiveFiltering; }
             set
             {
-                if (value == null)
+                if (value is null)
                     throw new ArgumentNullException("value");
 
                 if (value != _isLiveFiltering)
@@ -1461,7 +1461,7 @@ namespace System.Windows.Data
             get { return _isLiveGrouping; }
             set
             {
-                if (value == null)
+                if (value is null)
                     throw new ArgumentNullException("value");
 
                 if (value != _isLiveGrouping)
@@ -1494,7 +1494,7 @@ namespace System.Windows.Data
         {
             get
             {
-                if (_liveSortingProperties == null)
+                if (_liveSortingProperties is null)
                 {
                     _liveSortingProperties = new ObservableCollection<string>();
                     _liveSortingProperties.CollectionChanged += new NotifyCollectionChangedEventHandler(OnLivePropertyListChanged);
@@ -1516,7 +1516,7 @@ namespace System.Windows.Data
         {
             get
             {
-                if (_liveFilteringProperties == null)
+                if (_liveFilteringProperties is null)
                 {
                     _liveFilteringProperties = new ObservableCollection<string>();
                     _liveFilteringProperties.CollectionChanged += new NotifyCollectionChangedEventHandler(OnLivePropertyListChanged);
@@ -1538,7 +1538,7 @@ namespace System.Windows.Data
         {
             get
             {
-                if (_liveGroupingProperties == null)
+                if (_liveGroupingProperties is null)
                 {
                     _liveGroupingProperties = new ObservableCollection<string>();
                     _liveGroupingProperties.CollectionChanged += new NotifyCollectionChangedEventHandler(OnLivePropertyListChanged);
@@ -1929,7 +1929,7 @@ namespace System.Windows.Data
                     }
                     else
                     {
-                        lsi = (lsList == null || isSpecialItem) ? null : lsList.ItemAt(adjustedNewIndex - delta);
+                        lsi = (lsList is null || isSpecialItem) ? null : lsList.ItemAt(adjustedNewIndex - delta);
                         AddItemToGroups(newItem, lsi);
                     }
 
@@ -1997,7 +1997,7 @@ namespace System.Windows.Data
                     }
                     else
                     {
-                        lsi = (lsList == null) ? null : lsList.ItemAt(adjustedNewIndex - delta);
+                        lsi = (lsList is null) ? null : lsList.ItemAt(adjustedNewIndex - delta);
                         RemoveItemFromGroups(oldItem);
                         AddItemToGroups(newItem, lsi);
                     }
@@ -2009,7 +2009,7 @@ namespace System.Windows.Data
 
                     bool simpleMove = System.Windows.Controls.ItemsControl.EqualsEx(oldItem, newItem);
 
-                    if (UsesLocalArray && (lsList == null || !lsList.IsRestoringLiveSorting))
+                    if (UsesLocalArray && (lsList is null || !lsList.IsRestoringLiveSorting))
                     {
                         int localOldIndex = adjustedOldIndex - delta;
                         int localNewIndex = adjustedNewIndex - delta;
@@ -2068,7 +2068,7 @@ namespace System.Windows.Data
                     }
                     else
                     {
-                        lsi = (lsList == null) ? null : lsList.ItemAt(adjustedNewIndex);
+                        lsi = (lsList is null) ? null : lsList.ItemAt(adjustedNewIndex);
                         if (simpleMove)
                         {
                             // simple move
@@ -2591,7 +2591,7 @@ namespace System.Windows.Data
                         continue;       // the AddNew item is held separately
 
                     object item = list[k];
-                    if (ActiveFilter == null || ActiveFilter(item))
+                    if (ActiveFilter is null || ActiveFilter(item))
                     {
                         localList.Add(item);
                     }
@@ -3107,7 +3107,7 @@ namespace System.Windows.Data
         internal void RestoreLiveShaping()
         {
             LiveShapingList list = InternalList as LiveShapingList;
-            if (list == null)
+            if (list is null)
                 return;
 
             int oldIndex, newIndex;
@@ -3279,7 +3279,7 @@ namespace System.Windows.Data
         object ItemFrom(object o)
         {
             LiveShapingItem lsi = o as LiveShapingItem;
-            return (lsi == null) ? o : lsi.Item;
+            return (lsi is null) ? o : lsi.Item;
         }
 
         #endregion Live Shaping
@@ -3297,7 +3297,7 @@ namespace System.Windows.Data
         // defer work until the current activity completes
         private void DeferAction(Action action)
         {
-            if (_deferredActions == null)
+            if (_deferredActions is null)
             {
                 _deferredActions = new List<Action>();
             }

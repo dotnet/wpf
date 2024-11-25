@@ -150,7 +150,7 @@ namespace MS.Internal
         {
             ArgumentNullException.ThrowIfNull(executionContext);
 
-            if (callback == null) return; // Bail out early if callback is null
+            if (callback is null) return; // Bail out early if callback is null
 
             // Compat switch is set, defer directly to EC.Run
             if (BaseAppContextSwitches.DoNotUseCulturePreservingDispatcherOperations)

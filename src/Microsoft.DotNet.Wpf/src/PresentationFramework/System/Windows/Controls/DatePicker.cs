@@ -703,7 +703,7 @@ namespace System.Windows.Controls
 
                 // If the user does not provide a Content value in template, we provide a helper text that can be used in Accessibility
                 // this text is not shown on the UI, just used for Accessibility purposes
-                if (_dropDownButton.Content == null)
+                if (_dropDownButton.Content is null)
                 {
                     _dropDownButton.Content = SR.DatePicker_DropDownButtonName;
                 }
@@ -711,7 +711,7 @@ namespace System.Windows.Controls
 
             _textBox = GetTemplateChild(ElementTextBox) as DatePickerTextBox;
 
-            if (this.SelectedDate == null)
+            if (this.SelectedDate is null)
             {
                 SetWaterMarkText();
             }
@@ -722,7 +722,7 @@ namespace System.Windows.Controls
                 _textBox.AddHandler(TextBox.TextChangedEvent, new TextChangedEventHandler(TextBox_TextChanged), true);
                 _textBox.AddHandler(TextBox.LostFocusEvent, new RoutedEventHandler(TextBox_LostFocus), true);
 
-                if (this.SelectedDate == null)
+                if (this.SelectedDate is null)
                 {
                     if (!string.IsNullOrEmpty(this._defaultText))
                     {
@@ -876,7 +876,7 @@ namespace System.Windows.Controls
         {
             if (value)
             {
-                if (_isHandlerSuspended == null)
+                if (_isHandlerSuspended is null)
                 {
                     _isHandlerSuspended = new Dictionary<DependencyProperty, bool>(2);
                 }
@@ -1028,7 +1028,7 @@ namespace System.Windows.Controls
 
         private static DateTime? DiscardTime(DateTime? d)
         {
-            if (d == null)
+            if (d is null)
             {
                 return null;
             }

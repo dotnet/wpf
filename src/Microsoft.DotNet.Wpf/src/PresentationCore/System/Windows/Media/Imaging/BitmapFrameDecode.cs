@@ -232,7 +232,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         private int GetColorContexts(ref uint numContexts, IntPtr[] colorContextPtrs)
         {
-            Invariant.Assert(colorContextPtrs == null || numContexts <= colorContextPtrs.Length);
+            Invariant.Assert(colorContextPtrs is null || numContexts <= colorContextPtrs.Length);
             
             return UnsafeNativeMethods.WICBitmapFrameDecode.GetColorContexts(_frameSource, numContexts, colorContextPtrs, out numContexts);
         }
@@ -687,9 +687,9 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         private void EnsureSource()
         {
-            if (_frameSource == null)
+            if (_frameSource is null)
             {
-                if (_decoder == null)
+                if (_decoder is null)
                 {
                     HRESULT.Check((int)WinCodecErrors.WINCODEC_ERR_NOTINITIALIZED);
                 }
@@ -700,7 +700,7 @@ namespace System.Windows.Media.Imaging
                 // exist even though the download is complete. The code below creates a
                 // decoder if one does not exist.
                 //
-                if (_decoder.InternalDecoder == null)
+                if (_decoder.InternalDecoder is null)
                 {
                     Debug.Assert(_decoder is LateBoundBitmapDecoder);
                     Debug.Assert(IsDownloading == false);

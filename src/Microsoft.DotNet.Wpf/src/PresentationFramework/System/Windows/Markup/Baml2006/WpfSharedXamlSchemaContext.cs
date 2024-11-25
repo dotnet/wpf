@@ -31,7 +31,7 @@ namespace System.Windows.Baml2006
                 {
                     RequireRuntimeType(type);
                     xType = CreateKnownBamlType(type.Name, false, _useV3Rules);
-                    if (xType == null || xType.UnderlyingType != type)
+                    if (xType is null || xType.UnderlyingType != type)
                     {
                         xType = new WpfXamlType(type, this, false /* isBamlType */, _useV3Rules);
                     }

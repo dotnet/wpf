@@ -748,7 +748,7 @@ namespace MS.Internal.AutomationProxies
 
         private bool IsStandAlone()
         {
-            return _parent == null;
+            return _parent is null;
         }
 
         #endregion

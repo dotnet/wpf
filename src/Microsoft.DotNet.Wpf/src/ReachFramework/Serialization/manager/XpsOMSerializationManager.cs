@@ -93,7 +93,7 @@ namespace System.Windows.Xps.Serialization
                         }
                 }
 
-                if (_simulator == null)
+                if (_simulator is null)
                 {
                     _simulator = new XpsOMHierarchySimulator(this,
                                                              serializedObject);
@@ -150,7 +150,7 @@ namespace System.Windows.Xps.Serialization
             Type serializerType = null;
 
 
-            if ((serializerType = base.GetSerializerType(objectType)) == null)
+            if ((serializerType = base.GetSerializerType(objectType)) is null)
             {
                 if (typeof(System.Windows.Documents.FixedDocument).IsAssignableFrom(objectType))
                 {

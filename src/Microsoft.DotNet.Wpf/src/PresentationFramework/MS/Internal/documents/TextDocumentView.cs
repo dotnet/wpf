@@ -142,7 +142,7 @@ namespace MS.Internal.Documents
             if (!success)
             {
                 // Not found in floating elements, check columns 
-                Invariant.Assert(geometry == null);
+                Invariant.Assert(geometry is null);
 
                 //  Note: since flow may decide to do calculations in background we 
                 //  have to clamp by the current pointer range read from text segments. 
@@ -265,7 +265,7 @@ namespace MS.Internal.Documents
             //          cannot be represented as TextPointer belonging to TextSegments, because
             //          Backward direction belongs to the first line and the Forward direction
             //          belongs to the next page.
-            if (positionOut == null || !ContainsCore(positionOut))
+            if (positionOut is null || !ContainsCore(positionOut))
             {
                 positionOut = position;
                 linesMoved = 0;
@@ -600,7 +600,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_segments == null)
+                if (_segments is null)
                 {
                     _segments = GetTextSegments();
                     Invariant.Assert(_segments != null, "TextSegment collection is empty.");
@@ -617,7 +617,7 @@ namespace MS.Internal.Documents
             get
             {
                 Invariant.Assert(IsValid, "TextView is not updated.");
-                if (_columns == null)
+                if (_columns is null)
                 {
                     // When getting column results, query each on for text content, used to determine if the view has text content
                     _columns = _owner.GetColumnResults(out _hasTextContent);
@@ -635,7 +635,7 @@ namespace MS.Internal.Documents
             get
             {
                 Invariant.Assert(IsValid, "TextView is not updated.");
-                if (_floatingElements == null)
+                if (_floatingElements is null)
                 {
                     _floatingElements = _owner.FloatingElementResults;
                     Invariant.Assert(_floatingElements != null, "Floating elements collection is null.");
@@ -1027,7 +1027,7 @@ namespace MS.Internal.Documents
                 {
                     cellInfo = GetCellInfoFromPoint(nestedParagraphs, _emptyParagraphCollection, point, tableFilter);
                 }
-                if (cellInfo == null)
+                if (cellInfo is null)
                 {
                     cellInfo = ((TableParagraphResult)paragraph).GetCellInfoFromPoint(point);
                 }
@@ -2586,7 +2586,7 @@ namespace MS.Internal.Documents
                             {
                                 int nesteParagraphIndex = (count > 0) ? 0 : nestedParagraphs.Count - 1;
                                 positionOut = GetPositionAtNextLineFromSiblingPara(nestedParagraphs, nesteParagraphIndex, suggestedX - TextDpi.FromTextDpi(cpcCur.Rect.u), ref count);
-                                if (positionOut == null)
+                                if (positionOut is null)
                                 {
                                     positionOut = position;
                                 }
@@ -2629,7 +2629,7 @@ namespace MS.Internal.Documents
                     if (paragraphIndex >= 0 && paragraphIndex < paragraphs.Count)
                     {
                         positionOut = GetPositionAtNextLineFromSiblingPara(paragraphs, paragraphIndex, suggestedX, ref count);
-                        if (positionOut == null)
+                        if (positionOut is null)
                         {
                             // This may happen if next para has no content
                             positionOut = position;

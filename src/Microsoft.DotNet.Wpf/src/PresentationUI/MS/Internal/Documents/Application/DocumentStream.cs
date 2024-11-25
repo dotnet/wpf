@@ -243,7 +243,7 @@ internal sealed class DocumentStream : StreamProxy, IDisposable
 
         //----------------------------------------------------------------------
         // Open File in System Generated Location
-        if (tempToken == null)
+        if (tempToken is null)
         {
             // TODO: Should we prompt user asking if it is okay in the case
             // where the source is a local file, as it may mean degraded
@@ -407,7 +407,7 @@ internal sealed class DocumentStream : StreamProxy, IDisposable
     /// </returns>
     internal bool ReOpenWriteable()
     {
-        if ((_xpsFileToken == null) || (!_xpsFileToken.Location.IsFile))
+        if ((_xpsFileToken is null) || (!_xpsFileToken.Location.IsFile))
         {
             return false;
         }
@@ -510,17 +510,17 @@ internal sealed class DocumentStream : StreamProxy, IDisposable
     {
         bool success = false;
 
-        if (_original == null)
+        if (_original is null)
         {
             throw new InvalidOperationException(
                 SR.DocumentStreamMustBeTemporary);
         }
-        if (_original._xpsFileToken == null)
+        if (_original._xpsFileToken is null)
         {
             throw new InvalidOperationException(
                 SR.DocumentStreamMustBeFileSource);
         }
-        if (_xpsFileToken == null)
+        if (_xpsFileToken is null)
         {
             throw new InvalidOperationException(
                 SR.DocumentStreamMustBeFileSource);

@@ -217,7 +217,7 @@ namespace MS.Internal
         {
             // First time this is called, initialize from the registry
 
-            if( _enabledInRegistry == null )
+            if( _enabledInRegistry is null )
             {
                 bool enabled = false;
 
@@ -261,7 +261,7 @@ namespace MS.Internal
         {
             // Don't bother building the string if this trace is going to be ignored.
 
-            if( _traceSource == null
+            if( _traceSource is null
                 || !_traceSource.Switch.ShouldTrace( type ))
             {
                 return null;
@@ -288,7 +288,7 @@ namespace MS.Internal
                     // If this parameter is null, convert to "<null>"; otherwise, when a string.format is ultimately called
                     // it produces bad results.
 
-                    if( parameters[j] == null )
+                    if( parameters[j] is null )
                     {
                         parameters[j] = "<null>";
                     }
@@ -368,7 +368,7 @@ namespace MS.Internal
 
         static public string ToStringHelper(object value)
         {
-            if (value == null)
+            if (value is null)
                 return "<null>";
 
             // PreSharp uses message numbers that the C# compiler doesn't know about.
@@ -442,7 +442,7 @@ namespace MS.Internal
 
         static public string TypeName(object value)
         {
-            if (value == null)
+            if (value is null)
                 return "<null>";
 
             return value.GetType().Name;
@@ -478,7 +478,7 @@ namespace MS.Internal
 
         static public Type GetTypeHelper(object value)
         {
-            if (value == null)
+            if (value is null)
             {
                 return typeof(ValueType);
             }

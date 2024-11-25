@@ -329,7 +329,7 @@ namespace MS.Internal.IO.Packaging
             get
             {
                 string contentType = GetOleProperty(FormatId.DocumentSummaryInformation, PropertyId.ContentType) as string;
-                if (contentType == null)
+                if (contentType is null)
                 {
                     return contentType;
                 }
@@ -343,7 +343,7 @@ namespace MS.Internal.IO.Packaging
 
             set
             {
-                if (value == null)
+                if (value is null)
                 {
                     //indicates that the property should be deleted.
                     SetOleProperty(FormatId.DocumentSummaryInformation, PropertyId.ContentType, value);
@@ -520,7 +520,7 @@ namespace MS.Internal.IO.Packaging
             // fmtid is always either DocSum or Sum.
             IPropertyStorage ps =
                 fmtid == FormatId.SummaryInformation ? _psSummInfo : _psDocSummInfo;
-            if (ps == null)
+            if (ps is null)
             {
                 // This file doesn't even contain the property storage that this
                 // property belongs to, so it certainly doesn't contain the property.
@@ -641,7 +641,7 @@ namespace MS.Internal.IO.Packaging
             IPropertyStorage ps =
                 fmtid == FormatId.SummaryInformation ? _psSummInfo : _psDocSummInfo;
 
-            if (ps == null)
+            if (ps is null)
             {
                 //
                 // The property set does not exist, so create it.
@@ -680,7 +680,7 @@ namespace MS.Internal.IO.Packaging
             propSpecs[0].propType = (uint)PropSpecType.Id;
             propSpecs[0].union.propId = propId;
 
-            if (propVal == null)
+            if (propVal is null)
             {
                 //
                 // New value is null => remove the property. Unlike in the case of ReadMultiple,

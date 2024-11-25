@@ -107,7 +107,7 @@ namespace System.Windows.Media
         public override bool IsEmpty()
         {
             GeometryCollection children = Children;
-            if (children == null)
+            if (children is null)
             {
                 return true;
             }
@@ -126,7 +126,7 @@ namespace System.Windows.Media
         internal override bool IsObviouslyEmpty()
         {
             GeometryCollection children = Children;
-            return (children == null) || (children.Count == 0);
+            return (children is null) || (children.Count == 0);
         }
 
         #endregion IsEmpty
@@ -137,7 +137,7 @@ namespace System.Windows.Media
         public override bool MayHaveCurves()
         {
             GeometryCollection children = Children;
-            if (children == null)
+            if (children is null)
             {
                 return false;
             }

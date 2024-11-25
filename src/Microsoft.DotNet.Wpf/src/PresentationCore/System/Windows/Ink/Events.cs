@@ -39,12 +39,12 @@ namespace System.Windows.Ink
         /// <summary>Constructor</summary>
         public StrokeCollectionChangedEventArgs(StrokeCollection added, StrokeCollection removed)
         {
-            if ( added == null && removed == null )
+            if ( added is null && removed is null )
             {
                 throw new ArgumentException(SR.Format(SR.CannotBothBeNull, "added", "removed"));
             }
-            _added = ( added == null ) ? null : new StrokeCollection.ReadOnlyStrokeCollection(added);
-            _removed = ( removed == null ) ? null : new StrokeCollection.ReadOnlyStrokeCollection(removed);
+            _added = ( added is null ) ? null : new StrokeCollection.ReadOnlyStrokeCollection(added);
+            _removed = ( removed is null ) ? null : new StrokeCollection.ReadOnlyStrokeCollection(removed);
         }
 
         /// <summary>Set of strokes that where added, result may be an empty collection</summary>
@@ -52,7 +52,7 @@ namespace System.Windows.Ink
         {
             get
             {
-                if ( _added == null )
+                if ( _added is null )
                 {
                     _added = new StrokeCollection.ReadOnlyStrokeCollection(new StrokeCollection());
                 }
@@ -65,7 +65,7 @@ namespace System.Windows.Ink
         {
             get
             {
-                if ( _removed == null )
+                if ( _removed is null )
                 {
                     _removed = new StrokeCollection.ReadOnlyStrokeCollection(new StrokeCollection());
                 }
@@ -105,7 +105,7 @@ namespace System.Windows.Ink
                                             object newValue,
                                             object previousValue)
         {
-            if ( newValue == null && previousValue == null )
+            if ( newValue is null && previousValue is null )
             {
                 throw new ArgumentException(SR.Format(SR.CannotBothBeNull, "newValue", "previousValue"));
             }
@@ -160,7 +160,7 @@ namespace System.Windows.Ink
         internal ExtendedPropertiesChangedEventArgs(ExtendedProperty oldProperty,
                                                     ExtendedProperty newProperty)
         {
-            if ( oldProperty == null && newProperty == null )
+            if ( oldProperty is null && newProperty is null )
             {
                 throw new ArgumentNullException("oldProperty");
             }

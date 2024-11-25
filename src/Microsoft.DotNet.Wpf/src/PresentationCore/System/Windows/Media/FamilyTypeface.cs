@@ -221,7 +221,7 @@ namespace System.Windows.Media
         /// </summary>
         public bool Equals(FamilyTypeface typeface)
         {
-            if (typeface == null)
+            if (typeface is null)
                 return false;
 
             return (
@@ -254,7 +254,7 @@ namespace System.Windows.Media
         {
             get
             {
-                if (_characterMetrics == null)
+                if (_characterMetrics is null)
                 {
                     _characterMetrics = new CharacterMetricsDictionary();
                 }

@@ -33,7 +33,7 @@ namespace MS.Internal.ComponentModel
         public override MethodBase SelectMethod(BindingFlags bindingAttr, MethodBase[] match, Type[] types, ParameterModifier[] modifiers)
         {
             // Short circuit for cases where someone didn't pass in a types array.
-            if (types == null) 
+            if (types is null) 
             {
                 if (match.Length > 1) 
                 {

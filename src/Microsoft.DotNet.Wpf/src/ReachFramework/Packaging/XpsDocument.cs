@@ -486,7 +486,7 @@ namespace System.Windows.Xps.Packaging
             {
                 throw new NullReferenceException("signature.PackageSignature.SignaturePart");
             }
-            if( CurrentXpsManager == null )
+            if( CurrentXpsManager is null )
             {
                 throw new InvalidOperationException(SR.ReachPackaging_DocumentWasClosed);
             }
@@ -514,7 +514,7 @@ namespace System.Windows.Xps.Packaging
         {
             CheckDisposed();
         
-            if( CurrentXpsManager == null )
+            if( CurrentXpsManager is null )
             {
                 throw new InvalidOperationException(SR.ReachPackaging_DocumentWasClosed);
             }
@@ -545,7 +545,7 @@ namespace System.Windows.Xps.Packaging
         {
             CheckDisposed();
         
-            if( CurrentXpsManager == null )
+            if( CurrentXpsManager is null )
             {
                 throw new InvalidOperationException(SR.ReachPackaging_DocumentWasClosed);
             }
@@ -590,7 +590,7 @@ namespace System.Windows.Xps.Packaging
         {
             CheckDisposed();
         
-            if( CurrentXpsManager == null )
+            if( CurrentXpsManager is null )
             {
                 throw new InvalidOperationException(SR.ReachPackaging_DocumentWasClosed);
             }
@@ -604,7 +604,7 @@ namespace System.Windows.Xps.Packaging
                 throw new XpsPackagingException(SR.ReachPackaging_PackageUriNull);
             }
 
-            if (CurrentXpsManager.StartingPart == null)
+            if (CurrentXpsManager.StartingPart is null)
             {
                 return null;
             }
@@ -637,7 +637,7 @@ namespace System.Windows.Xps.Packaging
         CommitInternal(
             )
         {
-            if( CurrentXpsManager == null )
+            if( CurrentXpsManager is null )
             {
                 throw new InvalidOperationException(SR.ReachPackaging_DocumentWasClosed);
             }
@@ -707,7 +707,7 @@ namespace System.Windows.Xps.Packaging
         void
         EnsureThumbnail()
         {
-            if( _thumbnail == null )
+            if( _thumbnail is null )
             {
                  _thumbnail = CurrentXpsManager.EnsureThumbnail(this, null );
             }
@@ -842,7 +842,7 @@ namespace System.Windows.Xps.Packaging
         {
             ArgumentNullException.ThrowIfNull(certificate);
 
-            if( CurrentXpsManager == null )
+            if( CurrentXpsManager is null )
             {
                 throw new InvalidOperationException(SR.ReachPackaging_DocumentWasClosed);
             }

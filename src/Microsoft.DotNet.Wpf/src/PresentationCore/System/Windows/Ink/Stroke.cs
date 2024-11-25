@@ -126,7 +126,7 @@ namespace System.Windows.Ink
             //
             // copy state
             //
-            Debug.Assert(_cachedGeometry == null || _cachedGeometry.IsFrozen);
+            Debug.Assert(_cachedGeometry is null || _cachedGeometry.IsFrozen);
             //we don't need to cache if this is frozen
             //if (null != _cachedGeometry)
             //{
@@ -711,7 +711,7 @@ namespace System.Windows.Ink
         {
             get
             {
-                if (_extendedProperties == null)
+                if (_extendedProperties is null)
                 {
                     _extendedProperties = new ExtendedPropertyCollection();
                 }

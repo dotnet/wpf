@@ -142,7 +142,7 @@ namespace System.Windows.Media
                 // Ensure that we can Append to the Children collection
                 //
                 
-                if (children == null)
+                if (children is null)
                 {
                     throw new InvalidOperationException(SR.DrawingGroup_CannotAppendToNullCollection);                                
                 }

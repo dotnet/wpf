@@ -56,7 +56,7 @@ namespace System.Windows.Baml2006
                     return result;
                 }
                 // Getter fallback: see comment on WpfXamlMember.AsContentProperty
-                if (!_member.ApplyGetterFallback || _member.UnderlyingMember == null)
+                if (!_member.ApplyGetterFallback || _member.UnderlyingMember is null)
                 {
                     return result;
                 }

@@ -64,7 +64,7 @@ namespace System.Windows.Xps.Serialization
             ReachSerializerContext context
             )
         {
-            if(context == null)
+            if(context is null)
             {
 
             }

@@ -255,7 +255,7 @@ namespace System.Windows.Media
                 throw new ArgumentException(SR.CompositeFont_DuplicateTypeface);
 
             // Make room for the new item.
-            if (_items == null)
+            if (_items is null)
             {
                 _items = new FamilyTypeface[InitialCapacity];
             }
@@ -283,7 +283,7 @@ namespace System.Windows.Media
 
         private void InitializeItemsFromInnerList()
         {
-            if (_innerList != null && _items == null)
+            if (_innerList != null && _items is null)
             {
                 // Create the array.
                 FamilyTypeface[] items = new FamilyTypeface[_count];
@@ -369,7 +369,7 @@ namespace System.Windows.Media
             ArgumentNullException.ThrowIfNull(obj);
 
             FamilyTypeface familyTypeface = obj as FamilyTypeface;
-            if (familyTypeface == null)
+            if (familyTypeface is null)
                 throw new ArgumentException(SR.Format(SR.CannotConvertType, obj.GetType(), typeof(FamilyTypeface)));
 
             return familyTypeface;
@@ -445,7 +445,7 @@ namespace System.Windows.Media
                 {
                     // If there is no current item a non-generic IEnumerator should throw an exception,
                     // but a generic IEnumerator<T> is not required to.
-                    if (_current == null)
+                    if (_current is null)
                         throw new InvalidOperationException(SR.Enumerator_VerifyContext);
 
                     return _current; 

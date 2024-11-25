@@ -166,7 +166,7 @@ namespace System.Windows.Documents
         {
             UIElement childElement = this.Child;
 
-            if(_uiElementIsland == null || _uiElementIsland.Root != childElement)
+            if(_uiElementIsland is null || _uiElementIsland.Root != childElement)
             {
                 if(_uiElementIsland != null)
                 {

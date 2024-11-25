@@ -54,7 +54,7 @@ namespace Microsoft.Windows.Automation.Peers
             RibbonTwoLineText tlt = (RibbonTwoLineText)Owner;
             DependencyObject templatedParent = tlt.TemplatedParent;
             // If the templatedParent is a ContentPresenter, this RibbonTwoLineText is generated from a DataTemplate
-            if (templatedParent == null || templatedParent is ContentPresenter)
+            if (templatedParent is null || templatedParent is ContentPresenter)
             {
                 return base.IsControlElementCore();
             }

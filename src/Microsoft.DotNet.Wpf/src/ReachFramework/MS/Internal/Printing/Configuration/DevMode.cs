@@ -381,7 +381,7 @@ namespace MS.Internal.Printing.Configuration
 
         public void EnsureInitialized()
         {
-            if (this._byteData == null)
+            if (this._byteData is null)
             {
                 this._byteData = new byte[GetVariableByteSize(true) + WINVER_0x0500_FixedByteSize];
                 this._isDevModeW = true;
@@ -421,7 +421,7 @@ namespace MS.Internal.Printing.Configuration
         /// <param name="fields">Fields to copy</param>
         public void Copy(DevMode src, DevModeFields fields)
         {
-            if (src == null)
+            if (src is null)
             {
                 return;
             }
@@ -489,7 +489,7 @@ namespace MS.Internal.Printing.Configuration
         /// <returns>True if both DEVMODE were obtained or apply to the same device</returns>
         public static bool AreCompatible(DevMode a, DevMode b)
         {
-            if (a == null || b == null)
+            if (a is null || b is null)
             {
                 return false;
             }

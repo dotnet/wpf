@@ -138,7 +138,7 @@ namespace MS.Win32.Penimc
         {
             get
             {
-                if (_pimcManagerThreadStatic == null)
+                if (_pimcManagerThreadStatic is null)
                 {
                     _pimcManagerThreadStatic = CreatePimcManager();
                 }

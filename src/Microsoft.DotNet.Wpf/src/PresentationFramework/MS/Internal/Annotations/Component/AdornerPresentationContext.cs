@@ -45,7 +45,7 @@ namespace MS.Internal.Annotations.Component
             _adornerLayer = adornerLayer;
             if (adorner != null)
             {
-                if (adorner.AnnotationComponent == null)
+                if (adorner.AnnotationComponent is null)
                     throw new ArgumentNullException("annotation component");
                 if (adorner.AnnotationComponent.PresentationContext != null)
                     throw new InvalidOperationException(SR.Format(SR.ComponentAlreadyInPresentationContext, adorner.AnnotationComponent));
@@ -145,10 +145,10 @@ namespace MS.Internal.Annotations.Component
             get
             {
                 Visual parent = VisualTreeHelper.GetParent(_adornerLayer) as Visual;
-                if (parent == null) return null;
+                if (parent is null) return null;
 
                 AdornerLayer parentLayer = AdornerLayer.GetAdornerLayer((UIElement)parent);
-                if (parentLayer == null) return null;
+                if (parentLayer is null) return null;
 
                 PresentationContext p = new AdornerPresentationContext(parentLayer, null);
 
@@ -196,7 +196,7 @@ namespace MS.Internal.Annotations.Component
             {// need to find annotation adorner in layer, remove it and do house-keeping
                 AnnotationAdorner foundAdorner = this.FindAnnotationAdorner(component);
 
-                if (foundAdorner == null) throw new InvalidOperationException(SR.Format(SR.ComponentNotInPresentationContext, component));
+                if (foundAdorner is null) throw new InvalidOperationException(SR.Format(SR.ComponentNotInPresentationContext, component));
 
                 _adornerLayer.Remove(foundAdorner);
                 foundAdorner.RemoveChildren();
@@ -284,8 +284,8 @@ namespace MS.Internal.Annotations.Component
         /// <returns></returns>
         public static bool operator ==(AdornerPresentationContext left, AdornerPresentationContext right)
         {
-            if ((object)left == null)
-                return (object)right == null;
+            if ((object)left is null)
+                return (object)right is null;
 
             return left.Equals(right);
         }
@@ -323,14 +323,14 @@ namespace MS.Internal.Annotations.Component
             int level = GetComponentLevel(component);
             //get the component's adorner
             AnnotationAdorner adorner = FindAnnotationAdorner(component);
-            if (adorner == null)
+            if (adorner is null)
                 return;
 
             //set the adorner z-order
             _adornerLayer.SetAdornerZOrder(adorner, ComponentToAdorner(component.ZOrder, level));
 
             List<AnnotationAdorner> adorners = GetTopAnnotationAdorners(level, component);
-            if (adorners == null)
+            if (adorners is null)
                 return;
 
             int lastZOrder = component.ZOrder + 1;
@@ -373,7 +373,7 @@ namespace MS.Internal.Annotations.Component
         /// <returns>The annotation adorner that wraps the component in the adorner layer associated with this presentation context</returns>
         private AnnotationAdorner FindAnnotationAdorner(IAnnotationComponent component)
         {
-            if (_adornerLayer == null) return null;
+            if (_adornerLayer is null) return null;
 
             foreach (Adorner adorner in _adornerLayer.GetAdorners(component.AnnotatedElement))
             {
@@ -490,7 +490,7 @@ namespace MS.Internal.Annotations.Component
             {
                 adorner = this.FindAnnotationAdorner(component);
 
-                if (adorner == null) throw new InvalidOperationException(SR.Format(SR.ComponentNotInPresentationContext, component));
+                if (adorner is null) throw new InvalidOperationException(SR.Format(SR.ComponentNotInPresentationContext, component));
             }
 
             return adorner;

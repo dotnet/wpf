@@ -143,7 +143,7 @@ namespace MS.Internal.Data
         internal PathParser PathParser { get { return _pathParser; } }
         internal ValueConverterContext ValueConverterContext { get { return _valueConverterContext; } }
         internal AccessorTable AccessorTable { get { return _accessorTable; } }
-        internal bool IsShutDown { get { return (_viewManager == null); } }
+        internal bool IsShutDown { get { return (_viewManager is null); } }
 
         internal bool CleanupEnabled
         {
@@ -160,7 +160,7 @@ namespace MS.Internal.Data
             get
             {
                 // lazy construction of async dispatcher
-                if (_defaultAsyncDataDispatcher == null)
+                if (_defaultAsyncDataDispatcher is null)
                     _defaultAsyncDataDispatcher = new DefaultAsyncDataDispatcher();
 
                 return _defaultAsyncDataDispatcher;
@@ -175,7 +175,7 @@ namespace MS.Internal.Data
             get
             {
                 // _currentEngine is [ThreadStatic], so there's one per thread
-                if (_currentEngine == null)
+                if (_currentEngine is null)
                 {
                     _currentEngine = new DataBindEngine();
                 }
@@ -197,7 +197,7 @@ namespace MS.Internal.Data
         internal void AddTask(IDataBindEngineClient c, TaskOps op)
         {
             // ignore requests that arrive after shutdown
-            if (_mostRecentTask == null)
+            if (_mostRecentTask is null)
                 return;
 
             // if we're adding to an empty list, request that the list be processed
@@ -218,7 +218,7 @@ namespace MS.Internal.Data
             // event handler.  This avoids flashing, at the expense of lots more
             // events and handlers (bug 1019232)
             if (op == TaskOps.AttachToContext &&
-                _layoutElement == null &&
+                _layoutElement is null &&
                 (_layoutElement = c.TargetElement as UIElement) != null)
             {
                 _layoutElement.LayoutUpdated += new EventHandler(OnLayoutUpdated);
@@ -228,7 +228,7 @@ namespace MS.Internal.Data
         internal void CancelTask(IDataBindEngineClient c, TaskOps op)
         {
             // ignore requests that arrive after shutdown
-            if (_mostRecentTask == null)
+            if (_mostRecentTask is null)
                 return;
 
             for (Task task = (Task)_mostRecentTask[c]; task != null; task = task.PreviousForClient)
@@ -244,7 +244,7 @@ namespace MS.Internal.Data
         internal void CancelTasks(IDataBindEngineClient c)
         {
             // ignore requests that arrive after shutdown
-            if (_mostRecentTask == null)
+            if (_mostRecentTask is null)
                 return;
 
             // cancel pending tasks for the given client
@@ -384,21 +384,21 @@ namespace MS.Internal.Data
         // make an async request to the scheduler that handles requests for the given target
         internal void AddAsyncRequest(DependencyObject target, AsyncDataRequest request)
         {
-            if (target == null)
+            if (target is null)
                 return;
 
             // get the appropriate scheduler
             IAsyncDataDispatcher asyncDispatcher = AsyncDataDispatcher;
             /* AsyncDataDispatcher property is cut (task 41079)
             IAsyncDataDispatcher asyncDispatcher = Binding.GetAsyncDataDispatcher(target);
-            if (asyncDispatcher == null)
+            if (asyncDispatcher is null)
             {
                 asyncDispatcher = AsyncDataDispatcher;
             }
             */
 
             // add it to the list of schedulers that need cleanup
-            if (_asyncDispatchers == null)
+            if (_asyncDispatchers is null)
             {
                 _asyncDispatchers = new HybridDictionary(1);    // lazy instantiation
             }
@@ -500,7 +500,7 @@ namespace MS.Internal.Data
                 _crossThreadQueue.Enqueue(op);
                 _crossThreadCost += cost;
 
-                if (_crossThreadDispatcherOperation == null)
+                if (_crossThreadDispatcherOperation is null)
                 {
                     _crossThreadDispatcherOperation = Dispatcher.BeginInvoke(
                         DispatcherPriority.ContextIdle,
@@ -546,7 +546,7 @@ namespace MS.Internal.Data
                         }
                     }
 
-                    if (op == null)
+                    if (op is null)
                         break;
 
                     // do the work

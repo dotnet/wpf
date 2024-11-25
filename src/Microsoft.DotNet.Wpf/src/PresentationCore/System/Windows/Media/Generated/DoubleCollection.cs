@@ -436,7 +436,7 @@ namespace System.Windows.Media
         {
             get
             {
-                if (s_empty == null)
+                if (s_empty is null)
                 {
                     DoubleCollection collection = new DoubleCollection();
                     collection.Freeze();

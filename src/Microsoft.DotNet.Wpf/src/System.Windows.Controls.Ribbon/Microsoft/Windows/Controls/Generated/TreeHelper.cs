@@ -41,7 +41,7 @@ namespace Microsoft.Windows.Controls
             {
                 parent = VisualTreeHelper.GetParent(element);
             }
-            if (parent == null)
+            if (parent is null)
             {
                 parent = LogicalTreeHelper.GetParent(element);
             }
@@ -154,7 +154,7 @@ namespace Microsoft.Windows.Controls
             while (element != null)
             {
                 DependencyObject parent = GetParent(element);
-                if (parent == null)
+                if (parent is null)
                 {
                     return element;
                 }
@@ -175,7 +175,7 @@ namespace Microsoft.Windows.Controls
             while (element != null)
             {
                 DependencyObject parent = GetVisualParent(element, includeContentElements);
-                if (parent == null)
+                if (parent is null)
                 {
                     return element;
                 }
@@ -257,8 +257,8 @@ namespace Microsoft.Windows.Controls
         /// </summary>
         public static bool IsVisualAncestorOf(DependencyObject ancestor, DependencyObject descendant)
         {
-            if (ancestor == null ||
-                descendant == null)
+            if (ancestor is null ||
+                descendant is null)
             {
                 return false;
             }

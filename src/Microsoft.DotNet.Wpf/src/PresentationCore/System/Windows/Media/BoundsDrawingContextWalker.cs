@@ -353,7 +353,7 @@ namespace System.Windows.Media
             if (_haveClip)
             {
                 // Ensure the clip stack
-                if (_clipStack == null)
+                if (_clipStack is null)
                 {
                     _clipStack = new Stack<Rect>(2);
                 }
@@ -407,7 +407,7 @@ namespace System.Windows.Media
             Transform transform)
         {
             // Ensure the transform stack
-            if (_transformStack == null)
+            if (_transformStack is null)
             {
                 _transformStack = new Stack<Matrix>(2);
             }
@@ -622,7 +622,7 @@ namespace System.Windows.Media
         /// <param name="pushType">the push type to store</param>
         private void PushTypeStack(PushType pushType)
         {
-            if (_pushTypeStack == null)
+            if (_pushTypeStack is null)
             {
                 _pushTypeStack = new Stack<PushType>(2);
             }

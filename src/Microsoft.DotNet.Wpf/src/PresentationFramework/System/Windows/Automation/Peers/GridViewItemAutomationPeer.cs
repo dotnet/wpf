@@ -67,8 +67,8 @@ namespace System.Windows.Automation.Peers
 
                     foreach (UIElement ele in rowPresenter.ActualCells)
                     {
-                        GridViewCellAutomationPeer peer = (oldChildren == null ? null : (GridViewCellAutomationPeer)oldChildren[ele]);
-                        if (peer == null)
+                        GridViewCellAutomationPeer peer = (oldChildren is null ? null : (GridViewCellAutomationPeer)oldChildren[ele]);
+                        if (peer is null)
                         {
                             if (ele is ContentPresenter)
                             {
@@ -85,7 +85,7 @@ namespace System.Windows.Automation.Peers
                         }
 
                         //protection from indistinguishable UIElement - for example, 2 UIElement wiht same value
-                        if (_dataChildren[ele] == null)
+                        if (_dataChildren[ele] is null)
                         {
                             //Set Cell's row and column
                             peer.Column = column;

@@ -1100,7 +1100,7 @@ namespace MS.Internal.PtsHost
                 }
             }
 
-            if(objects == null || objects.Count == 0)
+            if(objects is null || objects.Count == 0)
             {
                 return null;
             }
@@ -1365,7 +1365,7 @@ namespace MS.Internal.PtsHost
         /// </param>
         internal Size MeasureChild(InlineObjectRun inlineObject)
         {
-            if(_currentLine == null)
+            if(_currentLine is null)
             {
                 return ((OptimalTextSource)StructuralCache.TextFormatterHost.Context).MeasureChild(inlineObject);
             }
@@ -1510,7 +1510,7 @@ namespace MS.Internal.PtsHost
         private void EnsureLineProperties()
         {
             // We also need to recreate line properties if DPI has changed.
-            if (_lineProperties == null || (_lineProperties != null && _lineProperties.DefaultTextRunProperties.PixelsPerDip != StructuralCache.TextFormatterHost.PixelsPerDip))
+            if (_lineProperties is null || (_lineProperties != null && _lineProperties.DefaultTextRunProperties.PixelsPerDip != StructuralCache.TextFormatterHost.PixelsPerDip))
             {
                 // For default text properties always set background to null.
                 // REASON: If element associated with the text run is block element, ignore background
@@ -1550,12 +1550,12 @@ namespace MS.Internal.PtsHost
         /// </param>
         private void SubmitEmbeddedObjects<T>(ref List<T> objectsCached, int dcpStart, int dcpLim, List<T> objectsNew) where T : EmbeddedObject
         {
-            ErrorHandler.Assert(objectsNew == null || (objectsNew[0].Dcp >= dcpStart && objectsNew[objectsNew.Count-1].Dcp <= dcpLim), ErrorHandler.SubmitInvalidList);
+            ErrorHandler.Assert(objectsNew is null || (objectsNew[0].Dcp >= dcpStart && objectsNew[objectsNew.Count-1].Dcp <= dcpLim), ErrorHandler.SubmitInvalidList);
 
             // Make sure that cached objects array exists
-            if (objectsCached == null)
+            if (objectsCached is null)
             {
-                if (objectsNew == null) 
+                if (objectsNew is null) 
                 {
                     // Nothing to do
                     return; 
@@ -1573,7 +1573,7 @@ namespace MS.Internal.PtsHost
             // (1) Only remove obsolete objects (no objects to add)
             // (2) Only add new objects (no objects are obsolete)
             // (3) Merge new objects into existing list (may add and remove objects)
-            if (objectsNew == null)
+            if (objectsNew is null)
             {
                 // (1) Only remove obsolete objects (no objects to add)
                 for (int index = start; index < end; index++)

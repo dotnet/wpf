@@ -123,7 +123,7 @@ namespace MS.Internal.SchemaGen.Main
 
         private static XmlNode FindElement(XmlNode node, string name)
         {
-            if (node == null)
+            if (node is null)
             {
                 return null;
             }
@@ -143,7 +143,7 @@ namespace MS.Internal.SchemaGen.Main
 
         private static XmlNode FindAttributeWithDefault(XmlNode node, ArrayList defAttr)
         {
-            if (node == null)
+            if (node is null)
             {
                 return null;
             }

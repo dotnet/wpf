@@ -66,7 +66,7 @@ namespace MS.Internal.AppModel
         private ArrayList GetSubStreams(object key)
         {
             ArrayList subStreams = (ArrayList) _subStreams[key];
-            if (subStreams == null)
+            if (subStreams is null)
             {
                 subStreams = new ArrayList(3);
                 _subStreams[key] = subStreams;
@@ -98,7 +98,7 @@ namespace MS.Internal.AppModel
                     LocalValueEntry localValueEntry = (LocalValueEntry)dpEnumerator.Current;
                     FrameworkPropertyMetadata metadata = localValueEntry.Property.GetMetadata(element.DependencyObjectType) as FrameworkPropertyMetadata;
                                         
-                    if (metadata == null)
+                    if (metadata is null)
                     {
                         continue;
                     }
@@ -115,7 +115,7 @@ namespace MS.Internal.AppModel
                         if (object.ReferenceEquals(localValueEntry.Property, Frame.SourceProperty))
                             continue;
 
-                        if (subStreams == null)
+                        if (subStreams is null)
                         {
                             subStreams = new ArrayList(3);
                         }
@@ -164,7 +164,7 @@ namespace MS.Internal.AppModel
         private void SaveState(object node)
         {
             UIElement element = node as UIElement;
-            if (element == null)
+            if (element is null)
             {
                 return;
             }
@@ -207,7 +207,7 @@ namespace MS.Internal.AppModel
                     object customState = customJournalingObject.GetJournalState(JournalReason.NewContentNavigation);
                     if (customState != null)
                     {
-                        if (_customJournaledObjects == null)
+                        if (_customJournaledObjects is null)
                         {
                             _customJournaledObjects = new HybridDictionary(2);
                         }
@@ -269,7 +269,7 @@ namespace MS.Internal.AppModel
                         }
 
                         //Using Binary formatter
-                        if(newValue == null)
+                        if(newValue is null)
                         {
                             dataStream.Position = 0;
                             #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
@@ -286,7 +286,7 @@ namespace MS.Internal.AppModel
         private void LoadState(object node)
         {
             UIElement element = node as UIElement;
-            if (element == null)
+            if (element is null)
             {
                 return;
             }
@@ -346,13 +346,13 @@ namespace MS.Internal.AppModel
             }
 
             DependencyObject treeNode = node as DependencyObject;
-            if (treeNode == null)
+            if (treeNode is null)
             {
                 return;
             }
 
             IEnumerator e = LogicalTreeHelper.GetChildren(treeNode).GetEnumerator();
-            if (e == null)
+            if (e is null)
             {
                 return;
             }
@@ -365,7 +365,7 @@ namespace MS.Internal.AppModel
 
         internal void Save(Object root)
         {
-            if (_subStreams == null)
+            if (_subStreams is null)
             {
                 _subStreams = new HybridDictionary(3);
             }
@@ -395,7 +395,7 @@ namespace MS.Internal.AppModel
         {
             get
             {
-                if (_formatter == null)
+                if (_formatter is null)
                 {
                     _formatter = new BinaryFormatter();
                 }

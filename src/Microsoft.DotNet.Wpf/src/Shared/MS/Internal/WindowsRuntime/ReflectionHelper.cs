@@ -63,7 +63,7 @@ namespace MS.Internal
 
                 method = type.GetMethod(methodName, Type.EmptyTypes);
 
-                if (method == null)
+                if (method is null)
                 {
                     throw new MissingMethodException(methodName);
                 }
@@ -96,7 +96,7 @@ namespace MS.Internal
 
                 method = type.GetMethod(methodName, new Type[] { typeof(TArg) });
 
-                if (method == null)
+                if (method is null)
                 {
                     throw new MissingMethodException(methodName);
                 }
@@ -146,7 +146,7 @@ namespace MS.Internal
 
                 method = obj.GetType().GetMethod(methodName, Type.EmptyTypes);
 
-                if (method == null)
+                if (method is null)
                 {
                     throw new MissingMethodException(methodName);
                 }
@@ -177,7 +177,7 @@ namespace MS.Internal
                 object result;
 
                 method = obj.GetType().GetMethod(methodName, new Type[] { typeof(TArg1) });
-                if (method == null)
+                if (method is null)
                 {
                     throw new MissingMethodException(methodName);
                 }
@@ -231,7 +231,7 @@ namespace MS.Internal
                 object result;
 
                 method = obj.GetType().GetMethod(methodName, new Type[] { typeof(TArg1), typeof(TArg2) });
-                if (method == null)
+                if (method is null)
                 {
                     throw new MissingMethodException(methodName);
                 }
@@ -283,7 +283,7 @@ namespace MS.Internal
                 object result;
                 
                 fieldInfo = obj.GetType().GetField(fieldName);
-                if (fieldInfo == null)
+                if (fieldInfo is null)
                 {
                     throw new MissingFieldException(fieldName);
                 }
@@ -308,7 +308,7 @@ namespace MS.Internal
             public static object ReflectionNew(this Type type)
             {
                 ConstructorInfo constructor = type.GetConstructor(Type.EmptyTypes);
-                if (constructor == null)
+                if (constructor is null)
                 {
                     string constructorName = $"{type.FullName}.{type.Name}()";
                     throw new MissingMethodException(constructorName);
@@ -333,7 +333,7 @@ namespace MS.Internal
             public static object ReflectionNew<TArg1>(this Type type, TArg1 arg1)
             {
                 ConstructorInfo constructor = type.GetConstructor(new Type[] { typeof(TArg1) });
-                if (constructor == null)
+                if (constructor is null)
                 {
                     string constructorName = $"{type.FullName}.{type.Name}({typeof(TArg1).Name})";
                     throw new MissingMethodException(constructorName);
@@ -360,7 +360,7 @@ namespace MS.Internal
             public static object ReflectionNew<TArg1, TArg2>(this Type type, TArg1 arg1, TArg2 arg2)
             {
                 ConstructorInfo constructor = type.GetConstructor(new Type[] { typeof(TArg1), typeof(TArg2) });
-                if (constructor == null)
+                if (constructor is null)
                 {
                     string constructorName = $"{type.FullName}.{type.Name}({typeof(TArg1).Name},{typeof(TArg2).Name})";
                     throw new MissingMethodException(constructorName);
@@ -388,7 +388,7 @@ namespace MS.Internal
                 Type type = obj.GetType();
                 PropertyInfo p = type.GetProperty(propertyName);
 
-                if (p == null)
+                if (p is null)
                 {
                     throw new MissingMemberException(propertyName);
                 }
@@ -426,7 +426,7 @@ namespace MS.Internal
             public static TResult ReflectionStaticGetProperty<TResult>(this Type type, string propertyName)
             {
                 PropertyInfo p = type.GetProperty(propertyName, BindingFlags.Static);
-                if (p == null)
+                if (p is null)
                 {
                     throw new MissingMemberException(propertyName);
                 }

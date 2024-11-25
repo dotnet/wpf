@@ -243,7 +243,7 @@ namespace System.Windows.Input.StylusPointer
                 input.Handled = true;
                 e.Cancel();
             }
-            else if (!isPromotedMouseMessage && stylusDevice == null)
+            else if (!isPromotedMouseMessage && stylusDevice is null)
             {
                 switch (rawMouseInputReport.Actions)
                 {
@@ -764,7 +764,7 @@ namespace System.Windows.Input.StylusPointer
             // we re-evaluate the element the stylus is over.
             //
             // See ReevaluateStylusOver for details.
-            if (_reevaluateCaptureOperation == null)
+            if (_reevaluateCaptureOperation is null)
             {
                 _reevaluateCaptureOperation = Dispatcher.BeginInvoke(DispatcherPriority.Input, _reevaluateCaptureDelegate, null);
             }
@@ -779,7 +779,7 @@ namespace System.Windows.Input.StylusPointer
         {
             _reevaluateCaptureOperation = null;
 
-            if (_stylusCapture == null)
+            if (_stylusCapture is null)
                 return null;
 
             bool killCapture = false;
@@ -867,7 +867,7 @@ namespace System.Windows.Input.StylusPointer
             // the user can change the input device to avoid the infinite loops, or close
             // the app if nothing else works.
             //
-            if (_reevaluateStylusOverOperation == null)
+            if (_reevaluateStylusOverOperation is null)
             {
                 _reevaluateStylusOverOperation = Dispatcher.BeginInvoke(DispatcherPriority.Input, _reevaluateStylusOverDelegate, null);
             }
@@ -1101,7 +1101,7 @@ namespace System.Windows.Input.StylusPointer
         {
             StylusEventArgs stylusEventArgs = e.StagingItem.Input as StylusEventArgs;
 
-            if (stylusEventArgs == null)
+            if (stylusEventArgs is null)
             {
                 return;
             }
@@ -1217,7 +1217,7 @@ namespace System.Windows.Input.StylusPointer
             // If current StylusDevice is becoming null, make sure we update the over state
             // before we update _currentStylusDevice or else the over property will not update
             // correctly!
-            if (updateOver && pointerStylusDevice == null && stylusDeviceChange && newOver == null)
+            if (updateOver && pointerStylusDevice is null && stylusDeviceChange && newOver is null)
             {
                 // This will cause UpdateOverProperty() to be called.
                 _currentStylusDevice.ChangeStylusOver(newOver); // This should be null.
@@ -1254,7 +1254,7 @@ namespace System.Windows.Input.StylusPointer
         /// <returns>The associated plugin manager or null if none found</returns>
         internal PointerStylusPlugInManager GetManagerForSource(PresentationSource source)
         {
-            if (source == null)
+            if (source is null)
             {
                 return null;
             }

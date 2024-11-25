@@ -165,7 +165,7 @@ namespace System.Windows.Documents
             if (string.IsNullOrWhiteSpace(missingFragmentText) ||
                 string.IsNullOrWhiteSpace(lastTokenText) ||
                 string.IsNullOrWhiteSpace(documentText) ||
-                spellChecker == null ||
+                spellChecker is null ||
                 !spellChecker.HasErrors(lastTokenText))
             {
                 return null;

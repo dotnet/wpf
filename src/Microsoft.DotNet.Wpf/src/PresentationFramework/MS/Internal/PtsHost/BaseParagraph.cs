@@ -112,7 +112,7 @@ namespace MS.Internal.PtsHost
             out int dvr)                        
         {
             // Suppress top space only in paginated scenarios.
-            dvr = (mcs == null || (suppressTopSpace)) ? 0 : mcs.Margin;
+            dvr = (mcs is null || (suppressTopSpace)) ? 0 : mcs.Margin;
         }
 
         /// <summary>

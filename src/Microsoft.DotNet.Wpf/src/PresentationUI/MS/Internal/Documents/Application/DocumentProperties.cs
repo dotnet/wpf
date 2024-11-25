@@ -223,10 +223,10 @@ namespace MS.Internal.Documents.Application
             // Ensure that DocumentProperties has not been constructed yet, and initialize a
             // new instance.
             System.Diagnostics.Debug.Assert(
-                Current == null,
+                Current is null,
                 "DocumentProperties initialized twice.");
 
-            if (Current == null)
+            if (Current is null)
             {
                 _current = new DocumentProperties(uri);
             }
@@ -254,12 +254,12 @@ namespace MS.Internal.Documents.Application
         /// </returns>
         internal bool VerifyPropertiesUnchanged()
         {
-            if (_xpsProperties == null )
+            if (_xpsProperties is null )
             {
                 return false;
             }
 
-            if (_rmProperties == null)
+            if (_rmProperties is null)
             {
                 return true;
             }

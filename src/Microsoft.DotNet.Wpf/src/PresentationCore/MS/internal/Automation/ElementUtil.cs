@@ -63,7 +63,7 @@ namespace MS.Internal.Automation
 
         internal static Visual GetFirstChild( Visual el )
         {
-            if (el == null)
+            if (el is null)
             {
                 return null;
             }
@@ -73,7 +73,7 @@ namespace MS.Internal.Automation
 
         internal static Visual GetLastChild( Visual el )
         {
-            if (el == null)
+            if (el is null)
             {
                 return null;
             }
@@ -88,7 +88,7 @@ namespace MS.Internal.Automation
             // are in our parent's children collection (ie. our siblings)
             Visual parent = VisualTreeHelper.GetParent(el) as Visual;
             // If parent is null, we're at root, so have no siblings
-            if (parent == null)
+            if (parent is null)
             {
                 return null;
             }
@@ -102,7 +102,7 @@ namespace MS.Internal.Automation
             // are in our parent's children collection (ie. our siblings)
             Visual parent = VisualTreeHelper.GetParent(el) as Visual;
             // If parent is null, we're at root, so have no siblings
-            if (parent == null)
+            if (parent is null)
             {
                 return null;
             }
@@ -117,7 +117,7 @@ namespace MS.Internal.Automation
             for( ; ; )
             {
                 Visual test = VisualTreeHelper.GetParent(scan) as Visual;
-                if( test == null )
+                if( test is null )
                     break;
                 scan = test;
             }
@@ -165,7 +165,7 @@ namespace MS.Internal.Automation
         {
             HwndSource hwndSource = HwndSource.CriticalFromHwnd(hwnd);
 
-            if(hwndSource == null)
+            if(hwndSource is null)
                 return null;
 
             Point               pointClient = PointUtil.ScreenToClient( pointScreen, hwndSource );
@@ -193,7 +193,7 @@ namespace MS.Internal.Automation
             Dispatcher dispatcher = peer.Dispatcher;
 
             // Null dispatcher likely means the visual is in bad shape!
-            if( dispatcher == null )
+            if( dispatcher is null )
             {
                 throw new ElementNotAvailableException();
             }

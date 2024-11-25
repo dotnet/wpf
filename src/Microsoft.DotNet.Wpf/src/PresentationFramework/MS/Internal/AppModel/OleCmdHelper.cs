@@ -65,7 +65,7 @@ namespace MS.Internal.AppModel
                 - E_NOTIMPL is not an acceptable return value.
             */
 
-            if (Application.Current == null || Application.IsShuttingDown == true)
+            if (Application.Current is null || Application.IsShuttingDown == true)
             {
                 Marshal.ThrowExceptionForHR(NativeMethods.E_FAIL);
             }
@@ -75,12 +75,12 @@ namespace MS.Internal.AppModel
             // there is no explicit "disabled" OLECMD flag
 
             IDictionary oleCmdMappingTable = GetOleCmdMappingTable(guidCmdGroup);
-            if (oleCmdMappingTable == null)
+            if (oleCmdMappingTable is null)
             {
                 Marshal.ThrowExceptionForHR(OleCmdHelper.OLECMDERR_E_UNKNOWNGROUP);
             }
             CommandWithArgument command = oleCmdMappingTable[cmdId] as CommandWithArgument;
-            if (command == null)
+            if (command is null)
             {
                 flags = CommandUnsupported;
                 return;
@@ -97,10 +97,10 @@ namespace MS.Internal.AppModel
 
         private object QueryEnabled(object command)
         {
-            if (Application.Current.MainWindow == null)
+            if (Application.Current.MainWindow is null)
                 return false;
             IInputElement target = FocusManager.GetFocusedElement(Application.Current.MainWindow);
-            if (target == null)
+            if (target is null)
             {
                 // This will always succeed because Window is IInputElement
                 target = (IInputElement)Application.Current.MainWindow;
@@ -114,7 +114,7 @@ namespace MS.Internal.AppModel
         /// </remarks>
         internal void ExecCommand(Guid guidCmdGroup, uint commandId, object arg)
         {
-            if (Application.Current == null || Application.IsShuttingDown == true)
+            if (Application.Current is null || Application.IsShuttingDown == true)
             {
                 Marshal.ThrowExceptionForHR(NativeMethods.E_FAIL);
             }
@@ -140,16 +140,16 @@ namespace MS.Internal.AppModel
             object arg = args[2];
 
             IDictionary oleCmdMappingTable = GetOleCmdMappingTable(guidCmdGroup);
-            if (oleCmdMappingTable == null)
+            if (oleCmdMappingTable is null)
                 return OLECMDERR_E_UNKNOWNGROUP;
             CommandWithArgument command = oleCmdMappingTable[commandId] as CommandWithArgument;
-            if (command == null)
+            if (command is null)
                 return OLECMDERR_E_NOTSUPPORTED;
 
-            if (Application.Current.MainWindow == null)
+            if (Application.Current.MainWindow is null)
                 return OLECMDERR_E_DISABLED;
             IInputElement target = FocusManager.GetFocusedElement(Application.Current.MainWindow);
-            if (target == null)
+            if (target is null)
             {
                 // This will always succeed because Window is IInputElement
                 target = (IInputElement)Application.Current.MainWindow;
@@ -181,7 +181,7 @@ namespace MS.Internal.AppModel
         }
         private void EnsureOleCmdMappingTable()
         {
-            if (_oleCmdMappingTable == null)
+            if (_oleCmdMappingTable is null)
             {
                 _oleCmdMappingTable = new SortedList(10);
 
@@ -202,7 +202,7 @@ namespace MS.Internal.AppModel
 
         private void EnsureApplicationCommandsTable()
         {
-            if (_applicationCommandsMappingTable == null)
+            if (_applicationCommandsMappingTable is null)
             {
                 /* we want to possible add 26 entries, so the capacity should be
                  * 26/0.72 = 19 for default of 1.0 load factor*/
@@ -246,7 +246,7 @@ namespace MS.Internal.AppModel
 
         private void EnsureEditingCommandsTable()
         {
-            if (_editingCommandsMappingTable == null)
+            if (_editingCommandsMappingTable is null)
             {
                 _editingCommandsMappingTable = new SortedList(2);
                 // Note: The keys are added as uint type so that the default container comparer works
@@ -286,7 +286,7 @@ namespace MS.Internal.AppModel
 
         public bool Execute(IInputElement target, object argument)
         {
-            if (argument == null)
+            if (argument is null)
             {
                 argument = _argument;
             }
@@ -314,7 +314,7 @@ namespace MS.Internal.AppModel
 
         public bool QueryEnabled(IInputElement target, object argument)
         {
-            if (argument == null)
+            if (argument is null)
             {
                 argument = _argument;
             }

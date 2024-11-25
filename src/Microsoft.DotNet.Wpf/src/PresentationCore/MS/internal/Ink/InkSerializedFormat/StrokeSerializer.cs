@@ -194,7 +194,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                                 locallyDecodedBytes = ExtendedPropertySerializer.DecodeAsISF(stream, remainingBytesInStrokeBlock, guidList, tag, ref guid, out data);
 
                                 // add the guid/data pair into the property collection (don't redecode the type)
-                                if (extendedProperties == null)
+                                if (extendedProperties is null)
                                 {
                                     extendedProperties = new ExtendedPropertyCollection();
                                 }
@@ -318,7 +318,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                             locallyDecodedBytes = ExtendedPropertySerializer.DecodeAsISF(stream, remainingBytesInStrokeBlock, guidList, tag, ref guid, out data);
 
                             // add the guid/data pair into the property collection (don't redecode the type)
-                            if (extendedProperties == null)
+                            if (extendedProperties is null)
                             {
                                 extendedProperties = new ExtendedPropertyCollection();
                             }

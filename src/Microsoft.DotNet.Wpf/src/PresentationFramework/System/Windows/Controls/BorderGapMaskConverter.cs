@@ -36,8 +36,8 @@ namespace System.Windows.Controls
             //
             // Parameter Validation
             //
-            if (parameter == null ||
-                values == null ||
+            if (parameter is null ||
+                values is null ||
                 values.Length != 3 ||
                 values[0] is not double ||
                 values[1] is not double ||

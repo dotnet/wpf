@@ -59,7 +59,7 @@ namespace MS.Internal.Data
         {
             get
             {
-                if (type == null || name == null)
+                if (type is null || name is null)
                     return null;
 
                 if (_table.TryGetValue(new AccessorTableKey(sourceValueType, type, name), out AccessorInfo info))

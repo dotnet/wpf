@@ -191,7 +191,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return _language == null &&
+                return _language is null &&
                     _scaleInEm == 1.0 &&
                     _ranges == _defaultRanges;
             }
@@ -201,7 +201,7 @@ namespace System.Windows.Media
         internal static bool MatchLanguage(XmlLanguage familyMapLanguage, XmlLanguage language)
         {
             // If there is no family map langue, the family map applies to any language.
-            if (familyMapLanguage == null)
+            if (familyMapLanguage is null)
             {
                 return true;
             }
@@ -217,7 +217,7 @@ namespace System.Windows.Media
         internal static bool MatchCulture(XmlLanguage familyMapLanguage, CultureInfo culture)
         {
             // If there is no family map langue, the family map applies to any language.
-            if (familyMapLanguage == null)
+            if (familyMapLanguage is null)
             {
                 return true;
             }

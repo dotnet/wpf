@@ -599,7 +599,7 @@ namespace System.Windows.Controls
             {
                 // always hand out this ItemCollection's SortDescription collection;
                 // in ItemsSource mode the inner collection view will be kept in synch with this collection
-                if (MySortDescriptions == null)
+                if (MySortDescriptions is null)
                 {
                     MySortDescriptions = new SortDescriptionCollection();
                     if (_collectionView != null)
@@ -685,7 +685,7 @@ namespace System.Windows.Controls
             {
                 // always hand out this ItemCollection's GroupDescription collection;
                 // in ItemsSource mode the inner collection view will be kept in synch with this collection
-                if (MyGroupDescriptions == null)
+                if (MyGroupDescriptions is null)
                 {
                     MyGroupDescriptions = new ObservableCollection<GroupDescription>();
                     if (_collectionView != null)
@@ -719,10 +719,10 @@ namespace System.Windows.Controls
         public override IDisposable DeferRefresh()
         {
             // if already deferred (level > 0) and there is a _collectionView, there should be a _deferInnerRefresh
-            Debug.Assert(_deferLevel == 0 || _collectionView == null || _deferInnerRefresh != null);
+            Debug.Assert(_deferLevel == 0 || _collectionView is null || _deferInnerRefresh != null);
 
             // if not already deferred, there should NOT be a _deferInnerRefresh
-            Debug.Assert(_deferLevel != 0 || _deferInnerRefresh == null);
+            Debug.Assert(_deferLevel != 0 || _deferInnerRefresh is null);
 
             if (_deferLevel == 0 && _collectionView != null)
             {
@@ -1371,7 +1371,7 @@ namespace System.Windows.Controls
             {
                 // always hand out this ItemCollection's LiveSortingProperties collection;
                 // in ItemsSource mode the inner collection view will be kept in synch with this collection
-                if (MyLiveSortingProperties == null)
+                if (MyLiveSortingProperties is null)
                 {
                     MyLiveSortingProperties = new ObservableCollection<string>();
                     ICollectionViewLiveShaping icvls = _collectionView as ICollectionViewLiveShaping;
@@ -1404,7 +1404,7 @@ namespace System.Windows.Controls
             {
                 // always hand out this ItemCollection's LiveFilteringProperties collection;
                 // in ItemsSource mode the inner collection view will be kept in synch with this collection
-                if (MyLiveFilteringProperties == null)
+                if (MyLiveFilteringProperties is null)
                 {
                     MyLiveFilteringProperties = new ObservableCollection<string>();
                     ICollectionViewLiveShaping icvls = _collectionView as ICollectionViewLiveShaping;
@@ -1441,7 +1441,7 @@ namespace System.Windows.Controls
             {
                 // always hand out this ItemCollection's LiveGroupingProperties collection;
                 // in ItemsSource mode the inner collection view will be kept in synch with this collection
-                if (MyLiveGroupingProperties == null)
+                if (MyLiveGroupingProperties is null)
                 {
                     MyLiveGroupingProperties = new ObservableCollection<string>();
                     ICollectionViewLiveShaping icvls = _collectionView as ICollectionViewLiveShaping;
@@ -1625,12 +1625,12 @@ namespace System.Windows.Controls
         #region Private Methods
 
         // ===== Lazy creation of InternalView =====
-        // When ItemCollection is instantiated, it is uninitialized (_collectionView == null).
+        // When ItemCollection is instantiated, it is uninitialized (_collectionView is null).
         // It remains so until SetItemsSource() puts it into ItemsSource mode
         // or a modifying method call such as Add() or Insert() puts it into direct mode.
 
         // Several ItemCollection methods check EnsureCollectionView, which returns false if
-        // (_collectionView == null) and (InternalView == null), and it can mean two things:
+        // (_collectionView is null) and (InternalView is null), and it can mean two things:
         //   1) ItemCollection is uninitialized
         //   2) ItemsControl is in ItemsSource mode, but the ItemsSource binding returned null
         // for either of these cases, a reasonable default return value or behavior is provided.
@@ -1638,7 +1638,7 @@ namespace System.Windows.Controls
         // EnsureCollectionView() will set _collectionView to the InternalView if the mode is correct.
         bool EnsureCollectionView()
         {
-            if (_collectionView == null && !IsUsingItemsSource && _internalView != null)
+            if (_collectionView is null && !IsUsingItemsSource && _internalView != null)
             {
                 // If refresh is not necessary, fake initialization so that SetCollectionView
                 // doesn't raise a refresh event.
@@ -1663,7 +1663,7 @@ namespace System.Windows.Controls
 
         void EnsureInternalView()
         {
-            if (_internalView == null)
+            if (_internalView is null)
             {
                 // lazy creation of the InnerItemCollectionView
                 _internalView = new InnerItemCollectionView(_defaultCapacity, this);
@@ -1963,7 +1963,7 @@ namespace System.Windows.Controls
             if (_deferLevel == 0)
             {
                 // if there is a _collectionView, there should be a _deferInnerRefresh
-                Debug.Assert(_collectionView == null || _deferInnerRefresh != null);
+                Debug.Assert(_collectionView is null || _deferInnerRefresh != null);
 
                 if (_deferInnerRefresh != null)
                 {
@@ -2187,7 +2187,7 @@ namespace System.Windows.Controls
         // keep collections in sync
         private void SynchronizeCollections<T>(NotifyCollectionChangedEventArgs e, Collection<T> origin, Collection<T> clone)
         {
-            if (clone == null)
+            if (clone is null)
                 return;             // the clone might be lazily-created
 
             switch (e.Action)
@@ -2259,7 +2259,7 @@ namespace System.Windows.Controls
         {
             // if either party is null, do nothing.  Allowing null lets the caller
             // avoid a lazy instantiation of the Sort/Group description collection.
-            if (clone == null || master == null)
+            if (clone is null || master is null)
                 return;
 
             if (clone.Count > 0)
@@ -2311,7 +2311,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_shapingStorage._sortDescriptionsMonitor == null)
+                if (_shapingStorage._sortDescriptionsMonitor is null)
                     _shapingStorage._sortDescriptionsMonitor = new MonitorWrapper();
                 return _shapingStorage._sortDescriptionsMonitor;
             }
@@ -2347,7 +2347,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_shapingStorage._groupDescriptionsMonitor == null)
+                if (_shapingStorage._groupDescriptionsMonitor is null)
                     _shapingStorage._groupDescriptionsMonitor = new MonitorWrapper();
                 return _shapingStorage._groupDescriptionsMonitor;
             }
@@ -2380,7 +2380,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_shapingStorage._liveSortingMonitor == null)
+                if (_shapingStorage._liveSortingMonitor is null)
                     _shapingStorage._liveSortingMonitor = new MonitorWrapper();
                 return _shapingStorage._liveSortingMonitor;
             }
@@ -2413,7 +2413,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_shapingStorage._liveFilteringMonitor == null)
+                if (_shapingStorage._liveFilteringMonitor is null)
                     _shapingStorage._liveFilteringMonitor = new MonitorWrapper();
                 return _shapingStorage._liveFilteringMonitor;
             }
@@ -2446,7 +2446,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_shapingStorage._liveGroupingMonitor == null)
+                if (_shapingStorage._liveGroupingMonitor is null)
                     _shapingStorage._liveGroupingMonitor = new MonitorWrapper();
                 return _shapingStorage._liveGroupingMonitor;
             }

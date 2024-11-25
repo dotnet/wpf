@@ -130,7 +130,7 @@ namespace System.Windows
 
             ArgumentNullException.ThrowIfNull(args);
 
-            if (args.Source == null)
+            if (args.Source is null)
             {
                 throw new ArgumentException(SR.SourceNotSet); 
             }
@@ -169,7 +169,7 @@ namespace System.Windows
                         //       to convert MouseDown/Up into a MouseLeft/RightButtonDown/Up
                         if(!reRaised)
                         {
-                            if (newSource == null)
+                            if (newSource is null)
                                 args.Source=source;
                             else
                                 args.Source=newSource;
@@ -243,7 +243,7 @@ namespace System.Windows
                             // but is necessary because the source could have 
                             // been modified during BuildRoute call and hence 
                             // may need to be reset to the original source.
-                            if (newSource == null)
+                            if (newSource is null)
                                 args.Source=source;                            
                             else
                                 args.Source=newSource;

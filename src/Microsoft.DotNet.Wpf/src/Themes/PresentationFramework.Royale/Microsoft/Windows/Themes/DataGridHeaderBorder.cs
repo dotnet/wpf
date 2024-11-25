@@ -62,7 +62,7 @@ namespace Microsoft.Windows.Themes
             // Draw the background
             RoyaleFreezables backgroundType = isPressed ? RoyaleFreezables.PressedBackground : isHovered ? RoyaleFreezables.HoveredBackground : RoyaleFreezables.NormalBackground;
             LinearGradientBrush background = (LinearGradientBrush)GetCachedFreezable((int)backgroundType);
-            if (background == null)
+            if (background is null)
             {
                 background = new LinearGradientBrush();
                 background.StartPoint = new Point();
@@ -128,7 +128,7 @@ namespace Microsoft.Windows.Themes
                 tabGeometry.Freeze();
 
                 Pen tabStroke = (Pen)GetCachedFreezable((int)RoyaleFreezables.TabStroke);
-                if (tabStroke == null)
+                if (tabStroke is null)
                 {
                     SolidColorBrush tabStrokeBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0xF8, 0xA9, 0x00));
                     tabStrokeBrush.Freeze();
@@ -140,7 +140,7 @@ namespace Microsoft.Windows.Themes
                 }
 
                 LinearGradientBrush tabFill = (LinearGradientBrush)GetCachedFreezable((int)RoyaleFreezables.TabFill);
-                if (tabFill == null)
+                if (tabFill is null)
                 {
                     tabFill = new LinearGradientBrush();
                     tabFill.StartPoint = new Point();
@@ -164,7 +164,7 @@ namespace Microsoft.Windows.Themes
             {
                 // When pressed, there is a border on the left and bottom
                 SolidColorBrush border = (SolidColorBrush)GetCachedFreezable((int)RoyaleFreezables.PressedBorder);
-                if (border == null)
+                if (border is null)
                 {
                     border = new SolidColorBrush(Color.FromArgb(0xFF, 0x80, 0x80, 0x99));
                     border.Freeze();
@@ -188,7 +188,7 @@ namespace Microsoft.Windows.Themes
                     {
                         // When not pressed or hovered, draw the resize gripper
                         LinearGradientBrush gripper = (LinearGradientBrush)GetCachedFreezable((int)(horizontal ? RoyaleFreezables.HorizontalGripper : RoyaleFreezables.VerticalGripper));
-                        if (gripper == null)
+                        if (gripper is null)
                         {
                             gripper = new LinearGradientBrush();
                             gripper.StartPoint = new Point();
@@ -232,7 +232,7 @@ namespace Microsoft.Windows.Themes
 
                 bool ascending = (sortDirection == ListSortDirection.Ascending);
                 PathGeometry arrowGeometry = (PathGeometry)GetCachedFreezable(ascending ? (int)RoyaleFreezables.ArrowUpGeometry : (int)RoyaleFreezables.ArrowDownGeometry);
-                if (arrowGeometry == null)
+                if (arrowGeometry is null)
                 {
                     arrowGeometry = new PathGeometry();
                     PathFigure arrowFigure = new PathFigure();
@@ -272,7 +272,7 @@ namespace Microsoft.Windows.Themes
                 }
 
                 SolidColorBrush arrowFill = (SolidColorBrush)GetCachedFreezable((int)RoyaleFreezables.ArrowFill);
-                if (arrowFill == null)
+                if (arrowFill is null)
                 {
                     arrowFill = new SolidColorBrush(Color.FromArgb(0xFF, 0xAC, 0xA8, 0x99));
                     arrowFill.Freeze();

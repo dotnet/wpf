@@ -92,7 +92,7 @@ namespace System.Windows.Media
 
             VerifyApiNonstructuralChange();
 
-            if (pen == null)
+            if (pen is null)
             {
                 return;
             }
@@ -114,8 +114,8 @@ namespace System.Windows.Media
             // Setup the geometries freezable-related state
             SetupNewFreezable(
                 geometry,
-                (point0Animations == null) && // Freeze if animations are null
-                (point1Animations == null)
+                (point0Animations is null) && // Freeze if animations are null
+                (point1Animations is null)
                 );
 
             // Add animations to the geometry
@@ -193,7 +193,7 @@ namespace System.Windows.Media
 
             VerifyApiNonstructuralChange();
 
-            if ((brush == null) && (pen == null))
+            if ((brush is null) && (pen is null))
             {
                 return;
             }
@@ -215,7 +215,7 @@ namespace System.Windows.Media
             // Setup the geometries freezable-related state
             SetupNewFreezable(
                 geometry,
-                (rectangleAnimations == null) // Freeze if there are no animations
+                (rectangleAnimations is null) // Freeze if there are no animations
                 );
 
             // Add animations to the geometry
@@ -313,7 +313,7 @@ namespace System.Windows.Media
 
             VerifyApiNonstructuralChange();
 
-            if ((brush == null) && (pen == null))
+            if ((brush is null) && (pen is null))
             {
                 return;
             }
@@ -335,9 +335,9 @@ namespace System.Windows.Media
             // Setup the geometries freezable-related state
             SetupNewFreezable(
                 geometry,
-                (rectangleAnimations == null) &&    // Freeze if animations are null
-                (radiusXAnimations == null) &&
-                (radiusYAnimations == null)
+                (rectangleAnimations is null) &&    // Freeze if animations are null
+                (radiusXAnimations is null) &&
+                (radiusYAnimations is null)
                 );
 
             // Add animations to the geometry
@@ -449,7 +449,7 @@ namespace System.Windows.Media
 
             VerifyApiNonstructuralChange();
 
-            if ((brush == null) && (pen == null))
+            if ((brush is null) && (pen is null))
             {
                 return;
             }
@@ -471,9 +471,9 @@ namespace System.Windows.Media
             // Setup the geometries freezable-related state
             SetupNewFreezable(
                 geometry,
-                (centerAnimations == null) && // Freeze if there are no animations
-                (radiusXAnimations == null) &&
-                (radiusYAnimations == null)
+                (centerAnimations is null) && // Freeze if there are no animations
+                (radiusXAnimations is null) &&
+                (radiusYAnimations is null)
                 );
 
             // Add animations to the geometry
@@ -527,7 +527,7 @@ namespace System.Windows.Media
 
             VerifyApiNonstructuralChange();
 
-            if (((brush == null) && (pen == null)) || (geometry == null))
+            if (((brush is null) && (pen is null)) || (geometry is null))
             {
                 return;
             }
@@ -585,7 +585,7 @@ namespace System.Windows.Media
 
             VerifyApiNonstructuralChange();
 
-            if (imageSource == null)
+            if (imageSource is null)
             {
                 return;
             }
@@ -639,7 +639,7 @@ namespace System.Windows.Media
 
             VerifyApiNonstructuralChange();
 
-            if (drawing == null)
+            if (drawing is null)
             {
                 return;
             }
@@ -701,7 +701,7 @@ namespace System.Windows.Media
 
             VerifyApiNonstructuralChange();
 
-            if (player == null)
+            if (player is null)
             {
                 return;
             }
@@ -1060,7 +1060,7 @@ namespace System.Windows.Media
             VerifyApiNonstructuralChange();
 
             // Verify that Pop hasn't been called too many times
-            if ( (_previousDrawingGroupStack == null) ||
+            if ( (_previousDrawingGroupStack is null) ||
                  (_previousDrawingGroupStack.Count == 0))
             {
                 throw new InvalidOperationException(SR.DrawingContext_TooManyPops);
@@ -1090,7 +1090,7 @@ namespace System.Windows.Media
 
             VerifyApiNonstructuralChange();
 
-            if (foregroundBrush == null || glyphRun == null)
+            if (foregroundBrush is null || glyphRun is null)
             {
                 return;
             }
@@ -1316,8 +1316,8 @@ namespace System.Windows.Media
             // Setup it's Freezeable-related state
             SetupNewFreezable(
                 geometryDrawing,
-                ((brush == null) || (brush.IsFrozen)) &&    // Freeze if the brush is frozen
-                ((pen == null) || (pen.IsFrozen)) &&        // and the pen is frozen
+                ((brush is null) || (brush.IsFrozen)) &&    // Freeze if the brush is frozen
+                ((pen is null) || (pen.IsFrozen)) &&        // and the pen is frozen
                 (geometry.IsFrozen)                         // and the geometry is frozen
                 );
 
@@ -1385,18 +1385,18 @@ namespace System.Windows.Media
         {
             Debug.Assert(newDrawing != null);
 
-            if (_rootDrawing == null)
+            if (_rootDrawing is null)
             {
                 // When a DrawingGroup is set, it should be made the root if
                 // a root drawing didnt exist.
-                Debug.Assert(_currentDrawingGroup == null);
+                Debug.Assert(_currentDrawingGroup is null);
 
                 // If this is the first Drawing being added, avoid creating a DrawingGroup
                 // and set this drawing as the root drawing.  This optimizes the common
                 // case where only a single child exists in the root DrawingGroup.
                 _rootDrawing = newDrawing;
             }
-            else if (_currentDrawingGroup == null)
+            else if (_currentDrawingGroup is null)
             {
                 // When the second drawing is added at the root level, set a
                 // DrawingGroup as the root and add both drawings to it.

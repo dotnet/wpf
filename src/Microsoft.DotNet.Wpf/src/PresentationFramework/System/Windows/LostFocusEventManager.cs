@@ -144,7 +144,7 @@ namespace System.Windows
                 LostFocusEventManager manager = (LostFocusEventManager)GetCurrentManager(managerType);
 
                 // at first use, create and register a new manager
-                if (manager == null)
+                if (manager is null)
                 {
                     manager = new LostFocusEventManager();
                     SetCurrentManager(managerType, manager);

@@ -178,7 +178,7 @@ namespace System.Windows.Xps.Serialization
 
         protected string GetString(object obj)
         {
-            if (obj == null)
+            if (obj is null)
             {
                 return null;
             }
@@ -1506,7 +1506,7 @@ namespace System.Windows.Xps.Serialization
 
         private static bool IsPathFigureEmpty(PathFigureCollection figures, bool forFill, bool forStroke)
         {
-            if (figures == null)
+            if (figures is null)
             {
                 return true;
             }
@@ -1549,7 +1549,7 @@ namespace System.Windows.Xps.Serialization
         /// <returns></returns>
         private static bool IsPathGeometryEmpty(PathGeometry pg, bool forFill, bool forStroke)
         {
-            if ((pg == null) || pg.Bounds.IsEmpty)
+            if ((pg is null) || pg.Bounds.IsEmpty)
             {
                 return true;
             }
@@ -1593,7 +1593,7 @@ namespace System.Windows.Xps.Serialization
         /// <returns>Returns the filtered GlyphRun if modified, otherwise the original GlyphRun</returns>
         private static GlyphRun FilterXmlInvalidChar(GlyphRun glyphRun)
         {
-            if (glyphRun.Characters == null)
+            if (glyphRun.Characters is null)
             {
                 // no characters to worry about
                 return glyphRun;
@@ -1612,7 +1612,7 @@ namespace System.Windows.Xps.Serialization
             {
                 if (!IsXmlValidChar(glyphRun.Characters[i]))
                 {
-                    if (filteredCharacters == null)
+                    if (filteredCharacters is null)
                     {
                         filteredCharacters = new List<char>(glyphRun.Characters);
                     }
@@ -1622,7 +1622,7 @@ namespace System.Windows.Xps.Serialization
                 }
             }
 
-            if (filteredCharacters == null)
+            if (filteredCharacters is null)
             {
                 // no filtering needed
                 return glyphRun;
@@ -1724,7 +1724,7 @@ namespace System.Windows.Xps.Serialization
         // Check for relative brush
         static public bool NeedBounds(Brush b)
         {
-            if (b == null)
+            if (b is null)
             {
                 return false;
             }
@@ -1851,7 +1851,7 @@ namespace System.Windows.Xps.Serialization
         /// </summary>
         void IMetroDrawingContext.DrawGeometry(Brush brush, Pen pen, Geometry geometry)
         {
-            if (geometry == null)
+            if (geometry is null)
             {
                 return;
             }
@@ -1867,7 +1867,7 @@ namespace System.Windows.Xps.Serialization
                 //
                 // If null fill, change to transparent fill to ensure hyperlink is clickable.
                 //
-                if (brush == null)
+                if (brush is null)
                 {
                     forFill = true; // have WriteGeometry treat as fill even though it isn't visible
                     brush = Brushes.Transparent;
@@ -1905,7 +1905,7 @@ namespace System.Windows.Xps.Serialization
             // and apply a reverse transformation to geometry.
             // This can generate strange viewbox and complicated path.
             // Disable for the memoent
-            if ((pen == null) && (_clip == null) && (_opacityMask == null) &&
+            if ((pen is null) && (_clip is null) && (_opacityMask is null) &&
                 !(geometry is CombinedGeometry) && NeedBounds(brush))
             {
                 inverse = GetBoundsInverse(bounds);
@@ -2033,14 +2033,14 @@ namespace System.Windows.Xps.Serialization
         /// </summary>
         void IMetroDrawingContext.DrawGlyphRun(Brush foreground, GlyphRun glyphRun)
         {
-            if (glyphRun == null)
+            if (glyphRun is null)
             {
                 return;
             }
 
             if (PreserveTransparent())
             {
-                if (foreground == null)
+                if (foreground is null)
                 {
                     // Give transparent foreground to ensure hyperlink is clickable.
                     foreground = Brushes.Transparent;
@@ -2066,7 +2066,7 @@ namespace System.Windows.Xps.Serialization
             Matrix clipMat = Matrix.Identity;
 
             // Optimization: apply translation to OriginX/OriginY if possible
-            if ((foreground is SolidColorBrush) && (_opacityMask == null))
+            if ((foreground is SolidColorBrush) && (_opacityMask is null))
             {
                 trans = ExtractTranslation(_transform, out dx, out dy);
 
@@ -2351,7 +2351,7 @@ namespace System.Windows.Xps.Serialization
             EdgeMode edgeMode
             )
         {
-            Debug.Assert(nameAttr == null || nameAttr.Length > 0, "Bad name attribute");
+            Debug.Assert(nameAttr is null || nameAttr.Length > 0, "Bad name attribute");
 
             Transform transform = new MatrixTransform(mat);
 
@@ -2366,12 +2366,12 @@ namespace System.Windows.Xps.Serialization
 
             int elementLevels = 0;
 
-            if ((clip == null) &&
+            if ((clip is null) &&
                 noTrans &&
                 Utility.IsOne(opacity) &&
-                (opacityMask == null) &&
-                nameAttr == null &&
-                navigateUri == null &&
+                (opacityMask is null) &&
+                nameAttr is null &&
+                navigateUri is null &&
                 edgeMode == EdgeMode.Unspecified)
             {
                 // If there is no clip, transform and opacity, nothing to generate
@@ -2386,7 +2386,7 @@ namespace System.Windows.Xps.Serialization
 
                 if (nameAttr != null)
                 {
-                    Debug.Assert(_nameAttr == null, "Empty");
+                    Debug.Assert(_nameAttr is null, "Empty");
                     _nameAttr = nameAttr;
                 }
 

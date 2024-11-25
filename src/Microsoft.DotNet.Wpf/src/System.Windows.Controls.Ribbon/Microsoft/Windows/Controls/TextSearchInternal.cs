@@ -54,7 +54,7 @@ namespace Microsoft.Windows.Controls
         {
             TextSearchInternal instance = (TextSearchInternal)itemsControl.GetValue(TextSearchInternalInstanceProperty);
 
-            if (instance == null)
+            if (instance is null)
             {
                 instance = new TextSearchInternal(itemsControl);
                 itemsControl.SetValue(TextSearchInternalInstancePropertyKey, instance);
@@ -531,7 +531,7 @@ namespace Microsoft.Windows.Controls
         {
             // Called when we get some input. Start or reset the timer.
             // Queue an inactive priority work item and set its deadline.
-            if (_timeoutTimer == null)
+            if (_timeoutTimer is null)
             {
                 _timeoutTimer = new DispatcherTimer(DispatcherPriority.Normal);
                 _timeoutTimer.Tick += new EventHandler(OnTimeout);
@@ -668,7 +668,7 @@ namespace Microsoft.Windows.Controls
         /// <returns></returns>
         internal static string GetPrimaryTextFromItem(ItemsControl itemsControl, object item, bool doHierarchicalSearch)
         {
-            if (item == null)
+            if (item is null)
                 return String.Empty;
 
             return GetPrimaryText(item, GetPrimaryTextPath(itemsControl, doHierarchicalSearch));
@@ -705,7 +705,7 @@ namespace Microsoft.Windows.Controls
             Prefix = String.Empty;
             MatchedItemIndex = -1;
             MatchedItemsControlIndex = -1;
-            if (_charsEntered == null)
+            if (_charsEntered is null)
             {
                 _charsEntered = new List<string>(10);
             }
@@ -847,7 +847,7 @@ namespace Microsoft.Windows.Controls
         {
             get
             {
-                if (_dummyElement == null)
+                if (_dummyElement is null)
                 {
                     _dummyElement = new DummyObject();
                 }

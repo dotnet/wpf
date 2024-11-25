@@ -71,7 +71,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         {
             get
             {
-                if (_ribbon == null)
+                if (_ribbon is null)
                 {
                     _ribbon = TreeHelper.FindTemplatedAncestor<Ribbon>(this);
                 }
@@ -132,7 +132,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             // We can only work on visuals that are us or children.
             // An empty rect has no size or position.  We can't meaningfully use it.
             if (rectangle.IsEmpty
-                || visual == null
+                || visual is null
                 || visual == (Visual)this
                 || !this.IsAncestorOf(visual))
             {

@@ -132,7 +132,7 @@ namespace System.Windows.Controls
         protected override Size MeasureOverride(Size constraint)
         {
             GridViewColumnCollection columns = Columns;
-            if (columns == null) { return new Size(); }
+            if (columns is null) { return new Size(); }
 
             UIElementCollection children = InternalChildren;
             double maxHeight = 0.0;           // Max height of children.
@@ -143,7 +143,7 @@ namespace System.Windows.Controls
             foreach (GridViewColumn column in columns)
             {
                 UIElement child = children[column.ActualIndex];
-                if (child == null) { continue; }
+                if (child is null) { continue; }
 
                 double childConstraintWidth = Math.Max(0.0, constraint.Width - accumulatedWidth);
 
@@ -209,7 +209,7 @@ namespace System.Windows.Controls
         protected override Size ArrangeOverride(Size arrangeSize)
         {
             GridViewColumnCollection columns = Columns;
-            if (columns == null) { return arrangeSize; }
+            if (columns is null) { return arrangeSize; }
 
             UIElementCollection children = InternalChildren;
 
@@ -219,7 +219,7 @@ namespace System.Windows.Controls
             foreach (GridViewColumn column in columns)
             {
                 UIElement child = children[column.ActualIndex];
-                if (child == null) { continue; }
+                if (child is null) { continue; }
 
                 // has a given value or 'auto'
                 double childArrangeWidth = Math.Min(remainingWidth, ((column.State == ColumnMeasureState.SpecificWidth) ? column.Width : column.DesiredWidth));
@@ -331,7 +331,7 @@ namespace System.Windows.Controls
                         if (GridViewColumn.CellTemplateProperty.Name.Equals(propertyName))
                         {
                             DataTemplate dt;
-                            if ((dt = column.CellTemplate) == null)
+                            if ((dt = column.CellTemplate) is null)
                             {
                                 cp.ClearValue(ContentControl.ContentTemplateProperty);
                             }
@@ -344,7 +344,7 @@ namespace System.Windows.Controls
                         else if (GridViewColumn.CellTemplateSelectorProperty.Name.Equals(propertyName))
                         {
                             DataTemplateSelector dts;
-                            if ((dts = column.CellTemplateSelector) == null)
+                            if ((dts = column.CellTemplateSelector) is null)
                             {
                                 cp.ClearValue(ContentControl.ContentTemplateSelectorProperty);
                             }
@@ -462,7 +462,7 @@ namespace System.Windows.Controls
                             _viewPort = scrollViewer.GetTemplateChild(ScrollViewer.ScrollContentPresenterTemplateName) as FrameworkElement;
 
                             // in case GridViewScrollViewer is re-styled, say, cannot find PART_ScrollContentPresenter
-                            if (_viewPort == null)
+                            if (_viewPort is null)
                             {
                                 _viewPort = scrollViewer;
                             }
@@ -541,7 +541,7 @@ namespace System.Windows.Controls
                     {
                         column.State = ColumnMeasureState.Data;
 
-                        if (DesiredWidthList == null || column.ActualIndex >= DesiredWidthList.Count)
+                        if (DesiredWidthList is null || column.ActualIndex >= DesiredWidthList.Count)
                         {
                             // How can this happen?
                             // Between the last measure was called and this update is called, there can be a

@@ -73,7 +73,7 @@ namespace MS.Internal.Documents
             DocumentGrid documentGrid = sender as DocumentGrid;
             ContextMenu contextMenu;
 
-            if (documentGrid == null)
+            if (documentGrid is null)
             {
                 return;
             }
@@ -90,7 +90,7 @@ namespace MS.Internal.Documents
             contextMenu = documentGrid.ContextMenu;
 
             // If someone explicitly set it null -- don't mess with it.
-            if (documentGrid.ReadLocalValue(FrameworkElement.ContextMenuProperty) == null)
+            if (documentGrid.ReadLocalValue(FrameworkElement.ContextMenuProperty) is null)
                 return;
 
             // If it's not null, someone's overriding our default -- don't mess with it.
@@ -205,7 +205,7 @@ namespace MS.Internal.Documents
             {
                 menuItem.Command = command;
                 menuItem.CommandTarget = dg.DocumentViewerOwner; // the text editor expects the commands to come from the DocumentViewer
-                if (header == null)
+                if (header is null)
                 {
                     menuItem.Header = command.Text; // use default menu text for this command
                 }

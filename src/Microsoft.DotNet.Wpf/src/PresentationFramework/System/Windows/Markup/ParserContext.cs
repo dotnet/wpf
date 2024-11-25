@@ -92,7 +92,7 @@ namespace System.Windows.Markup
 
         public ParserContext(XmlParserContext xmlParserContext)
         {
-            if (xmlParserContext == null)
+            if (xmlParserContext is null)
             {
                 throw new ArgumentNullException( "xmlParserContext" );
             }
@@ -263,7 +263,7 @@ namespace System.Windows.Markup
             get
             {
                 // Entry Point to others, initialize if null.
-                if (_xmlnsDictionary == null)
+                if (_xmlnsDictionary is null)
                     _xmlnsDictionary = new XmlnsDictionary();
 
                 return _xmlnsDictionary;
@@ -358,7 +358,7 @@ namespace System.Windows.Markup
         {
             get
             {
-               if (_nameScopeStack == null)
+               if (_nameScopeStack is null)
                    _nameScopeStack = new Stack(2);
 
                return _nameScopeStack;
@@ -421,7 +421,7 @@ namespace System.Windows.Markup
         /// <returns>XmlParserContext</returns>
         public static XmlParserContext ToXmlParserContext(ParserContext parserContext)
         {
-            if (parserContext == null)
+            if (parserContext is null)
             {
                 throw new ArgumentNullException( "parserContext" );
             }
@@ -456,7 +456,7 @@ namespace System.Windows.Markup
             }
 
             XmlParserContext xmlParserContext = new XmlParserContext(null, xmlnsMgr, parserContext.XmlLang, xmlSpace);
-            if( parserContext.BaseUri == null)
+            if( parserContext.BaseUri is null)
             {
                 xmlParserContext.BaseURI = null;
             }
@@ -591,7 +591,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                if (_provideValueServiceProvider == null)
+                if (_provideValueServiceProvider is null)
                 {
                     _provideValueServiceProvider = new ProvideValueServiceProvider(this);
                 }
@@ -608,7 +608,7 @@ namespace System.Windows.Markup
         {
             get 
             { 
-                if (_staticResourcesStack == null)
+                if (_staticResourcesStack is null)
                 {
                     _staticResourcesStack = new List<object[]>();
                 }
@@ -702,7 +702,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                if (_masterBracketCharacterCache == null)
+                if (_masterBracketCharacterCache is null)
                 {
                     _masterBracketCharacterCache = new Dictionary<Type, Dictionary<string, SpecialBracketCharacters>>();
                 }
@@ -763,7 +763,7 @@ namespace System.Windows.Markup
                     // example.
                     Debug.Assert(canDecrement);
 #endif
-                    if (_freezeStack == null)
+                    if (_freezeStack is null)
                     {
                         // Lazily allocate a _freezeStack if this is the first
                         // state change.
@@ -789,7 +789,7 @@ namespace System.Windows.Markup
                     {
                         freezable.Freeze();
                     }
-                    if (_freezeCache == null)
+                    if (_freezeCache is null)
                     {
                         _freezeCache = new Dictionary<string, Freezable>();
                     }
@@ -863,7 +863,7 @@ namespace System.Windows.Markup
                 {
                     Type attributeType = attributeData.AttributeType;
                     Assembly xamlAssembly = attributeType.Assembly;
-                    if (constructorArgumentType == null || markupExtensionBracketCharacterType == null)
+                    if (constructorArgumentType is null || markupExtensionBracketCharacterType is null)
                     {
                         constructorArgumentType =
                             xamlAssembly.GetType("System.Windows.Markup.ConstructorArgumentAttribute");
@@ -877,7 +877,7 @@ namespace System.Windows.Markup
                     }
                     else if (attributeType.IsAssignableFrom(markupExtensionBracketCharacterType))
                     {
-                        if (bracketCharacters == null)
+                        if (bracketCharacters is null)
                         {
                             bracketCharacters = new SpecialBracketCharacters();
                         }

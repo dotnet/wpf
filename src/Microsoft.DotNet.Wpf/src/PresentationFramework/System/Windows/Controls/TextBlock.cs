@@ -186,7 +186,7 @@ namespace System.Windows.Controls
         {
             ArgumentNullException.ThrowIfNull(text);
 
-            if (_complexContent == null)
+            if (_complexContent is null)
             {
                 Text = Text + text;
             }
@@ -234,7 +234,7 @@ namespace System.Windows.Controls
                     // We are hosting content that belongs to a ContentPresenter
                     return EmptyEnumerator.Instance;
                 }
-                else if (_complexContent == null)
+                else if (_complexContent is null)
                 {
                     return new SimpleContentEnumerator(Text);
                 }
@@ -601,7 +601,7 @@ namespace System.Windows.Controls
         {
             TextBlock textblock = (TextBlock)d;
 
-            if (value == null)
+            if (value is null)
             {
                 value = String.Empty;
             }
@@ -1145,7 +1145,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected override int VisualChildrenCount
         {
-            get { return _complexContent == null ? 0 : _complexContent.VisualChildren.Count; }
+            get { return _complexContent is null ? 0 : _complexContent.VisualChildren.Count; }
         }
 
         /// <summary>
@@ -1159,7 +1159,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected override Visual GetVisualChild(int index)
         {
-            if (_complexContent == null)
+            if (_complexContent is null)
             {
                 throw new ArgumentOutOfRangeException("index");
             }
@@ -1198,7 +1198,7 @@ namespace System.Windows.Controls
             // a) content is dirty (properties or content)
             // b) there are inline objects (they may be dynamically sized)
             int lineCount = LineCount;
-            if ((lineCount > 0) && IsMeasureValid && InlineObjects == null)
+            if ((lineCount > 0) && IsMeasureValid && InlineObjects is null)
             {
                 // Assuming that all of above conditions are true, Measure can be
                 // skipped in following situations:
@@ -1243,7 +1243,7 @@ namespace System.Windows.Controls
 
             // before erasing the line metrics, keep track of how big it was last time
             // so that we can initialize the metrics array to that size this time
-            int subsequentLinesInitialSize = (_subsequentLines == null) ? 1 : _subsequentLines.Count;
+            int subsequentLinesInitialSize = (_subsequentLines is null) ? 1 : _subsequentLines.Count;
 
             ClearLineMetrics();
 
@@ -1301,7 +1301,7 @@ namespace System.Windows.Controls
                         }
                         else
                         {
-                            if (_subsequentLines == null)
+                            if (_subsequentLines is null)
                             {
                                 _subsequentLines = new List<LineMetrics>(subsequentLinesInitialSize);
                             }
@@ -1347,7 +1347,7 @@ namespace System.Windows.Controls
                 desiredSize.Width += (padding.Left + padding.Right);
                 desiredSize.Height += (padding.Top + padding.Bottom);
 
-                Invariant.Assert(textLineBreakIn == null); // End of paragraph should have no line break record
+                Invariant.Assert(textLineBreakIn is null); // End of paragraph should have no line break record
 
                 exceptionThrown = false;
             }
@@ -1754,7 +1754,7 @@ Debug.Assert(lineCount == LineCount);
             LineProperties lineProperties = GetLineProperties();
 
             // Check for complex content
-            if (_complexContent == null || !(_complexContent.TextContainer is TextContainer))
+            if (_complexContent is null || !(_complexContent.TextContainer is TextContainer))
             {
                 // return empty collection
                 return new ReadOnlyCollection<Rect>(new List<Rect>(0));
@@ -1762,7 +1762,7 @@ Debug.Assert(lineCount == LineCount);
 
             // First find the element start and end position
             TextPointer start = FindElementPosition((IInputElement)child);
-            if (start == null)
+            if (start is null)
             {
                 return new ReadOnlyCollection<Rect>(new List<Rect>(0));
             }
@@ -1778,7 +1778,7 @@ Debug.Assert(lineCount == LineCount);
                 end.MoveByOffset(+1);
             }
 
-            if (end == null)
+            if (end is null)
             {
                 return new ReadOnlyCollection<Rect>(new List<Rect>(0));
             }
@@ -1865,7 +1865,7 @@ Debug.Assert(lineCount == LineCount);
                     throw new InvalidOperationException(SR.TextContainerChangingReentrancyInvalid);
                 }
 
-                if (_complexContent == null || !(_complexContent.TextContainer is TextContainer))
+                if (_complexContent is null || !(_complexContent.TextContainer is TextContainer))
                 {
                     // Return empty collection
                     return new HostedElements(new ReadOnlyCollection<TextSegment>(new List<TextSegment>(0)));
@@ -1983,7 +1983,7 @@ Debug.Assert(lineCount == LineCount);
                 // Store inline object in the cache.
                 ArrayList inlineObjects = InlineObjects;
                 bool alreadyCached = false;
-                if (inlineObjects == null)
+                if (inlineObjects is null)
                 {
                     InlineObjects = inlineObjects = new ArrayList(1);
                 }
@@ -2675,7 +2675,7 @@ Debug.Assert(lineCount == LineCount);
                 TextFormattingMode textFormattingMode = TextOptions.GetTextFormattingMode(this);
                 if (TextFormattingMode.Display == textFormattingMode)
                 {
-                    if (_textFormatterDisplay == null)
+                    if (_textFormatterDisplay is null)
                     {
                         _textFormatterDisplay = System.Windows.Media.TextFormatting.TextFormatter.FromCurrentDispatcher(textFormattingMode);
                     }
@@ -2683,7 +2683,7 @@ Debug.Assert(lineCount == LineCount);
                 }
                 else
                 {
-                    if (_textFormatterIdeal == null)
+                    if (_textFormatterIdeal is null)
                     {
                         _textFormatterIdeal = System.Windows.Media.TextFormatting.TextFormatter.FromCurrentDispatcher(textFormattingMode);
                     }
@@ -2783,7 +2783,7 @@ Debug.Assert(lineCount == LineCount);
         //-------------------------------------------------------------------
         private ArrayList InlineObjects
         {
-            get { return (_complexContent == null) ? null : _complexContent.InlineObjects; }
+            get { return (_complexContent is null) ? null : _complexContent.InlineObjects; }
             set { if (_complexContent != null) _complexContent.InlineObjects = value; }
         }
 
@@ -2837,7 +2837,7 @@ Debug.Assert(lineCount == LineCount);
         {
             // We distinguish these two cases by parent of TextContainer:
             // for plain text case it is TextBox.
-            if (!(position is TextPointer) || ((TextPointer)position).Parent == null || ((TextPointer)position).Parent is TextBox)
+            if (!(position is TextPointer) || ((TextPointer)position).Parent is null || ((TextPointer)position).Parent is TextBox)
             {
                 position.InsertTextInRun(text);
             }
@@ -2861,7 +2861,7 @@ Debug.Assert(lineCount == LineCount);
         private Line CreateLine(LineProperties lineProperties)
         {
             Line line;
-            if (_complexContent == null)
+            if (_complexContent is null)
                 line = new SimpleLine(this, Text, lineProperties.DefaultTextRunProperties);
             else
                 line = new ComplexLine(this);
@@ -2881,9 +2881,9 @@ Debug.Assert(lineCount == LineCount);
         // ------------------------------------------------------------------
         private void EnsureComplexContent(ITextContainer textContainer)
         {
-            if (_complexContent == null)
+            if (_complexContent is null)
             {
-                if (textContainer == null)
+                if (textContainer is null)
                 {
                     textContainer = new TextContainer(IsContentPresenterContainer ? null : this, false /* plainTextOnly */);
                 }
@@ -2932,7 +2932,7 @@ Debug.Assert(lineCount == LineCount);
             {
                 _complexContent.Detach(this);
                 _complexContent = null;
-                Invariant.Assert(_contentCache == null, "Content cache should be null when complex content exists.");
+                Invariant.Assert(_contentCache is null, "Content cache should be null when complex content exists.");
             }
         }
 
@@ -2983,7 +2983,7 @@ Debug.Assert(lineCount == LineCount);
         {
             Invariant.Assert(args != null);
 
-            if (_complexContent == null)
+            if (_complexContent is null)
             {
                 // This shouldn't ever happen (we only hook up this handler when we have complex
                 // content)... except that it does happen, in cases where TextBlock is part of
@@ -3376,7 +3376,7 @@ Debug.Assert(lineCount == LineCount);
             // data binding expression will be lost.
             bool shouldSerialize = false;
 
-            if (_complexContent == null)
+            if (_complexContent is null)
             {
                 object localValue = ReadLocalValue(TextProperty);
 
@@ -3405,7 +3405,7 @@ Debug.Assert(lineCount == LineCount);
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool ShouldSerializeInlines(XamlDesignerSerializationManager manager)
         {
-            return (_complexContent != null) && (manager != null) && (manager.XmlWriter == null);
+            return (_complexContent != null) && (manager != null) && (manager.XmlWriter is null);
         }
 
         // ------------------------------------------------------------------
@@ -3501,7 +3501,7 @@ Debug.Assert(lineCount == LineCount);
 
         private static bool ContainsContentElement(TextBlock textBlock, ContentElement element)
         {
-            if (textBlock._complexContent == null || !(textBlock._complexContent.TextContainer is TextContainer))
+            if (textBlock._complexContent is null || !(textBlock._complexContent.TextContainer is TextContainer))
             {
                 return false;
             }
@@ -3525,7 +3525,7 @@ Debug.Assert(lineCount == LineCount);
             {
                 if (CheckFlags(Flags.HasFirstLine))
                 {
-                    return (_subsequentLines == null) ? 1 : _subsequentLines.Count + 1;
+                    return (_subsequentLines is null) ? 1 : _subsequentLines.Count + 1;
                 }
 
                 return 0;
@@ -4098,7 +4098,7 @@ Debug.Assert(lineCount == LineCount);
                 return;
             }
 
-            if (text._complexContent == null)
+            if (text._complexContent is null)
             {
                 text._contentCache = (newText != null) ? newText : String.Empty;
             }
@@ -4109,7 +4109,7 @@ Debug.Assert(lineCount == LineCount);
                 {
                     bool exceptionThrown = true;
 
-                    Invariant.Assert(text._contentCache == null, "Content cache should be null when complex content exists.");
+                    Invariant.Assert(text._contentCache is null, "Content cache should be null when complex content exists.");
 
                     text._complexContent.TextContainer.BeginChange();
                     try

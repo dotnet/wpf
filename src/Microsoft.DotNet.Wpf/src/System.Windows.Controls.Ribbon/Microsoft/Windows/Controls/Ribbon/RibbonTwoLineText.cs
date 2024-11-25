@@ -293,7 +293,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     // Determine LineBreak with availableSize
                     MeasureWithConstraint(availableSize, out secondLinePointer);
 
-                    if (secondLinePointer == null)
+                    if (secondLinePointer is null)
                     {
                         MeasureWithoutConstraint(out secondLinePointer);
                     }

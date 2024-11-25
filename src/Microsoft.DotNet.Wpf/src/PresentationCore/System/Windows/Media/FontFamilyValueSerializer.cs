@@ -63,7 +63,7 @@ namespace System.Windows.Media
         public override string ConvertToString(object value, IValueSerializerContext context)
         {
             FontFamily fontFamily = value as FontFamily;
-            if (fontFamily == null || fontFamily.Source == null)
+            if (fontFamily is null || fontFamily.Source is null)
                 throw GetConvertToException(value, typeof(string));
             return fontFamily.Source;
         }

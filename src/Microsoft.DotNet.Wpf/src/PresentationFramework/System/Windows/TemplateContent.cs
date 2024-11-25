@@ -40,7 +40,7 @@ namespace System.Windows
                 set
                 {
                     // can't change the type (except from null)
-                    Debug.Assert(_xamlType == null);
+                    Debug.Assert(_xamlType is null);
 
                     _xamlType = value;
                 }
@@ -89,7 +89,7 @@ namespace System.Windows
             {
                 get
                 {
-                    if (_namespaces == null)
+                    if (_namespaces is null)
                     {
                         _namespaces = new FrugalObjectList<System.Xaml.NamespaceDeclaration>();
                     }
@@ -101,9 +101,9 @@ namespace System.Windows
 
             public override string ToString()
             {
-                string type = (this.Type == null) ? String.Empty : this.Type.Name;
-                string prop = (this.Property == null) ? "-" : this.Property.Name;
-                string inst = (Instance == null) ? "-" : "*";
+                string type = (this.Type is null) ? String.Empty : this.Type.Name;
+                string prop = (this.Property is null) ? "-" : this.Property.Name;
+                string inst = (Instance is null) ? "-" : "*";
                 string res = $"{type}.{prop} inst={inst}";
                 return res;
             }
@@ -173,7 +173,7 @@ namespace System.Windows
                     {
                         if (iteratorFrame.HasNamespaces)
                         {
-                            if (allNamespaces == null)  // late allocation cause there is often nothing.
+                            if (allNamespaces is null)  // late allocation cause there is often nothing.
                             {
                                 allNamespaces = new FrugalObjectList<System.Xaml.NamespaceDeclaration>();
                             }
@@ -209,7 +209,7 @@ namespace System.Windows
                 CreateObjectWriterSettings(ObjectWriterParentSettings);
             settings.AfterBeginInitHandler = delegate(object sender, System.Xaml.XamlObjectEventArgs args)
             {
-                //In several situations this even will happen with Stack == null.
+                //In several situations this even will happen with Stack is null.
                 //If this event was on the XOW, perhaps we could stop listening in some circumstances?
                 if (Stack != null && Stack.Depth > 0)
                 {
@@ -329,7 +329,7 @@ namespace System.Windows
             {
                 PropertyValue sdp = sharedProperties[i];
 
-                if (sdp.ChildName == null)
+                if (sdp.ChildName is null)
                 {
                     sdp.ChildName = name;
                 }
@@ -444,7 +444,7 @@ namespace System.Windows
                             stack.CurrentFrame.NameSet = true;
                         }
 
-                        if (RootType == null)
+                        if (RootType is null)
                         {
                             RootType = xamlReader.Type;
                         }
@@ -473,7 +473,7 @@ namespace System.Windows
                         }
 
                         XamlType type = stack.CurrentFrame.Property.Type;
-                        if (RootType == null)
+                        if (RootType is null)
                         {
                             RootType = type;
                         }
@@ -497,7 +497,7 @@ namespace System.Windows
                             stack.CurrentFrame.NameSet = true;
                         }
 
-                        if (TemplateLoadData.RootName == null && stack.Depth == 1)
+                        if (TemplateLoadData.RootName is null && stack.Depth == 1)
                         {
                             TemplateLoadData.RootName = stack.CurrentFrame.Name;
                         }
@@ -656,7 +656,7 @@ namespace System.Windows
                             stack.CurrentFrame.Name = name;
                             stack.CurrentFrame.NameSet = true;
 
-                            if (TemplateLoadData.RootName == null)
+                            if (TemplateLoadData.RootName is null)
                             {
                                 TemplateLoadData.RootName = name;
                             }
@@ -801,7 +801,7 @@ namespace System.Windows
             Debug.Assert(xamlReader.NodeType == System.Xaml.XamlNodeType.StartMember);
             // All DependencyPropertys are wrapped in WpfXamlMembers.  If it's not a WpfXamlMember, it's not a DependencyProperty
             WpfXamlMember xamlProperty = xamlReader.Member as WpfXamlMember;
-            if (xamlProperty == null)
+            if (xamlProperty is null)
             {
                 sharedValue = null;
                 return false;
@@ -809,7 +809,7 @@ namespace System.Windows
             DependencyProperty property = xamlProperty.DependencyProperty;
 
             // We can only share DPs.  Return the node pipe with just the SP in it
-            if (property == null)
+            if (property is null)
             {
                 sharedValue = null;
                 return false;
@@ -841,7 +841,7 @@ namespace System.Windows
                 // Throwning an exceptions will mark item as unshareable.  So for compability,
                 // Null is not shareable.
                 // But the much more common case of a NullExtension object is sharable.
-                if (xamlReader.Value == null)
+                if (xamlReader.Value is null)
                 {
                     sharedValue = null;
                     return false;
@@ -1239,7 +1239,7 @@ namespace System.Windows
                     $"{contentSource}TemplateSelector", targetType);
                 DependencyProperty dpContentStringFormat = DependencyProperty.FromName($"{contentSource}StringFormat", targetType);
 
-                if (dpContent == null && isContentSourceSet)
+                if (dpContent is null && isContentSourceSet)
                 {
                     throw new InvalidOperationException(SR.Format(SR.MissingContentSource, contentSource, targetType));
                 }
@@ -1537,7 +1537,7 @@ namespace System.Windows
         {
             get
             {
-                if (_namedTypes == null)
+                if (_namedTypes is null)
                     _namedTypes = new Dictionary<string, XamlType>();
                 return _namedTypes;
             }

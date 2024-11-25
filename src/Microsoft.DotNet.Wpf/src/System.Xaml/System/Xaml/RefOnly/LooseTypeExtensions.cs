@@ -65,7 +65,7 @@ namespace System.Xaml
 
         internal static bool IsAssemblyQualifiedNameAssignableFrom(Type t1, Type t2)
         {
-            if (t1 == null || t2 == null)
+            if (t1 is null || t2 is null)
             {
                 return false;
             }
@@ -121,7 +121,7 @@ namespace System.Xaml
 
         static bool IsLooseSubClassOf(Type t1, Type t2)
         {
-            if (t1 == null || t2 == null)
+            if (t1 is null || t2 is null)
             {
                 return false;
             }

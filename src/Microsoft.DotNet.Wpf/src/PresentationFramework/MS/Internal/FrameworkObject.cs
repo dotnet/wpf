@@ -64,7 +64,7 @@ namespace MS.Internal
         internal FrameworkObject(DependencyObject d, bool throwIfNeither)
             : this(d)
         {
-            if (throwIfNeither && _fe == null && _fce == null)
+            if (throwIfNeither && _fe is null && _fce is null)
             {
                 object arg = (d != null) ? (object)d.GetType() : (object)"NULL";
                 throw new InvalidOperationException(SR.Format(SR.MustBeFrameworkDerived, arg));
@@ -434,7 +434,7 @@ namespace MS.Internal
                     }
                 }
 
-                if (parent == null && _do != null)
+                if (parent is null && _do != null)
                 {
                     parent = _do.InheritanceContext;
                 }
@@ -740,7 +740,7 @@ namespace MS.Internal
         static StreamWriter logFile;
         internal static void Log(string format, params object[] args)
         {
-            if (logFile == null)
+            if (logFile is null)
             {
                 logFile = File.AppendText("IClog.txt");
                 logFile.WriteLine();
@@ -753,7 +753,7 @@ namespace MS.Internal
 
         internal static string LogIC(DependencyObject d1, DependencyProperty dp, DependencyObject d2)
         {
-            string name = (dp == null) ? "[null]" : dp.Name;
+            string name = (dp is null) ? "[null]" : dp.Name;
             return String.Format("{0}.{1} = {2}", d1.GetType().Name, name, d2.GetType().Name);
         }
 #endif
@@ -856,7 +856,7 @@ namespace MS.Internal
         private FrameworkObject GetRawPreferVisualParent()
         {
             // the null object has no parent
-            if (_do == null)
+            if (_do is null)
             {
                 return new FrameworkObject(null);
             }

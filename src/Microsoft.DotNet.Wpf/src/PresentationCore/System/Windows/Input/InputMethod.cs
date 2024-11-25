@@ -433,7 +433,7 @@ namespace System.Windows.Input
                 {
                     inputMethod = dispatcher.InputMethod as InputMethod;
                 
-                    if (inputMethod == null)
+                    if (inputMethod is null)
                     {
                         inputMethod = new InputMethod();
                         dispatcher.InputMethod = inputMethod;
@@ -1185,7 +1185,7 @@ namespace System.Windows.Input
 
                 // Advise compartment event sink to Win32 Cicero only when someone
                 // has StateChanged event handler.
-                if ((_StateChanged == null) && TextServicesLoader.ServicesInstalled)
+                if ((_StateChanged is null) && TextServicesLoader.ServicesInstalled)
                 {
                     InitializeCompartmentEventSink();
                 }
@@ -1197,7 +1197,7 @@ namespace System.Windows.Input
                 ArgumentNullException.ThrowIfNull(value);
 
                 _StateChanged -= value;
-                if ((_StateChanged == null) && TextServicesLoader.ServicesInstalled)
+                if ((_StateChanged is null) && TextServicesLoader.ServicesInstalled)
                 {
                     // Unadvise compartment event sink to Win32 Cicero if none has StateChanged event handler.
                     UninitializeCompartmentEventSink();
@@ -1230,7 +1230,7 @@ namespace System.Windows.Input
         {
             object value;
 
-            if (focus == null)
+            if (focus is null)
                 return;
 
             //
@@ -1462,7 +1462,7 @@ namespace System.Windows.Input
                     compartment = TextServicesCompartmentContext.Current.GetGlobalCompartment(iminfo.Guid);
                 if (compartment != null)
                 {
-                    if (_sink == null)
+                    if (_sink is null)
                         _sink = new TextServicesCompartmentEventSink(this);
                     compartment.AdviseNotifySink(_sink);
                 }

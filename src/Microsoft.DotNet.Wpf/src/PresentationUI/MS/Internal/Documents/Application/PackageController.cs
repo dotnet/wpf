@@ -110,7 +110,7 @@ internal class PackageController : IDocumentController
     {
         PackageDocument doc = (PackageDocument)document;
 
-        if (doc.Destination == null)
+        if (doc.Destination is null)
         {
             return false;
         }

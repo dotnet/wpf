@@ -176,7 +176,7 @@ namespace System.Windows.Media
                 DUCE.ResourceHandle hOffsetAnimations = GetAnimationResourceHandle(OffsetProperty, channel);
 
                 // Store the count of this resource's contained collections in local variables.
-                int DashesCount = (vDashes == null) ? 0 : vDashes.Count;
+                int DashesCount = (vDashes is null) ? 0 : vDashes.Count;
 
                 // Pack & send command packet
                 DUCE.MILCMD_DASHSTYLE data;
@@ -343,7 +343,7 @@ namespace System.Windows.Media
             // if these get touched by more than one thread in the lifetime
             // of your app
 
-            Debug.Assert(s_Dashes == null || s_Dashes.IsFrozen,
+            Debug.Assert(s_Dashes is null || s_Dashes.IsFrozen,
                 "Detected context bound default value DashStyle.s_Dashes (See OS Bug #947272).");
 
 

@@ -93,7 +93,7 @@ namespace System.Windows
                 FirePropertyChangeInAncestry(newOrigin, false /* oldValue */, null, originChangedAction);
             }
 
-            if (oldTreeState == null && treeStateLocalCopy != null)
+            if (oldTreeState is null && treeStateLocalCopy != null)
             {
                 // Now that we have applied the old tree state, throw it away.
                 treeStateLocalCopy.Clear();

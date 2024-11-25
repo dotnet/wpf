@@ -80,7 +80,7 @@ namespace Microsoft.Windows.Shell
             // If there isn't currently a worker associated with the Window then assign a new one.
             // There can be a many:1 relationship of to Window to WindowChrome objects, but a 1:1 for a Window and a WindowChromeWorker.
             WindowChromeWorker chromeWorker = WindowChromeWorker.GetWindowChromeWorker(window);
-            if (chromeWorker == null)
+            if (chromeWorker is null)
             {
                 chromeWorker = new WindowChromeWorker();
                 WindowChromeWorker.SetWindowChromeWorker(window, chromeWorker);
@@ -117,7 +117,7 @@ namespace Microsoft.Windows.Shell
         {
             Verify.IsNotNull(inputElement, "inputElement");
             var dobj = inputElement as DependencyObject;
-            if (dobj == null)
+            if (dobj is null)
             {
                 throw new ArgumentException("The element must be a DependencyObject", "inputElement");
             }
@@ -130,7 +130,7 @@ namespace Microsoft.Windows.Shell
         {
             Verify.IsNotNull(inputElement, "inputElement");
             var dobj = inputElement as DependencyObject;
-            if (dobj == null)
+            if (dobj is null)
             {
                 throw new ArgumentException("The element must be a DependencyObject", "inputElement");
             }
@@ -149,7 +149,7 @@ namespace Microsoft.Windows.Shell
         {
             Verify.IsNotNull(inputElement, "inputElement");
             var dobj = inputElement as DependencyObject;
-            if (dobj == null)
+            if (dobj is null)
             {
                 throw new ArgumentException("The element must be a DependencyObject", "inputElement");
             }
@@ -162,7 +162,7 @@ namespace Microsoft.Windows.Shell
         {
             Verify.IsNotNull(inputElement, "inputElement");
             var dobj = inputElement as DependencyObject;
-            if (dobj == null)
+            if (dobj is null)
             {
                 throw new ArgumentException("The element must be a DependencyObject", "inputElement");
             }

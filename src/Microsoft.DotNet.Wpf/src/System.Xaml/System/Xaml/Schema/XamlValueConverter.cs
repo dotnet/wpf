@@ -29,7 +29,7 @@ namespace System.Xaml.Schema
 
         public XamlValueConverter(Type converterType, XamlType targetType, string name)
         {
-            if (converterType == null && targetType == null && name == null)
+            if (converterType is null && targetType is null && name is null)
             {
                 throw new ArgumentException(SR.Format(SR.ArgumentRequired, $"{nameof(converterType)}, {nameof(targetType)}, {nameof(name)}"));
             }
@@ -61,7 +61,7 @@ namespace System.Xaml.Schema
             {
                 if (_isPublic == ThreeValuedBool.NotSet)
                 {
-                    _isPublic = (ConverterType == null || ConverterType.IsVisible) ? ThreeValuedBool.True : ThreeValuedBool.False;
+                    _isPublic = (ConverterType is null || ConverterType.IsVisible) ? ThreeValuedBool.True : ThreeValuedBool.False;
                 }
 
                 return _isPublic == ThreeValuedBool.True;

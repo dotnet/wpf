@@ -91,7 +91,7 @@ namespace System.Windows.Media.Media3D
 
             Visual3D visual3D = value as Visual3D;
 
-            if (visual3D == null)
+            if (visual3D is null)
             {
                 throw new System.ArgumentException(SR.Format(SR.Collection_BadType, this.GetType().Name, value.GetType().Name, typeof(Visual3D).Name));
             }

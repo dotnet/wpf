@@ -837,7 +837,7 @@ namespace System.Windows.Controls
             // Show AutoToolTip if needed.
             Thumb thumb = e.OriginalSource as Thumb;
 
-            if ((thumb == null) || (this.AutoToolTipPlacement == Primitives.AutoToolTipPlacement.None))
+            if ((thumb is null) || (this.AutoToolTipPlacement == Primitives.AutoToolTipPlacement.None))
             {
                 return;
             }
@@ -845,7 +845,7 @@ namespace System.Windows.Controls
             // Save original tooltip
             _thumbOriginalToolTip = thumb.ToolTip;
 
-            if (_autoToolTip == null)
+            if (_autoToolTip is null)
             {
                 _autoToolTip = new ToolTip();
                 _autoToolTip.Placement = PlacementMode.Custom;
@@ -879,7 +879,7 @@ namespace System.Windows.Controls
                 // Show AutoToolTip if needed
                 if (this.AutoToolTipPlacement != Primitives.AutoToolTipPlacement.None)
                 {
-                    if (_autoToolTip == null)
+                    if (_autoToolTip is null)
                     {
                         _autoToolTip = new ToolTip();
                     }
@@ -917,7 +917,7 @@ namespace System.Windows.Controls
             // Show AutoToolTip if needed.
             Thumb thumb = e.OriginalSource as Thumb;
 
-            if ((thumb == null) || (this.AutoToolTipPlacement == Primitives.AutoToolTipPlacement.None))
+            if ((thumb is null) || (this.AutoToolTipPlacement == Primitives.AutoToolTipPlacement.None))
             {
                 return;
             }
@@ -988,7 +988,7 @@ namespace System.Windows.Controls
             Size trackSize = new Size(0d, 0d);
             Size thumbSize = new Size(0d, 0d);
 
-            if (Track == null || DoubleUtil.LessThan(SelectionEnd,SelectionStart))
+            if (Track is null || DoubleUtil.LessThan(SelectionEnd,SelectionStart))
             {
                 return;
             }
@@ -1001,7 +1001,7 @@ namespace System.Windows.Controls
 
             FrameworkElement rangeElement = this.SelectionRangeElement as FrameworkElement;
 
-            if (rangeElement == null)
+            if (rangeElement is null)
             {
                 return;
             }
@@ -1054,14 +1054,14 @@ namespace System.Windows.Controls
 
         private void UpdateSelectedRangeElementSize()
         {
-            if (Track == null)
+            if (Track is null)
             {
                 return;
             }
 
             FrameworkElement rangeElement = this.SelectedRangeElement as FrameworkElement;
 
-            if (rangeElement == null)
+            if (rangeElement is null)
             {
                 return;
             }

@@ -196,8 +196,8 @@ namespace System.Windows.Media
                 DoubleCollection vGuidelinesY = GuidelinesY;
 
                 // Store the count of this resource's contained collections in local variables.
-                int GuidelinesXCount = (vGuidelinesX == null) ? 0 : vGuidelinesX.Count;
-                int GuidelinesYCount = (vGuidelinesY == null) ? 0 : vGuidelinesY.Count;
+                int GuidelinesXCount = (vGuidelinesX is null) ? 0 : vGuidelinesX.Count;
+                int GuidelinesYCount = (vGuidelinesY is null) ? 0 : vGuidelinesY.Count;
 
                 // Pack & send command packet
                 DUCE.MILCMD_GUIDELINESET data;
@@ -364,11 +364,11 @@ namespace System.Windows.Media
             // if these get touched by more than one thread in the lifetime
             // of your app.  (Windows OS 
 
-            Debug.Assert(s_GuidelinesX == null || s_GuidelinesX.IsFrozen,
+            Debug.Assert(s_GuidelinesX is null || s_GuidelinesX.IsFrozen,
                 "Detected context bound default value GuidelineSet.s_GuidelinesX (See OS Bug #947272).");
 
 
-            Debug.Assert(s_GuidelinesY == null || s_GuidelinesY.IsFrozen,
+            Debug.Assert(s_GuidelinesY is null || s_GuidelinesY.IsFrozen,
                 "Detected context bound default value GuidelineSet.s_GuidelinesY (See OS Bug #947272).");
 
 

@@ -49,7 +49,7 @@ namespace System.Windows.Media
         {
             VerifyApiNonstructuralChange();
 
-            if (pen == null)
+            if (pen is null)
             {
                 return;
             }
@@ -100,7 +100,7 @@ namespace System.Windows.Media
         {
             VerifyApiNonstructuralChange();
 
-            if (pen == null)
+            if (pen is null)
             {
                 return;
             }
@@ -159,7 +159,7 @@ namespace System.Windows.Media
         {
             VerifyApiNonstructuralChange();
 
-            if ((brush == null) && (pen == null))
+            if ((brush is null) && (pen is null))
             {
                 return;
             }
@@ -214,7 +214,7 @@ namespace System.Windows.Media
         {
             VerifyApiNonstructuralChange();
 
-            if ((brush == null) && (pen == null))
+            if ((brush is null) && (pen is null))
             {
                 return;
             }
@@ -280,7 +280,7 @@ namespace System.Windows.Media
         {
             VerifyApiNonstructuralChange();
 
-            if ((brush == null) && (pen == null))
+            if ((brush is null) && (pen is null))
             {
                 return;
             }
@@ -351,7 +351,7 @@ namespace System.Windows.Media
         {
             VerifyApiNonstructuralChange();
 
-            if ((brush == null) && (pen == null))
+            if ((brush is null) && (pen is null))
             {
                 return;
             }
@@ -427,7 +427,7 @@ namespace System.Windows.Media
         {
             VerifyApiNonstructuralChange();
 
-            if ((brush == null) && (pen == null))
+            if ((brush is null) && (pen is null))
             {
                 return;
             }
@@ -500,7 +500,7 @@ namespace System.Windows.Media
         {
             VerifyApiNonstructuralChange();
 
-            if ((brush == null) && (pen == null))
+            if ((brush is null) && (pen is null))
             {
                 return;
             }
@@ -564,7 +564,7 @@ namespace System.Windows.Media
         {
             VerifyApiNonstructuralChange();
 
-            if (((brush == null) && (pen == null)) || (geometry == null))
+            if (((brush is null) && (pen is null)) || (geometry is null))
             {
                 return;
             }
@@ -613,7 +613,7 @@ namespace System.Windows.Media
         {
             VerifyApiNonstructuralChange();
 
-            if (imageSource == null)
+            if (imageSource is null)
             {
                 return;
             }
@@ -663,7 +663,7 @@ namespace System.Windows.Media
         {
             VerifyApiNonstructuralChange();
 
-            if (imageSource == null)
+            if (imageSource is null)
             {
                 return;
             }
@@ -711,7 +711,7 @@ namespace System.Windows.Media
         {
             VerifyApiNonstructuralChange();
 
-            if ((foregroundBrush == null) || (glyphRun == null))
+            if ((foregroundBrush is null) || (glyphRun is null))
             {
                 return;
             }
@@ -752,7 +752,7 @@ namespace System.Windows.Media
         {
             VerifyApiNonstructuralChange();
 
-            if (drawing == null)
+            if (drawing is null)
             {
                 return;
             }
@@ -797,7 +797,7 @@ namespace System.Windows.Media
         {
             VerifyApiNonstructuralChange();
 
-            if (player == null)
+            if (player is null)
             {
                 return;
             }
@@ -845,7 +845,7 @@ namespace System.Windows.Media
         {
             VerifyApiNonstructuralChange();
 
-            if (player == null)
+            if (player is null)
             {
                 return;
             }
@@ -1108,8 +1108,8 @@ namespace System.Windows.Media
                 {
                     DoubleCollection guidelinesX = guidelines.GuidelinesX;
                     DoubleCollection guidelinesY = guidelines.GuidelinesY;
-                    int countX = guidelinesX == null ? 0 : guidelinesX.Count;
-                    int countY = guidelinesY == null ? 0 : guidelinesY.Count;
+                    int countX = guidelinesX is null ? 0 : guidelinesX.Count;
+                    int countY = guidelinesY is null ? 0 : guidelinesY.Count;
 
                     if (countX == 0 && (countY == 1 || countY == 2)
                         )
@@ -1342,7 +1342,7 @@ namespace System.Windows.Media
             Double baseValue,
             AnimationClock animations)
         {
-            if (animations == null)
+            if (animations is null)
             {
                 return 0;
             }
@@ -1359,7 +1359,7 @@ namespace System.Windows.Media
             Point baseValue,
             AnimationClock animations)
         {
-            if (animations == null)
+            if (animations is null)
             {
                 return 0;
             }
@@ -1376,7 +1376,7 @@ namespace System.Windows.Media
             Size baseValue,
             AnimationClock animations)
         {
-            if (animations == null)
+            if (animations is null)
             {
                 return 0;
             }
@@ -1393,7 +1393,7 @@ namespace System.Windows.Media
             Rect baseValue,
             AnimationClock animations)
         {
-            if (animations == null)
+            if (animations is null)
             {
                 return 0;
             }

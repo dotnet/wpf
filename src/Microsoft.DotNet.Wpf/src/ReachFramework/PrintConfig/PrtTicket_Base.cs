@@ -262,7 +262,7 @@ namespace MS.Internal.Printing.Configuration
                 if (this[propertyName] == value)
                     return;
 
-                if (FeatureNode == null)
+                if (FeatureNode is null)
                 {
                     // The PrintTicket doesn't have the feature element, so we need to create one.
                     XmlElement parentElement = null;
@@ -271,7 +271,7 @@ namespace MS.Internal.Printing.Configuration
                     {
                         // This is a sub-feature, so if the parent feature element is NOT in XML,
                         // we need to create the parent element in XML PrintTicket first.
-                        if (_parentFeature.FeatureNode == null)
+                        if (_parentFeature.FeatureNode is null)
                         {
                             PTFeatureNode.CreateFeatureNode(_parentFeature,
                                                             this._ownerPrintTicket.XmlDoc.DocumentElement);
@@ -310,7 +310,7 @@ namespace MS.Internal.Printing.Configuration
 
                     #if _DEBUG
                     // stringValue should never be null since derived class must verify "value"
-                    if (stringValue == null)
+                    if (stringValue is null)
                     {
                         throw new InvalidOperationException("_DEBUG: stringValue should never be null here");
                     }
@@ -373,7 +373,7 @@ namespace MS.Internal.Printing.Configuration
             }
 
             #if _DEBUG
-            if (map == null)
+            if (map is null)
             {
                 throw new InvalidOperationException("_DEBUG: LookupPropertyMap should never return null");
             }
@@ -493,7 +493,7 @@ namespace MS.Internal.Printing.Configuration
 
             // If an option element is already present, we will change its "name" XML attribute.
             // Otherwise we need to add an option element first.
-            if (optionNode == null)
+            if (optionNode is null)
             {
                 optionNode = PrintTicketEditor.AddSchemaElementWithNameAttr(pt,
                                                  this.FeatureElement,
@@ -520,12 +520,12 @@ namespace MS.Internal.Printing.Configuration
 
             XmlElement optionNode = GetFirstOption();
 
-            if (optionNode == null)
+            if (optionNode is null)
                 return found;
 
             string valueText = GetOptionPropertyValueText(optionNode, propertyName);
 
-            if (valueText == null)
+            if (valueText is null)
                 return found;
 
             try
@@ -564,7 +564,7 @@ namespace MS.Internal.Printing.Configuration
 
             // If an option element is already present, we will add scored property under that.
             // Otherwise we need to add an option element first.
-            if (option == null)
+            if (option is null)
             {
                 option = PrintTicketEditor.AddSchemaElementWithNameAttr(pt,
                                                       this.FeatureElement,
@@ -609,7 +609,7 @@ namespace MS.Internal.Printing.Configuration
 
             XmlElement optionNode = GetFirstOption();
 
-            if (optionNode == null)
+            if (optionNode is null)
                 return stdValue;
 
             string valueText = GetOptionPropertyValueText(optionNode, propertyName);
@@ -643,7 +643,7 @@ namespace MS.Internal.Printing.Configuration
 
             // If an option element is already present, we will add scored property under that.
             // Otherwise we need to add an option element first.
-            if (option == null)
+            if (option is null)
             {
                 option = PrintTicketEditor.AddSchemaElementWithNameAttr(pt,
                                                       this.FeatureElement,
@@ -688,7 +688,7 @@ namespace MS.Internal.Printing.Configuration
 
             XmlElement optionNode = GetFirstOption();
 
-            if (optionNode == null)
+            if (optionNode is null)
                 return refName;
 
             // Gets the ScoredProperty element
@@ -697,7 +697,7 @@ namespace MS.Internal.Printing.Configuration
                                                           PrintSchemaTags.Framework.ScoredProperty,
                                                           propertyName);
 
-            if (propertyNode == null)
+            if (propertyNode is null)
                 return refName;
 
             // Gets the ScoredProperty element's ParameterRef child element
@@ -706,7 +706,7 @@ namespace MS.Internal.Printing.Configuration
                                                        PrintSchemaTags.Framework.ParameterRef,
                                                        null);
 
-            if (refNode == null)
+            if (refNode is null)
                 return refName;
 
             string fullRefName = refNode.GetAttribute(PrintSchemaTags.Framework.NameAttr,
@@ -741,7 +741,7 @@ namespace MS.Internal.Printing.Configuration
 
             // If an option element is already present, we will add scored property under that.
             // Otherwise we need to add an option element first.
-            if (option == null)
+            if (option is null)
             {
                 option = PrintTicketEditor.AddSchemaElementWithNameAttr(pt,
                                                       this.FeatureElement,
@@ -817,7 +817,7 @@ namespace MS.Internal.Printing.Configuration
                                                           PrintSchemaTags.Framework.ScoredProperty,
                                                           propertyName);
 
-            if (propertyNode == null)
+            if (propertyNode is null)
                 return null;
 
             // Gets the ScoredProperty element's Value child element
@@ -827,8 +827,8 @@ namespace MS.Internal.Printing.Configuration
                                                        null);
 
             // Verifies the Value child element does exist and has a child Text element
-            if ((valueNode == null) ||
-                (valueNode.FirstChild == null) ||
+            if ((valueNode is null) ||
+                (valueNode.FirstChild is null) ||
                 (valueNode.FirstChild.NodeType != XmlNodeType.Text))
             {
                 #if _DEBUG
@@ -1110,7 +1110,7 @@ namespace MS.Internal.Printing.Configuration
                 if (IntValue == value)
                     return;
 
-                if (ParameterNode == null)
+                if (ParameterNode is null)
                 {
                     // The PrintTicket doesn't have the parameter element, so we need to create one.
                     PrintTicketParameterNode.CreateParameterNode(this);
@@ -1166,7 +1166,7 @@ namespace MS.Internal.Printing.Configuration
                 }
                 #endif
 
-                if (ParameterNode == null)
+                if (ParameterNode is null)
                 {
                     // The PrintTicket doesn't have the parameter element, so we need to create one.
                     PrintTicketParameterNode.CreateParameterNode(this);
@@ -1299,8 +1299,8 @@ namespace MS.Internal.Printing.Configuration
                                                        null);
 
             // Verifies the Value child element does exist and has a child Text element
-            if ((valueNode == null) ||
-                (valueNode.FirstChild == null) ||
+            if ((valueNode is null) ||
+                (valueNode.FirstChild is null) ||
                 (valueNode.FirstChild.NodeType != XmlNodeType.Text))
             {
                 #if _DEBUG

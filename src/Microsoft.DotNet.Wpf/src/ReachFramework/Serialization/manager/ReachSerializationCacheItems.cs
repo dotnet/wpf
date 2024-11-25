@@ -94,7 +94,7 @@ namespace System.Windows.Xps.Serialization
             SerializersCacheManager serializersCacheManager
             )
         {
-            if (clrSerializableProperties == null)
+            if (clrSerializableProperties is null)
             {
                 PropertyInfo[] properties = type.GetProperties();
 
@@ -251,7 +251,7 @@ namespace System.Windows.Xps.Serialization
                 object DependencyPropertyORPropertyInfo = 
                        DependencyProperty.FromName(propertyInfo.Name, propertyInfo.DeclaringType);
 
-                if(DependencyPropertyORPropertyInfo == null             &&
+                if(DependencyPropertyORPropertyInfo is null             &&
                    visibility != DesignerSerializationVisibility.Hidden && 
                    (propertyInfo.CanWrite ||  visibility == DesignerSerializationVisibility.Content))
                 {
@@ -559,7 +559,7 @@ namespace System.Windows.Xps.Serialization
 
                 canSerializeValue = true;
             }
-            else if (propertyCache.DefaultValueAttr == null)
+            else if (propertyCache.DefaultValueAttr is null)
             {
                 //
                 // Populate the property value in this data structure
@@ -592,7 +592,7 @@ namespace System.Windows.Xps.Serialization
 
             if(canSerializeValue)
             {
-                if ((propertyCache.PropertyValue == null) ||
+                if ((propertyCache.PropertyValue is null) ||
                     (propertyCache.PropertyValue == System.Windows.DependencyProperty.UnsetValue))
                 {
                     canSerializeValue = false;

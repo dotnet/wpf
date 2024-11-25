@@ -24,7 +24,7 @@ namespace MS.Internal
 
         public override object GetValue(object component)
         {
-            if (_getter == null)
+            if (_getter is null)
             {
                 var binder = new TrivialGetMemberBinder(PropertyName);
                 _getter = CallSite<Func<CallSite, object, object>>.Create(binder);
@@ -35,7 +35,7 @@ namespace MS.Internal
 
         public override void SetValue(object component, object value)
         {
-            if (_setter == null)
+            if (_setter is null)
             {
                 var binder = new TrivialSetMemberBinder(PropertyName);
                 _setter = CallSite<Action<CallSite, object, object>>.Create(binder);
@@ -131,7 +131,7 @@ namespace MS.Internal
         // ensure only one accessor for each rank
         public static DynamicIndexerAccessor GetIndexerAccessor(int rank)
         {
-            if (_accessors.Length < rank || _accessors[rank-1] == null)
+            if (_accessors.Length < rank || _accessors[rank-1] is null)
             {
                 lock(_lock)
                 {
@@ -142,7 +142,7 @@ namespace MS.Internal
                         _accessors = newAccessors;
                     }
 
-                    if (_accessors[rank-1] == null)
+                    if (_accessors[rank-1] is null)
                     {
                         _accessors[rank-1] = new DynamicIndexerAccessorImpl(rank);
                     }

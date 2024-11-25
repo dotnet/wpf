@@ -201,7 +201,7 @@ namespace MS.Internal.IO.Packaging
             // Make sure streamUri is in the correct form; getting partUri from it will do all necessary checks for error
             //    conditions; We also have to make sure that it has a part name
             Uri partUri = System.IO.Packaging.PackUriHelper.GetPartUri(streamUri);
-            if (partUri == null)
+            if (partUri is null)
             {
                 throw new InvalidOperationException(SR.InvalidPartName);
             }
@@ -268,7 +268,7 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         private void CheckDisposed()
         {
-            if (_obfuscatedStream == null)
+            if (_obfuscatedStream is null)
                 throw new ObjectDisposedException(null, SR.Media_StreamClosed);
         }
 

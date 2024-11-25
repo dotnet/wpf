@@ -85,7 +85,7 @@ namespace MS.Internal.Automation
                 // Create an event args and get the source logical element
                 AutomationFocusChangedEventArgs e = new InternalAutomationFocusChangedEventArgs(idObject, idChild, eventTime);
                 AutomationElement srcEl = GetFocusedElementFromWinEvent(hwnd, idObject, idChild);
-                if (srcEl == null)
+                if (srcEl is null)
                 {
                     // Don't raise focus change events for UI that is gone.  This has been seen when toolbar menus are
                     // being manipulated (e.g. mnu.SubMenu("File").MenuItems("Close").Click() in MITA).  We should be
@@ -200,7 +200,7 @@ namespace MS.Internal.Automation
         private void OnEventObjectFocus(int eventId, IntPtr hwnd, int idObject, int idChild, uint eventTime)
         {
             Accessible acc = Accessible.Create(hwnd, idObject, idChild);
-            if (acc == null)
+            if (acc is null)
             {
                 return;
             }
@@ -276,7 +276,7 @@ namespace MS.Internal.Automation
         private void OnEventSystemMenuPopupStart(int eventId, IntPtr hwnd, int idObject, int idChild, uint eventTime)
         {
             Accessible acc = Accessible.Create(hwnd, idObject, idChild);
-            if( acc == null )
+            if( acc is null )
                 return;
 
             HandleFocusChange(hwnd, acc, idObject, idChild, eventTime);
@@ -293,7 +293,7 @@ namespace MS.Internal.Automation
                 {
                     IntPtr i = Misc.SendMessageTimeout(NativeMethods.HWND.Cast(hwnd), UnsafeNativeMethods.LB_GETCURSEL, IntPtr.Zero, IntPtr.Zero);
                     Accessible acc = Accessible.Create(hwnd, UnsafeNativeMethods.OBJID_CLIENT, i.ToInt32() + 1);
-                    if (acc == null)
+                    if (acc is null)
                         return;
 
                     HandleFocusChange(hwnd, acc, idObject, idChild, eventTime);
@@ -319,7 +319,7 @@ namespace MS.Internal.Automation
                 }
 
                 Accessible acc = Accessible.Create(guiThreadInfo.hwndFocus, UnsafeNativeMethods.OBJID_CLIENT, 0);
-                if (acc == null)
+                if (acc is null)
                     return;
 
                 HandleFocusChange(hwnd, acc, idObject, idChild, eventTime);

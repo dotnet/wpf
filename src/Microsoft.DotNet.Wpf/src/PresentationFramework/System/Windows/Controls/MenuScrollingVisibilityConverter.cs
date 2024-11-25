@@ -45,8 +45,8 @@ namespace System.Windows.Controls
             //
             // Parameter Validation
             //
-            if (parameter == null ||
-                values == null ||
+            if (parameter is null ||
+                values is null ||
                 values.Length != 4 ||
                 values[0] is not Visibility ||
                 values[1] is not double ||

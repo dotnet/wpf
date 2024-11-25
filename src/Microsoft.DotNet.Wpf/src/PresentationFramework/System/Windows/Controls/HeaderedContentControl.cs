@@ -278,7 +278,7 @@ namespace System.Windows.Controls
             {
                 object header = Header;
 
-                if (HeaderIsNotLogical || header == null)
+                if (HeaderIsNotLogical || header is null)
                 {
                     return base.LogicalChildren;
                 }

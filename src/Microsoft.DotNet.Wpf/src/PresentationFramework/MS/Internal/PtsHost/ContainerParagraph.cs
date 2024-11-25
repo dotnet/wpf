@@ -106,10 +106,10 @@ namespace MS.Internal.PtsHost
                     }
                     else
                     {
-                        _ur.SyncPara.SetUpdateInfo(PTS.FSKCHANGE.fskchNone, _ur.Next == null);
+                        _ur.SyncPara.SetUpdateInfo(PTS.FSKCHANGE.fskchNone, _ur.Next is null);
                     }
 
-                    Invariant.Assert(_firstChild == null);
+                    Invariant.Assert(_firstChild is null);
                     _firstChild = _ur.SyncPara;
                     _ur = _ur.Next;
                 }
@@ -122,7 +122,7 @@ namespace MS.Internal.PtsHost
                 // In this case UpdGetFirstChangeInSegment will not be called.
                 // Hence there is need to destroy all existing paragraphs.
                 if (StructuralCache.CurrentFormatContext.IncrementalUpdate && 
-                    _ur == null && 
+                    _ur is null && 
                     NeedsUpdate() && 
                     !_firstParaValidInUpdateMode)
                 {
@@ -154,7 +154,7 @@ namespace MS.Internal.PtsHost
 #if TEXTPANELLAYOUTDEBUG
             bool cached = _firstChild != null;
 #endif
-            if (_firstChild == null)
+            if (_firstChild is null)
             {
                 // Determine paragraph type and create it.
                 ITextPointer textPointer = TextContainerHelper.GetContentStart(StructuralCache.TextContainer, Element);
@@ -212,14 +212,14 @@ namespace MS.Internal.PtsHost
                     }
                     else
                     {
-                        _ur.SyncPara.SetUpdateInfo(PTS.FSKCHANGE.fskchNone, _ur.Next == null);
+                        _ur.SyncPara.SetUpdateInfo(PTS.FSKCHANGE.fskchNone, _ur.Next is null);
                     }
 
                     _ur = _ur.Next;
                 }
                 else
                 {
-                    Invariant.Assert(_ur.SyncPara == null || cpCurrent < _ur.SyncPara.ParagraphStartCharacterPosition);
+                    Invariant.Assert(_ur.SyncPara is null || cpCurrent < _ur.SyncPara.ParagraphStartCharacterPosition);
 
                     // Skip all paragraphs before the beginning of the next UpdateRecord. 
                     // This situation may happen when we go to the next UpdateRecord after finding 
@@ -243,7 +243,7 @@ namespace MS.Internal.PtsHost
 #if TEXTPANELLAYOUTDEBUG
             bool cached = nextParagraph != null;
 #endif
-            if (nextParagraph == null)
+            if (nextParagraph is null)
             {
                 // Determine paragraph type and create it
                 ITextPointer textPointer = TextContainerHelper.GetTextPointerFromCP(StructuralCache.TextContainer, prevParagraph.ParagraphEndCharacterPosition, LogicalDirection.Forward);
@@ -299,15 +299,15 @@ namespace MS.Internal.PtsHost
             out int fChangeFirst,               // OUT: first paragraph changed?
             out IntPtr nmpBeforeChange)         // OUT: name of paragraph before the change if !fChangeFirst
         {
-            Debug.Assert(_ur == null); // UpdateRecord has been already created.
+            Debug.Assert(_ur is null); // UpdateRecord has been already created.
 
             BuildUpdateRecord();
 
             fFound = PTS.FromBoolean(_ur != null);
-            fChangeFirst = PTS.FromBoolean((_ur != null) && (_firstChild == null || _firstChild == _ur.FirstPara));
+            fChangeFirst = PTS.FromBoolean((_ur != null) && (_firstChild is null || _firstChild == _ur.FirstPara));
             if (PTS.ToBoolean(fFound) && !PTS.ToBoolean(fChangeFirst))
             {
-                if (_ur.FirstPara == null)
+                if (_ur.FirstPara is null)
                 {
                     // Something has been added at the end of container paragraph. 
                     // Find the last paragraph.
@@ -367,7 +367,7 @@ namespace MS.Internal.PtsHost
             // Hence needs to calculate and set update info on all children paragraphs.
             if (StructuralCache.CurrentFormatContext.FinitePage)
             {
-                Debug.Assert(_ur == null);
+                Debug.Assert(_ur is null);
 
                 // Get list of dtrs for the container paragraph
                 DtrList dtrs = StructuralCache.DtrsFromRange(
@@ -494,7 +494,7 @@ namespace MS.Internal.PtsHost
             // So when the next paragraph is continued from BR, it has MCS.
             // This problem is currently investigated by PTS team: PTSLS bug 915.
             // For now, MCS gets ignored here.
-            //ErrorHandler.Assert(pbrkrecIn == IntPtr.Zero || mcs == null, ErrorHandler.BrokenParaHasMcs);
+            //ErrorHandler.Assert(pbrkrecIn == IntPtr.Zero || mcs is null, ErrorHandler.BrokenParaHasMcs);
             if (mcs != null && pbrkrecIn != IntPtr.Zero)
             {
                 mcs = null;
@@ -1152,7 +1152,7 @@ namespace MS.Internal.PtsHost
                     ur = UpdateRecordFromDtr(dtrs, dtrs[i], cpContent);
 
                     // Link UpdateRecord to the previous one
-                    if (urPrev == null)
+                    if (urPrev is null)
                     {
                         _ur = ur;
                     }
@@ -1187,7 +1187,7 @@ namespace MS.Internal.PtsHost
                     }
                     else
                     {
-                        Debug.Assert(ur.Next.FirstPara == null || ur.Next.FirstPara.Next == null);
+                        Debug.Assert(ur.Next.FirstPara is null || ur.Next.FirstPara.Next is null);
                         ur.MergeWithNext();
                         continue; // don't go to next, because it has been merged
                     }
@@ -1286,7 +1286,7 @@ namespace MS.Internal.PtsHost
             ur.FirstPara = para;
 
             // (3) Determine change type for the fist affected paragraph
-            if (para == null)
+            if (para is null)
             {
                 ur.ChangeType = PTS.FSKCHANGE.fskchNew;
             }

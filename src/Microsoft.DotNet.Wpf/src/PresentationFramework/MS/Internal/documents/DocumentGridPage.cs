@@ -317,7 +317,7 @@ namespace MS.Internal.Documents
             if (!_disposed &&
                 e != null &&
                 !e.Cancelled &&
-                e.Error == null &&
+                e.Error is null &&
                 e.PageNumber != int.MaxValue &&
                 e.PageNumber == this.PageNumber &&
                 e.DocumentPage != null &&

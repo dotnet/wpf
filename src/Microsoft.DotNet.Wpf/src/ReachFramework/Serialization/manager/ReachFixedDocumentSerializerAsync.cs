@@ -62,7 +62,7 @@ namespace System.Windows.Xps.Serialization
             ReachSerializerContext context
             )
         {
-            if(context == null)
+            if(context is null)
             {
 
             }
@@ -172,7 +172,7 @@ namespace System.Windows.Xps.Serialization
 
             String xmlnsForType = SerializationManager.GetXmlNSForType(typeof(FixedDocument));
 
-            if(xmlnsForType == null)
+            if(xmlnsForType is null)
             {
                 XmlWriter.WriteStartElement(serializableObjectContext.Name);
             }
@@ -339,7 +339,7 @@ namespace System.Windows.Xps.Serialization
         {
             get
             {
-                if(base.XmlWriter == null)
+                if(base.XmlWriter is null)
                 {
                     base.XmlWriter = SerializationManager.AcquireXmlWriter(typeof(FixedDocument));
                 }

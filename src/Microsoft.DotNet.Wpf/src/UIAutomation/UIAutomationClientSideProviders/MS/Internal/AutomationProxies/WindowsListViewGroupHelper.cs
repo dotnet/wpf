@@ -70,7 +70,7 @@ namespace MS.Internal.AutomationProxies
                 EnsureCreation (hwnd);
 
                 GroupManager manager = _groupManagers[hwnd] as GroupManager;
-                if (manager == null)
+                if (manager is null)
                 {
                     // E.G. Going from the List mode to the something that has Group will cause this
 
@@ -129,7 +129,7 @@ namespace MS.Internal.AutomationProxies
         {
             Group group = GetGroup(id);
 
-            if (group == null)
+            if (group is null)
             {
                 return NativeMethods.Win32Rect.Empty;
             }
@@ -212,7 +212,7 @@ namespace MS.Internal.AutomationProxies
 
             for (item.iItem = 0; item.iItem < itemCount; item.iItem++)
             {
-                if (!XSendMessage.GetItem(_hwnd, ref item) || GetGroup(item.iGroupID) == null)
+                if (!XSendMessage.GetItem(_hwnd, ref item) || GetGroup(item.iGroupID) is null)
                 {
                     return false;
                 }
@@ -282,7 +282,7 @@ namespace MS.Internal.AutomationProxies
             }
             static public bool operator false(GroupInfo info)
             {
-                return info._items == null;
+                return info._items is null;
             }
             static public bool operator !(GroupInfo info)
             {
@@ -473,7 +473,7 @@ namespace MS.Internal.AutomationProxies
         private bool Add(int id, int item)
         {
             Group group = GetGroup(id);
-            if (group == null)
+            if (group is null)
             {
                 group = new Group(id, _hwnd, _isComctrlV6OnOsVerV6orHigher);
                 _groups.Add(group);

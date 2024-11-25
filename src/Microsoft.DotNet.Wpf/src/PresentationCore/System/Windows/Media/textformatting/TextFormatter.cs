@@ -121,7 +121,7 @@ namespace System.Windows.Media.TextFormatting
         {
             Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
 
-            if (dispatcher == null)
+            if (dispatcher is null)
                 throw new ArgumentException(SR.CurrentDispatcherNotFound);
 
             TextFormatter defaultTextFormatter;
@@ -134,11 +134,11 @@ namespace System.Windows.Media.TextFormatting
                 defaultTextFormatter = (TextFormatterImp)dispatcher.Reserved1;
             }
                         
-            if (defaultTextFormatter == null)
+            if (defaultTextFormatter is null)
             {
                 lock (_staticLock)
                 {
-                    if (defaultTextFormatter == null)
+                    if (defaultTextFormatter is null)
                     {
                         // Default formatter has not been created for this dispatcher,
                         // create a new one and stick it to the dispatcher.

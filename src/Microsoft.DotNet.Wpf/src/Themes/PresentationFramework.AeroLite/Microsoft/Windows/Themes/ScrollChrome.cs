@@ -278,11 +278,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonThumbFill == null)
+                if (_commonThumbFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonThumbFill == null)
+                        if (_commonThumbFill is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromArgb(0xFF, 0xDD, 0xDD, 0xDD));
                             temp.Freeze();
@@ -298,11 +298,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonThumbHoverFill == null)
+                if (_commonThumbHoverFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonThumbHoverFill == null)
+                        if (_commonThumbHoverFill is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromArgb(0xFF, 0xBD, 0xE6, 0xFD));
                             temp.Freeze();
@@ -318,11 +318,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonThumbPressedFill == null)
+                if (_commonThumbPressedFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonThumbPressedFill == null)
+                        if (_commonThumbPressedFill is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromArgb(0xFF, 0xBD, 0xE6, 0xFD));
                             temp.Freeze();
@@ -363,11 +363,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonThumbBorder == null)
+                if (_commonThumbBorder is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonThumbBorder == null)
+                        if (_commonThumbBorder is null)
                         {
                             Pen temp = new Pen();
                             temp.Thickness = 1;
@@ -387,11 +387,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonThumbHoverBorder == null)
+                if (_commonThumbHoverBorder is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonThumbHoverBorder == null)
+                        if (_commonThumbHoverBorder is null)
                         {
                             Pen temp = new Pen();
                             temp.Thickness = 1;
@@ -411,11 +411,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonThumbPressedBorder == null)
+                if (_commonThumbPressedBorder is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonThumbPressedBorder == null)
+                        if (_commonThumbPressedBorder is null)
                         {
                             Pen temp = new Pen();
                             temp.Thickness = 1;
@@ -460,11 +460,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonThumbEnabledGlyph == null)
+                if (_commonThumbEnabledGlyph is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonThumbEnabledGlyph == null)
+                        if (_commonThumbEnabledGlyph is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromArgb(0xFF, 0x00, 0x00, 0x00));
                             temp.Freeze();

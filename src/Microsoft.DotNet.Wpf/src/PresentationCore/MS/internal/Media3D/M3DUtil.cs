@@ -113,7 +113,7 @@ namespace MS.Internal.Media3D
         // bounding box post the given transformation.
         internal static Rect3D ComputeTransformedAxisAlignedBoundingBox(/* IN */ ref Rect3D originalBox, Transform3D transform)
         {
-            if (transform == null || transform == Transform3D.Identity)
+            if (transform is null || transform == Transform3D.Identity)
             {
                 return originalBox;
             }
@@ -528,7 +528,7 @@ namespace MS.Internal.Media3D
                 Visual3D visual3D = dependencyObject as Visual3D;
 
                 // we reached the top
-                if (visual3D == null) 
+                if (visual3D is null) 
                 {
                     break;
                 }

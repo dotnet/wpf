@@ -48,7 +48,7 @@ namespace System.Windows.Ink
         /// <summary>Determine if two ExtendedProperty objects are equal</summary>
         public override bool Equals(object obj)
         {
-            if (obj == null || obj.GetType() != GetType())
+            if (obj is null || obj.GetType() != GetType())
             {
                 return false;
             }
@@ -97,11 +97,11 @@ namespace System.Windows.Ink
         /// two ExtendedProperty objects</summary>
         public static bool operator ==(ExtendedProperty first, ExtendedProperty second)
         {
-            if ((object)first == null && (object)second == null)
+            if ((object)first is null && (object)second is null)
             {
                 return true;
             }
-            else if ((object)first == null || (object)second == null)
+            else if ((object)first is null || (object)second is null)
             {
                 return false;
             }
@@ -125,7 +125,7 @@ namespace System.Windows.Ink
         public override string ToString()
         {
             string val;
-            if (Value == null)
+            if (Value is null)
             {
                 val = "<undefined value>";
             }

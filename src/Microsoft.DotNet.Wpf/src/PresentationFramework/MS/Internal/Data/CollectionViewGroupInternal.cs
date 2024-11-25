@@ -49,7 +49,7 @@ namespace MS.Internal.Data
         /// </summary>
         public override bool IsBottomLevel
         {
-            get { return (_groupBy == null); }
+            get { return (_groupBy is null); }
         }
 
         #endregion  Public Properties
@@ -83,7 +83,7 @@ namespace MS.Internal.Data
                 }
 
                 // choose a comparer based on info in the GroupDescription and the owning collection view
-                _groupComparer = (_groupBy == null) ? null :
+                _groupComparer = (_groupBy is null) ? null :
                     ListCollectionView.PrepareComparer(
                         _groupBy.CustomSort,
                         _groupBy.SortDescriptionsInternal,
@@ -129,13 +129,13 @@ namespace MS.Internal.Data
         {
             get
             {
-                if (ItemCount > 0 && (GroupBy == null || GroupBy.GroupNames.Count == 0))
+                if (ItemCount > 0 && (GroupBy is null || GroupBy.GroupNames.Count == 0))
                 {
                     // look for first item, child by child
                     for (int k = 0, n = Items.Count; k < n; ++k)
                     {
                         CollectionViewGroupInternal subgroup = Items[k] as CollectionViewGroupInternal;
-                        if (subgroup == null)
+                        if (subgroup is null)
                         {
                             // child is an item - return it
                             return Items[k];
@@ -173,7 +173,7 @@ namespace MS.Internal.Data
 
         internal void Add(object item)
         {
-            if (_groupComparer == null)
+            if (_groupComparer is null)
             {
                 ChangeCounts(item, +1);
                 ProtectedItems.Add(item);
@@ -314,7 +314,7 @@ namespace MS.Internal.Data
 
                     // accumulate leaf count
                     CollectionViewGroupInternal subgroup = group.Items[k] as CollectionViewGroupInternal;
-                    result += (subgroup == null) ? 1 : subgroup.ItemCount;
+                    result += (subgroup is null) ? 1 : subgroup.ItemCount;
                 }
             }
 
@@ -374,7 +374,7 @@ namespace MS.Internal.Data
             // when group sorting is not declared,
             // never insert the new item/group before the explicit subgroups
             int low = 0;
-            if (_groupComparer == null && GroupBy != null)
+            if (_groupComparer is null && GroupBy != null)
             {
                 low = GroupBy.GroupNames.Count;
             }
@@ -392,7 +392,7 @@ namespace MS.Internal.Data
         {
             int index;
 
-            if (_groupComparer == null)
+            if (_groupComparer is null)
             {
                 // group sorting is not declared - find the position using the seed
                 if (comparer != null)
@@ -491,7 +491,7 @@ namespace MS.Internal.Data
             for (int i = low; i < high; ++i)
             {
                 CollectionViewGroupInternal subgroup = Items[i] as CollectionViewGroupInternal;
-                delta += (subgroup == null) ? 1 : subgroup.ItemCount;
+                delta += (subgroup is null) ? 1 : subgroup.ItemCount;
             }
 
             if (oldIndexLocal < newIndexLocal)
@@ -523,12 +523,12 @@ namespace MS.Internal.Data
         internal void AddSubgroupToMap(object nameKey, CollectionViewGroupInternal subgroup)
         {
             Debug.Assert(subgroup != null);
-            if (nameKey == null)
+            if (nameKey is null)
             {
                 // use null name place holder.
                 nameKey = _nullGroupNameKey;
             }
-            if (_nameToGroupMap == null)
+            if (_nameToGroupMap is null)
             {
                 _nameToGroupMap = new Hashtable();
             }
@@ -545,7 +545,7 @@ namespace MS.Internal.Data
         private void RemoveSubgroupFromMap(CollectionViewGroupInternal subgroup)
         {
             Debug.Assert(subgroup != null);
-            if (_nameToGroupMap == null)
+            if (_nameToGroupMap is null)
             {
                 return;
             }
@@ -576,7 +576,7 @@ namespace MS.Internal.Data
         {
             if (_nameToGroupMap != null)
             {
-                if (nameKey == null)
+                if (nameKey is null)
                 {
                     // use null name place holder.
                     nameKey = _nullGroupNameKey;
@@ -610,7 +610,7 @@ namespace MS.Internal.Data
                             foreach (object key in _nameToGroupMap.Keys)
                             {
                                 WeakReference weakRef = _nameToGroupMap[key] as WeakReference;
-                                if (weakRef == null || !weakRef.IsAlive)
+                                if (weakRef is null || !weakRef.IsAlive)
                                 {
                                     keysToBeRemoved.Add(key);
                                 }
@@ -804,7 +804,7 @@ namespace MS.Internal.Data
                     throw new InvalidOperationException();
 
                 // move forward to the next leaf
-                while (_subEnum == null || !_subEnum.MoveNext())
+                while (_subEnum is null || !_subEnum.MoveNext())
                 {
                     // done with the current top-level item.  Move to the next one.
                     ++_index;
@@ -812,7 +812,7 @@ namespace MS.Internal.Data
                         return false;
 
                     CollectionViewGroupInternal subgroup = _group.Items[_index] as CollectionViewGroupInternal;
-                    if (subgroup == null)
+                    if (subgroup is null)
                     {
                         // current item is a leaf - it's the new Current
                         _current = _group.Items[_index];
@@ -865,7 +865,7 @@ namespace MS.Internal.Data
 
             public void RemoveEmptyGroup(CollectionViewGroupInternal group)
             {
-                if (_toRemove == null)
+                if (_toRemove is null)
                 {
                     _toRemove = new System.Collections.Generic.List<CollectionViewGroupInternal>();
                 }

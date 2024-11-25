@@ -90,7 +90,7 @@ namespace MS.Internal.IO.Packaging
         {
             get
             {
-                if (_buffer == null)
+                if (_buffer is null)
                     _buffer = new byte[0x1000];     // 4k 
 
                 return _buffer;

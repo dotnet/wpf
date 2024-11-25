@@ -422,7 +422,7 @@ namespace System.Windows.Controls.Primitives
             }
             // If none of the DocumentPageViews have this property set,
             // then use the first one in the collection.
-            if (masterPageView == null)
+            if (masterPageView is null)
             {
                 masterPageView = _pageViews.Count > 0 ? _pageViews[0] : null;
             }
@@ -795,7 +795,7 @@ namespace System.Windows.Controls.Primitives
                             continue;
                         }
 
-                        if (masterPointer == null)
+                        if (masterPointer is null)
                         {
                             // Set initial masterPointer value.
                             masterPointer = startOfPage ? textSegment.Start : textSegment.End;
@@ -882,7 +882,7 @@ namespace System.Windows.Controls.Primitives
             bool hasMasterPage = false;
 
             // At least one DocumentPageView is required.
-            if (pageViews == null)
+            if (pageViews is null)
             {
                 throw new ArgumentException(SR.DocumentViewerPageViewsCollectionEmpty);
             }
@@ -1036,7 +1036,7 @@ namespace System.Windows.Controls.Primitives
             // do not create TextEditor for this instance of the viewer. (This situation may happen 
             // when the same instance of Document is attached to more than one viewer).
             textContainer = this.TextContainer;
-            if (textContainer != null && this.TextEditorRenderScope != null && textContainer.TextSelection == null)
+            if (textContainer != null && this.TextEditorRenderScope != null && textContainer.TextSelection is null)
             {
                 _textView = new MultiPageTextView(this, this.TextEditorRenderScope, textContainer);
                 _textEditor = new TextEditor(textContainer, this, false);
@@ -1107,7 +1107,7 @@ namespace System.Windows.Controls.Primitives
 
             if (_document != null && sender == _document.DocumentPaginator && e != null)
             {
-                if (!e.Cancelled && (e.Error == null))
+                if (!e.Cancelled && (e.Error is null))
                 {
                     bringIntoViewState = e.UserState as BringIntoViewState;
                     if (bringIntoViewState != null && bringIntoViewState.Source == this)
@@ -1509,7 +1509,7 @@ namespace System.Windows.Controls.Primitives
             // b) CancelPrint command is enabled only during printing.
             if (args.Command == ApplicationCommands.Print)
             {
-                args.CanExecute = (dv.Document != null) && (dv._documentWriter == null);
+                args.CanExecute = (dv.Document != null) && (dv._documentWriter is null);
                 args.Handled = true;
             }
             else if (args.Command == ApplicationCommands.CancelPrint)
@@ -1738,7 +1738,7 @@ namespace System.Windows.Controls.Primitives
             }
             // Only IDocumentPaginatorSource is a valid content.
             IDocumentPaginatorSource document = value as IDocumentPaginatorSource;
-            if (document == null)
+            if (document is null)
             {
                 throw new ArgumentException(SR.DocumentViewerChildMustImplementIDocumentPaginatorSource, "value");
             }

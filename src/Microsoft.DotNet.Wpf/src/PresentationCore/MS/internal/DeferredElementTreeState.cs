@@ -64,7 +64,7 @@ namespace MS.Internal
             {
                 parent = GetCoreParent(parent, treeState);
 
-                if (parent == null || InputElement.IsValid(parent))
+                if (parent is null || InputElement.IsValid(parent))
                 {
                     break;
                 }

@@ -98,11 +98,11 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
                     if (ptsContext != null)
                     {
                         Exception innerException = GetInnermostException(ptsContext);
-                        if (innerException == null || innerException is SecondaryException || innerException is PtsException)
+                        if (innerException is null || innerException is SecondaryException || innerException is PtsException)
                         {
                             // The only exceptions thrown were our own for PTS errors. We shouldn't throw in this case but should
                             // log the error if debug tracing is enabled
-                            string message = (innerException == null) ? String.Empty : innerException.Message;
+                            string message = (innerException is null) ? String.Empty : innerException.Message;
                             if (TracePageFormatting.IsEnabled)
                             {
                                 TracePageFormatting.Trace(
@@ -157,7 +157,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         // ------------------------------------------------------------------
         internal static void ValidateHandle(object handle)
         {
-            if (handle == null) { InvalidHandle(); }
+            if (handle is null) { InvalidHandle(); }
         }
         private static void InvalidHandle()
         {

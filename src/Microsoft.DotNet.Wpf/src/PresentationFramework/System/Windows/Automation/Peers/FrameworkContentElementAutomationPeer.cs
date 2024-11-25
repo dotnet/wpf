@@ -45,7 +45,7 @@ namespace System.Windows.Automation.Peers
                 }
             }
 
-            return result == null ? string.Empty : result;
+            return result is null ? string.Empty : result;
         }
 
         ///
@@ -73,7 +73,7 @@ namespace System.Windows.Automation.Peers
         override protected AutomationPeer GetLabeledByCore()
         {
             AutomationPeer labelPeer = base.GetLabeledByCore();
-            if (labelPeer == null)
+            if (labelPeer is null)
             {
                 Label label = Label.GetLabeledBy(Owner);
                 if (label != null)

@@ -113,7 +113,7 @@ namespace System.Windows.Controls
                             DependencyObject d = Host as DependencyObject;
                             if (d != null)
                                 label = (string)d.GetValue(FrameworkElement.NameProperty);
-                            if (label == null || label.Length == 0)
+                            if (label is null || label.Length == 0)
                                 label = Host.GetHashCode().ToString(CultureInfo.InvariantCulture);
                             EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientStringEnd, EventTrace.Keyword.KeywordGeneral, EventTrace.Level.Info,
                                                                  string.Create(CultureInfo.InvariantCulture, $"ItemContainerGenerator for {Host.GetType().Name} {label} - {_itemsGenerated} items"));
@@ -148,7 +148,7 @@ namespace System.Windows.Controls
             get
             {
                 // lazy creation
-                if (_itemsReadOnly == null && _items != null)
+                if (_itemsReadOnly is null && _items != null)
                 {
                     _itemsReadOnly = new ReadOnlyCollection<object>(new ListOfObject(_items));
                 }
@@ -228,7 +228,7 @@ namespace System.Windows.Controls
         DependencyObject IItemContainerGenerator.GenerateNext()
         {
             bool isNewlyRealized;
-            if (_generator == null)
+            if (_generator is null)
                 throw new InvalidOperationException(SR.GenerationNotInProgress);
 
             return _generator.GenerateNext(true, out isNewlyRealized);
@@ -236,7 +236,7 @@ namespace System.Windows.Controls
 
         DependencyObject IItemContainerGenerator.GenerateNext(out bool isNewlyRealized)
         {
-            if (_generator == null)
+            if (_generator is null)
                 throw new InvalidOperationException(SR.GenerationNotInProgress);
 
             return _generator.GenerateNext(false, out isNewlyRealized);
@@ -280,7 +280,7 @@ namespace System.Windows.Controls
             if (count <= 0)
                 throw new ArgumentException(SR.Format(SR.RemoveRequiresPositiveCount, count), "count");
 
-            if (_itemMap == null)
+            if (_itemMap is null)
             {
                 // ignore reentrant call (during RemoveAllInternal)
                 Debug.Assert(false, "Unexpected reentrant call to ICG.Remove");
@@ -331,7 +331,7 @@ namespace System.Windows.Controls
                 {
                     Debug.Assert(!_recyclableContainers.Contains(container), "trying to add a container to the collection twice");
 
-                    if (_containerType == null)
+                    if (_containerType is null)
                     {
                         _containerType = container.GetType();
                     }
@@ -688,7 +688,7 @@ namespace System.Windows.Controls
             container = null;
             itemIndex = 0;
 
-            if (_itemMap == null)
+            if (_itemMap is null)
             {
                 // _itemMap can be null if we re-enter the generator.  Scenario:  user calls RemoveAll(), we Unlink every container, fire
                 // ClearContainerForItem for each, and someone overriding ClearContainerForItem decides to look up the container.
@@ -825,7 +825,7 @@ namespace System.Windows.Controls
 
         private int GetCount(ItemBlock stop, bool returnLocalIndex)
         {
-            if (_itemMap == null)
+            if (_itemMap is null)
             {
                 // handle reentrant call
                 return 0;
@@ -849,7 +849,7 @@ namespace System.Windows.Controls
                 for (int i=0; i<n; ++i)
                 {
                     CollectionViewGroup group = Items[i] as CollectionViewGroup;
-                    count += (group == null) ? 1 : group.ItemCount;
+                    count += (group is null) ? 1 : group.ItemCount;
                 }
             }
 
@@ -890,14 +890,14 @@ namespace System.Windows.Controls
         /// </summary>
         public DependencyObject ContainerFromIndex(int index)
         {
-            if (_itemMap == null)
+            if (_itemMap is null)
             {
                 // handle reentrant call
                 return null;
             }
 
 #if DEBUG
-            object target = (Parent == null) && (0 <= index  &&  index < Host.View.Count) ? Host.View[index] : null;
+            object target = (Parent is null) && (0 <= index  &&  index < Host.View.Count) ? Host.View[index] : null;
 #endif
             int subIndex = 0;
 
@@ -909,7 +909,7 @@ namespace System.Windows.Controls
                 for (index=0, n=ItemsInternal.Count;  index < n;  ++index)
                 {
                     CollectionViewGroup group = ItemsInternal[index] as CollectionViewGroup;
-                    int size = (group == null) ? 1 : group.ItemCount;
+                    int size = (group is null) ? 1 : group.ItemCount;
 
                     if (subIndex < size)
                         break;
@@ -932,9 +932,9 @@ namespace System.Windows.Controls
                         container = groupItem.Generator.ContainerFromIndex(subIndex);
                     }
 #if DEBUG
-                    object item = (Parent == null) && (container != null) ?
+                    object item = (Parent is null) && (container != null) ?
                                 container.ReadLocalValue(ItemForItemContainerProperty) : null;
-                    Debug.Assert(item == null || ItemsControl.EqualsEx(item, target),
+                    Debug.Assert(item is null || ItemsControl.EqualsEx(item, target),
                         "Generator's data structure is corrupt - ContainerFromIndex found wrong item");
 #endif
                     return container;
@@ -1000,7 +1000,7 @@ namespace System.Windows.Controls
         // that this has happened, throw an exception.
         internal void Verify()
         {
-            if (_itemMap == null)
+            if (_itemMap is null)
                 return;
 
             List<string> errors = new List<string>();
@@ -1149,7 +1149,7 @@ namespace System.Windows.Controls
         // called when the host's AlternationCount changes
         internal void ChangeAlternationCount()
         {
-            if (_itemMap == null)
+            if (_itemMap is null)
             {
                 // handle reentrant call
                 return;
@@ -1371,7 +1371,7 @@ namespace System.Windows.Controls
                 DependencyObject container = null;
                 isNewlyRealized = false;
 
-                while (container == null)
+                while (container is null)
                 {
                     UnrealizedItemBlock uBlock = _cachedState.Block as UnrealizedItemBlock;
                     IList items = _factory.ItemsInternal;
@@ -1381,7 +1381,7 @@ namespace System.Windows.Controls
                     if (_cachedState.Block == _factory._itemMap)
                         _done = true;            // we've reached the end of the list
 
-                    if (uBlock == null && stopAtRealized)
+                    if (uBlock is null && stopAtRealized)
                         _done = true;
 
                     if (!(0 <= itemIndex && itemIndex < items.Count))
@@ -1405,7 +1405,7 @@ namespace System.Windows.Controls
 
                         // DataGrid needs to generate DataGridRows for special items like NewItemPlaceHolder and when adding a new row.
                         // Generate a new container for such cases.
-                        bool isNewItemPlaceHolderWhenGrouping = (_factory._generatesGroupItems && group == null);
+                        bool isNewItemPlaceHolderWhenGrouping = (_factory._generatesGroupItems && group is null);
 
                         if (_factory._recyclableContainers.Count > 0 && !_factory.Host.IsItemItsOwnContainer(item) && !isNewItemPlaceHolderWhenGrouping)
                         {
@@ -1414,7 +1414,7 @@ namespace System.Windows.Controls
                         }
                         else
                         {
-                            if (group == null || !_factory.IsGrouping)
+                            if (group is null || !_factory.IsGrouping)
                             {
                                 // generate container for an item
                                 container = _factory.Host.GetContainerForItem(item);
@@ -1635,7 +1635,7 @@ namespace System.Windows.Controls
         void MoveToPosition(GeneratorPosition position, GeneratorDirection direction, bool allowStartAtRealizedItem, ref GeneratorState state)
         {
             ItemBlock block = _itemMap;
-            if (block == null)
+            if (block is null)
                 return;         // this can happen in event-leapfrogging situations
 
             int itemIndex = 0;
@@ -1953,15 +1953,15 @@ namespace System.Windows.Controls
             {
                 groupStyle = Host.GetGroupStyle(null, 0);
 
-                if (groupStyle == null)
+                if (groupStyle is null)
                 {
                     items = Host.View;
                 }
                 else
                 {
                     CollectionView cv = Host.View.CollectionView;
-                    items = (cv == null) ? null : cv.Groups;
-                    if (items == null)
+                    items = (cv is null) ? null : cv.Groups;
+                    if (items is null)
                     {
                         items = Host.View;
 
@@ -2060,7 +2060,7 @@ namespace System.Windows.Controls
             emptyGroupItem.SetGenerator(new ItemContainerGenerator(this, emptyGroupItem));
 
             // add it to the list of placeholder items (this keeps it from being GC'd)
-            if (_emptyGroupItems == null)
+            if (_emptyGroupItems is null)
                 _emptyGroupItems = new ArrayList();
             _emptyGroupItems.Add(emptyGroupItem);
         }
@@ -2139,7 +2139,7 @@ namespace System.Windows.Controls
             block = null;
             offsetFromBlockStart = itemIndex;
 
-            if (_itemMap == null || itemIndex < 0)
+            if (_itemMap is null || itemIndex < 0)
                 return;
 
             int containerIndex = 0;
@@ -2179,7 +2179,7 @@ namespace System.Windows.Controls
             int deletionOffset = deletedFromItems ? 1 : 0;
             position = new GeneratorPosition(-1, 0);
 
-            if (_itemMap == null)
+            if (_itemMap is null)
             {
                 // handle reentrant call
                 block = null;
@@ -2449,7 +2449,7 @@ namespace System.Windows.Controls
         // Called when an item is added to the items collection
         void OnItemAdded(object item, int index)
         {
-            if (_itemMap == null)
+            if (_itemMap is null)
             {
                 // reentrant call (from RemoveAllInternal) shouldn't happen,
                 // but if it does, don't crash
@@ -2637,7 +2637,7 @@ namespace System.Windows.Controls
 
         void OnItemMoved(object item, int oldIndex, int newIndex)
         {
-            if (_itemMap == null)
+            if (_itemMap is null)
             {
                 // reentrant call (from RemoveAllInternal) shouldn't happen,
                 // but if it does, don't crash
@@ -2742,7 +2742,7 @@ namespace System.Windows.Controls
             // the UI, so that it doesn't inherit DataContext falsely.
             if (container != null)
             {
-                if (parent == null || VisualTreeHelper.GetParentInternal(container) != parent)
+                if (parent is null || VisualTreeHelper.GetParentInternal(container) != parent)
                 {
                     UnlinkContainerFromItem(container, item);
                 }

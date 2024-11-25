@@ -86,7 +86,7 @@ namespace System.IO.Packaging
                 ThrowIfInvalidated();
 
                 // wrap in read-only collection to protect against alteration
-                if (_signedParts == null)
+                if (_signedParts is null)
                     _signedParts = new ReadOnlyCollection<Uri>(_processor.PartManifest);
 
                 return _signedParts;
@@ -105,7 +105,7 @@ namespace System.IO.Packaging
                 ThrowIfInvalidated();
 
                 // wrap in read-only collection to protect against alteration
-                if (_signedRelationshipSelectors == null)
+                if (_signedRelationshipSelectors is null)
                     _signedRelationshipSelectors = new ReadOnlyCollection<PackageRelationshipSelector>(_processor.RelationshipManifest);
 
                 return _signedRelationshipSelectors;
@@ -237,9 +237,9 @@ namespace System.IO.Packaging
             {
                 ThrowIfInvalidated();
 
-                if (GetCertificatePart() == null)
+                if (GetCertificatePart() is null)
                 {
-                    if (Signer == null)
+                    if (Signer is null)
                     {
                         return CertificateEmbeddingOption.NotEmbedded;
                     }
@@ -282,7 +282,7 @@ namespace System.IO.Packaging
         {
             ThrowIfInvalidated();
 
-            if (Signer == null)
+            if (Signer is null)
                 return VerifyResult.CertificateRequired;
 
             return Verify(Signer);
@@ -315,7 +315,7 @@ namespace System.IO.Packaging
 
             // convert to Ex variant that has more functionality
             X509Certificate2 certificate = signingCertificate as X509Certificate2;
-            if (certificate == null)
+            if (certificate is null)
                 certificate = new X509Certificate2(signingCertificate.Handle);
 
             // verify
@@ -344,7 +344,7 @@ namespace System.IO.Packaging
             PackageDigitalSignatureManager manager, 
             XmlDigitalSignatureProcessor processor)
         {
-            Debug.Assert(processor.PackageSignature == null, "Logic Error: one processor per-signature");
+            Debug.Assert(processor.PackageSignature is null, "Logic Error: one processor per-signature");
             _manager = manager;
             _processor = processor;
 //            _processor.PackageSignature = this;
@@ -382,7 +382,7 @@ namespace System.IO.Packaging
         internal CertificatePart GetCertificatePart()
         {
             // lazy init
-            if (_certificatePart == null && !_alreadyLookedForCertPart)
+            if (_certificatePart is null && !_alreadyLookedForCertPart)
             {
                 PackageRelationshipCollection relationships = SignaturePart.GetRelationshipsByType(
                     CertificatePart.RelationshipType);

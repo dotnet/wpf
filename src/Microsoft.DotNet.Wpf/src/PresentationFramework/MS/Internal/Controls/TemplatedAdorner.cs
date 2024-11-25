@@ -72,7 +72,7 @@ namespace MS.Internal.Controls
         /// <returns>Transform to apply to the adorner</returns>
         public override GeneralTransform GetDesiredTransform(GeneralTransform transform)
         {
-            if (ReferenceElement == null)
+            if (ReferenceElement is null)
                 return transform;
 
             GeneralTransformGroup group = new GeneralTransformGroup();
@@ -112,7 +112,7 @@ namespace MS.Internal.Controls
         /// </summary>
         protected override Visual GetVisualChild(int index)
         {
-            if (_child == null || index != 0)
+            if (_child is null || index != 0)
             {
                 throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }

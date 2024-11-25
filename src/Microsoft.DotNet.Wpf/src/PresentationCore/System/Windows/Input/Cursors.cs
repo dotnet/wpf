@@ -323,7 +323,7 @@ namespace System.Windows.Input
 
         internal static Cursor EnsureCursor(CursorType cursorType)
         {
-            if (_stockCursors[(int)cursorType] == null)
+            if (_stockCursors[(int)cursorType] is null)
             {
                 _stockCursors[(int)cursorType] = new Cursor(cursorType);
             }

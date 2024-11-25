@@ -122,7 +122,7 @@ namespace System.Windows
                 // DO NOT move this from the begining of this constructor
                 if (_appCreatedInThisAppDomain == false)
                 {
-                    Debug.Assert(_appInstance == null, "_appInstance must be null here.");
+                    Debug.Assert(_appInstance is null, "_appInstance must be null here.");
                     _appInstance = this;
                     IsShuttingDown    = false;
                     _appCreatedInThisAppDomain = true;
@@ -311,14 +311,14 @@ namespace System.Windows
                 resource = resources[resourceKey];
             }
 
-            if (resource == DependencyProperty.UnsetValue  || resource == null)
+            if (resource == DependencyProperty.UnsetValue  || resource is null)
             {
                 // This is the top of the tree, try the system resource collection
                 // Safe from multithreading issues, SystemResources uses the SyncRoot lock to access the resource
                 resource = SystemResources.FindResourceInternal(resourceKey);
             }
 
-            if (resource == null)
+            if (resource is null)
             {
                 Helper.ResourceFailureThrow(resourceKey);
             }
@@ -344,7 +344,7 @@ namespace System.Windows
                 resource = resources[resourceKey];
             }
 
-            if (resource == DependencyProperty.UnsetValue  || resource == null)
+            if (resource == DependencyProperty.UnsetValue  || resource is null)
             {
                 // This is the top of the tree, try the system resource collection
                 // Safe from multithreading issues, SystemResources uses the SyncRoot lock to access the resource
@@ -366,7 +366,7 @@ namespace System.Windows
         {
             ResourceDictionary resources = _resources;
 
-            if (resources == null)
+            if (resources is null)
             {
                 return null;
             }
@@ -388,7 +388,7 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(component);
             ArgumentNullException.ThrowIfNull(resourceLocator);
 
-            if (resourceLocator.OriginalString == null)
+            if (resourceLocator.OriginalString is null)
                 throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull,"resourceLocator", "OriginalString"));
 
             if (resourceLocator.IsAbsoluteUri == true)
@@ -460,7 +460,7 @@ namespace System.Windows
 
             IStreamInfo bamlStream = stream as IStreamInfo;
 
-            if (bamlStream == null || bamlStream.Assembly != component.GetType().Assembly)
+            if (bamlStream is null || bamlStream.Assembly != component.GetType().Assembly)
             {
                 throw new Exception(SR.Format(SR.UriNotMatchWithRootType, component.GetType( ), resourceLocator));
             }
@@ -477,7 +477,7 @@ namespace System.Windows
         {
             ArgumentNullException.ThrowIfNull(resourceLocator);
 
-            if (resourceLocator.OriginalString == null)
+            if (resourceLocator.OriginalString is null)
                 throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull,"resourceLocator", "OriginalString"));
 
             if (resourceLocator.IsAbsoluteUri == true)
@@ -554,7 +554,7 @@ namespace System.Windows
             Debug.Assert(stream != null, "stream should not be null.");
             Debug.Assert(pc != null, "pc should not be null.");
 
-            if (s_NestedBamlLoadInfo == null)
+            if (s_NestedBamlLoadInfo is null)
             {
                 s_NestedBamlLoadInfo = new Stack<NestedBamlLoadInfo>();
             }
@@ -612,7 +612,7 @@ namespace System.Windows
         {
             ArgumentNullException.ThrowIfNull(uriResource);
 
-            if (uriResource.OriginalString == null)
+            if (uriResource.OriginalString is null)
                 throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull, "uriResource", "OriginalString"));
 
             if (uriResource.IsAbsoluteUri == true && !BaseUriHelper.IsPackApplicationUri(uriResource))
@@ -621,7 +621,7 @@ namespace System.Windows
             }
 
             ResourcePart part = GetResourceOrContentPart(uriResource) as ResourcePart;
-            return (part == null) ? null : new StreamResourceInfo(part.GetSeekableStream(), part.ContentType);
+            return (part is null) ? null : new StreamResourceInfo(part.GetSeekableStream(), part.ContentType);
         }
 
         /// <summary>
@@ -644,7 +644,7 @@ namespace System.Windows
         {
             ArgumentNullException.ThrowIfNull(uriContent);
 
-            if (uriContent.OriginalString == null)
+            if (uriContent.OriginalString is null)
                 throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull, "uriContent", "OriginalString"));
 
             if (uriContent.IsAbsoluteUri == true && !BaseUriHelper.IsPackApplicationUri(uriContent))
@@ -653,7 +653,7 @@ namespace System.Windows
             }
 
             ContentFilePart part = GetResourceOrContentPart(uriContent) as ContentFilePart;
-            return (part == null) ? null : new StreamResourceInfo(part.GetSeekableStream(), part.ContentType);
+            return (part is null) ? null : new StreamResourceInfo(part.GetSeekableStream(), part.ContentType);
         }
 
         /// <summary>
@@ -673,7 +673,7 @@ namespace System.Windows
 
             ArgumentNullException.ThrowIfNull(uriRemote);
 
-            if (uriRemote.OriginalString == null)
+            if (uriRemote.OriginalString is null)
                 throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull, "uriRemote", "OriginalString"));
 
             if (uriRemote.IsAbsoluteUri == true)
@@ -713,7 +713,7 @@ namespace System.Windows
                 {
                     stream = sooPart.GetSeekableStream();
 
-                    if (stream == null)
+                    if (stream is null)
                     {
                         //
                         // Cannot get stream from this PackagePart for some unknown reason,
@@ -735,9 +735,9 @@ namespace System.Windows
             }
 
             // When stream is not null, sooPart cannot be null either
-            Debug.Assert( ((stream != null) && (sooPart == null)) != true,  "When stream is not null, sooPart cannot be null either");
+            Debug.Assert( ((stream != null) && (sooPart is null)) != true,  "When stream is not null, sooPart cannot be null either");
 
-            return (stream == null) ? null : new StreamResourceInfo(stream, sooPart.ContentType);
+            return (stream is null) ? null : new StreamResourceInfo(stream, sooPart.ContentType);
         }
 
         /// <summary>
@@ -897,7 +897,7 @@ namespace System.Windows
 
                 lock(_globalLock)
                 {
-                    if (_resources == null)
+                    if (_resources is null)
                     {
                         // Shouldn't return null for property of type collection.
                         // It enables the Mort scenario: application.Resources.Add();
@@ -1091,7 +1091,7 @@ namespace System.Windows
                 // indexers are being used on the Hashtable object
                 lock(_globalLock)
                 {
-                    if (_htProps == null)
+                    if (_htProps is null)
                     {
                         // so we will have 5 entries before we resize
                         _htProps = new HybridDictionary(5);
@@ -1109,7 +1109,7 @@ namespace System.Windows
         {
             get
             {
-                if (_resourceAssembly == null)
+                if (_resourceAssembly is null)
                 {
                     lock (_globalLock)
                     {
@@ -1125,7 +1125,7 @@ namespace System.Windows
                 {
                     if (_resourceAssembly != value)
                     {
-                        if ((_resourceAssembly == null) && (Assembly.GetEntryAssembly() == null))
+                        if ((_resourceAssembly is null) && (Assembly.GetEntryAssembly() is null))
                         {
                             _resourceAssembly = value;
                             BaseUriHelper.ResourceAssembly = value;
@@ -1735,7 +1735,7 @@ namespace System.Windows
                     WindowsInternal.Add(window);
                 }
 
-                if (MainWindow == null)
+                if (MainWindow is null)
                 {
                     MainWindow = window;
                 }
@@ -1867,7 +1867,7 @@ namespace System.Windows
             {
                 lock(_globalLock)
                 {
-                    if(_appWindowList == null)
+                    if(_appWindowList is null)
                     {
                         _appWindowList = new WindowCollection();
                     }
@@ -1889,7 +1889,7 @@ namespace System.Windows
             {
                 lock(_globalLock)
                 {
-                    if (_nonAppWindowList == null)
+                    if (_nonAppWindowList is null)
                     {
                         _nonAppWindowList = new WindowCollection();
                     }
@@ -2028,7 +2028,7 @@ namespace System.Windows
         {
             get
             {
-                if (_applicationMarkupBaseUri == null)
+                if (_applicationMarkupBaseUri is null)
                 {
                     _applicationMarkupBaseUri = BaseUriHelper.BaseUri;
                 }
@@ -2119,7 +2119,7 @@ namespace System.Windows
         private static Package GetResourcePackage(Uri packageUri)
         {
             Package package = PreloadedPackages.GetPackage(packageUri);
-            if (package == null)
+            if (package is null)
             {
                 Uri packUri = PackUriHelper.Create(packageUri);
                 Invariant.Assert(packUri == BaseUriHelper.PackAppBaseUri || packUri == BaseUriHelper.SiteOfOriginBaseUri,
@@ -2136,7 +2136,7 @@ namespace System.Windows
         /// </summary>
         private void EnsureHwndSource()
         {
-            if (_parkingHwnd == null)
+            if (_parkingHwnd is null)
             {
                 // _appFilterHook needs to be member variable otherwise
                 // it is GC'ed and we don't get messages from HwndWrapper
@@ -2326,7 +2326,7 @@ namespace System.Windows
         private void ConfigAppWindowAndRootElement(object root, Uri uri)
         {
             Window w = root as Window;
-            if (w == null)
+            if (w is null)
             {
                 //Creates and returns a NavigationWindow for standalone cases
                 //For browser hosted cases, returns the RootBrowserWindow precreated by docobjhost
@@ -2402,7 +2402,7 @@ namespace System.Windows
         {
             get
             {
-                if (_events == null)
+                if (_events is null)
                 {
                     _events = new EventHandlerList();
                 }

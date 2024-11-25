@@ -213,7 +213,7 @@ namespace System.Windows.Input
         {
             get
             {
-                if (_manipulators == null)
+                if (_manipulators is null)
                 {
                     _manipulators = ((ManipulationDevice)Device).GetManipulatorsReadOnly();
                 }

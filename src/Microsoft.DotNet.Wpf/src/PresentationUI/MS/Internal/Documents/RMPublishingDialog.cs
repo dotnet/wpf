@@ -1005,7 +1005,7 @@ namespace MS.Internal.Documents
             /// <returns>Returns the name of the template (without path or extension).</returns>
             public override string ToString()
             {
-                if (_template == null)
+                if (_template is null)
                 {
                     return SR.ServerSideTemplateDisplayNone;
                 }

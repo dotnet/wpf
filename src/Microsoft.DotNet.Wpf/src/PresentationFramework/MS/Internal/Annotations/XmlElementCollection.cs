@@ -146,7 +146,7 @@ namespace MS.Internal.Annotations
         private void UnregisterForElement(XmlElement element)
         {
             // Nulls may exist in the collection in which case we don't need to unregister
-            if (element == null)
+            if (element is null)
                 return;
 
             Invariant.Assert(_xmlDocsRefCounts.ContainsKey(element.OwnerDocument), "Not registered on XmlElement");
@@ -176,7 +176,7 @@ namespace MS.Internal.Annotations
         private void RegisterForElement(XmlElement element)
         {
             // Nulls may exist in the collection in which case we don't need to register
-            if (element == null)
+            if (element is null)
                 return;
 
             if (!_xmlDocsRefCounts.ContainsKey(element.OwnerDocument))

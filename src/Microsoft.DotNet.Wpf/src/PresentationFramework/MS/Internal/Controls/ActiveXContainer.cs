@@ -210,7 +210,7 @@ namespace MS.Internal.Controls
                 ActiveXHost tempSite = _siteUIActive;
                 tempSite.ActiveXInPlaceObject.UIDeactivate();
             }
-            Debug.Assert(_siteUIActive == null, "Object did not call OnUIDeactivate");
+            Debug.Assert(_siteUIActive is null, "Object did not call OnUIDeactivate");
             _siteUIActive = site;
 
             // Should we set focus to the WebOC here?

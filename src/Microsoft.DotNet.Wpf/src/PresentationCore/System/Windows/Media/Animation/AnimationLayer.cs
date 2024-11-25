@@ -30,7 +30,7 @@ namespace System.Windows.Media.Animation
             object defaultDestinationValue)
         {
             Debug.Assert(
-                newAnimationClocks == null
+                newAnimationClocks is null
                 || (newAnimationClocks.Count > 0
                     && !newAnimationClocks.Contains(null)));
 
@@ -88,11 +88,11 @@ namespace System.Windows.Media.Animation
                 Debug.Assert(defaultDestinationValue == DependencyProperty.UnsetValue,
                     "We shouldn't take the time to calculate a default destination value when it isn't needed.");
 
-                if (newAnimationClocks == null)
+                if (newAnimationClocks is null)
                 {
                     return;
                 }
-                else if (_animationClocks == null)
+                else if (_animationClocks is null)
                 {
                     SetAnimationClocks(newAnimationClocks);
                 }
@@ -123,7 +123,7 @@ namespace System.Windows.Media.Animation
             Debug.Assert(animationClocks != null);
             Debug.Assert(animationClocks.Count > 0);
             Debug.Assert(!animationClocks.Contains(null));
-            Debug.Assert(_animationClocks == null);
+            Debug.Assert(_animationClocks is null);
 
             _animationClocks = animationClocks;
 
@@ -196,9 +196,9 @@ namespace System.Windows.Media.Animation
             List<AnimationClock> animationClockList = _animationClocks as List<AnimationClock>;
 
             // If _animationClocks is not a List<AnimationClock> then make it one.
-            if (animationClockList == null)
+            if (animationClockList is null)
             {
-                int oldClocksCount = (_animationClocks == null) ? 0 : _animationClocks.Count;
+                int oldClocksCount = (_animationClocks is null) ? 0 : _animationClocks.Count;
 
                 animationClockList = new List<AnimationClock>(oldClocksCount + newClocksCount);
 
@@ -240,7 +240,7 @@ namespace System.Windows.Media.Animation
 
             // This layer just contains a snapshot value or a fill value after
             // all the clocks have been completed.
-            if (_animationClocks == null)
+            if (_animationClocks is null)
             {
                 Debug.Assert(_snapshotValue != DependencyProperty.UnsetValue);
 

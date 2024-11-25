@@ -396,7 +396,7 @@ namespace System.Windows.Documents
             get
             {
                 Invariant.Assert(this.IsEmpty || _anchorPosition != null);
-                Invariant.Assert(_anchorPosition == null || _anchorPosition.IsFrozen);
+                Invariant.Assert(_anchorPosition is null || _anchorPosition.IsFrozen);
                 return this.IsEmpty ? ((ITextSelection)this).Start : _anchorPosition;
             }
         }
@@ -616,7 +616,7 @@ namespace System.Windows.Documents
                     newMovingPosition = GetNextTextSegmentInsertionPosition(direction);
                 }
 
-                if (newMovingPosition == null && direction == LogicalDirection.Forward)
+                if (newMovingPosition is null && direction == LogicalDirection.Forward)
                 {
                     // When moving forward we cannot find next insertion position, set the end of selection after the last paragraph
                     // (which is not an insertion position)
@@ -670,7 +670,7 @@ namespace System.Windows.Documents
                 return false;
             }
 
-            if (this.TextView == null || !this.TextView.IsValid)
+            if (this.TextView is null || !this.TextView.IsValid)
             {
                 return false;
             }
@@ -871,7 +871,7 @@ namespace System.Windows.Documents
         // returns false only as a special value indicating that we need to return without executing selection expansion code.
         private bool BeginMouseSelectionProcess(ITextPointer cursorPosition)
         {
-            if (_previousCursorPosition == null)
+            if (_previousCursorPosition is null)
             {
                 // This is a beginning of mouse selection guesture.
                 // Initialize the guesture state
@@ -995,7 +995,7 @@ namespace System.Windows.Documents
                         }
                         else
                         {
-                            if (_reenterPosition == null)
+                            if (_reenterPosition is null)
                             {
                                 // We are not in re-entering mode; expand moving end to word boundary
                                 cursorWordRange = TextPointerBase.GetWordRange(cursorPosition, cursorPosition.LogicalDirection);
@@ -1286,7 +1286,7 @@ namespace System.Windows.Documents
                 if (autoWordRange.IsNull)
                 {
                     // This property goes to springload formatting. We should not create undo unit for it.
-                    if (_springloadFormatting == null)
+                    if (_springloadFormatting is null)
                     {
                         _springloadFormatting = new DependencyObject();
                     }
@@ -1459,7 +1459,7 @@ namespace System.Windows.Documents
                     }
                 }
 
-                if (_springloadFormatting == null)
+                if (_springloadFormatting is null)
                 {
                     SpringloadCurrentFormatting(start.Parent);
                 }
@@ -1472,7 +1472,7 @@ namespace System.Windows.Documents
             _springloadFormatting = new DependencyObject();
 
             // Check if we have an object to read from
-            if (parent == null)
+            if (parent is null)
             {
                 return;
             }
@@ -1758,8 +1758,8 @@ namespace System.Windows.Documents
 
                 return (This.Start.GetPointerContext(LogicalDirection.Backward) != TextPointerContext.Text &&
                         This.End.GetPointerContext(LogicalDirection.Forward) != TextPointerContext.Text &&
-                        This.Start.GetNextInsertionPosition(LogicalDirection.Backward) == null &&
-                        This.End.GetNextInsertionPosition(LogicalDirection.Forward) == null);
+                        This.Start.GetNextInsertionPosition(LogicalDirection.Backward) is null &&
+                        This.End.GetNextInsertionPosition(LogicalDirection.Forward) is null);
             }
         }
 
@@ -1807,13 +1807,13 @@ namespace System.Windows.Documents
             }
 
             // Make sure that a highlight layer exists for drawing this selection
-            if (_highlightLayer == null)
+            if (_highlightLayer is null)
             {
                 _highlightLayer = new TextSelectionHighlightLayer(this);
             }
 
             // Make selection visible
-            if (textContainer.Highlights.GetLayer(typeof(TextSelection)) == null)
+            if (textContainer.Highlights.GetLayer(typeof(TextSelection)) is null)
             {
                 textContainer.Highlights.AddLayer(_highlightLayer);
             }
@@ -1827,7 +1827,7 @@ namespace System.Windows.Documents
             if (highlightLayer != null)
             {
                 textContainer.Highlights.RemoveLayer(highlightLayer);
-                Invariant.Assert(textContainer.Highlights.GetLayer(typeof(TextSelection)) == null);
+                Invariant.Assert(textContainer.Highlights.GetLayer(typeof(TextSelection)) is null);
             }
         }
 
@@ -1943,7 +1943,7 @@ namespace System.Windows.Documents
         {
             ITextSelection thisSelection = (ITextSelection)this;
 
-            if (this.TextView == null)
+            if (this.TextView is null)
             {
                 return;
             }
@@ -1964,7 +1964,7 @@ namespace System.Windows.Documents
             }
 
             // Move selection to this position
-            if (movingPosition == null)
+            if (movingPosition is null)
             {
                 thisSelection.SetCaretToPosition(cursorPosition, cursorPosition.LogicalDirection, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/false);
             }
@@ -2038,7 +2038,7 @@ namespace System.Windows.Documents
             object fontStylePropertyValue;
             bool italic;
 
-            if (textSelection == null || textSelection.CaretElement == null)
+            if (textSelection is null || textSelection.CaretElement is null)
             {
                 return;
             }
@@ -2072,7 +2072,7 @@ namespace System.Windows.Documents
             _pendingUpdateCaretStateCallback = false;
 
             // This can happen if selection has been detached by TextEditor.OnDetach.
-            if (_textEditor == null)
+            if (_textEditor is null)
             {
                 return null;
             }
@@ -2086,12 +2086,12 @@ namespace System.Windows.Documents
             // detaching CaretElement object
             CaretElement caretElement = _caretElement;
 
-            if (caretElement == null)
+            if (caretElement is null)
             {
                 return null;
             }
 
-            if (threadLocalStore.FocusedTextSelection == null)
+            if (threadLocalStore.FocusedTextSelection is null)
             {
                 // If we have multiple windows open, a non-blinking caret might be showing
                 // in the given TextEditor's UiScope.  If the selection for that Editor is
@@ -2105,7 +2105,7 @@ namespace System.Windows.Documents
             }
 
             // When the TextView is not valid, there is nothing to do
-            if (_textEditor.TextView == null || !_textEditor.TextView.IsValid)
+            if (_textEditor.TextView is null || !_textEditor.TextView.IsValid)
             {
                 // Do we need to clear obsolte highlight?
                 return null;
@@ -2197,7 +2197,7 @@ namespace System.Windows.Documents
             // document or paragraph.
             if (caretPosition.LogicalDirection == LogicalDirection.Backward && //
                 caretPosition.GetPointerContext(LogicalDirection.Backward) == TextPointerContext.ElementStart && //
-                (caretPosition.GetNextInsertionPosition(LogicalDirection.Backward) == null || //
+                (caretPosition.GetNextInsertionPosition(LogicalDirection.Backward) is null || //
                  TextPointerBase.IsNextToAnyBreak(caretPosition, LogicalDirection.Backward)))
             {
                 caretPosition = caretPosition.CreatePointer();
@@ -2419,7 +2419,7 @@ namespace System.Windows.Documents
         {
             TextEditorThreadLocalStore threadLocalStore = TextEditor._ThreadLocalStore;
 
-            if (_caretElement == null)
+            if (_caretElement is null)
             {
                 // Create new caret
                 _caretElement = new CaretElement(_textEditor, isBlinkEnabled);
@@ -2540,7 +2540,7 @@ namespace System.Windows.Documents
         /// <returns></returns>
         private static bool IsRootElement(DependencyObject element)
         {
-            return GetParentElement(element) == null;
+            return GetParentElement(element) is null;
         }
 
         /// <summary>
@@ -2578,10 +2578,10 @@ namespace System.Windows.Documents
             if (element is FrameworkElement || element is FrameworkContentElement)
             {
                 parent = LogicalTreeHelper.GetParent(element);
-                if (parent == null && element is FrameworkElement)
+                if (parent is null && element is FrameworkElement)
                 {
                     parent = ((FrameworkElement)element).TemplatedParent;
-                    if (parent == null && element is Visual)
+                    if (parent is null && element is Visual)
                     {
                         parent = VisualTreeHelper.GetParent(element);
                     }
@@ -2681,7 +2681,7 @@ namespace System.Windows.Documents
                     position = TextPointerBase.GetFollowingNonMergeableInlineContentStart(This.Start);
                 }
 
-                if (position == null)
+                if (position is null)
                 {
                     position = This.Start;
                 }

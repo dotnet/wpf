@@ -151,7 +151,7 @@ namespace System.Windows.Markup
                 record = record.Next;
             }
 
-            if (key == null)
+            if (key is null)
             {
                 ThrowException(nameof(SR.StyleNoDictionaryKey),
                                parserContext.LineNumber,

@@ -142,7 +142,7 @@ namespace MS.Internal.Documents
                                 continue;
                             }
 
-                            if (startPointer == null)
+                            if (startPointer is null)
                             {
                                 // Set initial masterPointer value.
                                 startPointer = !findToolBar.SearchUp ? textSegment.Start : textSegment.End;
@@ -260,7 +260,7 @@ namespace MS.Internal.Documents
                 }
             }
 
-            if (cultureInfo == null)
+            if (cultureInfo is null)
             {
                 cultureInfo = CultureInfo.CurrentCulture;
             }
@@ -300,7 +300,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_findToolBarStyleKey == null)
+                if (_findToolBarStyleKey is null)
                 {
                     _findToolBarStyleKey = new ComponentResourceKey(typeof(PresentationUIStyleResources), "PUIFlowViewers_FindToolBar");
                 }
@@ -370,7 +370,7 @@ namespace MS.Internal.Documents
             {
                 cm = e.TargetElement.GetValue(FrameworkElement.ContextMenuProperty) as ContextMenu;
             }
-            if (cm == null)
+            if (cm is null)
             {
                 cm = viewer.ContextMenu;
             }

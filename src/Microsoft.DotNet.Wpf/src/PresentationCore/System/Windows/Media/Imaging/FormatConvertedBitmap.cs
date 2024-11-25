@@ -185,7 +185,7 @@ namespace System.Windows.Media.Imaging
 
         internal override bool IsValidForFinalizeCreation(bool throwIfInvalid)
         {
-            if (Source == null)
+            if (Source is null)
             {
                 if (throwIfInvalid)
                 {
@@ -195,7 +195,7 @@ namespace System.Windows.Media.Imaging
             }
             if (DestinationFormat.Palettized)
             {
-                if (DestinationPalette == null)
+                if (DestinationPalette is null)
                 {
                     if (throwIfInvalid)
                     {

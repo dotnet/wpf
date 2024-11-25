@@ -170,7 +170,7 @@ namespace System.Windows.Markup.Localizer
         public override bool Equals(object other)
         {
             BamlLocalizableResource otherResource = other as BamlLocalizableResource;
-            if (otherResource == null)
+            if (otherResource is null)
                 return false;
                     
             return (_content     == otherResource._content 
@@ -184,8 +184,8 @@ namespace System.Windows.Markup.Localizer
         ///</summary>
         public override int GetHashCode()
         {
-            return (_content == null ? 0 : _content.GetHashCode()) 
-                  ^(_comments == null ? 0 : _comments.GetHashCode())
+            return (_content is null ? 0 : _content.GetHashCode()) 
+                  ^(_comments is null ? 0 : _comments.GetHashCode())
                   ^ (int) _flags
                   ^ (int) _category;
         }        

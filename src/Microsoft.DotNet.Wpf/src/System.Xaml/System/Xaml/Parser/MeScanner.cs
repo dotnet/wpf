@@ -286,7 +286,7 @@ namespace MS.Internal.Xaml.Parser
         {
             string error;
             XamlTypeName typeName = XamlTypeName.ParseInternal(longName, _context.FindNamespaceByPrefix, out error);
-            if (typeName == null)
+            if (typeName is null)
             {
                 throw new XamlParseException(this, error);
             }
@@ -296,7 +296,7 @@ namespace MS.Internal.Xaml.Parser
             typeName.Name = typeName.Name + KnownStrings.Extension;
             XamlType xamlType = _context.GetXamlType(typeName, false);
             // This would be cleaner if we moved the Extension fallback logic out of XSC
-            if (xamlType == null ||
+            if (xamlType is null ||
                 // Guard against Extension getting added twice
                 (xamlType.UnderlyingType != null &&
                  KS.Eq(xamlType.UnderlyingType.Name, typeName.Name + KnownStrings.Extension)))
@@ -312,7 +312,7 @@ namespace MS.Internal.Xaml.Parser
         private void ResolvePropertyName(string longName)
         {
             XamlPropertyName propName = XamlPropertyName.Parse(longName);
-            if (propName == null)
+            if (propName is null)
             {
                 throw new ArgumentException(SR.MalformedPropertyName);
             }

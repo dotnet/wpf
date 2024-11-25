@@ -75,7 +75,7 @@ namespace Microsoft.Windows.Themes
             }
 
             SolidColorBrush background = (SolidColorBrush)GetCachedFreezable((int)backgroundType);
-            if (background == null)
+            if (background is null)
             {
                 background = new SolidColorBrush();
 
@@ -124,7 +124,7 @@ namespace Microsoft.Windows.Themes
                     else
                     {
                         sideBrush = (Brush)GetCachedFreezable((int)sideType);
-                        if (sideBrush == null)
+                        if (sideBrush is null)
                         {
                             switch (sideType)
                             {
@@ -186,7 +186,7 @@ namespace Microsoft.Windows.Themes
 
                 bool ascending = (sortDirection == ListSortDirection.Ascending);
                 PathGeometry arrowGeometry = (PathGeometry)GetCachedFreezable(ascending ? (int)AeroLiteFreezables.ArrowUpGeometry : (int)AeroLiteFreezables.ArrowDownGeometry);
-                if (arrowGeometry == null)
+                if (arrowGeometry is null)
                 {
                     arrowGeometry = new PathGeometry();
                     PathFigure arrowFigure = new PathFigure();
@@ -227,7 +227,7 @@ namespace Microsoft.Windows.Themes
 
                 // Draw two arrows, one inset in the other. This is to achieve a double gradient over both the border and the fill.
                 SolidColorBrush arrowFill = (SolidColorBrush)GetCachedFreezable((int)AeroLiteFreezables.ArrowFill);
-                if (arrowFill == null)
+                if (arrowFill is null)
                 {
                     arrowFill = new SolidColorBrush(Color.FromArgb(0xFF, 0x00, 0x00, 0x00));
                     arrowFill.Freeze();

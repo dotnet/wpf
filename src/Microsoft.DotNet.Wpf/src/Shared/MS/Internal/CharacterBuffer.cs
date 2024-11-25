@@ -382,7 +382,7 @@ namespace MS.Internal
             int     length
             )
         {
-            if (characterString == null)
+            if (characterString is null)
             {
                 throw new ArgumentNullException("characterString");
             }

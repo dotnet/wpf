@@ -186,7 +186,7 @@ namespace System.Windows.Data
             // Binding a property value only works on DependencyObject and DependencyProperties.
             // For all other cases, just return this Binding object as the value.
 
-            if (serviceProvider == null)
+            if (serviceProvider is null)
             {
                 return this;
             }
@@ -197,7 +197,7 @@ namespace System.Windows.Data
             DependencyProperty targetDependencyProperty;
             Helper.CheckCanReceiveMarkupExtension(this, serviceProvider, out targetDependencyObject, out targetDependencyProperty);
 
-            if (targetDependencyObject == null || targetDependencyProperty == null)
+            if (targetDependencyObject is null || targetDependencyProperty is null)
             {
                 return this;
             }
@@ -447,7 +447,7 @@ namespace System.Windows.Data
 
         internal static ValidationRule LookupValidationRule(Type type, Collection<ValidationRule> collection)
         {
-            if (collection == null)
+            if (collection is null)
                 return null;
 
             for (int i=0; i<collection.Count; ++i)

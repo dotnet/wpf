@@ -132,13 +132,13 @@ namespace System.Windows.Input
             // If no namespaceUri or no prefix or no typename, defaulted to Known Commands.
             // there is no typename too, check for default in Known Commands.
 
-            if (IsKnownType(ownerType) || ownerType == null )// not found
+            if (IsKnownType(ownerType) || ownerType is null )// not found
             {
                 command = GetKnownCommand(localName, ownerType);
             }
 
 
-            if( command == null && ownerType != null ) // not a known command
+            if( command is null && ownerType != null ) // not a known command
 
             {
                 // Get them from Properties
@@ -146,7 +146,7 @@ namespace System.Windows.Input
                 if (propertyInfo != null)
                     command = propertyInfo.GetValue(null, null) as ICommand;
 
-                if (command == null)
+                if (command is null)
                 {
                     // Get them from Fields (ScrollViewer.PageDownCommand is a static readonly field
                     FieldInfo fieldInfo = ownerType.GetField(localName, BindingFlags.Static | BindingFlags.Public);
@@ -245,7 +245,7 @@ namespace System.Windows.Input
             RoutedUICommand knownCommand = null;
             bool searchAll = false;
 
-            if (ownerType == null)
+            if (ownerType is null)
                 searchAll = true;
 
             if (ownerType == typeof(NavigationCommands) || ((null == knownCommand) && searchAll))
@@ -738,7 +738,7 @@ namespace System.Windows.Input
 
 
             #if DEBUG
-            if( knownCommand == null )
+            if( knownCommand is null )
             {
                 if( ownerType != null )
                     VerifyCommandDoesntExist( ownerType, localName );
@@ -809,10 +809,10 @@ namespace System.Windows.Input
         static void VerifyCommandDoesntExist( Type type, string name )
         {
             PropertyInfo propertyInfo = type.GetProperty(name, BindingFlags.Public | BindingFlags.Static);
-            System.Diagnostics.Debug.Assert( propertyInfo == null, "KnownCommand isn't known to CommandConverter.GetKnownCommand" );
+            System.Diagnostics.Debug.Assert( propertyInfo is null, "KnownCommand isn't known to CommandConverter.GetKnownCommand" );
 
             FieldInfo fieldInfo = type.GetField(name, BindingFlags.Static | BindingFlags.Public);
-            System.Diagnostics.Debug.Assert( fieldInfo == null, "KnownCommand isn't known to CommandConverter.GetKnownCommand" );
+            System.Diagnostics.Debug.Assert( fieldInfo is null, "KnownCommand isn't known to CommandConverter.GetKnownCommand" );
          }
         #endif
     }

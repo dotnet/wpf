@@ -35,7 +35,7 @@ namespace MS.Internal.AppModel
         internal RequestSetStatusBarEventArgs(Uri targetUri)
             : base()
         {
-            if (targetUri == null)
+            if (targetUri is null)
                 _text = String.Empty;
             else
                 _text = BindUriHelper.UriToString(targetUri);

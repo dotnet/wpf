@@ -48,7 +48,7 @@ namespace System.Windows
         /// <summary>End Initialization, verify that internal state is consistent</summary>
         void ISupportInitialize.EndInit()
         {
-            if (_dataType == null)
+            if (_dataType is null)
             {
                 throw new InvalidOperationException(SR.Format(SR.PropertyMustHaveValue, "DataType", this.GetType().Name));
             }
@@ -157,7 +157,7 @@ namespace System.Windows
         {
             Exception result = null;
 
-            if (dataType == null)
+            if (dataType is null)
             {
                 result = new ArgumentNullException(argName);
             }

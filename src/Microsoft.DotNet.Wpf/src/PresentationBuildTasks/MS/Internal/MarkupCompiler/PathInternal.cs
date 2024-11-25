@@ -47,13 +47,13 @@ namespace MS.Internal
     {
         internal static string GetRelativePath(string relativeTo, string path, StringComparison comparisonType)
         {
-            if (relativeTo == null)
+            if (relativeTo is null)
                 throw new ArgumentNullException(nameof(relativeTo));
 
             if (PathInternal.IsEffectivelyEmpty(relativeTo.AsSpan()))
                 throw new ArgumentException(nameof(relativeTo));
 
-            if (path == null)
+            if (path is null)
                 throw new ArgumentNullException(nameof(path));
 
             if (PathInternal.IsEffectivelyEmpty(path.AsSpan()))

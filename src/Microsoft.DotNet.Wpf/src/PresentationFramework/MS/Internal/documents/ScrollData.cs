@@ -174,7 +174,7 @@ namespace MS.Internal.Documents
             // We can only work on visuals that are us or children.
             // An empty rect has no size or position.  We can't meaningfully use it.
             if (rectangle.IsEmpty ||
-                visual == null ||
+                visual is null ||
                 (visual != owner && !owner.IsAncestorOf(visual)))
             {
                 return Rect.Empty;

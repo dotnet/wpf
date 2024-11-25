@@ -55,7 +55,7 @@ namespace Microsoft.Windows.Automation.Peers
                 AutomationPeer peer = CreatePeerForElement(owner.PartToggleButton);
                 if (peer != null)
                 {
-                    if (children == null)
+                    if (children is null)
                     {
                         children = new List<AutomationPeer>(1);
                     }

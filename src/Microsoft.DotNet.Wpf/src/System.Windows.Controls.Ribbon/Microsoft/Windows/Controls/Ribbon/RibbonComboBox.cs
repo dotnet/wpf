@@ -534,7 +534,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 _clonedElement = null;
             }
 
-            if (itemTemplate == null && itemTemplateSelector == null && stringFormat == null)
+            if (itemTemplate is null && itemTemplateSelector is null && stringFormat is null)
             {
                 // if the item is a logical element it cannot be displayed directly in
                 // the selection box because it already belongs to the tree (in the dropdown box).
@@ -565,7 +565,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         // If both are true, they cancel out so no mirror should be applied
                         FlowDirection elementFD = (FlowDirection)_clonedElement.GetValue(FlowDirectionProperty);
                         DependencyObject parent = VisualTreeHelper.GetParent(_clonedElement);
-                        FlowDirection parentFD = parent == null ? FlowDirection : (FlowDirection)parent.GetValue(FlowDirectionProperty);
+                        FlowDirection parentFD = parent is null ? FlowDirection : (FlowDirection)parent.GetValue(FlowDirectionProperty);
                         if ((elementFD != this.FlowDirection) != (elementFD != parentFD))
                         {
                             visualBrush.Transform = new MatrixTransform(new Matrix(-1.0, 0.0, 0.0, 1.0, _clonedElement.RenderSize.Width, 0.0));
@@ -591,7 +591,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             }
 
             // display a null item by an empty string
-            if (item == null)
+            if (item is null)
             {
                 item = String.Empty;
                 itemTemplate = StringContentTemplate;
@@ -1031,7 +1031,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 if (IsDropDownOpen && _firstGallery != null)
                 {
                     focusedGalleryItem = _firstGallery.HighlightedContainer;
-                    if (focusedGalleryItem == null && _firstGallery.SelectedContainers.Count > 0)
+                    if (focusedGalleryItem is null && _firstGallery.SelectedContainers.Count > 0)
                     {
                         focusedGalleryItem = _firstGallery.SelectedContainers[0];
                     }
@@ -1043,7 +1043,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         if (IsDropDownOpen)
                         {
                             bool shiftPressed = ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift);
-                            if (focusedGalleryItem == null)
+                            if (focusedGalleryItem is null)
                             {
                                 // Move focus to the beggining or the end of popup.
                                 if (shiftPressed)
@@ -1066,7 +1066,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     case Key.Up:
                         if (IsDropDownOpen)
                         {
-                            if (focusedGalleryItem == null)
+                            if (focusedGalleryItem is null)
                             {
                                 // Navigate to the bottom of the popup.
                                 handled = RibbonHelper.NavigateToPreviousMenuItemOrGallery(this, Items.Count, BringIndexIntoView);
@@ -1095,7 +1095,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                             }
                             else if (IsDropDownOpen)
                             {
-                                if (focusedGalleryItem == null)
+                                if (focusedGalleryItem is null)
                                 {
                                     // Navigate to the top of the popup.
                                     handled = RibbonHelper.NavigateToNextMenuItemOrGallery(this, -1, BringIndexIntoView);

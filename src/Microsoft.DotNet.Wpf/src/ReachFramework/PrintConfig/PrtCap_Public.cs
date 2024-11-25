@@ -499,7 +499,7 @@ namespace MS.Internal.Printing.Configuration
                 if (_baLocalParamRequired[i])
                 {
                     // If a parameter definition has be referenced, then the parameter definition must be present in the XML.
-                    if (_pcLocalParamDefs[i] == null)
+                    if (_pcLocalParamDefs[i] is null)
                     {
                         throw NewPrintCapFormatException(String.Format(CultureInfo.CurrentCulture,
                                                                        PTUtility.GetTextFromResource("FormatException.ParameterDefMissOrInvalid"),

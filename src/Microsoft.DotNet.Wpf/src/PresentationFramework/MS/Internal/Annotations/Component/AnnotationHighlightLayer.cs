@@ -288,7 +288,7 @@ namespace MS.Internal.Annotations.Component
                 dynamicPosition = GetNextBackwardPosition(textPosition);
             }
 
-            return dynamicPosition == null ? StaticTextPointer.Null : dynamicPosition.CreateStaticPointer();
+            return dynamicPosition is null ? StaticTextPointer.Null : dynamicPosition.CreateStaticPointer();
         }
 
         #endregion Internal Methods
@@ -394,7 +394,7 @@ namespace MS.Internal.Annotations.Component
                         }
 
                         //set invalidateStart if needed
-                        if (invalidateStart == null)
+                        if (invalidateStart is null)
                             invalidateStart = highlightSegment.Segment.Start;
                     }
                     else
@@ -406,7 +406,7 @@ namespace MS.Internal.Annotations.Component
                 else
                 {
                     //set invalidateStart if needed
-                    if (invalidateStart == null)
+                    if (invalidateStart is null)
                         invalidateStart = rangeSegment.Start;
 
                     if (rangeSegment.End.CompareTo(highlightSegment.Segment.Start) > 0)
@@ -432,7 +432,7 @@ namespace MS.Internal.Annotations.Component
             //
             if (!rangeSegment.IsNull)
             {
-                if (invalidateStart == null)
+                if (invalidateStart is null)
                     invalidateStart = rangeSegment.Start;
                 _segments.Insert(ind++, new HighlightSegment(rangeSegment.Start, rangeSegment.End, highlightRange));
             }
@@ -952,7 +952,7 @@ namespace MS.Internal.Annotations.Component
                     return null;
 
                 //Debug.Assert((view.RenderScope != null) && (parentView.RenderScope != null), "null text view render scope");
-                if ((view.RenderScope == null) || (parentView.RenderScope == null))
+                if ((view.RenderScope is null) || (parentView.RenderScope is null))
                     return null;
 
                 Geometry pageGeometry = null;
@@ -1057,7 +1057,7 @@ namespace MS.Internal.Annotations.Component
             // Opens a segment for the following portion
             private void OpenSegment(ref ITextPointer segmentStart, ITextPointer cursor)
             {
-                if (segmentStart == null)
+                if (segmentStart is null)
                 {
                     // Create normalized position for the segment start
                     segmentStart = cursor.GetInsertionPosition(LogicalDirection.Forward);

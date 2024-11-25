@@ -176,7 +176,7 @@ namespace MS.Internal
                     }
                 }
             }
-            if (hashData == null)
+            if (hashData is null)
             {
                 HashAlgorithm hashAlgorithm;
 
@@ -241,7 +241,7 @@ namespace MS.Internal
         {
             bool fileExists;
 
-            if (fileName == null)
+            if (fileName is null)
             {
                 throw new ArgumentNullException(nameof(fileName));
             }
@@ -263,7 +263,7 @@ namespace MS.Internal
         //
         public void Delete(string fileName)
         {
-            if (fileName == null)
+            if (fileName is null)
             {
                 throw new ArgumentNullException(nameof(fileName));
             }
@@ -290,7 +290,7 @@ namespace MS.Internal
                 throw new ArgumentNullException(nameof(destinationFile));
             }
 
-            if (contentArray == null)
+            if (contentArray is null)
             {
                 throw new ArgumentNullException(nameof(contentArray));
             }
@@ -334,7 +334,7 @@ namespace MS.Internal
                 throw new ArgumentNullException(nameof(destinationFileBaseName));
             }
 
-            if (contentArray == null)
+            if (contentArray is null)
             {
                 throw new ArgumentNullException(nameof(contentArray));
             }
@@ -368,7 +368,7 @@ namespace MS.Internal
         {
             get
             {
-                if (_isRealBuild == null)
+                if (_isRealBuild is null)
                 {
                     bool isRealBuild = true;
 
@@ -406,7 +406,7 @@ namespace MS.Internal
         {
             get
             {
-                if (_hostFileManager == null)
+                if (_hostFileManager is null)
                 {
                     if (_buildTask != null && _buildTask.HostObject != null)
                     {

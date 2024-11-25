@@ -137,7 +137,7 @@ namespace System.Windows.Media.TextFormatting
             Invariant.Assert(glyphIndices   != null);
             // Device fonts are only used through the LS non-glyphed code path. Only when a DigitCulture is set
             // will a potential device font be ignored and come through shaping.
-            Invariant.Assert(_shapeTypeface.DeviceFont == null  || _textItem.DigitCulture != null);
+            Invariant.Assert(_shapeTypeface.DeviceFont is null  || _textItem.DigitCulture != null);
 
             bool[] caretStops = null;
 
@@ -188,7 +188,7 @@ namespace System.Windows.Media.TextFormatting
         {
             GlyphTypeface glyphTypeface;
 
-            if (_shapeTypeface == null)
+            if (_shapeTypeface is null)
             {
                 // We're in the optimized path where the GlyphTypeface depends only
                 // on the Typeface, not on the particular input characters.
@@ -241,7 +241,7 @@ namespace System.Windows.Media.TextFormatting
                 _properties.FontHintingEmSize,
                 nullFont,
                 CultureMapper.GetSpecificCulture(_properties.CultureInfo),
-                (_shapeTypeface == null  ||  _shapeTypeface.DeviceFont == null) ? null : _shapeTypeface.DeviceFont.Name,
+                (_shapeTypeface is null  ||  _shapeTypeface.DeviceFont is null) ? null : _shapeTypeface.DeviceFont.Name,
                 _textFormattingMode
             );
         }
@@ -409,7 +409,7 @@ namespace System.Windows.Media.TextFormatting
         {
             TextShapeableCharacters charShape = shapeable as TextShapeableCharacters;
 
-            if (charShape == null)
+            if (charShape is null)
                 return false;
 
             return
@@ -418,8 +418,8 @@ namespace System.Windows.Media.TextFormatting
                 && (_textItem.HasExtendedCharacter) == (charShape._textItem.HasExtendedCharacter)
                 && _emSize == charShape._emSize
                 && (
-                    _properties.CultureInfo == null ?
-                        charShape._properties.CultureInfo == null
+                    _properties.CultureInfo is null ?
+                        charShape._properties.CultureInfo is null
                       : _properties.CultureInfo.Equals(charShape._properties.CultureInfo)
                     )
                 && _nullShape == charShape._nullShape
@@ -448,7 +448,7 @@ namespace System.Windows.Media.TextFormatting
             {
                 return
                         (_shapeTypeface != null)                 // Can't use shaping without a shape typeface
-                    &&  (    (_shapeTypeface.DeviceFont == null) // Can't use shaping when rendering with a device font
+                    &&  (    (_shapeTypeface.DeviceFont is null) // Can't use shaping when rendering with a device font
                          ||  (_textItem.DigitCulture != null))   //   -- unless substituting digits
                     &&  (!IsSymbol);                             // Can't use shaping for symbol (non-Unicode) fonts
             }

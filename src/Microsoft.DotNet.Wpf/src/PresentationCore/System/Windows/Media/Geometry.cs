@@ -201,12 +201,12 @@ namespace System.Windows.Media
                 int hr = MilCoreApi.MilUtility_PolygonBounds(
                     &worldMatrix,
                     (fPenContributesToBounds) ? &penData : null,
-                    (dashArray == null) ? null : pDashArray,
+                    (dashArray is null) ? null : pDashArray,
                     pPoints,
                     pTypes,
                     pointCount,
                     segmentCount,
-                    (pGeometryMatrix == null) ? null : &geometryMatrix,
+                    (pGeometryMatrix is null) ? null : &geometryMatrix,
                     tolerance,
                     type == ToleranceType.Relative,
                     fSkipHollows,
@@ -240,7 +240,7 @@ namespace System.Windows.Media
 
             if (transform != null && !transform.IsIdentity)
             {
-                if (internalTransform == null || internalTransform.IsIdentity)
+                if (internalTransform is null || internalTransform.IsIdentity)
                 {
                     copy.Transform = transform;
                 }
@@ -373,7 +373,7 @@ namespace System.Windows.Media
         /// <param name="type">The way the error tolerance will be interpreted - relative or absolute</param>
         public bool StrokeContains(Pen pen, Point hitPoint, double tolerance, ToleranceType type)
         {
-            if (pen == null)
+            if (pen is null)
             {
                 return false;
             }
@@ -423,7 +423,7 @@ namespace System.Windows.Media
                     {
                         int hr = MilCoreApi.MilUtility_PathGeometryHitTest(
                                 &pathData.Matrix,
-                                (pen == null) ? null : &penData,
+                                (pen is null) ? null : &penData,
                                 dashArrayFixed,
                                 pathData.FillRule,
                                 pbPathData,
@@ -472,7 +472,7 @@ namespace System.Windows.Media
             {
                 int hr = MilCoreApi.MilUtility_PolygonHitTest(
                         &matrix,
-                        (pen == null) ? null : &penData,
+                        (pen is null) ? null : &penData,
                         dashArrayFixed,
                         pPoints,
                         pTypes,
@@ -540,7 +540,7 @@ namespace System.Windows.Media
         {
             ReadPreamble();
 
-            if (IsObviouslyEmpty() || geometry == null || geometry.IsObviouslyEmpty())
+            if (IsObviouslyEmpty() || geometry is null || geometry.IsObviouslyEmpty())
             {
                 return IntersectionDetail.Empty;
             }
@@ -567,7 +567,7 @@ namespace System.Windows.Media
         /// </summary>
         public IntersectionDetail StrokeContainsWithDetail(Pen pen, Geometry geometry, double tolerance, ToleranceType type)
         {
-            if (IsObviouslyEmpty() || geometry == null || geometry.IsObviouslyEmpty() || pen == null)
+            if (IsObviouslyEmpty() || geometry is null || geometry.IsObviouslyEmpty() || pen is null)
             {
                 return IntersectionDetail.Empty;
             }
@@ -723,7 +723,7 @@ namespace System.Windows.Media
                     {
                         int hr = UnsafeNativeMethods.MilCoreApi.MilUtility_PathGeometryWiden(
                             &penData,
-                            (dashArray == null) ? null : (double*)handle.AddrOfPinnedObject(),
+                            (dashArray is null) ? null : (double*)handle.AddrOfPinnedObject(),
                             &pathData.Matrix,
                             pathData.FillRule,
                             pbPathData,
@@ -950,7 +950,7 @@ namespace System.Windows.Media
         {
             internal bool IsEmpty()
             {
-                if ((SerializedData == null) || (SerializedData.Length <= 0))
+                if ((SerializedData is null) || (SerializedData.Length <= 0))
                 {
                     return true;
                 }
@@ -974,7 +974,7 @@ namespace System.Windows.Media
             {
                 get
                 {
-                    if ((SerializedData == null) || (SerializedData.Length <= 0))
+                    if ((SerializedData is null) || (SerializedData.Length <= 0))
                     {
                         return 0;
                     }
@@ -984,7 +984,7 @@ namespace System.Windows.Media
                         fixed (byte *pbPathData = SerializedData)
                         {
                             MIL_PATHGEOMETRY* pPathGeometryData = (MIL_PATHGEOMETRY*)pbPathData;
-                            uint size = pPathGeometryData == null ? 0 : pPathGeometryData->Size;
+                            uint size = pPathGeometryData is null ? 0 : pPathGeometryData->Size;
                             
                             Invariant.Assert(size <= (uint)SerializedData.Length);
 

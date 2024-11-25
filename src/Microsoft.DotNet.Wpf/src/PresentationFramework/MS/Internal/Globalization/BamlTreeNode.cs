@@ -112,7 +112,7 @@ namespace MS.Internal.Globalization
             nodeList.Add(parent);
 
             // return if this is the leaf
-            if (children == null)
+            if (children is null)
                 return;
 
             // for each child
@@ -190,7 +190,7 @@ namespace MS.Internal.Globalization
         /// <param name="child">child node to add</param>
         internal void AddChild(BamlTreeNode child)
         {
-            if (_children == null)
+            if (_children is null)
             {
                 _children = new List<BamlTreeNode>();
             }
@@ -493,7 +493,7 @@ namespace MS.Internal.Globalization
         /// </remarks> 
         internal void InsertProperty(BamlTreeNode child)
         {
-            if (_children == null)
+            if (_children is null)
             {
                 AddChild(child);
             }
@@ -544,11 +544,11 @@ namespace MS.Internal.Globalization
             // Baml element node inherit from parent element
             get
             {
-                if (_localizabilityAncestor == null)
+                if (_localizabilityAncestor is null)
                 {
                     // walk up the tree to find a parent node that is ILocalizabilityInheritable
                     for (BamlTreeNode parentNode = Parent;
-                         _localizabilityAncestor == null && parentNode != null;
+                         _localizabilityAncestor is null && parentNode != null;
                          parentNode = parentNode.Parent)
                     {
                         _localizabilityAncestor = (parentNode as ILocalizabilityInheritable);

@@ -112,7 +112,7 @@ namespace System.Windows.Media.Effects
             ArgumentNullException.ThrowIfNull(input);
 
             // if we don't have the input set, we should not be calling the output property
-            if (input.Input == null)
+            if (input.Input is null)
             {
                 throw new ArgumentException(SR.Effect_No_InputSource, "input");
             }

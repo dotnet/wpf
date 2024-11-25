@@ -749,7 +749,7 @@ namespace System.Windows.Markup
                  {
                      serializer = XamlTypeMapper.CreateInstance(xamlElementStartNode.SerializerType) as XamlSerializer;
                  }
-                 if (serializer == null)
+                 if (serializer is null)
                  {
                      ThrowException(nameof(SR.ParserNoSerializer),
                                    xamlElementStartNode.TypeFullName,
@@ -764,11 +764,11 @@ namespace System.Windows.Markup
 
 #if !PBTCOMPILER
                      
-                     if( TreeBuilder == null )
+                     if( TreeBuilder is null )
                      {
 #endif
                          serializer.ConvertXamlToBaml(TokenReader,
-                                           BamlRecordWriter == null ? ParserContext : BamlRecordWriter.ParserContext, 
+                                           BamlRecordWriter is null ? ParserContext : BamlRecordWriter.ParserContext, 
                                            xamlElementStartNode, BamlRecordWriter);
 #if !PBTCOMPILER
                      }
@@ -1429,7 +1429,7 @@ namespace System.Windows.Markup
                 if (InDeferLoadedSection &&
                     !_defNameFound)
                 {
-                    if (BamlRecordWriter != null && xamlPropertyNode.ValueElementType == null)
+                    if (BamlRecordWriter != null && xamlPropertyNode.ValueElementType is null)
                     {
                         ThrowException(nameof(SR.ParserNoType), 
                                        xamlPropertyNode.ValueTypeFullName,
@@ -1546,7 +1546,7 @@ namespace System.Windows.Markup
         /// </summary>
         bool IsLocalPass1
         {
-            get { return BamlRecordWriter == null; }
+            get { return BamlRecordWriter is null; }
         }
 #endif
 

@@ -145,7 +145,7 @@ namespace MS.Win32.Recognizer
 
         internal void AddReferenceOnRecognizer(RecognizerSafeHandle handle)
         {
-            System.Diagnostics.Debug.Assert(_recognizerHandle == null);
+            System.Diagnostics.Debug.Assert(_recognizerHandle is null);
             _recognizerHandle = handle;
         }
 

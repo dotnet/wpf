@@ -134,7 +134,7 @@ public sealed class BeginStoryboard : TriggerAction
             //  reference that has since been realized.
             Storyboard snapshot = GetValue(StoryboardProperty) as Storyboard;
 
-            if( snapshot == null )
+            if( snapshot is null )
             {
                 // This is the same error thrown by Begin if the Storyboard
                 //  property couldn't be resolved at Begin time.  Since we're
@@ -203,7 +203,7 @@ public sealed class BeginStoryboard : TriggerAction
 
     private void Begin( DependencyObject targetObject, INameScope nameScope, Int64 layer )
     {
-        if( Storyboard == null )
+        if( Storyboard is null )
         {
             throw new InvalidOperationException(SR.Storyboard_StoryboardReferenceRequired);
         }

@@ -98,7 +98,7 @@ namespace System.Windows.Documents
             for (int index = 0; index < Changes.Count; index++)
             {
                 TextChange curChange = Changes.Values[index];
-                if (leftChange == null || leftChange.Offset + leftChange.PropertyCount < curChange.Offset)
+                if (leftChange is null || leftChange.Offset + leftChange.PropertyCount < curChange.Offset)
                 {
                     leftChange = curChange;
                 }

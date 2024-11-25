@@ -72,7 +72,7 @@ namespace System.Windows.Documents
             int ecReadOnly,
             UnsafeNativeMethods.ITfEditRecord editRecord)
         {
-            if (_propertyRanges == null)
+            if (_propertyRanges is null)
             {
                 _propertyRanges = new TextServicesDisplayAttributePropertyRanges(_textstore);
             }

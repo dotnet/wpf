@@ -151,7 +151,7 @@ namespace System.Windows.Controls
 
         internal void PrepareItemContainer(object item, ItemsControl parentItemsControl)
         {
-            if (Generator == null)
+            if (Generator is null)
                 return;     // user-declared GroupItem - ignore (bug 108423)
 
             // If a GroupItem is being recycled set back IsItemsHost
@@ -182,7 +182,7 @@ namespace System.Windows.Controls
             Style style = groupStyle.ContainerStyle;
 
             // no ContainerStyle set, try ContainerStyleSelector
-            if (style == null)
+            if (style is null)
             {
                 if (groupStyle.ContainerStyleSelector != null)
                 {
@@ -235,7 +235,7 @@ namespace System.Windows.Controls
 
         internal void ClearItemContainer(object item, ItemsControl parentItemsControl)
         {
-            if (Generator == null)
+            if (Generator is null)
                 return;     // user-declared GroupItem - ignore (bug 108423)
 
             //

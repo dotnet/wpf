@@ -185,7 +185,7 @@ namespace System.Windows.Automation
                 autoid = (AutomationIdentifier) _idTable[id];
             }
 
-            if(autoid == null)
+            if(autoid is null)
             {
                 return null;
             }

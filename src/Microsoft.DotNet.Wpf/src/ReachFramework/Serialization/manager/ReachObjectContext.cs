@@ -156,7 +156,7 @@ namespace System.Windows.Xps.Serialization
                     (SerializableObjectContext)_recycableSerializableObjectContexts.Pop();
             }
 
-            if(serializableObjectContext == null)
+            if(serializableObjectContext is null)
             {
                 serializableObjectContext = new SerializableObjectContext(serializableObject,
                                                                           serializablePropertyContext);
@@ -174,7 +174,7 @@ namespace System.Windows.Xps.Serialization
                 MetroSerializationNamespaceTable parentNamespaceTable =
                 serializableObjectParentContext != null ? serializableObjectParentContext.NamespaceTable : null;
 
-                if (serializableObjectContext.NamespaceTable == null)
+                if (serializableObjectContext.NamespaceTable is null)
                 {
                     serializableObjectContext.NamespaceTable = new MetroSerializationNamespaceTable(parentNamespaceTable);
                 }
@@ -184,7 +184,7 @@ namespace System.Windows.Xps.Serialization
                 //
                 // Properties related creation within the context
                 //
-                if(serializableObjectContext.PropertiesCollection == null)
+                if(serializableObjectContext.PropertiesCollection is null)
                 {
                     serializableObjectContext.PropertiesCollection = new  SerializablePropertyCollection(serializationManager,
                                                                                                          serializableObject);

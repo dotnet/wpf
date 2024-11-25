@@ -31,7 +31,7 @@ namespace MS.Internal.Controls
         {
             this.arr = arr;
             this.loc = 0;
-            this.size = (arr == null) ? 0 : arr.Length;
+            this.size = (arr is null) ? 0 : arr.Length;
         }
 
         private EnumUnknown(Object[] arr, int loc)

@@ -57,7 +57,7 @@ namespace MS.Internal.PtsHost
                 mcsNew.Dispose();
                 mcsNew = null;
             }
-            else if (mcsCurrent == null && DoubleUtil.IsZero(mbp.Margin.Top))
+            else if (mcsCurrent is null && DoubleUtil.IsZero(mbp.Margin.Top))
             {
                 // No need to create new margin collapsing info
                 mcsNew.Dispose();
@@ -98,7 +98,7 @@ namespace MS.Internal.PtsHost
                 else
                 {
                     // Collapse margins
-                    if (mcsNew == null)
+                    if (mcsNew is null)
                     {
                         mcsNew = new MarginCollapsingState(ptsContext, 0);
                     }

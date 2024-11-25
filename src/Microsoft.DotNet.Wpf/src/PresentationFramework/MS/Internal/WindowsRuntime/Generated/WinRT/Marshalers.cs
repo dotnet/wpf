@@ -50,7 +50,7 @@ namespace WinRT
 
         public static unsafe MarshalString CreateMarshaler(string value)
         {
-            if (value == null) return null;
+            if (value is null) return null;
 
             var m = new MarshalString();
             Func<bool> dispose = () => { m.Dispose(); return false; };
@@ -270,7 +270,7 @@ namespace WinRT
 
         public static unsafe void DisposeAbiArray(object box)
         {
-            if (box == null) return;
+            if (box is null) return;
             var abi = ((int length, IntPtr data))box;
             DisposeAbiArrayElements(abi);
             Marshal.FreeCoTaskMem(abi.data);
@@ -341,7 +341,7 @@ namespace WinRT
 
         public static void DisposeAbiArray(object box)
         {
-            if (box == null) return;
+            if (box is null) return;
             var abi = ((int length, IntPtr data))box;
             Marshal.FreeCoTaskMem(abi.data);
         }
@@ -387,7 +387,7 @@ namespace WinRT
         private static Action<object, IntPtr> BindCopyAbi()
         {
             var copyAbi = HelperType.GetMethod("CopyAbi", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
-            if (copyAbi == null) return null;
+            if (copyAbi is null) return null;
             var parms = new[] { Expression.Parameter(typeof(object), "arg"), Expression.Parameter(typeof(IntPtr), "dest") };
             return Expression.Lambda<Action<object, IntPtr>>(
                 Expression.Call(copyAbi,
@@ -416,7 +416,7 @@ namespace WinRT
         private static Action<T, IntPtr> BindCopyManaged()
         {
             var copyManaged = HelperType.GetMethod("CopyManaged", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
-            if (copyManaged == null) return null;
+            if (copyManaged is null) return null;
             var parms = new[] { Expression.Parameter(typeof(T), "arg"), Expression.Parameter(typeof(IntPtr), "dest") };
             return Expression.Lambda<Action<T, IntPtr>>(
                 Expression.Call(copyManaged, parms), parms).Compile();
@@ -606,7 +606,7 @@ namespace WinRT
 
         public static unsafe void DisposeAbiArray(object box)
         {
-            if (box == null) return;
+            if (box is null) return;
             var abi = ((int length, IntPtr data))box;
             if (abi.data == IntPtr.Zero) return;
             DisposeAbiArrayElements(abi);
@@ -760,7 +760,7 @@ namespace WinRT
 
         public static unsafe void DisposeAbiArray(object box)
         {
-            if (box == null) return;
+            if (box is null) return;
             var abi = ((int length, IntPtr data))box;
             if (abi.data == IntPtr.Zero) return;
             DisposeAbiArrayElements(abi);
@@ -807,7 +807,7 @@ namespace WinRT
             }
             // If the metadata type doesn't implement the interface, then create a tear-off RCW.
             // TODO: Uniqueness of tear-offs?
-            if (_FromAbi == null)
+            if (_FromAbi is null)
             {
                 _FromAbi = BindFromAbi();
             }
@@ -825,7 +825,7 @@ namespace WinRT
             // use the ToAbi delegate since it will be faster than reflection.
             if (value.GetType() == HelperType)
             {
-                if (_ToAbi == null)
+                if (_ToAbi is null)
                 {
                     _ToAbi = BindToAbi();
                 }
@@ -1032,13 +1032,13 @@ namespace WinRT
                 if (AbiType != null)
                 {
                     // Could still be blittable and the 'ABI.*' type exists for other reasons (e.g. it's a mapped type)
-                    if (AbiType.GetMethod("FromAbi", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static) == null)
+                    if (AbiType.GetMethod("FromAbi", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static) is null)
                     {
                         AbiType = null;
                     }
                 }
 
-                if (AbiType == null)
+                if (AbiType is null)
                 {
                     AbiType = type;
                     CreateMarshaler = (T value) => value;

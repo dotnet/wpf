@@ -1424,7 +1424,7 @@ Add(Test.Elements.DoubleCollection,23.666)";
         {
             public string GetNamespace(string prefix)
             {
-                if (prefix == null)
+                if (prefix is null)
                 {
                     throw new ArgumentNullException();
                 }
@@ -1449,7 +1449,7 @@ Add(Test.Elements.DoubleCollection,23.666)";
         {
             public string LookupPrefix(string ns)
             {
-                if (ns == null)
+                if (ns is null)
                 {
                     throw new ArgumentNullException();
                 }

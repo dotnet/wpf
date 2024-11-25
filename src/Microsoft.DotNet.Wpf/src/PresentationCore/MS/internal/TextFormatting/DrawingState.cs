@@ -45,7 +45,7 @@ namespace MS.Internal.TextFormatting
             _antiInversion = antiInversion;
             _currentLine = currentLine;            
 
-            if (antiInversion == null)
+            if (antiInversion is null)
             {
                 _lineOrigin = lineOrigin;
             }
@@ -73,7 +73,7 @@ namespace MS.Internal.TextFormatting
         /// </summary>
         internal void SetGuidelineY(double runGuidelineY)
         {
-            if (_drawingContext == null)
+            if (_drawingContext is null)
                 return;
 
             Invariant.Assert(!_overrideBaseGuidelineY);

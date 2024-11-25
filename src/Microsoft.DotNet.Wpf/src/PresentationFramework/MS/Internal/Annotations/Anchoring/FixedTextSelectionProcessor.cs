@@ -201,7 +201,7 @@ namespace MS.Internal.Annotations.Anchoring
 
             FixedPageProxy fp = startNode as FixedPageProxy;
 
-            if (fp == null)
+            if (fp is null)
                 throw new ArgumentException(SR.StartNodeMustBeFixedPageProxy, "startNode");
 
             ContentLocatorPart part = new ContentLocatorPart(FixedTextElementName);
@@ -281,14 +281,14 @@ namespace MS.Internal.Annotations.Anchoring
                 if (dpv != null)
                 {
                     docPage = dpv.DocumentPage as FixedDocumentPage;
-                    if (docPage == null)
+                    if (docPage is null)
                     {
                         docPage = dpv.DocumentPage as FixedDocumentSequenceDocumentPage;
                     }
                 }
             }
 
-            if (docPage == null)
+            if (docPage is null)
             {
                 throw new ArgumentException(SR.StartNodeMustBeDocumentPageViewOrFixedPage, "startNode");
             }
@@ -303,7 +303,7 @@ namespace MS.Internal.Annotations.Anchoring
             ReadOnlyCollection<TextSegment> ts = tv.TextSegments;
 
             //check first if a TextRange can be generated
-            if (ts == null || ts.Count <= 0)
+            if (ts is null || ts.Count <= 0)
                 return null;
 
             TextAnchor resolvedAnchor = new TextAnchor();
@@ -311,7 +311,7 @@ namespace MS.Internal.Annotations.Anchoring
             if (docPage != null)
             {
                 string stringCount = locatorPart.NameValuePairs["Count"];
-                if (stringCount == null)
+                if (stringCount is null)
                     throw new ArgumentException(SR.Format(SR.InvalidLocatorPart, TextSelectionProcessor.CountAttribute));
                 int count = Int32.Parse(stringCount, NumberFormatInfo.InvariantInfo);
 
@@ -335,7 +335,7 @@ namespace MS.Internal.Annotations.Anchoring
                         segStart = tv.GetTextPositionFromPoint(start, true);
                     }
 
-                    if (segStart == null)
+                    if (segStart is null)
                     {
                         //selStart can be null if there are no insertion points on this page
                         continue;
@@ -481,7 +481,7 @@ namespace MS.Internal.Annotations.Anchoring
 
             TextAnchor anchor = selection as TextAnchor;
 
-            if (anchor == null || !(anchor.Start.TextContainer is FixedTextContainer ||
+            if (anchor is null || !(anchor.Start.TextContainer is FixedTextContainer ||
                     anchor.Start.TextContainer is DocumentSequenceTextContainer))
             {
                 throw new ArgumentException(SR.WrongSelectionType, $"selection: type={selection.GetType()}");
@@ -505,7 +505,7 @@ namespace MS.Internal.Annotations.Anchoring
                 throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, $"{locatorPart.PartType.Namespace}:{locatorPart.PartType.Name}"), "locatorPart");
 
             string segmentValue = locatorPart.NameValuePairs[TextSelectionProcessor.SegmentAttribute + segmentNumber.ToString(NumberFormatInfo.InvariantInfo)];
-            if (segmentValue == null)
+            if (segmentValue is null)
                 throw new ArgumentException(SR.Format(SR.InvalidLocatorPart, TextSelectionProcessor.SegmentAttribute + segmentNumber.ToString(NumberFormatInfo.InvariantInfo)));
 
             string[] values = segmentValue.Split(TextSelectionProcessor.Separator);
@@ -604,7 +604,7 @@ namespace MS.Internal.Annotations.Anchoring
             Invariant.Assert(textView != null, "DocumentPage didn't provide a TextView.");
 
             //check if there is any content
-            if ((textView.TextSegments == null) || (textView.TextSegments.Count == 0))
+            if ((textView.TextSegments is null) || (textView.TextSegments.Count == 0))
                 return false;
 
             start = textView.TextSegments[0].Start.CreatePointer(LogicalDirection.Forward);

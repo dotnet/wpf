@@ -370,7 +370,7 @@ namespace System.Windows.Data
                             bool writeAccess)
         {
             ViewManager vm = ViewManager.Current;
-            if (vm == null)
+            if (vm is null)
                 throw new InvalidOperationException(SR.Format(SR.AccessCollectionAfterShutDown, collection));
 
             vm.AccessCollection(collection, accessMethod, writeAccess);

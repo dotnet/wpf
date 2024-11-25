@@ -57,10 +57,10 @@ namespace MS.Internal.Data
             {
                 Record record = (Record)_table[name];
 
-                if (record == null)
+                if (record is null)
                 {
                     object component = _component.Target;
-                    if (component == null)
+                    if (component is null)
                         return null;
 
                     // initialize a new DC with the result of enumerating the
@@ -79,7 +79,7 @@ namespace MS.Internal.Data
                         MemberInfo[] aryMembers = xda.GetType().GetDefaultMembers();
                         Debug.Assert(aryMembers.Length == 1, "XLinq changed XDeferredAxis to have more than one indexer");
                         PropertyInfo pi = (aryMembers.Length > 0) ? aryMembers[0] as PropertyInfo : null;
-                        xda = (pi == null) ? null :
+                        xda = (pi is null) ? null :
                                     pi.GetValue(xda,
                                                 BindingFlags.GetProperty, null,
                                                 new object[] { name },

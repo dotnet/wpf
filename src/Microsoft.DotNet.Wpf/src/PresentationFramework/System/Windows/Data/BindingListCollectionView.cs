@@ -242,7 +242,7 @@ namespace System.Windows.Data
             {
                 if (InternalList.SupportsSorting)
                 {
-                    if (_sort == null)
+                    if (_sort is null)
                     {
                         bool allowAdvancedSorting = _blv != null && _blv.SupportsAdvancedSorting;
                         _sort = new BindingListSortDescriptionCollection(allowAdvancedSorting);
@@ -998,7 +998,7 @@ namespace System.Windows.Data
                 throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringTransaction, "CommitEdit", "AddNew"));
             VerifyRefreshNotDeferred();
 
-            if (_editItem == null)
+            if (_editItem is null)
                 return;
 
             IEditableObject ieo = _editItem as IEditableObject;
@@ -1037,7 +1037,7 @@ namespace System.Windows.Data
                 throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringTransaction, "CancelEdit", "AddNew"));
             VerifyRefreshNotDeferred();
 
-            if (_editItem == null)
+            if (_editItem is null)
                 return;
 
             IEditableObject ieo = _editItem as IEditableObject;
@@ -1166,7 +1166,7 @@ namespace System.Windows.Data
             get { return _isLiveGrouping; }
             set
             {
-                if (value == null)
+                if (value is null)
                     throw new ArgumentNullException("value");
 
 
@@ -1195,7 +1195,7 @@ namespace System.Windows.Data
         {
             get
             {
-                if (_liveSortingProperties == null)
+                if (_liveSortingProperties is null)
                 {
                     _liveSortingProperties = new ObservableCollection<string>();
                 }
@@ -1216,7 +1216,7 @@ namespace System.Windows.Data
         {
             get
             {
-                if (_liveFilteringProperties == null)
+                if (_liveFilteringProperties is null)
                 {
                     _liveFilteringProperties = new ObservableCollection<string>();
                 }
@@ -1237,7 +1237,7 @@ namespace System.Windows.Data
         {
             get
             {
-                if (_liveGroupingProperties == null)
+                if (_liveGroupingProperties is null)
                 {
                     _liveGroupingProperties = new ObservableCollection<string>();
                     _liveGroupingProperties.CollectionChanged += new NotifyCollectionChangedEventHandler(OnLivePropertyListChanged);
@@ -1333,7 +1333,7 @@ namespace System.Windows.Data
                     BindingOperations.AccessCollection(InternalList,
                         () =>
                         {
-                            if (_blv == null)
+                            if (_blv is null)
                                 InternalList.ApplySort(sorts[0].PropertyDescriptor, sorts[0].SortDirection);
                             else
                                 _blv.ApplySort(sorts);
@@ -2213,14 +2213,14 @@ namespace System.Windows.Data
                 pdc = null;
             }
 
-            if ((pdc == null) || (pdc.Count == 0))
+            if ((pdc is null) || (pdc.Count == 0))
                 throw new ArgumentException(SR.CannotDetermineSortByPropertiesForCollection);
 
             ListSortDescription[] sortDescriptions = new ListSortDescription[sorts.Count];
             for (int i = 0; i < sorts.Count; i++)
             {
                 PropertyDescriptor dd = pdc.Find(sorts[i].PropertyName, true);
-                if (dd == null)
+                if (dd is null)
                 {
                     string typeName = itl.GetListName(null);
                     throw new ArgumentException(SR.Format(SR.PropertyToSortByNotFoundOnType, typeName, sorts[i].PropertyName));
@@ -2398,7 +2398,7 @@ namespace System.Windows.Data
         internal void RestoreLiveShaping()
         {
             LiveShapingList list = CollectionProxy as LiveShapingList;
-            if (list == null)
+            if (list is null)
                 return;
 
             // restore grouping
@@ -2493,7 +2493,7 @@ namespace System.Windows.Data
         // defer work until the current activity completes
         private void DeferAction(Action action)
         {
-            if (_deferredActions == null)
+            if (_deferredActions is null)
             {
                 _deferredActions = new List<Action>();
             }

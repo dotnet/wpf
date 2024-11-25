@@ -174,7 +174,7 @@ namespace MS.Internal.Globalization
 
                     _keyToBamlNodeIndexMap.Add(key, i);
 
-                    if (_localizableResources.RootElementKey == null
+                    if (_localizableResources.RootElementKey is null
                      && currentNode.NodeType == BamlNodeType.StartElement
                      && currentNode.Parent != null
                      && currentNode.Parent.NodeType == BamlNodeType.StartDocument)
@@ -334,7 +334,7 @@ namespace MS.Internal.Globalization
 
         internal void AddClassAndAssembly(string className, string assemblyName)
         {
-            if (assemblyName == null || _classNameToAssemblyIndex.Contains(className))
+            if (assemblyName is null || _classNameToAssemblyIndex.Contains(className))
                 return;
 
             int index = _assemblyNames.IndexOf(assemblyName);
@@ -442,9 +442,9 @@ namespace MS.Internal.Globalization
         //--------------------------------------
         public override ElementLocalizability GetElementLocalizability(string assembly, string className)
         {
-            if (_externalResolver == null
-              || assembly == null || assembly.Length == 0
-              || className == null || className.Length == 0)
+            if (_externalResolver is null
+              || assembly is null || assembly.Length == 0
+              || className is null || className.Length == 0)
             {
                 // return the default value
                 return new ElementLocalizability(
@@ -462,7 +462,7 @@ namespace MS.Internal.Globalization
             else
             {
                 ElementLocalizability loc = _externalResolver.GetElementLocalizability(assembly, className);
-                if (loc == null || loc.Attribute == null)
+                if (loc is null || loc.Attribute is null)
                 {
                     loc = new ElementLocalizability(
                         null,
@@ -476,10 +476,10 @@ namespace MS.Internal.Globalization
 
         public override LocalizabilityAttribute GetPropertyLocalizability(string assembly, string className, string property)
         {
-            if (_externalResolver == null
-               || assembly == null || assembly.Length == 0
-               || className == null || className.Length == 0
-               || property == null || property.Length == 0)
+            if (_externalResolver is null
+               || assembly is null || assembly.Length == 0
+               || className is null || className.Length == 0
+               || property is null || property.Length == 0)
             {
                 return DefaultAttribute;
             }
@@ -493,7 +493,7 @@ namespace MS.Internal.Globalization
             else
             {
                 LocalizabilityAttribute loc = _externalResolver.GetPropertyLocalizability(assembly, className, property);
-                if (loc == null)
+                if (loc is null)
                 {
                     loc = DefaultAttribute;
                 }
@@ -536,7 +536,7 @@ namespace MS.Internal.Globalization
 
         public override string ResolveAssemblyFromClass(string className)
         {
-            if (className == null || className.Length == 0)
+            if (className is null || className.Length == 0)
             {
                 return string.Empty;
             }
@@ -575,7 +575,7 @@ namespace MS.Internal.Globalization
         {
             Debug.Assert(node.NodeType == BamlNodeType.StartElement);
 
-            if (node.Uid == null)
+            if (node.Uid is null)
             {
                 return new ElementComments(); // return empty comments for null Uid
             }

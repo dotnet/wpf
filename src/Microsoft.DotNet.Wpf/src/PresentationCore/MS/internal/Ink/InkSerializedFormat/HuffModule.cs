@@ -38,7 +38,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, AlgoModule.DefaultBAACount);
 
             HuffCodec huffCodec = _defaultHuffCodecs[index];
-            if (huffCodec == null)
+            if (huffCodec is null)
             {
                 huffCodec = new HuffCodec(index);
                 _defaultHuffCodecs[index] = huffCodec;
@@ -101,7 +101,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         {
             get
             {
-                if (_defaultDtxf == null)
+                if (_defaultDtxf is null)
                 {
                     _defaultDtxf = new DeltaDelta();
                 }
@@ -126,7 +126,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         //{
         //    internal CodeLookup(DeltaDelta dd, byte b)
         //    {
-        //        if (dd == null) { throw new ArgumentNullException(); }
+        //        if (dd is null) { throw new ArgumentNullException(); }
         //        DeltaDelta = dd;
         //        Byte = b;
         //    }

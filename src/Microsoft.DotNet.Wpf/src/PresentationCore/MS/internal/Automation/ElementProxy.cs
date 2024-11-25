@@ -90,7 +90,7 @@ namespace MS.Internal.Automation
         public object GetPatternProvider ( int pattern )
         {
             AutomationPeer peer = Peer;
-            if (peer == null)
+            if (peer is null)
             {
                 throw new ElementNotAvailableException();
             }
@@ -100,7 +100,7 @@ namespace MS.Internal.Automation
         public object GetPropertyValue(int property)
         {
             AutomationPeer peer = Peer;
-            if (peer == null)
+            if (peer is null)
             {
                 throw new ElementNotAvailableException();
             }
@@ -112,7 +112,7 @@ namespace MS.Internal.Automation
             get 
             {
                 AutomationPeer peer = Peer;
-                if (peer == null)
+                if (peer is null)
                 {
                     return ProviderOptions.ServerSideProvider;
                 }
@@ -127,7 +127,7 @@ namespace MS.Internal.Automation
                 IRawElementProviderSimple host  = null;
                 HostedWindowWrapper hwndWrapper = null;
                 AutomationPeer peer = Peer;
-                if (peer == null)
+                if (peer is null)
                 {
                     return null;
                 }
@@ -153,7 +153,7 @@ namespace MS.Internal.Automation
         public IRawElementProviderFragment Navigate( NavigateDirection direction )
         {
             AutomationPeer peer = Peer;
-            if (peer == null)
+            if (peer is null)
             {
                 return null;
             }
@@ -163,7 +163,7 @@ namespace MS.Internal.Automation
         public int [ ] GetRuntimeId()
         {
             AutomationPeer peer = Peer;
-            if (peer == null)
+            if (peer is null)
             {
                 throw new ElementNotAvailableException();
             }
@@ -175,7 +175,7 @@ namespace MS.Internal.Automation
             get 
             {
                 AutomationPeer peer = Peer;
-                if (peer == null)
+                if (peer is null)
                 {
                     throw new ElementNotAvailableException();
                 }
@@ -191,7 +191,7 @@ namespace MS.Internal.Automation
         public void SetFocus()
         {
             AutomationPeer peer = Peer;
-            if (peer == null)
+            if (peer is null)
             {
                 throw new ElementNotAvailableException();
             }
@@ -203,7 +203,7 @@ namespace MS.Internal.Automation
             get 
             {
                 AutomationPeer peer = Peer;
-                if (peer == null)
+                if (peer is null)
                 {
                     return null;
                 }
@@ -215,7 +215,7 @@ namespace MS.Internal.Automation
         public IRawElementProviderFragment ElementProviderFromPoint( double x, double y )
         {
             AutomationPeer peer = Peer;
-            if (peer == null)
+            if (peer is null)
             {
                 return null;
             }
@@ -225,7 +225,7 @@ namespace MS.Internal.Automation
         public IRawElementProviderFragment GetFocus()
         {
             AutomationPeer peer = Peer;
-            if (peer == null)
+            if (peer is null)
             {
                 return null;
             }
@@ -277,7 +277,7 @@ namespace MS.Internal.Automation
                     {
                         result = peer.ElementProxyWeakReference.Target as ElementProxy;
                     }
-                    if(result == null)
+                    if(result is null)
                     {
                         result = new ElementProxy(peer);
                         peer.ElementProxyWeakReference = new WeakReference(result);
@@ -334,7 +334,7 @@ namespace MS.Internal.Automation
         {
             Point point = (Point)arg;
             AutomationPeer peer = Peer;
-            if (peer == null)
+            if (peer is null)
             {
                 return null;
             }
@@ -350,7 +350,7 @@ namespace MS.Internal.Automation
             // If it implements Automation, can hand over to it, but if it doesn't,
             // would like nearest item, drill in using visual tree?
             AutomationPeer peer = Peer;
-            if (peer == null)
+            if (peer is null)
             {
                 return null;
             }
@@ -362,7 +362,7 @@ namespace MS.Internal.Automation
         private object InContextGetPatternProvider(object arg)
         {
             AutomationPeer peer = Peer;
-            if (peer == null)
+            if (peer is null)
             {
                 throw new ElementNotAvailableException();
             }
@@ -375,7 +375,7 @@ namespace MS.Internal.Automation
             NavigateDirection direction = (NavigateDirection) arg;
             AutomationPeer dest;
             AutomationPeer peer = Peer;
-            if (peer == null)
+            if (peer is null)
             {
                 return null;
             }
@@ -430,7 +430,7 @@ namespace MS.Internal.Automation
         {
             ProviderOptions options = ProviderOptions.ServerSideProvider;
             AutomationPeer peer = Peer;
-            if (peer == null)
+            if (peer is null)
             {
                 return options;
             }
@@ -444,7 +444,7 @@ namespace MS.Internal.Automation
         private object InContextGetPropertyValue ( object arg )
         {
             AutomationPeer peer = Peer;
-            if (peer == null)
+            if (peer is null)
             {
                 throw new ElementNotAvailableException();
             }
@@ -455,7 +455,7 @@ namespace MS.Internal.Automation
         private object InContextGetHostRawElementProvider( object unused )
         {
             AutomationPeer peer = Peer;
-            if (peer == null)
+            if (peer is null)
             {
                 return null;
             }
@@ -466,7 +466,7 @@ namespace MS.Internal.Automation
         private object InContextGetRuntimeId()
         {
             AutomationPeer peer = Peer;
-            if (peer == null)
+            if (peer is null)
             {
                 throw new ElementNotAvailableException();
             }
@@ -477,7 +477,7 @@ namespace MS.Internal.Automation
         private object InContextBoundingRectangle()
         {
             AutomationPeer peer = Peer;
-            if (peer == null)
+            if (peer is null)
             {
                 throw new ElementNotAvailableException();
             }
@@ -488,7 +488,7 @@ namespace MS.Internal.Automation
         private object InContextSetFocus()
         {
             AutomationPeer peer = Peer;
-            if (peer == null)
+            if (peer is null)
             {
                 throw new ElementNotAvailableException();
             }
@@ -501,14 +501,14 @@ namespace MS.Internal.Automation
         {
             AutomationPeer peer = Peer;
             AutomationPeer root = peer;
-            if (root == null)
+            if (root is null)
             {
                 return null;
             }
             while(true)
             {
                 AutomationPeer parent = root.GetParent();
-                if(parent == null) break;
+                if(parent is null) break;
                 root = parent;
             }
 

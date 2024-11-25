@@ -133,7 +133,7 @@ namespace System.Windows
             DependencyObject newParent)
         {
             // Added to a tree
-            if (oldParent == null && newParent != null)
+            if (oldParent is null && newParent != null)
             {
                 if(IsLoadedHelper(newParent) == true)
                 {
@@ -144,7 +144,7 @@ namespace System.Windows
                 }
             }
             // Removed from a tree
-            else if (oldParent != null && newParent == null)
+            else if (oldParent != null && newParent is null)
             {
                 if (IsLoadedHelper(oldParent) == true)
                 {
@@ -541,14 +541,14 @@ namespace System.Windows
             if(hasLoadChangedHandler)
             {
                 // Attaching to a Parent
-                if (oldParent == null && newParent != null)
+                if (oldParent is null && newParent != null)
                 {
                     // Subtree with a handler got added
                     AddHasLoadedChangeHandlerFlagInAncestry(newParent);
                 }
 
                 // Detaching from a Parent
-                else if (oldParent != null && newParent == null)
+                else if (oldParent != null && newParent is null)
                 {
                     // Subtree with a handler got removed
                     RemoveHasLoadedChangeHandlerFlagInAncestry(oldParent);
@@ -657,7 +657,7 @@ namespace System.Windows
                     }
 
                     // Propagate the change to your mentor, if any
-                    if (logicalParent == null && coreParent == null)
+                    if (logicalParent is null && coreParent is null)
                     {
                         parent = Helper.FindMentor(fo.DO.InheritanceContext);
                         if (parent != null)
@@ -724,7 +724,7 @@ namespace System.Windows
             FrameworkElement fe,
             DependencyObject parent)
         {
-            if (fe.GetValue(FrameworkElement.LoadedPendingProperty) == null)
+            if (fe.GetValue(FrameworkElement.LoadedPendingProperty) is null)
             {
                 // Propagate the change to your visual ancestry
                 if (parent != null)
@@ -756,7 +756,7 @@ namespace System.Windows
             FrameworkContentElement fce,
             DependencyObject        parent)
         {
-            if (fce.GetValue(FrameworkElement.LoadedPendingProperty) == null)
+            if (fce.GetValue(FrameworkElement.LoadedPendingProperty) is null)
             {
                 // Propagate the change to your logical ancestry
                 fce.IsLoadedCache = IsLoadedHelper(parent);

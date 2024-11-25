@@ -189,7 +189,7 @@ namespace System.Windows.Media.Imaging
                 // with 1 item that will point to an empty bitmap
                 if (_isDownloading)
                 {
-                    if (_readOnlyFrames == null)
+                    if (_readOnlyFrames is null)
                     {
                         _frames = new List<BitmapFrame>((int)1);
                         _frames.Add(
@@ -274,7 +274,7 @@ namespace System.Windows.Media.Imaging
         ///
         private void EnsureDecoder()
         {
-            if (_realDecoder == null)
+            if (_realDecoder is null)
             {
                 _realDecoder = BitmapDecoder.CreateFromUriOrStream(
                     _baseUri,

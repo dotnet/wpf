@@ -180,7 +180,7 @@ namespace System.Windows.Media.Media3D
             get
             {
                 // Make sure identity matrix is initialized.
-                if (s_identity == null)
+                if (s_identity is null)
                 {
                     MatrixTransform3D identity = new MatrixTransform3D();
                     identity.Freeze();

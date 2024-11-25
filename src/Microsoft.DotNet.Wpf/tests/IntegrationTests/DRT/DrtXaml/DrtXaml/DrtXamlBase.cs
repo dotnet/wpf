@@ -83,7 +83,7 @@ namespace DrtXaml
             XamlObjectWriter objWriter = new XamlObjectWriter(reader.SchemaContext);
             XamlServices.Transform(reader, objWriter);
             object root = objWriter.Result;
-            if (root == null)
+            if (root is null)
                 throw new NullReferenceException("Load returned null Root");
             return root;
         }

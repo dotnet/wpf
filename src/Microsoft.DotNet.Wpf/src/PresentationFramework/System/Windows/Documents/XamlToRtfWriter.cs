@@ -708,7 +708,7 @@ namespace System.Windows.Documents
             bool outSub = fsThis.Sub != fsParent.Sub;
             bool outLang = fsThis.Lang != fsParent.Lang && fsThis.Lang > 0;
             bool outDir = fsThis.DirChar != DirState.DirDefault
-                            && (documentNode.Parent == null
+                            && (documentNode.Parent is null
                                 || !documentNode.Parent.IsInline
                                 || fsThis.Lang != fsParent.Lang);
             bool outAny = outFont || outBold || outItalic || outUL || outLang || outDir ||
@@ -1233,7 +1233,7 @@ namespace System.Windows.Documents
             bool isTopLevelParagraph = dnThis.Type == DocumentNodeType.dnParagraph &&
                                        dnThis.Parent != null &&
                                        dnThis.Parent.Type == DocumentNodeType.dnSection &&
-                                       dnThis.Parent.Parent == null;
+                                       dnThis.Parent.Parent is null;
 
             if (fsThis.FontSize != fsParent.FontSize)
             {
@@ -2010,7 +2010,7 @@ namespace System.Windows.Documents
         // Write image control and image hex data to the rtf content
         private void WriteImage(DocumentNode documentNode)
         {
-            if (_wpfPayload == null)
+            if (_wpfPayload is null)
             {
                 // Package is not available. Skip the image.
                 return;
@@ -2472,7 +2472,7 @@ namespace System.Windows.Documents
                         if (xamlToRtfError == XamlToRtfError.None)
                         {
                             FontTableEntry e = converterState.FontTable.FindEntryByIndex((int)dn.FormatState.Font);
-                            int cp = (e == null) ? 1252 : e.CodePage;
+                            int cp = (e is null) ? 1252 : e.CodePage;
                             XamlParserHelper.AppendRTFText(dn.Content, newCharacters, cp);
                         }
                     }
@@ -2524,7 +2524,7 @@ namespace System.Windows.Documents
                     || xamlTag == XamlTag.XTTableColumn
                     || xamlTag == XamlTag.XTBitmapImage)
                 {
-                    if (dnTop == null)
+                    if (dnTop is null)
                     {
                         return xamlToRtfError;
                     }
@@ -3521,7 +3521,7 @@ namespace System.Windows.Documents
                 FontTable fontTable = converterState.FontTable;
                 FontTableEntry fontTableEntry = fontTable.FindEntryByName(attributeName);
 
-                if (fontTableEntry == null)
+                if (fontTableEntry is null)
                 {
                     fontTableEntry = fontTable.DefineEntry(fontTable.Count + 1);
 
@@ -3532,7 +3532,7 @@ namespace System.Windows.Documents
                     }
                 }
 
-                if (fontTableEntry == null)
+                if (fontTableEntry is null)
                 {
                     return false;
                 }
@@ -4012,7 +4012,7 @@ namespace System.Windows.Documents
 
             private static void AppendRtfUnicodeChar(StringBuilder sb, char c, int cp, ref Encoding e, byte[] rgAnsi, char[] rgChar)
             {
-                if (e == null)
+                if (e is null)
                 {
                     e = InternalEncoding.GetEncoding(cp);
                 }

@@ -285,7 +285,7 @@ namespace System.Windows.Documents
             bool     fill   = path.Fill != null;
             bool     stroke = path.Stroke != null;
 
-            if ((geom == null) || (! fill && ! stroke))
+            if ((geom is null) || (! fill && ! stroke))
             {
                 return;
             }
@@ -314,7 +314,7 @@ namespace System.Windows.Documents
 
             if (sgeo != null)
             {
-                if (_geometryWalker == null)
+                if (_geometryWalker is null)
                 {
                     _geometryWalker = new GeometryWalker(this);
                 }
@@ -411,7 +411,7 @@ namespace System.Windows.Documents
            //Multiple table cells separated by wide spaces should be identified
             GlyphRun glyphRun = glyphs.ToGlyphRun();
 
-            if (glyphRun == null)
+            if (glyphRun is null)
             {
                 //Could not create a GlyphRun out of this Glyphs element
                 //Some key properties might be missing/invalid
@@ -521,7 +521,7 @@ namespace System.Windows.Documents
 
                 FixedSOMFixedBlock fixedBlock = _GetContainingFixedBlock(textRun);
 
-                if (fixedBlock == null)
+                if (fixedBlock is null)
                 {
                     fixedBlock= new FixedSOMFixedBlock(_fixedSOMPage);
                     fixedBlock.AddTextRun(textRun);
@@ -541,7 +541,7 @@ namespace System.Windows.Documents
         {
             FixedSOMFixedBlock fixedBlock = null;
 
-            if (_currentFixedBlock == null)
+            if (_currentFixedBlock is null)
             {
                 return null;
             }
@@ -663,7 +663,7 @@ namespace System.Windows.Documents
 
             //If consecutive in markup and seem to be on the same line, almost discard horizontal distance
             if (fixedBlock == _currentFixedBlock &&
-                compareLine == null &&
+                compareLine is null &&
                 heightRatio < 1.5
                 )
             {
@@ -891,7 +891,7 @@ namespace System.Windows.Documents
 
 
                     FixedSOMFixedBlock box1 = boxes[i] as FixedSOMFixedBlock;
-                    if (box1 == null || box1.IsFloatingImage)
+                    if (box1 is null || box1.IsFloatingImage)
                     {
                         continue;
                     }
@@ -1037,7 +1037,7 @@ namespace System.Windows.Documents
                     }
                 }
 
-                if (table == null)
+                if (table is null)
                 {
                     table = new FixedSOMTable(_fixedSOMPage);
                     tables.Add(table);

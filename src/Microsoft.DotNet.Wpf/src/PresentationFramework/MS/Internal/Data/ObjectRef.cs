@@ -162,14 +162,14 @@ namespace MS.Internal.Data
                     }
                 }
 
-                if (o == null)
+                if (o is null)
                 {
                     args.NameResolvedInOuterScope = true;
                 }
             }
 
             FrameworkObject fo = new FrameworkObject(d);
-            while (o == null && fo.DO != null)
+            while (o is null && fo.DO != null)
             {
                 DependencyObject scopeOwner;
                 o = fo.FindName(_name, out scopeOwner);
@@ -186,7 +186,7 @@ namespace MS.Internal.Data
                     d.ReadLocalValue(System.Windows.Navigation.NavigationService.NavigationServiceProperty) == DependencyProperty.UnsetValue)
                 {
                     DependencyObject parent = LogicalTreeHelper.GetParent(d);
-                    if (parent == null)
+                    if (parent is null)
                     {
                         parent = Helper.FindMentor(d.InheritanceContext);
                     }
@@ -207,7 +207,7 @@ namespace MS.Internal.Data
                                             TraceData.Identify(fo.DO)));
                 }
 
-                if (o == null)
+                if (o is null)
                 {
                     args.NameResolvedInOuterScope = true;
 
@@ -219,7 +219,7 @@ namespace MS.Internal.Data
                     // if that doesn't work, we could be at the top of
                     // generated content for an ItemsControl.  If so, use
                     // the (visual) parent - a panel.
-                    if (dd == null)
+                    if (dd is null)
                     {
                         Panel panel = fo.FrameworkParent.DO as Panel;
                         if (panel != null && panel.IsItemsHost)
@@ -233,7 +233,7 @@ namespace MS.Internal.Data
                     // moral equivalent of having the ContentControl as the TemplatedParent.
                     // (The InheritanceBehavior clause prevents this for cases where the
                     // parent ContentControl imposes a barrier, e.g. Frame)
-                    if (dd == null && scopeOwner == null)
+                    if (dd is null && scopeOwner is null)
                     {
                         ContentControl cc = LogicalTreeHelper.GetParent(fo.DO) as ContentControl;
                         if (cc != null && cc.Content == fo.DO && cc.InheritanceBehavior == InheritanceBehavior.Default)
@@ -245,19 +245,19 @@ namespace MS.Internal.Data
                     // next, see if we're in a logical tree attached directly
                     // to a ContentPresenter.  This is the moral equivalent of
                     // having the ContentPresenter as the TemplatedParent.
-                    if (dd == null && scopeOwner == null)
+                    if (dd is null && scopeOwner is null)
                     {
                         // go to the top of the logical subtree
                         DependencyObject parent;
                         for (dd = fo.DO; ;)
                         {
                             parent = LogicalTreeHelper.GetParent(dd);
-                            if (parent == null)
+                            if (parent is null)
                             {
                                 parent = Helper.FindMentor(dd.InheritanceContext);
                             }
 
-                            if (parent == null)
+                            if (parent is null)
                                 break;
 
                             dd = parent;
@@ -272,7 +272,7 @@ namespace MS.Internal.Data
                 }
             }
 
-            if (o == null)
+            if (o is null)
             {
                 o = DependencyProperty.UnsetValue;
                 args.NameResolvedInOuterScope = false;
@@ -371,7 +371,7 @@ namespace MS.Internal.Data
                 // for generated wrappers, use the ItemForContainer property instead
                 // of DataContext, since it's always set by the generator
                 o = el.GetValue(ItemContainerGenerator.ItemForItemContainerProperty);
-                if (o == null)
+                if (o is null)
                     o = el.GetValue(FrameworkElement.DataContextProperty);
             }
 
@@ -380,7 +380,7 @@ namespace MS.Internal.Data
 
         private object GetDataObjectImpl(DependencyObject d, ObjectRefArgs args)
         {
-            if (d == null)
+            if (d is null)
                 return null;
 
             switch (_relativeSource.Mode)
@@ -397,7 +397,7 @@ namespace MS.Internal.Data
 
                 case RelativeSourceMode.FindAncestor:
                     d = FindAncestorOfType(_relativeSource.AncestorType, _relativeSource.AncestorLevel, d, args.IsTracing);
-                    if (d == null)
+                    if (d is null)
                     {
                         return DependencyProperty.UnsetValue;   // we fell off the tree
                     }
@@ -507,7 +507,7 @@ namespace MS.Internal.Data
                 }
             }
 
-            if (d == null)
+            if (d is null)
                 return DependencyProperty.UnsetValue;   // we fell off the tree
 
             // this only makes sense within generated content.  If this
@@ -517,7 +517,7 @@ namespace MS.Internal.Data
             Visual v = d as Visual;
             DependencyObject layout = (v != null) ? VisualTreeHelper.GetParent(v) : null;
             ItemsControl ic = ItemsControl.GetItemsOwner(layout);
-            if (ic == null)
+            if (ic is null)
             {
                 if (TraceData.IsEnabled)
                     TraceData.TraceAndNotify(TraceEventType.Error, TraceData.RefPreviousNotInContext);
@@ -549,7 +549,7 @@ namespace MS.Internal.Data
 
         private DependencyObject FindAncestorOfType(Type type, int level, DependencyObject d, bool isTracing)
         {
-            if (type == null)
+            if (type is null)
             {
                 if (TraceData.IsEnabled)
                     TraceData.TraceAndNotify(TraceEventType.Error, TraceData.RefAncestorTypeNotSpecified);

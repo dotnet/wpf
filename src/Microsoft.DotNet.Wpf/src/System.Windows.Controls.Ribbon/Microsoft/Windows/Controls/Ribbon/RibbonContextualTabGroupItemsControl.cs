@@ -178,7 +178,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private bool HasTabs(FrameworkElement container)
         {
             RibbonContextualTabGroup tabGroupHeader = container as RibbonContextualTabGroup;
-            if (tabGroupHeader == null ||
+            if (tabGroupHeader is null ||
                 !tabGroupHeader.IsVisible)
             {
                 return false;

@@ -472,7 +472,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         // Find the RibbonGroup whose name is specified next in the GroupSizeReductionOrder.
                         nextRibbonGroup = FindRibbonGroupWithName(GroupSizeReductionOrder[groupReduceOrderLocation--]);
 
-                        if (nextRibbonGroup == null)
+                        if (nextRibbonGroup is null)
                         {
                             resizeSuccessful = false;
                         }
@@ -516,7 +516,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     // Find the group who's next to be reduced.
                     RibbonGroup targetGroup = FindRibbonGroupWithName(GroupSizeReductionOrder[++_groupReduceOrderLocation]);
 
-                    if (targetGroup == null)
+                    if (targetGroup is null)
                     {
                         resizeSuccessful = false;
                     }
@@ -549,7 +549,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             bool resizeSuccessful = false;
 
-            if (_groupAutoResizeIndex == null)
+            if (_groupAutoResizeIndex is null)
             {
                 _groupAutoResizeIndex = Items.Count - 1;
             }
@@ -644,7 +644,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             RibbonTab tab = (RibbonTab)d;
             bool contextualHeaderSet = tab.ContextualTabGroupHeader != null;
 
-            if (tab.ContextualTabGroup == null && contextualHeaderSet)
+            if (tab.ContextualTabGroup is null && contextualHeaderSet)
             {
                 if (tab.Ribbon != null && tab.Ribbon.ContextualTabGroupItemsControl != null)
                 {

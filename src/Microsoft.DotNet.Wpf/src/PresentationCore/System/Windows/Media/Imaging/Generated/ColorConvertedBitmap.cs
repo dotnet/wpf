@@ -373,7 +373,7 @@ namespace System.Windows.Media.Imaging
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
             // of your app. 
-            Debug.Assert(s_Source == null || s_Source.IsFrozen,
+            Debug.Assert(s_Source is null || s_Source.IsFrozen,
                 "Detected context bound default value ColorConvertedBitmap.s_Source (See OS Bug #947272).");
 
 

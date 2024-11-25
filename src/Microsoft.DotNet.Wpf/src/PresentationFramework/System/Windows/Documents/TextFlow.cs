@@ -186,7 +186,7 @@ namespace System.Windows.Documents
         /// </returns>
         object IServiceProvider.GetService(Type serviceType)
         {
-            if (serviceType == null)
+            if (serviceType is null)
             {
                 throw new ArgumentNullException("serviceType");
             }
@@ -297,7 +297,7 @@ namespace System.Windows.Documents
         public TextFlow(Block block)
             : base()
         {
-            if (block == null)
+            if (block is null)
             {
                 throw new ArgumentNullException("block");
             }
@@ -758,7 +758,7 @@ namespace System.Windows.Documents
         /// <param name="arrangeSize">Size that element should use to arrange itself and its children.</param>
         protected sealed override Size ArrangeOverride(Size arrangeSize)
         {
-            Invariant.Assert(_structuralCache.DtrList == null || _structuralCache.DtrList.Length == 0 ||
+            Invariant.Assert(_structuralCache.DtrList is null || _structuralCache.DtrList.Length == 0 ||
                              (_structuralCache.DtrList.Length == 1 && _structuralCache.BackgroundFormatInfo.DoesFinalDTRCoverRestOfText == true));
 
             VerifyReentrancy();
@@ -835,7 +835,7 @@ namespace System.Windows.Documents
         {           
             get 
             {         
-                return _child == null ? 0 : 1; 
+                return _child is null ? 0 : 1; 
             }
         }
 
@@ -900,7 +900,7 @@ namespace System.Windows.Documents
         /// </summary>
         protected sealed override void OnChildDesiredSizeChanged(UIElement child)
         {
-            if (child == null)
+            if (child is null)
             {
                 throw new ArgumentNullException("child");
             }
@@ -925,7 +925,7 @@ namespace System.Windows.Documents
         ///<param name="child">Reference to a child UIElement that had AffectsParentMeasure/AffectsParentArrange property invalidated.</param>
         protected internal sealed override void ParentLayoutInvalidated(UIElement child)
         {
-            if (child == null)
+            if (child is null)
             {
                 throw new ArgumentNullException("child");
             }
@@ -938,7 +938,7 @@ namespace System.Windows.Documents
         /// </summary>
         protected sealed override HitTestResult HitTestCore(PointHitTestParameters hitTestParameters)
         {
-            if (hitTestParameters == null)
+            if (hitTestParameters is null)
             {
                 throw new ArgumentNullException("hitTestParameters");
             }
@@ -984,7 +984,7 @@ namespace System.Windows.Documents
         protected virtual ReadOnlyCollection<Rect> GetRectanglesCore(ContentElement child)
         {
             // Access and parameter validation
-            if (child == null)
+            if (child is null)
             {
                 throw new ArgumentNullException("child");
             }
@@ -1080,7 +1080,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            if (textContainer == null)
+            if (textContainer is null)
             {
                 // Create text tree that contains content of the element.
                 textContainer = new TextContainer(this);
@@ -1090,7 +1090,7 @@ namespace System.Windows.Documents
                 _foreignTextContainer = true;
             }
 
-            if (_structuralCache == null)
+            if (_structuralCache is null)
             {
                 // Create structural cache object
                 _structuralCache = new StructuralCache(this, textContainer, false);
@@ -1126,7 +1126,7 @@ namespace System.Windows.Documents
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool ShouldSerializeBlocks(XamlDesignerSerializationManager manager) 
         {
-            return manager != null && manager.XmlWriter == null;
+            return manager != null && manager.XmlWriter is null;
         }
 
 
@@ -1189,7 +1189,7 @@ namespace System.Windows.Documents
                 bool layoutValid = _documentPage != null &&  
                     CheckFlags(Flags.FormattedOnce) &&
                     !_structuralCache.ForceReformat &&
-                    (_structuralCache.DtrList == null || _structuralCache.BackgroundFormatInfo.DoesFinalDTRCoverRestOfText) &&
+                    (_structuralCache.DtrList is null || _structuralCache.BackgroundFormatInfo.DoesFinalDTRCoverRestOfText) &&
                     IsMeasureValid && IsArrangeValid &&
                     !CheckFlags(Flags.ContentChangeInProgress) &&
                     !CheckFlags(Flags.MeasureInProgress) &&
@@ -1210,7 +1210,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_typographyPropertiesGroup == null)
+                if (_typographyPropertiesGroup is null)
                 {
                     _typographyPropertiesGroup = TextElement.GetTypographyProperties(this);
                 }

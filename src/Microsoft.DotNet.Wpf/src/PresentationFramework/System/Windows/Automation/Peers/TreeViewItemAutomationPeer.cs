@@ -72,7 +72,7 @@ namespace System.Windows.Automation.Peers
                 iterate(this, owner,
                     (IteratorCallback)delegate(AutomationPeer peer)
                     {
-                        if (children == null)
+                        if (children is null)
                             children = new List<AutomationPeer>();
 
                         children.Add(peer);
@@ -105,7 +105,7 @@ namespace System.Windows.Automation.Peers
                             object dataItem = (child as UIElement) != null ? (logicalParentAp.Owner as ItemsControl).GetItemOrContainerFromContainer(child as UIElement) : child;
                             peer = oldChildren[dataItem];
 
-                            if (peer == null)
+                            if (peer is null)
                             {
                                 peer = logicalParentAp.GetPeerFromWeakRefStorage(dataItem);
                                 if (peer != null)
@@ -116,7 +116,7 @@ namespace System.Windows.Automation.Peers
                                 }
                             }
 
-                            if (peer == null)
+                            if (peer is null)
                             {
                                 peer = logicalParentAp.CreateItemAutomationPeer(dataItem);
                             }
@@ -130,7 +130,7 @@ namespace System.Windows.Automation.Peers
                                     wrapperPeer.EventsSource = peer;
                                 }
 
-                                if (dataChildren[dataItem] == null && peer is ItemAutomationPeer)
+                                if (dataChildren[dataItem] is null && peer is ItemAutomationPeer)
                                 {
                                     callback(peer);
                                     dataChildren[dataItem] = peer as ItemAutomationPeer;
@@ -145,7 +145,7 @@ namespace System.Windows.Automation.Peers
                                 done = callback(peer);
                         }
 
-                        if(peer == null)
+                        if(peer is null)
                             done = iterate(logicalParentAp, child, callback, dataChildren, oldChildren);
                     }
                     else
@@ -174,10 +174,10 @@ namespace System.Windows.Automation.Peers
             	parentPeer = EventsSource as TreeViewDataItemAutomationPeer;
             }
 
-            if (peer == null)
+            if (peer is null)
                 peer = GetPeerFromWeakRefStorage(item);
 
-            if (peer == null)
+            if (peer is null)
             {
                 peer = CreateItemAutomationPeer(item);
 
@@ -262,7 +262,7 @@ namespace System.Windows.Automation.Peers
             // To use the already stored WeakRef collection of it's children Items which might be created when last time this item was realized.
             if(EventsSource as TreeViewDataItemAutomationPeer != null)
             {
-                if((EventsSource as TreeViewDataItemAutomationPeer).WeakRefElementProxyStorageCache == null)
+                if((EventsSource as TreeViewDataItemAutomationPeer).WeakRefElementProxyStorageCache is null)
                     (EventsSource as TreeViewDataItemAutomationPeer).WeakRefElementProxyStorageCache = WeakRefElementProxyStorage;
                 else if(WeakRefElementProxyStorage.Count == 0)
                 {
@@ -347,7 +347,7 @@ namespace System.Windows.Automation.Peers
         {
             TreeView treeView = ((TreeViewItem)Owner).ParentTreeView;
             // If TreeView already has a selected item different from current - we cannot add to selection and throw
-            if (treeView == null || (treeView.SelectedItem != null && treeView.SelectedContainer != Owner))
+            if (treeView is null || (treeView.SelectedItem != null && treeView.SelectedContainer != Owner))
             {
                 throw new InvalidOperationException(SR.UIA_OperationCannotBePerformed);
             }

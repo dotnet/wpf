@@ -62,9 +62,9 @@ namespace System.Windows.Media.Composition
         {
             get
             {
-                if (_tail == null) 
+                if (_tail is null) 
                 {
-                    return _head.Channel == null ? 0 : 1;
+                    return _head.Channel is null ? 0 : 1;
                 }
                 else
                 {
@@ -76,7 +76,7 @@ namespace System.Windows.Media.Composition
                     int tailLength = _tail.Length;
 
                     bool lastTailIsEmpty = 
-                        _tail[tailLength - 1].Channel == null;
+                        _tail[tailLength - 1].Channel is null;
 
                     return 1 + tailLength - (lastTailIsEmpty ? 1 : 0);
                 }
@@ -148,7 +148,7 @@ namespace System.Windows.Media.Composition
                 // This is the case where we have to create a new resource.
                 //
 
-                if (_head.Channel == null) 
+                if (_head.Channel is null) 
                 {
                     //
                     // We're adding the first proxy.
@@ -169,7 +169,7 @@ namespace System.Windows.Media.Composition
                 }
                 else
                 {
-                    if (_tail == null) 
+                    if (_tail is null) 
                     {
                         //
                         // We're adding the second proxy.

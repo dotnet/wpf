@@ -269,7 +269,7 @@ namespace System.Windows.Input
         /// </summary>
         internal int[] GetRawPacketData()
         {
-            if (_data == null)
+            if (_data is null)
                 return null;
             return (int[])_data.Clone();
         }

@@ -61,7 +61,7 @@ namespace MS.Internal
         /// </summary>
         public static IList<T> Create(IList<T> list, int initialIndex, int count)
         {
-            if (list == null)
+            if (list is null)
                 return null;
 
             if (initialIndex == 0 && count == list.Count)

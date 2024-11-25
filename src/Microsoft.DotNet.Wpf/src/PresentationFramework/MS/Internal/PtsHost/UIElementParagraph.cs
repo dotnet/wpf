@@ -448,7 +448,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         private void EnsureUIElementIsland()
         {
-            if (_uiElementIsland == null)
+            if (_uiElementIsland is null)
             {
                 _uiElementIsland = new UIElementIsland(((BlockUIContainer)Element).Child);
                 _uiElementIsland.DesiredSizeChanged += new DesiredSizeChangedEventHandler(OnUIElementDesiredSizeChanged);

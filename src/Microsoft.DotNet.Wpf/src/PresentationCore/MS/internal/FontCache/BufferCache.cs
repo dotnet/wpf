@@ -54,7 +54,7 @@ namespace MS.Internal.FontCache
         {
             GlyphMetrics[] glyphMetrics = (GlyphMetrics[])GetBuffer(length, GlyphMetricsIndex);
 
-            if (glyphMetrics == null)
+            if (glyphMetrics is null)
             {
                 glyphMetrics = new GlyphMetrics[length];
             }
@@ -86,7 +86,7 @@ namespace MS.Internal.FontCache
         {
             ushort[] ushorts = (ushort[])GetBuffer(length, UShortsIndex);
 
-            if (ushorts == null)
+            if (ushorts is null)
             {
                 ushorts = new ushort[length];
             }
@@ -118,7 +118,7 @@ namespace MS.Internal.FontCache
         {
             uint[] uints = (uint[])GetBuffer(length, UIntsIndex);
 
-            if (uints == null)
+            if (uints is null)
             {
                 uints = new uint[length];
             }
@@ -196,12 +196,12 @@ namespace MS.Internal.FontCache
             {
                 if (Interlocked.Increment(ref _mutex) == 1)
                 {
-                    if (_buffers == null)
+                    if (_buffers is null)
                     {
                         _buffers = new Array[BuffersLength];
                     }
 
-                    if (_buffers[index] == null ||
+                    if (_buffers[index] is null ||
                         (_buffers[index].Length < buffer.Length && buffer.Length <= MaxBufferLength))
                     {
                         _buffers[index] = buffer;

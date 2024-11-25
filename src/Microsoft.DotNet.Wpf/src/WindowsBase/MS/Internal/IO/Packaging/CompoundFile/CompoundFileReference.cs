@@ -109,11 +109,11 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             int bytes = 0;
 
             // NOTE: Our RefComponentType must be written by our caller
-            bool calcOnly = (writer == null);
+            bool calcOnly = (writer is null);
 
             // what are we dealing with here?
             CompoundFileStreamReference streamReference = reference as CompoundFileStreamReference;
-            if ((streamReference == null) && (!(reference is CompoundFileStorageReference)))
+            if ((streamReference is null) && (!(reference is CompoundFileStorageReference)))
                 throw new ArgumentException(SR.UnknownReferenceSerialize, "reference");
 
             // first parse the path into strings
@@ -128,7 +128,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             // write the segments - if we are dealing with a stream entry, don't write the last "segment"
             // because it is in fact a stream name
-            for (int i = 0; i < segments.Length - (streamReference == null ? 0 : 1); i++)
+            for (int i = 0; i < segments.Length - (streamReference is null ? 0 : 1); i++)
             {
                 if (!calcOnly)
                 {
@@ -202,7 +202,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                             throw new FileFormatException(
                                 SR.CFRCorruptStgFollowStm);
 
-                        if (storageList == null)
+                        if (storageList is null)
                             storageList = new StringCollection();
 
                         String str = ContainerUtilities.ReadByteLengthPrefixedDWordPaddedUnicodeString(reader, out byteLength);
@@ -231,7 +231,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             CompoundFileReference newRef = null;
 
             // stream or storage?
-            if (streamName == null)
+            if (streamName is null)
             {
                 newRef = new CompoundFileStorageReference(
                     ContainerUtilities.ConvertStringArrayPathToBackSlashPath(storageList));

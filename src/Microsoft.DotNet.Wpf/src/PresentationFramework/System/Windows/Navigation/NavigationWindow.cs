@@ -225,7 +225,7 @@ namespace System.Windows.Navigation
 
         private void Initialize()
         {
-            Debug.Assert(_navigationService == null && _JNS == null);
+            Debug.Assert(_navigationService is null && _JNS is null);
 
             _navigationService = new NavigationService(this);
             _navigationService.BPReady += new BPReadyEventHandler(OnBPReady);
@@ -639,7 +639,7 @@ namespace System.Windows.Navigation
             get
             {
                 VerifyContextAndObjectState( );
-                return (_navigationService == null ? null : _navigationService.CurrentSource);
+                return (_navigationService is null ? null : _navigationService.CurrentSource);
             }
         }
 

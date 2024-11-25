@@ -924,7 +924,7 @@ namespace MS.Internal.TextFormatting
             //  Quick check for null properties
             //  Run properties should be all null or all not null
             //   
-            if (lsruns[0].RunProp.TypographyProperties == null)
+            if (lsruns[0].RunProp.TypographyProperties is null)
             {
                 for (int i = 1; i < lsruns.Length; i++)
                 {
@@ -968,7 +968,7 @@ namespace MS.Internal.TextFormatting
             //  Quick check for null properties
             //  Run properties should be all null or all not null
             //   
-            if (textRunTypographyProperties == null)
+            if (textRunTypographyProperties is null)
             {
                 fontFeatures = null;
                 fontFeatureRanges = null;

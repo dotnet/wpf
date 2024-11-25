@@ -147,7 +147,7 @@ namespace MS.Internal.Ink
             get
             {
                 // If the cursor instance hasn't been created or is dirty, we will create a new instance.
-                if ( _cachedCursor == null || !EditingCoordinator.IsCursorValid(this) )
+                if ( _cachedCursor is null || !EditingCoordinator.IsCursorValid(this) )
                 {
                     // Invoke the virtual method to get cursor. Then cache it.
                     _cachedCursor = GetCurrentCursor();

@@ -166,7 +166,7 @@ namespace System.Windows.Xps.Serialization
             // Check that we have a valid BitmapSource instance.
             //
             BitmapSource bitmapSource = (BitmapSource)value;
-            if (bitmapSource == null)
+            if (bitmapSource is null)
             {
                 throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "BitmapSource"));
             }
@@ -205,7 +205,7 @@ namespace System.Windows.Xps.Serialization
                 IServiceProvider resourceServiceProvider = manager.ResourcePolicy;
 
                 XpsImageSerializationService imageService = (XpsImageSerializationService)resourceServiceProvider.GetService(typeof(XpsImageSerializationService));
-                if (imageService == null)
+                if (imageService is null)
                 {
                     throw new XpsSerializationException(SR.ReachSerialization_NoImageService);
                 }

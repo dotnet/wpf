@@ -519,7 +519,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             }
 
             // use BinarySearch to locate blocks of interest quickly
-            if (_comparisonBlock == null)
+            if (_comparisonBlock is null)
                 _comparisonBlock = new MemoryStreamBlock(null, start);
             else
                 _comparisonBlock.Offset = start;
@@ -733,7 +733,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
         private void CheckDisposed()
         {
-            if (_baseStream == null)
+            if (_baseStream is null)
             {
                 throw new ObjectDisposedException(null, SR.StreamObjectDisposed);
             }
@@ -796,7 +796,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
                     // We can use our own reading functionality to read this data into a buffer (possibly using cached data)
                     int totalByteCount = (int)(blockCount * blockSize);
-                    if ((clearTextBuffer == null) || (clearTextBuffer.Length < totalByteCount))
+                    if ((clearTextBuffer is null) || (clearTextBuffer.Length < totalByteCount))
                     {
                         // Allocate at least 4k (to improve chances of re-use on subsequent loop iterations)
                         // and with enough room for the current operation.
@@ -871,12 +871,12 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 return;
             }
             
-            if (_random == null)
+            if (_random is null)
             {
                 _random = new Random();
             }
 
-            if (_randomBuffer == null || (_randomBuffer.Length < count))
+            if (_randomBuffer is null || (_randomBuffer.Length < count))
                 _randomBuffer = new byte[Math.Max(16, count)];              // current block size is 16
 
             _random.NextBytes(_randomBuffer);
@@ -922,7 +922,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
         // MaxValues below are used in order to ensure that we do not trigger any form of Isolated Storage Backup 
         // This is not a goal here. We are definitely would like to keep  SparseMemoryStream in the cached(in - memory) mode.
-        // In the context of our auto flush logic set at 16K we are pretty safe with those values…
+        // In the context of our auto flush logic set at 16K we are pretty safe with those valuesï¿½
         private SparseMemoryStream _readCache =  new SparseMemoryStream(Int32.MaxValue, Int64.MaxValue, false); 
         private SparseMemoryStream _writeCache =  new SparseMemoryStream(Int32.MaxValue, Int64.MaxValue, false);
 

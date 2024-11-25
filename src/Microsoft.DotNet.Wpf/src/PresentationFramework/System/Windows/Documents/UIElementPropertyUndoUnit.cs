@@ -127,7 +127,7 @@ namespace System.Windows.Documents
         {
             UndoManager undoManager = TextTreeUndo.GetOrClearUndoManager(textContainer);
 
-            if (undoManager == null)
+            if (undoManager is null)
             {
                 return;
             }

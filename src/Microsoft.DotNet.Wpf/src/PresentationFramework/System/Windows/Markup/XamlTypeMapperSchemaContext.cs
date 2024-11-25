@@ -72,7 +72,7 @@ namespace System.Windows.Markup
             public override IEnumerable<string> GetAllXamlNamespaces()
             {
                 IEnumerable<string> result = _allXamlNamespaces;
-                if (result == null)
+                if (result is null)
                 {
                     lock (syncObject)
                     {
@@ -200,7 +200,7 @@ namespace System.Windows.Markup
                 string clrNs = GetClrNsUri(pair.ClrNamespace, pair.AssemblyName);
                 lock (syncObject)
                 {
-                    if (_piNamespaces == null)
+                    if (_piNamespaces is null)
                     {
                         _piNamespaces = new Dictionary<string, string>();
                     }
@@ -310,7 +310,7 @@ namespace System.Windows.Markup
             {
                 lock (syncObject)
                 {
-                    if (_allowedInternalTypes == null)
+                    if (_allowedInternalTypes is null)
                     {
                         _allowedInternalTypes = new Dictionary<Type, XamlType>();
                     }
@@ -379,7 +379,7 @@ namespace System.Windows.Markup
                 // Finally, use the reflected xmlnsdefs (get them from the shared SchemaContext, to avoid redundant reflection)
                 result = _sharedSchemaContext.GetXamlTypeInternal(xamlNamespace, name, typeArguments);
                 // Apply visibility filtering, because the shared SchemaContext can't do that.
-                return result == null ||  result.IsPublic ? result : GetInternalType(result.UnderlyingType, result);
+                return result is null ||  result.IsPublic ? result : GetInternalType(result.UnderlyingType, result);
             }
 
             private bool SyncContainsKey<K,V>(IDictionary<K, V> dict, K key)
@@ -401,7 +401,7 @@ namespace System.Windows.Markup
             private static void AddToMultiHashtable<K, V>(Hashtable hashtable, K key, V value)
             {
                 List<V> list = (List<V>)hashtable[key];
-                if (list == null)
+                if (list is null)
                 {
                     list = new List<V>();
                     hashtable.Add(key, list);

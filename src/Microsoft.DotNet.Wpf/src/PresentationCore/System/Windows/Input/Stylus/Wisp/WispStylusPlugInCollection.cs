@@ -82,7 +82,7 @@ namespace System.Windows.Input.StylusWisp
                         unhookPenContexts = false;
 
                         // Are we currently hooked up?  If not then hook up.
-                        if (_penContexts == null)
+                        if (_penContexts is null)
                         {
                             InputManager inputManager = (InputManager)element.Dispatcher.InputManager;
                             PenContexts penContexts = StylusLogic.GetCurrentStylusLogicAs<WispLogic>().GetPenContextsFromHwnd(presentationSource);

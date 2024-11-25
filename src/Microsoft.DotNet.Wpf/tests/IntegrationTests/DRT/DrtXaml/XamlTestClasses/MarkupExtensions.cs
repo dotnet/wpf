@@ -71,7 +71,7 @@ namespace Test.Elements
             XamlType RoHolderType = schemaContextProvider.SchemaContext.GetXamlType(typeof(ElementResourceHolder));
             XamlMember resourceProperty1 = RoHolderType.GetMember("Resources");
             IEnumerable<AmbientPropertyValue> aEnumerable = ambient.GetAllAmbientValues(null, resourceProperty1, resourceProperty2);
-            if (aEnumerable == null)
+            if (aEnumerable is null)
             {
                 return null;
             }

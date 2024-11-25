@@ -61,7 +61,7 @@ namespace System.ComponentModel
         public static void RemoveListener(INotifyPropertyChanged source, IWeakEventListener listener, string propertyName)
         {
             /* for app-compat, allow RemoveListener(null, x) - it's a no-op
-            if (source == null)
+            if (source is null)
                 throw new ArgumentNullException("source");
             */
             ArgumentNullException.ThrowIfNull(listener);
@@ -153,7 +153,7 @@ namespace System.ComponentModel
                         }
 
                         // for each key, remove dead entries in its list
-                        bool removeList = /*purgeAll || purgeAll is always false*/ source == null;
+                        bool removeList = /*purgeAll || purgeAll is always false*/ source is null;
 
                         if (!removeList)
                         {
@@ -206,7 +206,7 @@ namespace System.ComponentModel
                         }
 
                         // for each key, remove dead entries in its list
-                        bool removeList = /*purgeAll || purgeAll is always false*/ source == null;
+                        bool removeList = /*purgeAll || purgeAll is always false*/ source is null;
 
                         if (!removeList)
                         {
@@ -226,7 +226,7 @@ namespace System.ComponentModel
                             // dictionary outside the iteration
                             if (/*!removeList && !removeList is always true*/ inUse && isChanged)
                             {
-                                if (toInstall == null)
+                                if (toInstall is null)
                                 {
                                     // lazy allocation
                                     toInstall = new HybridDictionary();
@@ -329,7 +329,7 @@ namespace System.ComponentModel
                 PropertyChangedEventManager manager = (PropertyChangedEventManager)GetCurrentManager(managerType);
 
                 // at first use, create and register a new manager
-                if (manager == null)
+                if (manager is null)
                 {
                     manager = new PropertyChangedEventManager();
                     SetCurrentManager(managerType, manager);
@@ -387,7 +387,7 @@ namespace System.ComponentModel
             {
                 HybridDictionary dict = (HybridDictionary)this[source];
 
-                if (dict == null)
+                if (dict is null)
                 {
                     // no entry in the hashtable - add a new one
                     dict = new HybridDictionary(true /* case insensitive */);
@@ -400,7 +400,7 @@ namespace System.ComponentModel
 
                 ListenerList list = (ListenerList)dict[propertyName];
 
-                if (list == null)
+                if (list is null)
                 {
                     // no entry in the dictionary - add a new one
                     list = new ListenerList<PropertyChangedEventArgs>();
@@ -494,7 +494,7 @@ namespace System.ComponentModel
                 // look up the list of listeners
                 HybridDictionary dict = (HybridDictionary)this[sender];
 
-                if (dict == null)
+                if (dict is null)
                 {
                     // this can happen when the last listener stops listening, but the
                     // source raises the event on another thread after the dictionary
@@ -508,7 +508,7 @@ namespace System.ComponentModel
                     ListenerList<PropertyChangedEventArgs> listeners = (ListenerList<PropertyChangedEventArgs>)dict[propertyName];
                     ListenerList<PropertyChangedEventArgs> genericListeners = (ListenerList<PropertyChangedEventArgs>)dict[String.Empty];
 
-                    if (genericListeners == null)
+                    if (genericListeners is null)
                     {
                         if (listeners != null)
                         {
@@ -543,7 +543,7 @@ namespace System.ComponentModel
                     // Use previously calculated combined list, if available.
                     list = (ListenerList)dict[AllListenersKey];
 
-                    if (list == null)
+                    if (list is null)
                     {
                         // make one pass to compute the size of the combined list.
                         // This avoids expensive reallocations.

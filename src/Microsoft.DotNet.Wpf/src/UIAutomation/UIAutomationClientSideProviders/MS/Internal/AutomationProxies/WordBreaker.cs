@@ -711,7 +711,7 @@ namespace MS.Internal.AutomationProxies
         {
             get
             {
-                if (textChangedHandler == null)
+                if (textChangedHandler is null)
                     textChangedHandler = new TextContainerChangedEventHandler(OnTextChanged);
 
                 return textChangedHandler;

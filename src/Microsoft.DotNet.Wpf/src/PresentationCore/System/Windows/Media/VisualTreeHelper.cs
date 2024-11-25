@@ -111,7 +111,7 @@ namespace System.Windows.Media
         /// </summary>
         public static void SetRootDpi(Visual visual, DpiScale dpiInfo)
         {
-            if ((object)dpiInfo == null)
+            if ((object)dpiInfo is null)
             {
                 throw new NullReferenceException("dpiInfo cannot be null");
             }
@@ -166,7 +166,7 @@ namespace System.Windows.Media
                 return visual3D.InternalVisualParent;
             }
 
-            Debug.Assert(reference == null);
+            Debug.Assert(reference is null);
 
             return null;
         }

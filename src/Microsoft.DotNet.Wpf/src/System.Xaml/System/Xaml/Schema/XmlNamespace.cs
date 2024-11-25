@@ -52,7 +52,7 @@ namespace System.Xaml.Schema
 
         public override XamlType GetDirectiveType(string name)
         {
-            if (_directives == null)
+            if (_directives is null)
             {
                 _directives = LoadDirectives();
             }
@@ -67,12 +67,12 @@ namespace System.Xaml.Schema
 
         public override XamlProperty GetDirectiveProperty(string name)
         {
-            if (_directives == null)
+            if (_directives is null)
             {
                 _directives = LoadDirectives();
             }
             XamlProperty directive = _directives.GetDirectiveProperty(name);
-            if (directive == null)
+            if (directive is null)
             {
                 directive = new UnknownProperty(name,
                                                 null, /*declaringType - xml directives don't have one. */

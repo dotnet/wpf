@@ -44,11 +44,11 @@ namespace MS.Internal.FontCache
         {
             get
             {
-                if (_systemFontCollection == null)
+                if (_systemFontCollection is null)
                 {
                     lock(_systemFontCollectionLock)
                     {
-                        if (_systemFontCollection == null)
+                        if (_systemFontCollection is null)
                         {
                             _systemFontCollection = DWriteFactory.Instance.GetSystemFontCollection();
                         }

@@ -76,7 +76,7 @@ namespace System.Xaml.MS.Impl
 
         private static int HashCode(MemberInfo mi)
         {
-            if (mi == null)
+            if (mi is null)
                 return 0;
             return mi.Name.GetHashCode() + mi.DeclaringType.Name.GetHashCode();
         }

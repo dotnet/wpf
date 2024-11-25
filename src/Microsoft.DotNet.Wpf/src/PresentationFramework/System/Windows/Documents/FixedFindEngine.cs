@@ -101,7 +101,7 @@ namespace System.Windows.Documents
                                                       matchDiacritics,
                                                       matchKashida,
                                                       matchAlefHamza);
-                if (result == null)
+                if (result is null)
                 {
                     //Start from the next page and check all pages until the end
                     pageNumber = matchLast ? pageNumber-1 : pageNumber+1;
@@ -126,7 +126,7 @@ namespace System.Windows.Documents
                         
                         String pageString = _GetPageString(fixedDoc, translatedPageNumber, replaceAlefWithAlefHamza);
 
-                        if (pageString == null)
+                        if (pageString is null)
                         {
                             //This is not a page-per-stream
                             //Default back to slow search
@@ -200,7 +200,7 @@ namespace System.Windows.Documents
                 //Make sure fast search result and slow search result are consistent
                 FixedDocument fixedDoc = childPaginator != null ? childPaginator.Source as FixedDocument : paginatorSource as FixedDocument;
                 String pageString = _GetPageString(fixedDoc, translatedPageNumber, replaceAlefWithAlefHamza);
-                if (pageString == null ||
+                if (pageString is null ||
                     _FoundOnPage(pageString, findPattern, cultureInfo, compareOptions))
                 {
                     //The search is only limited to the current page

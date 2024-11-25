@@ -154,7 +154,7 @@ namespace System.Windows.Documents
         /// </param>
         internal static void Select(ITextRange thisRange, ITextPointer position1, ITextPointer position2, bool includeCellAtMovingPosition)
         {
-            if (thisRange._TextSegments == null)
+            if (thisRange._TextSegments is null)
             {
                 // This is initializing call from TextRange constructor.
                 // No need in change notifications, no need in position verification.
@@ -444,7 +444,7 @@ namespace System.Windows.Documents
                 if (pointer is TextPointer) // Implement only for concrete TextCotainer returning null otherwise - for optimization
                 {
                     DependencyObject element = ((TextPointer)pointer).Parent as TextElement;
-                    while (value == null && (element is Inline || element is Paragraph || element is TextBlock))
+                    while (value is null && (element is Inline || element is Paragraph || element is TextBlock))
                     {
                         value = element.GetValue(formattingProperty);
 
@@ -481,7 +481,7 @@ namespace System.Windows.Documents
                     if (typeof(Paragraph).IsAssignableFrom(position.ParentType))
                     {
                         object value = position.GetValue(formattingProperty);
-                        if (startValue == null)
+                        if (startValue is null)
                         {
                             startValue = value;
                         }
@@ -500,7 +500,7 @@ namespace System.Windows.Documents
             // Most properties does not allow null as a value,
             // so if we still have null try to get a value from range start position.
             // For some properties (like TextDecorations) it still may remain null.
-            if (startValue == null)
+            if (startValue is null)
             {
                 startValue = thisRange.Start.GetValue(formattingProperty);
             }
@@ -799,7 +799,7 @@ namespace System.Windows.Documents
             List list = (List)navigator.GetAdjacentElement(LogicalDirection.Forward);
 
             // Initialize list context
-            if (listItemCounter == null)
+            if (listItemCounter is null)
             {
                 listItemCounter = new Stack<int>(1);
             }
@@ -830,7 +830,7 @@ namespace System.Windows.Documents
                 ListItem listItem = (ListItem)navigator.GetAdjacentElement(LogicalDirection.Forward);
 
                 // Initialize list context
-                if (listItemCounter == null)
+                if (listItemCounter is null)
                 {
                     listItemCounter = new Stack<int>(1);
                 }
@@ -870,7 +870,7 @@ namespace System.Windows.Documents
         // NOTE: Does not preserve the content of a buffer
         private static Char[] EnsureCharArraySize(Char[] charArray, int textLength)
         {
-            if (charArray == null)
+            if (charArray is null)
             {
                 charArray = new char[textLength + 10];
             }
@@ -1348,7 +1348,7 @@ namespace System.Windows.Documents
                 // which can create paragraphs etc.
                 if (textData.Length > 0)
                 {
-                    ITextPointer insertPosition = (explicitInsertPosition == null) ? thisRange.Start : explicitInsertPosition;
+                    ITextPointer insertPosition = (explicitInsertPosition is null) ? thisRange.Start : explicitInsertPosition;
 
                     // Ensure last paragraph existence and prepare ends for the new selection
                     bool pastedFragmentEndsWithNewLine = textData.EndsWith("\n", StringComparison.Ordinal);
@@ -1364,7 +1364,7 @@ namespace System.Windows.Documents
                         insertPosition.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.ElementEnd);
 
                     // Make sure that the range is positioned at insertion position
-                    if (insertPosition is TextPointer && explicitInsertPosition == null)
+                    if (insertPosition is TextPointer && explicitInsertPosition is null)
                     {
                         TextPointer insertionPosition = TextRangeEditTables.EnsureInsertionPosition((TextPointer)insertPosition);
                         thisRange.Select(insertionPosition, insertionPosition);
@@ -1417,7 +1417,7 @@ namespace System.Windows.Documents
                         {
                             // We must include ending paragraph break into a resulting range
                             newEnd = newEnd.GetNextInsertionPosition(LogicalDirection.Forward);
-                            if (newEnd == null)
+                            if (newEnd is null)
                             {
                                 newEnd = newStart.TextContainer.End; // set end of range to IsAfterLastParagraph position
                             }
@@ -1583,7 +1583,7 @@ namespace System.Windows.Documents
                 StreamReader rtfStreamReader = new StreamReader(stream);
                 string rtfText = rtfStreamReader.ReadToEnd();
                 MemoryStream memoryStream = TextEditorCopyPaste.ConvertRtfToXaml(rtfText);
-                if (memoryStream == null)
+                if (memoryStream is null)
                 {
                     throw new ArgumentException(SR.Format(SR.TextRange_UnrecognizedStructureInDataFormat, dataFormat), "stream");
                 }
@@ -1669,7 +1669,7 @@ namespace System.Windows.Documents
         {
             ITextContainer textContainer = thisRange.Start.TextContainer;
 
-            if (description != null && thisRange._ChangeBlockUndoRecord == null && thisRange._ChangeBlockLevel == 0)
+            if (description != null && thisRange._ChangeBlockUndoRecord is null && thisRange._ChangeBlockLevel == 0)
             {
                 thisRange._ChangeBlockUndoRecord = new ChangeBlockUndoRecord(textContainer, description);
             }

@@ -873,7 +873,7 @@ namespace System.Windows.Controls
             {
                 if (IsMouseOver &&
                     //1) Gripper doesn't exist; 2) Gripper exists and Mouse isn't on Gripper;
-                    (_headerGripper == null || !_headerGripper.IsMouseOver))
+                    (_headerGripper is null || !_headerGripper.IsMouseOver))
                 {
                     // Hovering over the button will click in the OnHover click mode
                     SetValue(IsPressedPropertyKey, BooleanBoxes.Box(true));
@@ -910,7 +910,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_splitCursorCache == null)
+                if (_splitCursorCache is null)
                 {
                     _splitCursorCache = GetCursor(c_SPLIT);
                 }
@@ -928,7 +928,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_splitOpenCursorCache == null)
+                if (_splitOpenCursorCache is null)
                 {
                     _splitOpenCursorCache = GetCursor(c_SPLITOPEN);
                 }

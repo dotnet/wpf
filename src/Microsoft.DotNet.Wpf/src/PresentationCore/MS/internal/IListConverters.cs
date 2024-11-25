@@ -115,7 +115,7 @@ namespace System.Windows.Media.Converters
         internal override object ConvertToCore(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             IList<double> list = value as IList<double>;
-            if (list == null)
+            if (list is null)
             {
                throw GetConvertToException(value, destinationType);            
             }
@@ -157,7 +157,7 @@ namespace System.Windows.Media.Converters
         internal override object ConvertToCore(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             IList<ushort> list = value as IList<ushort>;
-            if (list == null)
+            if (list is null)
             {
                 throw GetConvertToException(value, destinationType);            
             }
@@ -198,7 +198,7 @@ namespace System.Windows.Media.Converters
         internal override object ConvertToCore(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             IList<bool> list = value as IList<bool>;
-            if (list == null)
+            if (list is null)
             {
                 throw GetConvertToException(value, destinationType);            
             }
@@ -240,7 +240,7 @@ namespace System.Windows.Media.Converters
         internal override object ConvertToCore(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             IList<Point> list = value as IList<Point>;
-            if (list == null)
+            if (list is null)
             {
                 throw GetConvertToException(value, destinationType);            
             }
@@ -278,7 +278,7 @@ namespace System.Windows.Media.Converters
         internal override object ConvertToCore(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             IList<char> list = value as IList<char>; 
-            if (list == null)
+            if (list is null)
             {
                 throw GetConvertToException(value, destinationType);            
             }

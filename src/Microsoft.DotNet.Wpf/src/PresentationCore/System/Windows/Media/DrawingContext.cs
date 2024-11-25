@@ -54,7 +54,7 @@ namespace System.Windows.Media
 #if DEBUG
             MediaTrace.DrawingContextOp.Trace("DrawText(const)");
 #endif
-            if (formattedText == null)
+            if (formattedText is null)
             {
                 return;
             }

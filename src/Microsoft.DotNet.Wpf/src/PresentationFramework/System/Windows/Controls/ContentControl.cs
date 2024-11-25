@@ -67,7 +67,7 @@ namespace System.Windows.Controls
             {
                 object content = Content;
 
-                if (ContentIsNotLogical || content == null)
+                if (ContentIsNotLogical || content is null)
                 {
                     return EmptyEnumerator.Instance;
                 }
@@ -196,7 +196,7 @@ namespace System.Windows.Controls
         protected virtual void AddChild(object value)
         {
             // if conent is the first child or being cleared, set directly
-            if (Content == null || value == null)
+            if (Content is null || value is null)
             {
                 Content = value;
             }

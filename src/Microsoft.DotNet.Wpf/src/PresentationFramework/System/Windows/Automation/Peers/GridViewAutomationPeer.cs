@@ -83,7 +83,7 @@ namespace System.Windows.Automation.Peers
                 if (peer != null)
                 {
                     //If children is null, we still need to create an empty list to insert HeaderRowPresenter
-                    if (children == null)
+                    if (children is null)
                     {
                         children = new List<AutomationPeer>();
                     }
@@ -210,7 +210,7 @@ namespace System.Windows.Automation.Peers
 
             ListViewItem lvi = _listview.ItemContainerGenerator.ContainerFromIndex(row) as ListViewItem;
             //If item is virtualized, try to de-virtualize it
-            if (lvi == null)
+            if (lvi is null)
             {
                 VirtualizingPanel itemsHost = _listview.ItemsHost as VirtualizingPanel;
                 if (itemsHost != null)

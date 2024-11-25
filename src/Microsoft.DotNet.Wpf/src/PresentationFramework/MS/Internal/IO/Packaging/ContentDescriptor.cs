@@ -34,7 +34,7 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         public override bool Equals( object other )
         {
-            if (other == null)
+            if (other is null)
                 return false;   // Standard behavior.
 
             if (other.GetType() != GetType())

@@ -61,7 +61,7 @@ namespace MS.Internal.Printing.Configuration
             // Root element should have the "version" attribute
             // (XmlElement.GetAttribute returns empty string when the attribute is not found, but
             // (XmlTextReader.GetAttribute returns null when the attribute is not found)
-            if ((version == null) || (version.Length == 0))
+            if ((version is null) || (version.Length == 0))
             {
                 throw NewPTFormatException(String.Format(CultureInfo.CurrentCulture,
                                                          PTUtility.GetTextFromResource("FormatException.RootMissingAttribute"),
@@ -119,7 +119,7 @@ namespace MS.Internal.Printing.Configuration
                                                                             PrintSchemaNamespaces.FrameworkAttrForXmlDOM);
 
                     // All the recognized root child element should have an XML attribut "name"
-                    if ((childName == null) || (childName.Length == 0))
+                    if ((childName is null) || (childName.Length == 0))
                     {
                         throw NewPTFormatException(String.Format(CultureInfo.CurrentCulture,
                                                                  PTUtility.GetTextFromResource("FormatException.RootChildMissingAttribute"),
@@ -217,7 +217,7 @@ namespace MS.Internal.Printing.Configuration
                 // the new prefix is in the format like: "psk0000" "xsi0001" "xsd0100"
                 prefix = prefix_header + index.ToString(CultureInfo.InvariantCulture).PadLeft(4, '0');
 
-                if (root.Attributes["xmlns:" + prefix] == null)
+                if (root.Attributes["xmlns:" + prefix] is null)
                 {
                     root.SetAttribute("xmlns:" + prefix, nsURI);
                     break;
@@ -261,7 +261,7 @@ namespace MS.Internal.Printing.Configuration
                     continue;
                 }
 
-                if (nameAttrWanted == null)
+                if (nameAttrWanted is null)
                 {
                     // Caller is not looking for a "name" attribute value match, so we already
                     // found the wanted schema element.
@@ -325,7 +325,7 @@ namespace MS.Internal.Printing.Configuration
                     continue;
                 }
 
-                if (nameAttrToDelete == null)
+                if (nameAttrToDelete is null)
                 {
                     // Caller is not looking for a "name" attribute value match, so we already
                     // found the wanted schema element.
@@ -450,7 +450,7 @@ namespace MS.Internal.Printing.Configuration
             string QName;
             string prefix = xmlDoc.DocumentElement.GetPrefixOfNamespace(URI);
 
-            if (prefix == null)
+            if (prefix is null)
             {
                 QName = localName;
             }

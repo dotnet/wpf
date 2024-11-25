@@ -141,7 +141,7 @@ namespace MS.Internal.Automation
                 bool firstEvent = false;
                 lock (_lock)
                 {
-                    if (_eventsTable == null)
+                    if (_eventsTable is null)
                     {
                         _eventsTable = new Dictionary<int, EventInfo>(20);
                         firstEvent = true;

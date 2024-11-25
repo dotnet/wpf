@@ -403,7 +403,7 @@ namespace System.Windows
 
             dataObject = data as DataObject;
 
-            if (dataObject == null)
+            if (dataObject is null)
             {
                 // Create DataObject for DragDrop from the data.
                 dataObject = new DataObject(data);
@@ -924,7 +924,7 @@ namespace System.Windows
 
             // Get the data object and immediately return if there isn't the data object or no available data.
             _dataObject = GetDataObject(data);
-            if (_dataObject == null || !IsDataAvailable(_dataObject))
+            if (_dataObject is null || !IsDataAvailable(_dataObject))
             {
                 // Set the none effect.
                 effects = (int)DragDropEffects.None;
@@ -1086,7 +1086,7 @@ namespace System.Windows
 
             // Get the data object and then immediately return fail if there isn't the proper data.
             dataObject = GetDataObject(data);
-            if (dataObject == null || !IsDataAvailable(dataObject))
+            if (dataObject is null || !IsDataAvailable(dataObject))
             {
                 effects = (int)DragDropEffects.None;
 
@@ -1226,7 +1226,7 @@ namespace System.Windows
             bool ctrlKeyDown;
 
             // If there's no supported data available, don't allow the drag-and-drop.
-            if (e.Data == null)
+            if (e.Data is null)
             {
                 e.Effects = DragDropEffects.None;
                 return;
@@ -1254,7 +1254,7 @@ namespace System.Windows
             bool ctrlKeyDown;
 
             // If there's no supported data available, don't allow the drag-and-drop.
-            if (e.Data == null)
+            if (e.Data is null)
             {
                 e.Effects = DragDropEffects.None;
                 return;

@@ -163,7 +163,7 @@ namespace System.Windows
             get
             {
                 StylusPlugInCollection stylusCollection = StylusPlugInsField.GetValue(this);
-                if (stylusCollection == null)
+                if (stylusCollection is null)
                 {
                     stylusCollection = new StylusPlugInCollection(this);
                     StylusPlugInsField.SetValue(this, stylusCollection);
@@ -261,7 +261,7 @@ namespace System.Windows
             if(     !MeasureDirty
                 &&  !MeasureInProgress )
             {
-                Debug.Assert(MeasureRequest == null, "can't be clean and still have MeasureRequest");
+                Debug.Assert(MeasureRequest is null, "can't be clean and still have MeasureRequest");
 
 //                 VerifyAccess();
 
@@ -294,7 +294,7 @@ namespace System.Windows
             if(   !ArrangeDirty
                && !ArrangeInProgress)
             {
-                Debug.Assert(ArrangeRequest == null, "can't be clean and still have MeasureRequest");
+                Debug.Assert(ArrangeRequest is null, "can't be clean and still have MeasureRequest");
 
 //                 VerifyAccess();
 
@@ -348,7 +348,7 @@ namespace System.Windows
             {
                 LayoutEventList.ListItem item = getLayoutUpdatedHandler(value);
 
-                if(item == null)
+                if(item is null)
                 {
                     //set a weak ref in LM
                     item = ContextLayoutManager.From(Dispatcher).LayoutEvents.Add(value);
@@ -373,7 +373,7 @@ namespace System.Windows
         {
             object cachedLayoutUpdatedItems = LayoutUpdatedListItemsField.GetValue(this);
 
-            if(cachedLayoutUpdatedItems == null)
+            if(cachedLayoutUpdatedItems is null)
             {
                LayoutUpdatedListItemsField.SetValue(this, item);
                LayoutUpdatedHandlersField.SetValue(this, handler);
@@ -408,7 +408,7 @@ namespace System.Windows
         {
             object cachedLayoutUpdatedItems = LayoutUpdatedListItemsField.GetValue(this);
 
-            if(cachedLayoutUpdatedItems == null)
+            if(cachedLayoutUpdatedItems is null)
             {
                return null;
             }
@@ -499,8 +499,8 @@ namespace System.Windows
             //if(!v.CheckFlagsAnd(VisualFlags.IsLayoutSuspended)) return;
 
             //that can be true only on top of recursion, if suspended v is being connected to suspended parent.
-            bool parentIsSuspended = parent == null ? false : parent.CheckFlagsAnd(VisualFlags.IsLayoutSuspended);
-            uint parentTreeLevel   = parent == null ? 0     : parent.TreeLevel;
+            bool parentIsSuspended = parent is null ? false : parent.CheckFlagsAnd(VisualFlags.IsLayoutSuspended);
+            uint parentTreeLevel   = parent is null ? 0     : parent.TreeLevel;
 
             if(parentIsSuspended) return;
 
@@ -514,8 +514,8 @@ namespace System.Windows
 
                 Invariant.Assert(!e.MeasureInProgress && !e.ArrangeInProgress);
 
-                bool requireMeasureUpdate = e.MeasureDirty && !e.NeverMeasured && (e.MeasureRequest == null);
-                bool requireArrangeUpdate = e.ArrangeDirty && !e.NeverArranged && (e.ArrangeRequest == null);
+                bool requireMeasureUpdate = e.MeasureDirty && !e.NeverMeasured && (e.MeasureRequest is null);
+                bool requireArrangeUpdate = e.ArrangeDirty && !e.NeverArranged && (e.ArrangeRequest is null);
                 ContextLayoutManager contextLayoutManager = (requireMeasureUpdate || requireArrangeUpdate)
                     ? ContextLayoutManager.From(e.Dispatcher)
                     : null;
@@ -669,7 +669,7 @@ namespace System.Windows
                         if (gotException)
                         {
                             // we don't want to reset last exception element on layoutManager if it's been already set.
-                            if (layoutManager.GetLastExceptionElement() == null)
+                            if (layoutManager.GetLastExceptionElement() is null)
                             {
                                 layoutManager.SetLastExceptionElement(this);
                             }
@@ -809,7 +809,7 @@ namespace System.Windows
                         throw new InvalidOperationException(
                             SR.Format(
                                 SR.UIElement_Layout_InfinityArrange,
-                                    (parent == null ? "" : parent.GetType().FullName),
+                                    (parent is null ? "" : parent.GetType().FullName),
                                     this.GetType().FullName));
                     }
 
@@ -906,7 +906,7 @@ namespace System.Windows
                             if (gotException)
                             {
                                 // we don't want to reset last exception element on layoutManager if it's been already set.
-                                if (layoutManager.GetLastExceptionElement() == null)
+                                if (layoutManager.GetLastExceptionElement() is null)
                                 {
                                     layoutManager.SetLastExceptionElement(this);
                                 }
@@ -982,7 +982,7 @@ namespace System.Windows
 
         private void updatePixelSnappingGuidelines()
         {
-            if((!SnapsToDevicePixels) || (_drawingContent == null))
+            if((!SnapsToDevicePixels) || (_drawingContent is null))
             {
                 this.VisualXSnappingGuidelines = this.VisualYSnappingGuidelines = null;
             }
@@ -990,7 +990,7 @@ namespace System.Windows
             {
                 DoubleCollection xLines = this.VisualXSnappingGuidelines;
 
-                if(xLines == null)
+                if(xLines is null)
                 {
                     xLines = new DoubleCollection();
                     xLines.Add(0d);
@@ -1007,7 +1007,7 @@ namespace System.Windows
                 }
 
                 DoubleCollection yLines = this.VisualYSnappingGuidelines;
-                if(yLines == null)
+                if(yLines is null)
                 {
                     yLines = new DoubleCollection();
                     yLines.Add(0d);
@@ -1540,7 +1540,7 @@ namespace System.Windows
             // properties change.
 
             DependencyObject parent = null;
-            if(e.OldParent == null)
+            if(e.OldParent is null)
             {
                 // We were plugged into something.
 
@@ -1653,7 +1653,7 @@ namespace System.Windows
 
             ArgumentNullException.ThrowIfNull(args);
 
-            if (args.Source == null)
+            if (args.Source is null)
             {
                 throw new ArgumentException(SR.SourceNotSet);
             }
@@ -1670,11 +1670,11 @@ namespace System.Windows
                 ContentElement contentElement = null;
                 UIElement3D uiElement3D = null;
 
-                if (uiElement == null)
+                if (uiElement is null)
                 {
                     contentElement = e as ContentElement;
 
-                    if (contentElement == null)
+                    if (contentElement is null)
                     {
                         uiElement3D = e as UIElement3D;
                     }
@@ -1704,11 +1704,11 @@ namespace System.Windows
                     ContentElement contentElement = null;
                     UIElement3D uiElement3D = null;
 
-                    if (uiElement == null)
+                    if (uiElement is null)
                     {
                         contentElement = e as ContentElement;
 
-                        if (contentElement == null)
+                        if (contentElement is null)
                         {
                             uiElement3D = e as UIElement3D;
                         }
@@ -2076,7 +2076,7 @@ namespace System.Windows
                 UIElement element = candidate as UIElement;
                 if (element != null)
                 {
-                    if (rawHit == null)
+                    if (rawHit is null)
                     {
                         // Earlier we hit a non-IInputElement. This is the first one
                         // we've found, so use that as rawHit.
@@ -2093,7 +2093,7 @@ namespace System.Windows
                 UIElement3D element3D = candidate as UIElement3D;
                 if (element3D != null)
                 {
-                    if (rawHit == null)
+                    if (rawHit is null)
                     {
                         // Earlier we hit a non-IInputElement. This is the first one
                         // we've found, so use that as rawHit.
@@ -2616,7 +2616,7 @@ namespace System.Windows
                 // Find element's FocusScope and set its FocusedElement if not already set
                 // If FocusedElement is already set we don't want to steal focus for that scope
                 DependencyObject focusScope = FocusManager.GetFocusScope(this);
-                if (FocusManager.GetFocusedElement(focusScope) == null)
+                if (FocusManager.GetFocusedElement(focusScope) is null)
                 {
                     FocusManager.SetFocusedElement(focusScope, (IInputElement)this);
                 }
@@ -3073,7 +3073,7 @@ namespace System.Windows
 
             if(Clip != null)
             {
-                if(clipGeometry == null)
+                if(clipGeometry is null)
                     clipGeometry = Clip;
                 else
                 {
@@ -3143,7 +3143,7 @@ namespace System.Windows
             IDrawingContent oldContent = _drawingContent;
 
             //this element does not render - return
-            if(oldContent == null && newContent == null)
+            if(oldContent is null && newContent is null)
                 return;
 
             //
@@ -3299,7 +3299,7 @@ namespace System.Windows
                     true,
                     VisualProxyFlags.IsContentConnected);
             }
-            else if (isOnChannel) /* _drawingContent == null */
+            else if (isOnChannel) /* _drawingContent is null */
             {
                 DUCE.CompositionNode.SetContent(
                     _proxy.GetHandle(channel),
@@ -3648,12 +3648,12 @@ namespace System.Windows
                 // "logical" links lead to a content tree.
                 //
                 DependencyObject parent = uie.GetUIParentCore() as ContentElement;
-                if(parent == null)
+                if(parent is null)
                 {
                     parent = InputElement.GetContainingUIElement(uie._parent);
                 }
 
-                if(parent == null || (bool)parent.GetValue(IsEnabledProperty))
+                if(parent is null || (bool)parent.GetValue(IsEnabledProperty))
                 {
                     return BooleanBoxes.Box(uie.IsEnabledCore);
                 }
@@ -3756,7 +3756,7 @@ namespace System.Windows
                 //
                 DependencyObject parent = InputElement.GetContainingUIElement(uie._parent);
 
-                if (parent == null || UIElementHelper.IsHitTestVisible(parent))
+                if (parent is null || UIElementHelper.IsHitTestVisible(parent))
                 {
                     return BooleanBoxes.TrueBox;
                 }
@@ -4016,7 +4016,7 @@ namespace System.Windows
                     // [This whole dance, including the UncommonField, would be
                     // unnecessary once ItemsControl implements its own override
                     // of OnCreateAutomationPeer.]
-                    if (ap == null && !AutomationNotSupportedByDefaultField.GetValue(this))
+                    if (ap is null && !AutomationNotSupportedByDefaultField.GetValue(this))
                     {
                         ap = OnCreateAutomationPeerInternal();
                     }

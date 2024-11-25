@@ -460,7 +460,7 @@ namespace System.Windows.Media
             // ------------------------------------------------------------------------------------
             // 4) Cache the render context.
 
-            Debug.Assert(_cachedRenderContext == null);
+            Debug.Assert(_cachedRenderContext is null);
             _cachedRenderContext = rc;
         }
 

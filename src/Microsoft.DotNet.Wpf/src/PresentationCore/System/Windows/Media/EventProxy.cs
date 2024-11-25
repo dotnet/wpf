@@ -87,7 +87,7 @@ namespace System.Windows.Media
 #pragma warning disable 6500
             try
             {
-                ObjectDisposedException.ThrowIf(target == null, typeof(EventProxyWrapper));
+                ObjectDisposedException.ThrowIf(target is null, typeof(EventProxyWrapper));
                 IInvokable invokable = (IInvokable)target.Target;
                 if (invokable != null)
                 {

@@ -86,7 +86,7 @@ namespace System.Windows.Automation.Peers
                 AutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(textBox);
                 if (peer != null)
                 {
-                    if (children == null)
+                    if (children is null)
                         children = new List<AutomationPeer>();
 
                     children.Insert(0, peer);
@@ -108,7 +108,7 @@ namespace System.Windows.Automation.Peers
                     if (owner.IsEditable)
                     {
                         TextBox tb = owner.EditableTextBoxSite;
-                        if (tb == null || !tb.IsKeyboardFocused)
+                        if (tb is null || !tb.IsKeyboardFocused)
                             throw new InvalidOperationException(SR.SetFocusFailed);
                     }
                     else

@@ -37,7 +37,7 @@ namespace System.Windows.Documents
         // Throws an appropriate exception if a test fails.
         internal static void VerifyPosition(ITextContainer container, ITextPointer position, string paramName)
         {
-            if (position == null)
+            if (position is null)
             {
                 throw new ArgumentNullException(paramName);
             }
@@ -50,7 +50,7 @@ namespace System.Windows.Documents
 
         // Verifies two positions are safe to use as a logical text span.
         //
-        // Throws ArgumentNullException if startPosition == null || endPosition == null
+        // Throws ArgumentNullException if startPosition is null || endPosition is null
         //        ArgumentException if startPosition.TextContainer != endPosition.TextContainer or
         //                             startPosition > endPosition
         internal static void VerifyPositionPair(ITextPointer startPosition, ITextPointer endPosition)
@@ -100,7 +100,7 @@ namespace System.Windows.Documents
         {
             Invariant.Assert(position != null);
 
-            if (child == null)
+            if (child is null)
             {
                 throw new ArgumentNullException(paramName);
             }

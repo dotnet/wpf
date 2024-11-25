@@ -491,7 +491,7 @@ namespace System.Windows.Controls
                         _isScrubbingEnabled._isSet = false;
                     }
 
-                    if (_clock._value == null)
+                    if (_clock._value is null)
                     {
                         _mediaPlayer.Open(UriFromSourceUri(_source._value));
                     }

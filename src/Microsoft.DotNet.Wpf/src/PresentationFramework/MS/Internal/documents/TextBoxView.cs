@@ -229,7 +229,7 @@ namespace System.Windows.Controls
         /// </summary>
         Rect IScrollInfo.MakeVisible(Visual visual, Rect rectangle)
         {
-            if (_scrollData == null)
+            if (_scrollData is null)
             {
                 rectangle = Rect.Empty;
             }
@@ -387,7 +387,7 @@ namespace System.Windows.Controls
 
             set
             {
-                if (_scrollData == null)
+                if (_scrollData is null)
                 {
                     // Create cached scroll info.
                     _scrollData = new ScrollData();
@@ -413,7 +413,7 @@ namespace System.Windows.Controls
             EnsureTextContainerListeners();
 
             // Lazy allocate _lineMetrics on the first measure.
-            if (_lineMetrics == null)
+            if (_lineMetrics is null)
             {
                 _lineMetrics = new List<LineRecord>(1);
             }
@@ -444,7 +444,7 @@ namespace System.Windows.Controls
                 // Null out the dirty list when constraints change -- everything's dirty.
                 _dirtyList = null;
             }
-            else if (_dirtyList == null && !this.IsBackgroundLayoutPending)
+            else if (_dirtyList is null && !this.IsBackgroundLayoutPending)
             {
                 // No dirty region, no constraint change, no pending background layout.
                 desiredSize = _contentSize;
@@ -468,7 +468,7 @@ namespace System.Windows.Controls
             TextDpi.EnsureValidLineWidth(ref safeConstraint);
 
             // Do the measure.
-            if (_dirtyList == null)
+            if (_dirtyList is null)
             {
                 if (constraintschanged)
                 {
@@ -512,7 +512,7 @@ namespace System.Windows.Controls
         // Arranges content within a specified constraint.
         protected override Size ArrangeOverride(Size arrangeSize)
         {
-            if (_lineMetrics == null || _lineMetrics.Count == 0)
+            if (_lineMetrics is null || _lineMetrics.Count == 0)
             {
                 // No matching MeasureOverride call.
                 goto Exit;
@@ -580,7 +580,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (_visualChildren == null) ? 0 : _visualChildren.Count;
+                return (_visualChildren is null) ? 0 : _visualChildren.Count;
             }
         }
 
@@ -1130,7 +1130,7 @@ namespace System.Windows.Controls
         /// </summary>
         void ITextView.ThrottleBackgroundTasksForUserInput()
         {
-            if (_throttleBackgroundTimer == null)
+            if (_throttleBackgroundTimer is null)
             {
                 // Start up a timer.  Until the timer fires, we'll disable
                 // all background layout.  This leaves the TextBox responsive
@@ -1407,7 +1407,7 @@ namespace System.Windows.Controls
         // Initializes state used across a measure/arrange calculation.
         private void EnsureCache()
         {
-            if (_cache == null)
+            if (_cache is null)
             {
                 _cache = new TextCache(this);
             }
@@ -1443,7 +1443,7 @@ namespace System.Windows.Controls
             // Add the change to our dirty list.
             //
 
-            if (_dirtyList == null)
+            if (_dirtyList is null)
             {
                 _dirtyList = new DtrList();
             }
@@ -1473,7 +1473,7 @@ namespace System.Windows.Controls
             bool measureNeeded = false;
             bool arrangeNeeded = false;
 
-            if (_dirtyList == null)
+            if (_dirtyList is null)
             {
                 _dirtyList = new DtrList();
             }
@@ -1768,7 +1768,7 @@ namespace System.Windows.Controls
         // Updates IScrollInfo related state on an ArrangeOverride call.
         private void ArrangeScrollData(Size arrangeSize)
         {
-            if (_scrollData == null)
+            if (_scrollData is null)
             {
                 return;
             }
@@ -1808,7 +1808,7 @@ namespace System.Windows.Controls
         {
             // We should only see pending incremental updates in arrange when they
             // have come explicitly from the highlight layer.
-            Invariant.Assert(CheckFlags(Flags.ArrangePendingFromHighlightLayer) || _dirtyList == null);
+            Invariant.Assert(CheckFlags(Flags.ArrangePendingFromHighlightLayer) || _dirtyList is null);
 
             SetFlags(false, Flags.ArrangePendingFromHighlightLayer);
 
@@ -1826,7 +1826,7 @@ namespace System.Windows.Controls
             // Initialize state.
             //
 
-            if (_visualChildren == null)
+            if (_visualChildren is null)
             {
                 _visualChildren = new List<TextBoxLineDrawingVisual>(1);
             }
@@ -1882,7 +1882,7 @@ namespace System.Windows.Controls
             {
                 TextBoxLineDrawingVisual lineVisual = GetLineVisual(lineIndex);
 
-                if (lineVisual == null)
+                if (lineVisual is null)
                 {
                     LineRecord metrics = _lineMetrics[lineIndex];
 
@@ -1961,7 +1961,7 @@ namespace System.Windows.Controls
 
             for (int i = _visualChildren.Count - 1; i >= 0; i--)
             {
-                if (_visualChildren[i] == null || _visualChildren[i].DiscardOnArrange)
+                if (_visualChildren[i] is null || _visualChildren[i].DiscardOnArrange)
                 {
                     RemoveVisualChild(_visualChildren[i]);
 
@@ -2305,7 +2305,7 @@ namespace System.Windows.Controls
         // Callback for the next background layout tick.
         private object OnBackgroundMeasure(object o)
         {
-            if (_throttleBackgroundTimer == null)
+            if (_throttleBackgroundTimer is null)
             {
                 InvalidateMeasure();
             }
@@ -2688,7 +2688,7 @@ namespace System.Windows.Controls
             _viewportLineVisuals.AddRange(new TextBoxLineDrawingVisual[count]); // must we allocate an empty array?
             _viewportLineVisualsIndex = firstLineIndex;
 
-            if (oldLineVisuals == null)
+            if (oldLineVisuals is null)
             {
                 ClearVisualChildren();
                 return;
@@ -2850,7 +2850,7 @@ namespace System.Windows.Controls
 
         public void StopAndClearThrottleBackgroundTimer()
         {
-            if (_throttleBackgroundTimer == null)
+            if (_throttleBackgroundTimer is null)
             {
                 return;
             }
@@ -3023,7 +3023,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return _scrollData == null ? Rect.Empty :
+                return _scrollData is null ? Rect.Empty :
                                              new Rect(_scrollData.HorizontalOffset, _scrollData.VerticalOffset, _scrollData.ViewportWidth, _scrollData.ViewportHeight);
             }
         }

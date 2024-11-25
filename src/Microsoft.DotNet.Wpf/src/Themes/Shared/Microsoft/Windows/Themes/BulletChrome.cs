@@ -308,7 +308,7 @@ namespace Microsoft.Windows.Themes
                             dc.Pop();
                         }
                     }
-                    else if (IsChecked == null)
+                    else if (IsChecked is null)
                     {
                         dc.DrawRectangle(glyphFill, null, new Rect(bounds.Left + 2, bounds.Top + 2, bounds.Width - 4.0, bounds.Height - 4.0));
                     }
@@ -377,11 +377,11 @@ namespace Microsoft.Windows.Themes
 
             if (border != null)
             {
-                if (_commonBorderPen == null)   // Common case, if non-null, avoid the lock
+                if (_commonBorderPen is null)   // Common case, if non-null, avoid the lock
                 {
                     lock (_resourceAccess)   // If non-null, lock to create the pen for thread safety
                     {
-                        if (_commonBorderPen == null)   // Check again in case _pen was created within the last line
+                        if (_commonBorderPen is null)   // Check again in case _pen was created within the last line
                         {
                             // Assume that the first render of Button uses the most common brush for the app.
                             // This breaks down if (a) the first Button is disabled, (b) the first Button is
@@ -494,11 +494,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_checkMarkGeometry == null)
+                if (_checkMarkGeometry is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_checkMarkGeometry == null)
+                        if (_checkMarkGeometry is null)
                         {
                             StreamGeometry geometry = new StreamGeometry();
 
@@ -537,11 +537,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonCheckMarkFill == null)
+                if (_commonCheckMarkFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonCheckMarkFill == null)
+                        if (_commonCheckMarkFill is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromRgb(0x21, 0xA1, 0x21));
                             temp.Freeze();
@@ -557,11 +557,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonCheckMarkPressedFill == null)
+                if (_commonCheckMarkPressedFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonCheckMarkPressedFill == null)
+                        if (_commonCheckMarkPressedFill is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromRgb(0x1A, 0x7E, 0x18));
                             temp.Freeze();
@@ -577,11 +577,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonRadioButtonGlyphFill == null)
+                if (_commonRadioButtonGlyphFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonRadioButtonGlyphFill == null)
+                        if (_commonRadioButtonGlyphFill is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
 
@@ -605,11 +605,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonPressedBackground == null)
+                if (_commonPressedBackground is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonPressedBackground == null)
+                        if (_commonPressedBackground is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.GradientStops.Add(new GradientStop(Color.FromRgb(0xB2, 0xB2, 0xA9), 0));
@@ -636,11 +636,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonDisabledBorder == null)
+                if (_commonDisabledBorder is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonDisabledBorder == null)
+                        if (_commonDisabledBorder is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromRgb(0xCA, 0xC8, 0xBB));
                             temp.Freeze();
@@ -670,11 +670,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonDisabledBorderPen == null)
+                if (_commonDisabledBorderPen is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonDisabledBorderPen == null)
+                        if (_commonDisabledBorderPen is null)
                         {
                             Pen temp = new Pen();
                             temp.Thickness = 1;
@@ -692,11 +692,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonCheckBoxHoverHighlightPen == null)
+                if (_commonCheckBoxHoverHighlightPen is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonCheckBoxHoverHighlightPen == null)
+                        if (_commonCheckBoxHoverHighlightPen is null)
                         {
                             Pen temp = new Pen();
 
@@ -723,11 +723,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonRadioButtonHoverHighlightPen == null)
+                if (_commonRadioButtonHoverHighlightPen is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonRadioButtonHoverHighlightPen == null)
+                        if (_commonRadioButtonHoverHighlightPen is null)
                         {
                             Pen temp = new Pen();
 
@@ -776,11 +776,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonCheckBoxInnerFill == null)
+                if (_commonCheckBoxInnerFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonCheckBoxInnerFill == null)
+                        if (_commonCheckBoxInnerFill is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -804,11 +804,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonIndeterminateDisabledFill == null)
+                if (_commonIndeterminateDisabledFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonIndeterminateDisabledFill == null)
+                        if (_commonIndeterminateDisabledFill is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -831,11 +831,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonIndeterminateFill == null)
+                if (_commonIndeterminateFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonIndeterminateFill == null)
+                        if (_commonIndeterminateFill is null)
                         {
                             SolidColorBrush temp = new SolidColorBrush(Color.FromRgb(0x73, 0xC2, 0x73));
 
@@ -853,11 +853,11 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_commonIndeterminatePressedFill == null)
+                if (_commonIndeterminatePressedFill is null)
                 {
                     lock (_resourceAccess)
                     {
-                        if (_commonIndeterminatePressedFill == null)
+                        if (_commonIndeterminatePressedFill is null)
                         {
                             LinearGradientBrush temp = new LinearGradientBrush();
                             temp.StartPoint = new Point(0, 0);
@@ -904,7 +904,7 @@ namespace Microsoft.Windows.Themes
                             return CommonCheckMarkFill;
                         }
                     }
-                    else if (IsChecked == null)
+                    else if (IsChecked is null)
                     {
                         if (RenderPressed)
                         {

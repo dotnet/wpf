@@ -1173,7 +1173,7 @@ namespace System.Windows
         internal static string[] GetMappedFormats(string format)
         {
             // 
-            if (format == null)
+            if (format is null)
             {
                 return null;
             }
@@ -1565,7 +1565,7 @@ namespace System.Windows
         private int GetDataIntoOleStructsByTypeMedimIStream(string format, object data, ref STGMEDIUM medium)
         {
             IStream istream = (IStream)( Marshal.GetObjectForIUnknown(medium.unionmember) );
-            if ( istream == null )
+            if ( istream is null )
             {
                 return NativeMethods.E_INVALIDARG;
             }
@@ -1809,7 +1809,7 @@ namespace System.Windows
             IntPtr basePtr;
             int[] structData;
 
-            if (files == null || files.Length < 1)
+            if (files is null || files.Length < 1)
             {
                 return NativeMethods.S_OK;
             }
@@ -2120,8 +2120,8 @@ namespace System.Windows
         ///
         /// Returns an HRESULT
         ///  S_OK: success.
-        ///  STG_E_MEDIUMFULL: the original handle lacks capacity and doNotReallocate == true.  handle == null on exit.
-        ///  E_OUTOFMEMORY: could not re-size the handle.  handle == null on exit.
+        ///  STG_E_MEDIUMFULL: the original handle lacks capacity and doNotReallocate == true.  handle is null on exit.
+        ///  E_OUTOFMEMORY: could not re-size the handle.  handle is null on exit.
         ///
         /// If doNotReallocate is false, this method will always realloc the original
         /// handle to fit minimumByteCount tightly.
@@ -2278,7 +2278,7 @@ namespace System.Windows
                 string[] formats;
 
                 formats = dataObject.GetFormats();
-                _formats = new FORMATETC[formats == null ? 0 : formats.Length];
+                _formats = new FORMATETC[formats is null ? 0 : formats.Length];
 
                 if (formats != null)
                 {
@@ -2333,7 +2333,7 @@ namespace System.Windows
             {
                 int fetched = 0;
 
-                if (rgelt == null)
+                if (rgelt is null)
                 {
                     return NativeMethods.E_INVALIDARG;
                 }
@@ -2609,7 +2609,7 @@ namespace System.Windows
                 baseVar = GetDataFromBoundOleDataObject(format, aspect, index);
                 original = baseVar;
 
-                if (autoConvert && (baseVar == null || baseVar is MemoryStream))
+                if (autoConvert && (baseVar is null || baseVar is MemoryStream))
                 {
                     string[] mappedFormats;
 
@@ -2972,11 +2972,11 @@ namespace System.Windows
                 data = null;
 
                 data = GetDataFromOleOther(format, aspect, index);
-                if (data == null)
+                if (data is null)
                 {
                     data = GetDataFromOleHGLOBAL(format, aspect, index);
                 }
-                if (data == null)
+                if (data is null)
                 {
                     data = GetDataFromOleIStream(format, aspect, index);
                 }
@@ -3528,8 +3528,8 @@ namespace System.Windows
                 original = baseVar;
 
                 if (autoConvert
-                    && (dataStoreEntry == null || dataStoreEntry.AutoConvert)
-                    && (baseVar == null || baseVar is MemoryStream))
+                    && (dataStoreEntry is null || dataStoreEntry.AutoConvert)
+                    && (baseVar is null || baseVar is MemoryStream))
                 {
                     string[] mappedFormats;
 
@@ -3612,7 +3612,7 @@ namespace System.Windows
 
                     // If we couldn't find a specific entry, we'll use
                     // aspect == Content and index == 0.
-                    if (dse == null && naturalDse != null)
+                    if (dse is null && naturalDse != null)
                     {
                         dse = naturalDse;
                     }
@@ -3644,7 +3644,7 @@ namespace System.Windows
                 dse = new DataStoreEntry(data, autoConvert, aspect, index);
                 datalist = (DataStoreEntry[])this._data[format];
 
-                if (datalist == null)
+                if (datalist is null)
                 {
                     datalist = new DataStoreEntry[1];
                 }
@@ -3696,7 +3696,7 @@ namespace System.Windows
 
                 // If we couldn't find a specific entry, we'll use
                 // aspect == Content and index == 0.
-                if (dataStoreEntry == null && naturalDataStoreEntry != null)
+                if (dataStoreEntry is null && naturalDataStoreEntry != null)
                 {
                     dataStoreEntry = naturalDataStoreEntry;
                 }

@@ -55,9 +55,9 @@ internal sealed class CriticalFileToken
     {
         bool result = false;
 
-        if (((object)a) == null)
+        if (((object)a) is null)
         {
-            if (((object)b) == null)
+            if (((object)b) is null)
             {
                 result = true;
             }

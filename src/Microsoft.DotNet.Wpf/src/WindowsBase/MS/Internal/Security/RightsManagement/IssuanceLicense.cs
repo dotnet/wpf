@@ -283,7 +283,7 @@ namespace MS.Internal.Security.RightsManagement
                 // extract the user based on the index 
                 ContentUser user = GetIssuanceLicenseUser(userIndex, out userHandle);
 
-                if ((user == null) || (userHandle == null))
+                if ((user is null) || (userHandle is null))
                 {
                     break;
                 }
@@ -300,12 +300,12 @@ namespace MS.Internal.Security.RightsManagement
                                 (userHandle, rightIndex, out rightHandle, out validFrom, out validUntil);
 
                     // 0 right handle is an indication of the end of the list 
-                    if (rightHandle == null)
+                    if (rightHandle is null)
                     {
                         break;
                     }
 
-                    // right == null is an indication of a right that we didn't recognize 
+                    // right is null is an indication of a right that we didn't recognize 
                     // we should still continue the enumeration 
                     if (right != null)
                     {
@@ -328,7 +328,7 @@ namespace MS.Internal.Security.RightsManagement
                 // extract the user based on the index 
                 LocalizedNameDescriptionPair nameDescription = GetLocalizedNameDescriptionPair(nameIndex,
                                     out localeId);
-                if (nameDescription == null)
+                if (nameDescription is null)
                 {
                     break;
                 }
@@ -346,7 +346,7 @@ namespace MS.Internal.Security.RightsManagement
 
                 Nullable<KeyValuePair<string, string>> appSpecificDataEntry = GetApplicationSpecificData(appDataIndex);
 
-                if (appSpecificDataEntry == null)
+                if (appSpecificDataEntry is null)
                 {
                     break;
                 }
@@ -711,8 +711,8 @@ namespace MS.Internal.Security.RightsManagement
             checked { localeId = (int)locId; }
 
             // now we can build a ContentUser
-            return new LocalizedNameDescriptionPair(name == null ? null : name.ToString(),
-                                                                          description == null ? null : description.ToString());
+            return new LocalizedNameDescriptionPair(name is null ? null : name.ToString(),
+                                                                          description is null ? null : description.ToString());
         }
 
         private Nullable<KeyValuePair<string, string>> GetApplicationSpecificData(int index)
@@ -769,8 +769,8 @@ namespace MS.Internal.Security.RightsManagement
             Errors.ThrowOnErrorCode(hr);
 
             // build strings from the StringBuilder  instances 
-            string name = (tempName == null) ? null : tempName.ToString();
-            string value = (tempValue == null) ? null : tempValue.ToString();
+            string name = (tempName is null) ? null : tempName.ToString();
+            string value = (tempValue is null) ? null : tempValue.ToString();
 
             KeyValuePair<string, string> result = new KeyValuePair<string, string>(name, value);
 
@@ -1014,11 +1014,11 @@ namespace MS.Internal.Security.RightsManagement
 
             RevocationPoint resultRevocationPoint = new RevocationPoint();
 
-            resultRevocationPoint.Id = (idTemp == null) ? null : idTemp.ToString();
-            resultRevocationPoint.IdType = (idTypeTemp == null) ? null : idTypeTemp.ToString();
-            resultRevocationPoint.Url = (urlTemp == null) ? null : new Uri(urlTemp.ToString());
-            resultRevocationPoint.Name = (nameTemp == null) ? null : nameTemp.ToString();
-            resultRevocationPoint.PublicKey = (publicKeyTemp == null) ? null : publicKeyTemp.ToString();
+            resultRevocationPoint.Id = (idTemp is null) ? null : idTemp.ToString();
+            resultRevocationPoint.IdType = (idTypeTemp is null) ? null : idTypeTemp.ToString();
+            resultRevocationPoint.Url = (urlTemp is null) ? null : new Uri(urlTemp.ToString());
+            resultRevocationPoint.Name = (nameTemp is null) ? null : nameTemp.ToString();
+            resultRevocationPoint.PublicKey = (publicKeyTemp is null) ? null : publicKeyTemp.ToString();
             resultRevocationPoint.Frequency = frequency;
 
             return resultRevocationPoint;

@@ -468,7 +468,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_textBlock == null)
+                if (_textBlock is null)
                     CreateTextBlock();
                 return _textBlock;
             }
@@ -494,7 +494,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_textContainer == null)
+                if (_textContainer is null)
                     CreateTextBlock();
                 return _textContainer;
             }
@@ -552,7 +552,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_accessKeyStyle == null)
+                if (_accessKeyStyle is null)
                 {
                     Style accessKeyStyle = new Style(typeof(Run));
                     Trigger trigger = new Trigger();
@@ -713,7 +713,7 @@ namespace System.Windows.Controls
 
         private void UpdateText(string text)
         {
-            if (text == null)
+            if (text is null)
                 text = string.Empty;
 
             _accessKeyLocated = false;

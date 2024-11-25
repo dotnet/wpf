@@ -65,7 +65,7 @@ namespace MS.Internal.Automation
                 // If we are adding a listener then a proxy could be created as a result of an event so make sure they are loaded
                 ProxyManager.LoadDefaultProxies();
 
-                if (_listeners == null)
+                if (_listeners is null)
                 {
                     // enough space for 16 AddXxxListeners (100 bytes)
                     _listeners = new ArrayList(16);
@@ -81,7 +81,7 @@ namespace MS.Internal.Automation
 
                 // If listening for BoundingRectangleProperty then may need to start listening on the
                 // client-side for LocationChange WinEvent (only use *one* BoundingRectTracker instance).
-                if (_winEventTrackers[(int)Tracker.BoundingRect] == null && HasProperty(AutomationElement.BoundingRectangleProperty, l.Properties))
+                if (_winEventTrackers[(int)Tracker.BoundingRect] is null && HasProperty(AutomationElement.BoundingRectangleProperty, l.Properties))
                 {
                     // There may be special cases to not map BoundingRect to WinEvent. One may be
                     // where rawEl is a non-top-level native implementation and TreeScope == Element.
@@ -95,7 +95,7 @@ namespace MS.Internal.Automation
                 }
 
                 // Start listening for menu event in order to raise MenuOpened/Closed events.
-                if ( _winEventTrackers [(int)Tracker.MenuOpenedOrClosed] == null && (l.EventId == AutomationElement.MenuOpenedEvent || l.EventId == AutomationElement.MenuClosedEvent) )
+                if ( _winEventTrackers [(int)Tracker.MenuOpenedOrClosed] is null && (l.EventId == AutomationElement.MenuOpenedEvent || l.EventId == AutomationElement.MenuClosedEvent) )
                 {
                     AddWinEventListener( Tracker.MenuOpenedOrClosed, new MenuTracker( new MenuHandler( OnMenuEvent ) ) );
                 }
@@ -104,7 +104,7 @@ namespace MS.Internal.Automation
                 // Only advise UI contexts of events being added if the event might be raised by a provider.
                 // TopLevelWindow event is raised by UI Automation framework so no need to track new UI.
                 // Are there other events like this where Advise can be skipped?
-                if (_winEventTrackers[(int)Tracker.WindowShowOrOpen] == null )
+                if (_winEventTrackers[(int)Tracker.WindowShowOrOpen] is null )
                 {
                     AddWinEventListener( Tracker.WindowShowOrOpen, new WindowShowOrOpenTracker( new WindowShowOrOpenHandler( OnWindowShowOrOpen ) ) );
                     AddWinEventListener( Tracker.WindowHideOrClose, new WindowHideOrCloseTracker( new WindowHideOrCloseHandler( OnWindowHideOrClose ) ) );
@@ -112,14 +112,14 @@ namespace MS.Internal.Automation
 
                 // If listening for WindowInteractionStateProperty then may need to start listening on the
                 // client-side for ObjectStateChange WinEvent.
-                if (_winEventTrackers[(int)Tracker.WindowInteractionState] == null && HasProperty(WindowPattern.WindowInteractionStateProperty, l.Properties))
+                if (_winEventTrackers[(int)Tracker.WindowInteractionState] is null && HasProperty(WindowPattern.WindowInteractionStateProperty, l.Properties))
                 {
                     AddWinEventListener(Tracker.WindowInteractionState, new WindowInteractionStateTracker());
                 }
 
                 // If listening for WindowVisualStateProperty then may need to start listening on the
                 // client-side for ObjectLocationChange WinEvent.
-                if (_winEventTrackers[(int)Tracker.WindowVisualState] == null && HasProperty(WindowPattern.WindowVisualStateProperty, l.Properties))
+                if (_winEventTrackers[(int)Tracker.WindowVisualState] is null && HasProperty(WindowPattern.WindowVisualStateProperty, l.Properties))
                 {
                     AddWinEventListener(Tracker.WindowVisualState, new WindowVisualStateTracker());
                 }
@@ -140,7 +140,7 @@ namespace MS.Internal.Automation
 
         private static int[] PropertyArrayToIntArray(AutomationProperty[] properties)
         {
-            if (properties == null)
+            if (properties is null)
                 return null;
             int[] propertiesAsInts = new int[properties.Length];
             for (int i = 0; i < properties.Length; i++)
@@ -295,7 +295,7 @@ namespace MS.Internal.Automation
         {
             lock (_classLock)
             {
-                if (_listeners == null)
+                if (_listeners is null)
                     return;
 
                 // Stop all WinEvent tracking
@@ -414,7 +414,7 @@ namespace MS.Internal.Automation
             // This version of RaiseEventInThisClientOnly can be called with a local (proxied) or remote (native)AutomationElement
             lock (_classLock)
             {
-                if ( _listeners == null )
+                if ( _listeners is null )
                     return;
 
                 AutomationElement el = rawEl;
@@ -424,7 +424,7 @@ namespace MS.Internal.Automation
                     if (listener.EventListener.EventId == eventId)
                     {
                         // Did this event happen on an element this listener is interested in?
-                        if (rawEl == null || listener.WithinScope( rawEl ))
+                        if (rawEl is null || listener.WithinScope( rawEl ))
                         {
                             UiaCoreApi.UiaCacheRequest cacheRequest = listener.EventListener.CacheRequest;
                             CBQ.PostWorkItem(new ClientSideQueueItem(listener.ClientCallback, el, cacheRequest, e));
@@ -440,7 +440,7 @@ namespace MS.Internal.Automation
             // This version of RaiseEventInThisClientOnly can be called with a local (proxied) or remote (native)AutomationElement
             lock ( _classLock )
             {
-                if ( _listeners == null )
+                if ( _listeners is null )
                     return;
 
                 foreach ( EventListenerClientSide listener in _listeners )
@@ -484,7 +484,7 @@ namespace MS.Internal.Automation
                 // Track WinEvents
                 WinEventWrap eventWrapper = _winEventTrackers[(int)idx];
 
-                if ( eventWrapper == null )
+                if ( eventWrapper is null )
                 {
                     // First time create a WinEvent tracker and start listening
                     AddWinEventListener( idx, GetNewRootTracker( idx ) );
@@ -522,7 +522,7 @@ namespace MS.Internal.Automation
         private static void RemoveWinEventListener(Tracker idx, Delegate eventCallback)
         {
             WinEventWrap eventWrapper = _winEventTrackers[(int)idx];
-            if (eventWrapper == null)
+            if (eventWrapper is null)
                 return;
 
             bool fRemovedLastListener = eventWrapper.RemoveCallback(eventCallback);
@@ -538,7 +538,7 @@ namespace MS.Internal.Automation
         // HasProperty - helper to check for a property in an AutomationProperty array
         private static bool HasProperty(AutomationProperty p, AutomationProperty [] properties)
         {
-            if (properties == null)
+            if (properties is null)
                 return false;
 
             foreach (AutomationProperty p1 in properties)
@@ -574,7 +574,7 @@ namespace MS.Internal.Automation
 
                         // Only advise UI contexts if the provider still exists
                         // (but keep looking to see if need to do a WindowClosedEvent)
-                        if (rawEl == null)
+                        if (rawEl is null)
                             continue;
 
                         // Only advise UI contexts if the provider might raise that event.

@@ -56,7 +56,7 @@ namespace System.Xaml
             }
             else
             {
-                if (_nameMap == null)
+                if (_nameMap is null)
                 {
                     _nameMap = new HybridDictionary();
                     _nameMap[name] = scopedElement;
@@ -65,7 +65,7 @@ namespace System.Xaml
                 {
                     object nameContext = _nameMap[name];
 
-                    if (nameContext == null)
+                    if (nameContext is null)
                     {
                         _nameMap[name] = scopedElement;
                     }
@@ -115,7 +115,7 @@ namespace System.Xaml
             }
             else
             {
-                if (_nameMap == null)
+                if (_nameMap is null)
                 {
                     return null;
                 }

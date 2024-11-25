@@ -47,7 +47,7 @@ namespace MS.Internal.TextFormatting
         /// </summary>
         internal bool IsNoBreak
         {
-            get { return _breaks == null; }
+            get { return _breaks is null; }
         }
 
 

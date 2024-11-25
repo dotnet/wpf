@@ -61,7 +61,7 @@ namespace MS.Internal
             get
             {
                 // _currentTable is [ThreadStatic], so there's one per thread
-                if (_currentTable == null)
+                if (_currentTable is null)
                 {
                     _currentTable = new WeakEventTable();
                 }
@@ -312,7 +312,7 @@ namespace MS.Internal
                             foundDirt |= keys[i].Manager.PurgeInternal(source, data, purgeAll);
 
                             // if source has been GC'd, remove its data
-                            if (!purgeAll && source == null)
+                            if (!purgeAll && source is null)
                             {
                                 _dataTable.Remove(keys[i]);
                             }
@@ -341,7 +341,7 @@ namespace MS.Internal
                         foundDirt |= key.Manager.PurgeInternal(source, ide.Value, purgeAll);
 
                         // if source has been GC'd, remove its data
-                        if (!purgeAll && source == null)
+                        if (!purgeAll && source is null)
                         {
                             _toRemove.Add(key);
                         }
@@ -686,7 +686,7 @@ namespace MS.Internal
                     foreach (EventKey key in table._dataTable.Keys)
                     {
                         object source = key.Source;
-                        Type type = (source == null) ? typeof(WeakEventTable) : source.GetType();
+                        Type type = (source is null) ? typeof(WeakEventTable) : source.GetType();
                         System.Collections.Generic.List<LoggerPair> list;
 
                         if (!Data.TryGetValue(type, out list))

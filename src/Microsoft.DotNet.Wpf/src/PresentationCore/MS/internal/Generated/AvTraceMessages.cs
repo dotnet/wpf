@@ -22,7 +22,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _RaiseEvent == null )
+                if ( _RaiseEvent is null )
                 {
                     _RaiseEvent = new AvTraceDetails(1, new string[] { "Raise RoutedEvent" } );
                 }
@@ -36,7 +36,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _ReRaiseEventAs == null )
+                if ( _ReRaiseEventAs is null )
                 {
                     _ReRaiseEventAs = new AvTraceDetails(2, new string[] { "Raise RoutedEvent" } );
                 }
@@ -50,7 +50,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _HandleEvent == null )
+                if ( _HandleEvent is null )
                 {
                     _HandleEvent = new AvTraceDetails(3, new string[] { "RoutedEvent has set Handled" } );
                 }
@@ -64,7 +64,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _InvokeHandlers == null )
+                if ( _InvokeHandlers is null )
                 {
                     _InvokeHandlers = new AvTraceDetails(4, new string[] { "InvokeHandlers" } );
                 }
@@ -150,7 +150,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _StoryboardBegin == null )
+                if ( _StoryboardBegin is null )
                 {
                     _StoryboardBegin = new AvTraceDetails(1, new string[] { "Storyboard has begun" } );
                 }
@@ -164,7 +164,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _StoryboardPause == null )
+                if ( _StoryboardPause is null )
                 {
                     _StoryboardPause = new AvTraceDetails(2, new string[] { "Storyboard has been paused" } );
                 }
@@ -178,7 +178,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _StoryboardRemove == null )
+                if ( _StoryboardRemove is null )
                 {
                     _StoryboardRemove = new AvTraceDetails(3, new string[] { "Storyboard has been removed" } );
                 }
@@ -192,7 +192,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _StoryboardResume == null )
+                if ( _StoryboardResume is null )
                 {
                     _StoryboardResume = new AvTraceDetails(4, new string[] { "Storyboard has been resumed" } );
                 }
@@ -206,7 +206,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _StoryboardStop == null )
+                if ( _StoryboardStop is null )
                 {
                     _StoryboardStop = new AvTraceDetails(5, new string[] { "Storyboard has been stopped" } );
                 }
@@ -220,7 +220,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _StoryboardNotApplied == null )
+                if ( _StoryboardNotApplied is null )
                 {
                     _StoryboardNotApplied = new AvTraceDetails(6, new string[] { "Unable to perform action because the specified Storyboard was never applied to this object for interactive control." } );
                 }
@@ -234,7 +234,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _AnimateStorageValidationFailed == null )
+                if ( _AnimateStorageValidationFailed is null )
                 {
                     _AnimateStorageValidationFailed = new AvTraceDetails(7, new string[] { "Animated property failed validation. Animated value not set." } );
                 }
@@ -248,7 +248,7 @@ namespace MS.Internal
         {
             get
             {
-                if ( _AnimateStorageValidationNoLongerFailing == null )
+                if ( _AnimateStorageValidationNoLongerFailing is null )
                 {
                     _AnimateStorageValidationNoLongerFailing = new AvTraceDetails(8, new string[] { "Animated property no longer failing validation." } );
                 }

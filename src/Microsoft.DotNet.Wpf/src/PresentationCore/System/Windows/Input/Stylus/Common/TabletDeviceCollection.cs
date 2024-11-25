@@ -33,7 +33,7 @@ namespace System.Windows.Input
         {
             get
             {
-                ObjectDisposedException.ThrowIf(TabletDevices == null, typeof(TabletDeviceCollection));
+                ObjectDisposedException.ThrowIf(TabletDevices is null, typeof(TabletDeviceCollection));
 
                 return TabletDevices.Count;
             }
@@ -135,7 +135,7 @@ namespace System.Windows.Input
         {
             get
             {
-                if(_emptyTabletDeviceCollection == null)
+                if(_emptyTabletDeviceCollection is null)
                 {
                     _emptyTabletDeviceCollection = new TabletDeviceCollection();
                 }

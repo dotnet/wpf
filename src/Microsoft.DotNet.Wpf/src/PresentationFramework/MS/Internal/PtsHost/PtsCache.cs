@@ -66,7 +66,7 @@ namespace MS.Internal.PtsHost
         internal static PtsHost AcquireContext(PtsContext ptsContext, TextFormattingMode textFormattingMode)
         {
             PtsCache ptsCache = ptsContext.Dispatcher.PtsCache as PtsCache;
-            if (ptsCache == null)
+            if (ptsCache is null)
             {
                 ptsCache = new PtsCache(ptsContext.Dispatcher);
                 ptsContext.Dispatcher.PtsCache = ptsCache;
@@ -232,7 +232,7 @@ namespace MS.Internal.PtsHost
                     // If the queue is empty, schedule Dispatcher time to dispose
                     // PtsContexts in the Dispatcher thread.
                     // If the queue is not empty, there is already pending Dispatcher request.
-                    if (_releaseQueue == null)
+                    if (_releaseQueue is null)
                     {
                         _releaseQueue = new List<PtsContext>();
                         ptsContext.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(OnPtsContextReleased), null);

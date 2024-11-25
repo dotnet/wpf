@@ -584,7 +584,7 @@ namespace MS.Internal.Printing.Configuration
         /// <returns>IStream copy of the input stream</returns>
         private static IStream IStreamFromMemoryStream(MemoryStream stream)
         {
-            if (stream == null)
+            if (stream is null)
             {
                 return null;
             }

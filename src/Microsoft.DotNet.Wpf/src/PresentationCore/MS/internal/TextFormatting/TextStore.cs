@@ -195,13 +195,13 @@ namespace MS.Internal.TextFormatting
                     {
                         runInfo = FetchTextRun(_cpFirst + cchFetched);
 
-                        if (runInfo == null)
+                        if (runInfo is null)
                         {
                             // no more content to fetch
                             break;
                         }
 
-                        if (  _bidiState == null
+                        if (  _bidiState is null
                             &&
                                (   IsDirectionalModifier(runInfo.TextRun as TextModifier)
                                 || IsEndOfDirectionalModifier(runInfo)
@@ -329,13 +329,13 @@ namespace MS.Internal.TextFormatting
 
                 Debug.Assert(
                         runInfoVector != null
-                    &&  (   bidiLevels == null
+                    &&  (   bidiLevels is null
                         ||  cchResolved <= bidiLevels.Length)
                     );
 
                 bool forceBreak = IsForceBreakRequired(runInfoVector, ref cchResolved);
 
-                if(bidiLevels == null)
+                if(bidiLevels is null)
                 {
                     // no bidi detected, all characters are left-to-right
                     CreateLSRunsUniformBidiLevel(
@@ -895,7 +895,7 @@ namespace MS.Internal.TextFormatting
                 offsetToFirstChar = 0;
             }
 
-            if(_bidiState == null)
+            if(_bidiState is null)
             {
                 // make sure the initial state is setup
                 _bidiState = new BidiState(_settings, _cpFirst);
@@ -928,7 +928,7 @@ namespace MS.Internal.TextFormatting
                     int ich = resolvedLength;
                     do
                     {
-                        CultureInfo culture = CultureMapper.GetSpecificCulture(currentRunInfo.Properties == null ? null : currentRunInfo.Properties.CultureInfo);
+                        CultureInfo culture = CultureMapper.GetSpecificCulture(currentRunInfo.Properties is null ? null : currentRunInfo.Properties.CultureInfo);
                         DirectionClass europeanNumberOverride = _bidiState.GetEuropeanNumberClassOverride(culture);
 
                         //
@@ -1706,7 +1706,7 @@ namespace MS.Internal.TextFormatting
                 }
             }
 
-            if (shapeables == null)
+            if (shapeables is null)
             {
                 Debug.Assert(false);
                 throw new NotSupportedException();
@@ -2115,7 +2115,7 @@ namespace MS.Internal.TextFormatting
                 out lsrunLength
                 );
 
-            if (lsrun == null)
+            if (lsrun is null)
                 return null;
 
             textCulture = lsrun.TextCulture;
@@ -2208,7 +2208,7 @@ namespace MS.Internal.TextFormatting
                     out lsrunLength
                     );
 
-                if (lsrun == null)
+                if (lsrun is null)
                     return null;
 
                 lscpLim = lscp + lsrunLength;
@@ -2273,7 +2273,7 @@ namespace MS.Internal.TextFormatting
                         cchWordMax = cchLastWord;
                     }
 
-                    if (stringBuilder == null)
+                    if (stringBuilder is null)
                         stringBuilder = new StringBuilder();
 
                     // Gathering the raw text
@@ -2296,7 +2296,7 @@ namespace MS.Internal.TextFormatting
                 lscp = lscpLim;
 } while (cchText < MaxCchWordToHyphenate);
 
-            if (stringBuilder == null)
+            if (stringBuilder is null)
                 return null;
 
             lscchChunk = lscp - lscpChunk;
@@ -2338,7 +2338,7 @@ namespace MS.Internal.TextFormatting
             int                 rightMargin
             )
         {
-            if(_textObjectMetricsVector == null)
+            if(_textObjectMetricsVector is null)
             {
                 _textObjectMetricsVector = new SpanVector(null);
             }
@@ -2348,7 +2348,7 @@ namespace MS.Internal.TextFormatting
 
             TextEmbeddedObjectMetrics metrics = (TextEmbeddedObjectMetrics)rider.CurrentElement;
 
-            if(metrics == null)
+            if(metrics is null)
             {
                 int widthLeft = _formatWidth - currentPosition;
 

@@ -58,7 +58,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             get 
             { 
-                if (_current == null)
+                if (_current is null)
                 {
                     _current = new RibbonToolTipService();
                 }

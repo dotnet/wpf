@@ -149,7 +149,7 @@ namespace System.Windows.Input
 
             if (destinationType == typeof(string))
             {
-                if (value == null)
+                if (value is null)
                     return String.Empty;
 
                 MouseGesture mouseGesture = value as MouseGesture;

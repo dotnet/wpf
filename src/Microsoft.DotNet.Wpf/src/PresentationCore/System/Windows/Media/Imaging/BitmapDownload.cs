@@ -187,7 +187,7 @@ namespace System.Windows.Media.Imaging
                 }
             }
 
-            if (stream == null)
+            if (stream is null)
             {
                 entry.webRequest = WpfWebRequestHelper.CreateRequest(uri);
                 if (uriCachePolicy != null)

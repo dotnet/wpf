@@ -154,7 +154,7 @@ namespace MS.Internal.Automation
                 throw new ArgumentException(SR.UnsupportedPattern);
             }
 
-            if (pi.ClientSideWrapper == null)
+            if (pi.ClientSideWrapper is null)
             {
                 Debug.Assert(false, "missing client-side pattern wrapper");
                 return null;
@@ -480,7 +480,7 @@ namespace MS.Internal.Automation
         internal static int TryMsgWaitForMultipleObjects(SafeWaitHandle handle, bool waitAll, int milliseconds, int wakeMask, ref int lastWin32Error)
         {
             int terminationEvent;
-            if (handle == null)
+            if (handle is null)
             {
                 terminationEvent = UnsafeNativeMethods.MsgWaitForMultipleObjects(0, null, waitAll, milliseconds, wakeMask);
                 lastWin32Error = Marshal.GetLastWin32Error();

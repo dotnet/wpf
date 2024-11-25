@@ -364,7 +364,7 @@ namespace System.Windows.Navigation
 
             int index;
             JournalEntry journalEntry = GetGoBackEntry(out index);
-            if (journalEntry == null)
+            if (journalEntry is null)
                 throw new InvalidOperationException(SR.NoBackEntry);
             _uncommittedCurrentIndex = index;
             UpdateView();
@@ -625,7 +625,7 @@ namespace System.Windows.Navigation
 
         internal bool IsNavigable(JournalEntry entry)
         {
-            if (entry == null)
+            if (entry is null)
                 return false;
             // Fallback to entry.IsNavigable if the Filter hasn't been specified
             return (Filter != null) ? Filter(entry) : entry.IsNavigable();

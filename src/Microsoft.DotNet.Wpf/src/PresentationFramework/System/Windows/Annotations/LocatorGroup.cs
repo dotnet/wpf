@@ -103,7 +103,7 @@ namespace System.Windows.Annotations
             ArgumentNullException.ThrowIfNull(writer);
 
             string prefix = writer.LookupPrefix(AnnotationXmlConstants.Namespaces.CoreSchemaNamespace);
-            if (prefix == null)
+            if (prefix is null)
             {
                 writer.WriteAttributeString(AnnotationXmlConstants.Prefixes.XmlnsPrefix, AnnotationXmlConstants.Prefixes.CoreSchemaPrefix, null, AnnotationXmlConstants.Namespaces.CoreSchemaNamespace);
             }
@@ -214,7 +214,7 @@ namespace System.Windows.Annotations
         /// <returns>this ContentLocatorGroup</returns>
         internal override ContentLocatorBase Merge(ContentLocatorBase other)
         {
-            if (other == null)
+            if (other is null)
                 return this;
 
             ContentLocator firstRight = null;
@@ -226,7 +226,7 @@ namespace System.Windows.Annotations
                 {
                     foreach (ContentLocator right in locatorGroup.Locators)
                     {
-                        if (firstRight == null)
+                        if (firstRight is null)
                         {
                             firstRight = right;
                         }

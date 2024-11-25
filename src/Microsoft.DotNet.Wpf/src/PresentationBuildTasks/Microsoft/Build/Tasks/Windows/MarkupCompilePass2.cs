@@ -375,7 +375,7 @@ namespace Microsoft.Build.Tasks.Windows
         {
             get
             {
-               if (_generatedBaml == null)
+               if (_generatedBaml is null)
                    _generatedBaml = Array.Empty<TaskItem>();
                return _generatedBaml;
             }

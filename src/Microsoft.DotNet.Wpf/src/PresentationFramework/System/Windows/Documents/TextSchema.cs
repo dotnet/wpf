@@ -158,12 +158,12 @@ namespace System.Windows.Documents
         {
             DependencyObject parent = position.Parent;
 
-            if (parent == null)
+            if (parent is null)
             {
                 TextElement leftElement = position.GetAdjacentElementFromOuterPosition(LogicalDirection.Backward);
                 TextElement rightElement = position.GetAdjacentElementFromOuterPosition(LogicalDirection.Forward);
-                return (leftElement == null || IsValidSibling(leftElement.GetType(), childType)) && 
-                    (rightElement == null || IsValidSibling(rightElement.GetType(), childType));
+                return (leftElement is null || IsValidSibling(leftElement.GetType(), childType)) && 
+                    (rightElement is null || IsValidSibling(rightElement.GetType(), childType));
             }
 
             if (parent is TextElement)
@@ -590,7 +590,7 @@ namespace System.Windows.Documents
             }
 
             // Comparing null with empty collections
-            if (value1 == null)
+            if (value1 is null)
             {
                 if (value2 is TextDecorationCollection)
                 {
@@ -604,7 +604,7 @@ namespace System.Windows.Documents
                 }
                 return false;
             }
-            else if (value2 == null)
+            else if (value2 is null)
             {
                 if (value1 is TextDecorationCollection)
                 {
@@ -751,7 +751,7 @@ namespace System.Windows.Documents
         // Returns true if a property value can be incremented or decremented
         internal static bool IsPropertyIncremental(DependencyProperty property)
         {
-            if (property == null)
+            if (property is null)
             {
                 return false;
             }
@@ -805,7 +805,7 @@ namespace System.Windows.Documents
         private static bool IsValidChild(Type parentType, Type childType)
         {
             // Text Content
-            if (parentType == null || // Make sure that TextPointer.ParentType is never null. This happens in PasswordBox and in TextBox.
+            if (parentType is null || // Make sure that TextPointer.ParentType is never null. This happens in PasswordBox and in TextBox.
                 typeof(Run).IsAssignableFrom(parentType) ||
                 typeof(TextBox).IsAssignableFrom(parentType) ||
                 typeof(PasswordBox).IsAssignableFrom(parentType))

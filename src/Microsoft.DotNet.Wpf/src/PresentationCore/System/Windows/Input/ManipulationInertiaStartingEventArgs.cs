@@ -184,7 +184,7 @@ namespace System.Windows.Input
         {
             get
             {
-                if (_manipulators == null)
+                if (_manipulators is null)
                 {
                     _manipulators = ((ManipulationDevice)Device).GetManipulatorsReadOnly();
                 }
@@ -201,7 +201,7 @@ namespace System.Windows.Input
         {
             ArgumentNullException.ThrowIfNull(parameter);
 
-            if (_inertiaParameters == null)
+            if (_inertiaParameters is null)
             {
                 _inertiaParameters = new List<InertiaParameters2D>();
             }

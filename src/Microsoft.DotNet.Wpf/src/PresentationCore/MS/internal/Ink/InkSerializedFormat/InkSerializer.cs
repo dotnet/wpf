@@ -640,7 +640,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                                         }
 
                                         // if we didn't find an existing da to use, instance a new one
-                                        if (activeDrawingAttributes == null)
+                                        if (activeDrawingAttributes is null)
                                         {
                                             activeDrawingAttributes = new DrawingAttributes();
                                         }
@@ -1214,8 +1214,8 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <returns></returns>
         internal static uint ReliableRead(Stream stream, byte[] buffer, uint requestedCount)
         {
-            if (stream == null ||
-                buffer == null ||
+            if (stream is null ||
+                buffer is null ||
                 requestedCount > buffer.Length)
             {
                 throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("Invalid argument passed to ReliableRead"));

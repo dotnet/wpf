@@ -896,7 +896,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_textContainer == null)
+                if (_textContainer is null)
                 {
                     if (Content != null)
                     {
@@ -1004,7 +1004,7 @@ namespace MS.Internal.Documents
         /// </summary>
         protected override Visual GetVisualChild(int index)
         {
-            if (_childrenCollection == null || index < 0 || index >= _childrenCollection.Count)
+            if (_childrenCollection is null || index < 0 || index >= _childrenCollection.Count)
             {
                 throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
@@ -1059,7 +1059,7 @@ namespace MS.Internal.Documents
                 {
                     Border background = _childrenCollection[i] as Border;
 
-                    if (background == null)
+                    if (background is null)
                     {
                         throw new InvalidOperationException(SR.DocumentGridVisualTreeContainsNonBorderAsFirstElement);
                     }
@@ -1074,7 +1074,7 @@ namespace MS.Internal.Documents
                     //Then someone's been mucking with our VisualTree, so we'll throw.
                     DocumentGridPage page = _childrenCollection[i] as DocumentGridPage;
 
-                    if (page == null)
+                    if (page is null)
                     {
                         throw new InvalidOperationException(SR.DocumentGridVisualTreeContainsNonDocumentGridPage);
                     }
@@ -1267,7 +1267,7 @@ namespace MS.Internal.Documents
             //If the Alt key is held and we aren't currently in RubberBandSelection mode,
             //we can create and attach our RubberBandSelector now.
             //We'll stay in this mode until the mouse is clicked without the Alt key held.
-            if (altKeyDown && _rubberBandSelector == null)
+            if (altKeyDown && _rubberBandSelector is null)
             {
                 //See if our content implements IServiceProvider.
                 IServiceProvider serviceProvider = Content as IServiceProvider;
@@ -1673,7 +1673,7 @@ namespace MS.Internal.Documents
             }
 
             //Create the background if it does not exist.
-            if (_documentGridBackground == null)
+            if (_documentGridBackground is null)
             {
                 //We create a Border with a transparent background so that it can
                 //participate in Hit-Testing (which allows click events like those
@@ -2968,7 +2968,7 @@ namespace MS.Internal.Documents
         /// <param name="args"></param>
         private void OnRowLayoutCompleted(object source, RowLayoutCompletedEventArgs args)
         {
-            if (args == null)
+            if (args is null)
             {
                 return;
             }

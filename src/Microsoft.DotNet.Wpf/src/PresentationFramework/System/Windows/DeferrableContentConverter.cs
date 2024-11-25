@@ -49,7 +49,7 @@ namespace System.Windows
                 XamlSchemaContext xamlSchemaContext =
                     RequireService<IXamlSchemaContextProvider>(context).SchemaContext;
                 Baml2006SchemaContext schemaContext = xamlSchemaContext as Baml2006SchemaContext;
-                if (schemaContext == null)
+                if (schemaContext is null)
                 {
                     throw new InvalidOperationException(SR.ExpectedBamlSchemaContext);
                 }
@@ -62,13 +62,13 @@ namespace System.Windows
                     RequireService<IRootObjectProvider>(context);
 
                 ResourceDictionary dictionary = ipvt.TargetObject as ResourceDictionary;
-                if (dictionary == null)
+                if (dictionary is null)
                 {
                     throw new InvalidOperationException(SR.ExpectedResourceDictionaryTarget);
                 }
 
                 Stream stream = value as Stream;
-                if (stream == null)
+                if (stream is null)
                 {
                     byte[] bytes = value as byte[];
                     if (bytes != null)
@@ -76,7 +76,7 @@ namespace System.Windows
                         stream = new MemoryStream(bytes);
                     }
                 }
-                if (stream == null)
+                if (stream is null)
                 {
                     throw new InvalidOperationException(SR.ExpectedBinaryContent);
                 }
@@ -93,7 +93,7 @@ namespace System.Windows
         private static T RequireService<T>(IServiceProvider provider) where T : class
         {
             T result = provider.GetService(typeof(T)) as T;
-            if (result == null)
+            if (result is null)
             {
                 throw new InvalidOperationException(SR.Format(SR.DeferringLoaderNoContext, typeof(DeferrableContentConverter).Name, typeof(T).Name));
             }

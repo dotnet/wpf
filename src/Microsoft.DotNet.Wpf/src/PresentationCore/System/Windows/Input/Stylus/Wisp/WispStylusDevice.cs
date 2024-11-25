@@ -232,7 +232,7 @@ namespace System.Windows.Input.StylusWisp
                 throw new System.ComponentModel.InvalidEnumArgumentException("captureMode", (int)captureMode, typeof(CaptureMode));
             }
 
-            if (element == null)
+            if (element is null)
             {
                 captureMode = CaptureMode.None;
             }
@@ -521,7 +521,7 @@ namespace System.Windows.Input.StylusWisp
             // the user can change the input device to avoid the infinite loops, or close
             // the app if nothing else works.
             //
-            if (_reevaluateStylusOverOperation == null)
+            if (_reevaluateStylusOverOperation is null)
             {
                 _reevaluateStylusOverOperation = Dispatcher.BeginInvoke(DispatcherPriority.Input, _reevaluateStylusOverDelegate, null);
             }
@@ -795,7 +795,7 @@ namespace System.Windows.Input.StylusWisp
             //
             // See ReevaluateStylusOver for details.
             //
-            if (_reevaluateCaptureOperation == null)
+            if (_reevaluateCaptureOperation is null)
             {
                 _reevaluateCaptureOperation = Dispatcher.BeginInvoke(DispatcherPriority.Input, _reevaluateCaptureDelegate, null);
             }
@@ -810,7 +810,7 @@ namespace System.Windows.Input.StylusWisp
         {
             _reevaluateCaptureOperation = null;
 
-            if (_stylusCapture == null)
+            if (_stylusCapture is null)
                 return null;
 
             bool killCapture = false;
@@ -906,18 +906,18 @@ namespace System.Windows.Input.StylusWisp
 
         private bool ValidateVisualForCapture(DependencyObject visual)
         {
-            if (visual == null)
+            if (visual is null)
                 return false;
 
             PresentationSource presentationSource = PresentationSource.CriticalFromVisual(visual);
 
-            if (presentationSource == null)
+            if (presentationSource is null)
             {
                 return false;
             }
 
             if (CriticalActiveSource != presentationSource &&
-                Captured == null)
+                Captured is null)
             {
                 return false;
             }
@@ -1112,7 +1112,7 @@ namespace System.Windows.Input.StylusWisp
             VerifyAccess();
 
             // Fake up an empty one if we have to.
-            if (_eventStylusPoints == null)
+            if (_eventStylusPoints is null)
             {
                 return new StylusPointCollection(_tabletDevice.StylusPointDescription);
             }
@@ -1128,7 +1128,7 @@ namespace System.Windows.Input.StylusWisp
         {
             ArgumentNullException.ThrowIfNull(subsetToReformatTo);
             // Fake up an empty one if we have to.
-            if (_eventStylusPoints == null)
+            if (_eventStylusPoints is null)
             {
                 return new StylusPointCollection(subsetToReformatTo);
             }
@@ -1185,7 +1185,7 @@ namespace System.Windows.Input.StylusWisp
             // Verify that we have a valid PresentationSource with a valid RootVisual
             // - if we don't we won't be able to invoke ClientToRoot or TranslatePoint and 
             //   we will just return 0,0
-            if (relativePresentationSource == null || relativePresentationSource.RootVisual == null)
+            if (relativePresentationSource is null || relativePresentationSource.RootVisual is null)
             {
                 return new Point(0, 0);
             }
@@ -1264,7 +1264,7 @@ namespace System.Windows.Input.StylusWisp
         /// </remarks>
         internal override Point GetMouseScreenPosition(MouseDevice mouseDevice)
         {
-            if (mouseDevice == null)
+            if (mouseDevice is null)
             {
                 // return the last location this stylus device promoted a mouse for.
                 return _lastMouseScreenLocation;
@@ -1501,8 +1501,8 @@ namespace System.Windows.Input.StylusWisp
             HwndSource hwndSource = (HwndSource)inputSource;
 
             // See if window has been closed or is invalid
-            if (inputSource.CompositionTarget == null || inputSource.CompositionTarget.IsDisposed ||
-                hwndSource == null || hwndSource.IsHandleNull)
+            if (inputSource.CompositionTarget is null || inputSource.CompositionTarget.IsDisposed ||
+                hwndSource is null || hwndSource.IsHandleNull)
             {
                 PresentationSource newSource = null;
 
@@ -1521,7 +1521,7 @@ namespace System.Windows.Input.StylusWisp
                 }
 
                 // Now try last screen point hittesting to find a new window/PresetationSource.
-                if (newSource == null && stylusPoints != null)
+                if (newSource is null && stylusPoints != null)
                 {
                     Point ptScreen;
 
@@ -1893,7 +1893,7 @@ namespace System.Windows.Input.StylusWisp
         {
             get
             {
-                if (_touchDevice == null)
+                if (_touchDevice is null)
                 {
                     _touchDevice = new WispStylusTouchDevice(this);
                 }
@@ -1921,7 +1921,7 @@ namespace System.Windows.Input.StylusWisp
         {
             get
             {
-                if (_stylusOverTreeState == null)
+                if (_stylusOverTreeState is null)
                 {
                     _stylusOverTreeState = new DeferredElementTreeState();
                 }
@@ -1934,7 +1934,7 @@ namespace System.Windows.Input.StylusWisp
         {
             get
             {
-                if (_stylusCaptureWithinTreeState == null)
+                if (_stylusCaptureWithinTreeState is null)
                 {
                     _stylusCaptureWithinTreeState = new DeferredElementTreeState();
                 }

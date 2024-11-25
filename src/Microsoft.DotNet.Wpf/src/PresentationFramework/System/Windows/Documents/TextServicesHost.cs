@@ -97,7 +97,7 @@ namespace System.Windows.Documents
         {
             // Start WinEvent hook to listen windows move/size event.
             // We need to call ITextStoreACPSink::OnLayoutChange() whenever the window is moved.
-            if (_winEvent == null)
+            if (_winEvent is null)
             {
                 _winEvent = new MoveSizeWinEventHandler();
                 _winEvent.Start();
@@ -196,7 +196,7 @@ namespace System.Windows.Documents
             {
                 TextEditorThreadLocalStore threadLocalStore = TextEditor._ThreadLocalStore;
 
-                if (threadLocalStore.TextServicesHost == null)
+                if (threadLocalStore.TextServicesHost is null)
                 {
                     threadLocalStore.TextServicesHost = new TextServicesHost();
                 }
@@ -306,7 +306,7 @@ namespace System.Windows.Documents
             Debug.Assert(CheckAccess(), "RegisterTextStore called on bad thread!");
 
             // Get ITfThreadMgr
-            if (_threadManager == null)
+            if (_threadManager is null)
             {
                 Debug.Assert(_isDispatcherShutdownFinished == false, "Was this dispather finished?");
                 Debug.Assert(_registeredtextstorecount == 0, "TextStore was registered without ThreadMgr?");

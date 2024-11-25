@@ -200,7 +200,7 @@ namespace System.Windows.Media.Media3D
             // if these get touched by more than one thread in the lifetime
             // of your app.
 
-            Debug.Assert(s_Children == null || s_Children.IsFrozen,
+            Debug.Assert(s_Children is null || s_Children.IsFrozen,
                 "Detected context bound default value GeneralTransform3DGroup.s_Children (See OS Bug #947272).");
 
 

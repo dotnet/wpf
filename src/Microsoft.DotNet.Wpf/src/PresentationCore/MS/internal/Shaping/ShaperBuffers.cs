@@ -142,10 +142,10 @@ namespace MS.Internal.Shaping
          /// </remarks>
          public bool InitializeFeatureList(ushort size, ushort keep)
          {
-            if (_textFeatures == null)
+            if (_textFeatures is null)
             {
                 _textFeatures = new ShaperFeaturesList();
-                if (_textFeatures == null)
+                if (_textFeatures is null)
                 {
                     return false;
                 }
@@ -229,7 +229,7 @@ namespace MS.Internal.Shaping
         /// </remarks>
         internal bool Initialize (ushort newSize)
         {
-            if (_features == null || 
+            if (_features is null || 
                 newSize > _features.Length ||
                 newSize == 0)
             {
@@ -286,7 +286,7 @@ namespace MS.Internal.Shaping
                     }
                     
                     Feature[] newArray = new Feature[newSize];
-                    if (newArray == null)
+                    if (newArray is null)
                     {
                         // can't create new array, leave (at least we still
                         // have our current array)

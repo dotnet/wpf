@@ -11,7 +11,7 @@ namespace System
         /// <summary>
         /// This is a partial method. This method is responsible for populating the default values based on a TFM.
         /// It is partial because each library should define this method in their code to contain their defaults.
-        /// </summary> 
+        /// </summary>
         static partial void PopulateDefaultValuesPartial(string platformIdentifier, string profile, int targetFrameworkVersion)
         {
             // When building PresentationFramework, 'LocalAppContext' from WindowsBase.dll conflicts
@@ -32,6 +32,7 @@ namespace System
             LocalAppContext.DefineSwitchDefault(FrameworkAppContextSwitches.KeyboardNavigationFromHyperlinkInItemsControlIsNotRelativeToFocusedElementSwitchName, false);
             LocalAppContext.DefineSwitchDefault(FrameworkAppContextSwitches.ItemAutomationPeerKeepsItsItemAliveSwitchName, false);
             LocalAppContext.DefineSwitchDefault(FrameworkAppContextSwitches.DisableFluentThemeWindowBackdropSwitchName, false);
+            LocalAppContext.DefineSwitchDefault(FrameworkAppContextSwitches.DisableDynamicResourceOptimizationSwitchName, true);
 
 #pragma warning restore CS0436 // Type conflicts with imported type
         }

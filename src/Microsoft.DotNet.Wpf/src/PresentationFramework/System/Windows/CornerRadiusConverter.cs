@@ -2,30 +2,16 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// 
-//
-// Description: Contains the CornerRadiusConverter: TypeConverter for the CornerRadiusclass.
-//
-//
-
-using System;
-using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
+using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
-using System.Text;
-using System.Windows;
-using System.Security;
 using MS.Internal;
-using MS.Utility;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows
 {
     /// <summary>
-    /// CornerRadiusConverter - Converter class for converting instances of other types to and from CornerRadius instances.
+    /// Converter class for converting instances of other types to and from <see cref="CornerRadius"/> instances.
     /// </summary> 
     public class CornerRadiusConverter : TypeConverter
     {
@@ -35,10 +21,10 @@ namespace System.Windows
         /// CanConvertFrom - Returns whether or not this class can convert from a given type.
         /// </summary>
         /// <returns>
-        /// bool - True if thie converter can convert from the provided type, false if not.
+        /// <see langword="true"/> if the given <paramref name="sourceType"/> can be converted from, <see langword="false"/> otherwise.
         /// </returns>
-        /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
-        /// <param name="sourceType"> The Type being queried for support. </param>
+        /// <param name="typeDescriptorContext">The <see cref="ITypeDescriptorContext"/> for this call.</param>
+        /// <param name="sourceType">The <see cref="Type"/> being queried for support.</param>
         public override bool CanConvertFrom(ITypeDescriptorContext typeDescriptorContext, Type sourceType)
         {
             // We can only handle strings, integral and floating types
@@ -73,15 +59,7 @@ namespace System.Windows
         public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType)
         {
             // We can convert to an InstanceDescriptor or to a string.
-            if (    destinationType == typeof(InstanceDescriptor) 
-                ||  destinationType == typeof(string))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return destinationType == typeof(InstanceDescriptor) || destinationType == typeof(string);
         }
 
         /// <summary>
@@ -102,16 +80,15 @@ namespace System.Windows
         /// <param name="source"> The object to convert to a CornerRadius. </param>
         public override object ConvertFrom(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object source)
         {
-            if (source != null)
-            {
-                if (source is string) { return FromString((string)source, cultureInfo); }
-                else                  { return new CornerRadius(Convert.ToDouble(source, cultureInfo)); }
-            }
-            throw GetConvertFromException(source);
-        }
+            if (source is null)
+                throw GetConvertFromException(source);
 
-//Workaround for PreSharp bug - it complains about value being possibly null even though there is a check above
-#pragma warning disable 56506
+            if (source is string stringValue)
+                return FromString(stringValue, cultureInfo);
+
+            // Conversion from a numeric type
+            return new CornerRadius(Convert.ToDouble(source, cultureInfo));
+        }
 
         /// <summary>
         /// ConvertTo - Attempt to convert a CornerRadius to the given type
@@ -133,28 +110,22 @@ namespace System.Windows
         public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object value, Type destinationType)
         {
             ArgumentNullException.ThrowIfNull(value);
-
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            if (!(value is CornerRadius))
-            {
-                #pragma warning suppress 6506 // value is obviously not null
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(CornerRadius)), "value");
-            }
+            if (value is not CornerRadius cornerRadius)
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(CornerRadius)), nameof(value));
 
-            CornerRadius cr = (CornerRadius)value;
-            if (destinationType == typeof(string)) { return ToString(cr, cultureInfo); }
+            if (destinationType == typeof(string))
+                return ToString(cornerRadius, cultureInfo);
+
             if (destinationType == typeof(InstanceDescriptor))
             {
                 ConstructorInfo ci = typeof(CornerRadius).GetConstructor(new Type[] { typeof(double), typeof(double), typeof(double), typeof(double) });
-                return new InstanceDescriptor(ci, new object[] { cr.TopLeft, cr.TopRight, cr.BottomRight, cr.BottomLeft });
+                return new InstanceDescriptor(ci, new object[] { cornerRadius.TopLeft, cornerRadius.TopRight, cornerRadius.BottomRight, cornerRadius.BottomLeft });
             }
 
             throw new ArgumentException(SR.Format(SR.CannotConvertType, typeof(CornerRadius), destinationType.FullName));
         }
-
-//Workaround for PreSharp bug - it complains about value being possibly null even though there is a check above
-#pragma warning restore 56506
 
         #endregion Public Methods
 
@@ -173,37 +144,36 @@ namespace System.Windows
             return string.Create(cultureInfo, stackalloc char[64], $"{cr.TopLeft}{listSeparator}{cr.TopRight}{listSeparator}{cr.BottomRight}{listSeparator}{cr.BottomLeft}");
         }
 
-        static internal CornerRadius FromString(string s, CultureInfo cultureInfo)
+        /// <summary>
+        /// Parses a <see cref="CornerRadius"/> from a <see cref="string"/> given the <see cref="CultureInfo"/>.
+        /// </summary>
+        /// <param name="input"><see cref="string"/> to parse from.</param>
+        /// <param name="cultureInfo">The <see cref="CultureInfo"/> that is respected during parsing.</param>
+        /// <returns>A new instance of <see cref="CornerRadius"/>.</returns>
+        internal static CornerRadius FromString(string input, CultureInfo cultureInfo)
         {
-            TokenizerHelper th = new TokenizerHelper(s, cultureInfo);
-            double[] radii = new double[4];
+            ValueTokenizerHelper tokenizer = new(input, cultureInfo);
+            Span<double> radii = stackalloc double[4];
             int i = 0;
 
             // Peel off each Length in the delimited list.
-            while (th.NextToken())
+            while (tokenizer.NextToken())
             {
                 if (i >= 4)
-                {
-                    i = 5;    // Set i to a bad value. 
-                    break;
-                }
+                    throw new FormatException(SR.Format(SR.InvalidStringCornerRadius, input));
 
-                radii[i] = double.Parse(th.GetCurrentToken(), cultureInfo);
+                radii[i] = double.Parse(tokenizer.GetCurrentToken(), cultureInfo);
                 i++;
             }
 
             // We have a reasonable interpreation for one value (all four edges)
             // and four values (left, top, right, bottom).
-            switch (i)
+            return i switch
             {
-                case 1:
-                    return (new CornerRadius(radii[0]));
-
-                case 4:
-                    return (new CornerRadius(radii[0], radii[1], radii[2], radii[3]));
-            }
-
-            throw new FormatException(SR.Format(SR.InvalidStringCornerRadius, s));
+                1 => new CornerRadius(radii[0]),
+                4 => new CornerRadius(radii[0], radii[1], radii[2], radii[3]),
+                _ => throw new FormatException(SR.Format(SR.InvalidStringCornerRadius, input)),
+            };
         }
         #endregion
     }

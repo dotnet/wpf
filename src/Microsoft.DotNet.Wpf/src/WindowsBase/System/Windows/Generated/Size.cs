@@ -168,11 +168,11 @@ namespace System.Windows
         {
             IFormatProvider formatProvider = System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS;
 
-            TokenizerHelper th = new TokenizerHelper(source, formatProvider);
+            ValueTokenizerHelper tokenizer = new(source, formatProvider);
 
             Size value;
 
-            String firstToken = th.NextTokenRequired();
+            ReadOnlySpan<char> firstToken = tokenizer.NextTokenRequired();
 
             // The token will already have had whitespace trimmed so we can do a
             // simple string compare.
@@ -182,13 +182,12 @@ namespace System.Windows
             }
             else
             {
-                value = new Size(
-                    Convert.ToDouble(firstToken, formatProvider),
-                    Convert.ToDouble(th.NextTokenRequired(), formatProvider));
+                value = new Size(double.Parse(firstToken, formatProvider),
+                    double.Parse(tokenizer.NextTokenRequired(), formatProvider));
             }
 
             // There should be no more tokens in this string.
-            th.LastTokenRequired();
+            tokenizer.LastTokenRequired();
 
             return value;
         }

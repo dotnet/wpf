@@ -317,15 +317,25 @@
   <SolidColorBrush x:Key="AccentButtonBackground" Color="{StaticResource SystemAccentColorDark1}" />
   <SolidColorBrush x:Key="AccentButtonBackgroundPointerOver" Color="{StaticResource SystemAccentColorDark1}" Opacity="0.9" />
   <SolidColorBrush x:Key="AccentButtonBackgroundPressed" Color="{StaticResource SystemAccentColorDark1}" Opacity="0.8" />
-  <!--<SolidColorBrush x:Key="AccentButtonBackgroundDisabled" ResourceKey="AccentFillColorDisabledBrush" />-->
+  <SolidColorBrush x:Key="AccentButtonBackgroundDisabled" Color="{StaticResource AccentFillColorDisabled}" />
   <SolidColorBrush x:Key="AccentButtonForeground" Color="{StaticResource TextOnAccentFillColorPrimary}" />
   <SolidColorBrush x:Key="AccentButtonForegroundPointerOver" Color="{StaticResource TextOnAccentFillColorPrimary}" />
   <SolidColorBrush x:Key="AccentButtonForegroundPressed" Color="{StaticResource TextOnAccentFillColorSecondary}" />
-  <!--<SolidColorBrush x:Key="AccentButtonForegroundDisabled" ResourceKey="TextOnAccentFillColorDisabled" />-->
-  <!--<SolidColorBrush x:Key="AccentButtonBorderBrush" Color="{DynamicResource AccentControlElevationBorder}" />-->
-  <!--<SolidColorBrush x:Key="AccentButtonBorderBrushPointerOver" Color="{DynamicResource AccentControlElevationBorder}" />-->
+  <SolidColorBrush x:Key="AccentButtonForegroundDisabled" Color="{StaticResource TextOnAccentFillColorDisabled}" />
+  <LinearGradientBrush x:Key="AccentButtonBorderBrush" MappingMode="RelativeToBoundingBox" StartPoint="0,1" EndPoint="0,0">
+    <LinearGradientBrush.GradientStops>
+      <GradientStop Offset="0.025" Color="{StaticResource ControlStrokeColorOnAccentSecondary}" />
+      <GradientStop Offset="0.075" Color="{StaticResource ControlStrokeColorOnAccentDefault}" />
+    </LinearGradientBrush.GradientStops>
+  </LinearGradientBrush>
+  <LinearGradientBrush x:Key="AccentButtonBorderBrushPointerOver" MappingMode="RelativeToBoundingBox" StartPoint="0,1" EndPoint="0,0">
+    <LinearGradientBrush.GradientStops>
+      <GradientStop Offset="0.025" Color="{StaticResource ControlStrokeColorOnAccentSecondary}" />
+      <GradientStop Offset="0.075" Color="{StaticResource ControlStrokeColorOnAccentDefault}" />
+    </LinearGradientBrush.GradientStops>
+  </LinearGradientBrush>
   <SolidColorBrush x:Key="AccentButtonBorderBrushPressed" Color="{DynamicResource ControlFillColorTransparent}" />
-  <!--<SolidColorBrush x:Key="AccentButtonBorderBrushDisabled" Color="{DynamicResource ControlFillColorTransparentBrush}" />-->
+  <SolidColorBrush x:Key="AccentButtonBorderBrushDisabled" Color="{DynamicResource ControlFillColorTransparent}" />
   <SolidColorBrush x:Key="ButtonBackground" Color="{StaticResource ControlFillColorDefault}" />
   <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{StaticResource ControlFillColorSecondary}" />
   <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="{StaticResource ControlFillColorTertiary}" />
@@ -334,8 +344,18 @@
   <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{StaticResource TextFillColorPrimary}" />
   <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{StaticResource TextFillColorSecondary}" />
   <SolidColorBrush x:Key="ButtonForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
-  <!--<SolidColorBrush x:Key="ButtonBorderBrush" Color="{StaticResource ControlElevationBorder}" />-->
-  <!--<SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="{StaticResource ControlElevationBorder}" />-->
+  <LinearGradientBrush x:Key="ButtonBorderBrush" MappingMode="RelativeToBoundingBox" StartPoint="0,1" EndPoint="0,0">
+    <LinearGradientBrush.GradientStops>
+      <GradientStop Offset="0.025" Color="{StaticResource ControlStrokeColorSecondary}" />
+      <GradientStop Offset="0.075" Color="{StaticResource ControlStrokeColorDefault}" />
+    </LinearGradientBrush.GradientStops>
+  </LinearGradientBrush>
+  <LinearGradientBrush x:Key="ButtonBorderBrushPointerOver" MappingMode="RelativeToBoundingBox" StartPoint="0,1" EndPoint="0,0">
+    <LinearGradientBrush.GradientStops>
+      <GradientStop Offset="0.025" Color="{StaticResource ControlStrokeColorSecondary}" />
+      <GradientStop Offset="0.075" Color="{StaticResource ControlStrokeColorDefault}" />
+    </LinearGradientBrush.GradientStops>
+  </LinearGradientBrush>
   <SolidColorBrush x:Key="ButtonBorderBrushPressed" Color="{StaticResource ControlStrokeColorDefault}" />
   <SolidColorBrush x:Key="ButtonBorderBrushDisabled" Color="{StaticResource ControlStrokeColorDefault}" />
   <!--  Calendar  -->
@@ -681,9 +701,9 @@
   <SolidColorBrush x:Key="ToggleSwitchKnobFillOnPressed" Color="{StaticResource TextOnAccentFillColorPrimary}" />
   <SolidColorBrush x:Key="ToggleSwitchKnobFillOnDisabled" Color="{StaticResource TextOnAccentFillColorDisabled}" />
   <!--  ToolTip  -->
-  <SolidColorBrush x:Key="ToolTipBackground" Color="{StaticResource AcrylicBackgroundFillColorDefault}" />
+  <SolidColorBrush x:Key="ToolTipBackgroundBrush" Color="{StaticResource AcrylicBackgroundFillColorDefault}" />
   <SolidColorBrush x:Key="ToolTipBorderBrush" Color="{StaticResource SurfaceStrokeColorFlyout}" />
-  <SolidColorBrush x:Key="ToolTipForeground" Color="{StaticResource TextFillColorPrimary}" />
+  <SolidColorBrush x:Key="ToolTipForegroundBrush" Color="{StaticResource TextFillColorPrimary}" />
   <!--  ToolBar  -->
   <!--  TODO  -->
   <!--  TreeGrid  -->
@@ -701,7 +721,7 @@
     <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
     <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
     <Setter Property="Foreground" Value="{DynamicResource ButtonForeground}" />
-    <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderBrush}" />
     <Setter Property="BorderThickness" Value="{StaticResource ButtonBorderThemeThickness}" />
     <Setter Property="Padding" Value="{StaticResource ButtonPadding}" />
     <Setter Property="HorizontalAlignment" Value="Left" />
@@ -721,7 +741,7 @@
           <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
               <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource ButtonBackgroundPointerOver}" />
-              <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
+              <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource ButtonBorderBrushPointerOver}" />
               <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ButtonForegroundPointerOver}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
@@ -743,7 +763,7 @@
     <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
     <Setter Property="Background" Value="{DynamicResource AccentButtonBackground}" />
     <Setter Property="Foreground" Value="{DynamicResource AccentButtonForeground}" />
-    <Setter Property="BorderBrush" Value="{DynamicResource AccentControlElevationBorderBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AccentButtonBorderBrush}" />
     <Setter Property="BorderThickness" Value="{StaticResource ButtonBorderThemeThickness}" />
     <Setter Property="Padding" Value="{StaticResource ButtonPadding}" />
     <Setter Property="HorizontalAlignment" Value="Left" />
@@ -763,17 +783,17 @@
           <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
               <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource AccentButtonBackgroundPointerOver}" />
-              <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
+              <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource AccentButtonBorderBrushPointerOver}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
               <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource AccentButtonBackgroundPressed}" />
-              <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource AccentControlElevationBorderBrush}" />
+              <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource AccentButtonBorderBrushPressed}" />
               <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource AccentButtonForegroundPressed}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-              <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource ButtonBackgroundDisabled}" />
-              <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource ButtonBorderBrushDisabled}" />
-              <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ButtonForegroundDisabled}" />
+              <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource AccentButtonBackgroundDisabled}" />
+              <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource AccentButtonBorderBrushDisabled}" />
+              <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource AccentButtonForegroundDisabled}" />
             </Trigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>
@@ -1119,7 +1139,6 @@
     <Setter Property="VerticalAlignment" Value="Center" />
     <Setter Property="HorizontalContentAlignment" Value="Left" />
     <Setter Property="VerticalContentAlignment" Value="Top" />
-    <Setter Property="Cursor" Value="Hand" />
     <Setter Property="FontWeight" Value="Normal" />
     <Setter Property="KeyboardNavigation.IsTabStop" Value="True" />
     <Setter Property="Focusable" Value="True" />
@@ -2009,7 +2028,6 @@
     <Setter Property="VerticalAlignment" Value="Center" />
     <Setter Property="HorizontalContentAlignment" Value="Left" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
-    <Setter Property="Cursor" Value="Hand" />
     <Setter Property="FontWeight" Value="Normal" />
     <Setter Property="KeyboardNavigation.IsTabStop" Value="True" />
     <Setter Property="Focusable" Value="True" />
@@ -4030,6 +4048,10 @@
       </Trigger>
     </Style.Triggers>
   </Style>
+  <sys:Double x:Key="TabItemHeaderMinHeight">32</sys:Double>
+  <sys:Double x:Key="TabItemHeaderMinWidth">100</sys:Double>
+  <sys:Double x:Key="TabItemHeaderFontSize">14</sys:Double>
+  <Thickness x:Key="TabItemHeaderPadding">8,6,8,6</Thickness>
   <Style TargetType="{x:Type TabItem}">
     <Setter Property="Background" Value="{DynamicResource TabViewItemHeaderBackground}" />
     <Setter Property="BorderBrush" Value="Transparent" />
@@ -4046,8 +4068,8 @@
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type TabItem}">
           <Grid x:Name="Root">
-            <Border x:Name="Border" MinWidth="180" MinHeight="36" Margin="0" Padding="6" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,1,1,0" CornerRadius="8,8,0,0">
-              <ContentPresenter x:Name="ContentSite" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" ContentSource="Header" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" />
+            <Border x:Name="Border" MinWidth="{DynamicResource TabItemHeaderMinWidth}" MinHeight="{DynamicResource TabItemHeaderMinHeight}" Margin="0" Padding="{DynamicResource TabItemHeaderPadding}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,1,1,0" CornerRadius="8,8,0,0">
+              <ContentPresenter x:Name="ContentSite" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" ContentSource="Header" TextElement.FontSize="{DynamicResource TabItemHeaderFontSize}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" />
             </Border>
             <VisualStateManager.VisualStateGroups>
               <VisualStateGroup x:Name="SelectionStates">
@@ -4399,7 +4421,6 @@
     </Setter>
     <Setter Property="BorderBrush" Value="Transparent" />
     <Setter Property="BorderThickness" Value="0" />
-    <Setter Property="Cursor" Value="Hand" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
     <Setter Property="OverridesDefaultStyle" Value="True" />
     <Setter Property="Template">
@@ -4481,7 +4502,6 @@
       </Setter.Value>
     </Setter>
     <Setter Property="Background" Value="Transparent" />
-    <Setter Property="Cursor" Value="Hand" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
     <Setter Property="OverridesDefaultStyle" Value="True" />
     <Setter Property="Template">
@@ -4551,17 +4571,17 @@
   <sys:Double x:Key="ToolTipMaxWidth">320</sys:Double>
   <Thickness x:Key="ToolTipBorderThemeThickness">1</Thickness>
   <Style x:Key="DefaultToolTipStyle" TargetType="{x:Type ToolTip}">
-    <Setter Property="MaxWidth" Value="{StaticResource ToolTipMaxWidth}" />
+    <Setter Property="MaxWidth" Value="{DynamicResource ToolTipMaxWidth}" />
     <Setter Property="Height" Value="Auto" />
     <Setter Property="Width" Value="Auto" />
     <Setter Property="TextElement.FontSize" Value="12" />
     <Setter Property="TextBlock.TextAlignment" Value="Justify" />
-    <Setter Property="TextElement.Foreground" Value="{DynamicResource ToolTipForeground}" />
-    <Setter Property="Foreground" Value="{DynamicResource ToolTipForeground}" />
-    <Setter Property="Background" Value="{DynamicResource ToolTipBackground}" />
+    <Setter Property="TextElement.Foreground" Value="{DynamicResource ToolTipForegroundBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource ToolTipForegroundBrush}" />
+    <Setter Property="Background" Value="{DynamicResource ToolTipBackgroundBrush}" />
     <Setter Property="BorderBrush" Value="{DynamicResource ToolTipBorderBrush}" />
     <Setter Property="BorderThickness" Value="{DynamicResource ToolTipBorderThemeThickness}" />
-    <Setter Property="Padding" Value="{StaticResource ToolTipBorderPadding}" />
+    <Setter Property="Padding" Value="{DynamicResource ToolTipBorderPadding}" />
     <Setter Property="HorizontalContentAlignment" Value="Left" />
     <Setter Property="VerticalContentAlignment" Value="Top" />
     <Setter Property="SnapsToDevicePixels" Value="True" />

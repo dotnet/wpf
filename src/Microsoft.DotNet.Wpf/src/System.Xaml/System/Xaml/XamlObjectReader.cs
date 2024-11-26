@@ -698,7 +698,6 @@ namespace System.Xaml
                                         objectInfo.XamlNode = new XamlNode(XamlNodeType.GetObject);
                                     }
                                 }
-
                             }
                         }
                     }
@@ -1136,7 +1135,6 @@ namespace System.Xaml
 
                 removedProperties = new List<MarkupInfo>(propertiesWithDO);
                 return;
-
             }
 
             public virtual bool IsAttributableMarkupExtension

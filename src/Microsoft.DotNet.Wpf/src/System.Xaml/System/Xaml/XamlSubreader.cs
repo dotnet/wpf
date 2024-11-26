@@ -87,7 +87,6 @@ namespace System.Xaml
 
                 return _lineInfoReader.HasLineInfo;
             }
-
         }
 
         public int LineNumber

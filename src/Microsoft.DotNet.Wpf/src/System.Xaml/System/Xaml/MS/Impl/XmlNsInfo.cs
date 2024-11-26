@@ -445,7 +445,6 @@ namespace System.Xaml.MS.Impl
             {
                 dict[key] = new ReadOnlyCollection<string>(dict[key]);
             }
-
         }
 
         private class NamespaceComparer

@@ -227,7 +227,6 @@ namespace System.Xaml
                 {
                     done = true;
                 }
-
             }
 
             return _currentNode;

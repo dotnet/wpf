@@ -388,7 +388,6 @@ namespace System.Xaml
 
                 Logic_BeginInit(_context);
             }
-
         }
 
         public override void WriteEndObject()

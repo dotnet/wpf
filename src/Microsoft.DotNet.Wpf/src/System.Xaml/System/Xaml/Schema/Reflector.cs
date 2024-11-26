@@ -332,7 +332,6 @@ namespace System.Xaml.Schema
 
                 Debug.Fail($"Unexpected attribute type requested: {attributeType.Name}");
                 return null;
-
             }
 
             try

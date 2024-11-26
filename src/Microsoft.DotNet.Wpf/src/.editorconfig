@@ -338,9 +338,6 @@ dotnet_diagnostic.SA1505.severity = suggestion
 # SA1507: Code should not contain multiple blank lines in a row
 dotnet_diagnostic.SA1507.severity = suggestion
 
-# SA1508: A closing brace should not be preceded by a blank line
-dotnet_diagnostic.SA1508.severity = suggestion
-
 # SYSLIB1045: Convert to 'GeneratedRegexAttribute'.
 dotnet_diagnostic.SYSLIB1045.severity = suggestion
 

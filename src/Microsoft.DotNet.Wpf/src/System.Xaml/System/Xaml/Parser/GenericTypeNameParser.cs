@@ -190,7 +190,6 @@ namespace MS.Internal.Xaml.Parser
 
                 name = _scanner.MultiCharTokenText;
                 _scanner.Read();
-
             }
 
             Callout_FoundName(prefix, name);

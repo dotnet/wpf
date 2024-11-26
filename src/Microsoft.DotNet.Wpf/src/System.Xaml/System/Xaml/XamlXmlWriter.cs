@@ -1219,7 +1219,6 @@ namespace System.Xaml
                     //
                     writer.currentState = InMemberTryAttributes.State;
                 }
-
             }
 
             public override void WriteEndObject(XamlXmlWriter writer)
@@ -1420,7 +1419,6 @@ namespace System.Xaml
                     WriteStartElementForObject(writer, type);
                     writer.currentState = InRecordTryAttributes.State;
                  }
-
             }
         }
 

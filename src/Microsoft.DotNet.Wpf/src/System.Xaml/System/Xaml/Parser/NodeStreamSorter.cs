@@ -354,7 +354,6 @@ namespace MS.Internal.Xaml
                 }
 
                 _buffer.Enqueue(node);
-
             } while (!done);
         }
 

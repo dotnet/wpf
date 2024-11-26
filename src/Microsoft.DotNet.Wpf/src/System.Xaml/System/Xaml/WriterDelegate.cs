@@ -118,6 +118,5 @@ namespace System.Xaml
         {
             ObjectDisposedException.ThrowIf(IsDisposed, typeof(XamlWriter)); // Can't say ReaderMultiIndexDelegate because its internal.
         }
-
     }
 }

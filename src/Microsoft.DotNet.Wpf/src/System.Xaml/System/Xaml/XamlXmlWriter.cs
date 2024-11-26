@@ -1581,7 +1581,6 @@ namespace System.Xaml
                     writer.output.WriteValue(writer.deferredValue);
                 }
 
-
                 Debug.Assert(writer.namespaceScopes.Count > 0);
                 Frame memberFrame = writer.namespaceScopes.Pop();
                 Debug.Assert(memberFrame.AllocatingNodeType == XamlNodeType.StartMember ||

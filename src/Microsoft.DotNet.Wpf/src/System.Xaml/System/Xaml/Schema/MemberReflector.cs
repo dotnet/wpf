@@ -294,7 +294,6 @@ namespace System.Xaml.Schema
             return true;
         }
 
-
         // Used by Reflector for attribute lookups
         protected override MemberInfo Member
         {

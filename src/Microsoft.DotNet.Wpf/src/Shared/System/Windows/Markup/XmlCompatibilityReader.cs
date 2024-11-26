@@ -1109,7 +1109,6 @@ namespace System.Windows.Markup
             }
         }
 
-
         /// <summary>
         /// pops a scope if the end of a compatibility region.
         /// </summary>

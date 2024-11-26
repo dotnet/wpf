@@ -25,7 +25,6 @@ namespace MS.Internal.Xaml.Context
             : base()
         { }
 
-
         public ObjectWriterFrame(ObjectWriterFrame source)
             : base(source)
         {

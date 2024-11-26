@@ -427,7 +427,6 @@ namespace MS.Internal.Xaml.Parser
                 }
             } while (doingPropertyContent);
 
-
             if (_xamlScanner.NodeType != ScannerNodeType.ENDTAG)
             {
                 throw new XamlUnexpectedParseException(_xamlScanner, _xamlScanner.NodeType,

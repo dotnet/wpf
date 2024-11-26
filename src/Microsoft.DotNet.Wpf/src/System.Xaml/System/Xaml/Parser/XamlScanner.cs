@@ -643,7 +643,6 @@ namespace MS.Internal.Xaml.Parser
                 return;
             }
 
-
             bool tagIsRoot = _scannerStack.Depth == 0; // Attributes are processed before frame is pushed
             foreach (XamlAttribute attr in _attributes)
             {

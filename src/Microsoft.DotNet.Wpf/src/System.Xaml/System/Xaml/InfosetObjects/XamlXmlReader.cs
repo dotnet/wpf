@@ -363,7 +363,6 @@ namespace System.Xaml
                 newXmlNamespace = string.Empty;
             }
 
-
             // we need to treat all namespaces inside of XmlDataIslands as Supported.
             // we need to tree Freeze as known, if it is around... don't hardcode.
             //else if (xmlNamespace == XamlReaderHelper.PresentationOptionsNamespaceURI)

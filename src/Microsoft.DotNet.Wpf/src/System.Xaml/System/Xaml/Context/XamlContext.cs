@@ -225,7 +225,6 @@ namespace MS.Internal.Xaml
         public abstract string FindNamespaceByPrefix(string prefix);
         public abstract IEnumerable<NamespaceDeclaration> GetNamespacePrefixes();
 
-
         // -------------------- internal ------------------------
 
         private XamlType GetXamlTypeOrUnknown(XamlTypeName typeName)

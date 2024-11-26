@@ -95,7 +95,6 @@ namespace MS.Internal.Xaml.Parser
             }
         }
 
-
         // FxCop says this is not called
         //public bool IsXamlNsDefinition
         //{

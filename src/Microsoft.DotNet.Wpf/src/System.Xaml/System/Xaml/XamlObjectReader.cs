@@ -1434,7 +1434,6 @@ namespace System.Xaml
                 isComplete = descriptor.IsComplete;
             }
 
-
             bool TryGetDefaultConstructorInfo(XamlType type, out MemberInfo member, out ICollection arguments, out bool isComplete)
             {
                 arguments = null;

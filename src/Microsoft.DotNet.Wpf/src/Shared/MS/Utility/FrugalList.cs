@@ -375,7 +375,6 @@ namespace MS.Utility
         private T _loneEntry;
     }
 
-
     /// <summary>
     /// A simple class to handle a list with 3 items.  Perf analysis showed
     /// that this yielded better memory locality and perf than an object and an array.
@@ -1704,7 +1703,6 @@ namespace MS.Utility
             }
         }
 
-
         public T this[int index]
         {
             get
@@ -2087,7 +2085,6 @@ namespace MS.Utility
                 return 0;
             }
         }
-
 
         public T this[int index]
         {

@@ -335,7 +335,6 @@ namespace MS.Internal.Xaml.Parser
         }
     }
 
-
     internal class Sample_StringParserBase
     {
         protected const char NullChar = '\0';

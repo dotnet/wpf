@@ -164,7 +164,6 @@ namespace MS.Internal.Xaml.Parser
             Callout_EndOfType();
         }
 
-
         // SimpleTypeName   ::= (Prefix ‘:’)? TypeName
         //
         private void P_SimpleTypeName()

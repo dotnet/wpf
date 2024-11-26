@@ -61,7 +61,6 @@ namespace System.Windows.Markup
             return DateTime.Parse(value, dateTimeFormatInfo, DateTimeStyles);
         }
 
-
         /// <summary>
         /// Converts the given value object to a <see cref="T:System.DateTime"></see> using the arguments.
         /// </summary>

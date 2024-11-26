@@ -288,7 +288,6 @@ namespace System.Xaml.Schema
             private static ConstructorInfo s_actionCtor =
                 typeof(Action<object>).GetConstructor(new Type[] { typeof(Object), typeof(IntPtr) });
 
-
             public static object CreateInstance(XamlTypeInvoker type)
             {
                 if (!EnsureConstructorDelegate(type))

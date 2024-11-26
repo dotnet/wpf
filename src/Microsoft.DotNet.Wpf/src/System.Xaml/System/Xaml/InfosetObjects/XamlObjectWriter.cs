@@ -17,7 +17,6 @@ using MS.Internal.Xaml.Parser;
 using MS.Internal.Xaml.Runtime;
 using XAML3 = System.Windows.Markup;
 
-
 namespace System.Xaml
 {
     public class XamlObjectWriter : XamlWriter, IXamlLineInfoConsumer, IAddLineInfo, ICheckIfInitialized

@@ -162,7 +162,6 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
             return _xamlContext.ServiceProvider_GetFirstAmbientValue(types);
         }
 
-
         IEnumerable<AmbientPropertyValue> IAmbientProvider.GetAllAmbientValues(
                                                     IEnumerable<XamlType> ceilingTypes,
                                                     params XamlMember[] properties)
@@ -363,7 +362,6 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
 
             return token;
         }
-
 
         IEnumerable<KeyValuePair<string, object>> IXamlNameResolver.GetAllNamesAndValuesInScope()
         {

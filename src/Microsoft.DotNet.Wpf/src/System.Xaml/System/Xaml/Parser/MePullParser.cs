@@ -451,7 +451,6 @@ namespace MS.Internal.Xaml.Parser
             }
         }
 
-
         // ================================================
 
         private void NextToken()
@@ -463,7 +462,6 @@ namespace MS.Internal.Xaml.Parser
         {
             get { return _tokenizer.LineNumber; }
         }
-
 
         private int LinePosition
         {

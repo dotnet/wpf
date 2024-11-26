@@ -1096,7 +1096,7 @@ namespace System.Xaml
             }
             if (xamlMember == XamlLanguage.Uid)
             {
-                if (null == xamlType.GetAliasedProperty(XamlLanguage.Uid))
+                if (xamlType.GetAliasedProperty(XamlLanguage.Uid) == null)
                 {
                     return true;
                 }
@@ -1210,7 +1210,7 @@ namespace System.Xaml
             object[] argInstances = new object[rawArgs.Count];
             IList<XamlType> paramTypes = meType.GetPositionalParameters(rawArgs.Count);
 
-            if (null == paramTypes)
+            if (paramTypes == null)
             {
                 // A constructor with the specified number of arguments doesn't exist
                 string msg = string.Format(TypeConverterHelper.InvariantEnglishUS, SR.NoSuchConstructor, rawArgs.Count, meType.Name);

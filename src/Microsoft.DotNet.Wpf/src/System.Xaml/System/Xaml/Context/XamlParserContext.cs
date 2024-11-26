@@ -40,7 +40,7 @@ namespace MS.Internal.Xaml.Context
         {
             string xamlNs;
 
-            if (null != _prescopeNamespaces)
+            if (_prescopeNamespaces != null)
             {
                 if (_prescopeNamespaces.TryGetValue(prefix, out xamlNs))
                 {

@@ -28,7 +28,8 @@ namespace MS.Internal.Xaml.Parser
         PropertyName,  // String - Preceeds a '='.  {},= delimited, can (but shouldn't) contain spaces.
         String,        // String - all other strings, {},= delimited can contain spaces.
         QuotedMarkupExtension // String - must be recursivly parsed as a MarkupExtension.
-    };
+    }
+;
 
     // 1) Value and (propertynames for compatibility with WPF 3.0) can also have
     // escaped character with '\' to include '{' '}' ',' '=', and '\'.
@@ -161,6 +162,7 @@ namespace MS.Internal.Xaml.Parser
                     _token = MeTokenType.Open;
                     _state = StringState.Type;  // types follow '{'
                 }
+
                 break;
 
             case Quote1:
@@ -172,8 +174,10 @@ namespace MS.Internal.Xaml.Parser
                     {
                         isQuotedMarkupExtension = true;
                     }
+
                     PushBack();                   // put back the read-ahead.
                 }
+
                 readString = true;  // read substring"
                 break;
 
@@ -197,6 +201,7 @@ namespace MS.Internal.Xaml.Parser
                         ++_context.CurrentBracketModeParseParameters.CurrentConstructorParam <
                         _context.CurrentBracketModeParseParameters.MaxConstructorParams;
                 }
+
                 break;
 
             default:
@@ -233,6 +238,7 @@ namespace MS.Internal.Xaml.Parser
                     ResolvePropertyName(str);
                     break;
                 }
+
                 _state = StringState.Value;
                 _tokenText = RemoveEscapes(str);
             }
@@ -326,6 +332,7 @@ namespace MS.Internal.Xaml.Parser
             {
                 prop = _context.GetDottedProperty(tagType, tagNamespace, propName, false /*tagIsRoot*/);
             }
+
             // Regular property p
             else
             {
@@ -333,6 +340,7 @@ namespace MS.Internal.Xaml.Parser
                 declaringType = _context.CurrentType;
                 prop = _context.GetNoDotAttributeProperty(declaringType, propName, Namespace, ns, false /*tagIsRoot*/);
             }
+
             _tokenProperty = prop;
         }
 
@@ -375,6 +383,7 @@ namespace MS.Internal.Xaml.Parser
                         break;  // we are done.
                     }
                 }
+
                 // If we are inside of MarkupExtensionBracketCharacters for a particular property or position parameter,
                 // scoop up everything inside one by one, and keep track of nested Bracket Characters in the stack.
                 else if (_context.CurrentBracketModeParseParameters != null && _context.CurrentBracketModeParseParameters.IsBracketEscapeMode)
@@ -421,6 +430,7 @@ namespace MS.Internal.Xaml.Parser
                             done = true;  // we are done.
                             break;
                         }
+
                         sb.Append(ch);
                         break;
 
@@ -438,6 +448,7 @@ namespace MS.Internal.Xaml.Parser
                             braceCount--;
                             sb.Append(ch);
                         }
+
                         break;
                     case Comma:
                         done = true;  // we are done.
@@ -458,6 +469,7 @@ namespace MS.Internal.Xaml.Parser
                         {
                             throw new XamlParseException(this, SR.QuoteCharactersOutOfPlace);
                         }
+
                         quoteChar = ch;
                         wasQuoted = true;
                         break;
@@ -494,6 +506,7 @@ namespace MS.Internal.Xaml.Parser
                         break;  // we are done.
                     }
                 }
+
                 atStart = false;
                 Advance();
             }
@@ -532,6 +545,7 @@ namespace MS.Internal.Xaml.Parser
                 {
                     return _inputText[_idx + 1];
                 }
+
                 return NullChar;
             }
         }
@@ -544,6 +558,7 @@ namespace MS.Internal.Xaml.Parser
                 _idx = _inputText.Length;
                 return false;
             }
+
             return true;
         }
 
@@ -559,6 +574,7 @@ namespace MS.Internal.Xaml.Parser
             {
                 return true;
             }
+
             return false;
         }
 

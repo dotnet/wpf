@@ -40,6 +40,7 @@ namespace System.Xaml.Schema
             {
                 Initialize();
             }
+
             IsClrNamespace = true;
         }
 
@@ -162,6 +163,7 @@ namespace System.Xaml.Schema
 
                 clrTypeArgs[n] = typeArgs[n].UnderlyingType;
             }
+
             return clrTypeArgs;
         }
 
@@ -180,6 +182,7 @@ namespace System.Xaml.Schema
                 Debug.Assert(_assemblyNamespaces.Count == 1);
                 type = XamlLanguage.LookupClrNamespaceType(_assemblyNamespaces[0], typeName);
             }
+
             if (type == null)
             {
                 return null;
@@ -193,8 +196,10 @@ namespace System.Xaml.Schema
                 {
                     return null;
                 }
+
                 currentType = currentType.DeclaringType;
             }
+
             return type;
         }
 
@@ -211,6 +216,7 @@ namespace System.Xaml.Schema
                         // This is a dynamic assembly that got unloaded; ignore it
                         continue;
                     }
+
                     string clrPrefix = assemblyNamespacePair.ClrNamespace;
 
                     Type[] types = asm.GetTypes();
@@ -225,6 +231,7 @@ namespace System.Xaml.Schema
                     }
                 }
             }
+
             return xamlTypeList.AsReadOnly();
         }
 
@@ -251,6 +258,7 @@ namespace System.Xaml.Schema
                     // This is a dynamic assembly that got unloaded; ignore it
                     continue;
                 }
+
                 string longName = $"{assemblyNamespacePair.ClrNamespace}.{shortName}";
 
                 Type type = asm.GetType(longName);
@@ -259,6 +267,7 @@ namespace System.Xaml.Schema
                     return type;
                 }
             }
+
             return null;
         }
 

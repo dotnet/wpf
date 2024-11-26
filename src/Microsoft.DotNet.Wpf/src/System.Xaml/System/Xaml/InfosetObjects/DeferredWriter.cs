@@ -96,6 +96,7 @@ namespace System.Xaml
                     {
                         _deferredWriter.WriteStartObject(xamlType);
                     }
+
                     _deferredTreeDepth += 1;
                     _handled = true;
                     break;
@@ -127,6 +128,7 @@ namespace System.Xaml
                     _deferredWriter = null;
                     _mode = DeferringMode.TemplateReady;
                 }
+
                 break;
 
             default:
@@ -147,6 +149,7 @@ namespace System.Xaml
                     // We assume in WriteValue that this property can never be multi-valued
                     Debug.Assert(!property.IsDirective && !property.IsUnknown);
                 }
+
                 break;
 
             case DeferringMode.TemplateReady:
@@ -209,6 +212,7 @@ namespace System.Xaml
                     _mode = DeferringMode.TemplateDeferring;
                     goto case DeferringMode.TemplateDeferring;
                 }
+
                 break;
 
             case DeferringMode.TemplateDeferring:
@@ -295,6 +299,7 @@ namespace System.Xaml
                 {
                     _deferredLineInfoConsumer.SetLineInfo(lineNumber, linePosition);
                 }
+
                 break;
 
             default:

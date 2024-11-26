@@ -253,10 +253,12 @@ namespace System.Xaml
             {
                 return KnownStrings.Member;
             }
+
             if (type.Equals(typeof(PropertyDefinition)))
             {
                 return KnownStrings.Property;
             }
+
             return null;
         }
 
@@ -368,6 +370,7 @@ namespace System.Xaml
                         return null;
                 }
             }
+
             return null;
         }
 
@@ -388,6 +391,7 @@ namespace System.Xaml
                         return null;
                 }
             }
+
             return null;
         }
 

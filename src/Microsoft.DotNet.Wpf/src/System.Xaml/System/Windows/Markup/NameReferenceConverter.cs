@@ -37,12 +37,14 @@ namespace System.Windows.Markup
             {
                 throw new InvalidOperationException(SR.MustHaveName);
             }
+
             object obj = nameResolver.Resolve(name);
             if (obj == null)
             {
                 string[] names = new string[] { name };
                 obj = nameResolver.GetFixupToken(names, true);
             }
+
             return obj;
         }
 

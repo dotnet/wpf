@@ -158,6 +158,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
                     throw new ArgumentException(SR.Format(SR.ValueInArrayIsNull, "types"));
                 }
             }
+
             return _xamlContext.ServiceProvider_GetFirstAmbientValue(types);
         }
 
@@ -288,6 +289,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
             {
                 return null;
             }
+
             var token = new NameFixupToken();
             token.CanAssignDirectly = canAssignDirectly;
             token.NeededNames.AddRange(names);

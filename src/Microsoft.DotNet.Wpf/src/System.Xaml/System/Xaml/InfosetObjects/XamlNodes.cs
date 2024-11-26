@@ -18,7 +18,8 @@ namespace System.Xaml
         EndMember,
         Value,
         NamespaceDeclaration,
-    };
+    }
+;
 
     internal delegate void XamlNodeAddDelegate(XamlNodeType nodeType, object data);
     internal delegate void XamlLineInfoAddDelegate(int lineNumber, int linePosition);
@@ -153,8 +154,10 @@ namespace System.Xaml
                     str += $"LineInfo: {LineInfo}";
                     break;
                 }
+
                 break;
             }
+
             return str;
         }
 
@@ -166,6 +169,7 @@ namespace System.Xaml
                 {
                     return (NamespaceDeclaration)_data;
                 }
+
                 return null;
             }
         }
@@ -178,6 +182,7 @@ namespace System.Xaml
                 {
                     return (XamlType)_data;
                 }
+
                 return null;
             }
         }
@@ -190,6 +195,7 @@ namespace System.Xaml
                 {
                     return _data;
                 }
+
                 return null;
             }
         }
@@ -202,6 +208,7 @@ namespace System.Xaml
                 {
                     return (XamlMember)_data;
                 }
+
                 return null;
             }
         }
@@ -214,6 +221,7 @@ namespace System.Xaml
                 {
                     return _data as LineInfo;  // might be null for EOF and EOA.
                 }
+
                 return null;
             }
         }
@@ -226,6 +234,7 @@ namespace System.Xaml
                 {
                     return true;
                 }
+
                 return false;
             }
         }
@@ -238,6 +247,7 @@ namespace System.Xaml
                 {
                     return true;
                 }
+
                 return false;
             }
         }
@@ -250,6 +260,7 @@ namespace System.Xaml
                 {
                     return true;
                 }
+
                 return false;
             }
         }
@@ -260,6 +271,7 @@ namespace System.Xaml
             {
                 return false;
             }
+
             if (data is InternalNodeType)
             {
                 InternalNodeType internalNodeType = (InternalNodeType)data;
@@ -268,6 +280,7 @@ namespace System.Xaml
                     return true;
                 }
             }
+
             return false;
         }
     }

@@ -119,6 +119,7 @@ namespace System.Xaml
                 {
                     return null;
                 }
+
                 return _nameMap[name];
             }
         }

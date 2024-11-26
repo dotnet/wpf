@@ -272,6 +272,7 @@ namespace MS.Utility
             {
                 return 0;
             }
+
             return -1;
         }
 
@@ -284,6 +285,7 @@ namespace MS.Utility
                 ++_count;
                 return;
             }
+
             throw new ArgumentOutOfRangeException(nameof(index));
         }
 
@@ -409,6 +411,7 @@ namespace MS.Utility
                     // We have to promote
                     return FrugalListStoreState.SixItemList;
             }
+
             ++_count;
             return FrugalListStoreState.Success;
         }
@@ -433,17 +436,20 @@ namespace MS.Utility
             {
                 return 0;
             }
+
             if (_count > 1)
             {
                 if (EqualityComparer<T>.Default.Equals(_entry1, value))
                 {
                     return 1;
                 }
+
                 if ((3 == _count) && EqualityComparer<T>.Default.Equals(_entry2, value))
                 {
                     return 2;
                 }
             }
+
             return -1;
         }
 
@@ -472,9 +478,11 @@ namespace MS.Utility
                     default:
                         throw new ArgumentOutOfRangeException(nameof(index));
                 }
+
                 ++_count;
                 return;
             }
+
             throw new ArgumentOutOfRangeException(nameof(index));
         }
 
@@ -523,6 +531,7 @@ namespace MS.Utility
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -548,6 +557,7 @@ namespace MS.Utility
                 default:
                     throw new ArgumentOutOfRangeException(nameof(index));
             }
+
             _entry2 = default(T);
             --_count;
         }
@@ -659,6 +669,7 @@ namespace MS.Utility
                     array[2] = _entry2;
                 }
             }
+
             return array;
         }
 
@@ -743,6 +754,7 @@ namespace MS.Utility
                     // We have to promote
                     return FrugalListStoreState.Array;
             }
+
             ++_count;
             return FrugalListStoreState.Success;
         }
@@ -770,30 +782,35 @@ namespace MS.Utility
             {
                 return 0;
             }
+
             if (_count > 1)
             {
                 if (EqualityComparer<T>.Default.Equals(_entry1, value))
                 {
                     return 1;
                 }
+
                 if (_count > 2)
                 {
                     if (EqualityComparer<T>.Default.Equals(_entry2, value))
                     {
                         return 2;
                     }
+
                     if (_count > 3)
                     {
                         if (EqualityComparer<T>.Default.Equals(_entry3, value))
                         {
                             return 3;
                         }
+
                         if (_count > 4)
                         {
                             if (EqualityComparer<T>.Default.Equals(_entry4, value))
                             {
                                 return 4;
                             }
+
                             if ((6 == _count) && EqualityComparer<T>.Default.Equals(_entry5, value))
                             {
                                 return 5;
@@ -802,6 +819,7 @@ namespace MS.Utility
                     }
                 }
             }
+
             return -1;
         }
 
@@ -854,9 +872,11 @@ namespace MS.Utility
                     default:
                         throw new ArgumentOutOfRangeException(nameof(index));
                 }
+
                 ++_count;
                 return;
             }
+
             throw new ArgumentOutOfRangeException(nameof(index));
         }
 
@@ -988,6 +1008,7 @@ namespace MS.Utility
                 default:
                     throw new ArgumentOutOfRangeException(nameof(index));
             }
+
             _entry5 = default(T);
             --_count;
         }
@@ -1203,6 +1224,7 @@ namespace MS.Utility
                     }
                 }
             }
+
             return array;
         }
 
@@ -1326,6 +1348,7 @@ namespace MS.Utility
                 _entries[_count] = value;
                 ++_count;
             }
+
             return FrugalListStoreState.Success;
         }
 
@@ -1351,6 +1374,7 @@ namespace MS.Utility
                 ++_count;
                 return;
             }
+
             throw new ArgumentOutOfRangeException(nameof(index));
         }
 
@@ -1400,6 +1424,7 @@ namespace MS.Utility
                 {
                     continue;
                 }
+
                 // this list is smaller than oldList
                 throw new ArgumentException(SR.Format(SR.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
             }
@@ -1622,6 +1647,7 @@ namespace MS.Utility
                 {
                     return _listStore.Capacity;
                 }
+
                 return 0;
             }
             set
@@ -1631,6 +1657,7 @@ namespace MS.Utility
                 {
                     capacity = _listStore.Capacity;
                 }
+
                 if (capacity < value)
                 {
                     // Need to move to a more complex storage
@@ -1672,6 +1699,7 @@ namespace MS.Utility
                 {
                     return _listStore.Count;
                 }
+
                 return 0;
             }
         }
@@ -1686,6 +1714,7 @@ namespace MS.Utility
                 {
                     return _listStore.EntryAt(index);
                 }
+
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
 
@@ -1697,6 +1726,7 @@ namespace MS.Utility
                     _listStore.SetAt(index, value);
                     return;
                 }
+
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
         }
@@ -1765,6 +1795,7 @@ namespace MS.Utility
                     throw new InvalidOperationException(SR.FrugalList_CannotPromoteBeyondArray);
                 }
             }
+
             return _listStore.Count - 1;
         }
 
@@ -1782,6 +1813,7 @@ namespace MS.Utility
             {
                 return _listStore.Contains(value);
             }
+
             return false;
         }
 
@@ -1791,6 +1823,7 @@ namespace MS.Utility
             {
                 return _listStore.IndexOf(value);
             }
+
             return -1;
         }
 
@@ -1813,6 +1846,7 @@ namespace MS.Utility
                 _listStore.Insert(index, value);
                 return;
             }
+
             throw new ArgumentOutOfRangeException(nameof(index));
         }
 
@@ -1822,6 +1856,7 @@ namespace MS.Utility
             {
                 return _listStore.Remove(value);
             }
+
             return false;
         }
 
@@ -1832,6 +1867,7 @@ namespace MS.Utility
                 _listStore.RemoveAt(index);
                 return;
             }
+
             throw new ArgumentOutOfRangeException(nameof(index));
         }
 
@@ -1861,6 +1897,7 @@ namespace MS.Utility
             {
                 return _listStore.ToArray();
             }
+
             return null;
         }
 
@@ -1994,6 +2031,7 @@ namespace MS.Utility
                 {
                     return _listStore.Capacity;
                 }
+
                 return 0;
             }
             set
@@ -2003,6 +2041,7 @@ namespace MS.Utility
                 {
                     capacity = _listStore.Capacity;
                 }
+
                 if (capacity < value)
                 {
                     // Need to move to a more complex storage
@@ -2044,6 +2083,7 @@ namespace MS.Utility
                 {
                     return _listStore.Count;
                 }
+
                 return 0;
             }
         }
@@ -2058,6 +2098,7 @@ namespace MS.Utility
                 {
                     return _listStore.EntryAt(index);
                 }
+
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
 
@@ -2069,6 +2110,7 @@ namespace MS.Utility
                     _listStore.SetAt(index, value);
                     return;
                 }
+
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
         }
@@ -2137,6 +2179,7 @@ namespace MS.Utility
                     throw new InvalidOperationException(SR.FrugalList_CannotPromoteBeyondArray);
                 }
             }
+
             return _listStore.Count - 1;
         }
 
@@ -2154,6 +2197,7 @@ namespace MS.Utility
             {
                 return _listStore.Contains(value);
             }
+
             return false;
         }
 
@@ -2163,6 +2207,7 @@ namespace MS.Utility
             {
                 return _listStore.IndexOf(value);
             }
+
             return -1;
         }
 
@@ -2185,6 +2230,7 @@ namespace MS.Utility
                 _listStore.Insert(index, value);
                 return;
             }
+
             throw new ArgumentOutOfRangeException(nameof(index));
         }
 
@@ -2194,6 +2240,7 @@ namespace MS.Utility
             {
                 return _listStore.Remove(value);
             }
+
             return false;
         }
 
@@ -2204,6 +2251,7 @@ namespace MS.Utility
                 _listStore.RemoveAt(index);
                 return;
             }
+
             throw new ArgumentOutOfRangeException(nameof(index));
         }
 
@@ -2233,6 +2281,7 @@ namespace MS.Utility
             {
                 return _listStore.ToArray();
             }
+
             return null;
         }
 

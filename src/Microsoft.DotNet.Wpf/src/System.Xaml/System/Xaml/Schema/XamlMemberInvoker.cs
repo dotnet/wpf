@@ -37,6 +37,7 @@ namespace System.Xaml.Schema
                 {
                     s_Unknown = new XamlMemberInvoker();
                 }
+
                 return s_Unknown;
             }
         }
@@ -97,6 +98,7 @@ namespace System.Xaml.Schema
                 {
                     s_Directive = new DirectiveMemberInvoker();
                 }
+
                 return s_Directive;
             }
         }
@@ -125,6 +127,7 @@ namespace System.Xaml.Schema
                     flags |= BindingFlags.Instance;
                     args = Type.EmptyTypes;
                 }
+
                 _shouldSerializeMethod.Value = declaringType.GetMethod(methodName, flags, null, args, null);
             }
 
@@ -144,6 +147,7 @@ namespace System.Xaml.Schema
 
                 return result ? ShouldSerializeResult.True : ShouldSerializeResult.False;
             }
+
             return ShouldSerializeResult.Default;
         }
 
@@ -156,8 +160,10 @@ namespace System.Xaml.Schema
                 bool result = SafeReflectionInvoker.IsSystemXamlNonPublic(method);
                 methodIsSystemXamlNonPublic = result ? ThreeValuedBool.True : ThreeValuedBool.False;
             }
+
             return methodIsSystemXamlNonPublic == ThreeValuedBool.True;
         }
+
         // ^^^^^----- End of unused members.  -----^^^^^
 
         private bool IsUnknown

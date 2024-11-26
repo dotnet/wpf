@@ -48,6 +48,7 @@ namespace System.Xaml.Schema
             {
                 return CustomAttributeProvider.IsDefined(attributeType, false);
             }
+
             try
             {
                 CustomAttributeData cad = GetAttribute(attributeType);
@@ -73,41 +74,51 @@ namespace System.Xaml.Schema
                 {
                     return null;
                 }
+
                 if (attributeType == typeof(ContentPropertyAttribute))
                 {
                     return ((ContentPropertyAttribute)attributes[0]).Name;
                 }
+
                 if (attributeType == typeof(RuntimeNamePropertyAttribute))
                 {
                     return ((RuntimeNamePropertyAttribute)attributes[0]).Name;
                 }
+
                 if (attributeType == typeof(DictionaryKeyPropertyAttribute))
                 {
                     return ((DictionaryKeyPropertyAttribute)attributes[0]).Name;
                 }
+
                 if (attributeType == typeof(XamlSetMarkupExtensionAttribute))
                 {
                     return ((XamlSetMarkupExtensionAttribute)attributes[0]).XamlSetMarkupExtensionHandler;
                 }
+
                 if (attributeType == typeof(XamlSetTypeConverterAttribute))
                 {
                     return ((XamlSetTypeConverterAttribute)attributes[0]).XamlSetTypeConverterHandler;
                 }
+
                 if (attributeType == typeof(UidPropertyAttribute))
                 {
                     return ((UidPropertyAttribute)attributes[0]).Name;
                 }
+
                 if (attributeType == typeof(XmlLangPropertyAttribute))
                 {
                     return ((XmlLangPropertyAttribute)attributes[0]).Name;
                 }
+
                 if (attributeType == typeof(ConstructorArgumentAttribute))
                 {
                     return ((ConstructorArgumentAttribute)attributes[0]).ArgumentName;
                 }
+
                 Debug.Fail($"Unexpected attribute type requested: {attributeType.Name}");
                 return null;
             }
+
             try
             {
                 // CustomAttributeData doesn't have an inherit=true option
@@ -118,6 +129,7 @@ namespace System.Xaml.Schema
                 {
                     return null;
                 }
+
                 return Extract<string>(cad) ?? string.Empty;
             }
             catch (CustomAttributeFormatException)
@@ -170,19 +182,23 @@ namespace System.Xaml.Schema
                 {
                     return null;
                 }
+
                 if (attributeType == typeof(DesignerSerializationVisibilityAttribute))
                 {
                     DesignerSerializationVisibility result = ((DesignerSerializationVisibilityAttribute)attributes[0]).Visibility;
                     return (T)(object)result;
                 }
+
                 if (attributeType == typeof(UsableDuringInitializationAttribute))
                 {
                     bool result = ((UsableDuringInitializationAttribute)attributes[0]).Usable;
                     return (T)(object)result;
                 }
+
                 Debug.Fail($"Unexpected attribute type requested: {attributeType.Name}");
                 return null;
             }
+
             try
             {
                 CustomAttributeData cad = GetAttribute(attributeType);
@@ -190,6 +206,7 @@ namespace System.Xaml.Schema
                 {
                     return null;
                 }
+
                 return Extract<T>(cad);
             }
             catch (CustomAttributeFormatException)
@@ -208,22 +225,27 @@ namespace System.Xaml.Schema
                 {
                     return null;
                 }
+
                 if (attributeType == typeof(TypeConverterAttribute))
                 {
                     string typeName = ((TypeConverterAttribute)attributes[0]).ConverterTypeName;
                     return Type.GetType(typeName);
                 }
+
                 if (attributeType == typeof(MarkupExtensionReturnTypeAttribute))
                 {
                     return ((MarkupExtensionReturnTypeAttribute)attributes[0]).ReturnType;
                 }
+
                 if (attributeType == typeof(ValueSerializerAttribute))
                 {
                     return ((ValueSerializerAttribute)attributes[0]).ValueSerializerType;
                 }
+
                 Debug.Fail($"Unexpected attribute type requested: {attributeType.Name}");
                 return null;
             }
+
             try
             {
                 CustomAttributeData cad = GetAttribute(attributeType);
@@ -231,6 +253,7 @@ namespace System.Xaml.Schema
                 {
                     return null;
                 }
+
                 return ExtractType(cad);
             }
             catch (CustomAttributeFormatException)
@@ -249,6 +272,7 @@ namespace System.Xaml.Schema
                 {
                     return null;
                 }
+
                 Debug.Assert(attributeType == typeof(XamlDeferLoadAttribute));
                 Debug.Assert(count == 2);
                 XamlDeferLoadAttribute tca = (XamlDeferLoadAttribute)attributes[0];
@@ -256,6 +280,7 @@ namespace System.Xaml.Schema
                 Type contentType = Type.GetType(tca.ContentTypeName);
                 return new Type[] { converterType, contentType };
             }
+
             try
             {
                 CustomAttributeData cad = GetAttribute(attributeType);
@@ -263,6 +288,7 @@ namespace System.Xaml.Schema
                 {
                     return null;
                 }
+
                 return ExtractTypes(cad, count);
             }
             catch (CustomAttributeFormatException)
@@ -281,6 +307,7 @@ namespace System.Xaml.Schema
                 {
                     return null;
                 }
+
                 List<T> result = new List<T>();
 
                 if (attributeType == typeof(ContentWrapperAttribute))
@@ -289,6 +316,7 @@ namespace System.Xaml.Schema
                     {
                         result.Add((T)(object)attribute.ContentWrapper);
                     }
+
                     return result;
                 }
 
@@ -298,6 +326,7 @@ namespace System.Xaml.Schema
                     {
                         result.Add((T)(object)attribute.Name);
                     }
+
                     return result;
                 }
 
@@ -305,6 +334,7 @@ namespace System.Xaml.Schema
                 return null;
 
             }
+
             try
             {
                 List<CustomAttributeData> cads = new List<CustomAttributeData>();
@@ -313,12 +343,14 @@ namespace System.Xaml.Schema
                 {
                     return null;
                 }
+
                 List<T> types = new List<T>();
                 foreach (CustomAttributeData cad in cads)
                 {
                     T content = Extract<T>(cad);
                     types.Add((T)(object)content);
                 }
+
                 return types;
             }
             catch (CustomAttributeFormatException)
@@ -340,6 +372,7 @@ namespace System.Xaml.Schema
             {
                 return 0 != (bitMask & bitToCheck);
             }
+
             return null;
         }
 
@@ -416,10 +449,12 @@ namespace System.Xaml.Schema
             {
                 result = ExtractType(cad.ConstructorArguments[0]);
             }
+
             if (result == null)
             {
                 ThrowInvalidMetadata(cad, 1, typeof(Type));
             }
+
             return result;
         }
 
@@ -429,6 +464,7 @@ namespace System.Xaml.Schema
             {
                 ThrowInvalidMetadata(cad, count, typeof(Type));
             }
+
             Type[] result = new Type[count];
             for (int i = 0; i < count; i++)
             {
@@ -438,6 +474,7 @@ namespace System.Xaml.Schema
                     ThrowInvalidMetadata(cad, count, typeof(Type));
                 }
             }
+
             return result;
         }
 
@@ -452,6 +489,7 @@ namespace System.Xaml.Schema
                 string typeName = (string)arg.Value;
                 return Type.GetType(typeName);
             }
+
             return null;
         }
 
@@ -467,6 +505,7 @@ namespace System.Xaml.Schema
             {
                 ThrowInvalidMetadata(cad, 1, typeof(T));
             }
+
             return (T)cad.ConstructorArguments[0].Value;
         }
 
@@ -488,6 +527,7 @@ namespace System.Xaml.Schema
                     return _attributeData[i];
                 }
             }
+
             return null;
         }
 

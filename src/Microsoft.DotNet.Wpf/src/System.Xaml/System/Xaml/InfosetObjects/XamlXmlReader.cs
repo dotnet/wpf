@@ -181,19 +181,23 @@ namespace System.Xaml
                 // Or have already processed the markup compat and want that extra perf.
                 myXmlReader = givenXmlReader;
             }
+
             // Pick up the XmlReader settings to override the "settings" defaults.
             if (!String.IsNullOrEmpty(myXmlReader.BaseURI))
             {
                 _mergedSettings.BaseUri = new Uri(myXmlReader.BaseURI);
             }
+
             if (myXmlReader.XmlSpace == XmlSpace.Preserve)
             {
                 _mergedSettings.XmlSpacePreserve = true;
             }
+
             if (!String.IsNullOrEmpty(myXmlReader.XmlLang))
             {
                 _mergedSettings.XmlLang = myXmlReader.XmlLang;
             }
+
             IXmlNamespaceResolver myXmlReaderNS = myXmlReader as IXmlNamespaceResolver;
             Dictionary<string, string> xmlnsDictionary = null;
             if (myXmlReaderNS != null)
@@ -207,6 +211,7 @@ namespace System.Xaml
                         {
                             xmlnsDictionary = new Dictionary<string, string>();
                         }
+
                         xmlnsDictionary[ns.Key] = ns.Value;
                     }
                 }

@@ -22,6 +22,7 @@ namespace System.Xaml
             {
                 return true;
             }
+
             return base.CanConvertFrom(context, sourceType);
         }
 
@@ -36,6 +37,7 @@ namespace System.Xaml
                     return Delegate.CreateDelegate(delegateType, rootObject, valueString);
                 }
             }
+
             return base.ConvertFrom(context, culture, value);
         }
 
@@ -54,6 +56,7 @@ namespace System.Xaml
             {
                 return;
             }
+
             rootObject = rootObjectService.RootObject;
 
             IDestinationTypeProvider? targetService = context.GetService(typeof(IDestinationTypeProvider)) as IDestinationTypeProvider;
@@ -61,6 +64,7 @@ namespace System.Xaml
             {
                 return;
             }
+
             delegateType = targetService.GetDestinationType();
         }
     }

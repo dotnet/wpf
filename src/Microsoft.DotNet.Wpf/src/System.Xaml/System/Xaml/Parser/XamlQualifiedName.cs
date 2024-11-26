@@ -31,10 +31,12 @@ namespace MS.Internal.Xaml.Parser
             {
                 return false;
             }
+
             if (!IsValidNameStartChar(name[0]))
             {
                 return false;
             }
+
             for (int i = 1; i < name.Length; i++)
             {
                 if (!IsValidQualifiedNameChar(name[i]))
@@ -42,6 +44,7 @@ namespace MS.Internal.Xaml.Parser
                     return false;
                 }
             }
+
             return true;
         }
 
@@ -51,10 +54,12 @@ namespace MS.Internal.Xaml.Parser
             {
                 return false;
             }
+
             if (!IsValidNameStartChar(name[0]))
             {
                 return false;
             }
+
             for (int i = 1; i < name.Length; i++)
             {
                 if (!IsValidQualifiedNameCharPlus(name[i]))
@@ -62,6 +67,7 @@ namespace MS.Internal.Xaml.Parser
                     return false;
                 }
             }
+
             return true;
         }
 

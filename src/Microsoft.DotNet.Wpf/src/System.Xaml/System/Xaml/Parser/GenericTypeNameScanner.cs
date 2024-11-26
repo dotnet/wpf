@@ -68,11 +68,13 @@ namespace MS.Internal.Xaml.Parser
                         _token = GenericTypeNameScannerToken.NAME;
                         _state = State.START;
                     }
+
                     if (_state == State.INSUBSCRIPT)
                     {
                         _token = GenericTypeNameScannerToken.ERROR;
                         _state = State.START;
                     }
+
                     break;
                 }
 
@@ -91,6 +93,7 @@ namespace MS.Internal.Xaml.Parser
                         break;
                 }
             }
+
             if (_token == GenericTypeNameScannerToken.NAME || _token == GenericTypeNameScannerToken.SUBSCRIPT)
             {
                 _tokenText = CollectMultiCharToken();
@@ -112,6 +115,7 @@ namespace MS.Internal.Xaml.Parser
                         {
                             return 0;
                         }
+
                         openBracketFound = true;
                         break;
                     case Comma:
@@ -119,6 +123,7 @@ namespace MS.Internal.Xaml.Parser
                         {
                             return 0;
                         }
+
                         rank++;
                         break;
                     case CloseBracket:
@@ -126,6 +131,7 @@ namespace MS.Internal.Xaml.Parser
                         {
                             return 0;
                         }
+
                         pos++;
                         return rank;
                     default:
@@ -134,8 +140,10 @@ namespace MS.Internal.Xaml.Parser
                         {
                             return 0;
                         }
+
                         break;
                 }
+
                 pos++;
             }
             while (pos < subscript.Length);
@@ -152,6 +160,7 @@ namespace MS.Internal.Xaml.Parser
                 subscript = null;
                 return typeName;
             }
+
             subscript = typeName.Substring(openBracketNdx);
             return typeName.Substring(0, openBracketNdx);
         }
@@ -200,8 +209,10 @@ namespace MS.Internal.Xaml.Parser
                     {
                         _token = GenericTypeNameScannerToken.ERROR;
                     }
+
                     break;
             }
+
             _lastChar = CurrentChar;
             Advance();
         }
@@ -251,8 +262,10 @@ namespace MS.Internal.Xaml.Parser
                     {
                         _token = GenericTypeNameScannerToken.ERROR;
                     }
+
                     break;
             }
+
             _lastChar = CurrentChar;
             Advance();
         }
@@ -287,8 +300,10 @@ namespace MS.Internal.Xaml.Parser
                     {
                         _token = GenericTypeNameScannerToken.ERROR;
                     }
+
                     break;
             }
+
             _lastChar = CurrentChar;
             Advance();
         }
@@ -314,6 +329,7 @@ namespace MS.Internal.Xaml.Parser
             {
                 return _inputText;
             }
+
             string result = _inputText.Substring(_multiCharTokenStartIdx, _multiCharTokenLength);
             return result;
         }
@@ -351,6 +367,7 @@ namespace MS.Internal.Xaml.Parser
                 _idx = _inputText.Length;
                 return false;
             }
+
             return true;
         }
 
@@ -366,6 +383,7 @@ namespace MS.Internal.Xaml.Parser
             {
                 return true;
             }
+
             return false;
         }
 
@@ -378,6 +396,7 @@ namespace MS.Internal.Xaml.Parser
                 sawWhitespace = true;
                 Advance();
             }
+
             return sawWhitespace;
         }
     }

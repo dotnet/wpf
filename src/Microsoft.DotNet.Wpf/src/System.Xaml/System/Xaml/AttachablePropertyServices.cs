@@ -110,6 +110,7 @@ namespace System.Xaml
                         return true;
                     }
                 }
+
                 value = default(T);
                 return false;
             }
@@ -154,6 +155,7 @@ namespace System.Xaml
                         }
                     }
                 }
+
                 return 0;
             }
 
@@ -173,6 +175,7 @@ namespace System.Xaml
                         }
                     }
                 }
+
                 return false;
             }
 
@@ -232,6 +235,7 @@ namespace System.Xaml
                         }
                     }
                 }
+
                 value = default(T);
                 return false;
             }

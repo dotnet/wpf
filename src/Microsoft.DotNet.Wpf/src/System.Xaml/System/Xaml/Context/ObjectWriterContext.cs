@@ -37,6 +37,7 @@ namespace MS.Internal.Xaml.Context
             {
                 _settings = settings.StripDelegates();
             }
+
             _runtime = runtime;
             BaseUri = savedContext.BaseUri;
             // If the bottom of the stack is a (no XamlType) Value (reparse) then back-up onto it.
@@ -97,12 +98,14 @@ namespace MS.Internal.Xaml.Context
                     rootNameScopeDictionary = new NameScopeDictionary(rootNameScope);
                 }
             }
+
             _stack.CurrentFrame.NameScopeDictionary = rootNameScopeDictionary;
             _stack.PushScope();  // put a blank sentinal frame on the stack.
             if (settings != null)
             {
                 _settings = settings.StripDelegates();
             }
+
             _runtime = runtime;
             _savedDepth = 0;
         }
@@ -117,6 +120,7 @@ namespace MS.Internal.Xaml.Context
                     result = Assembly.Load(_settings.AccessLevel.AssemblyAccessToAssemblyName);
                     base.LocalAssembly = result;
                 }
+
                 return result;
             }
             protected set { base.LocalAssembly = value; }
@@ -161,6 +165,7 @@ namespace MS.Internal.Xaml.Context
                 xamlType = GetXamlType(name, true, true);
                 throw new XamlParseException(SR.Format(SR.TypeNotFound, xamlType.GetQualifiedName()));
             }
+
             return xamlType.UnderlyingType;
         }
 
@@ -205,6 +210,7 @@ namespace MS.Internal.Xaml.Context
             {
                 _settings = new XamlObjectWriterSettings();
             }
+
             return _settings;
         }
 
@@ -228,8 +234,10 @@ namespace MS.Internal.Xaml.Context
                 {
                     return xamlNs;
                 }
+
                 frame = (ObjectWriterFrame)frame.Previous;
             }
+
             return null;
         }
 
@@ -250,6 +258,7 @@ namespace MS.Internal.Xaml.Context
                         }
                     }
                 }
+
                 frame = (ObjectWriterFrame)frame.Previous;
             }
         }
@@ -271,6 +280,7 @@ namespace MS.Internal.Xaml.Context
                 {
                     _serviceProviderContext = new ServiceProviderContext(this);
                 }
+
                 return _serviceProviderContext;
             }
         }
@@ -295,6 +305,7 @@ namespace MS.Internal.Xaml.Context
             {
                 return frame.XamlType;
             }
+
             return frame.Member.Type;
         }
 
@@ -767,6 +778,7 @@ namespace MS.Internal.Xaml.Context
                     ObjectWriterFrame rootFrame = GetTopFrame();
                     _rootInstance = rootFrame.Instance;
                 }
+
                 return _rootInstance;
             }
         }
@@ -784,6 +796,7 @@ namespace MS.Internal.Xaml.Context
             {
                 frame = frame.Previous;
             }
+
             return (ObjectWriterFrame)frame;
         }
 
@@ -795,6 +808,7 @@ namespace MS.Internal.Xaml.Context
                 {
                     frame.NameScopeDictionary = frame.Instance as XAML3.INameScopeDictionary ?? new NameScopeDictionary(frame.Instance as XAML3.INameScope);
                 }
+
                 if (frame.NameScopeDictionary == null)
                 {
                     if (frame.Depth == 1)
@@ -816,6 +830,7 @@ namespace MS.Internal.Xaml.Context
                     }
                 }
             }
+
             // We are sure to find a name scope at the root (at least).
             Debug.Assert(frame.NameScopeDictionary != null || frame.Depth == 0);
             return frame.NameScopeDictionary;
@@ -837,8 +852,10 @@ namespace MS.Internal.Xaml.Context
                         previousNameScopeDictionary = nameScopeDictionary;
                         yield return nameScopeDictionary;
                     }
+
                     frame = (ObjectWriterFrame)frame.Previous;
                 }
+
                 // return the provided root namescope if it's different from the document root namescope
                 if (frame.NameScopeDictionary != null && frame.NameScopeDictionary != previousNameScopeDictionary)
                 {
@@ -856,8 +873,10 @@ namespace MS.Internal.Xaml.Context
                 {
                     return true;
                 }
+
                 frame = (ObjectWriterFrame)frame.Previous;
             }
+
             return false;
         }
 
@@ -961,13 +980,16 @@ namespace MS.Internal.Xaml.Context
                     {
                         isFullyInitialized = IsInitializedCallback.IsFullyInitialized(obj);
                     }
+
                     if (NameResolutionComplete || isFullyInitialized || IsInitializedCallback == null)
                     {
                         value = obj;
                     }
+
                     break;
                 }
             }
+
             return value;
         }
 
@@ -987,9 +1009,11 @@ namespace MS.Internal.Xaml.Context
                     {
                         continue;
                     }
+
                     allNamesAndValues.Add(nameValuePair);
                 }
             }
+
             return allNamesAndValues;
         }
 
@@ -1095,6 +1119,7 @@ namespace MS.Internal.Xaml.Context
                         break;
                     }
                 }
+
                 return value;
             }
 
@@ -1119,9 +1144,11 @@ namespace MS.Internal.Xaml.Context
                         {
                             continue;
                         }
+
                         allNamesAndValues.Add(nameValuePair);
                     }
                 }
+
                 return allNamesAndValues;
             }
         }

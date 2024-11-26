@@ -45,6 +45,7 @@ namespace MS.Internal.Xaml
             {
                 _seenStack.Add(new SeenCtorDirectiveFlags());
             }
+
             _seenStack[0].SeenInstancingProperty = false;
             _seenStack[0].SeenOutOfOrderCtorDirective = false;
         }
@@ -56,6 +57,7 @@ namespace MS.Internal.Xaml
             {
                 _seenStack.Add(new SeenCtorDirectiveFlags());
             }
+
             _seenStack[_startObjectDepth].SeenInstancingProperty = false;
             _seenStack[_startObjectDepth].SeenOutOfOrderCtorDirective = false;
         }
@@ -131,6 +133,7 @@ namespace MS.Internal.Xaml
                     {
                         return false;
                     }
+
                     _current = _source.Current;
                     if (_current.NodeType == XamlNodeType.StartObject)
                     {
@@ -142,6 +145,7 @@ namespace MS.Internal.Xaml
                         _current = _buffer.Dequeue();
                     }
                 }
+
                 // Skip over "End Of Attributes" nodes.
             } while (_current.IsEndOfAttributes);
             return true;
@@ -194,6 +198,7 @@ namespace MS.Internal.Xaml
                     {
                         _buffer.Enqueue(node);
                     }
+
                     break;
                 default:
                     break;
@@ -229,10 +234,12 @@ namespace MS.Internal.Xaml
             {
                 EnqueueOneXmlDirectiveProperty(XamlLanguage.Space, KnownStrings.Preserve);
             }
+
             if (!String.IsNullOrEmpty(_settings.XmlLang))
             {
                 EnqueueOneXmlDirectiveProperty(XamlLanguage.Lang, _settings.XmlLang);
             }
+
             if (_settings.BaseUri != null)
             {
                 EnqueueOneXmlDirectiveProperty(XamlLanguage.Base, _settings.BaseUri.ToString());
@@ -276,6 +283,7 @@ namespace MS.Internal.Xaml
             {
                 SortContentsOfReadAheadBuffer();
             }
+
             return;
         }
 
@@ -301,6 +309,7 @@ namespace MS.Internal.Xaml
                 {
                     throw new InvalidOperationException("premature end of stream before EoA");
                 }
+
                 node = _source.Current;
                 switch (node.NodeType)
                 {
@@ -314,6 +323,7 @@ namespace MS.Internal.Xaml
                     {
                         done = true;
                     }
+
                     break;
 
                 case XamlNodeType.None:
@@ -324,6 +334,7 @@ namespace MS.Internal.Xaml
                             done = true;
                         }
                     }
+
                     break;
 
                 case XamlNodeType.StartMember:
@@ -334,12 +345,14 @@ namespace MS.Internal.Xaml
                             CheckForOutOfOrderCtorDirectives(node);
                         }
                     }
+
                     break;
 
                 case XamlNodeType.EndMember:
                     propertyDepth -= 1;
                     break;
                 }
+
                 _buffer.Enqueue(node);
 
             } while (!done);
@@ -359,6 +372,7 @@ namespace MS.Internal.Xaml
                 {
                     throw new InvalidOperationException("premature end of stream after EoA");
                 }
+
                 XamlNode node = _source.Current;
                 switch (node.NodeType)
                 {
@@ -371,6 +385,7 @@ namespace MS.Internal.Xaml
                             done = true;
                         }
                     }
+
                     break;
 
                 case XamlNodeType.EndMember:
@@ -384,8 +399,10 @@ namespace MS.Internal.Xaml
                         // Exit loop normaly so we Enqueue the EndObject.
                         done = true;
                     }
+
                     break;
                 }
+
                 _buffer.Enqueue(node);
             } while (!done);
         }
@@ -405,15 +422,18 @@ namespace MS.Internal.Xaml
                     {
                         _moveList = new List<int>();
                     }
+
                     _moveList.Add(_buffer.Count);  // mark the current position as needing fixup
                 }
             }
+
             // Anything else except x:Key is an instancing member.
             else if (!(prop.IsDirective && prop == XamlLanguage.Key))
             {
                 HaveSeenInstancingProperty = true;
                 isInstancingProperty = true;
             }
+
             return isInstancingProperty;
         }
 
@@ -423,6 +443,7 @@ namespace MS.Internal.Xaml
             {
                 return false;
             }
+
             if ((member == XamlLanguage.Initialization)
                   || (member == XamlLanguage.PositionalParameters)
                   || (member == XamlLanguage.FactoryMethod)
@@ -432,6 +453,7 @@ namespace MS.Internal.Xaml
             {
                 return true;
             }
+
             return false;
         }
 
@@ -441,10 +463,12 @@ namespace MS.Internal.Xaml
             {
                 return false;
             }
+
             if (member.IsDirective && member == XamlLanguage.Key)
             {
                 return false;
             }
+
             // Actually...
             // XamlLanguage.Uid, if the type has no UidProperty is not "instancing".
             // But it might be slower to track the current type and lookup the UidProperty
@@ -498,6 +522,7 @@ namespace MS.Internal.Xaml
                     case XamlNodeType.StartMember:
                         break;
                 }
+
                 _sortingInfoArray[i] = rInfo;
             }
         }
@@ -509,6 +534,7 @@ namespace MS.Internal.Xaml
                 int xamlIndex = _sortingInfoArray[idx].OriginalOrderIndex;
                 _buffer.Enqueue(_originalNodesInOrder[xamlIndex]);
             }
+
             _sortingInfoArray = null;
         }
 
@@ -540,6 +566,7 @@ namespace MS.Internal.Xaml
             {
                 return false;
             }
+
             for (int i = 0; i < _moveList.Count; i++)
             {
                 int ctorIdx = _moveList[i];
@@ -550,6 +577,7 @@ namespace MS.Internal.Xaml
                     deepestIdx = i;
                 }
             }
+
             Debug.Assert(deepestIdx != -1);
             _moveList.RemoveAt(deepestIdx);
             return true;
@@ -595,10 +623,12 @@ namespace MS.Internal.Xaml
                 {
                     return false;
                 }
+
                 current = end;
                 originalIdx = _sortingInfoArray[current].OriginalOrderIndex;
                 nextMember = _originalNodesInOrder[originalIdx].Member;
             }
+
             return true;
         }
 
@@ -615,10 +645,12 @@ namespace MS.Internal.Xaml
                 {
                     return false;
                 }
+
                 current = end;
                 originalIdx = _sortingInfoArray[current].OriginalOrderIndex;
                 member = _originalNodesInOrder[originalIdx].Member;
             }
+
             return true;
         }
 
@@ -641,10 +673,12 @@ namespace MS.Internal.Xaml
                         Debug.Assert(false, "Missing End Object in node sorter");
                     }
                 }
+
                 current = end;
                 originalIdx = _sortingInfoArray[current].OriginalOrderIndex;
                 nextMember = _originalNodesInOrder[originalIdx].Member;
             }
+
             return end - start;
         }
 
@@ -689,6 +723,7 @@ namespace MS.Internal.Xaml
                     return false;  // we have searched past the end of the current Object.
                 }
             }
+
             end =_sortingInfoArray.Length;
             return false;
         }
@@ -713,6 +748,7 @@ namespace MS.Internal.Xaml
                     }
                 }
             }
+
             end = 0;
             return false;
         }

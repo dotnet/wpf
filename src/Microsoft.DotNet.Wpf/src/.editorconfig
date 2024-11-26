@@ -341,9 +341,6 @@ dotnet_diagnostic.SA1507.severity = suggestion
 # SA1508: A closing brace should not be preceded by a blank line
 dotnet_diagnostic.SA1508.severity = suggestion
 
-# SA1513: Closing brace should be followed by blank line
-dotnet_diagnostic.SA1513.severity = suggestion
-
 # SA1518: Code should not contain blank lines at the end of the file
 dotnet_diagnostic.SA1518.severity = suggestion
 

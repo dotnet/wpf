@@ -39,6 +39,7 @@ namespace System.Xaml
                 {
                     _reader = new ReaderDelegate(_writer.SchemaContext, Next, _hasLineInfo);
                 }
+
                 return _reader;
             }
         }
@@ -68,6 +69,7 @@ namespace System.Xaml
                 _nodeQueue.Enqueue(node);
                 return;
             }
+
             Debug.Assert(XamlNode.IsEof_Helper(nodeType, data));
             _nodeQueue.Enqueue(_endOfStreamNode);
         }
@@ -81,6 +83,7 @@ namespace System.Xaml
             {
                 _hasLineInfo = true;
             }
+
             if (_reader != null && !_reader.HasLineInfo)
             {
                 _reader.HasLineInfo = true;
@@ -98,6 +101,7 @@ namespace System.Xaml
             {
                 node = _endOfStreamNode;
             }
+
             return node;
         }
     }

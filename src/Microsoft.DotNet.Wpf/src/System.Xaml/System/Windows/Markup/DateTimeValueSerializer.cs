@@ -45,6 +45,7 @@ namespace System.Windows.Markup
             {
                 throw GetConvertFromException(value);
             }
+
             if (value.Length == 0)
             {
                 return DateTime.MinValue;

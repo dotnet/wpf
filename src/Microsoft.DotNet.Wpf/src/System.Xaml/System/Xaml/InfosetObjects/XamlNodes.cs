@@ -19,7 +19,6 @@ namespace System.Xaml
         Value,
         NamespaceDeclaration,
     }
-;
 
     internal delegate void XamlNodeAddDelegate(XamlNodeType nodeType, object data);
     internal delegate void XamlLineInfoAddDelegate(int lineNumber, int linePosition);

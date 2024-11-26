@@ -19,7 +19,6 @@ namespace MS.Internal.Xaml.Parser
         TEXT,
         ENDTAG
     }
-;
 
     internal enum ScannerAttributeKind
     {
@@ -33,5 +32,4 @@ namespace MS.Internal.Xaml.Parser
         AttachableProperty,
         Unknown
     }
-;
 }

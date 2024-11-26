@@ -29,7 +29,6 @@ namespace MS.Internal.Xaml.Parser
         String,        // String - all other strings, {},= delimited can contain spaces.
         QuotedMarkupExtension // String - must be recursivly parsed as a MarkupExtension.
     }
-;
 
     // 1) Value and (propertynames for compatibility with WPF 3.0) can also have
     // escaped character with '\' to include '{' '}' ',' '=', and '\'.

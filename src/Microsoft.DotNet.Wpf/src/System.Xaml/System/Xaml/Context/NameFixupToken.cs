@@ -21,7 +21,6 @@ namespace MS.Internal.Xaml.Context
         ObjectInitializationValue, // A TC on an object that returned a FixupToken
         UnresolvedChildren,        // An object that can't be EndInited because it has pending fixups on its properties
     }
-;
 
     internal class FixupTargetKeyHolder
     {

@@ -29,7 +29,7 @@ namespace MS.Internal.Xaml.Parser
             string newPrefix;
             do {
                 newPrefix = $"prefix{n++}";
-            } while (_nsResolver(newPrefix) != null);
+            } while (_nsResolver(newPrefix) is not null);
             _newNamespaces.Add(new NamespaceDeclaration(ns, newPrefix));
             return newPrefix;
         }

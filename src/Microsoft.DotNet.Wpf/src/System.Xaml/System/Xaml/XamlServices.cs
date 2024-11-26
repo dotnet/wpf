@@ -101,8 +101,8 @@ namespace System.Xaml
             IXamlLineInfo xamlLineInfo = xamlReader as IXamlLineInfo;
             IXamlLineInfoConsumer xamlLineInfoConsumer = xamlWriter as IXamlLineInfoConsumer;
             bool shouldPassLineNumberInfo = false;
-            if ((xamlLineInfo != null && xamlLineInfo.HasLineInfo)
-                && (xamlLineInfoConsumer != null && xamlLineInfoConsumer.ShouldProvideLineInfo))
+            if ((xamlLineInfo is not null && xamlLineInfo.HasLineInfo)
+                && (xamlLineInfoConsumer is not null && xamlLineInfoConsumer.ShouldProvideLineInfo))
             {
                 shouldPassLineNumberInfo = true;
             }

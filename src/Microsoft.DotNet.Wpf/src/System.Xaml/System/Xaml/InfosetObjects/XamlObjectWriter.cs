@@ -61,7 +61,7 @@ namespace System.Xaml
         internal XamlObjectWriter(XamlSavedContext savedContext, XamlObjectWriterSettings settings)
         {
             ArgumentNullException.ThrowIfNull(savedContext);
-            if (savedContext.SchemaContext == null)
+            if (savedContext.SchemaContext is null)
             {
                 throw new ArgumentException(SR.SavedContextSchemaContextNull, nameof(savedContext));
             }
@@ -74,12 +74,12 @@ namespace System.Xaml
             //ObjectWriter must be passed in a non-null SchemaContext.  We check that here, since the CreateContext method
             //will create one if a null SchemaContext was passed in.
             ArgumentNullException.ThrowIfNull(schemaContext);
-            if (savedContext != null && schemaContext != savedContext.SchemaContext)
+            if (savedContext is not null && schemaContext != savedContext.SchemaContext)
             {
                 throw new ArgumentException(SR.SavedContextSchemaContextMismatch, nameof(schemaContext));
             }
 
-            if (settings != null)
+            if (settings is not null)
             {
                 _afterBeginInitHandler = settings.AfterBeginInitHandler;
                 _beforePropertiesHandler = settings.BeforePropertiesHandler;
@@ -94,15 +94,15 @@ namespace System.Xaml
                 _preferUnconvertedDictionaryKeys = settings.PreferUnconvertedDictionaryKeys;
             }
 
-            XAML3.INameScope rootNameScope = (settings != null) ? settings.ExternalNameScope : null;
+            XAML3.INameScope rootNameScope = (settings is not null) ? settings.ExternalNameScope : null;
 
             XamlRuntime runtime = CreateRuntime(settings, schemaContext);
 
-            if (savedContext != null)
+            if (savedContext is not null)
             {
                 _context = new ObjectWriterContext(savedContext, settings, rootNameScope, runtime);
             }
-            else if (schemaContext != null)
+            else if (schemaContext is not null)
             {
                 _context = new ObjectWriterContext(schemaContext, settings, rootNameScope, runtime);
                 _context.AddNamespacePrefix(KnownStrings.XmlPrefix, XamlLanguage.Xml1998Namespace);
@@ -121,15 +121,15 @@ namespace System.Xaml
         {
             XamlRuntime result = null;
             XamlRuntimeSettings runtimeSettings = null;
-            if (settings != null)
+            if (settings is not null)
             {
                 runtimeSettings = new XamlRuntimeSettings { IgnoreCanConvert = settings.IgnoreCanConvert };
-                if (settings.AccessLevel != null)
+                if (settings.AccessLevel is not null)
                 {
                     result = new PartialTrustTolerantRuntime(runtimeSettings, settings.AccessLevel, schemaContext);
                 }
             }
-            if (result == null)
+            if (result is null)
             {
                 result = new ClrObjectRuntime(runtimeSettings, true /*isWriter*/);
             }
@@ -139,13 +139,13 @@ namespace System.Xaml
 
         protected virtual void OnAfterBeginInit(object value)
         {
-            if (_afterBeginInitHandler != null)
+            if (_afterBeginInitHandler is not null)
             {
                 // Currently SourceBamlUri exists only to address pre .NET 4.6 compat issue. It is not
                 // null only when we load system resources like themes\generic.xaml. And only for
                 // resources located in RD itself (as opposite to nested RDs). Thus we should never see
                 // different non-null base and source URIs. In any case base URI is preferred.
-                Debug.Assert(_context.SourceBamlUri == null || _context.BaseUri == null || _context.SourceBamlUri == _context.BaseUri,
+                Debug.Assert(_context.SourceBamlUri is null || _context.BaseUri is null || _context.SourceBamlUri == _context.BaseUri,
                     "Source BAML URI and base URI do not agree");
                 _afterBeginInitHandler(this, new XamlObjectEventArgs(value, _context.BaseUri ?? _context.SourceBamlUri, _context.LineNumber_StartObject, _context.LinePosition_StartObject));
             }
@@ -153,7 +153,7 @@ namespace System.Xaml
 
         protected virtual void OnBeforeProperties(object value)
         {
-            if (_beforePropertiesHandler != null)
+            if (_beforePropertiesHandler is not null)
             {
                 _beforePropertiesHandler(this, new XamlObjectEventArgs(value));
             }
@@ -161,7 +161,7 @@ namespace System.Xaml
 
         protected virtual void OnAfterProperties(object value)
         {
-            if (_afterPropertiesHandler != null)
+            if (_afterPropertiesHandler is not null)
             {
                 _afterPropertiesHandler(this, new XamlObjectEventArgs(value));
             }
@@ -169,7 +169,7 @@ namespace System.Xaml
 
         protected virtual void OnAfterEndInit(object value)
         {
-            if (_afterEndInitHandler != null)
+            if (_afterEndInitHandler is not null)
             {
                 _afterEndInitHandler(this, new XamlObjectEventArgs(value));
             }
@@ -177,7 +177,7 @@ namespace System.Xaml
 
         protected virtual bool OnSetValue(object eventSender, XamlMember member, object value)
         {
-            if (_xamlSetValueHandler != null)
+            if (_xamlSetValueHandler is not null)
             {
                 var e = new XAML3.XamlSetValueEventArgs(member, value);
                 _xamlSetValueHandler(eventSender, e);
@@ -190,7 +190,7 @@ namespace System.Xaml
         {
             get
             {
-                if (_nameFixupGraph == null)
+                if (_nameFixupGraph is null)
                 {
                     _nameFixupGraph = new NameFixupGraph();
                 }
@@ -200,7 +200,7 @@ namespace System.Xaml
 
         private bool HasUnresolvedChildren(object parent)
         {
-            if (_nameFixupGraph == null)
+            if (_nameFixupGraph is null)
             {
                 return false;
             }
@@ -211,7 +211,7 @@ namespace System.Xaml
         {
             get
             {
-                if (_pendingCollectionAdds == null)
+                if (_pendingCollectionAdds is null)
                     _pendingCollectionAdds = new Dictionary<object, List<PendingCollectionAdd>>();
                 return _pendingCollectionAdds;
             }
@@ -221,7 +221,7 @@ namespace System.Xaml
         {
             get
             {
-                if (_pendingKeyConversionContexts == null)
+                if (_pendingKeyConversionContexts is null)
                     _pendingKeyConversionContexts = new Dictionary<object, ObjectWriterContext>();
                 return _pendingKeyConversionContexts;
             }
@@ -234,7 +234,7 @@ namespace System.Xaml
 
         private void TryCreateParentInstance(ObjectWriterContext ctx)
         {
-            if (ctx.ParentInstance == null && ctx.ParentProperty != XamlLanguage.Arguments)
+            if (ctx.ParentInstance is null && ctx.ParentProperty != XamlLanguage.Arguments)
             {
                 ctx.LiftScope();
                 Logic_CreateAndAssignToParentStart(ctx);
@@ -261,16 +261,16 @@ namespace System.Xaml
                 string err = SR.ValueMustBeFollowedByEndMember;
                 throw _context.WithLineInfo(new XamlObjectWriterException(err));
             }
-            XamlMember parentProperty = (_context.CurrentType == null && _context.Depth > 1)
+            XamlMember parentProperty = (_context.CurrentType is null && _context.Depth > 1)
                 ? _context.ParentProperty
                 : _context.CurrentProperty;  // there is a push frame below making this the parent property.
-            if (parentProperty == null)
+            if (parentProperty is null)
             {
-                XamlType xamlType = (_context.CurrentType == null && _context.Depth > 1)
+                XamlType xamlType = (_context.CurrentType is null && _context.Depth > 1)
                     ? _context.ParentType
                     : _context.CurrentType;
 
-                string err = (xamlType != null)
+                string err = (xamlType is not null)
                     ? SR.Format(SR.NoPropertyInCurrentFrame_GO, xamlType.ToString())
                     : SR.NoPropertyInCurrentFrame_GO_noType;
 
@@ -284,7 +284,7 @@ namespace System.Xaml
             _lastInstance = null;
 
             // A Frame is pushed by either a AddNamespace or a WriteGet/StartObject
-            if (_context.CurrentType != null)
+            if (_context.CurrentType is not null)
             {
                 _context.PushScope();
             }
@@ -336,7 +336,7 @@ namespace System.Xaml
                 throw _context.WithLineInfo(new XamlObjectWriterException(err));
             }
 
-            if (_context.CurrentType != null && _context.CurrentProperty == null)
+            if (_context.CurrentType is not null && _context.CurrentProperty is null)
             {
                 string err = SR.Format(SR.NoPropertyInCurrentFrame_SO, xamlType.ToString(),
                                                                     _context.CurrentType.ToString());
@@ -350,7 +350,7 @@ namespace System.Xaml
             _lastInstance = null;
 
             // A Frame is pushed by either a AddNamespace or a WriteGet/StartObject
-            if (_context.CurrentType != null)
+            if (_context.CurrentType is not null)
             {
                 _context.PushScope();
             }
@@ -362,7 +362,7 @@ namespace System.Xaml
             // in it's constructor.  The instance is already created (that is how we got into
             // the constructor), now don't create the first StartObject use the existing instance.
             //
-            if ((_context.LiveDepth == 1) && (_rootObjectInstance != null))
+            if ((_context.LiveDepth == 1) && (_rootObjectInstance is not null))
             {
                 XamlType rootType = GetXamlType(_rootObjectInstance.GetType());
                 if (!rootType.CanAssignTo(_context.CurrentType))
@@ -391,7 +391,7 @@ namespace System.Xaml
             {
                 if (_deferringWriter.Mode == DeferringMode.TemplateReady)
                 {
-                    Debug.Assert(_context.CurrentProperty.DeferringLoader != null);
+                    Debug.Assert(_context.CurrentProperty.DeferringLoader is not null);
                     XamlNodeList templateList = _deferringWriter.CollectTemplateList();
                     _context.PushScope();
                     _context.CurrentInstance = (XamlReader)templateList.GetReader();
@@ -406,12 +406,12 @@ namespace System.Xaml
                 string err = SR.ValueMustBeFollowedByEndMember;
                 throw _context.WithLineInfo(new XamlObjectWriterException(err));
             }
-            if (_context.CurrentType == null)
+            if (_context.CurrentType is null)
             {
                 string err = SR.NoTypeInCurrentFrame_EO;
                 throw _context.WithLineInfo(new XamlObjectWriterException(err));
             }
-            if (_context.CurrentProperty != null)
+            if (_context.CurrentProperty is not null)
             {
                 string err = SR.Format(SR.OpenPropertyInCurrentFrame_EO, _context.CurrentType.ToString(),
                                                                         _context.CurrentProperty.ToString());
@@ -430,7 +430,7 @@ namespace System.Xaml
                 // Create From InitText, or Create with parameters.
                 // But, If we got to End Object and still haven't Created it,
                 // then create it now.
-                if (_context.CurrentInstance == null)
+                if (_context.CurrentInstance is null)
                 {
                     Logic_CreateAndAssignToParentStart(_context);
                 }
@@ -452,10 +452,10 @@ namespace System.Xaml
                         Logic_EndInit(_context);
                         instance = _context.CurrentInstance;
                         Logic_AssignProvidedValue(_context);
-                        if (_context.CurrentInstanceRegisteredName != null)
+                        if (_context.CurrentInstanceRegisteredName is not null)
                         {
                             // Names on MEs apply to the ME, not to the provided value
-                            if (_nameFixupGraph != null)
+                            if (_nameFixupGraph is not null)
                             {
                                 TriggerNameResolution(instance, _context.CurrentInstanceRegisteredName);
                             }
@@ -530,7 +530,7 @@ namespace System.Xaml
             }
             else if (isFixupToken)
             {
-                if (name != null)
+                if (name is not null)
                 {
                     NameFixupToken token = (NameFixupToken)_lastInstance;
                     if (token.FixupType == FixupType.ObjectInitializationValue && !token.CanAssignDirectly)
@@ -543,7 +543,7 @@ namespace System.Xaml
                     }
                 }
             }
-            else if (_nameFixupGraph != null)
+            else if (_nameFixupGraph is not null)
             {
                 TriggerNameResolution(_lastInstance, name);
             }
@@ -583,18 +583,18 @@ namespace System.Xaml
             {
                 err = SR.Format(SR.CantSetUnknownProperty, property.ToString());
             }
-            else if (_context.CurrentProperty != null)
+            else if (_context.CurrentProperty is not null)
             {
                 err = SR.Format(SR.OpenPropertyInCurrentFrame_SM, _context.CurrentType.ToString(),
                                                                  _context.CurrentProperty.ToString(),
                                                                  property.ToString());
             }
-            else if (_context.CurrentType == null)
+            else if (_context.CurrentType is null)
             {
                 err = SR.Format(SR.NoTypeInCurrentFrame_SM, property.ToString());
             }
 
-            if (err != null)
+            if (err is not null)
             {
                 throw _context.WithLineInfo(new XamlObjectWriterException(err));
             }
@@ -610,7 +610,7 @@ namespace System.Xaml
 
             // If we haven't created the object yet then consider creating it now.
             // We need an object instance to set property values on.
-            if (_context.CurrentInstance == null)
+            if (_context.CurrentInstance is null)
             {
                 if (!IsConstructionDirective(_context.CurrentProperty)
                     && !IsDirectiveAllowedOnNullInstance(_context.CurrentProperty, _context.CurrentType))
@@ -684,7 +684,7 @@ namespace System.Xaml
             XamlMember property;
             // In the Text value case we will be on the text frame
             // and the property is in the parent.
-            if (_context.CurrentType == null)
+            if (_context.CurrentType is null)
             {
                 property = _context.ParentProperty;
             }
@@ -694,9 +694,9 @@ namespace System.Xaml
                 property = _context.CurrentProperty;
             }
 
-            if (property == null)
+            if (property is null)
             {
-                string err = (_context.CurrentType != null)
+                string err = (_context.CurrentType is not null)
                     ? SR.Format(SR.NoPropertyInCurrentFrame_EM, _context.CurrentType.ToString())
                     : SR.NoPropertyInCurrentFrame_EM_noType;
 
@@ -729,14 +729,14 @@ namespace System.Xaml
             else if (property == XamlLanguage.Class)
             {
                 object value = null;
-                if (_context.CurrentType == null)
+                if (_context.CurrentType is null)
                 {
                     value = _context.CurrentInstance;
                     _context.PopScope();
                 }
                 Logic_ValidateXClass(_context, value);
             }
-            else if (_context.CurrentType == null)
+            else if (_context.CurrentType is null)
             {
                 // CurrentType == null means we are in a Value Frame (under a property)
                 // [rather than the result of some S0 sub-tree].
@@ -752,10 +752,10 @@ namespace System.Xaml
                 object value = _context.CurrentInstance;
 
                 bool shouldSetValue = true;
-                if (value != null)
+                if (value is not null)
                 {
                     XAML3.MarkupExtension me = value as XAML3.MarkupExtension;
-                    if (me != null)
+                    if (me is not null)
                     {
                         _context.CurrentInstance = me;
                         XamlType valueXamlType = GetXamlType(value.GetType());
@@ -810,7 +810,7 @@ namespace System.Xaml
                 // Handles the case of SM Template; V NodeList; EM
                 if (_deferringWriter.Mode == DeferringMode.TemplateReady)
                 {
-                    Debug.Assert(_context.CurrentProperty.DeferringLoader != null);
+                    Debug.Assert(_context.CurrentProperty.DeferringLoader is not null);
                     XamlNodeList templateList = _deferringWriter.CollectTemplateList();
                     _context.PushScope();
                     _context.CurrentInstance = (XamlReader)templateList.GetReader();
@@ -821,9 +821,9 @@ namespace System.Xaml
             // Error Checking
             //
             XamlMember currentProperty = _context.CurrentProperty;
-            if (currentProperty == null)
+            if (currentProperty is null)
             {
-                string err = (_context.CurrentType != null)
+                string err = (_context.CurrentType is not null)
                     ? SR.Format(SR.NoPropertyInCurrentFrame_V, value, _context.CurrentType.ToString())
                     : SR.Format(SR.NoPropertyInCurrentFrame_V_noType, value);
 
@@ -874,11 +874,11 @@ namespace System.Xaml
         {
             ThrowIfDisposed();
             ArgumentNullException.ThrowIfNull(namespaceDeclaration);
-            if(namespaceDeclaration.Prefix == null)
+            if(namespaceDeclaration.Prefix is null)
             {
                 throw new ArgumentException(SR.NamespaceDeclarationPrefixCannotBeNull);
             }
-            if(namespaceDeclaration.Namespace == null)
+            if(namespaceDeclaration.Namespace is null)
             {
                 throw new ArgumentException(SR.NamespaceDeclarationNamespaceCannotBeNull);
             }
@@ -898,7 +898,7 @@ namespace System.Xaml
                 string err = SR.ValueMustBeFollowedByEndMember;
                 throw _context.WithLineInfo(new XamlObjectWriterException(err));
             }
-            if (_context.CurrentType != null && _context.CurrentProperty == null)
+            if (_context.CurrentType is not null && _context.CurrentProperty is null)
             {
                 string err = SR.Format(SR.NoPropertyInCurrentFrame_NS, namespaceDeclaration.Prefix,
                                                                       namespaceDeclaration.Namespace,
@@ -907,7 +907,7 @@ namespace System.Xaml
             }
 
             // A Frame is pushed by either a AddNamespace or a WriteObject
-            if (_context.CurrentType != null)
+            if (_context.CurrentType is not null)
             {
                 _context.PushScope();
             }
@@ -934,12 +934,12 @@ namespace System.Xaml
                 _inDispose = true;
                 if (disposing && !IsDisposed)
                 {
-                    bool seenStartObject = _context.LiveDepth > 1 || _context.CurrentType != null;
+                    bool seenStartObject = _context.LiveDepth > 1 || _context.CurrentType is not null;
                     if (seenStartObject)
                     {
                         while (_context.LiveDepth > 0)
                         {
-                            if (_context.CurrentProperty != null)
+                            if (_context.CurrentProperty is not null)
                             {
                                 WriteEndMember();
                             }
@@ -975,7 +975,7 @@ namespace System.Xaml
         {
             get
             {
-                if (_rootNamescope != null)
+                if (_rootNamescope is not null)
                 {
                     return _rootNamescope;
                 }
@@ -1045,7 +1045,7 @@ namespace System.Xaml
         private object GetKeyFromInstance(object instance, XamlType instanceType, IAddLineInfo lineInfo)
         {
             XamlMember keyProperty = instanceType.GetAliasedProperty(XamlLanguage.Key);
-            if (keyProperty == null || instance == null)
+            if (keyProperty is null || instance is null)
             {
                 throw lineInfo.WithLineInfo(new XamlObjectWriterException(SR.Format(SR.MissingKey, instanceType.Name)));
             }
@@ -1056,7 +1056,7 @@ namespace System.Xaml
         private XamlType GetXamlType(Type clrType)
         {
             XamlType result = SchemaContext.GetXamlType(clrType);
-            if (result == null)
+            if (result is null)
             {
                 throw new InvalidOperationException(SR.Format(SR.ObjectWriterTypeNotAllowed,
                     SchemaContext.GetType(), clrType));
@@ -1096,7 +1096,7 @@ namespace System.Xaml
             }
             if (xamlMember == XamlLanguage.Uid)
             {
-                if (null == xamlType.GetAliasedProperty(XamlLanguage.Uid))
+                if (xamlType.GetAliasedProperty(XamlLanguage.Uid) is null)
                 {
                     return true;
                 }
@@ -1120,13 +1120,13 @@ namespace System.Xaml
             // of the rule in AssignProvideValue that skips PV() if the
             // parent instance is null (which is always is for Ctor params).
             // So Unpack and call Provide Value on items in the arguement vector here.
-            if (currentType.IsMarkupExtension && ctx.CurrentCtorArgs != null)
+            if (currentType.IsMarkupExtension && ctx.CurrentCtorArgs is not null)
             {
                 object[] args = ctx.CurrentCtorArgs;
                 for (int i = 0; i < args.Length; i++)
                 {
                     XAML3.MarkupExtension me = args[i] as XAML3.MarkupExtension;
-                    if (me != null)
+                    if (me is not null)
                     {
                         args[i] = Logic_PushAndPopAProvideValueStackFrame(ctx, XamlLanguage.PositionalParameters, me, false);
                     }
@@ -1142,21 +1142,21 @@ namespace System.Xaml
             else  // with Factory Method
             {
                 XamlPropertyName propertyName = XamlPropertyName.Parse((string)factoryMethodName);
-                if (propertyName == null)
+                if (propertyName is null)
                 {
                     string errMsg = string.Format(TypeConverterHelper.InvariantEnglishUS, SR.InvalidExpression, factoryMethodName);
                     throw ctx.WithLineInfo(new XamlInternalException(errMsg));
                 }
 
                 XamlType ownerType;
-                if (propertyName.Owner == null)
+                if (propertyName.Owner is null)
                 {
                     ownerType = currentType;
                 }
                 else
                 {
                     ownerType = ctx.GetXamlType(propertyName.Owner);
-                    if (ownerType == null)
+                    if (ownerType is null)
                     {
                         XamlTypeName ownerTypeName = ctx.GetXamlTypeName(propertyName.Owner);
                         throw ctx.WithLineInfo(new XamlObjectWriterException(SR.Format(SR.CannotResolveTypeForFactoryMethod, ownerTypeName, propertyName.Name)));
@@ -1165,7 +1165,7 @@ namespace System.Xaml
 
                 inst = Runtime.CreateWithFactoryMethod(ownerType, propertyName.Name, ctx.CurrentCtorArgs);
 
-                Debug.Assert(inst != null); // runtime throws before it returns null.
+                Debug.Assert(inst is not null); // runtime throws before it returns null.
 
                 XamlType instType = GetXamlType(inst.GetType());
                 if (!instType.CanAssignTo(currentType))
@@ -1210,7 +1210,7 @@ namespace System.Xaml
             object[] argInstances = new object[rawArgs.Count];
             IList<XamlType> paramTypes = meType.GetPositionalParameters(rawArgs.Count);
 
-            if (null == paramTypes)
+            if (paramTypes is null)
             {
                 // A constructor with the specified number of arguments doesn't exist
                 string msg = string.Format(TypeConverterHelper.InvariantEnglishUS, SR.NoSuchConstructor, rawArgs.Count, meType.Name);
@@ -1248,7 +1248,7 @@ namespace System.Xaml
                 string err = SR.Format(SR.CantCreateUnknownType, xamlType.GetQualifiedName());
                 throw ctx.WithLineInfo(new XamlObjectWriterException(err));
             }
-            if (ts == null)
+            if (ts is null)
             {
                 throw ctx.WithLineInfo(new XamlObjectWriterException(SR.Format(SR.InitializationSyntaxWithoutTypeConverter, xamlType.GetQualifiedName())));
             }
@@ -1303,11 +1303,11 @@ namespace System.Xaml
 
             object value = ctx.CurrentInstance;
             XamlReader deferredContent = value as XamlReader;
-            if (deferredContent != null)
+            if (deferredContent is not null)
             {
                 // property.DeferringLoader looks at the property AND the type of the property.
                 XamlValueConverter<XamlDeferringLoader> deferringLoader = property.DeferringLoader;
-                if (deferringLoader != null)
+                if (deferringLoader is not null)
                 {
                     ctx.CurrentInstance = Runtime.DeferredLoad(
                         ctx.ServiceProviderContext, deferringLoader, deferredContent);
@@ -1329,22 +1329,22 @@ namespace System.Xaml
                 declaringType = ctx.ParentType;
             }
 
-            if (property != null && !property.IsUnknown && declaringType != null)
+            if (property is not null && !property.IsUnknown && declaringType is not null)
             {
                 XamlType grandParentXamlType = ctx.GrandParentType;
                 if (property.IsDirective &&
                     property == XamlLanguage.Key &&
-                    grandParentXamlType != null &&
+                    grandParentXamlType is not null &&
                     grandParentXamlType.IsDictionary)
                 {
                     converter = grandParentXamlType.KeyType.TypeConverter;
                 }
-                if (converter!= null && converter.ConverterType != null && converter != BuiltInValueConverter.String)
+                if (converter is not null && converter.ConverterType is not null && converter != BuiltInValueConverter.String)
                 {
                     TypeConverter typeConverter = Runtime.GetConverterInstance(converter);
-                    if (typeConverter != null)
+                    if (typeConverter is not null)
                     {
-                        if (declaringType.SetTypeConverterHandler != null)
+                        if (declaringType.SetTypeConverterHandler is not null)
                         {
                             var eventArgs = new XAML3.XamlSetTypeConverterEventArgs(property, typeConverter, value, ctx.ServiceProviderContext,
                                     TypeConverterHelper.InvariantEnglishUS,
@@ -1362,7 +1362,7 @@ namespace System.Xaml
                 }
             }
 
-            if (converter != null)
+            if (converter is not null)
             {
                 inst = Logic_CreateFromValue(ctx, converter, value, property, property.Name);
             }
@@ -1401,7 +1401,7 @@ namespace System.Xaml
                 return false;
             }
             XamlType dictionaryType = ctx.GrandParentType;
-            if (dictionaryType != null && dictionaryType.IsDictionary &&
+            if (dictionaryType is not null && dictionaryType.IsDictionary &&
                 typeof(IDictionary).IsAssignableFrom(dictionaryType.UnderlyingType) &&
                 !IsBuiltInGenericDictionary(dictionaryType.UnderlyingType))
             {
@@ -1413,7 +1413,7 @@ namespace System.Xaml
 
         private static bool IsBuiltInGenericDictionary(Type type)
         {
-            if (type == null || !type.IsGenericType)
+            if (type is null || !type.IsGenericType)
             {
                 return false;
             }
@@ -1430,7 +1430,7 @@ namespace System.Xaml
             XamlType xamlType = ctx.CurrentType;
 
             Runtime.InitializationGuard(xamlType, inst, true);
-            if (ctx.BaseUri != null)
+            if (ctx.BaseUri is not null)
             {
                 Runtime.SetUriBase(xamlType, inst, ctx.BaseUri);
             }
@@ -1525,7 +1525,7 @@ namespace System.Xaml
                     // (x:Key and x:Name need their own "saved spot" outside of PreconstructionPropertyValues)
 
                     XAML3.MarkupExtension me = value as XAML3.MarkupExtension;
-                    if (me != null && !prop.IsDirective)
+                    if (me is not null && !prop.IsDirective)
                     {
                         Logic_PushAndPopAProvideValueStackFrame(ctx, prop, me, true);
                     }
@@ -1585,7 +1585,7 @@ namespace System.Xaml
             {
                 XamlType xamlType = onParent ? ctx.ParentType : ctx.CurrentType;
                 XamlMember propertyForDirective = xamlType.GetAliasedProperty(prop as XamlDirective);
-                if (prop != XamlLanguage.Key && propertyForDirective != null)
+                if (prop != XamlLanguage.Key && propertyForDirective is not null)
                 {
                     // handle aliases for x:Uid x:Lang etc.
                     Logic_DuplicatePropertyCheck(ctx, propertyForDirective, onParent);
@@ -1614,7 +1614,7 @@ namespace System.Xaml
                 {
                     Logic_CheckBaseUri(ctx, (string)value);
                     ctx.BaseUri = new Uri((string)value);
-                    if (ctx.ParentInstance != null)
+                    if (ctx.ParentInstance is not null)
                     {
                         Runtime.SetUriBase(ctx.ParentType, ctx.ParentInstance, ctx.BaseUri);
                     }
@@ -1626,7 +1626,7 @@ namespace System.Xaml
         {
             // Make sure BaseUri is not already set and that we can only set BaseUri on the root element
             // Depth > 2 because on the root element, SO/SM takes 1 slot, V is slot 2
-            if ((ctx.BaseUri != null) || (ctx.Depth > 2))
+            if ((ctx.BaseUri is not null) || (ctx.Depth > 2))
             {
                 throw new XamlObjectWriterException(SR.CannotSetBaseUri);
             }
@@ -1638,7 +1638,7 @@ namespace System.Xaml
         private void Logic_AssignProvidedValue(ObjectWriterContext ctx)
         {
             bool handled = Logic_ProvideValue(ctx);
-            if (!handled && ctx.ParentProperty != null)
+            if (!handled && ctx.ParentProperty is not null)
             {
                 Logic_DoAssignmentToParentProperty(ctx);
             }
@@ -1652,7 +1652,7 @@ namespace System.Xaml
             object parentInstance = ctx.ParentInstance;
             XamlMember parentProperty = ctx.ParentProperty;
 
-            if (parentProperty != null && parentProperty.IsUnknown == false)
+            if (parentProperty is not null && parentProperty.IsUnknown == false)
             {
                 XamlType declaringType = null;
 
@@ -1665,9 +1665,9 @@ namespace System.Xaml
                     declaringType = ctx.ParentType;
                 }
 
-                if (declaringType != null)
+                if (declaringType is not null)
                 {
-                    if (declaringType.SetMarkupExtensionHandler != null)
+                    if (declaringType.SetMarkupExtensionHandler is not null)
                     {
                         var eventArgs = new XAML3.XamlSetMarkupExtensionEventArgs(parentProperty, me, ctx.ServiceProviderContext, parentInstance);
                         eventArgs.CurrentType = declaringType;
@@ -1687,7 +1687,7 @@ namespace System.Xaml
             // or it is the live root instance. ME.ProvideValue must be invoked in each case, except where a ME is the
             // live root instance and _skipProvideValueOnRoot is true. This allows live root instances of templates to
             // remain as MEs where necessary.
-            Debug.Assert(parentInstance != null || parentProperty != null && parentProperty.IsDirective || ctx.LiveDepth == 1);
+            Debug.Assert(parentInstance is not null || parentProperty is not null && parentProperty.IsDirective || ctx.LiveDepth == 1);
             object value = me;
             if (ctx.LiveDepth != 1 || !_skipProvideValueOnRoot)
             {
@@ -1695,9 +1695,9 @@ namespace System.Xaml
             }
 
             // Checking that the ME isn't the Root of the XAML Document.
-            if (ctx.ParentProperty != null)
+            if (ctx.ParentProperty is not null)
             {
-                if (value != null)
+                if (value is not null)
                 {
                     if (!(value is NameFixupToken))
                     {
@@ -1764,7 +1764,7 @@ namespace System.Xaml
                     // If Value is a Markup Extention then check the collection item type
                     // if it can hold the ME then don't call ProvideValue().
                     XAML3.MarkupExtension me = value as XAML3.MarkupExtension;
-                    if(me != null && !Logic_WillParentCollectionAdd(ctx, value.GetType(), true))
+                    if(me is not null && !Logic_WillParentCollectionAdd(ctx, value.GetType(), true))
                     {
                         // We don't need to call Logic_ProvideValue() with the extra handler
                         // interfaces, because this is collection not a scalar property.
@@ -1775,9 +1775,9 @@ namespace System.Xaml
             }
             else
             {
-                if (currentType == null)
+                if (currentType is null)
                 {
-                    currentType = value == null ? collectionType.ItemType : GetXamlType(value.GetType());
+                    currentType = value is null ? collectionType.ItemType : GetXamlType(value.GetType());
                 }
                 object key = ctx.CurrentKey;
                 bool keyIsSet = ctx.CurrentIsKeySet;
@@ -1864,7 +1864,7 @@ namespace System.Xaml
 
                 // Reproduce the stack as it would have been at the point when the key was originally
                 // read, and run the type converter now.
-                Debug.Assert(ctx.CurrentProperty == null);
+                Debug.Assert(ctx.CurrentProperty is null);
                 ctx.CurrentProperty = XamlLanguage.Key;
                 ctx.PushScope();
                 ctx.CurrentInstance = key;
@@ -1889,12 +1889,12 @@ namespace System.Xaml
             NameFixupToken valueToken = value as NameFixupToken;
 
             List<PendingCollectionAdd> pendingCollection = null;
-            if (_pendingCollectionAdds != null)
+            if (_pendingCollectionAdds is not null)
             {
                 PendingCollectionAdds.TryGetValue(parentCollection, out pendingCollection);
             }
-            if (pendingCollection == null &&
-                (keyToken != null || valueToken != null ||
+            if (pendingCollection is null &&
+                (keyToken is not null || valueToken is not null ||
                 HasUnresolvedChildren(key) || HasUnresolvedChildren(value)))
             {
                 // We pend the add not only if the key or value are unresolved, but also if they
@@ -1904,19 +1904,19 @@ namespace System.Xaml
                 pendingCollection = new List<PendingCollectionAdd>();
                 PendingCollectionAdds.Add(parentCollection, pendingCollection);
             }
-            if (keyToken != null)
+            if (keyToken is not null)
             {
                 // Set KeyHolder to null since the item is no longer on the stack,
                 // so we won't be getting its key from the saved KeyHolder anymore
                 keyToken.Target.KeyHolder = null;
                 keyToken.Target.TemporaryCollectionIndex = pendingCollection.Count;
             }
-            if (valueToken != null)
+            if (valueToken is not null)
             {
                 Logic_PendCurrentFixupToken_SetValue(ctx, valueToken);
                 valueToken.Target.TemporaryCollectionIndex = pendingCollection.Count;
             }
-            if (pendingCollection != null)
+            if (pendingCollection is not null)
             {
                 PendingCollectionAdd pendingAdd = new PendingCollectionAdd
                 {
@@ -1971,7 +1971,7 @@ namespace System.Xaml
             else
             {
                 object parentInstance = ctx.ParentInstance;
-                if (parentInstance != null)
+                if (parentInstance is not null)
                 {
                     // This checks for multi-values to single valued properties.
                     // <Button.Background>
@@ -2086,7 +2086,7 @@ namespace System.Xaml
 
             // if the grandparent instance is null, we're not in a dictionary, so the key will never be used
             // so just throw it away
-            if (token.Target.Instance != null)
+            if (token.Target.Instance is not null)
             {
                 Logic_PendCurrentFixupToken_SetValue(ctx, token);
             }
@@ -2113,7 +2113,7 @@ namespace System.Xaml
         {
             XAML3.INameScope underlyingNameScope = nameScope;
             NameScopeDictionary nameScopeDict = nameScope as NameScopeDictionary;
-            if (nameScopeDict != null)
+            if (nameScopeDict is not null)
             {
                 underlyingNameScope = nameScopeDict.UnderlyingNameScope;
             }
@@ -2170,12 +2170,12 @@ namespace System.Xaml
                 throw ctx.WithLineInfo(new XamlObjectWriterException(SR.Format(SR.DirectiveNotAtRoot, XamlLanguage.Class)));
             }
             string className = value as string;
-            if (className == null)
+            if (className is null)
             {
                 throw ctx.WithLineInfo(new XamlObjectWriterException(SR.Format(SR.DirectiveMustBeString, XamlLanguage.Class)));
             }
             object curInstance = ctx.CurrentInstance;
-            Type rootInstanceType = (curInstance != null) ? curInstance.GetType() : ctx.CurrentType.UnderlyingType;
+            Type rootInstanceType = (curInstance is not null) ? curInstance.GetType() : ctx.CurrentType.UnderlyingType;
             if (rootInstanceType.FullName != className)
             {
                 string rootNamespace = SchemaContext.GetRootNamespace(rootInstanceType.Assembly);
@@ -2197,7 +2197,7 @@ namespace System.Xaml
             object childThatHasUnresolvedChildren = ctx.CurrentInstance;
             XamlMember property = ctx.ParentProperty;
 
-            if (property != null && property.IsDirective && ctx.ParentInstance == null && property != XamlLanguage.Key)
+            if (property is not null && property.IsDirective && ctx.ParentInstance is null && property != XamlLanguage.Key)
             {
                 // The parent instance is null, so we're in a creation directives. Forward refs
                 // aren't allowed here.
@@ -2220,7 +2220,7 @@ namespace System.Xaml
             XamlMember property, XamlSavedContext deferredMarkupExtensionContext)
         {
             NameFixupToken token = new NameFixupToken();
-            if (deferredMarkupExtensionContext != null)
+            if (deferredMarkupExtensionContext is not null)
             {
                 token.FixupType = FixupType.MarkupExtensionFirstRun;
                 token.SavedContext = deferredMarkupExtensionContext;
@@ -2236,7 +2236,7 @@ namespace System.Xaml
 
         private void CompleteNameReferences()
         {
-            if (_nameFixupGraph == null)
+            if (_nameFixupGraph is null)
             {
                 return;
             }
@@ -2247,9 +2247,9 @@ namespace System.Xaml
             foreach (NameFixupToken token in simpleFixups)
             {
                 object namedObject = token.ResolveName(token.NeededNames[0]);
-                if (namedObject == null)
+                if (namedObject is null)
                 {
-                    if (unresolvedRefs == null)
+                    if (unresolvedRefs is null)
                     {
                         unresolvedRefs = new List<NameFixupToken>();
                     }
@@ -2257,7 +2257,7 @@ namespace System.Xaml
                 }
                 // Only process if we haven't found any unresolved references. If we have,
                 // we're going to throw, so no point in processing.
-                else if (unresolvedRefs == null)
+                else if (unresolvedRefs is null)
                 {
                     token.ReferencedObject = namedObject;
                     token.NeededNames.RemoveAt(0);
@@ -2270,7 +2270,7 @@ namespace System.Xaml
                     _nameFixupGraph.AddEndOfParseDependency(token.ReferencedObject, token.Target);
                 }
             }
-            if (unresolvedRefs != null)
+            if (unresolvedRefs is not null)
             {
                 ThrowUnresolvedRefs(unresolvedRefs);
             }
@@ -2289,7 +2289,7 @@ namespace System.Xaml
             foreach (NameFixupToken token in objectDependencies)
             {
                 ProcessNameFixup(token, true);
-                if (token.Target.Instance != null &&
+                if (token.Target.Instance is not null &&
                     !_nameFixupGraph.HasUnresolvedChildren(token.Target.Instance))
                 {
                     CompleteDeferredInitialization(token.Target);
@@ -2328,7 +2328,7 @@ namespace System.Xaml
             Debug.Assert(!_inNameResolution);
             _inNameResolution = true;
 #endif
-            Debug.Assert(_nameFixupGraph != null);
+            Debug.Assert(_nameFixupGraph is not null);
             _nameFixupGraph.ResolveDependenciesTo(instance, name);
             while (_nameFixupGraph.HasResolvedTokensPendingProcessing)
             {
@@ -2340,7 +2340,7 @@ namespace System.Xaml
                 // dependencies to its name now.
                 if (token.FixupType == FixupType.ObjectInitializationValue &&
                     !token.CanAssignDirectly &&
-                    token.TargetContext.CurrentInstanceRegisteredName != null &&
+                    token.TargetContext.CurrentInstanceRegisteredName is not null &&
                     !_context.IsOnTheLiveStack(token.TargetContext.CurrentInstance))
                 {
                     string convertedName = token.TargetContext.CurrentInstanceRegisteredName;
@@ -2368,7 +2368,7 @@ namespace System.Xaml
 
         bool ICheckIfInitialized.IsFullyInitialized(object instance)
         {
-            if (instance == null)
+            if (instance is null)
             {
                 return true;
             }
@@ -2379,7 +2379,7 @@ namespace System.Xaml
                 {
                     return false;
                 }
-                return _nameFixupGraph == null || !_nameFixupGraph.HasUnresolvedOrPendingChildren(instance);
+                return _nameFixupGraph is null || !_nameFixupGraph.HasUnresolvedOrPendingChildren(instance);
             }
             else
             {
@@ -2387,7 +2387,7 @@ namespace System.Xaml
                 // and remove those dependencies. But we still want to be able to inform MEs/TCs that
                 // the named objects they're getting aren't actually fully initialized. So we save a list
                 // of incompletely initialized objects at the point we started completing references.
-                return _nameFixupGraph == null || !_nameFixupGraph.WasUninitializedAtEndOfParse(instance);
+                return _nameFixupGraph is null || !_nameFixupGraph.WasUninitializedAtEndOfParse(instance);
             }
         }
 
@@ -2481,7 +2481,7 @@ namespace System.Xaml
                     break;
                 case FixupType.ObjectInitializationValue:
                     Logic_CreateFromInitializationValue(owc);
-                    if (token.TargetContext.CurrentInstanceRegisteredName != null)
+                    if (token.TargetContext.CurrentInstanceRegisteredName is not null)
                     {
                         // We couldn't actually register before, because the instance hadn't been
                         // created by the TypeConverter. So register it now.
@@ -2504,7 +2504,7 @@ namespace System.Xaml
             {
                 ProcessNameFixup_UpdatePendingAddItem(token, owc.CurrentInstance);
             }
-            else if (token.Target.Property != null)
+            else if (token.Target.Property is not null)
             {
                 Logic_DoAssignmentToParentProperty(owc);
             }
@@ -2516,7 +2516,7 @@ namespace System.Xaml
             }
 
             NameFixupToken newToken = owc.CurrentInstance as NameFixupToken;
-            if (newToken != null)
+            if (newToken is not null)
             {
                 // Line Info should be the same as the original token, not wherever we happen to be currently.
                 // Also several properties on Target (IsOnTheStack, EndInstanceLineInfo, and potentially others)
@@ -2536,7 +2536,7 @@ namespace System.Xaml
 
         private void ProcessNameFixup_UpdatePendingAddKey(NameFixupToken token, object key)
         {
-            if (token.Target.KeyHolder != null)
+            if (token.Target.KeyHolder is not null)
             {
                 // The KeyHolder item is still on the stack, so update the KeyHolder
                 Debug.Assert(token.Target.KeyHolder.Key == token);
@@ -2562,14 +2562,14 @@ namespace System.Xaml
             pendingAdd.Item = item;
             if (!(item is NameFixupToken))
             {
-                pendingAdd.ItemType = (item != null) ? GetXamlType(item.GetType()) : null;
+                pendingAdd.ItemType = (item is not null) ? GetXamlType(item.GetType()) : null;
             }
         }
 
         private void ExecutePendingAdds(XamlType instanceType, object instance)
         {
             List<PendingCollectionAdd> pendingCollection;
-            if (_pendingCollectionAdds != null && PendingCollectionAdds.TryGetValue(instance, out pendingCollection))
+            if (_pendingCollectionAdds is not null && PendingCollectionAdds.TryGetValue(instance, out pendingCollection))
             {
                 foreach (PendingCollectionAdd pendingAdd in pendingCollection)
                 {
@@ -2613,7 +2613,7 @@ namespace System.Xaml
                     }
                 }
                 PendingCollectionAdds.Remove(instance);
-                if (_pendingKeyConversionContexts != null && _pendingKeyConversionContexts.ContainsKey(instance))
+                if (_pendingKeyConversionContexts is not null && _pendingKeyConversionContexts.ContainsKey(instance))
                 {
                     _pendingKeyConversionContexts.Remove(instance);
                 }

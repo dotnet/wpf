@@ -84,7 +84,7 @@ namespace System.Xaml
 
         public void StartThread(string threadName)
         {
-            if (_thread != null)
+            if (_thread is not null)
             {
                 throw new InvalidOperationException(SR.ThreadAlreadyStarted);
             }
@@ -186,13 +186,13 @@ namespace System.Xaml
 
             if (_currentNode.IsEof)
             {
-                if (_thread != null)
+                if (_thread is not null)
                 {
                     // If the input ended due to an (caught) exception on the background thread,
                     // then at the end of reading the input re-throw the exception on the
                     // foreground thread.
                     _thread.Join();
-                    if (_caughtException != null)
+                    if (_caughtException is not null)
                     {
                         Exception ex = _caughtException;
                         _caughtException = null;
@@ -229,8 +229,8 @@ namespace System.Xaml
             IXamlLineInfo xamlLineInfo = reader as IXamlLineInfo;
             IXamlLineInfoConsumer xamlLineInfoConsumer = writer as IXamlLineInfoConsumer;
             bool shouldPassLineNumberInfo = false;
-            if ((xamlLineInfo != null && xamlLineInfo.HasLineInfo)
-                && (xamlLineInfoConsumer != null && xamlLineInfoConsumer.ShouldProvideLineInfo))
+            if ((xamlLineInfo is not null && xamlLineInfo.HasLineInfo)
+                && (xamlLineInfoConsumer is not null && xamlLineInfoConsumer.ShouldProvideLineInfo))
             {
                 shouldPassLineNumberInfo = true;
             }

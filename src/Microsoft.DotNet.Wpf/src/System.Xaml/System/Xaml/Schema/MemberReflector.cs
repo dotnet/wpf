@@ -79,7 +79,7 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (s_UnknownReflector == null)
+                if (s_UnknownReflector is null)
                 {
                     s_UnknownReflector = new MemberReflector();
                     s_UnknownReflector._designerSerializationVisibility = DesignerSerializationVisibility.Visible;
@@ -220,7 +220,7 @@ namespace System.Xaml.Schema
         // Assumes method type args (if any) are visible
         internal static bool IsInternalVisibleTo(MethodInfo method, Assembly accessingAssembly, XamlSchemaContext schemaContext)
         {
-            if (accessingAssembly == null)
+            if (accessingAssembly is null)
             {
                 return false;
             }
@@ -241,7 +241,7 @@ namespace System.Xaml.Schema
         // Assumes method type args (if any) are visible
         internal static bool IsProtectedVisibleTo(MethodInfo method, Type derivedType, XamlSchemaContext schemaContext)
         {
-            if (derivedType == null)
+            if (derivedType is null)
             {
                 return false;
             }

@@ -22,7 +22,7 @@ namespace MS.Internal.Xaml.Parser
     {
         private string _startChars;
         private string _endChars;
-        private readonly static ISet<char> _restrictedCharSet = new SortedSet<char>((new char[] { '=', ',', '\'', '"', '{', '}', '\\' }));
+        private static readonly ISet<char> _restrictedCharSet = new SortedSet<char>((new char[] { '=', ',', '\'', '"', '{', '}', '\\' }));
         private bool _initializing;
         private StringBuilder _startCharactersStringBuilder;
         private StringBuilder _endCharactersStringBuilder;

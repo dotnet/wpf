@@ -656,7 +656,7 @@ namespace System.Xaml
             }
         }
 
-        static internal string GetTypeName(XamlType type)
+        internal static string GetTypeName(XamlType type)
         {
             string typeName = type.Name;
             if (type.IsMarkupExtension && type.Name.EndsWith("Extension", false, TypeConverterHelper.InvariantEnglishUS))

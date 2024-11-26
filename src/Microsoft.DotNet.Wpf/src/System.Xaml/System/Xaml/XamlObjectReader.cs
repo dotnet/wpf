@@ -235,7 +235,7 @@ namespace System.Xaml
 
         class ObjectReferenceEqualityComparer : IEqualityComparer<object>
         {
-            new public bool Equals(object x, object y)
+            public new bool Equals(object x, object y)
             {
                 return ReferenceEquals(x, y);
             }

@@ -210,9 +210,9 @@ namespace MS.Internal.Xaml
             return property;
         }
 
-        abstract public void AddNamespacePrefix(string prefix, string xamlNamespace);
-        abstract public string FindNamespaceByPrefix(string prefix);
-        abstract public IEnumerable<NamespaceDeclaration> GetNamespacePrefixes();
+        public abstract void AddNamespacePrefix(string prefix, string xamlNamespace);
+        public abstract string FindNamespaceByPrefix(string prefix);
+        public abstract IEnumerable<NamespaceDeclaration> GetNamespacePrefixes();
 
 
         // -------------------- internal ------------------------

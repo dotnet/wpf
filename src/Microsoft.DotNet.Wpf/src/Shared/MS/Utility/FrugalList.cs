@@ -2308,4 +2308,3 @@ namespace MS.Utility
         internal FrugalListBase<T> _listStore;
     }
 }
-

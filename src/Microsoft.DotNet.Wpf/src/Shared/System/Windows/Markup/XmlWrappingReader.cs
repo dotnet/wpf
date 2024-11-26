@@ -183,5 +183,3 @@ namespace System.Windows.Markup
         }
     }
 }
-
-

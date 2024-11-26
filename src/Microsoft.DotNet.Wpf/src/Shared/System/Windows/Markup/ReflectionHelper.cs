@@ -578,4 +578,3 @@ namespace System.Xaml
         #endregion Assembly Loading
     }
 }
-

@@ -182,12 +182,6 @@ dotnet_diagnostic.CA5351.severity = suggestion
 # CA5362: Potential reference cycle in deserialized object graph
 dotnet_diagnostic.CA5362.severity = suggestion
 
-# CSIsNull001: Use 'is' pattern check
-# dotnet_diagnostic.CSIsNull001.severity = suggestion
-
-# CSIsNull002: Use 'is not' pattern check
-# dotnet_diagnostic.CSIsNull002.severity = suggestion
-
 # IDE0005: Using directive is unnecessary.
 dotnet_diagnostic.IDE0005.severity = suggestion
 

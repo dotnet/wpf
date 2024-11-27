@@ -65,7 +65,7 @@ namespace MS.Internal.Xaml.Parser
 
         private void SetBrokenRuleString(string ruleString)
         {
-            if (String.IsNullOrEmpty(_brokenRule))
+            if (string.IsNullOrEmpty(_brokenRule))
             {
                 _brokenRule = SR.Format(SR.UnexpectedToken,
                                             _tokenizer.Token, ruleString, _originalText);

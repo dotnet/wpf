@@ -31,12 +31,12 @@ namespace MS.Internal.Xaml.Context
 
         // -----  abstracts overriden from XamlContext.
 
-        public override void AddNamespacePrefix(String prefix, string xamlNS)
+        public override void AddNamespacePrefix(string prefix, string xamlNS)
         {
             _prescopeNamespaces.Add(prefix, xamlNS);
         }
 
-        public string FindNamespaceByPrefixInParseStack(String prefix)
+        public string FindNamespaceByPrefixInParseStack(string prefix)
         {
             string xamlNs;
 
@@ -60,7 +60,7 @@ namespace MS.Internal.Xaml.Context
             return null;
         }
 
-        public override string FindNamespaceByPrefix(String prefix)
+        public override string FindNamespaceByPrefix(string prefix)
         {
             // For proper operation of some corner senarios the XmlNamespaceResolver
             // must be set.   But if it isn't we fall back to a look in our own stack.

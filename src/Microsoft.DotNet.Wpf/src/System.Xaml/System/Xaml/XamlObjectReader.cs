@@ -1771,7 +1771,7 @@ namespace System.Xaml
 
             public override void EnsureNoDuplicateNames(Stack<HashSet<string>> namesInCurrentScope)
             {
-                if (!String.IsNullOrEmpty(Name) &&
+                if (!string.IsNullOrEmpty(Name) &&
                     !namesInCurrentScope.Peek().Add(Name))
                 {
                     throw new XamlObjectReaderException(SR.Format(SR.ObjectReaderXamlNamedElementAlreadyRegistered, Name));

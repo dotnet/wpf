@@ -130,7 +130,7 @@ namespace MS.Internal.Xaml.Parser
                 return true;
             }
             // case where:  xmlns="ValueUri"
-            if (String.IsNullOrEmpty(Name.Prefix) && KS.Eq(Name.Name, KnownStrings.XmlNsPrefix))
+            if (string.IsNullOrEmpty(Name.Prefix) && KS.Eq(Name.Name, KnownStrings.XmlNsPrefix))
             {
                 uri = Value;
                 definingPrefix = string.Empty;

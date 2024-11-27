@@ -229,7 +229,7 @@ namespace MS.Internal.Xaml
             {
                 EnqueueOneXmlDirectiveProperty(XamlLanguage.Space, KnownStrings.Preserve);
             }
-            if (!String.IsNullOrEmpty(_settings.XmlLang))
+            if (!string.IsNullOrEmpty(_settings.XmlLang))
             {
                 EnqueueOneXmlDirectiveProperty(XamlLanguage.Lang, _settings.XmlLang);
             }

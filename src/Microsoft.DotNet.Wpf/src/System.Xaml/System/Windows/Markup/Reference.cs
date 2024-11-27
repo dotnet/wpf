@@ -31,7 +31,7 @@ namespace System.Windows.Markup
             {
                 throw new InvalidOperationException(SR.MissingNameResolver);
             }
-            if (String.IsNullOrEmpty(Name))
+            if (string.IsNullOrEmpty(Name))
             {
                 throw new InvalidOperationException(SR.MustHaveName);
             }

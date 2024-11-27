@@ -182,7 +182,7 @@ namespace System.Xaml
                 myXmlReader = givenXmlReader;
             }
             // Pick up the XmlReader settings to override the "settings" defaults.
-            if (!String.IsNullOrEmpty(myXmlReader.BaseURI))
+            if (!string.IsNullOrEmpty(myXmlReader.BaseURI))
             {
                 _mergedSettings.BaseUri = new Uri(myXmlReader.BaseURI);
             }
@@ -190,7 +190,7 @@ namespace System.Xaml
             {
                 _mergedSettings.XmlSpacePreserve = true;
             }
-            if (!String.IsNullOrEmpty(myXmlReader.XmlLang))
+            if (!string.IsNullOrEmpty(myXmlReader.XmlLang))
             {
                 _mergedSettings.XmlLang = myXmlReader.XmlLang;
             }
@@ -344,7 +344,7 @@ namespace System.Xaml
             {
                 string clrNs, assemblyName;
                 if (ClrNamespaceUriParser.TryParseUri(xmlNamespace, out clrNs, out assemblyName) &&
-                    String.IsNullOrEmpty(assemblyName))
+                    string.IsNullOrEmpty(assemblyName))
                 {
                     assemblyName = _mergedSettings.LocalAssembly.FullName;
                     newXmlNamespace = ClrNamespaceUriParser.GetUri(clrNs, assemblyName);

@@ -185,7 +185,7 @@ namespace System.Xaml.MS.Impl
 
         void LoadNsDefHelper(IList<XmlNsDefinition> result, string xmlns, string clrns, Assembly assembly)
         {
-            if (String.IsNullOrEmpty(xmlns) || clrns == null)
+            if (string.IsNullOrEmpty(xmlns) || clrns == null)
             {
                 throw new XamlSchemaException(SR.Format(SR.BadXmlnsDefinition, assembly.FullName));
             }
@@ -324,7 +324,7 @@ namespace System.Xaml.MS.Impl
 
         void LoadOldToNewNsHelper(Dictionary<string, string> result, string oldns, string newns, Assembly assembly)
         {
-            if (String.IsNullOrEmpty(newns) || String.IsNullOrEmpty(oldns))
+            if (string.IsNullOrEmpty(newns) || string.IsNullOrEmpty(oldns))
             {
                 throw new XamlSchemaException(SR.Format(SR.BadXmlnsCompat, assembly.FullName));
             }
@@ -373,7 +373,7 @@ namespace System.Xaml.MS.Impl
 
         void LoadPrefixesHelper(Dictionary<string, string> result, string xmlns, string prefix, Assembly assembly)
         {
-            if (String.IsNullOrEmpty(prefix) || String.IsNullOrEmpty(xmlns))
+            if (string.IsNullOrEmpty(prefix) || string.IsNullOrEmpty(xmlns))
             {
                 throw new XamlSchemaException(SR.Format(SR.BadXmlnsPrefix, assembly.FullName));
             }

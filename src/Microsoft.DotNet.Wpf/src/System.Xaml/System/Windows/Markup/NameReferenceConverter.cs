@@ -33,7 +33,7 @@ namespace System.Windows.Markup
             }
 
             string name = value as string;
-            if (String.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(name))
             {
                 throw new InvalidOperationException(SR.MustHaveName);
             }

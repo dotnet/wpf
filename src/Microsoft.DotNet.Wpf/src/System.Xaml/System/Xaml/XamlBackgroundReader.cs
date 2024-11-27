@@ -15,27 +15,27 @@ namespace System.Xaml
 
     public class XamlBackgroundReader : XamlReader, IXamlLineInfo
     {
-        EventWaitHandle _providerFullEvent;
-        EventWaitHandle _dataReceivedEvent;
+        private EventWaitHandle _providerFullEvent;
+        private EventWaitHandle _dataReceivedEvent;
 
-        XamlNode[] _incoming;
-        int _inIdx;
-        XamlNode[] _outgoing;
-        int _outIdx;
-        int _outValid;
+        private XamlNode[] _incoming;
+        private int _inIdx;
+        private XamlNode[] _outgoing;
+        private int _outIdx;
+        private int _outValid;
 
-        XamlNode _currentNode;
+        private XamlNode _currentNode;
 
-        XamlReader _wrappedReader;
-        XamlReader _internalReader;
-        XamlWriter _writer;
+        private XamlReader _wrappedReader;
+        private XamlReader _internalReader;
+        private XamlWriter _writer;
 
-        bool _wrappedReaderHasLineInfo;
-        int _lineNumber;
-        int _linePosition;
+        private bool _wrappedReaderHasLineInfo;
+        private int _lineNumber;
+        private int _linePosition;
 
-        Thread _thread;
-        Exception _caughtException;
+        private Thread _thread;
+        private Exception _caughtException;
 
         public XamlBackgroundReader(XamlReader wrappedReader)
         {

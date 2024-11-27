@@ -11,9 +11,9 @@ using System.Security;
 
 namespace System.Xaml.Schema
 {
-    static class SafeReflectionInvoker
+    internal static class SafeReflectionInvoker
     {
-        static readonly Assembly SystemXaml = typeof(SafeReflectionInvoker).Assembly;
+        private static readonly Assembly SystemXaml = typeof(SafeReflectionInvoker).Assembly;
 
         public static bool IsInSystemXaml(Type type)
         {

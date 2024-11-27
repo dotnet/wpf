@@ -20,26 +20,26 @@ namespace MS.Internal.Xaml.Context
     internal class NameFixupGraph
     {
         // Node -> out-edges (other objects the parent is dependent on)
-        Dictionary<object, FrugalObjectList<NameFixupToken>> _dependenciesByParentObject;
+        private Dictionary<object, FrugalObjectList<NameFixupToken>> _dependenciesByParentObject;
 
         // Node -> in-edge (other object that is dependent on this child)
-        Dictionary<object, NameFixupToken> _dependenciesByChildObject;
+        private Dictionary<object, NameFixupToken> _dependenciesByChildObject;
 
         // Node -> in-edges (other objects that are dependent on this name)
-        Dictionary<string, FrugalObjectList<NameFixupToken>> _dependenciesByName;
+        private Dictionary<string, FrugalObjectList<NameFixupToken>> _dependenciesByName;
 
         // Queue of tokens whose dependencies have been resolved, and are awaiting processing
-        Queue<NameFixupToken> _resolvedTokensPendingProcessing;
+        private Queue<NameFixupToken> _resolvedTokensPendingProcessing;
 
         // Token for a pending call to ProvideValue on the root object. Can't store this in
         // _dependenciesByParentObject because it has no parent.
-        NameFixupToken _deferredRootProvideValue;
+        private NameFixupToken _deferredRootProvideValue;
 
         // At the end of the parse, we start running reparses on partially initialized objects,
         // and remove those dependencies. But we still want to be able to inform MEs/TCs that
         // the named objects they're getting aren't actually fully initialized. So we save this list
         // of incompletely initialized objects at the point we start completing references.
-        HashSet <object> _uninitializedObjectsAtParseEnd;
+        private HashSet <object> _uninitializedObjectsAtParseEnd;
 
         public NameFixupGraph()
         {

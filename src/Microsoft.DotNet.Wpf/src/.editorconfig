@@ -323,9 +323,6 @@ dotnet_diagnostic.SA1131.severity = suggestion
 # SA1206: Keyword ordering
 dotnet_diagnostic.SA1206.severity = suggestion
 
-# SA1400: Member should declare an access modifier
-dotnet_diagnostic.SA1400.severity = suggestion
-
 # SA1404: Code analysis suppression should have justification
 dotnet_diagnostic.SA1404.severity = suggestion
 

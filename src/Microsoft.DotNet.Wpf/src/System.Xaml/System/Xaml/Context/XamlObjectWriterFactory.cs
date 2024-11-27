@@ -10,8 +10,8 @@ namespace MS.Internal.Xaml.Context
 {
     internal class XamlObjectWriterFactory: IXamlObjectWriterFactory
     {
-        XamlSavedContext _savedContext;
-        XamlObjectWriterSettings _parentSettings;
+        private XamlSavedContext _savedContext;
+        private XamlObjectWriterSettings _parentSettings;
 
         public XamlObjectWriterFactory(ObjectWriterContext context)
         {

@@ -27,8 +27,8 @@ namespace System.Xaml
 
     public class AmbientPropertyValue
     {
-        XamlMember _property;
-        object _value;
+        private XamlMember _property;
+        private object _value;
 
         public AmbientPropertyValue(XamlMember property, object value)
         {

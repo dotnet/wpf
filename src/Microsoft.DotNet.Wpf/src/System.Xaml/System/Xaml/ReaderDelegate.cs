@@ -46,7 +46,8 @@ namespace System.Xaml
                 {
                     break;
                 }
-            } while (_currentNode.NodeType == XamlNodeType.None);
+            }
+            while (_currentNode.NodeType == XamlNodeType.None);
 
             return !IsEof;
         }

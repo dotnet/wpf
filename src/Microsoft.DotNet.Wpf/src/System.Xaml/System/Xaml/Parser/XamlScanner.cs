@@ -581,7 +581,8 @@ namespace MS.Internal.Xaml.Parser
                 }
 
                 b = _xmlReader.MoveToNextAttribute();
-            } while (b);
+            }
+            while (b);
 
             PreprocessForTypeArguments(list);
 

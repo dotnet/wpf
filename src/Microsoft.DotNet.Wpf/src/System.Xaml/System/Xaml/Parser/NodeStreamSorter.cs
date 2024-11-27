@@ -147,7 +147,8 @@ namespace MS.Internal.Xaml
                 }
 
                 // Skip over "End Of Attributes" nodes.
-            } while (_current.IsEndOfAttributes);
+            }
+            while (_current.IsEndOfAttributes);
             return true;
         }
 
@@ -354,7 +355,8 @@ namespace MS.Internal.Xaml
                 }
 
                 _buffer.Enqueue(node);
-            } while (!done);
+            }
+            while (!done);
         }
 
         // After the End of Attributes is found continue to buffer nodes
@@ -403,7 +405,8 @@ namespace MS.Internal.Xaml
                 }
 
                 _buffer.Enqueue(node);
-            } while (!done);
+            }
+            while (!done);
         }
 
         // This updates the state of instancing vs. construction controling

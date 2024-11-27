@@ -329,9 +329,6 @@ dotnet_diagnostic.SA1404.severity = suggestion
 # SA1408: Conditional expressions should declare precedence
 dotnet_diagnostic.SA1408.severity = suggestion
 
-# SA1500: Braces for multi-line statements should not share line
-dotnet_diagnostic.SA1500.severity = suggestion
-
 # SYSLIB1045: Convert to 'GeneratedRegexAttribute'.
 dotnet_diagnostic.SYSLIB1045.severity = suggestion
 

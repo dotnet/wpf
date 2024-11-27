@@ -58,7 +58,8 @@ namespace System.Xaml.Replacements
                     });
                     return new InstanceDescriptor(
                         constructor,
-                        new object[] {
+                        new object[]
+                        {
                             dtOffset.Year,
                             dtOffset.Month,
                             dtOffset.Day,

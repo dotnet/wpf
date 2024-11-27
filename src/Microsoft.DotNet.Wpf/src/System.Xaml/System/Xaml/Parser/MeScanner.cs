@@ -282,7 +282,8 @@ namespace MS.Internal.Xaml.Parser
                     // pick up again after that
                     start = idx + 2;
                 }
-            } while (start < value.Length);
+            }
+            while (start < value.Length);
             string result = builder.ToString();
             return result;
         }

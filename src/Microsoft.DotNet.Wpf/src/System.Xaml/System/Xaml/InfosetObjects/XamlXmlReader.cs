@@ -269,7 +269,8 @@ namespace System.Xaml
                     _current = _endOfStreamNode;
                     break;
                 }
-            } while (_current.NodeType == XamlNodeType.None);
+            }
+            while (_current.NodeType == XamlNodeType.None);
             return !IsEof;
         }
 

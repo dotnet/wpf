@@ -68,7 +68,8 @@ namespace System.Xaml
                     _currentLineInfo = null;
                     break;
                 }
-            } while (_currentNode.NodeType == XamlNodeType.None);
+            }
+            while (_currentNode.NodeType == XamlNodeType.None);
             return !IsEof;
         }
 

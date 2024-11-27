@@ -419,9 +419,11 @@ namespace System.Xaml
         private static ReadOnlyCollection<XamlDirective> GetAllDirectives()
         {
             XamlDirective[] result = new XamlDirective[]
-                { Arguments, AsyncRecords, Class, Code, ClassModifier, ConnectionId, FactoryMethod, FieldModifier,
+                {
+                    Arguments, AsyncRecords, Class, Code, ClassModifier, ConnectionId, FactoryMethod, FieldModifier,
                     Key, Initialization, Items, Members, ClassAttributes, Name, PositionalParameters, Shared, Subclass,
-                    SynchronousMode, TypeArguments, Uid, UnknownContent, Base, Lang, Space};
+                    SynchronousMode, TypeArguments, Uid, UnknownContent, Base, Lang, Space
+                };
             return new ReadOnlyCollection<XamlDirective>(result);
         }
 
@@ -429,7 +431,9 @@ namespace System.Xaml
         {
             // System.Xaml and WindowsBase
             Assembly[] assemblies = new Assembly[]
-                { typeof(XamlLanguage).Assembly, typeof(MarkupExtension).Assembly };
+                {
+                    typeof(XamlLanguage).Assembly, typeof(MarkupExtension).Assembly
+                };
             XamlSchemaContextSettings settings =
                 new XamlSchemaContextSettings { SupportMarkupExtensionsWithDuplicateArity = true };
             XamlSchemaContext result = new XamlSchemaContext(assemblies, settings);

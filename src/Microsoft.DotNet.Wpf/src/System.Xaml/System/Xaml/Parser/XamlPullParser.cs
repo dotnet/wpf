@@ -254,7 +254,8 @@ namespace MS.Internal.Xaml.Parser
                         }
 
                         nodeType = _xamlScanner.NodeType;
-                    } while (nodeType == ScannerNodeType.PREFIXDEFINITION
+                    }
+                    while (nodeType == ScannerNodeType.PREFIXDEFINITION
                             || nodeType == ScannerNodeType.ELEMENT
                             || nodeType == ScannerNodeType.EMPTYELEMENT
                             || nodeType == ScannerNodeType.TEXT);
@@ -297,7 +298,8 @@ namespace MS.Internal.Xaml.Parser
                     doneWithElementContent = true;
                     break;
                 }
-            } while (!doneWithElementContent);
+            }
+            while (!doneWithElementContent);
 
             if (_xamlScanner.NodeType != ScannerNodeType.ENDTAG)
             {
@@ -398,7 +400,8 @@ namespace MS.Internal.Xaml.Parser
                         }
 
                         nodeType = _xamlScanner.NodeType;
-                    } while (nodeType == ScannerNodeType.PREFIXDEFINITION
+                    }
+                    while (nodeType == ScannerNodeType.PREFIXDEFINITION
                             || nodeType == ScannerNodeType.ELEMENT
                             || nodeType == ScannerNodeType.EMPTYELEMENT
                             || nodeType == ScannerNodeType.TEXT);
@@ -425,7 +428,8 @@ namespace MS.Internal.Xaml.Parser
                     doingPropertyContent = false;
                     break;
                 }
-            } while (doingPropertyContent);
+            }
+            while (doingPropertyContent);
 
             if (_xamlScanner.NodeType != ScannerNodeType.ENDTAG)
             {

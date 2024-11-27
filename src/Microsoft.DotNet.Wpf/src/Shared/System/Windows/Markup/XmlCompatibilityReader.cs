@@ -164,7 +164,7 @@ namespace System.Windows.Markup
                 ScanForEndCompatibility(previousElementDepth);
             }
 
-            bool more = Reader.Read(); //passed as ref arg to ReadStartElement and ReadEndElement
+            bool more = Reader.Read(); // passed as ref arg to ReadStartElement and ReadEndElement
             bool result = false;
 
             while (more)
@@ -322,7 +322,7 @@ namespace System.Windows.Markup
                     }
                 }
                 _depthOffset--;
-                PopScope();  //we know we can pop, so no need to scan
+                PopScope();  // we know we can pop, so no need to scan
                 more = Reader.Read();
             }
             else

@@ -271,7 +271,7 @@ namespace MS.Internal.Xaml
             // If we saw TypeArguments, Arguments, or FactoryMethod properties.
             // then dig in and correct the stream.
             //
-            //if (HaveSeenOutOfOrderCtorDirective)
+            // if (HaveSeenOutOfOrderCtorDirective)
             if(_moveList != null)
             {
                 SortContentsOfReadAheadBuffer();

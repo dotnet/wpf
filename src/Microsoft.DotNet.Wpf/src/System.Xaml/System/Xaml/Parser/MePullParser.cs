@@ -210,10 +210,10 @@ namespace MS.Internal.Xaml.Parser
         {
             Found f2 = new Found();
 
-            //  PositionalArgs ::= @ (Value (',' PositionalArgs)?) | NamedArg
+            // PositionalArgs ::= @ (Value (',' PositionalArgs)?) | NamedArg
             switch (_tokenizer.Token)
             {
-            //  PositionalArgs ::= ( @ Value (',' PositionalArgs)?) | NamedArg
+            // PositionalArgs ::= ( @ Value (',' PositionalArgs)?) | NamedArg
             case MeTokenType.String:
             case MeTokenType.QuotedMarkupExtension:
             case MeTokenType.Open:
@@ -233,15 +233,15 @@ namespace MS.Internal.Xaml.Parser
                 }
                 f.found = f2.found;
 
-                //  PositionalArgs ::= (Value @ (',' PositionalArgs)?) | NamedArg
+                // PositionalArgs ::= (Value @ (',' PositionalArgs)?) | NamedArg
                 if (_tokenizer.Token == MeTokenType.Comma)
                 {
                     Found f3 = new Found();
 
-                    //  PositionalArgs ::= (Value ( @ ',' PositionalArgs)?) | NamedArg
+                    // PositionalArgs ::= (Value ( @ ',' PositionalArgs)?) | NamedArg
                     NextToken();
 
-                    //  PositionalArgs ::= (Value (',' @ PositionalArgs)?) | NamedArg
+                    // PositionalArgs ::= (Value (',' @ PositionalArgs)?) | NamedArg
                     foreach (XamlNode node in P_PositionalArgs(f3))
                     {
                         yield return node;
@@ -255,7 +255,7 @@ namespace MS.Internal.Xaml.Parser
                 }
                 break;
 
-            //  PositionalArgs ::= (Value (',' PositionalArgs)?) | @ NamedArg
+            // PositionalArgs ::= (Value (',' PositionalArgs)?) | @ NamedArg
             case MeTokenType.PropertyName:
                 if (_context.CurrentArgCount > 0)
                 {
@@ -322,17 +322,17 @@ namespace MS.Internal.Xaml.Parser
         {
             Found f2 = new Found();
 
-            //   Value   ::= @(STRING | QUOTEDMARKUPEXTENSION | MarkupExtension)
+            // Value   ::= @(STRING | QUOTEDMARKUPEXTENSION | MarkupExtension)
             switch (_tokenizer.Token)
             {
-            //   Value   ::= (@STRING | QUOTEDMARKUPEXTENSION | MarkupExtension)
+            // Value   ::= (@STRING | QUOTEDMARKUPEXTENSION | MarkupExtension)
             case MeTokenType.String:
                 yield return Logic_Text();
                 f.found = true;
                 NextToken();
                 break;
 
-            //   Value   ::= (STRING | @QUOTEDMARKUPEXTENSION | MarkupExtension)
+            // Value   ::= (STRING | @QUOTEDMARKUPEXTENSION | MarkupExtension)
             case MeTokenType.QuotedMarkupExtension:
                 MePullParser nestedParser = new MePullParser(_context);
                 foreach (XamlNode node in nestedParser.Parse(_tokenizer.TokenText, LineNumber, LinePosition))
@@ -343,7 +343,7 @@ namespace MS.Internal.Xaml.Parser
                 NextToken();
                 break;
 
-            //   Value   ::= (STRING | QUOTEDMARKUPEXTENSION | @MarkupExtension)
+            // Value   ::= (STRING | QUOTEDMARKUPEXTENSION | @MarkupExtension)
             case MeTokenType.Open:
                 foreach (XamlNode node in P_MarkupExtension(f2))
                 {

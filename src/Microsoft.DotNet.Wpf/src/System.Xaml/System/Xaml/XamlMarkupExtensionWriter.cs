@@ -209,7 +209,7 @@ namespace System.Xaml
 
         abstract class WriterState
         {
-            //according to the BNF, CharactersToEscape ::= ['",={}\]
+            // according to the BNF, CharactersToEscape ::= ['",={}\]
             static char[] specialChars = new char[] { '\'', '"', ',', '=', '{', '}', '\\', ' ' };
 
             public virtual void WriteStartObject(XamlMarkupExtensionWriter writer, XamlType type)

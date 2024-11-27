@@ -183,10 +183,10 @@ namespace MS.Internal.Xaml.Context
         }
 
         // FxCop says this is never called
-        //public int Depth
-        //{
+        // public int Depth
+        // {
         //    get { return _stack.Depth; }
-        //}
+        // }
 
         public XamlType CurrentType
         {
@@ -227,10 +227,10 @@ namespace MS.Internal.Xaml.Context
         }
 
         // FxCop says this is not called
-        //public XamlType ParentType
-        //{
+        // public XamlType ParentType
+        // {
         //    get { return _stack.PreviousFrame.XamlType; }
-        //}
+        // }
 
         public XamlMember CurrentMember
         {
@@ -239,10 +239,10 @@ namespace MS.Internal.Xaml.Context
         }
 
         // FxCop says this is not called
-        //public XamlProperty MemberProperty
-        //{
+        // public XamlProperty MemberProperty
+        // {
         //    get { return _stack.PreviousFrame.Member; }
-        //}
+        // }
 
         public int CurrentArgCount
         {

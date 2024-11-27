@@ -97,10 +97,10 @@ namespace MS.Internal.Xaml.Parser
 
 
         // FxCop says this is not called
-        //public bool IsXamlNsDefinition
-        //{
+        // public bool IsXamlNsDefinition
+        // {
         //    get { return (!String.IsNullOrEmpty(_xmlnsDefinitionUri)); }
-        //}
+        // }
 
         // These properties are only defined if this Xml-Attribute is a XmlNs definition.
         public string XmlNsPrefixDefined
@@ -113,7 +113,7 @@ namespace MS.Internal.Xaml.Parser
             get { return _xmlnsDefinitionUri; }
         }
 
-        //  ========================== internal ================================
+        // ========================== internal ================================
 
         internal bool CheckIsXmlNamespaceDefinition(out string definingPrefix, out string uri)
         {
@@ -139,7 +139,7 @@ namespace MS.Internal.Xaml.Parser
             return false;
         }
 
-        //  ========================== private ================================
+        // ========================== private ================================
 
         private XamlMember GetXamlAttributeProperty(XamlParserContext context, XamlPropertyName propName,
                                                     XamlType tagType, string tagNamespace, bool tagIsRoot)

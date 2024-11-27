@@ -14,8 +14,8 @@ using System.Xaml;
 using MS.Internal.WindowsBase;
 #endif
 
-//using MS.Internal.PresentationCore;
-//using SR=MS.Internal.WindowsBase.SR;
+// using MS.Internal.PresentationCore;
+// using SR=MS.Internal.WindowsBase.SR;
 
     // These classes implement a frugal storage model for lists of type <T>.
     // Performance measurements show that Avalon has many lists that contain

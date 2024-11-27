@@ -71,8 +71,8 @@ namespace System.Xaml
         void Initialize(XamlSchemaContext schemaContext, XamlSavedContext savedContext, XamlObjectWriterSettings settings)
         {
             _inDispose = false;
-            //ObjectWriter must be passed in a non-null SchemaContext.  We check that here, since the CreateContext method
-            //will create one if a null SchemaContext was passed in.
+            // ObjectWriter must be passed in a non-null SchemaContext.  We check that here, since the CreateContext method
+            // will create one if a null SchemaContext was passed in.
             ArgumentNullException.ThrowIfNull(schemaContext);
             if (savedContext != null && schemaContext != savedContext.SchemaContext)
             {
@@ -280,7 +280,7 @@ namespace System.Xaml
             // Real processing begins here.
             //
 
-            //The first node (T, SO, or EP) after an EndObject should null out _lastInstance.
+            // The first node (T, SO, or EP) after an EndObject should null out _lastInstance.
             _lastInstance = null;
 
             // A Frame is pushed by either a AddNamespace or a WriteGet/StartObject
@@ -346,7 +346,7 @@ namespace System.Xaml
             // Real processing begins here.
             //
 
-            //The first node (T, SO, or EP) after an EndObject should null out _lastInstance.
+            // The first node (T, SO, or EP) after an EndObject should null out _lastInstance.
             _lastInstance = null;
 
             // A Frame is pushed by either a AddNamespace or a WriteGet/StartObject
@@ -707,7 +707,7 @@ namespace System.Xaml
             //
             _nextNodeMustBeEndMember = false;
 
-            //The first node (T, SO, or EP) after an EndObject should null out _lastInstance.
+            // The first node (T, SO, or EP) after an EndObject should null out _lastInstance.
             _lastInstance = null;
 
             if (property == XamlLanguage.Arguments)
@@ -830,7 +830,7 @@ namespace System.Xaml
                 throw _context.WithLineInfo(new XamlObjectWriterException(err));
             }
 
-            //The first node (T, SO, or EP) after an EndObject should null out _lastInstance.
+            // The first node (T, SO, or EP) after an EndObject should null out _lastInstance.
             _lastInstance = null;
 
             _context.PushScope();
@@ -986,8 +986,8 @@ namespace System.Xaml
             }
         }
 
-        //Result should return the _lastInstance when called after an EO.  Otherwise, it should return null.
-        //Currently we null out _lastInstance in the nodes that can come after EO (T, SO, EP). Can an NS come,
+        // Result should return the _lastInstance when called after an EO.  Otherwise, it should return null.
+        // Currently we null out _lastInstance in the nodes that can come after EO (T, SO, EP). Can an NS come,
         // what should we do?
         public virtual object Result
         {

@@ -28,7 +28,7 @@ using System.Diagnostics.CodeAnalysis;
 
 // New since v4 RTM:
 
-//this is used by subclasses, bad FxCop detection
+// this is used by subclasses, bad FxCop detection
 [assembly: SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Scope = "type", Target = "System.Xaml.MS.Impl.FrugalObjectList`1+Compacter")]
 #endregion
 

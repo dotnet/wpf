@@ -139,7 +139,7 @@ namespace MS.Internal.Xaml.Parser
                 pos++;
             }
             while (pos < subscript.Length);
-            //unterminated string
+            // unterminated string
             return 0;
         }
 

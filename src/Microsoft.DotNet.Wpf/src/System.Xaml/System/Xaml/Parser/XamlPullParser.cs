@@ -28,7 +28,7 @@ namespace MS.Internal.Xaml.Parser
 
         // =====================================================
 
-        //  Document ::= PREFIXDEFINITION* Element
+        // Document ::= PREFIXDEFINITION* Element
         //  Element ::= EmptyElement | (StartElement ElementBody)
         //  EmptyElement ::= EMPTYELEMENT DIRECTIVE* ATTRIBUTE*
         //  StartElement ::= ELEMENT DIRECTIVE*
@@ -927,7 +927,7 @@ namespace MS.Internal.Xaml.Parser
             _context.CurrentInContainerDirective = true;
 
             var startProperty = new XamlNode(XamlNodeType.StartMember, XamlLanguage.Items);
-            //SetLineInfo(startProperty);  // No line number info for implicit properties.
+            // SetLineInfo(startProperty);  // No line number info for implicit properties.
             return startProperty;
         }
 

@@ -761,7 +761,7 @@ namespace MS.Internal.Xaml.Context
         {
             get
             {
-                //evaluate if _rootInstance should just always look at _rootFrame.Instance instead of caching an instance
+                // evaluate if _rootInstance should just always look at _rootFrame.Instance instead of caching an instance
                 if (_rootInstance == null)
                 {
                     ObjectWriterFrame rootFrame = GetTopFrame();

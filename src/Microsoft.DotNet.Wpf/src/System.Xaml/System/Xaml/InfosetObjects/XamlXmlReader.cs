@@ -165,7 +165,7 @@ namespace System.Xaml
             XmlReader myXmlReader;
 
             _mergedSettings = (settings == null) ? new XamlXmlReaderSettings() : new XamlXmlReaderSettings(settings);
-            //Wrap the xmlreader with a XmlCompatReader instance to apply MarkupCompat rules.
+            // Wrap the xmlreader with a XmlCompatReader instance to apply MarkupCompat rules.
             if (!_mergedSettings.SkipXmlCompatibilityProcessing)
             {
                 XmlCompatibilityReader mcReader =
@@ -176,7 +176,7 @@ namespace System.Xaml
                 myXmlReader = mcReader;
             }
             else
-            {   //Don't wrap the xmlreader with XmlCompatReader.
+            {   // Don't wrap the xmlreader with XmlCompatReader.
                 // Useful for uses where users want to keep mc: content in the XamlNode stream.
                 // Or have already processed the markup compat and want that extra perf.
                 myXmlReader = givenXmlReader;
@@ -361,13 +361,13 @@ namespace System.Xaml
 
             // we need to treat all namespaces inside of XmlDataIslands as Supported.
             // we need to tree Freeze as known, if it is around... don't hardcode.
-            //else if (xmlNamespace == XamlReaderHelper.PresentationOptionsNamespaceURI)
-            //{
+            // else if (xmlNamespace == XamlReaderHelper.PresentationOptionsNamespaceURI)
+            // {
             //    // PresentationOptions is expected to be marked as 'ignorable' in most Xaml
             //    // so that other Xaml parsers don't have to interpret it, but this parser
             //    // does handle it to support it's Freeze attribute.
             //    return true;
-            //}
+            // }
             return result;
         }
     }

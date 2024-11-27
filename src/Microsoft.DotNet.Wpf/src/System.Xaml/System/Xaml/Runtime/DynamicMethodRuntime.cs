@@ -154,7 +154,7 @@ namespace MS.Internal.Xaml.Runtime
             return (TConverterBase)result;
         }
 
-        //CreateFromValue is expected to convert the provided value via any applicable converter (on property or type) or provide the original value if there is no converter
+        // CreateFromValue is expected to convert the provided value via any applicable converter (on property or type) or provide the original value if there is no converter
         public override object CreateFromValue(
                                     ServiceProviderContext serviceContext,
                                     XamlValueConverter<TypeConverter> ts, object value,
@@ -552,7 +552,7 @@ namespace MS.Internal.Xaml.Runtime
         private void Emit_LateBoundInvoke(ILGenerator ilGenerator, Type targetType, string methodName,
             BindingFlags bindingFlags, short targetArgNum, params short[] paramArgNums)
         {
-            //Emits: typeof(targetType).InvokeMember(
+            // Emits: typeof(targetType).InvokeMember(
             //           methodName, bindingFlags, null, ldarg_targetArgNum,
             //           new object[] { ldarg_paramArgNums });
 

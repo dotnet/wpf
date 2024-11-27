@@ -138,7 +138,6 @@
   <SolidColorBrush x:Key="ControlStrongFillColorDefaultBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
   <SolidColorBrush x:Key="ControlStrongFillColorDisabledBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
   <SolidColorBrush x:Key="ControlSolidFillColorDefaultBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
-  <SolidColorBrush x:Key="SystemColorWindowColorBrush" Color="Transparent" />
   <SolidColorBrush x:Key="SubtleFillColorSecondaryBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
   <SolidColorBrush x:Key="SubtleFillColorTertiaryBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
   <SolidColorBrush x:Key="SubtleFillColorDisabledBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
@@ -452,7 +451,7 @@
   <SolidColorBrush x:Key="RadioButtonBackground" Color="Transparent" />
   <SolidColorBrush x:Key="RadioButtonBackgroundPointerOver" Color="Transparent" />
   <SolidColorBrush x:Key="RadioButtonBackgroundPressed" Color="Transparent" />
-  <SolidColorBrush x:Key="RadioButtonBackgroundDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
+  <SolidColorBrush x:Key="RadioButtonBackgroundDisabled" Color="Transparent" />
   <SolidColorBrush x:Key="RadioButtonBorderBrush" Color="Transparent" />
   <SolidColorBrush x:Key="RadioButtonBorderBrushPointerOver" Color="Transparent" />
   <SolidColorBrush x:Key="RadioButtonBorderBrushPressed" Color="Transparent" />
@@ -471,6 +470,8 @@
   <SolidColorBrush x:Key="RadioButtonOuterEllipseStrokePressed" Color="{StaticResource SystemColorHighlightTextColor}" />
   <SolidColorBrush x:Key="RadioButtonOuterEllipseStrokeDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
   <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFill" Color="{StaticResource SystemColorHighlightColor}" />
+  <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFillDisabled" Color="{StaticResource SystemColorWindowColor}" />
+  <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStrokeDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
   <!--  RatingControl  -->
   <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="{StaticResource SystemColorHighlightColor}" />
   <!-- RepeatButton -->
@@ -612,7 +613,6 @@
   <Color x:Key="ControlStrongFillColorDefault">#2D3236</Color>
   <Color x:Key="ControlStrongFillColorDisabled">#2D3236</Color>
   <Color x:Key="ControlSolidFillColorDefault">#2D3236</Color>
-  <Color x:Key="SystemColorWindowColor">Transparent</Color>
   <Color x:Key="SubtleFillColorSecondary">#2D3236</Color>
   <Color x:Key="SubtleFillColorTertiary">#2D3236</Color>
   <Color x:Key="SubtleFillColorDisabled">#2D3236</Color>
@@ -3106,7 +3106,7 @@
     <Setter Property="MinHeight" Value="{DynamicResource TextControlThemeMinHeight}" />
     <Setter Property="MinWidth" Value="{DynamicResource TextControlThemeMinWidth}" />
     <Setter Property="Padding" Value="{DynamicResource TextControlThemePadding}" />
-    <Setter Property="PasswordChar" Value="●" />
+    <Setter Property="PasswordChar" Value="â—" />
     <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
     <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -3371,8 +3371,8 @@
               <Setter Property="Background" Value="{DynamicResource RadioButtonBackgroundDisabled}" />
               <Setter TargetName="OuterEllipse" Property="Fill" Value="{DynamicResource RadioButtonOuterEllipseFillDisabled}" />
               <Setter TargetName="OuterEllipse" Property="Stroke" Value="{DynamicResource RadioButtonOuterEllipseCheckedStrokeDisabled}" />
-              <Setter TargetName="CheckGlyph" Property="Opacity" Value="0.7" />
-              <Setter TargetName="CheckOuterEllipse" Property="Opacity" Value="0.7" />
+              <Setter TargetName="CheckOuterEllipse" Property="Stroke" Value="{DynamicResource RadioButtonOuterEllipseCheckedStrokeDisabled}" />
+              <Setter TargetName="CheckOuterEllipse" Property="Fill" Value="{DynamicResource RadioButtonOuterEllipseCheckedFillDisabled}" />
             </MultiTrigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>

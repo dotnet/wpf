@@ -386,7 +386,6 @@ namespace MS.Internal.Xaml.Context
                                 }
                                 else
                                 {   // The Ambient Property is either Fully build or not set.
-
                                     // FIRST: Ask the object (via IQueryAmbient interface) if it has a value for this property.
                                     // This is usefull to prevent needless creation of empty lazy properties.
                                     var ambientCtrl = inst as XAML3.IQueryAmbient;

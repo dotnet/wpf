@@ -2104,7 +2104,6 @@ namespace System.Xaml
                         }
                         else
                         {
-
                             if (value is NameFixupToken)
                             {
                                 // Only the key directive may be assigned a reference.

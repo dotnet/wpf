@@ -332,9 +332,6 @@ dotnet_diagnostic.SA1408.severity = suggestion
 # SA1500: Braces for multi-line statements should not share line
 dotnet_diagnostic.SA1500.severity = suggestion
 
-# SA1505: An opening brace should not be followed by a blank line
-dotnet_diagnostic.SA1505.severity = suggestion
-
 # SYSLIB1045: Convert to 'GeneratedRegexAttribute'.
 dotnet_diagnostic.SYSLIB1045.severity = suggestion
 

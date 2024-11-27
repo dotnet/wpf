@@ -682,7 +682,6 @@ namespace System.Xaml
                         var objectInfo = memberInfo.Children[0] as ObjectMarkupInfo;
                         if (objectInfo != null && objectInfo.Properties.Count == 1 && memberType == objectInfo.XamlNode.XamlType)
                         {
-
                             if (objectInfo.Properties[0].XamlNode.Member == XamlLanguage.Items)
                             {
                                 var itemsMemberInfo = objectInfo.Properties[0] as MemberMarkupInfo;

@@ -1062,7 +1062,6 @@ namespace System.Xaml
             _syncAccessingUnexaminedAssemblies = new Object();
             if (ReferenceAssemblies == null)
             {
-
                 _assemblyLoadHandler = new AssemblyLoadHandler(this);
                 _assemblyLoadHandler.Hook();
                 lock (_syncAccessingUnexaminedAssemblies)

@@ -18,7 +18,6 @@ using System.Xaml.Schema;
 
 namespace MS.Internal.Xaml.Runtime
 {
-
     // Perf notes:
     // - Consider caching some bounded number of ctor/factory binding lookups, similar to what
     //   Activator.CreateInstance does.

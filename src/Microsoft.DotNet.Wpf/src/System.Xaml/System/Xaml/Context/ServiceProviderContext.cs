@@ -376,7 +376,6 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
             }
             remove
             {
-
                 _xamlContext.RemoveNameScopeInitializationCompleteSubscriber(value);
             }
         }

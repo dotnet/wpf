@@ -378,7 +378,7 @@ namespace System.Xaml
         /// a property of a MarkupExtension as a ReadOnlyDictionary. Opening bracket is the
         /// key, while the value is the closing bracket.
         /// </summary>
-        public IReadOnlyDictionary<char,char> MarkupExtensionBracketCharacters
+        public IReadOnlyDictionary<char, char> MarkupExtensionBracketCharacters
         {
             get
             {
@@ -704,7 +704,7 @@ namespace System.Xaml
         /// a property of a MarkupExtension as a ReadOnlyDictionary. Opening bracket is the
         /// key, while the value is the closing bracket.
         /// </summary>
-        protected virtual IReadOnlyDictionary<char,char> LookupMarkupExtensionBracketCharacters()
+        protected virtual IReadOnlyDictionary<char, char> LookupMarkupExtensionBracketCharacters()
         {
             if (AreAttributesAvailable)
             {

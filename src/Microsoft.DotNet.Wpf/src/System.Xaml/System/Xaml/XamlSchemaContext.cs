@@ -467,7 +467,7 @@ namespace System.Xaml
         private ConcurrentDictionary<Type, XamlType> _masterTypeList;
         private ConcurrentDictionary<ReferenceEqualityTuple<Type, XamlType, Type>, object> _masterValueConverterList;
         private ConcurrentDictionary<ReferenceEqualityTuple<MemberInfo, MemberInfo>, XamlMember> _masterMemberList;
-        private ConcurrentDictionary<XamlType, Dictionary<string,SpecialBracketCharacters> > _masterBracketCharacterCache;
+        private ConcurrentDictionary<XamlType, Dictionary<string, SpecialBracketCharacters> > _masterBracketCharacterCache;
 
         // Security note: all of these ConcurrentDictionaries use Reference Equality to prevent spoofing of
         // RuntimeTypes/Members by other custom derived descendants of System.Type/MemberInfo.
@@ -572,7 +572,7 @@ namespace System.Xaml
             {
                 string constructorArgumentName = member.ConstructorArgument;
                 string propertyName = member.Name;
-                IReadOnlyDictionary<char,char> markupExtensionBracketCharactersList = member.MarkupExtensionBracketCharacters;
+                IReadOnlyDictionary<char, char> markupExtensionBracketCharactersList = member.MarkupExtensionBracketCharacters;
                 SpecialBracketCharacters splBracketCharacters = markupExtensionBracketCharactersList != null && markupExtensionBracketCharactersList.Count > 0
                     ? new SpecialBracketCharacters(markupExtensionBracketCharactersList)
                     : null;

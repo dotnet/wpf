@@ -267,7 +267,7 @@ namespace MS.Internal.Xaml.Context
         {
             get
             {
-                if (_serviceProviderContext != null)
+                if (_serviceProviderContext is null)
                 {
                     _serviceProviderContext = new ServiceProviderContext(this);
                 }

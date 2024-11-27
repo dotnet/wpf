@@ -471,7 +471,7 @@ namespace MS.Internal.Xaml
             // Build an array with the info we need
             _sortingInfoArray = new ReorderInfo[_originalNodesInOrder.Length];
             int depth = 0;
-            ReorderInfo rInfo = new ReorderInfo();
+            ReorderInfo rInfo = default(ReorderInfo);
 
             for (int i = 0; i < _originalNodesInOrder.Length; i++)
             {

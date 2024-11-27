@@ -2246,7 +2246,7 @@ namespace MS.Utility
 
         public FrugalStructList<T> Clone()
         {
-            FrugalStructList<T> myClone = new FrugalStructList<T>();
+            FrugalStructList<T> myClone = default(FrugalStructList<T>);
 
             if (null != _listStore)
             {

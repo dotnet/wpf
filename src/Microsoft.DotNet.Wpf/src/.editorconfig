@@ -314,9 +314,6 @@ dotnet_diagnostic.SA1028.severity = suggestion
 # SA1121: Use built-in type alias
 dotnet_diagnostic.SA1121.severity = suggestion
 
-# SA1129: Do not use default value type constructor
-dotnet_diagnostic.SA1129.severity = suggestion
-
 # SA1131: Constant values should appear on the right-hand side of comparisons
 dotnet_diagnostic.SA1131.severity = suggestion
 

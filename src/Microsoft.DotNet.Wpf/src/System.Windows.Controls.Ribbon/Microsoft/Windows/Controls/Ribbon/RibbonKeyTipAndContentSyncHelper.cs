@@ -46,8 +46,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         {
                             if (accessKeyIndex == -1)
                             {
-                                int accessorIndex = stringContent.IndexOf(keyTip[0]);
-                                if (accessorIndex != -1)
+                                if (stringContent.Contains(keyTip[0]))
                                 {
                                     syncElement.KeepKeyTipAndContentInSync = true;
                                     syncElement.IsKeyTipSyncSource = true;

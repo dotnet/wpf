@@ -373,7 +373,7 @@ namespace MS.Internal.AutomationProxies
             // If this is a Spinner UpDown Control, the buddy window should be a control with
             // the class of EDIT.
             IntPtr hwndBuddy = HwndBuddy(_hwnd);
-            return hwndBuddy != IntPtr.Zero && Misc.ProxyGetClassName(hwndBuddy).IndexOf("EDIT", StringComparison.OrdinalIgnoreCase) != -1;
+            return hwndBuddy != IntPtr.Zero && Misc.ProxyGetClassName(hwndBuddy).Contains("EDIT");
         }
 
         private double Max

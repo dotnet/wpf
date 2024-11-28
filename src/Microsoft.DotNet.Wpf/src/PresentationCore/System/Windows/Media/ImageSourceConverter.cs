@@ -114,7 +114,7 @@ namespace System.Windows.Media
                         uriHolder.OriginalUri,
                         null,
                         BitmapCreateOptions.None,
-                        BitmapCacheOption.Default,
+                        BitmapCacheOption.OnLoad,
                         null
                         );
                 }

@@ -148,7 +148,7 @@ namespace MS.Internal.ReachFramework
                 index = m_mainFile.Length;
             }
 
-            string uri = m_mainFile.Substring(0, index) + "_" + bitmapName;
+            string uri = string.Concat(m_mainFile.AsSpan(0, index), "_", bitmapName);
 
             Stream bitmapStreamDest = new System.IO.FileStream(uri, FileMode.Create, FileAccess.ReadWrite, FileShare.None);
 

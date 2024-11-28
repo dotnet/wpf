@@ -822,21 +822,21 @@ namespace MS.Internal.Data
             s = s.Substring(1);
 
             index = s.IndexOf(',');         // read LeftSize
-            node.LeftSize = Int32.Parse(s.Substring(0, index), TypeConverterHelper.InvariantEnglishUS);
+            node.LeftSize = Int32.Parse(s.AsSpan(0, index), TypeConverterHelper.InvariantEnglishUS);
             s = s.Substring(index + 1);
 
             index = s.IndexOf(',');         // read Size
-            node.Size = Int32.Parse(s.Substring(0, index), TypeConverterHelper.InvariantEnglishUS);
+            node.Size = Int32.Parse(s.AsSpan(0, index), TypeConverterHelper.InvariantEnglishUS);
             s = s.Substring(index+1);
 
             for (int k = 0; k < node.Size-1; ++k) // read data
             {
                 index = s.IndexOf(',');
-                node.SetItemAt(k, AsT(Int32.Parse(s.Substring(0, index), TypeConverterHelper.InvariantEnglishUS)));
+                node.SetItemAt(k, AsT(Int32.Parse(s.AsSpan(0, index), TypeConverterHelper.InvariantEnglishUS)));
                 s = s.Substring(index+1);
             }
             index = s.IndexOf('(');
-            node.SetItemAt(node.Size - 1, AsT(Int32.Parse(s.Substring(0, index), TypeConverterHelper.InvariantEnglishUS)));
+            node.SetItemAt(node.Size - 1, AsT(Int32.Parse(s.AsSpan(0, index), TypeConverterHelper.InvariantEnglishUS)));
             s = s.Substring(index);
 
             node.LeftChild = LoadTree(ref s);   // read subtrees

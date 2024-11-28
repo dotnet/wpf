@@ -1624,7 +1624,7 @@ namespace System.Windows.Markup
                     if (builder == null)
                     {
                         builder = new StringBuilder(value.Length);
-                        builder.Append(value.Substring(0,i));
+                        builder.Append(value.AsSpan(0,i));
                     }
                     noEscape = false;
                 }

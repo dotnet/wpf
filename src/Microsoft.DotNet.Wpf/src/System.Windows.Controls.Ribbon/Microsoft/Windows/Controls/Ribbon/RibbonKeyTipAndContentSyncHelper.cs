@@ -154,7 +154,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                             if (accessorIndex >= 0)
                             {
                                 syncElement.KeepKeyTipAndContentInSync = true;
-                                return stringContent.Substring(0, accessorIndex) + '_' + stringContent.Substring(accessorIndex);
+                                return string.Concat(stringContent.Substring(0, accessorIndex), '_', stringContent.Substring(accessorIndex));
                             }
                         }
                     }

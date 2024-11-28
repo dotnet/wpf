@@ -138,6 +138,7 @@
   <SolidColorBrush x:Key="ControlStrongFillColorDefaultBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
   <SolidColorBrush x:Key="ControlStrongFillColorDisabledBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
   <SolidColorBrush x:Key="ControlSolidFillColorDefaultBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
+  <SolidColorBrush x:Key="SystemColorWindowColorBrush" Color="Transparent" />
   <SolidColorBrush x:Key="SubtleFillColorSecondaryBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
   <SolidColorBrush x:Key="SubtleFillColorTertiaryBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
   <SolidColorBrush x:Key="SubtleFillColorDisabledBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
@@ -612,6 +613,7 @@
   <Color x:Key="ControlFillColorInputActive">#2D3236</Color>
   <Color x:Key="ControlStrongFillColorDefault">#2D3236</Color>
   <Color x:Key="ControlStrongFillColorDisabled">#2D3236</Color>
+  <Color x:Key="SystemColorWindowColor">Transparent</Color>
   <Color x:Key="ControlSolidFillColorDefault">#2D3236</Color>
   <Color x:Key="SubtleFillColorSecondary">#2D3236</Color>
   <Color x:Key="SubtleFillColorTertiary">#2D3236</Color>
@@ -3106,7 +3108,7 @@
     <Setter Property="MinHeight" Value="{DynamicResource TextControlThemeMinHeight}" />
     <Setter Property="MinWidth" Value="{DynamicResource TextControlThemeMinWidth}" />
     <Setter Property="Padding" Value="{DynamicResource TextControlThemePadding}" />
-    <Setter Property="PasswordChar" Value="â—" />
+    <Setter Property="PasswordChar" Value="●" />
     <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
     <Setter Property="OverridesDefaultStyle" Value="True" />

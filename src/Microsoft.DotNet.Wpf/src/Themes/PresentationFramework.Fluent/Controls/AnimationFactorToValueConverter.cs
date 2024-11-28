@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Globalization;
+using System.Diagnostics;
 
 namespace Fluent.Controls
 {
@@ -17,7 +18,7 @@ namespace Fluent.Controls
                 return 0.0;
             }
 
-            if (values[1] is not double factor)
+            if (values[1] is not double factor || factor == double.NaN)
             {
                 return 0.0;
             }

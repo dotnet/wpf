@@ -1465,7 +1465,7 @@ namespace System.Windows.Markup
                 // if the prefix was "" then
                 // 1) normal properties resolve to the parent Tag namespace.
                 // 2) Attached properties resolve to the "" default namespace.
-                if (!name.Contains("."))
+                if (!name.Contains('.'))
                     attribNamespaceURI = parentURI;
                 else
                     attribNamespaceURI = _parserHelper.LookupNamespace("");

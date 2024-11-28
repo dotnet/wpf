@@ -111,8 +111,6 @@ dotnet_diagnostic.CA1845.severity = suggestion
 # CA1846: Prefer AsSpan over Substring
 dotnet_diagnostic.CA1846.severity = suggestion
 
-# CA1847: Use string.Contains(char) instead of string.Contains(string) with single characters
-dotnet_diagnostic.CA1847.severity = suggestion
 
 # CA1851: Possible multiple enumerations of IEnumerable collection
 dotnet_diagnostic.CA1851.severity = suggestion

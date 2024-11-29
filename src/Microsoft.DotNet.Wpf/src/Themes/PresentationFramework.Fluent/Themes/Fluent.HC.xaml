@@ -470,7 +470,7 @@
   <SolidColorBrush x:Key="RadioButtonOuterEllipseStrokePointerOver" Color="{StaticResource SystemColorHighlightColor}" />
   <SolidColorBrush x:Key="RadioButtonOuterEllipseStrokePressed" Color="{StaticResource SystemColorHighlightTextColor}" />
   <SolidColorBrush x:Key="RadioButtonOuterEllipseStrokeDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
-  <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFill" Color="{StaticResource SystemColorHighlightColor}" />
+  <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFill" Color="{StaticResource SystemColorHighlightTextColor}" />
   <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFillDisabled" Color="{StaticResource SystemColorWindowColor}" />
   <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStrokeDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
   <!--  RatingControl  -->

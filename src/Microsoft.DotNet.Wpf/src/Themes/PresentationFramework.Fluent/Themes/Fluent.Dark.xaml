@@ -4007,7 +4007,7 @@
       </VisualStateManager.VisualStateGroups>
     </Grid>
   </ControlTemplate>
-  <Style TargetType="{x:Type TabControl}">
+  <Style x:Key="DefaultTabControlStyle" TargetType="{x:Type TabControl}">
     <Setter Property="Foreground" Value="{DynamicResource TabViewForeground}" />
     <Setter Property="Background" Value="{DynamicResource TabViewBackground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource TabViewBorderBrush}" />
@@ -4032,7 +4032,7 @@
       </Trigger>
     </Style.Triggers>
   </Style>
-  <Style TargetType="{x:Type TabItem}">
+  <Style x:Key="DefaultTabItemStyle" TargetType="{x:Type TabItem}">
     <Setter Property="Background" Value="{DynamicResource TabViewItemHeaderBackground}" />
     <Setter Property="BorderBrush" Value="Transparent" />
     <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -4100,6 +4100,8 @@
       </Setter.Value>
     </Setter>
   </Style>
+  <Style BasedOn="{StaticResource DefaultTabControlStyle}" TargetType="{x:Type TabControl}" />
+  <Style BasedOn="{StaticResource DefaultTabItemStyle}" TargetType="{x:Type TabItem}" />
   <sys:Double x:Key="CaptionTextBlockFontSize">12</sys:Double>
   <sys:Double x:Key="BodyTextBlockFontSize">14</sys:Double>
   <sys:Double x:Key="SubtitleTextBlockFontSize">20</sys:Double>

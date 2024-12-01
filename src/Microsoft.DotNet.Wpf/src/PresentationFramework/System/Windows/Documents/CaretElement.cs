@@ -478,6 +478,13 @@ namespace System.Windows.Documents
             }
         }
 
+        /// <summary>
+        /// Combines the <paramref name="geometry"/> using <see cref="Geometry.Combine(Geometry, Geometry, GeometryCombineMode, Transform, double, ToleranceType)"/>
+        /// with the <paramref name="addedGeometry"/> parameter. <para/> In case <paramref name="geometry"/> is <see langword="null"/>,
+        /// it is only assigned from <paramref name="addedGeometry"/>. In case both are <see langword="null"/>, it's a no-op.
+        /// </summary>
+        /// <param name="geometry">The <see cref="Geometry"/> to combine/assign into.</param>
+        /// <param name="addedGeometry">The <see cref="Geometry"/> to be combined/assigned.</param>
         internal static void AddGeometry(ref Geometry geometry, Geometry addedGeometry)
         {
             if (addedGeometry != null)

@@ -6,14 +6,10 @@
 // Enumerator class for returning descendants of TextBlock and FlowDocumentPage
 //
 
+using System.Diagnostics;
 using System.Collections;
-using MS.Internal.Documents;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System;
-using System.Diagnostics;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Documents
 {
@@ -21,7 +17,7 @@ namespace System.Windows.Documents
     ///  Enumerator class for implementation of IContentHost on TextBlock and FlowDocumentPage.
     ///  Used to iterate through descendants of the content host
     /// </summary>
-    internal class HostedElements : IEnumerator<IInputElement>
+    internal sealed class HostedElements : IEnumerator<IInputElement>
     {
         //-------------------------------------------------------------------
         //
@@ -164,19 +160,13 @@ namespace System.Windows.Documents
         {
             get
             {
-                // Disable PRESharp warning 6503: "Property get methods should not throw exceptions".
-                // HostedElements must throw exception if Current property is incorrectly accessed
                 if (_textSegments == null)
                 {
-                    // Collection was modified 
-#pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
                     throw new InvalidOperationException(SR.EnumeratorCollectionDisposed);
                 }
 
                 if (_currentPosition == null)
                 {
-                    // Enumerator not started. Call MoveNext to see if we can move ahead
-#pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
                     throw new InvalidOperationException(SR.EnumeratorNotStarted);
                 }
 

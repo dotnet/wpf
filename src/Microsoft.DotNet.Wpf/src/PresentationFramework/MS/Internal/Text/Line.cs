@@ -160,10 +160,8 @@ namespace MS.Internal.Text
         /// it uses those as the bounding rectangles. If not, it returns the rectangle for the first (and only) element
         /// of the text bounds.
         /// </remarks>
-        internal List<Rect> GetRangeBounds(int cp, int cch, double xOffset, double yOffset)
-        {
-            List<Rect> rectangles = new List<Rect>();
-            
+        internal ReadOnlySpan<Rect> GetRangeBounds(int cp, int cch, double xOffset, double yOffset)
+        {       
             // Adjust x offset for trailing spaces
             double delta = CalculateXOffsetShift();
             double adjustedXOffset = xOffset + delta;
@@ -173,7 +171,7 @@ namespace MS.Internal.Text
             {
                 // We should not shift offset in this case
                 Invariant.Assert(DoubleUtil.AreClose(delta, 0));
-                System.Windows.Media.TextFormatting.TextLine line = _line.Collapse(GetCollapsingProps(_wrappingWidth, _owner.ParagraphProperties));
+                TextLine line = _line.Collapse(GetCollapsingProps(_wrappingWidth, _owner.ParagraphProperties));
                 Invariant.Assert(line.HasCollapsed, "Line has not been collapsed");
                 textBounds = line.GetTextBounds(cp, cch);
             }
@@ -181,16 +179,19 @@ namespace MS.Internal.Text
             {
                 textBounds = _line.GetTextBounds(cp, cch);
             }
+
             Invariant.Assert(textBounds.Count > 0);
 
+            Rect[] rectangles = new Rect[textBounds.Count];
 
-            for (int boundIndex = 0; boundIndex < textBounds.Count; boundIndex++)
+            for (int boundIndex = 0; boundIndex < rectangles.Length; boundIndex++)
             {
                 Rect rect = textBounds[boundIndex].Rectangle;
                 rect.X += adjustedXOffset;
                 rect.Y += yOffset;
-                rectangles.Add(rect);
+                rectangles[boundIndex] = rect;
             }
+
             return rectangles;
         }
 

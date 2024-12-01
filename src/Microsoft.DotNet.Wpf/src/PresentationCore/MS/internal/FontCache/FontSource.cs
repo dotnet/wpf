@@ -176,9 +176,9 @@ namespace MS.Internal.FontCache
             byte[] bits;
 
             // Try our cache first.
-            lock (_resourceCache)
+            lock (s_resourceCache)
             {
-                bits = _resourceCache.Get(_fontUri);
+                bits = s_resourceCache.Get(_fontUri);
             }
 
             if (bits == null)
@@ -212,9 +212,9 @@ namespace MS.Internal.FontCache
                 fontStream?.Close();
             }
 
-            lock (_resourceCache)
+            lock (s_resourceCache)
             {
-                _resourceCache.Add(_fontUri, bits, false);
+                s_resourceCache.Add(_fontUri, bits, false);
             }
 
             return ByteArrayToUnmanagedStream(bits);
@@ -249,9 +249,9 @@ namespace MS.Internal.FontCache
             byte[] bits;
 
             // Try our cache first.
-            lock (_resourceCache)
+            lock (s_resourceCache)
             {
-                bits = _resourceCache.Get(_fontUri);
+                bits = s_resourceCache.Get(_fontUri);
             }
 
             if (bits != null)
@@ -435,7 +435,7 @@ namespace MS.Internal.FontCache
 
         private bool    _skipDemand;
 
-        private static SizeLimitedCache<Uri, byte[]> _resourceCache = new SizeLimitedCache<Uri, byte[]>(MaximumCacheItems);
+        private static readonly SizeLimitedCache<Uri, byte[]> s_resourceCache = new(MaximumCacheItems);
 
         /// <summary>
         /// The maximum number of fonts downloaded from pack:// Uris.

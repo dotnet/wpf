@@ -7,10 +7,6 @@
 //              interop with the browser. Deprecated as XBAP is not supported.
 //
 
-using MS.Win32;
-using MS.Internal;
-using MS.Internal.AppModel;
-
 namespace System.Windows.Interop
 {
     /// <summary>
@@ -18,11 +14,6 @@ namespace System.Windows.Interop
     /// </summary>
     public static class BrowserInteropHelper
     {
-        static BrowserInteropHelper()
-        {
-            IsInitialViewerNavigation = true;
-        }
-
         /// <summary>
         /// Returns the IOleClientSite interface
         /// </summary>
@@ -41,53 +32,13 @@ namespace System.Windows.Interop
         /// <summary>
         /// Returns true if the app is a browser hosted app.
         /// </summary>
-        /// <remarks>
-        /// Note that HostingFlags may not be set at the time this property is queried first. 
-        /// That's why they are still separate. Also, this one is public.
-        /// </remarks>
         public static bool IsBrowserHosted => false;
         
         /// <summary>
         /// Returns the Uri used to launch the application.
         /// </summary>
-        public static Uri Source
-        {
-            get
-            {
-                return SiteOfOriginContainer.BrowserSource;
-            }
-        }
+        public static Uri Source => null;
 
-        /// <summary>
-        /// Returns true if we are running the XAML viewer pseudo-application (what used to be XamlViewer.xbap).
-        /// This explicitly does not cover the case of XPS documents (MimeType.Document).
-        /// </summary>
-        internal static bool IsViewer
-        {
-            get
-            {
-                return Application.Current?.MimeType == MimeType.Markup;
-            }
-        }
-
-        /// <summary>
-        /// Returns true if we are in viewer mode AND this is the first time that a viewer has been navigated.
-        /// Including IsViewer is defense-in-depth in case somebody forgets to check IsViewer. There are other
-        /// reasons why both IsViewer and IsViewerNavigation are necessary, however.
-        /// </summary>
-        internal static bool IsInitialViewerNavigation
-        {
-            get
-            {
-                return IsViewer && _isInitialViewerNavigation;
-            }
-            set
-            {
-                _isInitialViewerNavigation = value;
-            }
-        }
-
-        private static bool _isInitialViewerNavigation;
     }
 }
 

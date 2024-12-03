@@ -28,12 +28,10 @@ internal static class ThemeManager
 
                 FluentThemeState newFluentThemeState = new FluentThemeState(Application.Current.ThemeMode.Value, useLightColors);
 
-                if (s_currentFluentThemeState == newFluentThemeState)
+                if (s_currentFluentThemeState != newFluentThemeState)
                 {
-                    return;
+                    AddOrUpdateThemeResources(Application.Current.Resources, GetThemeDictionary(Application.Current.ThemeMode));
                 }
-
-                AddOrUpdateThemeResources(Application.Current.Resources, GetThemeDictionary(Application.Current.ThemeMode));
 
                 foreach (Window window in Application.Current.Windows)
                 {

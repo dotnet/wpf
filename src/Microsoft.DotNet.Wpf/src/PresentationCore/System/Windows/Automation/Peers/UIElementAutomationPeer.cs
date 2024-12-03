@@ -249,8 +249,8 @@ namespace System.Windows.Automation.Peers
                             Rect boundingRect = CalculateVisibleBoundingRect(_owner);
                             
                             isOffscreen = (DoubleUtil.AreClose(boundingRect, Rect.Empty) || 
-                                           DoubleUtil.AreClose(boundingRect.Height, 0) || 
-                                           DoubleUtil.AreClose(boundingRect.Width, 0));
+                                           DoubleUtil.IsZero(boundingRect.Height) || 
+                                           DoubleUtil.IsZero(boundingRect.Width));
                         }
 
                         return isOffscreen;
@@ -275,8 +275,8 @@ namespace System.Windows.Automation.Peers
             
             while (parent != null && 
                    !DoubleUtil.AreClose(boundingRect, Rect.Empty) && 
-                   !DoubleUtil.AreClose(boundingRect.Height, 0) && 
-                   !DoubleUtil.AreClose(boundingRect.Width, 0))
+                   !DoubleUtil.IsZero(boundingRect.Height) && 
+                   !DoubleUtil.IsZero(boundingRect.Width))
             {
                 Visual visualParent = parent as Visual;
                 if (visualParent != null)

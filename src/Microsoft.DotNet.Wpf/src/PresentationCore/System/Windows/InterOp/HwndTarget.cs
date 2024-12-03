@@ -2180,7 +2180,7 @@ namespace System.Windows.Interop
             int height = _hwndClientRectInScreenCoords.bottom - _hwndClientRectInScreenCoords.top;
 
             MILTransparencyFlags flags = MILTransparencyFlags.Opaque;
-            // if (!DoubleUtil.AreClose(_opacity, 1.0))
+            // if (!DoubleUtil.IsOne(_opacity))
             // {
             //     flags |= MILTransparencyFlags.ConstantAlpha;
             // }

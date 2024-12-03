@@ -227,8 +227,8 @@ namespace System.Windows.Automation.Peers
                                 Rect boundingRect = UIElementAutomationPeer.CalculateVisibleBoundingRect(containingUIElement);
                                 
                                 isOffscreen = (DoubleUtil.AreClose(boundingRect, Rect.Empty) || 
-                                               DoubleUtil.AreClose(boundingRect.Height, 0) || 
-                                               DoubleUtil.AreClose(boundingRect.Width, 0));
+                                               DoubleUtil.IsZero(boundingRect.Height) || 
+                                               DoubleUtil.IsZero(boundingRect.Width));
                             }
                         }
 

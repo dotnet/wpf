@@ -246,7 +246,7 @@ namespace System.Windows.Markup
             else
             {
                 Debug.Assert(   unit == GridUnitType.Pixel 
-                            ||  DoubleUtil.AreClose(unitFactor, 1.0)    );
+                            ||  DoubleUtil.IsOne(unitFactor)    );
 
                 ReadOnlySpan<char> valueString = valueSpan.Slice(0, valueSpan.Length - strLenUnit);
                 value = double.Parse(valueString, provider: cultureInfo) * unitFactor;

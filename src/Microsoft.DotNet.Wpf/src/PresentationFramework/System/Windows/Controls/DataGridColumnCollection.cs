@@ -810,8 +810,8 @@ namespace System.Windows.Controls
                 if (width.IsStar)
                 {
                     hasStarColumns = true;
-                    if (!DoubleUtil.AreClose(width.Value, 0.0) &&
-                        !DoubleUtil.AreClose(width.DesiredValue, 0.0))
+                    if (!DoubleUtil.IsZero(width.Value) &&
+                        !DoubleUtil.IsZero(width.DesiredValue))
                     {
                         perStarWidth = width.DesiredValue / width.Value;
                         break;
@@ -1614,7 +1614,7 @@ namespace System.Windows.Controls
                 }
 
                 DataGridLength width = column.Width;
-                if (width.IsStar && !DoubleUtil.AreClose(width.Value, 0.0))
+                if (width.IsStar && !DoubleUtil.IsZero(width.Value))
                 {
                     if (DoubleUtil.GreaterThan(width.DisplayValue, column.MinWidth))
                     {
@@ -1834,7 +1834,7 @@ namespace System.Windows.Controls
                         perStarWidth,
                         retainAuto);
 
-                    if (DoubleUtil.AreClose(horizontalChange, 0.0))
+                    if (DoubleUtil.IsZero(horizontalChange))
                     {
                         break;
                     }
@@ -1864,7 +1864,7 @@ namespace System.Windows.Controls
                 }
 
                 DataGridLength width = column.Width;
-                if (width.IsStar && !DoubleUtil.AreClose(width.Value, 0.0))
+                if (width.IsStar && !DoubleUtil.IsZero(width.Value))
                 {
                     if (DoubleUtil.LessThan(width.DisplayValue, column.MaxWidth))
                     {

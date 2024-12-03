@@ -233,7 +233,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             else
             {
                 Debug.Assert(unit == RibbonControlLengthUnitType.Pixel || unit == RibbonControlLengthUnitType.Item ||
-                    DoubleUtil.AreClose(unitFactor, 1.0));
+                    DoubleUtil.IsOne(unitFactor));
 
                 ReadOnlySpan<char> valueString = goodString.AsSpan(0, strLen - strLenUnit);
                 value = double.Parse(valueString, provider: cultureInfo) * unitFactor;

@@ -25,10 +25,7 @@ internal static class WindowBackdropManager
 
     internal static bool SetBackdrop(Window window, WindowBackdropType backdropType)
     {
-        if (window is null ||
-                !IsSupported(backdropType) ||
-                window.AllowsTransparency ||
-                IsBackdropEnabled == false)
+        if (window is null || window.AllowsTransparency)
         {
             return false;
         }
@@ -42,6 +39,11 @@ internal static class WindowBackdropManager
         if (handle == IntPtr.Zero)
         {
             return false;
+        }
+
+        if(!IsSupported(backdropType) || IsBackdropEnabled == false)
+        {
+            return SetBackdropCore(handle, WindowBackdropType.None);
         }
 
         return SetBackdropCore(handle, backdropType);
@@ -99,7 +101,7 @@ internal static class WindowBackdropManager
             var windowSource = HwndSource.FromHwnd(hwnd);
             if (windowSource.CompositionTarget != null)
             {
-                // TODO : Save the previous background color and reapply in RestoreBackground 
+                // TODO : Save the previous background color and reapply in RestoreBackground
                 windowSource.CompositionTarget.BackgroundColor = Colors.Transparent;
                 return true;
             }
@@ -111,13 +113,43 @@ internal static class WindowBackdropManager
     {
         if (hwnd != IntPtr.Zero)
         {
-            var windowSource = HwndSource.FromHwnd(hwnd);
+            HwndSource windowSource = HwndSource.FromHwnd(hwnd);
             if (windowSource?.Handle != IntPtr.Zero && windowSource.CompositionTarget != null)
             {
-                windowSource.CompositionTarget.BackgroundColor = SystemColors.WindowColor;
+                // If the window is in light mode, set the background color to #FFFAFAFA and for dark mode set it to #FF202020
+                windowSource.CompositionTarget.BackgroundColor = WindowOnLightMode(windowSource) ?
+                    (Color)ColorConverter.ConvertFromString(_lightWindowBackgroundCompositionColor) : (Color)ColorConverter.ConvertFromString(_darkWindowBackgroundCompositionColor);;
+
                 return true;
             }
         }
+
+        return false;
+    }
+
+    /// <summary>
+    /// This method checks if the window associated with the hwndSource should be in light mode or not depending on Window's ThemeMode, Application's ThemeMode and System's Theme.
+    /// </summary>
+    /// <param name="hwndSource"></param>
+    /// <returns>True if window should be in light mode, false otherwise</returns>
+    private static bool WindowOnLightMode(HwndSource hwndSource)
+    {
+        Window window = hwndSource.RootVisual as Window;
+
+        if(window is null)
+        {
+            // We were unconditionally assuming that windowSource needs to have the mode as light even if window was null earlier. Doing the same here to ensure parity.
+            return true;
+        }
+
+        if (window.ThemeMode == ThemeMode.Light ||
+            (window.ThemeMode == ThemeMode.System && ThemeManager.IsSystemThemeLight()) ||
+            (window.ThemeMode == ThemeMode.None && Application.Current?.ThemeMode == ThemeMode.Light) ||
+            (window.ThemeMode == ThemeMode.None && Application.Current?.ThemeMode == ThemeMode.System && ThemeManager.IsSystemThemeLight()))
+        {
+            return true;
+        }
+
         return false;
     }
 
@@ -137,10 +169,14 @@ internal static class WindowBackdropManager
 
     #region Internal Properties
 
-    internal static bool IsBackdropEnabled => _isBackdropEnabled ??= Utility.IsWindows11_22H2OrNewer && 
+    internal static bool IsBackdropEnabled => _isBackdropEnabled ??= Utility.IsWindows11_22H2OrNewer &&
                                                                         !FrameworkAppContextSwitches.DisableFluentThemeWindowBackdrop;
 
     private static bool? _isBackdropEnabled = null;
+
+    private const string _lightWindowBackgroundCompositionColor = "#FFFAFAFA";
+
+    private const string _darkWindowBackgroundCompositionColor = "#FF202020";
 
     #endregion
 

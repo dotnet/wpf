@@ -49,7 +49,6 @@
     <Compile Include="$(WpfSharedDir)\RefAssemblyAttrs.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\CommonDependencyPropertyAttribute.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\FixedPageInfo.cs" />
-    <Compile Include="$(WpfSharedDir)\MS\Internal\HashHelper.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\SecurityHelper.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\SafeSecurityHelper.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\SafeSecurityHelperAvalon.cs" />
@@ -403,7 +402,6 @@
     <Compile Include="MS\Internal\WeakHashtable.cs" />
     <Compile Include="MS\Internal\WeakObjectHashtable.cs" />
     <Compile Include="MS\Internal\WindowsRuntime\Generated\**\*.cs" />
-    <Compile Remove="D:\repos\wpf\src\Microsoft.DotNet.Wpf\src\Shared\\MS\Internal\HashHelper.cs" />
     <Compile Include="MS\Internal\WindowsRuntime\Windows\Data\Text\WordsSegmenter.cs" />
     <Compile Include="MS\Win32\UxThemeWrapper.cs" />
     <Compile Include="OtherAssemblyAttrs.cs" />

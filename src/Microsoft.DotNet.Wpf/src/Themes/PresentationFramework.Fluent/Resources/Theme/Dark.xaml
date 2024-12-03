@@ -506,6 +506,7 @@
     <SolidColorBrush x:Key="LabelForeground" Color="{StaticResource TextFillColorPrimary}" />
 
     <!--  ListBox  -->
+    <Color x:Key="SystemChromeMediumLowColor">#FF2B2B2B</Color>
     <SolidColorBrush x:Key="ListBoxBackground" Color="{StaticResource CardBackgroundFillColorDefault}" />
     <SolidColorBrush x:Key="ListBoxItemForeground" Color="{StaticResource TextFillColorPrimary}" />
     <SolidColorBrush x:Key="ListBoxItemSelectedBackgroundThemeBrush" Color="{StaticResource SystemAccentColor}" Opacity="0.6" />

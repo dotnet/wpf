@@ -138,7 +138,7 @@
   <SolidColorBrush x:Key="ControlStrongFillColorDefaultBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
   <SolidColorBrush x:Key="ControlStrongFillColorDisabledBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
   <SolidColorBrush x:Key="ControlSolidFillColorDefaultBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
-  <SolidColorBrush x:Key="SystemColorWindowColorBrush" Color="Transparent" />
+  <SolidColorBrush x:Key="SubtleFillColorTransparentBrush" Color="Transparent" />
   <SolidColorBrush x:Key="SubtleFillColorSecondaryBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
   <SolidColorBrush x:Key="SubtleFillColorTertiaryBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
   <SolidColorBrush x:Key="SubtleFillColorDisabledBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
@@ -392,10 +392,12 @@
   <!--  Label  -->
   <SolidColorBrush x:Key="LabelForeground" Color="{StaticResource SystemColorGrayTextColor}" />
   <!--  ListBox  -->
+  <Color x:Key="SystemChromeMediumLowColor">#FF2B2B2B</Color>
   <SolidColorBrush x:Key="ListBoxBackground" Color="{StaticResource SystemColorButtonFaceColor}" />
   <SolidColorBrush x:Key="ListBoxItemForeground" Color="{StaticResource SystemColorWindowTextColor}" />
   <SolidColorBrush x:Key="ListBoxItemSelectedBackgroundThemeBrush" Color="{StaticResource SystemColorHighlightColor}" />
   <SolidColorBrush x:Key="ListBoxItemSelectedBackgroundPointerOverThemeBrush" Color="{StaticResource SystemColorButtonTextColor}" />
+  <SolidColorBrush x:Key="ListBoxItemBackgroundSelectedPressedThemeBrush" Color="{StaticResource SystemColorHighlightColor}" />
   <SolidColorBrush x:Key="ListBoxItemSelectedForegroundThemeBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
   <SolidColorBrush x:Key="ListBoxItemUnselectedBackgroundPointerOverThemeBrush" Color="{StaticResource SystemColorHighlightTextColor}" />
   <!--  ListView  -->
@@ -524,6 +526,8 @@
   <SolidColorBrush x:Key="TextControlBorderBrushDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
   <SolidColorBrush x:Key="TextControlPlaceholderForeground" Color="{StaticResource SystemColorGrayTextColor}" />
   <SolidColorBrush x:Key="TextControlButtonForeground" Color="{StaticResource SystemColorWindowTextColor}" />
+  <!--  ThumbRate  -->
+  <SolidColorBrush x:Key="ThumbRateForeground" Color="{StaticResource SystemColorHighlightColor}" />
   <!--  TimePicker  -->
   <SolidColorBrush x:Key="TimePickerButtonBackground" Color="{StaticResource SystemColorWindowColor}" />
   <SolidColorBrush x:Key="TimePickerButtonBackgroundPointerOver" Color="{StaticResource SystemColorHighlightTextColor}" />
@@ -613,8 +617,8 @@
   <Color x:Key="ControlFillColorInputActive">#2D3236</Color>
   <Color x:Key="ControlStrongFillColorDefault">#2D3236</Color>
   <Color x:Key="ControlStrongFillColorDisabled">#2D3236</Color>
-  <Color x:Key="SystemColorWindowColor">Transparent</Color>
   <Color x:Key="ControlSolidFillColorDefault">#2D3236</Color>
+  <Color x:Key="SubtleFillColorTransparent">#2D3236</Color>
   <Color x:Key="SubtleFillColorSecondary">#2D3236</Color>
   <Color x:Key="SubtleFillColorTertiary">#2D3236</Color>
   <Color x:Key="SubtleFillColorDisabled">#2D3236</Color>
@@ -3987,7 +3991,7 @@
       </VisualStateManager.VisualStateGroups>
     </Grid>
   </ControlTemplate>
-  <Style TargetType="{x:Type TabControl}">
+  <Style x:Key="DefaultTabControlStyle" TargetType="{x:Type TabControl}">
     <Setter Property="Foreground" Value="{DynamicResource TabViewForeground}" />
     <Setter Property="Background" Value="{DynamicResource TabViewBackground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource TabViewBorderBrush}" />
@@ -4012,7 +4016,7 @@
       </Trigger>
     </Style.Triggers>
   </Style>
-  <Style TargetType="{x:Type TabItem}">
+  <Style x:Key="DefaultTabItemStyle" TargetType="{x:Type TabItem}">
     <Setter Property="Background" Value="{DynamicResource TabViewItemHeaderBackground}" />
     <Setter Property="BorderBrush" Value="Transparent" />
     <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -4080,6 +4084,8 @@
       </Setter.Value>
     </Setter>
   </Style>
+  <Style BasedOn="{StaticResource DefaultTabControlStyle}" TargetType="{x:Type TabControl}" />
+  <Style BasedOn="{StaticResource DefaultTabItemStyle}" TargetType="{x:Type TabItem}" />
   <sys:Double x:Key="CaptionTextBlockFontSize">12</sys:Double>
   <sys:Double x:Key="BodyTextBlockFontSize">14</sys:Double>
   <sys:Double x:Key="SubtitleTextBlockFontSize">20</sys:Double>

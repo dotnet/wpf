@@ -381,10 +381,12 @@
     <SolidColorBrush x:Key="LabelForeground" Color="{StaticResource SystemColorGrayTextColor}" />
 
     <!--  ListBox  -->
+    <Color x:Key="SystemChromeMediumLowColor">#FF2B2B2B</Color>
     <SolidColorBrush x:Key="ListBoxBackground" Color="{StaticResource SystemColorButtonFaceColor}" />
     <SolidColorBrush x:Key="ListBoxItemForeground" Color="{StaticResource SystemColorWindowTextColor}" />
     <SolidColorBrush x:Key="ListBoxItemSelectedBackgroundThemeBrush" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="ListBoxItemSelectedBackgroundPointerOverThemeBrush" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="ListBoxItemBackgroundSelectedPressedThemeBrush" Color="{StaticResource SystemColorHighlightColor}"/>
     <SolidColorBrush x:Key="ListBoxItemSelectedForegroundThemeBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
     <SolidColorBrush x:Key="ListBoxItemUnselectedBackgroundPointerOverThemeBrush" Color="{StaticResource SystemColorHighlightTextColor}" />
 
@@ -532,6 +534,9 @@
     <SolidColorBrush x:Key="TextControlBorderBrushDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
     <SolidColorBrush x:Key="TextControlPlaceholderForeground" Color="{StaticResource SystemColorGrayTextColor}" />
     <SolidColorBrush x:Key="TextControlButtonForeground" Color="{StaticResource SystemColorWindowTextColor}" />
+
+    <!--  ThumbRate  -->
+    <SolidColorBrush x:Key="ThumbRateForeground" Color="{StaticResource SystemColorHighlightColor}" />
 
     <!--  TimePicker  -->
     <SolidColorBrush x:Key="TimePickerButtonBackground" Color="{StaticResource SystemColorWindowColor}" />

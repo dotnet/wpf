@@ -35,6 +35,7 @@
     <Compile Include="$(WpfCommonDir)\src\System\LocalAppContext.cs" />
     <Compile Include="$(WpfCommonDir)\src\System\AppContextDefaultValues.cs" />
     <Compile Include="GlobalUsings.cs" />
+    <Compile Include="HashHelper.cs" />
     <Compile Include="LibraryAssemblyInfo.cs" />
     <Compile Include="System\AppContextDefaultValues.cs" />
 
@@ -402,6 +403,7 @@
     <Compile Include="MS\Internal\WeakHashtable.cs" />
     <Compile Include="MS\Internal\WeakObjectHashtable.cs" />
     <Compile Include="MS\Internal\WindowsRuntime\Generated\**\*.cs" />
+    <Compile Remove="D:\repos\wpf\src\Microsoft.DotNet.Wpf\src\Shared\\MS\Internal\HashHelper.cs" />
     <Compile Include="MS\Internal\WindowsRuntime\Windows\Data\Text\WordsSegmenter.cs" />
     <Compile Include="MS\Win32\UxThemeWrapper.cs" />
     <Compile Include="OtherAssemblyAttrs.cs" />

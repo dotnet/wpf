@@ -48,7 +48,6 @@
     <Compile Include="$(WpfSharedDir)\MS\Internal\DecoderFallbackWithFailureFlag.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\FloatUtil.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\FreezableOperations.cs" />
-    <Compile Include="$(WpfSharedDir)\MS\Internal\HashHelper.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\PointUtil.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\MimeTypeMapper.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\Pair.cs" />

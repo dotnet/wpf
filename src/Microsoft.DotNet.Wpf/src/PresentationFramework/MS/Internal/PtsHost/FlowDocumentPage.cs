@@ -400,7 +400,7 @@ namespace MS.Internal.PtsHost
         }
 
         /// <summary>
-        /// Called when a UIElement-derived class which is hosted by a IContentHost changes it’s DesiredSize
+        /// Called when a UIElement-derived class which is hosted by a IContentHost changes itï¿½s DesiredSize
         /// </summary>
         /// <param name="child">
         /// Child element whose DesiredSize has changed
@@ -932,7 +932,7 @@ namespace MS.Internal.PtsHost
             Debug.Assert(e != null);
 
             // Validate that this function is only called when a TextContainer exists as complex content
-            Debug.Assert(_structuralCache.TextContainer is TextContainer);
+            Debug.Assert(_structuralCache.TextContainer is not null);
 
             TextPointer elementPosition = null;
 
@@ -949,8 +949,8 @@ namespace MS.Internal.PtsHost
             else
             {
                 // Else: search for e in the complex content
-                if (!(_structuralCache.TextContainer.Start is TextPointer) ||
-                    !(_structuralCache.TextContainer.End is TextPointer))
+                if (!(_structuralCache.TextContainer.Start is not null) ||
+                    !(_structuralCache.TextContainer.End is not null))
                 {
                     // Invalid TextContainer, don't search
                     return null;
@@ -1220,7 +1220,7 @@ namespace MS.Internal.PtsHost
         }
 
         /// <summary>
-        /// Called when a UIElement-derived class which is hosted by a IContentHost changes it’s DesiredSize
+        /// Called when a UIElement-derived class which is hosted by a IContentHost changes itï¿½s DesiredSize
         /// </summary>
         /// <param name="child">
         /// Child element whose DesiredSize has changed

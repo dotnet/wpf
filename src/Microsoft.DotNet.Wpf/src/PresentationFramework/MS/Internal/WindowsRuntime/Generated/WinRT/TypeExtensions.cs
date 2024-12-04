@@ -19,7 +19,7 @@ namespace WinRT
                 type = typeof(Exception);
             }
             Type customMapping = Projections.FindCustomHelperTypeMapping(type);
-            if (customMapping is object)
+            if (customMapping is not null)
             {
                 return customMapping;
             }
@@ -35,7 +35,7 @@ namespace WinRT
         public static Type GetHelperType(this Type type)
         {
             var helperType = type.FindHelperType();
-            if (helperType is object)
+            if (helperType is not null)
                 return helperType;
             throw new InvalidOperationException($"Target type is not a projected type: {type.FullName}.");
         }
@@ -52,7 +52,7 @@ namespace WinRT
             {
                 return null;
             }
-            if (helperType.IsGenericType && vftblType is object)
+            if (helperType.IsGenericType && vftblType is not null)
             {
                 vftblType = vftblType.MakeGenericType(helperType.GetGenericArguments());
             }

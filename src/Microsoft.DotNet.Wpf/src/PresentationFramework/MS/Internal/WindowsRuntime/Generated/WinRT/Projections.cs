@@ -137,7 +137,7 @@ namespace WinRT
                 || type == typeof(string)
                 || type == typeof(Guid)
                 || type == typeof(object)
-                || type.GetCustomAttribute<WindowsRuntimeTypeAttribute>() is object;
+                || type.GetCustomAttribute<WindowsRuntimeTypeAttribute>() is not null;
         }
 
         public static bool TryGetCompatibleWindowsRuntimeTypeForVariantType(Type type, out Type compatibleType)
@@ -212,7 +212,7 @@ namespace WinRT
                 {
                     IInspectable inspectable = inspectablePtr;
                     string runtimeClassName = inspectable.GetRuntimeClassName(true);
-                    if (runtimeClassName is object)
+                    if (runtimeClassName is not null)
                     {
                         if (ProjectedRuntimeClassNames.Contains(runtimeClassName))
                         {

@@ -67,7 +67,7 @@ namespace WinRT
             {
                 ExceptionDispatchInfo.Capture(ex).Throw();
             }
-            else if (ex is object)
+            else if (ex is not null)
             {
                 throw ex;
             }
@@ -108,7 +108,7 @@ namespace WinRT
                     {
                         ILanguageExceptionErrorInfo languageErrorInfo = new ABI.WinRT.Interop.ILanguageExceptionErrorInfo(languageErrorInfoRef);
                         using IObjectReference languageException = languageErrorInfo.GetLanguageException();
-                        if (languageException is object)
+                        if (languageException is not null)
                         {
                             if (languageException.IsReferenceToManagedObject)
                             {

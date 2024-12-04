@@ -19,20 +19,15 @@ namespace System.Windows
     /// </remarks>
     public class EventPrivateKey
     {
+        internal int GlobalIndex { get; }
+
         /// <summary>
         ///     Constructor for EventPrivateKey
         /// </summary>
         public EventPrivateKey()
         {
-            _globalIndex = GlobalEventManager.GetNextAvailableGlobalIndex(this);
+            GlobalIndex = GlobalEventManager.GetNextAvailableGlobalIndex();
         }
-
-        internal int GlobalIndex
-        {
-            get { return _globalIndex; }
-        }
-        
-        private int _globalIndex;
     }
 }
 

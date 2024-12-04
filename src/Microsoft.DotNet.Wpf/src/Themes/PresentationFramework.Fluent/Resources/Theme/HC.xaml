@@ -455,7 +455,7 @@
     <SolidColorBrush x:Key="RadioButtonBackground" Color="Transparent"/>
     <SolidColorBrush x:Key="RadioButtonBackgroundPointerOver" Color="Transparent"/>
     <SolidColorBrush x:Key="RadioButtonBackgroundPressed" Color="Transparent"/>
-    <SolidColorBrush x:Key="RadioButtonBackgroundDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
+    <SolidColorBrush x:Key="RadioButtonBackgroundDisabled" Color="Transparent" />
     <SolidColorBrush x:Key="RadioButtonBorderBrush" Color="Transparent"/>
     <SolidColorBrush x:Key="RadioButtonBorderBrushPointerOver" Color="Transparent"/>
     <SolidColorBrush x:Key="RadioButtonBorderBrushPressed" Color="Transparent"/>
@@ -473,7 +473,9 @@
     <SolidColorBrush x:Key="RadioButtonOuterEllipseStrokePointerOver" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="RadioButtonOuterEllipseStrokePressed" Color="{StaticResource SystemColorHighlightTextColor}" />
     <SolidColorBrush x:Key="RadioButtonOuterEllipseStrokeDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
-    <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFill" Color="{StaticResource SystemColorHighlightColor}"/>
+    <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFill" Color="{StaticResource SystemColorHighlightTextColor}"/>
+    <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFillDisabled" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStrokeDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
 
     <!--  RatingControl  -->
     <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="{StaticResource SystemColorHighlightColor}" />
@@ -639,6 +641,7 @@
     <Color x:Key="ControlStrongFillColorDefault">#2D3236</Color>
     <Color x:Key="ControlStrongFillColorDisabled">#2D3236</Color>
 
+    <Color x:Key="SystemColorWindowColor">Transparent</Color>
     <Color x:Key="ControlSolidFillColorDefault">#2D3236</Color>
 
     <Color x:Key="SubtleFillColorTransparent">#2D3236</Color>

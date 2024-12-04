@@ -155,6 +155,7 @@ namespace System.Xaml
                     return assemblies[i];
                 }
             }
+
             return null;
         }
 
@@ -175,6 +176,7 @@ namespace System.Xaml
                         return result;
                     }
 	            }
+
                 //
                 // We use AssemblyName ctor here because GetName demands FileIOPermission
                 // and does load more than just the required information.
@@ -189,6 +191,7 @@ namespace System.Xaml
                     GCNotificationToken.RegisterCallback(_cleanupCollectedAssemblies, null);
                     _isGCCallbackPending  = true;
                 }
+
                 return result;
             }
         }
@@ -207,6 +210,7 @@ namespace System.Xaml
                     {
                         continue;
                     }
+
                     if (weakRef.IsAlive)
                     {
                         // There is a weak ref that is still alive, register another GC callback for next time
@@ -219,9 +223,11 @@ namespace System.Xaml
                         {
                             keysToRemove = new List<object>();
                         }
+
                         keysToRemove.Add(key);
                     }
                 }
+
                 if (keysToRemove != null)
                 {
                     foreach (object key in keysToRemove)
@@ -229,6 +235,7 @@ namespace System.Xaml
                         _assemblies.Remove(key);
                     }
                 }
+
                 if (foundLiveDynamicAssemblies)
                 {
                     GCNotificationToken.RegisterCallback(_cleanupCollectedAssemblies, null);
@@ -328,6 +335,7 @@ namespace System.Xaml
                     return (target1 == target2);
                 }
             }
+
             return base.Equals(o);
         }
 
@@ -337,6 +345,7 @@ namespace System.Xaml
             {
                 return object.ReferenceEquals(right, null);
             }
+
             return left.Equals(right);
         }
 

@@ -61,6 +61,7 @@ namespace System.Xaml.Schema
                 {
                     _typeArguments = new List<XamlTypeName>();
                 }
+
                 return _typeArguments;
             }
         }
@@ -102,6 +103,7 @@ namespace System.Xaml.Schema
             {
                 throw new FormatException(error);
             }
+
             return result;
         }
 
@@ -116,6 +118,7 @@ namespace System.Xaml.Schema
             {
                 throw new FormatException(error);
             }
+
             return result;
         }
 
@@ -169,6 +172,7 @@ namespace System.Xaml.Schema
                 {
                     first = false;
                 }
+
                 typeName.ConvertToStringInternal(result, prefixGenerator);
             }
         }
@@ -207,10 +211,12 @@ namespace System.Xaml.Schema
             {
                 throw new InvalidOperationException(SR.XamlTypeNameNamespaceIsNull);
             }
+
             if (string.IsNullOrEmpty(Name))
             {
                 throw new InvalidOperationException(SR.XamlTypeNameNameIsNullOrEmpty);
             }
+
             if (prefixGenerator == null)
             {
                 result.Append('{');
@@ -224,12 +230,14 @@ namespace System.Xaml.Schema
                 {
                     throw new InvalidOperationException(SR.Format(SR.XamlTypeNameCannotGetPrefix, Namespace));
                 }
+
                 if (prefix.Length != 0)
                 {
                     result.Append(prefix);
                     result.Append(':');
                 }
             }
+
             if (HasTypeArgs)
             {
                 // The subscript goes after the type args

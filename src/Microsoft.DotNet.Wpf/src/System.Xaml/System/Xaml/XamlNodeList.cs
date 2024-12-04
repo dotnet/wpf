@@ -59,10 +59,12 @@ namespace System.Xaml
             {
                 throw new XamlException(SR.CloseXamlWriterBeforeReading);
             }
+
             if (_writer.SchemaContext == null)
             {
                 throw new XamlException(SR.SchemaContextNotInitialized);
             }
+
             return new ReaderMultiIndexDelegate(_writer.SchemaContext, Index, _nodeList.Count, _hasLineInfo);
         }
 
@@ -76,6 +78,7 @@ namespace System.Xaml
                     _nodeList.Add(node);
                     return;
                 }
+
                 Debug.Assert(XamlNode.IsEof_Helper(nodeType, data));
                 _readMode = true;
             }
@@ -106,6 +109,7 @@ namespace System.Xaml
             {
                 throw new XamlException(SR.CloseXamlWriterBeforeReading);
             }
+
             return _nodeList[idx];
         }
 

@@ -25,7 +25,6 @@ namespace MS.Internal.Xaml.Context
             : base()
         { }
 
-
         public ObjectWriterFrame(ObjectWriterFrame source)
             : base(source)
         {
@@ -36,10 +35,12 @@ namespace MS.Internal.Xaml.Context
             {
                 _preconstructionPropertyValues = new Dictionary<XamlMember, object>(source.PreconstructionPropertyValues);
             }
+
             if (source._assignedProperties != null)
             {
                 _assignedProperties = new HashSet<XamlMember>(source.AssignedProperties);
             }
+
             _key = source._key;
             _flags = source._flags;
             Instance = source.Instance;
@@ -146,6 +147,7 @@ namespace MS.Internal.Xaml.Context
                 {
                     return ftkh.Key;
                 }
+
                 return _key;
             }
             set
@@ -173,6 +175,7 @@ namespace MS.Internal.Xaml.Context
                 {
                     _preconstructionPropertyValues = new Dictionary<XamlMember, object>();
                 }
+
                 return _preconstructionPropertyValues;
             }
         }
@@ -193,6 +196,7 @@ namespace MS.Internal.Xaml.Context
                 {
                     _assignedProperties = new HashSet<XamlMember>();
                 }
+
                 return _assignedProperties;
             }
         }

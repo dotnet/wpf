@@ -57,6 +57,7 @@ namespace System.Xaml.Replacements
             {
                 return null;
             }
+
             if (schemaContextProvider.SchemaContext == null)
             {
                 return null;

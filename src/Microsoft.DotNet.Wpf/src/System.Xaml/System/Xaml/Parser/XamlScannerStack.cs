@@ -88,6 +88,5 @@ namespace MS.Internal.Xaml.Parser
                 _stack.Peek().InContent = value;
             }
         }
-
     }
 }

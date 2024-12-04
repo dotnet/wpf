@@ -136,6 +136,7 @@ namespace System.Xaml
             {
                 return false;
             }
+
             return Remove(item.Key);
         }
 
@@ -145,6 +146,7 @@ namespace System.Xaml
             {
                 throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Key"), nameof(item));
             }
+
             if (item.Value == null)
             {
                 throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Value"), nameof(item));
@@ -159,6 +161,7 @@ namespace System.Xaml
             {
                 throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Key"), nameof(item));
             }
+
             return ContainsKey(item.Key);
         }
 
@@ -230,6 +233,7 @@ namespace System.Xaml
                 {
                     list.Add(key);
                 }
+
                 return list;
             }
         }
@@ -248,6 +252,7 @@ namespace System.Xaml
                 {
                     list.Add(value);
                 }
+
                 return list;
             }
         }

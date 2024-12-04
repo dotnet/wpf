@@ -55,8 +55,10 @@ namespace MS.Internal.Xaml.Context
                 {
                     return xamlNs;
                 }
+
                 frame = (XamlParserFrame)frame.Previous;
             }
+
             return null;
         }
 
@@ -74,6 +76,7 @@ namespace MS.Internal.Xaml.Context
             {
                 return XmlNamespaceResolver(prefix);
             }
+
             return FindNamespaceByPrefixInParseStack(prefix);
         }
 
@@ -93,6 +96,7 @@ namespace MS.Internal.Xaml.Context
                         }
                     }
                 }
+
                 frame = (XamlParserFrame)frame.Previous;
             }
 
@@ -296,6 +300,7 @@ namespace MS.Internal.Xaml.Context
             {
                 allowProtectedForType = CurrentType.UnderlyingType;
             }
+
             return CurrentMember.IsWriteVisibleTo(LocalAssembly, allowProtectedForType);
         }
 

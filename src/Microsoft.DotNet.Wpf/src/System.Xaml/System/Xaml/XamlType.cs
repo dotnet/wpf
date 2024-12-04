@@ -88,6 +88,7 @@ namespace System.Xaml
                 {
                     _reflector.BaseType = LookupBaseType();
                 }
+
                 return _reflector.BaseType;
             }
         }
@@ -101,6 +102,7 @@ namespace System.Xaml
                 {
                     _reflector.Invoker = LookupInvoker() ?? XamlTypeInvoker.UnknownInvoker;
                 }
+
                 return _reflector.Invoker;
             }
         }
@@ -113,6 +115,7 @@ namespace System.Xaml
                 {
                     _isNameValid = XamlName.IsValidXamlName(_name) ? ThreeValuedBool.True : ThreeValuedBool.False;
                 }
+
                 return _isNameValid == ThreeValuedBool.True;
             }
         }
@@ -137,6 +140,7 @@ namespace System.Xaml
                 {
                     return namespaces[0];
                 }
+
                 return null;
             }
         }
@@ -160,6 +164,7 @@ namespace System.Xaml
                 {
                     _underlyingType.SetIfNull(LookupUnderlyingType());
                 }
+
                 return _underlyingType.Value;
             }
         }
@@ -196,11 +201,13 @@ namespace System.Xaml
                 {
                     return null;
                 }
+
                 Debug.Assert(_reflector != null, "_reflector should have been initialized by IsDictionary");
                 if (_reflector.KeyType == null)
                 {
                     _reflector.KeyType = LookupKeyType() ?? XamlLanguage.Object;
                 }
+
                 return _reflector.KeyType;
             }
         }
@@ -213,11 +220,13 @@ namespace System.Xaml
                 {
                     return null;
                 }
+
                 Debug.Assert(_reflector != null, "_reflector should have been initialized by GetCollectionKind");
                 if (_reflector.ItemType == null)
                 {
                     _reflector.ItemType = LookupItemType() ?? XamlLanguage.Object;
                 }
+
                 return _reflector.ItemType;
             }
         }
@@ -232,12 +241,14 @@ namespace System.Xaml
                 {
                     return null;
                 }
+
                 Debug.Assert(_reflector != null, "_reflector should have been initialized by GetCollectionKind");
                 if (_reflector.AllowedContentTypes == null)
                 {
                     _reflector.AllowedContentTypes = LookupAllowedContentTypes() ??
                         EmptyList<XamlType>.Value;
                 }
+
                 return _reflector.AllowedContentTypes;
             }
         }
@@ -250,12 +261,14 @@ namespace System.Xaml
                 {
                     return null;
                 }
+
                 Debug.Assert(_reflector != null, "_reflector should have been initialized by IsCollection");
                 if (_reflector.ContentWrappers == null)
                 {
                     _reflector.ContentWrappers = LookupContentWrappers() ??
                         EmptyList<XamlType>.Value;
                 }
+
                 return _reflector.ContentWrappers;
             }
         }
@@ -269,6 +282,7 @@ namespace System.Xaml
                 {
                     _reflector.TypeConverter = LookupTypeConverter();
                 }
+
                 return _reflector.TypeConverter;
             }
         }
@@ -282,6 +296,7 @@ namespace System.Xaml
                 {
                     _reflector.ValueSerializer = LookupValueSerializer();
                 }
+
                 return _reflector.ValueSerializer;
             }
         }
@@ -295,6 +310,7 @@ namespace System.Xaml
                 {
                     _reflector.ContentProperty = LookupContentProperty();
                 }
+
                 return _reflector.ContentProperty;
             }
         }
@@ -308,6 +324,7 @@ namespace System.Xaml
                 {
                     _reflector.DeferringLoader = LookupDeferringLoader();
                 }
+
                 return _reflector.DeferringLoader;
             }
         }
@@ -320,11 +337,13 @@ namespace System.Xaml
                 {
                     return null;
                 }
+
                 Debug.Assert(_reflector != null, "_reflector should have been initialized by IsMarkupExtension");
                 if (_reflector.MarkupExtensionReturnType == null)
                 {
                     _reflector.MarkupExtensionReturnType = LookupMarkupExtensionReturnType() ?? XamlLanguage.Object;
                 }
+
                 return _reflector.MarkupExtensionReturnType;
             }
         }
@@ -340,6 +359,7 @@ namespace System.Xaml
                 result = LookupMember(name, false /*skipReadOnlyCheck*/);
                 result = _reflector.Members.TryAdd(name, result);
             }
+
             return result;
         }
 
@@ -374,6 +394,7 @@ namespace System.Xaml
                 result = LookupAliasedProperty(directive);
                 _reflector.TryAddAliasedProperty(directive, result);
             }
+
             return result;
         }
 
@@ -387,6 +408,7 @@ namespace System.Xaml
                 result = LookupAttachableMember(name);
                 result = _reflector.AttachableMembers.TryAdd(name, result);
             }
+
             return result;
         }
 
@@ -403,8 +425,10 @@ namespace System.Xaml
                         _reflector.AttachableMembers.TryAdd(member.Name, member);
                     }
                 }
+
                 _reflector.AttachableMembers.IsComplete = true;
             }
+
             return _reflector.AttachableMembers.Values;
         }
 
@@ -430,12 +454,15 @@ namespace System.Xaml
                         return LooseTypeExtensions.IsAssemblyQualifiedNameAssignableFrom(
                             baseUnderlyingType, curUnderlyingType);
                     }
+
                     return baseUnderlyingType.IsAssignableFrom(curUnderlyingType);
                 }
+
                 if (curType == xamlType)
                 {
                     return true;
                 }
+
                 curType = curType.BaseType;
             }
             while (curType != null);
@@ -451,6 +478,7 @@ namespace System.Xaml
                 result = LookupPositionalParameters(parameterCount);
                 result = _reflector.TryAddPositionalParameters(parameterCount, result);
             }
+
             return result;
         }
 
@@ -464,6 +492,7 @@ namespace System.Xaml
                     _namespaces = new ReadOnlyCollection<string>(new string[] { string.Empty });
                 }
             }
+
             return _namespaces;
         }
 
@@ -508,6 +537,7 @@ namespace System.Xaml
                         _reflector.IsReadOnlyMethod = null;
                     }
                 }
+
                 return _reflector.IsReadOnlyMethod;
             }
         }
@@ -520,6 +550,7 @@ namespace System.Xaml
                 {
                     _reflector.XamlSetMarkupExtensionHandler = LookupSetMarkupExtensionHandler();
                 }
+
                 return _reflector.XamlSetMarkupExtensionHandler;
             }
         }
@@ -533,6 +564,7 @@ namespace System.Xaml
                 {
                     _reflector.XamlSetTypeConverterHandler = LookupSetTypeConverterHandler();
                 }
+
                 return _reflector.XamlSetTypeConverterHandler;
             }
         }
@@ -545,12 +577,14 @@ namespace System.Xaml
                 {
                     return null;
                 }
+
                 EnsureReflector();
                 if (!_reflector.AddMethodIsSet)
                 {
                     XamlCollectionKind collectionKind = GetCollectionKind();
                     _reflector.AddMethod = CollectionReflector.LookupAddMethod(UnderlyingType, collectionKind);
                 }
+
                 return _reflector.AddMethod;
             }
         }
@@ -563,11 +597,13 @@ namespace System.Xaml
                 {
                     return null;
                 }
+
                 Debug.Assert(_reflector != null, "_reflector should have been initialized by GetCollectionKind");
                 if (!_reflector.GetEnumeratorMethodIsSet)
                 {
                     _reflector.GetEnumeratorMethod = CollectionReflector.GetEnumeratorMethod(UnderlyingType);
                 }
+
                 return _reflector.GetEnumeratorMethod;
             }
         }
@@ -591,6 +627,7 @@ namespace System.Xaml
             {
                 return true;
             }
+
             Type underlyingType = UnderlyingType;
             return accessingAssembly != null && underlyingType != null &&
                 TypeReflector.IsVisibleTo(underlyingType, accessingAssembly, SchemaContext);
@@ -603,6 +640,7 @@ namespace System.Xaml
             {
                 _reflector.ExcludedReadOnlyMembers = LookupAllExcludedReadOnlyMembers() ?? EmptyList<XamlMember>.Value;
             }
+
             return _reflector.ExcludedReadOnlyMembers;
         }
 
@@ -614,10 +652,12 @@ namespace System.Xaml
             {
                 return EmptyList<ConstructorInfo>.Value;
             }
+
             if (IsPublic)
             {
                 return UnderlyingType.GetConstructors();
             }
+
             return GetPublicAndInternalConstructors();
         }
 
@@ -628,12 +668,14 @@ namespace System.Xaml
             {
                 return null;
             }
+
             IEnumerable<ConstructorInfo> ctors = GetConstructors();
             ConstructorInfo[] ctorArray = ctors as ConstructorInfo[];
             if (ctorArray == null)
             {
                 ctorArray = new List<ConstructorInfo>(ctors).ToArray();
             }
+
             MethodBase result = Type.DefaultBinder.SelectMethod(ConstructorBindingFlags, ctorArray, paramTypes, null);
             return (ConstructorInfo)result;
         }
@@ -661,6 +703,7 @@ namespace System.Xaml
                 {
                     attributeType = typeof(XmlLangPropertyAttribute);
                 }
+
                 if (attributeType != null)
                 {
                     string propertyName;
@@ -670,14 +713,17 @@ namespace System.Xaml
                         {
                             return null;
                         }
+
                         return GetPropertyOrUnknown(propertyName, skipReadOnlyCheck);
                     }
                 }
             }
+
             if (BaseType != null)
             {
                 return BaseType.GetAliasedProperty(directive);
             }
+
             return null;
         }
 
@@ -710,10 +756,12 @@ namespace System.Xaml
             {
                 return XamlLanguage.Object;
             }
+
             if (underlyingType.BaseType != null)
             {
                 return SchemaContext.GetXamlType(underlyingType.BaseType);
             }
+
             return null;
         }
 
@@ -730,6 +778,7 @@ namespace System.Xaml
             {
                 _reflector.AddMethod = addMethod;
             }
+
             return result;
         }
 
@@ -740,11 +789,13 @@ namespace System.Xaml
             {
                 return GetDefaultFlag(BoolTypeBits.ConstructionRequiresArguments);
             }
+
             if (underlyingType.IsValueType)
             {
                 // Value types have built-in default constructor
                 return false;
             }
+
             ConstructorInfo defaultCtor = underlyingType.GetConstructor(ConstructorBindingFlags, null, Type.EmptyTypes, null);
             return (defaultCtor == null) || !TypeReflector.IsPublicOrInternal(defaultCtor);
         }
@@ -758,12 +809,15 @@ namespace System.Xaml
                 {
                     return null;
                 }
+
                 return GetPropertyOrUnknown(contentPropertyName, false /*skipReadOnlyCheck*/);
             }
+
             if (BaseType != null)
             {
                 return BaseType.ContentProperty;
             }
+
             return null;
         }
 
@@ -816,10 +870,12 @@ namespace System.Xaml
                     return SchemaContext.GetValueConverter<XamlDeferringLoader>(loaderTypes[0], null);
                 }
             }
+
             if (BaseType != null)
             {
                 return BaseType.DeferringLoader;
             }
+
             return null;
         }
 
@@ -830,6 +886,7 @@ namespace System.Xaml
             {
                 return GetDefaultFlag(BoolTypeBits.Constructible);
             }
+
             // Type must be concrete, non-nested, and closed
             if (underlyingType.IsAbstract ||
                 underlyingType.IsInterface ||
@@ -839,21 +896,25 @@ namespace System.Xaml
             {
                 return false;
             }
+
             // Value types have built-in default constructor
             if (underlyingType.IsValueType)
             {
                 return true;
             }
+
             if (!ConstructionRequiresArguments)
             {
                 return true;
             }
+
             // Look for constructors
             foreach (ConstructorInfo ctor in GetConstructors())
             {
                 // found one, that's all we need
                 return true;
             }
+
             return false;
         }
 
@@ -878,6 +939,7 @@ namespace System.Xaml
             {
                 return !UnderlyingType.IsValueType || IsNullableGeneric();
             }
+
             return GetDefaultFlag(BoolTypeBits.Nullable);
         }
 
@@ -887,6 +949,7 @@ namespace System.Xaml
             {
                 return _reflector.IsUnknown;
             }
+
             return UnderlyingType == null;
         }
 
@@ -900,15 +963,18 @@ namespace System.Xaml
                     return true;
                 }
             }
+
             if (BaseType != null)
             {
                 return BaseType.IsWhitespaceSignificantCollection;
             }
+
             if (IsUnknown)
             {
                 Debug.Assert(_reflector != null, "_reflector should have been initialized by AreAttributesAvailable");
                 return _reflector.GetFlag(BoolTypeBits.WhitespaceSignificantCollection).Value;
             }
+
             return GetDefaultFlag(BoolTypeBits.WhitespaceSignificantCollection);
         }
 
@@ -927,6 +993,7 @@ namespace System.Xaml
             {
                 return BaseType.KeyType;
             }
+
             return null;
         }
 
@@ -957,6 +1024,7 @@ namespace System.Xaml
             {
                 return BaseType.ItemType;
             }
+
             return (result != null) ? SchemaContext.GetXamlType(result) : null;
         }
 
@@ -972,10 +1040,12 @@ namespace System.Xaml
                     return xamlReturnType;
                 }
             }
+
             if (BaseType != null)
             {
                 return BaseType.MarkupExtensionReturnType;
             }
+
             return null;
         }
 
@@ -985,6 +1055,7 @@ namespace System.Xaml
             {
                 return (BaseType != null) ? BaseType.GetAllAttachableMembers() : null;
             }
+
             EnsureReflector();
             return _reflector.LookupAllAttachableMembers(SchemaContext);
         }
@@ -1013,6 +1084,7 @@ namespace System.Xaml
                     }
                 }
             }
+
             if (events != null)
             {
                 foreach (EventInfo ei in events)
@@ -1021,6 +1093,7 @@ namespace System.Xaml
                     result.Add(member);
                 }
             }
+
             return result;
         }
 
@@ -1032,6 +1105,7 @@ namespace System.Xaml
                 {
                     return skipReadOnlyCheck ? BaseType.LookupMember(name, true) : BaseType.GetMember(name);
                 }
+
                 return null;
             }
 
@@ -1047,13 +1121,16 @@ namespace System.Xaml
                 {
                     return null;
                 }
+
                 return result;
             }
+
             EventInfo ei = _reflector.LookupEvent(name);
             if (ei != null)
             {
                 return SchemaContext.GetEvent(ei);
             }
+
             return null;
         }
 
@@ -1073,13 +1150,16 @@ namespace System.Xaml
                 {
                     return null;
                 }
+
                 return result;
             }
+
             setter = _reflector.LookupAttachableEvent(name);
             if (setter != null)
             {
                 return SchemaContext.GetAttachableEvent(name, setter);
             }
+
             return null;
         }
 
@@ -1099,6 +1179,7 @@ namespace System.Xaml
             {
                 _reflector.ReflectedPositionalParameters = LookupAllPositionalParameters();
             }
+
             IList<XamlType> result;
             _reflector.ReflectedPositionalParameters.TryGetValue(parameterCount, out result);
             return result;
@@ -1116,6 +1197,7 @@ namespace System.Xaml
             {
                 return GetDefaultFlag(BoolTypeBits.Public);
             }
+
             return underlyingType.IsVisible;
         }
 
@@ -1134,15 +1216,18 @@ namespace System.Xaml
                     return true;
                 }
             }
+
             if (BaseType != null)
             {
                 return BaseType.IsAmbient;
             }
+
             if (IsUnknown)
             {
                 Debug.Assert(_reflector != null, "_reflector should have been initialized by AreAttributesAvailable");
                 return _reflector.GetFlag(BoolTypeBits.Ambient).Value;
             }
+
             return GetDefaultFlag(BoolTypeBits.Ambient);
         }
 
@@ -1174,11 +1259,13 @@ namespace System.Xaml
                 {
                     return SchemaContext.GetValueConverter<TypeConverter>(typeof(EnumConverter), this);
                 }
+
                 XamlValueConverter<TypeConverter> result = BuiltInValueConverter.GetTypeConverter(underlyingType);
                 if (result != null)
                 {
                     return result;
                 }
+
                 if (IsNullableGeneric())
                 {
                     Type[] typeArgs = underlyingType.GetGenericArguments();
@@ -1187,6 +1274,7 @@ namespace System.Xaml
                     return innerXamlType.TypeConverter;
                 }
             }
+
             return null;
         }
 
@@ -1219,6 +1307,7 @@ namespace System.Xaml
                 {
                     return result;
                 }
+
                 if (IsNullableGeneric())
                 {
                     Type[] typeArgs = underlyingType.GetGenericArguments();
@@ -1227,6 +1316,7 @@ namespace System.Xaml
                     return innerXamlType.ValueSerializer;
                 }
             }
+
             return null;
         }
 
@@ -1242,10 +1332,12 @@ namespace System.Xaml
                     return true;
                 }
             }
+
             if (BaseType != null)
             {
                 return BaseType.TrimSurroundingWhitespace;
             }
+
             return GetDefaultFlag(BoolTypeBits.TrimSurroundingWhitespace);
         }
 
@@ -1260,10 +1352,12 @@ namespace System.Xaml
                     return usable.Value;
                 }
             }
+
             if (BaseType != null)
             {
                 return BaseType.IsUsableDuringInitialization;
             }
+
             return GetDefaultFlag(BoolTypeBits.UsableDuringInitialization);
         }
 
@@ -1278,14 +1372,17 @@ namespace System.Xaml
                     {
                         return null;
                     }
+
                     return (EventHandler<XamlSetMarkupExtensionEventArgs>)Delegate.CreateDelegate(
                         typeof(EventHandler<XamlSetMarkupExtensionEventArgs>), UnderlyingType, methodName);
                 }
             }
+
             if (BaseType != null)
             {
                 return BaseType.SetMarkupExtensionHandler;
             }
+
             return null;
         }
 
@@ -1300,14 +1397,17 @@ namespace System.Xaml
                     {
                         return null;
                     }
+
                     return (EventHandler<XamlSetTypeConverterEventArgs>)Delegate.CreateDelegate(
                         typeof(EventHandler<XamlSetTypeConverterEventArgs>), UnderlyingType, methodName);
                 }
             }
+
             if (BaseType != null)
             {
                 return BaseType.SetTypeConverterHandler;
             }
+
             return null;
         }
 
@@ -1327,6 +1427,7 @@ namespace System.Xaml
                     _reflector.CustomAttributeProvider = LookupCustomAttributeProvider();
                     Debug.Assert(UnderlyingTypeInternal.IsSet, "EnsureReflector should have caused UnderlyingType to be initialized");
                 }
+
                 return _reflector.CustomAttributeProvider != null || UnderlyingTypeInternal.Value != null;
             }
         }
@@ -1340,6 +1441,7 @@ namespace System.Xaml
                 {
                     flags |= BindingFlags.NonPublic;
                 }
+
                 return flags;
             }
         }
@@ -1355,6 +1457,7 @@ namespace System.Xaml
             {
                 ns = _namespaces[0];
             }
+
             if (!string.IsNullOrEmpty(ns))
             {
                 sb.Append('{');
@@ -1366,6 +1469,7 @@ namespace System.Xaml
                 sb.Append(UnderlyingTypeInternal.Value.Namespace);
                 sb.Append('.');
             }
+
             sb.Append(Name);
             if (IsGeneric)
             {
@@ -1378,6 +1482,7 @@ namespace System.Xaml
                         sb.Append(", ");
                     }
                 }
+
                 sb.Append(')');
             }
         }
@@ -1394,6 +1499,7 @@ namespace System.Xaml
             {
                 reflector = new TypeReflector(UnderlyingType);
             }
+
             Interlocked.CompareExchange(ref _reflector, reflector, null);
         }
 
@@ -1413,6 +1519,7 @@ namespace System.Xaml
             {
                 _reflector.CollectionKind = LookupCollectionKind();
             }
+
             return _reflector.CollectionKind;
         }
 
@@ -1425,6 +1532,7 @@ namespace System.Xaml
                 result = LookupBooleanValue(flagBit);
                 _reflector.SetFlag(flagBit, result.Value);
             }
+
             return result.Value;
         }
 
@@ -1435,6 +1543,7 @@ namespace System.Xaml
             {
                 result = new XamlMember(propertyName, this /*declaringType*/, false /*isAttachable*/);
             }
+
             return result;
         }
 
@@ -1460,10 +1569,12 @@ namespace System.Xaml
             {
                 return null;
             }
+
             if (list.Count > 0)
             {
                 return new ReadOnlyCollection<T>(list);
             }
+
             return EmptyList<T>.Value;
         }
 
@@ -1473,6 +1584,7 @@ namespace System.Xaml
             {
                 return null;
             }
+
             foreach (XamlType typeArg in typeArguments)
             {
                 if (typeArg == null)
@@ -1480,6 +1592,7 @@ namespace System.Xaml
                     throw new ArgumentException(SR.Format(SR.CollectionCannotContainNulls, "typeArguments"));
                 }
             }
+
             return new List<XamlType>(typeArguments).AsReadOnly();
         }
 
@@ -1490,16 +1603,19 @@ namespace System.Xaml
             {
                 genericType = genericType.GetElementType();
             }
+
             if (!genericType.IsGenericType)
             {
                 return null;
             }
+
             Type[] types = genericType.GetGenericArguments();
             XamlType[] result = new XamlType[types.Length];
             for (int i = 0; i < types.Length; i++)
             {
                 result[i] = schemaContext.GetXamlType(types[i]);
             }
+
             return GetReadOnly(result);
         }
 
@@ -1515,11 +1631,13 @@ namespace System.Xaml
                 typeName = GenericTypeNameScanner.StripSubscript(typeName, out subscript);
                 typeName = string.Concat(typeName.AsSpan(0, index), subscript);
             }
+
             // if nested, add the containing name
             if (type.IsNested)
             {
                 typeName = GetTypeName(type.DeclaringType) + KnownStrings.NestedTypeDelimiter + typeName;
             }
+
             return typeName;
         }
 
@@ -1547,6 +1665,7 @@ namespace System.Xaml
             {
                 return null;
             }
+
             List<XamlMember> result = new List<XamlMember>(excludedMembers.Count);
             for (int i = 0; i < excludedMembers.Count; i++)
             {
@@ -1560,6 +1679,7 @@ namespace System.Xaml
                     Debug.Assert(GetType() != typeof(XamlType), "Default GetAllMembers logic should have already captured all writeable properties");
                 }
             }
+
             return new ReadOnlyCollection<XamlMember>(result);
         }
 
@@ -1589,12 +1709,14 @@ namespace System.Xaml
                     XamlType xamlType = SchemaContext.GetXamlType(type);
                     typeVector[i] = xamlType;
                 }
+
                 if (ctorDict.ContainsKey(typeVector.Length))
                 {
                     if (!SchemaContext.SupportMarkupExtensionsWithDuplicateArity)
                     {
                         throw new XamlSchemaException(SR.Format(SR.MarkupExtensionWithDuplicateArity, UnderlyingType, typeVector.Length));
                     }
+
                     // Otherwise we just ignore the dupe
                 }
                 else
@@ -1602,6 +1724,7 @@ namespace System.Xaml
                     ctorDict.Add(typeVector.Length, GetReadOnly(typeVector));
                 }
             }
+
             return ctorDict;
         }
 
@@ -1646,6 +1769,7 @@ namespace System.Xaml
                         string err = SR.Format(SR.UsableDuringInitializationOnME, this);
                         throw new XamlSchemaException(err);
                     }
+
                     break;
 
                 case BoolTypeBits.WhitespaceSignificantCollection:
@@ -1665,6 +1789,7 @@ namespace System.Xaml
                     bit = GetDefaultFlag(typeBit);
                     break;
             }
+
             return bit;
         }
 
@@ -1688,6 +1813,7 @@ namespace System.Xaml
                 result = null;
                 return false;
             }
+
             Debug.Assert(_reflector != null, "_reflector should have been initialized by AreAttributesAvailable");
 
             // Look up the attribute on this type
@@ -1726,6 +1852,7 @@ namespace System.Xaml
                 {
                     result ^= _namespaces[0].GetHashCode();
                 }
+
                 if (_typeArguments != null && _typeArguments.Count > 0)
                 {
                     foreach (XamlType typeArgument in _typeArguments)
@@ -1733,6 +1860,7 @@ namespace System.Xaml
                         result ^= typeArgument.GetHashCode();
                     }
                 }
+
                 return result;
             }
             else if (UnderlyingType != null)
@@ -1759,10 +1887,12 @@ namespace System.Xaml
             {
                 return true;
             }
+
             if (xamlType1 is null || xamlType2 is null)
             {
                 return false;
             }
+
             if (xamlType1.IsUnknown)
             {
                 if (xamlType2.IsUnknown)
@@ -1782,12 +1912,14 @@ namespace System.Xaml
                     return (xamlType1._name == xamlType2._name) &&
                         TypeArgumentsAreEqual(xamlType1, xamlType2);
                 }
+
                 return false;
             }
             else if (xamlType2.IsUnknown)
             {
                 return false;
             }
+
             // If the types are known but don't have underlying types, this will return false.
             // We don't want to get into the business of comparing custom user types, especially
             // since the one way we could possibly do that (namespaces) can have side effects
@@ -1811,10 +1943,12 @@ namespace System.Xaml
             {
                 return false;
             }
+
             if (xamlType1._typeArguments.Count != xamlType2._typeArguments.Count)
             {
                 return false;
             }
+
             for (int i = 0; i < xamlType1._typeArguments.Count; i++)
             {
                 if (xamlType1._typeArguments[i] != xamlType2._typeArguments[i])
@@ -1822,6 +1956,7 @@ namespace System.Xaml
                     return false;
                 }
             }
+
             return true;
         }
 

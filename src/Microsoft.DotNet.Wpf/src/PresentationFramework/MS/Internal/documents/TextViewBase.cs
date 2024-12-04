@@ -111,7 +111,7 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            return new ReadOnlyCollection<GlyphRun>(new List<GlyphRun>());
+            return ReadOnlyCollection<GlyphRun>.Empty;
         }
 
         /// <summary>

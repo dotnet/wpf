@@ -345,7 +345,7 @@ namespace MS.Internal.PtsHost
 #if TEXTPANELLAYOUTDEBUG
             TextPanelDebug.IncrementCounter("TextPara.GetLines", TextPanelDebug.Category.TextView);
 #endif
-            ReadOnlyCollection<LineResult> lines = new ReadOnlyCollection<LineResult>(new List<LineResult>(0));
+            ReadOnlyCollection<LineResult> lines = ReadOnlyCollection<LineResult>.Empty;
 
             // Query paragraph details
             PTS.FSTEXTDETAILS textDetails;

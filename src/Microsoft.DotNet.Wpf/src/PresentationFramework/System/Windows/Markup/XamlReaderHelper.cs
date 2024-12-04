@@ -35,6 +35,10 @@ using MS.Internal;
 // you need to disable warnings 1634 and 1691. (Presharp Documentation)
 #pragma warning disable 1634, 1691
 
+#if NET472
+#pragma warning disable CA1847 
+#endif
+
 #if !PBTCOMPILER
 
 using System.Windows;

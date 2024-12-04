@@ -19,6 +19,11 @@ using System.Collections.Specialized;
 using System.Runtime.InteropServices;
 using MS.Internal.Xaml.Parser;
 
+#if NET472
+#pragma warning disable CA1846
+#pragma warning disable CA1847
+#endif
+
 #if PBTCOMPILER
 namespace MS.Internal.Markup
 #else

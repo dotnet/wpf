@@ -35,6 +35,10 @@ using MS.Internal.Tasks;
 // Since we disable PreSharp warnings in this file, we first need to disable warnings about unknown message numbers and unknown pragmas.
 #pragma warning disable 1634, 1691
 
+#if NET472
+#pragma warning disable CA1847 
+#endif
+
 namespace Microsoft.Build.Tasks.Windows
 {
     /// <summary>

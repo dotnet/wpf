@@ -6403,7 +6403,9 @@ namespace System.Windows.Baml2006
                             false // IsAttachable
                                      );
             bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.Grid)target).ColumnDefinitions; };
+            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Controls.Grid)target).ColumnDefinitions = (System.Windows.Controls.ColumnDefinitionCollection)value; };
             bamlMember.IsWritePrivate = true;
+            bamlMember.TypeConverterType = typeof(System.Windows.Controls.ColumnDefinitionCollectionConverter);
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6420,7 +6422,9 @@ namespace System.Windows.Baml2006
                             false // IsAttachable
                                      );
             bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.Grid)target).RowDefinitions; };
+            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Controls.Grid)target).RowDefinitions = (System.Windows.Controls.RowDefinitionCollection)value; };
             bamlMember.IsWritePrivate = true;
+            bamlMember.TypeConverterType = typeof(System.Windows.Controls.RowDefinitionCollectionConverter);
             bamlMember.Freeze();
             return bamlMember;
         }

@@ -23,5 +23,5 @@ internal static class HashHelper
     /// <summary>
     ///  Certain objects don't have reliable hashcodes, and cannot be used in a Hashtable, Dictionary, etc.
     /// </summary>
-    internal static bool HasReliableHashCode(object item) => !s_unreliableTypes.Contains(item.GetType());
+    internal static bool HasReliableHashCode(object item) => item is not null && !s_unreliableTypes.Contains(item.GetType());
 }

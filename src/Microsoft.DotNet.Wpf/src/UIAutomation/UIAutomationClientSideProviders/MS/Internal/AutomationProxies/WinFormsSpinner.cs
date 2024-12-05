@@ -154,7 +154,7 @@ namespace MS.Internal.AutomationProxies
                 IntPtr hwndSpin;
 
                 // Find the Edit control.  Typically the UpDown is first so we'll start with the other window.                                
-                if (Misc.ProxyGetClassName(hwndLastChild).IndexOf("Edit", StringComparison.OrdinalIgnoreCase) != -1)
+                if (Misc.ProxyGetClassName(hwndLastChild).Contains("Edit"))
                 {
                     hwndEdit = hwndLastChild;
                     hwndSpin = hwndFirstChild;
@@ -162,7 +162,7 @@ namespace MS.Internal.AutomationProxies
                 else
                 {
                     // Haven't seen this but suppose it's possible.  Subsequent test will confirm.
-                    if (Misc.ProxyGetClassName(hwndFirstChild).IndexOf("Edit", StringComparison.OrdinalIgnoreCase) != -1)
+                    if (Misc.ProxyGetClassName(hwndFirstChild).Contains("Edit"))
                     {
                         hwndEdit = hwndFirstChild;
                         hwndSpin = hwndLastChild;

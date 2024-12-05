@@ -671,14 +671,14 @@ namespace MS.Internal.Automation
                             break;
 
                         case ProxyScoping.PartialMatchApparentClassName:
-                            if (classNameForPartialMatch.IndexOf(pi.ClassName, StringComparison.Ordinal) >= 0)
+                            if (classNameForPartialMatch.Contains(pi.ClassName))
                             {
                                 factoryCallback = pi.ClientSideProviderFactoryCallback;
                             }
                             break;
 
                         case ProxyScoping.PartialMatchRealClassName:
-                            if (classNameForPartialMatch.IndexOf(pi.ClassName, StringComparison.Ordinal) >= 0
+                            if (classNameForPartialMatch.Contains(pi.ClassName)
                                 && ((pi.Flags & ClientSideProviderMatchIndicator.DisallowBaseClassNameMatch) == 0))
                             {
                                 factoryCallback = pi.ClientSideProviderFactoryCallback;

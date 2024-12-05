@@ -419,7 +419,7 @@ namespace MS.Internal
                 else
                 {
                     // duplicate the formatting character
-                    sb.Append(s.Substring(index, formatIndex - index + 1));
+                    sb.Append(s.AsSpan(index, formatIndex - index + 1));
                     sb.Append(s[formatIndex]);
 
                     index = formatIndex + 1;
@@ -429,7 +429,7 @@ namespace MS.Internal
 
             if (index <= lengthMinus1)
             {
-                sb.Append(s.Substring(index));
+                sb.Append(s.AsSpan(index));
             }
 
             return sb.ToString();

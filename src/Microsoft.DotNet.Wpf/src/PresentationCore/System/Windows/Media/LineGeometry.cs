@@ -1,27 +1,8 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+// See the LICENSE file in the project root for more information.                                          
 
-//                                             
-
-using System;                   
-using MS.Internal;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
-using System.Collections;
-using System.Text;
-using System.Globalization;
-using System.Windows.Media;
-using System.Windows;
-using System.Text.RegularExpressions;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-using System.Diagnostics;
-using System.Runtime.InteropServices; 
-using System.Security;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media 
 {
@@ -35,9 +16,7 @@ namespace System.Windows.Media
         /// <summary>
         /// 
         /// </summary>
-        public LineGeometry()
-        {
-        }
+        public LineGeometry() { }
         
         /// <summary>
         /// 
@@ -51,10 +30,7 @@ namespace System.Windows.Media
         /// <summary>
         /// 
         /// </summary>
-        public LineGeometry(
-            Point startPoint,
-            Point endPoint,
-            Transform transform) : this(startPoint, endPoint)
+        public LineGeometry(Point startPoint, Point endPoint, Transform transform) : this(startPoint, endPoint)
         {
             Transform = transform;
         }
@@ -89,50 +65,25 @@ namespace System.Windows.Media
         /// </summary>
         internal override Rect GetBoundsInternal(Pen pen, Matrix worldMatrix, double tolerance, ToleranceType type)
         {
-            Matrix geometryMatrix;
-            
-            Transform.GetTransformValue(Transform, out geometryMatrix);
+            Transform.GetTransformValue(Transform, out Matrix geometryMatrix);
 
-            return LineGeometry.GetBoundsHelper(
-                   pen,
-                   worldMatrix,
-                   StartPoint,
-                   EndPoint,
-                   geometryMatrix,
-                   tolerance,
-                   type);
+            return LineGeometry.GetBoundsHelper(pen, worldMatrix, StartPoint, EndPoint, geometryMatrix, tolerance, type);
         }
 
-        internal static Rect GetBoundsHelper(Pen pen, Matrix worldMatrix, Point pt1, Point pt2,
-                                             Matrix geometryMatrix, double tolerance, ToleranceType type)
+        internal static unsafe Rect GetBoundsHelper(Pen pen, Matrix worldMatrix, Point pt1, Point pt2,
+                                                    Matrix geometryMatrix, double tolerance, ToleranceType type)
         {
-            if (pen == null  &&  worldMatrix.IsIdentity && geometryMatrix.IsIdentity)
-            {
+            if (pen is null && worldMatrix.IsIdentity && geometryMatrix.IsIdentity)
                 return new Rect(pt1, pt2);
-            }
-            else
-            {
-                unsafe
-                {
-                    Point* pPoints = stackalloc Point[2];
-                    pPoints[0] = pt1;
-                    pPoints[1] = pt2;
 
-                    fixed (byte* pTypes = LineTypes) //Merely retrieves the pointer to static PE data, no actual pinning occurs
-                    {
-                        return Geometry.GetBoundsHelper(
-                            pen, 
-                            &worldMatrix, 
-                            pPoints, 
-                            pTypes, 
-                            c_pointCount,
-                            c_segmentCount,
-                            &geometryMatrix,
-                            tolerance,
-                            type,
-                            false); // skip hollows - meaningless here, this is never a hollow 
-                    }
-                }
+            Point* ptrPoints = stackalloc Point[(int)PointCount];
+            ptrPoints[0] = pt1;
+            ptrPoints[1] = pt2;
+
+            fixed (byte* ptrTypes = LineTypes) // Merely retrieves the pointer to static PE data, no actual pinning occurs
+            {
+                return Geometry.GetBoundsHelper(pen, &worldMatrix, ptrPoints, ptrTypes, PointCount, SegmentCount,
+                                                &geometryMatrix, tolerance, type, false); // skip hollows - meaningless here, this is never a hollow 
             }
         }
 
@@ -140,21 +91,13 @@ namespace System.Windows.Media
         {
             unsafe
             {
-                Point* pPoints = stackalloc Point[2];
-                pPoints[0] = StartPoint;
-                pPoints[1] = EndPoint;
+                Point* ptrPoints = stackalloc Point[(int)PointCount];
+                ptrPoints[0] = StartPoint;
+                ptrPoints[1] = EndPoint;
                 
-                fixed (byte* pTypes = LineTypes) //Merely retrieves the pointer to static PE data, no actual pinning occurs
+                fixed (byte* ptrTypes = LineTypes) // Merely retrieves the pointer to static PE data, no actual pinning occurs
                 {
-                    return ContainsInternal(
-                        pen,
-                        hitPoint,
-                        tolerance, 
-                        type,
-                        pPoints,
-                        GetPointCount(),
-                        pTypes,
-                        GetSegmentCount());
+                    return ContainsInternal(pen, hitPoint, tolerance, type, ptrPoints, PointCount, ptrTypes, SegmentCount);
                 }
             }
         }
@@ -185,18 +128,12 @@ namespace System.Windows.Media
             return 0.0;
         }
 
-        private static ReadOnlySpan<byte> LineTypes => [(byte)MILCoreSegFlags.SegTypeLine];
-
-        private static uint GetPointCount() { return c_pointCount; }
-
-        private static uint GetSegmentCount() { return c_segmentCount; }
-
         /// <summary>
         /// GetAsPathGeometry - return a PathGeometry version of this Geometry
         /// </summary>
         internal override PathGeometry GetAsPathGeometry()
         {
-            PathStreamGeometryContext ctx = new PathStreamGeometryContext(FillRule.EvenOdd, Transform);
+            PathStreamGeometryContext ctx = new(FillRule.EvenOdd, Transform);
             PathGeometry.ParsePathGeometryData(GetPathGeometryData(), ctx);
 
             return ctx.GetPathGeometry();
@@ -230,16 +167,7 @@ namespace System.Windows.Media
                 endPoint *= matrix;
             }
 
-            PathFigureCollection collection = new PathFigureCollection();
-            collection.Add(
-                new PathFigure(
-                startPoint,
-                new PathSegment[]{new LineSegment(endPoint, true)},
-                false // ==> not closed
-                )
-            );
-
-            return collection;
+            return new PathFigureCollection(1) { new PathFigure(startPoint, [new LineSegment(endPoint, true)], false) }; // ==> not closed;
         }
 
         /// <summary>
@@ -253,12 +181,9 @@ namespace System.Windows.Media
                 return Geometry.GetEmptyPathGeometryData();
             }
 
-            PathGeometryData data = new PathGeometryData();
-            data.FillRule = FillRule.EvenOdd;
-            data.Matrix = CompositionResourceManager.TransformToMilMatrix3x2D(Transform);
+            PathGeometryData data = new() { FillRule = FillRule.EvenOdd, Matrix = CompositionResourceManager.TransformToMilMatrix3x2D(Transform) };
 
-            ByteStreamGeometryContext ctx = new ByteStreamGeometryContext();
-
+            ByteStreamGeometryContext ctx = new();
             ctx.BeginFigure(StartPoint, true /* is filled */, false /* is closed */);
             ctx.LineTo(EndPoint, true /* is stroked */, false /* is smooth join */);
             
@@ -270,8 +195,10 @@ namespace System.Windows.Media
 
         #region Static Data
         
-        private const UInt32 c_segmentCount = 1;
-        private const UInt32 c_pointCount = 2;
+        private const uint SegmentCount = 1;
+        private const uint PointCount = 2;
+
+        private static ReadOnlySpan<byte> LineTypes => [(byte)MILCoreSegFlags.SegTypeLine];
 
         #endregion
     }

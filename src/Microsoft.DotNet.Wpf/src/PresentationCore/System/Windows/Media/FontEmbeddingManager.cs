@@ -3,66 +3,29 @@
 // See the LICENSE file in the project root for more information.
 
 //
-// 
-//
 // Description: The FontEmbeddingManager class handles physical and composite font embedding.
 //
 //              See spec at http://avalon/text/DesignDocsAndSpecs/Font%20embedding%20APIs.htm
 // 
-//
-//
 
-using System;
-using System.Text;
-using System.IO;
-using System.Globalization;
-using System.Collections;
+using SR = MS.Internal.PresentationCore.SR;
+using System.Runtime.InteropServices;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows;
-
-using MS.Internal.FontCache;
-using MS.Internal.FontFace;
-using MS.Internal.Shaping;
-using System.Security;
-
-using SR=MS.Internal.PresentationCore.SR;
-
-// Allow suppression of presharp warnings
-#pragma warning disable 1634, 1691
 
 namespace System.Windows.Media
 {
     /// <summary>
-    /// The FontEmbeddingManager class handles physical and composite font embedding.
+    /// The <see cref="FontEmbeddingManager"/> class handles physical and composite font embedding.
     /// </summary>
     public class FontEmbeddingManager
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
-
-        #region Constructors
-
         /// <summary>
         /// Creates a new instance of font usage manager.
         /// </summary>
         public FontEmbeddingManager()
         {
-            _collectedGlyphTypefaces = new Dictionary<Uri, Dictionary<ushort, bool>>(_uriComparer);
+            _collectedGlyphTypefaces = new Dictionary<Uri, HashSet<ushort>>(s_uriComparer);
         }
-
-        #endregion Constructors
-
-        //------------------------------------------------------
-        //
-        //  Public Methods
-        //
-        //------------------------------------------------------
-
-        #region Public Methods
 
         /// <summary>
         /// Collects information about glyph typeface and index used by a glyph run.
@@ -72,21 +35,15 @@ namespace System.Windows.Media
         {
             ArgumentNullException.ThrowIfNull(glyphRun);
 
-            // Suppress PRESharp parameter validation warning about glyphRun.GlyphTypeface because
-            // GlyphRun.GlyphTypeface property cannot be null.
-#pragma warning suppress 56506
             Uri glyphTypeface = glyphRun.GlyphTypeface.FontUri;
 
-            Dictionary<ushort, bool> glyphSet;
-            
-            if (_collectedGlyphTypefaces.ContainsKey(glyphTypeface))
-                glyphSet = _collectedGlyphTypefaces[glyphTypeface];
-            else
-                glyphSet = _collectedGlyphTypefaces[glyphTypeface] = new Dictionary<ushort, bool>();
+            ref HashSet<ushort> glyphSet = ref CollectionsMarshal.GetValueRefOrAddDefault(_collectedGlyphTypefaces, glyphTypeface, out bool exists);
+            if (!exists)
+                glyphSet = new HashSet<ushort>(glyphRun.GlyphIndices.Count);
 
-            foreach(ushort glyphIndex in glyphRun.GlyphIndices)
-            {             
-                glyphSet[glyphIndex] = true;
+            foreach (ushort glyphIndex in glyphRun.GlyphIndices)
+            {
+                glyphSet.Add(glyphIndex);
             }
         }
 
@@ -108,57 +65,44 @@ namespace System.Windows.Media
         /// </summary>
         /// <param name="glyphTypeface">Specifies the Uri of a glyph typeface to obtain usage data for.</param>
         /// <returns>A collection of glyph indices recorded previously.</returns>
-        /// <exception cref="System.ArgumentException">
+        /// <exception cref="ArgumentException">
         ///     Glyph typeface Uri does not point to a previously recorded glyph typeface.
         /// </exception>
         [CLSCompliant(false)]
         public ICollection<ushort> GetUsedGlyphs(Uri glyphTypeface)
         {
-            Dictionary<ushort, bool> glyphsUsed = _collectedGlyphTypefaces[glyphTypeface];
-            if (glyphsUsed == null)
+            HashSet<ushort> glyphsUsed = _collectedGlyphTypefaces[glyphTypeface];
+            if (glyphsUsed == null) // NOTE: This will currently throw KeyNotFoundException instead
             {
-                throw new ArgumentException(SR.GlyphTypefaceNotRecorded, "glyphTypeface");
+                throw new ArgumentException(SR.GlyphTypefaceNotRecorded, nameof(glyphTypeface));
             }
-            return glyphsUsed.Keys;
+            return glyphsUsed;
         }
 
-        #endregion Public Methods
-
-        private class UriComparer : IEqualityComparer<Uri>
+        private sealed class UriComparer : IEqualityComparer<Uri>
         {
-            #region IEqualityComparer<Uri> Members
-
             public bool Equals(Uri x, Uri y)
             {
                 // We don't use Uri.Equals because it doesn't compare Fragment parts,
                 // and we use Fragment part to store font face index.
-                return String.Equals(x.ToString(), y.ToString(), StringComparison.OrdinalIgnoreCase);
+                return string.Equals(x.ToString(), y.ToString(), StringComparison.OrdinalIgnoreCase);
             }
 
             public int GetHashCode(Uri obj)
             {
                 return obj.GetHashCode();
             }
-
-            #endregion
         }
 
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
-
-        #region Private Fields
+        /// <summary>
+        /// Contains the FontUri and its GlyphIndicies as values.   
+        /// </summary>
+        private readonly Dictionary<Uri, HashSet<ushort>> _collectedGlyphTypefaces;
 
         /// <summary>
-        /// bool values in the dictionary don't matter,
-        /// we'll switch to Set class when it becomes available.
+        /// Custom comparer for FontUri used in <see cref="_collectedGlyphTypefaces"/>.
         /// </summary>
-        private Dictionary<Uri, Dictionary<ushort, bool>>   _collectedGlyphTypefaces;
+        private static readonly UriComparer s_uriComparer = new();
 
-        private static UriComparer _uriComparer = new UriComparer();
-
-        #endregion Private Fields
     }
 }

@@ -67,7 +67,7 @@ namespace MS.Internal.AutomationProxies
                     return null;
                 }
 
-                if (!Misc.ProxyGetClassName(hwndBuddy).Contains("EDIT"))
+                if (!Misc.ProxyGetClassName(hwndBuddy).Contains("EDIT", StringComparison.OrdinalIgnoreCase))
                 {
                     return null;
                 }
@@ -281,7 +281,7 @@ namespace MS.Internal.AutomationProxies
                 while (hwndChild != IntPtr.Zero)
                 {
                     string className = Misc.ProxyGetClassName(hwndChild);
-                    if (className.Contains("msctls_updown32"))
+                    if (className.Contains("msctls_updown32", StringComparison.OrdinalIgnoreCase))
                     {
                         IntPtr hwndBuddy = Misc.ProxySendMessage(hwndChild, NativeMethods.UDM_GETBUDDY, IntPtr.Zero, IntPtr.Zero);
                         if (hwnd == hwndBuddy)

@@ -276,7 +276,7 @@ namespace MS.Internal.Xaml.Parser
             XamlTypeName typeName = new XamlTypeName(frame.Namespace, frame.Name, frame.TypeArgs);
 
             frame = _stack.Peek();
-            if (frame.TypeArgs == null)
+            if (frame.TypeArgs is null)
             {
                 frame.AllocateTypeArgs();
             }

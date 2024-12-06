@@ -124,7 +124,7 @@ namespace System.Windows.Markup
             {
                 converterType = ReflectionHelper.GetQualifiedType(converterName);
 
-                if (converterType != null)
+                if (converterType is not null)
                 {
                     // Validate that this is an accessible type converter.
                     if (!ReflectionHelper.IsPublicType(converterType))
@@ -445,10 +445,10 @@ namespace System.Windows.Markup
 
             TypeConverter? typeConverter = GetCoreConverterFromCoreType(type);
 
-            if (typeConverter == null)
+            if (typeConverter is null)
             {
                 Type? converterType = GetConverterType(type);
-                if (converterType != null)
+                if (converterType is not null)
                 {
                     typeConverter = Activator.CreateInstance(converterType,
                                                              BindingFlags.Instance | BindingFlags.CreateInstance | BindingFlags.Public,

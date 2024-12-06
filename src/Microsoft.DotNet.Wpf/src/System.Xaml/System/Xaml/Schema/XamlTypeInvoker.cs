@@ -44,7 +44,7 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (s_Unknown == null)
+                if (s_Unknown is null)
                 {
                     s_Unknown = new XamlTypeInvoker();
                 }
@@ -54,19 +54,19 @@ namespace System.Xaml.Schema
 
         public EventHandler<XamlSetMarkupExtensionEventArgs> SetMarkupExtensionHandler
         {
-            get { return _xamlType != null ? _xamlType.SetMarkupExtensionHandler : null; }
+            get { return _xamlType is not null ? _xamlType.SetMarkupExtensionHandler : null; }
         }
 
         public EventHandler<XamlSetTypeConverterEventArgs> SetTypeConverterHandler
         {
-            get { return _xamlType != null ? _xamlType.SetTypeConverterHandler : null; }
+            get { return _xamlType is not null ? _xamlType.SetTypeConverterHandler : null; }
         }
 
         public virtual void AddToCollection(object instance, object item)
         {
             ArgumentNullException.ThrowIfNull(instance);
             IList list = instance as IList;
-            if (list != null)
+            if (list is not null)
             {
                 list.Add(item);
                 return;
@@ -78,7 +78,7 @@ namespace System.Xaml.Schema
                 throw new NotSupportedException(SR.OnlySupportedOnCollections);
             }
             XamlType itemType;
-            if (item != null)
+            if (item is not null)
             {
                 itemType = _xamlType.SchemaContext.GetXamlType(item.GetType());
             }
@@ -87,7 +87,7 @@ namespace System.Xaml.Schema
                 itemType = _xamlType.ItemType;
             }
             MethodInfo addMethod = GetAddMethod(itemType);
-            if (addMethod == null)
+            if (addMethod is null)
             {
                 throw new XamlSchemaException(SR.Format(SR.NoAddMethodFound, _xamlType, itemType));
             }
@@ -98,7 +98,7 @@ namespace System.Xaml.Schema
         {
             ArgumentNullException.ThrowIfNull(instance);
             IDictionary dictionary = instance as IDictionary;
-            if (dictionary != null)
+            if (dictionary is not null)
             {
                 dictionary.Add(key, item);
                 return;
@@ -110,7 +110,7 @@ namespace System.Xaml.Schema
                 throw new NotSupportedException(SR.OnlySupportedOnDictionaries);
             }
             XamlType itemType;
-            if (item != null)
+            if (item is not null)
             {
                 itemType = _xamlType.SchemaContext.GetXamlType(item.GetType());
             }
@@ -119,7 +119,7 @@ namespace System.Xaml.Schema
                 itemType = _xamlType.ItemType;
             }
             MethodInfo addMethod = GetAddMethod(itemType);
-            if (addMethod == null)
+            if (addMethod is null)
             {
                 throw new XamlSchemaException(SR.Format(SR.NoAddMethodFound, _xamlType, itemType));
             }
@@ -129,10 +129,10 @@ namespace System.Xaml.Schema
         public virtual object CreateInstance(object[] arguments)
         {
             ThrowIfUnknown();
-            if (!_xamlType.UnderlyingType.IsValueType && (arguments == null || arguments.Length == 0))
+            if (!_xamlType.UnderlyingType.IsValueType && (arguments is null || arguments.Length == 0))
             {
                 object result = DefaultCtorXamlActivator.CreateInstance(this);
-                if (result != null)
+                if (result is not null)
                 {
                     return result;
                 }
@@ -143,7 +143,7 @@ namespace System.Xaml.Schema
         public virtual MethodInfo GetAddMethod(XamlType contentType)
         {
             ArgumentNullException.ThrowIfNull(contentType);
-            if (IsUnknown || _xamlType.ItemType == null)
+            if (IsUnknown || _xamlType.ItemType is null)
             {
                 return null;
             }
@@ -163,7 +163,7 @@ namespace System.Xaml.Schema
 
             // Populate the dictionary of all available Add methods
             MethodInfo addMethod;
-            if (_addMethods == null)
+            if (_addMethods is null)
             {
                 Dictionary<XamlType, MethodInfo> addMethods = new Dictionary<XamlType, MethodInfo>();
                 addMethods.Add(_xamlType.ItemType, _xamlType.AddMethod);
@@ -171,7 +171,7 @@ namespace System.Xaml.Schema
                 {
                     addMethod = CollectionReflector.GetAddMethod(
                         _xamlType.UnderlyingType, type.UnderlyingType);
-                    if (addMethod != null)
+                    if (addMethod is not null)
                     {
                         // Use TryAdd as AllowedContentTypes can contain
                         // duplicate types.
@@ -213,7 +213,7 @@ namespace System.Xaml.Schema
         {
             ArgumentNullException.ThrowIfNull(instance);
             IEnumerable enumerable = instance as IEnumerable;
-            if (enumerable != null)
+            if (enumerable is not null)
             {
                 return enumerable.GetEnumerator();
             }
@@ -257,7 +257,7 @@ namespace System.Xaml.Schema
 
         private bool IsUnknown
         {
-            get { return _xamlType == null || _xamlType.UnderlyingType == null; }
+            get { return _xamlType is null || _xamlType.UnderlyingType is null; }
         }
 
         private void ThrowIfUnknown()
@@ -300,7 +300,7 @@ namespace System.Xaml.Schema
             // returns true if a delegate is available, false if not
             private static bool EnsureConstructorDelegate(XamlTypeInvoker type)
             {
-                if (type._constructorDelegate != null)
+                if (type._constructorDelegate is not null)
                 {
                     return true;
                 }
@@ -321,7 +321,7 @@ namespace System.Xaml.Schema
                 Type underlyingType = type._xamlType.UnderlyingType.UnderlyingSystemType;
                 // Look up public ctors only, for equivalence with Activator.CreateInstance
                 ConstructorInfo tConstInfo = underlyingType.GetConstructor(Type.EmptyTypes);
-                if (tConstInfo == null)
+                if (tConstInfo is null)
                 {
                     // Throwing MissingMethodException for equivalence with Activator.CreateInstance
                     throw new MissingMethodException(SR.Format(SR.NoDefaultConstructor, underlyingType.FullName));

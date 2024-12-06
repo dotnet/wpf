@@ -30,7 +30,7 @@ namespace System.Windows.Markup
 // Constructor
 //
         internal XmlWrappingReader( XmlReader baseReader ) {
-            Debug.Assert( baseReader != null );
+            Debug.Assert( baseReader is not null);
             Reader = baseReader;
         }
 
@@ -117,11 +117,11 @@ namespace System.Windows.Markup
         }
 
         string IXmlNamespaceResolver.LookupPrefix( string namespaceName ) {
-            return (_readerAsResolver == null) ? null : _readerAsResolver.LookupPrefix( namespaceName );
+            return (_readerAsResolver is null) ? null : _readerAsResolver.LookupPrefix( namespaceName );
         }
 
         IDictionary<string,string> IXmlNamespaceResolver.GetNamespacesInScope ( XmlNamespaceScope scope ) {
-            return (_readerAsResolver == null) ? null : _readerAsResolver.GetNamespacesInScope( scope );
+            return (_readerAsResolver is null) ? null : _readerAsResolver.GetNamespacesInScope( scope );
         }
 
         public override void ResolveEntity() {
@@ -153,18 +153,18 @@ namespace System.Windows.Markup
 // IXmlLineInfo members
 //
         public virtual bool HasLineInfo() {
-            return ( _readerAsIXmlLineInfo == null ) ? false : _readerAsIXmlLineInfo.HasLineInfo();
+            return ( _readerAsIXmlLineInfo is null ) ? false : _readerAsIXmlLineInfo.HasLineInfo();
         }
 
         public virtual int LineNumber {
             get {
-                return ( _readerAsIXmlLineInfo == null ) ? 0 : _readerAsIXmlLineInfo.LineNumber;
+                return ( _readerAsIXmlLineInfo is null ) ? 0 : _readerAsIXmlLineInfo.LineNumber;
             }
         }
 
         public virtual int LinePosition {
             get {
-                return ( _readerAsIXmlLineInfo == null ) ? 0 : _readerAsIXmlLineInfo.LinePosition;
+                return ( _readerAsIXmlLineInfo is null ) ? 0 : _readerAsIXmlLineInfo.LinePosition;
             }
         }
 

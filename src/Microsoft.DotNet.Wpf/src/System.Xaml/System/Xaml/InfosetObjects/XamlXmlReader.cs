@@ -88,7 +88,7 @@ namespace System.Xaml
 
         private XmlReader CreateXmlReader(string fileName, XamlXmlReaderSettings settings)
         {
-            bool closeInput = (settings == null) ? true : settings.CloseInput;
+            bool closeInput = (settings is null) ? true : settings.CloseInput;
             return XmlReader.Create(fileName, new XmlReaderSettings { CloseInput = closeInput, DtdProcessing = DtdProcessing.Prohibit });
         }
 
@@ -122,7 +122,7 @@ namespace System.Xaml
 
         private XmlReader CreateXmlReader(Stream stream, XamlXmlReaderSettings settings)
         {
-            bool closeInput = (settings != null) && settings.CloseInput;
+            bool closeInput = (settings is not null) && settings.CloseInput;
             return XmlReader.Create(stream, new XmlReaderSettings { CloseInput = closeInput, DtdProcessing = DtdProcessing.Prohibit });
         }
 
@@ -156,7 +156,7 @@ namespace System.Xaml
 
         private XmlReader CreateXmlReader(TextReader textReader, XamlXmlReaderSettings settings)
         {
-            bool closeInput = (settings != null) && settings.CloseInput;
+            bool closeInput = (settings is not null) && settings.CloseInput;
             return XmlReader.Create(textReader, new XmlReaderSettings { CloseInput = closeInput, DtdProcessing = DtdProcessing.Prohibit });
         }
 
@@ -164,7 +164,7 @@ namespace System.Xaml
         {
             XmlReader myXmlReader;
 
-            _mergedSettings = (settings == null) ? new XamlXmlReaderSettings() : new XamlXmlReaderSettings(settings);
+            _mergedSettings = (settings is null) ? new XamlXmlReaderSettings() : new XamlXmlReaderSettings(settings);
             //Wrap the xmlreader with a XmlCompatReader instance to apply MarkupCompat rules.
             if (!_mergedSettings.SkipXmlCompatibilityProcessing)
             {
@@ -196,14 +196,14 @@ namespace System.Xaml
             }
             IXmlNamespaceResolver myXmlReaderNS = myXmlReader as IXmlNamespaceResolver;
             Dictionary<string, string> xmlnsDictionary = null;
-            if (myXmlReaderNS != null)
+            if (myXmlReaderNS is not null)
             {
                 IDictionary<string, string> rootNamespaces = myXmlReaderNS.GetNamespacesInScope(XmlNamespaceScope.Local);
-                if (rootNamespaces != null)
+                if (rootNamespaces is not null)
                 {
                     foreach (KeyValuePair<string, string> ns in rootNamespaces)
                     {
-                        if (xmlnsDictionary == null)
+                        if (xmlnsDictionary is null)
                         {
                             xmlnsDictionary = new Dictionary<string, string>();
                         }
@@ -212,7 +212,7 @@ namespace System.Xaml
                 }
             }
 
-            if (schemaContext == null)
+            if (schemaContext is null)
             {
                 schemaContext = new XamlSchemaContext();
             }
@@ -245,7 +245,7 @@ namespace System.Xaml
                     _current = _nodeStream.Current;
                     if (_current.NodeType == XamlNodeType.None)
                     {
-                        if (_current.LineInfo != null)
+                        if (_current.LineInfo is not null)
                         {
                             _currentLineInfo = _current.LineInfo;
                         }
@@ -340,7 +340,7 @@ namespace System.Xaml
             // We're inside of a XmlDataIsland
 
             // First, substitute in the LocalAssembly if needed
-            if (_mergedSettings.LocalAssembly != null)
+            if (_mergedSettings.LocalAssembly is not null)
             {
                 string clrNs, assemblyName;
                 if (ClrNamespaceUriParser.TryParseUri(xmlNamespace, out clrNs, out assemblyName) &&
@@ -353,7 +353,7 @@ namespace System.Xaml
             }
 
             bool result = _context.SchemaContext.TryGetCompatibleXamlNamespace(xmlNamespace, out newXmlNamespace);
-            if (newXmlNamespace == null)
+            if (newXmlNamespace is null)
             {
                 newXmlNamespace = string.Empty;
             }

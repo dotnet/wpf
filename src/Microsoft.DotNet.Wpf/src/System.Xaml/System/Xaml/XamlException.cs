@@ -24,7 +24,7 @@ namespace System.Xaml
             : base(message, innerException)
         {
             XamlException xex = innerException as XamlException;
-            if (xex != null)
+            if (xex is not null)
             {
                 LineNumber = xex.LineNumber;
                 LinePosition = xex.LinePosition;
@@ -144,7 +144,7 @@ namespace System.Xaml
         public XamlDuplicateMemberException() { }
 
         public XamlDuplicateMemberException(XamlMember member, XamlType type)
-            : base(SR.Format(SR.DuplicateMemberSet, (member != null) ? member.Name : null, (type != null) ? type.Name : null))
+            : base(SR.Format(SR.DuplicateMemberSet, (member is not null) ? member.Name : null, (type is not null) ? type.Name : null))
         {
             DuplicateMember = member;
             ParentType = type;

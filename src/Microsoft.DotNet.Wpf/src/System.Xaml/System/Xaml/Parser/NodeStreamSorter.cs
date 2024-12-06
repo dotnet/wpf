@@ -203,13 +203,13 @@ namespace MS.Internal.Xaml
 
         private void EnqueueInitialExtraXmlNses()
         {
-            if (_xmlnsDictionary != null)
+            if (_xmlnsDictionary is not null)
             {
                 foreach (string prefix in _xmlnsDictionary.Keys)
                 {
                     // Skip any prefixes in the settings that were already defined
                     // in the XML text (on the root node)
-                    if (_context.FindNamespaceByPrefixInParseStack(prefix) == null)
+                    if (_context.FindNamespaceByPrefixInParseStack(prefix) is null)
                     {
                         string uriString = _xmlnsDictionary[prefix];
                         XamlNode node = new XamlNode(XamlNodeType.NamespaceDeclaration, new NamespaceDeclaration(uriString, prefix));
@@ -233,7 +233,7 @@ namespace MS.Internal.Xaml
             {
                 EnqueueOneXmlDirectiveProperty(XamlLanguage.Lang, _settings.XmlLang);
             }
-            if (_settings.BaseUri != null)
+            if (_settings.BaseUri is not null)
             {
                 EnqueueOneXmlDirectiveProperty(XamlLanguage.Base, _settings.BaseUri.ToString());
             }
@@ -272,7 +272,7 @@ namespace MS.Internal.Xaml
             // then dig in and correct the stream.
             //
             //if (HaveSeenOutOfOrderCtorDirective)
-            if(_moveList != null)
+            if(_moveList is not null)
             {
                 SortContentsOfReadAheadBuffer();
             }
@@ -401,7 +401,7 @@ namespace MS.Internal.Xaml
                 if (HaveSeenInstancingProperty)
                 {
                     HaveSeenOutOfOrderCtorDirective = true;
-                    if (_moveList == null)
+                    if (_moveList is null)
                     {
                         _moveList = new List<int>();
                     }

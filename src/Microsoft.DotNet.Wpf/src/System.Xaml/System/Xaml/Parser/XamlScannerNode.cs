@@ -15,7 +15,7 @@ namespace MS.Internal.Xaml.Parser
     {
         public XamlScannerNode(IXmlLineInfo lineInfo)
         {
-            if (lineInfo != null)
+            if (lineInfo is not null)
             {
                 LineNumber = lineInfo.LineNumber;
                 LinePosition = lineInfo.LinePosition;

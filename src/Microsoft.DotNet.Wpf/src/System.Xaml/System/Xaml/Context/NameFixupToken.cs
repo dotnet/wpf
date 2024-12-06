@@ -128,7 +128,7 @@ namespace MS.Internal.Xaml.Context
             get { return _runtime; }
             set
             {
-                Debug.Assert(_runtime == null);
+                Debug.Assert(_runtime is null);
                 _runtime = value;
             }
         }
@@ -138,7 +138,7 @@ namespace MS.Internal.Xaml.Context
         {
             get
             {
-                if (_targetContext == null)
+                if (_targetContext is null)
                 {
                     _targetContext = new ObjectWriterContext(SavedContext, null, null, Runtime);
                 }
@@ -180,7 +180,7 @@ namespace MS.Internal.Xaml.Context
                 foreach (XAML3.INameScopeDictionary nameScope in NameScopeDictionaryList)
                 {
                     namedObject = nameScope.FindName(name);
-                    if (namedObject != null)
+                    if (namedObject is not null)
                     {
                         break;
                     }

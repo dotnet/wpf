@@ -59,7 +59,7 @@ namespace System.Xaml
             {
                 throw new XamlException(SR.CloseXamlWriterBeforeReading);
             }
-            if (_writer.SchemaContext == null)
+            if (_writer.SchemaContext is null)
             {
                 throw new XamlException(SR.SchemaContextNotInitialized);
             }

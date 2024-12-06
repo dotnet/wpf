@@ -60,12 +60,12 @@ namespace System.Xaml
             {
                 windowsBaseName = name2;
             }
-            return (windowsBaseName != null && SafeSecurityHelper.IsSameKeyToken(windowsBaseName.GetPublicKeyToken(), WindowsBaseToken));
+            return (windowsBaseName is not null && SafeSecurityHelper.IsSameKeyToken(windowsBaseName.GetPublicKeyToken(), WindowsBaseToken));
         }
 
         internal static bool IsAssemblyQualifiedNameAssignableFrom(Type t1, Type t2)
         {
-            if (t1 == null || t2 == null)
+            if (t1 is null || t2 is null)
             {
                 return false;
             }
@@ -104,7 +104,7 @@ namespace System.Xaml
 
         static bool LooselyImplementInterface(Type t, Type interfaceType)
         {
-            for (Type type = t; type != null; type = type.BaseType)
+            for (Type type = t; type is not null; type = type.BaseType)
             {
                 Type[] interfaces = type.GetInterfaces();
                 for (int i = 0; i < interfaces.Length; i++)
@@ -121,7 +121,7 @@ namespace System.Xaml
 
         static bool IsLooseSubClassOf(Type t1, Type t2)
         {
-            if (t1 == null || t2 == null)
+            if (t1 is null || t2 is null)
             {
                 return false;
             }
@@ -131,7 +131,7 @@ namespace System.Xaml
                 return false; //strictly testing for sub-class
             }
 
-            for(Type baseType = t1.BaseType; baseType != null; baseType = baseType.BaseType)
+            for(Type baseType = t1.BaseType; baseType is not null; baseType = baseType.BaseType)
             {
                 if (AssemblyQualifiedNameEquals(baseType, t2))
                 {

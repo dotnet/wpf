@@ -408,7 +408,7 @@ namespace MS.Internal.Xaml.Parser
                 case MeTokenType.PropertyName:
                     {
                         string error;
-                        if (_context.CurrentMember == null)
+                        if (_context.CurrentMember is null)
                         {
                             error = SR.Format(SR.MissingComma1,  _tokenizer.TokenText);
                         }

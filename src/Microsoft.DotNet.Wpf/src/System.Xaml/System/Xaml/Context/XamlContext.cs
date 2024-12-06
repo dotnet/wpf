@@ -185,7 +185,7 @@ namespace MS.Internal.Xaml
                 XamlDirective directive = SchemaContext.GetXamlDirective(propUsageNamespace, propName.Name);
                 if (directive != null)
                 {
-                    if (AllowedMemberLocations.None == (directive.AllowedLocation & AllowedMemberLocations.Attribute))
+                    if ((directive.AllowedLocation & AllowedMemberLocations.Attribute) == AllowedMemberLocations.None)
                     {
                         // Need a way to surface up this usage error now that
                         // we don't have UnknownProperty.Exception

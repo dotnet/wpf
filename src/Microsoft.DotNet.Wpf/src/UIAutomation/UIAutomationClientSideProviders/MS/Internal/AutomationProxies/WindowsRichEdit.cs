@@ -534,7 +534,7 @@ namespace MS.Internal.AutomationProxies
                     object embeddedObject;
                     while (start < end && embeddedObjectOffset != -1)
                     {
-                        sbText.Append(text.Substring(start, embeddedObjectOffset - start));
+                        sbText.Append(text.AsSpan(start, embeddedObjectOffset - start));
                         range.SetRange(embeddedObjectOffset, end);
                         if (range.GetEmbeddedObject(out embeddedObject) == NativeMethods.S_OK && embeddedObject != null)
                         {
@@ -552,7 +552,7 @@ namespace MS.Internal.AutomationProxies
 
                     if (start < end)
                     {
-                        sbText.Append(text.Substring(start, end - start));
+                        sbText.Append(text.AsSpan(start, end - start));
                     }
 
                     text = sbText.ToString();

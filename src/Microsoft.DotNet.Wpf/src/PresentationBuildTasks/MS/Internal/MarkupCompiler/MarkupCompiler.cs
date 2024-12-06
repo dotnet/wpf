@@ -483,7 +483,7 @@ namespace MS.Internal
                 }
 
                 int pathEndIndex = SourceFileInfo.RelativeSourceFilePath.LastIndexOf(Path.DirectorySeparatorChar);
-                string targetPath = TargetPath + SourceFileInfo.RelativeSourceFilePath.Substring(0, pathEndIndex + 1);
+                string targetPath = string.Concat(TargetPath, SourceFileInfo.RelativeSourceFilePath.Substring(0, pathEndIndex + 1));
 
                 // Create if not already exists
                 if (targetPath.Length > 0 && !Directory.Exists(targetPath))

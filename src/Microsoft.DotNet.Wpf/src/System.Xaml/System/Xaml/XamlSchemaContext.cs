@@ -564,25 +564,22 @@ namespace System.Xaml
         /// Looks up all properties via reflection on the given type, and scans through the attributes on all of them
         /// to build a cache of properties which have MarkupExtensionBracketCharactersAttribute set on them.
         /// </summary>
-        private Dictionary<string, SpecialBracketCharacters> BuildBracketCharacterCacheForType(XamlType type)
+        private static Dictionary<string, SpecialBracketCharacters> BuildBracketCharacterCacheForType(XamlType type)
         {
-            Dictionary<string, SpecialBracketCharacters> map = new Dictionary<string, SpecialBracketCharacters>(StringComparer.OrdinalIgnoreCase);
-            ICollection<XamlMember> members = type.GetAllMembers();
-            foreach (XamlMember member in members)
+            Dictionary<string, SpecialBracketCharacters> map = new(StringComparer.OrdinalIgnoreCase);
+
+            foreach (XamlMember member in type.GetAllMembers())
             {
-                string constructorArgumentName = member.ConstructorArgument;
-                string propertyName = member.Name;
-                IReadOnlyDictionary<char,char> markupExtensionBracketCharactersList = member.MarkupExtensionBracketCharacters;
-                SpecialBracketCharacters splBracketCharacters = markupExtensionBracketCharactersList != null && markupExtensionBracketCharactersList.Count > 0
-                    ? new SpecialBracketCharacters(markupExtensionBracketCharactersList)
-                    : null;
-                if (splBracketCharacters != null)
+                if (member.MarkupExtensionBracketCharacters?.Count > 0)
                 {
-                    splBracketCharacters.EndInit();
-                    map.Add(propertyName, splBracketCharacters);
-                    if (!string.IsNullOrEmpty(constructorArgumentName))
+                    SpecialBracketCharacters specialBracketChars = new(member.MarkupExtensionBracketCharacters);
+                    specialBracketChars.EndInit();
+
+                    map.Add(member.Name, specialBracketChars);
+
+                    if (!string.IsNullOrEmpty(member.ConstructorArgument))
                     {
-                        map.Add(constructorArgumentName, splBracketCharacters);
+                        map.Add(member.ConstructorArgument, specialBracketChars);
                     }
                 }
             }

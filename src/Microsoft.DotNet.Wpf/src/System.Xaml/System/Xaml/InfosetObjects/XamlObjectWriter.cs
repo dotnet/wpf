@@ -131,7 +131,7 @@ namespace System.Xaml
             }
             if (result == null)
             {
-                result = new ClrObjectRuntime(runtimeSettings, true /*isWriter*/);
+                result = new ClrObjectRuntime(runtimeSettings, isWriter: true);
             }
             result.LineInfo = this;
             return result;
@@ -606,7 +606,7 @@ namespace System.Xaml
 
             // Duplicate Property Setting Check.
             //
-            Logic_DuplicatePropertyCheck(_context, property, false /*onParent*/);
+            Logic_DuplicatePropertyCheck(_context, property, onParent: false);
 
             // If we haven't created the object yet then consider creating it now.
             // We need an object instance to set property values on.
@@ -1531,7 +1531,7 @@ namespace System.Xaml
                     }
                     else
                     {
-                        Logic_ApplyPropertyValue(ctx, prop, value, false /*onParent*/);
+                        Logic_ApplyPropertyValue(ctx, prop, value, onParent: false);
                     }
                 }
             }
@@ -2011,7 +2011,7 @@ namespace System.Xaml
 
                         if (!ctx.CurrentIsObjectFromMember)
                         {
-                            Logic_ApplyPropertyValue(ctx, parentProperty, value, true /*onParent*/);
+                            Logic_ApplyPropertyValue(ctx, parentProperty, value, onParent: true);
 
                             // registered a named object
                             if (parentProperty == parentType.GetAliasedProperty(XamlLanguage.Name))

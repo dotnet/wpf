@@ -12,11 +12,7 @@
 //
 //
 
-using System.Diagnostics;
-using System.Security;
-using System;
 using System.IO;
-using MS.Internal;
 
 namespace MS.Internal.Shaping
 {

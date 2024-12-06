@@ -5,24 +5,8 @@
 //
 //
 
-using System;
-using System.Windows.Threading;
-using System.Diagnostics;
-using System.Collections;
-using System.Collections.Specialized;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
-using System.IO;
-using System.Runtime.InteropServices;
-
-using MS.Internal;
-using MS.Win32;
-using Microsoft.Win32.SafeHandles;
-
-using System.Windows;
-using System.Windows.Media.Media3D;
-using System.Windows.Media.Animation;
 
 namespace System.Windows.Media
 {

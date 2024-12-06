@@ -4,13 +4,9 @@
 
 
 using MS.Win32.Pointer;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Security;
-using System.Windows.Input;
 
 namespace System.Windows.Input.StylusPointer
-{  
+{
     /// <summary>
     /// A WM_POINTER based implementation of the TabletDeviceBase class.
     /// </summary>

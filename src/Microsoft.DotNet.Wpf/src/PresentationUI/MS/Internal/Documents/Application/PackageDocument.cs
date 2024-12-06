@@ -4,17 +4,14 @@
 
 // Description: Extends Document with a single member TrancationalPackage.
 
-using System;
 using System.IO;
-using System.IO.Packaging;
-using System.Security;
 
 namespace MS.Internal.Documents.Application
 {
-/// <summary>
-/// Extends Document with a single member TrancationalPackage.
-/// </summary>
-internal class PackageDocument : Document
+    /// <summary>
+    /// Extends Document with a single member TrancationalPackage.
+    /// </summary>
+    internal class PackageDocument : Document
 {
     #region Constructors
     //--------------------------------------------------------------------------

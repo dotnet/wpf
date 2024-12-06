@@ -2,19 +2,17 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Collections.Generic;
+using MS.Internal;
+#if RIBBON_IN_FRAMEWORK
+using Microsoft.Windows.Controls;
+
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Controls.Ribbon.Primitives
 #else
 namespace Microsoft.Windows.Controls.Ribbon.Primitives
 #endif
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Windows;
-    using System.Windows.Controls;
-    using MS.Internal;
-#if RIBBON_IN_FRAMEWORK
-    using Microsoft.Windows.Controls;
 #endif
 
     /// <summary>

@@ -2,13 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Security;
-
-using SR=MS.Internal.PresentationCore.SR;
-using System.Collections.Specialized ;
-using System.Windows.Input;
-using System.Diagnostics;
+using System.Collections.Specialized;
 using MS.Internal;
 
 namespace System.Windows

@@ -5,18 +5,14 @@
 //    DocumentSignatureManager is an internal API for Mongoose to deal with Digital Signatures.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO.Packaging;
 using System.Reflection;
-using System.Security;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Windows.TrustUI;
 using System.Windows.Forms;
-using System.Windows.Interop;
 using System.Windows.Threading;
 
 using MS.Internal.Documents.Application;

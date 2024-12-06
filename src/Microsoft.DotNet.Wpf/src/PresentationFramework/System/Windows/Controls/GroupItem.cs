@@ -8,16 +8,8 @@
 // Specs:       Data Styling.mht
 //
 
-using System;
-using System.Collections;
-using System.Collections.Specialized;
 using System.Windows.Media;
 using System.Windows.Controls.Primitives;
-using System.Windows.Threading;
-using System.Collections.Generic;
-using MS.Internal.Utility;
-using MS.Internal.Hashing.PresentationFramework;
-using System.Diagnostics;
 using MS.Internal;
 using System.Windows.Automation;
 

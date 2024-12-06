@@ -19,7 +19,6 @@ using System.Text;
 using System.Reflection;
 using System.Globalization;
 using System.ComponentModel;
-using System.Security.Cryptography;
 
 using System.CodeDom;
 using System.CodeDom.Compiler;
@@ -29,14 +28,11 @@ using System.ComponentModel.Design.Serialization;
 
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-
-using System.Threading;
 using MS.Internal.Markup;
 using MS.Internal.Tasks;
 using MS.Utility;   // for SR
 using Microsoft.Build.Utilities;
 using Microsoft.Build.Tasks.Windows;
-using System.Runtime.CompilerServices;
 
 namespace MS.Internal
 {

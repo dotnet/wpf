@@ -2,13 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description: DefaultvalueFactory for Freezables
-//
-
-using System;
-using System.Diagnostics;
 using System.Windows;
 
 namespace MS.Internal

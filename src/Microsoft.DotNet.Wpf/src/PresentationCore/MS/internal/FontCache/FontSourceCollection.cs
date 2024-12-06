@@ -8,28 +8,9 @@
 //
 //
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
 using System.IO;
-using System.IO.Packaging;
-using System.Net;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Threading;
 
 using Microsoft.Win32;
-
-using MS.Win32;
-using MS.Utility;
-using MS.Internal;
-using MS.Internal.IO.Packaging;
-
-using MS.Internal.PresentationCore;
 using MS.Internal.Text.TextInterface;
 
 namespace MS.Internal.FontCache

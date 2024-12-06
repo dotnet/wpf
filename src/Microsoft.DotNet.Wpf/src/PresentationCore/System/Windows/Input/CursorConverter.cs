@@ -3,13 +3,9 @@
 // See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
 using System.Globalization;
 using System.Reflection;
 using System.Windows.Media; // TypeConverterHelper, UriHolder
-using System;
-using System.IO; // Stream
-using MS.Internal.IO.Packaging; // ResourceUriHelper
 using MS.Internal.PresentationCore;
 using MS.Internal; // BindUriHelper
 

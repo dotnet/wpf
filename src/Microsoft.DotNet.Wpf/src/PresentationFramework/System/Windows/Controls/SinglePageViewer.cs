@@ -9,7 +9,6 @@
 //              can be viewed using this control.
 //
 
-using System.Collections.Generic;           // Stack<T>
 using System.Collections.ObjectModel;       // ReadOnlyCollection<T>
 using System.Windows.Automation.Peers;      // AutomationPeer
 using System.Windows.Documents;             // IDocumentPaginatorSouce, ...
@@ -22,9 +21,7 @@ using MS.Internal;                          // Invariant, DoubleUtil
 using MS.Internal.Commands;                 // CommandHelpers
 using MS.Internal.Documents;                // FindToolBar
 using MS.Internal.KnownBoxes;               // BooleanBoxes
-using MS.Internal.PresentationFramework;    // SecurityHelper
 using MS.Internal.AppModel;                 // IJournalState
-using System.Security;                      // SecurityCritical, SecurityTreatAsSafe
 
 namespace System.Windows.Controls
 {

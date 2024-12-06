@@ -6,7 +6,6 @@
 // Description: AutomationPeer associated with FlowDocumentPageViewer.
 //
 
-using System.Collections.Generic;           // List<T>
 using System.Windows.Controls;              // FlowDocumentPageViewer
 using MS.Internal.Documents;                // IFlowDocumentView
 

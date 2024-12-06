@@ -22,9 +22,6 @@
 //
 //
 
-
-using System;
-
 namespace MS.Internal.IO.Packaging.CompoundFile
 {
     #region ContainerFlags enumeration

@@ -8,7 +8,6 @@
 //              typically wraps a type converter.
 //
 
-using System;
 using System.Globalization;
 using System.Collections;
 using System.ComponentModel;
@@ -19,9 +18,6 @@ using System.Windows.Data;
 using System.Windows.Navigation;    // BaseUriHelper
 using System.Windows.Baml2006; // WpfKnownType
 using System.Windows.Markup; // IUriContext
-
-using MS.Internal;          // Invariant.Assert
-using System.Diagnostics;
 
 namespace MS.Internal.Data
 {

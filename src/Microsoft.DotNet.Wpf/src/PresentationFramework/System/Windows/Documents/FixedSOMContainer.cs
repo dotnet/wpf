@@ -9,10 +9,6 @@
 
 namespace System.Windows.Documents
 {
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Windows.Media;
-    
     internal abstract class FixedSOMContainer :FixedSOMSemanticBox, IComparable
     {
         //--------------------------------------------------------------------

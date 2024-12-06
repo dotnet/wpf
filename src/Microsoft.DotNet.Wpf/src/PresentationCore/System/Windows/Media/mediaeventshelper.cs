@@ -5,21 +5,10 @@
 //
 //
 
-using System;
 using System.Text;
-using System.Diagnostics;
-using System.ComponentModel;
 using MS.Internal;
-using System.Windows.Media.Animation;
-using System.Windows.Media;
-using System.Windows.Media.Composition;
 using System.Windows.Threading;
-using System.Runtime.InteropServices;
 using System.IO;
-using System.Collections;
-using System.Security;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media
 {

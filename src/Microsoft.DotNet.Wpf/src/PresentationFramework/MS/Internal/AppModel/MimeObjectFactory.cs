@@ -8,13 +8,7 @@
 // mime type + stream into objects.
 //
 
-using System;
-using System.Windows;
 using System.IO;
-using System.Collections.Generic;
-using MS.Internal.Utility;
-using System.Diagnostics;
-using System.Globalization;
 using System.Windows.Markup;
 
 namespace MS.Internal.AppModel

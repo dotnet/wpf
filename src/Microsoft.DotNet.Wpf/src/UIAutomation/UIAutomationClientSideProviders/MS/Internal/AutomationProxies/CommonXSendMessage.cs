@@ -8,7 +8,6 @@
 using System;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Automation;
 using MS.Win32;

@@ -3,15 +3,12 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System.Collections.Generic;           // List<T>
 using System.Collections.Specialized;       // NotifyCollectionChangedAction
 using System.ComponentModel;                // DesignerSerializationVisibility
 using System.Windows.Automation.Peers;      // AutomationPeer
 using System.Windows.Controls.Primitives;   // GridViewRowPresenterBase
-using System.Windows.Data;                  // Binding
 using System.Windows.Input;                 // MouseEventArgs
 using System.Windows.Media;                 // SolidColorBrush
-using System.Diagnostics;
 
 using MS.Internal;                          // Helper
 

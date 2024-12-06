@@ -4,11 +4,7 @@
 
 // Description: Exception indicating that a clickable point could not be found
 
-using System.Windows.Automation;
-using System;
 using System.Runtime.Serialization;
-using System.Security;
-using MS.Internal.Automation;
 
 namespace System.Windows.Automation
 {

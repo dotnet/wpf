@@ -8,16 +8,12 @@
 //
 
 using MS.Internal.Documents;
-using MS.Utility;                   // ExceptionStringTable
 using System.Collections;
 using System.Collections.Specialized;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.Windows.Automation.Peers;    // AutomationPeer
 using System.Windows.Threading;     // Dispatcher
-using System.Windows;               // DependencyID etc.
 using System.Windows.Media;         // Visual
 using System.Windows.Markup; // IAddChild, ContentProperty
 using System.Windows.Navigation;

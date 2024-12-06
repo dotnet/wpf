@@ -7,14 +7,9 @@
 //              Spec at Decorator.xml
 //
 
-using MS.Internal;
 using MS.Internal.Controls;
-using MS.Utility;
-using System;
 using System.Collections;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows.Threading;
 using System.Windows.Media;
 using System.Windows.Markup; // IAddChild, ContentPropertyAttribute
 

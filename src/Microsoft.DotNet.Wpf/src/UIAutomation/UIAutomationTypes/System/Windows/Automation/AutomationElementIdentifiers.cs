@@ -4,10 +4,6 @@
 
 // Description: All the Constants that used to be on AutomationElement
 
-using System.Windows.Automation;
-using System.Collections;
-using System.Collections.Specialized;
-using System.ComponentModel;
 using MS.Internal.Automation;
 
 #if EVENT_TRACING_PROPERTY

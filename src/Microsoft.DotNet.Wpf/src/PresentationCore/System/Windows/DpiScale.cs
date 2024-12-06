@@ -6,7 +6,6 @@
 //
 
 using MS.Internal;
-using MS.Internal.PresentationCore;
 
 namespace System.Windows
 {

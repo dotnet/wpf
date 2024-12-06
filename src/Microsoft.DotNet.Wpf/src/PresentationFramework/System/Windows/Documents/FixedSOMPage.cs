@@ -2,6 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Windows.Markup;    // for XmlLanguage
+using System.Windows.Media;
+using System.Globalization;
+
 /*++                                                         
     Description:
         A semantic container that contains all the first-level containers on the page      
@@ -9,13 +13,6 @@
 
 namespace System.Windows.Documents
 {
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Windows.Markup;    // for XmlLanguage
-    using System.Windows.Media;
-    using System.Globalization;
-    using System.Diagnostics;
-    
     internal sealed class FixedSOMPage: FixedSOMContainer
     {
         //--------------------------------------------------------------------

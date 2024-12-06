@@ -12,17 +12,11 @@
 //
 //
 
-using System;
-using System.Runtime.InteropServices;
-using System.Security;
 using System.Threading;
-using MS.Internal;
 using Microsoft.Win32;
 using MS.Win32;
-using System.Diagnostics;
 
 #if WINDOWS_BASE
-    using MS.Internal.WindowsBase;
 #elif PRESENTATION_CORE
     using MS.Internal.PresentationCore;
 #elif PRESENTATIONFRAMEWORK

@@ -9,12 +9,7 @@
 //
 //
 
-using System;
-using System.Security;
 using System.IO;
-using System.Collections.Generic;
-using System.Text;
-using System.Diagnostics;
 using MS.Internal.PresentationCore;
 
 namespace MS.Internal.FontCache

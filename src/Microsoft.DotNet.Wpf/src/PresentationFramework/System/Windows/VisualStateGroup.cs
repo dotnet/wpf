@@ -3,12 +3,8 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Windows.Media.Animation;
 

@@ -2,28 +2,20 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// 
 // Description: Clipboard implementation to provide methods to place/get data from/to the system 
 //              clipboard.
 //
 // See spec at http://avalon/uis/Data%20Transfer%20clipboard%20dragdrop/Avalon%20Clipboard.htm
-// 
-//
 
 using MS.Win32;
 using MS.Internal;
 using System.Collections.Specialized;
 using System.IO;
-using System.Security;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
-using System.Runtime.Serialization;
 using System.Threading;
 using System.Windows.Media.Imaging;
-using System.Windows.Threading;
 
-using SR = MS.Internal.PresentationCore.SR;
 using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
 namespace System.Windows

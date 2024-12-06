@@ -9,17 +9,7 @@
 
 using MS.Internal;
 using MS.Internal.Telemetry.PresentationFramework;
-using MS.Utility;
 using System.ComponentModel;
-
-using System.Diagnostics;
-using System.Reflection;
-using System.Windows.Threading;
-
-using System.Windows.Media;
-
-
-using System;
 
 namespace System.Windows.Controls
 {

@@ -2,10 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
-
 // Conditional to use more aggressive fail-fast behaviors when debugging.
 #define DEV_DEBUG
+
+using System.Threading;
 
 // This file contains general utilities to aid in development.
 // It is distinct from unit test Assert classes.
@@ -16,10 +16,6 @@
 
 namespace Standard
 {
-    using System;
-    using System.Diagnostics;
-    using System.Threading;
-
     /// <summary>A static class for verifying assumptions.</summary>
     internal static class Assert
     {

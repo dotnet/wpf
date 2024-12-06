@@ -9,8 +9,6 @@
 // See specs at Validation.mht
 //
 
-using System;
-
 namespace System.Windows.Controls
 {
     /// <summary>

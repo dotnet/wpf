@@ -11,11 +11,6 @@
 //
 //
 
-using System.Windows;
-using System.Windows.Media.Media3D;
-
-using System;
-
 namespace System.Windows.Media.Media3D
 {
     /// <summary>

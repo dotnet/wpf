@@ -4,26 +4,17 @@
 
 #pragma warning disable 649 // Disable CS0649: "field is never assigned to"
 
-namespace MS.Win32 {
-    using Accessibility;
-    using System.Runtime.InteropServices;
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Text;
-    using MS.Internal;
+using System.Runtime.InteropServices;
+using System;
+using System.Text;
 #if !DRT && !UIAUTOMATIONTYPES
-    using MS.Internal.Interop;
-    using MS.Utility;
+using MS.Internal.Interop;
+using MS.Utility;
 #endif
-    using Microsoft.Win32;
-    using System.Security;
-    // The SecurityHelper class differs between assemblies and could not actually be
-    //  shared, so it is duplicated across namespaces to prevent name collision.
+// The SecurityHelper class differs between assemblies and could not actually be
+//  shared, so it is duplicated across namespaces to prevent name collision.
 #if WINDOWS_BASE
-    using MS.Internal.WindowsBase;
+using MS.Internal.WindowsBase;
 #elif PRESENTATION_CORE
     using MS.Internal.PresentationCore;
 #elif PRESENTATIONFRAMEWORK
@@ -36,6 +27,8 @@ namespace MS.Win32 {
 #error Attempt to use a class (duplicated across multiple namespaces) from an unknown assembly.
 #endif
 
+namespace MS.Win32
+{
     internal partial class NativeMethods {
  #if !FRAMEWORK_NATIVEMETHODS
         [StructLayout(LayoutKind.Sequential, CharSet=CharSet.Auto)]

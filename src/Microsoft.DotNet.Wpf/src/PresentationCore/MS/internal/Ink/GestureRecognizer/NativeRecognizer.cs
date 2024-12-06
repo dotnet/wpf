@@ -2,36 +2,17 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //      A wrapper class which interoperates with the unmanaged recognition APIS
 //      in mshwgst.dll
-//
-// Features:
-//
-//  01/14/2005 waynezen:       Created
-//
-//
 
 using Microsoft.Win32;
 using MS.Win32;
-using System;
-using System.Security;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Windows.Media;
 using System.Windows.Ink;
 using System.Windows.Input;
-using MS.Internal.PresentationCore;
-
-using MS.Utility;
-using SR = MS.Internal.PresentationCore.SR;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 

@@ -2,35 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//
-//
-
-using System;
-using System.Collections;
-using System.Diagnostics;
-using System.Threading;
 using System.Windows.Threading;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Automation.Provider;
 using System.Windows.Media.Composition;
-using System.Runtime.InteropServices;
-using System.Security;
 using MS.Internal;
-using MS.Win32;
 using MS.Utility;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media
 {
-    /// <summary>
-    ///
-    /// </summary>
     public abstract class CompositionTarget : DispatcherObject, IDisposable, ICompositionTarget
     {
         //

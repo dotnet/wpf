@@ -10,15 +10,10 @@
 //
 
 
-using System.Diagnostics;
-using System.Windows.Threading;
-
-using System.Windows;
 using System.Windows.Media;
 using System.ComponentModel;
 using MS.Internal;
 using MS.Internal.PresentationFramework;
-using System;
 
 namespace System.Windows.Shapes
 {

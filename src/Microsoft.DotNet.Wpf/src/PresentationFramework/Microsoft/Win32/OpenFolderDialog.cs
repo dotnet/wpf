@@ -2,6 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.ComponentModel;
+using System.IO;
+
+using MS.Internal.AppModel;
+using MS.Internal.Interop;
+
 //
 // 
 // Description:
@@ -12,14 +18,6 @@
 
 namespace Microsoft.Win32
 {
-    using System;
-    using System.ComponentModel;
-    using System.IO;
-    using System.Text;
-
-    using MS.Internal.AppModel;
-    using MS.Internal.Interop;
-
     /// <summary>
     ///  Represents a common dialog box that allows the user to open one or more folder(s). 
     ///  This class cannot be inherited.

@@ -7,11 +7,6 @@
 //   UI state. 
 //
 
-using System;
-using System.Runtime.Serialization;
-using System.Security;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Navigation;
 using System.Windows.Controls;

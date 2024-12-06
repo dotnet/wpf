@@ -9,15 +9,10 @@
 //
 //
 
-using System;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
-using System.Security;
 using System.Runtime.InteropServices;
-using MS.Internal.Shaping;
 using MS.Internal.Text.TextInterface;
-using MS.Internal.PresentationCore;
 
 namespace MS.Internal.TextFormatting
 {

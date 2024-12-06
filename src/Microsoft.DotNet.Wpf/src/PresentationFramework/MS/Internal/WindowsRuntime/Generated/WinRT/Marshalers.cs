@@ -1,17 +1,9 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Numerics;
-using System.Security.Cryptography;
-using System.Text;
 using System.Linq.Expressions;
-using System.Collections.Concurrent;
 using WinRT.Interop;
 
 #pragma warning disable 0169 // The field 'xxx' is never used

@@ -8,8 +8,6 @@
 // Description: 
 //      A safe way to deal with unmanaged MIL interface pointers.
 
-using System;
-using System.Security;
 using Microsoft.Win32.SafeHandles;
 
 using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;

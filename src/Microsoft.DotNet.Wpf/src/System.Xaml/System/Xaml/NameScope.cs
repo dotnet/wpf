@@ -8,7 +8,6 @@
 // within the logical tree section.
 
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Windows.Markup;
 

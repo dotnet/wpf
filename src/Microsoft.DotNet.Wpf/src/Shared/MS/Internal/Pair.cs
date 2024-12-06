@@ -15,9 +15,6 @@
 //
 //---------------------------------------------------------------------------
 
-using System;
-using System.Diagnostics;
-
 namespace MS.Internal
 {
     /// <summary>

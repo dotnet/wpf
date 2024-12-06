@@ -2,6 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Printing;
+using System.Windows.Media;
+
 #if !DONOTREFPRINTINGASMMETA
 //
 // Description: Plug-in document serializers implement this abstract class
@@ -10,12 +13,6 @@
 //
 namespace System.Windows.Documents.Serialization
 {
-    using System;
-    using System.Printing;
-    using System.Windows.Documents;
-    using System.Windows.Media;
-    using System.Security;
-
     /// <summary>
     /// SerializerWriter is an abstract class that is implemented by plug-in document serializers
     /// Objects of this class are instantiated by SerializerProvider.Create

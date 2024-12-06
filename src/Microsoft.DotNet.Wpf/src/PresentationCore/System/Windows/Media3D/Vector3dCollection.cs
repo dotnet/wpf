@@ -10,11 +10,8 @@
 //              See spec at http://avalon/medialayer/Specifications/Avalon3D%20API%20Spec.mht 
 
 
-using System.Windows;
-using System.Windows.Media.Media3D;
-using System;
-using System.IO; 
-using MS.Internal.Media; 
+using System.IO;
+using MS.Internal.Media;
 
 namespace System.Windows.Media.Media3D
 {

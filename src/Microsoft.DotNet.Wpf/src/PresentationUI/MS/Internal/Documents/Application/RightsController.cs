@@ -6,29 +6,24 @@
 //              be performed on it.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.Packaging;
-using System.Security;
 using System.Security.RightsManagement;
-using System.Windows;
-using System.Windows.TrustUI; // for SR
-using MS.Internal.IO.Packaging.CompoundFile;
 
 namespace MS.Internal.Documents.Application
 {
-/// <summary>
-/// Responsible for the lifecycle of the RightsDocument and the actions that can
-/// be performed on it.
-/// <see cref="MS.Internal.Documents.Application.IDocumentController"/>
-/// </summary>
-/// <remarks>
-/// All IDocumentController methods are expected to throw if provided
-/// a document that is not a RightsDocument.  Users of the IDocumentController
-/// interface are expected to use the IChainOfResponsibiltyNode method before
-/// calling into the IDocumentController methods to avoid runtime errors.
-/// </remarks>
-class RightsController : IDocumentController, IDisposable
+    /// <summary>
+    /// Responsible for the lifecycle of the RightsDocument and the actions that can
+    /// be performed on it.
+    /// <see cref="MS.Internal.Documents.Application.IDocumentController"/>
+    /// </summary>
+    /// <remarks>
+    /// All IDocumentController methods are expected to throw if provided
+    /// a document that is not a RightsDocument.  Users of the IDocumentController
+    /// interface are expected to use the IChainOfResponsibiltyNode method before
+    /// calling into the IDocumentController methods to avoid runtime errors.
+    /// </remarks>
+    class RightsController : IDocumentController, IDisposable
 {
     #region IDocumentController Members
     //--------------------------------------------------------------------------

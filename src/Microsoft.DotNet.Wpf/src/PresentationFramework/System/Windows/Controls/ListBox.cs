@@ -4,19 +4,13 @@
 
 
 using MS.Internal;
-using MS.Utility;
 using System.Collections;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows.Threading;
 using System.Windows.Media;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using System.Windows.Shapes;
-using System.Windows.Data;
 using System.Windows.Automation.Peers;
-
-using System;
 using MS.Internal.Commands; // CommandHelpers
 using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;

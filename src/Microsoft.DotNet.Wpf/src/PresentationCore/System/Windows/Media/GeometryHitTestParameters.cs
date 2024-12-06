@@ -4,17 +4,9 @@
 
 //
 
-using System;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Threading;
-using System.Security;
-
-using System.Collections;
-using System.Diagnostics;
 using MS.Internal;
 
-namespace System.Windows.Media 
+namespace System.Windows.Media
 {
     /// <summary>
     /// This is the class for specifying parameters hit testing with a geometry.

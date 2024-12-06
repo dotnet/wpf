@@ -5,16 +5,9 @@
 //
 #pragma warning disable 1634, 1691 // Allow suppression of certain presharp messages
 
-using System.Windows.Media;
-using System;
 using MS.Internal;
 using MS.Win32;
-using System.Reflection;
-using System.Collections;
-using System.Diagnostics;
-using System.Security;
 using System.Runtime.InteropServices;
-using MS.Internal.PresentationCore;
 
 namespace System.Windows.Media
 {

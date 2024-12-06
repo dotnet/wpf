@@ -24,23 +24,12 @@
 //          ElementStringValueProperty
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Globalization;
 using System.Reflection;
-using System.Security;
-using System.Text;
 
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Markup;
-using System.Windows.Documents;
-
-namespace System.Windows.Markup.Primitives 
+namespace System.Windows.Markup.Primitives
 {
     /// <summary>
     /// An implementation of MarkupObject for DependencyObjects that works also for CLR only objects

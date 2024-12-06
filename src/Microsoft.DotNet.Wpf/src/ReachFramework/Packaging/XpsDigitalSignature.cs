@@ -11,20 +11,11 @@
                                    
                                                                              
 --*/
-using MS.Internal;
-using System;
-using System.Windows.Documents;
 using System.IO.Packaging;
-using System.Security;                                  // for SecurityCritical tag
-using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Xml;
-
-using PackUriHelper = System.IO.Packaging.PackUriHelper;
 namespace System.Windows.Xps.Packaging
 {
     /// <summary>

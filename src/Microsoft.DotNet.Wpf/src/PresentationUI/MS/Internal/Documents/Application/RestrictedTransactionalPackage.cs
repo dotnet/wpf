@@ -8,18 +8,15 @@
 using System;
 using System.IO;
 using System.IO.Packaging;
-using System.Security;
 using System.Windows.TrustUI;
-
-using MS.Internal;
 
 namespace MS.Internal.Documents.Application
 {
-/// <summary>
-/// This class wraps TransactionalPackage, ensuring that only approved
-/// part content types can be written.
-/// </summary>
-internal sealed class RestrictedTransactionalPackage : TransactionalPackage
+    /// <summary>
+    /// This class wraps TransactionalPackage, ensuring that only approved
+    /// part content types can be written.
+    /// </summary>
+    internal sealed class RestrictedTransactionalPackage : TransactionalPackage
 {
     #region Constructors
     //--------------------------------------------------------------------------

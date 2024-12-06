@@ -3,21 +3,12 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Collections;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 
 using System.Windows.Threading;
-
-using System.Windows.Controls.Primitives;
 using System.Windows.Media;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Documents;
-
-using MS.Internal;
 using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationFramework;
 using MS.Utility;

@@ -9,17 +9,10 @@
 *
 *
 \***************************************************************************/
-using System;
 using System.IO;
-using System.Collections;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Documents;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Reflection;
-using MS.Internal;
 
 namespace System.Windows
 {

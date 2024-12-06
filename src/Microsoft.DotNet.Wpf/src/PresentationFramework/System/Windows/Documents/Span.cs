@@ -7,11 +7,10 @@
 //
 
 using MS.Internal;                  // Invariant.Assert
-using System.Windows.Controls;      // TextBlock
 using System.Windows.Markup; // ContentProperty
 using System.ComponentModel;        // DesignerSerializationVisibility
 
-namespace System.Windows.Documents 
+namespace System.Windows.Documents
 {
     /// <summary>
     /// Span element used for grouping other Inline elements.

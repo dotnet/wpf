@@ -6,10 +6,7 @@
 //
 //
 
-using System;
-using System.Windows.Automation;
 using System.Runtime.InteropServices;
-using System.Windows.Automation.Text;
 
 namespace System.Windows.Automation.Provider
 {

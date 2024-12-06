@@ -2,25 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//  Simple struct for maintaining information of a Part found in an Xml signature manifest
-//
-//
-//
-//
-//
-
-using System;
-using System.Diagnostics;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Security.Cryptography.Xml;
-using System.Xml;
-using System.Windows;
 using System.IO.Packaging;
-using MS.Internal;
 
 namespace MS.Internal.IO.Packaging
 {

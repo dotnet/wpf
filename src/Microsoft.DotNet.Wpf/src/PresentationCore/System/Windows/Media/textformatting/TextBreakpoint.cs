@@ -13,10 +13,6 @@
 //
 
 
-using System;
-using System.Security;
-
-using MS.Internal;
 using MS.Internal.TextFormatting;
 
 

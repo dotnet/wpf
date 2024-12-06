@@ -9,24 +9,14 @@
 *
 \***************************************************************************/
 
-using System;
 using System.Xml;
 using System.IO;
-using System.Windows;
-using System.Windows.Navigation;
 using System.Text;
 using System.Collections;
-using System.Collections.Specialized;
-using System.Collections.Generic;
 using System.ComponentModel;
-
-using System.Diagnostics;
 using System.Reflection;
-using System.Windows.Threading;
 
 using System.Globalization;
-using MS.Utility;
-using MS.Internal;
 
 namespace System.Windows.Markup
 {

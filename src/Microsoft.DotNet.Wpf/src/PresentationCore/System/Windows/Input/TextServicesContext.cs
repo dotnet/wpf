@@ -8,17 +8,11 @@
 //
 //
 
-using System;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Threading;
-using System.Security;
-using System.Diagnostics;
-using System.Collections;
-using MS.Utility;
 using MS.Win32;
 using MS.Internal;
-using MS.Internal.PresentationCore;                        // SecurityHelper
 
 namespace System.Windows.Input
 {

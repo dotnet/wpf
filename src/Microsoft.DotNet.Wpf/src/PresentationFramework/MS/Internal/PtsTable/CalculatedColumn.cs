@@ -11,12 +11,7 @@
 //
 
 
-using MS.Internal.PtsHost;
-using System;
-using System.Diagnostics;
 using System.Windows;
-using System.Windows.Documents;
-using System.Windows.Media;
 
 using MS.Internal.PtsHost.UnsafeNativeMethods;
 

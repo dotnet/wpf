@@ -3,13 +3,9 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Windows.Media;
-using MS.Win32;
 using MS.Internal;
-using System.Security;
-using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Windows.Media.Media3D;
-using System;
 
 namespace System.Windows.Input
 {

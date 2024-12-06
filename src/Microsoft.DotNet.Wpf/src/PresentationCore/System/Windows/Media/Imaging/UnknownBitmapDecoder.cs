@@ -5,19 +5,8 @@
 //
 //
 
-using System;
 using System.IO;
-using System.Collections;
-using System.Security;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
 using Microsoft.Win32.SafeHandles;
-using MS.Internal;
-using System.Diagnostics;
-using System.Windows.Media;
-using System.Globalization;
-using System.Runtime.InteropServices;
 
 namespace System.Windows.Media.Imaging
 {

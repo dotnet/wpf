@@ -2,33 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//  Microsoft Windows Presentation Foundation
-//
-
-using System;
 using System.IO;
 using MS.Internal;
-using MS.Win32.PresentationCore;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Reflection;
-using System.Collections;
-using System.Globalization;
-using System.Security;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-using System.Windows;
-using System.Text.RegularExpressions;
-using System.Runtime.InteropServices;
-using System.Windows.Markup;
-using SR=MS.Internal.PresentationCore.SR;
 using System.Windows.Navigation;
-using System.IO.Packaging;
-using MS.Internal.PresentationCore; 
-
-using PackUriHelper = System.IO.Packaging.PackUriHelper;
 
 namespace System.Windows.Media.Effects
 {

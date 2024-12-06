@@ -7,7 +7,6 @@
 //
 
 using System.ComponentModel;    // ISupportInitialize
-using System.Diagnostics;
 using System.Windows.Markup;    // MarkupExtension
 
 namespace System.Windows.Data

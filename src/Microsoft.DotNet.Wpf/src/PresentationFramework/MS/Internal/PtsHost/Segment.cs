@@ -7,9 +7,6 @@
 // Description: Interface representing PTS segment. 
 //
 
-
-using System;
-
 namespace MS.Internal.PtsHost
 {
     /// <summary>

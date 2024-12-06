@@ -5,9 +5,7 @@
 // Description: TreeWalker class, allows client to walk custom views of
 //              UIAutomation tree.
 
-using System;
 using System.Windows.Automation.Provider;
-using MS.Internal.Automation;
 
 namespace System.Windows.Automation
 {

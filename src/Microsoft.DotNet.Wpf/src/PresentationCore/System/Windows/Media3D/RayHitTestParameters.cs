@@ -6,12 +6,7 @@
 //
 //
 
-using System;
-using System.IO;
-using System.Diagnostics;
-using System.Collections.Generic;
 using MS.Internal.Media3D;
-using CultureInfo = System.Globalization.CultureInfo;
 
 namespace System.Windows.Media.Media3D
 {

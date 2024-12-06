@@ -8,13 +8,8 @@
 //      It also can get the unicode text from the IDataObject and create a corresponding textbox.
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Markup;
-using System.Text;
 
 namespace MS.Internal.Ink
 {

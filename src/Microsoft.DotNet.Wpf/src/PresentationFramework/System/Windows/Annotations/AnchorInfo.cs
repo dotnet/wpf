@@ -7,15 +7,6 @@
 //     IAnchorInfo is the public portion of IAttachedAnnotation.
 //
 
-
-using System;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Annotations;
-using System.Windows.Annotations.Storage;
-using System.Windows.Media;
-using MS.Utility;
-
 namespace System.Windows.Annotations
 {
     /// <summary>

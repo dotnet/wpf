@@ -4,13 +4,7 @@
 
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.IO;
 using System.Windows.Markup;
-
-using MS.Utility;
-
-using System;
-using System.Diagnostics;
 
 namespace System.Windows
 {

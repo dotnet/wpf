@@ -10,15 +10,13 @@
 *
 *
 \***************************************************************************/
-using System.Diagnostics;               // Debug.Assert
-
 namespace System.Windows.Media.Animation
 {
-/// <summary>
-/// RemoveStoryboard will call remove on its Storyboard reference when
-///  it is triggered.
-/// </summary>
-public sealed class RemoveStoryboard : ControllableStoryboardAction
+    /// <summary>
+    /// RemoveStoryboard will call remove on its Storyboard reference when
+    ///  it is triggered.
+    /// </summary>
+    public sealed class RemoveStoryboard : ControllableStoryboardAction
 {
     /// <summary>
     ///     Called when it's time to execute this storyboard action

@@ -6,7 +6,6 @@
 // Description: Helper methods for code that uses types from System.Xml.
 //
 
-using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Globalization;

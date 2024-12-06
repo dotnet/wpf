@@ -7,12 +7,7 @@
 // Description: MouseGestureValueSerializer - Serializes a MouseGesture 
 //
 
-using System;
 using System.ComponentModel;    // for TypeConverter
-using System.Globalization;     // for CultureInfo
-using System.Reflection;
-using System.Windows;
-using System.Windows.Input;
 using System.Windows.Markup;
 
 namespace System.Windows.Input

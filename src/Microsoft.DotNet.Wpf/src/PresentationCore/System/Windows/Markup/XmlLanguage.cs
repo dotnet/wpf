@@ -11,14 +11,10 @@
 //
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.Text;
 using System.IO;
-using System.Windows;
 using MS.Internal.PresentationCore;
 
 namespace System.Windows.Markup

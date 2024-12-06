@@ -7,16 +7,9 @@ using System.Windows.Input;
 using System.Windows.Input.StylusWisp;
 using System.Windows.Media;
 using System.Windows.Threading;
-using System.Diagnostics;
 using MS.Win32;
-using MS.Internal;
 using MS.Internal.Interop;
-using MS.Internal.PresentationCore;                        // SecurityHelper
 using MS.Utility;
-using System.Security;
-
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Interop
 {

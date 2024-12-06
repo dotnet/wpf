@@ -2,17 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:  Authentication Type enumeration is used to differentiate users.    
-//
-//
-//
-//
-
-using System;
-
-namespace System.Security.RightsManagement 
+namespace System.Security.RightsManagement
 {
     /// <summary>
     /// Enumeration that describes various Authentication types, currently only Passport and Windows are supported.

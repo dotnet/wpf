@@ -8,12 +8,8 @@
 
 using MS.Internal;
 using MS.Win32;
-using System;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Windows;
 using System.Windows.Input;
-using System.Security;
 
 namespace System.Windows.Documents
 {

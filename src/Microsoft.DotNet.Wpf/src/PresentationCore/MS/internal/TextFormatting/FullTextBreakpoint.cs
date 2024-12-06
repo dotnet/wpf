@@ -2,29 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
-//  Contents:  Full text implementation of the specialized text line representing 
-//             state of line up to the point where line break may occur
-//
-//  Spec:      Text Formatting API.doc
-//
-//
-
-
-using System;
-using System.Security;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
-
-using MS.Internal.PresentationCore;
-using SR = MS.Internal.PresentationCore.SR;
-
 
 namespace MS.Internal.TextFormatting
 {

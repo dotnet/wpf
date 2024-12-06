@@ -6,7 +6,6 @@
 // Description:
 //      Contains EventArg types raised to communicate BindingFailed events.
 
-using System.Diagnostics;
 using System.Windows.Data;
 
 namespace System.Windows.Diagnostics

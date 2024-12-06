@@ -6,7 +6,6 @@
 // Description: Enum describing the different steps in the validation process.
 //
 
-using System;
 using System.ComponentModel; // doc comments
 
 namespace System.Windows.Controls

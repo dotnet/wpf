@@ -9,8 +9,6 @@
 //              InitElementDictionary.
 //
 
-using System;
-
 namespace MS.Internal.IO.Packaging
 {
     /// <summary>

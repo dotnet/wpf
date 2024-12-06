@@ -10,20 +10,7 @@
 //
 //
 
-using MS.Internal;
-using MS.Internal.PresentationCore;
-using System;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Reflection;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Runtime.InteropServices;
 using System.Windows.Media.Composition;
-using System.Security;
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media
 {

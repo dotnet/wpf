@@ -9,7 +9,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Xml;
 
 #if PBTCOMPILER
 namespace MS.Internal.Markup

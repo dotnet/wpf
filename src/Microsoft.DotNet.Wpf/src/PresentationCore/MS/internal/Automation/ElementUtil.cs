@@ -2,32 +2,17 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// 
-//
-// Description: 
-//
-//
-
-using System;
 using System.Windows.Threading;
-using System.Threading;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Automation;
-using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
-using System.Security; 
 using MS.Win32;
 using MS.Internal.Media;
 using System.Runtime.InteropServices;
-using System.Globalization;
 
-using MS.Internal.PresentationCore;                        // SafeSecurityHelper
-
-using SR=MS.Internal.PresentationCore.SR;
+using MS.Internal.PresentationCore;
 
 namespace MS.Internal.Automation
 {

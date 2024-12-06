@@ -4,9 +4,6 @@
 
 // Description: NotificationEventArgs event args class
 
-using System;
-using System.Windows.Automation;
-
 namespace System.Windows.Automation
 {
     /// <summary>

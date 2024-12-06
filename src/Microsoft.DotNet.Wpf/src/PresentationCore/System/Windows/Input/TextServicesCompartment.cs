@@ -8,25 +8,17 @@
 //
 //
 
-using System;
 using System.Runtime.InteropServices;
-using System.Windows.Threading;
-
-using System.Security;
-using System.Diagnostics;
-using System.Collections;
-using MS.Utility;
 using MS.Win32;
-using MS.Internal;
 
-namespace System.Windows.Input 
+namespace System.Windows.Input
 {
     //------------------------------------------------------
     //
     //  TextServicesCompartment class
     //
     //------------------------------------------------------
- 
+
     internal class TextServicesCompartment
     {
         //------------------------------------------------------

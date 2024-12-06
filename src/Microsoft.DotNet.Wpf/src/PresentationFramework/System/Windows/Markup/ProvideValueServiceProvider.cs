@@ -10,10 +10,7 @@
 *
 *
 \***************************************************************************/
-using System;
-using System.Windows;
 using System.Windows.Media;
-using System.Diagnostics;
 
 namespace System.Windows.Markup
 {

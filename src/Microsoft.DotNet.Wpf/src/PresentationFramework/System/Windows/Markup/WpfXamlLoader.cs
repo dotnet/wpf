@@ -7,7 +7,6 @@ using MS.Utility;
 using System.Collections;
 using System.Windows.Baml2006;
 using System.Windows.Diagnostics;
-using System.Windows.Media;
 using System.Xaml;
 using System.Xaml.Permissions;
 using System.Windows.Data;

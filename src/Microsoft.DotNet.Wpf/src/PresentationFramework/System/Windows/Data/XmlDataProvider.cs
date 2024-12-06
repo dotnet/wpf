@@ -9,21 +9,15 @@
 //              XmlDataSource.mht
 //
 
-using System;
 using System.IO;                    // Stream
-using System.Collections;
 using System.ComponentModel;        // ISupportInitialize, AsyncCompletedEventHandler, [DesignerSerialization*], [DefaultValue]
-using System.Diagnostics;
 using System.IO.Packaging;          // PackUriHelper
-using System.Globalization;         // CultureInfo
 using System.Net;                   // WebRequest, IWebRequestCreate
 using System.Threading;             // ThreadPool, WaitCallback
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;     // IXmlSerializable
 using System.Xml.XPath;
-using System.Windows;
-using System.Windows.Data;
 using System.Windows.Threading;     // Dispatcher*
 using System.Windows.Markup; // IUriContext, [XamlDesignerSerializer]
 using MS.Internal;                  // CriticalExceptions

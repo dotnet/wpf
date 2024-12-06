@@ -2,6 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Windows.Markup;    // for XmlLanguage
+using System.Windows.Media;
+using System.Globalization;
+
 /*++                                       
     Description:
         This class represents a (partial) Glyphs element on the page. Most of the time it will be a full glyphs element
@@ -10,14 +14,6 @@
 
 namespace System.Windows.Documents
 {
-    using System.Windows.Shapes;
-    using System.Windows.Markup;    // for XmlLanguage
-    using System.Windows.Media;
-    using System.Diagnostics;
-    using System.Globalization;
-    using System.Windows;
-    using System.Collections.Generic;
-
     //a set of characters that have the same font, face and size
     internal sealed class FixedSOMTextRun : FixedSOMElement, IComparable
     {

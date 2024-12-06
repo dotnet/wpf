@@ -6,19 +6,11 @@
 // Description: TextServicesHost implementation.
 //
 
-using System;
 using System.Runtime.InteropServices;
 using System.Windows.Threading;
 using System.Threading;
-using System.Collections;
-using System.Diagnostics;
-using System.Windows.Media;
-using System.Windows.Input;
-using System.Windows.Documents;
 using MS.Win32;
 using MS.Internal;
-using MS.Internal.PresentationFramework;                   // SecurityHelper
-using System.Security;
 
 namespace System.Windows.Documents
 {

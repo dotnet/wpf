@@ -4,6 +4,12 @@
 
 
 
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+
 // This file contains general utilities to aid in development.
 // Classes here generally shouldn't be exposed publicly since
 // they're not particular to any library functionality.
@@ -12,21 +18,6 @@
 
 namespace Standard
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Globalization;
-    using System.IO;
-    using System.Reflection;
-    using System.Runtime.InteropServices;
-    using System.Security;
-    using System.Security.Cryptography;
-    using System.Text;
-    using System.Windows;
-    using System.Windows.Media;
-    using System.Windows.Media.Imaging;
-
     internal static partial class Utility
     {
         private static readonly Version _osVersion = Environment.OSVersion.Version;

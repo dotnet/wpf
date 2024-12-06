@@ -5,12 +5,6 @@
 
 using System.Windows.Threading;
 
-using MS.Utility;
-
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-
 namespace System.Windows
 {
     internal class FrameworkContextData

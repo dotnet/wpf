@@ -2,9 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Runtime.InteropServices;
-using System.Security;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Interop;
@@ -12,21 +10,20 @@ using System.Windows.Interop;
 using MS.Win32;
 
 #if PRESENTATION_CORE
-using MS.Internal.PresentationCore;
 #else
 #error There is an attempt to use this class from an unexpected assembly.
 #endif
 
 namespace MS.Internal
 {
-     /// <summary>
-     ///    A utility class for converting Point and Rect data between co-ordinate spaces
-     /// </summary>
-     /// <remarks>
-     ///    To avoid confusion, Avalon based Point and Rect variables are prefixed with
-     ///    "point" and "rect" respectively, whereas Win32 POINT and RECT variables are
-     ///    prefixed with "pt" and "rc" respectively.
-     /// </remarks>
+    /// <summary>
+    ///    A utility class for converting Point and Rect data between co-ordinate spaces
+    /// </summary>
+    /// <remarks>
+    ///    To avoid confusion, Avalon based Point and Rect variables are prefixed with
+    ///    "point" and "rect" respectively, whereas Win32 POINT and RECT variables are
+    ///    prefixed with "pt" and "rc" respectively.
+    /// </remarks>
     internal static class PointUtil
     {
         /// <summary>

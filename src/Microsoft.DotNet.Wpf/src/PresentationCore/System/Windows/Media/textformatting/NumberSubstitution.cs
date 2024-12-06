@@ -2,23 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
-//  Contents:  Number substitution related types
-//
-//  Spec:      Cultural%20digit%20substitution.htm
-//
-//
-
-
-using System;
 using System.Globalization;
 using System.ComponentModel;
-using System.Windows;
-using MS.Internal.FontCache; // for HashFn
-
-using SR = MS.Internal.PresentationCore.SR;
+using MS.Internal.FontCache;
 
 // Allow suppression of presharp warnings
 #pragma warning disable 1634, 1691

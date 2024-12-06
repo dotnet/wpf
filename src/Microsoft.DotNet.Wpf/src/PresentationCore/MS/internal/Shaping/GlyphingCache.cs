@@ -8,14 +8,9 @@
 //
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
-
-using MS.Internal;
 using MS.Internal.TextFormatting;
 
 namespace MS.Internal.Shaping

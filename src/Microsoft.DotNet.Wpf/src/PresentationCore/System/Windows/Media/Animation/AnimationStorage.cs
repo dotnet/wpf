@@ -5,9 +5,6 @@
 
 using MS.Internal;
 using MS.Utility;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows.Threading;
 using System.Windows.Media.Composition;
 using System.Windows.Media.Media3D;
 

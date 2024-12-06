@@ -2,19 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//   These structures and constants are managed equivalents to COM structures
-//   used to access OLE properties.
-//
-//
-//
-
-
-using System;
 using System.Runtime.InteropServices;
-
 
 namespace MS.Internal.IO.Packaging
 {

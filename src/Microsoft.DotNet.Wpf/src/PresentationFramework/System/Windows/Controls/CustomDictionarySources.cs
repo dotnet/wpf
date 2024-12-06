@@ -6,13 +6,7 @@
 // Description: Collection of Uri objects used to specify location of custom dictionaries.
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
-using System.Windows.Markup;
-using System.Windows.Navigation;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 

@@ -8,15 +8,11 @@
 //              See spec at: AdornerLayer Spec.htm
 // 
 
-using System;
 using System.Windows.Media;
-using System.Diagnostics;
 using System.Collections;
 using System.Collections.Specialized;
 using System.Windows.Threading;
 using System.Windows.Controls;
-
-using MS.Utility;
 using MS.Internal;
 using MS.Internal.Controls;
 using MS.Internal.Media;

@@ -2,33 +2,16 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //      A wrapper for a top-level hidden window that is used to process
 //      messages broadcasted to top-level windows only (such as DWM's
 //      WM_DWMCOMPOSITIONCHANGED). If the WPF application doesn't have
 //      a top-level window (as it is the case for XBAP applications),
 //      such messages would have been ignored.
-//
 
-using System;
-using System.Windows.Threading;
-
-using System.Collections;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-using Microsoft.Win32;
-using MS.Internal;
-using MS.Internal.PresentationCore;
 using MS.Internal.Interop;
 using MS.Win32;
-using System.Security;
-
-using SR=MS.Internal.PresentationCore.SR;
-using DllImport=MS.Internal.PresentationCore.DllImport;
 
 namespace System.Windows.Media
 {

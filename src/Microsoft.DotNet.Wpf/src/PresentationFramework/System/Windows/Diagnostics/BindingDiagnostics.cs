@@ -7,8 +7,6 @@
 //  Binding diagnostics API
 //
 
-using System.Collections.Generic;
-
 namespace System.Windows.Diagnostics
 {
     /// <summary>

@@ -7,15 +7,8 @@
 *  Class for converting a given TemplateKey to a string
 *
 \***************************************************************************/
-using System;
 using System.ComponentModel;        // for TypeConverter
 using System.Globalization;               // for CultureInfo
-using System.Reflection;
-using MS.Utility;
-using MS.Internal;
-using System.Windows;
-using System.ComponentModel.Design.Serialization;
-using System.Windows.Documents;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 

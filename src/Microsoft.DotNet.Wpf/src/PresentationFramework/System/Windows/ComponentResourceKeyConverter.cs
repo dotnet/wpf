@@ -5,11 +5,8 @@
 //
 //
 
-using System;
 using System.ComponentModel;
 using System.Globalization;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
 
 namespace System.Windows.Markup
 {

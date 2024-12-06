@@ -11,13 +11,7 @@
 //          The developer will typically hook this event if they want to take action at startup time 
 //
 
-using System.ComponentModel;
-
-using System.Windows.Interop;
-using MS.Internal.PresentationFramework;
-using System.Runtime.CompilerServices;
 using MS.Internal;
-using MS.Internal.AppModel; 
 
 namespace System.Windows
 {

@@ -4,15 +4,6 @@
 
 //
 
-using MS.Internal;
-using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Media;
-
-using SR=MS.Internal.PresentationCore.SR;
-
 namespace System.Windows.Media.Animation
 {
     /// <summary>

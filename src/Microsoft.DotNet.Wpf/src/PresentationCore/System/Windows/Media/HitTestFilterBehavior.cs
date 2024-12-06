@@ -4,16 +4,7 @@
 
 //
 
-using System;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Threading;
-
-using System.Collections;
-using System.Diagnostics;
-using MS.Internal;
-
-namespace System.Windows.Media 
+namespace System.Windows.Media
 {
     /// <summary>
     /// Behavior for filtering visuals while hit tesitng

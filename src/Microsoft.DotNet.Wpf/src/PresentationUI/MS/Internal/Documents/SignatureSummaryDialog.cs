@@ -9,12 +9,9 @@
 //    dialog types and others are only used in one or the other.
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
-using System.Security;
 using System.Windows.Forms;
-using System.IO.Packaging;
 using System.Windows.TrustUI;
 
 namespace MS.Internal.Documents

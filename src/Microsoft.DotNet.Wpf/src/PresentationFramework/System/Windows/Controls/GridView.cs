@@ -6,7 +6,6 @@
 using System.ComponentModel;            // DesignerSerializationVisibility
 using System.Windows.Automation.Peers;
 using System.Windows.Markup;
-using System.Diagnostics;               // Debug
 
 using MS.Internal;                      // Helper
 using MS.Internal.KnownBoxes;

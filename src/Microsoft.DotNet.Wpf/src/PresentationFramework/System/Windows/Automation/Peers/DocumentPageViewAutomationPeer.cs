@@ -6,9 +6,7 @@
 // Description: AutomationPeer associated with DocumentPageView.
 //
 
-using System.Collections.Generic;           // List<T>
 using System.Globalization;                 // CultureInfo
-using System.Windows.Controls;              // DocumentViewer
 using System.Windows.Controls.Primitives;   // DocumentPageView
 
 namespace System.Windows.Automation.Peers

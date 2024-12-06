@@ -2,17 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Collections;
-using System.Windows;
-using System.Security;
-using MS.Internal;
-using MS.Internal.PresentationCore;                        // SecurityHelper
-using System.Windows.Media;
 using MS.Win32; // VK translation.
-
-using System;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input
 {

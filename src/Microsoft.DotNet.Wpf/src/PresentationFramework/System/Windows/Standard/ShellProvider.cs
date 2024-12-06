@@ -4,17 +4,15 @@
 
 
 
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
+using System.Text;
+using MS.Internal.Interop;
+
+using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
+
 namespace Standard
 {
-    using System;
-    using System.Runtime.InteropServices;
-    using System.Runtime.InteropServices.ComTypes;
-    using System.Security;
-    using System.Text;
-    using MS.Internal.Interop;
-
-    using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
-
     #region Enums and Static Property Classes
 
     /// <summary>ShellItem attribute flags.  SIATTRIBFLAGS_*</summary>

@@ -2,19 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
-
 using MS.Internal;
 using MS.Internal.Media;
 using MS.Internal.Media3D;
-using System;
-using System.Diagnostics;
-using System.Security;
 using System.Windows.Diagnostics;
 using System.Windows.Media.Composition;
-using System.Windows.Media;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media.Media3D
 {

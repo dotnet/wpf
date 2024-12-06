@@ -4,7 +4,6 @@
 
 
 using System.ComponentModel;        // DesignerSerializationVisibility
-using System.Diagnostics;
 using System.Windows.Data;          // BindingBase
 using System.Windows.Markup;        // [ContentProperty]
 

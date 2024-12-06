@@ -4,12 +4,11 @@
 
 // Description: Automation Identifiers for Transform Pattern
 
-using System;
 using MS.Internal.Automation;
 
 namespace System.Windows.Automation
 {
-       
+
     ///<summary>wrapper class for Transform pattern </summary>
 #if (INTERNAL_COMPILE)
     internal static class TransformPatternIdentifiers

@@ -2,23 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //  Handles serialization to/from X509 Certificate part (X509v3 = ASN.1 DER format)
-//
-//
-//
-//
 
-using System;
-using System.Diagnostics;                               // for Assert
 using System.Security.Cryptography.X509Certificates;
-using System.Windows;                                   // For Exception strings - SR
-using System.IO.Packaging;      
+using System.IO.Packaging;
 using System.IO;                                        // for Stream
-using MS.Internal;                                      // For ContentType
-using MS.Internal.WindowsBase;
 using MS.Internal.IO.Packaging.Extensions;
 
 namespace MS.Internal.IO.Packaging

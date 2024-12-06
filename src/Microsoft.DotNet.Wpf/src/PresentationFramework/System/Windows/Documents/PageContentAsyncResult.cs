@@ -2,6 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.IO;
+using System.Windows.Threading;
+using System.Threading;
+
 //
 // Description:
 //      Implements the PageContentAsyncResult
@@ -9,22 +13,6 @@
 
 namespace System.Windows.Documents
 {
-    using System;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Windows.Threading;
-    using System.Threading;
-    using MS.Internal;
-    using MS.Internal.AppModel;
-    using MS.Internal.Utility;
-    using MS.Internal.Navigation;
-    using MS.Utility;
-    using System.Reflection;
-    using System.Windows.Controls;
-    using System.Windows.Markup;
-    using System.Net;
-    using System.IO.Packaging;
-
     /// <summary>
     /// IAsyncResult for GetPageAsync. This item is passed around and queued up during various
     /// phase of async call. 

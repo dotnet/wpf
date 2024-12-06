@@ -7,9 +7,6 @@
 //
 
 using MS.Internal;
-using System.Collections.Generic;
-using System.Windows.Threading;
-using System.Globalization;
 using System.Xml;
 using System.IO;
 using System.Windows.Markup; // Parser

@@ -10,7 +10,6 @@
 //              EncryptedPackageEnvelope respectively.
 //
 
-using System;
 using System.Windows;
 using System.IO.Packaging;
 using MS.Internal.Interop;

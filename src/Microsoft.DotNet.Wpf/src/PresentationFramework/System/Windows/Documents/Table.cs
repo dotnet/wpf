@@ -8,18 +8,9 @@
 //              See spec at WPP TableOM.doc
 //
 
-using MS.Internal;
-using MS.Internal.PtsHost;
-using MS.Internal.PtsTable;
-using MS.Utility;
-using System;
 using System.Collections;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows.Threading;
-using System.Windows;
 using System.Windows.Automation.Peers;
-using System.Windows.Media;
 using System.Windows.Markup;
 using MS.Internal.PtsHost.UnsafeNativeMethods;
 using MS.Internal.Documents;

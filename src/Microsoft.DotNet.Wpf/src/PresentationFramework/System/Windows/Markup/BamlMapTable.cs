@@ -9,19 +9,11 @@
 \***************************************************************************/
 
 using System;
-using System.Xml;
 using System.IO;
-using System.Globalization;
-using System.Text;
 using System.Collections;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.Reflection;
-
-using MS.Utility;
-using MS.Internal;
 
 #if PBTCOMPILER
 using MS.Internal.Markup;

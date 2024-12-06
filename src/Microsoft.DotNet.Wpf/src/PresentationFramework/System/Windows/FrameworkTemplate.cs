@@ -13,22 +13,13 @@ using MS.Internal;                      // Helper
 using MS.Utility;                       // ChildValueLookupList
 using System.ComponentModel;            // DesignerSerializationVisibility, DefaultValueAttribute
 using System.Collections;               // Hashtable
-using System.Collections.Generic;       // List<T>
 using System.Collections.Specialized;   // HybridDictionary
-using System.Diagnostics;               // Debug
 using System.Runtime.CompilerServices;  // ConditionalWeakTable
-using System.Security;                  // SecurityCriticalAttribute, SecurityTreatAsSafe
-using System.Threading;                 // Interlocked
-using System.Windows.Media.Animation;   // Timeline
 using System.Windows.Markup;     // XamlTemplateSerializer, ContentPropertyAttribute
 using System.Windows.Diagnostics;
-using System.Windows.Media;
-using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Threading; // DispatcherObject
 using System.Xaml;
 using System.Windows.Data;
-using System.Globalization;
 using MS.Internal.Xaml.Context;
 
 

@@ -8,9 +8,7 @@
 // Specs:       Data Styling.mht
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -19,13 +17,9 @@ using System.Globalization;     // for CultureInfo.InvariantCulture (event traci
 using System.Windows.Media;
 using System.Windows.Controls.Primitives;   // IItemContainerGenerator
 using System.Windows.Data;
-using System.Windows.Markup;
-using System.Diagnostics;
 using System.Text;
 using MS.Internal;
 using MS.Internal.Controls;
-using MS.Internal.KnownBoxes;
-using MS.Internal.Utility;
 using MS.Utility;
 
 

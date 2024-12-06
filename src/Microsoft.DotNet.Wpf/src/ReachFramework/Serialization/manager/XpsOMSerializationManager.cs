@@ -3,13 +3,8 @@
 // See the LICENSE file in the project root for more information.
 
 using MS.Utility;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Printing;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;

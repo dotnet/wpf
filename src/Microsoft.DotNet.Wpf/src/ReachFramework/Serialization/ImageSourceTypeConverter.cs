@@ -10,20 +10,12 @@
         images to a Xps package.
 
 --*/
-using System;
 using System.Net;
-using System.Collections;
-using System.Collections.Specialized;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.IO.Packaging;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Xps.Packaging;
-using System.Security;
-using MS.Internal.ReachFramework;
-using System.Windows.Markup;
 using MS.Internal.IO.Packaging;
 using MS.Utility;
 

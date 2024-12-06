@@ -5,18 +5,14 @@
 //
 //
 
-using System;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
-using System.Security;
 using System.Windows.Threading;
 using System.Text;
 using MS.Utility;
@@ -24,11 +20,8 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Markup;
 using System.Windows.Diagnostics;
 using System.Windows.Documents;
-using System.Windows.Media;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Resources;
-using System.Windows.Appearance;
 using MS.Win32;
 using MS.Internal;
 using MS.Internal.Ink;

@@ -7,21 +7,20 @@
 
 using System;
 using System.IO;
-using System.Security;
 using System.Windows.Forms;
 using System.Windows.TrustUI;
 
 namespace MS.Internal.Documents.Application
 {
-/// <summary>
-/// Interacts with user on file based information for XpsViewer.
-/// </summary>
-/// <remarks>
-/// Responsibility:
-/// Should be the only class that interacts with the user with or for file
-/// location information.
-/// </remarks>
-internal static class FilePresentation
+    /// <summary>
+    /// Interacts with user on file based information for XpsViewer.
+    /// </summary>
+    /// <remarks>
+    /// Responsibility:
+    /// Should be the only class that interacts with the user with or for file
+    /// location information.
+    /// </remarks>
+    internal static class FilePresentation
 {
     #region Internal Methods
     //--------------------------------------------------------------------------

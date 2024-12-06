@@ -8,17 +8,16 @@
 
 using System;
 using System.IO;
-using System.Security;
 using MS.Internal.Security; // AttachmentService
 
 namespace MS.Internal.Documents.Application
 {
-/// <summary>
-/// Responsible for the lifecycle of the FileDocument and the actions that can
-/// be performed on it.
-/// <see cref="MS.Internal.Documents.Application.IDocumentController"/>
-/// </summary>
-internal class FileController : IDocumentController
+    /// <summary>
+    /// Responsible for the lifecycle of the FileDocument and the actions that can
+    /// be performed on it.
+    /// <see cref="MS.Internal.Documents.Application.IDocumentController"/>
+    /// </summary>
+    internal class FileController : IDocumentController
 {
     #region IDocumentController Members
     //--------------------------------------------------------------------------

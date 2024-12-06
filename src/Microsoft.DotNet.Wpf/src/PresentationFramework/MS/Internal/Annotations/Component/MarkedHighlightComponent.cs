@@ -12,9 +12,6 @@
 //              See spec at StickyNoteControlSpec.mht
 //
 
-using System;
-using System.ComponentModel;
-using System.Windows.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -22,12 +19,9 @@ using System.Windows.Annotations;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using System.Text;
 using System.Collections;
-using System.Collections.Generic;
 using System.Xml;
 using System.Windows.Input;
-using System.Diagnostics;                           // Assert
 using MS.Internal.Annotations.Anchoring;
 using MS.Utility;
 

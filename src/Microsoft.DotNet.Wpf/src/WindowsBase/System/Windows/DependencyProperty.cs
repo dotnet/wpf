@@ -6,12 +6,10 @@ using MS.Utility;
 using MS.Internal;
 using System.Threading;
 using System.Collections;
-using System.Diagnostics;
 using System.ComponentModel;
 using System.Windows.Markup;    // For ValueSerializerAttribute
 using MS.Internal.WindowsBase;
 using System.Windows.Threading; // For DispatcherObject
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings

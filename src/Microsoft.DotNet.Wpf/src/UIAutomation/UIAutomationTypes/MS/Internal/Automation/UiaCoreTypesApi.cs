@@ -6,7 +6,6 @@
 
 
 using System;
-using System.Security;
 using System.Runtime.InteropServices;
 using MS.Internal.UIAutomationTypes;
 using MS.Win32;

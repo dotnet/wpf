@@ -3,11 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.Collections;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 

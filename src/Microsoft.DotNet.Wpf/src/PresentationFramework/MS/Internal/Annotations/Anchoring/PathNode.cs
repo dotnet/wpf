@@ -12,15 +12,10 @@
 //     Spec: Anchoring Namespace Spec.doc
 //
 
-using System;
-using System.Diagnostics;
 using System.Collections;
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Annotations;
 using System.Windows.Media;
-using System.Windows.Markup;
-using MS.Utility;
 
 namespace MS.Internal.Annotations.Anchoring
 {

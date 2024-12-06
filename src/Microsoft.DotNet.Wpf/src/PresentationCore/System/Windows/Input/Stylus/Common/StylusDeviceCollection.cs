@@ -3,15 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Windows;
-using System.Security;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Windows.Media;
-
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input
 {

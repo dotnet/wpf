@@ -7,13 +7,9 @@
 //      AnnotationComponentManager
 //
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Annotations;
 using System.Windows.Documents;
-using System.Windows.Media;
 
 namespace MS.Internal.Annotations.Component
 {

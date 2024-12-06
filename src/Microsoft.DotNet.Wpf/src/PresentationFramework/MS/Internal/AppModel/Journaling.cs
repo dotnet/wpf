@@ -6,15 +6,11 @@
 // Description: Contains various journaling related internal enums and classes
 //
 
-using System;
-using System.Security;
 using System.Runtime.Serialization;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Markup;
 
 using System.Windows.Navigation;
-using MS.Internal.Utility;
 
 //In order to avoid generating warnings about unknown message numbers and 
 //unknown pragmas when compiling your C# source code with the actual C# compiler, 

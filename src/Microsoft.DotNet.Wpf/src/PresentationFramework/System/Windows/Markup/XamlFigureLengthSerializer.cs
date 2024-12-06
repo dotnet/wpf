@@ -7,17 +7,8 @@
 //   XamlSerializer used to persist FigureLength structures in Baml
 //
 
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Xml;
-using System.Windows;
-using MS.Utility;
 using MS.Internal;
 
 #if PBTCOMPILER

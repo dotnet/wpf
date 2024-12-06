@@ -2,27 +2,16 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //  Implementation of a helper class that provides a fully functional Stream on unmanaged ZLib in a fashion
 //  consistent with Office and RMA (see Creating Rights-Managed HTML Files at
 //  http://msdn.microsoft.com/library/default.asp?url=/library/en-us/rma/introduction.asp).
-//
-//
 
 #pragma warning disable 1634, 1691
 
-using System;
 using System.IO;
-using System.Diagnostics;
 using System.IO.Compression;
-using System.IO.Packaging;
-using System.Windows;
 using System.Runtime.InteropServices;           // for Marshal class
-using MS.Internal.IO.Packaging;                 // for PackagingUtilities
-using System.Security;                          // for SecurityCritical and SecurityTreatAsSafe
-using MS.Internal.WindowsBase;
 using static Interop.Zlib;                     // workaround namespace collision with MS.Internal.interop
 
 namespace MS.Internal.IO.Packaging.CompoundFile

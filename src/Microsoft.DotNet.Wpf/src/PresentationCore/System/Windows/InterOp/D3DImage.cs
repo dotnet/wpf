@@ -2,30 +2,18 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
 // Description: D3DImage class
 //                  An ImageSource that displays a user created D3D surface
-//
 
 using MS.Internal;
 using MS.Internal.KnownBoxes;
-using MS.Internal.PresentationCore;
 using MS.Win32.PresentationCore;
-using System;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Composition;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using System.Security;
 using System.Threading;
-
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Interop
 {

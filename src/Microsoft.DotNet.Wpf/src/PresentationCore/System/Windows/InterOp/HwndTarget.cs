@@ -2,33 +2,20 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-
-using System;
-using System.Diagnostics;
 using System.Windows.Threading;
-using System.Reflection;
-using System.Threading;
-using System.Windows;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
 using System.Windows.Media.Composition;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Security;
 using MS.Internal;
 using MS.Internal.Automation;
 using MS.Internal.Interop;
 using MS.Utility;
 using MS.Win32;
-using MS.Internal.PresentationCore;             // SecurityHelper
+using MS.Internal.PresentationCore;
 
-using SR=MS.Internal.PresentationCore.SR;
 using HRESULT = MS.Internal.HRESULT;
 using NativeMethodsSetLastError = MS.Internal.WindowsBase.NativeMethodsSetLastError;
 using PROCESS_DPI_AWARENESS = MS.Win32.NativeMethods.PROCESS_DPI_AWARENESS;

@@ -11,11 +11,8 @@ using System;
 using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Xml;
-using MS.Utility;
-using System.Diagnostics;
 using MS.Internal.Xaml.Parser;
 
 #if PBTCOMPILER

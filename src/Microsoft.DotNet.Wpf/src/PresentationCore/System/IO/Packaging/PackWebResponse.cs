@@ -13,17 +13,10 @@
 #define TRACE
 #endif
 
-using System;
-using System.IO;
 using System.Net;
-using System.Runtime.Serialization;
-using System.Diagnostics;               // For Assert
 using System.Threading;                 // for ManualResetEvent
-using System.Globalization;             // for CultureInfo
 using MS.Internal.PresentationCore;     // for ExceptionStringTable
 using MS.Internal.IO.Packaging;              // for ResponseStream
-using System.Security;
-using System.Windows.Navigation;
 using MS.Utility;
 using MS.Internal;
 

@@ -2,10 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Windows;
-using System.Windows.Input;
-
 // Disable CS3001, CS3003, CS3024: Warning as Error: not CLS-compliant
 #pragma warning disable 3001, 3003, 3024
 

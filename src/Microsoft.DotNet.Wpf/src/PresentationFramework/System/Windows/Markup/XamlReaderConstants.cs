@@ -11,6 +11,9 @@
 // set this flag to turn on whitespace collapse rules.
 // #define UseValidatingReader
 
+
+/* Unmerged change from project 'PresentationFramework'
+Removed:
 using System;
 using System.Xml;
 using System.Xml.Serialization;
@@ -27,7 +30,7 @@ using System.Collections.Specialized;
 using Microsoft.Win32;
 using System.Runtime.InteropServices;
 using MS.Internal;
-
+*/
 // Disabling 1634 and 1691:
 // In order to avoid generating warnings about unknown message numbers and
 // unknown pragmas when compiling C# source code with the C# compiler,

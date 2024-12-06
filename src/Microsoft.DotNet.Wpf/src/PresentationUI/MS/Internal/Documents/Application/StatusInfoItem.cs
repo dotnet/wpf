@@ -5,13 +5,10 @@
 // Description: Used to control an (RM or DigSig) InfoBar and ToolBar item in MongooseUI
 
 
-using MS.Internal.Documents;
 using System;
-using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
-using System.Windows.TrustUI;
 
 namespace MS.Internal.Documents.Application
 {

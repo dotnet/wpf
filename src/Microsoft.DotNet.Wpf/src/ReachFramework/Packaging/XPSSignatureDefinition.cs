@@ -16,12 +16,6 @@
 
 
 --*/
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.IO.Packaging;
 using System.Xml;
 using System.Globalization;
 using System.Windows.Markup;

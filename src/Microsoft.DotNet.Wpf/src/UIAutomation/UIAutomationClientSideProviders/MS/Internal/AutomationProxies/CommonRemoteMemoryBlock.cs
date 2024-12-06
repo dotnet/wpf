@@ -15,11 +15,6 @@
 //
 
 using System;
-using System.ComponentModel;
-using System.Security;
-using System.Runtime.InteropServices;
-using System.Runtime.CompilerServices;
-using System.Windows.Automation;
 using Microsoft.Win32.SafeHandles;
 using MS.Win32;
 

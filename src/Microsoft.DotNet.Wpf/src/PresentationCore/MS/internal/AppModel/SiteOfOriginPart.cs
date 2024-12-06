@@ -9,15 +9,9 @@
 //
 
 
-using System;
 using System.Net;
 using System.IO.Packaging;
-using System.Windows;
-using System.Windows.Navigation;
-using System.Windows.Resources;
 using System.IO;
-using System.Resources;
-using System.Globalization;
 
 namespace MS.Internal.AppModel
 {

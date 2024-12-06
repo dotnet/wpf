@@ -10,19 +10,11 @@
 //
 //
 
-using System;
-using System.Security;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using MS.Internal;
 using MS.Internal.Text.TextInterface;
 using MS.Internal.Shaping;
-using System.Globalization;
-using MS.Internal.FontCache;
 
 
 namespace MS.Internal.TextFormatting

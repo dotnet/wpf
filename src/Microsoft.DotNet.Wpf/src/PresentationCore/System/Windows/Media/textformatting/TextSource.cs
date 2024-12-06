@@ -11,10 +11,6 @@
 //
 //
 
-
-using System;
-
-
 namespace System.Windows.Media.TextFormatting
 {
     /// <summary>

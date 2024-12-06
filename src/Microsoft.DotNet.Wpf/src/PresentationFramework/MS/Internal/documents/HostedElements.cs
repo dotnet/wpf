@@ -7,11 +7,7 @@
 //
 
 using System.Collections;
-using MS.Internal.Documents;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System;
-using System.Diagnostics;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 

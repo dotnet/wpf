@@ -4,10 +4,7 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
 
 namespace System.Xaml.Schema
 {

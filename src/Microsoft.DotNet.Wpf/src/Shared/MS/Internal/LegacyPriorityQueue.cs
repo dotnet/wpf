@@ -48,10 +48,6 @@
 // (We have no reports of this actually happening, possibly because it might escape
 // notice by all but the most font-obsessed users.)
 
-using System;
-using System.Diagnostics;
-using System.Collections.Generic;
-
 namespace MS.Internal
 {
     /// <summary>

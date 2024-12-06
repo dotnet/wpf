@@ -7,8 +7,6 @@
 //      Defines an enum type of the InkCanvas selection handle
 //
 
-using System;
-
 namespace System.Windows.Controls
 {
     /// <summary>

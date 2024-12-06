@@ -9,11 +9,8 @@
 *
 *
 \***************************************************************************/
-using System;
 using System.ComponentModel;
-using System.Windows;
 using System.Windows.Markup;
-using System.Reflection;
 using MS.Internal; // Helper
 
 namespace System.Windows

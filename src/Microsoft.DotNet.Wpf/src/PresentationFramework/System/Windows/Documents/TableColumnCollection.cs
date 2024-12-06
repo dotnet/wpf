@@ -6,9 +6,7 @@
 // Description: Collection of TableColumn objects.
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using MS.Internal.Documents;
 
 namespace System.Windows.Documents

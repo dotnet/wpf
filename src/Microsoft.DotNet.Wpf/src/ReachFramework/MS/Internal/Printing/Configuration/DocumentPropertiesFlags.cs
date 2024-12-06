@@ -2,11 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
 namespace MS.Internal.Printing.Configuration
 {
-    using System;
-
     /// <summary>
     /// From http://msdn.microsoft.com/en-us/library/dd183576(VS.85).aspx
     /// </summary>

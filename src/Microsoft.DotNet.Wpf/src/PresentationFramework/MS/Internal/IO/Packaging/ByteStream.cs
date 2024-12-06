@@ -8,14 +8,10 @@
 //
 
 
-using System;
-using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.ComTypes;      // for IStream
 using System.Windows;
 using MS.Win32;                                     // for NativeMethods
-using System.Security;                              // for marking critical methods
 
 namespace MS.Internal.IO.Packaging
 {

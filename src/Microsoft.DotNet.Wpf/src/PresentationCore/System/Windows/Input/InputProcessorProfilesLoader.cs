@@ -13,13 +13,7 @@
 // PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
 #pragma warning disable 1634, 1691
 
-using System;
-using System.Runtime.InteropServices;
-using System.Security;
 using System.Threading;
-
-using Microsoft.Win32;
-using System.Diagnostics;
 using MS.Win32;
 
 namespace System.Windows.Input

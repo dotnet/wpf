@@ -2,28 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
-//   This class wraps the issuance license publishing serveces 
-//
-//
-//
-//
+//   This class wraps the issuance license publishing services
 
-
-using System;
 using System.Text;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Security;
 using System.Security.RightsManagement;
-using SecurityHelper = MS.Internal.WindowsBase.SecurityHelper;
-using System.Globalization;             // For CultureInfo
-using MS.Internal;                      // for Invariant
-using System.Windows;
 
 namespace MS.Internal.Security.RightsManagement
 {

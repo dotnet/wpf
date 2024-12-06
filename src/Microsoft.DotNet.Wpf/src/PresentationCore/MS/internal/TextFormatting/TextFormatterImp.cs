@@ -2,35 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//+-----------------------------------------------------------------------
-//
-//
-//
-//  Contents:  Text formatter implementation
-//
-//
-
-
-using System;
-using System.Security;
-using System.Windows;
 using System.Windows.Media;
-using System.Windows.Threading;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows.Media.TextFormatting;
 using MS.Utility;
-
-using SR=MS.Internal.PresentationCore.SR;
 using MS.Internal.Shaping;
 using MS.Internal.Text.TextInterface;
 using MS.Internal.FontCache;
-
-#if !OPTIMALBREAK_API
-using MS.Internal.PresentationCore;
-#endif
-
 
 namespace MS.Internal.TextFormatting
 {

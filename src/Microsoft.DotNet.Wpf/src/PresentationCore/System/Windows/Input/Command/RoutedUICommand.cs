@@ -5,15 +5,11 @@
 //
 //
 
-using System;
 using System.ComponentModel; // for TypeConverter
-using System.Windows;
-using System.Windows.Markup;
-using System.Windows.Media;
 
 using MS.Internal.PresentationCore;
 
-namespace System.Windows.Input 
+namespace System.Windows.Input
 {
     /// <summary>
     ///     RoutedCommand with added UI Information.

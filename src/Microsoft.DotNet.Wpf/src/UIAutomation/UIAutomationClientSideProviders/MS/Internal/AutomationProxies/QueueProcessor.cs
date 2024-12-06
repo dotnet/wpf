@@ -8,13 +8,10 @@
 //      A seperate thread is created by the win32 proxy to manage the hooks.
 //              
 
-using System.Windows.Automation;
-using System.Windows.Automation.Provider;
 using System;
 using System.Threading;
 using System.Collections;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using MS.Win32;
 using Microsoft.Win32.SafeHandles;
 

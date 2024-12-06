@@ -2,37 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+using MS.Utility;
+
 namespace MS.Win32
 {
-    using MS.Utility;
-    using System.Runtime.InteropServices;
-    using System.Runtime.InteropServices.ComTypes;
-    using System;
-    using System.Security;
-    using System.Collections;
-    using System.IO;
-    using System.Text;
-    using System.ComponentModel;
-
-
-    // The SecurityHelper class differs between assemblies and could not actually be
-    //  shared, so it is duplicated across namespaces to prevent name collision.
-#if WINDOWS_BASE
-    using MS.Internal.WindowsBase;
-#elif PRESENTATION_CORE
-    using MS.Internal.PresentationCore;
-#elif PRESENTATIONFRAMEWORK
-    using MS.Internal.PresentationFramework;
-#elif DRT
-    using MS.Internal.Drt;
-#elif UIAUTOMATIONTYPES
-    using MS.Internal.UIAutomationTypes;
-#else
-#error Attempt to use a class (duplicated across multiple namespaces) from an unknown assembly.
-#endif
-
-    using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
-
     internal static partial class SafeNativeMethods
     {
         public static int GetMessagePos()

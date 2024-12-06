@@ -4,25 +4,13 @@
 
 // Description: Code behind file for the DocumentViewer FindToolBar.
 
-using System.Security;
-
 using System.Windows.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Markup;
-using System.Windows.TrustUI;
 
 using System;
-using System.Reflection;
-using System.Text;
-using System.Globalization;
-
-using MS.Internal.Documents.Application;
 
 namespace MS.Internal.Documents
 {

@@ -1,7 +1,11 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-        
+
+using System;
+using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
+
 //***************************************************************************
 // HOW TO USE THIS FILE
 //
@@ -20,10 +24,6 @@
 
 namespace MS.Win32
 {
-    using System;
-    using System.Runtime.InteropServices;
-    using System.Runtime.Versioning;
-
     internal static class SafeNativeMethods
     {
         [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Auto)]

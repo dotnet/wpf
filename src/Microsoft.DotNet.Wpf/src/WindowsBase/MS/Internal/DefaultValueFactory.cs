@@ -2,12 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description: Abstract base class for all default value factories
-//
-
-using System;
 using System.Windows;
 
 namespace MS.Internal
@@ -34,7 +28,8 @@ namespace MS.Internal
         /// </summary>
         internal abstract object DefaultValue 
         {
-            get;   }
+            get;   
+}
 
         /// <summary>
         ///     See PropertyMetadata.CreateDefaultValue

@@ -3,10 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 
-using MS.Internal;
-using System.Security;
-using System.Windows.Input;
-using System.Windows.Interop;
 using static MS.Win32.Pointer.UnsafeNativeMethods;
 
 namespace System.Windows.Input.StylusPointer

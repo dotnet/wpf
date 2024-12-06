@@ -2,6 +2,19 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal; // Invariant
+using MS.Internal.IO.Packaging;
+using System.Xml;
+using System.Windows.Markup; // TypeConvertContext, ParserContext
+using System.Windows.Controls; // Image
+using System.Globalization; // CultureInfo
+
+using System.Windows.Media; // ImageSource
+using System.Windows.Media.Imaging; // BitmapEncoder
+using System.IO; // MemoryStream
+using System.IO.Packaging; // Package
+using System.Threading; // Interlocked.Increment
+
 //
 // Description: Helper class for creating and accessing WPF Payloads in packages
 //    This file contains the definition  and implementation
@@ -20,25 +33,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal; // Invariant
-    using MS.Internal.IO.Packaging;
-    using System;
-    using System.Xml;
-    using System.Windows.Markup; // TypeConvertContext, ParserContext
-    using System.Windows.Controls; // Image
-    using System.Collections.Generic; // List
-    using System.ComponentModel; // TYpeDescriptor
-    using System.Globalization; // CultureInfo
-
-    using System.Windows.Media; // ImageSource
-    using System.Windows.Media.Imaging; // BitmapEncoder
-    using System.IO; // MemoryStream
-    using System.IO.Packaging; // Package
-    using System.Threading; // Interlocked.Increment
-    using System.Security; // SecurityCritical, SecurityTreatAsSafe attributes
-    using MS.Internal.PresentationFramework; // SecurityHelper
-
-    using InternalPackUriHelper = MS.Internal.IO.Packaging.PackUriHelper;
     // An object supporting flow content packaging with images and other resources.
     /// <summary>
     /// WpfPayload is a class providing services for creating,

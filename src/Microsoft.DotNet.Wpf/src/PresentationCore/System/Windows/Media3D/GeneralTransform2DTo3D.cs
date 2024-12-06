@@ -2,18 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// 
-//
 // Description: Declaration of the GeneralTransform2DTo3D class.
-//
-
-using System.Diagnostics;
-
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media.Media3D
 {

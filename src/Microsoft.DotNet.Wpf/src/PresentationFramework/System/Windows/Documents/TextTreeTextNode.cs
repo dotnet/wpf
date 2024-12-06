@@ -6,7 +6,6 @@
 // Description: A TextContainer node representing a run of text.
 //
 
-using System;
 using MS.Internal;
 
 namespace System.Windows.Documents

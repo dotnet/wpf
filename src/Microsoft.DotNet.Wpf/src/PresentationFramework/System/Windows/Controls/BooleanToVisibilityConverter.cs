@@ -3,15 +3,8 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.ComponentModel;
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Data;
 using System.Globalization;
-using System.Collections.Generic;
-
-using MS.Internal.Controls;
 
 
 namespace System.Windows.Controls

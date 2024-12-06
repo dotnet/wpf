@@ -5,8 +5,6 @@
 //
 //
 
-using System;
-
 namespace System.Windows.Interop
 {
     /// <summary>

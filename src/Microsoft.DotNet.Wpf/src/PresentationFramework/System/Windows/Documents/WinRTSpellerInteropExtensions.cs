@@ -3,10 +3,8 @@
 // See the LICENSE file in the project root for more information.
 
 using MS.Internal.WindowsRuntime.Windows.Data.Text;
-using System.Collections.Generic;
 
 using System.Windows.Documents.MsSpellCheckLib;
-using System.Windows.Documents.Tracing;
 using static System.Windows.Documents.WinRTSpellerInterop;
 
 namespace System.Windows.Documents

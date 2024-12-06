@@ -8,12 +8,8 @@
 // Specs:       Data Styling.mht
 //
 
-using System;
-using System.Collections;
-using System.Diagnostics;
 using System.Windows.Media;
 using MS.Internal;
-using MS.Internal.Data;                 // WeakRefKey
 
 namespace System.Windows.Controls
 {

@@ -10,15 +10,13 @@
 *
 *
 \***************************************************************************/
-using System.Diagnostics;               // Debug.Assert
-
 namespace System.Windows.Media.Animation
 {
-/// <summary>
-/// PauseStoryboard will call pause on its Storyboard reference when
-///  it is triggered.
-/// </summary>
-public sealed class PauseStoryboard : ControllableStoryboardAction
+    /// <summary>
+    /// PauseStoryboard will call pause on its Storyboard reference when
+    ///  it is triggered.
+    /// </summary>
+    public sealed class PauseStoryboard : ControllableStoryboardAction
 {
     /// <summary>
     ///     Called when it's time to execute this storyboard action

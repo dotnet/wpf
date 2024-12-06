@@ -5,15 +5,7 @@
 //
 //
 
-using System;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Security;
-
 using MS.Internal;
-using MS.Internal.PresentationCore;
 
 namespace System.Windows.Input.StylusWisp
 {

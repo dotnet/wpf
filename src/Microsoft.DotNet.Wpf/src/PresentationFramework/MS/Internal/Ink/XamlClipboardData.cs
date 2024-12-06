@@ -10,16 +10,9 @@
 //
 
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Markup;
-using System.Security;
 using System.Text;
-using System.Diagnostics;
-using MS.Internal; //security helper from PresentationCore
 
 namespace MS.Internal.Ink
 {

@@ -4,16 +4,11 @@
 
 // Class that implements BamlTreeMap.
 
-using System;
 using System.IO;
 using System.Xml;
-using System.Globalization;
 using System.Collections;
-using System.Collections.Generic;
 using System.Windows.Markup;
 using System.Windows.Markup.Localizer;
-using System.Diagnostics;
-using System.Text;
 using System.Windows;
 
 using MS.Utility;

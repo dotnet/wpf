@@ -7,10 +7,6 @@
 //              related data of BlockUIContainers.
 //
 
-using System;                                   // IntPtr
-using System.Collections.Generic;               // List<T>
-using System.Collections.ObjectModel;           // ReadOnlyCollection<T>
-using System.Security;                          // SecurityCritical
 using System.Windows;                           // FrameworkElement             
 using System.Windows.Media;                     // Visual
 using System.Windows.Documents;                 // BlockUIContainer

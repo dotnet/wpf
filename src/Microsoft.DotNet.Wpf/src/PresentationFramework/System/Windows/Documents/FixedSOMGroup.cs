@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Windows.Media;
+
 /*++                                                               
     Description:
        A concrete container that can be used to put together to group different or same types of containers         
@@ -9,12 +11,6 @@
 
 namespace System.Windows.Documents
 {
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Windows.Media;
-    using System.Globalization;
-    
-    
     internal class FixedSOMGroup :FixedSOMPageElement, IComparable
     {
         //--------------------------------------------------------------------

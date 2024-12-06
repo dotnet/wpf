@@ -12,10 +12,7 @@
 //
 //
 
-using System;
-using System.Windows;
-
-namespace System.Windows.Input 
+namespace System.Windows.Input
 {
     /// <summary>
     /// InputGesture - abstract base class for individual input device gestures.

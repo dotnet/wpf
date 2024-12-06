@@ -10,16 +10,11 @@
 
 using MS.Internal;
 using MS.Internal.KnownBoxes;
-using System;
 using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Automation.Peers;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Windows.Markup;
-using System.Windows.Threading;
 
 namespace System.Windows.Controls
 {

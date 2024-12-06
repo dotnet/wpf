@@ -13,12 +13,9 @@
 #define TRACE
 #endif
 
-using System;
 using System.Net;
-using System.Diagnostics;               // for Assert
 using MS.Internal.IO.Packaging;         // for PackageCache
 using MS.Internal.PresentationCore;     // for ExceptionStringTable
-using System.Security;
 using MS.Internal;
 
 namespace System.IO.Packaging

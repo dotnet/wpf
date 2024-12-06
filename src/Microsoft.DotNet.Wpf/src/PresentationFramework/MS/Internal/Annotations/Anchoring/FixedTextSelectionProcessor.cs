@@ -14,24 +14,13 @@
 //     Spec: Anchoring to text in paginated docs.doc
 //
 
-using System;
-using System.IO;
 using System.Windows;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.Windows.Annotations;
-using System.Windows.Annotations.Storage;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
-using System.Windows.Media;
 using System.Xml;
-using MS.Utility;
-using MS.Internal.Documents;
-using MS.Internal.PtsHost;
 
 namespace MS.Internal.Annotations.Anchoring
 {

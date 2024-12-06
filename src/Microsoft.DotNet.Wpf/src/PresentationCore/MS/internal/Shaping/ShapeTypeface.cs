@@ -9,24 +9,9 @@
 //
 //
 
-using System;
-using System.Runtime.InteropServices;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Diagnostics;
-using System.Security;
-using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.TextFormatting;
-
-using MS.Utility;
-using MS.Internal;
 using MS.Internal.FontCache;
 using MS.Internal.FontFace;
-using MS.Internal.TextFormatting;
-
-using FontFace = MS.Internal.FontFace;
 
 
 namespace MS.Internal.Shaping

@@ -2,41 +2,32 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
+using MS.Win32;
+using System.Collections;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Formats.Nrbf;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows.Interop;
+using System.Windows.Media.Imaging;
+using System.Text;
+using MS.Internal;
+
+using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
+
 // Description: Top-level class for data transfer for drag-drop and clipboard.
 //
 // See spec at http://avalon/uis/Data%20Transfer%20clipboard%20dragdrop/Avalon%20Data%20Transfer%20Object.htm
-//
-//
 
 
 namespace System.Windows
 {
-    using System;
-    using MS.Win32;
-    using System.Collections;
-    using System.Collections.Specialized;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Formats.Nrbf;
-    using System.IO;
-    using System.Runtime.InteropServices;
-    using System.Runtime.InteropServices.ComTypes;
-    using System.Runtime.Serialization;
-    using System.Runtime.Serialization.Formatters.Binary;
-    using System.Security;
-    using System.Windows.Interop;
-    using System.Windows.Media.Imaging;
-    using System.Text;
-    using MS.Internal;
-
-    using SR=MS.Internal.PresentationCore.SR;
-    using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
-
-// PreSharp uses message numbers that the C# compiler doesn't know about.
-// Disable the C# complaints, per the PreSharp documentation.
+    // PreSharp uses message numbers that the C# compiler doesn't know about.
+    // Disable the C# complaints, per the PreSharp documentation.
 #pragma warning disable 1634, 1691
 
     #region DataObject Class

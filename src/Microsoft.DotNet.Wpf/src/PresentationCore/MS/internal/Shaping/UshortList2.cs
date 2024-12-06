@@ -7,13 +7,6 @@
 //
 //  Contents:  Internal growable list with sublisting
 
-using System.Windows;
-using System;
-using System.Collections;
-using System.Diagnostics;
-using MS.Internal;
-using System.Security;
-
 namespace MS.Internal.Shaping
 {
     /// <summary>

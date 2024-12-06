@@ -11,8 +11,6 @@ All rights reserved.
 
 namespace MS.Internal.Printing
 {
-    using System;
-
     /// <summary>
     /// Internal API for testing
     /// </summary>

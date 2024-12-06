@@ -5,13 +5,7 @@
 //
 // 
 
-using System;
-using System.Net;
-using System.Windows;
-
-using MS.Internal.Utility;
-
-namespace System.Windows.Navigation 
+namespace System.Windows.Navigation
 {
     /// <summary>
     /// EventArgs for RequestNavigate

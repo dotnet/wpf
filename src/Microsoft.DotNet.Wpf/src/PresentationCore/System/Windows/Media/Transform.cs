@@ -11,19 +11,7 @@
 \***************************************************************************/
 
 using MS.Internal;
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Globalization;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Windows;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-using System.Windows.Markup;
 
 namespace System.Windows.Media
 {

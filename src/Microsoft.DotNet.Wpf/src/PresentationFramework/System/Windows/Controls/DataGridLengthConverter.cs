@@ -3,14 +3,10 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
-using System.Security;
-using System.Windows;
 using MS.Internal;
 
 namespace System.Windows.Controls

@@ -7,10 +7,8 @@
 //      Defines InkCanvasEditingMode for InkCanvas
 //
 
-using System;
-
 namespace System.Windows.Controls
-{    
+{
     /// <summary>
     /// Defines the InkCanvasEditingMode for the InkEditor
     /// </summary>

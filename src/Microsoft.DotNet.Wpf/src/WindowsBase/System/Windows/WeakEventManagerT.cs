@@ -7,9 +7,7 @@
 // Description: Generic weak event manager.
 //
 
-using System;
 using System.Reflection;
-using MS.Internal.WindowsBase;
 
 namespace System.Windows
 {

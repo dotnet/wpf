@@ -8,13 +8,9 @@
 // the assembly which hosts the baml stream.
 //
 
-using System;
 using System.IO;
 using System.Reflection;
-using System.Resources;
-using System.Globalization;
 using System.Windows.Markup;
-using System.Security;
 
 namespace MS.Internal.AppModel
 {

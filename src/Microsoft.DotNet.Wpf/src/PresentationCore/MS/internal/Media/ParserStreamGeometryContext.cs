@@ -13,12 +13,8 @@
 //  and we reduce creation of temporary strings.
 //
 
-using MS.Internal;
-
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Security;
 using System.IO;
 using MS.Utility;
 
@@ -37,10 +33,10 @@ using MS.Internal.PresentationCore;
 namespace MS.Internal.Media
 #endif
 {
-     /// <summary>
-     ///     ParserStreamGeometryContext
-     /// </summary>
-     internal class ParserStreamGeometryContext : StreamGeometryContext
+    /// <summary>
+    ///     ParserStreamGeometryContext
+    /// </summary>
+    internal class ParserStreamGeometryContext : StreamGeometryContext
      {
         enum ParserGeometryContextOpCodes : byte
         {

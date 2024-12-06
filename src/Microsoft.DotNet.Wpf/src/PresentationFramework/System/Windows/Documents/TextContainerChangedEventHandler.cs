@@ -6,9 +6,6 @@
 // Description: Delegate for a TextChangedEvent fired on a TextContainer.
 //
 
-using System;
-using System.Windows;
-
 namespace System.Windows.Documents
 {
     /// <summary>

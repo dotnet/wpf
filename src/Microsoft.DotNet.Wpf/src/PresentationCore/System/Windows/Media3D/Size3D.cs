@@ -2,22 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// 
-//
-// Description: 3D size implementation. 
-//
-//             
-//
-//
-
-using System.Windows;
-using System.Windows.Media.Media3D;
-
-using System;
-
-using SR=MS.Internal.PresentationCore.SR;
-
 namespace System.Windows.Media.Media3D
 {
     /// <summary>

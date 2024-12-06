@@ -8,13 +8,8 @@
 
 //#define DEBUG_SLOW
 
-using System;
 using System.Windows.Threading;
 using MS.Internal;
-using System.Collections;
-using System.ComponentModel;
-using System.Windows.Controls;
-using System.Windows.Markup;
 using MS.Internal.Documents;
 using System.Windows.Data;
 

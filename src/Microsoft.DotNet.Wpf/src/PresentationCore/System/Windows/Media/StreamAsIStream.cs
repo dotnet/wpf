@@ -2,24 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
 #pragma warning disable 1634, 1691 // Allow suppression of certain presharp messages
 
-using System.Windows.Media;
-using System.Security;
-using System;
 using MS.Internal;
 using MS.Win32;
-using System.Buffers;
-using System.Reflection;
-using System.Collections;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-using MS.Internal.PresentationCore;
 
-using SR=MS.Internal.PresentationCore.SR;
-using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
-
+using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 namespace System.Windows.Media
 {

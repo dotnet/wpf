@@ -3,16 +3,9 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.Collections;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using MS.Internal.Controls;
-using MS.Internal.Data;
-using MS.Utility;
 
 namespace MS.Internal.Controls
 {

@@ -3,22 +3,14 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using MS.Internal;
 using MS.Internal.KnownBoxes;
-using MS.Utility;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows.Threading;
-using System.Windows;
 #if OLD_AUTOMATION
 using System.Windows.Automation.Provider;
 #endif
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Controls.Primitives;
-using System.Windows.Markup;
-using System.Windows.Shapes;
 
 namespace System.Windows.Controls
 {

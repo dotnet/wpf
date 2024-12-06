@@ -7,15 +7,11 @@
 // Description: FontStretch structure. 
 //
 
-using System;
 using System.ComponentModel;
-using System.Diagnostics;
 
 using MS.Internal;
 
-using SR=MS.Internal.PresentationCore.SR;
-
-namespace System.Windows 
+namespace System.Windows
 {
     /// <summary>
     /// FontStretch structure describes relative change from the normal aspect ratio

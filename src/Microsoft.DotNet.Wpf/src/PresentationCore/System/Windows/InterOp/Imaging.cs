@@ -5,15 +5,8 @@
 //
 //
 
-using System;
-using System.Security;
 using MS.Internal;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Media.Imaging;
-using Microsoft.Win32.SafeHandles;
-using MS.Internal.PresentationCore;                        // SecurityHelper
-using System.Windows.Interop;
 
 namespace System.Windows.Interop
 {

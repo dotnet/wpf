@@ -2,25 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-
-using System;
-using System.IO;
 using System.Runtime.InteropServices;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using MS.Internal;
-using MS.Win32;
-using System.Security;
-using System.Collections;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
-using System.Diagnostics;
-using System.Globalization;
 using Microsoft.Win32.SafeHandles;
-using SR=MS.Internal.PresentationCore.SR;
-using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
+
+using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 namespace System.Windows.Media
 {

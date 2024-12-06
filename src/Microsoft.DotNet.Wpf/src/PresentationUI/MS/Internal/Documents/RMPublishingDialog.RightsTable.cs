@@ -9,8 +9,6 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Globalization;
-using System.Security;
 using System.Windows.Forms;
 using System.Windows.TrustUI;
 

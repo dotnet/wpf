@@ -2,19 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Collections;
 using System.ComponentModel;
-using System.Threading;
-using System.Windows.Threading;
-
-using System.Windows.Automation;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using MS.Utility;
 using MS.Internal.Telemetry.PresentationFramework;
 
 // Disable CS3001: Warning as Error: not CLS-compliant

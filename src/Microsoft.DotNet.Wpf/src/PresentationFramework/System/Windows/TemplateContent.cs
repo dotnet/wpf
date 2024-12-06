@@ -5,9 +5,7 @@
 using System.Xaml;
 using System.Xaml.Schema;
 using System.Xaml.Permissions;
-using System.Collections.Generic;
 using System.Windows.Controls;
-using System.Diagnostics;
 using System.Windows.Data;
 using System.Windows.Diagnostics;
 using System.Windows.Markup;
@@ -16,7 +14,6 @@ using MS.Utility;
 using System.ComponentModel;
 using System.Collections;
 using System.Collections.Specialized;
-using System.Security;
 using MS.Internal.Xaml.Context;
 using System.Windows.Baml2006;
 

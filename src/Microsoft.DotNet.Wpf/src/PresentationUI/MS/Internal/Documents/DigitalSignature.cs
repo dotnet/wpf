@@ -7,10 +7,7 @@
 //   request.
 
 using System;
-using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
-using System.IO.Packaging;
-using System.Security; // for SecurityCritical attributes
 using System.Windows.Xps.Packaging; // for XpsDigitalSignature
 
 namespace MS.Internal.Documents

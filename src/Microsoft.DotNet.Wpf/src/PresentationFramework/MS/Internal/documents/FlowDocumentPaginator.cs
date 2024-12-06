@@ -6,15 +6,11 @@
 // Description: DynamicDocumentPaginator associated with FlowDocument.
 //
 
-using System;                       // Object
-using System.Collections.Generic;   // List<T>
-using System.ComponentModel;        // AsyncCompletedEventArgs
 using System.Windows;               // Size
 using System.Windows.Documents;     // DocumentPaginator
 using System.Windows.Media;         // Visual
 using System.Windows.Threading;     // DispatcherOperationCallback
 using MS.Internal.PtsHost;          // BreakRecordTable, FlowDocumentPage
-using MS.Internal.Text;             // DynamicPropertyReader
 
 namespace MS.Internal.Documents
 {

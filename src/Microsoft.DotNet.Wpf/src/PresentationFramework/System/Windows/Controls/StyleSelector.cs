@@ -8,14 +8,6 @@
 // Specs:       Data Styling.mht
 //
 
-using System.Windows.Shapes;
-using System.Windows.Media;
-using System.Windows.Data;
-using System.ComponentModel;
-
-
-using System;
-
 namespace System.Windows.Controls
 {
     /// <summary>

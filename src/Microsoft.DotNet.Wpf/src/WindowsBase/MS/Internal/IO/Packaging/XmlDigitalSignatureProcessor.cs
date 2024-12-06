@@ -2,23 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
+
 // Description:
 //  Implementation of the W3C Digital Signature Handler.
 //  Generates and consumes XmlDSig-compliant digital signatures based on the subset
 //  specified by the Opc file format.
-//
 
 
-using System;
-using System.Diagnostics;
 using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Runtime.InteropServices;
-using System.Runtime.Serialization;
-using System.Security;                      // for SecurityCritical and SecurityTreatAsSafe
 using System.Security.Cryptography;
 using System.Security.Cryptography.Xml;
 using System.Security.Cryptography.X509Certificates;
@@ -26,9 +17,6 @@ using System.Xml;
 using System.IO;
 using System.Windows;
 using System.IO.Packaging;
-using Microsoft.Win32;
-using MS.Internal;
-using MS.Internal.WindowsBase;
 
 using MS.Internal.IO.Packaging.Extensions;
 

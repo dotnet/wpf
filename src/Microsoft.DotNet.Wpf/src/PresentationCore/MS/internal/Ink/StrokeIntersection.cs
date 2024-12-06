@@ -3,13 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 
-using MS.Internal;
 using MS.Internal.Ink;
-using MS.Utility;
-using System;
-using System.Windows;
-using System.Collections.Generic;
-using System.Globalization;
 
 namespace System.Windows.Ink
 {

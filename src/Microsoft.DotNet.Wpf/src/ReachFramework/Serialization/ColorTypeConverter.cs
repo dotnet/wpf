@@ -10,15 +10,10 @@
         colors to a Xps package.
 
 --*/
-using System;
-using System.Collections;
-using System.Collections.Specialized;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Text;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Xps.Packaging;
 
 namespace System.Windows.Xps.Serialization

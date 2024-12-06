@@ -9,23 +9,13 @@
         and its supporting enums.
 */
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Printing;
-using System.Security;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Interop;
 using System.Windows.Media;
-using System.Windows.Shapes;
 using System.Windows.Xps;
 using MS.Internal.Printing;
 using System.Windows.Xps.Serialization;
 using System.Windows.Documents;
 using System.Windows.Documents.Serialization;  // WritingCompletedEventArgs
-using MS.Internal.PresentationFramework;
 
 namespace System.Windows.Controls
 {

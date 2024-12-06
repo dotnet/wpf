@@ -9,11 +9,8 @@
 //      Source copied from axhosthelper.cs
 //     
 
-using System;
-using System.Collections;
 using System.Collections.Specialized;
 using System.Runtime.InteropServices;
-using System.Security;
 using MS.Win32;
 
 namespace MS.Internal.Controls

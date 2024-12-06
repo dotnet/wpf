@@ -5,7 +5,6 @@
 // Description: Automation Identifiers for TableItem Pattern
 
 
-using System;
 using MS.Internal.Automation;
 
 namespace System.Windows.Automation

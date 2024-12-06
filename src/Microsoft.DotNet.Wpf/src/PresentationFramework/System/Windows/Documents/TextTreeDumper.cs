@@ -6,9 +6,6 @@
 // Description: Debug-only helper class, dumps TextContainer state to debugger.
 //
 
-using System;
-using System.Diagnostics;
-
 namespace System.Windows.Documents
 {
 #if DEBUG

@@ -6,14 +6,12 @@
 // Description: Defines various helper methods used by document viewews.
 //
 
-using System;                           // EventHandler
 using System.Windows;                   // Visibility
 using System.Windows.Controls;          // Border
 using System.Windows.Controls.Primitives;   // PlacementMode
 using System.Windows.Input;             // KeyboardNavigation
 using System.Windows.Documents;         // ITextRange
 using System.Windows.Media;             // VisualTreeHelper
-using System.Security;                  // SecurityCritical, SecurityTreatAsSafe
 using System.Globalization;             // CultureInfo
 using System.Windows.Markup;            // XmlLanguage
 using System.Windows.Interop;           // HwndSource

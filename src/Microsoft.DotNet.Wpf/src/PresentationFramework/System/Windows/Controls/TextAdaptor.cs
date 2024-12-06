@@ -8,10 +8,7 @@
 // Spec for Text Object Model (TOM) at Text Object Model.doc
 //
 
-using System;                               // Exception
-using System.Collections.Generic;           // List<T>
 using System.Collections.ObjectModel;       // ReadOnlyCollection
-using System.Security;                      // SecurityCritical, ...
 using System.Windows;                       // PresentationSource
 using System.Windows.Automation;            // SupportedTextSelection
 using System.Windows.Automation.Peers;      // AutomationPeer

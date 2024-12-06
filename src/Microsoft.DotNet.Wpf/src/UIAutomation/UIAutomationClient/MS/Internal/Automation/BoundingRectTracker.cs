@@ -7,8 +7,6 @@
 using System;
 using System.Windows;
 using System.Windows.Automation;
-using System.Runtime.InteropServices;
-using System.ComponentModel;
 using MS.Win32;
 
 namespace MS.Internal.Automation

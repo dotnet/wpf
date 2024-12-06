@@ -2,34 +2,27 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal;
+using System.Collections; // IEnumerator
+using System.ComponentModel; // DefaultValue
+using System.Windows.Media;
+using System.Windows.Data; // Binding
+using System.Windows.Documents;
+using System.Windows.Automation.Peers;
+using System.Windows.Input; // CanExecuteRoutedEventArgs, ExecuteRoutedEventArgs
+
+using System.Windows.Controls.Primitives; // TextBoxBase
+using System.Windows.Markup; // IAddChild, XamlDesignerSerializer, ContentPropertyAttribute
+using MS.Internal.Documents;    // Undo
+using MS.Internal.Commands;     // CommandHelpers
+using MS.Internal.Telemetry.PresentationFramework;
+
 //
 // Description: The stock plain text editing control.
 //
 
 namespace System.Windows.Controls
 {
-    using MS.Internal;
-    using System.Threading;
-    using System.Collections; // IEnumerator
-    using System.ComponentModel; // DefaultValue
-    using System.Globalization;
-    using System.Windows;
-    using System.Windows.Media;
-    using System.Windows.Data; // Binding
-    using System.Windows.Documents;
-    using System.Windows.Automation.Peers;
-    using System.Windows.Input; // CanExecuteRoutedEventArgs, ExecuteRoutedEventArgs
-
-    using System.Windows.Controls.Primitives; // TextBoxBase
-    using System.Windows.Navigation;
-    using System.Windows.Markup; // IAddChild, XamlDesignerSerializer, ContentPropertyAttribute
-    using MS.Utility;
-    using MS.Internal.Text;
-    using MS.Internal.Automation;   // TextAdaptor
-    using MS.Internal.Documents;    // Undo
-    using MS.Internal.Commands;     // CommandHelpers
-    using MS.Internal.Telemetry.PresentationFramework;
-
     /// <summary>
     /// The stock text editing control.
     /// </summary>

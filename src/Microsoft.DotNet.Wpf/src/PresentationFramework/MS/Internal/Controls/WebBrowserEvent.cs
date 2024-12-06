@@ -10,15 +10,8 @@
 //      Copied from WebBrowse.cs in winforms
 //
 
-using System;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Security;
-using System.Windows;
-using System.Text;
 using System.Windows.Navigation;
-using MS.Internal.PresentationFramework;
 using System.Windows.Controls;
 using MS.Win32;
 using MS.Internal.AppModel;

@@ -11,22 +11,12 @@
 //
 //
 
-using System;
-using System.Collections;
-using System.Diagnostics;
-using System.IO;
 using System.IO.Packaging;
-using System.Globalization;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Security ;
-using System.Windows.Markup;
 
 using MS.Internal.AppModel;
 using MS.Internal;
 using MS.Internal.Utility;
-
-using System.Windows.Controls.Primitives;
 
 //In order to avoid generating warnings about unknown message numbers and
 //unknown pragmas when compiling your C# source code with the actual C# compiler,

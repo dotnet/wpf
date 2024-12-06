@@ -5,11 +5,8 @@
 // Description: UIAutomation Toolbar Proxy
 
 using System;
-using System.Collections;
-using System.Runtime.InteropServices;
 using System.ComponentModel;
 using System.Globalization;
-using System.Text;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows;

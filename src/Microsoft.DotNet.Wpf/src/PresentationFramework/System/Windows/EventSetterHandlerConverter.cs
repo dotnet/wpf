@@ -6,9 +6,6 @@
 using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
-
-using System.Windows;
-using System.Collections.Generic;
 using System.Xaml;
 
 namespace System.Windows.Markup

@@ -5,15 +5,11 @@
 // Description: HWND-based RichEdit Proxy
 
 using System;
-using System.Collections;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System.Windows.Automation.Text;
 using Accessibility;
 using MS.Win32;
 using NativeMethodsSetLastError = MS.Internal.UIAutomationClientSideProviders.NativeMethodsSetLastError;

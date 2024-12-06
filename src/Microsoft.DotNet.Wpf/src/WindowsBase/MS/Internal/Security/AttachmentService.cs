@@ -2,28 +2,17 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// <description>
-// Exposes IAttachmentExecute in a CLR friendly design.
-// </description>
-//
-//
-//
-//
-
-using System;
 using System.Runtime.InteropServices;
-using System.Security;
 
 namespace MS.Internal.Security
 {
-/// <summary>
-/// Exposes IAttachmentExecute in a CLR friendly design.
-/// </summary>
-/// <remarks>
-/// Only implemented the single method we are using SaveWithUI.
-/// </remarks>
-internal sealed class AttachmentService : IDisposable
+    /// <summary>
+    /// Exposes IAttachmentExecute in a CLR friendly design.
+    /// </summary>
+    /// <remarks>
+    /// Only implemented the single method we are using SaveWithUI.
+    /// </remarks>
+    internal sealed class AttachmentService : IDisposable
 {
     #region Constructors
     //--------------------------------------------------------------------------

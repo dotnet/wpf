@@ -12,10 +12,6 @@
 //
 //---------------------------------------------------------------------------
 
-using System;
-using System.IO;
-using System.Security;
-
 namespace System.IO
 {
     static internal class FileHelper

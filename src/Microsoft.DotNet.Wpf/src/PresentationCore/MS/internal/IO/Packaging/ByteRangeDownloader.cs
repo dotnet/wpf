@@ -12,17 +12,13 @@
 //  web requests. This class is used by ByteWrapper (unmanaged code) to make additional
 //  web requests other than through WININET
 
-using System;
 using System.Collections;
 using System.ComponentModel;              // For Win32Exception
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.IO.IsolatedStorage;        // For IsolatedStorage temp file
 using System.Net;
 using System.Net.Cache;                     // For RequestCachePolicy
 using System.Runtime.InteropServices;   // For Marshal
-using System.Security;                  // SecurityCritical, SecurityTreatAsSafe
 using System.Threading;                  // For Mutex
 using Microsoft.Win32.SafeHandles;
 using MS.Internal.PresentationCore;

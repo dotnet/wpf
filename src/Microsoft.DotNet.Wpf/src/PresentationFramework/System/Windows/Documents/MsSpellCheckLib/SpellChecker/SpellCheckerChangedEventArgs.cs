@@ -6,8 +6,6 @@
 // Description: EventArgs class that supports SpellCheckerChangedEventHandler.
 //
 
-using System;
-
 namespace System.Windows.Documents
 {
     namespace MsSpellCheckLib

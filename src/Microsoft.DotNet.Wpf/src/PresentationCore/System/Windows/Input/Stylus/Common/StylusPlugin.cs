@@ -4,18 +4,6 @@
 
 // #define TRACE
 
-using System;
-using System.Diagnostics;
-using System.Collections;
-using System.Collections.Specialized;
-using System.Windows.Threading;
-
-using System.Windows;
-using System.Windows.Input;
-
-using System.Windows.Media;
-using MS.Win32; // for *NativeMethods
-
 namespace System.Windows.Input.StylusPlugIns
 {
     /////////////////////////////////////////////////////////////////////

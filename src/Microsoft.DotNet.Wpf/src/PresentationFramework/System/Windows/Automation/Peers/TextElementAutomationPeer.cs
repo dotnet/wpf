@@ -6,13 +6,9 @@
 // Description: AutomationPeer associated with TextElements.
 //
 
-using System.Collections;
-using System.Collections.Generic;           // List<T>
-using System.Security;                      // SecurityCritical
 using System.Windows.Documents;             // ITextContainer
 using System.Windows.Media;                 // Geometry
 using System.Windows.Interop;               // HwndSource
-using MS.Internal.Automation;               // TextAdaptor
 using MS.Internal;
 using MS.Internal.Documents;                // TextContainerHelper
 

@@ -13,10 +13,6 @@
 //
 //
 
-using System.Diagnostics;
-using System.Security;
-using System;
-
 namespace MS.Internal.Shaping
 {
     internal struct ContextualLookupRecords

@@ -6,12 +6,7 @@
 // Description: RowCache caches information about Row layouts used by DocumentGrid.
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows;
-using System.Windows.Documents;
 
 namespace MS.Internal.Documents
 {

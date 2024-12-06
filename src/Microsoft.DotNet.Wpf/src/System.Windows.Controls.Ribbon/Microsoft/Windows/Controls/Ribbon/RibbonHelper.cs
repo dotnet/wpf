@@ -3,41 +3,36 @@
 // See the LICENSE file in the project root for more information.
 
 
+#region Using declarations
+
+using System.Collections;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Globalization;
+using System.Windows.Automation;
+using System.Windows.Automation.Peers;
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Interop;
+using System.Windows.Markup;
+using System.Windows.Markup.Primitives;
+using System.Windows.Media;
+using System.Windows.Threading;
+#if RIBBON_IN_FRAMEWORK
+using System.Windows.Controls.Ribbon.Primitives;
+using Microsoft.Windows.Controls;
+#else
+    using Microsoft.Windows.Controls.Ribbon.Primitives;
+#endif
+using MS.Internal;
+
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Controls.Ribbon
 #else
 namespace Microsoft.Windows.Controls.Ribbon
 #endif
 {
-    #region Using declarations
-
-    using System;
-    using System.Collections;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Globalization;
-    using System.Security;
-    using System.Windows;
-    using System.Windows.Automation;
-    using System.Windows.Automation.Peers;
-    using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
-    using System.Windows.Data;
-    using System.Windows.Input;
-    using System.Windows.Interop;
-    using System.Windows.Markup;
-    using System.Windows.Markup.Primitives;
-    using System.Windows.Media;
-    using System.Windows.Threading;
-#if RIBBON_IN_FRAMEWORK
-    using System.Windows.Controls.Ribbon.Primitives;
-    using Microsoft.Windows.Controls;
-#else
-    using Microsoft.Windows.Controls.Ribbon.Primitives;
-#endif
-    using MS.Internal;
-
-
     #endregion
 
     /// <summary>

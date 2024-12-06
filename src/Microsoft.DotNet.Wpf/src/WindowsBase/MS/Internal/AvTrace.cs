@@ -2,27 +2,16 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
-/***************************************************************************\
-*
-*
-* This class wraps a System.Diagnostics.TraceSource.  The purpose of
-* wrapping is so that we can have a common point of enabling/disabling
-* without perf effect.  This is also where we standardize the output
-* we produce, to enable more effective trace filters, trace listeners,
-* and post-processing tools.
-*
-*
-\***************************************************************************/
+// This class wraps a System.Diagnostics.TraceSource.  The purpose of
+// wrapping is so that we can have a common point of enabling/disabling
+// without perf effect.  This is also where we standardize the output
+// we produce, to enable more effective trace filters, trace listeners,
+// and post-processing tools.
 
 #define TRACE
 
-using System;
-using System.Diagnostics;
 using System.Globalization;
-using System.Security;
 using System.Text;
-using System.Reflection;
 using System.Collections;
 using System.Windows;
 

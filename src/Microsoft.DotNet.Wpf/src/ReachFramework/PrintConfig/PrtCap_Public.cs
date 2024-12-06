@@ -13,17 +13,11 @@ Abstract:
 
 --*/
 
-using System;
 using System.IO;
 using System.Xml;
-using System.Collections;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Diagnostics;
 using System.Globalization;
 
 using System.Printing;
-using MS.Internal.Printing.Configuration;
 
 namespace MS.Internal.Printing.Configuration
 {

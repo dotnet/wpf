@@ -4,8 +4,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Xaml;
 
 namespace MS.Internal.Xaml.Parser

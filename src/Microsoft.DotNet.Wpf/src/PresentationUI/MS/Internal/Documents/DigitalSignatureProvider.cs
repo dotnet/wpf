@@ -3,13 +3,9 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.IO.Packaging;
-using System.Net;
-using System.Security;              // For elevations
 using System.Security.Cryptography.X509Certificates;
 using System.Windows.TrustUI;
 using System.Windows.Xps.Packaging;

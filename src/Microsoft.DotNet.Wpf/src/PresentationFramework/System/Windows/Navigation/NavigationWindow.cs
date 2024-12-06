@@ -14,33 +14,17 @@
 //              of the window.
 //
 
-using System;
 using System.Collections;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Security;
 
 using MS.Internal.AppModel;
 using MS.Internal.KnownBoxes;
 using MS.Internal.Utility;
-using MS.Utility;
-using MS.Win32;
-using MS.Internal.PresentationFramework;
-
-using System.Windows;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Navigation;
 using System.Windows.Markup;
-using System.Windows.Threading;
-using System.Windows.Documents;
 
 namespace System.Windows.Navigation
 {

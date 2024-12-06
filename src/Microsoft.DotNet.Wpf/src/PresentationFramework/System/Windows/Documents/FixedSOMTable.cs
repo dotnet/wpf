@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Windows.Media;
+
 /*++                                            
     Description:
         This class reprsents a table on the page
@@ -9,13 +11,6 @@
 
 namespace System.Windows.Documents
 {
-    using System.Windows.Shapes;
-    using System.Windows.Media;
-    using System.Windows.Markup;
-    using System.Diagnostics;
-    using System.Windows;
-    using System.Globalization;
-
     internal sealed class FixedSOMTable : FixedSOMPageElement
     {
         //--------------------------------------------------------------------

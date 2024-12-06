@@ -4,8 +4,6 @@
 
 // Description: Client-side wrapper for Invoke Pattern
 
-using System;
-using System.Windows.Automation.Provider;
 using MS.Internal.Automation;
 
 namespace System.Windows.Automation

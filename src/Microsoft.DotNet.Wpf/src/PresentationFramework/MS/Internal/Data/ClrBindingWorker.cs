@@ -6,23 +6,14 @@
 // Description: Defines ClrBindingWorker object, workhorse for CLR bindings
 //
 
-using System;
-using System.Collections;
 using System.Reflection;
-using System.Globalization;
 using System.Windows.Threading;
 using System.Threading;
 
 using System.ComponentModel;
-
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls; // Validation
 using System.Windows.Data;
-using System.Windows.Markup;     // for GetTypeFromName
-using MS.Internal.Controls; // Validation
-using MS.Internal.Utility;              // for GetTypeFromName
-using MS.Utility;
 
 namespace MS.Internal.Data
 {

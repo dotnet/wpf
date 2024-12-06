@@ -8,9 +8,6 @@
 //
 //
 
-using System;
-using System.Security;
-using MS.Internal.Shaping;
 using MS.Internal.FontCache;
 
 //

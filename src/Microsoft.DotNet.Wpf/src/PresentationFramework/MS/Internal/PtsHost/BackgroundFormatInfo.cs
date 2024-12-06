@@ -8,7 +8,6 @@
 //
 
 
-using System;
 using MS.Internal.Documents; // FlowDocumentFormatter
 using System.Windows.Threading; // DispatcherTimer
 

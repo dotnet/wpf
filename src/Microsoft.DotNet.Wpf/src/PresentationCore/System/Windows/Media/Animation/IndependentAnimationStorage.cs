@@ -3,10 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 
-using MS.Internal;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows.Threading;
 using System.Windows.Media.Composition;
 
 namespace System.Windows.Media.Animation

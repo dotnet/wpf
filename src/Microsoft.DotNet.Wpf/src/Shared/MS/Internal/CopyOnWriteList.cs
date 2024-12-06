@@ -2,21 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Collections;
-using System.Diagnostics;
-
-#if WINDOWS_BASE
-    using MS.Internal.WindowsBase;
-#elif PRESENTATION_CORE
-    using MS.Internal.PresentationCore;
-#elif PRESENTATIONFRAMEWORK
-    using MS.Internal.PresentationFramework;
-#elif DRT
-    using MS.Internal.Drt;
-#else
-using MS.Internal.YourAssemblyName;
-#endif
 
 namespace MS.Internal
 {

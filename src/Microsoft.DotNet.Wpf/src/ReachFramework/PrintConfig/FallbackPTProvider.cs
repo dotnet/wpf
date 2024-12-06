@@ -2,6 +2,18 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.ComponentModel;
+using System.Globalization;
+using System.IO;
+using System.Printing;
+using System.Printing.Interop;
+using System.Runtime.InteropServices;
+using System.Windows.Xps.Serialization;
+using System.Xml;
+using MS.Utility;
+using MS.Internal.PrintWin32Thunk;
+using MS.Internal.ReachFramework;
+
 /*++
 
 
@@ -17,22 +29,6 @@ Abstract:
 
 namespace MS.Internal.Printing.Configuration
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Globalization;
-    using System.IO;
-    using System.Printing;
-    using System.Printing.Interop;
-    using System.Runtime.InteropServices;
-    using System.Security;
-    using System.Windows.Xps.Serialization;
-    using System.Xml;
-    using MS.Utility;
-    using MS.Internal.PrintWin32Thunk;
-    using MS.Internal.ReachFramework;
-
-
     /// <summary>
     /// Managed PrintTicket provider class that inter-ops with unmanaged DDI driver
     /// </summary>

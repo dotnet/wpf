@@ -2,6 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal;
+using System.Collections;
+using System.Globalization;
+using System.Text;
+using System.Xml;
+using System.IO;
+using System.Windows.Controls; // TextBlock
+
 //
 // Description: Provides an abstract level of TextRange implementation
 //      Implemented as a static class containing a set of methods
@@ -23,17 +31,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Globalization;
-    using System.Text;
-    using System.Xml;
-    using System.IO;
-    using MS.Internal.Documents;
-    using System.Windows.Controls; // TextBlock
-
     /// <summary>
     /// A class a portion of text content.
     /// Can be contigous or disjoint; supports rectangular table ranges.

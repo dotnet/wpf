@@ -14,14 +14,9 @@ Abstract:
 
 --*/
 
-using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Globalization;
-
-using System.Printing;
 using MS.Internal.Printing.Configuration;
-using System.Security;
 
 //[assembly:System.Runtime.InteropServices.ComVisibleAttribute(false)]
 

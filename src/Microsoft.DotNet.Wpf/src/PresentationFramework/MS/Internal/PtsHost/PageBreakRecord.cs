@@ -6,10 +6,7 @@
 // Description: Break records for PTS pages.
 //
 
-using System;                                   // IntPtr, IDisposable, ...
 using System.Threading;                         // Interlocked
-using System.Security;                          // SecurityCritical
-using MS.Internal.PtsHost.UnsafeNativeMethods;  // PTS
 
 namespace MS.Internal.PtsHost
 {

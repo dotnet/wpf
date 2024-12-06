@@ -10,12 +10,8 @@
         to a Xps package.
 
 --*/
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Windows.Media;
-using System.Windows.Xps.Packaging;
 using MS.Utility;
 
 namespace System.Windows.Xps.Serialization

@@ -8,21 +8,18 @@
 //              resilience against out-of-proc COM server failures.
 //
 
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
-using System.Security;
+using ISpellChecker = System.Windows.Documents.MsSpellCheckLib.RCW.ISpellChecker;
+using IEnumString = System.Windows.Documents.MsSpellCheckLib.RCW.IEnumString;
+using ISpellCheckerChangedEventHandler = System.Windows.Documents.MsSpellCheckLib.RCW.ISpellCheckerChangedEventHandler;
+using IOptionDescription = System.Windows.Documents.MsSpellCheckLib.RCW.IOptionDescription;
+using IEnumSpellingError = System.Windows.Documents.MsSpellCheckLib.RCW.IEnumSpellingError;
 
 namespace System.Windows.Documents
 {
     namespace MsSpellCheckLib
     {
-        using ISpellChecker = RCW.ISpellChecker;
-        using IEnumString = RCW.IEnumString;
-        using ISpellCheckerChangedEventHandler = RCW.ISpellCheckerChangedEventHandler;
-        using IOptionDescription = RCW.IOptionDescription;
-        using IEnumSpellingError = RCW.IEnumSpellingError;
-
         /// <summary>
         /// This type encapsulates services provided by RCW.ISpellChecker interface and provides
         /// a resilient (to out-of-proc COM server failures) interface to callers.

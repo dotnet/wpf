@@ -7,17 +7,11 @@
 // Description: Wrapper for PTS page. 
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Security;
 using System.Threading;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Documents;
 using MS.Internal.Text;
-using MS.Utility;
 using System.Windows.Threading;
 using MS.Internal.Documents;
 using MS.Internal.PtsHost.UnsafeNativeMethods;

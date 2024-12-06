@@ -7,23 +7,9 @@
 * Purpose:  Public api for writing baml records to a stream
 *
 \***************************************************************************/
-using System;
-using System.Xml;
 using System.IO;
-using System.Windows;
-using System.Text;
 using System.Collections;
-using System.ComponentModel;
-using MS.Internal.Utility;
-using MS.Internal;
-
-using System.Diagnostics;
 using System.Reflection;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Threading;
-
-using MS.Utility;
 
 namespace System.Windows.Markup
 {

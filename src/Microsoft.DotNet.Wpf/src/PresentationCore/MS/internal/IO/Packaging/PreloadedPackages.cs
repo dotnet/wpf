@@ -9,16 +9,8 @@
 //                  PackWebRequest.
 //
 
-using System;
-using System.Security;
-using System.Collections;
 using System.Collections.Specialized;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
 using System.IO.Packaging;
-
-using MS.Internal;
 using MS.Internal.PresentationCore;     // for ExceptionStringTable
 
 namespace MS.Internal.IO.Packaging

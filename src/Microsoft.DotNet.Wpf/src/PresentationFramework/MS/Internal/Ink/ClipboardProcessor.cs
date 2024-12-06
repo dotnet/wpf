@@ -10,20 +10,14 @@
 // Features:
 //
 
-using System;
 using System.IO;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Security;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Ink;
 using System.Windows.Media;
 using System.Windows.Markup;
 using System.Xml;
-using MS.Internal.PresentationFramework; //security helper
 
 namespace MS.Internal.Ink
 {

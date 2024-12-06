@@ -7,10 +7,9 @@
 // Description: Predefined FontStretch structures that correspond to common font stretches. 
 //
 
-using System;
 using System.Globalization;
 
-namespace System.Windows 
+namespace System.Windows
 {
     /// <summary>
     /// FontStretches contains predefined font stretch structures for common font stretches.

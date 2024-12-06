@@ -8,10 +8,8 @@
 //
 
 using System;
-using System.Xml;
 using System.IO;
 using MS.Utility;
-using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;

@@ -8,8 +8,6 @@
 //
 //
 
-using System;
-
 namespace System.Windows.Input
 {
     /// <summary>

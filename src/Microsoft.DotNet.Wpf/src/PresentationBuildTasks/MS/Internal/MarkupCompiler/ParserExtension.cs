@@ -19,8 +19,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.CodeDom;
-using System.CodeDom.Compiler;
-using System.ComponentModel;
 using MS.Utility;   // for SR
 
 namespace MS.Internal

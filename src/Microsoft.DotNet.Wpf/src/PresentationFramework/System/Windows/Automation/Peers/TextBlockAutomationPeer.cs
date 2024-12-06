@@ -7,9 +7,7 @@
 // Description: AutomationPeer associated with TextBlock.
 //
 
-using System.Collections.Generic;           // List<T>
 using System.Windows.Controls;              // TextBlock
-using System.Windows.Documents;             // ITextContainer
 using MS.Internal.Documents;                // TextContainerHelper
 
 namespace System.Windows.Automation.Peers

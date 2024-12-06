@@ -6,11 +6,9 @@
 // Description: IScrollInfo implementation helper for FlowDocumentView, TextBoxView.
 //
 
-using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using MS.Internal;
 using System.Windows.Controls.Primitives; // for doc comments
 
 namespace MS.Internal.Documents

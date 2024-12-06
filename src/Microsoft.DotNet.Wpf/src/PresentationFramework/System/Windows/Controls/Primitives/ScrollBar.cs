@@ -3,32 +3,16 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Windows.Threading;
-
-using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Data;
-
-using System.Windows.Media;
 using System.Windows.Input;
-using System.Windows.Markup;
 
 using MS.Internal;
 using MS.Internal.Commands;
 using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;
-using MS.Utility;
-using MS.Internal.Utility;
-using MS.Win32;
-using System.Security;
 
 namespace System.Windows.Controls.Primitives
 {

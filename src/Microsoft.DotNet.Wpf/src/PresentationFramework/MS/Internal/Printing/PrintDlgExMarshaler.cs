@@ -4,11 +4,9 @@
 
 #if !DONOTREFPRINTINGASMMETA
 
-using System;
 using System.Printing.Interop;
 using System.Printing;
 using System.Runtime.InteropServices;
-using System.Security;
 using System.Windows.Controls;
 
 namespace MS.Internal.Printing

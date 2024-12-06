@@ -14,19 +14,13 @@ Abstract:
 
 --*/
 
-using System;
 using System.IO;
-using System.Collections.Specialized;
 using System.Runtime.InteropServices;
-using System.Globalization;
-
-using System.Printing;
 using System.Printing.Interop;
 using MS.Internal.Printing.Configuration;
 using System.Windows.Xps.Serialization; // for Toolbox
 
 using MS.Utility;
-using System.Security;
 
 namespace System.Printing
 {

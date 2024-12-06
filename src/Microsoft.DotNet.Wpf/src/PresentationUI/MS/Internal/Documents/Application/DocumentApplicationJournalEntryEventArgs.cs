@@ -5,10 +5,6 @@
 // Description: Used as a custom journal entry for changes in the DocumentApplication's UI state.
 
 using System;
-using System.Runtime.Serialization;
-using System.Windows;
-using System.Windows.Documents;
-using System.Windows.Navigation;
 
 namespace MS.Internal.Documents.Application
 {

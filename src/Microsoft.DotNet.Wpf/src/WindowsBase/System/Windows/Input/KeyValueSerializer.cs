@@ -2,33 +2,15 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//
-//      KeyValueSerializer: Serializes a key string to a string and vice-versa
-//
-// Features:
-//
-//
-//
-// 
-
-using System;
-using System.ComponentModel;    // for TypeConverter
-using System.Globalization;     // for CultureInfo
-using System.Reflection;
-using System.Windows;
-using System.Windows.Input;
+using System.ComponentModel;
 using System.Windows.Markup;
-using MS.Utility;
 
 namespace System.Windows.Input
 {
     /// <summary>
     /// Key Serializer class for serializing a Key
     /// </summary>
-    /// <ExternalAPI/> 
+    /// <ExternalAPI/>
     public class KeyValueSerializer : ValueSerializer
     {
         /// <summary>

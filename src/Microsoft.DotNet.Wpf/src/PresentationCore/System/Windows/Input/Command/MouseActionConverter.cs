@@ -2,17 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
-// Description: MouseActionConverter - Converts a MouseAction string 
-//              to the *Type* that the string represents 
-//
-
-using System.ComponentModel;    // for TypeConverter
-using System.Globalization;     // for CultureInfo
-
-using SR = MS.Internal.PresentationCore.SR;
+using System.ComponentModel;
+using System.Globalization;
 
 namespace System.Windows.Input
 {

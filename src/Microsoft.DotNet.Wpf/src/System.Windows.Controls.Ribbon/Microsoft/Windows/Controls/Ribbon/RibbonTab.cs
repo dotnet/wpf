@@ -3,29 +3,27 @@
 // See the LICENSE file in the project root for more information.
 
 
+
+#region Using declarations
+
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Windows.Automation;
+using System.Windows.Automation.Peers;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
+#if RIBBON_IN_FRAMEWORK
+using System.Windows.Controls.Ribbon.Primitives;
+using Microsoft.Windows.Controls;
+
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Controls.Ribbon
 #else
 namespace Microsoft.Windows.Controls.Ribbon
 #endif
 {
-
-    #region Using declarations
-
-    using System;
-    using System.Collections.ObjectModel;
-    using System.Collections.Specialized;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Windows;
-    using System.Windows.Automation;
-    using System.Windows.Automation.Peers;
-    using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
-    using System.Windows.Input;
-#if RIBBON_IN_FRAMEWORK
-    using System.Windows.Controls.Ribbon.Primitives;
-    using Microsoft.Windows.Controls;
 #else
     using Microsoft.Windows.Automation.Peers;
     using Microsoft.Windows.Controls.Ribbon.Primitives;

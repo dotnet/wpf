@@ -8,13 +8,7 @@
 //
 
 
-using System;
-using System.Windows;
-using System.Windows.Interop;
-using System.Security;
-using System.Diagnostics;
 using MS.Internal;
-using MS.Win32;
 
 namespace System.Windows.Interop
 {

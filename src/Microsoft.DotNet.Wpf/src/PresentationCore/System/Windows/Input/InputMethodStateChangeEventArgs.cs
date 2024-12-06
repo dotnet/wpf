@@ -8,25 +8,14 @@
 //
 //
 
-using System;
-using System.Runtime.InteropServices;
-using System.Collections;
-using System.Diagnostics;
-using System.Globalization;
-using System.Windows.Threading;
-using System.Windows;
-using MS.Internal; //TextServicesInterop
-using MS.Utility;
-using MS.Win32;
-
-namespace System.Windows.Input 
+namespace System.Windows.Input
 {
     //------------------------------------------------------
     //
     //  InputMethodStateChjangedEventArgs class
     //
     //------------------------------------------------------
- 
+
     /// <summary>
     /// This InputMethodStateChangedEventArgs class is 
     /// </summary>

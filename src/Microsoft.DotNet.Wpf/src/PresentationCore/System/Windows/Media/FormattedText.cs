@@ -2,28 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description: Implementation of FormattedText class. The FormattedText class is targeted at programmers
-// needing to add some simple text to a MIL visual.
-//
-//
-
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
-using System.Runtime.InteropServices;
 using MS.Internal;
 using MS.Internal.TextFormatting;
-using MS.Internal.FontFace;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 #pragma warning disable 1634, 1691
 //Allow suppression of Presharp warnings

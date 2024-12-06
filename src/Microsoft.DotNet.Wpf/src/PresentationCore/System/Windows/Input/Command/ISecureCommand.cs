@@ -12,9 +12,7 @@
 //  
 //
 
-using System;
 using System.ComponentModel;
-using System.Security;
 using MS.Internal.PresentationCore;
 
 namespace System.Windows.Input

@@ -12,9 +12,7 @@
 using System.Collections;
 using System.Globalization;
 
-using System;
-
-namespace System.Windows.Input 
+namespace System.Windows.Input
 {
     /// <summary>
     ///     An interface for controlling the input language source.

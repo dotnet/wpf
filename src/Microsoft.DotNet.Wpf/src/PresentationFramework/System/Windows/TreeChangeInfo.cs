@@ -11,12 +11,6 @@
 //
 //
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows.Media;
-using System.Windows.Controls;
-using System.Windows.Documents;
 using MS.Internal;
 using MS.Utility;
 

@@ -6,8 +6,6 @@
 // Description: A group of non-overlapping text highlights with a single owner.
 //
 
-using System.Collections;
-
 namespace System.Windows.Documents
 {
     /// <summary>

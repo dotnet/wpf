@@ -5,10 +5,9 @@
 // Description: Orientation types
 
 
-using System;
 using System.Runtime.InteropServices;
 
-namespace System.Windows.Automation 
+namespace System.Windows.Automation
 {
     /// <summary>
     /// Used to represent Orientation property enumerated types.

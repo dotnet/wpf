@@ -10,15 +10,10 @@
 //              InputBindings and CommandBindings
 // 
 
-using System;
-using System.Security;
-using System.Windows;
 using System.ComponentModel;
-using System.Collections;
-using System.Windows.Input;
 using MS.Internal.PresentationCore;
 
-namespace System.Windows.Input 
+namespace System.Windows.Input
 {
     /// <summary>
     /// Command

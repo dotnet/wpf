@@ -9,14 +9,7 @@
 
 using MS.Internal;
 using MS.Utility;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows.Threading;
 using System.Windows.Media.Composition;
-
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media.Animation
 {

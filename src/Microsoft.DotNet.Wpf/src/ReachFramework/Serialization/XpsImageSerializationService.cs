@@ -10,11 +10,8 @@
         used by the Xps Serialization APIs for serializing
         images to a Xps package.
 --*/
-using System;
 using System.IO;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Security;
 using System.Windows.Xps.Packaging;
 
 using MS.Internal;

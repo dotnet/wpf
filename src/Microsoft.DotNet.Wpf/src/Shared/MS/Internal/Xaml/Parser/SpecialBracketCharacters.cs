@@ -7,7 +7,6 @@
 //  Description: Data model for the Bracket characters specified on a Markup Extension property.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;

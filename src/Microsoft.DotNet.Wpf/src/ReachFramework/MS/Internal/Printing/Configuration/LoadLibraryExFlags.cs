@@ -13,8 +13,6 @@
 
 namespace MS.Internal.Printing.Configuration
 {
-    using System;
-
     [Flags]
     internal enum LoadLibraryExFlags : uint
     {

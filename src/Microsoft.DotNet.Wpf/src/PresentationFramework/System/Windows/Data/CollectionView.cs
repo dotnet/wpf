@@ -10,17 +10,13 @@
 //
 
 
-using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
 
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Diagnostics;
-using System.Windows;
 using System.Threading;
 using System.Windows.Threading;
 using MS.Internal.Data;

@@ -40,16 +40,13 @@
 //
 
 
-using System;
-using System.Security;
 using System.Reflection;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Globalization;
 
 namespace MS.Internal.Interop
 {
-internal abstract class InternalDispatchObject<IDispInterface> : IReflect
+    internal abstract class InternalDispatchObject<IDispInterface> : IReflect
 {
     /// <summary>
     /// DISPID->MethodInfo map used by InvokeMember()

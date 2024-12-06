@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Media.Animation;
 

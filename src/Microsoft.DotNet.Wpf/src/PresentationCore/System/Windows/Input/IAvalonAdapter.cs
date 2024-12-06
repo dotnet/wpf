@@ -9,9 +9,6 @@
 //              with information to determine how to process a Keytab coming from ElementHost.
 //
 
-using MS.Internal.PresentationCore;
-using System.Runtime.CompilerServices;
-
 namespace System.Windows.Input
 {
     /// <summary>

@@ -6,17 +6,15 @@
 //  Extends StreamDocument with CriticalFileTokens for use by FileController
 //  FilePresentation and DocumentStream.
 
-using System;
 using System.IO;
-using System.Security;
 
 namespace MS.Internal.Documents.Application
 {
-/// <summary>
-/// Extends StreamDocument with CriticalFileTokens for use by FileController
-/// FilePresentation and DocumentStream.
-/// </summary>
-internal class FileDocument : StreamDocument<DocumentStream>
+    /// <summary>
+    /// Extends StreamDocument with CriticalFileTokens for use by FileController
+    /// FilePresentation and DocumentStream.
+    /// </summary>
+    internal class FileDocument : StreamDocument<DocumentStream>
 {
     #region Constructors
     //--------------------------------------------------------------------------

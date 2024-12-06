@@ -4,13 +4,11 @@
 
 //
 
-using System;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
 using System.Globalization;
 using System.Reflection;
 using System.Windows.Media.Animation;
-using System.Security;
 
 namespace System.Windows
 {

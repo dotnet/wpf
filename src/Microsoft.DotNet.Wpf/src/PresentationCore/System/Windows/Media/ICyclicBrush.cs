@@ -9,8 +9,6 @@
 //	objects whose content can point back into the Visual tree.
 //
 
-using System;
-using System.Windows.Media;
 using System.Windows.Media.Composition;
 
 namespace System.Windows.Media

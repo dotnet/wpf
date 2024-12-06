@@ -11,13 +11,6 @@
 //
 //
 
-
-using System;
-using System.Collections;
-using System.Windows;
-
-using SR=MS.Internal.PresentationCore.SR;
-
 namespace System.Windows.Media.TextFormatting
 {
     /// <summary>

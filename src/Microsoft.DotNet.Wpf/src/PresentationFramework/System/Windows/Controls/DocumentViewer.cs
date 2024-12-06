@@ -11,26 +11,14 @@ using MS.Internal.Commands;
 using MS.Internal.Documents;
 using MS.Internal.Telemetry.PresentationFramework;
 using MS.Utility;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;                            // For DesignerSerializationVisibility
 using System.Globalization;
-using System.Reflection;
-using System.Windows;
-using System.Windows.Automation;
 using System.Windows.Automation.Peers;
-using System.Windows.Automation.Provider;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Navigation;                        // For HyperLink navigation event.
 using System.Windows.Markup;
-using MS.Internal.Automation;                           // For TextAdaptor.
-using System.Security;
 
 
 namespace System.Windows.Controls

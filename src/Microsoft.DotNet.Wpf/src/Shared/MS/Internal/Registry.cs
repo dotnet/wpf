@@ -2,12 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using MS.Internal;
-using System.Security;
 using Microsoft.Win32;
 
-//****** 
 // Keep in sync with host\Inc\Registry.hxx
 
 namespace MS.Internal

@@ -7,7 +7,6 @@
 //              Given a DOM node for a fixed page, enumerates its text content.
 //
 
-using System;
 using System.Xml;
 
 namespace MS.Internal.IO.Packaging

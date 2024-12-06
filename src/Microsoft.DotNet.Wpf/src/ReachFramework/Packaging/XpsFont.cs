@@ -13,7 +13,6 @@
         a resource added to a fixed page.
 
 --*/
-using System;
 using System.IO.Packaging;
 
 namespace System.Windows.Xps.Packaging

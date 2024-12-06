@@ -3,11 +3,10 @@
 // See the LICENSE file in the project root for more information.
 
 
+using System.Collections;
+
 namespace MS.Internal
 {
-    using System;
-    using System.Collections;
-
     internal interface IWeakHashtable
     {
         // Hashtable members

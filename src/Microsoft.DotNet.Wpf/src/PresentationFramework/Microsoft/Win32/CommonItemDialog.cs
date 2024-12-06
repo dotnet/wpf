@@ -2,31 +2,20 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// 
-// Description:
-//              CommonItemDialog is an abstract class derived from CommonDialog
-//              that implements shared functionality common to all IFileDialog
-//              variants. It provides a common options storage and events handling.
-//
+using MS.Internal.AppModel;
+using MS.Internal.Interop;
+using MS.Win32;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Windows;
+
+// There are THREE definitions of HRESULT. Two in ErrorCodes, and one in wgx_render.cs.
+// wgx_render.cs wins if we don't explicitly define it here.
+using HRESULT = MS.Internal.Interop.HRESULT;
 
 namespace Microsoft.Win32
 {
-    using MS.Internal;
-    using MS.Internal.AppModel;
-    using MS.Internal.Interop;
-    using MS.Win32;
-
-    using System;
-    using System.ComponentModel;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Runtime.InteropServices;
-    using System.Text;
-    using System.Windows;
-
-    using HRESULT = MS.Internal.Interop.HRESULT;
-
     /// <summary>
     ///    Provides a common base class for wrappers around both the
     ///    File Open and File Save common dialog boxes.  Derives from
@@ -45,7 +34,7 @@ namespace Microsoft.Win32
         #region Constructors
 
         /// <summary>
-        /// In an inherited class, initializes a new instance of 
+        /// In an inherited class, initializes a new instance of
         /// the System.Windows.CommonItemDialog class.
         /// </summary>
         private protected CommonItemDialog()
@@ -68,7 +57,7 @@ namespace Microsoft.Win32
 
         /// <summary>
         ///  Resets all properties to their default values.
-        ///  Classes derived from CommonItemDialog are expected to 
+        ///  Classes derived from CommonItemDialog are expected to
         ///  call Base.Reset() at the beginning of their
         ///  implementation of Reset() if they choose to
         ///  override this function.
@@ -141,13 +130,13 @@ namespace Microsoft.Win32
             }
         }
 
-        //   The actual flag is FOS_NODEREFERENCELINKS (set = do not dereference, unset = deref) - 
+        //   The actual flag is FOS_NODEREFERENCELINKS (set = do not dereference, unset = deref) -
         //   while we have true = dereference and false=do not dereference.  Because we expose
-        //   the opposite of the Windows flag as a property to be clearer, we need to negate 
+        //   the opposite of the Windows flag as a property to be clearer, we need to negate
         //   the value in both the getter and the setter here.
         /// <summary>
-        ///  Gets or sets a value indicating whether the dialog box returns the location 
-        ///  of the file referenced by the shortcut or whether it returns the location 
+        ///  Gets or sets a value indicating whether the dialog box returns the location
+        ///  of the file referenced by the shortcut or whether it returns the location
         ///  of the shortcut (.lnk). Not all dialogs allow users to select shortcuts.
         /// </summary>
         public bool DereferenceLinks
@@ -238,7 +227,7 @@ namespace Microsoft.Win32
             }
         }
 
-        //   If false, the file dialog boxes will allow invalid characters in the returned file name. 
+        //   If false, the file dialog boxes will allow invalid characters in the returned file name.
         //   We are actually responsible for dealing with this flag - it determines whether all of the
         //   processing in ProcessFileNames (which includes things such as the AddExtension feature)
         //   occurs.
@@ -324,7 +313,7 @@ namespace Microsoft.Win32
             }
             else
             {
-                // if value is false, AND the bitwise complement of the 
+                // if value is false, AND the bitwise complement of the
                 // option with _dialogOptions
                 _dialogOptions &= ~option;
             }
@@ -340,7 +329,7 @@ namespace Microsoft.Win32
         ///  Returns the choice the user made in the message box
         ///  (true if MessageBoxResult.Yes,
         ///   false if OK or MessageBoxResult.No)
-        /// 
+        ///
         ///  We have to do this instead of just calling MessageBox because
         ///  of an issue where keyboard navigation would fail after showing
         ///  a message box.  See http://bugcheck/default.asp?URL=/Bugs/URT/84016.asp
@@ -468,7 +457,7 @@ namespace Microsoft.Win32
 
         //   If multiple files are selected, we only return the first filename.
         /// <summary>
-        ///  Gets a string containing the full path of the file or folder selected in 
+        ///  Gets a string containing the full path of the file or folder selected in
         ///  the dialog box.
         /// </summary>
         private protected string CriticalItemName
@@ -494,7 +483,7 @@ namespace Microsoft.Win32
 
         /// <summary>
         ///  In cases where we need to return an array of strings, we return
-        ///  a clone of the array.  We also need to make sure we return a 
+        ///  a clone of the array.  We also need to make sure we return a
         ///  string[0] instead of a null if we don't have any filenames.
         /// </summary>
         private protected string[] CloneItemNames()
@@ -532,9 +521,9 @@ namespace Microsoft.Win32
         //  variables and for the options bitmask.
         private void Initialize()
         {
-            // 
+            //
             // Initialize Options Flags
-            // 
+            //
             _dialogOptions = 0;   // _dialogOptions is an int containing a set of
                                         // bit flags used to initialize the dialog box.
                                         // Within our code, we only use GetOption and SetOption
@@ -559,7 +548,7 @@ namespace Microsoft.Win32
 
             //
             // Initialize additional properties
-            // 
+            //
             _itemNames = null;
             _title = null;
             _initialDirectory = null;
@@ -670,8 +659,8 @@ namespace Microsoft.Win32
         //
         //   The solution is this private property, which returns the title of the
         //   file dialog (using the stored handle of the dialog _hwndFileDialog to
-        //   call GetWindowText). 
-        // 
+        //   call GetWindowText).
+        //
         //   It is designed to only be called by MessageBoxWithFocusRestore.
         private string DialogCaption
         {
@@ -781,7 +770,7 @@ namespace Microsoft.Win32
         private string _defaultDirectory;       // Starting directory if no recent
         private string _rootDirectory;          // Topmost directory
 
-        // We store the handle of the file dialog inside our class 
+        // We store the handle of the file dialog inside our class
         // for a variety of purposes (like getting the title of the dialog
         // box when we need to show a message box with the same title bar caption)
         private IntPtr _hwndFileDialog;

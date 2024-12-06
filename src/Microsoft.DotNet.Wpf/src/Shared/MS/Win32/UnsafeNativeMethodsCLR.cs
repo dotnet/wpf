@@ -2,48 +2,45 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-namespace MS.Win32
-{
-    using Accessibility;
-    using System.Runtime.InteropServices;
-    using System.Runtime.InteropServices.ComTypes;
-    using System.Runtime.ConstrainedExecution;
-    using System;
-    using System.Collections;
-    using System.IO;
-    using System.Text;
-    using System.Security;
-    using System.Diagnostics;
-    using System.ComponentModel;
-    using MS.Internal;
+using Accessibility;
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
+using System;
+using System.Text;
+using System.Diagnostics;
+using System.ComponentModel;
 #if !DRT && !UIAUTOMATIONTYPES
-    using MS.Internal.Interop;
-    using MS.Utility;
+using MS.Internal.Interop;
+using MS.Utility;
 #endif
 
- // DRTs cannot access MS.Internal
+// DRTs cannot access MS.Internal
 #if !DRT && !UIAUTOMATIONTYPES
-    using HR = MS.Internal.Interop.HRESULT;
+using HR = MS.Internal.Interop.HRESULT;
 #endif
 
- //The SecurityHelper class differs between assemblies and could not actually be
- // shared, so it is duplicated across namespaces to prevent name collision.
+//The SecurityHelper class differs between assemblies and could not actually be
+// shared, so it is duplicated across namespaces to prevent name collision.
 #if WINDOWS_BASE
-    using MS.Internal.WindowsBase;
+using MS.Internal.WindowsBase;
+using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
+
 #elif PRESENTATION_CORE
     using MS.Internal.PresentationCore;
 #elif PRESENTATIONFRAMEWORK
     using MS.Internal.PresentationFramework;
 #elif UIAUTOMATIONTYPES
     using MS.Internal.UIAutomationTypes;
+using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
+
 #elif DRT
     using MS.Internal.Drt;
 #else
 #error Attempt to use a class (duplicated across multiple namespaces) from an unknown assembly.
 #endif
 
-    using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
-
+namespace MS.Win32
+{
     internal partial class UnsafeNativeMethods {
 
 #if BASE_NATIVEMETHODS

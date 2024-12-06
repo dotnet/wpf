@@ -12,11 +12,7 @@
 //      presentation context stored in the annotation component.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows;
-using System.Windows.Annotations;
 using System.Windows.Documents;
 using System.Windows.Media;
 

@@ -4,22 +4,10 @@
 
 //#define TRACEPTW
 
-using System;
-using System.Diagnostics;
-using System.Collections;
 using System.Runtime.InteropServices;
-using System.Windows.Interop;
-using System.Windows.Threading;
-using System.Windows.Media;
 using System.Threading;
-using System.Security;
-using MS.Internal;
-using MS.Internal.PresentationCore;                        // SecurityHelper
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using MS.Win32.Penimc;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input
 {

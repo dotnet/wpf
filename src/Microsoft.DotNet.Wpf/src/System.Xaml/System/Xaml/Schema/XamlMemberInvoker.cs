@@ -4,9 +4,7 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-using System.Security;
 using System.Xaml.MS.Impl;
 
 namespace System.Xaml.Schema

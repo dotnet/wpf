@@ -4,22 +4,12 @@
 
 
 using System.ComponentModel;
-using System.Collections;
 using System.Collections.Specialized;
-using System.Diagnostics;
-using System.Globalization;
-using System.Windows.Threading;
-using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows;
 using System.Windows.Automation.Peers;
 using System.Windows.Media;
 using System.Windows.Controls.Primitives;
-using System.Windows.Markup;
-using MS.Utility;
 using MS.Internal.Telemetry.PresentationFramework;
-
-using System;
 
 namespace System.Windows.Controls
 {

@@ -8,8 +8,6 @@
 //      adheres to the annotation schema.
 //
 
-using System;
-
 namespace MS.Internal.Annotations
 {
     /// <summary>

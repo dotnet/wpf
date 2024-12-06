@@ -6,17 +6,8 @@
 //
 //              Created it.
 
-using System;
 using System.ComponentModel;
-using System.Windows.Threading;
-using System.Windows.Media;
 using System.Windows.Media.Effects;
-using System.Diagnostics;
-using System.Collections;
-using MS.Internal;
-using System.Resources;
-using System.Runtime.InteropServices;
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media
 {

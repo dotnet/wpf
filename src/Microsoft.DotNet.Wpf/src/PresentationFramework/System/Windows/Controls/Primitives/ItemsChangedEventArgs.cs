@@ -8,9 +8,7 @@
 // Specs:       Data Styling.mht
 //
 
-using System;
 using System.Collections.Specialized;
-using System.ComponentModel;
 
 
 namespace System.Windows.Controls.Primitives

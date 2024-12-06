@@ -5,8 +5,6 @@
 //
 //
 
-using System;
-
 namespace MS.Internal.FontCache
 {
     ///<summary>

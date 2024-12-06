@@ -9,10 +9,6 @@
 //
 //
 
-using System;
-using System.Security;
-
-
 namespace MS.Internal.FontFace
 {
     internal interface IDeviceFont

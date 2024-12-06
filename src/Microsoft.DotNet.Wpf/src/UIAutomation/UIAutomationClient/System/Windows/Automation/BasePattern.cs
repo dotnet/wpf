@@ -4,11 +4,8 @@
 
 // Description: Client-side wrapper for Base Pattern
 
-using System;
-using System.Windows.Automation;
 using System.Diagnostics;
 using MS.Internal.Automation;
-using System.Runtime.InteropServices;
 
 namespace System.Windows.Automation
 {

@@ -2,30 +2,21 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.ComponentModel;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading;
+using System.Windows.Markup;
+using MS.Internal;
+using MS.Internal.AppModel;
+using MS.Internal.Interop;
+using MS.Win32;
 
+using HRESULT = MS.Internal.Interop.HRESULT;
 
 namespace System.Windows.Shell
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Reflection;
-    using System.Runtime.InteropServices;
-    using System.Security;
-    using System.Text;
-    using System.Threading;
-    using System.Windows;
-    using System.Windows.Markup;
-    using MS.Internal;
-    using MS.Internal.AppModel;
-    using MS.Internal.PresentationFramework;
-    using MS.Internal.Interop;
-    using MS.Win32;
-
-    using HRESULT = MS.Internal.Interop.HRESULT;
-
     /// <summary>
     /// The list of possible reasons why a JumpItem would be rejected from a JumpList when applied.
     /// </summary>
@@ -73,7 +64,7 @@ namespace System.Windows.Shell
             }
 
             // We don't want the contents of the list getting modified in the event handler,
-            // so use a read-only copy 
+            // so use a read-only copy
             if (rejectedItems != null)
             {
                 RejectedItems = new List<JumpItem>(rejectedItems).AsReadOnly();
@@ -212,7 +203,7 @@ namespace System.Windows.Shell
                     }
                 }
             }
-            
+
         }
 
         #region Attached Property Methods
@@ -279,7 +270,7 @@ namespace System.Windows.Shell
 
         public JumpList()
             : this(null, false, false)
-        { 
+        {
             // Restore the ability to use ISupportInitialize.
             _initializing = null;
         }
@@ -290,7 +281,7 @@ namespace System.Windows.Shell
             {
                 _jumpItems = new List<JumpItem>(items);
             }
-            else 
+            else
             {
                 _jumpItems = new List<JumpItem>();
             }
@@ -326,7 +317,7 @@ namespace System.Windows.Shell
         public bool ShowRecentCategory {
             get;
 
-            set; 
+            set;
         }
 
         /// <summary>
@@ -400,11 +391,11 @@ namespace System.Windows.Shell
         /// for what taskbar item an HWND should be associated with, e.g. you can put
         /// windows from multiple processes into the same group, or you can prevent glomming
         /// of HWNDs that would otherwise be shown together.
-        /// 
+        ///
         /// Even though this property isn't exposed on the public WPF OM
         /// we still want to make sure that the jump list gets associated with
         /// the current running app even if the client has explicitly changed the id.
-        /// 
+        ///
         /// It's straightforward to p/invoke to set these for the running application or
         /// the HWND.  Not so much for this object.
         /// </remarks>
@@ -617,8 +608,8 @@ namespace System.Windows.Shell
                 // For common use patterns there isn't really any user code on the stack, so there isn't
                 // an opportunity to catch this in the app.
                 // We can instead handle this.
-                
-                // Try to notify the developer if they're hitting this. 
+
+                // Try to notify the developer if they're hitting this.
                 if (TraceShell.IsEnabled)
                 {
                     TraceShell.Trace(TraceEventType.Error, TraceShell.RejectingJumpItemsBecauseCatastrophicFailure);
@@ -722,7 +713,7 @@ namespace System.Windows.Shell
                 {
                     var removedLink = shellMap.ShellObject as IShellLinkW;
                     if (removedLink != null)
-                    { 
+                    {
                         // There's no intrinsic comparison function for ShellLinks.
                         // Talking to the Shell guys, the way they compare these is to catenate a string with
                         // a normalized version of the app path and the unmodified args.
@@ -759,7 +750,7 @@ namespace System.Windows.Shell
                 return CreateItemFromJumpPath(jumpPath);
             }
             else if (jumpTask != null)
-            { 
+            {
                 return CreateLinkFromJumpTask(jumpTask, true);
             }
 
@@ -880,7 +871,7 @@ namespace System.Windows.Shell
         }
 
         private static readonly string _FullName;
-        
+
         #region Converter methods
 
         private static IShellLinkW CreateLinkFromJumpTask(JumpTask jumpTask, bool allowSeparators)

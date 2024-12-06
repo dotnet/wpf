@@ -2,21 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:  Enumeration of content right that represents the list of
-//                  supported XrML rights
-//
-//
-//
-//
-
-using System;
-
-namespace System.Security.RightsManagement 
+namespace System.Security.RightsManagement
 {
     /// <summary>
-    /// Right enumeration represents the list of supported XrML rights. 
+    /// Right enumeration represents the list of supported XrML rights.
     /// </summary>
     public enum ContentRight : int
     {

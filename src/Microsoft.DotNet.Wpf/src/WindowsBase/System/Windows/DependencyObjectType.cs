@@ -2,13 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows.Threading;
-using MS.Utility;
-using MS.Internal.WindowsBase;
-
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows

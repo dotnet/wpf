@@ -7,27 +7,14 @@
 //   base Parser class that parses XML markup into an Avalon Element Tree
 //
 
-using System;
 using System.Xml;
 using System.IO;
-using System.IO.Packaging;
-using System.Windows;
 using System.ComponentModel;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Reflection;
 
 using MS.Utility;
 using System.Text;
-using System.ComponentModel.Design.Serialization;
-using System.Globalization;
-using System.Windows.Markup.Primitives;
 using MS.Internal;
-
-using MS.Internal.IO.Packaging;
 using System.Windows.Baml2006;
-using System.Threading;
 using System.Windows.Threading;
 using System.Xaml;
 using System.Xaml.Permissions;

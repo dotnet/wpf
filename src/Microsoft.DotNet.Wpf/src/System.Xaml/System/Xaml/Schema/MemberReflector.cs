@@ -4,10 +4,8 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
-using System.Security;
 using System.Windows.Markup;
 
 namespace System.Xaml.Schema

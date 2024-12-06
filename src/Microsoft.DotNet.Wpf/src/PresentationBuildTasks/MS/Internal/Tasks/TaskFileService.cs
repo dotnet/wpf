@@ -24,7 +24,6 @@ using System;
 using System.IO;
 using Microsoft.Build.Utilities;
 using Microsoft.Build.Tasks.Windows;
-using System.Diagnostics;
 using System.Text;
 using System.Security.Cryptography;
 

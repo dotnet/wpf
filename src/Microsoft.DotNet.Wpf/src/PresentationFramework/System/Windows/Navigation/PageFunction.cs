@@ -9,8 +9,6 @@
 //             this is the base element class from which the developer derives 
 //             from to enable returning results to a caller.  
 //
-using System;
-using System.Diagnostics;
 using System.Windows.Controls;
 
 using MS.Internal.AppModel;

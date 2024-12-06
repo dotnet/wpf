@@ -12,10 +12,7 @@
 // See specs at Validation.mht
 //
 
-using System;
-using System.Windows;
 using System.Globalization;
-using System.Windows.Controls;
 
 namespace System.Windows.Controls
 {

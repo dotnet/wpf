@@ -9,18 +9,12 @@
 // See spec at Data Binding.mht
 //
 
-using System;
-using System.Collections;
-using System.Diagnostics;
 using System.Globalization;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Markup;
-using MS.Internal;
-using MS.Internal.Utility;
 
 namespace MS.Internal.Data
 {

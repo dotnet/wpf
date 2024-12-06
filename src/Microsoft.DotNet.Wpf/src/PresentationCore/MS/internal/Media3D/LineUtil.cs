@@ -60,13 +60,8 @@
 //
 // None of this code understands rays.  This is all in terms of lines, lines, lines, lines!
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media.Media3D;
-
-using MS.Utility;
 
 namespace MS.Internal.Media3D
 {

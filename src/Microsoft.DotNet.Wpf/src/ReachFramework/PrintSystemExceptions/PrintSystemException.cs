@@ -9,13 +9,8 @@
 
         Print System exception objects declaration.
 --*/
-using System;
-using System.Collections;
-using System.Runtime.InteropServices;
 using System.Text;
-using System.Security; //SecurityCritical
 using System.Collections.ObjectModel;
-using System.Collections.Generic;
 
 
 using MS.Internal.PrintWin32Thunk.Win32ApiThunk;

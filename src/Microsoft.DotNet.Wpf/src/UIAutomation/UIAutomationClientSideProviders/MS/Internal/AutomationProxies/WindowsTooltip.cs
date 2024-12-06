@@ -8,13 +8,9 @@
 #pragma warning disable 1634, 1691
 
 using System;
-using System.Globalization;
-using System.Text;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows;
-using System.Runtime.InteropServices;
-using System.ComponentModel;
 using MS.Win32;
 
 namespace MS.Internal.AutomationProxies

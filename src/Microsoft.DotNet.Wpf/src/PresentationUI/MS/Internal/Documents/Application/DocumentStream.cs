@@ -12,31 +12,30 @@
 using System;
 using System.Globalization;
 using System.IO;
-using System.Security;
 using System.Security.AccessControl;
 using System.Windows.TrustUI;
 
 namespace MS.Internal.Documents.Application
 {
-/// <summary>
-/// An XpsDocument stream represents the stream data for the document
-/// regardless of implementation of the backing streams.  It has logical
-/// operations that allow elevating from Read to SafeWrite and editing in place.
-/// </summary>
-/// <remarks>
-/// Responsibility:
-/// The class must hide the location and implemenation complexity of
-/// performing simple logical operations needed by the system.
-/// 
-/// Design Comments:
-/// The need for this is primarly driven from two factors:
-/// 
-///  - Package which does not allow use to discard changes
-/// 
-///  - RightsManagement where key changes make it impossible to edit a 
-///    document in place
-/// </remarks>
-internal sealed class DocumentStream : StreamProxy, IDisposable
+    /// <summary>
+    /// An XpsDocument stream represents the stream data for the document
+    /// regardless of implementation of the backing streams.  It has logical
+    /// operations that allow elevating from Read to SafeWrite and editing in place.
+    /// </summary>
+    /// <remarks>
+    /// Responsibility:
+    /// The class must hide the location and implemenation complexity of
+    /// performing simple logical operations needed by the system.
+    /// 
+    /// Design Comments:
+    /// The need for this is primarly driven from two factors:
+    /// 
+    ///  - Package which does not allow use to discard changes
+    /// 
+    ///  - RightsManagement where key changes make it impossible to edit a 
+    ///    document in place
+    /// </remarks>
+    internal sealed class DocumentStream : StreamProxy, IDisposable
 {
     #region Constructors
     //--------------------------------------------------------------------------

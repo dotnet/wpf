@@ -4,19 +4,16 @@
 
 
 
+using System.Diagnostics.CodeAnalysis;
+using System.Windows.Data;
+using Standard;
+
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Shell
 #else
 namespace Microsoft.Windows.Shell
 #endif
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Windows;
-    using System.Windows.Data;
-    using Standard;
-
     public enum ResizeGripDirection
     {
         None,

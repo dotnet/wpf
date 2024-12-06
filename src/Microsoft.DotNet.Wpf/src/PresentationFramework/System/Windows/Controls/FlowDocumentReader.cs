@@ -3,11 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;                               // Object
 using System.Collections;                   // IEnumerator
-using System.Collections.Generic;           // Stack<T>
-using System.Collections.ObjectModel;       // ReadOnlyCollection<T>
-using System.Security;                      // SecurityCritical
 using System.Windows.Automation.Peers;      // AutomationPeer
 using System.Windows.Data;                  // BindingOperations
 using System.Windows.Controls.Primitives;   // PlacementMode
@@ -15,7 +11,6 @@ using System.Windows.Documents;             // FlowDocument
 using System.Windows.Input;                 // KeyEventArgs
 using System.Windows.Media;                 // ScaleTransform, VisualTreeHelper
 using System.Windows.Markup;                // IAddChild
-using System.Windows.Threading;             // Dispatcher
 using MS.Internal;                          // Invariant, DoubleUtil
 using MS.Internal.Commands;                 // CommandHelpers
 using MS.Internal.Controls;                 // EmptyEnumerator

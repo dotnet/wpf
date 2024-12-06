@@ -6,17 +6,9 @@
 // Description: Table column object implementation.
 //
 
-using System;
-using System.Diagnostics;
-using System.Windows.Threading;
-
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Media;
 using MS.Internal.PtsHost.UnsafeNativeMethods; // PTS restrictions
-using System.Collections;
-using System.Collections.Generic;
 
 using MS.Internal.Documents;
 

@@ -4,7 +4,6 @@
 
 #nullable disable
 
-using System.Diagnostics;
 using System.Windows.Markup;
 using System.Xaml;
 

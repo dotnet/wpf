@@ -12,21 +12,8 @@
 // Allow use of presharp: #pragma warning suppress <nnnn>
 #pragma warning disable 1634, 1691
 
-using MS.Internal;
-
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows.Media.Animation;   
-using System.Windows.Media.Media3D;
-
-using MS.Internal.PresentationCore;
-
-using SR=MS.Internal.PresentationCore.SR;
-
 namespace System.Windows.Media.Animation
-{       
+{
     /// <summary>
     ///
     /// </summary>

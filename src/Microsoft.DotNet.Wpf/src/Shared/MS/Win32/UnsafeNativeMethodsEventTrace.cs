@@ -4,8 +4,6 @@
 
 #if !SILVERLIGHTXAML
 
-using System;
-using System.Security;
 using System.Runtime.InteropServices;
 #if SYSTEM_XAML
 using MS.Internal.Xaml;

@@ -4,9 +4,6 @@
 
 // Description: Interface exposes a control's ability to manipulate text ranges
 
-using System;
-using System.Collections;
-using System.Windows.Automation;
 using System.Windows.Automation.Text;
 using System.Runtime.InteropServices;
 

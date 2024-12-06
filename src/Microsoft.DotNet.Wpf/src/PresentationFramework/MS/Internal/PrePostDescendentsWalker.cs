@@ -9,10 +9,7 @@
 //
 
 
-using System;
-using System.Diagnostics;
 using System.Windows;
-using MS.Utility;
 
 namespace MS.Internal
 {

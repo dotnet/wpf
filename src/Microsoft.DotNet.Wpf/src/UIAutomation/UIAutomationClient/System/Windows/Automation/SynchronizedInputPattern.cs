@@ -4,9 +4,7 @@
 
 // Description: Client-side wrapper for SynchronizedInput Pattern
 
-using System;
 //using System.Collections;
-using System.Windows.Automation.Provider;
 using MS.Internal.Automation;
 
 namespace System.Windows.Automation

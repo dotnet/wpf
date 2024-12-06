@@ -8,19 +8,17 @@
 
 using System;
 using System.Runtime.InteropServices;
-using System.ComponentModel;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System.Windows;
 using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
 
-        // The default implementation for scroll bars uses SB_THUMBTRACK and SB_THUMBPOSITION for SetValue
-        // This does not work with listview so the Scrollbar is overloaded with a derived version that
-        // uses LVM_SCROLL messages instead
-        class WindowsListViewScrollBar: WindowsScrollBar, IRangeValueProvider
+    // The default implementation for scroll bars uses SB_THUMBTRACK and SB_THUMBPOSITION for SetValue
+    // This does not work with listview so the Scrollbar is overloaded with a derived version that
+    // uses LVM_SCROLL messages instead
+    class WindowsListViewScrollBar: WindowsScrollBar, IRangeValueProvider
         {
 
             // ------------------------------------------------------

@@ -5,17 +5,9 @@
 // Class that implements BamlResourceSerializer
 
 
-using System;
 using System.IO;
-using System.Globalization;
-using System.Runtime.InteropServices;
-using System.Collections;
-using System.Collections.Generic;
 using System.Windows.Markup;
 using System.Windows.Markup.Localizer;
-using System.Diagnostics;
-using System.Text;
-using System.Windows;
 
 namespace MS.Internal.Globalization
 {

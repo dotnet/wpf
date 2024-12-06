@@ -11,10 +11,6 @@
 *
 \***************************************************************************/
 using System.Collections.ObjectModel; // Collection<T>
-using System.Diagnostics;   // Debug.Assert
-using System.Windows.Data;  // Binding knowledge
-using System.Windows.Media; // Visual knowledge
-using System.Windows.Markup; // MarkupExtension
 
 namespace System.Windows
 {

@@ -10,7 +10,6 @@
 
 using System;
 using System.Windows.Automation;
-using System.Windows.Automation.Text;
 
 namespace MS.Internal.Automation
 {

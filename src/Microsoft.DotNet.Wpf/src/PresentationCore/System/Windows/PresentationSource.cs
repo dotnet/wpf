@@ -2,22 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Collections;
-using System.Diagnostics;
-using System.ComponentModel;
-using System.Runtime.InteropServices;
 using System.Windows.Threading;
-using System.Security;
 using System.Windows.Media;
-using System.Windows.Media.Media3D;
-using System.Windows.Markup;
 using System.Windows.Input;
-using MS.Win32;
 using MS.Utility;
 using MS.Internal;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows
 {

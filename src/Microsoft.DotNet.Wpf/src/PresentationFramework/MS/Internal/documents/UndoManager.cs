@@ -8,17 +8,8 @@
 //     See spec at Undo spec.htm
 //
 
-using System;
 using System.Windows;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Diagnostics;
-using MS.Utility;
-using System.Windows.Markup;
-using System.Windows.Documents;
-using System.Windows.Controls.Primitives;
 
 namespace MS.Internal.Documents
 {

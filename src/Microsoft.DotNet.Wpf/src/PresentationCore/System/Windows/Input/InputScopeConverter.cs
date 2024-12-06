@@ -10,12 +10,8 @@
 // 
 //
 
-using System;
-using System.Collections.Generic;
-using System.Windows.Input;
 using System.ComponentModel;
 using System.Globalization;
-using System.ComponentModel.Design.Serialization;
 
 
 namespace System.Windows.Input

@@ -8,10 +8,6 @@
 //      Defines XAML source info.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-
 namespace System.Windows.Diagnostics
 {
     [DebuggerDisplay("{line={LineNumber}, offset={LinePosition}, uri={SourceUri}}")]

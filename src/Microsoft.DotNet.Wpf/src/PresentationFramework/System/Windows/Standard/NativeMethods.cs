@@ -4,26 +4,21 @@
 
 
 
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
+using System.Text;
+using Microsoft.Win32.SafeHandles;
+
+// Some COM interfaces and Win32 structures are already declared in the framework.
+// Interesting ones to remember in System.Runtime.InteropServices.ComTypes are:
+using IStream = System.Runtime.InteropServices.ComTypes.IStream;
+using NativeMethodsSetLastError = MS.Internal.WindowsBase.NativeMethodsSetLastError;
+
 namespace Standard
 {
-    using System;
-    using System.ComponentModel;
-    using System.Diagnostics.CodeAnalysis;
-    using System.IO;
-    using System.Runtime.ConstrainedExecution;
-    using System.Runtime.InteropServices;
-    using System.Runtime.InteropServices.ComTypes;
-    using System.Security;
-    using System.Text;
-    using Microsoft.Win32.SafeHandles;
-
-    // Some COM interfaces and Win32 structures are already declared in the framework.
-    // Interesting ones to remember in System.Runtime.InteropServices.ComTypes are:
-    using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
-    using IPersistFile = System.Runtime.InteropServices.ComTypes.IPersistFile;
-    using IStream = System.Runtime.InteropServices.ComTypes.IStream;
-    using NativeMethodsSetLastError = MS.Internal.WindowsBase.NativeMethodsSetLastError;
-
     #region Native Values
 
     internal static class Win32Value

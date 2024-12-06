@@ -9,9 +9,6 @@
 //
 //
 
-using System;
-using System.Windows.Media;
-
 namespace System.Windows.Media.TextFormatting
 {
     /// <summary>

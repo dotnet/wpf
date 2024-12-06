@@ -5,9 +5,6 @@
 // Description: Windows Static Proxy
 
 using System;
-using System.Text;
-using System.Collections;
-using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using MS.Win32;

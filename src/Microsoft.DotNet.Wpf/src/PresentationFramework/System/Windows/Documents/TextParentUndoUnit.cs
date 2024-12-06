@@ -8,17 +8,6 @@
 //      See spec at Undo spec.htm 
 // 
 
-using System;
-using MS.Internal;
-using System.Windows.Input;
-using System.Windows.Controls;
-using System.Windows.Documents.Internal;
-using System.Windows.Threading;
-using System.ComponentModel;
-using System.Windows.Media;
-using System.Windows.Markup;
-using System.Text;
-using MS.Utility;
 using MS.Internal.Documents;
 
 namespace System.Windows.Documents

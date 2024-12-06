@@ -10,14 +10,9 @@
 using MS.Internal.Text;
 using MS.Internal.Documents;
 using MS.Internal.PtsTable;
-using System.Security;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
-using System.Windows.Threading;
-using System;
-using System.Diagnostics;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 using MS.Internal.PtsHost.UnsafeNativeMethods;

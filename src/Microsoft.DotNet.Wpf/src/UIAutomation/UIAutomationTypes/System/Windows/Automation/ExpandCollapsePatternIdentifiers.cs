@@ -4,7 +4,6 @@
 
 // Description: Automation Identifiers for ExpandCollapse Pattern
 
-using System;
 using MS.Internal.Automation;
 using System.Runtime.InteropServices;
 

@@ -9,11 +9,8 @@
 //
 //
 
-using System.Windows;
-using System.Windows.Media.Media3D;
-using System;
-using System.IO; 
-using MS.Internal.Media; 
+using System.IO;
+using MS.Internal.Media;
 
 namespace System.Windows.Media
 {

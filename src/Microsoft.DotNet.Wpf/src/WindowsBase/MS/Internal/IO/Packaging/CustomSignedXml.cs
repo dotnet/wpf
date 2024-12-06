@@ -2,17 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //  Wrapper class for existing SignedXml class that works around
 
-
-using System;
 using System.Xml;
-using System.Windows;                          // for SR
 using System.Security.Cryptography.Xml;
-using MS.Internal.WindowsBase;
 using Microsoft.Win32;                          // for Registry and RegistryKey classes
 using System.Globalization;                     // for CultureInfo
 

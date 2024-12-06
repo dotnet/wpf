@@ -4,8 +4,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-
 namespace System.Xaml
 {
     public class XamlXmlReaderSettings : XamlReaderSettings

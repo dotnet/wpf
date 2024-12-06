@@ -12,11 +12,6 @@
 //#define CURSOR_DEBUG
 
 using MS.Win32;
-using System;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Runtime.ConstrainedExecution;
-using System.Security;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Ink;

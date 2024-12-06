@@ -2,6 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.IO;
+using System.Xml;
+using System.Text;
+using System.Globalization;
+using System.Windows.Markup;
+
 //
 // Description:
 //      Implements fast, paginated search functionality for Fixed documents
@@ -10,14 +16,6 @@
 
 namespace System.Windows.Documents
 {
-    using System;
-    using System.IO;
-    using System.Xml;
-    using System.Text;
-    using System.Globalization;
-    using System.Diagnostics;
-    using System.Windows.Markup;
-
     internal sealed class FixedFindEngine
     {
         //Searches for the specified pattern and updates start *or* end pointers depending on search direction

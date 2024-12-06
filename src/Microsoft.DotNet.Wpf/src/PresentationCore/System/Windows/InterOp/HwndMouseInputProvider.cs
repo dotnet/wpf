@@ -6,16 +6,12 @@ using System.Windows.Threading;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Runtime.InteropServices;
-using System.Diagnostics;
 using System.Reflection;
-using System.Security;
 using MS.Internal;
 using MS.Internal.Interop;
 using MS.Internal.PresentationCore;                        // SecurityHelper
 using MS.Win32;
 using MS.Utility;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Interop
 {

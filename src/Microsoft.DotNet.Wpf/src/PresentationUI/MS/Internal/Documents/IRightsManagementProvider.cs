@@ -5,15 +5,11 @@
 // Description: 
 //    IRightsManagementProvider is interface that defines the DRP's RM API adapter.
 
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Security.RightsManagement;
 using System.IO;
 using System.IO.Packaging;
-using MS.Internal.Security.RightsManagement;
-using System.Security;
 
 namespace MS.Internal.Documents
 {

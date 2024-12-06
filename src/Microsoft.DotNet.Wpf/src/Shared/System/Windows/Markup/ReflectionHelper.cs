@@ -4,11 +4,7 @@
 
 #nullable disable
 
-//
-//
-//
 //  Description: Specifies that the whitespace surrounding an element should be trimmed.
-//
 
 using System;
 using System.IO;

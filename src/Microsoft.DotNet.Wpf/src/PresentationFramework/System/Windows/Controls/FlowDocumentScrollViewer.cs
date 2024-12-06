@@ -3,11 +3,8 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;                           // Object
 using System.Collections;               // IEnumerator
-using System.Collections.Generic;       // Stack<T>
 using System.Collections.ObjectModel;   // ReadOnlyCollection<T>
-using System.Security;                  // SecurityCritical
 using System.Windows.Annotations;       // AnnotationService
 using System.Windows.Automation.Peers;  // AutomationPeer
 using System.Windows.Data;              // BindingOperations

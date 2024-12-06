@@ -13,19 +13,10 @@
 //     Spec: Anchoring Namespace Spec.doc
 //
 
-using System;
-using System.Diagnostics;
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Annotations;
-using System.Windows.Annotations.Storage;
-using System.Windows.Markup;
-using System.Windows.Threading;
 using System.Xml;
-
-using MS.Utility;
 
 namespace MS.Internal.Annotations.Anchoring
 {

@@ -6,10 +6,6 @@
 // Description: BamlTreeNode structures 
 //
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-
 using System.Windows;
 using System.Windows.Markup;
 

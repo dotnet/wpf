@@ -12,12 +12,8 @@
 
 using MS.Win32;
 using System.Collections;
-using System.Globalization;
-using System.Runtime.InteropServices;
-using System.Security;
 using System.Text;
 using MS.Internal.PresentationCore;
-using SecurityHelper=MS.Internal.SecurityHelper;
 
 namespace System.Windows
 {

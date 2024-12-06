@@ -6,7 +6,6 @@
 // Description: Accessors for dynamic objects
 //
 
-using System;
 using SW = System.Windows;              // SR
 
 namespace MS.Internal.Data

@@ -8,15 +8,6 @@
 //
 //
 
-using System;
-using System.Diagnostics;
-using System.Text;
-using System.Windows.Threading;
-using System.Windows;
-using System.Security; 
-using MS.Win32;
-using Microsoft.Win32; // for RegistryKey class
-
 namespace System.Windows.Input
 {
     /// <summary>

@@ -6,7 +6,6 @@
 // are propogated to that new UI.
 
 using System;
-using System.Text;
 using System.Windows.Automation;
 using MS.Win32;
 using System.Diagnostics;

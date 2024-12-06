@@ -2,13 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq.Expressions;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using WinRT;
 using WinRT.Interop;
@@ -19,9 +12,9 @@ using WinRT.Interop;
 
 namespace MS.Internal.WindowsRuntime
 {
-namespace Windows.Globalization
-{
-    [global::WinRT.WindowsRuntimeType]
+    namespace Windows.Globalization
+    {
+        [global::WinRT.WindowsRuntimeType]
     [Guid("EA79A752-F7C2-4265-B1BD-C4DEC4E4F080")]
     
     internal interface ILanguage
@@ -212,8 +205,8 @@ namespace Windows.Globalization
 }
 
 namespace ABI.Windows.Globalization
-{
-    [global::WinRT.ObjectReferenceWrapper(nameof(_obj))]
+    {
+        [global::WinRT.ObjectReferenceWrapper(nameof(_obj))]
     [Guid("EA79A752-F7C2-4265-B1BD-C4DEC4E4F080")]
     internal class ILanguage : global::MS.Internal.WindowsRuntime.Windows.Globalization.ILanguage
     {

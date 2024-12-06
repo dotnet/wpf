@@ -9,7 +9,6 @@
 //
 //
 
-using System;
 using MS.Internal.PresentationCore;
 
 namespace System.Windows.Markup

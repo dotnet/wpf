@@ -2,21 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description: Arguments for the ExceptionFilter event. The event is raised 
-//              when a dispatcher exception has occured. This event is raised
-//              before the callstack is unwound.
-//
-//
-//
-//
-
-using System.Diagnostics;
-
-using System;
-
-namespace System.Windows.Threading 
+namespace System.Windows.Threading
 {
     /// <summary>
     ///     Arguments for the ExceptionFilter event. The event is raised when

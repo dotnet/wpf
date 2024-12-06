@@ -7,20 +7,11 @@
 // Description: Drawing is the base Drawing class that defines the standard
 //              interface which Drawing's must implement.  
 
-using MS.Internal;
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Resources;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-using System.Windows.Markup;
-using System.Windows.Threading;
 
-namespace System.Windows.Media 
-{        
+namespace System.Windows.Media
+{
     /// <summary>
     /// Base class for the enumerable and modifiable Drawing subclasses.
     /// </summary>

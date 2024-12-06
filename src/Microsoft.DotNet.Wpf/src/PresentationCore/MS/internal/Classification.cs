@@ -9,15 +9,8 @@
 //
 //
 
-using System;
-using System.Diagnostics;
-using MS.Internal;
-using System.Windows;
-using System.Security;
-using System.Collections;
 using System.Runtime.InteropServices;
 using System.Windows.Media.TextFormatting;
-using MS.Internal.PresentationCore;
 
 namespace MS.Internal
 {

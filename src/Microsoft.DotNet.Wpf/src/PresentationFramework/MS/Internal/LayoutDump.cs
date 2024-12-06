@@ -6,15 +6,12 @@
 // Description: Set of layout tree verification utilities. 
 //
 
-using System;
 using System.IO;
 using System.Xml;
 using System.Windows;
 using System.Globalization;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Windows.Media;
 using System.Windows.Documents;
 using System.Windows.Controls;

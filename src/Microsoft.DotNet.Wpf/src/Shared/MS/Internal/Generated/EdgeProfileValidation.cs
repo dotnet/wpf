@@ -13,7 +13,6 @@
 //---------------------------------------------------------------------------
 
 #if PRESENTATION_CORE
-using SR=MS.Internal.PresentationCore.SR;
 #else
 using SR=System.Windows.SR;
 #endif

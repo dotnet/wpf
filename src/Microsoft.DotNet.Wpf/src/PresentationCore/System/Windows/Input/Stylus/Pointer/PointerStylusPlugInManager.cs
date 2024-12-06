@@ -3,22 +3,10 @@
 // See the LICENSE file in the project root for more information.
 
 
-using MS.Internal;
-using MS.Internal.PresentationCore;                        // SecurityHelper
-using MS.Utility;
-using MS.Win32;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Windows;
-using System.Windows.Input;
 using System.Windows.Input.StylusPlugIns;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input.StylusPointer
 {

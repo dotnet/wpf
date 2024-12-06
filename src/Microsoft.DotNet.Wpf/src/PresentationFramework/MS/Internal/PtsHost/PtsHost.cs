@@ -19,20 +19,15 @@
 // Description: Provides PTS callbacks implementation / forwarding. 
 //
 #pragma warning disable 1634, 1691  // avoid generating warnings about unknown 
-                                    // message numbers and unknown pragmas for PRESharp contol
-                                    
+// message numbers and unknown pragmas for PRESharp contol
+
 #pragma warning disable 6500        // Specifically disable warning about unhandled null reference and SEH exceptions.
 
-using System;                                   // IntPtr
-using System.Threading;                         // Monitor
-using System.Diagnostics;
-using System.Security;                          // SecurityCritical
 using System.Windows;
-using System.Windows.Documents; 
+using System.Windows.Documents;
 using System.Windows.Media.TextFormatting;
 using MS.Internal.Text;
 using MS.Internal.PtsHost.UnsafeNativeMethods;  // PTS
-using System.Collections.Generic;
 
 namespace MS.Internal.PtsHost
 {

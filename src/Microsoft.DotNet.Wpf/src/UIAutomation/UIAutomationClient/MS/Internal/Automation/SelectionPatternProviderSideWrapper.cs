@@ -6,7 +6,6 @@
 
 using System;
 using System.Diagnostics;
-using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 
 namespace MS.Internal.Automation

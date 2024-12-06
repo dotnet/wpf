@@ -9,24 +9,17 @@
 #pragma warning disable 1634, 1691
 
 using MS.Internal.Documents.Application;
-using MS.Internal.IO.Packaging;             // For PreloadedPackages
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;                // For IValueConverter
 using System.Globalization;                 // For localization of string conversion
 using System.IO;
-using System.IO.Packaging;                  // For Packages
 using System.Printing;                      // For PrintQueue
-using System.Security;
 using System.Windows;
 using System.Windows.Controls;              // For Page Ranges
-using System.Windows.Controls.Primitives;   // For ToggleButton
 using System.Windows.Data;                  // For data binding
 using System.Windows.Documents;             // For PresentationUIStyleResources
 using System.Windows.Documents.Serialization;             // For WritingCompletedEventArgs
 using System.Windows.Input;                 // For focus / input based events
 using System.Windows.Interop;               // For WindowInteropHelper
-using System.Windows.Navigation;            // For NavigationWindow
 using System.Windows.Markup;                // For MarkupExtension
 using System.Windows.Threading;             // For DispatcherPriority
 using System.Windows.TrustUI;               // For string resources

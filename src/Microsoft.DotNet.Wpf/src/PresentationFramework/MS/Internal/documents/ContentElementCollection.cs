@@ -6,12 +6,7 @@
 // Description: Generic Collection of Table related objects.
 //
 
-using MS.Utility;
-using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.Diagnostics;
-using System.Threading;
 using System.Windows;
 using System.Windows.Documents;
 

@@ -5,21 +5,8 @@
 //
 //
 
-using System;
-using System.Collections;
-using System.Security;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
 using MS.Internal;
 using MS.Win32.PresentationCore;
-using System.Diagnostics;
-using System.Windows.Media;
-using System.Globalization;
-using System.Runtime.InteropServices;
-using System.Windows.Media.Imaging;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media.Imaging
 {

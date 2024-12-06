@@ -7,18 +7,12 @@
 //              and saving PropertyPath to string
 //
 
-using System;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Text;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
-using System.Windows;
 using System.Windows.Markup;
-using MS.Internal;
-using MS.Utility;
 using MS.Internal.Data;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings

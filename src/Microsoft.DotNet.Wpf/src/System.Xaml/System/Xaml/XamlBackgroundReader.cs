@@ -4,7 +4,6 @@
 
 #nullable disable
 
-using System.Diagnostics;
 using System.Threading;
 
 namespace System.Xaml

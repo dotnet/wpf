@@ -9,12 +9,7 @@
 //
 //
 
-using System.Windows.Media;
-using MS.Internal;
-
-using System;
-
-namespace System.Windows.Media 
+namespace System.Windows.Media
 {
     /// <summary>
     /// Brushes - A collection of well-known SolidColorBrushes

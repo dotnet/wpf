@@ -8,13 +8,10 @@
 // This file must always be kept up to date with changes in TextMarkerSource
 //
 
-using System;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Documents;   // List
-using MS.Internal.Text;             
+using MS.Internal.Text;
 using System.Windows.Media;       // FormattedText and Brush
-using MS.Internal.TextFormatting; // TextMarkerSource
 using System.Text;                // StringBuilder
 
 namespace MS.Internal.PtsHost

@@ -2,6 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Runtime.InteropServices;
+using MS.Internal;
+using MS.Win32;
+using System.Globalization;
+using System.Windows.Controls;
+using MS.Internal.PresentationFramework;
+
 //
 // Description: Custom COM marshalling code and interfaces for interaction
 //              with the Natural Language Group's nl6 proofing engine.
@@ -9,17 +16,6 @@
 
 namespace System.Windows.Documents
 {
-    using System.Collections;
-    using System.Runtime.InteropServices;
-    using MS.Internal;
-    using MS.Win32;
-    using System.Globalization;
-    using System.Security;
-    using System.IO;
-    using System.Collections.Generic;
-    using System.Windows.Controls;
-    using MS.Internal.PresentationFramework;
-
     // Custom COM marshalling code and interfaces for interaction
     // with the Natural Language Group's nl6 proofing engine.
     internal class NLGSpellerInterop : SpellerInteropBase

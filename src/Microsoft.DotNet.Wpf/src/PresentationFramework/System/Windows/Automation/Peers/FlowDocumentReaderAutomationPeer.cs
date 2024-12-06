@@ -6,7 +6,6 @@
 // Description: AutomationPeer associated with FlowDocumentReader.
 //
 
-using System.Collections.Generic;           // List<T>
 using System.Windows.Automation.Provider;   // IMultipleViewProvider
 using System.Windows.Controls;              // FlowDocumentReader
 using System.Windows.Documents;             // FlowDocument

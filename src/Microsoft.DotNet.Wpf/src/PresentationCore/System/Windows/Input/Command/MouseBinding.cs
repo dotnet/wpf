@@ -2,23 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// 
-//
 // Description: The MouseBinding class is used by the developer to create Mouse Input Bindings 
 //
 //                  See spec at : http://avalon/coreui/Specs/Commanding(new).mht  
 // 
 //* MouseBinding class serves the purpose of Input Bindings for Mouse Device.
-//
 
-using System;
-using System.Windows.Input;
-using System.Windows;
 using System.Windows.Markup;
 using System.ComponentModel;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input
 {

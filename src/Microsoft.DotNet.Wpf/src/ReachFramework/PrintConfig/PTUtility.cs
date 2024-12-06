@@ -14,8 +14,6 @@ Abstract:
 
 --*/
 
-using System;
-using System.Collections.Specialized;
 using System.Resources;
 
 namespace MS.Internal.Printing.Configuration

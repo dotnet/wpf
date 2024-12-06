@@ -6,8 +6,6 @@
 // Description: Visual representing a part of paragraph. 
 //
 
-using System;
-using System.Windows;
 using System.Windows.Media;
 
 namespace MS.Internal.PtsHost

@@ -3,15 +3,10 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Collections.Specialized;
-using System.IO;
-using System.Windows.Markup;
 
 using MS.Utility;
 using MS.Internal;
-
-using System;
 using System.ComponentModel;            // DesignerSerializationVisibilityAttribute & DefaultValue
-using System.Diagnostics;
 
 namespace System.Windows
 {

@@ -3,11 +3,8 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.ComponentModel;
-using System.Globalization;
 using System.Reflection;
-using System.Windows;
 using System.Windows.Navigation;
 
 namespace System.Windows.Baml2006

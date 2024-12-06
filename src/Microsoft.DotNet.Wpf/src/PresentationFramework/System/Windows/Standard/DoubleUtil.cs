@@ -5,9 +5,6 @@
 
 namespace Standard
 {
-    using System;
-    using System.Diagnostics.CodeAnalysis;
-
     /// <summary>
     /// DoubleUtil uses fixed eps to provide fuzzy comparison functionality for doubles.
     /// Note that FP noise is a big problem and using any of these compare 

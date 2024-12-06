@@ -2,32 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //  Helper for XmlDigitalSignatureProcessor.
 //  Generates and consumes Metro-compliant SignatureProperties element within an
 //  XmlDSig signature.
-//
-//
-//
-//
-//
 
-using System;
-using System.Collections;
 using System.Globalization;
-using System.Runtime.InteropServices;
-using System.Runtime.Serialization;
-using System.Security.Cryptography;
 using System.Security.Cryptography.Xml;
-using System.Security.Cryptography.X509Certificates;
 using System.Xml;
-using System.IO;
-using System.Windows;
-using System.IO.Packaging;
-using System.Diagnostics;
-using MS.Internal.WindowsBase;
 
 namespace MS.Internal.IO.Packaging
 {

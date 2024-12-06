@@ -3,27 +3,17 @@
 // See the LICENSE file in the project root for more information.
 
 
+using MS.Internal;                          // For Invariant.Assert
+using MS.Internal.Documents;
+using System.Windows.Controls;              // Canvas
+using System.Collections;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Media.TextFormatting;  // CharacterHit
+using System.Windows.Input;
+
 namespace System.Windows.Documents
 {
-    using MS.Internal;                          // For Invariant.Assert
-    using MS.Internal.Documents;
-    using System.Windows;                       // DependencyID etc.
-    using System.Windows.Controls;              // Canvas
-    using System.Collections;
-    using System.Windows.Media;
-    using System.Windows.Media.Imaging;
-    using System.Windows.Media.TextFormatting;  // CharacterHit
-    using System.Windows.Shapes;                // Glyphs
-    using System.Windows.Markup;
-    using System.Windows.Input;
-    using System.Threading;
-    using System;
-    using System.IO;
-    using System.Collections.Generic;
-    using System.Security ;
-    using System.Diagnostics;
-
-
     //=====================================================================
     /// <summary>
     /// Class has a function similar to that of TextEditor.  It can be attached

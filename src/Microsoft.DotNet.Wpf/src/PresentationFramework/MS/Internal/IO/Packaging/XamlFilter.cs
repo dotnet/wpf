@@ -11,19 +11,13 @@
 //  #define TRACE
 #endif
 
-using System;
 using System.IO;
 using System.Xml;
-using MS.Win32;                         // For SafeNativeMethods
 using System.Globalization;             // For CultureInfo
-using System.Diagnostics;               // For Assert
 using System.Collections;               // For Stack and Hashtable
-using System.Collections.Generic;       // For List<>
 using System.Runtime.InteropServices;   // For COMException
-using System.Runtime.InteropServices.ComTypes;   // For IStream, etc.
 using System.Windows;                   // for ExceptionStringTable
 using MS.Internal.Interop;  // for CHUNK_BREAKTYPE (and other IFilter-related definitions)
-using MS.Internal;          // for Invariant
 
 namespace MS.Internal.IO.Packaging
 {

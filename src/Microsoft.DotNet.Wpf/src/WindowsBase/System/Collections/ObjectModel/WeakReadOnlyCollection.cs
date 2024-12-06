@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 
-
 // This is basically copied from ReadOnlyCollection<T>, with just enough modification
 // to support storage of items as WeakReferences.  Use of internal BCL features
 // is commented out.
@@ -18,13 +17,6 @@
 
 namespace System.Collections.ObjectModel
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Windows;
-    using MS.Internal.WindowsBase;
-
     [Serializable]
     [System.Runtime.InteropServices.ComVisible(false)]
     //[DebuggerTypeProxy(typeof(Mscorlib_CollectionDebugView<>))]

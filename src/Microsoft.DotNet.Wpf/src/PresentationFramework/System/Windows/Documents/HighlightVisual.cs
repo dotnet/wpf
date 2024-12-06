@@ -2,6 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal.Documents;
+using System.Windows.Media;         // Visual
+using System.Collections;
+
 //
 // Description:
 //      Implements the HighlightVisual element for rendering highlight for fixed 
@@ -10,20 +14,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal;                  // DoubleUtil
-    using MS.Internal.Documents;
-    using MS.Utility;                   // ExceptionStringTable
-    using System.ComponentModel;
-    using System.Windows.Threading;             // Dispatcher
-    using System.Windows;               // DependencyID etc.
-    using System.Windows.Media;         // Visual
-    using System.Windows.Shapes;        // Glyphs
-    using System;
-    using System.Collections;
-    using System.IO;
-    using System.Diagnostics;
-        
-
     internal sealed class HighlightVisual : Adorner
     {
         //--------------------------------------------------------------------

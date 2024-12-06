@@ -15,14 +15,9 @@
 //               saved list to the calling pagefunction
 // 
 
-using System;
 using System.Windows.Navigation;
 using System.Windows;
-using System.Diagnostics;
-using System.Collections;
 using System.Reflection;
-using System.IO;
-using System.Security;
 
 namespace MS.Internal.AppModel
 {

@@ -4,26 +4,21 @@
 
 
 
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
+using System.Windows.Interop;
+using System.Windows.Media;
+using System.Windows.Threading;
+using Standard;
+
+using HANDLE_MESSAGE = System.Collections.Generic.KeyValuePair<Standard.WM, Standard.MessageHandler>;
+
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Shell
 #else
 namespace Microsoft.Windows.Shell
 #endif
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Runtime.InteropServices;
-    using System.Security;
-    using System.Threading;
-    using System.Windows;
-    using System.Windows.Interop;
-    using System.Windows.Media;
-    using System.Windows.Threading;
-    using Standard;
-
-    using HANDLE_MESSAGE = System.Collections.Generic.KeyValuePair<Standard.WM, Standard.MessageHandler>;
-
     internal class WindowChromeWorker : DependencyObject
     {
         // Delegate signature used for Dispatcher.BeginInvoke.

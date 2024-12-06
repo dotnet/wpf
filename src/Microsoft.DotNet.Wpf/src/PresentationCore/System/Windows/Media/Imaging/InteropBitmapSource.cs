@@ -6,24 +6,10 @@
 //
 
 
-using System;
-using System.IO;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
 using MS.Internal;
 using MS.Win32.PresentationCore;
-using System.Security;
-using System.Diagnostics;
 using System.Windows.Media;
-using System.Globalization;
-using System.Runtime.InteropServices;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-using MS.Internal.PresentationCore;                        // SecurityHelper
-using SR=MS.Internal.PresentationCore.SR;
 using System.Windows.Media.Imaging;
 
 namespace System.Windows.Interop

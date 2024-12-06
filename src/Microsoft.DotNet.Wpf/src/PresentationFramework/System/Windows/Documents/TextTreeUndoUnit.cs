@@ -6,10 +6,8 @@
 // Description: Base class for all TextContainer undo units.
 //
 
-using System;
 using MS.Internal;
 using MS.Internal.Documents;
-using System.Windows.Data;
 
 namespace System.Windows.Documents
 {

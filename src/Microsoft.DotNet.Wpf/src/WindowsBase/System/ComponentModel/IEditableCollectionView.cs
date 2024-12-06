@@ -2,23 +2,17 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
 // Description: Editing functionality for collection views.
 //
 // See spec at http://sharepoint/sites/wpftsv/Documents/DataGrid/DataGrid_CollectionView.mht
-//
-
-using System;
 
 namespace System.ComponentModel
 {
-/// <summary>
-/// Describes the desired position of the new item placeholder in an
-/// <seealso cref="IEditableCollectionView"/>.
-/// </summary>
-public enum NewItemPlaceholderPosition
+    /// <summary>
+    /// Describes the desired position of the new item placeholder in an
+    /// <seealso cref="IEditableCollectionView"/>.
+    /// </summary>
+    public enum NewItemPlaceholderPosition
 {
     /// <summary> Do not include a placeholder. </summary>
     None,

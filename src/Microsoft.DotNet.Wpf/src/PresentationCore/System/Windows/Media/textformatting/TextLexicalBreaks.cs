@@ -10,9 +10,6 @@
 //
 //
 
-using System;
-using System.Globalization;
-
 namespace System.Windows.Media.TextFormatting
 {
     /// <summary>

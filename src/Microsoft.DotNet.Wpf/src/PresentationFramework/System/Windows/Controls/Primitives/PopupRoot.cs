@@ -2,20 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections;
-using System.Windows.Threading;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Markup;
-using System.Runtime.InteropServices;
-using MS.Utility;
-using MS.Win32;
-using MS.Internal;
-using MS.Internal.Data;
 using MS.Internal.KnownBoxes;
 
 namespace System.Windows.Controls.Primitives

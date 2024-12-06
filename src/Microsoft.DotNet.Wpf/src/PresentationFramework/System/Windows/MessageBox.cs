@@ -3,17 +3,10 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.Runtime.InteropServices;
-using System.Security;
 using System.ComponentModel;
-
-
-using System.Windows;
 using System.Windows.Interop;
-using MS.Utility;
 using MS.Win32;
-using MS.Internal.PresentationFramework;
 
 namespace System.Windows
 {

@@ -2,18 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
-//  Contents:  CharacterMetricsDictionary
-//
-//
-
-using System;
-using SC=System.Collections;
-using System.Collections.Generic;
-
-using SR=MS.Internal.PresentationCore.SR;
+using SC = System.Collections;
 
 // Allow suppression of presharp warnings
 #pragma warning disable 1634, 1691

@@ -9,8 +9,6 @@
 //
 
 
-using System;
-using System.Security;
 using MS.Internal.UIAutomationTypes.Interop;
 
 namespace MS.Internal.Automation

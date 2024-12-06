@@ -6,9 +6,7 @@
 // Description: TextRange provider adaptor for Text Object Model based objects
 //
 
-using System;                               // Exception, ...
 using System.Collections;                   // Hashtable
-using System.Collections.Generic;           // List<L>
 using System.Collections.ObjectModel;       // ReadOnlyCollection<T>
 using System.Globalization;                 // CultureInfo
 using System.Windows;                       // TextDecorationCollection

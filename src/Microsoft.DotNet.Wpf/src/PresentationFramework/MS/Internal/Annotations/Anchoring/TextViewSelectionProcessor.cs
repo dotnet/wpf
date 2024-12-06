@@ -9,23 +9,11 @@
 //     all anchors that intersect with the text in an element's TextView.      
 //
 
-using System;
 using System.Windows;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.Windows.Annotations;
-using System.Windows.Annotations.Storage;
-using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Xml;
-using MS.Utility;
-using System.Windows.Media;
-using System.Windows.Controls.Primitives;
-using MS.Internal.Documents;
-using MS.Internal.PtsHost;
 
 namespace MS.Internal.Annotations.Anchoring
 {

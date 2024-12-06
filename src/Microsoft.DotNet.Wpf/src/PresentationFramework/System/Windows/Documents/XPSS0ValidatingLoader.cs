@@ -4,19 +4,11 @@
 
 #region Using directives
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Markup;
 using System.Xml;
 using System.IO;
 using System.IO.Packaging;
-using System.Xml.Schema;
-using System.Net;
-using System.Resources;
-using System.Reflection;
-using System.Security;
 
 using MS.Internal;
 using MS.Internal.IO.Packaging;
@@ -27,7 +19,6 @@ using MS.Internal.IO.Packaging.Extensions;
 using Package = System.IO.Packaging.Package;
 using PackageRelationship = System.IO.Packaging.PackageRelationship;
 using PackUriHelper = System.IO.Packaging.PackUriHelper;
-using InternalPackUriHelper = MS.Internal.IO.Packaging.PackUriHelper;
 
 namespace System.Windows.Documents
 {

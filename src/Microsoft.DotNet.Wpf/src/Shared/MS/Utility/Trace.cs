@@ -6,16 +6,6 @@
 
 #if !SILVERLIGHTXAML
 
-using System.Collections;
-using System.Diagnostics.Tracing;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Threading;
-using System;
-using MS.Internal.WindowsBase;
-
-
 #if SYSTEM_XAML
 namespace MS.Internal.Xaml
 #else

@@ -4,14 +4,11 @@
 
 
 
+using System.Windows.Input;
+using System.Windows.Media;
+
 namespace System.Windows.Shell
 {
-    using System;
-    using System.Diagnostics;
-    using System.Windows;
-    using System.Windows.Input;
-    using System.Windows.Media;
-
     public sealed class ThumbButtonInfo : Freezable, ICommandSource
     {
         protected override Freezable CreateInstanceCore()

@@ -14,22 +14,16 @@
 //
 //
 
-using System;
 using System.Net;
-using System.Security;
-using System.Diagnostics;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Diagnostics.CodeAnalysis;
-
-using System.Windows;
-using System.Windows.Interop;
 using MS.Win32;
 using MS.Internal.PresentationCore;
 
 namespace MS.Internal.AppModel
 {
-static class CookieHandler
+    static class CookieHandler
 {
     internal static void HandleWebRequest(WebRequest request)
     {

@@ -8,10 +8,8 @@
 //      See spec at Undo spec.htm 
 //
 
-using System;
 using System.Windows;
 using System.Collections;
-using MS.Utility;
 
 namespace MS.Internal.Documents
 {

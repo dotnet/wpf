@@ -6,8 +6,6 @@
 //
 // Description: Object supplied as the source when the resource is fetched from the SystemResources
 //
-using System;
-
 namespace System.Windows
 {
     ///<summary/>

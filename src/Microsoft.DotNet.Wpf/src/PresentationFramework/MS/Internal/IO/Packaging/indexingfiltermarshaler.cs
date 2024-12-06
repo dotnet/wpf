@@ -10,16 +10,10 @@
 //
 
 
-using System.Diagnostics;
-using System;
 using System.Runtime.InteropServices;
-using System.Collections;
 using System.Windows;                     // for ExceptionStringTable
-using System.Security;                    // for SecurityCritical
 
 using MS.Internal.Interop;                // for STAT_CHUNK, etc.
-using MS.Internal;                        // for Invariant
-using MS.Win32;
 
 namespace MS.Internal.IO.Packaging
 {

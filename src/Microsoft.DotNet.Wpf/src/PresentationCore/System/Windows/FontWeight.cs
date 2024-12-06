@@ -8,13 +8,9 @@
 //
 
 
-using System;
 using System.ComponentModel;
-using System.Diagnostics;
 
-using SR=MS.Internal.PresentationCore.SR;
-
-namespace System.Windows 
+namespace System.Windows
 {
     /// <summary>
     /// FontWeight structure describes the degree of blackness or thickness of strokes of characters in a font.

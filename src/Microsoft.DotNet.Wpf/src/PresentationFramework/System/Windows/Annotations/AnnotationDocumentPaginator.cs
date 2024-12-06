@@ -3,18 +3,13 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Windows.Annotations.Storage;
 using System.Windows.Documents;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
-using System.Windows.Shapes;
 using MS.Internal;
 using MS.Internal.Annotations;
 using MS.Internal.Annotations.Anchoring;

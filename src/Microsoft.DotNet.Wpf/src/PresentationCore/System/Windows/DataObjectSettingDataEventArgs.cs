@@ -7,8 +7,6 @@
 // Description: DataObjectSettingData event arguments
 //
 
-using System;
-
 namespace System.Windows
 {
     /// <summary>

@@ -6,32 +6,22 @@
 // Description:  
 //      WebBrowser is a wrapper for the webbrowser activex control     
 
-using System;
-using System.ComponentModel;
 using System.Runtime.InteropServices;
-using System.Windows;
 using MS.Win32;
-using System.Security; 
 using System.Windows.Controls.Primitives; //PopupRoot
-using MS.Internal.Utility ;
+using MS.Internal.Utility;
 using MS.Internal.AppModel; //RootBrowserWindow
 using System.Windows.Interop;
 using System.Windows.Input;
-using System.Windows.Threading;
-using System.Diagnostics;
 using System.Windows.Navigation;
 using System.IO; //Stream
 using System.Threading; // thread
 using MS.Internal;
 using MS.Internal.Controls;
-using MS.Internal.Interop;
 using MS.Internal.Telemetry.PresentationFramework;
-using System.IO.Packaging;
 using System.Diagnostics.CodeAnalysis;
 
 using HRESULT = MS.Internal.Interop.HRESULT;
-using SafeSecurityHelper=MS.Internal.PresentationFramework.SafeSecurityHelper;
-using SecurityHelperPF=MS.Internal.PresentationFramework.SecurityHelper;
 using PackUriHelper = MS.Internal.IO.Packaging.PackUriHelper;
 
 /* Overview of Keyboard Input Routing for the WebOC

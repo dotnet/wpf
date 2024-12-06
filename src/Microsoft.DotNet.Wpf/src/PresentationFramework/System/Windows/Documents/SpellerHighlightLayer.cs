@@ -6,12 +6,9 @@
 // Description: Highlight rendering for the Speller.
 //
 
-using System;
 using MS.Internal;
-using System.Windows.Documents;
 using System.Windows.Media;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace System.Windows.Documents

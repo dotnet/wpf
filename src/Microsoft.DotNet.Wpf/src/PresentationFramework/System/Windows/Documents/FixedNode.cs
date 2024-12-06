@@ -2,6 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Globalization;
+using System.Text;
+
 //
 // Description:
 //      FixedNode is an immutable type that represents a fast and
@@ -12,11 +15,6 @@
 
 namespace System.Windows.Documents
 {
-    using System;
-    using System.Diagnostics;
-    using System.Globalization;
-    using System.Text;
-
     //=====================================================================
     /// <summary>
     /// FixedNode is an immutable type that represents a fast and

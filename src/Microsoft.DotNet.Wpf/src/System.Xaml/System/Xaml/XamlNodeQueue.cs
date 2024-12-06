@@ -4,9 +4,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using System.Diagnostics;
-
 namespace System.Xaml
 {
     // Provides a FIFO buffer for writing nodes and reading them back.

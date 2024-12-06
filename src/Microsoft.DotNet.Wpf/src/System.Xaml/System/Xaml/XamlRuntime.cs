@@ -4,9 +4,7 @@
 
 #nullable disable
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Markup;
 using System.Xaml;

@@ -7,8 +7,6 @@
 //              by a validation rule is not available.
 //
 
-using System;
-
 namespace System.Windows.Data
 {
     ///<summary>Exception class thrown when a value requested by a validation rule is not available</summary>

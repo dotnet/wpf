@@ -73,7 +73,7 @@ namespace System.Xaml
             }
             _internalReader = new ReaderDelegate(_wrappedReader.SchemaContext, xamlNodeNextDelegate, _wrappedReaderHasLineInfo);
 
-            //Standin so it won't start null
+            // Standin so it won't start null
             _currentNode = new XamlNode(XamlNode.InternalNodeType.StartOfStream);
         }
 

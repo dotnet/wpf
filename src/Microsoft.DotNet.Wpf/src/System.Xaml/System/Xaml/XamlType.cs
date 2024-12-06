@@ -1570,7 +1570,7 @@ namespace System.Xaml
             // Constructors.  If the type is TypeExtension then we hard code the right answer.
             if (UnderlyingType == XamlLanguage.Type.UnderlyingType)
             {
-                Dictionary<int, IList<XamlType>> result = new Dictionary<int,IList<XamlType>>();
+                Dictionary<int, IList<XamlType>> result = new Dictionary<int, IList<XamlType>>();
                 XamlType typeOfType = SchemaContext.GetXamlType(typeof(Type));
                 XamlType[] typeVector = new XamlType[] { typeOfType };
                 result.Add(1, GetReadOnly(typeVector));

@@ -42,7 +42,7 @@ namespace System.Xaml
         public EventHandler<XamlObjectEventArgs> AfterEndInitHandler { get; set; }
         public EventHandler<XamlSetValueEventArgs> XamlSetValueHandler { get; set; }
 
-        public Object RootObjectInstance { get; set; }
+        public object RootObjectInstance { get; set; }
         public bool IgnoreCanConvert { get; set; }
         public INameScope ExternalNameScope { get; set; }
         public bool SkipDuplicatePropertyCheck { get; set; }

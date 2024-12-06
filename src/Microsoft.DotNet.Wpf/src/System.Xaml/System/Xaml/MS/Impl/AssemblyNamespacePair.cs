@@ -13,9 +13,9 @@ namespace System.Xaml.MS.Impl
     internal class AssemblyNamespacePair
     {
         WeakReference _assembly;
-        String _clrNamespace;
+        string _clrNamespace;
 
-        public AssemblyNamespacePair(Assembly asm, String clrNamespace)
+        public AssemblyNamespacePair(Assembly asm, string clrNamespace)
         {
             _assembly = new WeakReference(asm);
             _clrNamespace = clrNamespace;

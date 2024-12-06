@@ -115,7 +115,7 @@ namespace System.Xaml.Schema
             get { return _constructorArgument.IsSet; }
         }
 
-        internal IReadOnlyDictionary<char,char> MarkupExtensionBracketCharactersArgument { get; set; }
+        internal IReadOnlyDictionary<char, char> MarkupExtensionBracketCharactersArgument { get; set; }
 
         internal bool MarkupExtensionBracketCharactersArgumentIsSet { get; set; }
 

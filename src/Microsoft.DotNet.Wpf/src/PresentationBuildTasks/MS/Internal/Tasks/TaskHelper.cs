@@ -203,7 +203,11 @@ namespace MS.Internal.Tasks
             while (e.InnerException != null)
             {
                 Exception eInner = e.InnerException;
+#if NET
                 if (!e.Message.Contains(eInner.Message, StringComparison.Ordinal))
+#else
+                if (e.Message.IndexOf(eInner.Message, StringComparison.Ordinal) == -1)
+#endif
                 {
                     message += ", ";
                     message += eInner.Message;

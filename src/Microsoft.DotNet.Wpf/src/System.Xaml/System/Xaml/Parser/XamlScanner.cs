@@ -15,10 +15,10 @@ using MS.Internal.Xaml.Context;
 
 namespace MS.Internal.Xaml.Parser
 {
-    class XamlScanner
+    internal class XamlScanner
     {
-        XmlReader _xmlReader;
-        IXmlLineInfo _xmlLineInfo;
+        private XmlReader _xmlReader;
+        private IXmlLineInfo _xmlLineInfo;
 
         // XamlParserContext vs. XamlScannerStack
         // The XamlScannerStack belongs to the Scanner (aka XamlScanner) exclusively.
@@ -28,17 +28,17 @@ namespace MS.Internal.Xaml.Parser
         // Except the scanner loads namespaces into the Parser's XamlParserContext,
         // and reads from it to resolve type names and namespace prefixes.
         //
-        XamlScannerStack _scannerStack;
-        XamlParserContext _parserContext;
+        private XamlScannerStack _scannerStack;
+        private XamlParserContext _parserContext;
 
-        XamlText _accumulatedText;
-        List<XamlAttribute> _attributes;
-        int _nextAttribute;
-        XamlScannerNode _currentNode;
-        Queue<XamlScannerNode> _readNodesQueue;
-        XamlXmlReaderSettings _settings;
-        XamlAttribute _typeArgumentAttribute;
-        bool _hasKeyAttribute;
+        private XamlText _accumulatedText;
+        private List<XamlAttribute> _attributes;
+        private int _nextAttribute;
+        private XamlScannerNode _currentNode;
+        private Queue<XamlScannerNode> _readNodesQueue;
+        private XamlXmlReaderSettings _settings;
+        private XamlAttribute _typeArgumentAttribute;
+        private bool _hasKeyAttribute;
 
         internal XamlScanner(XamlParserContext context, XmlReader xmlReader, XamlXmlReaderSettings settings)
         {
@@ -859,7 +859,7 @@ namespace MS.Internal.Xaml.Parser
                 KS.Eq(XamlLanguage.XData.Name, name);
         }
 
-        XamlException LineInfo(XamlException e)
+        private XamlException LineInfo(XamlException e)
         {
             if (_xmlLineInfo != null)
             {

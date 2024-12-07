@@ -12,8 +12,8 @@ namespace System.Xaml.MS.Impl
     [DebuggerDisplay("{ClrNamespace} {Assembly.FullName}")]
     internal class AssemblyNamespacePair
     {
-        WeakReference _assembly;
-        String _clrNamespace;
+        private WeakReference _assembly;
+        private String _clrNamespace;
 
         public AssemblyNamespacePair(Assembly asm, String clrNamespace)
         {

@@ -122,7 +122,6 @@
     <Compile Include="MS\Internal\KnownBoxes.cs" />
     <Compile Include="MS\Internal\LoadedOrUnloadedOperation.cs" />
     <Compile Include="MS\Internal\MediaTrace.cs" />
-    <Compile Include="MS\Internal\PartialArray.cs" />
     <Compile Include="MS\Internal\Span.cs" />
     <Compile Include="MS\Internal\SynchronizedInputHelper.cs" />
     <Compile Include="MS\Internal\SystemDrawingHelper.cs" />

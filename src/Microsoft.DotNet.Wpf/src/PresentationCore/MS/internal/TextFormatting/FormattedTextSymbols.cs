@@ -358,7 +358,7 @@ namespace MS.Internal.TextFormatting
 
                     if (glyphOffsets != null)
                     {
-                        _glyphOffsets  = new PartialArray<Point>(new Point[glyphOffsets.Length]);                    
+                        _glyphOffsets = new Point[glyphOffsets.Length];                    
                     
                         for (int i = 0; i < glyphOffsets.Length; i++)
                         {

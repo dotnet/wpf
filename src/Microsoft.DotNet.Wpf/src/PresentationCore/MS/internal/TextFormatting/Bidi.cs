@@ -671,7 +671,7 @@ namespace MS.Internal.TextFormatting
         }
 
         static private void ResolveNeutrals(
-            IList<DirectionClass>   characterClass,   // [IN / OUT]
+            Span<DirectionClass>    characterClass,   // [IN / OUT]
             int                     classIndex,       // [IN]
             int                     count,            // [IN]
             DirectionClass          startClass,       // [IN]
@@ -683,7 +683,7 @@ namespace MS.Internal.TextFormatting
             DirectionClass        endType;
             DirectionClass        resolutionType;
 
-            if ((characterClass == null) || (count == 0))
+            if (count == 0)
             {
                 return;
             }
@@ -726,13 +726,13 @@ namespace MS.Internal.TextFormatting
 
 
         static private void ChangeType(
-            IList<DirectionClass> characterClass,   // [IN / OUT]
+            Span<DirectionClass>  characterClass,   // [IN / OUT]
             int                   classIndex,
             int                   count,            // [IN]
             DirectionClass        newClass          // [IN]
         )
         {
-            if ((characterClass == null) || (count == 0))
+            if (count == 0)
             {
                 return;
             }
@@ -748,7 +748,7 @@ namespace MS.Internal.TextFormatting
 
 
         static private int ResolveNeutralAndWeak(
-            IList<DirectionClass>   characterClass,        // [IN / OUT]
+            Span<DirectionClass>    characterClass,        // [IN / OUT]
             int                     classIndex,            // [IN]
             int                     runLength,             // [IN]
             DirectionClass          sor,                   // [IN]
@@ -1648,11 +1648,11 @@ namespace MS.Internal.TextFormatting
         }
 
         static private void ResolveImplictLevels(
-            IList<DirectionClass>   characterClass,     // [IN / OUT]
+            Span<DirectionClass>    characterClass,     // [IN / OUT]
             CharacterBuffer         charBuffer,         // [IN]
             int                     ichText,            // [IN]
             int                     runLength,          // [IN]
-            IList<byte>             levels,             // [IN / OUT]
+            Span<byte>              levels,             // [IN / OUT]
             int                     index, 
             byte                    paragraphEmbeddingLevel // [IN] Paragraph base level
         )
@@ -1662,9 +1662,8 @@ namespace MS.Internal.TextFormatting
                 return;
             }
 
-            int counter = 0;
-
-            for (counter = runLength -1; counter >= 0; counter--)
+            int counter;
+            for (counter = runLength - 1; counter >= 0; counter--)
             {
                  Invariant.Assert(CharProperty[3, (int) characterClass[counter+index]]==1,
                 ("Cannot have unresolved classes during implict levels resolution"));
@@ -1732,7 +1731,7 @@ namespace MS.Internal.TextFormatting
                 flags,
                 state,
                 levels,
-                new PartialArray<DirectionClass>(characterClass),
+                characterClass,
                 out cchResolved
                 );
         }
@@ -1744,13 +1743,13 @@ namespace MS.Internal.TextFormatting
             int                     cchTextMaxHint,     // hint maximum number of char processed
             Flags                   flags,              // control flags
             State                   state,              // bidi state in, out or both
-            IList<byte>             levels,             // [IN/OUT] resolved level per char
-            IList<DirectionClass>   characterClass,     // [IN/OUT] direction class of each char
+            Span<byte>              levels,             // [IN/OUT] resolved level per char
+            Span<DirectionClass>    characterClass,     // [IN/OUT] direction class of each char
             out int                 cchResolved         // number of char resolved
             )
         {
             DirectionClass          tempClass;
-            int                 []  runLimits;
+            int[]                   runLimits;
             State                   stateIn = null, stateOut = null; // both can point into state parameter
             ulong                   overrideStatus;
             OverrideClass           overrideClass;
@@ -1765,8 +1764,8 @@ namespace MS.Internal.TextFormatting
             int                     runCount         = 0;
             int                     wordCount;
 
-            Invariant.Assert(levels != null && levels.Count >= cchText);
-            Invariant.Assert(characterClass != null && characterClass.Count >= cchText);
+            Invariant.Assert(levels.Length >= cchText);
+            Invariant.Assert(characterClass.Length >= cchText);
 
             cchResolved = 0;
 

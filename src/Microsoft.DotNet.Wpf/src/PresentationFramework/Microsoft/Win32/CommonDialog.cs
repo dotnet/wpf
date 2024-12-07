@@ -100,7 +100,7 @@ namespace Microsoft.Win32
                 // prevent breaking UIAutomation.
                 if (hwndOwner == IntPtr.Zero)
                 {
-                    tempParentHwnd = new HwndWrapper(0, 0, 0, 0, 0, 0, 0, "", IntPtr.Zero, null);
+                    tempParentHwnd = new HwndWrapper(0, 0, 0, 0, 0, 0, 0, string.Empty, IntPtr.Zero);
                     hwndOwner = tempParentHwnd.Handle;
                 }
 

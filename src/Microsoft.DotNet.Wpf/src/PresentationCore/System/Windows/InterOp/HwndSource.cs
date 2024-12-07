@@ -234,18 +234,23 @@ namespace System.Windows.Interop
             // list. If this is done the other way around, first HwndTarget resize will
             // force re-render, then layout will be updated according to the new size,
             // scheduling another render.
-            HwndWrapperHook[] wrapperHooks = { _hwndTargetHook, _layoutHook, _inputHook, null };
 
-            if (null != parameters.HwndSourceHook)
+            ReadOnlySpan<HwndWrapperHook> wrapperHooks = [_hwndTargetHook, _layoutHook, _inputHook, _publicHook];
+
+            if (parameters.HwndSourceHook is not null)
             {
                 // In case there's more than one delegate, add these to the event storage backwards
                 // so they'll get invoked in the expected order.
                 Delegate[] handlers = parameters.HwndSourceHook.GetInvocationList();
-                for (int i = handlers.Length -1; i >= 0; --i)
+                for (int i = handlers.Length - 1; i >= 0; --i)
                 {
                     EventHelper.AddHandler(ref _hooks, (HwndSourceHook)handlers[i]);
                 }
-                wrapperHooks[3] = _publicHook;
+            }
+            else
+            {
+                // In this case, we do not need the _publicHook
+                wrapperHooks = wrapperHooks.Slice(0, 3);
             }
 
             _restoreFocusMode = parameters.RestoreFocusMode;
@@ -260,27 +265,19 @@ namespace System.Windows.Interop
                 parameters.ExtendedWindowStyle &= (~NativeMethods.WS_EX_LAYERED);
             }
 
-
             _constructionParameters = parameters;
-            _hwndWrapper = new HwndWrapper(parameters.WindowClassStyle,
-                                       parameters.WindowStyle,
-                                       parameters.ExtendedWindowStyle,
-                                       parameters.PositionX,
-                                       parameters.PositionY,
-                                       parameters.Width,
-                                       parameters.Height,
-                                       parameters.WindowName,
-                                       parameters.ParentWindow,
-                                       wrapperHooks);
 
-            _hwndTarget = new HwndTarget(_hwndWrapper.Handle);
-            _hwndTarget.UsesPerPixelOpacity = parameters.EffectivePerPixelOpacity;
-            if(_hwndTarget.UsesPerPixelOpacity)
+            _hwndWrapper = new HwndWrapper(parameters.WindowClassStyle, parameters.WindowStyle, parameters.ExtendedWindowStyle,
+                                           parameters.PositionX, parameters.PositionY, parameters.Width, parameters.Height,
+                                           parameters.WindowName, parameters.ParentWindow, wrapperHooks);
+
+            _hwndTarget = new HwndTarget(_hwndWrapper.Handle) { UsesPerPixelOpacity = parameters.EffectivePerPixelOpacity };
+            if (_hwndTarget.UsesPerPixelOpacity)
             {
                 _hwndTarget.BackgroundColor = Colors.Transparent;
 
                 // Prevent this window from being themed.
-                UnsafeNativeMethods.CriticalSetWindowTheme(new HandleRef(this, _hwndWrapper.Handle), "", "");
+                UnsafeNativeMethods.CriticalSetWindowTheme(new HandleRef(this, _hwndWrapper.Handle), string.Empty, string.Empty);
             }
             _constructionParameters = null;
 

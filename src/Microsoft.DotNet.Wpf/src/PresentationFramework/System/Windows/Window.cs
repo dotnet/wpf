@@ -6377,21 +6377,15 @@ namespace System.Windows
         /// </summary>
         private HwndWrapper EnsureHiddenWindow()
         {
-            if (_hiddenWindow == null)
-            {
-                _hiddenWindow = new HwndWrapper(
-                    0, // classStyle
-                    NativeMethods.WS_OVERLAPPEDWINDOW, // style
-                    0, // exStyle
-                    NativeMethods.CW_USEDEFAULT, // x
-                    NativeMethods.CW_USEDEFAULT, // y
-                    NativeMethods.CW_USEDEFAULT, // width
-                    NativeMethods.CW_USEDEFAULT, // height
-                    "Hidden Window", // name
-                    IntPtr.Zero,
-                    null
-                );
-            }
+            _hiddenWindow ??= new HwndWrapper(classStyle: 0,
+                                              NativeMethods.WS_OVERLAPPEDWINDOW, // style
+                                              exStyle: 0,
+                                              NativeMethods.CW_USEDEFAULT, // x
+                                              NativeMethods.CW_USEDEFAULT, // y
+                                              NativeMethods.CW_USEDEFAULT, // width
+                                              NativeMethods.CW_USEDEFAULT, // height
+                                              "Hidden Window", // name
+                                              IntPtr.Zero);
 
             return _hiddenWindow;
         }

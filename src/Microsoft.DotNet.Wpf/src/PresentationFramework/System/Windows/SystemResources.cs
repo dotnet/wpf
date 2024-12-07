@@ -1115,18 +1115,15 @@ namespace System.Windows
             {
                 // Create a top-level, invisible window so we can get the WM_THEMECHANGE notification
                 // and for HwndHost to park non-visible HwndHosts.
-                var hwndNotify =
-                    new HwndWrapper(
-                    classStyle: 0,
-                    style: NativeMethods.WS_POPUP | NativeMethods.WS_DISABLED,
-                    exStyle: 0,
-                    x: x,
-                    y: y,
-                    width: 0,
-                    height: 0,
-                    name: "SystemResourceNotifyWindow",
-                    parent: IntPtr.Zero,
-                    hooks: null);
+                HwndWrapper hwndNotify = new(classStyle: 0,
+                                             style: NativeMethods.WS_POPUP | NativeMethods.WS_DISABLED,
+                                             exStyle: 0,
+                                             x: x,
+                                             y: y,
+                                             width: 0,
+                                             height: 0,
+                                             name: "SystemResourceNotifyWindow",
+                                             parent: IntPtr.Zero);
 
                 // Do not call into DpiUtil.GetExtendedDpiInfoForWindow()
                 // unless IsPerMonitorDpiscalingActive == true. DpiUtil.GetExtendedDpiInfoForWindow()

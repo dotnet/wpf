@@ -66,12 +66,9 @@ namespace System.Windows.Media
 
             // Create a top-level, invisible window so we can get the WM_DWMCOMPOSITIONCHANGED
             // and other DWM notifications that are broadcasted to top-level windows only.
-            HwndWrapper hwndNotification;
-            hwndNotification = new HwndWrapper(0, NativeMethods.WS_POPUP, 0, 0, 0, 0, 0, "MediaContextNotificationWindow", IntPtr.Zero, null);
-
             _hwndNotificationHook = new HwndWrapperHook(MessageFilter);
 
-            _hwndNotification = hwndNotification;
+            _hwndNotification = new HwndWrapper(0, NativeMethods.WS_POPUP, 0, 0, 0, 0, 0, "MediaContextNotificationWindow", parent: IntPtr.Zero);
             _hwndNotification.AddHook(_hwndNotificationHook);
 
             _isDisposed = false;

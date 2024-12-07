@@ -2404,25 +2404,40 @@
               <ToggleButton x:Name="HeaderSite" AutomationProperties.Name="{TemplateBinding AutomationProperties.Name}" Margin="0" Padding="{TemplateBinding Padding}" HorizontalAlignment="Stretch" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}" ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}" FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" FontStyle="{TemplateBinding FontStyle}" FontStretch="{TemplateBinding FontStretch}" FontWeight="{TemplateBinding FontWeight}" Foreground="{TemplateBinding Foreground}" IsChecked="{Binding Path=IsExpanded,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}" IsEnabled="{TemplateBinding IsEnabled}" OverridesDefaultStyle="True" Template="{StaticResource DefaultExpanderToggleButtonDownStyle}" FocusVisualStyle="{DynamicResource DefaultControlFocusVisualStyle}" />
             </Border>
             <Grid x:Name="ContentPresenterGrid" DockPanel.Dock="Bottom" ClipToBounds="True">
+              <!-- Dummy border to store Animation factor for expander -->
+              <Border x:Name="AnimationFactorBorder" Width="0" Visibility="Collapsed" />
               <Border x:Name="ContentPresenterBorder" Background="{DynamicResource ExpanderContentBackground}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,0,1,1" CornerRadius="0,0,4,4" Visibility="Collapsed">
                 <ContentPresenter x:Name="ContentPresenter" Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}" />
-                <Border.Tag>
-                  <system:Double>0.0</system:Double>
-                </Border.Tag>
                 <Border.Resources>
-                  <TranslateTransform x:Key="HeightAnimation">
+                  <TranslateTransform x:Key="HeightAnimationNegative">
                     <TranslateTransform.Y>
                       <MultiBinding Converter="{StaticResource AnimationFactorToValueConverter}" ConverterParameter="negative">
                         <Binding ElementName="ContentPresenterBorder" Path="ActualHeight" />
-                        <Binding ElementName="ContentPresenterBorder" Path="Tag" />
+                        <Binding ElementName="AnimationFactorBorder" Path="Width" />
                       </MultiBinding>
                     </TranslateTransform.Y>
                   </TranslateTransform>
-                  <TranslateTransform x:Key="WidthAnimation">
+                  <TranslateTransform x:Key="WidthAnimationNegative">
                     <TranslateTransform.X>
                       <MultiBinding Converter="{StaticResource AnimationFactorToValueConverter}" ConverterParameter="negative">
                         <Binding ElementName="ContentPresenterBorder" Path="ActualWidth" />
-                        <Binding ElementName="ContentPresenterBorder" Path="Tag" />
+                        <Binding ElementName="AnimationFactorBorder" Path="Width" />
+                      </MultiBinding>
+                    </TranslateTransform.X>
+                  </TranslateTransform>
+                  <TranslateTransform x:Key="HeightAnimationPositive">
+                    <TranslateTransform.Y>
+                      <MultiBinding Converter="{StaticResource AnimationFactorToValueConverter}" ConverterParameter="positive">
+                        <Binding ElementName="ContentPresenterBorder" Path="ActualHeight" />
+                        <Binding ElementName="AnimationFactorBorder" Path="Width" />
+                      </MultiBinding>
+                    </TranslateTransform.Y>
+                  </TranslateTransform>
+                  <TranslateTransform x:Key="WidthAnimationPositive">
+                    <TranslateTransform.X>
+                      <MultiBinding Converter="{StaticResource AnimationFactorToValueConverter}" ConverterParameter="positive">
+                        <Binding ElementName="ContentPresenterBorder" Path="ActualWidth" />
+                        <Binding ElementName="AnimationFactorBorder" Path="Width" />
                       </MultiBinding>
                     </TranslateTransform.X>
                   </TranslateTransform>
@@ -2444,7 +2459,7 @@
                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBorder" Storyboard.TargetProperty="(Border.Visibility)">
                       <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
                     </ObjectAnimationUsingKeyFrames>
-                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBorder" Storyboard.TargetProperty="Tag">
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="AnimationFactorBorder" Storyboard.TargetProperty="Width">
                       <DiscreteDoubleKeyFrame KeyTime="0" Value="1.0" />
                       <SplineDoubleKeyFrame KeySpline="0.0, 0.0, 0.0, 1.0" KeyTime="0:0:0.333" Value="0.0" />
                     </DoubleAnimationUsingKeyFrames>
@@ -2456,9 +2471,9 @@
                   <Storyboard>
                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBorder" Storyboard.TargetProperty="(Border.Visibility)">
                       <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
-                      <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Collapsed}" />
+                      <DiscreteObjectKeyFrame KeyTime="0:0:5" Value="{x:Static Visibility.Collapsed}" />
                     </ObjectAnimationUsingKeyFrames>
-                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBorder" Storyboard.TargetProperty="Tag">
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="AnimationFactorBorder" Storyboard.TargetProperty="Width">
                       <DiscreteDoubleKeyFrame KeyTime="0" Value="0.0" />
                       <SplineDoubleKeyFrame KeySpline="1.0, 1.0, 0.0, 1.0" KeyTime="0:0:0.333" Value="1.0" />
                     </DoubleAnimationUsingKeyFrames>
@@ -2482,8 +2497,8 @@
                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBorder" Storyboard.TargetProperty="(Border.Visibility)">
                       <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
                     </ObjectAnimationUsingKeyFrames>
-                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBorder" Storyboard.TargetProperty="Tag">
-                      <DiscreteDoubleKeyFrame KeyTime="0" Value="-1.0" />
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="AnimationFactorBorder" Storyboard.TargetProperty="Width">
+                      <DiscreteDoubleKeyFrame KeyTime="0" Value="1.0" />
                       <SplineDoubleKeyFrame KeySpline="0.0, 0.0, 0.0, 1.0" KeyTime="0:0:0.333" Value="0.0" />
                     </DoubleAnimationUsingKeyFrames>
                   </Storyboard>
@@ -2496,9 +2511,9 @@
                       <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
                       <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Collapsed}" />
                     </ObjectAnimationUsingKeyFrames>
-                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBorder" Storyboard.TargetProperty="Tag">
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="AnimationFactorBorder" Storyboard.TargetProperty="Width">
                       <DiscreteDoubleKeyFrame KeyTime="0" Value="0.0" />
-                      <SplineDoubleKeyFrame KeySpline="1.0, 1.0, 0.0, 1.0" KeyTime="0:0:0.333" Value="-1.0" />
+                      <SplineDoubleKeyFrame KeySpline="1.0, 1.0, 0.0, 1.0" KeyTime="0:0:0.333" Value="1.0" />
                     </DoubleAnimationUsingKeyFrames>
                   </Storyboard>
                 </BeginStoryboard>
@@ -2520,8 +2535,8 @@
                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBorder" Storyboard.TargetProperty="(Border.Visibility)">
                       <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
                     </ObjectAnimationUsingKeyFrames>
-                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBorder" Storyboard.TargetProperty="Tag">
-                      <DiscreteDoubleKeyFrame KeyTime="0" Value="-1.0" />
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="AnimationFactorBorder" Storyboard.TargetProperty="Width">
+                      <DiscreteDoubleKeyFrame KeyTime="0" Value="1.0" />
                       <SplineDoubleKeyFrame KeySpline="0.0, 0.0, 0.0, 1.0" KeyTime="0:0:0.333" Value="0.0" />
                     </DoubleAnimationUsingKeyFrames>
                   </Storyboard>
@@ -2534,9 +2549,9 @@
                       <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
                       <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Collapsed}" />
                     </ObjectAnimationUsingKeyFrames>
-                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBorder" Storyboard.TargetProperty="Tag">
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="AnimationFactorBorder" Storyboard.TargetProperty="Width">
                       <DiscreteDoubleKeyFrame KeyTime="0" Value="0.0" />
-                      <SplineDoubleKeyFrame KeySpline="1.0, 1.0, 0.0, 1.0" KeyTime="0:0:0.333" Value="-1.0" />
+                      <SplineDoubleKeyFrame KeySpline="1.0, 1.0, 0.0, 1.0" KeyTime="0:0:0.333" Value="1.0" />
                     </DoubleAnimationUsingKeyFrames>
                   </Storyboard>
                 </BeginStoryboard>
@@ -2558,7 +2573,7 @@
                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBorder" Storyboard.TargetProperty="(Border.Visibility)">
                       <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
                     </ObjectAnimationUsingKeyFrames>
-                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBorder" Storyboard.TargetProperty="Tag">
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="AnimationFactorBorder" Storyboard.TargetProperty="Width">
                       <DiscreteDoubleKeyFrame KeyTime="0" Value="1.0" />
                       <SplineDoubleKeyFrame KeySpline="0.0, 0.0, 0.0, 1.0" KeyTime="0:0:0.333" Value="0.0" />
                     </DoubleAnimationUsingKeyFrames>
@@ -2572,7 +2587,7 @@
                       <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
                       <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Collapsed}" />
                     </ObjectAnimationUsingKeyFrames>
-                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBorder" Storyboard.TargetProperty="Tag">
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="AnimationFactorBorder" Storyboard.TargetProperty="Width">
                       <DiscreteDoubleKeyFrame KeyTime="0" Value="0.0" />
                       <SplineDoubleKeyFrame KeySpline="1.0, 1.0, 0.0, 1.0" KeyTime="0:0:0.333" Value="1.0" />
                     </DoubleAnimationUsingKeyFrames>
@@ -2584,22 +2599,22 @@
               <Setter Property="DockPanel.Dock" Value="Right" TargetName="ContentPresenterGrid" />
               <Setter Property="DockPanel.Dock" Value="Left" TargetName="ToggleButtonBorder" />
               <Setter Property="Template" Value="{StaticResource DefaultExpanderToggleButtonRightStyle}" TargetName="HeaderSite" />
-              <Setter Property="RenderTransform" Value="{DynamicResource WidthAnimation}" TargetName="ContentPresenterBorder" />
+              <Setter Property="RenderTransform" Value="{DynamicResource WidthAnimationNegative}" TargetName="ContentPresenterBorder" />
             </Trigger>
             <Trigger Property="ExpandDirection" Value="Up">
               <Setter Property="DockPanel.Dock" Value="Top" TargetName="ContentPresenterGrid" />
               <Setter Property="DockPanel.Dock" Value="Bottom" TargetName="ToggleButtonBorder" />
               <Setter Property="Template" Value="{StaticResource DefaultExpanderToggleButtonUpStyle}" TargetName="HeaderSite" />
-              <Setter Property="RenderTransform" Value="{DynamicResource HeightAnimation}" TargetName="ContentPresenterBorder" />
+              <Setter Property="RenderTransform" Value="{DynamicResource HeightAnimationPositive}" TargetName="ContentPresenterBorder" />
             </Trigger>
             <Trigger Property="ExpandDirection" Value="Down">
-              <Setter Property="RenderTransform" Value="{DynamicResource HeightAnimation}" TargetName="ContentPresenterBorder" />
+              <Setter Property="RenderTransform" Value="{DynamicResource HeightAnimationNegative}" TargetName="ContentPresenterBorder" />
             </Trigger>
             <Trigger Property="ExpandDirection" Value="Left">
               <Setter Property="DockPanel.Dock" Value="Left" TargetName="ContentPresenterGrid" />
               <Setter Property="DockPanel.Dock" Value="Right" TargetName="ToggleButtonBorder" />
               <Setter Property="Template" Value="{StaticResource DefaultExpanderToggleButtonLeftStyle}" TargetName="HeaderSite" />
-              <Setter Property="RenderTransform" Value="{DynamicResource WidthAnimation}" TargetName="ContentPresenterBorder" />
+              <Setter Property="RenderTransform" Value="{DynamicResource WidthAnimationPositive}" TargetName="ContentPresenterBorder" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
               <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ExpanderHeaderDisabledForeground}" />

@@ -19,12 +19,7 @@ using System.IO;
 using System.IO.Packaging;
 using System.Net;
 using System.Net.Cache;                 // for RequestCachePolicy
-using System.Runtime.Serialization;
 using System.Diagnostics;               // For Assert
-using MS.Utility;                       // for EventTrace
-using MS.Internal.IO.Packaging;         // for PackageCacheEntry
-using MS.Internal.PresentationCore;     // for SR exception strings
-using MS.Internal;
 
 namespace MS.Internal.IO.Packaging
 {
@@ -194,8 +189,7 @@ namespace MS.Internal.IO.Packaging
             get
             {
                 // lazy init
-                if (_headers == null)
-                    _headers = new WebHeaderCollection();
+                _headers ??= [];
 
                 return _headers;
             }
@@ -253,8 +247,7 @@ namespace MS.Internal.IO.Packaging
             get
             {
                 // lazy init
-                if (_proxy == null)
-                    _proxy = WebRequest.DefaultWebProxy;
+                _proxy ??= DefaultWebProxy;
 
                 return _proxy;
             }
@@ -329,7 +322,7 @@ namespace MS.Internal.IO.Packaging
         //  Private Methods
         //
         //------------------------------------------------------
-        private bool IsScheme(String schemeName)
+        private bool IsScheme(string schemeName)
         {
             return (string.Equals(_innerUri.Scheme, schemeName, StringComparison.Ordinal));
         }
@@ -340,7 +333,7 @@ namespace MS.Internal.IO.Packaging
         private void SetDefaults()
         {
             // set defaults
-            _connectionGroupName = String.Empty;                // http default
+            _connectionGroupName = string.Empty;                // http default
             _contentType = null;                                // default
             _credentials = null;                                // actual default
             _headers = null;                                    // lazy init
@@ -367,10 +360,10 @@ namespace MS.Internal.IO.Packaging
         //  Private Fields
         //
         //------------------------------------------------------
-        private Uri                 _uri;                   // pack uri
-        private Uri                 _innerUri;              // inner uri extracted from the pack uri
-        private Uri                 _partName;              // name of PackagePart (if any) - null for full-container references
-        private Package             _cacheEntry;            // cached package
+        private readonly Uri         _uri;                   // pack uri
+        private readonly Uri         _innerUri;              // inner uri extracted from the pack uri
+        private readonly Uri         _partName;              // name of PackagePart (if any) - null for full-container references
+        private readonly Package     _cacheEntry;            // cached package
 
         // local copies of public members
         private string              _connectionGroupName;

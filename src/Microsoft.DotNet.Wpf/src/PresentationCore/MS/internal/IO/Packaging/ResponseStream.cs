@@ -24,7 +24,6 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Packaging;      // for PackWebResponse
 using MS.Utility;
-using System.Windows;
 
 namespace MS.Internal.IO.Packaging
 {
@@ -235,18 +234,15 @@ namespace MS.Internal.IO.Packaging
                 {
 #if DEBUG
                     if (PackWebRequestFactory._traceSwitch.Enabled)
-                        System.Diagnostics.Trace.TraceInformation("ContainerResponseStream.Dispose(bool)");
+                        Trace.TraceInformation("ContainerResponseStream.Dispose(bool)");
 #endif
                     _container = null;
 
                     // close the Part or NetStream
                     _innerStream.Close();
 
-                    if (_owningStream != null)
-                    {
-                        // in this case, the innerStream was the part so this is the NetStream
-                        _owningStream.Close();
-                    }
+                    // in this case, the innerStream was the part so this is the NetStream
+                    _owningStream?.Close();
                 }
             }
             finally

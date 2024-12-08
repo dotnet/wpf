@@ -26,7 +26,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
                                   IDestinationTypeProvider,
                                   IXamlLineInfo
     {
-        ObjectWriterContext _xamlContext;
+        private ObjectWriterContext _xamlContext;
 
         public ServiceProviderContext(ObjectWriterContext context)
         {

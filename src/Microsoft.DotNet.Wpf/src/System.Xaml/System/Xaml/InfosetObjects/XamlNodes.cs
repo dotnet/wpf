@@ -30,8 +30,8 @@ namespace System.Xaml
     {
         internal enum InternalNodeType:byte { None, StartOfStream, EndOfStream, EndOfAttributes, LineInfo }
 
-        XamlNodeType _nodeType;
-        InternalNodeType _internalNodeType;
+        private XamlNodeType _nodeType;
+        private InternalNodeType _internalNodeType;
         private object _data;
 
         public XamlNodeType NodeType

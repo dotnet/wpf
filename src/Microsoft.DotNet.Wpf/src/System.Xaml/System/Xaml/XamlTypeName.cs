@@ -14,7 +14,7 @@ namespace System.Xaml.Schema
     [DebuggerDisplay("{ToString()}")]
     public class XamlTypeName
     {
-        List<XamlTypeName> _typeArguments;
+        private List<XamlTypeName> _typeArguments;
 
         public string Name { get; set; }
         public string Namespace { get; set; }

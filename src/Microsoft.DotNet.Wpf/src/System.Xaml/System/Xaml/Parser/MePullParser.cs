@@ -14,10 +14,10 @@ namespace MS.Internal.Xaml.Parser
 {
     internal class MePullParser
     {
-        XamlParserContext _context;
-        string _originalText;
-        MeScanner _tokenizer;
-        string _brokenRule;
+        private XamlParserContext _context;
+        private string _originalText;
+        private MeScanner _tokenizer;
+        private string _brokenRule;
 
         [DebuggerDisplay("{found}")]
         private class Found

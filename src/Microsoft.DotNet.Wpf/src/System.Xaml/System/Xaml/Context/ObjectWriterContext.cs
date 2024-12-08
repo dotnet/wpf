@@ -21,12 +21,12 @@ namespace MS.Internal.Xaml.Context
 
         private object _rootInstance;
 
-        ServiceProviderContext _serviceProviderContext;
-        XamlRuntime _runtime;
-        int _savedDepth;     // The depth of the "saved" part this context is based on.
-        bool _nameResolutionComplete;
-        XamlObjectWriterSettings _settings;
-        List<NameScopeInitializationCompleteSubscriber> _nameScopeInitializationCompleteSubscribers;
+        private ServiceProviderContext _serviceProviderContext;
+        private XamlRuntime _runtime;
+        private int _savedDepth;     // The depth of the "saved" part this context is based on.
+        private bool _nameResolutionComplete;
+        private XamlObjectWriterSettings _settings;
+        private List<NameScopeInitializationCompleteSubscriber> _nameScopeInitializationCompleteSubscribers;
 
         public ObjectWriterContext(XamlSavedContext savedContext,
             XamlObjectWriterSettings settings, XAML3.INameScope rootNameScope, XamlRuntime runtime)
@@ -1030,7 +1030,7 @@ namespace MS.Internal.Xaml.Context
 
         internal class NameScopeInitializationCompleteSubscriber
         {
-            List<XAML3.INameScopeDictionary> _nameScopeDictionaryList = new List<XAML3.INameScopeDictionary>();
+            private List<XAML3.INameScopeDictionary> _nameScopeDictionaryList = new List<XAML3.INameScopeDictionary>();
 
             public EventHandler Handler
             {
@@ -1045,7 +1045,7 @@ namespace MS.Internal.Xaml.Context
 
         private class StackWalkNameResolver : IXamlNameResolver
         {
-            List<XAML3.INameScopeDictionary> _nameScopeDictionaryList;
+            private List<XAML3.INameScopeDictionary> _nameScopeDictionaryList;
 
             public StackWalkNameResolver(List<XAML3.INameScopeDictionary> nameScopeDictionaryList)
             {

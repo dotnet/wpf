@@ -451,7 +451,6 @@ namespace System.Windows
             }
 
             MS.Internal.Text.TextInterface.Font.ResetFontFaceCache();
-            MS.Internal.FontCache.BufferCache.Reset();
 
             if (etwTracingEnabled)
             {

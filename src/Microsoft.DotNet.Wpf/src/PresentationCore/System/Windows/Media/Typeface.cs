@@ -10,6 +10,7 @@
 //
 
 using System;
+using System.Buffers;
 using System.Globalization;
 using System.Collections;
 using System.Collections.Generic;
@@ -406,8 +407,14 @@ namespace System.Windows.Media
             }
 
             bool ignoreWidths = widthMax == double.MaxValue;
-            ushort[] glyphIndices = BufferCache.GetUShorts(charBufferRange.Length);
-            MS.Internal.Text.TextInterface.GlyphMetrics[] glyphMetrics = ignoreWidths ? null : BufferCache.GetGlyphMetrics(charBufferRange.Length);
+            bool releaseMetrics = false;
+            ushort[] glyphIndices = ArrayPool<ushort>.Shared.Rent(charBufferRange.Length);
+            MS.Internal.Text.TextInterface.GlyphMetrics[] glyphMetrics = null;
+            if (!ignoreWidths)
+            {
+                glyphMetrics = ArrayPool<MS.Internal.Text.TextInterface.GlyphMetrics>.Shared.Rent(charBufferRange.Length);
+                releaseMetrics = true;
+            }
 
             glyphTypeface.GetGlyphMetricsOptimized(charBufferRange, 
                                                    emSize,
@@ -497,9 +504,12 @@ namespace System.Windows.Media
                 }
             }
 
-            BufferCache.ReleaseUShorts(glyphIndices);
+            ArrayPool<ushort>.Shared.Return(glyphIndices);
             glyphIndices = null;
-            BufferCache.ReleaseGlyphMetrics(glyphMetrics);
+            if (releaseMetrics)
+            {
+                ArrayPool<MS.Internal.Text.TextInterface.GlyphMetrics>.Shared.Return(glyphMetrics);
+            }
             glyphMetrics = null;
 
             if (symbolTypeface)
@@ -632,7 +642,7 @@ namespace System.Windows.Media
             GlyphTypeface glyphTypeface = TryGetGlyphTypeface();
             Invariant.Assert(glyphTypeface != null);
 
-            MS.Internal.Text.TextInterface.GlyphMetrics[] glyphMetrics = BufferCache.GetGlyphMetrics(charBufferRange.Length);
+            MS.Internal.Text.TextInterface.GlyphMetrics[] glyphMetrics = ArrayPool<MS.Internal.Text.TextInterface.GlyphMetrics>.Shared.Rent(charBufferRange.Length);
 
             glyphTypeface.GetGlyphMetricsOptimized(charBufferRange, 
                                                    emSize,
@@ -663,7 +673,7 @@ namespace System.Windows.Media
                 }
             }
 
-            BufferCache.ReleaseGlyphMetrics(glyphMetrics);
+            ArrayPool<MS.Internal.Text.TextInterface.GlyphMetrics>.Shared.Return(glyphMetrics);
         }
 
         /// <summary>

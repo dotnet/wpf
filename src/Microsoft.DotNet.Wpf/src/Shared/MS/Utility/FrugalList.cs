@@ -238,7 +238,7 @@ namespace MS.Utility
         {
             // If we don't have any entries or the existing entry is being overwritten,
             // then we can use this store. Otherwise we have to promote.
-            if (0 == _count)
+            if (_count == 0)
             {
                 _loneEntry = value;
                 ++_count;
@@ -319,7 +319,7 @@ namespace MS.Utility
 
         public override void Promote(FrugalListBase<T> oldList)
         {
-            if (SIZE == oldList.Count)
+            if (oldList.Count == SIZE)
             {
                 SetCount(SIZE);
                 SetAt(0, oldList.EntryAt(0));
@@ -421,7 +421,7 @@ namespace MS.Utility
 
         public override bool Contains(T value)
         {
-            return (-1 != IndexOf(value));
+            return (IndexOf(value) != -1);
         }
 
         public override int IndexOf(T value)
@@ -436,7 +436,7 @@ namespace MS.Utility
                 {
                     return 1;
                 }
-                if ((3 == _count) && EqualityComparer<T>.Default.Equals(_entry2, value))
+                if ((_count == 3) && EqualityComparer<T>.Default.Equals(_entry2, value))
                 {
                     return 2;
                 }
@@ -514,7 +514,7 @@ namespace MS.Utility
                     RemoveAt(1);
                     return true;
                 }
-                else if ((3 == _count) && EqualityComparer<T>.Default.Equals(_entry2, value))
+                else if ((_count == 3) && EqualityComparer<T>.Default.Equals(_entry2, value))
                 {
                     RemoveAt(2);
                     return true;
@@ -570,7 +570,7 @@ namespace MS.Utility
         public override void Promote(FrugalListBase<T> oldList)
         {
             int oldCount = oldList.Count;
-            if (SIZE >= oldCount)
+            if (oldCount <= SIZE)
             {
                 SetCount(oldList.Count);
 
@@ -758,7 +758,7 @@ namespace MS.Utility
 
         public override bool Contains(T value)
         {
-            return (-1 != IndexOf(value));
+            return (IndexOf(value) != -1);
         }
 
         public override int IndexOf(T value)
@@ -791,7 +791,7 @@ namespace MS.Utility
                             {
                                 return 4;
                             }
-                            if ((6 == _count) && EqualityComparer<T>.Default.Equals(_entry5, value))
+                            if ((_count == 6) && EqualityComparer<T>.Default.Equals(_entry5, value))
                             {
                                 return 5;
                             }
@@ -929,7 +929,7 @@ namespace MS.Utility
                                 RemoveAt(4);
                                 return true;
                             }
-                            else if ((6 == _count) && EqualityComparer<T>.Default.Equals(_entry5, value))
+                            else if ((_count == 6) && EqualityComparer<T>.Default.Equals(_entry5, value))
                             {
                                 RemoveAt(5);
                                 return true;
@@ -1019,7 +1019,7 @@ namespace MS.Utility
         public override void Promote(FrugalListBase<T> oldList)
         {
             int oldCount = oldList.Count;
-            if (SIZE >= oldCount)
+            if (oldCount <= SIZE)
             {
                 SetCount(oldList.Count);
 
@@ -1082,7 +1082,7 @@ namespace MS.Utility
         public void Promote(ThreeItemList<T> oldList)
         {
             int oldCount = oldList.Count;
-            if (SIZE <= oldCount)
+            if (oldCount >= SIZE)
             {
                 SetCount(oldList.Count);
 
@@ -1393,7 +1393,7 @@ namespace MS.Utility
         {
             for (int index = 0; index < oldList.Count; ++index)
             {
-                if (FrugalListStoreState.Success == Add(oldList.EntryAt(index)))
+                if (Add(oldList.EntryAt(index)) == FrugalListStoreState.Success)
                 {
                     continue;
                 }
@@ -1615,7 +1615,7 @@ namespace MS.Utility
         {
             get
             {
-                if (null != _listStore)
+                if (_listStore != null)
                 {
                     return _listStore.Capacity;
                 }
@@ -1624,7 +1624,7 @@ namespace MS.Utility
             set
             {
                 int capacity = 0;
-                if (null != _listStore)
+                if (_listStore != null)
                 {
                     capacity = _listStore.Capacity;
                 }
@@ -1650,7 +1650,7 @@ namespace MS.Utility
                         newStore = new ArrayItemList<T>(value);
                     }
 
-                    if (null != _listStore)
+                    if (_listStore != null)
                     {
                         // Move entries in the old store to the new one
                         newStore.Promote(_listStore);
@@ -1665,7 +1665,7 @@ namespace MS.Utility
         {
             get
             {
-                if (null != _listStore)
+                if (_listStore != null)
                 {
                     return _listStore.Count;
                 }
@@ -1679,7 +1679,7 @@ namespace MS.Utility
             get
             {
                 // If no entry, default(T) is returned
-                if ((null != _listStore) && ((index < _listStore.Count) && (index >= 0)))
+                if ((_listStore != null) && ((index < _listStore.Count) && (index >= 0)))
                 {
                     return _listStore.EntryAt(index);
                 }
@@ -1689,7 +1689,7 @@ namespace MS.Utility
             set
             {
                 // Ensure write success
-                if ((null != _listStore) && ((index < _listStore.Count) && (index >= 0)))
+                if ((_listStore != null) && ((index < _listStore.Count) && (index >= 0)))
                 {
                     _listStore.SetAt(index, value);
                     return;
@@ -1700,7 +1700,7 @@ namespace MS.Utility
 
         public int Add(T value)
         {
-            if (null != _listStore)
+            if (_listStore != null)
             {
                 // This is done because forward branches
                 // default prediction is not to be taken
@@ -1713,7 +1713,7 @@ namespace MS.Utility
             }
 
             FrugalListStoreState myState = _listStore.Add(value);
-            if (FrugalListStoreState.Success == myState)
+            if (myState == FrugalListStoreState.Success)
             {
             }
             else
@@ -1722,7 +1722,7 @@ namespace MS.Utility
                 // Allocate the store, promote, and add using the derived classes
                 // to avoid virtual method calls
 
-                if (FrugalListStoreState.ThreeItemList == myState)
+                if (myState == FrugalListStoreState.ThreeItemList)
                 {
                     ThreeItemList<T> newStore = new ThreeItemList<T>();
 
@@ -1733,7 +1733,7 @@ namespace MS.Utility
                     newStore.Add(value);
                     _listStore = newStore;
                 }
-                else if (FrugalListStoreState.SixItemList == myState)
+                else if (myState == FrugalListStoreState.SixItemList)
                 {
                     SixItemList<T> newStore = new SixItemList<T>();
 
@@ -1745,7 +1745,7 @@ namespace MS.Utility
                     newStore.Add(value);
                     _listStore = newStore;
                 }
-                else if (FrugalListStoreState.Array == myState)
+                else if (myState == FrugalListStoreState.Array)
                 {
                     ArrayItemList<T> newStore = new ArrayItemList<T>(_listStore.Count + 1);
 
@@ -1767,7 +1767,7 @@ namespace MS.Utility
 
         public void Clear()
         {
-            if (null != _listStore)
+            if (_listStore != null)
             {
                 _listStore.Clear();
             }
@@ -1775,7 +1775,7 @@ namespace MS.Utility
 
         public bool Contains(T value)
         {
-            if ((null != _listStore) && (_listStore.Count > 0))
+            if ((_listStore != null) && (_listStore.Count > 0))
             {
                 return _listStore.Contains(value);
             }
@@ -1784,7 +1784,7 @@ namespace MS.Utility
 
         public int IndexOf(T value)
         {
-            if ((null != _listStore) && (_listStore.Count > 0))
+            if ((_listStore != null) && (_listStore.Count > 0))
             {
                 return _listStore.IndexOf(value);
             }
@@ -1793,12 +1793,12 @@ namespace MS.Utility
 
         public void Insert(int index, T value)
         {
-            if ((index == 0) || ((null != _listStore) && ((index <= _listStore.Count) && (index >= 0))))
+            if ((index == 0) || ((_listStore != null) && ((index <= _listStore.Count) && (index >= 0))))
             {
                 // Make sure we have a place to put the item
                 int minCapacity = 1;
 
-                if ((null != _listStore) && (_listStore.Count == _listStore.Capacity))
+                if ((_listStore != null) && (_listStore.Count == _listStore.Capacity))
                 {
                     // Store is full
                     minCapacity = Capacity + 1;
@@ -1815,7 +1815,7 @@ namespace MS.Utility
 
         public bool Remove(T value)
         {
-            if ((null != _listStore) && (_listStore.Count > 0))
+            if ((_listStore != null) && (_listStore.Count > 0))
             {
                 return _listStore.Remove(value);
             }
@@ -1824,7 +1824,7 @@ namespace MS.Utility
 
         public void RemoveAt(int index)
         {
-            if ((null != _listStore) && ((index < _listStore.Count) && (index >= 0)))
+            if ((_listStore != null) && ((index < _listStore.Count) && (index >= 0)))
             {
                 _listStore.RemoveAt(index);
                 return;
@@ -1854,7 +1854,7 @@ namespace MS.Utility
 
         public T[] ToArray()
         {
-            if ((null != _listStore) && (_listStore.Count > 0))
+            if ((_listStore != null) && (_listStore.Count > 0))
             {
                 return _listStore.ToArray();
             }
@@ -1863,7 +1863,7 @@ namespace MS.Utility
 
         public void CopyTo(T[] array, int index)
         {
-            if ((null != _listStore) && (_listStore.Count > 0))
+            if ((_listStore != null) && (_listStore.Count > 0))
             {
                 _listStore.CopyTo(array, index);
             }
@@ -1873,7 +1873,7 @@ namespace MS.Utility
         {
             FrugalObjectList<T> myClone = new FrugalObjectList<T>();
 
-            if (null != _listStore)
+            if (_listStore != null)
             {
                 myClone._listStore = (FrugalListBase<T>)_listStore.Clone();
             }
@@ -1987,7 +1987,7 @@ namespace MS.Utility
         {
             get
             {
-                if (null != _listStore)
+                if (_listStore != null)
                 {
                     return _listStore.Capacity;
                 }
@@ -1996,7 +1996,7 @@ namespace MS.Utility
             set
             {
                 int capacity = 0;
-                if (null != _listStore)
+                if (_listStore != null)
                 {
                     capacity = _listStore.Capacity;
                 }
@@ -2022,7 +2022,7 @@ namespace MS.Utility
                         newStore = new ArrayItemList<T>(value);
                     }
 
-                    if (null != _listStore)
+                    if (_listStore != null)
                     {
                         // Move entries in the old store to the new one
                         newStore.Promote(_listStore);
@@ -2037,7 +2037,7 @@ namespace MS.Utility
         {
             get
             {
-                if (null != _listStore)
+                if (_listStore != null)
                 {
                     return _listStore.Count;
                 }
@@ -2051,7 +2051,7 @@ namespace MS.Utility
             get
             {
                 // If no entry, default(T) is returned
-                if ((null != _listStore) && ((index < _listStore.Count) && (index >= 0)))
+                if ((_listStore != null) && ((index < _listStore.Count) && (index >= 0)))
                 {
                     return _listStore.EntryAt(index);
                 }
@@ -2061,7 +2061,7 @@ namespace MS.Utility
             set
             {
                 // Ensure write success
-                if ((null != _listStore) && ((index < _listStore.Count) && (index >= 0)))
+                if ((_listStore != null) && ((index < _listStore.Count) && (index >= 0)))
                 {
                     _listStore.SetAt(index, value);
                     return;
@@ -2072,7 +2072,7 @@ namespace MS.Utility
 
         public int Add(T value)
         {
-            if (null != _listStore)
+            if (_listStore != null)
             {
                 // This is done because forward branches
                 // default prediction is not to be taken
@@ -2085,7 +2085,7 @@ namespace MS.Utility
             }
 
             FrugalListStoreState myState = _listStore.Add(value);
-            if (FrugalListStoreState.Success == myState)
+            if (myState == FrugalListStoreState.Success)
             {
             }
             else
@@ -2094,7 +2094,7 @@ namespace MS.Utility
                 // Allocate the store, promote, and add using the derived classes
                 // to avoid virtual method calls
 
-                if (FrugalListStoreState.ThreeItemList == myState)
+                if (myState == FrugalListStoreState.ThreeItemList)
                 {
                     ThreeItemList<T> newStore = new ThreeItemList<T>();
 
@@ -2105,7 +2105,7 @@ namespace MS.Utility
                     newStore.Add(value);
                     _listStore = newStore;
                 }
-                else if (FrugalListStoreState.SixItemList == myState)
+                else if (myState == FrugalListStoreState.SixItemList)
                 {
                     SixItemList<T> newStore = new SixItemList<T>();
 
@@ -2117,7 +2117,7 @@ namespace MS.Utility
                     newStore.Add(value);
                     _listStore = newStore;
                 }
-                else if (FrugalListStoreState.Array == myState)
+                else if (myState == FrugalListStoreState.Array)
                 {
                     ArrayItemList<T> newStore = new ArrayItemList<T>(_listStore.Count + 1);
 
@@ -2139,7 +2139,7 @@ namespace MS.Utility
 
         public void Clear()
         {
-            if (null != _listStore)
+            if (_listStore != null)
             {
                 _listStore.Clear();
             }
@@ -2147,7 +2147,7 @@ namespace MS.Utility
 
         public bool Contains(T value)
         {
-            if ((null != _listStore) && (_listStore.Count > 0))
+            if ((_listStore != null) && (_listStore.Count > 0))
             {
                 return _listStore.Contains(value);
             }
@@ -2156,7 +2156,7 @@ namespace MS.Utility
 
         public int IndexOf(T value)
         {
-            if ((null != _listStore) && (_listStore.Count > 0))
+            if ((_listStore != null) && (_listStore.Count > 0))
             {
                 return _listStore.IndexOf(value);
             }
@@ -2165,12 +2165,12 @@ namespace MS.Utility
 
         public void Insert(int index, T value)
         {
-            if ((index == 0) || ((null != _listStore) && ((index <= _listStore.Count) && (index >= 0))))
+            if ((index == 0) || ((_listStore != null) && ((index <= _listStore.Count) && (index >= 0))))
             {
                 // Make sure we have a place to put the item
                 int minCapacity = 1;
 
-                if ((null != _listStore) && (_listStore.Count == _listStore.Capacity))
+                if ((_listStore != null) && (_listStore.Count == _listStore.Capacity))
                 {
                     // Store is full
                     minCapacity = Capacity + 1;
@@ -2187,7 +2187,7 @@ namespace MS.Utility
 
         public bool Remove(T value)
         {
-            if ((null != _listStore) && (_listStore.Count > 0))
+            if ((_listStore != null) && (_listStore.Count > 0))
             {
                 return _listStore.Remove(value);
             }
@@ -2196,7 +2196,7 @@ namespace MS.Utility
 
         public void RemoveAt(int index)
         {
-            if ((null != _listStore) && ((index < _listStore.Count) && (index >= 0)))
+            if ((_listStore != null) && ((index < _listStore.Count) && (index >= 0)))
             {
                 _listStore.RemoveAt(index);
                 return;
@@ -2226,7 +2226,7 @@ namespace MS.Utility
 
         public T[] ToArray()
         {
-            if ((null != _listStore) && (_listStore.Count > 0))
+            if ((_listStore != null) && (_listStore.Count > 0))
             {
                 return _listStore.ToArray();
             }
@@ -2235,7 +2235,7 @@ namespace MS.Utility
 
         public void CopyTo(T[] array, int index)
         {
-            if ((null != _listStore) && (_listStore.Count > 0))
+            if ((_listStore != null) && (_listStore.Count > 0))
             {
                 _listStore.CopyTo(array, index);
             }
@@ -2245,7 +2245,7 @@ namespace MS.Utility
         {
             FrugalStructList<T> myClone = new FrugalStructList<T>();
 
-            if (null != _listStore)
+            if (_listStore != null)
             {
                 myClone._listStore = (FrugalListBase<T>)_listStore.Clone();
             }

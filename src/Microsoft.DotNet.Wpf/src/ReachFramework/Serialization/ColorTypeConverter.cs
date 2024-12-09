@@ -155,7 +155,7 @@ namespace System.Windows.Xps.Serialization
             {
                 colorString = color.ToString(culture);
 
-                if (colorString.StartsWith("sc#", StringComparison.Ordinal) && colorString.Contains("E"))
+                if (colorString.StartsWith("sc#", StringComparison.Ordinal) && colorString.Contains('E'))
                 {
                     //
                     // Fix bug 1588888: Serialization produces non-compliant scRGB color string.

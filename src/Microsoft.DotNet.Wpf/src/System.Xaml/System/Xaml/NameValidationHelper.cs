@@ -32,7 +32,7 @@ namespace System.Xaml
             UnicodeCategory uc;
             for (int i = 0; i < name.Length; i++)
             {
-                uc = Char.GetUnicodeCategory(name[i]);
+                uc = char.GetUnicodeCategory(name[i]);
                 bool idStart = (uc == UnicodeCategory.UppercaseLetter || // (Lu)
                              uc == UnicodeCategory.LowercaseLetter || // (Ll)
                              uc == UnicodeCategory.TitlecaseLetter || // (Lt)

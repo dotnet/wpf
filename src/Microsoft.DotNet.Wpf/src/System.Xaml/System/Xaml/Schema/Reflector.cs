@@ -125,7 +125,7 @@ namespace System.Xaml.Schema
             }
         }
 
-        public IReadOnlyDictionary<char,char> GetBracketCharacterAttributes(Type attributeType)
+        public IReadOnlyDictionary<char, char> GetBracketCharacterAttributes(Type attributeType)
         {
             if (CustomAttributeProvider != null)
             {

@@ -24,7 +24,7 @@ namespace MS.Internal.Xaml.Parser
 
         public static XamlPropertyName Parse(string longName)
         {
-            if(String.IsNullOrEmpty(longName))
+            if(string.IsNullOrEmpty(longName))
             {
                 return null;
             }
@@ -45,7 +45,7 @@ namespace MS.Internal.Xaml.Parser
             {
                 owner = dottedName.Substring(start, dotIdx);
 
-                if (String.IsNullOrEmpty(owner))
+                if (string.IsNullOrEmpty(owner))
                 {
                     return null;
                 }
@@ -56,7 +56,7 @@ namespace MS.Internal.Xaml.Parser
             string name = (start == 0) ? dottedName : dottedName.Substring(start);
 
             XamlQualifiedName ownerName = null;
-            if (!String.IsNullOrEmpty(owner))
+            if (!string.IsNullOrEmpty(owner))
             {
                 ownerName = new XamlQualifiedName(prefix, owner);
             }

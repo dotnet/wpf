@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,7 +21,7 @@ namespace MS.Internal
 
         internal static void ProvideContextForObject(
             DependencyObject context,
-            DependencyObject newValue )
+            DependencyObject newValue)
         {
             if (context != null)
             {
@@ -39,7 +39,7 @@ namespace MS.Internal
 
         internal static void RemoveContextFromObject(
             DependencyObject context,
-            DependencyObject oldValue )
+            DependencyObject oldValue)
         {
             if (context != null && oldValue.InheritanceContext == context)
             {
@@ -60,7 +60,7 @@ namespace MS.Internal
         internal static void AddInheritanceContext(DependencyObject newInheritanceContext,
                                                               DependencyObject value,
                                                               ref bool hasMultipleInheritanceContexts,
-                                                              ref DependencyObject inheritanceContext )
+                                                              ref DependencyObject inheritanceContext)
         {
             // ignore the request when the new context is the same as the old,
             // or when there are already multiple contexts
@@ -96,7 +96,7 @@ namespace MS.Internal
         internal static void RemoveInheritanceContext(DependencyObject oldInheritanceContext,
                                                               DependencyObject value,
                                                               ref bool hasMultipleInheritanceContexts,
-                                                              ref DependencyObject inheritanceContext )
+                                                              ref DependencyObject inheritanceContext)
         {
             // ignore the request when the given context doesn't match the old one,
             // or when there are already multiple contexts

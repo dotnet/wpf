@@ -1,10 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
-using System.Windows.Media.Animation;
 using System.Windows.Markup;
+using System.Windows.Media.Animation;
 
 namespace System.Windows.Media
 {
@@ -158,7 +158,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override void CloneCore(Freezable sourceFreezable)
         {
-            MediaTimeline sourceTimeline = (MediaTimeline) sourceFreezable;
+            MediaTimeline sourceTimeline = (MediaTimeline)sourceFreezable;
             base.CloneCore(sourceFreezable);
 
             CopyCommon(sourceTimeline);
@@ -169,7 +169,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable sourceFreezable)
         {
-            MediaTimeline sourceTimeline = (MediaTimeline) sourceFreezable;
+            MediaTimeline sourceTimeline = (MediaTimeline)sourceFreezable;
             base.CloneCurrentValueCore(sourceFreezable);
 
             CopyCommon(sourceTimeline);
@@ -180,7 +180,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override void GetAsFrozenCore(Freezable source)
         {
-            MediaTimeline sourceTimeline = (MediaTimeline) source;
+            MediaTimeline sourceTimeline = (MediaTimeline)source;
             base.GetAsFrozenCore(source);
 
             CopyCommon(sourceTimeline);
@@ -191,7 +191,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable source)
         {
-            MediaTimeline sourceTimeline = (MediaTimeline) source;
+            MediaTimeline sourceTimeline = (MediaTimeline)source;
             base.GetCurrentValueAsFrozenCore(source);
 
             CopyCommon(sourceTimeline);

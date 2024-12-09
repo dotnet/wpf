@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -74,7 +74,7 @@ namespace MS.Internal
 
             // handle the assemblies that are already loaded
             Assembly[] assemblies = domain.GetAssemblies();
-            for (int i=assemblies.Length-1;  i>=0;  --i)
+            for (int i = assemblies.Length - 1; i >= 0; --i)
             {
                 OnLoaded(assemblies[i]);
             }
@@ -101,7 +101,7 @@ namespace MS.Internal
         static SystemDrawingExtensionMethods _systemDrawingExtensionMethods;
 
         // load the extension class for System.Drawing
-        internal static SystemDrawingExtensionMethods ExtensionsForSystemDrawing(bool force=false)
+        internal static SystemDrawingExtensionMethods ExtensionsForSystemDrawing(bool force = false)
         {
             if (_systemDrawingExtensionMethods == null &&
                 (force || IsLoaded(UncommonAssembly.System_Drawing_Common)))
@@ -119,7 +119,7 @@ namespace MS.Internal
         static SystemXmlExtensionMethods _systemXmlExtensionMethods;
 
         // load the extension class for System.Xml
-        internal static SystemXmlExtensionMethods ExtensionsForSystemXml(bool force=false)
+        internal static SystemXmlExtensionMethods ExtensionsForSystemXml(bool force = false)
         {
             if (_systemXmlExtensionMethods == null &&
                 (force || IsLoaded(UncommonAssembly.System_Private_Xml)))
@@ -137,7 +137,7 @@ namespace MS.Internal
         static SystemXmlLinqExtensionMethods _systemXmlLinqExtensionMethods;
 
         // load the extension class for System.XmlLinq
-        internal static SystemXmlLinqExtensionMethods ExtensionsForSystemXmlLinq(bool force=false)
+        internal static SystemXmlLinqExtensionMethods ExtensionsForSystemXmlLinq(bool force = false)
         {
             if (_systemXmlLinqExtensionMethods == null &&
                 (force || IsLoaded(UncommonAssembly.System_Private_Xml_Linq)))
@@ -155,7 +155,7 @@ namespace MS.Internal
         static SystemDataExtensionMethods _systemDataExtensionMethods;
 
         // load the extension class for System.Data
-        internal static SystemDataExtensionMethods ExtensionsForSystemData(bool force=false)
+        internal static SystemDataExtensionMethods ExtensionsForSystemData(bool force = false)
         {
             if (_systemDataExtensionMethods == null &&
                 (force || IsLoaded(UncommonAssembly.System_Data_Common)))
@@ -173,7 +173,7 @@ namespace MS.Internal
         static SystemCoreExtensionMethods _systemCoreExtensionMethods;
 
         // load the extension class for System.Core
-        internal static SystemCoreExtensionMethods ExtensionsForSystemCore(bool force=false)
+        internal static SystemCoreExtensionMethods ExtensionsForSystemCore(bool force = false)
         {
             // System.Core is always loaded by default on .NET Framework. On .NET Core, 
             // System.Core is a facade assembly never loaded by the CLR, and System.Core types 
@@ -204,7 +204,7 @@ namespace MS.Internal
             object result = null;
 
             // create the instance of the extension class
-            Type extensionType = Type.GetType($"{extensionTypeName}, {extensionAssemblyName}", throwOnError:false);
+            Type extensionType = Type.GetType($"{extensionTypeName}, {extensionAssemblyName}", throwOnError: false);
             if (extensionType != null)
             {
                 result = Activator.CreateInstance(extensionType);
@@ -230,7 +230,7 @@ namespace MS.Internal
                 return;
 
             // see if the assembly matches one of the uncommon assemblies
-            for (int i=_records.Length-1; i>=0; --i)
+            for (int i = _records.Length - 1; i >= 0; --i)
             {
                 if (!_records[i].IsLoaded &&
                     assembly.FullName.StartsWith(_records[i].Name, StringComparison.OrdinalIgnoreCase))

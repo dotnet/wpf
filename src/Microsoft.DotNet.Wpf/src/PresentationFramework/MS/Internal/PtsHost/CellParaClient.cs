@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,15 +7,14 @@
 // Description: Para client for cell
 //
 
-using MS.Internal.Text;
-using MS.Internal.Documents;
-using MS.Internal.PtsTable;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
-using System.Collections.ObjectModel;
-
+using MS.Internal.Documents;
 using MS.Internal.PtsHost.UnsafeNativeMethods;
+using MS.Internal.PtsTable;
+using MS.Internal.Text;
 
 namespace MS.Internal.PtsHost
 {
@@ -90,7 +89,7 @@ namespace MS.Internal.PtsHost
                 durCellWidth += calculatedColumns[i].DurWidth + durCellSpacing;
             } while (--i >= ColumnIndex);
 
-            if(tableFlowDirection != PageFlowDirection)
+            if (tableFlowDirection != PageFlowDirection)
             {
                 PTS.FSRECT pageRect = pageContext.PageRect;
 
@@ -102,7 +101,7 @@ namespace MS.Internal.PtsHost
             _rect.du = TextDpi.ToTextDpi(durCellWidth);
             _rect.dv = TextDpi.ToTextDpi(_arrangeHeight);
 
-            if(tableFlowDirection != PageFlowDirection)
+            if (tableFlowDirection != PageFlowDirection)
             {
                 PTS.FSRECT pageRect = pageContext.PageRect;
 
@@ -115,7 +114,7 @@ namespace MS.Internal.PtsHost
 
             OnArrange();
 
-            if(_paraHandle != IntPtr.Zero)
+            if (_paraHandle != IntPtr.Zero)
             {
                 PTS.Validate(PTS.FsClearUpdateInfoInSubpage(PtsContext.Context, _paraHandle), PtsContext);
             }
@@ -141,7 +140,7 @@ namespace MS.Internal.PtsHost
         /// <param name="fsfmtr">Format result</param>
         /// <param name="dvrUsed">dvr Used</param>
         /// <param name="breakRecordOut">Resultant break record for end of page</param>
-        internal void FormatCellFinite(Size subpageSize, IntPtr breakRecordIn, bool isEmptyOk, uint fswdir, 
+        internal void FormatCellFinite(Size subpageSize, IntPtr breakRecordIn, bool isEmptyOk, uint fswdir,
                                        PTS.FSKSUPPRESSHARDBREAKBEFOREFIRSTPARA fsksuppresshardbreakbeforefirstparaIn,
                                        out PTS.FSFMTR fsfmtr, out int dvrUsed, out IntPtr breakRecordOut)
         {
@@ -152,7 +151,7 @@ namespace MS.Internal.PtsHost
             int dvrTopSpace;
             PTS.FSPAP fspap;
 
-            if(CellParagraph.StructuralCache.DtrList != null && breakRecordIn != IntPtr.Zero)
+            if (CellParagraph.StructuralCache.DtrList != null && breakRecordIn != IntPtr.Zero)
             {
                 CellParagraph.InvalidateStructure(TextContainerHelper.GetCPFromElement(CellParagraph.StructuralCache.TextContainer, CellParagraph.Element, ElementEdge.BeforeStart));
             }
@@ -221,7 +220,7 @@ namespace MS.Internal.PtsHost
             PTS.FSPAP fspap;
 
 
-            if(CellParagraph.StructuralCache.DtrList != null)
+            if (CellParagraph.StructuralCache.DtrList != null)
             {
                 CellParagraph.InvalidateStructure(TextContainerHelper.GetCPFromElement(CellParagraph.StructuralCache.TextContainer, CellParagraph.Element, ElementEdge.BeforeStart));
             }
@@ -356,7 +355,7 @@ namespace MS.Internal.PtsHost
             Debug.Assert(tableParaClient != null);
 
             CalculatedColumn[] calculatedColumns = tableParaClient.CalculatedColumns;
-            Debug.Assert(   calculatedColumns != null 
+            Debug.Assert(calculatedColumns != null
                         && (Cell.ColumnIndex + Cell.ColumnSpan) <= calculatedColumns.Length);
 
             double durCellSpacing = Table.InternalCellSpacing;
@@ -455,7 +454,7 @@ namespace MS.Internal.PtsHost
 
             _columnWidths = new double[tpc.CalculatedColumns.Length];
 
-            for(int index = 0; index < tpc.CalculatedColumns.Length; index++)
+            for (int index = 0; index < tpc.CalculatedColumns.Length; index++)
             {
                 _columnWidths[index] = tpc.CalculatedColumns[index].DurWidth;
             }

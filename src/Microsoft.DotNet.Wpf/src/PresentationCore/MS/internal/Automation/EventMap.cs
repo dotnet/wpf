@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -27,24 +27,24 @@ namespace MS.Internal.Automation
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
         private static bool IsKnownLegacyEvent(int id)
         {
-            if (    id == AutomationElementIdentifiers.ToolTipOpenedEvent.Id
-                ||  id == AutomationElementIdentifiers.ToolTipClosedEvent.Id
-                ||  id == AutomationElementIdentifiers.MenuOpenedEvent.Id
-                ||  id == AutomationElementIdentifiers.MenuClosedEvent.Id
-                ||  id == AutomationElementIdentifiers.AutomationFocusChangedEvent.Id
-                ||  id == InvokePatternIdentifiers.InvokedEvent.Id
-                ||  id == SelectionItemPatternIdentifiers.ElementAddedToSelectionEvent.Id
-                ||  id == SelectionItemPatternIdentifiers.ElementRemovedFromSelectionEvent.Id
-                ||  id == SelectionItemPatternIdentifiers.ElementSelectedEvent.Id
-                ||  id == SelectionPatternIdentifiers.InvalidatedEvent.Id
-                ||  id == TextPatternIdentifiers.TextSelectionChangedEvent.Id
-                ||  id == TextPatternIdentifiers.TextChangedEvent.Id
-                ||  id == AutomationElementIdentifiers.AsyncContentLoadedEvent.Id
-                ||  id == AutomationElementIdentifiers.AutomationPropertyChangedEvent.Id
-                ||  id == AutomationElementIdentifiers.StructureChangedEvent.Id
-                ||  id == SynchronizedInputPatternIdentifiers.InputReachedTargetEvent?.Id
-                ||  id == SynchronizedInputPatternIdentifiers.InputReachedOtherElementEvent?.Id
-                ||  id == SynchronizedInputPatternIdentifiers.InputDiscardedEvent?.Id)
+            if (id == AutomationElementIdentifiers.ToolTipOpenedEvent.Id
+                || id == AutomationElementIdentifiers.ToolTipClosedEvent.Id
+                || id == AutomationElementIdentifiers.MenuOpenedEvent.Id
+                || id == AutomationElementIdentifiers.MenuClosedEvent.Id
+                || id == AutomationElementIdentifiers.AutomationFocusChangedEvent.Id
+                || id == InvokePatternIdentifiers.InvokedEvent.Id
+                || id == SelectionItemPatternIdentifiers.ElementAddedToSelectionEvent.Id
+                || id == SelectionItemPatternIdentifiers.ElementRemovedFromSelectionEvent.Id
+                || id == SelectionItemPatternIdentifiers.ElementSelectedEvent.Id
+                || id == SelectionPatternIdentifiers.InvalidatedEvent.Id
+                || id == TextPatternIdentifiers.TextSelectionChangedEvent.Id
+                || id == TextPatternIdentifiers.TextChangedEvent.Id
+                || id == AutomationElementIdentifiers.AsyncContentLoadedEvent.Id
+                || id == AutomationElementIdentifiers.AutomationPropertyChangedEvent.Id
+                || id == AutomationElementIdentifiers.StructureChangedEvent.Id
+                || id == SynchronizedInputPatternIdentifiers.InputReachedTargetEvent?.Id
+                || id == SynchronizedInputPatternIdentifiers.InputReachedOtherElementEvent?.Id
+                || id == SynchronizedInputPatternIdentifiers.InputDiscardedEvent?.Id)
             {
                 return true;
             }
@@ -56,7 +56,7 @@ namespace MS.Internal.Automation
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
         private static bool IsKnownNewEvent(int id)
         {
-            if (   id == AutomationElementIdentifiers.LiveRegionChangedEvent?.Id
+            if (id == AutomationElementIdentifiers.LiveRegionChangedEvent?.Id
                 || id == AutomationElementIdentifiers.NotificationEvent?.Id
                 || id == AutomationElementIdentifiers.ActiveTextPositionChangedEvent?.Id)
             {
@@ -83,29 +83,71 @@ namespace MS.Internal.Automation
         {
             AutomationEvent eventObject = null;
 
-            switch(eventId)
+            switch (eventId)
             {
-                case AutomationEvents.ToolTipOpened:                                        eventObject = AutomationElementIdentifiers.ToolTipOpenedEvent; break;
-                case AutomationEvents.ToolTipClosed:                                        eventObject = AutomationElementIdentifiers.ToolTipClosedEvent; break;
-                case AutomationEvents.MenuOpened:                                           eventObject = AutomationElementIdentifiers.MenuOpenedEvent; break;
-                case AutomationEvents.MenuClosed:                                           eventObject = AutomationElementIdentifiers.MenuClosedEvent; break;
-                case AutomationEvents.AutomationFocusChanged:                               eventObject = AutomationElementIdentifiers.AutomationFocusChangedEvent; break;
-                case AutomationEvents.InvokePatternOnInvoked:                               eventObject = InvokePatternIdentifiers.InvokedEvent; break;
-                case AutomationEvents.SelectionItemPatternOnElementAddedToSelection:        eventObject = SelectionItemPatternIdentifiers.ElementAddedToSelectionEvent; break;
-                case AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection:    eventObject = SelectionItemPatternIdentifiers.ElementRemovedFromSelectionEvent; break;
-                case AutomationEvents.SelectionItemPatternOnElementSelected:                eventObject = SelectionItemPatternIdentifiers.ElementSelectedEvent; break;
-                case AutomationEvents.SelectionPatternOnInvalidated:                        eventObject = SelectionPatternIdentifiers.InvalidatedEvent; break;
-                case AutomationEvents.TextPatternOnTextSelectionChanged:                    eventObject = TextPatternIdentifiers.TextSelectionChangedEvent; break;
-                case AutomationEvents.TextPatternOnTextChanged:                             eventObject = TextPatternIdentifiers.TextChangedEvent; break;
-                case AutomationEvents.AsyncContentLoaded:                                   eventObject = AutomationElementIdentifiers.AsyncContentLoadedEvent; break;
-                case AutomationEvents.PropertyChanged:                                      eventObject = AutomationElementIdentifiers.AutomationPropertyChangedEvent; break;
-                case AutomationEvents.StructureChanged:                                     eventObject = AutomationElementIdentifiers.StructureChangedEvent; break;
-                case AutomationEvents.InputReachedTarget:                                   eventObject = SynchronizedInputPatternIdentifiers.InputReachedTargetEvent; break;
-                case AutomationEvents.InputReachedOtherElement:                             eventObject = SynchronizedInputPatternIdentifiers.InputReachedOtherElementEvent; break;
-                case AutomationEvents.InputDiscarded:                                       eventObject = SynchronizedInputPatternIdentifiers.InputDiscardedEvent; break;
-                case AutomationEvents.LiveRegionChanged:                                    eventObject = AutomationElementIdentifiers.LiveRegionChangedEvent; break;
-                case AutomationEvents.Notification:                                         eventObject = AutomationElementIdentifiers.NotificationEvent; break;
-                case AutomationEvents.ActiveTextPositionChanged:                            eventObject = AutomationElementIdentifiers.ActiveTextPositionChangedEvent; break;
+                case AutomationEvents.ToolTipOpened:
+                    eventObject = AutomationElementIdentifiers.ToolTipOpenedEvent;
+                    break;
+                case AutomationEvents.ToolTipClosed:
+                    eventObject = AutomationElementIdentifiers.ToolTipClosedEvent;
+                    break;
+                case AutomationEvents.MenuOpened:
+                    eventObject = AutomationElementIdentifiers.MenuOpenedEvent;
+                    break;
+                case AutomationEvents.MenuClosed:
+                    eventObject = AutomationElementIdentifiers.MenuClosedEvent;
+                    break;
+                case AutomationEvents.AutomationFocusChanged:
+                    eventObject = AutomationElementIdentifiers.AutomationFocusChangedEvent;
+                    break;
+                case AutomationEvents.InvokePatternOnInvoked:
+                    eventObject = InvokePatternIdentifiers.InvokedEvent;
+                    break;
+                case AutomationEvents.SelectionItemPatternOnElementAddedToSelection:
+                    eventObject = SelectionItemPatternIdentifiers.ElementAddedToSelectionEvent;
+                    break;
+                case AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection:
+                    eventObject = SelectionItemPatternIdentifiers.ElementRemovedFromSelectionEvent;
+                    break;
+                case AutomationEvents.SelectionItemPatternOnElementSelected:
+                    eventObject = SelectionItemPatternIdentifiers.ElementSelectedEvent;
+                    break;
+                case AutomationEvents.SelectionPatternOnInvalidated:
+                    eventObject = SelectionPatternIdentifiers.InvalidatedEvent;
+                    break;
+                case AutomationEvents.TextPatternOnTextSelectionChanged:
+                    eventObject = TextPatternIdentifiers.TextSelectionChangedEvent;
+                    break;
+                case AutomationEvents.TextPatternOnTextChanged:
+                    eventObject = TextPatternIdentifiers.TextChangedEvent;
+                    break;
+                case AutomationEvents.AsyncContentLoaded:
+                    eventObject = AutomationElementIdentifiers.AsyncContentLoadedEvent;
+                    break;
+                case AutomationEvents.PropertyChanged:
+                    eventObject = AutomationElementIdentifiers.AutomationPropertyChangedEvent;
+                    break;
+                case AutomationEvents.StructureChanged:
+                    eventObject = AutomationElementIdentifiers.StructureChangedEvent;
+                    break;
+                case AutomationEvents.InputReachedTarget:
+                    eventObject = SynchronizedInputPatternIdentifiers.InputReachedTargetEvent;
+                    break;
+                case AutomationEvents.InputReachedOtherElement:
+                    eventObject = SynchronizedInputPatternIdentifiers.InputReachedOtherElementEvent;
+                    break;
+                case AutomationEvents.InputDiscarded:
+                    eventObject = SynchronizedInputPatternIdentifiers.InputDiscardedEvent;
+                    break;
+                case AutomationEvents.LiveRegionChanged:
+                    eventObject = AutomationElementIdentifiers.LiveRegionChangedEvent;
+                    break;
+                case AutomationEvents.Notification:
+                    eventObject = AutomationElementIdentifiers.NotificationEvent;
+                    break;
+                case AutomationEvents.ActiveTextPositionChanged:
+                    eventObject = AutomationElementIdentifiers.ActiveTextPositionChangedEvent;
+                    break;
 
                 default:
                     throw new ArgumentException(SR.Automation_InvalidEventId, "eventId");

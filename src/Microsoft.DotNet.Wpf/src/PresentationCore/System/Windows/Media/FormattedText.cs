@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -262,8 +262,8 @@ namespace System.Windows.Media
                 _defaultParaProps.DefaultTextRunProperties.PixelsPerDip = _pixelsPerDip;
             }
         }
-    
-    #endregion
+
+        #endregion
 
         #region Formatting properties
 
@@ -331,12 +331,12 @@ namespace System.Windows.Media
                 // Presharp warns that runProps is not validated, but it can never be null 
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
-                
+
                 Invariant.Assert(runProps != null);
-                
+
                 if (runProps.ForegroundBrush == foregroundBrush)
                     continue;
-                    
+
                 GenericTextRunProperties newProps = new GenericTextRunProperties(
                     runProps.Typeface,
                     runProps.FontRenderingEmSize,
@@ -405,9 +405,9 @@ namespace System.Windows.Media
                 // Presharp warns that runProps is not validated, but it can never be null 
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
-                
+
                 Invariant.Assert(runProps != null);
-                
+
                 Typeface oldTypeface = runProps.Typeface;
                 if (fontFamily.Equals(oldTypeface.FontFamily))
                     continue;
@@ -460,9 +460,9 @@ namespace System.Windows.Media
                 // Presharp warns that runProps is not validated, but it can never be null 
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
-                
+
                 Invariant.Assert(runProps != null);
-                
+
                 if (runProps.FontRenderingEmSize == emSize)
                     continue;
 
@@ -504,7 +504,7 @@ namespace System.Windows.Media
             ValidateCulture(culture);
 
             int limit = ValidateRange(startIndex, count);
-            for (int i = startIndex; i < limit; )
+            for (int i = startIndex; i < limit;)
             {
                 SpanRider formatRider = new SpanRider(_formatRuns, _latestPosition, i);
                 i = Math.Min(limit, i + formatRider.Length);
@@ -513,9 +513,9 @@ namespace System.Windows.Media
                 // Presharp warns that runProps is not validated, but it can never be null 
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
-                
+
                 Invariant.Assert(runProps != null);
-                
+
                 if (runProps.CultureInfo.Equals(culture))
                     continue;
 
@@ -563,7 +563,7 @@ namespace System.Windows.Media
             )
         {
             int limit = ValidateRange(startIndex, count);
-            for (int i = startIndex; i < limit; )
+            for (int i = startIndex; i < limit;)
             {
                 SpanRider formatRider = new SpanRider(_formatRuns, _latestPosition, i);
                 i = Math.Min(limit, i + formatRider.Length);
@@ -631,9 +631,9 @@ namespace System.Windows.Media
                 // Presharp warns that runProps is not validated, but it can never be null 
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
-                
+
                 Invariant.Assert(runProps != null);
-                
+
                 Typeface oldTypeface = runProps.Typeface;
                 if (oldTypeface.Weight == weight)
                     continue;
@@ -683,9 +683,9 @@ namespace System.Windows.Media
                 // Presharp warns that runProps is not validated, but it can never be null 
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
-                
+
                 Invariant.Assert(runProps != null);
-                
+
                 Typeface oldTypeface = runProps.Typeface;
                 if (oldTypeface.Style == style)
                     continue;
@@ -702,8 +702,8 @@ namespace System.Windows.Media
                     runProps.CultureInfo,
                     runProps.NumberSubstitution
                     );
-#pragma warning restore 6506 
-                
+#pragma warning restore 6506
+
                 _latestPosition = _formatRuns.SetValue(formatRider.CurrentPosition, i - formatRider.CurrentPosition, newProps, formatRider.SpanPosition);
                 InvalidateMetrics(); // invalidate cached metrics
             }
@@ -736,9 +736,9 @@ namespace System.Windows.Media
                 // Presharp warns that runProps is not validated, but it can never be null 
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
-                
+
                 Invariant.Assert(runProps != null);
-                
+
                 Typeface oldTypeface = runProps.Typeface;
                 if (oldTypeface.Stretch == stretch)
                     continue;
@@ -756,8 +756,8 @@ namespace System.Windows.Media
                     runProps.NumberSubstitution
                     );
                 _latestPosition = _formatRuns.SetValue(formatRider.CurrentPosition, i - formatRider.CurrentPosition, newProps, formatRider.SpanPosition);
-#pragma warning restore 6506 
-                
+#pragma warning restore 6506
+
                 InvalidateMetrics();
             }
         }
@@ -789,9 +789,9 @@ namespace System.Windows.Media
                 // Presharp warns that runProps is not validated, but it can never be null 
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
-                
+
                 Invariant.Assert(runProps != null);
-                
+
                 if (runProps.Typeface == typeface)
                     continue;
 
@@ -807,8 +807,8 @@ namespace System.Windows.Media
                     runProps.CultureInfo,
                     runProps.NumberSubstitution
                     );
-#pragma warning restore 6506 
-                
+#pragma warning restore 6506
+
                 _latestPosition = _formatRuns.SetValue(formatRider.CurrentPosition, i - formatRider.CurrentPosition, newProps, formatRider.SpanPosition);
                 InvalidateMetrics();
             }
@@ -843,7 +843,7 @@ namespace System.Windows.Media
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
 
                 Invariant.Assert(runProps != null);
-                
+
                 if (runProps.TextDecorations == textDecorations)
                     continue;
 
@@ -859,8 +859,8 @@ namespace System.Windows.Media
                     runProps.CultureInfo,
                     runProps.NumberSubstitution
                     );
-#pragma warning restore 6506 
-                
+#pragma warning restore 6506
+
                 _latestPosition = _formatRuns.SetValue(formatRider.CurrentPosition, i - formatRider.CurrentPosition, newProps, formatRider.SpanPosition);
             }
         }
@@ -876,20 +876,20 @@ namespace System.Windows.Media
         /// </summary>
         private struct LineEnumerator : IEnumerator, IDisposable
         {
-            int             _textStorePosition;
-            int             _lineCount;
-            double          _totalHeight;
-            TextLine        _currentLine;
-            TextLine        _nextLine;
-            TextFormatter   _formatter;
-            FormattedText   _that;
+            int _textStorePosition;
+            int _lineCount;
+            double _totalHeight;
+            TextLine _currentLine;
+            TextLine _nextLine;
+            TextFormatter _formatter;
+            FormattedText _that;
 
             // these are needed because _currentLine can be disposed before the next MoveNext() call
-            double          _previousHeight;
-            int             _previousLength;
+            double _previousHeight;
+            int _previousLength;
 
             // line break before _currentLine, needed in case we have to reformat it with collapsing symbol
-            TextLineBreak       _previousLineBreak;
+            TextLineBreak _previousLineBreak;
 
             internal LineEnumerator(FormattedText text)
             {
@@ -1049,7 +1049,7 @@ namespace System.Windows.Media
                             currentLineBreak
                             );
                         nextLineFits = (_totalHeight + _currentLine.Height + _nextLine.Height <= _that._maxTextHeight);
-                    }                       
+                    }
 
                     if (!nextLineFits)
                     {
@@ -1296,7 +1296,7 @@ namespace System.Windows.Media
         /// The maxTextWidths array overrides the MaxTextWidth property.
         /// </summary>
         /// <param name="maxTextWidths">The max text width array</param>
-        public void SetMaxTextWidths(double [] maxTextWidths)
+        public void SetMaxTextWidths(double[] maxTextWidths)
         {
             if (maxTextWidths == null || maxTextWidths.Length <= 0)
                 throw new ArgumentNullException("maxTextWidths");
@@ -1312,9 +1312,9 @@ namespace System.Windows.Media
         /// The maxTextWidths array overrides the MaxTextWidth property.
         /// </summary>
         /// <returns>The copy of max text width array</returns>
-        public double [] GetMaxTextWidths()
+        public double[] GetMaxTextWidths()
         {
-            return (_maxTextWidths == null) ? null : (double [])_maxTextWidths.Clone();
+            return (_maxTextWidths == null) ? null : (double[])_maxTextWidths.Clone();
         }
 
         /// <summary>
@@ -1384,7 +1384,7 @@ namespace System.Windows.Media
                     // if trimming is disabled, enforce emergency wrap
                     _defaultParaProps.SetTextWrapping(TextWrapping.Wrap);
                 }
-                else 
+                else
                 {
                     _defaultParaProps.SetTextWrapping(TextWrapping.WrapWithOverflow);
                 }
@@ -1609,7 +1609,7 @@ namespace System.Windows.Media
             if (accumulatedGeometry == null || accumulatedGeometry.IsEmpty())
                 return Geometry.Empty;
             return accumulatedGeometry;
-        }        
+        }
 
         /// <summary>
         /// Builds a highlight geometry object for a given character range.
@@ -1677,7 +1677,7 @@ namespace System.Windows.Media
                 }
             }
 
-            if (accumulatedBounds == null  ||  accumulatedBounds.IsEmpty())
+            if (accumulatedBounds == null || accumulatedBounds.IsEmpty())
                 return null;
 
             return accumulatedBounds;
@@ -1690,8 +1690,8 @@ namespace System.Windows.Media
         /// Draws the text object
         /// </summary>
         internal void Draw(
-            DrawingContext  dc, 
-            Point           origin
+            DrawingContext dc,
+            Point origin
             )
         {
             Point lineOrigin = origin;
@@ -1828,7 +1828,7 @@ namespace System.Windows.Media
 
         private class TextSourceImplementation : TextSource
         {
-            private FormattedText   _that;
+            private FormattedText _that;
 
             public TextSourceImplementation(FormattedText text)
             {
@@ -1841,7 +1841,7 @@ namespace System.Windows.Media
             /// </summary>
             /// <param name="textSourceCharacterIndex">character index to specify where in the source text the fetch is to start.</param>
             public override TextRun GetTextRun(
-                int         textSourceCharacterIndex
+                int textSourceCharacterIndex
                 )
             {
                 if (textSourceCharacterIndex >= _that._text.Length)
@@ -1850,7 +1850,7 @@ namespace System.Windows.Media
                 }
 
                 SpanRider thatFormatRider = new SpanRider(
-                    _that._formatRuns, 
+                    _that._formatRuns,
                     _that._latestPosition,
                     textSourceCharacterIndex
                     );
@@ -1872,20 +1872,20 @@ namespace System.Windows.Media
             /// <param name="textSourceCharacterIndexLimit">character index to specify where in the source text the text retrieval stops.</param>
             /// <returns>character string immediately before the specify text source character index.</returns>
             public override TextSpan<CultureSpecificCharacterBufferRange> GetPrecedingText(
-                int         textSourceCharacterIndexLimit
+                int textSourceCharacterIndexLimit
                 )
             {
                 CharacterBufferRange charString = CharacterBufferRange.Empty;
                 CultureInfo culture = null;
-            
-                if (textSourceCharacterIndexLimit > 0)                    
+
+                if (textSourceCharacterIndexLimit > 0)
                 {
                     SpanRider thatFormatRider = new SpanRider(
                         _that._formatRuns,
                         _that._latestPosition,
                         textSourceCharacterIndexLimit - 1
                         );
-                    
+
                     charString = new CharacterBufferRange(
                         new CharacterBufferReference(_that._text, thatFormatRider.CurrentSpanStart),
                         textSourceCharacterIndexLimit - thatFormatRider.CurrentSpanStart
@@ -1894,7 +1894,7 @@ namespace System.Windows.Media
                     culture = ((TextRunProperties)thatFormatRider.CurrentElement).CultureInfo;
                 }
 
-                return new TextSpan<CultureSpecificCharacterBufferRange> (
+                return new TextSpan<CultureSpecificCharacterBufferRange>(
                     charString.Length,
                     new CultureSpecificCharacterBufferRange(culture, charString)
                     );
@@ -1908,7 +1908,7 @@ namespace System.Windows.Media
             public override int GetTextEffectCharacterIndexFromTextSourceCharacterIndex(
                 int textSourceCharacterIndex
                 )
-            {                
+            {
                 throw new NotSupportedException();
             }
         };
@@ -1927,7 +1927,7 @@ namespace System.Windows.Media
                     CombineGeometryRecursive(child, ref accumulatedGeometry);
                 }
             }
-            else 
+            else
             {
                 GlyphRunDrawing glyphRunDrawing = drawing as GlyphRunDrawing;
                 if (glyphRunDrawing != null)
@@ -1937,15 +1937,17 @@ namespace System.Windows.Media
                     if (glyphRun != null)
                     {
                         Geometry glyphRunGeometry = glyphRun.BuildGeometry();
-                        
+
                         if (!glyphRunGeometry.IsEmpty())
                         {
                             if (accumulatedGeometry == null)
                             {
-                                accumulatedGeometry = new GeometryGroup();
-                                accumulatedGeometry.FillRule = FillRule.Nonzero;
+                                accumulatedGeometry = new GeometryGroup
+                                {
+                                    FillRule = FillRule.Nonzero
+                                };
                             }
-                            accumulatedGeometry.Children.Add(glyphRunGeometry);                        
+                            accumulatedGeometry.Children.Add(glyphRunGeometry);
                         }
                     }
                 }
@@ -1956,9 +1958,9 @@ namespace System.Windows.Media
                     {
                         // process geometry (i.e. TextDecoration on the line)
                         Geometry geometry = geometryDrawing.Geometry;
-                         
+
                         if (geometry != null)
-                        {              
+                        {
                             LineGeometry lineGeometry = geometry as LineGeometry;
                             if (lineGeometry != null)
                             {
@@ -1966,15 +1968,15 @@ namespace System.Windows.Media
                                 // bounding area. So this line won't show up. Work aroud it by increase the Bounding rect 
                                 // to be Pen's thickness                        
 
-                                Rect bound  = lineGeometry.Bounds;
+                                Rect bound = lineGeometry.Bounds;
                                 if (bound.Height == 0)
                                 {
                                     bound.Height = geometryDrawing.Pen.Thickness;
-                                }                        
+                                }
                                 else if (bound.Width == 0)
                                 {
                                     bound.Width = geometryDrawing.Pen.Thickness;
-                                } 
+                                }
 
                                 // convert the line geometry into a rectangle geometry
                                 // we lost line cap info here
@@ -1982,13 +1984,15 @@ namespace System.Windows.Media
                             }
                             if (accumulatedGeometry == null)
                             {
-                                accumulatedGeometry = new GeometryGroup();
-                                accumulatedGeometry.FillRule = FillRule.Nonzero;
+                                accumulatedGeometry = new GeometryGroup
+                                {
+                                    FillRule = FillRule.Nonzero
+                                };
                             }
                             accumulatedGeometry.Children.Add(geometry);
                         }
                     }
-                }            
+                }
             }
         }
         #endregion
@@ -1996,27 +2000,27 @@ namespace System.Windows.Media
         #region Private fields
 
         // properties and format runs
-        private string                          _text;
-        private double                          _pixelsPerDip = MS.Internal.FontCache.Util.PixelsPerDip;
-        private SpanVector                      _formatRuns = new SpanVector(null);
-        private SpanPosition                    _latestPosition = new SpanPosition();
+        private string _text;
+        private double _pixelsPerDip = MS.Internal.FontCache.Util.PixelsPerDip;
+        private SpanVector _formatRuns = new SpanVector(null);
+        private SpanPosition _latestPosition = new SpanPosition();
 
-        private GenericTextParagraphProperties  _defaultParaProps;
+        private GenericTextParagraphProperties _defaultParaProps;
 
-        private double                          _maxTextWidth;
-        private double []                       _maxTextWidths;
-        private double                          _maxTextHeight = double.MaxValue;
-        private int                             _maxLineCount = int.MaxValue;
-        private TextTrimming                    _trimming = TextTrimming.WordEllipsis;
+        private double _maxTextWidth;
+        private double[] _maxTextWidths;
+        private double _maxTextHeight = double.MaxValue;
+        private int _maxLineCount = int.MaxValue;
+        private TextTrimming _trimming = TextTrimming.WordEllipsis;
 
-        private TextFormattingMode              _textFormattingMode;
+        private TextFormattingMode _textFormattingMode;
 
         // text source callbacks
-        private TextSourceImplementation        _textSourceImpl;
+        private TextSourceImplementation _textSourceImpl;
 
         // cached metrics
-        private CachedMetrics                   _metrics;
-        private double                          _minWidth;
+        private CachedMetrics _metrics;
+        private double _minWidth;
 
         #endregion
 

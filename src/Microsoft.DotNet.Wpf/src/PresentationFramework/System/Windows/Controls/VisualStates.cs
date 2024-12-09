@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -121,7 +121,7 @@ namespace System.Windows.Controls
         public const string GroupFocus = "FocusStates";
         #endregion GroupFocus
 
-         #region GroupExpansion
+        #region GroupExpansion
 
         /// <summary>
         /// Expanded state of the Expansion state group.
@@ -138,18 +138,18 @@ namespace System.Windows.Controls
         /// </summary>
         public const string GroupExpansion = "ExpansionStates";
         #endregion GroupExpansion
-        
+
         #region GroupOpen
-        
+
         public const string StateOpen = "Open";
         public const string StateClosed = "Closed";
-        
+
         public const string GroupOpen = "OpenStates";
 
         #endregion
 
         #region GroupHasItems
-        
+
         /// <summary>
         /// HasItems state of the HasItems state group.
         /// </summary>
@@ -193,7 +193,7 @@ namespace System.Windows.Controls
         /// </summary>
         public const string GroupExpandDirection = "ExpandDirectionStates";
         #endregion
-        
+
 
         #region GroupSelection
         /// <summary>
@@ -396,7 +396,7 @@ namespace System.Windows.Controls
         public const string DATAGRIDROWHEADER_stateSelectedCurrentRow = "Unfocused_CurrentRow_Selected";
         public const string DATAGRIDROWHEADER_stateSelectedCurrentRowFocused = "Normal_CurrentRow_Selected";
         public const string DATAGRIDROWHEADER_stateSelectedFocused = "Normal_Selected";
-        
+
         #endregion DataGridRowHeader
 
 

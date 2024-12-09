@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,9 +14,9 @@
 #endif
 
 using System.Net;
+using MS.Internal;
 using MS.Internal.IO.Packaging;         // for PackageCache
 using MS.Internal.PresentationCore;     // for ExceptionStringTable
-using MS.Internal;
 
 namespace System.IO.Packaging
 {
@@ -31,7 +31,7 @@ namespace System.IO.Packaging
             _traceSwitch = new BooleanSwitch("PackWebRequest", "PackWebRequest/Response and NetStream trace messages");
 #endif
         }
-        
+
         //------------------------------------------------------
         //
         //  IWebRequestCreate
@@ -64,7 +64,7 @@ namespace System.IO.Packaging
             if (_traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        Environment.CurrentManagedThreadId + ": " + 
+                        Environment.CurrentManagedThreadId + ": " +
                         "PackWebRequestFactory - responding to uri: " + uri);
 #endif
             // only inspect cache if part name is present because cache only contains an object, not
@@ -91,11 +91,11 @@ namespace System.IO.Packaging
                 {
                     cachedPackageIsThreadSafe = false;          // always assume PackageStore packages are not thread-safe
                     cachedPackageIsFromPublicStore = true;
-                    
+
                     // Try to get a package from the package store
                     c = PackageStore.GetPackage(packageUri);
                 }
-                
+
                 // do we have a package?
                 if (c != null)
                 {
@@ -103,20 +103,20 @@ namespace System.IO.Packaging
                     if (_traceSwitch.Enabled)
                         System.Diagnostics.Trace.TraceInformation(
                                 DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                Environment.CurrentManagedThreadId + ": " + 
+                                Environment.CurrentManagedThreadId + ": " +
                                 "PackWebRequestFactory - cache hit - returning CachedPackWebRequest");
 #endif
                     // use the cached object
-                    return new PackWebRequest(uri, packageUri, partUri, c, 
-                        cachedPackageIsFromPublicStore, cachedPackageIsThreadSafe);   
+                    return new PackWebRequest(uri, packageUri, partUri, c,
+                        cachedPackageIsFromPublicStore, cachedPackageIsThreadSafe);
                 }
-}
-        
+            }
+
 #if DEBUG
             if (_traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        Environment.CurrentManagedThreadId + ": " + 
+                        Environment.CurrentManagedThreadId + ": " +
                         "PackWebRequestFactory - spawning regular PackWebRequest");
 #endif
             return new PackWebRequest(uri, packageUri, partUri);
@@ -137,7 +137,7 @@ namespace System.IO.Packaging
         {
             if (string.Equals(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.Ordinal))
             {
-                return ((IWebRequestCreate) _factorySingleton).Create(uri);
+                return ((IWebRequestCreate)_factorySingleton).Create(uri);
             }
             else
             {

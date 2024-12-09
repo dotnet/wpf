@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,8 +9,8 @@
 
 
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Documents;
+using System.Windows.Media;
 
 namespace MS.Internal.PtsHost
 {
@@ -49,17 +49,17 @@ namespace MS.Internal.PtsHost
         // Column space distribution.
         // ------------------------------------------------------------------
         internal ColumnSpaceDistribution ColumnSpaceDistribution { get { return ColumnSpaceDistribution.Between; } }
-        
+
         // ------------------------------------------------------------------
         // Column gap.
         // ------------------------------------------------------------------
-        internal double ColumnGap 
-        { 
-            get 
-            { 
-                Invariant.Assert(!double.IsNaN(_columnGap)); 
-                return _columnGap; 
-            } 
+        internal double ColumnGap
+        {
+            get
+            {
+                Invariant.Assert(!double.IsNaN(_columnGap));
+                return _columnGap;
+            }
         }
         private double _columnGap;
 

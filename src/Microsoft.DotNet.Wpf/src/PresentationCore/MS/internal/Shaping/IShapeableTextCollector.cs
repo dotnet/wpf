@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -33,14 +33,14 @@ namespace MS.Internal.TextFormatting
         /// <param name="nullShape">always yield missing glyphs</param>
         /// <returns>a shapeable object</returns>
         void Add(
-            IList<TextShapeableSymbols>              shapeableList,
-            CharacterBufferRange                     characterBufferRange,
-            TextRunProperties                        textRunProperties,
+            IList<TextShapeableSymbols> shapeableList,
+            CharacterBufferRange characterBufferRange,
+            TextRunProperties textRunProperties,
             MS.Internal.Text.TextInterface.ItemProps textItem,
-            ShapeTypeface                            shapeTypeface,
-            double                                   emScale,
-            bool                                     nullShape,
-            TextFormattingMode                       textFormattingMode
+            ShapeTypeface shapeTypeface,
+            double emScale,
+            bool nullShape,
+            TextFormattingMode textFormattingMode
             );
     }
 }

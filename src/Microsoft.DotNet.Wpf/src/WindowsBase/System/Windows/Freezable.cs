@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -238,7 +238,7 @@ namespace System.Windows
                 {
                     ChangedInternal += value;
                 }
-}
+            }
             remove
             {
                 WritePreamble();
@@ -455,9 +455,9 @@ namespace System.Windows
                 {
                     EntryIndex entryIndex = new EntryIndex(i);
                     PropertyMetadata metadata = dp.GetMetadata(DependencyObjectType);
-                    
+
                     FreezeValueCallback freezeValueCallback = metadata.FreezeValueCallback;
-                    if(!freezeValueCallback(this, dp, entryIndex, metadata, isChecking))
+                    if (!freezeValueCallback(this, dp, entryIndex, metadata, isChecking))
                     {
                         return false;
                     }
@@ -626,7 +626,7 @@ namespace System.Windows
             if (IsFrozenInternal)
             {
                 throw new InvalidOperationException(
-                    SR.Format(SR.Freezable_CantBeFrozen,GetType().FullName));
+                    SR.Format(SR.Freezable_CantBeFrozen, GetType().FullName));
             }
         }
 
@@ -1261,10 +1261,11 @@ namespace System.Windows
 
             if (HasHandlers)
             {
-                HandlerContextStorage hps = new HandlerContextStorage();
-
-                hps._handlerStorage = _contextStorage;
-                hps._contextStorage = context;
+                HandlerContextStorage hps = new HandlerContextStorage
+                {
+                    _handlerStorage = _contextStorage,
+                    _contextStorage = context
+                };
 
                 _contextStorage = hps;
             }
@@ -1472,11 +1473,11 @@ namespace System.Windows
 
             if (HasContextInformation)
             {
-              _contextStorage = ((HandlerContextStorage)_contextStorage)._contextStorage;
+                _contextStorage = ((HandlerContextStorage)_contextStorage)._contextStorage;
             }
             else
             {
-              _contextStorage = null;
+                _contextStorage = null;
             }
 
             Freezable_UsingSingletonHandler = false;
@@ -1499,7 +1500,7 @@ namespace System.Windows
                 _contextStorage = null;
             }
 
-             Freezable_UsingHandlerList = false;
+            Freezable_UsingHandlerList = false;
         }
 
         /// <summary>
@@ -1543,10 +1544,11 @@ namespace System.Windows
 
             if (HasContextInformation)
             {
-                HandlerContextStorage hps = new HandlerContextStorage();
-
-                hps._contextStorage = _contextStorage;
-                hps._handlerStorage = handler;
+                HandlerContextStorage hps = new HandlerContextStorage
+                {
+                    _contextStorage = _contextStorage,
+                    _handlerStorage = handler
+                };
 
                 _contextStorage = hps;
             }
@@ -1653,11 +1655,11 @@ namespace System.Windows
                     HandlerContextStorage ptrStorage = (HandlerContextStorage)_contextStorage;
 
                     return (EventHandler)ptrStorage._handlerStorage;
-}
+                }
                 else
                 {
                     return (EventHandler)_contextStorage;
-}
+                }
             }
         }
 
@@ -1814,7 +1816,8 @@ namespace System.Windows
             public EventStorage(int initialSize)
             {
                 // check just in case
-                if (initialSize <= 0) initialSize = 1;
+                if (initialSize <= 0)
+                    initialSize = 1;
 
                 _events = new EventHandler[initialSize];
                 _logSize = 0;
@@ -1828,11 +1831,13 @@ namespace System.Windows
             //
             public void Add(EventHandler e)
             {
-                if (_logSize == _physSize) {
+                if (_logSize == _physSize)
+                {
                     _physSize *= 2;
                     EventHandler[] temp = new EventHandler[_physSize];
 
-                    for (int i = 0; i < _logSize; i++) {
+                    for (int i = 0; i < _logSize; i++)
+                    {
                         temp[i] = _events[i];
                     }
 
@@ -1919,7 +1924,7 @@ namespace System.Windows
         {
             if (Invariant.Strict)
             {
-                Freezable cloneAsFreezable = (Freezable) clone;
+                Freezable cloneAsFreezable = (Freezable)clone;
 
                 Debug_VerifyInstance("CloneCore", original, cloneAsFreezable);
 
@@ -1980,10 +1985,10 @@ namespace System.Windows
                 {
                     FrugalObjectList<FreezableContextPair> contextList = ContextList;
 
-                    for(int i = 0, count = ContextList.Count; i < count; i++)
+                    for (int i = 0, count = ContextList.Count; i < count; i++)
                     {
-                        FreezableContextPair context = ContextList[i];                        
-                        DependencyObject owner = (DependencyObject) context.Owner.Target;
+                        FreezableContextPair context = ContextList[i];
+                        DependencyObject owner = (DependencyObject)context.Owner.Target;
 
                         if (!context.Owner.IsAlive)
                         {
@@ -2037,7 +2042,7 @@ namespace System.Windows
                 // If the owner's DP value does not point to us than we've leaked
                 // a context.
 
-                DependencyObject ownerAsDO = (DependencyObject) owner;
+                DependencyObject ownerAsDO = (DependencyObject)owner;
                 object effectiveValue = ownerAsDO.GetValue(property);
 
                 // There is a notable exception to the rule above, which is that
@@ -2056,21 +2061,21 @@ namespace System.Windows
                     && property.OwnerType.FullName == "System.Windows.Media.VisualBrush"
                     && owner.GetType().FullName != "System.Windows.Media.VisualBrush";    // ResourceDictionaries may not be owned by a VisualBrush.
 
-// Find a way to bring back context verification.
-//                
-//                Invariant.Assert(effectiveValue == this || mayBeResourceDictionary,
-//                    String.Format(System.Globalization.CultureInfo.InvariantCulture,
-//                        "Detected context leak: Property '{0}.{1}' on {2}.  Expected '{3}', Actual '{4}'",
-//                        property.OwnerType.Name,
-//                        property.Name,
-//                        owner.GetType().FullName,
-//                        this,
-//                        effectiveValue));
+                // Find a way to bring back context verification.
+                //                
+                //                Invariant.Assert(effectiveValue == this || mayBeResourceDictionary,
+                //                    String.Format(System.Globalization.CultureInfo.InvariantCulture,
+                //                        "Detected context leak: Property '{0}.{1}' on {2}.  Expected '{3}', Actual '{4}'",
+                //                        property.OwnerType.Name,
+                //                        property.Name,
+                //                        owner.GetType().FullName,
+                //                        this,
+                //                        effectiveValue));
             }
         }
 
         #endregion Debug
- 
+
         //------------------------------------------------------
         //
         //  Private fields

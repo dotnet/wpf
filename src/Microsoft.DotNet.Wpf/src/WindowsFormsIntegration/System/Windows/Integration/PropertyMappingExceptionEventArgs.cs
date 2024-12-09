@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,7 +9,7 @@ namespace System.Windows.Forms.Integration
     /// <summary>
     /// Enables the user to see the property that threw an exception, and to preview or cancel the exception.
     /// </summary>
-    public class PropertyMappingExceptionEventArgs : IntegrationExceptionEventArgs 
+    public class PropertyMappingExceptionEventArgs : IntegrationExceptionEventArgs
     {
         private string _propertyName;
         private object _propertyValue;
@@ -17,7 +17,7 @@ namespace System.Windows.Forms.Integration
         /// <summary>
         /// Initializes a new instance of the PropertyMappingExceptionEventArgs class.
         /// </summary>
-        public PropertyMappingExceptionEventArgs(Exception exception, string propertyName, object propertyValue) 
+        public PropertyMappingExceptionEventArgs(Exception exception, string propertyName, object propertyValue)
             : base(false, exception)
         {
             if (exception == null)

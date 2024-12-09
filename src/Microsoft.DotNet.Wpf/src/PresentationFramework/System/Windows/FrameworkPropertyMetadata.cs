@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,50 +13,50 @@ namespace System.Windows
     /// <summary>
     /// </summary>
     [Flags]
-    public enum FrameworkPropertyMetadataOptions: int
+    public enum FrameworkPropertyMetadataOptions : int
     {
         /// <summary>No flags</summary>
-        None                            = 0x000,
+        None = 0x000,
 
         /// <summary>This property affects measurement</summary>
-        AffectsMeasure                  = 0x001,
+        AffectsMeasure = 0x001,
 
         /// <summary>This property affects arragement</summary>
-        AffectsArrange                  = 0x002,
+        AffectsArrange = 0x002,
 
         /// <summary>This property affects parent's measurement</summary>
-        AffectsParentMeasure            = 0x004,
+        AffectsParentMeasure = 0x004,
 
         /// <summary>This property affects parent's arrangement</summary>
-        AffectsParentArrange            = 0x008,
+        AffectsParentArrange = 0x008,
 
         /// <summary>This property affects rendering</summary>
-        AffectsRender                   = 0x010,
+        AffectsRender = 0x010,
 
         /// <summary>This property inherits to children</summary>
-        Inherits                        = 0x020,
+        Inherits = 0x020,
 
         /// <summary>
         /// This property causes inheritance and resource lookup to override values 
         /// of InheritanceBehavior that may be set on any FE in the path of lookup
         /// </summary>
-        OverridesInheritanceBehavior    = 0x040,
+        OverridesInheritanceBehavior = 0x040,
 
         /// <summary>This property does not support data binding</summary>
-        NotDataBindable                 = 0x080,
+        NotDataBindable = 0x080,
 
         /// <summary>Data bindings on this property default to two-way</summary>
-        BindsTwoWayByDefault            = 0x100,
+        BindsTwoWayByDefault = 0x100,
 
         /// <summary>This property should be saved/restored when journaling/navigating by URI</summary>
-        Journal                         = 0x400,
+        Journal = 0x400,
 
         /// <summary>
         ///     This property's subproperties do not affect rendering.
         ///     For instance, a property X may have a subproperty Y.
         ///     Changing X.Y does not require rendering to be updated.
         /// </summary>
-        SubPropertiesDoNotAffectRender  = 0x800,
+        SubPropertiesDoNotAffectRender = 0x800,
     }
 
     /// <summary>
@@ -220,7 +220,7 @@ namespace System.Windows
             base(defaultValue, propertyChangedCallback, coerceValueCallback, isAnimationProhibited)
         {
             if (!BindingOperations.IsValidUpdateSourceTrigger(defaultUpdateSourceTrigger))
-                throw new InvalidEnumArgumentException("defaultUpdateSourceTrigger", (int) defaultUpdateSourceTrigger, typeof(UpdateSourceTrigger));
+                throw new InvalidEnumArgumentException("defaultUpdateSourceTrigger", (int)defaultUpdateSourceTrigger, typeof(UpdateSourceTrigger));
             if (defaultUpdateSourceTrigger == UpdateSourceTrigger.Default)
                 throw new ArgumentException(SR.NoDefaultUpdateSourceTrigger, "defaultUpdateSourceTrigger");
 
@@ -232,9 +232,9 @@ namespace System.Windows
         {
             // FW_DefaultUpdateSourceTriggerEnumBit1        = 0x40000000,
             // FW_DefaultUpdateSourceTriggerEnumBit2        = 0x80000000,
-            _flags = (MetadataFlags)(((uint)_flags & 0x3FFFFFFF) | ((uint) UpdateSourceTrigger.PropertyChanged) << 30);
+            _flags = (MetadataFlags)(((uint)_flags & 0x3FFFFFFF) | ((uint)UpdateSourceTrigger.PropertyChanged) << 30);
         }
-        
+
         private static bool IsFlagSet(FrameworkPropertyMetadataOptions flag, FrameworkPropertyMetadataOptions flags)
         {
             return (flags & flag) != 0;
@@ -243,7 +243,7 @@ namespace System.Windows
         private void TranslateFlags(FrameworkPropertyMetadataOptions flags)
         {
             Initialize();
-            
+
             // Convert flags to state sets. If a flag is set, then,
             // the value is set on the respective property. Otherwise,
             // the state remains unset
@@ -471,7 +471,7 @@ namespace System.Windows
         {
             // FW_DefaultUpdateSourceTriggerEnumBit1        = 0x40000000,
             // FW_DefaultUpdateSourceTriggerEnumBit2        = 0x80000000,
-            get { return (UpdateSourceTrigger) (((uint) _flags >> 30) & 0x3); }
+            get { return (UpdateSourceTrigger)(((uint)_flags >> 30) & 0x3); }
             set
             {
                 if (IsSealed)
@@ -479,13 +479,13 @@ namespace System.Windows
                     throw new InvalidOperationException(SR.TypeMetadataCannotChangeAfterUse);
                 }
                 if (!BindingOperations.IsValidUpdateSourceTrigger(value))
-                    throw new InvalidEnumArgumentException("value", (int) value, typeof(UpdateSourceTrigger));
+                    throw new InvalidEnumArgumentException("value", (int)value, typeof(UpdateSourceTrigger));
                 if (value == UpdateSourceTrigger.Default)
                     throw new ArgumentException(SR.NoDefaultUpdateSourceTrigger, "value");
 
                 // FW_DefaultUpdateSourceTriggerEnumBit1        = 0x40000000,
                 // FW_DefaultUpdateSourceTriggerEnumBit2        = 0x80000000,
-                _flags = (MetadataFlags)(((uint) _flags & 0x3FFFFFFF) | ((uint) value) << 30);
+                _flags = (MetadataFlags)(((uint)_flags & 0x3FFFFFFF) | ((uint)value) << 30);
                 SetModified(MetadataFlags.FW_DefaultUpdateSourceTriggerModifiedID);
             }
         }
@@ -555,7 +555,8 @@ namespace System.Windows
         ///     Deriving classes must override this and return a new instance of
         ///     themselves.
         /// </summary>
-        internal override PropertyMetadata CreateInstance() {
+        internal override PropertyMetadata CreateInstance()
+        {
             return new FrameworkPropertyMetadata();
         }
 
@@ -616,7 +617,7 @@ namespace System.Windows
                 {
                     // FW_DefaultUpdateSourceTriggerEnumBit1        = 0x40000000,
                     // FW_DefaultUpdateSourceTriggerEnumBit2        = 0x80000000,
-                    _flags = (MetadataFlags)(((uint)_flags & 0x3FFFFFFF) | ((uint) fbaseMetadata.DefaultUpdateSourceTrigger) << 30);
+                    _flags = (MetadataFlags)(((uint)_flags & 0x3FFFFFFF) | ((uint)fbaseMetadata.DefaultUpdateSourceTrigger) << 30);
                 }
             }
         }
@@ -636,7 +637,7 @@ namespace System.Windows
         {
             // Remember if this is the metadata for a ReadOnly property
             ReadOnly = dp.ReadOnly;
-            
+
             base.OnApply(dp, targetType);
         }
 

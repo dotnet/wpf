@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -53,28 +53,28 @@ namespace System.Windows.Media.Effects
 
         private static void BevelWidthPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            BevelBitmapEffect target = ((BevelBitmapEffect) d);
+            BevelBitmapEffect target = ((BevelBitmapEffect)d);
 
 
             target.PropertyChanged(BevelWidthProperty);
         }
         private static void ReliefPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            BevelBitmapEffect target = ((BevelBitmapEffect) d);
+            BevelBitmapEffect target = ((BevelBitmapEffect)d);
 
 
             target.PropertyChanged(ReliefProperty);
         }
         private static void LightAnglePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            BevelBitmapEffect target = ((BevelBitmapEffect) d);
+            BevelBitmapEffect target = ((BevelBitmapEffect)d);
 
 
             target.PropertyChanged(LightAngleProperty);
         }
         private static void SmoothnessPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            BevelBitmapEffect target = ((BevelBitmapEffect) d);
+            BevelBitmapEffect target = ((BevelBitmapEffect)d);
 
 
             target.PropertyChanged(SmoothnessProperty);
@@ -90,7 +90,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double) GetValue(BevelWidthProperty);
+                return (double)GetValue(BevelWidthProperty);
             }
             set
             {
@@ -105,7 +105,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double) GetValue(ReliefProperty);
+                return (double)GetValue(ReliefProperty);
             }
             set
             {
@@ -120,7 +120,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double) GetValue(LightAngleProperty);
+                return (double)GetValue(LightAngleProperty);
             }
             set
             {
@@ -135,7 +135,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double) GetValue(SmoothnessProperty);
+                return (double)GetValue(SmoothnessProperty);
             }
             set
             {
@@ -150,7 +150,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (EdgeProfile) GetValue(EdgeProfileProperty);
+                return (EdgeProfile)GetValue(EdgeProfileProperty);
             }
             set
             {

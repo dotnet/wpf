@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,16 +7,16 @@
 //      Implements the FixedDocumentSequence element
 //
 
-using MS.Internal.Documents;
 using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Automation.Peers;    // AutomationPeer
-using System.Windows.Threading;     // Dispatcher
-using System.Windows.Media;         // Visual
 using System.Windows.Markup; // IAddChild, ContentProperty
+using System.Windows.Media;         // Visual
 using System.Windows.Navigation;
+using System.Windows.Threading;     // Dispatcher
+using MS.Internal.Documents;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -100,7 +100,7 @@ namespace System.Windows.Documents
         {
             ArgumentNullException.ThrowIfNull(value);
 
-//             Dispatcher.VerifyAccess();
+            //             Dispatcher.VerifyAccess();
 
             DocumentReference docRef = value as DocumentReference;
 
@@ -162,7 +162,7 @@ namespace System.Windows.Documents
             rootFixedPage = null;
 
             DynamicDocumentPaginator childPaginator;
-            FixedDocument            childFixedDoc;
+            FixedDocument childFixedDoc;
 
             if (Char.IsDigit(elementID[0]))
             {
@@ -209,7 +209,7 @@ namespace System.Windows.Documents
         {
             get
             {
-//                 Dispatcher.VerifyAccess();
+                //                 Dispatcher.VerifyAccess();
 
                 DocumentReference[] docArray = new DocumentReference[_references.Count];
                 this._references.CopyTo(docArray, 0);
@@ -241,7 +241,7 @@ namespace System.Windows.Documents
             DocumentsTrace.FixedFormat.IDF.Trace($"IDP.GetPage({pageNumber})");
 
             // Make sure that the call is in the right context.
-//             Dispatcher.VerifyAccess();
+            //             Dispatcher.VerifyAccess();
 
             // Page number cannot be negative.
             if (pageNumber < 0)
@@ -291,7 +291,7 @@ namespace System.Windows.Documents
             DocumentsTrace.FixedFormat.IDF.Trace($"IDP.GetPageAsync({pageNumber}, {userState})");
 
             // Make sure that the call is in the right context.
-//             Dispatcher.VerifyAccess();
+            //             Dispatcher.VerifyAccess();
 
             // Page number cannot be negative.
             if (pageNumber < 0)
@@ -324,7 +324,7 @@ namespace System.Windows.Documents
             {
                 DocumentSequenceTextPointer dsTextPointer = (DocumentSequenceTextPointer)contentPosition;
 
-                #pragma warning suppress 6506 // dsTextPointer is obviously not null
+#pragma warning suppress 6506 // dsTextPointer is obviously not null
                 childPaginator = GetPaginator(dsTextPointer.ChildBlock.DocRef);
                 childContentPosition = dsTextPointer.ChildPointer as ContentPosition;
             }
@@ -475,7 +475,7 @@ namespace System.Windows.Documents
         /// </summary>
         Uri IUriContext.BaseUri
         {
-            get { return (Uri) GetValue(BaseUriHelper.BaseUriProperty); }
+            get { return (Uri)GetValue(BaseUriHelper.BaseUriProperty); }
             set { SetValue(BaseUriHelper.BaseUriProperty, value); }
         }
         #endregion
@@ -496,7 +496,7 @@ namespace System.Windows.Documents
         {
             get
             {
-//                 Dispatcher.VerifyAccess();
+                //                 Dispatcher.VerifyAccess();
                 return _references;
             }
         }
@@ -520,7 +520,7 @@ namespace System.Windows.Documents
             }
             set
             {
-                SetValue(PrintTicketProperty,value);
+                SetValue(PrintTicketProperty, value);
             }
         }
 
@@ -664,8 +664,8 @@ namespace System.Windows.Documents
             _paginator = new FixedDocumentSequencePaginator(this);
             _references = new DocumentReferenceCollection();
             _references.CollectionChanged += new NotifyCollectionChangedEventHandler(_OnCollectionChanged);
-            _asyncOps   = new Dictionary<Object,GetPageAsyncRequest>();
-            _pendingPages  =  new List<RequestedPage>();
+            _asyncOps = new Dictionary<Object, GetPageAsyncRequest>();
+            _pendingPages = new List<RequestedPage>();
             _pageSize = new Size(8.5d * 96d, 11.0d * 96d);
             this.Initialized += new EventHandler(OnInitialized);
         }
@@ -949,13 +949,13 @@ namespace System.Windows.Documents
         //---------------------------------------------------------------------
 
         #region Private Fields
-        private DocumentReferenceCollection   _references;
+        private DocumentReferenceCollection _references;
         private DocumentReference _partialRef;  // uninitialized doc that is currently parsed.
 
         // IDP
         private FixedDocumentSequencePaginator _paginator;
         private IDictionary<Object, GetPageAsyncRequest> _asyncOps;  // pending request from client code
-        private IList<RequestedPage>         _pendingPages;          // pending request to child page
+        private IList<RequestedPage> _pendingPages;          // pending request to child page
         private Size _pageSize;
         private bool _navigateAfterPagination = false;
         private string _navigateFragment;
@@ -1032,9 +1032,9 @@ namespace System.Windows.Documents
         {
             internal GetPageAsyncRequest(RequestedPage page, object userState)
             {
-                Page       = page;
-                UserState  = userState;
-                Cancelled  = false;
+                Page = page;
+                UserState = userState;
+                Cancelled = false;
             }
 
             internal RequestedPage Page;
@@ -1206,7 +1206,7 @@ namespace System.Windows.Documents
             get
             {
                 int docIndex = 0;
-                foreach(DocumentReference docRef in _fixedDocumentSequence.References)
+                foreach (DocumentReference docRef in _fixedDocumentSequence.References)
                 {
                     docIndex++;
                     if (docRef.CurrentlyLoadedDoc == _documentPaginator.Source)
@@ -1227,12 +1227,12 @@ namespace System.Windows.Documents
 
         #region Private Fields
 
-        private readonly FixedDocumentSequence    _fixedDocumentSequence;
+        private readonly FixedDocumentSequence _fixedDocumentSequence;
         private readonly DynamicDocumentPaginator _documentPaginator;
-        private readonly DocumentPage             _documentPage;
-        private bool                              _layedOut;
+        private readonly DocumentPage _documentPage;
+        private bool _layedOut;
         // Text OM
-        private DocumentSequenceTextView          _textView;
+        private DocumentSequenceTextView _textView;
 
         #endregion Private Fields
     }

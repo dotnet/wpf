@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,12 +9,12 @@
 
 using System.Threading;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Documents;
-using MS.Internal.Text;
+using System.Windows.Media;
 using System.Windows.Threading;
 using MS.Internal.Documents;
 using MS.Internal.PtsHost.UnsafeNativeMethods;
+using MS.Internal.Text;
 
 namespace MS.Internal.PtsHost
 {
@@ -100,7 +100,7 @@ namespace MS.Internal.PtsHost
         {
             bool canUpdate = !IsEmpty;
 
-            if(!_section.CanUpdate)
+            if (!_section.CanUpdate)
             {
                 // Main text segment is null for section, no update possible.
                 canUpdate = false;
@@ -164,13 +164,13 @@ namespace MS.Internal.PtsHost
                 {
                     canUpdate = false;
                     Debug.Assert(breakRecord == null || !_section.StructuralCache.DestroyStructure, "Cannot format from dirty break record unless StructuralCache.DestroyStructure is not set.");
-                 
+
                     _section.InvalidateStructure();
                     // Update structural cache info. The DestroyStructureCache parameter is set to true if
                     // the name table is not preserved. If the name table is to be preserved, e.g. for highlight
                     // changed, we do not clear structure cache
                     _section.StructuralCache.ClearUpdateInfo(/*destroy structure cache:*/ _section.StructuralCache.DestroyStructure);
-                } 
+                }
                 // If there is DRT list, invalidate entire NameTable starting from the 
                 // position of the first DTR.
                 // Then clear update info, if incremental update is not possible.
@@ -253,7 +253,7 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         private void BackgroundFormat()
         {
-            FlowDocument formattingOwner = _section.StructuralCache.FormattingOwner; 
+            FlowDocument formattingOwner = _section.StructuralCache.FormattingOwner;
 
             if (formattingOwner.Formatter is FlowDocumentFormatter)
             {
@@ -268,7 +268,7 @@ namespace MS.Internal.PtsHost
         {
             int cpLast = _section.StructuralCache.BackgroundFormatInfo.CPInterrupted;
             int cpTextContainer = _section.StructuralCache.BackgroundFormatInfo.CchAllText;
-                                                                                                                          
+
             DirtyTextRange dtr = new DirtyTextRange(cpLast, cpTextContainer - cpLast, cpTextContainer - cpLast);
             _section.StructuralCache.AddDirtyTextRange(dtr);
 
@@ -317,7 +317,7 @@ namespace MS.Internal.PtsHost
 
             OnAfterFormatPage(true, false);
 
-            if(formattingResult == PTS.FSFMTRBL.fmtrblInterrupted)
+            if (formattingResult == PTS.FSFMTRBL.fmtrblInterrupted)
             {
                 DeferFormattingToBackground();
             }
@@ -366,7 +366,7 @@ namespace MS.Internal.PtsHost
 
             OnAfterFormatPage(true, true);
 
-            if(formattingResult == PTS.FSFMTRBL.fmtrblInterrupted)
+            if (formattingResult == PTS.FSFMTRBL.fmtrblInterrupted)
             {
                 DeferFormattingToBackground();
             }
@@ -540,7 +540,7 @@ namespace MS.Internal.PtsHost
                     }
                 }
             }
-}
+        }
 
         //-------------------------------------------------------------------
         // Update viewport top-level
@@ -772,7 +772,7 @@ namespace MS.Internal.PtsHost
                     rect.dv = Math.Max(rect.dv, bbox.fsrc.dv);
                 }
                 // Set page size
-                _calculatedSize.Width  = Math.Max(TextDpi.MinWidth, TextDpi.FromTextDpi(rect.du));
+                _calculatedSize.Width = Math.Max(TextDpi.MinWidth, TextDpi.FromTextDpi(rect.du));
                 _calculatedSize.Height = Math.Max(TextDpi.MinWidth, TextDpi.FromTextDpi(rect.dv));
                 // Set content size
                 if (PTS.ToBoolean(bbox.fDefined))
@@ -860,7 +860,7 @@ namespace MS.Internal.PtsHost
         // Retrieve bounding box of the page/subpage
         // ------------------------------------------------------------------
         private PTS.FSBBOX GetBoundingBox()
-        { 
+        {
             PTS.FSBBOX bbox = new PTS.FSBBOX();
             // There are 3 cases when calculating bounding box:
             // (1) PTS page is not created - return empty rect.
@@ -925,7 +925,7 @@ namespace MS.Internal.PtsHost
                 if (sectionDetails.u.withpagenotes.cBasicColumns != 0)
                 {
                     // Retrieve description for each column.
-                    PTS.FSTRACKDESCRIPTION [] arrayColumnDesc;
+                    PTS.FSTRACKDESCRIPTION[] arrayColumnDesc;
                     PtsHelper.TrackListFromSection(PtsContext, sectionDesc.pfssection, ref sectionDetails, out arrayColumnDesc);
 
                     // Arrange each column
@@ -973,7 +973,7 @@ namespace MS.Internal.PtsHost
                 if (sectionDetails.u.withpagenotes.cBasicColumns != 0)
                 {
                     // Retrieve description for each column.
-                    PTS.FSTRACKDESCRIPTION [] arrayColumnDesc;
+                    PTS.FSTRACKDESCRIPTION[] arrayColumnDesc;
                     PtsHelper.TrackListFromSection(PtsContext, sectionDesc.pfssection, ref sectionDetails, out arrayColumnDesc);
 
                     // Arrange each column
@@ -1003,13 +1003,14 @@ namespace MS.Internal.PtsHost
             PTS.Validate(PTS.FsQueryPageDetails(PtsContext.Context, _ptsPage, out pageDetails));
 
             // If there is no change, visual information is valid
-            if (pageDetails.fskupd == PTS.FSKUPDATE.fskupdNoChange) { return; }
+            if (pageDetails.fskupd == PTS.FSKUPDATE.fskupdNoChange)
+            { return; }
             ErrorHandler.Assert(pageDetails.fskupd != PTS.FSKUPDATE.fskupdShifted, ErrorHandler.UpdateShiftedNotValid);
 
             ContainerVisual pageContentVisual;
             ContainerVisual floatingElementsVisual;
 
-            if(_visual.Children.Count != 2)
+            if (_visual.Children.Count != 2)
             {
                 _visual.Children.Clear();
                 _visual.Children.Add(new ContainerVisual());
@@ -1062,7 +1063,7 @@ namespace MS.Internal.PtsHost
                 if (!emptyPage)
                 {
                     // Retrieve description for each section.
-                    PTS.FSSECTIONDESCRIPTION [] arraySectionDesc;
+                    PTS.FSSECTIONDESCRIPTION[] arraySectionDesc;
                     PtsHelper.SectionListFromPage(PtsContext, _ptsPage, ref pageDetails, out arraySectionDesc);
 
                     emptyPage = (arraySectionDesc.Length == 0);
@@ -1099,8 +1100,8 @@ namespace MS.Internal.PtsHost
         // Update PTS section visuals.
         //-------------------------------------------------------------------
         private void UpdateSectionVisuals(
-            SectionVisual visual, 
-            PTS.FSKUPDATE fskupdInherited, 
+            SectionVisual visual,
+            PTS.FSKUPDATE fskupdInherited,
             ref PTS.FSSECTIONDESCRIPTION sectionDesc)
         {
             PTS.FSKUPDATE fskupd = sectionDesc.fsupdinf.fskupd;
@@ -1111,7 +1112,8 @@ namespace MS.Internal.PtsHost
             ErrorHandler.Assert(fskupd != PTS.FSKUPDATE.fskupdShifted, ErrorHandler.UpdateShiftedNotValid);
 
             // If there is no change, visual information is valid
-            if (fskupd == PTS.FSKUPDATE.fskupdNoChange) { return; }
+            if (fskupd == PTS.FSKUPDATE.fskupdNoChange)
+            { return; }
 
             bool emptySection;
 
@@ -1136,7 +1138,7 @@ namespace MS.Internal.PtsHost
                 if (!emptySection)
                 {
                     // Retrieve description for each column.
-                    PTS.FSTRACKDESCRIPTION [] arrayColumnDesc;
+                    PTS.FSTRACKDESCRIPTION[] arrayColumnDesc;
                     PtsHelper.TrackListFromSection(PtsContext, sectionDesc.pfssection, ref sectionDetails, out arrayColumnDesc);
 
                     emptySection = (arrayColumnDesc.Length == 0);
@@ -1185,9 +1187,9 @@ namespace MS.Internal.PtsHost
         {
             IInputElement ie = null;
 
-            if(_pageContextOfThisPage.FloatingElementList != null)
+            if (_pageContextOfThisPage.FloatingElementList != null)
             {
-                for(int index = 0; index < _pageContextOfThisPage.FloatingElementList.Count && ie == null; index++)
+                for (int index = 0; index < _pageContextOfThisPage.FloatingElementList.Count && ie == null; index++)
                 {
                     BaseParaClient floatingElement = _pageContextOfThisPage.FloatingElementList[index];
 
@@ -1195,7 +1197,7 @@ namespace MS.Internal.PtsHost
                 }
             }
 
-            if(ie == null)
+            if (ie == null)
             {
                 // Get page details
                 PTS.FSPAGEDETAILS pageDetails;
@@ -1210,7 +1212,7 @@ namespace MS.Internal.PtsHost
                     // (1) simple page (contains only one track)
                     if (pageDetails.u.simple.trackdescr.fsrc.Contains(pt))
                     {
-                        ie = PtsHelper.InputHitTestTrack(PtsContext, pt, ref pageDetails.u.simple.trackdescr); 
+                        ie = PtsHelper.InputHitTestTrack(PtsContext, pt, ref pageDetails.u.simple.trackdescr);
                     }
                 }
                 else
@@ -1226,7 +1228,7 @@ namespace MS.Internal.PtsHost
                     if (pageDetails.u.complex.cSections != 0)
                     {
                         // Retrieve description for each section.
-                        PTS.FSSECTIONDESCRIPTION [] arraySectionDesc;
+                        PTS.FSSECTIONDESCRIPTION[] arraySectionDesc;
                         PtsHelper.SectionListFromPage(PtsContext, _ptsPage, ref pageDetails, out arraySectionDesc);
 
                         // Hittest each section
@@ -1251,7 +1253,7 @@ namespace MS.Internal.PtsHost
         // length: int representing number of positions occupied by e
         // ------------------------------------------------------------------
         private List<Rect> GetRectanglesInPage(ContentElement e, int start, int length)
-        {            
+        {
             // Rectangles to be returned
             List<Rect> rectangles = new List<Rect>();
             Invariant.Assert(!IsEmpty);
@@ -1287,7 +1289,7 @@ namespace MS.Internal.PtsHost
                     for (int index = 0; index < arraySectionDesc.Length; index++)
                     {
                         rectangles = GetRectanglesInSection(e, start, length, ref arraySectionDesc[index]);
-                        
+
                         // For consistency, helpers cannot return null for rectangles
                         Invariant.Assert(rectangles != null);
                         if (rectangles.Count != 0)
@@ -1313,7 +1315,7 @@ namespace MS.Internal.PtsHost
         // mouse is over.
         //-------------------------------------------------------------------
         private IInputElement InputHitTestSection(
-            PTS.FSPOINT pt, 
+            PTS.FSPOINT pt,
             ref PTS.FSSECTIONDESCRIPTION sectionDesc)
         {
             IInputElement ie = null;
@@ -1339,7 +1341,7 @@ namespace MS.Internal.PtsHost
                 if (sectionDetails.u.withpagenotes.cBasicColumns != 0)
                 {
                     // Retrieve description for each column.
-                    PTS.FSTRACKDESCRIPTION [] arrayColumnDesc;
+                    PTS.FSTRACKDESCRIPTION[] arrayColumnDesc;
                     PtsHelper.TrackListFromSection(PtsContext, sectionDesc.pfssection, ref sectionDetails, out arrayColumnDesc);
 
                     // Hittest each column
@@ -1409,7 +1411,7 @@ namespace MS.Internal.PtsHost
                     {
                         // See if any rectangles for the element are found in this track
                         List<Rect> trackRectangles = PtsHelper.GetRectanglesInTrack(PtsContext, e, start, length, ref arrayColumnDesc[index]);
-                        
+
                         // For consistency, rectangles collection is never null, only empty
                         Invariant.Assert(trackRectangles != null);
                         if (trackRectangles.Count != 0)
@@ -1455,7 +1457,7 @@ namespace MS.Internal.PtsHost
         {
             get
             {
-                return (_ptsPage == IntPtr.Zero); 
+                return (_ptsPage == IntPtr.Zero);
             }
         }
 
@@ -1502,7 +1504,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         // Context the current page provides for its content.
         // ------------------------------------------------------------------
-        private PageContext _pageContextOfThisPage = new PageContext(); 
+        private PageContext _pageContextOfThisPage = new PageContext();
 
 
         // ------------------------------------------------------------------
@@ -1545,12 +1547,12 @@ namespace MS.Internal.PtsHost
 
         internal void AddFloatingParaClient(BaseParaClient floatingElement)
         {
-            if(_floatingElementList == null)
+            if (_floatingElementList == null)
             {
                 _floatingElementList = new List<BaseParaClient>();
             }
 
-            if(!_floatingElementList.Contains(floatingElement))
+            if (!_floatingElementList.Contains(floatingElement))
             {
                 _floatingElementList.Add(floatingElement);
             }
@@ -1558,12 +1560,12 @@ namespace MS.Internal.PtsHost
 
         internal void RemoveFloatingParaClient(BaseParaClient floatingElement)
         {
-            if(_floatingElementList.Contains(floatingElement))
+            if (_floatingElementList.Contains(floatingElement))
             {
                 _floatingElementList.Remove(floatingElement);
             }
 
-            if(_floatingElementList.Count == 0)
+            if (_floatingElementList.Count == 0)
             {
                 _floatingElementList = null;
             }

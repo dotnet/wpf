@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -941,7 +941,7 @@ namespace System.Windows.Controls
         /// <summary>
         ///     Called by the DataGrid when Items.CollectionChanged is raised.
         /// </summary>
-        internal void OnItemsCollectionChanged(NotifyCollectionChangedEventArgs e, List<Tuple<int,int>> ranges)
+        internal void OnItemsCollectionChanged(NotifyCollectionChangedEventArgs e, List<Tuple<int, int>> ranges)
         {
             if (!IsEmpty)
             {
@@ -1428,14 +1428,14 @@ namespace System.Windows.Controls
         /// <summary>
         ///     Ensures that full rows in the list are selected.
         /// </summary>
-        internal void RestoreOnlyFullRows(List<Tuple<int,int>> ranges)
+        internal void RestoreOnlyFullRows(List<Tuple<int, int>> ranges)
         {
             Clear();
 
             int numColumns = _owner.Columns.Count;
             if (numColumns > 0)
             {
-                foreach (Tuple<int,int> range in ranges)
+                foreach (Tuple<int, int> range in ranges)
                 {
                     AddRegion(range.Item1, 0, range.Item2, numColumns);
                 }

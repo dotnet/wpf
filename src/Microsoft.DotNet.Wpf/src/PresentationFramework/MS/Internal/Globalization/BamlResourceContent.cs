@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,7 +21,8 @@ namespace MS.Internal.Globalization
         /// </summary>
         internal static string EscapeString(string content)
         {
-            if (content == null) return null;
+            if (content == null)
+                return null;
 
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < content.Length; i++)
@@ -99,11 +100,16 @@ namespace MS.Internal.Globalization
         {
             switch (match.Value)
             {
-                case "&lt;": return "<";
-                case "&gt;": return ">";
-                case "&amp;": return "&";
-                case "&apos;": return "'";
-                case "&quot;": return "\"";
+                case "&lt;":
+                    return "<";
+                case "&gt;":
+                    return ">";
+                case "&amp;":
+                    return "&";
+                case "&apos;":
+                    return "'";
+                case "&quot;":
+                    return "\"";
                 default:
                     {
                         // this is a '\' followed by 0 or 1 character                    
@@ -127,10 +133,12 @@ namespace MS.Internal.Globalization
         /// </summary>
         internal static BamlStringToken[] ParseChildPlaceholder(string input)
         {
-            if (input == null) return null;
+            if (input == null)
+                return null;
 
             List<BamlStringToken> tokens = new List<BamlStringToken>(8);
-            int tokenStart = 0; bool inPlaceHolder = false;
+            int tokenStart = 0;
+            bool inPlaceHolder = false;
             for (int i = 0; i < input.Length; i++)
             {
                 if (input[i] == BamlConst.ChildStart)

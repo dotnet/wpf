@@ -1,16 +1,16 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Reflection;
 using System.Globalization;
-using MS.Utility;
+using System.Reflection;
+using System.Text;
 using MS.Internal.Xaml.Parser;
+using MS.Utility;
 
 #if PBTCOMPILER
 namespace MS.Internal.Markup
@@ -28,13 +28,13 @@ namespace System.Windows.Markup
         string LookupNamespace(string prefix);
 
         bool GetElementType(
-                bool    extensionFirst,
-                string  localName,
-                string  namespaceURI,
-            ref string  assemblyName,
-            ref string  typeFullName,
-            ref Type    baseType,
-            ref Type    serializerType);
+                bool extensionFirst,
+                string localName,
+                string namespaceURI,
+            ref string assemblyName,
+            ref string typeFullName,
+            ref Type baseType,
+            ref Type serializerType);
 
         bool CanResolveLocalAssemblies();
     }
@@ -49,8 +49,8 @@ namespace System.Windows.Markup
         /// Constructor.
         /// </summary>
         internal MarkupExtensionParser(
-            IParserHelper    parserHelper,
-            ParserContext    parserContext)
+            IParserHelper parserHelper,
+            ParserContext parserContext)
         {
             _parserHelper = parserHelper;
             _parserContext = parserContext;
@@ -61,13 +61,13 @@ namespace System.Windows.Markup
         /// format for MarkupExtensions.  Otherwise return null.
         /// </summary>
         internal AttributeData IsMarkupExtensionAttribute(
-                Type          declaringType,    // Type where propIdName is declared
-                string        propIdName,       // Name of the property
-            ref string        attrValue,
-                int           lineNumber,
-                int           linePosition,
-                int           depth,
-                object        info)             // PropertyInfo or DependencyProperty or MethodInfo for the property
+                Type declaringType,    // Type where propIdName is declared
+                string propIdName,       // Name of the property
+            ref string attrValue,
+                int lineNumber,
+                int linePosition,
+                int depth,
+                object info)             // PropertyInfo or DependencyProperty or MethodInfo for the property
         {
             string typeName;
             string args;
@@ -86,11 +86,11 @@ namespace System.Windows.Markup
         /// format for MarkupExtensions.  Otherwise return null.
         /// </summary>
         internal DefAttributeData IsMarkupExtensionDefAttribute(
-                Type   declaringType,
+                Type declaringType,
             ref string attrValue,
-                int    lineNumber,
-                int    linePosition,
-                int    depth)
+                int lineNumber,
+                int linePosition,
+                int depth)
         {
             string typeName;
             string args;
@@ -131,7 +131,7 @@ namespace System.Windows.Markup
         ///     Prefixing the string with "{}" will tell GetMarkupExtensionTypeAndArgs()
         /// that the remainder of the string is to be treated literally.
         /// </remarks>
-        internal static string AddEscapeToLiteralString( string literalString )
+        internal static string AddEscapeToLiteralString(string literalString)
         {
             string returnString = literalString;
             if (!String.IsNullOrEmpty(returnString) && returnString[0] == '{')
@@ -186,9 +186,9 @@ namespace System.Windows.Markup
         ///  return true.  Otherwise, return false.
         /// </summary>
         private bool IsSimpleTypeExtensionArgs(
-                Type   extensionType,
-                int    lineNumber,
-                int    linePosition,
+                Type extensionType,
+                int lineNumber,
+                int linePosition,
             ref string args)
         {
             if (KnownTypes.Types[(int)KnownElements.TypeExtension] == extensionType)
@@ -223,13 +223,13 @@ namespace System.Windows.Markup
         ///  valueExtensions only apply to DynamicResourceExtension.
         /// </summary>
         private bool IsSimpleExtension(
-                Type   extensionType,
-                int    lineNumber,
-                int    linePosition,
-                int    depth,
-            out short  extensionTypeId,
-            out bool   isValueNestedExtension,
-            out bool   isValueTypeExtension,
+                Type extensionType,
+                int lineNumber,
+                int linePosition,
+                int depth,
+            out short extensionTypeId,
+            out bool isValueNestedExtension,
+            out bool isValueTypeExtension,
             ref string args)
         {
             bool isSimple = false;
@@ -351,7 +351,7 @@ namespace System.Windows.Markup
             StringBuilder stringBuilder = null;
             int i = 1;
 
-            for (; i<length; i++)
+            for (; i < length; i++)
             {
                 // Skip all whitespace unless we are collecting characters for the
                 // type name.
@@ -423,11 +423,11 @@ namespace System.Windows.Markup
                 typeName = stringBuilder.ToString();
             }
 
-            if (i < length-1)
+            if (i < length - 1)
             {
-                args = attrValue.Substring(i, length-i);
+                args = attrValue.Substring(i, length - i);
             }
-            else if( attrValue[length-1] == '}')
+            else if (attrValue[length - 1] == '}')
             {
                 args = "}";
             }
@@ -441,13 +441,13 @@ namespace System.Windows.Markup
         /// used when storing items in an IDictionary.
         /// </summary>
         private DefAttributeData FillDefAttributeData(
-                Type   declaringType,    // Type where attribute is declared
+                Type declaringType,    // Type where attribute is declared
                 string typename,
                 string args,
                 string attributeValue,
-                int    lineNumber,
-                int    linePosition,
-                int    depth)
+                int lineNumber,
+                int linePosition,
+                int depth)
         {
             string namespaceURI;
             string targetAssemblyName;
@@ -475,14 +475,14 @@ namespace System.Windows.Markup
 
         // Fill the attribute data structure with type and attribute string information
         private AttributeData FillAttributeData(
-                Type   declaringType,    // Type where propIdName is declared
+                Type declaringType,    // Type where propIdName is declared
                 string propIdName,       // Name of the property
                 string typename,
                 string args,
                 string attributeValue,
-                int    lineNumber,
-                int    linePosition,
-                int    depth,
+                int lineNumber,
+                int linePosition,
+                int depth,
                 object info)            // PropertyInfo or DependencyProperty or MethodInfo for the property
         {
             string namespaceURI;
@@ -544,18 +544,18 @@ namespace System.Windows.Markup
         private bool GetExtensionType(
                     string typename,
                     string attributeValue,
-                    int    lineNumber,
-                    int    linePosition,
+                    int lineNumber,
+                    int linePosition,
                 out string namespaceURI,
                 out string targetAssemblyName,
                 out string targetFullName,
-                out Type   targetType,
-                out Type   serializerType)
+                out Type targetType,
+                out Type serializerType)
         {
             targetAssemblyName = null;
-            targetFullName     = null;
-            targetType         = null;
-            serializerType     = null;
+            targetFullName = null;
+            targetType = null;
+            serializerType = null;
 
             // lookup the type of the target
             string fullname = typename;
@@ -606,11 +606,11 @@ namespace System.Windows.Markup
         /// </summary>
         internal ArrayList CompileAttributes(
             ArrayList markupExtensionList,
-            int       startingDepth)
+            int startingDepth)
         {
             ArrayList xamlNodes = new ArrayList(markupExtensionList.Count * 5);
 
-            for (int i = 0; i<markupExtensionList.Count; i++)
+            for (int i = 0; i < markupExtensionList.Count; i++)
             {
                 AttributeData data = (AttributeData)markupExtensionList[i];
 
@@ -649,70 +649,70 @@ namespace System.Windows.Markup
             switch (propertyRecordType)
             {
                 case BamlRecordType.PropertyArrayStart:
-                {
-                    propertyStart = new XamlPropertyArrayStartNode(
-                                                                data.LineNumber,
-                                                                data.LinePosition,
-                                                                data.Depth,
-                                                                data.Info,
-                                                                declaringTypeAssemblyName,
-                                                                declaringTypeFullName,
-                                                                data.PropertyName);
+                    {
+                        propertyStart = new XamlPropertyArrayStartNode(
+                                                                    data.LineNumber,
+                                                                    data.LinePosition,
+                                                                    data.Depth,
+                                                                    data.Info,
+                                                                    declaringTypeAssemblyName,
+                                                                    declaringTypeFullName,
+                                                                    data.PropertyName);
 
-                    propertyEnd = new XamlPropertyArrayEndNode(
-                                          data.LineNumber,
-                                          data.LinePosition,
-                                          data.Depth);
-                    break;
-                }
+                        propertyEnd = new XamlPropertyArrayEndNode(
+                                              data.LineNumber,
+                                              data.LinePosition,
+                                              data.Depth);
+                        break;
+                    }
                 case BamlRecordType.PropertyIDictionaryStart:
-                {
-                    propertyStart = new XamlPropertyIDictionaryStartNode(
-                                                                data.LineNumber,
-                                                                data.LinePosition,
-                                                                data.Depth,
-                                                                data.Info,
-                                                                declaringTypeAssemblyName,
-                                                                declaringTypeFullName,
-                                                                data.PropertyName);
-                    propertyEnd = new XamlPropertyIDictionaryEndNode(
-                                          data.LineNumber,
-                                          data.LinePosition,
-                                          data.Depth);
-                    break;
-                }
+                    {
+                        propertyStart = new XamlPropertyIDictionaryStartNode(
+                                                                    data.LineNumber,
+                                                                    data.LinePosition,
+                                                                    data.Depth,
+                                                                    data.Info,
+                                                                    declaringTypeAssemblyName,
+                                                                    declaringTypeFullName,
+                                                                    data.PropertyName);
+                        propertyEnd = new XamlPropertyIDictionaryEndNode(
+                                              data.LineNumber,
+                                              data.LinePosition,
+                                              data.Depth);
+                        break;
+                    }
                 case BamlRecordType.PropertyIListStart:
-                {
-                    propertyStart = new XamlPropertyIListStartNode(
-                                                                data.LineNumber,
-                                                                data.LinePosition,
-                                                                data.Depth,
-                                                                data.Info,
-                                                                declaringTypeAssemblyName,
-                                                                declaringTypeFullName,
-                                                                data.PropertyName);
-                    propertyEnd = new XamlPropertyIListEndNode(
-                                          data.LineNumber,
-                                          data.LinePosition,
-                                          data.Depth);
-                    break;
-                }
+                    {
+                        propertyStart = new XamlPropertyIListStartNode(
+                                                                    data.LineNumber,
+                                                                    data.LinePosition,
+                                                                    data.Depth,
+                                                                    data.Info,
+                                                                    declaringTypeAssemblyName,
+                                                                    declaringTypeFullName,
+                                                                    data.PropertyName);
+                        propertyEnd = new XamlPropertyIListEndNode(
+                                              data.LineNumber,
+                                              data.LinePosition,
+                                              data.Depth);
+                        break;
+                    }
                 default: // PropertyComplexStart
-                {
-                    propertyStart = new XamlPropertyComplexStartNode(
-                                                                data.LineNumber,
-                                                                data.LinePosition,
-                                                                data.Depth,
-                                                                data.Info,
-                                                                declaringTypeAssemblyName,
-                                                                declaringTypeFullName,
-                                                                data.PropertyName);
-                    propertyEnd = new XamlPropertyComplexEndNode(
-                                          data.LineNumber,
-                                          data.LinePosition,
-                                          data.Depth);
-                    break;
-                }
+                    {
+                        propertyStart = new XamlPropertyComplexStartNode(
+                                                                    data.LineNumber,
+                                                                    data.LinePosition,
+                                                                    data.Depth,
+                                                                    data.Info,
+                                                                    declaringTypeAssemblyName,
+                                                                    declaringTypeFullName,
+                                                                    data.PropertyName);
+                        propertyEnd = new XamlPropertyComplexEndNode(
+                                              data.LineNumber,
+                                              data.LinePosition,
+                                              data.Depth);
+                        break;
+                    }
             }
 
             // NOTE:  Add duplicate property checking here as is done in XamlReaderHelper
@@ -815,11 +815,11 @@ namespace System.Windows.Markup
         /// syntax and return a list of xaml nodes that represents those attributes.
         /// </summary>
         internal ArrayList CompileDictionaryKeys(
-            ArrayList   complexDefAttributesList,
-            int         startingDepth)
+            ArrayList complexDefAttributesList,
+            int startingDepth)
         {
             ArrayList xamlNodes = new ArrayList(complexDefAttributesList.Count * 5);
-            for (int i = 0; i<complexDefAttributesList.Count; i++)
+            for (int i = 0; i < complexDefAttributesList.Count; i++)
             {
                 DefAttributeData data = (DefAttributeData)complexDefAttributesList[i];
 
@@ -833,7 +833,7 @@ namespace System.Windows.Markup
         /// syntax and return a list of xaml nodes that represents those attributes.
         /// </summary>
         internal void CompileDictionaryKey(
-            ArrayList   xamlNodes,
+            ArrayList xamlNodes,
             DefAttributeData data)
         {
             ArrayList list = TokenizeAttributes(data.Args, data.LineNumber, data.LinePosition, data.TargetType);
@@ -905,10 +905,10 @@ namespace System.Windows.Markup
         /// these can be a pair of special characters (like (), [] etc). Anything enclosed inside these characters
         /// has no special meaning, except \ and other such MarkupExtensionBracketCharacters themselves.
         ///  </summary>
-        private ArrayList TokenizeAttributes (
+        private ArrayList TokenizeAttributes(
             string args,
-            int    lineNumber,
-            int    linePosition,
+            int lineNumber,
+            int linePosition,
             Type extensionType)
         {
             // As a result of having to rely on Reflection to find whether a property has a MarkupExtensionBracketCharacterAttribute
@@ -916,7 +916,7 @@ namespace System.Windows.Markup
             // here, we just return null. If this was MarkupCompilePass2 and the extension was still unknown, it would have errored out by now
             // already.
 
-            if (extensionType == typeof (UnknownMarkupExtension))
+            if (extensionType == typeof(UnknownMarkupExtension))
             {
                 return null;
             }
@@ -929,7 +929,7 @@ namespace System.Windows.Markup
             int currentConstructorParam = 0;
             bool inCtorParsingMode = constructorParameters != null && maxConstructorParams > 0;
             bool inBracketCharacterMode = false;
-            
+
             ArrayList list = null;
             int length = args.Length;
             bool inQuotes = false;
@@ -937,7 +937,7 @@ namespace System.Windows.Markup
             bool nonWhitespaceFound = false;
             bool gotFinalCloseCurly = false;
             Char quoteChar = '\'';
-            int  leftCurlies = 0;
+            int leftCurlies = 0;
             StringBuilder stringBuilder = null;
             int i = 0;
             string parameterName = null;
@@ -954,7 +954,7 @@ namespace System.Windows.Markup
             // Loop through the args, creating a list of arguments and known delimiters.
             // This loop does limited syntax checking, and serves to tokenize the argument
             // string into chunks that are validated in greater detail in the next phase.
-            for (i=0; i < length && !gotFinalCloseCurly; i++)
+            for (i = 0; i < length && !gotFinalCloseCurly; i++)
             {
                 // Escape character is always in effect for everything inside
                 // a MarkupExtension.  We have to remember that the next character is
@@ -1053,105 +1053,105 @@ namespace System.Windows.Markup
                     }
                     else  // not in quotes or inside nested curlies.  Parse the Tokens
                     { // not in special escape mode either
-                        switch(args[i])
+                        switch (args[i])
                         {
-                        case '"':
-                        case '\'':
-                            // If we're not inside quotes, then a start quote can only
-                            // occur as the first non-whitespace character in a name or value.
-                            if (stringBuilder.Length != 0)
-                            {
-                                ThrowException(nameof(SR.ParserMarkupExtensionNoQuotesInName), args,
-                                               lineNumber, linePosition);
-                            }
-                            inQuotes = true;
-                            quoteChar = args[i];
-                            break;
-
-                        case ',':
-                        case '=':
-                            if (inCtorParsingMode && args[i] == ',')
-                            {
-                                inCtorParsingMode = ++currentConstructorParam < maxConstructorParams;
-                                if (inCtorParsingMode)
+                            case '"':
+                            case '\'':
+                                // If we're not inside quotes, then a start quote can only
+                                // occur as the first non-whitespace character in a name or value.
+                                if (stringBuilder.Length != 0)
                                 {
-                                    parameterName = constructorParameters[currentConstructorParam].Name;
-                                    bracketCharacters = GetBracketCharacterForProperty(parameterName, bracketCharacterCache);
+                                    ThrowException(nameof(SR.ParserMarkupExtensionNoQuotesInName), args,
+                                                   lineNumber, linePosition);
                                 }
-                            }
+                                inQuotes = true;
+                                quoteChar = args[i];
+                                break;
 
-                            // If we have a token in the stringbuilder, then store it
-                            if (stringBuilder != null && stringBuilder.Length > 0)
-                            {
-                                AddToTokenList(list, stringBuilder, true);
-                                if (bracketCharacterStack.Count != 0)
+                            case ',':
+                            case '=':
+                                if (inCtorParsingMode && args[i] == ',')
                                 {
-                                    ThrowException(nameof(SR.ParserMarkupExtensionMalformedBracketCharacers), bracketCharacterStack.Peek().ToString(), lineNumber, linePosition);
+                                    inCtorParsingMode = ++currentConstructorParam < maxConstructorParams;
+                                    if (inCtorParsingMode)
+                                    {
+                                        parameterName = constructorParameters[currentConstructorParam].Name;
+                                        bracketCharacters = GetBracketCharacterForProperty(parameterName, bracketCharacterCache);
+                                    }
                                 }
-                            }
-                            else if (list.Count == 0)
-                            {
-                                // Must have an attribute before you have the first delimeter
-                                ThrowException(nameof(SR.ParserMarkupExtensionDelimiterBeforeFirstAttribute), args,
-                                               lineNumber, linePosition);
-                            }
-                            else if (list[list.Count - 1] is Char)
-                            {
-                                // Can't have two delimiters in a row, so check what is on
-                                // the list and complain if the last item is a character, or if
-                                // a delimiter is the first item.
-                                ThrowException(nameof(SR.ParserMarkupExtensionBadDelimiter), args,
-                                               lineNumber, linePosition);
-                            }
 
-                            if (args[i] == '=')
-                            {
-                                inCtorParsingMode = false;
-                                // find BracketCharacterAttribute for the property name that preceeded this = delimiter
-                                parameterName = (string) list[list.Count - 1];
-                                bracketCharacters = GetBracketCharacterForProperty(parameterName, bracketCharacterCache);
-                            }
-
-                            // Append known delimiters.
-                            list.Add(args[i]);
-                            nonWhitespaceFound = false;
-                            break;
-
-                        case '}':
-                            // If we hit the outside right curly brace, then end processing.  If
-                            // there is a delimiter on the top of the stack and we haven't
-                            // hit another non-whitespace character, then its an error
-                            gotFinalCloseCurly = true;
-                            if (stringBuilder != null)
-                            {
-                                if (stringBuilder.Length > 0)
+                                // If we have a token in the stringbuilder, then store it
+                                if (stringBuilder != null && stringBuilder.Length > 0)
                                 {
                                     AddToTokenList(list, stringBuilder, true);
+                                    if (bracketCharacterStack.Count != 0)
+                                    {
+                                        ThrowException(nameof(SR.ParserMarkupExtensionMalformedBracketCharacers), bracketCharacterStack.Peek().ToString(), lineNumber, linePosition);
+                                    }
                                 }
-                                else if (list.Count > 0 && (list[list.Count-1] is Char))
+                                else if (list.Count == 0)
                                 {
+                                    // Must have an attribute before you have the first delimeter
+                                    ThrowException(nameof(SR.ParserMarkupExtensionDelimiterBeforeFirstAttribute), args,
+                                                   lineNumber, linePosition);
+                                }
+                                else if (list[list.Count - 1] is Char)
+                                {
+                                    // Can't have two delimiters in a row, so check what is on
+                                    // the list and complain if the last item is a character, or if
+                                    // a delimiter is the first item.
                                     ThrowException(nameof(SR.ParserMarkupExtensionBadDelimiter), args,
                                                    lineNumber, linePosition);
                                 }
-                            }
-                            break;
 
-                        case '{':
-                            leftCurlies++;
-                            stringBuilder.Append(args[i]);
-                            break;
+                                if (args[i] == '=')
+                                {
+                                    inCtorParsingMode = false;
+                                    // find BracketCharacterAttribute for the property name that preceeded this = delimiter
+                                    parameterName = (string)list[list.Count - 1];
+                                    bracketCharacters = GetBracketCharacterForProperty(parameterName, bracketCharacterCache);
+                                }
 
-                        default:
-                            if (bracketCharacters != null && bracketCharacters.StartsEscapeSequence(args[i]))
-                            {
-                                bracketCharacterStack.Clear();
-                                bracketCharacterStack.Push(args[i]);
-                                inBracketCharacterMode = true;
-                            }
+                                // Append known delimiters.
+                                list.Add(args[i]);
+                                nonWhitespaceFound = false;
+                                break;
 
-                            // Must just be a plain old character, so add it to the stringbuilder
-                            stringBuilder.Append(args[i]);
-                            break;
+                            case '}':
+                                // If we hit the outside right curly brace, then end processing.  If
+                                // there is a delimiter on the top of the stack and we haven't
+                                // hit another non-whitespace character, then its an error
+                                gotFinalCloseCurly = true;
+                                if (stringBuilder != null)
+                                {
+                                    if (stringBuilder.Length > 0)
+                                    {
+                                        AddToTokenList(list, stringBuilder, true);
+                                    }
+                                    else if (list.Count > 0 && (list[list.Count - 1] is Char))
+                                    {
+                                        ThrowException(nameof(SR.ParserMarkupExtensionBadDelimiter), args,
+                                                       lineNumber, linePosition);
+                                    }
+                                }
+                                break;
+
+                            case '{':
+                                leftCurlies++;
+                                stringBuilder.Append(args[i]);
+                                break;
+
+                            default:
+                                if (bracketCharacters != null && bracketCharacters.StartsEscapeSequence(args[i]))
+                                {
+                                    bracketCharacterStack.Clear();
+                                    bracketCharacterStack.Push(args[i]);
+                                    inBracketCharacterMode = true;
+                                }
+
+                                // Must just be a plain old character, so add it to the stringbuilder
+                                stringBuilder.Append(args[i]);
+                                break;
                         }
                     }
                 }
@@ -1168,7 +1168,7 @@ namespace System.Windows.Markup
             else if (i < length)
             {
                 ThrowException(nameof(SR.ParserMarkupExtensionTrailingGarbage), "}",
-                               args.Substring(i,length-(i)), lineNumber, linePosition);
+                               args.Substring(i, length - (i)), lineNumber, linePosition);
             }
 
             return list;
@@ -1177,15 +1177,15 @@ namespace System.Windows.Markup
 
         private static void AddToTokenList(ArrayList list, StringBuilder sb, bool trim)
         {
-            if(trim)
+            if (trim)
             {
                 Debug.Assert(sb.Length > 0);
                 Debug.Assert(!Char.IsWhiteSpace(sb[0]));
 
-                int i = sb.Length-1;
-                while(Char.IsWhiteSpace(sb[i]))
+                int i = sb.Length - 1;
+                while (Char.IsWhiteSpace(sb[i]))
                     --i;
-                sb.Length = i+1;
+                sb.Length = i + 1;
             }
             list.Add(sb.ToString());
             sb.Length = 0;
@@ -1219,10 +1219,10 @@ namespace System.Windows.Markup
         /// name=value, or when the end of the attributes is reached.
         /// </summary>
         private void WriteConstructorParams(
-                ArrayList        xamlNodes,
-                ArrayList        list,
+                ArrayList xamlNodes,
+                ArrayList list,
                 DefAttributeData data,
-            ref int              listIndex)
+            ref int listIndex)
         {
 #if PBTCOMPILER
             int numberOfConstructorAttributes = 0;
@@ -1238,7 +1238,7 @@ namespace System.Windows.Markup
                                         data.LinePosition,
                                         ++data.Depth));
 
-                for (; listIndex < list.Count; listIndex+=2)
+                for (; listIndex < list.Count; listIndex += 2)
                 {
                     if (!(list[listIndex] is String))
                     {
@@ -1248,9 +1248,9 @@ namespace System.Windows.Markup
 
                     // If the next item after the current one is '=', then we've hit the
                     // start of named parameters, so stop
-                    if (list.Count > (listIndex+1) &&
-                        list[listIndex+1] is Char &&
-                        (Char)list[listIndex+1] == '=')
+                    if (list.Count > (listIndex + 1) &&
+                        list[listIndex + 1] is Char &&
+                        (Char)list[listIndex + 1] == '=')
                     {
                         break;
                     }
@@ -1302,7 +1302,7 @@ namespace System.Windows.Markup
                     // unknown, then we defer this check until it can be resolved.
 
                     ConstructorInfo[] infos = data.TargetType.GetConstructors(BindingFlags.Public | BindingFlags.Instance);
-                    for (int i=0; i<infos.Length; i++)
+                    for (int i = 0; i < infos.Length; i++)
                     {
                         ConstructorInfo info = infos[i];
                         ParameterInfo[] paramInfos = info.GetParameters();
@@ -1331,20 +1331,20 @@ namespace System.Windows.Markup
         /// </summary>
 
         private void WriteProperties(
-            ArrayList        xamlNodes,
-            ArrayList        list,
-            int              listIndex,
+            ArrayList xamlNodes,
+            ArrayList list,
+            int listIndex,
             DefAttributeData data)
         {
             if (list != null && listIndex < list.Count)
             {
-                ArrayList propertyNamesSoFar = new ArrayList(list.Count/4);
+                ArrayList propertyNamesSoFar = new ArrayList(list.Count / 4);
 
-                for (int k = listIndex; k < list.Count; k+=4)
+                for (int k = listIndex; k < list.Count; k += 4)
                 {
-                    if (k > (list.Count-3) ||
-                        (list[k+1] is String) ||
-                        ((Char)list[k+1]) != '=')
+                    if (k > (list.Count - 3) ||
+                        (list[k + 1] is String) ||
+                        ((Char)list[k + 1]) != '=')
                     {
                         ThrowException(nameof(SR.ParserMarkupExtensionNoNameValue), data.Args,
                                        data.LineNumber, data.LinePosition);
@@ -1360,12 +1360,12 @@ namespace System.Windows.Markup
                     {
                         ThrowException(nameof(SR.ParserDuplicateMarkupExtensionProperty), propertyName, data.LineNumber, data.LinePosition);
                     }
-                    propertyNamesSoFar.Add( propertyName );
+                    propertyNamesSoFar.Add(propertyName);
 
                     // Fetch the property context
 
                     int nameIndex = propertyName.IndexOf(':');
-                    string localName = (nameIndex < 0) ? propertyName : propertyName.Substring(nameIndex+1);
+                    string localName = (nameIndex < 0) ? propertyName : propertyName.Substring(nameIndex + 1);
                     string prefix = (nameIndex < 0) ? String.Empty : propertyName.Substring(0, nameIndex);
 
                     string attribNamespaceURI = ResolveAttributeNamespaceURI(prefix, localName, data.TargetNamespaceUri);
@@ -1373,7 +1373,7 @@ namespace System.Windows.Markup
                     object dynamicObject;
                     string assemblyName;
                     string typeFullName;
-                    Type   declaringType;
+                    Type declaringType;
                     string dynamicObjectName;
 
                     AttributeContext attributeContext = GetAttributeContext(
@@ -1390,7 +1390,7 @@ namespace System.Windows.Markup
                     // Handle nested markup extensions by recursing here.  If the
                     // value is not a markup extension, just store it as text for
                     // runtime resolution.
-                    string strValue = list[k+2] as String;
+                    string strValue = list[k + 2] as String;
                     AttributeData nestedAttrData = IsMarkupExtensionAttribute(
                                                         data.TargetType,
                                                         propertyName,
@@ -1400,7 +1400,7 @@ namespace System.Windows.Markup
                                                         data.Depth,
                                                         dynamicObject);
 
-                    list[k+2] = strValue;
+                    list[k + 2] = strValue;
                     if (data.IsUnknownExtension)
                     {
                         // For unknown extensions, no more work should be done.  
@@ -1434,7 +1434,7 @@ namespace System.Windows.Markup
                     {
                         CompileProperty(xamlNodes,
                                         propertyName,
-                                        ((String)list[k+2]),
+                                        ((String)list[k + 2]),
                                         data.TargetType,
                                         data.TargetNamespaceUri,    // xmlns of TargetType
                                         null,
@@ -1449,7 +1449,7 @@ namespace System.Windows.Markup
         private string ResolveAttributeNamespaceURI(string prefix, string name, string parentURI)
         {
             string attribNamespaceURI;
-            if(!String.IsNullOrEmpty(prefix))
+            if (!String.IsNullOrEmpty(prefix))
             {
                 attribNamespaceURI = _parserHelper.LookupNamespace(prefix);
             }
@@ -1481,7 +1481,7 @@ namespace System.Windows.Markup
 
             return bracketCharacters;
         }
-        
+
         /// <summary>
         /// Represent a single property for a MarkupExtension as a complex property.
         /// </summary>
@@ -1500,19 +1500,19 @@ namespace System.Windows.Markup
             RemoveEscapes(ref value);
 
             int nameIndex = name.IndexOf(':');
-            string localName = (nameIndex < 0) ? name : name.Substring(nameIndex+1);
+            string localName = (nameIndex < 0) ? name : name.Substring(nameIndex + 1);
             string prefix = (nameIndex < 0) ? String.Empty : name.Substring(0, nameIndex);
             string attribNamespaceURI = ResolveAttributeNamespaceURI(prefix, localName, parentTypeNamespaceUri);
 
             object dynamicObject;
             string assemblyName;
             string typeFullName;
-            Type   declaringType;
+            Type declaringType;
             string dynamicObjectName;
 
             if (String.IsNullOrEmpty(attribNamespaceURI))
             {
-               ThrowException(nameof(SR.ParserPrefixNSProperty), prefix, name, lineNumber, linePosition);
+                ThrowException(nameof(SR.ParserPrefixNSProperty), prefix, name, lineNumber, linePosition);
             }
 
             AttributeContext attributeContext = GetAttributeContext(
@@ -1609,7 +1609,7 @@ namespace System.Windows.Markup
         /// </summary>
         internal static void RemoveEscapes(ref string value)
         {
-            StringBuilder builder=null;
+            StringBuilder builder = null;
             bool noEscape = true;
             for (int i = 0; i < value.Length; i++)
             {
@@ -1618,7 +1618,7 @@ namespace System.Windows.Markup
                     if (builder == null)
                     {
                         builder = new StringBuilder(value.Length);
-                        builder.Append(value.Substring(0,i));
+                        builder.Append(value.Substring(0, i));
                     }
                     noEscape = false;
                 }
@@ -1642,14 +1642,14 @@ namespace System.Windows.Markup
         /// DependencyProperties.
         /// </summary>
         AttributeContext GetAttributeContext(
-                Type   elementBaseType,
+                Type elementBaseType,
                 string elementBaseTypeNamespaceUri,
                 string attributeNamespaceUri,
                 string attributeLocalName,
             out Object dynamicObject,        // resolved object.
             out string assemblyName,         // assemblyName the declaringType is found in
             out string typeFullName,         // typeFullName of the object that the field is on
-            out Type   declaringType,        // type of the object that the field is on
+            out Type declaringType,        // type of the object that the field is on
             out string dynamicObjectName)    // name of the dynamicObject if found one
         {
             AttributeContext attributeContext = AttributeContext.Unknown;
@@ -1686,8 +1686,8 @@ namespace System.Windows.Markup
         void ThrowException(
             string id,
             string parameter1,
-            int    lineNumber,
-            int    linePosition)
+            int lineNumber,
+            int linePosition)
         {
             string message = SR.Format(SR.GetResourceString(id), parameter1);
             ThrowExceptionWithLine(message, lineNumber, linePosition);
@@ -1700,8 +1700,8 @@ namespace System.Windows.Markup
             string id,
             string parameter1,
             string parameter2,
-            int    lineNumber,
-            int    linePosition)
+            int lineNumber,
+            int linePosition)
         {
             string message = SR.Format(SR.GetResourceString(id), parameter1, parameter2);
             ThrowExceptionWithLine(message, lineNumber, linePosition);
@@ -1715,8 +1715,8 @@ namespace System.Windows.Markup
             string parameter1,
             string parameter2,
             string parameter3,
-            int    lineNumber,
-            int    linePosition)
+            int lineNumber,
+            int linePosition)
         {
             string message = SR.Format(SR.GetResourceString(id), parameter1, parameter2, parameter3);
             ThrowExceptionWithLine(message, lineNumber, linePosition);
@@ -1727,8 +1727,8 @@ namespace System.Windows.Markup
         /// </summary>
         void ThrowExceptionWithLine(
             string message,
-            int    lineNumber,
-            int    linePosition)
+            int lineNumber,
+            int linePosition)
         {
             message += " ";
             message += SR.Format(SR.ParserLineAndOffset,
@@ -1742,10 +1742,10 @@ namespace System.Windows.Markup
         }
 
         // Helper that provices namespace and type resolutions
-        private IParserHelper    _parserHelper;
+        private IParserHelper _parserHelper;
 
         // Parser Context for the current node being parsed.
-        private ParserContext    _parserContext;
+        private ParserContext _parserContext;
 
         internal class UnknownMarkupExtension
         {

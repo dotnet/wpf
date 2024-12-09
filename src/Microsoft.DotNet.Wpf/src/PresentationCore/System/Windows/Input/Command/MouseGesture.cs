@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,8 +13,8 @@
 //
 //
 
-using System.Windows.Markup;
 using System.ComponentModel;
+using System.Windows.Markup;
 
 namespace System.Windows.Input
 {
@@ -32,7 +32,7 @@ namespace System.Windows.Input
         //
         //------------------------------------------------------
 
-#region Constructors
+        #region Constructors
         /// <summary>
         ///  Constructor
         /// </summary>
@@ -44,7 +44,7 @@ namespace System.Windows.Input
         ///  constructor
         /// </summary>
         /// <param name="mouseAction">Mouse Action</param>
-        public MouseGesture(MouseAction mouseAction): this(mouseAction, ModifierKeys.None)
+        public MouseGesture(MouseAction mouseAction) : this(mouseAction, ModifierKeys.None)
         {
         }
 
@@ -53,7 +53,7 @@ namespace System.Windows.Input
         /// </summary>
         /// <param name="mouseAction">Mouse Action</param>
         /// <param name="modifiers">Modifiers</param>
-        public MouseGesture( MouseAction mouseAction,ModifierKeys modifiers)   // acclerator action
+        public MouseGesture(MouseAction mouseAction, ModifierKeys modifiers)   // acclerator action
         {
             if (!MouseGesture.IsDefinedMouseAction(mouseAction))
                 throw new InvalidEnumArgumentException("mouseAction", (int)mouseAction, typeof(MouseAction));
@@ -66,25 +66,25 @@ namespace System.Windows.Input
 
             //AttachClassListeners();
         }
-#endregion Constructors
-        
+        #endregion Constructors
+
         //------------------------------------------------------
         //
         //  Public Methods
         //
         //------------------------------------------------------
 
-#region Public Methods
+        #region Public Methods
         /// <summary>
         /// Action 
         /// </summary>
         public MouseAction MouseAction
         {
-            get 
-            { 
-                return _mouseAction; 
+            get
+            {
+                return _mouseAction;
             }
-            set 
+            set
             {
                 if (!MouseGesture.IsDefinedMouseAction((MouseAction)value))
                     throw new InvalidEnumArgumentException("value", (int)value, typeof(MouseAction));
@@ -101,11 +101,11 @@ namespace System.Windows.Input
         /// </summary>
         public ModifierKeys Modifiers
         {
-            get 
-            { 
-                return _modifiers; 
+            get
+            {
+                return _modifiers;
             }
-            set 
+            set
             {
                 if (!ModifierKeysConverter.IsDefinedModifierKeys((ModifierKeys)value))
                     throw new InvalidEnumArgumentException("value", (int)value, typeof(ModifierKeys));
@@ -128,9 +128,9 @@ namespace System.Windows.Input
         public override bool Matches(object targetElement, InputEventArgs inputEventArgs)
         {
             MouseAction mouseAction = GetMouseAction(inputEventArgs);
-            if(mouseAction != MouseAction.None)
+            if (mouseAction != MouseAction.None)
             {
-                return ( ( (int)this.MouseAction == (int)mouseAction ) && ( this.Modifiers == Keyboard.Modifiers ) );
+                return (((int)this.MouseAction == (int)mouseAction) && (this.Modifiers == Keyboard.Modifiers));
             }
             return false;
         }
@@ -141,7 +141,7 @@ namespace System.Windows.Input
         {
             return (mouseAction >= MouseAction.None && mouseAction <= MouseAction.MiddleDoubleClick);
         }
-#endregion Public Methods
+        #endregion Public Methods
 
         #region Internal NotifyProperty changed
 
@@ -168,16 +168,16 @@ namespace System.Windows.Input
         //  Internal Methods
         //
         //------------------------------------------------------
-#region Internal Methods
+        #region Internal Methods
 
         internal static MouseAction GetMouseAction(InputEventArgs inputArgs)
         {
             MouseAction MouseAction = MouseAction.None;
 
             MouseEventArgs mouseArgs = inputArgs as MouseEventArgs;
-            if(mouseArgs != null)
+            if (mouseArgs != null)
             {
-                if(inputArgs is MouseWheelEventArgs)
+                if (inputArgs is MouseWheelEventArgs)
                 {
                     MouseAction = MouseAction.WheelClick;
                 }
@@ -185,31 +185,31 @@ namespace System.Windows.Input
                 {
                     MouseButtonEventArgs args = inputArgs as MouseButtonEventArgs;
 
-                    switch(args.ChangedButton)
+                    switch (args.ChangedButton)
                     {
                         case MouseButton.Left:
                             {
-                                if(args.ClickCount == 2)
+                                if (args.ClickCount == 2)
                                     MouseAction = MouseAction.LeftDoubleClick;
-                                else if(args.ClickCount == 1)
+                                else if (args.ClickCount == 1)
                                     MouseAction = MouseAction.LeftClick;
                             }
                             break;
 
                         case MouseButton.Right:
                             {
-                                if(args.ClickCount == 2)
+                                if (args.ClickCount == 2)
                                     MouseAction = MouseAction.RightDoubleClick;
-                                else if(args.ClickCount == 1)
+                                else if (args.ClickCount == 1)
                                     MouseAction = MouseAction.RightClick;
                             }
                             break;
 
                         case MouseButton.Middle:
                             {
-                                if(args.ClickCount == 2)
+                                if (args.ClickCount == 2)
                                     MouseAction = MouseAction.MiddleDoubleClick;
-                                else if(args.ClickCount == 1)
+                                else if (args.ClickCount == 1)
                                     MouseAction = MouseAction.MiddleClick;
                             }
                             break;
@@ -219,17 +219,17 @@ namespace System.Windows.Input
             return MouseAction;
         }
 
-#endregion Internal Methods
+        #endregion Internal Methods
 
         //------------------------------------------------------
         //
         //  Private Fields
         //
         //------------------------------------------------------
-#region Private Fields
-        private MouseAction  _mouseAction = MouseAction.None;
-        private ModifierKeys  _modifiers = ModifierKeys.None;
- //       private static bool _classRegistered = false;
-#endregion Private Fields
+        #region Private Fields
+        private MouseAction _mouseAction = MouseAction.None;
+        private ModifierKeys _modifiers = ModifierKeys.None;
+        //       private static bool _classRegistered = false;
+        #endregion Private Fields
     }
- }
+}

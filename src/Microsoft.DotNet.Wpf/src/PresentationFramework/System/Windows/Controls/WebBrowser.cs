@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,21 +6,20 @@
 // Description:  
 //      WebBrowser is a wrapper for the webbrowser activex control     
 
-using System.Runtime.InteropServices;
-using MS.Win32;
-using System.Windows.Controls.Primitives; //PopupRoot
-using MS.Internal.Utility;
-using MS.Internal.AppModel; //RootBrowserWindow
-using System.Windows.Interop;
-using System.Windows.Input;
-using System.Windows.Navigation;
+using System.Diagnostics.CodeAnalysis;
 using System.IO; //Stream
+using System.Runtime.InteropServices;
 using System.Threading; // thread
+using System.Windows.Controls.Primitives; //PopupRoot
+using System.Windows.Input;
+using System.Windows.Interop;
+using System.Windows.Navigation;
 using MS.Internal;
+using MS.Internal.AppModel; //RootBrowserWindow
 using MS.Internal.Controls;
 using MS.Internal.Telemetry.PresentationFramework;
-using System.Diagnostics.CodeAnalysis;
-
+using MS.Internal.Utility;
+using MS.Win32;
 using HRESULT = MS.Internal.Interop.HRESULT;
 using PackUriHelper = MS.Internal.IO.Packaging.PackUriHelper;
 
@@ -75,8 +74,8 @@ namespace System.Windows.Controls
             ControlsTraceLogger.AddControl(TelemetryControls.WebBrowser);
         }
 
-        public WebBrowser() 
-            : base(new Guid(CLSID.WebBrowser), true )
+        public WebBrowser()
+            : base(new Guid(CLSID.WebBrowser), true)
         {
             _hostingAdaptor = new WebOCHostingAdaptor(this);
         }
@@ -119,7 +118,7 @@ namespace System.Windows.Controls
         /// <param name="postData">HTTP POST data such as form data.</param>
         /// <param name="additionalHeaders">HTTP headers to add to the default headers.</param>        
         public void Navigate(Uri source, string targetFrameName, byte[] postData, string additionalHeaders)
-        {             
+        {
             object objTargetFrameName = (object)targetFrameName;
             object objPostData = (object)postData;
             object objHeaders = (object)additionalHeaders;
@@ -154,7 +153,7 @@ namespace System.Windows.Controls
         {
             ArgumentNullException.ThrowIfNull(stream);
 
-            DocumentStream = stream;            
+            DocumentStream = stream;
             // We navigate to "about:blank" when Source is set to null. 
             // When we get NavigateComplete event, we load the stream via the IPersistStreamInit interface.
             Source = null;
@@ -197,7 +196,7 @@ namespace System.Windows.Controls
         {
             VerifyAccess();
 
-            AxIWebBrowser2.GoForward();            
+            AxIWebBrowser2.GoForward();
         }
 
 
@@ -229,7 +228,7 @@ namespace System.Windows.Controls
             //      REFRESH_COMPLETELY = 3
             // }
             int refreshOption = noCache ? 3 : 0;
-            object refreshOptionObject = (object) refreshOption;
+            object refreshOptionObject = (object)refreshOption;
             AxIWebBrowser2.Refresh2(ref refreshOptionObject);
         }
 
@@ -270,11 +269,13 @@ namespace System.Windows.Controls
             // (In IE 7 it is blocked by turning on the DOCHOSTUIFLAG.ENABLE_REDIRECT_NOTIFICATION flag so that  
             // the additional BeforeNavigate2 event is fired for server side redirect.)
 
-            object retVal = null;            
+            object retVal = null;
             if (scriptObjectEx != null)
             {
-                NativeMethods.DISPPARAMS dp = new NativeMethods.DISPPARAMS();
-                dp.rgvarg = IntPtr.Zero;
+                NativeMethods.DISPPARAMS dp = new NativeMethods.DISPPARAMS
+                {
+                    rgvarg = IntPtr.Zero
+                };
                 try
                 {
                     // If we use reflection to call script code, we need to Assert for the UnmanagedCode permission. 
@@ -318,7 +319,7 @@ namespace System.Windows.Controls
                         Thread.CurrentThread.CurrentCulture.LCID,
                         NativeMethods.DISPATCH_METHOD,
                         dp,
-                        out retVal, 
+                        out retVal,
                         new NativeMethods.EXCEPINFO(),
                         null);
                     hr.ThrowIfFailed();
@@ -352,7 +353,7 @@ namespace System.Windows.Controls
         /// Gets or sets the current uri of the WebBrowser control.
         /// </summary>
         public Uri Source
-        {            
+        {
             set
             {
                 VerifyAccess();
@@ -375,7 +376,7 @@ namespace System.Windows.Controls
                 {
                     urlString = null;
                 }
-               
+
                 return (string.IsNullOrEmpty(urlString) ? null : new Uri(urlString));
             }
         }
@@ -450,7 +451,7 @@ namespace System.Windows.Controls
                 return AxIWebBrowser2.Document;
             }
         }
-        
+
         #endregion Public Properties
 
         //----------------------------------------------
@@ -583,13 +584,13 @@ namespace System.Windows.Controls
         internal override void DetachSink()
         {
             //If we have a cookie get rid of it
-            if ( _cookie != null)
+            if (_cookie != null)
             {
                 _cookie.Disconnect();
                 _cookie = null;
             }
         }
-        
+
         internal override ActiveXSite CreateActiveXSite()
         {
             return new WebBrowserSite(this);
@@ -725,7 +726,7 @@ namespace System.Windows.Controls
         //----------------------------------------------
 
         #region Private Methods
-        
+
         private void LoadedHandler(object sender, RoutedEventArgs args)
         {
             PresentationSource pSource = PresentationSource.CriticalFromVisual(this);
@@ -735,7 +736,7 @@ namespace System.Windows.Controls
             // pending Loaded event to fire. More details for this scenario can be found in the 
             // Windows OS Bug#1981485.
             // Invariant.Assert(pSource != null, "Loaded has fired. PresentationSource shouldn't be null");
-            
+
             if (pSource != null && pSource.RootVisual is PopupRoot)
             {
                 throw new InvalidOperationException(SR.CannotBeInsidePopup);
@@ -746,15 +747,15 @@ namespace System.Windows.Controls
         // Turn on all the WebOC Feature Control Keys implementing various security mitigations. 
         // Whenever possible, we do it programmatically instead of adding reg-keys so that these are on on all WPF apps. 
         // Unfortunately, some FCKs, especially newer ones, work only through the registry.
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId="MS.Win32.UnsafeNativeMethods.CoInternetSetFeatureEnabled(System.Int32,System.Int32,System.Boolean)", 
-            Justification="CoInternetSetFeatureEnabled() returns error for an unknown FCK. We expect this to happen with older versions of IE.")]
+        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "MS.Win32.UnsafeNativeMethods.CoInternetSetFeatureEnabled(System.Int32,System.Int32,System.Boolean)",
+            Justification = "CoInternetSetFeatureEnabled() returns error for an unknown FCK. We expect this to happen with older versions of IE.")]
         private static void TurnOnFeatureControlKeys()
         {
             Version osver = Environment.OSVersion.Version;
-            if (osver.Major == 5 && osver.Minor == 2 && osver.MajorRevision == 0) 
+            if (osver.Major == 5 && osver.Minor == 2 && osver.MajorRevision == 0)
             {
                 // XPSP2 mitigations - not available on Server 2003 before SP1. 
-                return ; 
+                return;
             }
 
             // NOTE: If the WebOC is hosted in the browser's process, the flags we set here will have no 
@@ -763,25 +764,25 @@ namespace System.Windows.Controls
             // it is running at low integrity level (IE 'protected mode'), so the WebOC is in a stronger 
             // sandbox there.
 
-            UnsafeNativeMethods.CoInternetSetFeatureEnabled( NativeMethods.FEATURE_OBJECT_CACHING, NativeMethods.SET_FEATURE_ON_PROCESS, true ) ; 
-            UnsafeNativeMethods.CoInternetSetFeatureEnabled( NativeMethods.FEATURE_ZONE_ELEVATION, NativeMethods.SET_FEATURE_ON_PROCESS, true ) ;
-            UnsafeNativeMethods.CoInternetSetFeatureEnabled( NativeMethods.FEATURE_MIME_HANDLING, NativeMethods.SET_FEATURE_ON_PROCESS, true ) ;
-            UnsafeNativeMethods.CoInternetSetFeatureEnabled( NativeMethods.FEATURE_MIME_SNIFFING, NativeMethods.SET_FEATURE_ON_PROCESS, true ) ;
-            UnsafeNativeMethods.CoInternetSetFeatureEnabled( NativeMethods.FEATURE_WINDOW_RESTRICTIONS, NativeMethods.SET_FEATURE_ON_PROCESS, true ) ;
-            UnsafeNativeMethods.CoInternetSetFeatureEnabled( NativeMethods.FEATURE_WEBOC_POPUPMANAGEMENT, NativeMethods.SET_FEATURE_ON_PROCESS, true ) ;
-            UnsafeNativeMethods.CoInternetSetFeatureEnabled( NativeMethods.FEATURE_BEHAVIORS, NativeMethods.SET_FEATURE_ON_PROCESS, true ) ;
-            UnsafeNativeMethods.CoInternetSetFeatureEnabled( NativeMethods.FEATURE_DISABLE_MK_PROTOCOL, NativeMethods.SET_FEATURE_ON_PROCESS, true ) ;
-            UnsafeNativeMethods.CoInternetSetFeatureEnabled( NativeMethods.FEATURE_LOCALMACHINE_LOCKDOWN, NativeMethods.SET_FEATURE_ON_PROCESS, true ) ;
-            UnsafeNativeMethods.CoInternetSetFeatureEnabled( NativeMethods.FEATURE_SECURITYBAND, NativeMethods.SET_FEATURE_ON_PROCESS, true ) ;
-            UnsafeNativeMethods.CoInternetSetFeatureEnabled( NativeMethods.FEATURE_RESTRICT_ACTIVEXINSTALL, NativeMethods.SET_FEATURE_ON_PROCESS, true ) ;
-            UnsafeNativeMethods.CoInternetSetFeatureEnabled( NativeMethods.FEATURE_VALIDATE_NAVIGATE_URL, NativeMethods.SET_FEATURE_ON_PROCESS, true ) ;
-            UnsafeNativeMethods.CoInternetSetFeatureEnabled( NativeMethods.FEATURE_RESTRICT_FILEDOWNLOAD, NativeMethods.SET_FEATURE_ON_PROCESS, true ) ;
-            UnsafeNativeMethods.CoInternetSetFeatureEnabled( NativeMethods.FEATURE_ADDON_MANAGEMENT, NativeMethods.SET_FEATURE_ON_PROCESS, true ) ;
-            UnsafeNativeMethods.CoInternetSetFeatureEnabled( NativeMethods.FEATURE_PROTOCOL_LOCKDOWN, NativeMethods.SET_FEATURE_ON_PROCESS, true ) ;
-            UnsafeNativeMethods.CoInternetSetFeatureEnabled( NativeMethods.FEATURE_HTTP_USERNAME_PASSWORD_DISABLE, NativeMethods.SET_FEATURE_ON_PROCESS, true ) ;
-            UnsafeNativeMethods.CoInternetSetFeatureEnabled( NativeMethods.FEATURE_SAFE_BINDTOOBJECT, NativeMethods.SET_FEATURE_ON_PROCESS, true ) ;
-            UnsafeNativeMethods.CoInternetSetFeatureEnabled( NativeMethods.FEATURE_UNC_SAVEDFILECHECK, NativeMethods.SET_FEATURE_ON_PROCESS, true ) ;
-            UnsafeNativeMethods.CoInternetSetFeatureEnabled( NativeMethods.FEATURE_GET_URL_DOM_FILEPATH_UNENCODED, NativeMethods.SET_FEATURE_ON_PROCESS, true ) ;
+            UnsafeNativeMethods.CoInternetSetFeatureEnabled(NativeMethods.FEATURE_OBJECT_CACHING, NativeMethods.SET_FEATURE_ON_PROCESS, true);
+            UnsafeNativeMethods.CoInternetSetFeatureEnabled(NativeMethods.FEATURE_ZONE_ELEVATION, NativeMethods.SET_FEATURE_ON_PROCESS, true);
+            UnsafeNativeMethods.CoInternetSetFeatureEnabled(NativeMethods.FEATURE_MIME_HANDLING, NativeMethods.SET_FEATURE_ON_PROCESS, true);
+            UnsafeNativeMethods.CoInternetSetFeatureEnabled(NativeMethods.FEATURE_MIME_SNIFFING, NativeMethods.SET_FEATURE_ON_PROCESS, true);
+            UnsafeNativeMethods.CoInternetSetFeatureEnabled(NativeMethods.FEATURE_WINDOW_RESTRICTIONS, NativeMethods.SET_FEATURE_ON_PROCESS, true);
+            UnsafeNativeMethods.CoInternetSetFeatureEnabled(NativeMethods.FEATURE_WEBOC_POPUPMANAGEMENT, NativeMethods.SET_FEATURE_ON_PROCESS, true);
+            UnsafeNativeMethods.CoInternetSetFeatureEnabled(NativeMethods.FEATURE_BEHAVIORS, NativeMethods.SET_FEATURE_ON_PROCESS, true);
+            UnsafeNativeMethods.CoInternetSetFeatureEnabled(NativeMethods.FEATURE_DISABLE_MK_PROTOCOL, NativeMethods.SET_FEATURE_ON_PROCESS, true);
+            UnsafeNativeMethods.CoInternetSetFeatureEnabled(NativeMethods.FEATURE_LOCALMACHINE_LOCKDOWN, NativeMethods.SET_FEATURE_ON_PROCESS, true);
+            UnsafeNativeMethods.CoInternetSetFeatureEnabled(NativeMethods.FEATURE_SECURITYBAND, NativeMethods.SET_FEATURE_ON_PROCESS, true);
+            UnsafeNativeMethods.CoInternetSetFeatureEnabled(NativeMethods.FEATURE_RESTRICT_ACTIVEXINSTALL, NativeMethods.SET_FEATURE_ON_PROCESS, true);
+            UnsafeNativeMethods.CoInternetSetFeatureEnabled(NativeMethods.FEATURE_VALIDATE_NAVIGATE_URL, NativeMethods.SET_FEATURE_ON_PROCESS, true);
+            UnsafeNativeMethods.CoInternetSetFeatureEnabled(NativeMethods.FEATURE_RESTRICT_FILEDOWNLOAD, NativeMethods.SET_FEATURE_ON_PROCESS, true);
+            UnsafeNativeMethods.CoInternetSetFeatureEnabled(NativeMethods.FEATURE_ADDON_MANAGEMENT, NativeMethods.SET_FEATURE_ON_PROCESS, true);
+            UnsafeNativeMethods.CoInternetSetFeatureEnabled(NativeMethods.FEATURE_PROTOCOL_LOCKDOWN, NativeMethods.SET_FEATURE_ON_PROCESS, true);
+            UnsafeNativeMethods.CoInternetSetFeatureEnabled(NativeMethods.FEATURE_HTTP_USERNAME_PASSWORD_DISABLE, NativeMethods.SET_FEATURE_ON_PROCESS, true);
+            UnsafeNativeMethods.CoInternetSetFeatureEnabled(NativeMethods.FEATURE_SAFE_BINDTOOBJECT, NativeMethods.SET_FEATURE_ON_PROCESS, true);
+            UnsafeNativeMethods.CoInternetSetFeatureEnabled(NativeMethods.FEATURE_UNC_SAVEDFILECHECK, NativeMethods.SET_FEATURE_ON_PROCESS, true);
+            UnsafeNativeMethods.CoInternetSetFeatureEnabled(NativeMethods.FEATURE_GET_URL_DOM_FILEPATH_UNENCODED, NativeMethods.SET_FEATURE_ON_PROCESS, true);
 
             // Note: For PresentationHost.exe WebOC hosting scenarios, the FEATURE_LOCALMACHINE_LOCKDOWN
             //       flag is set through the registry, as there's a known limitation of not being able
@@ -823,12 +824,12 @@ namespace System.Windows.Controls
             //                                      Standalone WebBrowser hosts will have to apply it on their own.
             //                                      (Similar problem with FEATURE_LOCALMACHINE_LOCKDOWN.)
 
-            UnsafeNativeMethods.CoInternetSetFeatureEnabled( NativeMethods.FEATURE_SSLUX, NativeMethods.SET_FEATURE_ON_PROCESS, true ) ;
-            UnsafeNativeMethods.CoInternetSetFeatureEnabled( NativeMethods.FEATURE_DISABLE_LEGACY_COMPRESSION, NativeMethods.SET_FEATURE_ON_PROCESS, true ) ;
-            UnsafeNativeMethods.CoInternetSetFeatureEnabled( NativeMethods.FEATURE_DISABLE_TELNET_PROTOCOL, NativeMethods.SET_FEATURE_ON_PROCESS, true ) ;
+            UnsafeNativeMethods.CoInternetSetFeatureEnabled(NativeMethods.FEATURE_SSLUX, NativeMethods.SET_FEATURE_ON_PROCESS, true);
+            UnsafeNativeMethods.CoInternetSetFeatureEnabled(NativeMethods.FEATURE_DISABLE_LEGACY_COMPRESSION, NativeMethods.SET_FEATURE_ON_PROCESS, true);
+            UnsafeNativeMethods.CoInternetSetFeatureEnabled(NativeMethods.FEATURE_DISABLE_TELNET_PROTOCOL, NativeMethods.SET_FEATURE_ON_PROCESS, true);
 
         }
-        
+
         private void DoNavigate(Uri source, ref object targetFrameName, ref object postData, ref object headers, bool ignoreEscaping = false)
         {
             VerifyAccess();
@@ -888,14 +889,14 @@ namespace System.Windows.Controls
             // based overloads for the public Navigate methods, creating a Uri internally and using AbsoluteUri
             // to get back the URI string to feed in to the WebOC in its original form. WinForms has a similar
             // set of overloads to enable this scenario.
-            object sourceString = ignoreEscaping ? source.AbsoluteUri : BindUriHelper.UriToString(source);            
+            object sourceString = ignoreEscaping ? source.AbsoluteUri : BindUriHelper.UriToString(source);
 
             try
             {
-                AxIWebBrowser2.Navigate2(ref sourceString, ref flags, ref targetFrameName, ref postData, ref headers);                
+                AxIWebBrowser2.Navigate2(ref sourceString, ref flags, ref targetFrameName, ref postData, ref headers);
             }
             catch (COMException ce)
-            {   
+            {
                 // Clear internal state if Navigation fails.
                 CleanInternalState();
 
@@ -904,7 +905,7 @@ namespace System.Windows.Controls
                 if ((uint)unchecked(ce.ErrorCode) != (uint)unchecked(0x800704c7))
                 {
                     throw;
-                }                             
+                }
             }
         }
 
@@ -955,12 +956,12 @@ namespace System.Windows.Controls
             Invariant.Assert(ActiveXState >= ActiveXHelper.ActiveXState.InPlaceActive, "Should be at least InPlaceActive when tabbed into");
 
             bool activated = DoVerb(NativeMethods.OLEIVERB_UIACTIVATE);
-            
+
             if (activated)
             {
                 this.ActiveXState = ActiveXHelper.ActiveXState.UIActive;
             }
-            
+
             return activated;
         }
 
@@ -979,16 +980,16 @@ namespace System.Windows.Controls
         // Reference to the native ActiveX control's IWebBrowser2
         // Do not reference this directly. Use the AxIWebBrowser2 property instead since that
         // will cause the object to be instantiated if it is not already created.
-        private UnsafeNativeMethods.IWebBrowser2  _axIWebBrowser2;
+        private UnsafeNativeMethods.IWebBrowser2 _axIWebBrowser2;
 
-        WebOCHostingAdaptor                       _hostingAdaptor;
+        WebOCHostingAdaptor _hostingAdaptor;
 
         // To hook up events from the native WebBrowser
-        private ConnectionPointCookie             _cookie;
-        private object                            _objectForScripting;
-        private Stream                            _documentStream;
+        private ConnectionPointCookie _cookie;
+        private object _objectForScripting;
+        private Stream _documentStream;
 
-        private bool                              _navigatingToAboutBlank;
+        private bool _navigatingToAboutBlank;
 
         /// <summary>
         /// TFS  - Launching a navigation from the Navigating event handler causes reentrancy.
@@ -997,7 +998,7 @@ namespace System.Windows.Controls
         /// we shouldn't clean up the shared state touched by the last navigation (see WebBrowserEvent's
         /// BeforeNavigate2 method), so that the newly started navigation can continue.
         /// </summary>
-        private Guid                              _lastNavigation;
+        private Guid _lastNavigation;
 
         #endregion Private Fields
 

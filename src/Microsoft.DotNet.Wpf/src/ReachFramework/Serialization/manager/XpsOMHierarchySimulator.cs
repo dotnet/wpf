@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,7 +15,7 @@ namespace System.Windows.Xps.Serialization
         XpsOMHierarchySimulator(
             XpsOMSerializationManager manager,
             Object serializedObject
-            ) : base (manager, serializedObject)
+            ) : base(manager, serializedObject)
         {
             _xpsOMSerializationManager = manager;
         }
@@ -114,7 +114,7 @@ namespace System.Windows.Xps.Serialization
             // Clear off the table from the packaging policy
             //
             _xpsOMSerializationManager.ResourcePolicy.ColorContextTable = null;
-        
+
             _xpsOMSerializationManager.RegisterDocumentEnd();
 
             // Inform any registered listener that the document has been serialized
@@ -124,12 +124,12 @@ namespace System.Windows.Xps.Serialization
                                                             0,
                                                             0,
                                                        null);
-                     
+
             (_serializationManager as IXpsSerializationManager)?.OnXPSSerializationProgressChanged(progressEvent);
         }
 
         #endregion Internal Methods
-        
+
         #region Private Data
 
         private XpsOMSerializationManager _xpsOMSerializationManager;

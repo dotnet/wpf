@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,8 +9,8 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
 using System.Windows.Media.Composition;
+using MS.Internal;
 // These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows.Media.Media3D
@@ -56,28 +56,28 @@ namespace System.Windows.Media.Media3D
 
         private static void PositionsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            MeshGeometry3D target = ((MeshGeometry3D) d);
+            MeshGeometry3D target = ((MeshGeometry3D)d);
 
 
             target.PropertyChanged(PositionsProperty);
         }
         private static void NormalsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            MeshGeometry3D target = ((MeshGeometry3D) d);
+            MeshGeometry3D target = ((MeshGeometry3D)d);
 
 
             target.PropertyChanged(NormalsProperty);
         }
         private static void TextureCoordinatesPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            MeshGeometry3D target = ((MeshGeometry3D) d);
+            MeshGeometry3D target = ((MeshGeometry3D)d);
 
 
             target.PropertyChanged(TextureCoordinatesProperty);
         }
         private static void TriangleIndicesPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            MeshGeometry3D target = ((MeshGeometry3D) d);
+            MeshGeometry3D target = ((MeshGeometry3D)d);
 
 
             target.PropertyChanged(TriangleIndicesProperty);
@@ -93,7 +93,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Point3DCollection) GetValue(PositionsProperty);
+                return (Point3DCollection)GetValue(PositionsProperty);
             }
             set
             {
@@ -108,7 +108,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Vector3DCollection) GetValue(NormalsProperty);
+                return (Vector3DCollection)GetValue(NormalsProperty);
             }
             set
             {
@@ -123,7 +123,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (PointCollection) GetValue(TextureCoordinatesProperty);
+                return (PointCollection)GetValue(TextureCoordinatesProperty);
             }
             set
             {
@@ -138,7 +138,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Int32Collection) GetValue(TriangleIndicesProperty);
+                return (Int32Collection)GetValue(TriangleIndicesProperty);
             }
             set
             {
@@ -212,15 +212,15 @@ namespace System.Windows.Media.Media3D
                     channel.BeginCommand(
                         (byte*)&data,
                         sizeof(DUCE.MILCMD_MESHGEOMETRY3D),
-                        (int)(data.PositionsSize + 
-                              data.NormalsSize + 
-                              data.TextureCoordinatesSize + 
+                        (int)(data.PositionsSize +
+                              data.NormalsSize +
+                              data.TextureCoordinatesSize +
                               data.TriangleIndicesSize)
                         );
 
 
                     // Copy this collection's elements (or their handles) to reserved data
-                    for(int i = 0; i < PositionsCount; i++)
+                    for (int i = 0; i < PositionsCount; i++)
                     {
                         MilPoint3F resource = CompositionResourceManager.Point3DToMilPoint3F(vPositions.Internal_GetItem(i));
                         channel.AppendCommandData(
@@ -230,7 +230,7 @@ namespace System.Windows.Media.Media3D
                     }
 
                     // Copy this collection's elements (or their handles) to reserved data
-                    for(int i = 0; i < NormalsCount; i++)
+                    for (int i = 0; i < NormalsCount; i++)
                     {
                         MilPoint3F resource = CompositionResourceManager.Vector3DToMilPoint3F(vNormals.Internal_GetItem(i));
                         channel.AppendCommandData(
@@ -240,7 +240,7 @@ namespace System.Windows.Media.Media3D
                     }
 
                     // Copy this collection's elements (or their handles) to reserved data
-                    for(int i = 0; i < TextureCoordinatesCount; i++)
+                    for (int i = 0; i < TextureCoordinatesCount; i++)
                     {
                         Point resource = vTextureCoordinates.Internal_GetItem(i);
                         channel.AppendCommandData(
@@ -250,7 +250,7 @@ namespace System.Windows.Media.Media3D
                     }
 
                     // Copy this collection's elements (or their handles) to reserved data
-                    for(int i = 0; i < TriangleIndicesCount; i++)
+                    for (int i = 0; i < TriangleIndicesCount; i++)
                     {
                         Int32 resource = vTriangleIndices.Internal_GetItem(i);
                         channel.AppendCommandData(
@@ -265,25 +265,25 @@ namespace System.Windows.Media.Media3D
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-                if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_MESHGEOMETRY3D))
-                {
-                    AddRefOnChannelAnimations(channel);
+            if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_MESHGEOMETRY3D))
+            {
+                AddRefOnChannelAnimations(channel);
 
 
-                    UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
-                }
+                UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
+            }
 
-                return _duceResource.GetHandle(channel);
-}
+            return _duceResource.GetHandle(channel);
+        }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-                Debug.Assert(_duceResource.IsOnChannel(channel));
+            Debug.Assert(_duceResource.IsOnChannel(channel));
 
-                if (_duceResource.ReleaseOnChannel(channel))
-                {
-                    ReleaseOnChannelAnimations(channel);
-}
-}
+            if (_duceResource.ReleaseOnChannel(channel))
+            {
+                ReleaseOnChannelAnimations(channel);
+            }
+        }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
             // Note that we are in a lock here already.

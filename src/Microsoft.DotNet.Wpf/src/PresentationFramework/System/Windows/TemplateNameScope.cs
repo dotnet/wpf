@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,10 +10,10 @@
 *
 *
 \***************************************************************************/
-using MS.Internal;
-using System.Collections.Specialized;
 using System.Collections;
+using System.Collections.Specialized;
 using System.Windows.Markup;
+using MS.Internal;
 
 namespace System.Windows
 {
@@ -38,7 +38,7 @@ namespace System.Windows
         // This is used for FEF-based templates.
 
         internal TemplateNameScope(DependencyObject templatedParent)
-                        : this( templatedParent, null, null )
+                        : this(templatedParent, null, null)
         {
         }
 
@@ -46,7 +46,7 @@ namespace System.Windows
         internal TemplateNameScope(
                                     DependencyObject templatedParent,
                                     List<DependencyObject> affectedChildren,
-                                    FrameworkTemplate frameworkTemplate )
+                                    FrameworkTemplate frameworkTemplate)
         {
             Debug.Assert(templatedParent == null || (templatedParent is FrameworkElement || templatedParent is FrameworkContentElement),
                          "Templates are only supported on FE/FCE containers.");
@@ -85,7 +85,7 @@ namespace System.Windows
             FrameworkElement fe;
             FrameworkContentElement fce;
 
-            Helper.DowncastToFEorFCE( scopedElement as DependencyObject,
+            Helper.DowncastToFEorFCE(scopedElement as DependencyObject,
                                       out fe, out fce,
                                       false /*throwIfNeither*/ );
 
@@ -96,7 +96,7 @@ namespace System.Windows
             // then we'll just set the properties directly on the element
             // (this is the serialization scenario).
 
-            if( _templatedParent == null )
+            if (_templatedParent == null)
             {
                 if (_nameMap == null)
                 {
@@ -109,9 +109,9 @@ namespace System.Windows
                 // the shared values (assuming this is an FE/FCE), and set them
                 // directly onto the element.
 
-                if( fe != null || fce != null )
+                if (fe != null || fce != null)
                 {
-                    SetTemplateParentValues( name, scopedElement );
+                    SetTemplateParentValues(name, scopedElement);
                 }
 
             }
@@ -144,7 +144,7 @@ namespace System.Windows
 
                 // Update the TemplatedParent, IsTemplatedParentAnFE, and TemplateChildIndex.
 
-                if( fe != null )
+                if (fe != null)
                 {
                     fe._templatedParent = _templatedParent;
                     fe.IsTemplatedParentAnFE = _isTemplatedParentAnFE;
@@ -166,11 +166,11 @@ namespace System.Windows
                 HybridDictionary templateChildLoadedDictionary = _frameworkTemplate._TemplateChildLoadedDictionary;
 
                 FrameworkTemplate.TemplateChildLoadedFlags templateChildLoadedFlags
-                        = templateChildLoadedDictionary[ childIndex ] as FrameworkTemplate.TemplateChildLoadedFlags;
+                        = templateChildLoadedDictionary[childIndex] as FrameworkTemplate.TemplateChildLoadedFlags;
 
-                if( templateChildLoadedFlags != null )
+                if (templateChildLoadedFlags != null)
                 {
-                    if( templateChildLoadedFlags.HasLoadedChangedHandler || templateChildLoadedFlags.HasUnloadedChangedHandler )
+                    if (templateChildLoadedFlags.HasLoadedChangedHandler || templateChildLoadedFlags.HasUnloadedChangedHandler)
                     {
                         BroadcastEventHelper.AddHasLoadedChangeHandlerFlagInAncestry((fe != null) ? (DependencyObject)fe : (DependencyObject)fce);
                     }
@@ -182,7 +182,7 @@ namespace System.Windows
                 StyleHelper.CreateInstanceDataForChild(
                                 StyleHelper.TemplateDataField,
                                 _templatedParent,
-                                (fe!=null) ? (DependencyObject)fe : (DependencyObject)fce,
+                                (fe != null) ? (DependencyObject)fe : (DependencyObject)fce,
                                 childIndex,
                                 _frameworkTemplate.HasInstanceValues,
                                 ref _frameworkTemplate.ChildRecordFromChildIndex);
@@ -208,7 +208,7 @@ namespace System.Windows
             if (_templatedParent != null)
             {
                 FrameworkObject fo = new FrameworkObject(_templatedParent);
-                
+
                 Debug.Assert(fo.IsFE);
                 if (fo.IsFE)
                 {
@@ -223,7 +223,7 @@ namespace System.Windows
             {
                 if (_nameMap == null || name == null || name == String.Empty)
                     return null;
-                
+
                 return _nameMap[name];
             }
         }
@@ -242,9 +242,9 @@ namespace System.Windows
         //
         //+----------------------------------------------------------------------------------------------------------------
 
-        private void SetTemplateParentValues( string name, object element )
+        private void SetTemplateParentValues(string name, object element)
         {
-            FrameworkTemplate.SetTemplateParentValues( name, element, _frameworkTemplate, ref _provideValueServiceProvider );
+            FrameworkTemplate.SetTemplateParentValues(name, element, _frameworkTemplate, ref _provideValueServiceProvider);
         }
 
 
@@ -261,15 +261,15 @@ namespace System.Windows
         private static UncommonField<Hashtable> _templatedNonFeChildrenField = (UncommonField<Hashtable>)StyleHelper.TemplatedNonFeChildrenField;
 
         // The templated parent we're instantiating for
-        private DependencyObject       _templatedParent;
+        private DependencyObject _templatedParent;
 
         // The template we're instantiating
-        private FrameworkTemplate      _frameworkTemplate;
+        private FrameworkTemplate _frameworkTemplate;
 
         // Is templated parent an FE or an FCE?
-        private bool                   _isTemplatedParentAnFE;
+        private bool _isTemplatedParentAnFE;
 
-        ProvideValueServiceProvider    _provideValueServiceProvider;
+        ProvideValueServiceProvider _provideValueServiceProvider;
 
         // This is a HybridDictionary of Name-Object maps
         private HybridDictionary _nameMap;

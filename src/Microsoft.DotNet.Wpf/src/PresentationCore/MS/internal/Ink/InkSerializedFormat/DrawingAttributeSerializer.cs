@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 //#define OLD_ISF
 
 using System.IO;
-using System.Windows.Media;
 using System.Windows.Ink;
+using System.Windows.Media;
 
 //
 //  These are the V1 DrawingAttributes and their respective defaults:
@@ -127,7 +127,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 KnownTagCache.KnownTagIndex tag;
                 uint uiTag;
                 // First read the tag
-                uint cb = SerializationHelper.Decode (stream, out uiTag);
+                uint cb = SerializationHelper.Decode(stream, out uiTag);
                 tag = (KnownTagCache.KnownTagIndex)uiTag;
 
                 if (maximumStreamSize < cb)
@@ -138,7 +138,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 maximumStreamSize -= cb;
 
                 // Get the guid based on the tag
-                Guid guid = guidList.FindGuid (tag);
+                Guid guid = guidList.FindGuid(tag);
                 if (guid == Guid.Empty)
                 {
                     throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("Drawing Attribute tag embedded in ISF stream does not match guid table"));
@@ -148,7 +148,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                 if (KnownIds.PenTip == guid)
                 {
-                    cb = SerializationHelper.Decode (stream, out dw);
+                    cb = SerializationHelper.Decode(stream, out dw);
                     penTip = (PenTip)dw;
                     if (!PenTipHelper.IsDefined(penTip))
                     {
@@ -165,7 +165,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 else if (KnownIds.DrawingFlags == guid)
                 {
                     // Encode the drawing flags with considerations for v2 model
-                    cb = SerializationHelper.Decode (stream, out dw);
+                    cb = SerializationHelper.Decode(stream, out dw);
                     DrawingFlags flags = (DrawingFlags)dw;
                     da.DrawingFlags = flags;
                     maximumStreamSize -= cb;
@@ -175,7 +175,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     uint ropSize = GuidList.GetDataSizeIfKnownGuid(KnownIds.RasterOperation);
                     if (ropSize == 0)
                     {
-                        throw new InvalidOperationException(StrokeCollectionSerializer. ISFDebugMessage("ROP data size was not found"));
+                        throw new InvalidOperationException(StrokeCollectionSerializer.ISFDebugMessage("ROP data size was not found"));
                     }
 
                     byte[] data = new byte[ropSize];
@@ -191,25 +191,25 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 }
                 else if (KnownIds.CurveFittingError == guid)
                 {
-                    cb = SerializationHelper.Decode (stream, out dw);
+                    cb = SerializationHelper.Decode(stream, out dw);
                     da.FittingError = (int)dw;
                     maximumStreamSize -= cb;
                 }
                 else if (KnownIds.StylusHeight == guid || KnownIds.StylusWidth == guid)
                 {
                     double _size;
-                    cb = SerializationHelper.Decode (stream, out dw);
+                    cb = SerializationHelper.Decode(stream, out dw);
                     _size = (double)dw;
                     maximumStreamSize -= cb;
                     if (maximumStreamSize > 0)
                     {
-                        cb = SerializationHelper.Decode (stream, out dw);
+                        cb = SerializationHelper.Decode(stream, out dw);
                         maximumStreamSize -= cb;
                         if (KnownTagCache.KnownTagIndex.Mantissa == (KnownTagCache.KnownTagIndex)dw)
                         {
                             uint cbInSize;
                             // First thing that is in there is maximumStreamSize of the data
-                            cb = SerializationHelper.Decode (stream, out cbInSize);
+                            cb = SerializationHelper.Decode(stream, out cbInSize);
                             maximumStreamSize -= cb;
 
                             // in maximumStreamSize is one more than the decoded no
@@ -219,14 +219,14 @@ namespace MS.Internal.Ink.InkSerializedFormat
                                 throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("ISF size if greater then maximum stream size"));
                             }
                             byte[] in_data = new byte[cbInSize];
-							
-                            uint bytesRead = (uint) stream.Read (in_data, 0, (int)cbInSize);
+
+                            uint bytesRead = (uint)stream.Read(in_data, 0, (int)cbInSize);
                             if (cbInSize != bytesRead)
                             {
                                 throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("Read different size from stream then expected"));
                             }
 
-                            byte[] out_buffer = Compressor.DecompressPropertyData (in_data);
+                            byte[] out_buffer = Compressor.DecompressPropertyData(in_data);
                             using (MemoryStream localStream = new MemoryStream(out_buffer))
                             using (BinaryReader rdr = new BinaryReader(localStream))
                             {
@@ -234,12 +234,12 @@ namespace MS.Internal.Ink.InkSerializedFormat
                                 _size += (double)(sFraction / DrawingAttributes.StylusPrecision);
 
                                 maximumStreamSize -= cbInSize;
-			                }
+                            }
                         }
                         else
                         {
                             // Seek it back by cb
-                            stream.Seek (-cb, SeekOrigin.Current);
+                            stream.Seek(-cb, SeekOrigin.Current);
                             maximumStreamSize += cb;
                         }
                     }
@@ -292,13 +292,13 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     object data;
                     cb = ExtendedPropertySerializer.DecodeAsISF(stream, maximumStreamSize, guidList, tag, ref guid, out data);
                     maximumStreamSize -= cb;
-                    da.AddPropertyData(guid,data);
+                    da.AddPropertyData(guid, data);
                 }
             }
 
             if (0 != maximumStreamSize)
             {
-                throw new ArgumentException ();
+                throw new ArgumentException();
             }
 
             //
@@ -345,7 +345,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             // 2) next we need to set hight and width
             //
             if (da.StylusTip == StylusTip.Ellipse &&
-                widthIsSetInISF && 
+                widthIsSetInISF &&
                 !heightIsSetInISF)
             {
                 //
@@ -369,8 +369,8 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
             da.Height = GetCappedHeightOrWidth(height);
             da.Width = GetCappedHeightOrWidth(width);
-            
-			//
+
+            //
             // 3) next we need to set IsHighlighter (by looking for RasterOperation.MaskPen)
             //
 
@@ -396,7 +396,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 }
             }
             //else, IsHighlighter will be set to false by default, no need to set it
-            
+
             //
             // 4) see if there is a transparency we need to add to color
             //
@@ -514,7 +514,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 //note: Color.A is set to 255 by default, which means fully opaque
                 //transparency is just the opposite - 0 means fully opaque so 
                 //we need to flip the values
-                int transparency = MathHelper.AbsNoThrow(( (int)alphaChannel ) - 255);
+                int transparency = MathHelper.AbsNoThrow(((int)alphaChannel) - 255);
                 Debug.Assert(bw != null);
                 cbData += SerializationHelper.Encode(stream, (uint)guidList.FindTag(KnownIds.Transparency, true));
                 cbData += SerializationHelper.Encode(stream, Convert.ToUInt32(transparency));
@@ -642,16 +642,16 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 // when missing in the isf stream OR for compatibility with V1
                 //
                 bool skipPersisting = DoubleUtil.AreClose(size, sizeWhenMissing);
-                if ( stylusWidth == stylusHeight && 
-                     da.StylusTip == StylusTip.Ellipse && 
-                     guid == KnownIds.StylusHeight && 
+                if (stylusWidth == stylusHeight &&
+                     da.StylusTip == StylusTip.Ellipse &&
+                     guid == KnownIds.StylusHeight &&
                      da.HeightChangedForCompatabity)
                 {
                     //we need to put height in the ISF stream for compat
                     skipPersisting = true;
                 }
 
-                    
+
                 if (!skipPersisting)
                 {
                     uint uIntegral = (uint)(size + 0.5f);

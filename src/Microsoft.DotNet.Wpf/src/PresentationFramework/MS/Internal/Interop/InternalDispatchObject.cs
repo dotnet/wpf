@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -40,98 +40,98 @@
 //
 
 
+using System.Globalization;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Globalization;
 
 namespace MS.Internal.Interop
 {
     internal abstract class InternalDispatchObject<IDispInterface> : IReflect
-{
-    /// <summary>
-    /// DISPID->MethodInfo map used by InvokeMember()
-    /// </summary>
-    private Dictionary<int, MethodInfo> _dispId2MethodMap;
-
-    protected InternalDispatchObject()
     {
-        // Populate _dispId2MethodMap with the MethodInfos for the interface, keyed by DISPID.
-        // There is no support for properties (yet).
-        MethodInfo[] methods = typeof(IDispInterface).GetMethods();
-        _dispId2MethodMap = new Dictionary<int, MethodInfo>(methods.Length);
-        foreach (MethodInfo method in methods)
+        /// <summary>
+        /// DISPID->MethodInfo map used by InvokeMember()
+        /// </summary>
+        private Dictionary<int, MethodInfo> _dispId2MethodMap;
+
+        protected InternalDispatchObject()
         {
-            int dispid = ((DispIdAttribute[])method.GetCustomAttributes(typeof(DispIdAttribute), false))[0].Value;
-            _dispId2MethodMap[dispid] = method;
-        }
-    }
-
-    FieldInfo IReflect.GetField(string name, BindingFlags bindingAttr)
-    {
-        throw new NotImplementedException();
-    }
-    FieldInfo[] IReflect.GetFields(BindingFlags bindingAttr)
-    {
-        return null;
-    }
-    MemberInfo[] IReflect.GetMember(string name, BindingFlags bindingAttr)
-    {
-        throw new NotImplementedException();
-    }
-    MemberInfo[] IReflect.GetMembers(BindingFlags bindingAttr)
-    {
-        throw new NotImplementedException();
-    }
-    MethodInfo IReflect.GetMethod(string name, BindingFlags bindingAttr)
-    {
-        throw new NotImplementedException();
-    }
-    MethodInfo IReflect.GetMethod(string name, BindingFlags bindingAttr, Binder binder, Type[] types, ParameterModifier[] modifiers)
-    {
-        throw new NotImplementedException();
-    }
-    MethodInfo[] IReflect.GetMethods(BindingFlags bindingAttr)
-    {
-        // It doesn't help to return typeof(IDispInterface).GetMethods(), because the CLR's IDispatch layer
-        // ignores non-visible MethodInfos (DispatchInfo::SynchWithManagedView(), in clr\src\VM\DispatchInfo.cpp).
-        // For all "unknown" DISPIDs, IReflect.InvokeMember() is passed a method name like "[DISPID=<id>]", 
-        // which we parse.
-        return null;
-    }
-    PropertyInfo[] IReflect.GetProperties(BindingFlags bindingAttr)
-    {
-        return null;
-    }
-    PropertyInfo IReflect.GetProperty(string name, BindingFlags bindingAttr, Binder binder, Type returnType, Type[] types, ParameterModifier[] modifiers)
-    {
-        throw new NotImplementedException();
-    }
-    PropertyInfo IReflect.GetProperty(string name, BindingFlags bindingAttr)
-    {
-        throw new NotImplementedException();
-    }
-
-    object IReflect.InvokeMember(string name, BindingFlags invokeAttr, Binder binder, object target, object[] args, ParameterModifier[] modifiers, System.Globalization.CultureInfo culture, string[] namedParameters)
-    {
-        // We never expect to get a real method name here--see the explanation in GetMethods().
-        if (name.StartsWith("[DISPID=", StringComparison.OrdinalIgnoreCase))
-        {
-            int dispid = int.Parse(name.Substring(8, name.Length-9), CultureInfo.InvariantCulture);
-            MethodInfo method;
-            if (_dispId2MethodMap.TryGetValue(dispid, out method))
+            // Populate _dispId2MethodMap with the MethodInfos for the interface, keyed by DISPID.
+            // There is no support for properties (yet).
+            MethodInfo[] methods = typeof(IDispInterface).GetMethods();
+            _dispId2MethodMap = new Dictionary<int, MethodInfo>(methods.Length);
+            foreach (MethodInfo method in methods)
             {
-                return method.Invoke(this, invokeAttr, binder, args, culture);
+                int dispid = ((DispIdAttribute[])method.GetCustomAttributes(typeof(DispIdAttribute), false))[0].Value;
+                _dispId2MethodMap[dispid] = method;
             }
         }
-        // This exception can be thrown if IDispInterface doesn't declare a method with a particular DISPID, 
-        // but the real COM interface has it and the event source is trying to invoke it. For a call coming via
-        // the native IDispatch, such an error is usually ignorable.
-        throw new MissingMethodException(GetType().Name, name);
-    }
-    
-    Type IReflect.UnderlyingSystemType
-    {
-        get { return typeof(IDispInterface); }
-    }
-};
+
+        FieldInfo IReflect.GetField(string name, BindingFlags bindingAttr)
+        {
+            throw new NotImplementedException();
+        }
+        FieldInfo[] IReflect.GetFields(BindingFlags bindingAttr)
+        {
+            return null;
+        }
+        MemberInfo[] IReflect.GetMember(string name, BindingFlags bindingAttr)
+        {
+            throw new NotImplementedException();
+        }
+        MemberInfo[] IReflect.GetMembers(BindingFlags bindingAttr)
+        {
+            throw new NotImplementedException();
+        }
+        MethodInfo IReflect.GetMethod(string name, BindingFlags bindingAttr)
+        {
+            throw new NotImplementedException();
+        }
+        MethodInfo IReflect.GetMethod(string name, BindingFlags bindingAttr, Binder binder, Type[] types, ParameterModifier[] modifiers)
+        {
+            throw new NotImplementedException();
+        }
+        MethodInfo[] IReflect.GetMethods(BindingFlags bindingAttr)
+        {
+            // It doesn't help to return typeof(IDispInterface).GetMethods(), because the CLR's IDispatch layer
+            // ignores non-visible MethodInfos (DispatchInfo::SynchWithManagedView(), in clr\src\VM\DispatchInfo.cpp).
+            // For all "unknown" DISPIDs, IReflect.InvokeMember() is passed a method name like "[DISPID=<id>]", 
+            // which we parse.
+            return null;
+        }
+        PropertyInfo[] IReflect.GetProperties(BindingFlags bindingAttr)
+        {
+            return null;
+        }
+        PropertyInfo IReflect.GetProperty(string name, BindingFlags bindingAttr, Binder binder, Type returnType, Type[] types, ParameterModifier[] modifiers)
+        {
+            throw new NotImplementedException();
+        }
+        PropertyInfo IReflect.GetProperty(string name, BindingFlags bindingAttr)
+        {
+            throw new NotImplementedException();
+        }
+
+        object IReflect.InvokeMember(string name, BindingFlags invokeAttr, Binder binder, object target, object[] args, ParameterModifier[] modifiers, System.Globalization.CultureInfo culture, string[] namedParameters)
+        {
+            // We never expect to get a real method name here--see the explanation in GetMethods().
+            if (name.StartsWith("[DISPID=", StringComparison.OrdinalIgnoreCase))
+            {
+                int dispid = int.Parse(name.Substring(8, name.Length - 9), CultureInfo.InvariantCulture);
+                MethodInfo method;
+                if (_dispId2MethodMap.TryGetValue(dispid, out method))
+                {
+                    return method.Invoke(this, invokeAttr, binder, args, culture);
+                }
+            }
+            // This exception can be thrown if IDispInterface doesn't declare a method with a particular DISPID, 
+            // but the real COM interface has it and the event source is trying to invoke it. For a call coming via
+            // the native IDispatch, such an error is usually ignorable.
+            throw new MissingMethodException(GetType().Name, name);
+        }
+
+        Type IReflect.UnderlyingSystemType
+        {
+            get { return typeof(IDispInterface); }
+        }
+    };
 }//namespace

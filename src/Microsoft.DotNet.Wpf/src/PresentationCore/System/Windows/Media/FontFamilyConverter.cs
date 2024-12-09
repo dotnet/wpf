@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using System.Globalization;
-using System.Windows.Navigation;
 using System.Windows.Markup;
+using System.Windows.Navigation;
 
 // Allow suppression of presharp warnings
 #pragma warning disable 1634, 1691
@@ -153,7 +153,7 @@ namespace System.Windows.Media
                         else
                         {
                             parentCulture = culture.Parent;
-                            if (parentCulture != null && 
+                            if (parentCulture != null &&
                                 (parentCulture.Equals(CultureInfo.InvariantCulture) || parentCulture == culture))
                             {
                                 parentCulture = null;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,8 +6,8 @@
 //
 
 using System.Reflection;
-using System.Windows.Resources;
 using System.Windows.Navigation;
+using System.Windows.Resources;
 
 namespace MS.Internal.Resources
 {
@@ -25,16 +25,16 @@ namespace MS.Internal.Resources
             }
 
             if (_contentFiles != null && _contentFiles.Count > 0)
-            {                
+            {
                 if (_contentFiles.Contains(partName))
                 {
                     return true;
                 }
             }
-            
+
             return false;
         }
-        
+
         //
         // Get a list of Content Files for a given Assembly.
         //
@@ -63,11 +63,11 @@ namespace MS.Internal.Resources
             {
                 contentFiles = new HashSet<string>(assemblyAttributes.Length, StringComparer.OrdinalIgnoreCase);
 
-                for (int i=0; i<assemblyAttributes.Length; i++)
+                for (int i = 0; i < assemblyAttributes.Length; i++)
                 {
                     AssemblyAssociatedContentFileAttribute aacf;
 
-                    aacf = (AssemblyAssociatedContentFileAttribute) assemblyAttributes[i];
+                    aacf = (AssemblyAssociatedContentFileAttribute)assemblyAttributes[i];
                     contentFiles.Add(aacf.RelativeContentFilePath);
                 }
             }

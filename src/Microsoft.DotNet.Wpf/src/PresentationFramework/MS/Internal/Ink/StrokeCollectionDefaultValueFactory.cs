@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -86,7 +86,7 @@ namespace MS.Internal.Ink
 
                 //
                 // We only promote the value when there is no local value set yet.
-                if ( _owner.ReadLocalValue(_dependencyProperty) == DependencyProperty.UnsetValue )
+                if (_owner.ReadLocalValue(_dependencyProperty) == DependencyProperty.UnsetValue)
                 {
                     // Promote the instance to the local value.
                     _owner.SetValue(_dependencyProperty, value);
@@ -98,7 +98,7 @@ namespace MS.Internal.Ink
                 metadata.ClearCachedDefaultValue(_owner, _dependencyProperty);
             }
 
-            private readonly DependencyObject   _owner;
+            private readonly DependencyObject _owner;
             private readonly DependencyProperty _dependencyProperty;
         }
     }

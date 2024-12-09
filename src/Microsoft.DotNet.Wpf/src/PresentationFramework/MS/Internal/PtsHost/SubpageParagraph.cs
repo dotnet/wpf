@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,9 +13,8 @@
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
-using MS.Internal.Text;
-
 using MS.Internal.PtsHost.UnsafeNativeMethods;
+using MS.Internal.Text;
 
 namespace MS.Internal.PtsHost
 {
@@ -50,7 +49,7 @@ namespace MS.Internal.PtsHost
         {
             base.Dispose();
 
-            if(_mainTextSegment != null)
+            if (_mainTextSegment != null)
             {
                 _mainTextSegment.Dispose();
                 _mainTextSegment = null;
@@ -96,7 +95,7 @@ namespace MS.Internal.PtsHost
             // to HandleMapper that holds a reference to it. PTS manages lifetime of this object, and 
             // calls DestroyParaclient to get rid of it. DestroyParaclient will call Dispose() on the object
             // and remove it from HandleMapper.
-            paraClient =  new SubpageParaClient(this);
+            paraClient = new SubpageParaClient(this);
             paraClientHandle = paraClient.Handle;
 #pragma warning restore 6518
         }
@@ -116,7 +115,7 @@ namespace MS.Internal.PtsHost
             MarginCollapsingState mcs,          // IN:  input margin collapsing state
             PTS.FSKCLEAR fskclearIn,            // IN:  clear property that must be satisfied
             PTS.FSKSUPPRESSHARDBREAKBEFOREFIRSTPARA fsksuppresshardbreakbeforefirstparaIn,
-                                                // IN: suppress breaks at track start?
+            // IN: suppress breaks at track start?
             out PTS.FSFMTR fsfmtr,              // OUT: result of formatting the paragraph
             out IntPtr pfspara,                 // OUT: pointer to the para data
             out IntPtr pbrkrecOut,              // OUT: pointer to the para break record
@@ -134,7 +133,7 @@ namespace MS.Internal.PtsHost
             MbpInfo mbp;
             MarginCollapsingState mcsSubpage, mcsBottom;
             PTS.FSRECT fsrcSubpageMargin;
-            PTS.FSCOLUMNINFO [] columnInfoCollection;
+            PTS.FSCOLUMNINFO[] columnInfoCollection;
 
             // Currently it is possible to get MCS and BR in following situation:
             // At the end of the page there is a paragraph with delayed figure, so the figure
@@ -163,11 +162,11 @@ namespace MS.Internal.PtsHost
             // and make sure that subpage is at least 1 unit wide (cannot measure at width <= 0)
             marginTop = 0;
             mcsSubpage = null;
-            
-            // Get MBP info. Since subpage height and width must be at least 1, the max size for MBP is subpage dimensions less 1
-            mbp = MbpInfo.FromElement(Element, StructuralCache.TextFormatterHost.PixelsPerDip); 
 
-            if(fswdirSubpage != fswdir)
+            // Get MBP info. Since subpage height and width must be at least 1, the max size for MBP is subpage dimensions less 1
+            mbp = MbpInfo.FromElement(Element, StructuralCache.TextFormatterHost.PixelsPerDip);
+
+            if (fswdirSubpage != fswdir)
             {
                 PTS.FSRECT pageRect = StructuralCache.CurrentFormatContext.PageRect;
                 PTS.Validate(PTS.FsTransformRectangle(fswdir, ref pageRect, ref fsrcToFill, fswdirSubpage, out fsrcToFill));
@@ -215,8 +214,8 @@ namespace MS.Internal.PtsHost
 
             // Format subpage
             StructuralCache.CurrentFormatContext.PushNewPageData(new Size(TextDpi.FromTextDpi(subpageWidth), TextDpi.FromTextDpi(subpageHeight)),
-                                                                 new Thickness(), 
-                                                                 false, 
+                                                                 new Thickness(),
+                                                                 false,
                                                                  true);
 
             fixed (PTS.FSCOLUMNINFO* rgColumnInfo = columnInfoCollection)
@@ -224,8 +223,8 @@ namespace MS.Internal.PtsHost
                 PTS.Validate(PTS.FsCreateSubpageFinite(PtsContext.Context, pbrkrecIn, fBRFromPreviousPage, _mainTextSegment.Handle,
                     footnoteRejector, fEmptyOk, fSuppressTopSpace, fswdir, subpageWidth, subpageHeight,
                     ref fsrcSubpageMargin, cColumns, rgColumnInfo, PTS.False,
-                    0, null, null, 0, null, null, PTS.FromBoolean(false), 
-                    fsksuppresshardbreakbeforefirstparaIn, 
+                    0, null, null, 0, null, null, PTS.FromBoolean(false),
+                    fsksuppresshardbreakbeforefirstparaIn,
                     out fsfmtr, out pfspara, out pbrkrecOut, out dvrUsed, out fsbbox, out pmcsclientOut, out dvrTopSpace), PtsContext);
             }
 
@@ -285,7 +284,7 @@ namespace MS.Internal.PtsHost
                 fsbbox.fsrc.dv = Math.Max(dvrUsed - dvrTopSpace, 0);
             }
 
-            if(fswdirSubpage != fswdir)
+            if (fswdirSubpage != fswdir)
             {
                 PTS.FSRECT pageRect = StructuralCache.CurrentFormatContext.PageRect;
                 PTS.Validate(PTS.FsTransformBbox(fswdirSubpage, ref pageRect, ref fsbbox, fswdir, out fsbbox));
@@ -349,7 +348,7 @@ namespace MS.Internal.PtsHost
             // NOTE: Do not suppress top space for bottomles pages.
             mbp = MbpInfo.FromElement(Element, StructuralCache.TextFormatterHost.PixelsPerDip);
 
-            if(fswdirSubpage != fswdir)
+            if (fswdirSubpage != fswdir)
             {
                 PTS.FSRECT fsrcToFillSubpage = new PTS.FSRECT(urTrack, 0, durTrack, 0);
                 PTS.FSRECT pageRect = StructuralCache.CurrentFormatContext.PageRect;
@@ -390,15 +389,15 @@ namespace MS.Internal.PtsHost
             // Create subpage
 
             StructuralCache.CurrentFormatContext.PushNewPageData(new Size(TextDpi.FromTextDpi(subpageWidth), TextDpi.MaxWidth),
-                                                                 new Thickness(), 
-                                                                 false, 
+                                                                 new Thickness(),
+                                                                 false,
                                                                  false);
 
             fixed (PTS.FSCOLUMNINFO* rgColumnInfo = columnInfoCollection)
             {
                 PTS.Validate(PTS.FsCreateSubpageBottomless(PtsContext.Context, _mainTextSegment.Handle, fSuppressTopSpace,
                     fswdir, subpageWidth, urSubpageMargin, durSubpageMargin, vrSubpageMargin,
-                    cColumns, rgColumnInfo, 0, null, null, 0, null, null, PTS.FromBoolean(_isInterruptible), 
+                    cColumns, rgColumnInfo, 0, null, null, 0, null, null, PTS.FromBoolean(_isInterruptible),
                     out fsfmtrbl, out pfspara, out dvrUsed, out fsbbox, out pmcsclientOut, out dvrTopSpace,
                     out fPageBecomesUninterruptable), PtsContext);
             }
@@ -455,7 +454,7 @@ namespace MS.Internal.PtsHost
             }
 
 
-            if(fswdirSubpage != fswdir)
+            if (fswdirSubpage != fswdir)
             {
                 PTS.FSRECT pageRect = StructuralCache.CurrentFormatContext.PageRect;
                 PTS.Validate(PTS.FsTransformBbox(fswdirSubpage, ref pageRect, ref fsbbox, fswdir, out fsbbox));
@@ -509,7 +508,7 @@ namespace MS.Internal.PtsHost
             // NOTE: Do not suppress top space for bottomles pages.
             mbp = MbpInfo.FromElement(Element, StructuralCache.TextFormatterHost.PixelsPerDip);
 
-            if(fswdirSubpage != fswdir)
+            if (fswdirSubpage != fswdir)
             {
                 PTS.FSRECT fsrcToFillSubpage = new PTS.FSRECT(urTrack, 0, durTrack, 0);
                 PTS.FSRECT pageRect = StructuralCache.CurrentFormatContext.PageRect;
@@ -548,8 +547,8 @@ namespace MS.Internal.PtsHost
             }
 
             StructuralCache.CurrentFormatContext.PushNewPageData(new Size(TextDpi.FromTextDpi(subpageWidth), TextDpi.MaxWidth),
-                                                                 new Thickness(), 
-                                                                 true, 
+                                                                 new Thickness(),
+                                                                 true,
                                                                  false);
 
             // Create subpage
@@ -614,7 +613,7 @@ namespace MS.Internal.PtsHost
             }
 
 
-            if(fswdirSubpage != fswdir)
+            if (fswdirSubpage != fswdir)
             {
                 PTS.FSRECT pageRect = StructuralCache.CurrentFormatContext.PageRect;
                 PTS.Validate(PTS.FsTransformBbox(fswdirSubpage, ref pageRect, ref fsbbox, fswdir, out fsbbox));
@@ -667,7 +666,7 @@ namespace MS.Internal.PtsHost
             }
             return (_mainTextSegment == null);
         }
-        
+
         // ------------------------------------------------------------------
         // Invalidate accumulated format caches.
         // ------------------------------------------------------------------

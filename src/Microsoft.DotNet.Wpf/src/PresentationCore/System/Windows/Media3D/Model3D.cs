@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -31,7 +31,7 @@ namespace System.Windows.Media.Media3D
         #region Constructors
 
         // Prevent 3rd parties from extending this abstract base class.
-        internal Model3D() {}
+        internal Model3D() { }
 
         #endregion Constructors
 
@@ -40,7 +40,7 @@ namespace System.Windows.Media.Media3D
         //  Public Methods
         //
         //------------------------------------------------------
-        
+
         //------------------------------------------------------
         //
         //  Public Properties
@@ -53,11 +53,11 @@ namespace System.Windows.Media.Media3D
         ///     Gets bounds for this model.
         /// </summary>
         public Rect3D Bounds
-        { 
+        {
             get
-            { 
+            {
                 ReadPreamble();
-                
+
                 return CalculateSubgraphBoundsOuterSpace();
             }
         }
@@ -69,7 +69,7 @@ namespace System.Windows.Media.Media3D
         //  Internal Methods
         //
         //------------------------------------------------------
-        
+
         #region Internal Methods
 
         // NOTE: Model3D hit testing takes the rayParams in the outer space of the
@@ -82,7 +82,7 @@ namespace System.Windows.Media.Media3D
         {
             Transform3D transform = Transform;
 
-            rayParams.PushModelTransform(transform);            
+            rayParams.PushModelTransform(transform);
             RayHitTestCore(rayParams);
             rayParams.PopTransform(transform);
         }
@@ -99,7 +99,7 @@ namespace System.Windows.Media.Media3D
         internal Rect3D CalculateSubgraphBoundsOuterSpace()
         {
             Rect3D innerBounds = CalculateSubgraphBoundsInnerSpace();
-            
+
             return M3DUtil.ComputeTransformedAxisAlignedBoundingBox(ref innerBounds, Transform);
         }
 

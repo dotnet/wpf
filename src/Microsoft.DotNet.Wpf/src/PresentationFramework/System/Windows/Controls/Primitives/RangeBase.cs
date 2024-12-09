@@ -1,12 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 using System.ComponentModel;
-using System.Windows.Threading;
-
 using System.Windows.Automation.Peers;
+using System.Windows.Threading;
 
 namespace System.Windows.Controls.Primitives
 {
@@ -63,10 +62,10 @@ namespace System.Windows.Controls.Primitives
         ///     Flags:              none
         ///     Default Value:      0
         /// </summary>
-        public static readonly DependencyProperty MinimumProperty = 
+        public static readonly DependencyProperty MinimumProperty =
                 DependencyProperty.Register(
-                        "Minimum", 
-                        typeof(double), 
+                        "Minimum",
+                        typeof(double),
                         typeof(RangeBase),
                         new FrameworkPropertyMetadata(
                                 0.0d,
@@ -79,7 +78,7 @@ namespace System.Windows.Controls.Primitives
         [Bindable(true), Category("Behavior")]
         public double Minimum
         {
-            get { return (double) GetValue(MinimumProperty); }
+            get { return (double)GetValue(MinimumProperty); }
             set { SetValue(MinimumProperty, value); }
         }
 
@@ -88,7 +87,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         private static void OnMinimumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            RangeBase ctrl = (RangeBase) d;
+            RangeBase ctrl = (RangeBase)d;
 
             RangeBaseAutomationPeer peer = UIElementAutomationPeer.FromElement(ctrl) as RangeBaseAutomationPeer;
             if (peer != null)
@@ -117,8 +116,8 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         public static readonly DependencyProperty MaximumProperty =
                 DependencyProperty.Register(
-                        "Maximum", 
-                        typeof(double), 
+                        "Maximum",
+                        typeof(double),
                         typeof(RangeBase),
                         new FrameworkPropertyMetadata(
                                 1.0d,
@@ -128,22 +127,22 @@ namespace System.Windows.Controls.Primitives
 
         private static object CoerceMaximum(DependencyObject d, object value)
         {
-            RangeBase ctrl = (RangeBase) d;
+            RangeBase ctrl = (RangeBase)d;
             double min = ctrl.Minimum;
-            if ((double) value < min)
+            if ((double)value < min)
             {
                 return min;
             }
             return value;
         }
-        
+
         /// <summary>
         ///     Maximum restricts the maximum value of the Value property
         /// </summary>
         [Bindable(true), Category("Behavior")]
         public double Maximum
         {
-            get { return (double) GetValue(MaximumProperty); }
+            get { return (double)GetValue(MaximumProperty); }
             set { SetValue(MaximumProperty, value); }
         }
 
@@ -152,7 +151,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         private static void OnMaximumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            RangeBase ctrl = (RangeBase) d;
+            RangeBase ctrl = (RangeBase)d;
 
             RangeBaseAutomationPeer peer = UIElementAutomationPeer.FromElement(ctrl) as RangeBaseAutomationPeer;
             if (peer != null)
@@ -161,7 +160,7 @@ namespace System.Windows.Controls.Primitives
             }
 
             ctrl.CoerceValue(ValueProperty);
-            ctrl.OnMaximumChanged((double) e.OldValue, (double) e.NewValue);
+            ctrl.OnMaximumChanged((double)e.OldValue, (double)e.NewValue);
         }
 
         /// <summary>
@@ -180,8 +179,8 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         public static readonly DependencyProperty ValueProperty =
                 DependencyProperty.Register(
-                        "Value", 
-                        typeof(double), 
+                        "Value",
+                        typeof(double),
                         typeof(RangeBase),
                         new FrameworkPropertyMetadata(
                                 0.0d,
@@ -193,9 +192,9 @@ namespace System.Windows.Controls.Primitives
         // made this internal because Slider wants to leverage it
         internal static object ConstrainToRange(DependencyObject d, object value)
         {
-            RangeBase ctrl = (RangeBase) d;
+            RangeBase ctrl = (RangeBase)d;
             double min = ctrl.Minimum;
-            double v = (double) value;
+            double v = (double)value;
             if (v < min)
             {
                 return min;
@@ -206,17 +205,17 @@ namespace System.Windows.Controls.Primitives
             {
                 return max;
             }
-            
+
             return value;
         }
-        
+
         /// <summary>
         ///     Value property
         /// </summary>
         [Bindable(true), Category("Behavior")]
         public double Value
         {
-            get { return (double) GetValue(ValueProperty); }
+            get { return (double)GetValue(ValueProperty); }
             set { SetValue(ValueProperty, value); }
         }
 
@@ -233,7 +232,7 @@ namespace System.Windows.Controls.Primitives
                 peer.RaiseValuePropertyChangedEvent((double)e.OldValue, (double)e.NewValue);
             }
 
-            ctrl.OnValueChanged((double) e.OldValue, (double) e.NewValue);
+            ctrl.OnValueChanged((double)e.OldValue, (double)e.NewValue);
         }
 
         /// <summary>
@@ -243,8 +242,10 @@ namespace System.Windows.Controls.Primitives
         /// <param name="newValue">The new value of the Value property.</param>
         protected virtual void OnValueChanged(double oldValue, double newValue)
         {
-            RoutedPropertyChangedEventArgs<double> args = new RoutedPropertyChangedEventArgs<double>(oldValue, newValue);
-            args.RoutedEvent=RangeBase.ValueChangedEvent;
+            RoutedPropertyChangedEventArgs<double> args = new RoutedPropertyChangedEventArgs<double>(oldValue, newValue)
+            {
+                RoutedEvent = RangeBase.ValueChangedEvent
+            };
             RaiseEvent(args);
         }
 
@@ -276,8 +277,8 @@ namespace System.Windows.Controls.Primitives
         /// <summary>
         ///     The DependencyProperty for the LargeChange property.
         /// </summary>
-        public static readonly DependencyProperty LargeChangeProperty 
-            = DependencyProperty.Register("LargeChange", typeof(double), typeof(RangeBase), 
+        public static readonly DependencyProperty LargeChangeProperty
+            = DependencyProperty.Register("LargeChange", typeof(double), typeof(RangeBase),
                                           new FrameworkPropertyMetadata(1.0),
                                           new ValidateValueCallback(IsValidChange));
 
@@ -296,15 +297,15 @@ namespace System.Windows.Controls.Primitives
                 SetValue(LargeChangeProperty, value);
             }
         }
-        
+
         #endregion
 
         #region SmallChange Property
         /// <summary>
         ///     The DependencyProperty for the SmallChange property.
         /// </summary>
-        public static readonly DependencyProperty SmallChangeProperty 
-            = DependencyProperty.Register("SmallChange", typeof(double), typeof(RangeBase), 
+        public static readonly DependencyProperty SmallChangeProperty
+            = DependencyProperty.Register("SmallChange", typeof(double), typeof(RangeBase),
                                           new FrameworkPropertyMetadata(0.1),
                                           new ValidateValueCallback(IsValidChange));
 
@@ -323,9 +324,9 @@ namespace System.Windows.Controls.Primitives
                 SetValue(SmallChangeProperty, value);
             }
         }
-        
+
         #endregion
-        
+
         #endregion
 
         #region Method Overrides
@@ -379,7 +380,7 @@ namespace System.Windows.Controls.Primitives
             else
             {
                 //Not on dispatcher, try posting to the dispatcher with 20ms timeout
-                Dispatcher.Invoke(DispatcherPriority.Send, new TimeSpan(0, 0, 0, 0, 20), new DispatcherOperationCallback(delegate(object o)
+                Dispatcher.Invoke(DispatcherPriority.Send, new TimeSpan(0, 0, 0, 0, 20), new DispatcherOperationCallback(delegate (object o)
                 {
                     min = Minimum;
                     max = Maximum;

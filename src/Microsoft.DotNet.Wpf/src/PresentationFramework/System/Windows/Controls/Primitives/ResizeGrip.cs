@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -36,7 +36,7 @@ namespace System.Windows.Controls.Primitives
             _dType = DependencyObjectType.FromSystemTypeInternal(typeof(ResizeGrip));
 
             Window.IWindowServiceProperty.OverrideMetadata(
-                    typeof(ResizeGrip), 
+                    typeof(ResizeGrip),
                     new FrameworkPropertyMetadata(new PropertyChangedCallback(_OnWindowServiceChanged)));
         }
         /// <summary>
@@ -98,7 +98,7 @@ namespace System.Windows.Controls.Primitives
         private static DependencyObjectType _dType;
 
         #endregion DTypeThemeStyleKey
-        
+
         //
         //  This property
         //  1. Finds the correct initial size for the _effectiveValues store on the current DependencyObject

@@ -1,16 +1,16 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Utility;
-using MS.Internal;
-using System.Threading;
 using System.Collections;
 using System.ComponentModel;
-using System.Windows.Markup;    // For ValueSerializerAttribute
-using MS.Internal.WindowsBase;
-using System.Windows.Threading; // For DispatcherObject
 using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Windows.Markup;    // For ValueSerializerAttribute
+using System.Windows.Threading; // For DispatcherObject
+using MS.Internal;
+using MS.Internal.WindowsBase;
+using MS.Utility;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -90,9 +90,9 @@ namespace System.Windows
             string name,
             Type propertyType,
             Type ownerType,
-            PropertyMetadata typeMetadata )
+            PropertyMetadata typeMetadata)
         {
-            return RegisterReadOnly( name, propertyType, ownerType, typeMetadata, null );
+            return RegisterReadOnly(name, propertyType, ownerType, typeMetadata, null);
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace System.Windows
             Type propertyType,
             Type ownerType,
             PropertyMetadata typeMetadata,
-            ValidateValueCallback validateValueCallback )
+            ValidateValueCallback validateValueCallback)
         {
             RegisterParameterValidation(name, propertyType, ownerType);
 
@@ -117,7 +117,7 @@ namespace System.Windows
             }
             else
             {
-                defaultMetadata = AutoGeneratePropertyMetadata(propertyType,validateValueCallback,name,ownerType);
+                defaultMetadata = AutoGeneratePropertyMetadata(propertyType, validateValueCallback, name, ownerType);
             }
 
             //  We create a DependencyPropertyKey at this point with a null property
@@ -136,14 +136,14 @@ namespace System.Windows
 
             authorizationKey.SetDependencyProperty(property);
 
-            if (typeMetadata == null )
+            if (typeMetadata == null)
             {
                 // No metadata specified, generate one so we can specify the authorized key.
-                typeMetadata = AutoGeneratePropertyMetadata(propertyType,validateValueCallback,name,ownerType);
+                typeMetadata = AutoGeneratePropertyMetadata(propertyType, validateValueCallback, name, ownerType);
             }
 
             // Authorize registering type for read-only access, create key.
-            #pragma warning suppress 6506 // typeMetadata is never null, since we generate default metadata if none is provided.
+#pragma warning suppress 6506 // typeMetadata is never null, since we generate default metadata if none is provided.
 
             // Apply type-specific metadata to owner type only
             property.OverrideMetadata(ownerType, typeMetadata, authorizationKey);
@@ -158,7 +158,7 @@ namespace System.Windows
         /// </summary>
         public static DependencyPropertyKey RegisterAttachedReadOnly(string name, Type propertyType, Type ownerType, PropertyMetadata defaultMetadata)
         {
-            return RegisterAttachedReadOnly( name, propertyType, ownerType, defaultMetadata, null );
+            return RegisterAttachedReadOnly(name, propertyType, ownerType, defaultMetadata, null);
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace System.Windows
             // Establish default metadata for all types, if none is provided
             if (defaultMetadata == null)
             {
-                defaultMetadata = AutoGeneratePropertyMetadata( propertyType, validateValueCallback, name, ownerType );
+                defaultMetadata = AutoGeneratePropertyMetadata(propertyType, validateValueCallback, name, ownerType);
             }
 
             //  We create a DependencyPropertyKey at this point with a null property
@@ -186,7 +186,7 @@ namespace System.Windows
             // is so we fail securely.
             DependencyPropertyKey authorizedKey = new DependencyPropertyKey(null);
 
-            DependencyProperty property = RegisterCommon( name, propertyType, ownerType, defaultMetadata, validateValueCallback);
+            DependencyProperty property = RegisterCommon(name, propertyType, ownerType, defaultMetadata, validateValueCallback);
 
             property._readOnlyKey = authorizedKey;
 
@@ -205,7 +205,7 @@ namespace System.Windows
         public static DependencyProperty RegisterAttached(string name, Type propertyType, Type ownerType)
         {
             // Forwarding
-            return RegisterAttached(name, propertyType, ownerType, null, null );
+            return RegisterAttached(name, propertyType, ownerType, null, null);
         }
 
         /// <summary>
@@ -219,7 +219,7 @@ namespace System.Windows
         public static DependencyProperty RegisterAttached(string name, Type propertyType, Type ownerType, PropertyMetadata defaultMetadata)
         {
             // Forwarding
-            return RegisterAttached(name, propertyType, ownerType, defaultMetadata, null );
+            return RegisterAttached(name, propertyType, ownerType, defaultMetadata, null);
         }
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace System.Windows
         {
             RegisterParameterValidation(name, propertyType, ownerType);
 
-            return RegisterCommon( name, propertyType, ownerType, defaultMetadata, validateValueCallback );
+            return RegisterCommon(name, propertyType, ownerType, defaultMetadata, validateValueCallback);
         }
 
         private static void RegisterParameterValidation(string name, Type propertyType, Type ownerType)
@@ -265,7 +265,7 @@ namespace System.Windows
             // Establish default metadata for all types, if none is provided
             if (defaultMetadata == null)
             {
-                defaultMetadata = AutoGeneratePropertyMetadata( propertyType, validateValueCallback, name, ownerType );
+                defaultMetadata = AutoGeneratePropertyMetadata(propertyType, validateValueCallback, name, ownerType);
             }
             else // Metadata object is provided.
             {
@@ -275,7 +275,7 @@ namespace System.Windows
                     defaultMetadata.DefaultValue = AutoGenerateDefaultValue(propertyType);
                 }
 
-                ValidateMetadataDefaultValue( defaultMetadata, propertyType, name, validateValueCallback );
+                ValidateMetadataDefaultValue(defaultMetadata, propertyType, name, validateValueCallback);
             }
 
             // Create property
@@ -303,12 +303,12 @@ namespace System.Windows
             }
 
 
-            if( TraceDependencyProperty.IsEnabled )
+            if (TraceDependencyProperty.IsEnabled)
             {
                 TraceDependencyProperty.TraceActivityItem(
                     TraceDependencyProperty.Register,
                     dp,
-                    dp.OwnerType );
+                    dp.OwnerType);
             }
 
 
@@ -341,7 +341,7 @@ namespace System.Windows
             object defaultValue = AutoGenerateDefaultValue(propertyType);
 
             // If a validator is passed in, see if the default value makes sense.
-            if ( validateValueCallback != null &&
+            if (validateValueCallback != null &&
                 !validateValueCallback(defaultValue))
             {
                 // Didn't work - require the caller to specify one.
@@ -356,7 +356,7 @@ namespace System.Windows
             PropertyMetadata defaultMetadata,
             Type propertyType,
             string propertyName,
-            ValidateValueCallback validateValueCallback )
+            ValidateValueCallback validateValueCallback)
         {
             // If we are registered to use the DefaultValue factory we can
             // not validate the DefaultValue at registration time, so we
@@ -393,7 +393,7 @@ namespace System.Windows
 
             // An Expression used as default value won't behave as expected since
             //  it doesn't get evaluated.  We explicitly fail it here.
-            if (defaultValue is Expression )
+            if (defaultValue is Expression)
             {
                 throw new ArgumentException(SR.DefaultValueMayNotBeExpression);
             }
@@ -417,7 +417,7 @@ namespace System.Windows
 
                     if (valueAsISealable != null && valueAsISealable.CanSeal)
                     {
-                        Invariant.Assert (!valueAsISealable.IsSealed,
+                        Invariant.Assert(!valueAsISealable.IsSealed,
                                "A Sealed ISealable must not have dispatcher affinity");
 
                         valueAsISealable.Seal();
@@ -435,7 +435,7 @@ namespace System.Windows
 
             // After checking for correct type, check default value against
             //  validator (when one is given)
-            if ( validateValueCallback != null &&
+            if (validateValueCallback != null &&
                 !validateValueCallback(defaultValue))
             {
                 throw new ArgumentException(SR.Format(SR.DefaultValueInvalid, propertyName));
@@ -452,7 +452,7 @@ namespace System.Windows
                 Type forType,
                 PropertyMetadata typeMetadata,
             out DependencyObjectType dType,
-            out PropertyMetadata baseMetadata )
+            out PropertyMetadata baseMetadata)
         {
             ArgumentNullException.ThrowIfNull(forType);
             ArgumentNullException.ThrowIfNull(typeMetadata);
@@ -473,7 +473,7 @@ namespace System.Windows
             if (typeMetadata.IsDefaultValueModified)
             {
                 // Will throw ArgumentException if fails.
-                ValidateMetadataDefaultValue( typeMetadata, PropertyType, Name, ValidateValueCallback );
+                ValidateMetadataDefaultValue(typeMetadata, PropertyType, Name, ValidateValueCallback);
             }
 
             // Force all base classes to register their metadata
@@ -572,7 +572,7 @@ namespace System.Windows
                 {
                     throw new ArgumentException(SR.Format(SR.TypeMetadataAlreadyRegistered, forType.Name));
                 }
-           }
+            }
 
             // Merge base's metadata into this metadata
             // CALLBACK
@@ -824,7 +824,7 @@ namespace System.Windows
         /// </summary>
         public int GlobalIndex
         {
-            get { return (int) (_packedData & Flags.GlobalIndexMask); }
+            get { return (int)(_packedData & Flags.GlobalIndexMask); }
         }
 
         internal bool IsObjectType
@@ -927,9 +927,9 @@ namespace System.Windows
             }
         }
 
-        internal void VerifyReadOnlyKey( DependencyPropertyKey candidateKey )
+        internal void VerifyReadOnlyKey(DependencyPropertyKey candidateKey)
         {
-            Debug.Assert( ReadOnly, "Why are we trying to validate read-only key on a property that is not read-only?");
+            Debug.Assert(ReadOnly, "Why are we trying to validate read-only key on a property that is not read-only?");
 
             if (_readOnlyKey != candidateKey)
             {
@@ -1065,7 +1065,7 @@ namespace System.Windows
             Flags packedData;
             lock (Synchronized)
             {
-                packedData = (Flags) GetUniqueGlobalIndex(ownerType, name);
+                packedData = (Flags)GetUniqueGlobalIndex(ownerType, name);
 
                 RegisteredPropertyList.Add(this);
             }
@@ -1124,7 +1124,7 @@ namespace System.Windows
         /// </summary>
         internal CoerceValueCallback DesignerCoerceValueCallback
         {
-            get {  return _designerCoerceValueCallback; }
+            get { return _designerCoerceValueCallback; }
             set
             {
                 if (ReadOnly)
@@ -1150,14 +1150,14 @@ namespace System.Windows
         [Flags]
         private enum Flags : int
         {
-            GlobalIndexMask                           = 0x0000FFFF,
-            IsValueType                               = 0x00010000,
-            IsFreezableType                           = 0x00020000,
-            IsStringType                              = 0x00040000,
-            IsPotentiallyInherited                    = 0x00080000,
-            IsDefaultValueChanged                     = 0x00100000,
-            IsPotentiallyUsingDefaultValueFactory     = 0x00200000,
-            IsObjectType                              = 0x00400000,
+            GlobalIndexMask = 0x0000FFFF,
+            IsValueType = 0x00010000,
+            IsFreezableType = 0x00020000,
+            IsStringType = 0x00040000,
+            IsPotentiallyInherited = 0x00080000,
+            IsDefaultValueChanged = 0x00100000,
+            IsPotentiallyUsingDefaultValueFactory = 0x00200000,
+            IsObjectType = 0x00400000,
             // 0xFF800000   free bits
         }
 
@@ -1165,12 +1165,14 @@ namespace System.Windows
 
         // Synchronized (write locks, lock-free reads): Covered by DependencyProperty instance
         // This is a map that contains the IDs of derived classes that have overriden metadata
-        /* property */ internal InsertionSortMap _metadataMap = new InsertionSortMap();
+        /* property */
+        internal InsertionSortMap _metadataMap = new InsertionSortMap();
 
         private CoerceValueCallback _designerCoerceValueCallback;
 
         // Synchronized (write locks, lock-free reads): Covered by DependencyProperty.Synchronized
-        /* property */ internal static ItemStructList<DependencyProperty> RegisteredPropertyList = new ItemStructList<DependencyProperty>(768);
+        /* property */
+        internal static ItemStructList<DependencyProperty> RegisteredPropertyList = new ItemStructList<DependencyProperty>(768);
 
         // Synchronized: Covered by DependencyProperty.Synchronized
         private static readonly Dictionary<FromNameKey, DependencyProperty> PropertyFromName = new();
@@ -1187,8 +1189,10 @@ namespace System.Windows
         /// <summary>
         ///     Returns the number of all registered properties.
         /// </summary>
-        internal static int RegisteredPropertyCount {
-            get {
+        internal static int RegisteredPropertyCount
+        {
+            get
+            {
                 return RegisteredPropertyList.Count;
             }
         }
@@ -1198,15 +1202,19 @@ namespace System.Windows
         ///     currently registered.
         ///     Synchronized (write locks, lock-free reads): Covered by DependencyProperty.Synchronized
         /// </summary>
-        internal static IEnumerable RegisteredProperties {
-            get {
-                foreach(DependencyProperty dp in RegisteredPropertyList.List) {
-                    if (dp != null) {
+        internal static IEnumerable RegisteredProperties
+        {
+            get
+            {
+                foreach (DependencyProperty dp in RegisteredPropertyList.List)
+                {
+                    if (dp != null)
+                    {
                         yield return dp;
                     }
                 }
             }
         }
-}
+    }
 }
 

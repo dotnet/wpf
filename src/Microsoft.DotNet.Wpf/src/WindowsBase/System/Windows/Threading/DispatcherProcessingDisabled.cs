@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,10 +15,10 @@ namespace System.Windows.Threading
         /// </summary>
         public void Dispose()
         {
-            if(_dispatcher != null)
+            if (_dispatcher != null)
             {
                 _dispatcher.VerifyAccess();
-                
+
                 _dispatcher._disableProcessingCount--;
                 _dispatcher = null;
             }
@@ -47,7 +47,7 @@ namespace System.Windows.Threading
         /// Compute hash code for this object.
         /// </summary>
         /// <returns>A 32-bit signed integer hash code.</returns>
-        public override int GetHashCode( )
+        public override int GetHashCode()
         {
             return base.GetHashCode();
         }

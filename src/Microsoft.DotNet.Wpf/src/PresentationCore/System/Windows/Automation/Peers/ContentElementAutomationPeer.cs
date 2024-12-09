@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,8 +9,8 @@
 //
 
 using System.Windows.Input;             // AccessKeyManager
-using MS.Internal.PresentationCore;     // SR
 using MS.Internal.Automation;
+using MS.Internal.PresentationCore;     // SR
 
 namespace System.Windows.Automation.Peers
 {
@@ -128,7 +128,7 @@ namespace System.Windows.Automation.Peers
 
             switch (behavior)
             {
-                case IsOffscreenBehavior.Onscreen :
+                case IsOffscreenBehavior.Onscreen:
                     return false;
 
                 default:
@@ -313,7 +313,7 @@ namespace System.Windows.Automation.Peers
         {
             return GetBoundingRectangle();
         }
-        
+
 
         private ContentElement _owner;
         private SynchronizedInputAdaptor _synchronizedInputPattern;

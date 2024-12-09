@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -108,7 +108,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void CloneCore(Freezable sourceFreezable)
         {
-            BooleanAnimationUsingKeyFrames sourceAnimation = (BooleanAnimationUsingKeyFrames) sourceFreezable;
+            BooleanAnimationUsingKeyFrames sourceAnimation = (BooleanAnimationUsingKeyFrames)sourceFreezable;
             base.CloneCore(sourceFreezable);
 
             CopyCommon(sourceAnimation, /* isCurrentValueClone = */ false);
@@ -119,7 +119,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable sourceFreezable)
         {
-            BooleanAnimationUsingKeyFrames sourceAnimation = (BooleanAnimationUsingKeyFrames) sourceFreezable;
+            BooleanAnimationUsingKeyFrames sourceAnimation = (BooleanAnimationUsingKeyFrames)sourceFreezable;
             base.CloneCurrentValueCore(sourceFreezable);
 
             CopyCommon(sourceAnimation, /* isCurrentValueClone = */ true);
@@ -130,7 +130,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void GetAsFrozenCore(Freezable source)
         {
-            BooleanAnimationUsingKeyFrames sourceAnimation = (BooleanAnimationUsingKeyFrames) source;
+            BooleanAnimationUsingKeyFrames sourceAnimation = (BooleanAnimationUsingKeyFrames)source;
             base.GetAsFrozenCore(source);
 
             CopyCommon(sourceAnimation, /* isCurrentValueClone = */ false);
@@ -141,7 +141,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable source)
         {
-            BooleanAnimationUsingKeyFrames sourceAnimation = (BooleanAnimationUsingKeyFrames) source;
+            BooleanAnimationUsingKeyFrames sourceAnimation = (BooleanAnimationUsingKeyFrames)source;
             base.GetCurrentValueAsFrozenCore(source);
 
             CopyCommon(sourceAnimation, /* isCurrentValueClone = */ true);
@@ -155,14 +155,14 @@ namespace System.Windows.Media.Animation
         /// <param name="sourceAnimation"></param>
         /// <param name="isCurrentValueClone"></param>
         private void CopyCommon(BooleanAnimationUsingKeyFrames sourceAnimation, bool isCurrentValueClone)
-        {    
+        {
             _areKeyTimesValid = sourceAnimation._areKeyTimesValid;
 
-            if (   _areKeyTimesValid 
+            if (_areKeyTimesValid
                 && sourceAnimation._sortedResolvedKeyFrames != null)
             {
                 // _sortedResolvedKeyFrames is an array of ResolvedKeyFrameEntry so the notion of CurrentValueClone doesn't apply
-                _sortedResolvedKeyFrames = (ResolvedKeyFrameEntry[])sourceAnimation._sortedResolvedKeyFrames.Clone(); 
+                _sortedResolvedKeyFrames = (ResolvedKeyFrameEntry[])sourceAnimation._sortedResolvedKeyFrames.Clone();
             }
 
             if (sourceAnimation._keyFrames != null)
@@ -219,7 +219,7 @@ namespace System.Windows.Media.Animation
                 KeyFrames.Add(keyFrame);
             }
             else
-            {        
+            {
                 throw new ArgumentException(SR.Animation_ChildMustBeKeyFrame, "child");
             }
         }
@@ -307,7 +307,7 @@ namespace System.Windows.Media.Animation
         /// </returns>
         protected sealed override Boolean GetCurrentValueCore(
             Boolean defaultOriginValue,
-            Boolean defaultDestinationValue, 
+            Boolean defaultDestinationValue,
             AnimationClock animationClock)
         {
             Debug.Assert(animationClock.CurrentState != ClockState.Stopped);
@@ -329,9 +329,9 @@ namespace System.Windows.Media.Animation
                 return defaultDestinationValue;
             }
 
-            TimeSpan    currentTime         = animationClock.CurrentTime.Value;
-            Int32       keyFrameCount       = _sortedResolvedKeyFrames.Length;
-            Int32       maxKeyFrameIndex    = keyFrameCount - 1;
+            TimeSpan currentTime = animationClock.CurrentTime.Value;
+            Int32 keyFrameCount = _sortedResolvedKeyFrames.Length;
+            Int32 maxKeyFrameIndex = keyFrameCount - 1;
 
             Boolean currentIterationValue;
 
@@ -342,14 +342,14 @@ namespace System.Windows.Media.Animation
             // Skip all the key frames with key times lower than the current time.
             // currentResolvedKeyFrameIndex will be greater than maxKeyFrameIndex 
             // if we are past the last key frame.
-            while (   currentResolvedKeyFrameIndex < keyFrameCount
-                   && currentTime  > _sortedResolvedKeyFrames[currentResolvedKeyFrameIndex]._resolvedKeyTime)
+            while (currentResolvedKeyFrameIndex < keyFrameCount
+                   && currentTime > _sortedResolvedKeyFrames[currentResolvedKeyFrameIndex]._resolvedKeyTime)
             {
                 currentResolvedKeyFrameIndex++;
             }
 
             // If there are multiple key frames at the same key time, be sure to go to the last one.
-            while (   currentResolvedKeyFrameIndex < maxKeyFrameIndex
+            while (currentResolvedKeyFrameIndex < maxKeyFrameIndex
                    && currentTime == _sortedResolvedKeyFrames[currentResolvedKeyFrameIndex + 1]._resolvedKeyTime)
             {
                 currentResolvedKeyFrameIndex++;
@@ -386,20 +386,20 @@ namespace System.Windows.Media.Animation
                     // currentTime.TotalMilliseconds                                  = current segment time
                     // _sortedResolvedKeyFrames[0]._resolvedKeyTime.TotalMilliseconds = current segment duration
 
-                    currentSegmentProgress = currentTime.TotalMilliseconds 
+                    currentSegmentProgress = currentTime.TotalMilliseconds
                                              / _sortedResolvedKeyFrames[0]._resolvedKeyTime.TotalMilliseconds;
                 }
                 else
                 {
-                    Int32    previousResolvedKeyFrameIndex = currentResolvedKeyFrameIndex - 1;
+                    Int32 previousResolvedKeyFrameIndex = currentResolvedKeyFrameIndex - 1;
                     TimeSpan previousResolvedKeyTime = _sortedResolvedKeyFrames[previousResolvedKeyFrameIndex]._resolvedKeyTime;
 
                     fromValue = GetResolvedKeyFrameValue(previousResolvedKeyFrameIndex);
 
                     TimeSpan segmentCurrentTime = currentTime - previousResolvedKeyTime;
-                    TimeSpan segmentDuration    = _sortedResolvedKeyFrames[currentResolvedKeyFrameIndex]._resolvedKeyTime - previousResolvedKeyTime;
+                    TimeSpan segmentDuration = _sortedResolvedKeyFrames[currentResolvedKeyFrameIndex]._resolvedKeyTime - previousResolvedKeyTime;
 
-                    currentSegmentProgress = segmentCurrentTime.TotalMilliseconds 
+                    currentSegmentProgress = segmentCurrentTime.TotalMilliseconds
                                             / segmentDuration.TotalMilliseconds;
                 }
 
@@ -506,7 +506,7 @@ namespace System.Windows.Media.Animation
         {
             ReadPreamble();
 
-            return _keyFrames != null 
+            return _keyFrames != null
                 && _keyFrames.Count > 0;
         }
 
@@ -602,7 +602,7 @@ namespace System.Windows.Media.Animation
             int index = 0;
 
             // Initialize the _originalKeyFrameIndex.
-            for ( ; index < keyFrameCount; index++)
+            for (; index < keyFrameCount; index++)
             {
                 _sortedResolvedKeyFrames[index]._originalKeyFrameIndex = index;
             }
@@ -672,7 +672,7 @@ namespace System.Windows.Media.Animation
                             _sortedResolvedKeyFrames[index]._resolvedKeyTime = calculationDuration;
                             index++;
                         }
-                        else if (   index == 0
+                        else if (index == 0
                                  && keyTime.Type == KeyTimeType.Paced)
                         {
                             // Note: It's important that this block come after
@@ -695,8 +695,10 @@ namespace System.Windows.Media.Animation
                                 hasPacedKeyTimes = true;
                             }
 
-                            KeyTimeBlock block = new KeyTimeBlock();
-                            block.BeginIndex = index;
+                            KeyTimeBlock block = new KeyTimeBlock
+                            {
+                                BeginIndex = index
+                            };
 
                             // NOTE: We don't want to go all the way up to the
                             // last frame because if it is Uniform or Paced its
@@ -712,18 +714,18 @@ namespace System.Windows.Media.Animation
                             {
                                 KeyTimeType type = _keyFrames[index].KeyTime.Type;
 
-                                if (   type == KeyTimeType.Percent
+                                if (type == KeyTimeType.Percent
                                     || type == KeyTimeType.TimeSpan)
                                 {
                                     break;
-                                }   
+                                }
                                 else if (type == KeyTimeType.Paced)
                                 {
                                     hasPacedKeyTimes = true;
-                                }                                
+                                }
                             }
 
-                            Debug.Assert(index < keyFrameCount, 
+                            Debug.Assert(index < keyFrameCount,
                                 "The end index for a block of unspecified key frames is out of bounds.");
 
                             block.EndIndex = index;
@@ -853,7 +855,7 @@ namespace System.Windows.Media.Animation
                         prevKeyValue = currentKeyValue;
                         index++;
                     }
-                    while (   index < maxKeyFrameIndex
+                    while (index < maxKeyFrameIndex
                             && _keyFrames[index].KeyTime.Type == KeyTimeType.Paced);
 
                     // index is currently set to the index of the key frame
@@ -886,7 +888,7 @@ namespace System.Windows.Media.Animation
                 {
                     index++;
                 }
-            } 
+            }
             while (index < maxKeyFrameIndex);
         }
 

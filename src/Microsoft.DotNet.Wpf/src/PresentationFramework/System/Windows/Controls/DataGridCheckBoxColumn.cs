@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -35,7 +35,7 @@ namespace System.Windows.Controls
                     {
                         baseStyle = Application.Current.FindResource(typeof(CheckBox)) as Style;
                     }
-                    
+
                     Style style = new Style(typeof(CheckBox), baseStyle);
 
                     // When not in edit mode, the end-user should not be able to toggle the state
@@ -67,7 +67,7 @@ namespace System.Windows.Controls
                     {
                         baseStyle = Application.Current.FindResource(typeof(CheckBox)) as Style;
                     }
-                    
+
                     Style style = new Style(typeof(CheckBox), baseStyle);
 
                     style.Setters.Add(new Setter(CheckBox.HorizontalAlignmentProperty, HorizontalAlignment.Center));
@@ -180,7 +180,7 @@ namespace System.Windows.Controls
                 return uneditedValue;
             }
 
-            return (bool?) false;
+            return (bool?)false;
         }
 
         internal override void OnInput(InputEventArgs e)
@@ -211,7 +211,7 @@ namespace System.Windows.Controls
         {
             KeyEventArgs keyArgs = e as KeyEventArgs;
             return (keyArgs != null) &&
-                    keyArgs.RoutedEvent == Keyboard.KeyDownEvent && 
+                    keyArgs.RoutedEvent == Keyboard.KeyDownEvent &&
                    ((keyArgs.KeyStates & KeyStates.Down) == KeyStates.Down) &&
                    (keyArgs.Key == Key.Space);
         }

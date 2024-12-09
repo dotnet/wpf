@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -71,16 +71,16 @@ namespace System.Windows.Media
 
         private class TransformModifierNode : ModifierNode
         {
-            public TransformModifierNode(Transform transform) {_transform = transform;}
+            public TransformModifierNode(Transform transform) { _transform = transform; }
             public Transform _transform;
         }
 
         private class ClipModifierNode : ModifierNode
         {
-            public ClipModifierNode(Geometry clip) {_clip = clip;}
+            public ClipModifierNode(Geometry clip) { _clip = clip; }
             public Geometry _clip;
         }
-        
+
         #endregion Private helper classes
 
         #region Static Drawing Context Methods
@@ -104,7 +104,7 @@ namespace System.Windows.Media
             Pen pen,
             Geometry geometry)
         {
-            if ((geometry == null) || geometry.IsEmpty()) 
+            if ((geometry == null) || geometry.IsEmpty())
             {
                 return;
             }
@@ -171,7 +171,7 @@ namespace System.Windows.Media
                     DrawGeometry(Brushes.Black, null /* pen */, new RectangleGeometry(rectangle));
                 }
             }
-        }   
+        }
 
         /// <summary>
         ///     PushClip -
@@ -186,9 +186,9 @@ namespace System.Windows.Media
 
             // 1st case:- No change, keep the old clip
             // 2nd case:- No matter what, the intersection will also be empty
-            if ((clipGeometry == null)  
+            if ((clipGeometry == null)
                 ||
-                ((_currentClip!=null) && (_currentClip.IsEmpty()))) 
+                ((_currentClip != null) && (_currentClip.IsEmpty())))
             {
                 clipGeometry = _currentClip;
             }
@@ -263,7 +263,7 @@ namespace System.Windows.Media
             else if ((_currentTransform != null) && !_currentTransform.IsIdentity)
             {
                 // Both the current transform and the new one are nontrivial, combine them
-                Matrix combined =  transform.Value * _currentTransform.Value;
+                Matrix combined = transform.Value * _currentTransform.Value;
                 transform = new MatrixTransform(combined);
             }
 
@@ -273,7 +273,7 @@ namespace System.Windows.Media
             _currentTransform = transform;
         }
 
-            
+
         /// <summary>
         ///     PushGuidelineSet - 
         ///     Push a set of guidelines which should be applied
@@ -377,7 +377,7 @@ namespace System.Windows.Media
             // triggered a StopWalk and we wouldn't be here
 
             Debug.Assert(_intersectionDetail != IntersectionDetail.FullyContains);
-            
+
             // The new result cannot be NotCalculated, because we just
             // calculated!
 
@@ -398,7 +398,7 @@ namespace System.Windows.Media
             // FullyInside + FullInside  | Intersects  | Intersects  | FullyInside
 
             if (_intersectionDetail == IntersectionDetail.NotCalculated)
-                // This is the first node
+            // This is the first node
             {
                 _intersectionDetail = intersectionDetail;
                 // Takes care of the first column.
@@ -407,7 +407,7 @@ namespace System.Windows.Media
                 // This node is fully inside the hit geometry --
                 &&
                 _intersectionDetail != IntersectionDetail.FullyInside)
-                //  -- but we have already encountered a previous node that was not fully inside
+            //  -- but we have already encountered a previous node that was not fully inside
             {
                 _intersectionDetail = IntersectionDetail.Intersects;
 
@@ -417,7 +417,7 @@ namespace System.Windows.Media
                 // This node does not touch the hit geometry --
                 &&
                 _intersectionDetail != IntersectionDetail.Empty)
-                //  -- but we have already encountered a previous node that was touched
+            //  -- but we have already encountered a previous node that was touched
             {
                 _intersectionDetail = IntersectionDetail.Intersects;
 
@@ -436,7 +436,7 @@ namespace System.Windows.Media
                 // The hit geometry is fully contained in the visual, so signal a StopWalk
                 _contains = true;
             }
-}
+        }
 
         private void PushModifierStack(ModifierNode modifier)
         {

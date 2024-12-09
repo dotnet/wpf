@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,13 +11,12 @@
 
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
-using System.Windows.Documents;
 using MS.Internal.Documents;
-using MS.Internal.Text;
-
 using MS.Internal.PtsHost.UnsafeNativeMethods;
+using MS.Internal.Text;
 
 namespace MS.Internal.PtsHost
 {
@@ -73,10 +72,10 @@ namespace MS.Internal.PtsHost
                 }
 
 
-                if(IsDeferredVisualCreationSupported(ref textDetails.u.full))
+                if (IsDeferredVisualCreationSupported(ref textDetails.u.full))
                 {
                     // Transition to from no deferred visuals to deferred visuals -- Ignore update info
-                    if(_lineIndexFirstVisual == -1 && lineContainerVisual.Children.Count > 0)
+                    if (_lineIndexFirstVisual == -1 && lineContainerVisual.Children.Count > 0)
                     {
                         ignoreUpdateInfo = true;
                     }
@@ -86,14 +85,14 @@ namespace MS.Internal.PtsHost
                 else
                 {
                     // Transition from deferred visuals to no deferred visuals -- Ignore update info
-                    if(_lineIndexFirstVisual != -1)
+                    if (_lineIndexFirstVisual != -1)
                     {
                         _lineIndexFirstVisual = -1;
                         lineContainerVisual.Children.Clear();
                     }
 
                     // If we have no children, update isn't really possible.
-                    if(lineContainerVisual.Children.Count == 0)
+                    if (lineContainerVisual.Children.Count == 0)
                     {
                         ignoreUpdateInfo = true;
                     }
@@ -133,12 +132,12 @@ namespace MS.Internal.PtsHost
             }
 
             // Mirror lines around the page.
-            if(ThisFlowDirection != PageFlowDirection)
+            if (ThisFlowDirection != PageFlowDirection)
             {
                 PTS.FSRECT pageRect = _pageContext.PageRect;
                 PtsHelper.UpdateMirroringTransform(PageFlowDirection, ThisFlowDirection, lineContainerVisual, TextDpi.FromTextDpi(2 * pageRect.u + pageRect.du));
             }
-}
+        }
 
         // ------------------------------------------------------------------
         // Updates viewport
@@ -155,7 +154,7 @@ namespace MS.Internal.PtsHost
                 // Query paragraph details and render its content
                 ContainerVisual lineContainerVisual = _visual;
 
-                Debug.Assert(!((TextParagraph) Paragraph).HasFiguresFloatersOrInlineObjects());
+                Debug.Assert(!((TextParagraph)Paragraph).HasFiguresFloatersOrInlineObjects());
 
                 UpdateViewportSimpleLines(lineContainerVisual, ref textDetails.u.full, ref viewport);
             }
@@ -166,7 +165,7 @@ namespace MS.Internal.PtsHost
             if (attachedObjectCount > 0)
             {
                 // Get list of attached objects
-                PTS.FSATTACHEDOBJECTDESCRIPTION [] arrayAttachedObjectDesc;
+                PTS.FSATTACHEDOBJECTDESCRIPTION[] arrayAttachedObjectDesc;
                 PtsHelper.AttachedObjectListFromParagraph(PtsContext, _paraHandle, attachedObjectCount, out arrayAttachedObjectDesc);
 
                 // Arrange attached objects
@@ -203,7 +202,7 @@ namespace MS.Internal.PtsHost
                 PTS.FSPOINT localPoint = pt;
 
                 // Mirror input point around page to hit test lines.
-                if(ThisFlowDirection != PageFlowDirection)
+                if (ThisFlowDirection != PageFlowDirection)
                 {
                     localPoint.u = _pageContext.PageRect.du - localPoint.u;
                 }
@@ -299,11 +298,11 @@ namespace MS.Internal.PtsHost
                     }
 
                     // Ensure these are specified in page coordinates.
-                    if(rectangles.Count > 0 && ThisFlowDirection != PageFlowDirection)
+                    if (rectangles.Count > 0 && ThisFlowDirection != PageFlowDirection)
                     {
                         PTS.FSRECT pageRect = _pageContext.PageRect;
 
-                        for(int index = 0; index < rectangles.Count; index++)
+                        for (int index = 0; index < rectangles.Count; index++)
                         {
                             PTS.FSRECT rectTransform = new PTS.FSRECT(rectangles[index]);
                             PTS.Validate(PTS.FsTransformRectangle(PTS.FlowDirectionToFswdir(ThisFlowDirection), ref pageRect, ref rectTransform, PTS.FlowDirectionToFswdir(PageFlowDirection), out rectTransform));
@@ -311,7 +310,7 @@ namespace MS.Internal.PtsHost
                         }
                     }
                 }
-}
+            }
             else
             {
                 // (c) cached - when using ParaChache
@@ -387,11 +386,11 @@ namespace MS.Internal.PtsHost
             PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle, out textDetails));
 
             // Floaters are only supported by full paragraphs
-            if (   textDetails.fsktd == PTS.FSKTEXTDETAILS.fsktdFull
+            if (textDetails.fsktd == PTS.FSKTEXTDETAILS.fsktdFull
                 && textDetails.u.full.cAttachedObjects > 0)
             {
                 // Get list of floaters
-                PTS.FSATTACHEDOBJECTDESCRIPTION [] arrayAttachedObjectDesc;
+                PTS.FSATTACHEDOBJECTDESCRIPTION[] arrayAttachedObjectDesc;
                 PtsHelper.AttachedObjectListFromParagraph(PtsContext, _paraHandle, textDetails.u.full.cAttachedObjects, out arrayAttachedObjectDesc);
 
                 floaters = new List<ParagraphResult>(arrayAttachedObjectDesc.Length);
@@ -404,7 +403,7 @@ namespace MS.Internal.PtsHost
                     BaseParaClient paraClient = PtsContext.HandleToObject(attachedObjectDesc.pfsparaclient) as BaseParaClient;
                     PTS.ValidateHandle(paraClient);
 
-                    if(paraClient is FloaterParaClient)
+                    if (paraClient is FloaterParaClient)
                     {
                         floaters.Add(paraClient.CreateParagraphResult());
                     }
@@ -425,10 +424,10 @@ namespace MS.Internal.PtsHost
             PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle, out textDetails));
 
             // Floaters are only supported by full paragraphs
-            if (   textDetails.fsktd == PTS.FSKTEXTDETAILS.fsktdFull
+            if (textDetails.fsktd == PTS.FSKTEXTDETAILS.fsktdFull
                 && textDetails.u.full.cAttachedObjects > 0)
             {
-                PTS.FSATTACHEDOBJECTDESCRIPTION [] arrayAttachedObjectDesc;
+                PTS.FSATTACHEDOBJECTDESCRIPTION[] arrayAttachedObjectDesc;
                 PtsHelper.AttachedObjectListFromParagraph(PtsContext, _paraHandle, textDetails.u.full.cAttachedObjects, out arrayAttachedObjectDesc);
 
                 figures = new List<ParagraphResult>(arrayAttachedObjectDesc.Length);
@@ -441,7 +440,7 @@ namespace MS.Internal.PtsHost
                     BaseParaClient paraClient = PtsContext.HandleToObject(attachedObjectDesc.pfsparaclient) as BaseParaClient;
                     PTS.ValidateHandle(paraClient);
 
-                    if(paraClient is FigureParaClient)
+                    if (paraClient is FigureParaClient)
                     {
                         figures.Add(paraClient.CreateParagraphResult());
                     }
@@ -479,9 +478,9 @@ namespace MS.Internal.PtsHost
             int dcp = Paragraph.ParagraphStartCharacterPosition;
             TextContentRange textContentRange;
 
-            if(TextParagraph.HasFiguresOrFloaters())
+            if (TextParagraph.HasFiguresOrFloaters())
             {
-                PTS.FSATTACHEDOBJECTDESCRIPTION [] arrayAttachedObjectDesc = null;
+                PTS.FSATTACHEDOBJECTDESCRIPTION[] arrayAttachedObjectDesc = null;
 
                 int attachedObjectCount = textDetails.u.full.cAttachedObjects;
                 textContentRange = new TextContentRange();
@@ -495,7 +494,7 @@ namespace MS.Internal.PtsHost
 
                 // Figures and floaters cannot break
                 TextParagraph.UpdateTextContentRangeFromAttachedObjects(textContentRange, dcp + dcpFirst, dcp + dcpLast, arrayAttachedObjectDesc);
-}
+            }
             else
             {
                 textContentRange = new TextContentRange(dcp + dcpFirst, dcp + dcpLast, Paragraph.StructuralCache.TextContainer);
@@ -565,7 +564,8 @@ namespace MS.Internal.PtsHost
                         for (index = 0; index < arrayLineDesc.Length; index++)
                         {
                             PTS.FSLINEDESCRIPTIONCOMPOSITE lineDesc = arrayLineDesc[index];
-                            if (lineDesc.cElements == 0) continue;
+                            if (lineDesc.cElements == 0)
+                                continue;
 
                             // Get list of line elements.
                             PTS.FSLINEELEMENT[] arrayLineElement;
@@ -607,7 +607,7 @@ namespace MS.Internal.PtsHost
             Line.FormattingContext ctx = new Line.FormattingContext(false, true, true, TextParagraph.TextRunCache);
             Line line = new Line(Paragraph.StructuralCache.TextFormatterHost, this, Paragraph.ParagraphStartCharacterPosition);
 
-            if(IsOptimalParagraph)
+            if (IsOptimalParagraph)
             {
                 ctx.LineFormatLengthTarget = dcpLim - dcpLine;
             }
@@ -715,7 +715,7 @@ namespace MS.Internal.PtsHost
             }
 
             // Mirror back to page flow direction
-            if(ThisFlowDirection != PageFlowDirection)
+            if (ThisFlowDirection != PageFlowDirection)
             {
                 PTS.FSRECT pageRect = _pageContext.PageRect;
                 PTS.FSRECT rectTransform = new PTS.FSRECT(rect);
@@ -971,7 +971,7 @@ namespace MS.Internal.PtsHost
             PTS.FSTEXTDETAILS textDetails;
             PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle, out textDetails));
 
-            if(ThisFlowDirection != PageFlowDirection)
+            if (ThisFlowDirection != PageFlowDirection)
             {
                 urDistance = _pageContext.PageRect.du - urDistance;
             }
@@ -992,7 +992,7 @@ namespace MS.Internal.PtsHost
                     if (!PTS.ToBoolean(textDetails.u.full.fLinesComposite))
                     {
                         // (a) full with simple lines
-                        PTS.FSLINEDESCRIPTIONSINGLE [] arrayLineDesc;
+                        PTS.FSLINEDESCRIPTIONSINGLE[] arrayLineDesc;
                         PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle, ref textDetails.u.full, out arrayLineDesc);
 
                         // Get lines information
@@ -1017,7 +1017,7 @@ namespace MS.Internal.PtsHost
                     else
                     {
                         // (b) full with composite lines - when figures/floaters are present
-                        PTS.FSLINEDESCRIPTIONCOMPOSITE [] arrayLineDesc;
+                        PTS.FSLINEDESCRIPTIONCOMPOSITE[] arrayLineDesc;
                         PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle, ref textDetails.u.full, out arrayLineDesc);
 
                         // Get lines information
@@ -1025,10 +1025,11 @@ namespace MS.Internal.PtsHost
                         for (index = 0; index < arrayLineDesc.Length; index++)
                         {
                             PTS.FSLINEDESCRIPTIONCOMPOSITE lineDesc = arrayLineDesc[index];
-                            if (lineDesc.cElements == 0) continue;
+                            if (lineDesc.cElements == 0)
+                                continue;
 
                             // Get list of line elements.
-                            PTS.FSLINEELEMENT [] arrayLineElement;
+                            PTS.FSLINEELEMENT[] arrayLineElement;
                             PtsHelper.LineElementListFromCompositeLine(PtsContext, ref lineDesc, out arrayLineElement);
 
                             int elIndex;
@@ -1069,7 +1070,7 @@ namespace MS.Internal.PtsHost
             Line.FormattingContext ctx = new Line.FormattingContext(false, true, true, TextParagraph.TextRunCache);
             Line line = new Line(Paragraph.StructuralCache.TextFormatterHost, this, Paragraph.ParagraphStartCharacterPosition);
 
-            if(IsOptimalParagraph)
+            if (IsOptimalParagraph)
             {
                 ctx.LineFormatLengthTarget = dcpLim - dcpLine;
             }
@@ -1082,7 +1083,7 @@ namespace MS.Internal.PtsHost
             CharacterHit charHit = line.GetTextPositionFromDistance(urDistance);
             int cpPosition = charHit.FirstCharacterIndex + charHit.TrailingLength;
             int dcpLastAttachedObject = TextParagraph.GetLastDcpAttachedObjectBeforeLine(dcpLine);
-            if(cpPosition < dcpLastAttachedObject)
+            if (cpPosition < dcpLastAttachedObject)
             {
                 cpPosition = dcpLastAttachedObject;
             }
@@ -1229,7 +1230,7 @@ namespace MS.Internal.PtsHost
             base.OnArrange();
 
             // Optimization - Don't arrange if we have no figures, floaters, inline objects
-            if(!TextParagraph.HasFiguresFloatersOrInlineObjects())
+            if (!TextParagraph.HasFiguresFloatersOrInlineObjects())
             {
                 return;
             }
@@ -1266,7 +1267,7 @@ namespace MS.Internal.PtsHost
                                 {
                                     UIElement uiElement = (UIElement)inlineObjects[i].Element;
 
-                                    if(uiElement.IsMeasureValid && !uiElement.IsArrangeValid)
+                                    if (uiElement.IsMeasureValid && !uiElement.IsArrangeValid)
                                     {
                                         uiElement.Arrange(new Rect(uiElement.DesiredSize));
                                     }
@@ -1299,7 +1300,7 @@ namespace MS.Internal.PtsHost
                                     for (int i = 0; i < inlineObjects.Count; i++)
                                     {
                                         UIElement uiElement = (UIElement)inlineObjects[i].Element;
-                                        if(uiElement.IsMeasureValid && !uiElement.IsArrangeValid)
+                                        if (uiElement.IsMeasureValid && !uiElement.IsArrangeValid)
                                         {
                                             uiElement.Arrange(new Rect(uiElement.DesiredSize));
                                         }
@@ -1313,7 +1314,7 @@ namespace MS.Internal.PtsHost
                 if (textDetails.u.full.cAttachedObjects > 0)
                 {
                     // Get list of floaters
-                    PTS.FSATTACHEDOBJECTDESCRIPTION [] arrayAttachedObjectDesc;
+                    PTS.FSATTACHEDOBJECTDESCRIPTION[] arrayAttachedObjectDesc;
                     PtsHelper.AttachedObjectListFromParagraph(PtsContext, _paraHandle, textDetails.u.full.cAttachedObjects, out arrayAttachedObjectDesc);
 
                     // Arrange floaters
@@ -1325,13 +1326,13 @@ namespace MS.Internal.PtsHost
                         BaseParaClient paraClient = PtsContext.HandleToObject(attachedObjectDesc.pfsparaclient) as BaseParaClient;
                         PTS.ValidateHandle(paraClient);
 
-                        if(paraClient is FloaterParaClient)
+                        if (paraClient is FloaterParaClient)
                         {
                             PTS.FSFLOATERDETAILS floaterDetails;
                             PTS.Validate(PTS.FsQueryFloaterDetails(PtsContext.Context, attachedObjectDesc.pfspara, out floaterDetails));
                             PTS.FSRECT rectFloater = floaterDetails.fsrcFloater;
 
-                            if(ThisFlowDirection != PageFlowDirection)
+                            if (ThisFlowDirection != PageFlowDirection)
                             {
                                 PTS.FSRECT pageRect = _pageContext.PageRect;
                                 PTS.Validate(PTS.FsTransformRectangle(PTS.FlowDirectionToFswdir(ThisFlowDirection), ref pageRect, ref rectFloater, PTS.FlowDirectionToFswdir(PageFlowDirection), out rectFloater));
@@ -1339,13 +1340,13 @@ namespace MS.Internal.PtsHost
 
                             ((FloaterParaClient)paraClient).ArrangeFloater(rectFloater, _rect, PTS.FlowDirectionToFswdir(ThisFlowDirection), _pageContext);
                         }
-                        else if(paraClient is FigureParaClient)
+                        else if (paraClient is FigureParaClient)
                         {
                             PTS.FSFIGUREDETAILS figureDetails;
                             PTS.Validate(PTS.FsQueryFigureObjectDetails(PtsContext.Context, attachedObjectDesc.pfspara, out figureDetails));
                             PTS.FSRECT rectFigure = figureDetails.fsrcFlowAround;
 
-                            if(ThisFlowDirection != PageFlowDirection)
+                            if (ThisFlowDirection != PageFlowDirection)
                             {
                                 PTS.FSRECT pageRect = _pageContext.PageRect;
                                 PTS.Validate(PTS.FsTransformRectangle(PTS.FlowDirectionToFswdir(ThisFlowDirection), ref pageRect, ref rectFigure, PTS.FlowDirectionToFswdir(PageFlowDirection), out rectFigure));
@@ -1357,7 +1358,7 @@ namespace MS.Internal.PtsHost
                         {
                             Invariant.Assert(false, "Attached object not figure or floater.");
                         }
-}
+                    }
                 }
             }
             else
@@ -1403,13 +1404,13 @@ namespace MS.Internal.PtsHost
                     int insertionIndex = -1;
 
                     // Shift lines before change
-                    if(textDetails.dvrShiftBeforeChange != 0)
+                    if (textDetails.dvrShiftBeforeChange != 0)
                     {
                         int countVisualsShiftBeforeChange = Math.Min(Math.Max(lineIndexToBeginRemoval - _lineIndexFirstVisual, 0), lineVisuals.Count);
-                        for(int index = 0; index < countVisualsShiftBeforeChange; index++)
+                        for (int index = 0; index < countVisualsShiftBeforeChange; index++)
                         {
                             // Shift line's visual
-                            ContainerVisual lineVisual = (ContainerVisual) lineVisuals[index];
+                            ContainerVisual lineVisual = (ContainerVisual)lineVisuals[index];
                             Vector offset = lineVisual.Offset;
                             offset.Y += TextDpi.FromTextDpi(textDetails.dvrShiftBeforeChange);
                             lineVisual.Offset = offset;
@@ -1485,7 +1486,7 @@ namespace MS.Internal.PtsHost
                         for (int index = shiftIndex; index < lineVisuals.Count; index++)
                         {
                             // Shift line's visual
-                            ContainerVisual lineVisual = (ContainerVisual) lineVisuals[index];
+                            ContainerVisual lineVisual = (ContainerVisual)lineVisuals[index];
                             Vector offset = lineVisual.Offset;
                             offset.Y += TextDpi.FromTextDpi(textDetails.dvrShiftAfterChange);
                             lineVisual.Offset = offset;
@@ -1520,7 +1521,7 @@ namespace MS.Internal.PtsHost
                 return null;
 
             // Get list of complex lines.
-            PTS.FSLINEDESCRIPTIONSINGLE [] arrayLineDesc;
+            PTS.FSLINEDESCRIPTIONSINGLE[] arrayLineDesc;
             PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
             List<LineResult> lines = new List<LineResult>(arrayLineDesc.Length);
@@ -1535,7 +1536,7 @@ namespace MS.Internal.PtsHost
                     TextDpi.FromTextDpi(lineDesc.durBBox), TextDpi.FromTextDpi(lineDesc.dvrAscent + lineDesc.dvrDescent));
 
                 // Mirror layout box to page flow direction
-                if(PageFlowDirection != ThisFlowDirection)
+                if (PageFlowDirection != ThisFlowDirection)
                 {
                     PTS.FSRECT pageRect = _pageContext.PageRect;
                     PTS.FSRECT rectTransform = new PTS.FSRECT(lbox);
@@ -1572,7 +1573,7 @@ namespace MS.Internal.PtsHost
                 return null;
 
             // Get list of complex composite lines.
-            PTS.FSLINEDESCRIPTIONCOMPOSITE [] arrayLineDesc;
+            PTS.FSLINEDESCRIPTIONCOMPOSITE[] arrayLineDesc;
             PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
             List<LineResult> lines = new List<LineResult>(arrayLineDesc.Length);
@@ -1581,10 +1582,11 @@ namespace MS.Internal.PtsHost
             for (int index = 0; index < arrayLineDesc.Length; index++)
             {
                 PTS.FSLINEDESCRIPTIONCOMPOSITE lineDesc = arrayLineDesc[index];
-                if (lineDesc.cElements == 0) { continue; }
+                if (lineDesc.cElements == 0)
+                { continue; }
 
                 // Get list of line elements.
-                PTS.FSLINEELEMENT [] arrayLineElement;
+                PTS.FSLINEELEMENT[] arrayLineElement;
                 PtsHelper.LineElementListFromCompositeLine(PtsContext, ref lineDesc, out arrayLineElement);
 
                 for (int elIndex = 0; elIndex < arrayLineElement.Length; elIndex++)
@@ -1596,7 +1598,7 @@ namespace MS.Internal.PtsHost
                                          TextDpi.FromTextDpi(element.durBBox), TextDpi.FromTextDpi(element.dvrAscent + element.dvrDescent));
 
                     // Mirror layout box to page flow direction
-                    if(ThisFlowDirection != PageFlowDirection)
+                    if (ThisFlowDirection != PageFlowDirection)
                     {
                         PTS.FSRECT pageRect = _pageContext.PageRect;
                         PTS.FSRECT rectTransform = new PTS.FSRECT(lbox);
@@ -1641,7 +1643,7 @@ namespace MS.Internal.PtsHost
                 return;
 
             // Get list of lines
-            PTS.FSLINEDESCRIPTIONSINGLE [] arrayLineDesc;
+            PTS.FSLINEDESCRIPTIONSINGLE[] arrayLineDesc;
             PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
             // First iterate through lines
@@ -1653,14 +1655,14 @@ namespace MS.Internal.PtsHost
                 // it means that the next line starts from such position, hence go to the next line.
                 // But if this is the last line (EOP character), get rectangle form the last
                 // character of the line.
-                if (   ((lineDesc.dcpFirst <= dcp) && (lineDesc.dcpLim > dcp))
+                if (((lineDesc.dcpFirst <= dcp) && (lineDesc.dcpLim > dcp))
                     || ((lineDesc.dcpLim == dcp) && (index == arrayLineDesc.Length - 1)))
                 {
                     // Create and format line
                     Line line = new Line(Paragraph.StructuralCache.TextFormatterHost, this, Paragraph.ParagraphStartCharacterPosition);
                     Line.FormattingContext ctx = new Line.FormattingContext(false, PTS.ToBoolean(lineDesc.fClearOnLeft), PTS.ToBoolean(lineDesc.fClearOnRight), TextParagraph.TextRunCache);
 
-                    if(IsOptimalParagraph)
+                    if (IsOptimalParagraph)
                     {
                         ctx.LineFormatLengthTarget = lineDesc.dcpLim - lineDesc.dcpFirst;
                     }
@@ -1729,17 +1731,18 @@ namespace MS.Internal.PtsHost
                 return;
 
             // Get list of lines
-            PTS.FSLINEDESCRIPTIONCOMPOSITE [] arrayLineDesc;
+            PTS.FSLINEDESCRIPTIONCOMPOSITE[] arrayLineDesc;
             PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
             // First iterate through lines
             for (int index = 0; index < arrayLineDesc.Length; index++)
             {
                 PTS.FSLINEDESCRIPTIONCOMPOSITE lineDesc = arrayLineDesc[index];
-                if (lineDesc.cElements == 0) { continue; }
+                if (lineDesc.cElements == 0)
+                { continue; }
 
                 // Get list of line elements.
-                PTS.FSLINEELEMENT [] arrayLineElement;
+                PTS.FSLINEELEMENT[] arrayLineElement;
                 PtsHelper.LineElementListFromCompositeLine(PtsContext, ref lineDesc, out arrayLineElement);
 
                 for (int elIndex = 0; elIndex < arrayLineElement.Length; elIndex++)
@@ -1750,14 +1753,14 @@ namespace MS.Internal.PtsHost
                     // it means that the next line starts from such position, hence go to the next line.
                     // But if this is the last line (EOP character), get rectangle form the last
                     // character of the line.
-                    if (   ((element.dcpFirst <= dcp) && (element.dcpLim > dcp))
+                    if (((element.dcpFirst <= dcp) && (element.dcpLim > dcp))
                         || ((element.dcpLim == dcp) && (elIndex == arrayLineElement.Length - 1) && (index == arrayLineDesc.Length - 1)))
                     {
                         // Create and format line
                         Line line = new Line(Paragraph.StructuralCache.TextFormatterHost, this, Paragraph.ParagraphStartCharacterPosition);
                         Line.FormattingContext ctx = new Line.FormattingContext(false, PTS.ToBoolean(element.fClearOnLeft), PTS.ToBoolean(element.fClearOnRight), TextParagraph.TextRunCache);
 
-                        if(IsOptimalParagraph)
+                        if (IsOptimalParagraph)
                         {
                             ctx.LineFormatLengthTarget = element.dcpLim - element.dcpFirst;
                         }
@@ -1830,7 +1833,7 @@ namespace MS.Internal.PtsHost
             int lineStart = 0;
             int lineCount = arrayLineDesc.Length;
 
-            if(_lineIndexFirstVisual != -1)
+            if (_lineIndexFirstVisual != -1)
             {
                 lineStart = _lineIndexFirstVisual;
                 lineCount = _visual.Children.Count;
@@ -1865,9 +1868,9 @@ namespace MS.Internal.PtsHost
                 //  it means that the next line starts from such position, hence go to the next line.
                 //  But if this is the last line (EOP character), get geometry form the last
                 //  character of the line.
-                if (    lineDesc.dcpLim > dcpStart
-                    ||  (   (lineIndex == arrayLineDesc.Length - 1)
-                        &&  (lineDesc.dcpLim == dcpStart)   )
+                if (lineDesc.dcpLim > dcpStart
+                    || ((lineIndex == arrayLineDesc.Length - 1)
+                        && (lineDesc.dcpLim == dcpStart))
                    )
                 {
                     int dcpRangeStartForThisLine = Math.Max(lineDesc.dcpFirst, dcpStart);
@@ -1877,8 +1880,8 @@ namespace MS.Internal.PtsHost
                     double lineTopSpace = (lineIndex == 0) ? paragraphTopSpace : 0.0;
                     double endOfParaGlyphWidth;
 
-                    if (    (handleEndOfPara && lineIndex == (arrayLineDesc.Length - 1))
-                        ||  (dcpEnd >= lineDesc.dcpLim && HasAnyLineBreakAtCp(lineDesc.dcpLim)) )
+                    if ((handleEndOfPara && lineIndex == (arrayLineDesc.Length - 1))
+                        || (dcpEnd >= lineDesc.dcpLim && HasAnyLineBreakAtCp(lineDesc.dcpLim)))
                     {
                         endOfParaGlyphWidth = ((double)TextParagraph.Element.GetValue(TextElement.FontSizeProperty) * CaretElement.c_endOfParaMagicMultiplier);
                     }
@@ -1975,10 +1978,10 @@ namespace MS.Internal.PtsHost
                     //  it means that the next line starts from such position, hence go to the next line.
                     //  But if this is the last line (EOP character), get geometry form the last
                     //  character of the line.
-                    if (    elemDesc.dcpLim > dcpStart
-                        ||  (   (elemDesc.dcpLim == dcpStart)
-                            &&  (elemIndex == arrayLineElement.Length - 1)
-                            &&  (lineIndex == arrayLineDesc.Length - 1) )   )
+                    if (elemDesc.dcpLim > dcpStart
+                        || ((elemDesc.dcpLim == dcpStart)
+                            && (elemIndex == arrayLineElement.Length - 1)
+                            && (lineIndex == arrayLineDesc.Length - 1)))
                     {
                         int dcpRangeStartForThisElem = Math.Max(elemDesc.dcpFirst, dcpStart);
                         //  Note (end-of-para workaround): dcp can be '0' due to end-of-para
@@ -1987,8 +1990,8 @@ namespace MS.Internal.PtsHost
                         double lineTopSpace = (lineIndex == 0) ? paragraphTopSpace : 0.0;
                         double endOfParaGlyphWidth;
 
-                        if (    (handleEndOfPara && lineIndex == (arrayLineDesc.Length - 1))
-                            ||  (dcpEnd >= elemDesc.dcpLim && HasAnyLineBreakAtCp(elemDesc.dcpLim)  )   )
+                        if ((handleEndOfPara && lineIndex == (arrayLineDesc.Length - 1))
+                            || (dcpEnd >= elemDesc.dcpLim && HasAnyLineBreakAtCp(elemDesc.dcpLim)))
                         {
                             endOfParaGlyphWidth = ((double)TextParagraph.Element.GetValue(TextElement.FontSizeProperty) * CaretElement.c_endOfParaMagicMultiplier);
                         }
@@ -2300,7 +2303,7 @@ namespace MS.Internal.PtsHost
             {
                 int visualIndex = lineIndex;
 
-                if(VisualTreeHelper.GetChild(Visual, visualIndex) is ParagraphElementVisual)
+                if (VisualTreeHelper.GetChild(Visual, visualIndex) is ParagraphElementVisual)
                 {
                     temp = Visual.InternalGetVisualChild(lineIndex);
                     visualIndex = elemIndex;
@@ -2430,7 +2433,7 @@ namespace MS.Internal.PtsHost
                     Line line = new Line(Paragraph.StructuralCache.TextFormatterHost, this, Paragraph.ParagraphStartCharacterPosition);
                     Line.FormattingContext ctx = new Line.FormattingContext(false, PTS.ToBoolean(lineDesc.fClearOnLeft), PTS.ToBoolean(lineDesc.fClearOnRight), TextParagraph.TextRunCache);
 
-                    if(IsOptimalParagraph)
+                    if (IsOptimalParagraph)
                     {
                         ctx.LineFormatLengthTarget = lineDesc.dcpLim - lineDesc.dcpFirst;
                     }
@@ -2554,7 +2557,7 @@ namespace MS.Internal.PtsHost
                         Line line = new Line(Paragraph.StructuralCache.TextFormatterHost, this, Paragraph.ParagraphStartCharacterPosition);
                         Line.FormattingContext ctx = new Line.FormattingContext(false, PTS.ToBoolean(element.fClearOnLeft), PTS.ToBoolean(element.fClearOnRight), TextParagraph.TextRunCache);
 
-                        if(IsOptimalParagraph)
+                        if (IsOptimalParagraph)
                         {
                             ctx.LineFormatLengthTarget = element.dcpLim - element.dcpFirst;
                         }
@@ -2633,7 +2636,7 @@ namespace MS.Internal.PtsHost
                     Line line = new Line(Paragraph.StructuralCache.TextFormatterHost, this, Paragraph.ParagraphStartCharacterPosition);
                     Line.FormattingContext ctx = new Line.FormattingContext(false, PTS.ToBoolean(lineDesc.fClearOnLeft), PTS.ToBoolean(lineDesc.fClearOnRight), TextParagraph.TextRunCache);
 
-                    if(IsOptimalParagraph)
+                    if (IsOptimalParagraph)
                     {
                         ctx.LineFormatLengthTarget = lineDesc.dcpLim - lineDesc.dcpFirst;
                     }
@@ -2714,7 +2717,7 @@ namespace MS.Internal.PtsHost
                 return position;
 
             // Get list of lines
-            PTS.FSLINEDESCRIPTIONCOMPOSITE [] arrayLineDesc;
+            PTS.FSLINEDESCRIPTIONCOMPOSITE[] arrayLineDesc;
             PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
             // Declare next position and set it to initial position
@@ -2724,10 +2727,11 @@ namespace MS.Internal.PtsHost
             for (int index = 0; index < arrayLineDesc.Length; index++)
             {
                 PTS.FSLINEDESCRIPTIONCOMPOSITE lineDesc = arrayLineDesc[index];
-                if (lineDesc.cElements == 0) { continue; }
+                if (lineDesc.cElements == 0)
+                { continue; }
 
                 // Get list of line elements.
-                PTS.FSLINEELEMENT [] arrayLineElement;
+                PTS.FSLINEELEMENT[] arrayLineElement;
                 PtsHelper.LineElementListFromCompositeLine(PtsContext, ref lineDesc, out arrayLineElement);
 
                 for (int elIndex = 0; elIndex < arrayLineElement.Length; elIndex++)
@@ -2736,7 +2740,7 @@ namespace MS.Internal.PtsHost
 
                     // 'dcp' needs to be within line range. If position points to dcpLim,
                     // it means that the next line starts from such position, hence go to the next line.
-                    if (   ((element.dcpFirst <= dcp) && (element.dcpLim > dcp))
+                    if (((element.dcpFirst <= dcp) && (element.dcpLim > dcp))
                         || ((element.dcpLim == dcp) && (elIndex == arrayLineElement.Length - 1) && (index == arrayLineDesc.Length - 1)))
                     {
                         if (dcp == element.dcpFirst && direction == LogicalDirection.Backward)
@@ -2799,7 +2803,7 @@ namespace MS.Internal.PtsHost
                         Line line = new Line(Paragraph.StructuralCache.TextFormatterHost, this, Paragraph.ParagraphStartCharacterPosition);
                         Line.FormattingContext ctx = new Line.FormattingContext(false, PTS.ToBoolean(element.fClearOnLeft), PTS.ToBoolean(element.fClearOnRight), TextParagraph.TextRunCache);
 
-                        if(IsOptimalParagraph)
+                        if (IsOptimalParagraph)
                         {
                             ctx.LineFormatLengthTarget = element.dcpLim - element.dcpFirst;
                         }
@@ -2915,7 +2919,7 @@ namespace MS.Internal.PtsHost
                     Line line = new Line(Paragraph.StructuralCache.TextFormatterHost, this, Paragraph.ParagraphStartCharacterPosition);
                     Line.FormattingContext ctx = new Line.FormattingContext(false, PTS.ToBoolean(lineDesc.fClearOnLeft), PTS.ToBoolean(lineDesc.fClearOnRight), TextParagraph.TextRunCache);
 
-                    if(IsOptimalParagraph)
+                    if (IsOptimalParagraph)
                     {
                         ctx.LineFormatLengthTarget = lineDesc.dcpLim - lineDesc.dcpFirst;
                     }
@@ -2981,7 +2985,8 @@ namespace MS.Internal.PtsHost
             for (int index = 0; index < arrayLineDesc.Length; index++)
             {
                 PTS.FSLINEDESCRIPTIONCOMPOSITE lineDesc = arrayLineDesc[index];
-                if (lineDesc.cElements == 0) { continue; }
+                if (lineDesc.cElements == 0)
+                { continue; }
 
                 // Get list of line elements.
                 PTS.FSLINEELEMENT[] arrayLineElement;
@@ -3041,7 +3046,7 @@ namespace MS.Internal.PtsHost
                         Line line = new Line(Paragraph.StructuralCache.TextFormatterHost, this, Paragraph.ParagraphStartCharacterPosition);
                         Line.FormattingContext ctx = new Line.FormattingContext(false, PTS.ToBoolean(element.fClearOnLeft), PTS.ToBoolean(element.fClearOnRight), TextParagraph.TextRunCache);
 
-                        if(IsOptimalParagraph)
+                        if (IsOptimalParagraph)
                         {
                             ctx.LineFormatLengthTarget = element.dcpLim - element.dcpFirst;
                         }
@@ -3098,7 +3103,7 @@ namespace MS.Internal.PtsHost
                 return;
 
             // Get list of lines
-            PTS.FSLINEDESCRIPTIONSINGLE [] arrayLineDesc;
+            PTS.FSLINEDESCRIPTIONSINGLE[] arrayLineDesc;
             PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
             // Iterate through all lines
@@ -3113,7 +3118,7 @@ namespace MS.Internal.PtsHost
                     Line line = new Line(Paragraph.StructuralCache.TextFormatterHost, this, Paragraph.ParagraphStartCharacterPosition);
                     Line.FormattingContext ctx = new Line.FormattingContext(false, PTS.ToBoolean(lineDesc.fClearOnLeft), PTS.ToBoolean(lineDesc.fClearOnRight), TextParagraph.TextRunCache);
 
-                    if(IsOptimalParagraph)
+                    if (IsOptimalParagraph)
                     {
                         ctx.LineFormatLengthTarget = lineDesc.dcpLim - lineDesc.dcpFirst;
                     }
@@ -3158,7 +3163,8 @@ namespace MS.Internal.PtsHost
             for (int index = 0; index < arrayLineDesc.Length; index++)
             {
                 PTS.FSLINEDESCRIPTIONCOMPOSITE lineDesc = arrayLineDesc[index];
-                if (lineDesc.cElements == 0) { continue; }
+                if (lineDesc.cElements == 0)
+                { continue; }
 
                 // Get list of line elements.
                 PTS.FSLINEELEMENT[] arrayLineElement;
@@ -3175,7 +3181,7 @@ namespace MS.Internal.PtsHost
                         Line line = new Line(Paragraph.StructuralCache.TextFormatterHost, this, Paragraph.ParagraphStartCharacterPosition);
                         Line.FormattingContext ctx = new Line.FormattingContext(false, PTS.ToBoolean(element.fClearOnLeft), PTS.ToBoolean(element.fClearOnRight), TextParagraph.TextRunCache);
 
-                        if(IsOptimalParagraph)
+                        if (IsOptimalParagraph)
                         {
                             ctx.LineFormatLengthTarget = element.dcpLim - element.dcpFirst;
                         }
@@ -3215,7 +3221,7 @@ namespace MS.Internal.PtsHost
             VisualCollection visualChildren = visual.Children;
 
             // Get list of simple lines.
-            PTS.FSLINEDESCRIPTIONSINGLE [] arrayLineDesc;
+            PTS.FSLINEDESCRIPTIONSINGLE[] arrayLineDesc;
             PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
             // Create lines and render them
@@ -3233,7 +3239,7 @@ namespace MS.Internal.PtsHost
                     Line.FormattingContext ctx = new Line.FormattingContext(false, PTS.ToBoolean(lineDesc.fClearOnLeft), PTS.ToBoolean(lineDesc.fClearOnRight), TextParagraph.TextRunCache);
                     Line line = new Line(Paragraph.StructuralCache.TextFormatterHost, this, cpTextParaStart);
 
-                    if(IsOptimalParagraph)
+                    if (IsOptimalParagraph)
                     {
                         ctx.LineFormatLengthTarget = lineDesc.dcpLim - lineDesc.dcpFirst;
                     }
@@ -3255,11 +3261,11 @@ namespace MS.Internal.PtsHost
             else
             {
                 // Shift lines before change
-                if(textDetails.dvrShiftBeforeChange != 0)
+                if (textDetails.dvrShiftBeforeChange != 0)
                 {
-                    for(int index = 0; index < textDetails.cLinesBeforeChange; index++)
+                    for (int index = 0; index < textDetails.cLinesBeforeChange; index++)
                     {
-                        ContainerVisual lineVisual = (ContainerVisual) visualChildren[index];
+                        ContainerVisual lineVisual = (ContainerVisual)visualChildren[index];
                         Vector offset = lineVisual.Offset;
                         offset.Y += TextDpi.FromTextDpi(textDetails.dvrShiftBeforeChange);
                         lineVisual.Offset = offset;
@@ -3278,7 +3284,7 @@ namespace MS.Internal.PtsHost
                     Line.FormattingContext ctx = new Line.FormattingContext(false, PTS.ToBoolean(lineDesc.fClearOnLeft), PTS.ToBoolean(lineDesc.fClearOnRight), TextParagraph.TextRunCache);
                     Line line = new Line(Paragraph.StructuralCache.TextFormatterHost, this, cpTextParaStart);
 
-                    if(IsOptimalParagraph)
+                    if (IsOptimalParagraph)
                     {
                         ctx.LineFormatLengthTarget = lineDesc.dcpLim - lineDesc.dcpFirst;
                     }
@@ -3300,7 +3306,7 @@ namespace MS.Internal.PtsHost
                 for (int index = textDetails.cLinesBeforeChange + textDetails.cLinesChanged; index < arrayLineDesc.Length; index++)
                 {
                     // Shift line's visual
-                    ContainerVisual lineVisual = (ContainerVisual) visualChildren[index];
+                    ContainerVisual lineVisual = (ContainerVisual)visualChildren[index];
                     Vector offset = lineVisual.Offset;
                     offset.Y += TextDpi.FromTextDpi(textDetails.dvrShiftAfterChange);
                     lineVisual.Offset = offset;
@@ -3335,7 +3341,7 @@ namespace MS.Internal.PtsHost
             Line.FormattingContext ctx = new Line.FormattingContext(false, PTS.ToBoolean(lineDesc.fClearOnLeft), PTS.ToBoolean(lineDesc.fClearOnRight), TextParagraph.TextRunCache);
             Line line = new Line(Paragraph.StructuralCache.TextFormatterHost, this, cpTextParaStart);
 
-            if(IsOptimalParagraph)
+            if (IsOptimalParagraph)
             {
                 ctx.LineFormatLengthTarget = lineDesc.dcpLim - lineDesc.dcpFirst;
             }
@@ -3586,7 +3592,7 @@ namespace MS.Internal.PtsHost
             int cpTextParaStart = Paragraph.ParagraphStartCharacterPosition;
 
             // Get list of composite lines.
-            PTS.FSLINEDESCRIPTIONCOMPOSITE [] arrayLineDesc;
+            PTS.FSLINEDESCRIPTIONCOMPOSITE[] arrayLineDesc;
             PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
             // Create lines and render them
@@ -3616,7 +3622,7 @@ namespace MS.Internal.PtsHost
                     }
 
                     // Get list of line elements
-                    PTS.FSLINEELEMENT [] arrayLineElement;
+                    PTS.FSLINEELEMENT[] arrayLineElement;
                     PtsHelper.LineElementListFromCompositeLine(PtsContext, ref lineDesc, out arrayLineElement);
 
                     for (int elIndex = 0; elIndex < arrayLineElement.Length; elIndex++)
@@ -3627,7 +3633,7 @@ namespace MS.Internal.PtsHost
                         Line.FormattingContext ctx = new Line.FormattingContext(false, PTS.ToBoolean(element.fClearOnLeft), PTS.ToBoolean(element.fClearOnRight), TextParagraph.TextRunCache);
                         Line line = new Line(Paragraph.StructuralCache.TextFormatterHost, this, cpTextParaStart);
 
-                        if(IsOptimalParagraph)
+                        if (IsOptimalParagraph)
                         {
                             ctx.LineFormatLengthTarget = element.dcpLim - element.dcpFirst;
                         }
@@ -3650,11 +3656,11 @@ namespace MS.Internal.PtsHost
             else
             {
                 // Shift lines before change
-                if(textDetails.dvrShiftBeforeChange != 0)
+                if (textDetails.dvrShiftBeforeChange != 0)
                 {
                     for (int index = 0; index < textDetails.cLinesBeforeChange; index++)
                     {
-                        ContainerVisual lineVisual = (ContainerVisual) visualChildren[index];
+                        ContainerVisual lineVisual = (ContainerVisual)visualChildren[index];
                         Vector offset = lineVisual.Offset;
                         offset.Y += TextDpi.FromTextDpi(textDetails.dvrShiftBeforeChange);
                         lineVisual.Offset = offset;
@@ -3685,7 +3691,7 @@ namespace MS.Internal.PtsHost
                     }
 
                     // Get list of line elements.
-                    PTS.FSLINEELEMENT [] arrayLineElement;
+                    PTS.FSLINEELEMENT[] arrayLineElement;
                     PtsHelper.LineElementListFromCompositeLine(PtsContext, ref lineDesc, out arrayLineElement);
 
                     for (int elIndex = 0; elIndex < arrayLineElement.Length; elIndex++)
@@ -3696,7 +3702,7 @@ namespace MS.Internal.PtsHost
                         Line.FormattingContext ctx = new Line.FormattingContext(false, PTS.ToBoolean(element.fClearOnLeft), PTS.ToBoolean(element.fClearOnRight), TextParagraph.TextRunCache);
                         Line line = new Line(Paragraph.StructuralCache.TextFormatterHost, this, cpTextParaStart);
 
-                        if(IsOptimalParagraph)
+                        if (IsOptimalParagraph)
                         {
                             ctx.LineFormatLengthTarget = element.dcpLim - element.dcpFirst;
                         }
@@ -3742,7 +3748,7 @@ namespace MS.Internal.PtsHost
                 BaseParaClient paraClient;
 
                 // Get list of floaters
-                PTS.FSATTACHEDOBJECTDESCRIPTION [] arrayAttachedObjectDesc;
+                PTS.FSATTACHEDOBJECTDESCRIPTION[] arrayAttachedObjectDesc;
                 PtsHelper.AttachedObjectListFromParagraph(PtsContext, _paraHandle, cAttachedObjects,
                                                           out arrayAttachedObjectDesc);
 
@@ -3762,7 +3768,7 @@ namespace MS.Internal.PtsHost
                         fskupd = fskupdInherited;
                     }
 
-                    if(fskupd != PTS.FSKUPDATE.fskupdNoChange)
+                    if (fskupd != PTS.FSKUPDATE.fskupdNoChange)
                     {
                         paraClient.ValidateVisual(fskupd);
                     }
@@ -3786,7 +3792,7 @@ namespace MS.Internal.PtsHost
             int cpTextParaStart = Paragraph.ParagraphStartCharacterPosition;
 
             // Get list of complex lines.
-            PTS.FSLINEDESCRIPTIONSINGLE [] arrayLineDesc;
+            PTS.FSLINEDESCRIPTIONSINGLE[] arrayLineDesc;
             PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
             // Find affected line by looking at vertical offset
@@ -3800,7 +3806,7 @@ namespace MS.Internal.PtsHost
                     Line.FormattingContext ctx = new Line.FormattingContext(false, PTS.ToBoolean(lineDesc.fClearOnLeft), PTS.ToBoolean(lineDesc.fClearOnRight), TextParagraph.TextRunCache);
                     Line line = new Line(Paragraph.StructuralCache.TextFormatterHost, this, cpTextParaStart);
 
-                    if(IsOptimalParagraph)
+                    if (IsOptimalParagraph)
                     {
                         ctx.LineFormatLengthTarget = lineDesc.dcpLim - lineDesc.dcpFirst;
                     }
@@ -3837,13 +3843,13 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         private bool IsDeferredVisualCreationSupported(ref PTS.FSTEXTDETAILSFULL textDetails)
         {
-            if(!Paragraph.StructuralCache.IsDeferredVisualCreationSupported)
+            if (!Paragraph.StructuralCache.IsDeferredVisualCreationSupported)
                 return false;
 
-            if(PTS.ToBoolean(textDetails.fLinesComposite))
+            if (PTS.ToBoolean(textDetails.fLinesComposite))
                 return false;
 
-            if(TextParagraph.HasFiguresFloatersOrInlineObjects())
+            if (TextParagraph.HasFiguresFloatersOrInlineObjects())
                 return false;
 
 
@@ -3927,7 +3933,7 @@ namespace MS.Internal.PtsHost
             Line line = new Line(Paragraph.StructuralCache.TextFormatterHost, this, Paragraph.ParagraphStartCharacterPosition);
             Line.FormattingContext ctx = new Line.FormattingContext(false, PTS.ToBoolean(lineDesc.fClearOnLeft), PTS.ToBoolean(lineDesc.fClearOnRight), TextParagraph.TextRunCache);
 
-            if(IsOptimalParagraph)
+            if (IsOptimalParagraph)
             {
                 ctx.LineFormatLengthTarget = lineDesc.dcpLim - lineDesc.dcpFirst;
             }
@@ -3966,21 +3972,22 @@ namespace MS.Internal.PtsHost
             int cpTextParaStart = Paragraph.ParagraphStartCharacterPosition;
 
             // Get list of complex lines.
-            PTS.FSLINEDESCRIPTIONCOMPOSITE [] arrayLineDesc;
+            PTS.FSLINEDESCRIPTIONCOMPOSITE[] arrayLineDesc;
             PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
             // Find affected composite line by looking at vertical offset
             for (int index = 0; index < arrayLineDesc.Length; index++)
             {
                 PTS.FSLINEDESCRIPTIONCOMPOSITE lineDesc = arrayLineDesc[index];
-                if (lineDesc.cElements == 0) continue;
+                if (lineDesc.cElements == 0)
+                    continue;
 
                 if (lineDesc.vrStart + lineDesc.dvrAscent + lineDesc.dvrDescent > pt.v)
                 {
                     // Affected composite line has been found.
 
                     // Get list of line elements.
-                    PTS.FSLINEELEMENT [] arrayLineElement;
+                    PTS.FSLINEELEMENT[] arrayLineElement;
                     PtsHelper.LineElementListFromCompositeLine(PtsContext, ref lineDesc, out arrayLineElement);
 
                     for (int elIndex = 0; elIndex < arrayLineElement.Length; elIndex++)
@@ -3991,7 +3998,7 @@ namespace MS.Internal.PtsHost
                         Line.FormattingContext ctx = new Line.FormattingContext(false, PTS.ToBoolean(element.fClearOnLeft), PTS.ToBoolean(element.fClearOnRight), TextParagraph.TextRunCache);
                         Line line = new Line(Paragraph.StructuralCache.TextFormatterHost, this, cpTextParaStart);
 
-                        if(IsOptimalParagraph)
+                        if (IsOptimalParagraph)
                         {
                             ctx.LineFormatLengthTarget = element.dcpLim - element.dcpFirst;
                         }
@@ -4021,7 +4028,7 @@ namespace MS.Internal.PtsHost
                                 }
                             }
                         }
-}
+                    }
 
                     break;
                 }
@@ -4058,7 +4065,8 @@ namespace MS.Internal.PtsHost
             for (int index = 0; index < arrayLineDesc.Length; index++)
             {
                 PTS.FSLINEDESCRIPTIONCOMPOSITE lineDesc = arrayLineDesc[index];
-                if (lineDesc.cElements == 0) continue;
+                if (lineDesc.cElements == 0)
+                    continue;
 
                 List<Rect> lineRectangles = GetRectanglesInCompositeLine(lineDesc, e, localStart, length);
                 Invariant.Assert(lineRectangles != null);
@@ -4094,7 +4102,7 @@ namespace MS.Internal.PtsHost
             //}
             //if (end < lineDesc.dcpFirst)
             //{
-                // Element ends before line starts
+            // Element ends before line starts
             //    return rectangles;
             //}
 
@@ -4126,7 +4134,7 @@ namespace MS.Internal.PtsHost
                 Line line = new Line(Paragraph.StructuralCache.TextFormatterHost, this, Paragraph.ParagraphStartCharacterPosition);
                 Line.FormattingContext ctx = new Line.FormattingContext(false, PTS.ToBoolean(element.fClearOnLeft), PTS.ToBoolean(element.fClearOnRight), TextParagraph.TextRunCache);
 
-                if(IsOptimalParagraph)
+                if (IsOptimalParagraph)
                 {
                     ctx.LineFormatLengthTarget = element.dcpLim - element.dcpFirst;
                 }

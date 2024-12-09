@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,8 +13,8 @@ using System.Globalization; // for CultureInfo
 using System.Reflection;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Markup;
 using System.Windows.Documents; // EditingCommands
+using System.Windows.Markup;
 
 namespace System.Windows.Input
 {
@@ -41,7 +41,7 @@ namespace System.Windows.Input
         ///<param name="context">ITypeDescriptorContext</param>
         ///<param name="sourceType">type to convert from</param>
         ///<returns>true if the given type can be converted, flase otherwise</returns>
-        public override bool CanConvertFrom( ITypeDescriptorContext context, Type sourceType )
+        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
             // We can only handle string.
             if (sourceType == typeof(string))
@@ -60,13 +60,13 @@ namespace System.Windows.Input
         ///<param name="context">ITypeDescriptorContext</param>
         ///<param name="destinationType">Type to convert to</param>
         ///<returns>true if conversion is possible</returns>
-        public override bool CanConvertTo( ITypeDescriptorContext context, Type destinationType )
+        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
             // We can only convert a "known" command into a string.  This logic
             // is mirrored in ConvertTo.
             //
             // Example: <Button Command="Copy"/>
-            if (destinationType == typeof(string) )
+            if (destinationType == typeof(string))
             {
                 RoutedCommand command = context != null ? context.Instance as RoutedCommand : null;
 
@@ -88,7 +88,7 @@ namespace System.Windows.Input
         ///<param name="culture">CultureInfo</param>
         ///<param name="source">Object to convert from</param>
         ///<returns>instance of Command</returns>
-        public override object ConvertFrom( ITypeDescriptorContext context, CultureInfo culture, object source )
+        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object source)
         {
             if (source != null && source is string)
             {
@@ -103,7 +103,7 @@ namespace System.Windows.Input
                     Type ownerType = GetTypeFromContext(context, typeName);
 
                     // Find the command (this is shared with CommandValueSerializer).
-                    ICommand command = ConvertFromHelper( ownerType, localName );
+                    ICommand command = ConvertFromHelper(ownerType, localName);
 
                     if (command != null)
                     {
@@ -120,20 +120,20 @@ namespace System.Windows.Input
 
 
 
-        internal static ICommand ConvertFromHelper(Type ownerType, string localName )
+        internal static ICommand ConvertFromHelper(Type ownerType, string localName)
         {
             ICommand command = null;
 
             // If no namespaceUri or no prefix or no typename, defaulted to Known Commands.
             // there is no typename too, check for default in Known Commands.
 
-            if (IsKnownType(ownerType) || ownerType == null )// not found
+            if (IsKnownType(ownerType) || ownerType == null)// not found
             {
                 command = GetKnownCommand(localName, ownerType);
             }
 
 
-            if( command == null && ownerType != null ) // not a known command
+            if (command == null && ownerType != null) // not a known command
 
             {
                 // Get them from Properties
@@ -165,7 +165,7 @@ namespace System.Windows.Input
         ///<param name="destinationType">the type to convert to</param>
         ///<returns>string object, if the destination type is string
         /// </returns>
-        public override object ConvertTo( ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType )
+        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             ArgumentNullException.ThrowIfNull(destinationType);
 
@@ -187,12 +187,12 @@ namespace System.Windows.Input
                     return String.Empty;
                 }
             }
-            
+
             throw GetConvertToException(value, destinationType);
         }
         #endregion Public Methods
 
-        internal static bool IsKnownType( Type commandType )
+        internal static bool IsKnownType(Type commandType)
         {
             if (commandType == typeof(ApplicationCommands) ||
             commandType == typeof(EditingCommands) ||
@@ -206,22 +206,22 @@ namespace System.Windows.Input
         }
 
         //Utility helper to get the required information from the parserContext
-        private Type GetTypeFromContext( ITypeDescriptorContext context, string typeName )
+        private Type GetTypeFromContext(ITypeDescriptorContext context, string typeName)
         {
             // Parser Context must exist to get the namespace info from prefix, if not, we assume it is known command.
             if (null != context && typeName != null)
             {
                 IXamlTypeResolver xamlTypeResolver = (IXamlTypeResolver)context.GetService(typeof(IXamlTypeResolver));
 
-                if( null != xamlTypeResolver )
+                if (null != xamlTypeResolver)
                 {
-                    return xamlTypeResolver.Resolve( typeName );
+                    return xamlTypeResolver.Resolve(typeName);
                 }
             }
             return null;
         }
 
-        private void ParseUri( string source, out string typeName, out string localName )
+        private void ParseUri(string source, out string typeName, out string localName)
         {
             typeName = null;
             localName = ((string)source).Trim();
@@ -235,7 +235,7 @@ namespace System.Windows.Input
             }
         }
 
-        private static RoutedUICommand GetKnownCommand( string localName, Type ownerType )
+        private static RoutedUICommand GetKnownCommand(string localName, Type ownerType)
         {
             RoutedUICommand knownCommand = null;
             bool searchAll = false;
@@ -462,7 +462,7 @@ namespace System.Windows.Input
                 }
             }
 
-            if (ownerType == typeof(EditingCommands) || ((null == knownCommand )&& searchAll))
+            if (ownerType == typeof(EditingCommands) || ((null == knownCommand) && searchAll))
             {
                 switch (localName)
                 {
@@ -618,7 +618,7 @@ namespace System.Windows.Input
                         knownCommand = EditingCommands.ApplyBackground;
                         break;
                     // END Application Compatibility Note
-                    
+
                     case "AlignLeft":
                         knownCommand = EditingCommands.AlignLeft;
                         break;
@@ -732,22 +732,22 @@ namespace System.Windows.Input
             }
 
 
-            #if DEBUG
-            if( knownCommand == null )
+#if DEBUG
+            if (knownCommand == null)
             {
-                if( ownerType != null )
-                    VerifyCommandDoesntExist( ownerType, localName );
+                if (ownerType != null)
+                    VerifyCommandDoesntExist(ownerType, localName);
                 else
                 {
-                    VerifyCommandDoesntExist( typeof(NavigationCommands), localName );
-                    VerifyCommandDoesntExist( typeof(ApplicationCommands), localName );
-                    VerifyCommandDoesntExist( typeof(MediaCommands), localName );
-                    VerifyCommandDoesntExist( typeof(EditingCommands), localName );
-                    VerifyCommandDoesntExist( typeof(ComponentCommands), localName );
+                    VerifyCommandDoesntExist(typeof(NavigationCommands), localName);
+                    VerifyCommandDoesntExist(typeof(ApplicationCommands), localName);
+                    VerifyCommandDoesntExist(typeof(MediaCommands), localName);
+                    VerifyCommandDoesntExist(typeof(EditingCommands), localName);
+                    VerifyCommandDoesntExist(typeof(ComponentCommands), localName);
                 }
 
             }
-            #endif
+#endif
 
 
 
@@ -800,15 +800,15 @@ namespace System.Windows.Input
             return null;
         }
 
-        #if DEBUG
-        static void VerifyCommandDoesntExist( Type type, string name )
+#if DEBUG
+        static void VerifyCommandDoesntExist(Type type, string name)
         {
             PropertyInfo propertyInfo = type.GetProperty(name, BindingFlags.Public | BindingFlags.Static);
-            System.Diagnostics.Debug.Assert( propertyInfo == null, "KnownCommand isn't known to CommandConverter.GetKnownCommand" );
+            System.Diagnostics.Debug.Assert(propertyInfo == null, "KnownCommand isn't known to CommandConverter.GetKnownCommand");
 
             FieldInfo fieldInfo = type.GetField(name, BindingFlags.Static | BindingFlags.Public);
-            System.Diagnostics.Debug.Assert( fieldInfo == null, "KnownCommand isn't known to CommandConverter.GetKnownCommand" );
-         }
-        #endif
+            System.Diagnostics.Debug.Assert(fieldInfo == null, "KnownCommand isn't known to CommandConverter.GetKnownCommand");
+        }
+#endif
     }
 }

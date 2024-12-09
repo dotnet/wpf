@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -39,7 +39,7 @@ namespace MS.Internal.Ink
         internal bool CopyToDataObject(IDataObject dataObject)
         {
             // Check if the data can be copied
-            if ( CanCopy() )
+            if (CanCopy())
             {
                 // Do copy.
                 DoCopy(dataObject);
@@ -53,10 +53,10 @@ namespace MS.Internal.Ink
         /// Paste the data from the IDataObject
         /// </summary>
         /// <param name="dataObject">The IDataObject instance</param>
-        internal void PasteFromDataObject(IDataObject dataObject) 
+        internal void PasteFromDataObject(IDataObject dataObject)
         {
             // Check if we can paste.
-            if ( CanPaste(dataObject) )
+            if (CanPaste(dataObject))
             {
                 // Do Paste.
                 DoPaste(dataObject);
@@ -64,7 +64,7 @@ namespace MS.Internal.Ink
         }
 
         internal abstract bool CanPaste(IDataObject dataObject);
-        
+
         #endregion Internal Methods
 
         //-------------------------------------------------------------------------------

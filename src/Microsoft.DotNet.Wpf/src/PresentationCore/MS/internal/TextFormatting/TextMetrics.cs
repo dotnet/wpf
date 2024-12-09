@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,21 +9,21 @@ namespace MS.Internal.TextFormatting
 {
     internal partial struct TextMetrics : ITextMetrics
     {
-        private TextFormatterImp        _formatter;                 // text formatter formatting this metrics
-        private int                     _lscpLim;                   // number of LSCP in the line (for boundary condition handling)
-        private int                     _cchLength;                 // actual character count    
-        private int                     _cchDepend;                 // number of chars after linebreak that triggers reformatting this line
-        private int                     _cchNewline;                // number of chars of newline symbol
-        private int                     _height;                    // line height
-        private int                     _textHeight;                // measured height of text within the line
-        private int                     _baselineOffset;            // offset from top of line height to baseline    
-        private int                     _textAscent;                // offset from top of text height to baseline
-        private int                     _textStart;                 // distance from LS origin to text start
-        private int                     _textWidth;                 // text start to end
-        private int                     _textWidthAtTrailing;       // text start to end excluding trailing whitespaces    
-        private int                     _paragraphToText;           // paragraph start to text start
-        private LSRun                   _lastRun;                   // Last Text LSRun
-        private double                  _pixelsPerDip;              // PixelsPerDip
+        private TextFormatterImp _formatter;                 // text formatter formatting this metrics
+        private int _lscpLim;                   // number of LSCP in the line (for boundary condition handling)
+        private int _cchLength;                 // actual character count    
+        private int _cchDepend;                 // number of chars after linebreak that triggers reformatting this line
+        private int _cchNewline;                // number of chars of newline symbol
+        private int _height;                    // line height
+        private int _textHeight;                // measured height of text within the line
+        private int _baselineOffset;            // offset from top of line height to baseline    
+        private int _textAscent;                // offset from top of text height to baseline
+        private int _textStart;                 // distance from LS origin to text start
+        private int _textWidth;                 // text start to end
+        private int _textWidthAtTrailing;       // text start to end excluding trailing whitespaces    
+        private int _paragraphToText;           // paragraph start to text start
+        private LSRun _lastRun;                   // Last Text LSRun
+        private double _pixelsPerDip;              // PixelsPerDip
 
         /// <summary>
         /// Construct text metrics from full text info
@@ -116,12 +116,12 @@ namespace MS.Internal.TextFormatting
         /// 
         /// </remarks>
         internal unsafe void Compute(
-            FullTextState           fullText,
-            int                     firstCharIndex,
-            int                     paragraphWidth,
-            FormattedTextSymbols    collapsingSymbol,
-            ref LsLineWidths        lineWidths,
-            LsLInfo*                plsLineInfo
+            FullTextState fullText,
+            int firstCharIndex,
+            int paragraphWidth,
+            FormattedTextSymbols collapsingSymbol,
+            ref LsLineWidths lineWidths,
+            LsLInfo* plsLineInfo
             )
         {
             _formatter = fullText.Formatter;
@@ -152,7 +152,7 @@ namespace MS.Internal.TextFormatting
 
             Debug.Assert(_cchLength > 0);
 
-            if (  plsLineInfo->endr != LsEndRes.endrEndPara 
+            if (plsLineInfo->endr != LsEndRes.endrEndPara
                && plsLineInfo->endr != LsEndRes.endrSoftCR)
             {
                 // endrEndPara denotes that the line ends at paragraph end. It is a result of submitting Paragraph Separator to LS.
@@ -183,7 +183,7 @@ namespace MS.Internal.TextFormatting
             {
                 // if height has not been settled, 
                 // calculate line height and baseline offset
-                if(pap.LineHeight > 0)
+                if (pap.LineHeight > 0)
                 {
                     // Host specifies line height, honor it.
                     _height = pap.LineHeight;
@@ -194,7 +194,7 @@ namespace MS.Internal.TextFormatting
                         );
                 }
 
-                if(plsLineInfo->dvrMultiLineHeight == int.MaxValue)
+                if (plsLineInfo->dvrMultiLineHeight == int.MaxValue)
                 {
                     // Line is empty so text height and text baseline are based on the default typeface;
                     // it doesn't make sense even for an emtpy line to have zero text height
@@ -210,7 +210,7 @@ namespace MS.Internal.TextFormatting
                     {
                         // Line requires vertical repositioning of text runs
                         store.AdjustRunsVerticalOffset(
-                            plsLineInfo->cpLimToContinue - firstCharIndex, 
+                            plsLineInfo->cpLimToContinue - firstCharIndex,
                             _height,
                             _baselineOffset,
                             out _textHeight,
@@ -229,9 +229,9 @@ namespace MS.Internal.TextFormatting
             }
 
             // Text alignment aligns the line to correspondent paragraph alignment start edge
-            switch(pap.Align)
+            switch (pap.Align)
             {
-                case TextAlignment.Right: 
+                case TextAlignment.Right:
 
                     // alignment rule: 
                     //   "The sum of paragraph start to line start and line width is equal to paragraph width"
@@ -242,7 +242,7 @@ namespace MS.Internal.TextFormatting
                     _paragraphToText = paragraphWidth - _textWidthAtTrailing;
                     break;
 
-                case TextAlignment.Center: 
+                case TextAlignment.Center:
 
                     // alignment rule: 
                     //   "The sum of paragraph start to line start and half the line width is equal to half the paragraph width"
@@ -297,12 +297,12 @@ namespace MS.Internal.TextFormatting
                 }
             }
 
-            if (    _lastRun != null 
-                &&  _lastRun.TextModifierScope != null 
-                &&  !(_lastRun.TextRun is TextEndOfParagraph))
+            if (_lastRun != null
+                && _lastRun.TextModifierScope != null
+                && !(_lastRun.TextRun is TextEndOfParagraph))
             {
                 return new TextLineBreak(
-                    _lastRun.TextModifierScope, 
+                    _lastRun.TextModifierScope,
                     pbreakrec
                     );
             }
@@ -344,8 +344,8 @@ namespace MS.Internal.TextFormatting
         /// <summary>
         /// Client to get the number of newline characters at line end
         /// </summary>
-        public int NewlineLength 
-        { 
+        public int NewlineLength
+        {
             get { return _cchNewline; }
         }
 
@@ -380,9 +380,9 @@ namespace MS.Internal.TextFormatting
         /// <summary>
         /// Client to get the height of the line
         /// </summary>
-        public double Height 
-        { 
-            get { return _formatter.IdealToReal(_height, _pixelsPerDip); } 
+        public double Height
+        {
+            get { return _formatter.IdealToReal(_height, _pixelsPerDip); }
         }
 
 
@@ -400,8 +400,8 @@ namespace MS.Internal.TextFormatting
         /// Client to get the distance from top to baseline of this text line
         /// </summary>
         public double Baseline
-        { 
-            get { return _formatter.IdealToReal(_baselineOffset, _pixelsPerDip); } 
+        {
+            get { return _formatter.IdealToReal(_baselineOffset, _pixelsPerDip); }
         }
 
 
@@ -419,18 +419,18 @@ namespace MS.Internal.TextFormatting
         /// Client to get the distance from the before edge of line height 
         /// to the baseline of marker of the line if any.
         /// </summary>
-        public double MarkerBaseline 
-        { 
-            get { return Baseline; } 
+        public double MarkerBaseline
+        {
+            get { return Baseline; }
         }
 
 
         /// <summary>
         /// Client to get the overall height of the list items marker of the line if any.
         /// </summary>
-        public double MarkerHeight 
-        { 
-            get { return Height; } 
+        public double MarkerHeight
+        {
+            get { return Height; }
         }
     }
 }

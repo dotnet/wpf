@@ -1,12 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Windows.Controls;
 using System.Windows.Documents;
-
-using MS.Internal.Documents;
 using MS.Internal.Automation;
+using MS.Internal.Documents;
 
 namespace System.Windows.Automation.Peers
 {
@@ -14,11 +13,11 @@ namespace System.Windows.Automation.Peers
     public class RichTextBoxAutomationPeer : TextAutomationPeer
     {
         ///
-        public RichTextBoxAutomationPeer(RichTextBox owner): base(owner)
+        public RichTextBoxAutomationPeer(RichTextBox owner) : base(owner)
         {
             _textPattern = new TextAdaptor(this, owner.TextContainer);
         }
-    
+
         ///
         override protected string GetClassNameCore()
         {
@@ -60,7 +59,7 @@ namespace System.Windows.Automation.Peers
                     returnValue = base.GetPattern(patternInterface);
                 }
             }
- 
+
             return returnValue;
         }
 
@@ -85,7 +84,7 @@ namespace System.Windows.Automation.Peers
             return TextContainerHelper.GetAutomationPeersFromRange(start, end, owner.TextContainer.Start);
         }
 
-        private TextAdaptor _textPattern;        
+        private TextAdaptor _textPattern;
     }
 }
 

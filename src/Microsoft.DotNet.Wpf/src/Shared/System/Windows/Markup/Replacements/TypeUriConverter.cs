@@ -44,7 +44,7 @@ namespace System.Xaml.Replacements
                 if (destinationType == typeof(InstanceDescriptor))
                 {
                     ConstructorInfo constructor = typeof(Uri).GetConstructor(new Type[] { typeof(string), typeof(UriKind) });
-                    return  new InstanceDescriptor(constructor, new object[] { uri.OriginalString, uriKind });
+                    return new InstanceDescriptor(constructor, new object[] { uri.OriginalString, uriKind });
                 }
                 else if (destinationType == typeof(string))
                 {

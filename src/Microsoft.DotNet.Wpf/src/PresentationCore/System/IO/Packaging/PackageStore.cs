@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -53,16 +53,16 @@ namespace System.IO.Packaging
         public static Package GetPackage(Uri uri)
         {
             ValidatePackageUri(uri);
-  
+
             lock (_globalLock)
             {
                 Package package = null;
 
                 if (_packages != null && _packages.Contains(uri))
                 {
-                    package = (Package) _packages[uri];
+                    package = (Package)_packages[uri];
                 }
-                
+
                 return package;
             }
         }
@@ -89,7 +89,7 @@ namespace System.IO.Packaging
             //  only PackUriHelper.ComparePackUri can do the proper comparison of pack Uris.
 
             Uri packUri = PackUriHelper.Create(uri);
-       
+
             if (PackUriHelper.ComparePackUri(packUri, BaseUriHelper.PackAppBaseUri) == 0 ||
                 PackUriHelper.ComparePackUri(packUri, BaseUriHelper.SiteOfOriginBaseUri) == 0)
             {
@@ -109,7 +109,7 @@ namespace System.IO.Packaging
                 {
                     throw new InvalidOperationException(SR.PackageAlreadyExists);
                 }
-                
+
                 _packages.Add(uri, package);
             }
         }
@@ -148,10 +148,10 @@ namespace System.IO.Packaging
                 throw new ArgumentException(SR.UriMustBeAbsolute, "uri");
             }
         }
-        
+
 
         #endregion Private Methods
-    
+
         #region Private Fields
 
         // We expect to have no more than 10 packages in the store

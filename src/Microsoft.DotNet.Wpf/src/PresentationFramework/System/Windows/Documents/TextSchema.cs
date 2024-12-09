@@ -1,10 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal;
 using System.Windows.Controls; // TextBox, TextBlock
 using System.Windows.Media; // Brush
+using MS.Internal;
 
 //
 // Description: A static class providing information about text content schema
@@ -161,7 +161,7 @@ namespace System.Windows.Documents
             {
                 TextElement leftElement = position.GetAdjacentElementFromOuterPosition(LogicalDirection.Backward);
                 TextElement rightElement = position.GetAdjacentElementFromOuterPosition(LogicalDirection.Forward);
-                return (leftElement == null || IsValidSibling(leftElement.GetType(), childType)) && 
+                return (leftElement == null || IsValidSibling(leftElement.GetType(), childType)) &&
                     (rightElement == null || IsValidSibling(rightElement.GetType(), childType));
             }
 
@@ -256,8 +256,8 @@ namespace System.Windows.Documents
         /// <returns></returns>
         internal static bool IsFormattingType(Type elementType)
         {
-            return 
-                typeof(Run).IsAssignableFrom(elementType) || 
+            return
+                typeof(Run).IsAssignableFrom(elementType) ||
                 typeof(Span).IsAssignableFrom(elementType);
         }
 
@@ -1202,8 +1202,8 @@ namespace System.Windows.Documents
             };
 
         // Behavioral property list
-        private static readonly DependencyProperty[] _behavioralPropertyList = new DependencyProperty[] 
-            { 
+        private static readonly DependencyProperty[] _behavioralPropertyList = new DependencyProperty[]
+            {
                 UIElement.AllowDropProperty,
             };
 

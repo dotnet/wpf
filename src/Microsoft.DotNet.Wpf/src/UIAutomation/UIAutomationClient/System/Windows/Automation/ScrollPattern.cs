@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,7 +14,7 @@ namespace System.Windows.Automation
 #if (INTERNAL_COMPILE)
     internal class ScrollPattern: BasePattern
 #else
-    public class ScrollPattern: BasePattern
+    public class ScrollPattern : BasePattern
 #endif
     {
         //------------------------------------------------------
@@ -22,7 +22,7 @@ namespace System.Windows.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         private ScrollPattern(AutomationElement el, SafePatternHandle hPattern, bool cached)
@@ -40,30 +40,30 @@ namespace System.Windows.Automation
         //  Public Constants / Readonly Fields
         //
         //------------------------------------------------------
- 
+
         #region Public Constants and Readonly Fields
 
         /// <summary>Value used by SetSCrollPercent to indicate that no scrolling should take place in the specified direction</summary>
         public const double NoScroll = -1.0;
-        
+
         /// <summary>Scroll pattern</summary>
         public static readonly AutomationPattern Pattern = ScrollPatternIdentifiers.Pattern;
 
         /// <summary>Property ID: HorizontalScrollPercent - Current horizontal scroll position</summary>
         public static readonly AutomationProperty HorizontalScrollPercentProperty = ScrollPatternIdentifiers.HorizontalScrollPercentProperty;
-        
+
         /// <summary>Property ID: HorizontalViewSize - Minimum possible horizontal scroll position</summary>
         public static readonly AutomationProperty HorizontalViewSizeProperty = ScrollPatternIdentifiers.HorizontalViewSizeProperty;
-        
+
         /// <summary>Property ID: VerticalScrollPercent - Current vertical scroll position</summary>
         public static readonly AutomationProperty VerticalScrollPercentProperty = ScrollPatternIdentifiers.VerticalScrollPercentProperty;
-        
+
         /// <summary>Property ID: VerticalViewSize </summary>
         public static readonly AutomationProperty VerticalViewSizeProperty = ScrollPatternIdentifiers.VerticalViewSizeProperty;
-        
+
         /// <summary>Property ID: HorizontallyScrollable</summary>
         public static readonly AutomationProperty HorizontallyScrollableProperty = ScrollPatternIdentifiers.HorizontallyScrollableProperty;
-        
+
         /// <summary>Property ID: VerticallyScrollable</summary>
         public static readonly AutomationProperty VerticallyScrollableProperty = ScrollPatternIdentifiers.VerticallyScrollableProperty;
 
@@ -75,7 +75,7 @@ namespace System.Windows.Automation
         //  Public Methods
         //
         //------------------------------------------------------
- 
+
         #region Public Methods
 
         /// <summary> Request to set the current horizontal and Vertical scroll position 
@@ -85,7 +85,7 @@ namespace System.Windows.Automation
         /// vertically provides simple panning support.</summary>
         /// <param name="horizontalPercent">Amount to scroll by horizontally</param>
         /// <param name="verticalPercent">Amount to scroll by vertically </param>
-        public void SetScrollPercent( double horizontalPercent, double verticalPercent )
+        public void SetScrollPercent(double horizontalPercent, double verticalPercent)
         {
             UiaCoreApi.ScrollPattern_SetScrollPercent(_hPattern, horizontalPercent, verticalPercent);
         }
@@ -98,7 +98,7 @@ namespace System.Windows.Automation
         ///
         /// <param name="horizontalAmount">amount to scroll by horizontally</param>
         /// <param name="verticalAmount">amount to scroll by vertically </param>
-        public void Scroll( ScrollAmount horizontalAmount, ScrollAmount verticalAmount )
+        public void Scroll(ScrollAmount horizontalAmount, ScrollAmount verticalAmount)
         {
             UiaCoreApi.ScrollPattern_Scroll(_hPattern, horizontalAmount, verticalAmount);
         }
@@ -107,7 +107,7 @@ namespace System.Windows.Automation
         /// Request to scroll horizontally by the specified amount
         /// </summary>
         /// <param name="amount">Amount to scroll by</param>
-        public void ScrollHorizontal( ScrollAmount amount )
+        public void ScrollHorizontal(ScrollAmount amount)
         {
             UiaCoreApi.ScrollPattern_Scroll(_hPattern, amount, ScrollAmount.NoAmount);
         }
@@ -116,7 +116,7 @@ namespace System.Windows.Automation
         /// Request to scroll vertically by the specified amount
         /// </summary>
         /// <param name="amount">Amount to scroll by</param>
-        public void ScrollVertical( ScrollAmount amount )
+        public void ScrollVertical(ScrollAmount amount)
         {
             UiaCoreApi.ScrollPattern_Scroll(_hPattern, ScrollAmount.NoAmount, amount);
         }
@@ -129,7 +129,7 @@ namespace System.Windows.Automation
         //  Public Properties
         //
         //------------------------------------------------------
- 
+
         #region Public Properties
         /// <summary>
         /// This member allows access to previously requested
@@ -188,7 +188,7 @@ namespace System.Windows.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         static internal object Wrap(AutomationElement el, SafePatternHandle hPattern, bool cached)
@@ -204,7 +204,7 @@ namespace System.Windows.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         SafePatternHandle _hPattern;
@@ -250,7 +250,7 @@ namespace System.Windows.Automation
             //  Public Properties
             //
             //------------------------------------------------------
- 
+
             #region Public Properties
 
             /// <summary>

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -78,7 +78,7 @@ namespace MS.Internal
             {
                 if (!MS.Internal.BaseAppContextSwitches.EnableWeakEventMemoryImprovements)
                 {
-                    CallWithNonPumpingWait(()=>{_rwLock.EnterWriteLock();});
+                    CallWithNonPumpingWait(() => { _rwLock.EnterWriteLock(); });
                     return _awr;
                 }
                 else
@@ -95,7 +95,7 @@ namespace MS.Internal
             {
                 if (!MS.Internal.BaseAppContextSwitches.EnableWeakEventMemoryImprovements)
                 {
-                    CallWithNonPumpingWait(()=>{_rwLock.EnterReadLock();});
+                    CallWithNonPumpingWait(() => { _rwLock.EnterReadLock(); });
                     return _arr;
                 }
                 else
@@ -119,13 +119,13 @@ namespace MS.Internal
         // called when AutoWriterRelease is disposed
         private void ReleaseWriterLock()
         {
-            CallWithNonPumpingWait(()=>{_rwLock.ExitWriteLock();});
+            CallWithNonPumpingWait(() => { _rwLock.ExitWriteLock(); });
         }
 
         // called when AutoReaderRelease is disposed
         private void ReleaseReaderLock()
         {
-            CallWithNonPumpingWait(()=>{_rwLock.ExitReadLock();});
+            CallWithNonPumpingWait(() => { _rwLock.ExitReadLock(); });
         }
 
         // called when AutoWriterRelease is disposed
@@ -173,7 +173,7 @@ namespace MS.Internal
                     Interlocked.Exchange<NonPumpingSynchronizationContext>(ref _defaultSynchronizationContext, nonPumpingSynchronizationContext);
                 }
             }
-}
+        }
 
         #endregion Private Methods
 

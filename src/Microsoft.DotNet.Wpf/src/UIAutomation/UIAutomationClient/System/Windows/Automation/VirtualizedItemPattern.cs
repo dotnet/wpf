@@ -14,7 +14,7 @@ namespace System.Windows.Automation
 #if (INTERNAL_COMPILE)
     internal class VirtualizedItemPattern: BasePattern
 #else
-    public class VirtualizedItemPattern: BasePattern
+    public class VirtualizedItemPattern : BasePattern
 #endif
     {
         //------------------------------------------------------
@@ -22,7 +22,7 @@ namespace System.Windows.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         private VirtualizedItemPattern(AutomationElement el, SafePatternHandle hPattern)
@@ -39,7 +39,7 @@ namespace System.Windows.Automation
         //  Public Constants / Readonly Fields
         //
         //------------------------------------------------------
- 
+
         #region Public Constants and Readonly Fields
 
         /// <summary>VirtualizedItem pattern</summary>
@@ -53,7 +53,7 @@ namespace System.Windows.Automation
         //  Public Methods
         //
         //------------------------------------------------------
- 
+
         #region Public Methods
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace System.Windows.Automation
         /// Parent control may scroll as a side effect if the container needs to
         /// bring the item into view in order to devirtualize it.
         /// </summary>
-       public void Realize()
+        public void Realize()
         {
             UiaCoreApi.VirtualizedItemPattern_Realize(_hPattern);
         }
@@ -74,7 +74,7 @@ namespace System.Windows.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         static internal object Wrap(AutomationElement el, SafePatternHandle hPattern, bool cached)
@@ -90,7 +90,7 @@ namespace System.Windows.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private SafePatternHandle _hPattern;

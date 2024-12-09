@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -91,13 +91,13 @@ namespace MS.Internal
 
         #region Conversion to DO/FE/FCE
 
-        internal FrameworkElement           FE  { get { return _fe; } }
-        internal FrameworkContentElement    FCE { get { return _fce; } }
-        internal DependencyObject           DO  { get { return _do; } }
+        internal FrameworkElement FE { get { return _fe; } }
+        internal FrameworkContentElement FCE { get { return _fce; } }
+        internal DependencyObject DO { get { return _do; } }
 
-        internal bool   IsFE    { get { return (_fe != null); } }
-        internal bool   IsFCE   { get { return (_fce != null); } }
-        internal bool   IsValid { get { return (_fe != null || _fce != null); } }
+        internal bool IsFE { get { return (_fe != null); } }
+        internal bool IsFCE { get { return (_fce != null); } }
+        internal bool IsValid { get { return (_fe != null || _fce != null); } }
 
         #endregion Conversion to DO/FE/FCE
 
@@ -213,7 +213,7 @@ namespace MS.Internal
                 }
             }
         }
-        
+
         internal FrameworkObject FrameworkParent
         {
             get
@@ -714,7 +714,7 @@ namespace MS.Internal
 #if TRACE_INHERITANCE_CONTEXT
             int depth = 0;
 #endif
-            for (   FrameworkObject fo = new FrameworkObject(d2);
+            for (FrameworkObject fo = new FrameworkObject(d2);
                     fo.DO != null;
                     fo.Reset(fo.EffectiveParent))
             {
@@ -769,11 +769,11 @@ namespace MS.Internal
 
         internal void BeginInit()
         {
-            if( IsFE )
+            if (IsFE)
             {
                 _fe.BeginInit();
             }
-            else if( IsFCE )
+            else if (IsFCE)
             {
                 _fce.BeginInit();
             }
@@ -782,14 +782,14 @@ namespace MS.Internal
                 UnexpectedCall();
             }
         }
-        
+
         internal void EndInit()
         {
-            if( IsFE )
+            if (IsFE)
             {
                 _fe.EndInit();
             }
-            else if( IsFCE )
+            else if (IsFCE)
             {
                 _fce.EndInit();
             }
@@ -798,7 +798,7 @@ namespace MS.Internal
                 UnexpectedCall();
             }
         }
-        
+
         internal object FindName(string name, out DependencyObject scopeOwner)
         {
             if (IsFE)
@@ -1175,9 +1175,9 @@ namespace MS.Internal
 
         #region Private fields
 
-        private FrameworkElement        _fe;
+        private FrameworkElement _fe;
         private FrameworkContentElement _fce;
-        private DependencyObject        _do;
+        private DependencyObject _do;
 
         #endregion Private fields
     }

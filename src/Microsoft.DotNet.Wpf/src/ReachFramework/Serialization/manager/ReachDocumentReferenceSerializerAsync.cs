@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -20,11 +20,11 @@ namespace System.Windows.Xps.Serialization
         /// <param name="manager">serialization manager</param>
         public
         ReachDocumentReferenceSerializerAsync(
-            PackageSerializationManager   manager
-            ):
+            PackageSerializationManager manager
+            ) :
         base(manager)
         {
-            
+
         }
 
         /// <summary>
@@ -37,27 +37,27 @@ namespace System.Windows.Xps.Serialization
             ReachSerializerContext context
             )
         {
-            if(context == null)
+            if (context == null)
             {
 
             }
-           
-            switch (context.Action) 
+
+            switch (context.Action)
             {
                 case SerializerAction.serializeDocument:
-                {
-                    SerializeDocument(context.ObjectContext);
-                    break;
-                }
-                
+                    {
+                        SerializeDocument(context.ObjectContext);
+                        break;
+                    }
+
                 default:
-                {
-                    base.AsyncOperation(context);
-                    break;
-                }
+                    {
+                        base.AsyncOperation(context);
+                        break;
+                    }
             }
         }
-        
+
         /// <summary>
         ///
         /// </summary>
@@ -65,10 +65,10 @@ namespace System.Windows.Xps.Serialization
         override
         void
         PersistObjectData(
-            SerializableObjectContext   serializableObjectContext
+            SerializableObjectContext serializableObjectContext
             )
         {
-            if(serializableObjectContext.IsComplexValue)
+            if (serializableObjectContext.IsComplexValue)
             {
 
                 ReachSerializerContext context = new ReachSerializerContext(this,
@@ -96,13 +96,13 @@ namespace System.Windows.Xps.Serialization
         private
         void
         SerializeDocument(
-            SerializableObjectContext   serializableObjectContext
+            SerializableObjectContext serializableObjectContext
             )
         {
             //
             // Loads the document
             //
-            FixedDocument document = 
+            FixedDocument document =
             ((DocumentReference)serializableObjectContext.TargetObject).GetDocument(false);
 
             if (document.IsInitialized == false)
@@ -116,7 +116,7 @@ namespace System.Windows.Xps.Serialization
             {
                 ReachSerializer serializer = SerializationManager.GetSerializer(document);
 
-                if(serializer!=null)
+                if (serializer != null)
                 {
                     serializer.SerializeObject(document);
                 }

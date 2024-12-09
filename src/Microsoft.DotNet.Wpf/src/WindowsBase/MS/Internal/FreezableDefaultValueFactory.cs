@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,7 +9,7 @@ namespace MS.Internal
     // <summary>
     // FreezableDefaultValueFactory is a DefaultValueFactory implementation which 
     // is inserted by the property system for any DP registered with a default 
-    // value of type Freezable. The user�s given default value is frozen and 
+    // value of type Freezable. The user’s given default value is frozen and 
     // used as a template to create unfrozen copies on a per DP per DO basis. If 
     // the default value is modified it is automatically promoted from default to 
     // local.
@@ -25,7 +25,7 @@ namespace MS.Internal
                 "Null can not be made mutable.  Do not use FreezableDefaultValueFactory.");
             Debug.Assert(defaultValue.CanFreeze,
                 "The defaultValue prototype must be freezable.");
-            
+
             _defaultValuePrototype = defaultValue.GetAsFrozen();
         }
 
@@ -50,16 +50,16 @@ namespace MS.Internal
         {
             Debug.Assert(owner != null && property != null,
                 "It is the caller responsibility to ensure that owner and property are non-null.");
-            
+
             Freezable result = _defaultValuePrototype;
             Freezable ownerFreezable = owner as Freezable;
-            
+
             // If the owner is frozen, just return the frozen prototype.
             if (ownerFreezable != null && ownerFreezable.IsFrozen)
             {
                 return result;
             }
-            
+
             result = _defaultValuePrototype.Clone();
 
             // Wire up a FreezableDefaultPromoter to observe the default value we
@@ -67,7 +67,7 @@ namespace MS.Internal
             FreezableDefaultPromoter promoter = new FreezableDefaultPromoter(owner, property);
             promoter.SetFreezableDefaultValue(result);
             result.Changed += promoter.OnDefaultValueChanged;
-                        
+
             return result;
         }
 

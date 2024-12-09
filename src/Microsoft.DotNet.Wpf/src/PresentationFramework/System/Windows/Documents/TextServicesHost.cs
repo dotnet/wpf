@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,10 +7,10 @@
 //
 
 using System.Runtime.InteropServices;
-using System.Windows.Threading;
 using System.Threading;
-using MS.Win32;
+using System.Windows.Threading;
 using MS.Internal;
+using MS.Win32;
 
 namespace System.Windows.Documents
 {
@@ -361,7 +361,7 @@ namespace System.Windows.Documents
         // Deactivate and release ThreadManager.
         private void DeactivateThreadManager()
         {
-            if (_threadManager is not null) 
+            if (_threadManager is not null)
             {
                 // On XP, if we're called on a worker thread (during AppDomain shutdown)
                 // we can't call call any methods on _threadManager.  The problem is

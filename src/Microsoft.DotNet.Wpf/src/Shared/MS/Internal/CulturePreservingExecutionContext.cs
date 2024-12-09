@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -63,7 +63,7 @@ namespace MS.Internal
     ///
     ///     This flow is similar to the default behavior on .NET 4.5.2 and earlier. 
     /// </remarks>
-    internal class CulturePreservingExecutionContext: IDisposable
+    internal class CulturePreservingExecutionContext : IDisposable
     {
         #region ExecutionContext Forwarders
 
@@ -85,7 +85,7 @@ namespace MS.Internal
             // behavior and return null. 
             if (ExecutionContext.IsFlowSuppressed())
             {
-                return null; 
+                return null;
             }
 
             var culturePreservingContext = new CulturePreservingExecutionContext();
@@ -100,7 +100,7 @@ namespace MS.Internal
                 // reason besides IsFlowSuppressed, then match that behavior
                 // and return null 
                 culturePreservingContext.Dispose();
-                return null; 
+                return null;
             }
         }
 
@@ -148,7 +148,8 @@ namespace MS.Internal
         {
             ArgumentNullException.ThrowIfNull(executionContext);
 
-            if (callback == null) return; // Bail out early if callback is null
+            if (callback == null)
+                return; // Bail out early if callback is null
 
             // Compat switch is set, defer directly to EC.Run
             if (BaseAppContextSwitches.DoNotUseCulturePreservingDispatcherOperations)
@@ -175,7 +176,7 @@ namespace MS.Internal
                 // modified during the callback execution.
                 executionContext._cultureAndContext.WriteCultureInfosToCurrentThread();
             }
-}
+        }
 
         #endregion
 

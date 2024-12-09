@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,10 +8,10 @@
 
 //#define DEBUG_SLOW
 
+using System.Windows.Data;
 using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.Documents;
-using System.Windows.Data;
 
 namespace System.Windows.Documents
 {
@@ -210,7 +210,7 @@ namespace System.Windows.Documents
         {
             TextElement textElement;
 
-//             VerifyAccess();
+            //             VerifyAccess();
 
             ArgumentNullException.ThrowIfNull(position);
             ArgumentNullException.ThrowIfNull(property);
@@ -252,7 +252,7 @@ namespace System.Windows.Documents
             TextElement textElement;
             LocalValueEntry property;
 
-//             VerifyAccess();
+            //             VerifyAccess();
 
             ArgumentNullException.ThrowIfNull(position);
 
@@ -503,7 +503,7 @@ namespace System.Windows.Documents
             int nodeOffset = pointer.Handle1;
             TextPointerContext context;
             ElementEdge edge;
-            
+
             if (node is TextTreeTextNode && nodeOffset > 0 && nodeOffset < node.SymbolCount)
             {
                 context = TextPointerContext.Text;
@@ -721,7 +721,7 @@ namespace System.Windows.Documents
 
             return (parent == null) ? DependencyProperty.UnsetValue : parent.GetValue(formattingProperty);
         }
-        
+
         // Prepares the tree for an AddChange call, and raises the Changing
         // event if it has not already fired in this change block.
         //
@@ -1627,7 +1627,7 @@ namespace System.Windows.Documents
             {
                 TextPointer startPosition;
 
-//                 VerifyAccess();
+                //                 VerifyAccess();
 
                 EmptyDeadPositionList();
                 DemandCreatePositionState();
@@ -1658,7 +1658,7 @@ namespace System.Windows.Documents
             {
                 TextPointer endPosition;
 
-//                 VerifyAccess();
+                //                 VerifyAccess();
 
                 EmptyDeadPositionList();
                 DemandCreatePositionState();
@@ -1687,7 +1687,7 @@ namespace System.Windows.Documents
         {
             get
             {
-//                 VerifyAccess();
+                //                 VerifyAccess();
 
                 return _parent;
             }
@@ -1947,9 +1947,9 @@ namespace System.Windows.Documents
         // Undo manager associated with this TextContainer.
         // May be null.
         internal UndoManager UndoManager
-        { 
+        {
             get
-            { 
+            {
                 return _undoManager;
             }
         }
@@ -1997,7 +1997,7 @@ namespace System.Windows.Documents
             }
         }
 
-        
+
         #endregion Internal Properties
 
         //------------------------------------------------------
@@ -2398,8 +2398,8 @@ namespace System.Windows.Documents
                 Invariant.Assert(startPosition.Parent == endPosition.Parent);
                 TextElement textElement = startPosition.Parent as TextElement;
                 if (textElement != null)
-                {               
-                    textElement.OnTextUpdated();                    
+                {
+                    textElement.OnTextUpdated();
                 }
             }
 
@@ -2578,7 +2578,7 @@ namespace System.Windows.Documents
         //
         // Called by ExtractElementFromSiblingTree.
         private void AdjustRefCountsForShallowDelete(ref TextTreeNode previousNode, ElementEdge previousEdge,
-                                                     ref TextTreeNode nextNode,ElementEdge nextEdge,
+                                                     ref TextTreeNode nextNode, ElementEdge nextEdge,
                                                      ref TextTreeNode firstContainedNode, ref TextTreeNode lastContainedNode,
                                                      TextTreeTextElementNode extractedElementNode)
         {
@@ -2838,9 +2838,9 @@ namespace System.Windows.Documents
             // Record all the IME related char state before the extract.
             int imeCharCount = elementNode.IMECharCount;
             int imeLeftEdgeCharCount = elementNode.IMELeftEdgeCharCount;
-            
+
             int nextNodeCharDelta = 0;
-            
+
             // DevDiv.1092668 We care about the next node only if it will become the First IME Visible Sibling 
             // after the extraction. If this is a deep extract we shouldn't care if the element is empty, 
             // since all of its contents are getting extracted as well
@@ -2848,7 +2848,7 @@ namespace System.Windows.Documents
             if ((deep || empty) && element.IsFirstIMEVisibleSibling)
             {
                 nextNode = (TextTreeTextElementNode)elementNode.GetNextNode();
-                
+
                 if (nextNode != null)
                 {
                     // The following node is the new first ime visible sibling.

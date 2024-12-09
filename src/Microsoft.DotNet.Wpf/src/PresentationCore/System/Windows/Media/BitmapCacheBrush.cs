@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Windows.Threading;
-using System.Windows.Media.Media3D;
-using System.Windows.Media.Composition;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Composition;
+using System.Windows.Media.Media3D;
+using System.Windows.Threading;
 
 namespace System.Windows.Media
 {
@@ -32,14 +32,14 @@ namespace System.Windows.Media
 
         private ContainerVisual AutoWrapVisual
         {
-            get 
-            { 
+            get
+            {
                 // Lazily create the dummy visual instance.
                 if (_dummyVisual == null)
                 {
                     _dummyVisual = new ContainerVisual();
                 }
-                
+
                 return _dummyVisual;
             }
         }
@@ -68,7 +68,7 @@ namespace System.Windows.Media
                     Exit();
                 }
             }
-        } 
+        }
 
         /// <summary> 
         /// Calling this will make sure that the render request
@@ -100,8 +100,8 @@ namespace System.Windows.Media
             }
         }
 
-       void ICyclicBrush.RenderForCyclicBrush(DUCE.Channel channel, bool skipChannelCheck)
-       {
+        void ICyclicBrush.RenderForCyclicBrush(DUCE.Channel channel, bool skipChannelCheck)
+        {
             Visual vVisual = InternalTarget;
 
             // The Visual may have been registered for an asynchronous render, but may have been
@@ -143,8 +143,8 @@ namespace System.Windows.Media
             }
 
             _isAsyncRenderRegistered = false;
-       }
-        
+        }
+
         // Implement functions used to addref and release resources in codegen that need
         // to be specialized for Visual which doesn't implement DUCE.IResource
         internal void AddRefResource(Visual visual, DUCE.Channel channel)
@@ -175,13 +175,13 @@ namespace System.Windows.Media
             if (e.IsAValueChange || e.IsASubPropertyChange)
             {
                 if ((e.Property == TargetProperty) || (e.Property == AutoLayoutContentProperty))
-                {   
+                {
                     // Should we wrap the visual in a dummy visual node for rendering?
                     if (e.Property == TargetProperty && e.IsAValueChange)
                     {
                         if (AutoWrapTarget)
                         {
-                            Debug.Assert(InternalTarget == AutoWrapVisual, 
+                            Debug.Assert(InternalTarget == AutoWrapVisual,
                                 "InternalTarget should point to our dummy visual AutoWrapVisual when AutoWrapTarget is true.");
 
                             // Change the value being wrapped by AutoWrapVisual.
@@ -194,7 +194,7 @@ namespace System.Windows.Media
                             InternalTarget = Target;
                         }
                     }
-                    
+
                     // Should we initiate a layout on this Visual?
                     // Yes, if AutoLayoutContent is true and if the Visual is a UIElement not already in
                     // another tree (i.e. the parent is null) or its not the hwnd root.
@@ -202,9 +202,9 @@ namespace System.Windows.Media
                     {
                         Debug.Assert(!_pendingLayout);
                         UIElement element = Target as UIElement;
-            
-                        if ((element != null) 
-                              && 
+
+                        if ((element != null)
+                              &&
                               ((VisualTreeHelper.GetParent(element) == null && !(element.IsRootElement)) // element is not connected to visual tree, OR
                                || (VisualTreeHelper.GetParent(element) is Visual3D) // element is a 2D child of a 3D object, OR
                                || (VisualTreeHelper.GetParent(element) == InternalTarget))) // element is only connected to visual tree via our wrapper Visual
@@ -351,7 +351,7 @@ namespace System.Windows.Media
         {
             Debug.Assert(_reentrancyFlag); // Exit must be matched with Enter. See Enter comments.
             _reentrancyFlag = false;
-        }       
+        }
 
         private static object CoerceOpacity(DependencyObject d, object value)
         {
@@ -381,16 +381,16 @@ namespace System.Windows.Media
         }
 
         private static void StaticInitialize(Type typeofThis)
-        {             
+        {
             OpacityProperty.OverrideMetadata(typeofThis, new IndependentlyAnimatedPropertyMetadata(1.0, /* PropertyChangedHandle */ null, CoerceOpacity));
             TransformProperty.OverrideMetadata(typeofThis, new UIPropertyMetadata(null, /* PropertyChangedHandle */ null, CoerceTransform));
             RelativeTransformProperty.OverrideMetadata(typeofThis, new UIPropertyMetadata(null, /* PropertyChangedHandle */ null, CoerceRelativeTransform));
         }
 
         private ContainerVisual _dummyVisual;
-        
+
         private DispatcherOperation _DispatcherLayoutResult;
-        private bool _pendingLayout;        
+        private bool _pendingLayout;
         private bool _reentrancyFlag;
 
         private bool _isAsyncRenderRegistered = false;

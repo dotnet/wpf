@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -41,12 +41,12 @@ namespace System.Windows.Input
         /// </param>
         /// <param name="inputType">the input device that generated the input event</param>
         internal RawAppCommandInputReport(
-            PresentationSource  inputSource,
-            InputMode           mode,
-            int                 timestamp,
-            int                 appCommand,
-            InputType           device,
-            InputType           inputType) : base(inputSource, inputType, mode, timestamp)
+            PresentationSource inputSource,
+            InputMode mode,
+            int timestamp,
+            int appCommand,
+            InputType device,
+            InputType inputType) : base(inputSource, inputType, mode, timestamp)
         {
             _appCommand = appCommand;
             _device = device;

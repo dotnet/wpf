@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -89,9 +89,9 @@ namespace System.Windows.Navigation
         // they are looking at the current list
         internal JournalEntry this[int index]
         {
-            get 
-            { 
-                return _journalEntryList[index]; 
+            get
+            {
+                return _journalEntryList[index];
             }
         }
         #endregion Operator Overloads
@@ -99,9 +99,9 @@ namespace System.Windows.Navigation
         // Total number of entries in the journal including non-navigable entries
         internal int TotalCount
         {
-            get 
-            { 
-                return _journalEntryList.Count; 
+            get
+            {
+                return _journalEntryList.Count;
             }
         }
 
@@ -112,9 +112,9 @@ namespace System.Windows.Navigation
         /// </summary>
         internal int CurrentIndex
         {
-            get 
-            { 
-                return _currentEntryIndex; 
+            get
+            {
+                return _currentEntryIndex;
             }
         }
 
@@ -123,7 +123,7 @@ namespace System.Windows.Navigation
         /// </summary>
         internal JournalEntry CurrentEntry
         {
-            get 
+            get
             {
                 if (_currentEntryIndex >= 0 && _currentEntryIndex < TotalCount)
                 {
@@ -240,7 +240,7 @@ namespace System.Windows.Navigation
         //  Internal Methods
         //
         //-----------------------------------------------------
-       
+
         #region Internal Methods
 
         /// <summary>
@@ -327,7 +327,7 @@ namespace System.Windows.Navigation
             if (_currentEntryIndex >= TotalCount)
                 return false; // nothing to do
 
-            if(_uncommittedCurrentIndex > _currentEntryIndex)
+            if (_uncommittedCurrentIndex > _currentEntryIndex)
                 throw new InvalidOperationException(SR.InvalidOperation_CannotClearFwdStack);
 
             _journalEntryList.RemoveRange(_currentEntryIndex, _journalEntryList.Count - _currentEntryIndex);
@@ -442,7 +442,7 @@ namespace System.Windows.Navigation
                     return i;
                 }
             }
-            
+
             // Didn't find it
             return -1;
         }
@@ -461,7 +461,7 @@ namespace System.Windows.Navigation
                 JournalEntry je = _journalEntryList[i];
                 if (je.IsAlive())
                 {
-                    RemoveEntryInternal(i); 
+                    RemoveEntryInternal(i);
                 }
                 else
                 {
@@ -486,7 +486,7 @@ namespace System.Windows.Navigation
         internal JournalEntry RemoveEntryInternal(int index)
         {
             Debug.Assert(index < TotalCount && index >= 0, "Invalid index passed to RemoveEntryInternal");
-            Debug.Assert(_uncommittedCurrentIndex == _currentEntryIndex, 
+            Debug.Assert(_uncommittedCurrentIndex == _currentEntryIndex,
                 "This method should be called only in steady state.");
 
             JournalEntry theEntry = _journalEntryList[index];
@@ -576,7 +576,8 @@ namespace System.Windows.Navigation
             // Then we can't go fwd. But if _currentEntryIndex=TotalCount, we can. 
             // See also the special case in BeginForwardNavigation().
             index = _uncommittedCurrentIndex;
-            do {
+            do
+            {
                 index++;
                 if (index == _currentEntryIndex)
                 {
@@ -632,10 +633,10 @@ namespace System.Windows.Navigation
 
         #region Private Fields
 
-        private JournalEntryFilter  _filter;
+        private JournalEntryFilter _filter;
 
-        JournalEntryBackStack       _backStack;
-        JournalEntryForwardStack    _forwardStack;
+        JournalEntryBackStack _backStack;
+        JournalEntryForwardStack _forwardStack;
 
         // This is where we get the id we assign to all JournalEntries.
         // It will be incremented each time.

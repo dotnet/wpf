@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -28,25 +28,25 @@ namespace MS.Internal.Text
         // ------------------------------------------------------------------
         internal LineMetrics(
 #if DEBUG
-                    double wrappingWidth, 
+                    double wrappingWidth,
 #endif
-                    int length, 
-                    double width, 
-                    double height, 
-                    double baseline, 
-                    bool hasInlineObjects, 
+                    int length,
+                    double width,
+                    double height,
+                    double baseline,
+                    bool hasInlineObjects,
                     TextLineBreak textLineBreak)
         {
 #if DEBUG
             _wrappingWidth = wrappingWidth;
 #endif
             _start = 0;
-            _width  = width;
+            _width = width;
             _height = height;
             _baseline = baseline;
             _textLineBreak = textLineBreak;
 
-            _packedData = ((uint) length & LengthMask) | (hasInlineObjects ? HasInlineObjectsMask : 0);
+            _packedData = ((uint)length & LengthMask) | (hasInlineObjects ? HasInlineObjectsMask : 0);
         }
 
         internal LineMetrics(LineMetrics source, double start, double width)
@@ -56,20 +56,20 @@ namespace MS.Internal.Text
 #endif
             _start = start;
             _width = width;
-            
+
             _height = source.Height;
             _baseline = source.Baseline;
             _textLineBreak = source.TextLineBreak;
 
             _packedData = source._packedData | HasBeenUpdatedMask;
         }
-        
+
         /// <summary>
         /// Disposes linebreak object
         /// </summary>
         internal LineMetrics Dispose(bool returnUpdatedMetrics)
         {
-            if(_textLineBreak != null)
+            if (_textLineBreak != null)
             {
                 _textLineBreak.Dispose();
                 if (returnUpdatedMetrics)
@@ -101,7 +101,7 @@ namespace MS.Internal.Text
         // ------------------------------------------------------------------
         // Number or characters in the line.
         // ------------------------------------------------------------------
-        internal int Length { get { return (int) (_packedData & LengthMask); } }
+        internal int Length { get { return (int)(_packedData & LengthMask); } }
         private uint _packedData;
 
         // ------------------------------------------------------------------
@@ -144,7 +144,7 @@ namespace MS.Internal.Text
         // ------------------------------------------------------------------
         internal TextLineBreak TextLineBreak { get { return _textLineBreak; } }
         private TextLineBreak _textLineBreak;
-       
+
         private static readonly uint HasBeenUpdatedMask = 0x40000000;
         private static readonly uint LengthMask = 0x3FFFFFFF;
         private static readonly uint HasInlineObjectsMask = 0x80000000;

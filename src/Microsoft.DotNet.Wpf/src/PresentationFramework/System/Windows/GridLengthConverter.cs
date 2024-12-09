@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,12 +11,12 @@
 //
 //
 
-using MS.Internal;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
 using System.Globalization;
 using System.Reflection;
 using System.Windows.Markup;
+using MS.Internal;
 
 namespace System.Windows
 {
@@ -24,7 +24,7 @@ namespace System.Windows
     /// GridLengthConverter - Converter class for converting 
     /// instances of other types to and from GridLength instances.
     /// </summary> 
-    public class GridLengthConverter: TypeConverter
+    public class GridLengthConverter : TypeConverter
     {
         //-------------------------------------------------------------------
         //
@@ -45,7 +45,7 @@ namespace System.Windows
         /// <c>false</c> otherwise.
         /// </returns>
         public override bool CanConvertFrom(
-            ITypeDescriptorContext typeDescriptorContext, 
+            ITypeDescriptorContext typeDescriptorContext,
             Type sourceType)
         {
             // We can only handle strings, integral and floating types
@@ -63,7 +63,7 @@ namespace System.Windows
                 case TypeCode.UInt32:
                 case TypeCode.UInt64:
                     return true;
-                default: 
+                default:
                     return false;
             }
         }
@@ -79,11 +79,11 @@ namespace System.Windows
         /// <c>false</c> otherwise.
         /// </returns>
         public override bool CanConvertTo(
-            ITypeDescriptorContext typeDescriptorContext, 
-            Type destinationType) 
+            ITypeDescriptorContext typeDescriptorContext,
+            Type destinationType)
         {
-            return (    destinationType == typeof(InstanceDescriptor) 
-                    ||  destinationType == typeof(string)   );
+            return (destinationType == typeof(InstanceDescriptor)
+                    || destinationType == typeof(string));
         }
 
         /// <summary>
@@ -103,8 +103,8 @@ namespace System.Windows
         /// and is not a valid type which can be converted to a GridLength.
         /// </exception>
         public override object ConvertFrom(
-            ITypeDescriptorContext typeDescriptorContext, 
-            CultureInfo cultureInfo, 
+            ITypeDescriptorContext typeDescriptorContext,
+            CultureInfo cultureInfo,
             object source)
         {
             if (source != null)
@@ -156,21 +156,21 @@ namespace System.Windows
         /// or if the destinationType isn't one of the valid destination types.
         /// </exception>
         public override object ConvertTo(
-            ITypeDescriptorContext typeDescriptorContext, 
+            ITypeDescriptorContext typeDescriptorContext,
             CultureInfo cultureInfo,
             object value,
             Type destinationType)
         {
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            if (    value != null
-                &&  value is GridLength )
+            if (value != null
+                && value is GridLength)
             {
                 GridLength gl = (GridLength)value;
 
-                if (destinationType == typeof(string)) 
-                { 
-                    return (ToString(gl, cultureInfo)); 
+                if (destinationType == typeof(string))
+                {
+                    return (ToString(gl, cultureInfo));
                 }
 
                 if (destinationType == typeof(InstanceDescriptor))

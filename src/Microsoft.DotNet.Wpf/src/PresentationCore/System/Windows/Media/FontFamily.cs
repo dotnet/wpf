@@ -1,10 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.ComponentModel;
 using System.IO;
 using System.Windows.Markup;
-using System.ComponentModel;
 using MS.Internal;
 using MS.Internal.FontCache;
 using MS.Internal.FontFace;
@@ -57,7 +57,7 @@ namespace System.Windows.Media
         /// of which may be either a regular family name string (e.g., "Arial") or a URI
         /// (e.g., "file:///c:/windows/fonts/#Arial").</param>
         public FontFamily(string familyName) : this(null, familyName)
-        {}
+        { }
 
         /// <summary>
         /// Constructs FontFamily from a string and an optional base URI.
@@ -307,7 +307,7 @@ namespace System.Windows.Media
 
             return mutableFamily;
         }
-     
+
 
         /// <summary>
         /// First font family
@@ -328,8 +328,8 @@ namespace System.Windows.Media
 
                     if (family == null)
                     {
-                        FontStyle style     = FontStyles.Normal;
-                        FontWeight weight   = FontWeights.Normal;
+                        FontStyle style = FontStyles.Normal;
+                        FontWeight weight = FontWeights.Normal;
                         FontStretch stretch = FontStretches.Normal;
                         family = FindFirstFontFamilyAndFace(ref style, ref weight, ref stretch);
 
@@ -346,10 +346,10 @@ namespace System.Windows.Media
                     _firstFontFamily = family;
                 }
 
-                return family;               
+                return family;
             }
         }
-        
+
 
         #region Resolving family name to font family
 
@@ -374,7 +374,7 @@ namespace System.Windows.Media
 
                 // null font family should always exist
                 Invariant.Assert(firstFontFamily != null);
-}
+            }
 
             return firstFontFamily;
         }
@@ -386,20 +386,20 @@ namespace System.Windows.Media
         /// </summary>
         internal static IFontFamily SafeLookupFontFamily(
             CanonicalFontFamilyReference canonicalName,
-            out bool                     nullFont
+            out bool nullFont
             )
         {
             nullFont = false;
 
             IFontFamily fontFamily = LookupFontFamily(canonicalName);
 
-            if(fontFamily == null)
+            if (fontFamily == null)
             {
                 nullFont = true;
                 fontFamily = LookupFontFamily(NullFontFamilyCanonicalName);
                 Invariant.Assert(fontFamily != null, "Unable to create null font family");
             }
-            
+
             return fontFamily;
         }
 
@@ -410,8 +410,8 @@ namespace System.Windows.Media
         /// <param name="canonicalName">font family canonical name</param>
         internal static IFontFamily LookupFontFamily(CanonicalFontFamilyReference canonicalName)
         {
-            FontStyle style     = FontStyles.Normal;
-            FontWeight weight   = FontWeights.Normal;
+            FontStyle style = FontStyles.Normal;
+            FontWeight weight = FontWeights.Normal;
             FontStretch stretch = FontStretches.Normal;
 
             return LookupFontFamilyAndFace(canonicalName, ref style, ref weight, ref stretch);
@@ -439,8 +439,8 @@ namespace System.Windows.Media
         /// and stretch to valies implied by the font family (e.g., "Arial Bold" implies FontWeight.Bold).
         /// </summary>
         internal IFontFamily FindFirstFontFamilyAndFace(
-            ref FontStyle   style,
-            ref FontWeight  weight,
+            ref FontStyle style,
+            ref FontWeight weight,
             ref FontStretch stretch
             )
         {
@@ -451,7 +451,7 @@ namespace System.Windows.Media
             }
 
             IFontFamily firstFontFamily = null;
-            
+
             _familyIdentifier.Canonicalize();
 
             for (int i = 0, c = _familyIdentifier.Count; firstFontFamily == null && i < c; ++i)
@@ -477,9 +477,9 @@ namespace System.Windows.Media
         /// <returns>The font family object.</returns>
         internal static IFontFamily LookupFontFamilyAndFace(
             CanonicalFontFamilyReference canonicalFamilyReference,
-            ref FontStyle                style,
-            ref FontWeight               weight,
-            ref FontStretch              stretch
+            ref FontStyle style,
+            ref FontWeight weight,
+            ref FontStretch stretch
             )
         {
             if (canonicalFamilyReference == null || object.ReferenceEquals(canonicalFamilyReference, CanonicalFontFamilyReference.Unresolved))

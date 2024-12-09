@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -41,7 +41,7 @@ namespace System.Windows.Input
             : this(x, y, pressureFactor, null, null, false, true)
         {
         }
-        
+
 
         /// <summary>
         /// StylusPoint
@@ -59,12 +59,12 @@ namespace System.Windows.Input
         /// <summary>
         /// internal ctor
         /// </summary>
-        internal StylusPoint(   
-            double x, 
-            double y, 
-            float pressureFactor, 
-            StylusPointDescription stylusPointDescription, 
-            int[] additionalValues, 
+        internal StylusPoint(
+            double x,
+            double y,
+            float pressureFactor,
+            StylusPointDescription stylusPointDescription,
+            int[] additionalValues,
             bool validateAdditionalData,
             bool validatePressureFactor)
         {
@@ -137,7 +137,7 @@ namespace System.Windows.Input
                         SetPropertyValue(properties[i], additionalValues[j], false/*copy on write*/);
                     }
                 }
-            } 
+            }
         }
 
 
@@ -157,10 +157,10 @@ namespace System.Windows.Input
         /// <summary>
         /// X
         /// </summary>
-        public double X 
+        public double X
         {
             get { return _x; }
-            set 
+            set
             {
                 if (Double.IsNaN(value))
                 {
@@ -170,7 +170,7 @@ namespace System.Windows.Input
                 // only accept values between MaxXY and MinXY
                 // we don't throw when passed a value outside of that range, we just silently trunctate
                 //
-                _x = GetClampedXYValue(value); 
+                _x = GetClampedXYValue(value);
             }
         }
 
@@ -180,7 +180,7 @@ namespace System.Windows.Input
         public double Y
         {
             get { return _y; }
-            set 
+            set
             {
                 if (Double.IsNaN(value))
                 {
@@ -190,7 +190,7 @@ namespace System.Windows.Input
                 // only accept values between MaxXY and MinXY
                 // we don't throw when passed a value outside of that range, we just silently trunctate
                 //
-                _y = GetClampedXYValue(value); 
+                _y = GetClampedXYValue(value);
             }
         }
 
@@ -199,7 +199,7 @@ namespace System.Windows.Input
         /// </summary>
         public float PressureFactor
         {
-            get 
+            get
             {
                 //
                 // note that pressure can be stored a > 1 or < 0. 
@@ -215,20 +215,20 @@ namespace System.Windows.Input
                 }
                 return _pressureFactor;
             }
-            set 
+            set
             {
                 if (value < 0.0f || value > 1.0f)
                 {
                     throw new ArgumentOutOfRangeException("PressureFactor", SR.InvalidPressureValue);
                 }
-                _pressureFactor = value; 
+                _pressureFactor = value;
             }
         }
 
         /// <summary>
         /// Describes the properties this StylusPoint contains
         /// </summary>
-        public StylusPointDescription Description 
+        public StylusPointDescription Description
         {
             get
             {
@@ -341,7 +341,7 @@ namespace System.Windows.Input
                 // only accept values between MaxXY and MinXY
                 // we don't throw when passed a value outside of that range, we just silently trunctate
                 //
-                _x = GetClampedXYValue(dVal); 
+                _x = GetClampedXYValue(dVal);
             }
             else if (stylusPointProperty.Id == StylusPointPropertyIds.Y)
             {
@@ -350,7 +350,7 @@ namespace System.Windows.Input
                 // only accept values between MaxXY and MinXY
                 // we don't throw when passed a value outside of that range, we just silently trunctate
                 //
-                _y = GetClampedXYValue(dVal); 
+                _y = GetClampedXYValue(dVal);
             }
             else if (stylusPointProperty.Id == StylusPointPropertyIds.NormalPressure)
             {
@@ -578,7 +578,7 @@ namespace System.Windows.Input
         /// </returns>
         public override int GetHashCode()
         {
-            int hash = 
+            int hash =
                 _x.GetHashCode() ^
                 _y.GetHashCode() ^
                 _pressureFactor.GetHashCode();

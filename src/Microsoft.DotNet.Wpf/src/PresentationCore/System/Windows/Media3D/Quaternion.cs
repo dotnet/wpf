@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -57,7 +57,7 @@ namespace System.Windows.Media.Media3D
             _w = w;
             _isNotDistinguishedIdentity = true;
         }
-        
+
         /// <summary>
         /// Constructs a quaternion via specified axis of rotation and an angle.
         /// Throws an InvalidOperationException if given (0,0,0) as axis vector.
@@ -81,7 +81,7 @@ namespace System.Windows.Media.Media3D
 
         #endregion Constructors
 
-        
+
         //------------------------------------------------------
         //
         //  Public Methods
@@ -103,7 +103,7 @@ namespace System.Windows.Media.Media3D
         /// <summary>
         /// Retrieves quaternion's axis.
         /// </summary>
-        public Vector3D Axis 
+        public Vector3D Axis
         {
             // q = M [cos(Q/2), sin(Q /2)v]
             // axis = sin(Q/2)v
@@ -115,7 +115,7 @@ namespace System.Windows.Media.Media3D
                 // returning arbitrary axis.
                 if (IsDistinguishedIdentity || (_x == 0 && _y == 0 && _z == 0))
                 {
-                    return new Vector3D(0,1,0);
+                    return new Vector3D(0, 1, 0);
                 }
                 else
                 {
@@ -130,50 +130,50 @@ namespace System.Windows.Media.Media3D
         /// Retrieves quaternion's angle.
         /// </summary>
         public double Angle
-        { 
+        {
             get
             {
                 if (IsDistinguishedIdentity)
                 {
                     return 0;
                 }
-                
+
                 // Magnitude of quaternion times sine and cosine
-                double msin = Math.Sqrt(_x*_x + _y*_y + _z*_z);
+                double msin = Math.Sqrt(_x * _x + _y * _y + _z * _z);
                 double mcos = _w;
-                
+
                 if (!(msin <= Double.MaxValue))
                 {
                     // Overflowed probably in squaring, so let's scale
                     // the values.  We don't need to include _w in the
                     // scale factor because we're not going to square
                     // it.
-                    double maxcoeff = Math.Max(Math.Abs(_x),Math.Max(Math.Abs(_y),Math.Abs(_z)));
-                    double x = _x/maxcoeff;
-                    double y = _y/maxcoeff;
-                    double z = _z/maxcoeff;
-                    msin = Math.Sqrt(x*x + y*y + z*z);
+                    double maxcoeff = Math.Max(Math.Abs(_x), Math.Max(Math.Abs(_y), Math.Abs(_z)));
+                    double x = _x / maxcoeff;
+                    double y = _y / maxcoeff;
+                    double z = _z / maxcoeff;
+                    msin = Math.Sqrt(x * x + y * y + z * z);
                     // Scale mcos too.
-                    mcos = _w/maxcoeff;
+                    mcos = _w / maxcoeff;
                 }
 
                 // Atan2 is better than acos.  (More precise and more efficient.)
-                return Math.Atan2(msin,mcos) * (360.0 / Math.PI);
+                return Math.Atan2(msin, mcos) * (360.0 / Math.PI);
             }
-        } 
+        }
 
         /// <summary>
         /// Returns whether the quaternion is normalized (i.e. has a magnitude of 1).
         /// </summary>
-        public bool IsNormalized 
-        { 
+        public bool IsNormalized
+        {
             get
             {
                 if (IsDistinguishedIdentity)
                 {
                     return true;
                 }
-                double norm2 = _x*_x + _y*_y + _z*_z + _w*_w;
+                double norm2 = _x * _x + _y * _y + _z * _z + _w * _w;
                 return DoubleUtil.IsOne(norm2);
             }
         }
@@ -198,13 +198,13 @@ namespace System.Windows.Media.Media3D
             {
                 return;
             }
-            
+
             // Conjugate([x,y,z,w]) = [-x,-y,-z,w]
             _x = -_x;
             _y = -_y;
             _z = -_z;
         }
-        
+
         /// <summary>
         /// Replaces quaternion with its inverse
         /// </summary>
@@ -214,16 +214,16 @@ namespace System.Windows.Media.Media3D
             {
                 return;
             }
-            
+
             // Inverse = Conjugate / Norm Squared
             Conjugate();
-            double norm2 = _x*_x + _y*_y + _z*_z + _w*_w;
+            double norm2 = _x * _x + _y * _y + _z * _z + _w * _w;
             _x /= norm2;
             _y /= norm2;
             _z /= norm2;
             _w /= norm2;
         }
-        
+
         /// <summary>
         /// Normalizes this quaternion.
         /// </summary>
@@ -233,21 +233,21 @@ namespace System.Windows.Media.Media3D
             {
                 return;
             }
-            
-            double norm2 = _x*_x + _y*_y + _z*_z + _w*_w;
+
+            double norm2 = _x * _x + _y * _y + _z * _z + _w * _w;
             if (norm2 > Double.MaxValue)
             {
                 // Handle overflow in computation of norm2
-                double rmax = 1.0/Max(Math.Abs(_x),
+                double rmax = 1.0 / Max(Math.Abs(_x),
                                       Math.Abs(_y),
                                       Math.Abs(_z),
                                       Math.Abs(_w));
-                
+
                 _x *= rmax;
                 _y *= rmax;
                 _z *= rmax;
                 _w *= rmax;
-                norm2 = _x*_x + _y*_y + _z*_z + _w*_w;                
+                norm2 = _x * _x + _y * _y + _z * _z + _w * _w;
             }
             double normInverse = 1.0 / Math.Sqrt(norm2);
             _x *= normInverse;
@@ -268,7 +268,7 @@ namespace System.Windows.Media.Media3D
             {
                 if (left.IsDistinguishedIdentity)
                 {
-                    return new Quaternion(0,0,0,2);
+                    return new Quaternion(0, 0, 0, 2);
                 }
                 else
                 {
@@ -315,7 +315,7 @@ namespace System.Windows.Media.Media3D
             {
                 if (left.IsDistinguishedIdentity)
                 {
-                    return new Quaternion(0,0,0,0);
+                    return new Quaternion(0, 0, 0, 0);
                 }
                 else
                 {
@@ -365,14 +365,14 @@ namespace System.Windows.Media.Media3D
             {
                 return left;
             }
-            
+
             double x = left._w * right._x + left._x * right._w + left._y * right._z - left._z * right._y;
             double y = left._w * right._y + left._y * right._w + left._z * right._x - left._x * right._z;
             double z = left._w * right._z + left._z * right._w + left._x * right._y - left._y * right._x;
             double w = left._w * right._w - left._x * right._x - left._y * right._y - left._z * right._z;
-            Quaternion result = new Quaternion(x,y,z,w);
+            Quaternion result = new Quaternion(x, y, z, w);
             return result;
-}
+        }
 
         /// <summary>
         /// Quaternion multiplication.
@@ -389,7 +389,7 @@ namespace System.Windows.Media.Media3D
         /// Scale this quaternion by a scalar.
         /// </summary>
         /// <param name="scale">Value to scale by.</param>            
-        private void Scale( double scale )
+        private void Scale(double scale)
         {
             if (IsDistinguishedIdentity)
             {
@@ -412,8 +412,8 @@ namespace System.Windows.Media.Media3D
             {
                 return 1;
             }
-            
-            double norm2 = _x*_x + _y*_y + _z*_z + _w*_w;
+
+            double norm2 = _x * _x + _y * _y + _z * _z + _w * _w;
             if (!(norm2 <= Double.MaxValue))
             {
                 // Do this the slow way to avoid squaring large
@@ -423,15 +423,15 @@ namespace System.Windows.Media.Media3D
                 // the length can be up to twice as big as the largest
                 // coefficient.
 
-                double max = Math.Max(Math.Max(Math.Abs(_x),Math.Abs(_y)),
-                                      Math.Max(Math.Abs(_z),Math.Abs(_w)));
+                double max = Math.Max(Math.Max(Math.Abs(_x), Math.Abs(_y)),
+                                      Math.Max(Math.Abs(_z), Math.Abs(_w)));
 
-                double x = _x/max;
-                double y = _y/max;
-                double z = _z/max;
-                double w = _w/max;
+                double x = _x / max;
+                double y = _y / max;
+                double z = _z / max;
+                double w = _w / max;
 
-                double smallLength = Math.Sqrt(x*x+y*y+z*z+w*w);
+                double smallLength = Math.Sqrt(x * x + y * y + z * z + w * w);
                 // Return length of this smaller vector times the scale we applied originally.
                 return smallLength * max;
             }
@@ -450,7 +450,7 @@ namespace System.Windows.Media.Media3D
         {
             return Slerp(from, to, t, /* useShortestPath = */ true);
         }
-        
+
         /// <summary>
         /// Smoothly interpolate between the two given quaternions using Spherical 
         /// Linear Interpolation (SLERP).
@@ -471,18 +471,18 @@ namespace System.Windows.Media.Media3D
             {
                 to._w = 1;
             }
-            
+
             double cosOmega;
             double scaleFrom, scaleTo;
 
             // Normalize inputs and stash their lengths
             double lengthFrom = from.Length();
             double lengthTo = to.Length();
-            from.Scale(1/lengthFrom);
-            to.Scale(1/lengthTo);
-            
+            from.Scale(1 / lengthFrom);
+            to.Scale(1 / lengthTo);
+
             // Calculate cos of omega.
-            cosOmega = from._x*to._x + from._y*to._y + from._z*to._z + from._w*to._w;
+            cosOmega = from._x * to._x + from._y * to._y + from._z * to._z + from._w * to._w;
 
             if (useShortestPath)
             {
@@ -490,7 +490,7 @@ namespace System.Windows.Media.Media3D
                 // cosOmega will be positive.
                 if (cosOmega < 0.0)
                 {
-                    cosOmega = -cosOmega; 
+                    cosOmega = -cosOmega;
                     to._x = -to._x;
                     to._y = -to._y;
                     to._z = -to._z;
@@ -527,7 +527,7 @@ namespace System.Windows.Media.Media3D
 
             // Calculate scaling coefficients.
             if (cosOmega > maxCosine)
-            {        
+            {
                 // Quaternions are too close - use linear interpolation.
                 scaleFrom = 1.0 - t;
                 scaleTo = t;
@@ -540,7 +540,7 @@ namespace System.Windows.Media.Media3D
                 to = new Quaternion(-from.Y, from.X, -from.W, from.Z);
 
                 double theta = t * Math.PI;
-                
+
                 scaleFrom = Math.Cos(theta);
                 scaleTo = Math.Sin(theta);
             }
@@ -548,7 +548,7 @@ namespace System.Windows.Media.Media3D
             {
                 // Standard case - use SLERP interpolation.
                 double omega = Math.Acos(cosOmega);
-                double sinOmega = Math.Sqrt(1.0 - cosOmega*cosOmega);
+                double sinOmega = Math.Sqrt(1.0 - cosOmega * cosOmega);
                 scaleFrom = Math.Sin((1.0 - t) * omega) / sinOmega;
                 scaleTo = Math.Sin(t * omega) / sinOmega;
             }
@@ -558,20 +558,20 @@ namespace System.Windows.Media.Media3D
             // magnitudes, i.e. lengthOut = lengthFrom * (lengthTo/lengthFrom)^t
             //                            = lengthFrom ^ (1-t) * lengthTo ^ t
 
-            double lengthOut = lengthFrom * Math.Pow(lengthTo/lengthFrom, t);
+            double lengthOut = lengthFrom * Math.Pow(lengthTo / lengthFrom, t);
             scaleFrom *= lengthOut;
             scaleTo *= lengthOut;
 
-            return new Quaternion(scaleFrom*from._x + scaleTo*to._x,
-                                  scaleFrom*from._y + scaleTo*to._y,
-                                  scaleFrom*from._z + scaleTo*to._z,
-                                  scaleFrom*from._w + scaleTo*to._w);
+            return new Quaternion(scaleFrom * from._x + scaleTo * to._x,
+                                  scaleFrom * from._y + scaleTo * to._y,
+                                  scaleFrom * from._z + scaleTo * to._z,
+                                  scaleFrom * from._w + scaleTo * to._w);
         }
 
         #endregion Public Methods
 
         #region Private Methods
-            
+
         static private double Max(double a, double b, double c, double d)
         {
             if (b > a)
@@ -672,7 +672,7 @@ namespace System.Windows.Media.Media3D
                     return _w;
                 }
             }
-            
+
             set
             {
                 if (IsDistinguishedIdentity)
@@ -685,7 +685,7 @@ namespace System.Windows.Media.Media3D
         }
 
         #endregion Public Properties
-        
+
         //------------------------------------------------------
         //
         //  Internal Fields
@@ -702,7 +702,7 @@ namespace System.Windows.Media.Media3D
         #endregion Internal Fields
 
         #region Private Fields and Properties
-            
+
         // If this bool is false then we are a default quaternion with
         // all doubles equal to zero, but should be treated as
         // identity.
@@ -710,7 +710,7 @@ namespace System.Windows.Media.Media3D
 
         private bool IsDistinguishedIdentity
         {
-            get 
+            get
             {
                 return !_isNotDistinguishedIdentity;
             }
@@ -733,11 +733,13 @@ namespace System.Windows.Media.Media3D
         private static Quaternion GetIdentity()
         {
             // This code is called only once.
-            Quaternion q = new Quaternion(0,0,0,1);
-            q.IsDistinguishedIdentity = true;
+            Quaternion q = new Quaternion(0, 0, 0, 1)
+            {
+                IsDistinguishedIdentity = true
+            };
             return q;
         }
-        
+
 
         // Hash code for identity.
         private static int c_identityHashCode = GetIdentityHashCode();

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,13 +11,12 @@
 // 
 //
 
-using MS.Win32;
 using System.Runtime.InteropServices;
-using System.Windows.Threading;
-using MS.Internal;
 using System.Windows.Input;
 using System.Windows.Interop;
-
+using System.Windows.Threading;
+using MS.Internal;
+using MS.Win32;
 using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
 namespace System.Windows
@@ -375,7 +374,7 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(data);
 
             RoutedEventArgs args = new RoutedEventArgs(DragDropStartedEvent, dragSource);
-            
+
             // Raise the DragDropStarted internal event(Bubble).
             if (dragSource is UIElement)
             {
@@ -406,7 +405,7 @@ namespace System.Windows
             DragDropEffects ret = OleDoDragDrop(dragSource, dataObject, allowedEffects);
 
             args = new RoutedEventArgs(DragDropCompletedEvent, dragSource);
-            
+
             // Raise the DragDropCompleted internal event(Bubble).
             if (dragSource is UIElement)
             {
@@ -690,7 +689,7 @@ namespace System.Windows
         private void RaiseQueryContinueDragEvent(QueryContinueDragEventArgs args)
         {
             // Set PreviewQueryContinueDrag(Tunnel) first.
-            args.RoutedEvent=DragDrop.PreviewQueryContinueDragEvent;
+            args.RoutedEvent = DragDrop.PreviewQueryContinueDragEvent;
 
             // Raise the preview QueryContinueDrag event(Tunnel).
             if (_dragSource is UIElement)
@@ -747,7 +746,7 @@ namespace System.Windows
         private void RaiseGiveFeedbackEvent(GiveFeedbackEventArgs args)
         {
             // Set PreviewGiveFeedback(Tunnel) first.
-            args.RoutedEvent=DragDrop.PreviewGiveFeedbackEvent;
+            args.RoutedEvent = DragDrop.PreviewGiveFeedbackEvent;
 
             // Raise the preview GiveFeedback(Tunnel).
             if (_dragSource is UIElement)
@@ -816,7 +815,7 @@ namespace System.Windows
         private void OnDefaultQueryContinueDrag(QueryContinueDragEventArgs e)
         {
             int mouseButtonDownCount = 0;
-            
+
             if ((e.KeyStates & DragDropKeyStates.LeftMouseButton) == DragDropKeyStates.LeftMouseButton)
             {
                 mouseButtonDownCount++;
@@ -881,7 +880,7 @@ namespace System.Windows
         //  Constructor
         //
         //------------------------------------------------------
-        
+
         #region Constructor
 
         /// <summary>
@@ -1348,7 +1347,7 @@ namespace System.Windows
                         {
                             if (targetUIElement3D.AllowDrop)
                             {
-                                target = targetUIElement3D;                        
+                                target = targetUIElement3D;
                             }
                             else
                             {
@@ -1439,7 +1438,7 @@ namespace System.Windows
         private DependencyObject _lastTarget;
 
         #endregion Private Fields
-    }  
+    }
 
     #endregion OleDropTarget
 }

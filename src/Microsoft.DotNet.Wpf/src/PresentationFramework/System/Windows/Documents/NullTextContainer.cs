@@ -1,9 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal.Documents;
 using MS.Internal;
+using MS.Internal.Documents;
 
 //
 // Description:
@@ -32,18 +32,18 @@ namespace System.Windows.Documents
 
         internal NullTextContainer()
         {
-            _start  = new NullTextPointer(this, LogicalDirection.Backward);
-            _end    = new NullTextPointer(this, LogicalDirection.Forward);
+            _start = new NullTextPointer(this, LogicalDirection.Backward);
+            _end = new NullTextPointer(this, LogicalDirection.Forward);
         }
         #endregion Constructors
-        
+
         //--------------------------------------------------------------------
         //
         // Public Methods
         //
         //---------------------------------------------------------------------
         #region Public Methods
-        
+
         //
         // This is readonly Text OM. All modification methods returns false
         //
@@ -149,7 +149,7 @@ namespace System.Windows.Documents
         }
 
         #endregion Public Methods
-  
+
         //--------------------------------------------------------------------
         //
         // Public Properties
@@ -229,7 +229,7 @@ namespace System.Windows.Documents
 
         // Optional text selection, always null for this ITextContainer.
         ITextSelection ITextContainer.TextSelection
-        { 
+        {
             get { return null; }
             set { Invariant.Assert(false, "NullTextContainer is never associated with a TextEditor/TextSelection!"); }
         }
@@ -274,13 +274,13 @@ namespace System.Windows.Documents
         }
 
         #endregion Public Properties
- 
+
         //--------------------------------------------------------------------
         //
         // Public Events
         //
         //---------------------------------------------------------------------
-        
+
         #region Public Events
 
         // 9/15/2004: these don't need to be "public",
@@ -303,8 +303,8 @@ namespace System.Windows.Documents
         //---------------------------------------------------------------------
 
         #region Private Fields
-        private NullTextPointer    _start;
-        private NullTextPointer    _end;
+        private NullTextPointer _start;
+        private NullTextPointer _end;
 
         #endregion Private Fields
     }

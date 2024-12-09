@@ -1,16 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 
-using System.Xml;
-using System.Windows.Xps.Packaging;
-using System.Windows.Media;
 using System.Printing;
-using MS.Utility;
-
+using System.Windows.Media;
+using System.Windows.Xps.Packaging;
+using System.Xml;
 using Microsoft.Internal.AlphaFlattener;
+using MS.Utility;
 //
 // Ngc = Next Generation Converter. It means to convert the avalon element tree
 //  to the downlevel GDI primitives.
@@ -31,16 +30,16 @@ namespace System.Windows.Xps.Serialization
         /// <exception cref="ArgumentNullException">queue is NULL.</exception>
         public
         NgcSerializationManager(
-            PrintQueue   queue,
-            bool         isBatchMode
-            ):
+            PrintQueue queue,
+            bool isBatchMode
+            ) :
         base()
         {
             ArgumentNullException.ThrowIfNull(queue);
-            _printQueue                 = queue;
-            this._isBatchMode           = isBatchMode;
-            this._isSimulating          = false;
-            this._printTicketManager    = new NgcPrintTicketManager(_printQueue);
+            _printQueue = queue;
+            this._isBatchMode = isBatchMode;
+            this._isSimulating = false;
+            this._printTicketManager = new NgcPrintTicketManager(_printQueue);
         }
         #endregion Construtor
 
@@ -55,7 +54,7 @@ namespace System.Windows.Xps.Serialization
         override
         void
         SaveAsXaml(
-            Object  serializedObject
+            Object serializedObject
             )
         {
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXSaveXpsBegin);
@@ -67,23 +66,23 @@ namespace System.Windows.Xps.Serialization
                 throw new XpsSerializationException(SR.ReachSerialization_NotSupported);
             }
 
-            if(_isBatchMode && !_isSimulating)
+            if (_isBatchMode && !_isSimulating)
             {
                 XpsSerializationPrintTicketRequiredEventArgs printTicketEvent =
                 new XpsSerializationPrintTicketRequiredEventArgs(PrintTicketLevel.FixedDocumentSequencePrintTicket,
                                                                  0);
                 OnNGCSerializationPrintTicketRequired(printTicketEvent);
 
-                StartDocument(null,true);
+                StartDocument(null, true);
                 _isSimulating = true;
             }
 
-            if(_isBatchMode)
+            if (_isBatchMode)
             {
                 StartPage();
             }
 
-            if(!_isBatchMode &&
+            if (!_isBatchMode &&
                IsDocumentSequencePrintTicketRequired(serializedObject))
             {
                 XpsSerializationPrintTicketRequiredEventArgs printTicketEvent =
@@ -96,7 +95,7 @@ namespace System.Windows.Xps.Serialization
             ReachSerializer reachSerializer = GetSerializer(serializedObject);
 
 
-            if(reachSerializer != null)
+            if (reachSerializer != null)
             {
                 //
                 // Call top-level type serializer, it will walk through the contents and
@@ -106,7 +105,7 @@ namespace System.Windows.Xps.Serialization
 
                 reachSerializer.SerializeObject(serializedObject);
 
-                if(_isBatchMode)
+                if (_isBatchMode)
                 {
                     EndPage();
                 }
@@ -128,7 +127,7 @@ namespace System.Windows.Xps.Serialization
         Cancel(
             )
         {
-            if(_startDocCnt != 0 )
+            if (_startDocCnt != 0)
             {
                 _device.AbortDocument();
                 _startDocCnt = 0;
@@ -143,7 +142,7 @@ namespace System.Windows.Xps.Serialization
         Commit(
             )
         {
-            if(_isBatchMode && _isSimulating)
+            if (_isBatchMode && _isSimulating)
             {
                 EndDocument();
             }
@@ -160,14 +159,14 @@ namespace System.Windows.Xps.Serialization
         /// </summary>
         public
         event
-        XpsSerializationPrintTicketRequiredEventHandler     XpsSerializationPrintTicketRequired;
+        XpsSerializationPrintTicketRequiredEventHandler XpsSerializationPrintTicketRequired;
 
         /// <summary>
         ///
         /// </summary>
         public
         event
-        XpsSerializationProgressChangedEventHandler         XpsSerializationProgressChanged;
+        XpsSerializationProgressChangedEventHandler XpsSerializationProgressChanged;
 
 
         /// <summary>
@@ -179,7 +178,7 @@ namespace System.Windows.Xps.Serialization
         override
         String
         GetXmlNSForType(
-            Type    objectType
+            Type objectType
             )
         {
             return null;
@@ -197,7 +196,7 @@ namespace System.Windows.Xps.Serialization
         {
             ReachSerializer reachSerializer = null;
 
-            if((reachSerializer = base.GetSerializer(serializedObject)) == null)
+            if ((reachSerializer = base.GetSerializer(serializedObject)) == null)
             {
                 reachSerializer = this.SerializersCacheManager.GetSerializer(serializedObject);
             }
@@ -218,7 +217,7 @@ namespace System.Windows.Xps.Serialization
             Type serializerType = null;
 
 
-            if((serializerType = base.GetSerializerType(objectType)) == null)
+            if ((serializerType = base.GetSerializerType(objectType)) == null)
             {
                 if (typeof(System.Windows.Documents.FixedDocumentSequence).IsAssignableFrom(objectType))
                 {
@@ -232,19 +231,19 @@ namespace System.Windows.Xps.Serialization
                 {
                     serializerType = typeof(NgcFixedDocumentSerializer);
                 }
-                else if(typeof(System.Windows.Documents.PageContentCollection).IsAssignableFrom(objectType))
+                else if (typeof(System.Windows.Documents.PageContentCollection).IsAssignableFrom(objectType))
                 {
                     serializerType = typeof(NGCReachPageContentCollectionSerializer);
                 }
-                else if(typeof(System.Windows.Documents.PageContent).IsAssignableFrom(objectType))
+                else if (typeof(System.Windows.Documents.PageContent).IsAssignableFrom(objectType))
                 {
                     serializerType = typeof(NGCReachPageContentSerializer);
                 }
-                else if(typeof(System.Windows.Controls.UIElementCollection).IsAssignableFrom(objectType))
+                else if (typeof(System.Windows.Controls.UIElementCollection).IsAssignableFrom(objectType))
                 {
                     serializerType = typeof(NGCReachUIElementCollectionSerializer);
                 }
-                else if(typeof(System.Windows.Documents.FixedPage).IsAssignableFrom(objectType))
+                else if (typeof(System.Windows.Documents.FixedPage).IsAssignableFrom(objectType))
                 {
                     serializerType = typeof(NgcFixedPageSerializer);
                 }
@@ -271,7 +270,7 @@ namespace System.Windows.Xps.Serialization
         override
         XmlWriter
         AcquireXmlWriter(
-            Type    writerType
+            Type writerType
             )
         {
             return null;
@@ -281,7 +280,7 @@ namespace System.Windows.Xps.Serialization
         override
         void
         ReleaseXmlWriter(
-            Type    writerType
+            Type writerType
             )
         {
             return;
@@ -291,7 +290,7 @@ namespace System.Windows.Xps.Serialization
         override
         XpsResourceStream
         AcquireResourceStream(
-            Type    resourceType
+            Type resourceType
             )
         {
             return null;
@@ -301,8 +300,8 @@ namespace System.Windows.Xps.Serialization
         override
         XpsResourceStream
         AcquireResourceStream(
-            Type    resourceType,
-            String  resourceID
+            Type resourceType,
+            String resourceID
             )
         {
             return null;
@@ -312,7 +311,7 @@ namespace System.Windows.Xps.Serialization
         override
         void
         ReleaseResourceStream(
-            Type    resourceType
+            Type resourceType
             )
         {
             return;
@@ -322,8 +321,8 @@ namespace System.Windows.Xps.Serialization
         override
         void
         ReleaseResourceStream(
-            Type    resourceType,
-            String  resourceID
+            Type resourceType,
+            String resourceID
             )
         {
             return;
@@ -418,10 +417,10 @@ namespace System.Windows.Xps.Serialization
         void
         StartDocument(
             Object o,
-            bool   documentPrintTicketRequired
+            bool documentPrintTicketRequired
             )
         {
-            if(documentPrintTicketRequired)
+            if (documentPrintTicketRequired)
             {
                 XpsSerializationPrintTicketRequiredEventArgs e =
                     new XpsSerializationPrintTicketRequiredEventArgs(PrintTicketLevel.FixedDocumentPrintTicket,
@@ -429,16 +428,16 @@ namespace System.Windows.Xps.Serialization
                 OnNGCSerializationPrintTicketRequired(e);
             }
 
-            if( _startDocCnt == 0 )
+            if (_startDocCnt == 0)
             {
                 JobName = _printQueue.CurrentJobSettings.Description;
 
-                if(JobName == null)
+                if (JobName == null)
                 {
                     JobName = NgcSerializerUtil.InferJobName(o);
                 }
 
-                _device  = new MetroToGdiConverter(PrintQueue);
+                _device = new MetroToGdiConverter(PrintQueue);
 
                 if (!_isSimulating)
                 {
@@ -457,7 +456,7 @@ namespace System.Windows.Xps.Serialization
         void
         EndDocument()
         {
-            if( _startDocCnt == 1 )
+            if (_startDocCnt == 1)
             {
                 _device.EndDocument();
 
@@ -482,15 +481,15 @@ namespace System.Windows.Xps.Serialization
         bool
         StartPage()
         {
-            bool    bManulStartDoc = false;
+            bool bManulStartDoc = false;
 
             if (_startDocCnt == 0)
             {
-                StartDocument(null,true);
+                StartDocument(null, true);
                 bManulStartDoc = true;
             }
 
-            if(!_isStartPage)
+            if (!_isStartPage)
             {
                 if (_isPrintTicketMerged == false)
                 {
@@ -521,7 +520,7 @@ namespace System.Windows.Xps.Serialization
                 {
                     _device.FlushPage();
                 }
-                catch (PrintingCanceledException )
+                catch (PrintingCanceledException)
                 {
                     _device.EndDocument();
                     throw;
@@ -550,7 +549,7 @@ namespace System.Windows.Xps.Serialization
         {
             XpsSerializationPrintTicketRequiredEventArgs e = operationState as XpsSerializationPrintTicketRequiredEventArgs;
 
-            if(XpsSerializationPrintTicketRequired != null)
+            if (XpsSerializationPrintTicketRequired != null)
             {
                 e.Modified = true;
 
@@ -559,7 +558,7 @@ namespace System.Windows.Xps.Serialization
                     _isPrintTicketMerged = true;
                 }
 
-                XpsSerializationPrintTicketRequired(this,e);
+                XpsSerializationPrintTicketRequired(this, e);
 
                 _printTicketManager.ConstructPrintTicketTree(e);
             }
@@ -573,9 +572,9 @@ namespace System.Windows.Xps.Serialization
         {
             XpsSerializationProgressChangedEventArgs e = operationState as XpsSerializationProgressChangedEventArgs;
 
-            if(XpsSerializationProgressChanged != null)
+            if (XpsSerializationProgressChanged != null)
             {
-                XpsSerializationProgressChanged(this,e);
+                XpsSerializationProgressChanged(this, e);
             }
         }
 
@@ -589,12 +588,12 @@ namespace System.Windows.Xps.Serialization
             Visual visual
             )
         {
-            bool    bManulStartDoc = false;
-            bool    bManulStartpage = false;
+            bool bManulStartDoc = false;
+            bool bManulStartpage = false;
 
             if (_startDocCnt == 0)
             {
-                StartDocument(visual,true);
+                StartDocument(visual, true);
                 bManulStartDoc = true;
             }
             if (!_isStartPage)
@@ -635,7 +634,7 @@ namespace System.Windows.Xps.Serialization
         {
             get
             {
-                if(XpsSerializationPrintTicketRequired!=null)
+                if (XpsSerializationPrintTicketRequired != null)
                 {
                     return true;
                 }
@@ -649,16 +648,16 @@ namespace System.Windows.Xps.Serialization
         private
         bool
         IsSerializedObjectTypeSupported(
-            Object  serializedObject
+            Object serializedObject
             )
         {
             bool isSupported = false;
 
             Type serializedObjectType = serializedObject.GetType();
 
-            if(_isBatchMode)
+            if (_isBatchMode)
             {
-                if((typeof(System.Windows.Media.Visual).IsAssignableFrom(serializedObjectType)) &&
+                if ((typeof(System.Windows.Media.Visual).IsAssignableFrom(serializedObjectType)) &&
                     (serializedObjectType != typeof(System.Windows.Documents.FixedPage)))
                 {
                     isSupported = true;
@@ -666,11 +665,11 @@ namespace System.Windows.Xps.Serialization
             }
             else
             {
-                if ( (serializedObjectType == typeof(System.Windows.Documents.FixedDocumentSequence)) ||
-                     (serializedObjectType == typeof(System.Windows.Documents.FixedDocument))    ||
-                     (serializedObjectType == typeof(System.Windows.Documents.FixedPage))        ||
+                if ((serializedObjectType == typeof(System.Windows.Documents.FixedDocumentSequence)) ||
+                     (serializedObjectType == typeof(System.Windows.Documents.FixedDocument)) ||
+                     (serializedObjectType == typeof(System.Windows.Documents.FixedPage)) ||
                      (typeof(System.Windows.Documents.DocumentPaginator).IsAssignableFrom(serializedObjectType)) ||
-                     (typeof(System.Windows.Media.Visual).IsAssignableFrom(serializedObjectType)) )
+                     (typeof(System.Windows.Media.Visual).IsAssignableFrom(serializedObjectType)))
                 {
                     isSupported = true;
                 }
@@ -682,17 +681,17 @@ namespace System.Windows.Xps.Serialization
         private
         bool
         IsDocumentSequencePrintTicketRequired(
-            Object  serializedObject
+            Object serializedObject
             )
         {
             bool isRequired = false;
 
             Type serializedObjectType = serializedObject.GetType();
 
-            if ((serializedObjectType == typeof(System.Windows.Documents.FixedDocument))    ||
-                (serializedObjectType == typeof(System.Windows.Documents.FixedPage))        ||
+            if ((serializedObjectType == typeof(System.Windows.Documents.FixedDocument)) ||
+                (serializedObjectType == typeof(System.Windows.Documents.FixedPage)) ||
                 (typeof(System.Windows.Documents.DocumentPaginator).IsAssignableFrom(serializedObjectType)) ||
-                (typeof(System.Windows.Media.Visual).IsAssignableFrom(serializedObjectType)) )
+                (typeof(System.Windows.Media.Visual).IsAssignableFrom(serializedObjectType)))
             {
                 isRequired = true;
             }
@@ -703,16 +702,16 @@ namespace System.Windows.Xps.Serialization
         #endregion Internal Methods
 
         #region Private Member
-        private     PrintQueue             _printQueue;
-        private     int                    _startDocCnt;
-        private     bool                   _isStartPage;
-        private     MetroToGdiConverter    _device;
-        private     String                 _jobName;
-        private     bool                   _isBatchMode;
-        private     bool                   _isSimulating;
-        private     NgcPrintTicketManager  _printTicketManager;
-        private     bool                   _isPrintTicketMerged;
-        private     Size                    _pageSize = new Size(816,1056);
+        private PrintQueue _printQueue;
+        private int _startDocCnt;
+        private bool _isStartPage;
+        private MetroToGdiConverter _device;
+        private String _jobName;
+        private bool _isBatchMode;
+        private bool _isSimulating;
+        private NgcPrintTicketManager _printTicketManager;
+        private bool _isPrintTicketMerged;
+        private Size _pageSize = new Size(816, 1056);
         #endregion Private Member
     };
 
@@ -725,13 +724,13 @@ namespace System.Windows.Xps.Serialization
             PrintQueue printQueue
             )
         {
-            this._printQueue        = printQueue;
-            this._fdsPrintTicket    = null;
-            this._fdPrintTicket     = null;
-            this._fpPrintTicket     = null;
-            this._rootPrintTicket   = null;
+            this._printQueue = printQueue;
+            this._fdsPrintTicket = null;
+            this._fdPrintTicket = null;
+            this._fpPrintTicket = null;
+            this._rootPrintTicket = null;
             this._activePrintTicket = null;
-            this._isActiveUpdated   = false;
+            this._isActiveUpdated = false;
 
             this.m_validatedPrintTicketCache = new MS.Internal.Printing.MostFrequentlyUsedCache<string, PrintTicket>(s_PrintTicketCacheMaxCount);
         }
@@ -743,112 +742,112 @@ namespace System.Windows.Xps.Serialization
         public
         void
         ConstructPrintTicketTree(
-            XpsSerializationPrintTicketRequiredEventArgs    args
+            XpsSerializationPrintTicketRequiredEventArgs args
             )
         {
-            switch(args.PrintTicketLevel)
+            switch (args.PrintTicketLevel)
             {
                 case PrintTicketLevel.FixedDocumentSequencePrintTicket:
-                {
-                    if(args.PrintTicket != null)
                     {
-                        _fdsPrintTicket  = args.PrintTicket;
-                        _rootPrintTicket = _fdsPrintTicket;
-                    }
-                    else
-                    {
-                        _rootPrintTicket = new PrintTicket(_printQueue.UserPrintTicket.GetXmlStream());
-                    }
-
-                    _activePrintTicket = _rootPrintTicket;
-                    _isActiveUpdated   = true;
-
-                    break;
-                }
-
-                case PrintTicketLevel.FixedDocumentPrintTicket:
-                {
-                    if(args.PrintTicket != null)
-                    {
-                        _fdPrintTicket = args.PrintTicket;
-
-                        if(_fdsPrintTicket!=null)
+                        if (args.PrintTicket != null)
                         {
-                            //
-                            // we have to merge the 2 print tickets
-                            //
-                            _rootPrintTicket = _printQueue.
-                                               MergeAndValidatePrintTicket(_fdsPrintTicket, _fdPrintTicket).
-                                               ValidatedPrintTicket;
+                            _fdsPrintTicket = args.PrintTicket;
+                            _rootPrintTicket = _fdsPrintTicket;
                         }
                         else
                         {
-                            _rootPrintTicket = _fdPrintTicket;
+                            _rootPrintTicket = new PrintTicket(_printQueue.UserPrintTicket.GetXmlStream());
                         }
+
+                        _activePrintTicket = _rootPrintTicket;
+                        _isActiveUpdated = true;
+
+                        break;
                     }
-                    else
+
+                case PrintTicketLevel.FixedDocumentPrintTicket:
                     {
-                        _fdPrintTicket   = null;
-                        _rootPrintTicket = _fdsPrintTicket;
+                        if (args.PrintTicket != null)
+                        {
+                            _fdPrintTicket = args.PrintTicket;
+
+                            if (_fdsPrintTicket != null)
+                            {
+                                //
+                                // we have to merge the 2 print tickets
+                                //
+                                _rootPrintTicket = _printQueue.
+                                                   MergeAndValidatePrintTicket(_fdsPrintTicket, _fdPrintTicket).
+                                                   ValidatedPrintTicket;
+                            }
+                            else
+                            {
+                                _rootPrintTicket = _fdPrintTicket;
+                            }
+                        }
+                        else
+                        {
+                            _fdPrintTicket = null;
+                            _rootPrintTicket = _fdsPrintTicket;
+                        }
+
+                        if (_rootPrintTicket == null)
+                        {
+                            _rootPrintTicket = new PrintTicket(_printQueue.UserPrintTicket.GetXmlStream());
+                        }
+
+                        _activePrintTicket = _rootPrintTicket;
+                        _isActiveUpdated = true;
+
+                        break;
                     }
-
-                    if(_rootPrintTicket == null)
-                    {
-                        _rootPrintTicket = new PrintTicket(_printQueue.UserPrintTicket.GetXmlStream());
-                    }
-
-                    _activePrintTicket = _rootPrintTicket;
-                    _isActiveUpdated   = true;
-
-                    break;
-                }
 
                 case PrintTicketLevel.FixedPagePrintTicket:
-                {
-                    if(args.PrintTicket != null)
                     {
-                        _fpPrintTicket = args.PrintTicket;
-
-                        // The NULL check might not be needed but just in case...
-                        String printTicketPairXMLStr =
-                            (_rootPrintTicket == null ? "" : _rootPrintTicket.ToXmlString()) +
-                            (_fpPrintTicket == null ? "" : _fpPrintTicket.ToXmlString());
-
-                        PrintTicket newActivePrintTicket;
-
-                        if (!m_validatedPrintTicketCache.TryGetValue(printTicketPairXMLStr, out newActivePrintTicket))
+                        if (args.PrintTicket != null)
                         {
-                            //
-                            // we have to merge the 2 print tickets
-                            //
-                            newActivePrintTicket = _printQueue.
-                                                 MergeAndValidatePrintTicket(_rootPrintTicket, _fpPrintTicket).
-                                                 ValidatedPrintTicket;
+                            _fpPrintTicket = args.PrintTicket;
 
-                            m_validatedPrintTicketCache.CacheValue(printTicketPairXMLStr, newActivePrintTicket);
+                            // The NULL check might not be needed but just in case...
+                            String printTicketPairXMLStr =
+                                (_rootPrintTicket == null ? "" : _rootPrintTicket.ToXmlString()) +
+                                (_fpPrintTicket == null ? "" : _fpPrintTicket.ToXmlString());
+
+                            PrintTicket newActivePrintTicket;
+
+                            if (!m_validatedPrintTicketCache.TryGetValue(printTicketPairXMLStr, out newActivePrintTicket))
+                            {
+                                //
+                                // we have to merge the 2 print tickets
+                                //
+                                newActivePrintTicket = _printQueue.
+                                                     MergeAndValidatePrintTicket(_rootPrintTicket, _fpPrintTicket).
+                                                     ValidatedPrintTicket;
+
+                                m_validatedPrintTicketCache.CacheValue(printTicketPairXMLStr, newActivePrintTicket);
+                            }
+
+                            // Ensure cache values are immutable.
+                            _activePrintTicket = newActivePrintTicket.Clone();
+
+                            _isActiveUpdated = true;
                         }
-
-                        // Ensure cache values are immutable.
-                        _activePrintTicket = newActivePrintTicket.Clone ();
-
-                        _isActiveUpdated   = true;
-                    }
-                    else
-                    {
-                        if(_fpPrintTicket != null)
+                        else
                         {
-                            _fpPrintTicket     = null;
-                            _activePrintTicket = _rootPrintTicket;
-                            _isActiveUpdated   = true;
+                            if (_fpPrintTicket != null)
+                            {
+                                _fpPrintTicket = null;
+                                _activePrintTicket = _rootPrintTicket;
+                                _isActiveUpdated = true;
+                            }
                         }
+                        break;
                     }
-                    break;
-                }
 
                 default:
-                {
-                    break;
-                }
+                    {
+                        break;
+                    }
             }
 
         }
@@ -919,25 +918,25 @@ namespace System.Windows.Xps.Serialization
         MS.Internal.Printing.MostFrequentlyUsedCache<string, PrintTicket> m_validatedPrintTicketCache;
 
         private
-        PrintQueue      _printQueue;
+        PrintQueue _printQueue;
 
         private
-        PrintTicket     _fdsPrintTicket;
+        PrintTicket _fdsPrintTicket;
 
         private
-        PrintTicket     _fdPrintTicket;
+        PrintTicket _fdPrintTicket;
 
         private
-        PrintTicket     _fpPrintTicket;
+        PrintTicket _fpPrintTicket;
 
         private
-        PrintTicket     _rootPrintTicket;
+        PrintTicket _rootPrintTicket;
 
         private
-        PrintTicket     _activePrintTicket;
+        PrintTicket _activePrintTicket;
 
         private
-        bool            _isActiveUpdated;
+        bool _isActiveUpdated;
 
 
         #endregion Private Members
@@ -951,18 +950,18 @@ namespace System.Windows.Xps.Serialization
 
         public
         MXDWSerializationManager(
-            PrintQueue   queue
+            PrintQueue queue
             )
         {
-            this._jobName       = null;
+            this._jobName = null;
             this._gdiDevice = null;
-            this._mxdwFileName  = null;
+            this._mxdwFileName = null;
 
             _printQueue = queue;
 
             _jobName = _printQueue.CurrentJobSettings.Description;
 
-            if(_jobName == null)
+            if (_jobName == null)
             {
                 _jobName = NgcSerializerUtil.InferJobName(null);
             }
@@ -1036,19 +1035,19 @@ namespace System.Windows.Xps.Serialization
         }
 
         private
-        PrintQueue              _printQueue;
+        PrintQueue _printQueue;
 
         private
-        MetroToGdiConverter     _gdiDevice;
+        MetroToGdiConverter _gdiDevice;
 
         private
-        String                  _jobName;
+        String _jobName;
 
         private
-        String                  _mxdwFileName;
+        String _mxdwFileName;
 
         private
-        bool                    _isPassThruSupported;
+        bool _isPassThruSupported;
     };
 
 }

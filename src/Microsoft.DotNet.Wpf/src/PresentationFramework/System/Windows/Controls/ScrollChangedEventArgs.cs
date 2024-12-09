@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,7 +15,7 @@ namespace System.Windows.Controls
     /// <summary>
     /// The ScrollChangedEventsArgs describe a change in scrolling state.
     /// </summary>
-    public class ScrollChangedEventArgs: RoutedEventArgs
+    public class ScrollChangedEventArgs : RoutedEventArgs
     {
         //-------------------------------------------------------------------
         //
@@ -53,8 +53,8 @@ namespace System.Windows.Controls
         /// <seealso cref="System.Windows.Controls.ScrollViewer.HorizontalOffset"/>
         /// </summary>
         public double HorizontalOffset
-        { 
-            get { return _offset.X; } 
+        {
+            get { return _offset.X; }
         }
         /// <summary>
         /// Updated VerticalPosition of the scrolled content
@@ -152,7 +152,7 @@ namespace System.Windows.Controls
         //-------------------------------------------------------------------
         //
         //  Protected Methods
-            //
+        //
         //-------------------------------------------------------------------
 
         #region Protected Methods
@@ -178,13 +178,13 @@ namespace System.Windows.Controls
         //-------------------------------------------------------------------
 
         #region Private Fields
-        
+
         // Current scroll data
         private Vector _offset;
         private Vector _offsetChange;
-        private Size   _extent;
+        private Size _extent;
         private Vector _extentChange;
-        private Size   _viewport;
+        private Size _viewport;
         private Vector _viewportChange;
 
         #endregion

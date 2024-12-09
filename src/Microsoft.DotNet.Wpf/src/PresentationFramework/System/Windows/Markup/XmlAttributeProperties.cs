@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -35,7 +35,7 @@ namespace System.Windows.Markup
 #endif
     {
 #if !PBTCOMPILER
-#region Public Methods
+        #region Public Methods
 
         // This is a dummy contructor to prevent people 
         // from being able to instantiate this class
@@ -45,15 +45,15 @@ namespace System.Windows.Markup
 
         static XmlAttributeProperties()
         {
-            XmlSpaceProperty = 
+            XmlSpaceProperty =
                 DependencyProperty.RegisterAttached("XmlSpace", typeof(string), typeof(XmlAttributeProperties),
                                             new FrameworkPropertyMetadata("default"));
-            
-            XmlnsDictionaryProperty = 
+
+            XmlnsDictionaryProperty =
                 DependencyProperty.RegisterAttached("XmlnsDictionary", typeof(XmlnsDictionary), typeof(XmlAttributeProperties),
                                             new FrameworkPropertyMetadata((object)null, FrameworkPropertyMetadataOptions.Inherits));
-            
-            XmlnsDefinitionProperty = 
+
+            XmlnsDefinitionProperty =
                 DependencyProperty.RegisterAttached("XmlnsDefinition", typeof(string), typeof(XmlAttributeProperties),
                                             new FrameworkPropertyMetadata(XamlReaderHelper.DefinitionNamespaceURI,
                                                                           FrameworkPropertyMetadataOptions.Inherits));
@@ -163,16 +163,16 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Public Methods
+        #endregion Public Methods
 
-#region AttachedProperties
+        #region AttachedProperties
 
         /// <summary>
         /// xml:space Element property
         /// </summary>
         [Browsable(false)]
-        [Localizability(LocalizationCategory.NeverLocalize)]        
-        public static readonly DependencyProperty XmlSpaceProperty ;
+        [Localizability(LocalizationCategory.NeverLocalize)]
+        public static readonly DependencyProperty XmlSpaceProperty;
 
         /// <summary>
         /// Return value of xml:space on the passed DependencyObject
@@ -183,7 +183,7 @@ namespace System.Windows.Markup
         {
             if (dependencyObject == null)
             {
-                throw new ArgumentNullException( "dependencyObject" );
+                throw new ArgumentNullException("dependencyObject");
             }
 
             return (string)dependencyObject.GetValue(XmlSpaceProperty);
@@ -196,7 +196,7 @@ namespace System.Windows.Markup
         {
             if (dependencyObject == null)
             {
-                throw new ArgumentNullException( "dependencyObject" );
+                throw new ArgumentNullException("dependencyObject");
             }
 
             dependencyObject.SetValue(XmlSpaceProperty, value);
@@ -206,7 +206,7 @@ namespace System.Windows.Markup
         /// XmlnsDictionary Element property
         /// </summary>
         [Browsable(false)]
-        public static readonly DependencyProperty XmlnsDictionaryProperty ;
+        public static readonly DependencyProperty XmlnsDictionaryProperty;
 
         /// <summary>
         /// Return value of XmlnsDictionary on the passed DependencyObject
@@ -217,7 +217,7 @@ namespace System.Windows.Markup
         {
             if (dependencyObject == null)
             {
-                throw new ArgumentNullException( "dependencyObject" );
+                throw new ArgumentNullException("dependencyObject");
             }
 
             return (XmlnsDictionary)dependencyObject.GetValue(XmlnsDictionaryProperty);
@@ -230,7 +230,7 @@ namespace System.Windows.Markup
         {
             if (dependencyObject == null)
             {
-                throw new ArgumentNullException( "dependencyObject" );
+                throw new ArgumentNullException("dependencyObject");
             }
 
             if (dependencyObject.IsSealed == false)
@@ -243,8 +243,8 @@ namespace System.Windows.Markup
         /// XmlnsDefinition Directory property
         /// </summary>
         [Browsable(false)]
-        public static readonly DependencyProperty XmlnsDefinitionProperty ; 
-        
+        public static readonly DependencyProperty XmlnsDefinitionProperty;
+
         /// <summary>
         /// Return value of xmlns definition directory on the passed DependencyObject
         /// </summary>
@@ -255,7 +255,7 @@ namespace System.Windows.Markup
         {
             if (dependencyObject == null)
             {
-                throw new ArgumentNullException( "dependencyObject" );
+                throw new ArgumentNullException("dependencyObject");
             }
 
             return (string)dependencyObject.GetValue(XmlnsDefinitionProperty);
@@ -268,7 +268,7 @@ namespace System.Windows.Markup
         {
             if (dependencyObject == null)
             {
-                throw new ArgumentNullException( "dependencyObject" );
+                throw new ArgumentNullException("dependencyObject");
             }
 
             dependencyObject.SetValue(XmlnsDefinitionProperty, value);
@@ -278,7 +278,7 @@ namespace System.Windows.Markup
         /// XmlNamespaceMaps that map xml namespace uri to assembly/clr namespaces
         /// </summary>
         [Browsable(false)]
-        public static readonly DependencyProperty XmlNamespaceMapsProperty ; 
+        public static readonly DependencyProperty XmlNamespaceMapsProperty;
 
         /// <summary>
         /// Return value of XmlNamespaceMaps on the passed DependencyObject
@@ -292,7 +292,7 @@ namespace System.Windows.Markup
         {
             if (dependencyObject == null)
             {
-                throw new ArgumentNullException( "dependencyObject" );
+                throw new ArgumentNullException("dependencyObject");
             }
 
             return (Hashtable)dependencyObject.GetValue(XmlNamespaceMapsProperty);
@@ -308,13 +308,13 @@ namespace System.Windows.Markup
         {
             if (dependencyObject == null)
             {
-                throw new ArgumentNullException( "dependencyObject" );
+                throw new ArgumentNullException("dependencyObject");
             }
 
             dependencyObject.SetValue(XmlNamespaceMapsProperty, value);
         }
 
-#endregion AttachedProperties
+        #endregion AttachedProperties
 
 #else
         private XmlAttributeProperties()
@@ -323,7 +323,7 @@ namespace System.Windows.Markup
 
 #endif   // temporal PBT
 
-#region Internal 
+        #region Internal 
 
         // Return the setter method info for XmlSpace
         internal static MethodInfo XmlSpaceSetter
@@ -341,9 +341,9 @@ namespace System.Windows.Markup
 
         // These are special attributes that aren't mapped like other properties
         internal static readonly string XmlSpaceString = "xml:space";
-        internal static readonly string XmlLangString  = "xml:lang";
+        internal static readonly string XmlLangString = "xml:lang";
         internal static readonly string XmlnsDefinitionString = "xmlns";
         private static MethodInfo _xmlSpaceSetter = null;
-#endregion Internal
+        #endregion Internal
     }
 }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -36,11 +36,11 @@ namespace System.Windows.Input
             MouseButtonState mouseButtonState = MouseButtonState.Released;
 
             // Security Mitigation: do not give out input state if the device is not active.
-            if(IsActive)
+            if (IsActive)
             {
                 int virtualKeyCode = 0;
 
-                switch( mouseButton )
+                switch (mouseButton)
                 {
                     case MouseButton.Left:
                         virtualKeyCode = NativeMethods.VK_LBUTTON;
@@ -59,7 +59,7 @@ namespace System.Windows.Input
                         break;
                 }
 
-                mouseButtonState = ( UnsafeNativeMethods.GetKeyState(virtualKeyCode) & 0x8000 ) != 0 ? MouseButtonState.Pressed : MouseButtonState.Released;
+                mouseButtonState = (UnsafeNativeMethods.GetKeyState(virtualKeyCode) & 0x8000) != 0 ? MouseButtonState.Pressed : MouseButtonState.Released;
             }
 
             return mouseButtonState;

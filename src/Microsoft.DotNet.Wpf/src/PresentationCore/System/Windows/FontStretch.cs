@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -77,7 +77,7 @@ namespace System.Windows
         /// <param name="left">First object to compare.</param>
         /// <param name="right">Second object to compare.</param>
         /// <returns>True if left is less than right, false otherwise.</returns>
-        public static bool operator<(FontStretch left, FontStretch right)
+        public static bool operator <(FontStretch left, FontStretch right)
         {
             return Compare(left, right) < 0;
         }
@@ -88,7 +88,7 @@ namespace System.Windows
         /// <param name="left">First object to compare.</param>
         /// <param name="right">Second object to compare.</param>
         /// <returns>True if left is less or equal than right, false otherwise.</returns>
-        public static bool operator<=(FontStretch left, FontStretch right)
+        public static bool operator <=(FontStretch left, FontStretch right)
         {
             return Compare(left, right) <= 0;
         }
@@ -99,7 +99,7 @@ namespace System.Windows
         /// <param name="left">First object to compare.</param>
         /// <param name="right">Second object to compare.</param>
         /// <returns>True if left is greater than right, false otherwise.</returns>
-        public static bool operator>(FontStretch left, FontStretch right)
+        public static bool operator >(FontStretch left, FontStretch right)
         {
             return Compare(left, right) > 0;
         }
@@ -110,7 +110,7 @@ namespace System.Windows
         /// <param name="left">First object to compare.</param>
         /// <param name="right">Second object to compare.</param>
         /// <returns>True if left is greater or equal than right, false otherwise.</returns>
-        public static bool operator>=(FontStretch left, FontStretch right)
+        public static bool operator >=(FontStretch left, FontStretch right)
         {
             return Compare(left, right) >= 0;
         }
@@ -122,7 +122,7 @@ namespace System.Windows
         /// <param name="right">Second object to compare.</param>
         /// <returns>Returns true when the font stretch values are equal for both objects,
         /// and false otherwise.</returns>
-        public static bool operator==(FontStretch left, FontStretch right)
+        public static bool operator ==(FontStretch left, FontStretch right)
         {
             return Compare(left, right) == 0;
         }
@@ -134,7 +134,7 @@ namespace System.Windows
         /// <param name="right">Second object to compare.</param>
         /// <returns>Returns false when the font stretch values are equal for both objects,
         /// and true otherwise.</returns>
-        public static bool operator!=(FontStretch left, FontStretch right)
+        public static bool operator !=(FontStretch left, FontStretch right)
         {
             return !(left == right);
         }

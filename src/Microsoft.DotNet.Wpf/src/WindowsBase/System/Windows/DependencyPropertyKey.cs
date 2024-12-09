@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -38,21 +38,21 @@ namespace System.Windows
         ///     Override the metadata of a property that is already secured with
         /// this key.
         /// </summary>
-        public void OverrideMetadata( Type forType, PropertyMetadata typeMetadata )
+        public void OverrideMetadata(Type forType, PropertyMetadata typeMetadata)
         {
-            if( _dp == null )
+            if (_dp == null)
             {
                 throw new InvalidOperationException();
             }
 
-            _dp.OverrideMetadata( forType, typeMetadata, this );
+            _dp.OverrideMetadata(forType, typeMetadata, this);
         }
 
         // This is not a property setter because we can't have a public
         //  property getter and a internal property setter on the same property.
         internal void SetDependencyProperty(DependencyProperty dp)
         {
-            Debug.Assert(_dp==null,"This should only be used when we need a placeholder and have a temporary value of null. It should not be used to change this property.");
+            Debug.Assert(_dp == null, "This should only be used when we need a placeholder and have a temporary value of null. It should not be used to change this property.");
             _dp = dp;
         }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,13 +16,13 @@ namespace System.Windows.Documents
         #region Constructors
 
         internal ColumnResizeUndoUnit(TextPointer textPointerTable, int columnIndex, double[] columnWidths, double resizeAmount) : base("ColumnResize")
-        
+
         {
             _textContainer = textPointerTable.TextContainer;
             _cpTable = _textContainer.Start.GetOffsetToPosition(textPointerTable);
             _columnWidths = columnWidths;
             _columnIndex = columnIndex;
-            _resizeAmount = resizeAmount;            
+            _resizeAmount = resizeAmount;
         }
 
         #endregion Constructors
@@ -33,34 +33,34 @@ namespace System.Windows.Documents
         /// Perform the appropriate action for this unit.  If this is a parent undo unit, the
         /// parent must create an appropriate parent undo unit to contain the redo units.
         /// </summary>
-        public override void Do() 
+        public override void Do()
         {
-            UndoManager undoManager;        
+            UndoManager undoManager;
             IParentUndoUnit redo;
             TextPointer textPointerTable;
             Table table;
-    
+
             undoManager = TopContainer as UndoManager;
             redo = null;
 
-            textPointerTable = new TextPointer(_textContainer.Start, _cpTable, LogicalDirection.Forward); 
-            table = (Table) textPointerTable.Parent;  
+            textPointerTable = new TextPointer(_textContainer.Start, _cpTable, LogicalDirection.Forward);
+            table = (Table)textPointerTable.Parent;
 
             _columnWidths[_columnIndex] -= _resizeAmount;
-            if(_columnIndex < table.ColumnCount - 1)
+            if (_columnIndex < table.ColumnCount - 1)
             {
                 _columnWidths[_columnIndex + 1] += _resizeAmount;
             }
 
-            if(undoManager != null && undoManager.IsEnabled)
+            if (undoManager != null && undoManager.IsEnabled)
             {
                 redo = new ColumnResizeUndoUnit(textPointerTable, _columnIndex, _columnWidths, -_resizeAmount);
                 undoManager.Open(redo);
-            }    
+            }
 
             TextRangeEditTables.EnsureTableColumnsAreFixedSize(table, _columnWidths);
-    
-            if(redo != null)
+
+            if (redo != null)
             {
                 undoManager.Close(redo, UndoCloseAction.Commit);
             }

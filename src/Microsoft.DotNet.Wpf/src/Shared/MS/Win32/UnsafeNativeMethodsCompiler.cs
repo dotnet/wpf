@@ -1,10 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Text;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
+using System.Text;
 
 namespace MS.Win32.Compile
 {
@@ -13,7 +13,8 @@ namespace MS.Win32.Compile
     // Keep unsafe native methods used by Compiler related classes.
     // It can be shared by PresentationBuildTasks and PresentationFramework
     //
-    internal static partial class UnsafeNativeMethods {
+    internal static partial class UnsafeNativeMethods
+    {
 
         //------------------------------------------------------
         //
@@ -40,7 +41,7 @@ namespace MS.Win32.Compile
                         out string wzMimeOut,           // the suggested mime
                         int dwReserved);
 
-       #endregion
+        #endregion
     }
 }
 

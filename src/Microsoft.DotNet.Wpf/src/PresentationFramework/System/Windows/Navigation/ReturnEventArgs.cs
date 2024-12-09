@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -36,9 +36,9 @@ namespace System.Windows.Navigation
         /// ReturnEventArgs constructor. Supplied value is assigned to Result value
         ///</summary>
         ///<param name="result">Assigned to Result property</param>      
-        public ReturnEventArgs( T result)
+        public ReturnEventArgs(T result)
         {
-            _result = result; 
+            _result = result;
         }
 
         #endregion Constructors
@@ -48,24 +48,24 @@ namespace System.Windows.Navigation
         //  Public Properties
         //
         //------------------------------------------------------
-                
+
         #region Public Properties 
 
         ///<summary>
         ///     The Result property indicates the result that a PageFunction is 
         ///     returning to it's caller, at the end of a Structured Navigation. 
         ///</summary> 
-        public T Result 
-        { 
+        public T Result
+        {
             get
             {
-                return _result; 
+                return _result;
             }
-            set 
+            set
             {
-                _result = value; 
+                _result = value;
             }
-        } 
+        }
 
         #endregion Public Properties 
 
@@ -74,10 +74,10 @@ namespace System.Windows.Navigation
         //  Private Fields    
         //    
         //------------------------------------------------------
-        
+
         #region Private Fields
 
-        private T _result; 
+        private T _result;
 
         #endregion Private Fields
     }

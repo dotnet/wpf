@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -41,7 +41,7 @@ namespace System.Windows.Controls
     /// ColumnDefinitionCollection provides public access for ColumnDefinitions
     /// reading and manipulation.
     /// </remarks>
-    public sealed class ColumnDefinitionCollection : IList<ColumnDefinition> , IList
+    public sealed class ColumnDefinitionCollection : IList<ColumnDefinition>, IList
     {
         //------------------------------------------------------
         //
@@ -153,8 +153,8 @@ namespace System.Windows.Controls
 
             for (int i = 0; i < _size; ++i)
             {
-                Debug.Assert(   _items[i] != null
-                            &&  _items[i].Parent == _owner );
+                Debug.Assert(_items[i] != null
+                            && _items[i].Parent == _owner);
 
                 PrivateDisconnectChild(_items[i]);
                 _items[i] = null;
@@ -168,8 +168,8 @@ namespace System.Windows.Controls
         bool IList.Contains(object value)
         {
             ColumnDefinition item = value as ColumnDefinition;
-            if (    item != null
-                &&  item.Parent == _owner  )
+            if (item != null
+                && item.Parent == _owner)
             {
                 Debug.Assert(_items[item.Index] == item);
                 return (true);
@@ -183,8 +183,8 @@ namespace System.Windows.Controls
         /// </summary>
         public bool Contains(ColumnDefinition value)    //  bool ICollection<T>.Contains(T item)
         {
-            if (    value != null
-                &&  value.Parent == _owner  )
+            if (value != null
+                && value.Parent == _owner)
             {
                 Debug.Assert(_items[value.Index] == value);
                 return (true);
@@ -206,8 +206,8 @@ namespace System.Windows.Controls
         /// </summary>
         public int IndexOf(ColumnDefinition value)  //  int IList<T>.IndexOf(T item);
         {
-            if (    value == null
-                ||  value.Parent != _owner )
+            if (value == null
+                || value.Parent != _owner)
             {
                 return (-1);
             }
@@ -322,8 +322,8 @@ namespace System.Windows.Controls
             {
                 for (int i = index + count - 1; i >= index; --i)
                 {
-                    Debug.Assert(   _items[i] != null
-                                &&  _items[i].Parent == _owner );
+                    Debug.Assert(_items[i] != null
+                                && _items[i].Parent == _owner);
 
                     PrivateDisconnectChild(_items[i]);
                 }
@@ -331,8 +331,8 @@ namespace System.Windows.Controls
                 _size -= count;
                 for (int i = index; i < _size; ++i)
                 {
-                    Debug.Assert(   _items[i + count] != null
-                                &&  _items[i + count].Parent == _owner );
+                    Debug.Assert(_items[i + count] != null
+                                && _items[i + count].Parent == _owner);
 
                     _items[i] = _items[i + count];
                     _items[i].Index = i;
@@ -383,8 +383,8 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (    _owner.MeasureOverrideInProgress
-                        ||  _owner.ArrangeOverrideInProgress    );
+                return (_owner.MeasureOverrideInProgress
+                        || _owner.ArrangeOverrideInProgress);
             }
         }
 
@@ -396,8 +396,8 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (    _owner.MeasureOverrideInProgress
-                        ||  _owner.ArrangeOverrideInProgress    );
+                return (_owner.MeasureOverrideInProgress
+                        || _owner.ArrangeOverrideInProgress);
             }
         }
 
@@ -506,7 +506,7 @@ namespace System.Windows.Controls
         /// </summary>
         internal int InternalCount
         {
-            get { return (_size);   }
+            get { return (_size); }
         }
 
         /// <summary>
@@ -514,7 +514,7 @@ namespace System.Windows.Controls
         /// </summary>
         internal DefinitionBase[] InternalItems
         {
-            get {   return (_items);    }
+            get { return (_items); }
         }
 
         #endregion Internal Properties
@@ -638,8 +638,8 @@ namespace System.Windows.Controls
 
             for (int i = _size - 1; i >= index; --i)
             {
-                Debug.Assert(   _items[i] != null
-                            &&  _items[i].Parent == _owner );
+                Debug.Assert(_items[i] != null
+                            && _items[i].Parent == _owner);
 
                 _items[i + 1] = _items[i];
                 _items[i].Index = i + 1;
@@ -656,8 +656,8 @@ namespace System.Windows.Controls
         /// </summary>
         private void PrivateRemove(DefinitionBase value)
         {
-            Debug.Assert(   _items[value.Index] == value
-                        &&  value.Parent == _owner );
+            Debug.Assert(_items[value.Index] == value
+                        && value.Parent == _owner);
 
             PrivateOnModified();
 
@@ -669,8 +669,8 @@ namespace System.Windows.Controls
 
             for (int i = index; i < _size; ++i)
             {
-                Debug.Assert(   _items[i + 1] != null
-                            &&  _items[i + 1].Parent == _owner    );
+                Debug.Assert(_items[i + 1] != null
+                            && _items[i + 1].Parent == _owner);
 
                 _items[i] = _items[i + 1];
                 _items[i].Index = i;
@@ -798,12 +798,12 @@ namespace System.Windows.Controls
                     {
                         if (_index == -1)
                         {
-                            #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+#pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
                             throw new InvalidOperationException(SR.EnumeratorNotStarted);
                         }
                         else
                         {
-                            #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+#pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
                             throw new InvalidOperationException(SR.EnumeratorReachedEnd);
                         }
                     }
@@ -824,12 +824,12 @@ namespace System.Windows.Controls
                     {
                         if (_index == -1)
                         {
-                            #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+#pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
                             throw new InvalidOperationException(SR.EnumeratorNotStarted);
                         }
                         else
                         {
-                            #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+#pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
                             throw new InvalidOperationException(SR.EnumeratorReachedEnd);
                         }
                     }

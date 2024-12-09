@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,11 +7,11 @@
 //      A rendering element which binds to the strokes data
 //
 
-using System.Windows.Media;
+using System.Windows.Automation.Peers;
 using System.Windows.Ink;
+using System.Windows.Media;
 using System.Windows.Threading;
 using MS.Internal.Ink;
-using System.Windows.Automation.Peers;
 
 namespace System.Windows.Controls
 {
@@ -19,7 +19,7 @@ namespace System.Windows.Controls
     /// Renders the specified StrokeCollection data.
     /// </summary>
     public class InkPresenter : Decorator
-    {                                        
+    {
         //-------------------------------------------------------------------------------
         //
         // Constructors
@@ -32,7 +32,7 @@ namespace System.Windows.Controls
         /// The constructor of InkPresenter
         /// </summary>
         public InkPresenter()
-        {        
+        {
             // Create the internal Renderer object.
             _renderer = new Ink.Renderer();
 
@@ -42,7 +42,7 @@ namespace System.Windows.Controls
 
             // Register rti high contrast callback. Then check whether we are under the high contrast already.
             HighContrastHelper.RegisterHighContrastCallback(_contrastCallback);
-            if ( SystemParameters.HighContrast )
+            if (SystemParameters.HighContrast)
             {
                 _contrastCallback.TurnHighContrastOn(SystemColors.WindowTextColor);
             }
@@ -106,7 +106,7 @@ namespace System.Windows.Controls
                         new FrameworkPropertyMetadata(
                                 new StrokeCollectionDefaultValueFactory(),
                                 new PropertyChangedCallback(OnStrokesChanged)),
-                        (ValidateValueCallback)delegate(object value)
+                        (ValidateValueCallback)delegate (object value)
                             { return value != null; });
 
         /// <summary>
@@ -155,14 +155,14 @@ namespace System.Windows.Controls
             Size newSize = base.MeasureOverride(constraint);
 
             // If there are strokes in IP, we need to combine the size to final size.
-            if ( strokes != null && strokes.Count != 0 )
+            if (strokes != null && strokes.Count != 0)
             {
                 // Get the bounds of the stroks
                 Rect boundingRect = StrokesBounds;
 
                 // If we have an empty bounding box or the Right/Bottom value is negative,
                 // an empty size will be returned.
-                if ( !boundingRect.IsEmpty && boundingRect.Right > 0.0 && boundingRect.Bottom > 0.0 )
+                if (!boundingRect.IsEmpty && boundingRect.Right > 0.0 && boundingRect.Bottom > 0.0)
                 {
                     // The new size needs to contain the right boundary and bottom boundary.
                     Size sizeStrokes = new Size(boundingRect.Right, boundingRect.Bottom);
@@ -172,7 +172,7 @@ namespace System.Windows.Controls
                 }
             }
 
-            if ( Child != null )
+            if (Child != null)
             {
                 _constraintSize = constraint;
             }
@@ -199,20 +199,20 @@ namespace System.Windows.Controls
             // When we arrange the child, we shouldn't count in the strokes' bounds. 
             // We only use the constraint size for the child.
             Size availableSize = arrangeSize;
-            if ( !_constraintSize.IsEmpty )
+            if (!_constraintSize.IsEmpty)
             {
-                availableSize = new Size(Math.Min(arrangeSize.Width, _constraintSize.Width), 
+                availableSize = new Size(Math.Min(arrangeSize.Width, _constraintSize.Width),
                                                 Math.Min(arrangeSize.Height, _constraintSize.Height));
             }
 
             // We arrange our child as what Decorator does 
             // exceopt we are using the available size computed from our cached measure size.
             UIElement child = Child;
-            if ( child != null )
+            if (child != null)
             {
                 child.Arrange(new Rect(availableSize));
-            } 
-            
+            }
+
             return arrangeSize;
         }
 
@@ -228,7 +228,7 @@ namespace System.Windows.Controls
             // regardless ClipToBounds is set or not. 
             // We override the GetLayoutClip method so that we can bypass the default layout clip if ClipToBounds is set to false.
             // So we allow the ink to be drown anywhere when no clip is set.
-            if ( ClipToBounds )
+            if (ClipToBounds)
             {
                 return base.GetLayoutClip(layoutSlotSize);
             }
@@ -242,13 +242,13 @@ namespace System.Windows.Controls
         protected override Visual GetVisualChild(int index)
         {
             int count = VisualChildrenCount;
-                
-            if(count == 2)
+
+            if (count == 2)
             {
                 switch (index)
                 {
-                    case 0: 
-                        return  base.Child;
+                    case 0:
+                        return base.Child;
 
                     case 1:
                         return _renderer.RootVisual;
@@ -259,11 +259,11 @@ namespace System.Windows.Controls
             }
             else if (index == 0 && count == 1)
             {
-                if ( _hasAddedRoot )
+                if (_hasAddedRoot)
                 {
                     return _renderer.RootVisual;
                 }
-                else if(base.Child != null)
+                else if (base.Child != null)
                 {
                     return base.Child;
                 }
@@ -271,7 +271,7 @@ namespace System.Windows.Controls
             throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
         }
 
-        
+
         /// <summary>
         ///  Derived classes override this property to enable the Visual code to enumerate 
         ///  the Visual children. Derived classes need to return the number of children
@@ -282,33 +282,33 @@ namespace System.Windows.Controls
         ///  Remark: During this virtual method the Visual tree must not be modified.
         /// </summary>        
         protected override int VisualChildrenCount
-        {           
-            get 
+        {
+            get
             {
                 // we can have 4 states:-
                 // 1. no children
                 // 2. only base.Child
                 // 3. only _renderer.RootVisual as the child
                 // 4. both base.Child and  _renderer.RootVisual
-                
-                if(base.Child != null)
+
+                if (base.Child != null)
                 {
-                    if ( _hasAddedRoot )
+                    if (_hasAddedRoot)
                     {
-                       return 2;
+                        return 2;
                     }
-                    else 
+                    else
                     {
                         return 1;
                     }
                 }
-                else if ( _hasAddedRoot )
+                else if (_hasAddedRoot)
                 {
                     return 1;
                 }
-                
+
                 return 0;
-            }            
+            }
         }
 
         /// <summary>
@@ -453,7 +453,7 @@ namespace System.Windows.Controls
             Debug.Assert(newStrokes != null, "Cannot set a null to InkPresenter");
 
             // Remove the event handlers from the old stroke collection
-            if ( null != oldStrokes )
+            if (null != oldStrokes)
             {
                 // Stop listening on events from the stroke collection.
                 oldStrokes.StrokesChanged -= new StrokeCollectionChangedEventHandler(OnStrokesChanged);
@@ -484,11 +484,11 @@ namespace System.Windows.Controls
             Debug.Assert(addedStrokes != null, "The added StrokeCollection cannot be null.");
             int count, i;
 
-            if ( removedStrokes != null )
+            if (removedStrokes != null)
             {
                 // Deal with removed strokes first
                 count = removedStrokes.Count;
-                for ( i = 0; i < count; i++ )
+                for (i = 0; i < count; i++)
                 {
                     StopListeningOnStrokeEvents(removedStrokes[i]);
                 }
@@ -496,7 +496,7 @@ namespace System.Windows.Controls
 
             // Add new strokes
             count = addedStrokes.Count;
-            for ( i = 0; i < count; i++ )
+            for (i = 0; i < count; i++)
             {
                 StartListeningOnStrokeEvents(addedStrokes[i]);
             }
@@ -544,7 +544,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void EnsureRootVisual()
         {
-            if ( !_hasAddedRoot )
+            if (!_hasAddedRoot)
             {
                 // Ideally we should set _hasAddedRoot to true before calling AddVisualChild.
                 // So that VisualDiagnostics.OnVisualChildChanged can get correct child index.
@@ -574,7 +574,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if ( _cachedBounds == null )
+                if (_cachedBounds == null)
                 {
                     _cachedBounds = Strokes.GetBounds();
                 }
@@ -592,15 +592,15 @@ namespace System.Windows.Controls
         //-------------------------------------------------------------------------------
 
         #region Private Fields
-        private Ink.Renderer    _renderer;
-        private Nullable<Rect>  _cachedBounds = null;
-        private bool            _hasAddedRoot;
+        private Ink.Renderer _renderer;
+        private Nullable<Rect> _cachedBounds = null;
+        private bool _hasAddedRoot;
         //
         // HighContrast support
         //
-        private InkPresenterHighContrastCallback    _contrastCallback;
+        private InkPresenterHighContrastCallback _contrastCallback;
 
-        private Size                                _constraintSize;
+        private Size _constraintSize;
 
         #endregion Private Fields
     }

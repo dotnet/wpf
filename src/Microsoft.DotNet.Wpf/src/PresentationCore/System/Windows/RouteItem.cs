@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,15 +22,15 @@ namespace System.Windows
         }
 
         #endregion Construction
-        
+
         #region Operations
 
         // Returns target
         internal object Target
         {
-            get {return _target;}
+            get { return _target; }
         }
-        
+
         // Invokes the associated RoutedEventHandler
         // on the target object with the given 
         // RoutedEventArgs
@@ -82,7 +82,7 @@ namespace System.Windows
         /// <summary>
         ///     Equals operator overload
         /// </summary>
-        public static bool operator== (RouteItem routeItem1, RouteItem routeItem2)
+        public static bool operator ==(RouteItem routeItem1, RouteItem routeItem2)
         {
             return routeItem1.Equals(routeItem2);
         }
@@ -90,11 +90,11 @@ namespace System.Windows
         /// <summary>
         ///     NotEquals operator overload
         /// </summary>
-        public static bool operator!= (RouteItem routeItem1, RouteItem routeItem2)
+        public static bool operator !=(RouteItem routeItem1, RouteItem routeItem2)
         {
             return !routeItem1.Equals(routeItem2);
         }
-        
+
         #endregion Operations
 
         #region Data

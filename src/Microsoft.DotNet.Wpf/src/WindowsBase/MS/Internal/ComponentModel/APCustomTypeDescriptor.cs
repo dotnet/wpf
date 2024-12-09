@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,7 +12,8 @@ namespace MS.Internal.ComponentModel
     ///     could just inherit from the CustomTypeDescriptor class, which does most of the forwarding
     ///     work for us, but these are allocated a lot so we want them to be structs.
     /// </summary>
-    struct APCustomTypeDescriptor : ICustomTypeDescriptor {
+    struct APCustomTypeDescriptor : ICustomTypeDescriptor
+    {
         //------------------------------------------------------
         //
         //  Constructors
@@ -26,7 +27,7 @@ namespace MS.Internal.ComponentModel
         ///     our base provider, which provides is with a default implementation of everything
         ///     we don't override.  for us, we want to override only the property mechanism.
         /// </summary>
-        internal APCustomTypeDescriptor(ICustomTypeDescriptor parent, object instance) 
+        internal APCustomTypeDescriptor(ICustomTypeDescriptor parent, object instance)
         {
             _parent = parent;
             _instance = FromObj(instance);
@@ -41,12 +42,12 @@ namespace MS.Internal.ComponentModel
         //------------------------------------------------------
 
         #region Public Methods
-        
+
         /// <summary>
         ///     Returns a collection of properties for our object.  We first rely on base
         ///     CLR properties and then we attempt to match these with dependency properties.
         /// </summary>
-        public PropertyDescriptorCollection GetProperties() 
+        public PropertyDescriptorCollection GetProperties()
         {
             return GetProperties(null);
         }
@@ -55,7 +56,7 @@ namespace MS.Internal.ComponentModel
         ///     Returns a collection of properties for our object.  We first rely on base
         ///     CLR properties and then we attempt to match these with dependency properties.
         /// </summary>
-        public PropertyDescriptorCollection GetProperties(Attribute[] attributes) 
+        public PropertyDescriptorCollection GetProperties(Attribute[] attributes)
         {
             // Because attached properties can come and go at any time,
             // the set of properties we have here always needs to be rebuilt.
@@ -69,12 +70,12 @@ namespace MS.Internal.ComponentModel
 
             PropertyFilterOptions filter = PropertyFilterOptions.Valid | PropertyFilterOptions.SetValues;
 
-            if (attributes != null) 
+            if (attributes != null)
             {
-                foreach (Attribute attr in attributes) 
+                foreach (Attribute attr in attributes)
                 {
                     PropertyFilterAttribute filterAttr = attr as PropertyFilterAttribute;
-                    if (filterAttr != null) 
+                    if (filterAttr != null)
                     {
                         filter = filterAttr.Filter;
                         break;
@@ -82,7 +83,7 @@ namespace MS.Internal.ComponentModel
                 }
             }
 
-            if (filter == PropertyFilterOptions.None) 
+            if (filter == PropertyFilterOptions.None)
             {
                 return PropertyDescriptorCollection.Empty;
             }
@@ -100,13 +101,13 @@ namespace MS.Internal.ComponentModel
             // enumerator.
 
             List<PropertyDescriptor> filteredProps;
-             
-            if (filter == PropertyFilterOptions.SetValues) 
+
+            if (filter == PropertyFilterOptions.SetValues)
             {
                 LocalValueEnumerator localEnum = _instance.GetLocalValueEnumerator();
                 filteredProps = new List<PropertyDescriptor>(localEnum.Count);
 
-                while(localEnum.MoveNext())
+                while (localEnum.MoveNext())
                 {
                     DependencyProperty dp = localEnum.Current.Property;
                     DependencyPropertyKind kind = DependencyObjectProvider.GetDependencyPropertyKind(dp, instanceType);
@@ -123,7 +124,7 @@ namespace MS.Internal.ComponentModel
             {
                 filteredProps = new List<PropertyDescriptor>(registeredProperties.Length);
 
-                foreach (DependencyProperty dp in registeredProperties) 
+                foreach (DependencyProperty dp in registeredProperties)
                 {
                     bool addProp = false;
                     DependencyPropertyKind kind = DependencyObjectProvider.GetDependencyPropertyKind(dp, instanceType);
@@ -137,19 +138,19 @@ namespace MS.Internal.ComponentModel
                         PropertyFilterOptions anySet = PropertyFilterOptions.SetValues | PropertyFilterOptions.UnsetValues;
                         PropertyFilterOptions anyValid = PropertyFilterOptions.Valid | PropertyFilterOptions.Invalid;
 
-                        if ((filter & anySet) == anySet || (filter & anyValid) == anyValid) 
+                        if ((filter & anySet) == anySet || (filter & anyValid) == anyValid)
                         {
                             addProp = true;
                         }
 
-                        if (!addProp && (filter & anyValid) != 0) 
+                        if (!addProp && (filter & anyValid) != 0)
                         {
                             bool canAttach = CanAttachProperty(dp, _instance);
                             addProp = canAttach ^ ((filter & anyValid) == PropertyFilterOptions.Invalid);
                         }
 
 
-                        if (!addProp && (filter & anySet) != 0) 
+                        if (!addProp && (filter & anySet) != 0)
                         {
                             bool shouldSerialize = _instance.ContainsValue(dp);
                             addProp = shouldSerialize ^ ((filter & anySet) == PropertyFilterOptions.UnsetValues);
@@ -163,7 +164,7 @@ namespace MS.Internal.ComponentModel
                         addProp = true;
                     }
 
-                    if (addProp) 
+                    if (addProp)
                     {
                         DependencyObjectPropertyDescriptor dpProp = DependencyObjectProvider.GetAttachedPropertyDescriptor(dp, instanceType);
                         filteredProps.Add(dpProp);
@@ -188,7 +189,7 @@ namespace MS.Internal.ComponentModel
         {
             // We only support public type converters, in order to avoid asserts.
             TypeConverter typeConverter = _parent.GetConverter();
-            if( typeConverter.GetType().IsPublic )
+            if (typeConverter.GetType().IsPublic)
             {
                 return typeConverter;
             }
@@ -227,7 +228,7 @@ namespace MS.Internal.ComponentModel
         /// <summary>
         ///     Returns a dependency object for the given value.  
         /// </summary>
-        private static DependencyObject FromObj(object value) 
+        private static DependencyObject FromObj(object value)
         {
             // This indirection is necessary to support
             // the "association" feature of type descriptor.  This feature
@@ -239,7 +240,7 @@ namespace MS.Internal.ComponentModel
         ///     Returns an array of all registered properties declared in the
         ///     system.  
         /// </summary>
-        private DependencyProperty[] GetRegisteredProperties() 
+        private DependencyProperty[] GetRegisteredProperties()
         {
             DependencyProperty[] registeredProperties;
 
@@ -249,17 +250,17 @@ namespace MS.Internal.ComponentModel
             // If the count doesn't match our cached count, we re-fetch
             // all registered properties.
 
-            lock(_syncLock) 
+            lock (_syncLock)
             {
                 int cacheCnt = _dpCacheCount;
                 int currentCnt = DependencyProperty.RegisteredPropertyCount;
 
-                if (_dpCacheArray == null || cacheCnt != currentCnt) 
+                if (_dpCacheArray == null || cacheCnt != currentCnt)
                 {
                     List<DependencyProperty> dpList = new List<DependencyProperty>(currentCnt);
-                    lock(DependencyProperty.Synchronized) 
+                    lock (DependencyProperty.Synchronized)
                     {
-                        foreach(DependencyProperty dp in DependencyProperty.RegisteredProperties) 
+                        foreach (DependencyProperty dp in DependencyProperty.RegisteredProperties)
                         {
                             dpList.Add(dp);
                         }
@@ -276,7 +277,7 @@ namespace MS.Internal.ComponentModel
         }
 
         #endregion Private Methods
-    
+
         //------------------------------------------------------
         //
         //  Private Fields
@@ -284,7 +285,7 @@ namespace MS.Internal.ComponentModel
         //------------------------------------------------------
 
         #region Private Fields
-        
+
 
         private ICustomTypeDescriptor _parent;
         private DependencyObject _instance;
@@ -293,7 +294,7 @@ namespace MS.Internal.ComponentModel
 
         // Synchronized by "_syncLock"
         private static int _dpCacheCount = 0;
-        
+
         // Synchronized by "_syncLock"
         private static DependencyProperty[] _dpCacheArray;
 

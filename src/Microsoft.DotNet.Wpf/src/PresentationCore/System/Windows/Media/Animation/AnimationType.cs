@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,7 +23,7 @@ namespace System.Windows.Media.Animation
         /// The animation animates from the defaultOriginValue to the To property value.
         /// </summary>
         To,
-        
+
         /// <summary>
         /// The animation animates from the defaultOriginValue value to the defaultOriginValue value plus
         /// the By property value.

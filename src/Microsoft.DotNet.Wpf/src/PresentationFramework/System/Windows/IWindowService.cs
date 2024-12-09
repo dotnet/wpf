@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,7 +13,7 @@ namespace System.Windows
     /// <summary>
     /// 
     /// </summary>
-    internal interface IWindowService 
+    internal interface IWindowService
     {
         /// <summary>
         /// The data that will be displayed as the title of the window.  Hosts 
@@ -22,11 +22,11 @@ namespace System.Windows
         /// property somewhere besides the caption bar.
         /// </summary>
         string Title
-        { 
-            get; 
-            set; 
+        {
+            get;
+            set;
         }
-                       
+
         /// <summary>
         /// Height of the host window
         /// </summary>

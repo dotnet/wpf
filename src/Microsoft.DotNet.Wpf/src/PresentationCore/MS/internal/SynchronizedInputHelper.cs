@@ -1,13 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Media3D;
-using System.Windows.Input;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Media3D;
 
 namespace MS.Internal
 {
@@ -42,7 +42,7 @@ namespace MS.Internal
         internal static bool IsMappedEvent(RoutedEventArgs args)
         {
             RoutedEvent re = args.RoutedEvent;
-            
+
             return (re == Keyboard.KeyUpEvent ||
                     re == Keyboard.KeyDownEvent ||
                     re == TextCompositionManager.TextInputEvent ||
@@ -53,13 +53,13 @@ namespace MS.Internal
         internal static SynchronizedInputType GetPairedInputType(SynchronizedInputType inputType)
         {
             SynchronizedInputType pairedInputType = SynchronizedInputType.KeyDown;
-            
+
             switch (inputType)
             {
                 case SynchronizedInputType.KeyDown:
                     pairedInputType = SynchronizedInputType.KeyUp;
                     break;
-                    
+
                 case SynchronizedInputType.KeyUp:
                     pairedInputType = SynchronizedInputType.KeyDown;
                     break;
@@ -75,7 +75,7 @@ namespace MS.Internal
                 case SynchronizedInputType.MouseRightButtonDown:
                     pairedInputType = SynchronizedInputType.MouseRightButtonUp;
                     break;
-                
+
                 case SynchronizedInputType.MouseRightButtonUp:
                     pairedInputType = SynchronizedInputType.MouseRightButtonDown;
                     break;
@@ -100,7 +100,7 @@ namespace MS.Internal
         // Check whether this element is listening for input.
         internal static bool IsListening(DependencyObject o, RoutedEventArgs args)
         {
-            if (InputManager.ListeningElement == o && 
+            if (InputManager.ListeningElement == o &&
                 Array.IndexOf(InputManager.SynchronizedInputEvents, args.RoutedEvent) >= 0)
             {
                 return true;
@@ -124,7 +124,7 @@ namespace MS.Internal
             // handled by one of the child visual element but we should consider it as if event is handled by
             // parent element ( logical parent).
             DependencyObject visualParent = null;
-            if(o is Visual || o is Visual3D)
+            if (o is Visual || o is Visual3D)
             {
                 visualParent = UIElementHelper.GetUIParent(o);
             }
@@ -270,18 +270,18 @@ namespace MS.Internal
             switch (inputType)
             {
                 case SynchronizedInputType.KeyUp:
-                    e = new RoutedEvent[] {Keyboard.KeyUpEvent};
+                    e = new RoutedEvent[] { Keyboard.KeyUpEvent };
                     break;
                 case SynchronizedInputType.KeyDown:
-                    e = new RoutedEvent[] {Keyboard.KeyDownEvent, TextCompositionManager.TextInputEvent};
+                    e = new RoutedEvent[] { Keyboard.KeyDownEvent, TextCompositionManager.TextInputEvent };
                     break;
                 case SynchronizedInputType.MouseLeftButtonDown:
                 case SynchronizedInputType.MouseRightButtonDown:
-                    e = new RoutedEvent[] {Mouse.MouseDownEvent};
+                    e = new RoutedEvent[] { Mouse.MouseDownEvent };
                     break;
                 case SynchronizedInputType.MouseLeftButtonUp:
                 case SynchronizedInputType.MouseRightButtonUp:
-                    e = new RoutedEvent[] {Mouse.MouseUpEvent};
+                    e = new RoutedEvent[] { Mouse.MouseUpEvent };
                     break;
                 default:
                     Debug.Assert(false);
@@ -329,14 +329,14 @@ namespace MS.Internal
                         break;
                 }
             }
-}
+        }
     }
 
     internal enum SynchronizedInputStates
     {
-        NoOpportunity  = 0x01,
+        NoOpportunity = 0x01,
         HadOpportunity = 0x02,
-        Handled        = 0x04,
-        Discarded      = 0x08
+        Handled = 0x04,
+        Discarded = 0x08
     };
 }

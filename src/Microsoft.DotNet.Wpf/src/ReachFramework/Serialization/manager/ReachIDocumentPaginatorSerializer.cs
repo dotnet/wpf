@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System.Xml;
-using System.Windows.Xps.Packaging;
 using System.Windows.Documents;
 using System.Windows.Markup;
+using System.Windows.Xps.Packaging;
+using System.Xml;
 
 namespace System.Windows.Xps.Serialization
 {
@@ -42,7 +42,7 @@ namespace System.Windows.Xps.Serialization
             //
             ((XpsSerializationManager)SerializationManager).ResourcePolicy.ImageCrcTable = new Dictionary<UInt32, Uri>();
 
-            ((XpsSerializationManager)SerializationManager).ResourcePolicy.ImageUriHashTable = new Dictionary<int,Uri>();
+            ((XpsSerializationManager)SerializationManager).ResourcePolicy.ImageUriHashTable = new Dictionary<int, Uri>();
             //
             // Create the ColorContextTable required by the Type Converters
             // The ColorContext table at this time is shared / document
@@ -66,9 +66,9 @@ namespace System.Windows.Xps.Serialization
             String xmlnsForType = SerializationManager.GetXmlNSForType(typeof(FixedDocument));
             String nameForType = XpsS0Markup.FixedDocument;
 
-            if( SerializationManager is XpsSerializationManager)
+            if (SerializationManager is XpsSerializationManager)
             {
-               (SerializationManager as XpsSerializationManager).RegisterDocumentStart();
+                (SerializationManager as XpsSerializationManager).RegisterDocumentStart();
             }
 
             if (xmlnsForType == null)
@@ -82,7 +82,7 @@ namespace System.Windows.Xps.Serialization
             }
 
             {
-                XpsSerializationPrintTicketRequiredEventArgs e = 
+                XpsSerializationPrintTicketRequiredEventArgs e =
                 new XpsSerializationPrintTicketRequiredEventArgs(PrintTicketLevel.FixedDocumentPrintTicket,
                                                                  0);
 
@@ -91,9 +91,9 @@ namespace System.Windows.Xps.Serialization
                 //
                 // Serialize the data for the PrintTicket
                 //
-                if(e.Modified)
+                if (e.Modified)
                 {
-                    if(e.PrintTicket != null)
+                    if (e.PrintTicket != null)
                     {
                         PrintTicketSerializer serializer = new PrintTicketSerializer(SerializationManager);
                         serializer.SerializeObject(e.PrintTicket);
@@ -136,7 +136,7 @@ namespace System.Windows.Xps.Serialization
             //
             // Clear off the table from the resource policy
             //
-             ((XpsSerializationManager)SerializationManager).ResourcePolicy.ImageCrcTable = null;
+            ((XpsSerializationManager)SerializationManager).ResourcePolicy.ImageCrcTable = null;
 
             ((XpsSerializationManager)SerializationManager).ResourcePolicy.ImageUriHashTable = null;
             //
@@ -146,15 +146,15 @@ namespace System.Windows.Xps.Serialization
             //
             // Signal to any registered callers that the Document has been serialized
             //
-            XpsSerializationProgressChangedEventArgs progressEvent = 
+            XpsSerializationProgressChangedEventArgs progressEvent =
             new XpsSerializationProgressChangedEventArgs(XpsWritingProgressChangeLevel.FixedDocumentWritingProgress,
                                                          0,
                                                          0,
                                                          null);
 
-            if( SerializationManager is XpsSerializationManager)
+            if (SerializationManager is XpsSerializationManager)
             {
-               (SerializationManager as XpsSerializationManager).RegisterDocumentEnd();
+                (SerializationManager as XpsSerializationManager).RegisterDocumentEnd();
             }
             ((IXpsSerializationManager)SerializationManager).OnXPSSerializationProgressChanged(progressEvent);
         }

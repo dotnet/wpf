@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -29,12 +29,12 @@ namespace MS.Internal.IO.Packaging
         /// This is the equivalent of the MemoryStream constructor which takes int capacity parameter. 
         /// Callers should treat resulting MemoryStream excatly as the System.Io.MemoryStream
         /// </summary>        
-        MemoryStream Create(int capacity);        
+        MemoryStream Create(int capacity);
 
         /// <summary>
         /// This function can be safely called from any context it will not result in any significant operation except 
         /// some integer accumulation math. It is ok to call this in a middle of Read/Write/Flush/Seek/SetLength or whatever 
         /// </summary>        
         void ReportMemoryUsageDelta(int delta);
+    }
 }
-} 

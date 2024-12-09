@@ -1,20 +1,19 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal.Documents;
-using System.Windows.Controls;      // UIElementCollection
-using System.Windows.Media;
-using System.Windows.Automation;
-using System.Windows.Documents.DocumentStructures;
 using System.Collections;
 using System.Globalization;
-using System.Text;
 using System.IO;
+using System.Text;
+using System.Windows.Automation;
+using System.Windows.Controls;      // UIElementCollection
+using System.Windows.Documents.DocumentStructures;
+using System.Windows.Media;
 using System.Xml;
-using Path = System.Windows.Shapes.Path;
-
+using MS.Internal.Documents;
 using MS.Utility;
+using Path = System.Windows.Shapes.Path;
 
 //
 // Description:
@@ -350,7 +349,7 @@ namespace System.Windows.Documents
                 FixedSOMTextRun run = element as FixedSOMTextRun;
                 if (run != null && run.IsReversed)
                 {
-                    fixedOffset  = run.EndIndex - run.StartIndex - fixedOffset;
+                    fixedOffset = run.EndIndex - run.StartIndex - fixedOffset;
                 }
                 int offset = element.OffsetInFlowNode + fixedOffset - element.StartIndex;
                 return new FlowPosition(_container, flow, offset);
@@ -438,7 +437,7 @@ namespace System.Windows.Documents
             }
 
             run = element as FixedSOMTextRun;
-            int fixedOffset  = flowOffset - element.OffsetInFlowNode + element.StartIndex;
+            int fixedOffset = flowOffset - element.OffsetInFlowNode + element.StartIndex;
             if (run != null && run.IsReversed)
             {
                 fixedOffset = run.EndIndex - run.StartIndex - fixedOffset;
@@ -474,13 +473,13 @@ namespace System.Windows.Documents
             }
 
             ArrayList ar = new ArrayList();
-            FlowNode flowStart  = flowNodes[0];
-            FlowNode flowEnd    = flowNodes[flowNodes.Length - 1];
+            FlowNode flowStart = flowNodes[0];
+            FlowNode flowEnd = flowNodes[flowNodes.Length - 1];
 
             foreach (FlowNode flowScan in flowNodes)
             {
                 int skipBefore = 0;
-                int stopAt     = Int32.MaxValue;
+                int stopAt = Int32.MaxValue;
                 if (flowScan == flowStart)
                 {
                     skipBefore = offsetStart;
@@ -735,13 +734,13 @@ namespace System.Windows.Documents
         private void _Init()
         {
             // Initialize Id
-            _nextScopeId  = FixedFlowMap.FlowOrderScopeIdStart;
+            _nextScopeId = FixedFlowMap.FlowOrderScopeIdStart;
 
             // Create empty mapping
             _fixedFlowMap = new FixedFlowMap();
 
             //
-            _pageStructures  = new List<FixedPageStructure>();
+            _pageStructures = new List<FixedPageStructure>();
         }
 
         //--------------------------------------------------------------------
@@ -973,7 +972,7 @@ namespace System.Windows.Documents
 
                     Canvas canvas = elements.Current as Canvas;
 
-                    children       = canvas.Children;
+                    children = canvas.Children;
                     localTransform = canvas.RenderTransform;
 
                     if (localTransform == null)
@@ -1098,7 +1097,7 @@ namespace System.Windows.Documents
 
         private bool _IsBoundaryPage(int pageIndex)
         {
-            return (   pageIndex == FixedFlowMap.FixedOrderStartPage
+            return (pageIndex == FixedFlowMap.FixedOrderStartPage
                     || pageIndex == FixedFlowMap.FixedOrderEndPage
                     );
         }
@@ -1153,7 +1152,7 @@ namespace System.Windows.Documents
 
         #region Private Fields
         private readonly FixedTextContainer _container;     // page container
-        private List<FixedPageStructure>  _pageStructures; // contain all FixedPageStructure for each page.
+        private List<FixedPageStructure> _pageStructures; // contain all FixedPageStructure for each page.
         private int _nextScopeId;                           // Next FlowNode ScopeId
         private FixedFlowMap _fixedFlowMap;
         private static bool[] _cTable = new bool[] { true, //0x5BF   //Combining marks table
@@ -1319,7 +1318,7 @@ namespace System.Windows.Documents
                 //Marks the hyperlink associated with a specific UIElement as "used"
                 public void MarkAsUsed(UIElement uiElement)
                 {
-                    for (int i=0; i<_hyperlinks.Count; i++)
+                    for (int i = 0; i < _hyperlinks.Count; i++)
                     {
                         LogicalHyperlink hyperlink = _hyperlinks[i];
                         if (hyperlink.UIElement == uiElement)
@@ -1436,8 +1435,8 @@ namespace System.Windows.Documents
                         _AddStartNode(FixedElement.ElementType.Paragraph);
                         _AddStartNode(FixedElement.ElementType.Hyperlink);
                         _currentFixedElement.SetValue(Hyperlink.NavigateUriProperty, hyperlink.Uri);
-                        _currentFixedElement.SetValue(FixedElement.HelpTextProperty, (String) (hyperlink.UIElement.GetValue(AutomationProperties.HelpTextProperty)));
-                        _currentFixedElement.SetValue(FixedElement.NameProperty, (String) (hyperlink.UIElement.GetValue(AutomationProperties.NameProperty)));
+                        _currentFixedElement.SetValue(FixedElement.HelpTextProperty, (String)(hyperlink.UIElement.GetValue(AutomationProperties.HelpTextProperty)));
+                        _currentFixedElement.SetValue(FixedElement.NameProperty, (String)(hyperlink.UIElement.GetValue(AutomationProperties.NameProperty)));
                         _AddEndNode();
                         _AddEndNode();
                     }
@@ -1552,7 +1551,7 @@ namespace System.Windows.Documents
             {
                 _FinishLine();
                 _mapping.MappingReplace(_pageStructure.FlowStart, _flowNodes);
-                _pageStructure.SetFlowBoundary(_flowNodes[0], _flowNodes[_flowNodes.Count-1]);
+                _pageStructure.SetFlowBoundary(_flowNodes[0], _flowNodes[_flowNodes.Count - 1]);
                 _pageStructure.SetupLineResults(_lineResults.ToArray());
             }
 
@@ -1577,10 +1576,10 @@ namespace System.Windows.Documents
                 else
                 {
                     //Run
-                    int nodeLength = (int) node.Cookie;
+                    int nodeLength = (int)node.Cookie;
                     _currentDumpNode.SetAttribute("Cookie", nodeLength.ToString());
                     FixedSOMElement[] somElems = node.FixedSOMElements;
-                    if (somElems!=null)
+                    if (somElems != null)
                     {
                         StringBuilder strBuilder = new StringBuilder();
                         foreach (FixedSOMElement somElem in somElems)
@@ -1627,7 +1626,7 @@ namespace System.Windows.Documents
                 _flowNodes.Add((FlowNode)_endNodes.Pop());
                 _currentFixedElement = (FixedElement)_fixedElements.Pop();
 #if DEBUG
-                _currentDumpNode = (XmlElement) _currentDumpNode.ParentNode;
+                _currentDumpNode = (XmlElement)_currentDumpNode.ParentNode;
 #endif
             }
 
@@ -1637,7 +1636,7 @@ namespace System.Windows.Documents
                 {
                     int textRunLength = 0;
                     FixedSOMTextRun run = null;
-                    for (int i=0; i<_textRuns.Count; i++)
+                    for (int i = 0; i < _textRuns.Count; i++)
                     {
                         run = _textRuns[i];
                         Glyphs glyphs = _builder.GetGlyphsElement(run.FixedNode);
@@ -1660,23 +1659,25 @@ namespace System.Windows.Documents
                         textRunLength += run.EndIndex - run.StartIndex;
                         Debug.Assert(run.EndIndex - run.StartIndex == run.Text.Length);
 
-                        if (i>0 && _builder._IsNonContiguous(_textRuns[i-1], run, comparison))
+                        if (i > 0 && _builder._IsNonContiguous(_textRuns[i - 1], run, comparison))
                         {
-                            _textRuns[i-1].Text = $"{_textRuns[i - 1].Text} ";
+                            _textRuns[i - 1].Text = $"{_textRuns[i - 1].Text} ";
                             textRunLength++;
                         }
                     }
-                    if (addSpace && run.Text.Length>0 && !run.Text.EndsWith(" ", StringComparison.Ordinal) && !IsHyphen(run.Text[run.Text.Length - 1]))
+                    if (addSpace && run.Text.Length > 0 && !run.Text.EndsWith(" ", StringComparison.Ordinal) && !IsHyphen(run.Text[run.Text.Length - 1]))
                     {
                         run.Text = $"{run.Text} ";
-                        textRunLength ++;
+                        textRunLength++;
                     }
 
                     if (textRunLength != 0)
                     {
-                        FlowNode flowNodeRun = new FlowNode(_NewScopeId(), FlowNodeType.Run, textRunLength);
-                        // Add list of text runs to flow node
-                        flowNodeRun.FixedSOMElements = _textRuns.ToArray();
+                        FlowNode flowNodeRun = new FlowNode(_NewScopeId(), FlowNodeType.Run, textRunLength)
+                        {
+                            // Add list of text runs to flow node
+                            FixedSOMElements = _textRuns.ToArray()
+                        };
 
                         int offset = 0;
 
@@ -1735,8 +1736,8 @@ namespace System.Windows.Documents
                         Debug.Assert(uiElement != null);
                         if (uiElement != null)
                         {
-                            _currentFixedElement.SetValue(FixedElement.HelpTextProperty, (String) (uiElement.GetValue(AutomationProperties.HelpTextProperty)));
-                            _currentFixedElement.SetValue(FixedElement.NameProperty, (String) (uiElement.GetValue(AutomationProperties.NameProperty)));
+                            _currentFixedElement.SetValue(FixedElement.HelpTextProperty, (String)(uiElement.GetValue(AutomationProperties.HelpTextProperty)));
+                            _currentFixedElement.SetValue(FixedElement.NameProperty, (String)(uiElement.GetValue(AutomationProperties.NameProperty)));
                             if (shadowHyperlink != null)
                             {
                                 _logicalHyperlinkContainer.MarkAsUsed(shadowHyperlink);

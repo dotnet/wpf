@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,17 +14,16 @@ Abstract:
 
 --*/
 
-using System.Xml;
 using System.Collections.ObjectModel;
-
 using System.Printing;
+using System.Xml;
 
 namespace MS.Internal.Printing.Configuration
 {
     /// <summary>
     /// Represents an output stapling option.
     /// </summary>
-    internal class StaplingOption: PrintCapabilityOption
+    internal class StaplingOption : PrintCapabilityOption
     {
         #region Constructors
 
@@ -210,8 +209,10 @@ namespace MS.Internal.Printing.Configuration
 
         internal static PrintCapabilityFeature NewFeatureCallback(InternalPrintCapabilities printCap)
         {
-            JobStapleCapability cap = new JobStapleCapability(printCap);
-            cap._staplingOptions = new Collection<StaplingOption>();
+            JobStapleCapability cap = new JobStapleCapability(printCap)
+            {
+                _staplingOptions = new Collection<StaplingOption>()
+            };
 
             return cap;
         }

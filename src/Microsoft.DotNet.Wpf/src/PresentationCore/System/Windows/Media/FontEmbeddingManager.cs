@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -52,14 +52,14 @@ namespace System.Windows.Media
             Uri glyphTypeface = glyphRun.GlyphTypeface.FontUri;
 
             Dictionary<ushort, bool> glyphSet;
-            
+
             if (_collectedGlyphTypefaces.ContainsKey(glyphTypeface))
                 glyphSet = _collectedGlyphTypefaces[glyphTypeface];
             else
                 glyphSet = _collectedGlyphTypefaces[glyphTypeface] = new Dictionary<ushort, bool>();
 
-            foreach(ushort glyphIndex in glyphRun.GlyphIndices)
-            {             
+            foreach (ushort glyphIndex in glyphRun.GlyphIndices)
+            {
                 glyphSet[glyphIndex] = true;
             }
         }
@@ -129,7 +129,7 @@ namespace System.Windows.Media
         /// bool values in the dictionary don't matter,
         /// we'll switch to Set class when it becomes available.
         /// </summary>
-        private Dictionary<Uri, Dictionary<ushort, bool>>   _collectedGlyphTypefaces;
+        private Dictionary<Uri, Dictionary<ushort, bool>> _collectedGlyphTypefaces;
 
         private static UriComparer _uriComparer = new UriComparer();
 

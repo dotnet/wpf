@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,7 +21,7 @@ namespace System.Windows.Markup
     internal class ProvideValueServiceProvider : IServiceProvider, IProvideValueTarget, IXamlTypeResolver, IUriContext, IFreezeFreezables
     {
         // Construction
-        
+
         internal ProvideValueServiceProvider(ParserContext context)
         {
             _context = context;
@@ -32,7 +32,7 @@ namespace System.Windows.Markup
         }
 
         // Set the TargetObject/Property (for use by IProvideValueTarget).
-        
+
         internal void SetData(object targetObject, object targetProperty)
         {
             _targetObject = targetObject;
@@ -40,7 +40,7 @@ namespace System.Windows.Markup
         }
 
         // Clear the TargetObject/Property (after a call to ProvideValue)
-        
+
         internal void ClearData()
         {
             _targetObject = _targetProperty = null;
@@ -48,14 +48,14 @@ namespace System.Windows.Markup
 
 
         // IXamlTypeResolver implementation
-        
+
         Type IXamlTypeResolver.Resolve(string qualifiedTypeName) // E.g. foo:Class
         {
             return _context.XamlTypeMapper.GetTypeFromBaseString(qualifiedTypeName, _context, true);
         }
 
         // IProvideValueTarget implementation
-        
+
         object IProvideValueTarget.TargetObject
         {
             get { return _targetObject; }
@@ -66,7 +66,7 @@ namespace System.Windows.Markup
         }
 
         // IUriContext implementation
-        
+
         Uri IUriContext.BaseUri
         {
             get { return _context.BaseUri; }
@@ -94,25 +94,25 @@ namespace System.Windows.Markup
 
         // IServiceProvider implementation (this is the way to get to the
         // above interface implementations).
-        
+
         public object GetService(Type service)
         {
             // IProvideValueTarget is the only implementation that
             // doesn't need the ParserContext
-            
-            if( service == typeof(IProvideValueTarget))
+
+            if (service == typeof(IProvideValueTarget))
             {
                 return this as IProvideValueTarget;
             }
 
-            if( _context != null )
+            if (_context != null)
             {
-                if( service == typeof(IXamlTypeResolver))
+                if (service == typeof(IXamlTypeResolver))
                 {
                     return this as IXamlTypeResolver;
                 }
 
-                else if( service == typeof(IUriContext))
+                else if (service == typeof(IUriContext))
                 {
                     return this as IUriContext;
                 }

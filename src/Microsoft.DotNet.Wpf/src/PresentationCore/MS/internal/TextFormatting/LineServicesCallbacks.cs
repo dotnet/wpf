@@ -1,13 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Windows;
-using System.Globalization;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
-
 using MS.Internal.Text.TextInterface;
 
 // Disabling 1634 and 1691: 
@@ -69,18 +68,18 @@ namespace MS.Internal.TextFormatting
         ///
         /// </remarks>
         internal unsafe LsErr FetchRunRedefined(
-            IntPtr              pols,               // Line Layout context
-            int                 lscpFetch,          // position to fetch
-            int                 fIsStyle,           // flag indicates if pstyle is given
-            IntPtr              pstyle,             // current demanded style
-            char*               pwchTextBuffer,     // [in/out] fixed-size character buffer
-            int                 cchTextBuffer,      // buffer length in characters
-            ref int             fIsBufferUsed,      // [out] Boolean flag indicating the fixed-size buffer is used
-            out char*           pwchText,           // [out] pointer to run's character string
-            ref int             cchText,            // [out] length of string
-            ref int             fIsHidden,          // [out] Is this run hidden?
-            ref LsChp           lschp,              // [out] run's character properties
-            ref IntPtr          lsplsrun            // [out] fetched run
+            IntPtr pols,               // Line Layout context
+            int lscpFetch,          // position to fetch
+            int fIsStyle,           // flag indicates if pstyle is given
+            IntPtr pstyle,             // current demanded style
+            char* pwchTextBuffer,     // [in/out] fixed-size character buffer
+            int cchTextBuffer,      // buffer length in characters
+            ref int fIsBufferUsed,      // [out] Boolean flag indicating the fixed-size buffer is used
+            out char* pwchText,           // [out] pointer to run's character string
+            ref int cchText,            // [out] length of string
+            ref int fIsHidden,          // [out] Is this run hidden?
+            ref LsChp lschp,              // [out] run's character properties
+            ref IntPtr lsplsrun            // [out] fetched run
             )
         {
             LsErr lserr = LsErr.None;
@@ -175,8 +174,8 @@ namespace MS.Internal.TextFormatting
 
                             lschp.idObj = (ushort)TextStore.ObjectId.Text_chp;
 
-                            if (    lsrun.Shapeable != null
-                                &&  lsrun.Shapeable.IsShapingRequired)
+                            if (lsrun.Shapeable != null
+                                && lsrun.Shapeable.IsShapingRequired)
                             {
                                 lschp.flags |= LsChp.Flags.fGlyphBased;
 
@@ -202,22 +201,22 @@ namespace MS.Internal.TextFormatting
                             break;
                         }
 
-                    default :
+                    default:
                         //  case Plsrun.LineBreak, Plsrun.ParaBreak, Plsrun.FakeLineBreak.
                         lschp.idObj = (ushort)TextStore.ObjectId.Text_chp;
                         store.CchEol = lsrun.Length;
-                        break;                                            
+                        break;
                 }
 
 
-                if (    lsrun.Type == Plsrun.Text
-                    ||  lsrun.Type == Plsrun.InlineObject)
+                if (lsrun.Type == Plsrun.Text
+                    || lsrun.Type == Plsrun.InlineObject)
                 {
                     // Run properties trigger repositioning
                     Debug.Assert(lsrun.RunProp != null);
 
-                    if (    lsrun.RunProp != null
-                        &&  lsrun.RunProp.BaselineAlignment != BaselineAlignment.Baseline)
+                    if (lsrun.RunProp != null
+                        && lsrun.RunProp.BaselineAlignment != BaselineAlignment.Baseline)
                     {
                         FullText.VerticalAdjust = true;
                     }
@@ -240,8 +239,8 @@ namespace MS.Internal.TextFormatting
         }
 
         private void SetChpFormat(
-            TextRunProperties   runProp,
-            ref LsChp           lschp
+            TextRunProperties runProp,
+            ref LsChp lschp
             )
         {
             SetChpFormat(runProp.TextDecorations, ref lschp);
@@ -249,8 +248,8 @@ namespace MS.Internal.TextFormatting
         }
 
         private void SetChpFormat(
-            TextDecorationCollection    textDecorations,
-            ref LsChp                   lschp
+            TextDecorationCollection textDecorations,
+            ref LsChp lschp
             )
         {
             // TextDecorations can be null.
@@ -277,9 +276,9 @@ namespace MS.Internal.TextFormatting
 
 
         internal LsErr FetchPap(
-            IntPtr      pols,           // Line Layout context
-            int         lscpFetch,      // position to fetch
-            ref LsPap   lspap           // [out] paragraph properties
+            IntPtr pols,           // Line Layout context
+            int lscpFetch,      // position to fetch
+            ref LsPap lspap           // [out] paragraph properties
             )
         {
             LsErr lserr = LsErr.None;
@@ -365,10 +364,10 @@ namespace MS.Internal.TextFormatting
         }
 
         internal LsErr FetchLineProps(
-            IntPtr              pols,               // Line Layout context
-            int                 lscpFetch,          // character position to fetch
-            int                 firstLineInPara,    // (bool) whether this the first line in paragraph
-            ref LsLineProps     lsLineProps         // [out] line properties
+            IntPtr pols,               // Line Layout context
+            int lscpFetch,          // character position to fetch
+            int firstLineInPara,    // (bool) whether this the first line in paragraph
+            ref LsLineProps lsLineProps         // [out] line properties
             )
         {
             LsErr lserr = LsErr.None;
@@ -387,12 +386,12 @@ namespace MS.Internal.TextFormatting
                 else
                     lsLineProps.durLeft = settings.TextIndent;
 
-                if (    pap.Wrap 
-                    &&  pap.OptimalBreak
-                    &&  settings.MaxLineWidth < FullText.FormatWidth)
+                if (pap.Wrap
+                    && pap.OptimalBreak
+                    && settings.MaxLineWidth < FullText.FormatWidth)
                 {
                     // durRightBreak & durRightJustify are the distances from the paragraph right margin
-                    lsLineProps.durRightBreak = lsLineProps.durRightJustify = (FullText.FormatWidth -  settings.MaxLineWidth);
+                    lsLineProps.durRightBreak = lsLineProps.durRightJustify = (FullText.FormatWidth - settings.MaxLineWidth);
                 }
             }
             catch (Exception e)
@@ -410,11 +409,11 @@ namespace MS.Internal.TextFormatting
 
 
         internal LsErr GetRunTextMetrics(
-            System.IntPtr       pols,           // Line Layout context
-            Plsrun              plsrun,         // plsrun
-            LsDevice            lsDevice,       // kind of device
-            LsTFlow             lstFlow,        // text flow
-            ref LsTxM           lstTextMetrics  // [out] returning metrics
+            System.IntPtr pols,           // Line Layout context
+            Plsrun plsrun,         // plsrun
+            LsDevice lsDevice,       // kind of device
+            LsTFlow lstFlow,        // text flow
+            ref LsTxM lstTextMetrics  // [out] returning metrics
             )
         {
             LsErr lserr = LsErr.None;
@@ -457,16 +456,16 @@ namespace MS.Internal.TextFormatting
 
 
         internal unsafe LsErr GetRunCharWidths(
-            IntPtr          pols,               // Line Layout context
-            Plsrun          plsrun,             // plsrun
-            LsDevice        device,             // kind of device
-            char*           charString,         // character string
-            int             stringLength,       // string length
-            int             maxWidth,           // max width allowance
-            LsTFlow         textFlow,           // text flow
-            int*            charWidths,         // [out] returning char widths up to given upperbound
-            ref int         totalWidth,         // [out] total run width
-            ref int         stringLengthFitted  // [out] number of char fitted
+            IntPtr pols,               // Line Layout context
+            Plsrun plsrun,             // plsrun
+            LsDevice device,             // kind of device
+            char* charString,         // character string
+            int stringLength,       // string length
+            int maxWidth,           // max width allowance
+            LsTFlow textFlow,           // text flow
+            int* charWidths,         // [out] returning char widths up to given upperbound
+            ref int totalWidth,         // [out] total run width
+            ref int stringLengthFitted  // [out] number of char fitted
             )
         {
             LsErr lserr = LsErr.None;
@@ -491,12 +490,12 @@ namespace MS.Internal.TextFormatting
                     // common cases, we treat this as an exception rather than the norm.
                     // We assume at this point that the current line has been formatted with
                     // full text state retained in the line.
-                    #if DEBUG
+#if DEBUG
                     // FullTextState property is only used in this Assert. 
                     // Put both the property and the assert under #if DEBUG to avoid
                     // FxCop violations
                     Debug.Assert(Draw.CurrentLine.FullTextState != null);
-                    #endif
+#endif
                     lsrun = Draw.CurrentLine.GetRun(plsrun);
                     formatter = Draw.CurrentLine.Formatter;
                 }
@@ -549,10 +548,10 @@ namespace MS.Internal.TextFormatting
         }
 
         internal LsErr GetDurMaxExpandRagged(
-            IntPtr      pols,               // Line Layout context
-            Plsrun      plsrun,             // plsrun
-            LsTFlow     lstFlow,            // text flow
-            ref int     maxExpandRagged     // [out] em width
+            IntPtr pols,               // Line Layout context
+            Plsrun plsrun,             // plsrun
+            LsTFlow lstFlow,            // text flow
+            ref int maxExpandRagged     // [out] em width
             )
         {
             LsErr lserr = LsErr.None;
@@ -581,16 +580,16 @@ namespace MS.Internal.TextFormatting
 
 
         internal LsErr GetAutoNumberInfo(
-            IntPtr          pols,               // Line Layout context
-            ref LsKAlign    alignment,          // [out] Marker alignment
-            ref LsChp       lschp,              // [out] Marker properties
-            ref IntPtr      lsplsrun,           // [out] Marker run
-            ref ushort      addedChar,          // [out] Character to add after marker
-            ref LsChp       lschpAddedChar,     // [out] Added character properties
-            ref IntPtr      lsplsrunAddedChar,  // [out] Added character run
-            ref int         fWord95Model,        // [out] true iff follow Word95 autonumbering model
-            ref int         offset,             // [out] Offset from marker to start of main text (relevant iff word95Model is true)
-            ref int         width               // [out] Offset from margin to start of main text (relevant iff word95Model is true)
+            IntPtr pols,               // Line Layout context
+            ref LsKAlign alignment,          // [out] Marker alignment
+            ref LsChp lschp,              // [out] Marker properties
+            ref IntPtr lsplsrun,           // [out] Marker run
+            ref ushort addedChar,          // [out] Character to add after marker
+            ref LsChp lschpAddedChar,     // [out] Added character properties
+            ref IntPtr lsplsrunAddedChar,  // [out] Added character run
+            ref int fWord95Model,        // [out] true iff follow Word95 autonumbering model
+            ref int offset,             // [out] Offset from marker to start of main text (relevant iff word95Model is true)
+            ref int width               // [out] Offset from margin to start of main text (relevant iff word95Model is true)
             )
         {
             LsErr lserr = LsErr.None;
@@ -612,10 +611,10 @@ namespace MS.Internal.TextFormatting
                     int lsrunOffset;
 
                     lsrun = markerStore.FetchLSRun(
-                        lscp, 
+                        lscp,
                         fullTextState.TextFormattingMode,
                         fullTextState.IsSideways,
-                        out plsrun, 
+                        out plsrun,
                         out lsrunOffset,
                         out lsrunLength
                         );
@@ -626,8 +625,10 @@ namespace MS.Internal.TextFormatting
 
                 alignment = LsKAlign.lskalRight;
 
-                lschp = new LsChp();
-                lschp.idObj = (ushort)TextStore.ObjectId.Text_chp;
+                lschp = new LsChp
+                {
+                    idObj = (ushort)TextStore.ObjectId.Text_chp
+                };
 
                 SetChpFormat(lsrun.RunProp, ref lschp);
 
@@ -656,11 +657,11 @@ namespace MS.Internal.TextFormatting
         }
 
         internal LsErr GetRunUnderlineInfo(
-            IntPtr          pols,           // Line Layout context
-            Plsrun          plsrun,         // plsrun
-            ref LsHeights   lsHeights,      // run height
-            LsTFlow         textFlow,       // text flow direction
-            ref LsULInfo    ulInfo          // [out] result underline info
+            IntPtr pols,           // Line Layout context
+            Plsrun plsrun,         // plsrun
+            ref LsHeights lsHeights,      // run height
+            LsTFlow textFlow,       // text flow direction
+            ref LsULInfo ulInfo          // [out] result underline info
             )
         {
             LsErr lserr = LsErr.None;
@@ -720,11 +721,11 @@ namespace MS.Internal.TextFormatting
         }
 
         internal LsErr GetRunStrikethroughInfo(
-            IntPtr          pols,           // Line Layout context
-            Plsrun          plsrun,         // plsrun
-            ref LsHeights   lsHeights,      // run height
-            LsTFlow         textFlow,       // text flow direction
-            ref LsStInfo    stInfo          // [out] result strikethrough info
+            IntPtr pols,           // Line Layout context
+            Plsrun plsrun,         // plsrun
+            ref LsHeights lsHeights,      // run height
+            LsTFlow textFlow,       // text flow direction
+            ref LsStInfo stInfo          // [out] result strikethrough info
             )
         {
             LsErr lserr = LsErr.None;
@@ -774,9 +775,9 @@ namespace MS.Internal.TextFormatting
 
 
         private void GetLSRunStrikethroughMetrics(
-            LSRun       lsrun,
-            out double  strikeThroughPositionInEm,
-            out double  strikeThroughThicknessInEm
+            LSRun lsrun,
+            out double strikeThroughPositionInEm,
+            out double strikeThroughThicknessInEm
             )
         {
             if (lsrun.Shapeable != null)
@@ -794,15 +795,15 @@ namespace MS.Internal.TextFormatting
 
 
         internal LsErr Hyphenate(
-            IntPtr          pols,                   // Line Layout context
-            int             fLastHyphenFound,       // whether last hyphen found?
-            int             lscpLastHyphen,         // cp of the last found hyphen
-            ref LsHyph      lastHyph,               // [in] last found hyphenation
-            int             lscpWordStart,          // first character of word
-            int             lscpExceed,             // first character in this word that exceeds column
-            ref int         fHyphenFound,           // [out] hyphenation opportunity found?
-            ref int         lscpHyphen,             // [out] cp of the character before hyphen
-            ref LsHyph      lsHyph                  // [out] hyphen info
+            IntPtr pols,                   // Line Layout context
+            int fLastHyphenFound,       // whether last hyphen found?
+            int lscpLastHyphen,         // cp of the last found hyphen
+            ref LsHyph lastHyph,               // [in] last found hyphenation
+            int lscpWordStart,          // first character of word
+            int lscpExceed,             // first character in this word that exceeds column
+            ref int fHyphenFound,           // [out] hyphenation opportunity found?
+            ref int lscpHyphen,             // [out] cp of the character before hyphen
+            ref LsHyph lsHyph                  // [out] hyphen info
             )
         {
             LsErr lserr = LsErr.None;
@@ -832,14 +833,14 @@ namespace MS.Internal.TextFormatting
             return lserr;
         }
 
-        
+
         internal LsErr GetNextHyphenOpp(
-            IntPtr              pols,                   // Line Layout context
-            int                 lscpStartSearch,        // LSCP to start search for hyphen opportunity
-            int                 lsdcpSearch,            // number of LSCP to look for the hyphen opportunity
-            ref int             fHyphenFound,           // [out] hyphen found
-            ref int             lscpHyphen,             // [out] LSCP of character before hyphen
-            ref LsHyph          lsHyph                  // [out] hyphen info
+            IntPtr pols,                   // Line Layout context
+            int lscpStartSearch,        // LSCP to start search for hyphen opportunity
+            int lsdcpSearch,            // number of LSCP to look for the hyphen opportunity
+            ref int fHyphenFound,           // [out] hyphen found
+            ref int lscpHyphen,             // [out] LSCP of character before hyphen
+            ref LsHyph lsHyph                  // [out] hyphen info
             )
         {
             LsErr lserr = LsErr.None;
@@ -869,14 +870,14 @@ namespace MS.Internal.TextFormatting
             return lserr;
         }
 
-        
+
         internal LsErr GetPrevHyphenOpp(
-            IntPtr              pols,                   // Line Layout context
-            int                 lscpStartSearch,        // LSCP to start search for hyphen opportunity
-            int                 lsdcpSearch,            // number of LSCP to look for the hyphen opportunity
-            ref int             fHyphenFound,           // [out] hyphen found
-            ref int             lscpHyphen,             // [out] LSCP of character before hyphen
-            ref LsHyph          lsHyph                  // [out] hyphen info
+            IntPtr pols,                   // Line Layout context
+            int lscpStartSearch,        // LSCP to start search for hyphen opportunity
+            int lsdcpSearch,            // number of LSCP to look for the hyphen opportunity
+            ref int fHyphenFound,           // [out] hyphen found
+            ref int lscpHyphen,             // [out] LSCP of character before hyphen
+            ref LsHyph lsHyph                  // [out] hyphen info
             )
         {
             LsErr lserr = LsErr.None;
@@ -913,15 +914,15 @@ namespace MS.Internal.TextFormatting
 
 
         internal LsErr DrawStrikethrough(
-            IntPtr          pols,           // Line Layout context
-            Plsrun          plsrun,         // plsrun
-            uint            stType,         // kind of strike
-            ref LSPOINT     ptOrigin,       // [in] drawing origin
-            int             stLength,       // strike length
-            int             stThickness,    // strike thickness
-            LsTFlow         textFlow,       // text flow direction
-            uint            displayMode,    // display mode
-            ref LSRECT      clipRect        // [in] clipping rectangle
+            IntPtr pols,           // Line Layout context
+            Plsrun plsrun,         // plsrun
+            uint stType,         // kind of strike
+            ref LSPOINT ptOrigin,       // [in] drawing origin
+            int stLength,       // strike length
+            int stThickness,    // strike thickness
+            LsTFlow textFlow,       // text flow direction
+            uint displayMode,    // display mode
+            ref LSRECT clipRect        // [in] clipping rectangle
             )
         {
             LsErr lserr = LsErr.None;
@@ -945,7 +946,7 @@ namespace MS.Internal.TextFormatting
                 int baselineTop = ptOrigin.y + (int)Math.Round(lsrun.EmSize * strikeThroughPositionInEm);
                 int overlineTop = baselineTop - (lsrun.BaselineOffset - (int)Math.Round(lsrun.EmSize * strikeThroughThicknessInEm));
 
-                const uint locationMask = 
+                const uint locationMask =
                     (1U << (int)TextDecorationLocation.OverLine) |
                     (1U << (int)TextDecorationLocation.Strikethrough) |
                     (1U << (int)TextDecorationLocation.Baseline);
@@ -979,14 +980,14 @@ namespace MS.Internal.TextFormatting
 
         internal LsErr DrawUnderline(
             IntPtr pols,                // Line Layout context
-            Plsrun      plsrun,         // plsrun
-            uint        ulType,         // kind of underline
+            Plsrun plsrun,         // plsrun
+            uint ulType,         // kind of underline
             ref LSPOINT ptOrigin,       // [in] drawing origin
-            int         ulLength,       // underline length
-            int         ulThickness,    // underline thickness
-            LsTFlow     textFlow,       // text flow direction
-            uint        displayMode,    // display mode
-            ref LSRECT  clipRect        // [in] clipping rectangle
+            int ulLength,       // underline length
+            int ulThickness,    // underline thickness
+            LsTFlow textFlow,       // text flow direction
+            uint displayMode,    // display mode
+            ref LSRECT clipRect        // [in] clipping rectangle
             )
         {
             LsErr lserr = LsErr.None;
@@ -1031,16 +1032,16 @@ namespace MS.Internal.TextFormatting
 
 
         private void DrawTextDecorations(
-            LSRun    lsrun,
-            uint     locationMask,
-            int      left,
-            int      underlineTop,
-            int      overlineTop,
-            int      strikethroughTop,
-            int      baselineTop,
-            int      length,
-            int      thickness,
-            LsTFlow  textFlow
+            LSRun lsrun,
+            uint locationMask,
+            int left,
+            int underlineTop,
+            int overlineTop,
+            int strikethroughTop,
+            int baselineTop,
+            int length,
+            int thickness,
+            LsTFlow textFlow
             )
         {
             TextMetrics.FullTextLine currentLine = Draw.CurrentLine;
@@ -1088,18 +1089,18 @@ namespace MS.Internal.TextFormatting
 
 
         private void DrawTextDecorationCollection(
-            LSRun                     lsrun,
-            uint                      locationMask,
-            TextDecorationCollection  textDecorations,
-            Brush                     foregroundBrush,
-            int                       left,
-            int                       underlineTop,
-            int                       overlineTop,
-            int                       strikethroughTop,
-            int                       baselineTop,
-            int                       length,
-            int                       thickness,
-            LsTFlow                   textFlow
+            LSRun lsrun,
+            uint locationMask,
+            TextDecorationCollection textDecorations,
+            Brush foregroundBrush,
+            int left,
+            int underlineTop,
+            int overlineTop,
+            int strikethroughTop,
+            int baselineTop,
+            int length,
+            int thickness,
+            LsTFlow textFlow
             )
         {
             Invariant.Assert(textDecorations != null);
@@ -1175,13 +1176,13 @@ namespace MS.Internal.TextFormatting
         /// Draw any text decoration line
         /// </summary>
         private Rect DrawTextDecoration(
-            LSRun           lsrun,           // lsrun
-            Brush           foregroundBrush, // default brush if text decoration has no pen
-            LSPOINT         ptOrigin,        // drawing origin
-            int             ulLength,        // underline length
-            int             ulThickness,     // underline thickness
-            LsTFlow         textFlow,        // text flow direction
-            TextDecoration  textDecoration   //TextDecoration to be draw (add to sublinecollection
+            LSRun lsrun,           // lsrun
+            Brush foregroundBrush, // default brush if text decoration has no pen
+            LSPOINT ptOrigin,        // drawing origin
+            int ulLength,        // underline length
+            int ulThickness,     // underline thickness
+            LsTFlow textFlow,        // text flow direction
+            TextDecoration textDecoration   //TextDecoration to be draw (add to sublinecollection
             )
         {
             switch (textFlow)
@@ -1249,7 +1250,7 @@ namespace MS.Internal.TextFormatting
             }
 
             // pen thickness can be negative, which has the same effect as its absolute value
-            penThickness = Math.Abs(penThickness);            
+            penThickness = Math.Abs(penThickness);
 
             //
             // Resolve text decoration offset unit
@@ -1281,28 +1282,28 @@ namespace MS.Internal.TextFormatting
             DrawingContext drawingContext = Draw.DrawingContext;
 
             if (drawingContext != null)
-            {      
-                
-                
+            {
+
+
                 // Thickness used to draw the text decoration. 
                 // It might be scaled to account for PenOffset animation
                 double drawingPenThickness = penThickness;
 
                 // The origin used to draw the text decoration
                 // It might be offset to account for PenOffset animation
-                Point  drawingLineOrigin   = lineOrigin;
+                Point drawingLineOrigin = lineOrigin;
 
                 bool animated = !textDecoration.CanFreeze && (unitValue != 0);
 
                 int pushCount = 0; // counter for the number of explicit DrawingContext.Push()
-                
+
                 // put the guideline collection for the text decoration.
-                Draw.SetGuidelineY(baselineOrigin.Y);                
-                
-                try 
+                Draw.SetGuidelineY(baselineOrigin.Y);
+
+                try
                 {
                     if (animated)
-                    {                    
+                    {
                         //
                         // When TextDecoration has animation, we use Translate transform to
                         // directly apply animations for PenOffset property.
@@ -1318,7 +1319,7 @@ namespace MS.Internal.TextFormatting
                             drawingLineOrigin.X,  // reference point of scaling
                             drawingLineOrigin.Y  // reference point of scaling
                             );
-                           
+
                         TranslateTransform yTranslate = new TranslateTransform(
                             0,                       // x translate
                             textDecoration.PenOffset // y translate
@@ -1326,7 +1327,7 @@ namespace MS.Internal.TextFormatting
 
                         // adjust the pen's thickness as it will be scaled back by the scale transform
                         drawingPenThickness = drawingPenThickness / Math.Abs(unitValue);
-                                                    
+
                         // applied transforms
                         drawingContext.PushTransform(scaleTransform);
                         pushCount++;
@@ -1338,7 +1339,7 @@ namespace MS.Internal.TextFormatting
                     {
                         // TextDecoration doesn't have animation, adjust the line origin directly
                         drawingLineOrigin.Y += unitValue * textDecoration.PenOffset;
-                    }                    
+                    }
 
                     // Apply the pair of guidelines: one for baseline and another
                     // for top edge of undelining line. Both will be snapped to pixel grid.
@@ -1368,10 +1369,10 @@ namespace MS.Internal.TextFormatting
                                 drawingLineOrigin.Y - drawingPenThickness * 0.5,
                                 lineLength,
                                 drawingPenThickness
-                                )                    
-                            );                    
+                                )
+                            );
                     }
-                    else                    
+                    else
                     {
                         // a pen is specified for the text decoration. need to create a new copy 
                         // in order to set the thickness. 
@@ -1384,9 +1385,9 @@ namespace MS.Internal.TextFormatting
                             // If it is still the same pen, we'll call Copy() to get a new one.
                             textDecorationPen = textDecoration.Pen.Clone();
                         }
-                        
-                        textDecorationPen.Thickness = drawingPenThickness;                  
-                        
+
+                        textDecorationPen.Thickness = drawingPenThickness;
+
                         // draw the text decoration
                         drawingContext.DrawLine(
                             textDecorationPen,
@@ -1395,17 +1396,17 @@ namespace MS.Internal.TextFormatting
                             );
                     }
                 }
-                finally 
-                {               
+                finally
+                {
                     for (int i = 0; i < pushCount; i++)
                     {
-                        drawingContext.Pop(); 
+                        drawingContext.Pop();
                     }
 
                     Draw.UnsetGuidelineY();
                 }
             }
-            
+
             return new Rect(
                 lineOrigin.X,
                 lineOrigin.Y + unitValue * textDecoration.PenOffset - penThickness * 0.5,
@@ -1416,18 +1417,18 @@ namespace MS.Internal.TextFormatting
 
 
         internal unsafe LsErr DrawTextRun(
-            IntPtr          pols,               // Line Layout context
-            Plsrun          plsrun,             // plsrun
-            ref LSPOINT     ptText,             // [in] text origin
-            char*           pwchText,           // character string
-            int*            piCharAdvances,     // char advance widths
-            int             cchText,            // text length
-            LsTFlow         textFlow,           // text flow
-            uint            displayMode,        // draw in transparent or opaque
-            ref LSPOINT     ptRun,              // [in] run origin
-            ref LsHeights   lsHeights,          // [in] run height
-            int             dupRun,             // run length
-            ref LSRECT      clipRect            // [in] from DisplayLine's clip rectangle param
+            IntPtr pols,               // Line Layout context
+            Plsrun plsrun,             // plsrun
+            ref LSPOINT ptText,             // [in] text origin
+            char* pwchText,           // character string
+            int* piCharAdvances,     // char advance widths
+            int cchText,            // text length
+            LsTFlow textFlow,           // text flow
+            uint displayMode,        // draw in transparent or opaque
+            ref LSPOINT ptRun,              // [in] run origin
+            ref LsHeights lsHeights,          // [in] run height
+            int dupRun,             // run length
+            ref LSRECT clipRect            // [in] from DisplayLine's clip rectangle param
             )
         {
             LsErr lserr = LsErr.None;
@@ -1439,14 +1440,14 @@ namespace MS.Internal.TextFormatting
                 lsrun = currentLine.GetRun(plsrun);
 
                 GlyphRun glyphRun = ComputeUnshapedGlyphRun(
-                    lsrun, 
-                    textFlow, 
+                    lsrun,
+                    textFlow,
                     currentLine.Formatter,
                     true,       // origin of the glyph run provided at drawing time                    
-                    ptText, 
-                    dupRun, 
-                    cchText, 
-                    pwchText, 
+                    ptText,
+                    dupRun,
+                    cchText,
+                    pwchText,
                     piCharAdvances,
                     currentLine.IsJustified
                     );
@@ -1455,13 +1456,13 @@ namespace MS.Internal.TextFormatting
                 {
                     DrawingContext drawingContext = Draw.DrawingContext;
 
-                    Draw.SetGuidelineY(glyphRun.BaselineOrigin.Y);                    
+                    Draw.SetGuidelineY(glyphRun.BaselineOrigin.Y);
 
-                    try 
+                    try
                     {
                         _boundingBox.Union(
                             lsrun.DrawGlyphRun(
-                                drawingContext, 
+                                drawingContext,
                                 null,   // draw with the run's foreground brush
                                 glyphRun
                                 )
@@ -1488,11 +1489,11 @@ namespace MS.Internal.TextFormatting
 
 
         internal LsErr FInterruptShaping(
-            IntPtr          pols,               // Line Layout context
-            LsTFlow         textFlow,           // text flow
-            Plsrun          plsrunFirst,        // first run
-            Plsrun          plsrunSecond,       // second run
-            ref int         fIsInterruptOk      // [out] disconnect glyphs between runs?
+            IntPtr pols,               // Line Layout context
+            LsTFlow textFlow,           // text flow
+            Plsrun plsrunFirst,        // first run
+            Plsrun plsrunSecond,       // second run
+            ref int fIsInterruptOk      // [out] disconnect glyphs between runs?
             )
         {
             LsErr lserr = LsErr.None;
@@ -1501,8 +1502,8 @@ namespace MS.Internal.TextFormatting
             {
                 TextStore store = FullText.StoreFrom(plsrunFirst);
 
-                if (    !TextStore.IsContent(plsrunFirst)
-                    ||  !TextStore.IsContent(plsrunSecond))
+                if (!TextStore.IsContent(plsrunFirst)
+                    || !TextStore.IsContent(plsrunSecond))
                 {
                     fIsInterruptOk = 1;
                     return LsErr.None;
@@ -1583,21 +1584,21 @@ namespace MS.Internal.TextFormatting
         /// 
         /// </remarks>
         internal unsafe LsErr GetGlyphsRedefined(
-            IntPtr                      pols,                   // Line Layout context
-            IntPtr*                     plsplsruns,             // array of plsruns
-            int*                        pcchPlsrun,             // array of character count per run
-            int                         plsrunCount,            // number of runs
-            char*                       pwchText,               // character string
-            int                         cchText,                // character count
-            LsTFlow                     textFlow,               // text flow direction
-            ushort*                     puGlyphsBuffer,         // [in/out] fixed-size buffer for glyph indices
-            uint*                       piGlyphPropsBuffer,     // [in/out] fixed-size buffer for glyph properties list
-            int                         cgiGlyphBuffers,        // glyph buffers length in glyphs
-            ref int                     fIsGlyphBuffersUsed,    // [out] Boolean flag indicates glyph buffers being used
-            ushort*                     puClusterMap,           // [out] character-to-glyph cluster map
-            ushort*                     puCharProperties,       // [out] character properties
-            int*                        pfCanGlyphAlone,        // [out] parallel to character codes: glyphing does not depend on neighbor?
-            ref int                     glyphCount              // [out] glyph buffer length and returning actual glyph count
+            IntPtr pols,                   // Line Layout context
+            IntPtr* plsplsruns,             // array of plsruns
+            int* pcchPlsrun,             // array of character count per run
+            int plsrunCount,            // number of runs
+            char* pwchText,               // character string
+            int cchText,                // character count
+            LsTFlow textFlow,               // text flow direction
+            ushort* puGlyphsBuffer,         // [in/out] fixed-size buffer for glyph indices
+            uint* piGlyphPropsBuffer,     // [in/out] fixed-size buffer for glyph properties list
+            int cgiGlyphBuffers,        // glyph buffers length in glyphs
+            ref int fIsGlyphBuffersUsed,    // [out] Boolean flag indicates glyph buffers being used
+            ushort* puClusterMap,           // [out] character-to-glyph cluster map
+            ushort* puCharProperties,       // [out] character properties
+            int* pfCanGlyphAlone,        // [out] parallel to character codes: glyphing does not depend on neighbor?
+            ref int glyphCount              // [out] glyph buffer length and returning actual glyph count
             )
         {
             Invariant.Assert(puGlyphsBuffer != null && piGlyphPropsBuffer != null);
@@ -1616,15 +1617,15 @@ namespace MS.Internal.TextFormatting
                 bool isRightToLeft = ((lsrunFirst.BidiLevel & 1) != 0);
 
                 DWriteFontFeature[][] fontFeatures;
-                uint[]                fontFeatureRanges;
-                uint                  actualGlyphCount;
-                checked 
+                uint[] fontFeatureRanges;
+                uint actualGlyphCount;
+                checked
                 {
                     uint uCchText = (uint)cchText;
                     LSRun.CompileFeatureSet(lsruns, pcchPlsrun, uCchText, out fontFeatures, out fontFeatureRanges);
-                    
+
                     GlyphTypeface glyphTypeface = lsrunFirst.Shapeable.GlyphTypeFace;
-                    
+
                     FullText.Formatter.TextAnalyzer.GetGlyphs(
                         pwchText,
                         uCchText,
@@ -1647,7 +1648,7 @@ namespace MS.Internal.TextFormatting
                         );
 
                     glyphCount = (int)actualGlyphCount;
-                   
+
                     if (glyphCount <= cgiGlyphBuffers)
                     {
                         fIsGlyphBuffersUsed = 1;
@@ -1669,28 +1670,28 @@ namespace MS.Internal.TextFormatting
                 lserr = LsErr.ClientAbort;
             }
             return lserr;
-            
+
         }
 
 
         internal unsafe LsErr GetGlyphPositions(
-            IntPtr                      pols,               // Line Layout context
-            IntPtr*                     plsplsruns,         // array of plsruns
-            int*                        pcchPlsrun,         // array of character count per run
-            int                         plsrunCount,        // number of runs
-            LsDevice                    device,             // on reference or presentation device
-            char*                       pwchText,           // character string
-            ushort*                     puClusterMap,       // character-to-glyph cluster map
-            ushort*                     puCharProperties,   // character properties
-            int                         cchText,            // character count
-            ushort*                     puGlyphs,           // glyph indices
-            uint*                       piGlyphProperties,  // glyph properties
-            int                         glyphCount,         // glyph count
-            LsTFlow                     textFlow,           // text flow direction
-            int*                        piGlyphAdvances,    // [out] glyph advances
-            GlyphOffset*                piiGlyphOffsets     // [out] glyph offsets
+            IntPtr pols,               // Line Layout context
+            IntPtr* plsplsruns,         // array of plsruns
+            int* pcchPlsrun,         // array of character count per run
+            int plsrunCount,        // number of runs
+            LsDevice device,             // on reference or presentation device
+            char* pwchText,           // character string
+            ushort* puClusterMap,       // character-to-glyph cluster map
+            ushort* puCharProperties,   // character properties
+            int cchText,            // character count
+            ushort* puGlyphs,           // glyph indices
+            uint* piGlyphProperties,  // glyph properties
+            int glyphCount,         // glyph count
+            LsTFlow textFlow,           // text flow direction
+            int* piGlyphAdvances,    // [out] glyph advances
+            GlyphOffset* piiGlyphOffsets     // [out] glyph offsets
             )
-        {            
+        {
             LsErr lserr = LsErr.None;
             LSRun lsrunFirst = null;
 
@@ -1709,7 +1710,7 @@ namespace MS.Internal.TextFormatting
                 uint[] fontFeatureRanges;
                 LSRun.CompileFeatureSet(lsruns, pcchPlsrun, checked((uint)cchText), out fontFeatures, out fontFeatureRanges);
 
-                
+
                 FullText.Formatter.TextAnalyzer.GetGlyphPlacements(
                     pwchText,
                     puClusterMap,
@@ -1737,8 +1738,8 @@ namespace MS.Internal.TextFormatting
                 {
                     piiGlyphOffsets[i].du = glyphOffset[i].du;
                     piiGlyphOffsets[i].dv = glyphOffset[i].dv;
-                }                
-                 
+                }
+
             }
             catch (Exception e)
             {
@@ -1751,7 +1752,7 @@ namespace MS.Internal.TextFormatting
                 lserr = LsErr.ClientAbort;
             }
             return lserr;
-            
+
         }
 
 
@@ -1759,8 +1760,8 @@ namespace MS.Internal.TextFormatting
         /// Generate a list of correspondent lsruns
         /// </summary>
         private unsafe LSRun[] RemapLSRuns(
-            IntPtr*         plsplsruns,
-            int             plsrunCount
+            IntPtr* plsplsruns,
+            int plsrunCount
             )
         {
             LSRun[] lsruns = new LSRun[plsrunCount];
@@ -1777,25 +1778,25 @@ namespace MS.Internal.TextFormatting
 
 
         internal unsafe LsErr DrawGlyphs(
-            IntPtr                      pols,                       // Line Layout context
-            Plsrun                      plsrun,                     // plsrun
-            char*                       pwchText,                   // character string
-            ushort*                     puClusterMap,               // character-to-cluster map
-            ushort*                     puCharProperties,           // character properties
-            int                         charCount,                  // character count
-            ushort*                     puGlyphs,                   // glyph indices
-            int*                        piJustifiedGlyphAdvances,   // justified glyph advances
-            int*                        piGlyphAdvances,            // original ideal glyph advances
-            GlyphOffset*                piiGlyphOffsets,            // glyph offsets
-            uint*                       piGlyphProperties,          // glyph properties
-            LsExpType*                  plsExpType,                 // glyph expansion types
-            int                         glyphCount,                 // glyph count
-            LsTFlow                     textFlow,                   // text flow
-            uint                        displayMode,                // draw transparent or opaque
-            ref LSPOINT                 ptRun,                      // [in] display position (at baseline)
-            ref LsHeights               lsHeights,                  // [in] run height metrics
-            int                         runWidth,                   // run overall advance width
-            ref LSRECT                  clippingRect                // [in] clipping rectangle if any applied
+            IntPtr pols,                       // Line Layout context
+            Plsrun plsrun,                     // plsrun
+            char* pwchText,                   // character string
+            ushort* puClusterMap,               // character-to-cluster map
+            ushort* puCharProperties,           // character properties
+            int charCount,                  // character count
+            ushort* puGlyphs,                   // glyph indices
+            int* piJustifiedGlyphAdvances,   // justified glyph advances
+            int* piGlyphAdvances,            // original ideal glyph advances
+            GlyphOffset* piiGlyphOffsets,            // glyph offsets
+            uint* piGlyphProperties,          // glyph properties
+            LsExpType* plsExpType,                 // glyph expansion types
+            int glyphCount,                 // glyph count
+            LsTFlow textFlow,                   // text flow
+            uint displayMode,                // draw transparent or opaque
+            ref LSPOINT ptRun,                      // [in] display position (at baseline)
+            ref LsHeights lsHeights,                  // [in] run height metrics
+            int runWidth,                   // run overall advance width
+            ref LSRECT clippingRect                // [in] clipping rectangle if any applied
             )
         {
             LsErr lserr = LsErr.None;
@@ -1829,17 +1830,17 @@ namespace MS.Internal.TextFormatting
 
                     Draw.SetGuidelineY(glyphRun.BaselineOrigin.Y);
 
-                    try 
+                    try
                     {
                         _boundingBox.Union(
                             lsrun.DrawGlyphRun(
-                                drawingContext, 
+                                drawingContext,
                                 null,     // draw with the run's foreground
                                 glyphRun
                                 )
                             );
                     }
-                    finally 
+                    finally
                     {
                         Draw.UnsetGuidelineY();
                     }
@@ -1866,15 +1867,15 @@ namespace MS.Internal.TextFormatting
         /// the critical _exception member.
         /// </summary>
         internal unsafe LsErr GetCharCompressionInfoFullMixed(
-            IntPtr              pols,                   // Line Layout context
-            LsDevice            device,                 // kind of device
-            LsTFlow             textFlow,               // text flow
-            LsCharRunInfo       *plscharrunInfo,        // char-based run info
-            LsNeighborInfo      *plsneighborInfoLeft,   // left neighbor info
-            LsNeighborInfo      *plsneighborInfoRight,  // right neigbor info
-            int                 maxPriorityLevel,       // maximum priority level
-            int**               pplscompressionLeft,    // [in/out] fill in left compression amount per priority level on the way out
-            int**               pplscompressionRight    // [in/out] fill in right compression amount per priority level on the way out
+            IntPtr pols,                   // Line Layout context
+            LsDevice device,                 // kind of device
+            LsTFlow textFlow,               // text flow
+            LsCharRunInfo* plscharrunInfo,        // char-based run info
+            LsNeighborInfo* plsneighborInfoLeft,   // left neighbor info
+            LsNeighborInfo* plsneighborInfoRight,  // right neigbor info
+            int maxPriorityLevel,       // maximum priority level
+            int** pplscompressionLeft,    // [in/out] fill in left compression amount per priority level on the way out
+            int** pplscompressionRight    // [in/out] fill in right compression amount per priority level on the way out
             )
         {
             LsErr lserr = LsErr.None;
@@ -1916,15 +1917,15 @@ namespace MS.Internal.TextFormatting
         /// the critical _exception member.
         /// </summary>
         internal unsafe LsErr GetCharExpansionInfoFullMixed(
-            IntPtr              pols,                   // Line Layout context
-            LsDevice            device,                 // kind of device
-            LsTFlow             textFlow,               // text flow
-            LsCharRunInfo       *plscharrunInfo,        // char-based run info
-            LsNeighborInfo      *plsneighborInfoLeft,   // left neighbor info
-            LsNeighborInfo      *plsneighborInfoRight,  // right neigbor info
-            int                 maxPriorityLevel,       // maximum priority level
-            int**               pplsexpansionLeft,      // [in/out] fill in left expansion amount per priority level on the way out
-            int**               pplsexpansionRight      // [in/out] fill in right expansion amount per priority level on the way out
+            IntPtr pols,                   // Line Layout context
+            LsDevice device,                 // kind of device
+            LsTFlow textFlow,               // text flow
+            LsCharRunInfo* plscharrunInfo,        // char-based run info
+            LsNeighborInfo* plsneighborInfoLeft,   // left neighbor info
+            LsNeighborInfo* plsneighborInfoRight,  // right neigbor info
+            int maxPriorityLevel,       // maximum priority level
+            int** pplsexpansionLeft,      // [in/out] fill in left expansion amount per priority level on the way out
+            int** pplsexpansionRight      // [in/out] fill in right expansion amount per priority level on the way out
             )
         {
             LsErr lserr = LsErr.None;
@@ -1964,11 +1965,11 @@ namespace MS.Internal.TextFormatting
         /// Adjust characters at inter-word spacing position targetting the specified amount.
         /// </summary>
         private unsafe LsErr AdjustChars(
-            LsCharRunInfo       *plscharrunInfo,
-            bool                expanding,
-            int                 interWordAdjustTo,
-            int**               pplsAdjustLeft,
-            int**               pplsAdjustRight
+            LsCharRunInfo* plscharrunInfo,
+            bool expanding,
+            int interWordAdjustTo,
+            int** pplsAdjustLeft,
+            int** pplsAdjustRight
             )
         {
             char* pwch = plscharrunInfo->pwch;
@@ -2007,7 +2008,7 @@ namespace MS.Internal.TextFormatting
                 else if (expanding)
                 {
                     // emergency expansion, use the column width as maximum allowance
-                    pplsAdjustRight[2][i] = FullText.FormatWidth; 
+                    pplsAdjustRight[2][i] = FullText.FormatWidth;
                 }
             }
             return LsErr.None;
@@ -2020,15 +2021,15 @@ namespace MS.Internal.TextFormatting
         /// the critical _exception member.
         /// </summary>
         internal unsafe LsErr GetGlyphCompressionInfoFullMixed(
-            IntPtr              pols,                   // Line Layout context
-            LsDevice            device,                 // kind of device
-            LsTFlow             textFlow,               // text flow
-            LsGlyphRunInfo      *plsglyphrunInfo,       // glyph-based run info
-            LsNeighborInfo      *plsneighborInfoLeft,   // left neighbor info
-            LsNeighborInfo      *plsneighborInfoRight,  // right neigbor info
-            int                 maxPriorityLevel,       // maximum priority level
-            int                 **pplscompressionLeft,  // [in/out] fill in left compression amount per priority level on the way out
-            int                 **pplscompressionRight  // [in/out] fill in right compression amount per priority level on the way out
+            IntPtr pols,                   // Line Layout context
+            LsDevice device,                 // kind of device
+            LsTFlow textFlow,               // text flow
+            LsGlyphRunInfo* plsglyphrunInfo,       // glyph-based run info
+            LsNeighborInfo* plsneighborInfoLeft,   // left neighbor info
+            LsNeighborInfo* plsneighborInfoRight,  // right neigbor info
+            int maxPriorityLevel,       // maximum priority level
+            int** pplscompressionLeft,  // [in/out] fill in left compression amount per priority level on the way out
+            int** pplscompressionRight  // [in/out] fill in right compression amount per priority level on the way out
             )
         {
             LsErr lserr = LsErr.None;
@@ -2070,10 +2071,10 @@ namespace MS.Internal.TextFormatting
         /// is not allowed at all time.
         /// </summary>
         private unsafe LsErr CompressGlyphs(
-            LsGlyphRunInfo      *plsglyphrunInfo,
-            int                 interWordCompressTo,
-            int                 **pplsCompressionLeft,
-            int                 **pplsCompressionRight
+            LsGlyphRunInfo* plsglyphrunInfo,
+            int interWordCompressTo,
+            int** pplsCompressionLeft,
+            int** pplsCompressionRight
             )
         {
             char* pwch = plsglyphrunInfo->pwch;
@@ -2121,9 +2122,9 @@ namespace MS.Internal.TextFormatting
                     pplsCompressionRight[1][igi + i] = 0;
                     pplsCompressionRight[2][igi + i] = 0;
 
-                    if (    i == cgi - 1
-                        &&  cch == 1
-                        &&  j < cch
+                    if (i == cgi - 1
+                        && cch == 1
+                        && j < cch
                         )
                     {
                         // cluster has interword space, compress to the right of the last glyph of the cluster
@@ -2145,17 +2146,17 @@ namespace MS.Internal.TextFormatting
         /// full-mixed justification used only by optimal break mode. 
         /// </summary>
         internal unsafe LsErr GetGlyphExpansionInfoFullMixed(
-            IntPtr              pols,                   // Line Layout context
-            LsDevice            device,                 // kind of device
-            LsTFlow             textFlow,               // text flow
-            LsGlyphRunInfo      *plsglyphrunInfo,       // glyph-based run info
-            LsNeighborInfo      *plsneighborInfoLeft,   // left neighbor info
-            LsNeighborInfo      *plsneighborInfoRight,  // right neigbor info
-            int                 maxPriorityLevel,       // maximum priority level
-            int                 **pplsexpansionLeft,    // [in/out] fill in left expansion amount per priority level on the way out
-            int                 **pplsexpansionRight,   // [in/out] fill in right expansion amount per priority level on the way out
-            LsExpType           *plsexptype,            // [in/out] fill in glyph expansion type for each glyph
-            int                 *pduMinInk              // [in/out] fill in glyph minimum expansion for exptAddInkContinuous
+            IntPtr pols,                   // Line Layout context
+            LsDevice device,                 // kind of device
+            LsTFlow textFlow,               // text flow
+            LsGlyphRunInfo* plsglyphrunInfo,       // glyph-based run info
+            LsNeighborInfo* plsneighborInfoLeft,   // left neighbor info
+            LsNeighborInfo* plsneighborInfoRight,  // right neigbor info
+            int maxPriorityLevel,       // maximum priority level
+            int** pplsexpansionLeft,    // [in/out] fill in left expansion amount per priority level on the way out
+            int** pplsexpansionRight,   // [in/out] fill in right expansion amount per priority level on the way out
+            LsExpType* plsexptype,            // [in/out] fill in glyph expansion type for each glyph
+            int* pduMinInk              // [in/out] fill in glyph minimum expansion for exptAddInkContinuous
             )
         {
             LsErr lserr = LsErr.None;
@@ -2201,13 +2202,13 @@ namespace MS.Internal.TextFormatting
         /// Inter-letter expansion may be allowed in emergency case.
         /// </summary>
         private unsafe LsErr ExpandGlyphs(
-            LsGlyphRunInfo      *plsglyphrunInfo,
-            int                 interWordExpandTo,
-            int                 **pplsExpansionLeft,
-            int                 **pplsExpansionRight,
-            LsExpType           *plsexptype,
-            LsExpType           interWordExpansionType,
-            LsExpType           interLetterExpansionType
+            LsGlyphRunInfo* plsglyphrunInfo,
+            int interWordExpandTo,
+            int** pplsExpansionLeft,
+            int** pplsExpansionRight,
+            LsExpType* plsexptype,
+            LsExpType interWordExpansionType,
+            LsExpType interLetterExpansionType
             )
         {
             char* pwch = plsglyphrunInfo->pwch;
@@ -2289,9 +2290,9 @@ namespace MS.Internal.TextFormatting
         //
         //
         internal unsafe LsErr GetObjectHandlerInfo(
-            System.IntPtr   pols,               // Line Layout context
-            uint            objectId,           // installed object id
-            void*           objectInfo          // [out] object handler info
+            System.IntPtr pols,               // Line Layout context
+            uint objectId,           // installed object id
+            void* objectInfo          // [out] object handler info
             )
         {
             LsErr lserr = LsErr.None;
@@ -2313,9 +2314,11 @@ namespace MS.Internal.TextFormatting
                 switch (objectId)
                 {
                     case (uint)TextStore.ObjectId.InlineObject:
-                        InlineInit inlineInit = new InlineInit();
-                        inlineInit.pfnFormat = this.InlineFormatDelegate;
-                        inlineInit.pfnDraw = this.InlineDrawDelegate;
+                        InlineInit inlineInit = new InlineInit
+                        {
+                            pfnFormat = this.InlineFormatDelegate,
+                            pfnDraw = this.InlineDrawDelegate
+                        };
                         Marshal.StructureToPtr(inlineInit, (System.IntPtr)objectInfo, false);
                         break;
 
@@ -2338,16 +2341,16 @@ namespace MS.Internal.TextFormatting
         }
 
         internal LsErr InlineFormat(
-            System.IntPtr           pols,               // Line Layout context
-            Plsrun                  plsrun,             // plsrun
-            int                     lscpInline,         // first cp of the run
-            int                     currentPosition,    // inline's current pen location in text direction
-            int                     rightMargin,        // right margin
-            ref ObjDim              pobjDim,            // [out] object dimension
-            out int                 fFirstRealOnLine,   // [out] is this run the first in line
-            out int                 fPenPositionUsed,   // [out] is pen position used to format object
-            out LsBrkCond           breakBefore,        // [out] break condition before this object
-            out LsBrkCond           breakAfter          // [out] break condition after this object
+            System.IntPtr pols,               // Line Layout context
+            Plsrun plsrun,             // plsrun
+            int lscpInline,         // first cp of the run
+            int currentPosition,    // inline's current pen location in text direction
+            int rightMargin,        // right margin
+            ref ObjDim pobjDim,            // [out] object dimension
+            out int fFirstRealOnLine,   // [out] is this run the first in line
+            out int fPenPositionUsed,   // [out] is pen position used to format object
+            out LsBrkCond breakBefore,        // [out] break condition before this object
+            out LsBrkCond breakAfter          // [out] break condition after this object
             )
         {
             LsErr lserr = LsErr.None;
@@ -2379,8 +2382,10 @@ namespace MS.Internal.TextFormatting
                     rightMargin
                     );
 
-                pobjDim = new ObjDim();
-                pobjDim.dur = TextFormatterImp.RealToIdeal(metrics.Width);
+                pobjDim = new ObjDim
+                {
+                    dur = TextFormatterImp.RealToIdeal(metrics.Width)
+                };
                 pobjDim.heightsRef.dvMultiLineHeight = TextFormatterImp.RealToIdeal(metrics.Height);
                 pobjDim.heightsRef.dvAscent = TextFormatterImp.RealToIdeal(metrics.Baseline);
                 pobjDim.heightsRef.dvDescent = pobjDim.heightsRef.dvMultiLineHeight - pobjDim.heightsRef.dvAscent;
@@ -2430,11 +2435,11 @@ namespace MS.Internal.TextFormatting
 
 
         internal LsErr InlineDraw(
-            System.IntPtr   pols,           // Line Layout context
-            Plsrun          plsrun,         // plsrun
-            ref LSPOINT     ptRun,          // [in] pen position at which to render the object
-            LsTFlow         textFlow,       // text flow direction
-            int             runWidth        // object width
+            System.IntPtr pols,           // Line Layout context
+            Plsrun plsrun,         // plsrun
+            ref LSPOINT ptRun,          // [in] pen position at which to render the object
+            LsTFlow textFlow,       // text flow direction
+            int runWidth        // object width
             )
         {
             LsErr lserr = LsErr.None;
@@ -2470,7 +2475,7 @@ namespace MS.Internal.TextFormatting
 
                 // object baseline origin in UV relative to paragraph start
                 Point baselineOrigin = new Point(
-                    currentLine.Formatter.IdealToReal(currentLine.LSLineUToParagraphU(lsrunOrigin.x), currentLine.PixelsPerDip)+ Draw.VectorToLineOrigin.X,
+                    currentLine.Formatter.IdealToReal(currentLine.LSLineUToParagraphU(lsrunOrigin.x), currentLine.PixelsPerDip) + Draw.VectorToLineOrigin.X,
                     currentLine.Formatter.IdealToReal((lsrunOrigin.y + lsrun.BaselineMoveOffset), currentLine.PixelsPerDip) + Draw.VectorToLineOrigin.Y
                     );
 
@@ -2510,15 +2515,15 @@ namespace MS.Internal.TextFormatting
                         )
                     );
 
-                DrawingContext drawingContext = Draw.DrawingContext;                
-                
+                DrawingContext drawingContext = Draw.DrawingContext;
+
                 if (drawingContext != null)
                 {
                     // snapping for inline object
                     Draw.SetGuidelineY(baselineOrigin.Y);
 
-                    try 
-                    {                    
+                    try
+                    {
                         if (Draw.AntiInversion == null)
                         {
                             // Draw at XY origin
@@ -2542,17 +2547,17 @@ namespace MS.Internal.TextFormatting
                             // they intend to draw it.
 
                             drawingContext.PushTransform(Draw.AntiInversion);
-                            try 
+                            try
                             {
                                 textObject.Draw(drawingContext, baselineOrigin, baseDirection != 0, false);
-                            } 
+                            }
                             finally
                             {
                                 drawingContext.Pop();
                             }
                         }
                     }
-                    finally 
+                    finally
                     {
                         Draw.UnsetGuidelineY();
                     }
@@ -2584,28 +2589,28 @@ namespace MS.Internal.TextFormatting
         // Line service enumeration API gives the actual backing store CP range as well as all the necessary info
         // to contruct the GlyphRun. 
         //        
-        internal unsafe LsErr EnumText(        
-            IntPtr                      pols,                           // ls context
-            Plsrun                      plsrun,                         // plsrun
-            int                         cpFirst,                        // first cp of the ls dnode
-            int                         dcp,                            // dcp of the dnode
-            char                        *pwchText,                      // characters for glyph run
-            int                         cchText,                        // length of characters 
-            LsTFlow                     lstFlow,                        // flow direction
-            int                         fReverseOrder,                  // flag for reverse order enumeration
-            int                         fGeometryProvided,              // flag for providing geometry 
-            ref LSPOINT                 pptStart,                       // [in] logical start of the run
-            ref LsHeights               pheights,                       // [in] height (iff geometryProvided)
-            int                         dupRun,                         // width of the run
-            int                         glyphBaseRun,                   // flag for glyph based run
-            int                         *piCharAdvances,                // character advance widths (iff !glyphBaseRun)
-            ushort                      *puClusterMap,                  // cluster map (iff glyphBaseRun)
-            ushort                      *characterProperties,           // character properties (iff glyphBaseRun)
-            ushort                      *puGlyphs,                      // glyph indices (iff glyphBaseRun)
-            int                         *piJustifiedGlyphAdvances,      // glyph advances (iff glyphBaseRun)
-            GlyphOffset                 *piiGlyphOffsets,               // glyph offsets (iff glyphBaseRun)
-            uint                        *piGlyphProperties,             // glyph properties (iff glyphProperties)
-            int                         glyphCount                      // glyph count
+        internal unsafe LsErr EnumText(
+            IntPtr pols,                           // ls context
+            Plsrun plsrun,                         // plsrun
+            int cpFirst,                        // first cp of the ls dnode
+            int dcp,                            // dcp of the dnode
+            char* pwchText,                      // characters for glyph run
+            int cchText,                        // length of characters 
+            LsTFlow lstFlow,                        // flow direction
+            int fReverseOrder,                  // flag for reverse order enumeration
+            int fGeometryProvided,              // flag for providing geometry 
+            ref LSPOINT pptStart,                       // [in] logical start of the run
+            ref LsHeights pheights,                       // [in] height (iff geometryProvided)
+            int dupRun,                         // width of the run
+            int glyphBaseRun,                   // flag for glyph based run
+            int* piCharAdvances,                // character advance widths (iff !glyphBaseRun)
+            ushort* puClusterMap,                  // cluster map (iff glyphBaseRun)
+            ushort* characterProperties,           // character properties (iff glyphBaseRun)
+            ushort* puGlyphs,                      // glyph indices (iff glyphBaseRun)
+            int* piJustifiedGlyphAdvances,      // glyph advances (iff glyphBaseRun)
+            GlyphOffset* piiGlyphOffsets,               // glyph offsets (iff glyphBaseRun)
+            uint* piGlyphProperties,             // glyph properties (iff glyphProperties)
+            int glyphCount                      // glyph count
             )
         {
             Debug.Assert(fGeometryProvided == 0, "Line enumeration doesn't need geometry information");
@@ -2615,12 +2620,12 @@ namespace MS.Internal.TextFormatting
                 // Do not enumerate negative cps because they are not in the backing store.
                 return LsErr.None;
             }
-            
+
             LsErr lserr = LsErr.None;
             LSRun lsrun = null;
 
-            try                 
-            {   
+            try
+            {
                 TextMetrics.FullTextLine currentLine = Draw.CurrentLine;
                 lsrun = currentLine.GetRun(plsrun);
                 GlyphRun glyphRun = null;
@@ -2631,16 +2636,16 @@ namespace MS.Internal.TextFormatting
                     {
                         // create shaped glyph run
                         glyphRun = ComputeShapedGlyphRun(
-                            lsrun, 
+                            lsrun,
                             currentLine.Formatter,
                             false,      // glyph run origin not provided
-                            pptStart, 
-                            cchText, 
-                            pwchText, 
-                            puClusterMap, 
-                            glyphCount, 
+                            pptStart,
+                            cchText,
+                            pwchText,
+                            puClusterMap,
+                            glyphCount,
                             puGlyphs,
-                            piJustifiedGlyphAdvances, 
+                            piJustifiedGlyphAdvances,
                             piiGlyphOffsets,
                             currentLine.IsJustified
                             );
@@ -2655,22 +2660,22 @@ namespace MS.Internal.TextFormatting
                         dupRun += piCharAdvances[i];
                     }
 
-                    
+
                     // it is an unshaped glyphrun
                     glyphRun = ComputeUnshapedGlyphRun(
-                        lsrun, 
-                        lstFlow, 
+                        lsrun,
+                        lstFlow,
                         currentLine.Formatter,
                         false,      // glyph run origin not provided at enumeration
-                        pptStart, 
-                        dupRun, 
-                        cchText, 
-                        pwchText, 
+                        pptStart,
+                        dupRun,
+                        cchText,
+                        pwchText,
                         piCharAdvances,
                         currentLine.IsJustified
                         );
                 }
-                
+
                 if (glyphRun != null)
                 {
                     // 
@@ -2685,7 +2690,7 @@ namespace MS.Internal.TextFormatting
                            glyphRun
                            )
                     );
-                }                   
+                }
             }
             catch (Exception e)
             {
@@ -2697,61 +2702,61 @@ namespace MS.Internal.TextFormatting
                 SaveNonCLSException("EnumText", plsrun, lsrun);
                 lserr = LsErr.ClientAbort;
             }
-            
+
             return lserr;
         }
 
         // enumerating a tab
         internal unsafe LsErr EnumTab(
-            IntPtr              pols,               // pointer to context
-            Plsrun              plsrun,             // plsrun
-            int                 cpFirst,            // first cp of the dnode run
-            char                *pwchText,          // a single tab character
-            char                tabLeader,          // a single tab leader character
-            LsTFlow             lstFlow,            // flow direction
-            int                 fReverseOrder,      // flag for reverse order enumeration
-            int                 fGeometryProvided,  // flag for providing geometry information
-            ref LSPOINT         pptStart,           // [in] logical start of the run (iff geometryProvided)
-            ref LsHeights       heights,            // [in] height (iff geometryProvided)
-            int                 dupRun              // width of the run
+            IntPtr pols,               // pointer to context
+            Plsrun plsrun,             // plsrun
+            int cpFirst,            // first cp of the dnode run
+            char* pwchText,          // a single tab character
+            char tabLeader,          // a single tab leader character
+            LsTFlow lstFlow,            // flow direction
+            int fReverseOrder,      // flag for reverse order enumeration
+            int fGeometryProvided,  // flag for providing geometry information
+            ref LSPOINT pptStart,           // [in] logical start of the run (iff geometryProvided)
+            ref LsHeights heights,            // [in] height (iff geometryProvided)
+            int dupRun              // width of the run
             )
-        {       
+        {
             if (cpFirst < 0)
             {
                 // Do not enumerate negative cps because they are not in the backing store.
                 return LsErr.None;
             }
-        
+
             LsErr lserr = LsErr.None;
             LSRun lsrun = null;
 
-            try 
+            try
             {
                 TextMetrics.FullTextLine currentLine = Draw.CurrentLine;
                 lsrun = currentLine.GetRun(plsrun);
-                GlyphRun glyphRun = null;                
-                
+                GlyphRun glyphRun = null;
+
                 if (lsrun.Type == Plsrun.Text)
-                {         
+                {
                     // Construct glyph run for the single tableader.
                     // We don't repeat the tab leader justification logic here.
                     int charWidth = 0;
                     lsrun.Shapeable.GetAdvanceWidthsUnshaped(
-                        &tabLeader, 
+                        &tabLeader,
                         1,
-                        TextFormatterImp.ToIdeal, 
+                        TextFormatterImp.ToIdeal,
                         &charWidth
-                        );                
+                        );
 
                     glyphRun = ComputeUnshapedGlyphRun(
-                        lsrun, 
+                        lsrun,
                         lstFlow,
                         currentLine.Formatter,
                         false,      // glyph run origin not provided at enumeration time
-                        pptStart, 
-                        charWidth, 
-                        1, 
-                        &tabLeader, 
+                        pptStart,
+                        charWidth,
+                        1,
+                        &tabLeader,
                         &charWidth,
                         currentLine.IsJustified
                         );
@@ -2759,15 +2764,15 @@ namespace MS.Internal.TextFormatting
                 }
 
                 if (glyphRun != null)
-                {                    
+                {
                     IndexedGlyphRuns.Add(
                         new IndexedGlyphRun(
                            currentLine.GetExternalCp(cpFirst),
                            1,       // dcp is 1 for a Tab character
                            glyphRun
                            )
-                    );                    
-                }                
+                    );
+                }
             }
             catch (Exception e)
             {
@@ -2789,7 +2794,7 @@ namespace MS.Internal.TextFormatting
         /// </summary>
         private bool IsSpace(char ch)
         {
-            if (   ch == '\u0009' // tab
+            if (ch == '\u0009' // tab
                 || ch == '\u0020' // Space
                 )
             {
@@ -2849,14 +2854,14 @@ namespace MS.Internal.TextFormatting
         /// <param name="baselineOrigin"></param>
         /// <param name="adjustedAdvanceWidths"></param>
         private unsafe void AdjustMetricsForDisplayModeJustifiedText(
-            char              *pwchText,
-            int               *piGlyphAdvances,
-            int               glyphCount,
-            bool              isRightToLeft,
-            int               idealBaselineOriginX,
-            int               idealBaselineOriginY,
-            double            pixelsPerDip,
-            out Point         baselineOrigin,
+            char* pwchText,
+            int* piGlyphAdvances,
+            int glyphCount,
+            bool isRightToLeft,
+            int idealBaselineOriginX,
+            int idealBaselineOriginY,
+            double pixelsPerDip,
+            out Point baselineOrigin,
             out IList<double> adjustedAdvanceWidths
             )
         {
@@ -2866,7 +2871,7 @@ namespace MS.Internal.TextFormatting
                                        RoundDipForDisplayModeJustifiedText(IdealToRealWithNoRounding(idealBaselineOriginY), pixelsPerDip));
 
             int idealRoundedBaselineOriginX = RealToIdeal(baselineOrigin.X);
-            
+
             // Floating point errors were causing issues since it could tip a number
             // over the 0.5 boundary and cause the number to round incorrectly.
             // By "incorrectly" we mean in a different way than the way the number was 
@@ -2875,7 +2880,7 @@ namespace MS.Internal.TextFormatting
 
             if (isRightToLeft)
             {
-                idealStartingError *= -1; 
+                idealStartingError *= -1;
             }
 
             if (glyphCount > 0)
@@ -2884,12 +2889,12 @@ namespace MS.Internal.TextFormatting
                 // to the last known space character. This is done because if we were to add the error to the character that caused
                 // it to grow to be approximately 1 pixel we will end up shifting characters belonging to a word left/right by 1 pixel.
                 double realAccumulatedRoundedAdvanceWidth = 0;
-                double realAccumulatedAdvanceWidth        = 0;
-                int    idealAccumulatedAdvanceWidth       = idealStartingError;
-                
-                double error                   = 0;
-                double realAdvanceWidth        = 0;
-                int    indexOfLastKnownSpace   = -1;
+                double realAccumulatedAdvanceWidth = 0;
+                int idealAccumulatedAdvanceWidth = idealStartingError;
+
+                double error = 0;
+                double realAdvanceWidth = 0;
+                int indexOfLastKnownSpace = -1;
                 double realRoundedAdvanceWidth = 0;
 
                 for (int i = 0; i < glyphCount; ++i)
@@ -2899,11 +2904,11 @@ namespace MS.Internal.TextFormatting
                         indexOfLastKnownSpace = i;
                     }
 
-                    idealAccumulatedAdvanceWidth       += piGlyphAdvances[i];
-                    realAccumulatedAdvanceWidth         = IdealToRealWithNoRounding(idealAccumulatedAdvanceWidth);
+                    idealAccumulatedAdvanceWidth += piGlyphAdvances[i];
+                    realAccumulatedAdvanceWidth = IdealToRealWithNoRounding(idealAccumulatedAdvanceWidth);
 
-                    realAdvanceWidth                    = IdealToRealWithNoRounding(piGlyphAdvances[i]);
-                    realRoundedAdvanceWidth             = RoundDipForDisplayModeJustifiedText(realAdvanceWidth, pixelsPerDip);
+                    realAdvanceWidth = IdealToRealWithNoRounding(piGlyphAdvances[i]);
+                    realRoundedAdvanceWidth = RoundDipForDisplayModeJustifiedText(realAdvanceWidth, pixelsPerDip);
                     realAccumulatedRoundedAdvanceWidth += realRoundedAdvanceWidth;
 
                     // The error is calculated as the difference between where the glyph will be after rounding all the previous 
@@ -2939,7 +2944,7 @@ namespace MS.Internal.TextFormatting
                     // joined.
                     // Note: We round the end result again because floating point errors in high dpi are not trivial.
                     error += RoundDipForDisplayModeJustifiedText(
-                                        realAccumulatedRoundedAdvanceWidth 
+                                        realAccumulatedRoundedAdvanceWidth
                                         - RoundDipForDisplayModeJustifiedText(realAccumulatedAdvanceWidth, pixelsPerDip),
                                         pixelsPerDip
                                         );
@@ -2949,7 +2954,7 @@ namespace MS.Internal.TextFormatting
                     if (indexOfLastKnownSpace >= 0)
                     {
                         adjustedAdvanceWidths[indexOfLastKnownSpace] -= error;
-                        realAccumulatedRoundedAdvanceWidth           -= error;
+                        realAccumulatedRoundedAdvanceWidth -= error;
                         error = 0;
                     }
                 }
@@ -2961,19 +2966,19 @@ namespace MS.Internal.TextFormatting
                 if (indexOfLastKnownSpace < 0)
                 {
                     realAccumulatedRoundedAdvanceWidth = 0;
-                    realAccumulatedAdvanceWidth        = 0;
-                    idealAccumulatedAdvanceWidth       = idealStartingError;
-                    realAdvanceWidth                   = 0;
-                    realRoundedAdvanceWidth            = 0;
-                    error                              = 0;
+                    realAccumulatedAdvanceWidth = 0;
+                    idealAccumulatedAdvanceWidth = idealStartingError;
+                    realAdvanceWidth = 0;
+                    realRoundedAdvanceWidth = 0;
+                    error = 0;
 
                     for (int i = 0; i < glyphCount; ++i)
                     {
-                        idealAccumulatedAdvanceWidth       += piGlyphAdvances[i];
-                        realAccumulatedAdvanceWidth         = IdealToRealWithNoRounding(idealAccumulatedAdvanceWidth);
+                        idealAccumulatedAdvanceWidth += piGlyphAdvances[i];
+                        realAccumulatedAdvanceWidth = IdealToRealWithNoRounding(idealAccumulatedAdvanceWidth);
 
-                        realAdvanceWidth                    = IdealToRealWithNoRounding(piGlyphAdvances[i]);
-                        realRoundedAdvanceWidth             = RoundDipForDisplayModeJustifiedText(realAdvanceWidth, pixelsPerDip);
+                        realAdvanceWidth = IdealToRealWithNoRounding(piGlyphAdvances[i]);
+                        realRoundedAdvanceWidth = RoundDipForDisplayModeJustifiedText(realAdvanceWidth, pixelsPerDip);
                         realAccumulatedRoundedAdvanceWidth += realRoundedAdvanceWidth;
 
                         // The error is calculated as the difference between where the glyph will be after rounding all the previous 
@@ -2983,7 +2988,7 @@ namespace MS.Internal.TextFormatting
                                         - RoundDipForDisplayModeJustifiedText(realAccumulatedAdvanceWidth, pixelsPerDip),
                                         pixelsPerDip
                                         );
-                        adjustedAdvanceWidths[i]            = realRoundedAdvanceWidth - error;
+                        adjustedAdvanceWidths[i] = realRoundedAdvanceWidth - error;
                         realAccumulatedRoundedAdvanceWidth -= error;
                     }
                 }
@@ -2992,18 +2997,18 @@ namespace MS.Internal.TextFormatting
 
         // Compute shaped glyph run from LS data
         private unsafe GlyphRun ComputeShapedGlyphRun(
-            LSRun                   lsrun,                      // ls run
-            TextFormatterImp        textFormatterImp,           // The TextFormatter Implementation
-            bool                    originProvided,             // flag indicate whether the origin of the run is provided                        
-            LSPOINT                 lsrunOrigin,                // physical start of the run
-            int                     charCount,                  // characters count
-            char                    *pwchText,                  // characters for the GlyphRun
-            ushort                  *puClusterMap,              // cluster map
-            int                     glyphCount,                 // glyph count
-            ushort                  *puGlyphs,                  // glyph indices
-            int                     *piJustifiedGlyphAdvances,  // glyph advances
-            GlyphOffset             *piiGlyphOffsets,           // glyph offsets
-            bool                    justify
+            LSRun lsrun,                      // ls run
+            TextFormatterImp textFormatterImp,           // The TextFormatter Implementation
+            bool originProvided,             // flag indicate whether the origin of the run is provided                        
+            LSPOINT lsrunOrigin,                // physical start of the run
+            int charCount,                  // characters count
+            char* pwchText,                  // characters for the GlyphRun
+            ushort* puClusterMap,              // cluster map
+            int glyphCount,                 // glyph count
+            ushort* puGlyphs,                  // glyph indices
+            int* piJustifiedGlyphAdvances,  // glyph advances
+            GlyphOffset* piiGlyphOffsets,           // glyph offsets
+            bool justify
             )
         {
             TextMetrics.FullTextLine currentLine = Draw.CurrentLine;
@@ -3013,7 +3018,7 @@ namespace MS.Internal.TextFormatting
             int nominalY = 0;
 
             if (originProvided)
-            {   
+            {
                 if (currentLine.RightToLeft)
                 {
                     // line origin is actually in XY as it is computed by LS during display.
@@ -3061,7 +3066,7 @@ namespace MS.Internal.TextFormatting
                 clusterMap[i] = puClusterMap[i];
             }
 
-            ushort[] glyphIndices = new ushort[glyphCount];            
+            ushort[] glyphIndices = new ushort[glyphCount];
             IList<double> glyphAdvances;
             IList<Point> glyphOffsets;
 
@@ -3106,7 +3111,7 @@ namespace MS.Internal.TextFormatting
                         glyphAdvances.Add(textFormatterImp.IdealToReal(piJustifiedGlyphAdvances[i], currentLine.PixelsPerDip));
                     }
                 }
-                glyphOffsets  = new List<Point>(glyphCount);
+                glyphOffsets = new List<Point>(glyphCount);
                 for (int i = 0; i < glyphCount; i++)
                 {
                     glyphIndices[i] = puGlyphs[i];
@@ -3130,12 +3135,12 @@ namespace MS.Internal.TextFormatting
 
             GlyphRun glyphRun = lsrun.Shapeable.ComputeShapedGlyphRun(
                 runOrigin,
-                charString, 
-                clusterMap, 
-                glyphIndices, 
-                glyphAdvances, 
+                charString,
+                clusterMap,
+                glyphIndices,
+                glyphAdvances,
                 glyphOffsets,
-                isRightToLeft, 
+                isRightToLeft,
                 false   // no sideway support yet
                 );
 
@@ -3144,30 +3149,30 @@ namespace MS.Internal.TextFormatting
 
         // Compute unshaped glyph run from LS data        
         private unsafe GlyphRun ComputeUnshapedGlyphRun(
-            LSRun               lsrun,              // LSrun used to shape the GlyphRun            
-            LsTFlow             textFlow,           // flow direction
-            TextFormatterImp    textFormatterImp,   // The TextFormatter Implementation
-            bool                originProvided,     // flag indicate whether the origin of the run is provided                        
-            LSPOINT             lsrunOrigin,        // physical start of the run
-            int                 dupRun,             // width of the run
-            int                 cchText,            // character count
-            char                *pwchText,          // characters for display 
-            int                 *piCharAdvances,    // character advance widths,
-            bool                justify
+            LSRun lsrun,              // LSrun used to shape the GlyphRun            
+            LsTFlow textFlow,           // flow direction
+            TextFormatterImp textFormatterImp,   // The TextFormatter Implementation
+            bool originProvided,     // flag indicate whether the origin of the run is provided                        
+            LSPOINT lsrunOrigin,        // physical start of the run
+            int dupRun,             // width of the run
+            int cchText,            // character count
+            char* pwchText,          // characters for display 
+            int* piCharAdvances,    // character advance widths,
+            bool justify
             )
         {
             GlyphRun glyphRun = null;
             if (lsrun.Type == Plsrun.Text)
             {
                 Debug.Assert(lsrun.Shapeable != null);
-                Point runOrigin    = new Point();
+                Point runOrigin = new Point();
                 int nominalX = 0;
                 int nominalY = 0;
 
                 if (originProvided)
-                {                   
+                {
                     TextMetrics.FullTextLine currentLine = Draw.CurrentLine;
-                    
+
                     if (textFlow == LsTFlow.lstflowWS)
                     {
                         lsrunOrigin.x -= dupRun;
@@ -3204,7 +3209,7 @@ namespace MS.Internal.TextFormatting
 
                 // We have to copy the character string here due to the same reason
                 // we copy glyph arrays in ComputeShapedGlyphRun.
-                
+
                 char[] charString = new char[cchText];
                 IList<double> charWidths;
 
@@ -3249,17 +3254,17 @@ namespace MS.Internal.TextFormatting
                     }
                 }
 
-                
+
 
                 glyphRun = lsrun.Shapeable.ComputeUnshapedGlyphRun(
                     runOrigin,
                     charString,
                     charWidths
                     );
-            }            
+            }
 
             return glyphRun;
-        } 
+        }
 
 
 
@@ -3271,91 +3276,91 @@ namespace MS.Internal.TextFormatting
         //
         internal unsafe LineServicesCallbacks()
         {
-            _pfnFetchRunRedefined                   = new FetchRunRedefined(this.FetchRunRedefined);
-            _pfnFetchLineProps                      = new FetchLineProps(this.FetchLineProps);
-            _pfnFetchPap                            = new FetchPap(this.FetchPap);
-            _pfnGetRunTextMetrics                   = new GetRunTextMetrics(this.GetRunTextMetrics);
-            _pfnGetRunCharWidths                    = new GetRunCharWidths(this.GetRunCharWidths);
-            _pfnGetDurMaxExpandRagged               = new GetDurMaxExpandRagged(this.GetDurMaxExpandRagged);
-            _pfnDrawTextRun                         = new DrawTextRun(this.DrawTextRun);
-            _pfnGetGlyphsRedefined                  = new GetGlyphsRedefined(this.GetGlyphsRedefined);
-            _pfnGetGlyphPositions                   = new GetGlyphPositions(this.GetGlyphPositions);
-            _pfnGetAutoNumberInfo                   = new GetAutoNumberInfo(this.GetAutoNumberInfo);
-            _pfnDrawGlyphs                          = new DrawGlyphs(this.DrawGlyphs);
-            _pfnGetObjectHandlerInfo                = new GetObjectHandlerInfo(this.GetObjectHandlerInfo);
-            _pfnGetRunUnderlineInfo                 = new GetRunUnderlineInfo(this.GetRunUnderlineInfo);
-            _pfnGetRunStrikethroughInfo             = new GetRunStrikethroughInfo(this.GetRunStrikethroughInfo);
-            _pfnHyphenate                           = new Hyphenate(this.Hyphenate);
-            _pfnGetNextHyphenOpp                    = new GetNextHyphenOpp(this.GetNextHyphenOpp);
-            _pfnGetPrevHyphenOpp                    = new GetPrevHyphenOpp(this.GetPrevHyphenOpp);
-            _pfnDrawUnderline                       = new DrawUnderline(this.DrawUnderline);
-            _pfnDrawStrikethrough                   = new DrawStrikethrough(this.DrawStrikethrough);
-            _pfnFInterruptShaping                   = new FInterruptShaping(this.FInterruptShaping);
-            _pfnGetCharCompressionInfoFullMixed     = new GetCharCompressionInfoFullMixed(this.GetCharCompressionInfoFullMixed);
-            _pfnGetCharExpansionInfoFullMixed       = new GetCharExpansionInfoFullMixed(this.GetCharExpansionInfoFullMixed);
-            _pfnGetGlyphCompressionInfoFullMixed    = new GetGlyphCompressionInfoFullMixed(this.GetGlyphCompressionInfoFullMixed);
-            _pfnGetGlyphExpansionInfoFullMixed      = new GetGlyphExpansionInfoFullMixed(this.GetGlyphExpansionInfoFullMixed);
-            _pfnEnumText                            = new EnumText(this.EnumText);
-            _pfnEnumTab                             = new EnumTab(this.EnumTab);
+            _pfnFetchRunRedefined = new FetchRunRedefined(this.FetchRunRedefined);
+            _pfnFetchLineProps = new FetchLineProps(this.FetchLineProps);
+            _pfnFetchPap = new FetchPap(this.FetchPap);
+            _pfnGetRunTextMetrics = new GetRunTextMetrics(this.GetRunTextMetrics);
+            _pfnGetRunCharWidths = new GetRunCharWidths(this.GetRunCharWidths);
+            _pfnGetDurMaxExpandRagged = new GetDurMaxExpandRagged(this.GetDurMaxExpandRagged);
+            _pfnDrawTextRun = new DrawTextRun(this.DrawTextRun);
+            _pfnGetGlyphsRedefined = new GetGlyphsRedefined(this.GetGlyphsRedefined);
+            _pfnGetGlyphPositions = new GetGlyphPositions(this.GetGlyphPositions);
+            _pfnGetAutoNumberInfo = new GetAutoNumberInfo(this.GetAutoNumberInfo);
+            _pfnDrawGlyphs = new DrawGlyphs(this.DrawGlyphs);
+            _pfnGetObjectHandlerInfo = new GetObjectHandlerInfo(this.GetObjectHandlerInfo);
+            _pfnGetRunUnderlineInfo = new GetRunUnderlineInfo(this.GetRunUnderlineInfo);
+            _pfnGetRunStrikethroughInfo = new GetRunStrikethroughInfo(this.GetRunStrikethroughInfo);
+            _pfnHyphenate = new Hyphenate(this.Hyphenate);
+            _pfnGetNextHyphenOpp = new GetNextHyphenOpp(this.GetNextHyphenOpp);
+            _pfnGetPrevHyphenOpp = new GetPrevHyphenOpp(this.GetPrevHyphenOpp);
+            _pfnDrawUnderline = new DrawUnderline(this.DrawUnderline);
+            _pfnDrawStrikethrough = new DrawStrikethrough(this.DrawStrikethrough);
+            _pfnFInterruptShaping = new FInterruptShaping(this.FInterruptShaping);
+            _pfnGetCharCompressionInfoFullMixed = new GetCharCompressionInfoFullMixed(this.GetCharCompressionInfoFullMixed);
+            _pfnGetCharExpansionInfoFullMixed = new GetCharExpansionInfoFullMixed(this.GetCharExpansionInfoFullMixed);
+            _pfnGetGlyphCompressionInfoFullMixed = new GetGlyphCompressionInfoFullMixed(this.GetGlyphCompressionInfoFullMixed);
+            _pfnGetGlyphExpansionInfoFullMixed = new GetGlyphExpansionInfoFullMixed(this.GetGlyphExpansionInfoFullMixed);
+            _pfnEnumText = new EnumText(this.EnumText);
+            _pfnEnumTab = new EnumTab(this.EnumTab);
         }
 
         internal void PopulateContextInfo(ref LsContextInfo contextInfo, ref LscbkRedefined lscbkRedef)
         {
-            lscbkRedef.pfnFetchRunRedefined                 = _pfnFetchRunRedefined;
-            lscbkRedef.pfnGetGlyphsRedefined                = _pfnGetGlyphsRedefined;
-            lscbkRedef.pfnFetchLineProps                    = _pfnFetchLineProps;
-            contextInfo.pfnFetchLineProps                   = _pfnFetchLineProps;
-            contextInfo.pfnFetchPap                         = _pfnFetchPap;
-            contextInfo.pfnGetRunTextMetrics                = _pfnGetRunTextMetrics;
-            contextInfo.pfnGetRunCharWidths                 = _pfnGetRunCharWidths;
-            contextInfo.pfnGetDurMaxExpandRagged            = _pfnGetDurMaxExpandRagged;
-            contextInfo.pfnDrawTextRun                      = _pfnDrawTextRun;
-            contextInfo.pfnGetGlyphPositions                = _pfnGetGlyphPositions;
-            contextInfo.pfnGetAutoNumberInfo                = _pfnGetAutoNumberInfo;
-            contextInfo.pfnDrawGlyphs                       = _pfnDrawGlyphs;
-            contextInfo.pfnGetObjectHandlerInfo             = _pfnGetObjectHandlerInfo;
-            contextInfo.pfnGetRunUnderlineInfo              = _pfnGetRunUnderlineInfo;
-            contextInfo.pfnGetRunStrikethroughInfo          = _pfnGetRunStrikethroughInfo;
-            contextInfo.pfnHyphenate                        = _pfnHyphenate;
-            contextInfo.pfnGetNextHyphenOpp                 = _pfnGetNextHyphenOpp;
-            contextInfo.pfnGetPrevHyphenOpp                 = _pfnGetPrevHyphenOpp;
-            contextInfo.pfnDrawUnderline                    = _pfnDrawUnderline;
-            contextInfo.pfnDrawStrikethrough                = _pfnDrawStrikethrough;
-            contextInfo.pfnFInterruptShaping                = _pfnFInterruptShaping;
-            contextInfo.pfnGetCharCompressionInfoFullMixed  = _pfnGetCharCompressionInfoFullMixed;
-            contextInfo.pfnGetCharExpansionInfoFullMixed    = _pfnGetCharExpansionInfoFullMixed;
+            lscbkRedef.pfnFetchRunRedefined = _pfnFetchRunRedefined;
+            lscbkRedef.pfnGetGlyphsRedefined = _pfnGetGlyphsRedefined;
+            lscbkRedef.pfnFetchLineProps = _pfnFetchLineProps;
+            contextInfo.pfnFetchLineProps = _pfnFetchLineProps;
+            contextInfo.pfnFetchPap = _pfnFetchPap;
+            contextInfo.pfnGetRunTextMetrics = _pfnGetRunTextMetrics;
+            contextInfo.pfnGetRunCharWidths = _pfnGetRunCharWidths;
+            contextInfo.pfnGetDurMaxExpandRagged = _pfnGetDurMaxExpandRagged;
+            contextInfo.pfnDrawTextRun = _pfnDrawTextRun;
+            contextInfo.pfnGetGlyphPositions = _pfnGetGlyphPositions;
+            contextInfo.pfnGetAutoNumberInfo = _pfnGetAutoNumberInfo;
+            contextInfo.pfnDrawGlyphs = _pfnDrawGlyphs;
+            contextInfo.pfnGetObjectHandlerInfo = _pfnGetObjectHandlerInfo;
+            contextInfo.pfnGetRunUnderlineInfo = _pfnGetRunUnderlineInfo;
+            contextInfo.pfnGetRunStrikethroughInfo = _pfnGetRunStrikethroughInfo;
+            contextInfo.pfnHyphenate = _pfnHyphenate;
+            contextInfo.pfnGetNextHyphenOpp = _pfnGetNextHyphenOpp;
+            contextInfo.pfnGetPrevHyphenOpp = _pfnGetPrevHyphenOpp;
+            contextInfo.pfnDrawUnderline = _pfnDrawUnderline;
+            contextInfo.pfnDrawStrikethrough = _pfnDrawStrikethrough;
+            contextInfo.pfnFInterruptShaping = _pfnFInterruptShaping;
+            contextInfo.pfnGetCharCompressionInfoFullMixed = _pfnGetCharCompressionInfoFullMixed;
+            contextInfo.pfnGetCharExpansionInfoFullMixed = _pfnGetCharExpansionInfoFullMixed;
             contextInfo.pfnGetGlyphCompressionInfoFullMixed = _pfnGetGlyphCompressionInfoFullMixed;
-            contextInfo.pfnGetGlyphExpansionInfoFullMixed   = _pfnGetGlyphExpansionInfoFullMixed;
-            contextInfo.pfnEnumText                         = _pfnEnumText;
-            contextInfo.pfnEnumTab                          = _pfnEnumTab;
+            contextInfo.pfnGetGlyphExpansionInfoFullMixed = _pfnGetGlyphExpansionInfoFullMixed;
+            contextInfo.pfnEnumText = _pfnEnumText;
+            contextInfo.pfnEnumTab = _pfnEnumTab;
         }
 
-        private FetchRunRedefined                   _pfnFetchRunRedefined;
-        private FetchLineProps                      _pfnFetchLineProps;
-        private FetchPap                            _pfnFetchPap;
-        private GetRunTextMetrics                   _pfnGetRunTextMetrics;
-        private GetRunCharWidths                    _pfnGetRunCharWidths;
-        private GetDurMaxExpandRagged               _pfnGetDurMaxExpandRagged;
-        private GetAutoNumberInfo                   _pfnGetAutoNumberInfo;
-        private DrawTextRun                         _pfnDrawTextRun;
-        private GetGlyphsRedefined                  _pfnGetGlyphsRedefined;
-        private GetGlyphPositions                   _pfnGetGlyphPositions;
-        private DrawGlyphs                          _pfnDrawGlyphs;
-        private GetObjectHandlerInfo                _pfnGetObjectHandlerInfo;
-        private GetRunUnderlineInfo                 _pfnGetRunUnderlineInfo;
-        private GetRunStrikethroughInfo             _pfnGetRunStrikethroughInfo;
-        private Hyphenate                           _pfnHyphenate;
-        private GetNextHyphenOpp                    _pfnGetNextHyphenOpp;
-        private GetPrevHyphenOpp                    _pfnGetPrevHyphenOpp;
-        private DrawUnderline                       _pfnDrawUnderline;
-        private DrawStrikethrough                   _pfnDrawStrikethrough;
-        private FInterruptShaping                   _pfnFInterruptShaping;
-        private GetCharCompressionInfoFullMixed     _pfnGetCharCompressionInfoFullMixed;
-        private GetCharExpansionInfoFullMixed       _pfnGetCharExpansionInfoFullMixed;
-        private GetGlyphCompressionInfoFullMixed    _pfnGetGlyphCompressionInfoFullMixed;
-        private GetGlyphExpansionInfoFullMixed      _pfnGetGlyphExpansionInfoFullMixed;
-        private EnumText                            _pfnEnumText;
-        private EnumTab                             _pfnEnumTab;
+        private FetchRunRedefined _pfnFetchRunRedefined;
+        private FetchLineProps _pfnFetchLineProps;
+        private FetchPap _pfnFetchPap;
+        private GetRunTextMetrics _pfnGetRunTextMetrics;
+        private GetRunCharWidths _pfnGetRunCharWidths;
+        private GetDurMaxExpandRagged _pfnGetDurMaxExpandRagged;
+        private GetAutoNumberInfo _pfnGetAutoNumberInfo;
+        private DrawTextRun _pfnDrawTextRun;
+        private GetGlyphsRedefined _pfnGetGlyphsRedefined;
+        private GetGlyphPositions _pfnGetGlyphPositions;
+        private DrawGlyphs _pfnDrawGlyphs;
+        private GetObjectHandlerInfo _pfnGetObjectHandlerInfo;
+        private GetRunUnderlineInfo _pfnGetRunUnderlineInfo;
+        private GetRunStrikethroughInfo _pfnGetRunStrikethroughInfo;
+        private Hyphenate _pfnHyphenate;
+        private GetNextHyphenOpp _pfnGetNextHyphenOpp;
+        private GetPrevHyphenOpp _pfnGetPrevHyphenOpp;
+        private DrawUnderline _pfnDrawUnderline;
+        private DrawStrikethrough _pfnDrawStrikethrough;
+        private FInterruptShaping _pfnFInterruptShaping;
+        private GetCharCompressionInfoFullMixed _pfnGetCharCompressionInfoFullMixed;
+        private GetCharExpansionInfoFullMixed _pfnGetCharExpansionInfoFullMixed;
+        private GetGlyphCompressionInfoFullMixed _pfnGetGlyphCompressionInfoFullMixed;
+        private GetGlyphExpansionInfoFullMixed _pfnGetGlyphExpansionInfoFullMixed;
+        private EnumText _pfnEnumText;
+        private EnumTab _pfnEnumTab;
 
 
         /////   Delegates used by custom object handler
@@ -3495,15 +3500,15 @@ namespace MS.Internal.TextFormatting
         /// </summary>
         internal ICollection<IndexedGlyphRun> IndexedGlyphRuns
         {
-            get 
+            get
             {
                 if (_indexedGlyphRuns == null)
                 {
-                    _indexedGlyphRuns = new List<IndexedGlyphRun>(8);                    
+                    _indexedGlyphRuns = new List<IndexedGlyphRun>(8);
                 }
-                
+
                 return _indexedGlyphRuns;
-            }            
+            }
         }
     }
 }

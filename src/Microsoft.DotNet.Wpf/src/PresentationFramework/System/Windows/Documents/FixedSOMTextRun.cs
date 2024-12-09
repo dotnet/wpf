@@ -1,15 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Globalization;
 using System.Windows.Markup;    // for XmlLanguage
 using System.Windows.Media;
-using System.Globalization;
 
-/*++                                       
+/*++
     Description:
         This class represents a (partial) Glyphs element on the page. Most of the time it will be a full glyphs element
-        Partial elements are necessary when we decide that a single Glyphs element represents multiple semantic entitites such as table cells         
+        Partial elements are necessary when we decide that a single Glyphs element represents multiple semantic entitites such as table cells
 --*/
 
 namespace System.Windows.Documents
@@ -22,14 +22,14 @@ namespace System.Windows.Documents
         // Constructors
         //
         //---------------------------------------------------------------------
-        
+
         #region Constructors
 
         private FixedSOMTextRun(Rect boundingRect, GeneralTransform trans, FixedNode fixedNode, int startIndex, int endIndex) : base(fixedNode, startIndex, endIndex, trans)
         {
             _boundingRect = trans.TransformBounds(boundingRect);
         }
-        
+
 
         #endregion Constructors
 
@@ -57,7 +57,7 @@ namespace System.Windows.Documents
 
                 thisRect.Offset(_mat.OffsetX, _mat.OffsetY);
                 otherRect.Offset(otherRun.Matrix.OffsetX, otherRun.Matrix.OffsetY);
-                
+
                 if (FixedTextBuilder.IsSameLine(otherRect.Top - thisRect.Top, thisRect.Height, otherRect.Height))
                 {
                     result = (thisRect.Left < otherRect.Left) ? 1 : -1;
@@ -71,13 +71,13 @@ namespace System.Windows.Documents
             else
             {
                 //Markup order for LTR languages
-                
+
                 List<FixedNode> markupOrder = this.FixedBlock.FixedSOMPage.MarkupOrder;
                 result = markupOrder.IndexOf(this.FixedNode) - markupOrder.IndexOf(otherRun.FixedNode);
             }
-            
+
             return result;
-        }        
+        }
 
 
         //--------------------------------------------------------------------
@@ -95,17 +95,18 @@ namespace System.Windows.Documents
             {
                 return null;
             }
+#pragma warning disable IDE0017
             FixedSOMTextRun run = new FixedSOMTextRun(boundingRect, transform, fixedNode, startIndex, endIndex);
             run._fontUri = glyphs.FontUri;
             run._cultureInfo = glyphs.Language.GetCompatibleCulture();
             run._bidiLevel = glyphs.BidiLevel;
             run._isSideways = glyphs.IsSideways;
             run._fontSize = glyphs.FontRenderingEmSize;
-
+#pragma warning restore IDE0017
             GlyphRun glyphRun = glyphs.ToGlyphRun();
 
             GlyphTypeface gtf = glyphRun.GlyphTypeface;
-            
+
             // Find font family
             // glyphs.FontUri, glyphRun.glyphTypeface
 
@@ -115,7 +116,7 @@ namespace System.Windows.Documents
                 //Try getting the English name
                 gtf.FamilyNames.TryGetValue(System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS, out run._fontFamily);
             }
-            
+
             // Find font style (normal, italics, Oblique)
             // need to open Font file.
             run._fontStyle = gtf.Style;
@@ -134,7 +135,7 @@ namespace System.Windows.Documents
                 !(trans.Value.IsIdentity))
             {
                 Matrix mat = trans.Value;
-                double yScale = Math.Sqrt(mat.M12*mat.M12 + mat.M22*mat.M22);
+                double yScale = Math.Sqrt(mat.M12 * mat.M12 + mat.M22 * mat.M22);
                 double xScale = Math.Sqrt(mat.M11 * mat.M11 + mat.M21 * mat.M21);
                 run._fontSize *= yScale;
                 run._defaultCharWidth *= xScale;
@@ -142,9 +143,9 @@ namespace System.Windows.Documents
 
             run._foreground = glyphs.Fill;
             String s = glyphs.UnicodeString;
-            run.Text = s.Substring(startIndex, endIndex-startIndex);
+            run.Text = s.Substring(startIndex, endIndex - startIndex);
 
-            if (allowReverseGlyphs && run._bidiLevel == 0 && !run._isSideways && 
+            if (allowReverseGlyphs && run._bidiLevel == 0 && !run._isSideways &&
                 startIndex == 0 && endIndex == s.Length
                 && String.IsNullOrEmpty(glyphs.CaretStops)
                 && FixedTextBuilder.MostlyRTL(s))
@@ -178,13 +179,13 @@ namespace System.Windows.Documents
             return run;
         }
 
-#if DEBUG      
+#if DEBUG
         public override void Render(DrawingContext dc, string label, DrawDebugVisual debugVisual)
         {
             Pen pen = new Pen(Brushes.Blue, 1);
             Rect rect = _boundingRect;
-            rect.Inflate(-1,-1);
-            dc.DrawRectangle(null, pen , rect);
+            rect.Inflate(-1, -1);
+            dc.DrawRectangle(null, pen, rect);
             if (label != null && debugVisual == DrawDebugVisual.TextRuns)
             {
                 base.RenderLabel(dc, label);
@@ -216,7 +217,7 @@ namespace System.Windows.Documents
                 if ((run.Foreground == null && this.Foreground == null) ||
                      thisBrush != null && otherBrush != null && thisBrush.Color == otherBrush.Color && thisBrush.Opacity == otherBrush.Opacity)
                 {
-                    return true;    
+                    return true;
                 }
             }
             return false;
@@ -278,7 +279,7 @@ namespace System.Windows.Documents
 
         public CultureInfo CultureInfo
         {
-            get 
+            get
             {
                 return _cultureInfo;
             }
@@ -366,7 +367,7 @@ namespace System.Windows.Documents
                 return _fontStretch;
             }
         }
-        
+
         public double FontRenderingEmSize
         {
             get

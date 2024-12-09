@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -230,21 +230,21 @@ namespace System.Windows.Media
         /// <param name="fontFamilyLocationReference">Optional location reference, exposed as part of the Source
         /// property of each FontFamily.</param>
         private static ICollection<FontFamily> CreateFamilyCollection(
-            Uri     fontLocation,
-            Uri     fontFamilyBaseUri,
-            string  fontFamilyLocationReference
+            Uri fontLocation,
+            Uri fontFamilyBaseUri,
+            string fontFamilyLocationReference
             )
         {
             // Use reference comparison to determine the critical isWindowsFonts value. We want this
             // to be true ONLY if we're called internally to enumerate the default family collection.
             // See the SecurityNote for the FamilyCollection constructor.
-            FamilyCollection familyCollection = 
+            FamilyCollection familyCollection =
                 object.ReferenceEquals(fontLocation, Util.WindowsFontsUriObject) ?
-                    FamilyCollection.FromWindowsFonts(fontLocation) : 
+                    FamilyCollection.FromWindowsFonts(fontLocation) :
                     FamilyCollection.FromUri(fontLocation);
 
             FontFamily[] fontFamilyList = familyCollection.GetFontFamilies(fontFamilyBaseUri, fontFamilyLocationReference);
-            
+
             return Array.AsReadOnly<FontFamily>(fontFamilyList);
         }
 

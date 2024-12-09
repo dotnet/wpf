@@ -1,8 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Utility;
 using System.ComponentModel;
 using System.Printing;
 using System.Windows.Documents;
@@ -10,22 +9,23 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Xps.Packaging;
 using System.Xml;
+using MS.Utility;
 
 
 #pragma warning disable 1634, 1691 //Allows suppression of certain PreSharp messages
 
 namespace System.Windows.Xps.Serialization
 {
-    internal class XpsOMSerializationManager : 
+    internal class XpsOMSerializationManager :
                           PackageSerializationManager,
-                          IXpsSerializationManager        
+                          IXpsSerializationManager
     {
         #region Constructor
-        public 
+        public
         XpsOMSerializationManager(
-            XpsOMPackagingPolicy xpsOMManager, 
+            XpsOMPackagingPolicy xpsOMManager,
             bool batchMode
-            ):
+            ) :
         base()
         {
             _packagingPolicy = xpsOMManager;
@@ -74,7 +74,7 @@ namespace System.Windows.Xps.Serialization
                 {
                     // Prefast complains that serializedObject is not tested for null
                     // It is tested a few lines up
-                    #pragma warning suppress 56506
+#pragma warning suppress 56506
                     if ((serializedObject as DocumentPaginator).Source is FixedDocument &&
                         serializedObject.GetType().ToString().Contains("FixedDocumentPaginator"))
                     {
@@ -83,9 +83,9 @@ namespace System.Windows.Xps.Serialization
                     else
                         if ((serializedObject as DocumentPaginator).Source is FixedDocumentSequence &&
                             serializedObject.GetType().ToString().Contains("FixedDocumentSequencePaginator"))
-                        {
-                            serializedObject = (serializedObject as DocumentPaginator).Source;
-                        }
+                    {
+                        serializedObject = (serializedObject as DocumentPaginator).Source;
+                    }
                 }
 
                 if (_simulator == null)
@@ -110,11 +110,11 @@ namespace System.Windows.Xps.Serialization
 
                 if (reachSerializer != null)
                 {
-                
-                     //Things that need to be done at this stage
-                     //1. Setting the stack context
-                     //2. Setting the root of the graph for future references
-                
+
+                    //Things that need to be done at this stage
+                    //1. Setting the stack context
+                    //2. Setting the root of the graph for future references
+
                     reachSerializer.SerializeObject(serializedObject);
 
                     if (_isBatchMode)
@@ -286,7 +286,7 @@ namespace System.Windows.Xps.Serialization
         {
             return XpsSerializationManager.CanSerializeClrProperty(serializableObject, property, _reachSerializationServices);
         }
-        
+
         internal
         override
         string
@@ -347,7 +347,7 @@ namespace System.Windows.Xps.Serialization
             signalReleaseToFontService(typeof(FixedDocumentSequence));
 
             _packagingPolicy?.CloseXpsOMPackageWriter();
-                
+
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXReleaseWriterEnd);
         }
 
@@ -401,7 +401,7 @@ namespace System.Windows.Xps.Serialization
             throw new NotImplementedException();
         }
 
-        internal 
+        internal
         override
         XpsResourceStream
         AcquireResourceStream(
@@ -506,9 +506,9 @@ namespace System.Windows.Xps.Serialization
         BasePackagingPolicy
         PackagingPolicy
         {
-            get 
+            get
             {
-                return _packagingPolicy; 
+                return _packagingPolicy;
             }
         }
 
@@ -517,12 +517,12 @@ namespace System.Windows.Xps.Serialization
         XpsResourcePolicy
         ResourcePolicy
         {
-            get 
+            get
             {
                 return _resourcePolicy;
             }
         }
-        
+
         #endregion PackageSerializationManager override
 
         #region Private methods
@@ -602,7 +602,7 @@ namespace System.Windows.Xps.Serialization
         #endregion Private methods
 
         #region Internal methods
-        
+
         internal
         void
         EnsureXpsOMPackageWriter()
@@ -650,7 +650,7 @@ namespace System.Windows.Xps.Serialization
         }
 
         internal
-        void 
+        void
         RegisterPageStart()
         {
             if (_pageStartState)
@@ -678,7 +678,7 @@ namespace System.Windows.Xps.Serialization
         }
 
         internal
-        void 
+        void
         RegisterDocumentSequenceStart()
         {
             _documentNumber = 0;
@@ -702,11 +702,11 @@ namespace System.Windows.Xps.Serialization
         void
         RegisterDocumentStart()
         {
-            if( _documentStartState )
+            if (_documentStartState)
             {
                 throw new XpsSerializationException(SR.ReachSerialization_FixedDocumentInDocument);
             }
-            if( _pageStartState)
+            if (_pageStartState)
             {
                 throw new XpsSerializationException(SR.ReachSerialization_FixedDocumentInPage);
             }
@@ -976,7 +976,7 @@ namespace System.Windows.Xps.Serialization
         private
         ReachSerializationServices _reachSerializationServices;
 
-        private 
+        private
         VisualSerializationService _visualSerializationService;
 
         #endregion Private members

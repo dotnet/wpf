@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -29,14 +29,14 @@ namespace System.Windows.Documents
         {
             var onTableCommand = new ExecutedRoutedEventHandler(OnTableCommand);
             var onQueryStatusNYI = new CanExecuteRoutedEventHandler(OnQueryStatusNYI);
-            
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.InsertTable   , onTableCommand, onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyInsertTable, nameof(SR.KeyInsertTableDisplayString)));
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.InsertRows    , onTableCommand, onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyInsertRows, nameof(SR.KeyInsertRowsDisplayString)));
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.InsertColumns , onTableCommand, onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyInsertColumns, nameof(SR.KeyInsertColumnsDisplayString)));
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.DeleteRows    , onTableCommand, onQueryStatusNYI, nameof(SR.KeyDeleteRows), nameof(SR.KeyDeleteRowsDisplayString));
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.DeleteColumns , onTableCommand, onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyDeleteColumns, nameof(SR.KeyDeleteColumnsDisplayString)));
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MergeCells    , onTableCommand, onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyMergeCells, nameof(SR.KeyMergeCellsDisplayString)));
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SplitCell     , onTableCommand, onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeySplitCell, nameof(SR.KeySplitCellDisplayString)));
+
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.InsertTable, onTableCommand, onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyInsertTable, nameof(SR.KeyInsertTableDisplayString)));
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.InsertRows, onTableCommand, onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyInsertRows, nameof(SR.KeyInsertRowsDisplayString)));
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.InsertColumns, onTableCommand, onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyInsertColumns, nameof(SR.KeyInsertColumnsDisplayString)));
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.DeleteRows, onTableCommand, onQueryStatusNYI, nameof(SR.KeyDeleteRows), nameof(SR.KeyDeleteRowsDisplayString));
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.DeleteColumns, onTableCommand, onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyDeleteColumns, nameof(SR.KeyDeleteColumnsDisplayString)));
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.MergeCells, onTableCommand, onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeyMergeCells, nameof(SR.KeyMergeCellsDisplayString)));
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SplitCell, onTableCommand, onQueryStatusNYI, KeyGesture.CreateFromResourceStrings(KeySplitCell, nameof(SR.KeySplitCellDisplayString)));
         }
 
         #endregion Class Internal Methods

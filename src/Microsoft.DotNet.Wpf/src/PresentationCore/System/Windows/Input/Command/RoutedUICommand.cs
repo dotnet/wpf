@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -47,7 +47,7 @@ namespace System.Windows.Input
             : base(name, ownerType, inputGestures)
         {
             ArgumentNullException.ThrowIfNull(text);
-            _text = text; 
+            _text = text;
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace System.Windows.Input
         /// <param name="name">Declared Name of the RoutedCommand for Serialization</param>
         /// <param name="ownerType">Type that is registering the property</param>
         /// <param name="commandId">An identifier assigned by the owning type to the command</param>
-        internal RoutedUICommand(string name, Type ownerType, byte commandId):base(name, ownerType, commandId)
+        internal RoutedUICommand(string name, Type ownerType, byte commandId) : base(name, ownerType, commandId)
         {
         }
 
@@ -67,7 +67,7 @@ namespace System.Windows.Input
         {
             get
             {
-                if(_text == null)
+                if (_text == null)
                 {
                     _text = GetText();
                 }
@@ -86,25 +86,25 @@ namespace System.Windows.Input
         /// <returns>The text for the command</returns>
         private string GetText()
         {
-            if(OwnerType == typeof(ApplicationCommands))
+            if (OwnerType == typeof(ApplicationCommands))
             {
                 return ApplicationCommands.GetUIText(CommandId);
             }
-            else if(OwnerType == typeof(NavigationCommands))
+            else if (OwnerType == typeof(NavigationCommands))
             {
                 return NavigationCommands.GetUIText(CommandId);
             }
-            else if(OwnerType == typeof(MediaCommands))
+            else if (OwnerType == typeof(MediaCommands))
             {
                 return MediaCommands.GetUIText(CommandId);
             }
-            else if(OwnerType == typeof(ComponentCommands))
+            else if (OwnerType == typeof(ComponentCommands))
             {
                 return ComponentCommands.GetUIText(CommandId);
             }
             return null;
         }
 
-       private string _text;
+        private string _text;
     }
 }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,10 +22,10 @@ namespace MS.Internal.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
-        internal AutomationPropertyInfo( 
+        internal AutomationPropertyInfo(
             AutomationProperty id,
             DependencyProperty dependencyProperty,
             DependencyProperty overrideDP
@@ -43,12 +43,12 @@ namespace MS.Internal.Automation
         //  Internal Properties
         //
         //------------------------------------------------------
- 
+
         #region Internal Properties
 
-        internal AutomationProperty         ID                  { get { return _id; } }
-        internal DependencyProperty         DependencyProperty  { get { return _dependencyProperty; } }
-        internal DependencyProperty         OverrideDP          { get { return _overrideDP; } }
+        internal AutomationProperty ID { get { return _id; } }
+        internal DependencyProperty DependencyProperty { get { return _dependencyProperty; } }
+        internal DependencyProperty OverrideDP { get { return _overrideDP; } }
 
         #endregion Internal Properties
 
@@ -58,7 +58,7 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private AutomationProperty _id;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -117,8 +117,8 @@ namespace System.Windows.Media
         /// Gets the bounds of this Geometry as an axis-aligned bounding box given a Pen and/or Transform
         /// </summary>
         internal override Rect GetBoundsInternal(Pen pen, Matrix matrix, double tolerance, ToleranceType type)
-        { 
-            if (IsObviouslyEmpty()) 
+        {
+            if (IsObviouslyEmpty())
             {
                 return Rect.Empty;
             }
@@ -266,7 +266,7 @@ namespace System.Windows.Media
         {
             return GetAsPathGeometry().IsEmpty();
         }
-        
+
         internal override bool IsObviouslyEmpty()
         {
             // See which operand is obviously empty
@@ -274,7 +274,7 @@ namespace System.Windows.Media
             Geometry geometry2 = Geometry2;
             bool empty1 = geometry1 == null || geometry1.IsObviouslyEmpty();
             bool empty2 = geometry2 == null || geometry2.IsObviouslyEmpty();
-            
+
             // Depending on the operation -- 
             if (GeometryCombineMode == GeometryCombineMode.Intersect)
             {

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -18,7 +18,7 @@ namespace System.Windows
         /// <summary>
         /// Predefined font weight : Thin.
         /// </summary>
-        public static FontWeight Thin       { get { return new FontWeight(100); } }
+        public static FontWeight Thin { get { return new FontWeight(100); } }
 
         /// <summary>
         /// Predefined font weight : Extra-light.
@@ -33,57 +33,57 @@ namespace System.Windows
         /// <summary>
         /// Predefined font weight : Light.
         /// </summary>
-        public static FontWeight Light      { get { return new FontWeight(300); } }
+        public static FontWeight Light { get { return new FontWeight(300); } }
 
         /// <summary>
         /// Predefined font weight : Normal.
         /// </summary>
-        public static FontWeight Normal     { get { return new FontWeight(400); } }
+        public static FontWeight Normal { get { return new FontWeight(400); } }
 
         /// <summary>
         /// Predefined font weight : Regular.
         /// </summary>
-        public static FontWeight Regular    { get { return new FontWeight(400); } }
+        public static FontWeight Regular { get { return new FontWeight(400); } }
 
         /// <summary>
         /// Predefined font weight : Medium.
         /// </summary>
-        public static FontWeight Medium     { get { return new FontWeight(500); } }
+        public static FontWeight Medium { get { return new FontWeight(500); } }
 
         /// <summary>
         /// Predefined font weight : Demi-bold.
         /// </summary>
-        public static FontWeight DemiBold   { get { return new FontWeight(600); } }
+        public static FontWeight DemiBold { get { return new FontWeight(600); } }
 
         /// <summary>
         /// Predefined font weight : Semi-bold.
         /// </summary>
-        public static FontWeight SemiBold   { get { return new FontWeight(600); } }
+        public static FontWeight SemiBold { get { return new FontWeight(600); } }
 
         /// <summary>
         /// Predefined font weight : Bold.
         /// </summary>
-        public static FontWeight Bold       { get { return new FontWeight(700); } }
+        public static FontWeight Bold { get { return new FontWeight(700); } }
 
         /// <summary>
         /// Predefined font weight : Extra-bold.
         /// </summary>
-        public static FontWeight ExtraBold  { get { return new FontWeight(800); } }
+        public static FontWeight ExtraBold { get { return new FontWeight(800); } }
 
         /// <summary>
         /// Predefined font weight : Ultra-bold.
         /// </summary>
-        public static FontWeight UltraBold  { get { return new FontWeight(800); } }
+        public static FontWeight UltraBold { get { return new FontWeight(800); } }
 
         /// <summary>
         /// Predefined font weight : Black.
         /// </summary>
-        public static FontWeight Black      { get { return new FontWeight(900); } }
+        public static FontWeight Black { get { return new FontWeight(900); } }
 
         /// <summary>
         /// Predefined font weight : Heavy.
         /// </summary>
-        public static FontWeight Heavy      { get { return new FontWeight(900); } }
+        public static FontWeight Heavy { get { return new FontWeight(900); } }
 
         /// <summary>
         /// Predefined font weight : ExtraBlack.

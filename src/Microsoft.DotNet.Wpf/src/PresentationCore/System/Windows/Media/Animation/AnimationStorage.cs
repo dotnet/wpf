@@ -1,14 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using MS.Internal;
-using MS.Utility;
 using System.Windows.Media.Composition;
 using System.Windows.Media.Media3D;
-
+using MS.Internal;
 using MS.Internal.PresentationCore;     // SR
+using MS.Utility;
 
 namespace System.Windows.Media.Animation
 {
@@ -44,10 +43,10 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-                Debug.Assert(   _animationClocks == null
+                Debug.Assert(_animationClocks == null
                              || _animationClocks.Count > 0);
 
-                Debug.Assert(   _propertyTriggerLayers == null
+                Debug.Assert(_propertyTriggerLayers == null
                              || _propertyTriggerLayers.Count > 0);
 
                 return _animationClocks == null
@@ -173,7 +172,7 @@ namespace System.Windows.Media.Animation
 
             FrugalMap animatedPropertyMap = AnimatedPropertyMapField.GetValue(d);
 
-            if (   animatedPropertyMap.Count == 0
+            if (animatedPropertyMap.Count == 0
                 || animatedPropertyMap[_dependencyProperty.GlobalIndex] == DependencyProperty.UnsetValue)
             {
                 if (!IsEmpty)
@@ -314,7 +313,7 @@ namespace System.Windows.Media.Animation
         }
 
         internal void EvaluateAnimatedValue(
-            PropertyMetadata    metadata,
+            PropertyMetadata metadata,
             ref EffectiveValueEntry entry)
         {
             DependencyObject d = (DependencyObject)_dependencyObject.Target;
@@ -346,7 +345,7 @@ namespace System.Windows.Media.Animation
                         _dependencyProperty.Name,
                         null));
             }
-            
+
             entry.SetAnimatedValue(animatedValue, value);
         }
 
@@ -391,7 +390,7 @@ namespace System.Windows.Media.Animation
                         value = newEntry.Value;
                         if (newEntry.IsDeferredReference)
                         {
-                            value = ((DeferredReference) value).GetValue(newEntry.BaseValueSourceInternal);
+                            value = ((DeferredReference)value).GetValue(newEntry.BaseValueSourceInternal);
                             newEntry.Value = value;
                         }
                     }
@@ -399,10 +398,12 @@ namespace System.Windows.Media.Animation
                     {
                         // else entry has modifiers; preserve expression but throw away
                         // coerced & animated values, since we'll be recomputing an animated value
-                        newEntry = new EffectiveValueEntry();
-                        newEntry.BaseValueSourceInternal = oldEntry.BaseValueSourceInternal;
-                        newEntry.PropertyIndex = oldEntry.PropertyIndex;
-                        newEntry.HasExpressionMarker = oldEntry.HasExpressionMarker;
+                        newEntry = new EffectiveValueEntry
+                        {
+                            BaseValueSourceInternal = oldEntry.BaseValueSourceInternal,
+                            PropertyIndex = oldEntry.PropertyIndex,
+                            HasExpressionMarker = oldEntry.HasExpressionMarker
+                        };
 
                         value = oldEntry.ModifiedValue.BaseValue;
                         if (oldEntry.IsDeferredReference)
@@ -467,7 +468,7 @@ namespace System.Windows.Media.Animation
                             }
                         }
                     }
-                    else if(!_hadValidationError)
+                    else if (!_hadValidationError)
                     {
                         if (TraceAnimation.IsEnabled)
                         {
@@ -503,7 +504,7 @@ namespace System.Windows.Media.Animation
 
         private void OnRemoveRequested(object sender, EventArgs args)
         {
-            Debug.Assert(   _animationClocks != null
+            Debug.Assert(_animationClocks != null
                          && _animationClocks.Count > 0,
                 "An AnimationClock no longer associated with a property should not have a RemoveRequested event handler.");
 
@@ -516,7 +517,7 @@ namespace System.Windows.Media.Animation
 
             _animationClocks.RemoveAt(index);
 
-            if (   _hasStickySnapshotValue
+            if (_hasStickySnapshotValue
                 && index == 0)
             {
                 // The first clock is always the one that would have unstuck
@@ -563,7 +564,7 @@ namespace System.Windows.Media.Animation
             }
         }
 
-#endregion
+        #endregion
 
         #region Static Helper Methods
 
@@ -597,14 +598,14 @@ namespace System.Windows.Media.Animation
             Debug.Assert(!animationClocks.Contains(null),
                 "The animationClocks parameter should not contain a null entry.");
             Debug.Assert(HandoffBehaviorEnum.IsDefined(handoffBehavior),
-                "Public API caller of this internal method is responsible for validating that the HandoffBehavior value is valid." );
+                "Public API caller of this internal method is responsible for validating that the HandoffBehavior value is valid.");
 
             AnimationStorage storage = GetStorage(d, dp);
 
             // handoffBehavior is SnapshotAndReplace or the situation is such
             // that it is the equivalent because we have nothing to compose
             // with.
-            if (   handoffBehavior == HandoffBehavior.SnapshotAndReplace
+            if (handoffBehavior == HandoffBehavior.SnapshotAndReplace
                 || storage == null
                 || storage._animationClocks == null)
             {
@@ -697,11 +698,11 @@ namespace System.Windows.Media.Animation
             HandoffBehavior handoffBehavior,
             Int64 propertyTriggerLayerIndex)
         {
-            if( propertyTriggerLayerIndex == 1 )
+            if (propertyTriggerLayerIndex == 1)
             {
                 // Layer 1 is a special layer, where it gets treated as if there
                 //  was no layer specification at all.
-                ApplyAnimationClocks( d, dp, animationClocks, handoffBehavior );
+                ApplyAnimationClocks(d, dp, animationClocks, handoffBehavior);
                 return;
             }
 
@@ -782,13 +783,13 @@ namespace System.Windows.Media.Animation
             Debug.Assert(IsPropertyAnimatable(d, dp));
 
             Debug.Assert(HandoffBehaviorEnum.IsDefined(handoffBehavior),
-                "Public API caller of this internal method is responsible for validating that the HandoffBehavior value is valid." );
+                "Public API caller of this internal method is responsible for validating that the HandoffBehavior value is valid.");
 
             AnimationStorage storage = GetStorage(d, dp);
 
             if (animation == null)
             {
-                if (   storage == null
+                if (storage == null
                     || handoffBehavior == HandoffBehavior.Compose)
                 {
                     // Composing with a null animation is a no-op.
@@ -909,13 +910,13 @@ namespace System.Windows.Media.Animation
             // we need to check the state of the first clock as well to avoid
             // potential first frame issues. In this case _hasStickySnapshotValue
             // will be updated to false shortly.
-            if (   storage._hasStickySnapshotValue
+            if (storage._hasStickySnapshotValue
                 && storage._animationClocks[0].CurrentState == ClockState.Stopped)
             {
                 return storage._snapshotValue;
             }
 
-            if (   storage._animationClocks == null
+            if (storage._animationClocks == null
                 && storage._propertyTriggerLayers == null)
             {
                 Debug.Assert(storage._snapshotValue != DependencyProperty.UnsetValue);
@@ -1032,7 +1033,7 @@ namespace System.Windows.Media.Animation
 
             UIPropertyMetadata uiMetadata = dp.GetMetadata(d.DependencyObjectType) as UIPropertyMetadata;
 
-            if (   uiMetadata != null
+            if (uiMetadata != null
                 && uiMetadata.IsAnimationProhibited)
             {
                 return false;
@@ -1084,7 +1085,7 @@ namespace System.Windows.Media.Animation
         /// </returns>
         internal static AnimationStorage GetStorage(DependencyObject d, DependencyProperty dp)
         {
-            Debug.Assert(   AnimatedPropertyMapField.GetValue(d)[dp.GlobalIndex] == DependencyProperty.UnsetValue
+            Debug.Assert(AnimatedPropertyMapField.GetValue(d)[dp.GlobalIndex] == DependencyProperty.UnsetValue
                          || AnimatedPropertyMapField.GetValue(d)[dp.GlobalIndex] is AnimationStorage);
 
             return AnimatedPropertyMapField.GetValue(d)[dp.GlobalIndex] as AnimationStorage;

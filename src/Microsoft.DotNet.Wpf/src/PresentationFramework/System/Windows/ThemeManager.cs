@@ -1,5 +1,5 @@
+﻿using System.Windows.Appearance;
 using Microsoft.Win32;
-using System.Windows.Appearance;
 
 
 namespace System.Windows;
@@ -25,7 +25,7 @@ internal static class ThemeManager
                 {
                     AddOrUpdateThemeResources(Application.Current.Resources, GetThemeDictionary(Application.Current.ThemeMode));
                 }
-                
+
                 foreach (Window window in Application.Current.Windows)
                 {
                     if (window.ThemeMode == ThemeMode.None)
@@ -124,7 +124,7 @@ internal static class ThemeManager
             Application.Current.ThemeMode = themeMode;
             return themeMode == ThemeMode.None ? false : true;
         }
-        
+
         return false;
     }
 
@@ -132,7 +132,7 @@ internal static class ThemeManager
     {
         ThemeMode themeMode = GetThemeModeFromResourceDictionary(window.Resources);
 
-        if(window.ThemeMode != themeMode)
+        if (window.ThemeMode != themeMode)
         {
             window.ThemeMode = themeMode;
         }
@@ -170,21 +170,21 @@ internal static class ThemeManager
         if (themeMode == ThemeMode.None)
             return null;
 
-        if ( SystemParameters.HighContrast)
+        if (SystemParameters.HighContrast)
         {
             return new ResourceDictionary() { Source = new Uri(FluentThemeResourceDictionaryUri + "Fluent.HC.xaml", UriKind.Absolute) };
         }
 
         ResourceDictionary rd = null;
         bool useLightColors = GetUseLightColors(themeMode);
-        
+
         if (themeMode == ThemeMode.System)
         {
             rd = new ResourceDictionary() { Source = new Uri(FluentThemeResourceDictionaryUri + "Fluent.xaml", UriKind.Absolute) };
 
             var colorFileName = useLightColors ? "Light.xaml" : "Dark.xaml";
             Uri dictionaryUri = new Uri(FluentColorDictionaryUri + colorFileName, UriKind.Absolute);
-            rd.MergedDictionaries.Insert(0, new ResourceDictionary() { Source = dictionaryUri });            
+            rd.MergedDictionaries.Insert(0, new ResourceDictionary() { Source = dictionaryUri });
         }
         else
         {
@@ -319,7 +319,7 @@ internal static class ThemeManager
 
     internal static bool IgnoreWindowResourcesChange { get; set; } = false;
 
-    internal const double DefaultFluentFontSizeFactor = 14.0 / 12.0 ;
+    internal const double DefaultFluentFontSizeFactor = 14.0 / 12.0;
 
     internal static WindowCollection FluentEnabledWindows { get; set; } = new WindowCollection();
 

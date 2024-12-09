@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,8 +8,8 @@
 
 using System.Collections;
 using System.Runtime.InteropServices;
-using MS.Win32;
 using MS.Internal;
+using MS.Win32;
 
 namespace System.Windows.Documents
 {
@@ -20,7 +20,7 @@ namespace System.Windows.Documents
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         // ctor that takes a range of events
@@ -44,7 +44,7 @@ namespace System.Windows.Documents
         {
             if (_arTextStore == null)
             {
-               _arTextStore = new ArrayList(1);
+                _arTextStore = new ArrayList(1);
             }
 
             _arTextStore.Add(textstore);
@@ -60,7 +60,7 @@ namespace System.Windows.Documents
         internal override void WinEventProc(int eventId, IntPtr hwnd)
         {
             Invariant.Assert(eventId == NativeMethods.EVENT_SYSTEM_MOVESIZEEND);
-             
+
             if (_arTextStore != null)
             {
                 for (int i = 0; i < _arTextStore.Count; i++)

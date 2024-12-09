@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -29,7 +29,7 @@ namespace System.Windows.Documents
         /// ToggleInsert command.
         /// Changed typing mode between insertion and overtyping.
         /// </summary>
-        public static RoutedUICommand  ToggleInsert            { get { return EnsureCommand(ref _ToggleInsert           , "ToggleInsert"             ); } }
+        public static RoutedUICommand ToggleInsert { get { return EnsureCommand(ref _ToggleInsert, "ToggleInsert"); } }
 
         /// <summary>
         /// Delete command.
@@ -37,9 +37,9 @@ namespace System.Windows.Documents
         /// When selection is not empty deletes the selected content.
         /// Formatting of deleted content is not springloaded (unlike Backspace).
         /// </summary>
-        public static RoutedUICommand  Delete                  { get { return EnsureCommand(ref _Delete                 , "Delete"                   ); } }
+        public static RoutedUICommand Delete { get { return EnsureCommand(ref _Delete, "Delete"); } }
 
-        internal static RoutedUICommand Clear                  { get { return EnsureCommand(ref _Clear                  , "Clear"                    ); } }
+        internal static RoutedUICommand Clear { get { return EnsureCommand(ref _Clear, "Clear"); } }
 
         /// <summary>
         /// Backspace command.
@@ -48,17 +48,17 @@ namespace System.Windows.Documents
         /// Formatting of deleted content is springloaded (unlike Delete).
         /// Formatting for springloading is taken from the very first selected character.
         /// </summary>
-        public static RoutedUICommand  Backspace               { get { return EnsureCommand(ref _Backspace              , "Backspace"                ); } }
+        public static RoutedUICommand Backspace { get { return EnsureCommand(ref _Backspace, "Backspace"); } }
 
         /// <summary>
         /// DeleteNextWord command.
         /// </summary>
-        public static RoutedUICommand  DeleteNextWord          { get { return EnsureCommand(ref _DeleteNextWord         , "DeleteNextWord"           ); } }
+        public static RoutedUICommand DeleteNextWord { get { return EnsureCommand(ref _DeleteNextWord, "DeleteNextWord"); } }
 
         /// <summary>
         /// DeletePreviousWord command.
         /// </summary>
-        public static RoutedUICommand  DeletePreviousWord      { get { return EnsureCommand(ref _DeletePreviousWord     , "DeletePreviousWord"       ); } }
+        public static RoutedUICommand DeletePreviousWord { get { return EnsureCommand(ref _DeletePreviousWord, "DeletePreviousWord"); } }
 
         /// <summary>
         /// EnterParagraphBreak command.
@@ -67,12 +67,12 @@ namespace System.Windows.Documents
         /// the structure of text elements is changed so that paragraph break appears
         /// at caret position.
         /// </summary>
-        public static RoutedUICommand  EnterParagraphBreak     { get { return EnsureCommand(ref _EnterParagraphBreak    , "EnterParagraphBreak"      ); } }
+        public static RoutedUICommand EnterParagraphBreak { get { return EnsureCommand(ref _EnterParagraphBreak, "EnterParagraphBreak"); } }
 
         /// <summary>
         /// EnterLineBreak command.
         /// </summary>
-        public static RoutedUICommand  EnterLineBreak          { get { return EnsureCommand(ref _EnterLineBreak         , "EnterLineBreak"           ); } }
+        public static RoutedUICommand EnterLineBreak { get { return EnsureCommand(ref _EnterLineBreak, "EnterLineBreak"); } }
 
         /// <summary>
         /// TabForward command.
@@ -85,7 +85,7 @@ namespace System.Windows.Documents
         /// the caret into first cell of that row.
         /// Otherwise Tab character is inserted in current position.
         /// </summary>
-        public static RoutedUICommand  TabForward              { get { return EnsureCommand(ref _TabForward             , "TabForward"               ); } }
+        public static RoutedUICommand TabForward { get { return EnsureCommand(ref _TabForward, "TabForward"); } }
 
         /// <summary>
         /// TabBackward command.
@@ -96,83 +96,83 @@ namespace System.Windows.Documents
         /// If the caret is in table cell then it moves to the previous cell.
         /// Otherwise Tab character is inserted in current position.
         /// </summary>
-        public static RoutedUICommand  TabBackward             { get { return EnsureCommand(ref _TabBackward            , "TabBackward"              ); } }
+        public static RoutedUICommand TabBackward { get { return EnsureCommand(ref _TabBackward, "TabBackward"); } }
 
         // Caret navigation commands
         // -------------------------
         /// <summary>
         /// MoveRightByCharacter command.
         /// </summary>
-        public static RoutedUICommand  MoveRightByCharacter    { get { return EnsureCommand(ref _MoveRightByCharacter   , "MoveRightByCharacter"     ); } }
+        public static RoutedUICommand MoveRightByCharacter { get { return EnsureCommand(ref _MoveRightByCharacter, "MoveRightByCharacter"); } }
 
         /// <summary>
         /// MoveLeftByCharacter command.
         /// </summary>
-        public static RoutedUICommand  MoveLeftByCharacter     { get { return EnsureCommand(ref _MoveLeftByCharacter    , "MoveLeftByCharacter"      ); } }
+        public static RoutedUICommand MoveLeftByCharacter { get { return EnsureCommand(ref _MoveLeftByCharacter, "MoveLeftByCharacter"); } }
 
         /// <summary>
         /// MoveRightByWord command.
         /// </summary>
-        public static RoutedUICommand  MoveRightByWord         { get { return EnsureCommand(ref _MoveRightByWord        , "MoveRightByWord"          ); } }
+        public static RoutedUICommand MoveRightByWord { get { return EnsureCommand(ref _MoveRightByWord, "MoveRightByWord"); } }
 
         /// <summary>
         /// MoveLeftByWord command.
         /// </summary>
-        public static RoutedUICommand  MoveLeftByWord          { get { return EnsureCommand(ref _MoveLeftByWord         , "MoveLeftByWord"           ); } }
+        public static RoutedUICommand MoveLeftByWord { get { return EnsureCommand(ref _MoveLeftByWord, "MoveLeftByWord"); } }
 
         /// <summary>
         /// MoveDownByLine command.
         /// </summary>
-        public static RoutedUICommand  MoveDownByLine          { get { return EnsureCommand(ref _MoveDownByLine         , "MoveDownByLine"           ); } }
+        public static RoutedUICommand MoveDownByLine { get { return EnsureCommand(ref _MoveDownByLine, "MoveDownByLine"); } }
 
         /// <summary>
         /// MoveUpByLine command.
         /// </summary>
-        public static RoutedUICommand  MoveUpByLine            { get { return EnsureCommand(ref _MoveUpByLine           , "MoveUpByLine"             ); } }
+        public static RoutedUICommand MoveUpByLine { get { return EnsureCommand(ref _MoveUpByLine, "MoveUpByLine"); } }
 
         /// <summary>
         /// MoveDownByParagraph command.
         /// </summary>
-        public static RoutedUICommand  MoveDownByParagraph     { get { return EnsureCommand(ref _MoveDownByParagraph    , "MoveDownByParagraph"      ); } }
+        public static RoutedUICommand MoveDownByParagraph { get { return EnsureCommand(ref _MoveDownByParagraph, "MoveDownByParagraph"); } }
 
         /// <summary>
         /// MoveUpByParagraph command.
         /// </summary>
-        public static RoutedUICommand  MoveUpByParagraph       { get { return EnsureCommand(ref _MoveUpByParagraph      , "MoveUpByParagraph"        ); } }
+        public static RoutedUICommand MoveUpByParagraph { get { return EnsureCommand(ref _MoveUpByParagraph, "MoveUpByParagraph"); } }
 
         /// <summary>
         /// MoveDownByPage command.
         /// Corresponds to PgDn key on the keyboard.
         /// </summary>
-        public static RoutedUICommand  MoveDownByPage          { get { return EnsureCommand(ref _MoveDownByPage         , "MoveDownByPage"             ); } }
+        public static RoutedUICommand MoveDownByPage { get { return EnsureCommand(ref _MoveDownByPage, "MoveDownByPage"); } }
 
         /// <summary>
         /// MoveUpByPage command.
         /// Corresponds to PgUp key on the keyboard.
         /// </summary>
-        public static RoutedUICommand  MoveUpByPage            { get { return EnsureCommand(ref _MoveUpByPage           , "MoveUpByPage"             ); } }
+        public static RoutedUICommand MoveUpByPage { get { return EnsureCommand(ref _MoveUpByPage, "MoveUpByPage"); } }
 
         /// <summary>
         /// MoveToLineStart command.
         /// Corresponds to Home key on the keyboard.
         /// </summary>
-        public static RoutedUICommand  MoveToLineStart         { get { return EnsureCommand(ref _MoveToLineStart        , "MoveToLineStart"          ); } }
+        public static RoutedUICommand MoveToLineStart { get { return EnsureCommand(ref _MoveToLineStart, "MoveToLineStart"); } }
 
         /// <summary>
         /// MoveToLineEnd command.
         /// Corresponds to End key on the keyboard.
         /// </summary>
-        public static RoutedUICommand  MoveToLineEnd           { get { return EnsureCommand(ref _MoveToLineEnd          , "MoveToLineEnd"            ); } }
+        public static RoutedUICommand MoveToLineEnd { get { return EnsureCommand(ref _MoveToLineEnd, "MoveToLineEnd"); } }
 
         /// <summary>
         /// MoveToDocumentStart command.
         /// </summary>
-        public static RoutedUICommand  MoveToDocumentStart     { get { return EnsureCommand(ref _MoveToDocumentStart    , "MoveToDocumentStart"      ); } }
+        public static RoutedUICommand MoveToDocumentStart { get { return EnsureCommand(ref _MoveToDocumentStart, "MoveToDocumentStart"); } }
 
         /// <summary>
         /// MoveToDocumentEnd command.
         /// </summary>
-        public static RoutedUICommand  MoveToDocumentEnd       { get { return EnsureCommand(ref _MoveToDocumentEnd      , "MoveToDocumentEnd"        ); } }
+        public static RoutedUICommand MoveToDocumentEnd { get { return EnsureCommand(ref _MoveToDocumentEnd, "MoveToDocumentEnd"); } }
 
         // Selection extension commands
         // ----------------------------
@@ -180,72 +180,72 @@ namespace System.Windows.Documents
         /// <summary>
         /// SelectRightByCharacter command.
         /// </summary>
-        public static RoutedUICommand  SelectRightByCharacter  { get { return EnsureCommand(ref _SelectRightByCharacter , "SelectRightByCharacter"   ); } }
+        public static RoutedUICommand SelectRightByCharacter { get { return EnsureCommand(ref _SelectRightByCharacter, "SelectRightByCharacter"); } }
 
         /// <summary>
         /// SelectLeftByCharacter command.
         /// </summary>
-        public static RoutedUICommand  SelectLeftByCharacter   { get { return EnsureCommand(ref _SelectLeftByCharacter  , "SelectLeftByCharacter"    ); } }
+        public static RoutedUICommand SelectLeftByCharacter { get { return EnsureCommand(ref _SelectLeftByCharacter, "SelectLeftByCharacter"); } }
 
         /// <summary>
         /// SelectRightByWord command.
         /// </summary>
-        public static RoutedUICommand  SelectRightByWord       { get { return EnsureCommand(ref _SelectRightByWord      , "SelectRightByWord"        ); } }
+        public static RoutedUICommand SelectRightByWord { get { return EnsureCommand(ref _SelectRightByWord, "SelectRightByWord"); } }
 
         /// <summary>
         /// SelectLeftbyWord command.
         /// </summary>
-        public static RoutedUICommand  SelectLeftByWord        { get { return EnsureCommand(ref _SelectLeftByWord       , "SelectLeftByWord"         ); } }
+        public static RoutedUICommand SelectLeftByWord { get { return EnsureCommand(ref _SelectLeftByWord, "SelectLeftByWord"); } }
 
         /// <summary>
         /// SelectDownByLine command.
         /// </summary>
-        public static RoutedUICommand  SelectDownByLine        { get { return EnsureCommand(ref _SelectDownByLine       , "SelectDownByLine"         ); } }
+        public static RoutedUICommand SelectDownByLine { get { return EnsureCommand(ref _SelectDownByLine, "SelectDownByLine"); } }
 
         /// <summary>
         /// SelectUpByLine command.
         /// </summary>
-        public static RoutedUICommand  SelectUpByLine          { get { return EnsureCommand(ref _SelectUpByLine         , "SelectUpByLine"           ); } }
+        public static RoutedUICommand SelectUpByLine { get { return EnsureCommand(ref _SelectUpByLine, "SelectUpByLine"); } }
 
         /// <summary>
         /// SelectDownByParagraph command.
         /// </summary>
-        public static RoutedUICommand  SelectDownByParagraph   { get { return EnsureCommand(ref _SelectDownByParagraph  , "SelectDownByParagraph"    ); } }
+        public static RoutedUICommand SelectDownByParagraph { get { return EnsureCommand(ref _SelectDownByParagraph, "SelectDownByParagraph"); } }
 
         /// <summary>
         /// SelectUpByParagraph command.
         /// </summary>
-        public static RoutedUICommand  SelectUpByParagraph     { get { return EnsureCommand(ref _SelectUpByParagraph    , "SelectUpByParagraph"      ); } }
+        public static RoutedUICommand SelectUpByParagraph { get { return EnsureCommand(ref _SelectUpByParagraph, "SelectUpByParagraph"); } }
 
         /// <summary>
         /// SelectDownByPage command.
         /// </summary>
-        public static RoutedUICommand  SelectDownByPage        { get { return EnsureCommand(ref _SelectDownByPage       , "SelectDownByPage"         ); } }
+        public static RoutedUICommand SelectDownByPage { get { return EnsureCommand(ref _SelectDownByPage, "SelectDownByPage"); } }
 
         /// <summary>
         /// SelectUpByPage command.
         /// </summary>
-        public static RoutedUICommand  SelectUpByPage          { get { return EnsureCommand(ref _SelectUpByPage         , "SelectUpByPage"           ); } }
+        public static RoutedUICommand SelectUpByPage { get { return EnsureCommand(ref _SelectUpByPage, "SelectUpByPage"); } }
 
         /// <summary>
         /// SelectToLineStart command.
         /// </summary>
-        public static RoutedUICommand  SelectToLineStart       { get { return EnsureCommand(ref _SelectToLineStart      , "SelectToLineStart"        ); } }
+        public static RoutedUICommand SelectToLineStart { get { return EnsureCommand(ref _SelectToLineStart, "SelectToLineStart"); } }
 
         /// <summary>
         /// SelectToLineEnd command.
         /// </summary>
-        public static RoutedUICommand  SelectToLineEnd         { get { return EnsureCommand(ref _SelectToLineEnd        , "SelectToLineEnd"          ); } }
+        public static RoutedUICommand SelectToLineEnd { get { return EnsureCommand(ref _SelectToLineEnd, "SelectToLineEnd"); } }
 
         /// <summary>
         /// SelectToDocumentStart command.
         /// </summary>
-        public static RoutedUICommand  SelectToDocumentStart   { get { return EnsureCommand(ref _SelectToDocumentStart  , "SelectToDocumentStart"    ); } }
+        public static RoutedUICommand SelectToDocumentStart { get { return EnsureCommand(ref _SelectToDocumentStart, "SelectToDocumentStart"); } }
 
         /// <summary>
         /// SelectToDocumentEnd command.
         /// </summary>
-        public static RoutedUICommand  SelectToDocumentEnd     { get { return EnsureCommand(ref _SelectToDocumentEnd    , "SelectToDocumentEnd"      ); } }
+        public static RoutedUICommand SelectToDocumentEnd { get { return EnsureCommand(ref _SelectToDocumentEnd, "SelectToDocumentEnd"); } }
 
         // Character editing commands
         // --------------------------
@@ -259,37 +259,37 @@ namespace System.Windows.Documents
         /// When empty selection is between words or in the process of typing
         /// the property is springloaded.
         /// </summary>
-        public static RoutedUICommand  ToggleBold              { get { return EnsureCommand(ref _ToggleBold             , "ToggleBold"               ); } }
+        public static RoutedUICommand ToggleBold { get { return EnsureCommand(ref _ToggleBold, "ToggleBold"); } }
 
         /// <summary>
         /// ToggleItalic command.
         /// </summary>
-        public static RoutedUICommand  ToggleItalic            { get { return EnsureCommand(ref _ToggleItalic           , "ToggleItalic"             ); } }
+        public static RoutedUICommand ToggleItalic { get { return EnsureCommand(ref _ToggleItalic, "ToggleItalic"); } }
 
         /// <summary>
         /// ToggleUnderline command.
         /// </summary>
-        public static RoutedUICommand  ToggleUnderline         { get { return EnsureCommand(ref _ToggleUnderline        , "ToggleUnderline"          ); } }
+        public static RoutedUICommand ToggleUnderline { get { return EnsureCommand(ref _ToggleUnderline, "ToggleUnderline"); } }
 
         /// <summary>
         /// ToggleSubscript command.
         /// </summary>
-        public static RoutedUICommand  ToggleSubscript         { get { return EnsureCommand(ref _ToggleSubscript        , "ToggleSubscript"          ); } }
+        public static RoutedUICommand ToggleSubscript { get { return EnsureCommand(ref _ToggleSubscript, "ToggleSubscript"); } }
 
         /// <summary>
         /// ToggleSuperscript command.
         /// </summary>
-        public static RoutedUICommand  ToggleSuperscript       { get { return EnsureCommand(ref _ToggleSuperscript      , "ToggleSuperscript"        ); } }
+        public static RoutedUICommand ToggleSuperscript { get { return EnsureCommand(ref _ToggleSuperscript, "ToggleSuperscript"); } }
 
         /// <summary>
         /// IncreaseFontSize command.
         /// </summary>
-        public static RoutedUICommand  IncreaseFontSize        { get { return EnsureCommand(ref _IncreaseFontSize       , "IncreaseFontSize"         ); } }
+        public static RoutedUICommand IncreaseFontSize { get { return EnsureCommand(ref _IncreaseFontSize, "IncreaseFontSize"); } }
 
         /// <summary>
         /// DecreaseFontSize command.
         /// </summary>
-        public static RoutedUICommand  DecreaseFontSize        { get { return EnsureCommand(ref _DecreaseFontSize       , "DecreaseFontSize"         ); } }
+        public static RoutedUICommand DecreaseFontSize { get { return EnsureCommand(ref _DecreaseFontSize, "DecreaseFontSize"); } }
 
         // Paragraph editing commands
         // --------------------------
@@ -297,22 +297,22 @@ namespace System.Windows.Documents
         /// <summary>
         /// AlignLeft command.
         /// </summary>
-        public static RoutedUICommand  AlignLeft               { get { return EnsureCommand(ref _AlignLeft              , "AlignLeft"                ); } }
+        public static RoutedUICommand AlignLeft { get { return EnsureCommand(ref _AlignLeft, "AlignLeft"); } }
 
         /// <summary>
         /// AlightCenter command.
         /// </summary>
-        public static RoutedUICommand  AlignCenter             { get { return EnsureCommand(ref _AlignCenter            , "AlignCenter"              ); } }
+        public static RoutedUICommand AlignCenter { get { return EnsureCommand(ref _AlignCenter, "AlignCenter"); } }
 
         /// <summary>
         /// AlignRight command.
         /// </summary>
-        public static RoutedUICommand  AlignRight              { get { return EnsureCommand(ref _AlignRight             , "AlignRight"               ); } }
+        public static RoutedUICommand AlignRight { get { return EnsureCommand(ref _AlignRight, "AlignRight"); } }
 
         /// <summary>
         /// AlignJustify command.
         /// </summary>
-        public static RoutedUICommand  AlignJustify            { get { return EnsureCommand(ref _AlignJustify           , "AlignJustify"             ); } }
+        public static RoutedUICommand AlignJustify { get { return EnsureCommand(ref _AlignJustify, "AlignJustify"); } }
 
         // List editing commands
         // ---------------------
@@ -325,7 +325,7 @@ namespace System.Windows.Documents
         /// by circle over all predefined non-numeric list marker styles.
         /// The circle includes no-list state as well.
         /// </summary>
-        public static RoutedUICommand  ToggleBullets           { get { return EnsureCommand(ref _ToggleBullets          , "ToggleBullets"            ); } }
+        public static RoutedUICommand ToggleBullets { get { return EnsureCommand(ref _ToggleBullets, "ToggleBullets"); } }
 
         /// <summary>
         /// ToggelNumbers command.
@@ -335,7 +335,7 @@ namespace System.Windows.Documents
         /// by circle over all predefined numeric list marker styles
         /// The circle includes no-list state as well.
         /// </summary>
-        public static RoutedUICommand  ToggleNumbering         { get { return EnsureCommand(ref _ToggleNumbering        , "ToggleNumbering"          ); } }
+        public static RoutedUICommand ToggleNumbering { get { return EnsureCommand(ref _ToggleNumbering, "ToggleNumbering"); } }
 
         /// <summary>
         /// IncreaseIndentation command.
@@ -353,12 +353,12 @@ namespace System.Windows.Documents
         /// <summary>
         /// Corrects a misspelled word at the insertion position.
         /// </summary>
-        public static RoutedUICommand CorrectSpellingError   { get { return EnsureCommand(ref _CorrectSpellingError, "CorrectSpellingError"        ); } }
+        public static RoutedUICommand CorrectSpellingError { get { return EnsureCommand(ref _CorrectSpellingError, "CorrectSpellingError"); } }
 
         /// <summary>
         /// Ignores all instances of the misspelled word at the insertion position.
         /// </summary>
-        public static RoutedUICommand IgnoreSpellingError    { get { return EnsureCommand(ref _IgnoreSpellingError, "IgnoreSpellingError"          ); } }
+        public static RoutedUICommand IgnoreSpellingError { get { return EnsureCommand(ref _IgnoreSpellingError, "IgnoreSpellingError"); } }
 
         #endregion Public Properties
 
@@ -374,27 +374,27 @@ namespace System.Windows.Documents
         //      f) Re-expose via reflection in Lexicon
 
         // Typing commands
-        internal static RoutedUICommand Space                             { get { return EnsureCommand(ref _Space                                  , "Space"                                     ); } }
-        internal static RoutedUICommand ShiftSpace                        { get { return EnsureCommand(ref _ShiftSpace                             , "ShiftSpace"                                ); } }
+        internal static RoutedUICommand Space { get { return EnsureCommand(ref _Space, "Space"); } }
+        internal static RoutedUICommand ShiftSpace { get { return EnsureCommand(ref _ShiftSpace, "ShiftSpace"); } }
 
         // Caret navigation commands
         // -------------------------
-        internal static RoutedUICommand MoveToColumnStart                 { get { return EnsureCommand(ref _MoveToColumnStart                      , "MoveToColumnStart"                         ); } }
-        internal static RoutedUICommand MoveToColumnEnd                   { get { return EnsureCommand(ref _MoveToColumnEnd                        , "MoveToColumnEnd"                           ); } }
-        internal static RoutedUICommand MoveToWindowTop                   { get { return EnsureCommand(ref _MoveToWindowTop                        , "MoveToWindowTop"                           ); } }
-        internal static RoutedUICommand MoveToWindowBottom                { get { return EnsureCommand(ref _MoveToWindowBottom                     , "MoveToWindowBottom"                        ); } }
+        internal static RoutedUICommand MoveToColumnStart { get { return EnsureCommand(ref _MoveToColumnStart, "MoveToColumnStart"); } }
+        internal static RoutedUICommand MoveToColumnEnd { get { return EnsureCommand(ref _MoveToColumnEnd, "MoveToColumnEnd"); } }
+        internal static RoutedUICommand MoveToWindowTop { get { return EnsureCommand(ref _MoveToWindowTop, "MoveToWindowTop"); } }
+        internal static RoutedUICommand MoveToWindowBottom { get { return EnsureCommand(ref _MoveToWindowBottom, "MoveToWindowBottom"); } }
 
         // Selection extension commands
         // ----------------------------
-        internal static RoutedUICommand SelectToColumnStart               { get { return EnsureCommand(ref _SelectToColumnStart                    , "SelectToColumnStart"                       ); } }
-        internal static RoutedUICommand SelectToColumnEnd                 { get { return EnsureCommand(ref _SelectToColumnEnd                      , "SelectToColumnEnd"                         ); } }
-        internal static RoutedUICommand SelectToWindowTop                 { get { return EnsureCommand(ref _SelectToWindowTop                      , "SelectToWindowTop"                         ); } }
-        internal static RoutedUICommand SelectToWindowBottom              { get { return EnsureCommand(ref _SelectToWindowBottom                   , "SelectToWindowBottom"                      ); } }
+        internal static RoutedUICommand SelectToColumnStart { get { return EnsureCommand(ref _SelectToColumnStart, "SelectToColumnStart"); } }
+        internal static RoutedUICommand SelectToColumnEnd { get { return EnsureCommand(ref _SelectToColumnEnd, "SelectToColumnEnd"); } }
+        internal static RoutedUICommand SelectToWindowTop { get { return EnsureCommand(ref _SelectToWindowTop, "SelectToWindowTop"); } }
+        internal static RoutedUICommand SelectToWindowBottom { get { return EnsureCommand(ref _SelectToWindowBottom, "SelectToWindowBottom"); } }
 
         // Character editing commands
         // --------------------------
-        internal static RoutedUICommand ResetFormat                       { get { return EnsureCommand(ref _ResetFormat                            , "ResetFormat"                               ); } }
-        internal static RoutedUICommand ToggleSpellCheck                  { get { return EnsureCommand(ref _ToggleSpellCheck                       , "ToggleSpellCheck"                          ); } }
+        internal static RoutedUICommand ResetFormat { get { return EnsureCommand(ref _ResetFormat, "ResetFormat"); } }
+        internal static RoutedUICommand ToggleSpellCheck { get { return EnsureCommand(ref _ToggleSpellCheck, "ToggleSpellCheck"); } }
 
         // BEGIN Application Compatibility Note
         // The following commands are internal, but they are exposed publicly
@@ -402,41 +402,41 @@ namespace System.Windows.Documents
         // because it is well documented.  For example, in the
         // "WPF XAML Vocabulary Specification 2006" found here:
         // http://msdn.microsoft.com/en-us/library/dd361848(PROT.10).aspx
-        internal static RoutedUICommand ApplyFontSize                     { get { return EnsureCommand(ref _ApplyFontSize                          , "ApplyFontSize"                             ); } }
-        internal static RoutedUICommand ApplyFontFamily                   { get { return EnsureCommand(ref _ApplyFontFamily                        , "ApplyFontFamily"                           ); } }
-        internal static RoutedUICommand ApplyForeground                   { get { return EnsureCommand(ref _ApplyForeground                        , "ApplyForeground"                           ); } }
-        internal static RoutedUICommand ApplyBackground                   { get { return EnsureCommand(ref _ApplyBackground                        , "ApplyBackground"                           ); } }
+        internal static RoutedUICommand ApplyFontSize { get { return EnsureCommand(ref _ApplyFontSize, "ApplyFontSize"); } }
+        internal static RoutedUICommand ApplyFontFamily { get { return EnsureCommand(ref _ApplyFontFamily, "ApplyFontFamily"); } }
+        internal static RoutedUICommand ApplyForeground { get { return EnsureCommand(ref _ApplyForeground, "ApplyForeground"); } }
+        internal static RoutedUICommand ApplyBackground { get { return EnsureCommand(ref _ApplyBackground, "ApplyBackground"); } }
         // END Application Compatibility Note
 
-        internal static RoutedUICommand ApplyInlineFlowDirectionRTL       { get { return EnsureCommand(ref _ApplyInlineFlowDirectionRTL            , "ApplyInlineFlowDirectionRTL"               ); } }
-        internal static RoutedUICommand ApplyInlineFlowDirectionLTR       { get { return EnsureCommand(ref _ApplyInlineFlowDirectionLTR            , "ApplyInlineFlowDirectionLTR"               ); } }
+        internal static RoutedUICommand ApplyInlineFlowDirectionRTL { get { return EnsureCommand(ref _ApplyInlineFlowDirectionRTL, "ApplyInlineFlowDirectionRTL"); } }
+        internal static RoutedUICommand ApplyInlineFlowDirectionLTR { get { return EnsureCommand(ref _ApplyInlineFlowDirectionLTR, "ApplyInlineFlowDirectionLTR"); } }
 
         // Paragraph editing commands
         // --------------------------
-        internal static RoutedUICommand ApplySingleSpace                  { get { return EnsureCommand(ref _ApplySingleSpace                       , "ApplySingleSpace"                          ); } }
-        internal static RoutedUICommand ApplyOneAndAHalfSpace             { get { return EnsureCommand(ref _ApplyOneAndAHalfSpace                  , "ApplyOneAndAHalfSpace"                     ); } }
-        internal static RoutedUICommand ApplyDoubleSpace                  { get { return EnsureCommand(ref _ApplyDoubleSpace                       , "ApplyDoubleSpace"                          ); } }
-        internal static RoutedUICommand ApplyParagraphFlowDirectionRTL    { get { return EnsureCommand(ref _ApplyParagraphFlowDirectionRTL         , "ApplyParagraphFlowDirectionRTL"            ); } }
-        internal static RoutedUICommand ApplyParagraphFlowDirectionLTR    { get { return EnsureCommand(ref _ApplyParagraphFlowDirectionLTR         , "ApplyParagraphFlowDirectionLTR"            ); } }
+        internal static RoutedUICommand ApplySingleSpace { get { return EnsureCommand(ref _ApplySingleSpace, "ApplySingleSpace"); } }
+        internal static RoutedUICommand ApplyOneAndAHalfSpace { get { return EnsureCommand(ref _ApplyOneAndAHalfSpace, "ApplyOneAndAHalfSpace"); } }
+        internal static RoutedUICommand ApplyDoubleSpace { get { return EnsureCommand(ref _ApplyDoubleSpace, "ApplyDoubleSpace"); } }
+        internal static RoutedUICommand ApplyParagraphFlowDirectionRTL { get { return EnsureCommand(ref _ApplyParagraphFlowDirectionRTL, "ApplyParagraphFlowDirectionRTL"); } }
+        internal static RoutedUICommand ApplyParagraphFlowDirectionLTR { get { return EnsureCommand(ref _ApplyParagraphFlowDirectionLTR, "ApplyParagraphFlowDirectionLTR"); } }
 
         // CopyPaste Commands
         // ------------------
-        internal static RoutedUICommand CopyFormat                        { get { return EnsureCommand(ref _CopyFormat                             , "CopyFormat"                                ); } }
-        internal static RoutedUICommand PasteFormat                       { get { return EnsureCommand(ref _PasteFormat                            , "PasteFormat"                               ); } }
+        internal static RoutedUICommand CopyFormat { get { return EnsureCommand(ref _CopyFormat, "CopyFormat"); } }
+        internal static RoutedUICommand PasteFormat { get { return EnsureCommand(ref _PasteFormat, "PasteFormat"); } }
 
         // List editing commands
         // ---------------------
-        internal static RoutedUICommand RemoveListMarkers                 { get { return EnsureCommand(ref _RemoveListMarkers                      , "RemoveListMarkers"                         ); } }
+        internal static RoutedUICommand RemoveListMarkers { get { return EnsureCommand(ref _RemoveListMarkers, "RemoveListMarkers"); } }
 
         // Table editing commands
         // ----------------------
-        internal static RoutedUICommand InsertTable                       { get { return EnsureCommand(ref _InsertTable                            , "InsertTable"                               ); } }
-        internal static RoutedUICommand InsertRows                        { get { return EnsureCommand(ref _InsertRows                             , "InsertRows"                                ); } }
-        internal static RoutedUICommand InsertColumns                     { get { return EnsureCommand(ref _InsertColumns                          , "InsertColumns"                             ); } }
-        internal static RoutedUICommand DeleteRows                        { get { return EnsureCommand(ref _DeleteRows                             , "DeleteRows"                                ); } }
-        internal static RoutedUICommand DeleteColumns                     { get { return EnsureCommand(ref _DeleteColumns                          , "DeleteColumns"                             ); } }
-        internal static RoutedUICommand MergeCells                        { get { return EnsureCommand(ref _MergeCells                             , "MergeCells"                                ); } }
-        internal static RoutedUICommand SplitCell                         { get { return EnsureCommand(ref _SplitCell                              , "SplitCell"                                 ); } }
+        internal static RoutedUICommand InsertTable { get { return EnsureCommand(ref _InsertTable, "InsertTable"); } }
+        internal static RoutedUICommand InsertRows { get { return EnsureCommand(ref _InsertRows, "InsertRows"); } }
+        internal static RoutedUICommand InsertColumns { get { return EnsureCommand(ref _InsertColumns, "InsertColumns"); } }
+        internal static RoutedUICommand DeleteRows { get { return EnsureCommand(ref _DeleteRows, "DeleteRows"); } }
+        internal static RoutedUICommand DeleteColumns { get { return EnsureCommand(ref _DeleteColumns, "DeleteColumns"); } }
+        internal static RoutedUICommand MergeCells { get { return EnsureCommand(ref _MergeCells, "MergeCells"); } }
+        internal static RoutedUICommand SplitCell { get { return EnsureCommand(ref _SplitCell, "SplitCell"); } }
 
         #endregion Public Properties
 

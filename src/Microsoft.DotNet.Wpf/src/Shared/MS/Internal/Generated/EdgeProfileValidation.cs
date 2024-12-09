@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -32,12 +32,12 @@ namespace System.Windows.Media.Effects
         /// <returns> 'true' if the enumeration contains a valid value, 'false' otherwise. </returns>
         public static bool IsEdgeProfileValid(object valueObject)
         {
-            EdgeProfile value = (EdgeProfile) valueObject;
+            EdgeProfile value = (EdgeProfile)valueObject;
 
-            return (value == EdgeProfile.Linear) || 
-                   (value == EdgeProfile.CurvedIn) || 
-                   (value == EdgeProfile.CurvedOut) || 
+            return (value == EdgeProfile.Linear) ||
+                   (value == EdgeProfile.CurvedIn) ||
+                   (value == EdgeProfile.CurvedOut) ||
                    (value == EdgeProfile.BulgedUp);
-        }                                
+        }
     }
 }

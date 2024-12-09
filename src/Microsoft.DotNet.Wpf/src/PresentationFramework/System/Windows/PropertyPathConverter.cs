@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,11 +7,11 @@
 //              and saving PropertyPath to string
 //
 
-using System.ComponentModel;
 using System.Collections.ObjectModel;
-using System.Text;
+using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
+using System.Text;
 using System.Windows.Markup;
 using MS.Internal.Data;
 
@@ -23,7 +23,7 @@ namespace System.Windows
     /// PropertyPathConverter - Converter class for converting instances of other types
     /// to and from PropertyPath instances.
     /// </summary>
-    public sealed class PropertyPathConverter: TypeConverter
+    public sealed class PropertyPathConverter : TypeConverter
     {
         //-------------------------------------------------------------------
         //
@@ -31,7 +31,7 @@ namespace System.Windows
         //
         //-------------------------------------------------------------------
 
-#region Public Methods
+        #region Public Methods
 
         /// <summary>
         /// CanConvertFrom - Returns whether or not this class can convert from a given type.
@@ -102,7 +102,7 @@ namespace System.Windows
                 return new PropertyPath((string)source, typeDescriptorContext);
             }
 
-            #pragma warning suppress 6506 // source is obviously not null
+#pragma warning suppress 6506 // source is obviously not null
             throw new ArgumentException(SR.Format(SR.CannotConvertType, source.GetType().FullName, typeof(PropertyPath)));
         }
 
@@ -170,26 +170,26 @@ namespace System.Windows
                 StringBuilder builder = new StringBuilder();
 
                 int start = 0;
-                for (int i=0; i<originalPath.Length; ++i)
+                for (int i = 0; i < originalPath.Length; ++i)
                 {
                     // look for (n)
                     if (originalPath[i] == '(')
                     {
                         int j;
-                        for (j=i+1; j<originalPath.Length; ++j)
+                        for (j = i + 1; j < originalPath.Length; ++j)
                         {
                             if (originalPath[j] == ')')
                                 break;
                         }
 
                         int index;
-                        if (Int32.TryParse( originalPath.AsSpan(i+1, j-i-1),
+                        if (Int32.TryParse(originalPath.AsSpan(i + 1, j - i - 1),
                                             NumberStyles.Integer,
                                             TypeConverterHelper.InvariantEnglishUS.NumberFormat,
                                             out index))
                         {
                             // found (n). Write out the path so far, including the opening (
-                            builder.Append(originalPath.AsSpan(start, i-start+1));
+                            builder.Append(originalPath.AsSpan(start, i - start + 1));
 
                             object pathPart = parameters[index];
 
@@ -283,7 +283,7 @@ namespace System.Windows
 
                             // resume after the (n)
                             i = j;
-                            start = j+1;
+                            start = j + 1;
                         }
                     }
                 }
@@ -297,7 +297,7 @@ namespace System.Windows
             }
 
         }
-#endregion
+        #endregion
 
     }
 }

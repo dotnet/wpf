@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,7 +22,7 @@ namespace System.Windows
         /// to an instance of a KeyTime.
         /// </summary>
         public override bool CanConvertFrom(
-            ITypeDescriptorContext typeDescriptorContext, 
+            ITypeDescriptorContext typeDescriptorContext,
             Type type)
         {
             if (type == typeof(string))
@@ -45,7 +45,7 @@ namespace System.Windows
             ITypeDescriptorContext typeDescriptorContext,
             Type type)
         {
-            if (   type == typeof(InstanceDescriptor)
+            if (type == typeof(InstanceDescriptor)
                 || type == typeof(string))
             {
                 return true;
@@ -62,8 +62,8 @@ namespace System.Windows
         /// 
         /// </summary>
         public override object ConvertFrom(
-            ITypeDescriptorContext typeDescriptorContext, 
-            CultureInfo cultureInfo, 
+            ITypeDescriptorContext typeDescriptorContext,
+            CultureInfo cultureInfo,
             object value)
         {
             string stringValue = value as string;
@@ -125,12 +125,12 @@ namespace System.Windows
         /// 
         /// </summary>
         public override object ConvertTo(
-            ITypeDescriptorContext typeDescriptorContext, 
-            CultureInfo cultureInfo, 
-            object value, 
+            ITypeDescriptorContext typeDescriptorContext,
+            CultureInfo cultureInfo,
+            object value,
             Type destinationType)
         {
-            if (   value != null
+            if (value != null
                 && value is KeyTime)
             {
                 KeyTime keyTime = (KeyTime)value;
@@ -203,8 +203,8 @@ namespace System.Windows
 
             return base.ConvertTo(
                 typeDescriptorContext,
-                cultureInfo, 
-                value, 
+                cultureInfo,
+                value,
                 destinationType);
         }
     }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -27,7 +27,7 @@ namespace System.Windows
         /// 2. Resource lookup will not query the current element but will skip over to the app and theme dictionaries.
         /// </summary>
         SkipToAppNow = 1,
-        
+
         /// <summary>
         /// 1. Inheritable property lookup will query the current element but not any further.
         /// 2. Resource lookup will query the current element and will then skip over to the app and theme dictionaries.
@@ -45,13 +45,13 @@ namespace System.Windows
         /// 2. Resource lookup will query the current element and will then skip over to the theme dictionaries.
         /// </summary>
         SkipToThemeNext = 4,
-        
+
         /// <summary>
         /// 1. Inheritable property lookup will not query the current element or any further.
         /// 2. Resource lookup will not query the current element or any further.
         /// </summary>
         SkipAllNow = 5,
-        
+
         /// <summary>
         /// 1. Inheritable property lookup will query the current element but not any further.
         /// 2. Resource lookup will query the current element but not any further.

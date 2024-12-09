@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -82,16 +82,16 @@ namespace System.Windows.Interop
 
 
         /// constructor for ActiveXHost
-        internal ActiveXHost(Guid clsid, bool fTrusted ) : base( fTrusted )
+        internal ActiveXHost(Guid clsid, bool fTrusted) : base(fTrusted)
         {
             // Thread.ApartmentState is [Obsolete]
-            #pragma warning disable 0618
+#pragma warning disable 0618
             // What if the control is marked as free-threaded?
             if (Thread.CurrentThread.ApartmentState != ApartmentState.STA)
             {
                 throw new ThreadStateException(SR.Format(SR.AxRequiresApartmentThread, clsid.ToString()));
             }
-            #pragma warning restore 0618
+#pragma warning restore 0618
 
             _clsid = clsid;
 
@@ -172,10 +172,10 @@ namespace System.Windows.Interop
             _boundRect = bounds;
 
             //These are already transformed to client co-ordinate/device units for high dpi also
-            _bounds.left    = (int) bounds.X;
-            _bounds.top     = (int) bounds.Y;
-            _bounds.right   = (int) (bounds.Width + bounds.X);
-            _bounds.bottom  = (int) (bounds.Height + bounds.Y);
+            _bounds.left = (int)bounds.X;
+            _bounds.top = (int)bounds.Y;
+            _bounds.right = (int)(bounds.Width + bounds.X);
+            _bounds.bottom = (int)(bounds.Height + bounds.Y);
 
             //SetExtent only sets height and width, can call it for perf if X, Y haven't changed
             //We need to call SetObjectRects instead, which updates X, Y, width and height
@@ -661,7 +661,7 @@ namespace System.Windows.Interop
                 }
                 catch (Exception e)
                 {
-                    if(CriticalExceptions.IsCriticalException(e))
+                    if (CriticalExceptions.IsCriticalException(e))
                     {
                         throw;
                     }
@@ -747,7 +747,7 @@ namespace System.Windows.Interop
         /// </summary>
         internal int TabIndex
         {
-            get { return (int) GetValue(TabIndexProperty); }
+            get { return (int)GetValue(TabIndexProperty); }
             set { SetValue(TabIndexProperty, value); }
         }
 
@@ -966,9 +966,11 @@ namespace System.Windows.Interop
 
         private NativeMethods.SIZE SetExtent(int width, int height)
         {
-            NativeMethods.SIZE sz = new NativeMethods.SIZE();
-            sz.cx = width;
-            sz.cy = height;
+            NativeMethods.SIZE sz = new NativeMethods.SIZE
+            {
+                cx = width,
+                cy = height
+            };
 
             bool resetExtents = false;
             try
@@ -1030,33 +1032,33 @@ namespace System.Windows.Interop
 
         private delegate void PropertyInvalidator(ActiveXHost axhost);
 
-        private NativeMethods.COMRECT _bounds    = new NativeMethods.COMRECT(0, 0, 0, 0);
-        private Rect             _boundRect      = new Rect(0, 0, 0, 0);
+        private NativeMethods.COMRECT _bounds = new NativeMethods.COMRECT(0, 0, 0, 0);
+        private Rect _boundRect = new Rect(0, 0, 0, 0);
 
-        private Size             _cachedSize     = Size.Empty;
-        private HandleRef        _hwndParent;
-        private bool             _isDisposed;
+        private Size _cachedSize = Size.Empty;
+        private HandleRef _hwndParent;
+        private bool _isDisposed;
 
         #endregion Framework Related
 
         #region ActiveX Related
 
-        private Guid                        _clsid;
+        private Guid _clsid;
 
-        private HandleRef                   _axWindow;
-        private BitVector32                 _axHostState    = new BitVector32();
-        private ActiveXHelper.ActiveXState  _axState        = ActiveXHelper.ActiveXState.Passive;
+        private HandleRef _axWindow;
+        private BitVector32 _axHostState = new BitVector32();
+        private ActiveXHelper.ActiveXState _axState = ActiveXHelper.ActiveXState.Passive;
 
-        private ActiveXSite                 _axSite;
+        private ActiveXSite _axSite;
 
-        private ActiveXContainer            _axContainer;
+        private ActiveXContainer _axContainer;
 
-        private object                      _axInstance;
+        private object _axInstance;
 
         // Pointers to the ActiveX object: Interface pointers are cached for perf.
-        private UnsafeNativeMethods.IOleObject              _axOleObject;
+        private UnsafeNativeMethods.IOleObject _axOleObject;
 
-        private UnsafeNativeMethods.IOleInPlaceObject       _axOleInPlaceObject;
+        private UnsafeNativeMethods.IOleInPlaceObject _axOleInPlaceObject;
 
         private UnsafeNativeMethods.IOleInPlaceActiveObject _axOleInPlaceActiveObject;
 

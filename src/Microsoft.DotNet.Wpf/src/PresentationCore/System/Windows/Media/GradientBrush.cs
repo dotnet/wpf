@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -26,7 +26,7 @@ namespace System.Windows.Media
     public abstract partial class GradientBrush : Brush
     {
         #region Constructors
-        
+
         /// <summary>
         /// Protected constructor for GradientBrush
         /// </summary>
@@ -38,7 +38,7 @@ namespace System.Windows.Media
         /// Protected constructor for GradientBrush
         /// Sets all the values of the GradientStopCollection, all other values are left as default.
         /// </summary>
-        protected GradientBrush(GradientStopCollection gradientStopCollection) 
+        protected GradientBrush(GradientStopCollection gradientStopCollection)
         {
             GradientStops = gradientStopCollection;
         }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,7 +22,7 @@ namespace System.Windows.Media
         /// <summary>
         ///
         /// </summary>
-        public QuadraticBezierSegment(Point point1, Point point2, bool isStroked) 
+        public QuadraticBezierSegment(Point point1, Point point2, bool isStroked)
         {
             Point1 = point1;
             Point2 = point2;
@@ -32,7 +32,7 @@ namespace System.Windows.Media
         /// <summary>
         ///
         /// </summary>
-        internal QuadraticBezierSegment(Point point1, Point point2, bool isStroked, bool isSmoothJoin) 
+        internal QuadraticBezierSegment(Point point1, Point point2, bool isStroked, bool isSmoothJoin)
         {
             Point1 = point1;
             Point2 = point2;
@@ -67,7 +67,7 @@ namespace System.Windows.Media
         #endregion
 
         #region Resource
-        
+
         /// <summary>
         /// SerializeData - Serialize the contents of this Segment to the provided context.
         /// </summary>
@@ -75,7 +75,7 @@ namespace System.Windows.Media
         {
             ctx.QuadraticBezierTo(Point1, Point2, IsStroked, IsSmoothJoin);
         }
-        
+
         #endregion
 
         internal override bool IsCurved()

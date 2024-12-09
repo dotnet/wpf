@@ -1,26 +1,26 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 
+using System.Globalization;
 using System.Windows;                  // for Rect                        WindowsBase.dll
 using System.Windows.Media;            // for Geometry, Brush, ImageData. PresentationCore.dll
-using System.Globalization;
 
 namespace Microsoft.Internal.AlphaFlattener
 {
-    internal class DisplayList 
+    internal class DisplayList
     {
-        public bool   m_DisJoint;
+        public bool m_DisJoint;
         public double m_width;
         public double m_height;
 
         public DisplayList(bool disJoint, double width, double height)
         {
-            m_DisJoint       = disJoint;
-            m_width          = width;
-            m_height         = height;
+            m_DisJoint = disJoint;
+            m_width = width;
+            m_height = height;
         }
 
         #region Public Methods
@@ -31,7 +31,7 @@ namespace Microsoft.Internal.AlphaFlattener
         internal static string LeftPad(object obj, int len)
         {
             string s;
-        
+
             List<int> l = obj as List<int>;
 
             if (l != null)
@@ -44,7 +44,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     {
                         s = s + ' ';
                     }
-                    
+
                     s = s + i;
                 }
 
@@ -56,11 +56,11 @@ namespace Microsoft.Internal.AlphaFlattener
             }
             else if (obj is Rect)
             {
-                Rect r = (Rect) obj;
+                Rect r = (Rect)obj;
 
-                return " [" + LeftPad(r.Left,   6) + ' '
-                            + LeftPad(r.Top,    6) + ' '
-                            + LeftPad(r.Width,  6) + ' '
+                return " [" + LeftPad(r.Left, 6) + ' '
+                            + LeftPad(r.Top, 6) + ' '
+                            + LeftPad(r.Width, 6) + ' '
                             + LeftPad(r.Height, 6) + "]";
             }
             else
@@ -78,7 +78,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 Console.WriteLine();
 
                 Console.WriteLine(" No      Type           Und Ovr TrO           Bounding Box                   Clipping");
-        
+
                 if (verbose)
                 {
                     Console.Write("                     Transform");
@@ -87,7 +87,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 Console.WriteLine();
                 return;
             }
-            
+
             Primitive p = info.primitive;
 
             string typ = p.GetType().ToString();
@@ -95,7 +95,7 @@ namespace Microsoft.Internal.AlphaFlattener
             typ = typ.Substring(typ.LastIndexOf('.') + 1);
 
             Console.Write(LeftPad(index, 4) + LeftPad(typ, 18) + ":");
-            
+
             List<int> extra = null;
 
             if (p.IsOpaque)
@@ -138,16 +138,16 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 Console.Write("         ");
             }
-            
+
             Console.Write(LeftPad(info.bounds, 0));
-            
+
             Geometry clip = p.Clip;
 
             if (clip != null)
             {
                 Console.Write(LeftPad(clip.Bounds, 0));
             }
-            
+
             if (verbose)
             {
                 Matrix m = p.Transform;
@@ -161,7 +161,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 Console.Write(LeftPad(m.OffsetY, 6));
                 Console.Write("} ");
             }
-            
+
             if (verbose)
             {
                 GlyphPrimitive gp = p as GlyphPrimitive;
@@ -169,14 +169,14 @@ namespace Microsoft.Internal.AlphaFlattener
                 if (gp != null)
                 {
                     IList<char> chars = gp.GlyphRun.Characters;
-                                
+
                     Console.Write(" \"");
 
-                    for (int i = 0; i < chars.Count; i ++)
+                    for (int i = 0; i < chars.Count; i++)
                     {
                         Console.Write(chars[i]);
                     }
-                    
+
                     Console.Write('"');
                 }
             }
@@ -205,7 +205,7 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 Console.Write(' ');
                 Console.Write(LeftPad(extra, 0));
-            }   
+            }
 
             Console.WriteLine();
         }
@@ -280,7 +280,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     p.Clip = null;
                 }
                 else if ((bounds.Left <= info.bounds.Left) &&
-                         (bounds.Top  <= info.bounds.Top) &&
+                         (bounds.Top <= info.bounds.Top) &&
                          (bounds.Right >= info.bounds.Right) &&
                          (bounds.Bottom >= info.bounds.Bottom))
                 {
@@ -334,7 +334,9 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             if (one > two)
             {
-                int t = one; one = two; two = t;
+                int t = one;
+                one = two;
+                two = t;
             }
 
             PrimitiveInfo pi = _commands[one];
@@ -350,7 +352,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 if (!qi.primitive.IsTransparent && !qi.primitive.IsOpaque)
                 {
-                    pi.overlapHasTransparency ++;
+                    pi.overlapHasTransparency++;
                 }
 
                 // if (! qi.primitive.IsOpaque) // Remember primitves covered by a primitive having transparency
@@ -368,7 +370,7 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 Console.Write(" <{0} {1}>", one, two);
 
-                overlapcount ++;
+                overlapcount++;
 
                 if (overlapcount >= 10)
                 {
@@ -415,7 +417,7 @@ namespace Microsoft.Internal.AlphaFlattener
         #endregion
 
         #region Protected Attributes
-        protected List<PrimitiveInfo>    _commands; //    = null;
+        protected List<PrimitiveInfo> _commands; //    = null;
         #endregion
 
     }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,10 +11,9 @@
 
 using System.Globalization;
 using System.Windows.Media.TextFormatting;
-
 using MS.Internal;
-using MS.Internal.FontFace;
 using MS.Internal.FontCache;
+using MS.Internal.FontFace;
 using MS.Internal.TextFormatting;
 
 
@@ -25,18 +24,18 @@ namespace System.Windows.Media
     /// </summary>
     public class Typeface
     {
-        private FontFamily              _fontFamily;
+        private FontFamily _fontFamily;
 
         // these _style, _weight and _stretch are only used for storing what was passed into the constructor.
         // Since FontFamily may change these values when it includes a style name implicitly,
-        private FontStyle               _style;
-        private FontWeight              _weight;
-        private FontStretch             _stretch;        
+        private FontStyle _style;
+        private FontWeight _weight;
+        private FontStretch _stretch;
 
-        private FontFamily              _fallbackFontFamily;
+        private FontFamily _fallbackFontFamily;
 
         // Cached canonical values of the typeface. 
-        private CachedTypeface         _cachedTypeface;        
+        private CachedTypeface _cachedTypeface;
 
 
         /// <summary>
@@ -45,15 +44,15 @@ namespace System.Windows.Media
         /// <param name="typefaceName">font typeface name</param>
         public Typeface(
             string typefaceName
-            ) 
+            )
             // assume face name is family name until we get face name resolved properly.
             : this(
-                new FontFamily(typefaceName),   
-                FontStyles.Normal, 
-                FontWeights.Normal, 
+                new FontFamily(typefaceName),
+                FontStyles.Normal,
+                FontWeights.Normal,
                 FontStretches.Normal
                 )
-        {}
+        { }
 
 
 
@@ -65,10 +64,10 @@ namespace System.Windows.Media
         /// <param name="weight">Boldness of font</param>
         /// <param name="stretch">Width of characters</param>
         public Typeface(
-            FontFamily      fontFamily,
-            FontStyle       style,
-            FontWeight      weight,
-            FontStretch     stretch
+            FontFamily fontFamily,
+            FontStyle style,
+            FontWeight weight,
+            FontStretch stretch
             )
             : this(
                 fontFamily,
@@ -77,7 +76,7 @@ namespace System.Windows.Media
                 stretch,
                 FontFamily.FontFamilyGlobalUI
                 )
-        {}
+        { }
 
 
 
@@ -90,11 +89,11 @@ namespace System.Windows.Media
         /// <param name="stretch">Width of characters</param>
         /// <param name="fallbackFontFamily">fallback font family</param>
         public Typeface(
-            FontFamily      fontFamily,
-            FontStyle       style,
-            FontWeight      weight,
-            FontStretch     stretch,
-            FontFamily      fallbackFontFamily
+            FontFamily fontFamily,
+            FontStyle style,
+            FontWeight weight,
+            FontStretch stretch,
+            FontFamily fallbackFontFamily
             )
         {
             ArgumentNullException.ThrowIfNull(fontFamily);
@@ -194,8 +193,8 @@ namespace System.Windows.Media
         /// </summary>
         public double XHeight
         {
-            get 
-            { 
+            get
+            {
                 return CachedTypeface.TypefaceMetrics.XHeight;
             }
         }
@@ -206,8 +205,8 @@ namespace System.Windows.Media
         /// </summary>
         public double CapsHeight
         {
-            get 
-            { 
+            get
+            {
                 return CachedTypeface.TypefaceMetrics.CapsHeight;
             }
         }
@@ -218,8 +217,8 @@ namespace System.Windows.Media
         /// </summary>
         public double UnderlinePosition
         {
-            get 
-            { 
+            get
+            {
                 return CachedTypeface.TypefaceMetrics.UnderlinePosition;
             }
         }
@@ -242,8 +241,8 @@ namespace System.Windows.Media
         /// </summary>
         public double StrikethroughPosition
         {
-            get 
-            { 
+            get
+            {
                 return CachedTypeface.TypefaceMetrics.StrikethroughPosition;
             }
         }
@@ -273,7 +272,7 @@ namespace System.Windows.Media
 
         internal double Baseline(double emSize, double toReal, double pixelsPerDip, TextFormattingMode textFormattingMode)
         {
-            return CachedTypeface.FirstFontFamily.Baseline(emSize, toReal, pixelsPerDip, textFormattingMode);            
+            return CachedTypeface.FirstFontFamily.Baseline(emSize, toReal, pixelsPerDip, textFormattingMode);
         }
 
         internal double LineSpacing(double emSize, double toReal, double pixelsPerDip, TextFormattingMode textFormattingMode)
@@ -290,11 +289,11 @@ namespace System.Windows.Media
             {
                 return CachedTypeface.TypefaceMetrics.Symbol;
             }
-        }        
+        }
 
         internal bool NullFont
         {
-            get 
+            get
             {
                 return CachedTypeface.NullFont;
             }
@@ -311,7 +310,7 @@ namespace System.Windows.Media
 
         internal FontStyle CanonicalStyle
         {
-            get 
+            get
             {
                 return CachedTypeface.CanonicalStyle;
             }
@@ -319,7 +318,7 @@ namespace System.Windows.Media
 
         internal FontWeight CanonicalWeight
         {
-            get 
+            get
             {
                 return CachedTypeface.CanonicalWeight;
             }
@@ -327,13 +326,13 @@ namespace System.Windows.Media
 
         internal FontStretch CanonicalStretch
         {
-            get 
+            get
             {
                 return CachedTypeface.CanonicalStretch;
             }
         }
-        
-       
+
+
         /// <summary>
         /// Scan through specified character string checking for valid character 
         /// nominal glyph.
@@ -354,27 +353,29 @@ namespace System.Windows.Media
         /// <param name="stringLengthFit">number of character fit in given width</param>
         /// <returns>whether the specified string can be optimized by nominal glyph lookup</returns>
         internal bool CheckFastPathNominalGlyphs(
-            CharacterBufferRange    charBufferRange,
-            double                  emSize,
-            float                   pixelsPerDip,
-            double                  scalingFactor,
-            double                  widthMax,
-            bool                    keepAWord,
-            bool                    numberSubstitution,
-            CultureInfo             cultureInfo,
-            TextFormattingMode      textFormattingMode,
-            bool                    isSideways,
-            bool                    breakOnTabs,
-            out int                 stringLengthFit
+            CharacterBufferRange charBufferRange,
+            double emSize,
+            float pixelsPerDip,
+            double scalingFactor,
+            double widthMax,
+            bool keepAWord,
+            bool numberSubstitution,
+            CultureInfo cultureInfo,
+            TextFormattingMode textFormattingMode,
+            bool isSideways,
+            bool breakOnTabs,
+            out int stringLengthFit
             )
         {
             stringLengthFit = 0;
 
-            if (CachedTypeface.NullFont) return false;
+            if (CachedTypeface.NullFont)
+                return false;
 
             GlyphTypeface glyphTypeface = TryGetGlyphTypeface();
-            
-            if (glyphTypeface == null) return false;
+
+            if (glyphTypeface == null)
+                return false;
 
             double totalWidth = 0;
             int i = 0;
@@ -400,7 +401,7 @@ namespace System.Windows.Media
             ushort[] glyphIndices = BufferCache.GetUShorts(charBufferRange.Length);
             MS.Internal.Text.TextInterface.GlyphMetrics[] glyphMetrics = ignoreWidths ? null : BufferCache.GetGlyphMetrics(charBufferRange.Length);
 
-            glyphTypeface.GetGlyphMetricsOptimized(charBufferRange, 
+            glyphTypeface.GetGlyphMetricsOptimized(charBufferRange,
                                                    emSize,
                                                    pixelsPerDip,
                                                    glyphIndices,
@@ -421,7 +422,7 @@ namespace System.Windows.Media
             // At this point totalWidth includes all of the widths including the stop character (which fits above)
             // i indexes the next character (not included in the width)
             //
-            if(keepAWord)
+            if (keepAWord)
             {
                 do
                 {
@@ -437,17 +438,17 @@ namespace System.Windows.Media
                         charFlags = Classification.CharAttributeOf(charClass).Flags;
                         charFastTextCheck &= charFlags;
 
-                        glyph = glyphIndices[i-1];
+                        glyph = glyphIndices[i - 1];
                         if (!ignoreWidths)
                         {
                             totalWidth += TextFormatterImp.RoundDip(glyphMetrics[i - 1].AdvanceWidth * designToEm, pixelsPerDip, textFormattingMode) * scalingFactor;
                         }
                     }
-                } while(
+                } while (
                         i < charBufferRange.Length
-                    &&  ((charFlags & charFlagsMask) == 0)
-                    &&  (glyph != 0 || symbolTypeface)
-                    &&  glyph != blankGlyph
+                    && ((charFlags & charFlagsMask) == 0)
+                    && (glyph != 0 || symbolTypeface)
+                    && glyph != blankGlyph
                     );
 
                 // i is now at a character immediately following a leading blank
@@ -460,12 +461,12 @@ namespace System.Windows.Media
             // 3. Glyph index is 0 (unless symbol font)
             // 4. totalWidth > widthMax
             //
-            
-            while(
+
+            while (
                     i < charBufferRange.Length
-                &&  (ignoreWidths || totalWidth <= widthMax)
-                &&  ((charFlags & charFlagsMask) == 0)
-                &&  (glyph != 0 || symbolTypeface)
+                && (ignoreWidths || totalWidth <= widthMax)
+                && ((charFlags & charFlagsMask) == 0)
+                && (glyph != 0 || symbolTypeface)
                 )
             {
                 char ch = charBufferRange[i++];
@@ -480,7 +481,7 @@ namespace System.Windows.Media
                     charFlags = Classification.CharAttributeOf(charClass).Flags;
                     charFastTextCheck &= charFlags;
 
-                    glyph = glyphIndices[i-1];
+                    glyph = glyphIndices[i - 1];
                     if (!ignoreWidths)
                     {
                         totalWidth += TextFormatterImp.RoundDip(glyphMetrics[i - 1].AdvanceWidth * designToEm, pixelsPerDip, textFormattingMode) * scalingFactor;
@@ -512,7 +513,7 @@ namespace System.Windows.Media
                 // complex character encountered, exclude it
                 Debug.Assert(i > 0);
 
-                if(--i <= 0)
+                if (--i <= 0)
                 {
                     // first char is complex, fail the call
                     return false;
@@ -522,11 +523,11 @@ namespace System.Windows.Media
             stringLengthFit = i;
             TypographyAvailabilities typography = glyphTypeface.FontFaceLayoutInfo.TypographyAvailabilities;
 
-            if ((charFastTextCheck & (byte) CharacterAttributeFlags.CharacterFastText) != 0)
+            if ((charFastTextCheck & (byte)CharacterAttributeFlags.CharacterFastText) != 0)
             {
                 // all input code points are Fast Text
                 if ((typography &
-                         (  TypographyAvailabilities.FastTextTypographyAvailable
+                         (TypographyAvailabilities.FastTextTypographyAvailable
                           | TypographyAvailabilities.FastTextMajorLanguageLocalizedFormAvailable
                          )
                      ) != 0
@@ -548,7 +549,7 @@ namespace System.Windows.Media
                     return true;
                 }
             }
-            else if ((charFastTextCheck & (byte) CharacterAttributeFlags.CharacterIdeo) != 0)
+            else if ((charFastTextCheck & (byte)CharacterAttributeFlags.CharacterIdeo) != 0)
             {
                 // The input are all ideographs, check the IdeoTypographyAvailable bit. It is safe if
                 // the bit is not set.
@@ -560,7 +561,7 @@ namespace System.Windows.Media
                 // present at all. If none exists, it is optimizable. We might under-optimize here but
                 // it will be non-major languages.
                 return ((typography & TypographyAvailabilities.Available) == 0);
-            }            
+            }
         }
 
         /// <summary>
@@ -575,12 +576,12 @@ namespace System.Windows.Media
         /// if CheckFastPathNominalGlyphs has previously returned true.</remarks>
         internal void GetCharacterNominalWidthsAndIdealWidth(
             CharacterBufferRange charBufferRange,
-            double               emSize,
-            float                pixelsPerDip,
-            double               toIdeal,
-            TextFormattingMode   textFormattingMode,
-            bool                 isSideways,
-            out int[]            nominalWidths
+            double emSize,
+            float pixelsPerDip,
+            double toIdeal,
+            TextFormattingMode textFormattingMode,
+            bool isSideways,
+            out int[] nominalWidths
             )
         {
             int idealWidth;
@@ -609,13 +610,13 @@ namespace System.Windows.Media
         /// if CheckFastPathNominalGlyphs has previously returned true.</remarks>
         internal void GetCharacterNominalWidthsAndIdealWidth(
             CharacterBufferRange charBufferRange,
-            double               emSize,
-            float                pixelsPerDip,
-            double               toIdeal,
-            TextFormattingMode   textFormattingMode,
-            bool                 isSideways,
-            out int[]            nominalWidths,
-            out int              idealWidth
+            double emSize,
+            float pixelsPerDip,
+            double toIdeal,
+            TextFormattingMode textFormattingMode,
+            bool isSideways,
+            out int[] nominalWidths,
+            out int idealWidth
             )
         {
             // This function should only be called if CheckFastPathNominalGlyphs has
@@ -625,7 +626,7 @@ namespace System.Windows.Media
 
             MS.Internal.Text.TextInterface.GlyphMetrics[] glyphMetrics = BufferCache.GetGlyphMetrics(charBufferRange.Length);
 
-            glyphTypeface.GetGlyphMetricsOptimized(charBufferRange, 
+            glyphTypeface.GetGlyphMetricsOptimized(charBufferRange,
                                                    emSize,
                                                    pixelsPerDip,
                                                    textFormattingMode,
@@ -682,14 +683,14 @@ namespace System.Windows.Media
         public override bool Equals(object o)
         {
             Typeface t = o as Typeface;
-            if(t == null)
+            if (t == null)
                 return false;
 
-            return  _style == t._style 
-                &&  _weight == t._weight 
-                &&  _stretch == t._stretch 
-                &&  _fontFamily.Equals(t._fontFamily)
-                &&  CompareFallbackFontFamily(t._fallbackFontFamily);
+            return _style == t._style
+                && _weight == t._weight
+                && _stretch == t._stretch
+                && _fontFamily.Equals(t._fontFamily)
+                && CompareFallbackFontFamily(t._fallbackFontFamily);
         }
 
 
@@ -706,16 +707,16 @@ namespace System.Windows.Media
         //----------------------------------------
         private CachedTypeface CachedTypeface
         {
-            get 
+            get
             {
                 if (_cachedTypeface == null)
                 {
                     CachedTypeface cachedTypeface = TypefaceMetricsCache.ReadonlyLookup(this) as CachedTypeface;
-                    
+
                     if (cachedTypeface == null)
                     {
-                       cachedTypeface = ConstructCachedTypeface();
-                       TypefaceMetricsCache.Add(this, cachedTypeface);
+                        cachedTypeface = ConstructCachedTypeface();
+                        TypefaceMetricsCache.Add(this, cachedTypeface);
                     }
 
                     // For thread-safety, set the _cachedTypeface field only after we have a fully 
@@ -725,12 +726,12 @@ namespace System.Windows.Media
 
                 return _cachedTypeface;
             }
-        }        
+        }
 
         private CachedTypeface ConstructCachedTypeface()
         {
-            FontStyle canonicalStyle     = _style;
-            FontWeight canonicalWeight   = _weight;
+            FontStyle canonicalStyle = _style;
+            FontWeight canonicalWeight = _weight;
             FontStretch canonicalStretch = _stretch;
 
             //
@@ -741,7 +742,7 @@ namespace System.Windows.Media
             // cached. 
             //
             FontFamily sourceFontFamily = FontFamily;
-            
+
             IFontFamily firstFontFamily = sourceFontFamily.FindFirstFontFamilyAndFace(
                 ref canonicalStyle,
                 ref canonicalWeight,
@@ -757,14 +758,14 @@ namespace System.Windows.Media
                         ref canonicalStyle,
                         ref canonicalWeight,
                         ref canonicalStretch
-                        );                  
+                        );
                 }
 
                 if (firstFontFamily == null)
                 {
                     sourceFontFamily = null;
                     firstFontFamily = FontFamily.LookupFontFamily(FontFamily.NullFontFamilyCanonicalName);
-                }                
+                }
             }
 
             // If it's a named font, map all occurrences of the same name to one cached IFontFamily.
@@ -773,18 +774,18 @@ namespace System.Windows.Media
                 // We lookup in the cache to see if there is cached IFontFamily instance of the source FontFamily. Otherwise, 
                 // this IFontFamily value is added to the TypefaceMetrics cache. 
                 IFontFamily cachedValue = TypefaceMetricsCache.ReadonlyLookup(sourceFontFamily.FamilyIdentifier) as IFontFamily;
-                
+
                 if (cachedValue != null)
                 {
                     firstFontFamily = cachedValue;
                 }
                 else
                 {
-                    TypefaceMetricsCache.Add(sourceFontFamily.FamilyIdentifier, firstFontFamily);   
-                }                
+                    TypefaceMetricsCache.Add(sourceFontFamily.FamilyIdentifier, firstFontFamily);
+                }
             }
 
-            ITypefaceMetrics typefaceMetrics = firstFontFamily.GetTypefaceMetrics(canonicalStyle, canonicalWeight, canonicalStretch);            
+            ITypefaceMetrics typefaceMetrics = firstFontFamily.GetTypefaceMetrics(canonicalStyle, canonicalWeight, canonicalStretch);
 
             return new CachedTypeface(
                 canonicalStyle,

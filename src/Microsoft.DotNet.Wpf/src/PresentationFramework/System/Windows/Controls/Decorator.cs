@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,11 +7,11 @@
 //              Spec at Decorator.xml
 //
 
-using MS.Internal.Controls;
 using System.Collections;
 using System.ComponentModel;
-using System.Windows.Media;
 using System.Windows.Markup; // IAddChild, ContentPropertyAttribute
+using System.Windows.Media;
+using MS.Internal.Controls;
 
 namespace System.Windows.Controls
 {
@@ -59,11 +59,11 @@ namespace System.Windows.Controls
         ///<param name="value">
         /// The object to add as a child; it must be a UIElement.
         ///</param>
-        void IAddChild.AddChild (Object value)
+        void IAddChild.AddChild(Object value)
         {
             if (!(value is UIElement))
             {
-                throw new ArgumentException (SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(UIElement)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(UIElement)), "value");
             }
 
             if (this.Child != null)
@@ -82,7 +82,7 @@ namespace System.Windows.Controls
         ///<param name="text">
         /// Text to add as a child.
         ///</param> 
-        void IAddChild.AddText (string text)
+        void IAddChild.AddText(string text)
         {
             XamlSerializerUtil.ThrowIfNonWhiteSpaceInAddText(text, this);
         }
@@ -106,13 +106,13 @@ namespace System.Windows.Controls
             {
                 return _child;
             }
-            
+
             set
             {
-                if(_child != value)
+                if (_child != value)
                 {
                     // notify the visual layer that the old child has been removed.
-                    RemoveVisualChild(_child);                    
+                    RemoveVisualChild(_child);
 
                     //need to remove old element from logical tree
                     RemoveLogicalChild(_child);
@@ -139,7 +139,7 @@ namespace System.Windows.Controls
                 {
                     return EmptyEnumerator.Instance;
                 }
-                
+
                 return new SingleChildEnumerator(_child);
             }
         }
@@ -168,12 +168,12 @@ namespace System.Windows.Controls
         /// </summary>
         protected override Visual GetVisualChild(int index)
         {
-            if (    (_child == null)
-                ||  (index != 0))
+            if ((_child == null)
+                || (index != 0))
             {
                 throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
-            
+
             return _child;
         }
 
@@ -195,7 +195,7 @@ namespace System.Windows.Controls
             }
             return (new Size());
         }
-        
+
         /// <summary>
         /// Decorator computes the position of its single child inside child's Margin and calls Arrange
         /// on the child.

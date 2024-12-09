@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,7 +22,7 @@ namespace System.Windows.Markup
     /// </summary>
     internal class XamlGridLengthSerializer : XamlSerializer
     {
-#region Construction
+        #region Construction
 
         /// <summary>
         ///     Constructor for XamlGridLengthSerializer
@@ -38,9 +38,9 @@ namespace System.Windows.Markup
         }
 
 
-#endregion Construction
+        #endregion Construction
 
-#region Conversions
+        #region Conversions
 
         ///<summary>
         /// Serializes this object using the passed writer.
@@ -57,14 +57,14 @@ namespace System.Windows.Markup
         //  101XXUUU     four bytes       Amount in int32 , GridUnitType in UUU
         //  111XXUUU     eight bytes      Amount in double, GridUnitType in UUU
         //
-        public override bool ConvertStringToCustomBinary (
-            BinaryWriter   writer,           // Writer into the baml stream
-            string         stringValue)      // String to convert
+        public override bool ConvertStringToCustomBinary(
+            BinaryWriter writer,           // Writer into the baml stream
+            string stringValue)      // String to convert
         {
             ArgumentNullException.ThrowIfNull(writer);
 
             GridUnitType gridUnitType;
-            double   value;
+            double value;
             FromString(stringValue, TypeConverterHelper.InvariantEnglishUS,
                         out value, out gridUnitType);
 
@@ -76,17 +76,17 @@ namespace System.Windows.Markup
                 //
                 //  0 - 127 and Pixel
                 //
-                if (    intAmount <= 127 
-                    &&  intAmount >= 0
-                    &&  gridUnitType == GridUnitType.Pixel  )
+                if (intAmount <= 127
+                    && intAmount >= 0
+                    && gridUnitType == GridUnitType.Pixel)
                 {
                     writer.Write((byte)intAmount);
                 }
                 //
                 //  unsigned byte
                 //
-                else if (   intAmount <= 255 
-                        &&  intAmount >= 0  )
+                else if (intAmount <= 255
+                        && intAmount >= 0)
                 {
                     writer.Write((byte)(0x80 | unitAndFlags));
                     writer.Write((byte)intAmount);
@@ -94,8 +94,8 @@ namespace System.Windows.Markup
                 //
                 //  signed short integer
                 //
-                else if (   intAmount <= 32767 
-                        &&  intAmount >= -32768 )
+                else if (intAmount <= 32767
+                        && intAmount >= -32768)
                 {
                     writer.Write((byte)(0xC0 | unitAndFlags));
                     writer.Write((Int16)intAmount);
@@ -112,7 +112,7 @@ namespace System.Windows.Markup
             //
             //  double
             //
-            else 
+            else
             {
                 writer.Write((byte)(0xE0 | unitAndFlags));
                 writer.Write(value);
@@ -120,7 +120,7 @@ namespace System.Windows.Markup
 
             return true;
         }
-        
+
         /// <summary>
         ///   Convert a compact binary representation of a GridLength into and instance
         ///   of GridLength.  The reader must be left pointing immediately after the object 
@@ -160,7 +160,7 @@ namespace System.Windows.Markup
                 {
                     unitValue = (double)reader.ReadInt32();
                 }
-                else 
+                else
                 {
                     unitValue = (double)reader.ReadDouble();
                 }
@@ -172,9 +172,9 @@ namespace System.Windows.Markup
 
         // Parse a GridLength from a string given the CultureInfo.
         static internal void FromString(
-                string       s, 
-                CultureInfo  cultureInfo,
-            out double       value,
+                string s,
+                CultureInfo cultureInfo,
+            out double value,
             out GridUnitType unit)
         {
             ReadOnlySpan<char> valueSpan = s.AsSpan().Trim();
@@ -235,8 +235,8 @@ namespace System.Windows.Markup
             //  we have a value to parse.
             else
             {
-                Debug.Assert(   unit == GridUnitType.Pixel 
-                            ||  DoubleUtil.AreClose(unitFactor, 1.0)    );
+                Debug.Assert(unit == GridUnitType.Pixel
+                            || DoubleUtil.AreClose(unitFactor, 1.0));
 
                 ReadOnlySpan<char> valueString = valueSpan.Slice(0, valueSpan.Length - strLenUnit);
                 value = double.Parse(valueString, provider: cultureInfo) * unitFactor;
@@ -244,13 +244,13 @@ namespace System.Windows.Markup
         }
 
 
-#endregion Conversions
+        #endregion Conversions
 
-#region Fields
+        #region Fields
 
         //  Note: keep this array in sync with the GridUnitType enum
         static private string[] UnitStrings = { "auto", "px", "*" };
 
-#endregion Fields
+        #endregion Fields
     }
 }

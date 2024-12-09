@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,7 +22,7 @@ namespace System.Windows
     /// </summary>
     // Note: Keep the GridUnitType enum in sync with the string representation 
     //       of units (GridLengthConverter._unitString). 
-    public enum GridUnitType 
+    public enum GridUnitType
     {
         /// <summary>
         /// The value indicates that content should be calculated without constraints. 
@@ -31,7 +31,7 @@ namespace System.Windows
         /// <summary>
         /// The value is expressed as a pixel.
         /// </summary>
-        Pixel, 
+        Pixel,
         /// <summary>
         /// The value is expressed as a weighted proportion of available space.
         /// </summary>
@@ -96,9 +96,9 @@ namespace System.Windows
             {
                 throw new ArgumentException(SR.Format(SR.InvalidCtorParameterNoInfinity, "value"));
             }
-            if (    type != GridUnitType.Auto
-                &&  type != GridUnitType.Pixel
-                &&  type != GridUnitType.Star   )
+            if (type != GridUnitType.Auto
+                && type != GridUnitType.Pixel
+                && type != GridUnitType.Star)
             {
                 throw new ArgumentException(SR.Format(SR.InvalidCtorParameterUnknownGridUnitType, "type"));
             }
@@ -124,10 +124,10 @@ namespace System.Windows
         /// <param name="gl2">second GridLength to compare.</param>
         /// <returns>true if specified GridLengths have same value 
         /// and unit type.</returns>
-        public static bool operator == (GridLength gl1, GridLength gl2)
+        public static bool operator ==(GridLength gl1, GridLength gl2)
         {
-            return (    gl1.GridUnitType == gl2.GridUnitType 
-                    &&  gl1.Value == gl2.Value  );
+            return (gl1.GridUnitType == gl2.GridUnitType
+                    && gl1.Value == gl2.Value);
         }
 
         /// <summary>
@@ -137,10 +137,10 @@ namespace System.Windows
         /// <param name="gl2">second GridLength to compare.</param>
         /// <returns>true if specified GridLengths have either different value or 
         /// unit type.</returns>
-        public static bool operator != (GridLength gl1, GridLength gl2)
+        public static bool operator !=(GridLength gl1, GridLength gl2)
         {
-            return (    gl1.GridUnitType != gl2.GridUnitType 
-                    ||  gl1.Value != gl2.Value  );
+            return (gl1.GridUnitType != gl2.GridUnitType
+                    || gl1.Value != gl2.Value);
         }
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace System.Windows
         /// and unit type as oCompare.</returns>
         override public bool Equals(object oCompare)
         {
-            if(oCompare is GridLength)
+            if (oCompare is GridLength)
             {
                 GridLength l = (GridLength)oCompare;
                 return (this == l);
@@ -215,7 +215,7 @@ namespace System.Windows
         {
             return GridLengthConverter.ToString(this, CultureInfo.InvariantCulture);
         }
-        
+
         #endregion Public Methods 
 
         //------------------------------------------------------
@@ -245,7 +245,7 @@ namespace System.Windows
         #region Private Fields 
         private double _unitValue;      //  unit value storage
         private GridUnitType _unitType; //  unit type storage
-        
+
         //  static instance of Auto GridLength
         private static readonly GridLength s_auto = new GridLength(1.0, GridUnitType.Auto);
         #endregion Private Fields 

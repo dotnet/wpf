@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,8 +12,8 @@ namespace System.Windows.Media.Animation
     /// </summary>
     internal abstract class IndependentAnimationStorage : AnimationStorage, DUCE.IResource
     {
-        protected MediaContext.ResourcesUpdatedHandler       _updateResourceHandler;
-        protected DUCE.MultiChannelResource     _duceResource = new DUCE.MultiChannelResource();
+        protected MediaContext.ResourcesUpdatedHandler _updateResourceHandler;
+        protected DUCE.MultiChannelResource _duceResource = new DUCE.MultiChannelResource();
         private bool _isValid = true;
 
         #region Constructor
@@ -200,7 +200,7 @@ namespace System.Windows.Media.Animation
             // If _isValid is false we've already added the event handler for the next frame.
             // If _updateResourceHandler is null we haven't been added to our channel yet so
             //     there's no need to update anything.
-            if (   _isValid
+            if (_isValid
                 && _updateResourceHandler != null)
             {
                 DependencyObject d = (DependencyObject)_dependencyObject.Target;

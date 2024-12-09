@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,7 +19,7 @@ namespace MS.Internal.Automation
     // Manages the property map that is used to determine if there are
     // Automation clients interested in properties.
     internal class EventPropertyMap
-	{
+    {
         //------------------------------------------------------
         //
         //  Constructors
@@ -63,7 +63,7 @@ namespace MS.Internal.Automation
         //
         // Returns: true if the event property map was created during this call and
         //          false if the property map was not created during this call.
-        internal static bool AddPropertyNotify(DependencyProperty [] properties)
+        internal static bool AddPropertyNotify(DependencyProperty[] properties)
         {
             if (properties == null)
                 return false;
@@ -108,7 +108,7 @@ namespace MS.Internal.Automation
         // Updates the list of DynamicProperties that are currently being listened to.
         // Called by AccEvent class when removing certain events.
         // Returns: true if the property table is empty after this operation.
-        internal static bool RemovePropertyNotify(DependencyProperty [] properties)
+        internal static bool RemovePropertyNotify(DependencyProperty[] properties)
         {
             Debug.Assert(properties != null);
 

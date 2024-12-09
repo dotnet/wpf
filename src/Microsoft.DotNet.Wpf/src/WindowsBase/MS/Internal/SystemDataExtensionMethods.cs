@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -30,5 +30,5 @@ namespace MS.Internal
         // return true if DBNull is a valid value for the given item and column.
         // The column may be specified directly by name, or indirectly by indexer: Item[arg]
         internal abstract bool DetermineWhetherDBNullIsValid(object item, string columnName, object arg);
-}
+    }
 }

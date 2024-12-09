@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,15 +9,13 @@
 
         Print System exception objects declaration.
 --*/
-using System.Text;
 using System.Collections.ObjectModel;
-
-
+using System.Text;
 using MS.Internal.PrintWin32Thunk.Win32ApiThunk;
 
 namespace System.Printing
 {
-    abstract internal class  PrinterHResult
+    abstract internal class PrinterHResult
     {
         ///<summary>
         ///
@@ -32,7 +30,7 @@ namespace System.Printing
                        win32ErrorCode :
                        (int)((win32ErrorCode & unchecked((int)0x80000000)) | ((int)Facility.Win32 << 16) | unchecked((int)0x80000000));
         }
-        
+
         ///<summary>
         ///
         ///</summary>
@@ -56,17 +54,17 @@ namespace System.Printing
         {
             return (Facility)(((errorCode) >> 16) & 0x1fff);
         }
-        
+
         public enum Error
         {
             PrintSystemGenericError = (int)1801, //ERROR_INVALID_PRINTER_NAME,
             PrintingCancelledGenericError = (int)1223, //ERROR_CANCELLED,
         };
-        
+
         public enum Facility
         {
             Win32 = 7,
-        };        
+        };
     }
 
     /// <summary>
@@ -102,7 +100,7 @@ namespace System.Printing
         /// </remarks>
         public
         PrintSystemException(
-            String             message
+            String message
             ) : base(GetMessageFromResource(PrinterHResult.HResultFromWin32((int)PrinterHResult.Error.PrintSystemGenericError),
                                             message))
         {
@@ -123,9 +121,9 @@ namespace System.Printing
         /// </remarks>
         public
         PrintSystemException(
-            String             message,
-            Exception          innerException
-            ) : base (GetMessageFromResource(PrinterHResult.HResultFromWin32((int)PrinterHResult.Error.PrintSystemGenericError),
+            String message,
+            Exception innerException
+            ) : base(GetMessageFromResource(PrinterHResult.HResultFromWin32((int)PrinterHResult.Error.PrintSystemGenericError),
                                              message),
                                              innerException)
         {
@@ -145,8 +143,8 @@ namespace System.Printing
         public override
         void
         GetObjectData(
-            System.Runtime.Serialization.SerializationInfo  info,
-            System.Runtime.Serialization.StreamingContext    context
+            System.Runtime.Serialization.SerializationInfo info,
+            System.Runtime.Serialization.StreamingContext context
             )
         {
             base.GetObjectData(info, context);
@@ -159,9 +157,9 @@ namespace System.Printing
         ///</summary>
         public
         PrintSystemException(
-            int        errorCode,
-            String     message
-            ) : base(GetMessageFromResource(errorCode,message))
+            int errorCode,
+            String message
+            ) : base(GetMessageFromResource(errorCode, message))
         {
             base.HResult = errorCode;
         }
@@ -171,10 +169,10 @@ namespace System.Printing
         ///</summary>
         public
         PrintSystemException(
-            int        errorCode,
-            String     message,
-            String     printerMessage
-            ) : base(GetMessageFromResource(errorCode,message) + printerMessage)
+            int errorCode,
+            String message,
+            String printerMessage
+            ) : base(GetMessageFromResource(errorCode, message) + printerMessage)
         {
             base.HResult = errorCode;
         }
@@ -184,10 +182,10 @@ namespace System.Printing
         ///</summary>
         public
         PrintSystemException(
-            int        errorCode,
-            String     message,
-            Exception  innerException
-            ) : base(GetMessageFromResource(errorCode,message),
+            int errorCode,
+            String message,
+            Exception innerException
+            ) : base(GetMessageFromResource(errorCode, message),
                      innerException)
         {
             base.HResult = errorCode;
@@ -201,8 +199,8 @@ namespace System.Printing
 #pragma warning disable SYSLIB0051 // Type or member is obsolete
         protected
         PrintSystemException(
-            System.Runtime.Serialization.SerializationInfo  info,
-            System.Runtime.Serialization.StreamingContext   context
+            System.Runtime.Serialization.SerializationInfo info,
+            System.Runtime.Serialization.StreamingContext context
             ) : base(info, context)
         {
         }
@@ -215,7 +213,7 @@ namespace System.Printing
         private static
         String
         GetMessageFromResource(
-            String     resourceKey
+            String resourceKey
             )
         {
             return printResourceManager.GetString(resourceKey,
@@ -231,8 +229,8 @@ namespace System.Printing
         private static
         String
         GetMessageFromResource(
-            int        errorCode,
-            String     resourceKey
+            int errorCode,
+            String resourceKey
             )
         {
             String exceptionMessage = null;
@@ -276,18 +274,18 @@ namespace System.Printing
                                                                 win32ErrorMessage.Capacity,
                                                                 IntPtr.Zero);
 
-            if(charCount < 0)
+            if (charCount < 0)
             {
                 win32ErrorMessage.Length = 0;
             }
             else
             {
-                if(charCount < win32ErrorMessage.Length)
+                if (charCount < win32ErrorMessage.Length)
                 {
                     win32ErrorMessage.Length = charCount;
                 }
             }
-            
+
             return win32ErrorMessage.ToString();
         }
 
@@ -306,13 +304,13 @@ namespace System.Printing
         ///
         ///</summary>
         static
-        System.Resources.ResourceManager     printResourceManager;
+        System.Resources.ResourceManager printResourceManager;
 
         const
-        int  defaultWin32ErrorMessageLength = 256;
+        int defaultWin32ErrorMessageLength = 256;
 
         const
-        int  FormatMessageFromSystem = unchecked((int)0x00001000);
+        int FormatMessageFromSystem = unchecked((int)0x00001000);
     };
 
     /// <summary>
@@ -333,9 +331,10 @@ namespace System.Printing
         /// </remarks>
         public
         PrintQueueException(
-            ): base("PrintSystemException.PrintQueue.Generic")
+            ) : base("PrintSystemException.PrintQueue.Generic")
 
-        {   this.printerName = null;
+        {
+            this.printerName = null;
         }
 
         /// <summary>
@@ -349,8 +348,8 @@ namespace System.Printing
         /// </param>
         public
         PrintQueueException(
-            String             message
-            ) : base (message)
+            String message
+            ) : base(message)
         {
             this.printerName = null;
         }
@@ -369,13 +368,13 @@ namespace System.Printing
         /// </param>
         public
         PrintQueueException(
-            String             message,
-            Exception          innerException
-            ): base(message,
+            String message,
+            Exception innerException
+            ) : base(message,
                     innerException)
-            {
-                this.printerName = null;
-            }
+        {
+            this.printerName = null;
+        }
 
         /// <value>
         /// Printer name property. The name represents the name identifier of
@@ -403,8 +402,8 @@ namespace System.Printing
         public override
         void
         GetObjectData(
-            System.Runtime.Serialization.SerializationInfo  info,
-            System.Runtime.Serialization.StreamingContext   context
+            System.Runtime.Serialization.SerializationInfo info,
+            System.Runtime.Serialization.StreamingContext context
             )
         {
             if (info != null)
@@ -420,13 +419,13 @@ namespace System.Printing
         ///</summary>
         public
         PrintQueueException(
-            int        errorCode,
-            String     message,
-            String     printerName
+            int errorCode,
+            String message,
+            String printerName
             ) : base(errorCode, message)
         {
             this.printerName = printerName;
-            base.HResult     = errorCode;
+            base.HResult = errorCode;
         }
 
         ///<summary>
@@ -434,14 +433,14 @@ namespace System.Printing
         ///</summary>
         public
         PrintQueueException(
-            int        errorCode,
-            String     message,
-            String     printerName,
-            String     printerMessage
+            int errorCode,
+            String message,
+            String printerName,
+            String printerMessage
             ) : base(errorCode, message, printerMessage)
         {
             this.printerName = printerName;
-            base.HResult     = errorCode;
+            base.HResult = errorCode;
         }
 
         ///<summary>
@@ -449,16 +448,16 @@ namespace System.Printing
         ///</summary>
         public
         PrintQueueException(
-            int                errorCode,
-            String             message,
-            String             printerName,
-            Exception          innerException
+            int errorCode,
+            String message,
+            String printerName,
+            Exception innerException
             ) : base(errorCode,
                      message,
                      innerException)
         {
             this.printerName = printerName;
-            base.HResult     = errorCode;
+            base.HResult = errorCode;
         }
 
         /// <summary>
@@ -468,14 +467,14 @@ namespace System.Printing
         /// <param name="context"> The contextual information about the source or destination. </param>
         protected
         PrintQueueException(
-            System.Runtime.Serialization.SerializationInfo  info,
-            System.Runtime.Serialization.StreamingContext    context
+            System.Runtime.Serialization.SerializationInfo info,
+            System.Runtime.Serialization.StreamingContext context
             ) : base(info, context)
         {
             this.printerName = (String)(info.GetValue("PrinterName", typeof(System.String)));
         }
 
-        private String     printerName;
+        private String printerName;
 
     };
 
@@ -499,7 +498,7 @@ namespace System.Printing
         /// </remarks>
         public
         PrintServerException(
-            ): base ("PrintSystemException.PrintServer.Generic")
+            ) : base("PrintSystemException.PrintServer.Generic")
 
         {
             this.serverName = null;
@@ -516,8 +515,8 @@ namespace System.Printing
         /// </param>
         public
         PrintServerException(
-            String             message
-            ): base(message)
+            String message
+            ) : base(message)
         {
             this.serverName = null;
         }
@@ -536,9 +535,9 @@ namespace System.Printing
         /// </param>
         public
         PrintServerException(
-            String             message,
-            Exception          innerException
-            ): base(message,
+            String message,
+            Exception innerException
+            ) : base(message,
                     innerException)
         {
             this.serverName = null;
@@ -570,8 +569,8 @@ namespace System.Printing
         public override
         void
         GetObjectData(
-            System.Runtime.Serialization.SerializationInfo  info,
-            System.Runtime.Serialization.StreamingContext   context
+            System.Runtime.Serialization.SerializationInfo info,
+            System.Runtime.Serialization.StreamingContext context
             )
         {
             if (info != null)
@@ -588,13 +587,13 @@ namespace System.Printing
         ///</summary>
         public
         PrintServerException(
-            int        errorCode,
-            String     message,
-            String     serverName
-            ): base(errorCode, message)
+            int errorCode,
+            String message,
+            String serverName
+            ) : base(errorCode, message)
         {
             this.serverName = serverName;
-            base.HResult    = errorCode;
+            base.HResult = errorCode;
         }
 
         ///<summary>
@@ -602,16 +601,16 @@ namespace System.Printing
         ///</summary>
         public
         PrintServerException(
-            int                errorCode,
-            String             message,
-            String             serverName,
-            Exception          innerException
-            ): base(errorCode,
+            int errorCode,
+            String message,
+            String serverName,
+            Exception innerException
+            ) : base(errorCode,
                              message,
                              innerException)
         {
             this.serverName = serverName;
-            base.HResult    = errorCode;
+            base.HResult = errorCode;
         }
 
         /// <summary>
@@ -621,14 +620,14 @@ namespace System.Printing
         /// <param name="context"> The contextual information about the source or destination. </param>
         protected
         PrintServerException(
-            System.Runtime.Serialization.SerializationInfo  info,
-            System.Runtime.Serialization.StreamingContext    context
-            ): base(info, context)
+            System.Runtime.Serialization.SerializationInfo info,
+            System.Runtime.Serialization.StreamingContext context
+            ) : base(info, context)
         {
             this.serverName = (String)(info.GetValue("ServerName", typeof(String)));
         }
 
-        private String     serverName;
+        private String serverName;
 
     };
 
@@ -653,11 +652,11 @@ namespace System.Printing
         /// </remarks>
         public
         PrintCommitAttributesException(
-            ): base("PrintSystemException.CommitPrintSystemAttributesException")
+            ) : base("PrintSystemException.CommitPrintSystemAttributesException")
         {
             committedAttributes = new Collection<String>();
-            failedAttributes   = new Collection<String>();
-            printObjectName    = null;
+            failedAttributes = new Collection<String>();
+            printObjectName = null;
         }
 
         /// <summary>
@@ -671,12 +670,12 @@ namespace System.Printing
         /// </param>
         public
         PrintCommitAttributesException(
-            String    message
-            ): base(message)
+            String message
+            ) : base(message)
         {
-            printObjectName    = null;
+            printObjectName = null;
             committedAttributes = new Collection<String>();
-            failedAttributes   = new Collection<String>();
+            failedAttributes = new Collection<String>();
         }
 
         /// <summary>
@@ -687,14 +686,14 @@ namespace System.Printing
         /// </remarks>
         public
         PrintCommitAttributesException(
-            String                 message,
-            Exception              innerException
-            ): base(message,
+            String message,
+            Exception innerException
+            ) : base(message,
                     innerException)
         {
-            printObjectName    = null;
+            printObjectName = null;
             committedAttributes = new Collection<String>();
-            failedAttributes   = new Collection<String>();
+            failedAttributes = new Collection<String>();
         }
 
         /// <value>
@@ -724,15 +723,15 @@ namespace System.Printing
         public override
         void
         GetObjectData(
-            System.Runtime.Serialization.SerializationInfo      info,
-            System.Runtime.Serialization.StreamingContext       context
+            System.Runtime.Serialization.SerializationInfo info,
+            System.Runtime.Serialization.StreamingContext context
             )
         {
             if (info != null)
             {
                 info.AddValue("CommittedAttributes", committedAttributes);
-                info.AddValue("FailedAttributes",   failedAttributes);
-                info.AddValue("ObjectName",         printObjectName);
+                info.AddValue("FailedAttributes", failedAttributes);
+                info.AddValue("ObjectName", printObjectName);
             }
 
             base.GetObjectData(info, context);
@@ -744,15 +743,15 @@ namespace System.Printing
         ///</summary>
         public
         PrintCommitAttributesException(
-            int                 errorCode,
-            Collection<String>  attributesSuccessList,
-            Collection<String>  attributesFailList
-            ): base(errorCode,
+            int errorCode,
+            Collection<String> attributesSuccessList,
+            Collection<String> attributesFailList
+            ) : base(errorCode,
                     "PrintSystemException.CommitPrintSystemAttributesException")
         {
             this.committedAttributes = attributesSuccessList;
-            this.failedAttributes   = attributesFailList;
-            this.printObjectName    = null;
+            this.failedAttributes = attributesFailList;
+            this.printObjectName = null;
         }
 
         ///<summary>
@@ -760,16 +759,16 @@ namespace System.Printing
         ///</summary>
         public
         PrintCommitAttributesException(
-            int                 errorCode,
-            String              message,
-            Collection<String>  attributesSuccessList,
-            Collection<String>  attributesFailList,
-            String              objectName
-            ) : base(errorCode,message)
+            int errorCode,
+            String message,
+            Collection<String> attributesSuccessList,
+            Collection<String> attributesFailList,
+            String objectName
+            ) : base(errorCode, message)
         {
             this.committedAttributes = attributesSuccessList;
-            this.failedAttributes   = attributesFailList;
-            this.printObjectName    = null;
+            this.failedAttributes = attributesFailList;
+            this.printObjectName = null;
         }
 
         ///<summary>
@@ -803,20 +802,20 @@ namespace System.Printing
         /// <param name="context"> The contextual information about the source or destination. </param>
         protected
         PrintCommitAttributesException(
-            System.Runtime.Serialization.SerializationInfo      info,
-            System.Runtime.Serialization.StreamingContext        context
-            ): base(info, context)
+            System.Runtime.Serialization.SerializationInfo info,
+            System.Runtime.Serialization.StreamingContext context
+            ) : base(info, context)
 
-            {
-                committedAttributes = (Collection<String>)(info.GetValue("CommittedAttributes",  committedAttributes.GetType()));
-                failedAttributes   = (Collection<String>)(info.GetValue("FailedAttributes",    failedAttributes.GetType()));
-                printObjectName    = (String)(info.GetValue("ObjectName",                      printObjectName.GetType()));
-            }
+        {
+            committedAttributes = (Collection<String>)(info.GetValue("CommittedAttributes", committedAttributes.GetType()));
+            failedAttributes = (Collection<String>)(info.GetValue("FailedAttributes", failedAttributes.GetType()));
+            printObjectName = (String)(info.GetValue("ObjectName", printObjectName.GetType()));
+        }
 
 
-        Collection<String>  committedAttributes;
-        Collection<String>  failedAttributes;
-        String              printObjectName;
+        Collection<String> committedAttributes;
+        Collection<String> failedAttributes;
+        String printObjectName;
     };
 
     /// <summary>
@@ -835,9 +834,9 @@ namespace System.Printing
         PrintJobException(
             )
         {
-            this.jobId          = 0;
+            this.jobId = 0;
             this.printQueueName = null;
-            this.jobContainer   = null;
+            this.jobContainer = null;
         }
 
         /// <summary>
@@ -848,12 +847,12 @@ namespace System.Printing
         /// </param>
         public
         PrintJobException(
-            String             message
-            ): base(message)
+            String message
+            ) : base(message)
         {
-            this.jobId          = 0;
+            this.jobId = 0;
             this.printQueueName = null;
-            this.jobContainer   = null;
+            this.jobContainer = null;
         }
 
         /// <summary>
@@ -867,14 +866,14 @@ namespace System.Printing
         /// </param>
         public
         PrintJobException(
-            String             message,
-            Exception          innerException
+            String message,
+            Exception innerException
             ) : base(message,
                      innerException)
         {
-            this.jobId          = 0;
+            this.jobId = 0;
             this.printQueueName = null;
-            this.jobContainer   = null;
+            this.jobContainer = null;
         }
 
         /// <value>
@@ -929,13 +928,13 @@ namespace System.Printing
         public override
         void
         GetObjectData(
-            System.Runtime.Serialization.SerializationInfo  info,
-            System.Runtime.Serialization.StreamingContext    context
+            System.Runtime.Serialization.SerializationInfo info,
+            System.Runtime.Serialization.StreamingContext context
             )
         {
-            if( info != null )
+            if (info != null)
             {
-                info.AddValue("JobId", jobId );
+                info.AddValue("JobId", jobId);
             }
             base.GetObjectData(info, context);
         }
@@ -981,11 +980,11 @@ namespace System.Printing
         /// </param>
         public
         PrintJobException(
-            int              errorCode,
-            String           message,
-            String           printQueueName,
-            String           jobName,
-            int              jobId
+            int errorCode,
+            String message,
+            String printQueueName,
+            String jobName,
+            int jobId
             ) : base(errorCode, (message))
         {
             this.printQueueName = printQueueName;
@@ -1016,12 +1015,12 @@ namespace System.Printing
         /// </param>
         public
         PrintJobException(
-            int              errorCode,
-            String           message,
-            String           printQueueName,
-            String           jobName,
-            int              jobId,
-            Exception        innerException
+            int errorCode,
+            String message,
+            String printQueueName,
+            String jobName,
+            int jobId,
+            Exception innerException
             ) : base(errorCode, (message), innerException)
         {
             this.printQueueName = printQueueName;
@@ -1043,14 +1042,14 @@ namespace System.Printing
         /// </param>
         public
         PrintJobException(
-            int                errorCode,
-            String             message,
-            Exception          innerException
+            int errorCode,
+            String message,
+            Exception innerException
             ) : base(errorCode, message, innerException)
         {
-            this.jobId          = 0;
+            this.jobId = 0;
             this.printQueueName = null;
-            this.jobContainer   = null;
+            this.jobContainer = null;
         }
 
         /// <summary>
@@ -1060,16 +1059,16 @@ namespace System.Printing
         /// <param name="context"> The contextual information about the source or destination. </param>
         protected
         PrintJobException(
-            System.Runtime.Serialization.SerializationInfo  info,
-            System.Runtime.Serialization.StreamingContext    context
+            System.Runtime.Serialization.SerializationInfo info,
+            System.Runtime.Serialization.StreamingContext context
             ) : base(info, context)
         {
             this.jobId = (int)(info.GetValue("JobId", typeof(int)));
         }
 
-        int            jobId;
-        String         printQueueName;
-        String         jobContainer;
+        int jobId;
+        String printQueueName;
+        String jobContainer;
     };
 
     /// <summary>
@@ -1215,12 +1214,12 @@ namespace System.Printing
         /// </param>
         public
         PrintingCanceledException(
-            int         errorCode,
-            String      message,
-            String      printQueueName,
-            String      jobName,
-            int         jobId,
-            Exception   innerException
+            int errorCode,
+            String message,
+            String printQueueName,
+            String jobName,
+            int jobId,
+            Exception innerException
 
             ) : base(errorCode, message, printQueueName, jobName, jobId, innerException)
         {
@@ -1233,8 +1232,8 @@ namespace System.Printing
         /// <param name="context"> The contextual information about the source or destination. </param>
         protected
         PrintingCanceledException(
-            System.Runtime.Serialization.SerializationInfo  info,
-            System.Runtime.Serialization.StreamingContext   context
+            System.Runtime.Serialization.SerializationInfo info,
+            System.Runtime.Serialization.StreamingContext context
             ) : base(info, context)
         {
         }
@@ -1250,7 +1249,7 @@ namespace System.Printing
         /// <summary>
         /// PrintingNotSupportedException constructor.
         /// </summary>
-        public PrintingNotSupportedException()            
+        public PrintingNotSupportedException()
         {
         }
 

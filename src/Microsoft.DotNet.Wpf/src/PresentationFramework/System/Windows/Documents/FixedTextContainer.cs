@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal.Documents;
+using System.Collections;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using System.Collections;
+using MS.Internal.Documents;
 
 //
 // Description:
@@ -243,7 +243,7 @@ namespace System.Windows.Documents
         // ctor/OnDetach methods.
         ITextSelection ITextContainer.TextSelection
         {
-            get { return this.TextSelection;}
+            get { return this.TextSelection; }
             set { _textSelection = value; }
         }
 
@@ -279,7 +279,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                #pragma warning suppress 56503
+#pragma warning suppress 56503
                 throw new NotImplementedException();
             }
         }
@@ -333,10 +333,10 @@ namespace System.Windows.Documents
         }
 
 
-        internal int GetPageNumber(ITextPointer  textPointer)
+        internal int GetPageNumber(ITextPointer textPointer)
         {
             FixedTextPointer fixedTextPointer = textPointer as FixedTextPointer;
-            int  pageNumber = int.MaxValue;
+            int pageNumber = int.MaxValue;
 
             if (fixedTextPointer != null)
             {
@@ -413,10 +413,10 @@ namespace System.Windows.Documents
             int endIndex = 0;
             if (_GetFixedNodesForFlowRange(start, end, out elements, out startIndex, out endIndex))
             {
-                for(int i=0; i<elements.Length; i++)
+                for (int i = 0; i < elements.Length; i++)
                 {
                     FixedSOMElement elem = elements[i];
-                    
+
                     FixedNode fn = elem.FixedNode;
                     // Get the FixedPage if possible
                     FixedPage page = this.FixedDocument.SyncGetPageWithCheck(fn.Page);
@@ -574,7 +574,7 @@ namespace System.Windows.Documents
             _fixedTextBuilder = new FixedTextBuilder(this);
 
             // create initial TextPointer and container element
-            _start = new  FixedTextPointer(false, LogicalDirection.Backward, new FlowPosition(this, this.FixedTextBuilder.FixedFlowMap.FlowStartEdge, 1));
+            _start = new FixedTextPointer(false, LogicalDirection.Backward, new FlowPosition(this, this.FixedTextBuilder.FixedFlowMap.FlowStartEdge, 1));
             _end = new FixedTextPointer(false, LogicalDirection.Forward, new FlowPosition(this, this.FixedTextBuilder.FixedFlowMap.FlowEndEdge, 0));
 
             _containerElement = new FixedElement(FixedElement.ElementType.Container, _start, _end, int.MaxValue);
@@ -608,7 +608,7 @@ namespace System.Windows.Documents
         private bool _GetFixedNodesForFlowRange(ITextPointer start, ITextPointer end, out FixedSOMElement[] elements, out int startIndex, out int endIndex)
         {
             Debug.Assert(start.CompareTo(end) <= 0);
-            elements  = null;
+            elements = null;
             startIndex = 0;
             endIndex = 0;
 
@@ -617,8 +617,8 @@ namespace System.Windows.Documents
                 return false;
             }
 
-            FixedTextPointer pStart    = (FixedTextPointer)start;
-            FixedTextPointer pEnd      = (FixedTextPointer)end;
+            FixedTextPointer pStart = (FixedTextPointer)start;
+            FixedTextPointer pEnd = (FixedTextPointer)end;
 
             return this.FixedTextBuilder.GetFixedNodesForFlowRange(pStart.FlowPosition, pEnd.FlowPosition, out elements, out startIndex, out endIndex);
         } //endofGetFixedNodes
@@ -634,17 +634,17 @@ namespace System.Windows.Documents
         /// <summary>
         /// Cache for document content provider
         /// </summary>
-        private FixedDocument          _fixedPanel;    // the fixed document
+        private FixedDocument _fixedPanel;    // the fixed document
 
         /// <summary>
         /// Fixed To Flow Implemenation
         /// </summary>
-        private FixedTextBuilder    _fixedTextBuilder; // heuristics to build text stream from fixed document
+        private FixedTextBuilder _fixedTextBuilder; // heuristics to build text stream from fixed document
 
         /// <summary>
         ///  Text OM
         /// </summary>
-        private DependencyObject  _parent;
+        private DependencyObject _parent;
         private FixedElement _containerElement;
         private FixedTextPointer _start;
         private FixedTextPointer _end;

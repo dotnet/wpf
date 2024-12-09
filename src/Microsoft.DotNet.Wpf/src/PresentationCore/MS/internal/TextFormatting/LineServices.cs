@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,9 +9,9 @@
 //
 //
 
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Media.TextFormatting;
-using System.Runtime.InteropServices;
 using MS.Internal.Text.TextInterface;
 
 namespace MS.Internal.TextFormatting
@@ -35,312 +35,312 @@ namespace MS.Internal.TextFormatting
     //
 
     internal delegate LsErr FetchPap(
-        IntPtr                      pols,
-        int                         lscpFetch,
-        ref LsPap                   lspap
-        );                          
+        IntPtr pols,
+        int lscpFetch,
+        ref LsPap lspap
+        );
 
     internal delegate LsErr FetchLineProps(
-        IntPtr                      pols,               
-        int                         lscpFetch,
-        int                         firstLineInPara,    
-        ref LsLineProps             lsLineProps         
+        IntPtr pols,
+        int lscpFetch,
+        int firstLineInPara,
+        ref LsLineProps lsLineProps
         );
 
     internal unsafe delegate LsErr FetchRunRedefined(
-        IntPtr                      pols,               
-        int                         lscpFetch,
-        int                         fIsStyle,       // logically boolean (see above)
-        IntPtr                      pstyle,             
-        char*                       pwchTextBuffer,     
-        int                         cchTextBuffer,      
-        ref int                     fIsBufferUsed,  // logically boolean (see above)
-        out char*                   pwchText,           
-        ref int                     cchText,            
-        ref int                     fIsHidden,      // logically boolean (see above)     
-        ref LsChp                   lschp,              
-        ref IntPtr                  lsplsrun            
-        );                                       
+        IntPtr pols,
+        int lscpFetch,
+        int fIsStyle,       // logically boolean (see above)
+        IntPtr pstyle,
+        char* pwchTextBuffer,
+        int cchTextBuffer,
+        ref int fIsBufferUsed,  // logically boolean (see above)
+        out char* pwchText,
+        ref int cchText,
+        ref int fIsHidden,      // logically boolean (see above)     
+        ref LsChp lschp,
+        ref IntPtr lsplsrun
+        );
 
-    internal delegate LsErr GetRunTextMetrics (
-        IntPtr                      pols,
-        Plsrun                      plsrun,
-        LsDevice                    lsDevice,
-        LsTFlow                     lstFlow,
-        ref LsTxM                   lstTextMetrics
+    internal delegate LsErr GetRunTextMetrics(
+        IntPtr pols,
+        Plsrun plsrun,
+        LsDevice lsDevice,
+        LsTFlow lstFlow,
+        ref LsTxM lstTextMetrics
         );
 
     internal unsafe delegate LsErr GetRunCharWidths(
-        IntPtr                      pols,
-        Plsrun                      plsrun,
-        LsDevice                    device,
-        char                        *runText,
-        int                         cchRun,
-        int                         maxWidth,
-        LsTFlow                     textFlow,
-        int                         *charWidths,
-        ref int                     totalWidth,
-        ref int                     cchProcessed
-        );                                        
+        IntPtr pols,
+        Plsrun plsrun,
+        LsDevice device,
+        char* runText,
+        int cchRun,
+        int maxWidth,
+        LsTFlow textFlow,
+        int* charWidths,
+        ref int totalWidth,
+        ref int cchProcessed
+        );
 
     internal delegate LsErr GetDurMaxExpandRagged(
-        IntPtr                      pols,
-        Plsrun                      plsrun,
-        LsTFlow                     lstFlow,
-        ref int                     maxExpandRagged
+        IntPtr pols,
+        Plsrun plsrun,
+        LsTFlow lstFlow,
+        ref int maxExpandRagged
         );
 
     internal unsafe delegate LsErr DrawTextRun(
-        IntPtr                      pols,
-        Plsrun                      plsrun,
-        ref LSPOINT                 ptText,
-        char                        *runText,
-        int                         *charWidths,
-        int                         cchText,
-        LsTFlow                     textFlow,
-        uint                        displayMode,
-        ref LSPOINT                 ptRun,
-        ref LsHeights               lsHeights,
-        int                         dupRun,
-        ref LSRECT                  clipRect
+        IntPtr pols,
+        Plsrun plsrun,
+        ref LSPOINT ptText,
+        char* runText,
+        int* charWidths,
+        int cchText,
+        LsTFlow textFlow,
+        uint displayMode,
+        ref LSPOINT ptRun,
+        ref LsHeights lsHeights,
+        int dupRun,
+        ref LSRECT clipRect
         );
 
     internal delegate LsErr FInterruptShaping(
-        IntPtr                      pols,
-        LsTFlow                     textFlow,
-        Plsrun                      firstPlsrun,
-        Plsrun                      secondPlsrun,
-        ref int                     fIsInterruptOk      // logically boolean (see above)
+        IntPtr pols,
+        LsTFlow textFlow,
+        Plsrun firstPlsrun,
+        Plsrun secondPlsrun,
+        ref int fIsInterruptOk      // logically boolean (see above)
         );
 
-    
+
     internal delegate LsErr GetRunUnderlineInfo(
-        IntPtr                      pols,           
-        Plsrun                      plsrun,         
-        ref LsHeights               lsHeights,      
-        LsTFlow                     textFlow,       
-        ref LsULInfo                ulInfo          
+        IntPtr pols,
+        Plsrun plsrun,
+        ref LsHeights lsHeights,
+        LsTFlow textFlow,
+        ref LsULInfo ulInfo
         );
 
     internal delegate LsErr GetRunStrikethroughInfo(
-        IntPtr                      pols,           
-        Plsrun                      plsrun,         
-        ref LsHeights               lsHeights,      
-        LsTFlow                     textFlow,       
-        ref LsStInfo                stInfo          
+        IntPtr pols,
+        Plsrun plsrun,
+        ref LsHeights lsHeights,
+        LsTFlow textFlow,
+        ref LsStInfo stInfo
         );
 
     internal delegate LsErr Hyphenate(
-        IntPtr                      pols,
-        int                         fLastHyphenationFound,  // logically boolean (see above)
-        int                         lscpLastHyphenation,
-        ref LsHyph                  lastHyphenation,
-        int                         lscpBeginWord,
-        int                         lscpExceed,
-        ref int                     fHyphenFound,           // logically boolean (see above)
-        ref int                     lscpHyphen,
-        ref LsHyph                  plsHyph
+        IntPtr pols,
+        int fLastHyphenationFound,  // logically boolean (see above)
+        int lscpLastHyphenation,
+        ref LsHyph lastHyphenation,
+        int lscpBeginWord,
+        int lscpExceed,
+        ref int fHyphenFound,           // logically boolean (see above)
+        ref int lscpHyphen,
+        ref LsHyph plsHyph
         );
 
     internal delegate LsErr GetNextHyphenOpp(
-        IntPtr                      pols,
-        int                         lscpStartSearch,
-        int                         lsdcpSearch,
-        ref int                     fHyphenFound,           // logically boolean (see above)
-        ref int                     lscpHyphen,
-        ref LsHyph                  lsHyph
+        IntPtr pols,
+        int lscpStartSearch,
+        int lsdcpSearch,
+        ref int fHyphenFound,           // logically boolean (see above)
+        ref int lscpHyphen,
+        ref LsHyph lsHyph
         );
 
     internal delegate LsErr GetPrevHyphenOpp(
-        IntPtr                      pols,
-        int                         lscpStartSearch,
-        int                         lsdcpSearch,
-        ref int                     fHyphenFound,           // logically boolean (see above)
-        ref int                     lscpHyphen,
-        ref LsHyph                  lsHyph
+        IntPtr pols,
+        int lscpStartSearch,
+        int lsdcpSearch,
+        ref int fHyphenFound,           // logically boolean (see above)
+        ref int lscpHyphen,
+        ref LsHyph lsHyph
         );
-    
+
     internal delegate LsErr GetAutoNumberInfo(
-        IntPtr                      pols,               
-        ref LsKAlign                alignment,          
-        ref LsChp                   lschp,              
-        ref IntPtr                  lsplsrun,
-        ref ushort                  addedChar,              // logically char (see above)
-        ref LsChp                   lschpAddedChar,     
-        ref IntPtr                  lsplsrunAddedChar,  
-        ref int                     fWord95Model,           // logically boolean (see above)
-        ref int                     offset,             
-        ref int                     width               
+        IntPtr pols,
+        ref LsKAlign alignment,
+        ref LsChp lschp,
+        ref IntPtr lsplsrun,
+        ref ushort addedChar,              // logically char (see above)
+        ref LsChp lschpAddedChar,
+        ref IntPtr lsplsrunAddedChar,
+        ref int fWord95Model,           // logically boolean (see above)
+        ref int offset,
+        ref int width
         );
 
     internal delegate LsErr DrawUnderline(
-        IntPtr                      pols,       
-        Plsrun                      plsrun,     
-        uint                        ulType,     
-        ref LSPOINT                 ptOrigin,   
-        int                         ulLength,   
-        int                         ulThickness,
-        LsTFlow                     textFlow,   
-        uint                        displayMode,
-        ref LSRECT                  clipRect    
+        IntPtr pols,
+        Plsrun plsrun,
+        uint ulType,
+        ref LSPOINT ptOrigin,
+        int ulLength,
+        int ulThickness,
+        LsTFlow textFlow,
+        uint displayMode,
+        ref LSRECT clipRect
         );
 
     internal delegate LsErr DrawStrikethrough(
-        IntPtr                      pols,
-        Plsrun                      plsrun,
-        uint                        stType,
-        ref LSPOINT                 ptOrigin,
-        int                         stLength,
-        int                         stThickness,
-        LsTFlow                     textFlow,
-        uint                        displayMode,
-        ref LSRECT                  clipRect
+        IntPtr pols,
+        Plsrun plsrun,
+        uint stType,
+        ref LSPOINT ptOrigin,
+        int stLength,
+        int stThickness,
+        LsTFlow textFlow,
+        uint displayMode,
+        ref LSRECT clipRect
         );
 
     internal unsafe delegate LsErr GetGlyphsRedefined(
-        IntPtr                      pols,                   
-        IntPtr*                     plsplsruns,             
-        int*                        pcchPlsrun,             
-        int                         plsrunCount,            
-        char*                       pwchText,               
-        int                         cchText,                
-        LsTFlow                     textFlow,               
-        ushort*                     puGlyphsBuffer,         
-        uint*                       piGlyphPropsBuffer,     
-        int                         cgiGlyphBuffers,
-        ref int                     fIsGlyphBuffersUsed,    // logically boolean (see above)  
-        ushort*                     puClusterMap,           
-        ushort*                     puCharProperties,       
-        int*                        pfCanGlyphAlone,        
-        ref int                     glyphCount              
+        IntPtr pols,
+        IntPtr* plsplsruns,
+        int* pcchPlsrun,
+        int plsrunCount,
+        char* pwchText,
+        int cchText,
+        LsTFlow textFlow,
+        ushort* puGlyphsBuffer,
+        uint* piGlyphPropsBuffer,
+        int cgiGlyphBuffers,
+        ref int fIsGlyphBuffersUsed,    // logically boolean (see above)  
+        ushort* puClusterMap,
+        ushort* puCharProperties,
+        int* pfCanGlyphAlone,
+        ref int glyphCount
         );
 
     internal unsafe delegate LsErr GetGlyphPositions(
-        IntPtr                      pols,               
-        IntPtr                      *plsplsruns,
-        int                         *pcchPlsrun,
-        int                         plsrunCount,
-        LsDevice                    device,             
-        char                        *pwchText,          
-        ushort                      *puClusterMap,        
-        ushort                      *puCharProperties,
-        int                         cchText,            
-        ushort                      *puGlyphs,          
-        uint                        *piGlyphProperties,      
-        int                         glyphCount,         
-        LsTFlow                     textFlow,           
-        int                         *piGlyphAdvances,   
-        GlyphOffset                 *piiGlyphOffsets 
+        IntPtr pols,
+        IntPtr* plsplsruns,
+        int* pcchPlsrun,
+        int plsrunCount,
+        LsDevice device,
+        char* pwchText,
+        ushort* puClusterMap,
+        ushort* puCharProperties,
+        int cchText,
+        ushort* puGlyphs,
+        uint* piGlyphProperties,
+        int glyphCount,
+        LsTFlow textFlow,
+        int* piGlyphAdvances,
+        GlyphOffset* piiGlyphOffsets
         );
 
     internal unsafe delegate LsErr DrawGlyphs(
-        IntPtr                      pols,
-        Plsrun                      plsrun,
-        char                        *pwchText,
-        ushort                      *puClusterMap,
-        ushort                      *puCharProperties,
-        int                         cchText,
-        ushort                      *puGlyphs,
-        int                         *piJustifiedGlyphAdvances,
-        int                         *puGlyphAdvances,
-        GlyphOffset                 *piiGlyphOffsets,
-        uint                        *piGlyphProperties,
-        LsExpType                   *plsExpType,
-        int                         glyphCount,
-        LsTFlow                     textFlow,
-        uint                        displayMode,
-        ref LSPOINT                 origin,
-        ref LsHeights               lsHeights,
-        int                         runWidth,
-        ref LSRECT                  clippingRect
+        IntPtr pols,
+        Plsrun plsrun,
+        char* pwchText,
+        ushort* puClusterMap,
+        ushort* puCharProperties,
+        int cchText,
+        ushort* puGlyphs,
+        int* piJustifiedGlyphAdvances,
+        int* puGlyphAdvances,
+        GlyphOffset* piiGlyphOffsets,
+        uint* piGlyphProperties,
+        LsExpType* plsExpType,
+        int glyphCount,
+        LsTFlow textFlow,
+        uint displayMode,
+        ref LSPOINT origin,
+        ref LsHeights lsHeights,
+        int runWidth,
+        ref LSRECT clippingRect
         );
 
     internal unsafe delegate LsErr EnumText(
-        IntPtr                      pols,
-        Plsrun                      plsrun,
-        int                         cpFirst,
-        int                         dcp,
-        char                        *pwchText,
-        int                         cchText,
-        LsTFlow                     lstFlow,
-        int                         fReverseOrder,      // logically boolean (see above)
-        int                         fGeometryProvided,  // logically boolean (see above)
-        ref LSPOINT                 pptStart,
-        ref LsHeights               pheights,
-        int                         dupRun,
-        int                         glyphBaseRun,
-        int                         *charWidths,
-        ushort                      *pClusterMap,
-        ushort                      *characterProperties,
-        ushort                      *puglyphs,
-        int                         *pGlyphAdvances,
-        GlyphOffset                 *pGlyphOffsets,
-        uint                        *pGlyphProperties,
-        int                         glyphCount
+        IntPtr pols,
+        Plsrun plsrun,
+        int cpFirst,
+        int dcp,
+        char* pwchText,
+        int cchText,
+        LsTFlow lstFlow,
+        int fReverseOrder,      // logically boolean (see above)
+        int fGeometryProvided,  // logically boolean (see above)
+        ref LSPOINT pptStart,
+        ref LsHeights pheights,
+        int dupRun,
+        int glyphBaseRun,
+        int* charWidths,
+        ushort* pClusterMap,
+        ushort* characterProperties,
+        ushort* puglyphs,
+        int* pGlyphAdvances,
+        GlyphOffset* pGlyphOffsets,
+        uint* pGlyphProperties,
+        int glyphCount
         );
 
     internal unsafe delegate LsErr EnumTab(
-        IntPtr                      pols,
-        Plsrun                      plsrun,
-        int                         cpFirst,
-        char                        *pwchText,
-        char                        tabLeader,
-        LsTFlow                     lstFlow,
-        int                         fReverseOrder,      // logically boolean (see above)
-        int                         fGeometryProvided,  // logically boolean (see above)
-        ref LSPOINT                 pptStart,
-        ref LsHeights               heights,
-        int                         dupRun
+        IntPtr pols,
+        Plsrun plsrun,
+        int cpFirst,
+        char* pwchText,
+        char tabLeader,
+        LsTFlow lstFlow,
+        int fReverseOrder,      // logically boolean (see above)
+        int fGeometryProvided,  // logically boolean (see above)
+        ref LSPOINT pptStart,
+        ref LsHeights heights,
+        int dupRun
         );
 
     internal unsafe delegate LsErr GetCharCompressionInfoFullMixed(
-        IntPtr                      pols,
-        LsDevice                    device,
-        LsTFlow                     textFlow,
-        LsCharRunInfo               *plscharrunInfo,
-        LsNeighborInfo              *plsneighborInfoLeft,
-        LsNeighborInfo              *plsneighborInfoRight,
-        int                         maxPriorityLevel,
-        int                         **pplscompressionLeft,
-        int                         **pplscompressionRight
+        IntPtr pols,
+        LsDevice device,
+        LsTFlow textFlow,
+        LsCharRunInfo* plscharrunInfo,
+        LsNeighborInfo* plsneighborInfoLeft,
+        LsNeighborInfo* plsneighborInfoRight,
+        int maxPriorityLevel,
+        int** pplscompressionLeft,
+        int** pplscompressionRight
         );
 
     internal unsafe delegate LsErr GetCharExpansionInfoFullMixed(
-        IntPtr                      pols,
-        LsDevice                    device,
-        LsTFlow                     textFlow,
-        LsCharRunInfo               *plscharrunInfo,
-        LsNeighborInfo              *plsneighborInfoLeft,
-        LsNeighborInfo              *plsneighborInfoRight,
-        int                         maxPriorityLevel,
-        int                         **pplsexpansionLeft,
-        int                         **pplsexpansionRight
+        IntPtr pols,
+        LsDevice device,
+        LsTFlow textFlow,
+        LsCharRunInfo* plscharrunInfo,
+        LsNeighborInfo* plsneighborInfoLeft,
+        LsNeighborInfo* plsneighborInfoRight,
+        int maxPriorityLevel,
+        int** pplsexpansionLeft,
+        int** pplsexpansionRight
         );
 
     internal unsafe delegate LsErr GetGlyphCompressionInfoFullMixed(
-        IntPtr                      pols,
-        LsDevice                    device,
-        LsTFlow                     textFlow,
-        LsGlyphRunInfo              *plsglyphrunInfo,
-        LsNeighborInfo              *plsneighborInfoLeft,
-        LsNeighborInfo              *plsneighborInfoRight,
-        int                         maxPriorityLevel,
-        int                         **pplscompressionLeft,
-        int                         **pplscompressionRight
+        IntPtr pols,
+        LsDevice device,
+        LsTFlow textFlow,
+        LsGlyphRunInfo* plsglyphrunInfo,
+        LsNeighborInfo* plsneighborInfoLeft,
+        LsNeighborInfo* plsneighborInfoRight,
+        int maxPriorityLevel,
+        int** pplscompressionLeft,
+        int** pplscompressionRight
         );
 
     internal unsafe delegate LsErr GetGlyphExpansionInfoFullMixed(
-        IntPtr                      pols,
-        LsDevice                    device,
-        LsTFlow                     textFlow,
-        LsGlyphRunInfo              *plsglyphrunInfo,
-        LsNeighborInfo              *plsneighborInfoLeft,
-        LsNeighborInfo              *plsneighborInfoRight,
-        int                         maxPriorityLevel,
-        int                         **pplsexpansionLeft,
-        int                         **pplsexpansionRight,
-        LsExpType                   *plsexptype,
-        int                         *pduMinInk
+        IntPtr pols,
+        LsDevice device,
+        LsTFlow textFlow,
+        LsGlyphRunInfo* plsglyphrunInfo,
+        LsNeighborInfo* plsneighborInfoLeft,
+        LsNeighborInfo* plsneighborInfoRight,
+        int maxPriorityLevel,
+        int** pplsexpansionLeft,
+        int** pplsexpansionRight,
+        LsExpType* plsexptype,
+        int* pduMinInk
         );
 
 
@@ -349,30 +349,30 @@ namespace MS.Internal.TextFormatting
     //
     //
     internal unsafe delegate LsErr GetObjectHandlerInfo(
-        IntPtr                      pols,               // Line Layout context
-        uint                        objectId,           // installed object id
-        void*                       objectInfo          // object handler info
+        IntPtr pols,               // Line Layout context
+        uint objectId,           // installed object id
+        void* objectInfo          // object handler info
         );
 
     internal delegate LsErr InlineFormat(
-        IntPtr                      pols,               // Line Layout context
-        Plsrun                      plsrun,             // plsrun
-        int                         lscpInline,         // first cp of the run
-        int                         currentPosition,    // inline's current pen location in text direction
-        int                         rightMargin,        // right margin
-        ref ObjDim                  pobjDim,            // object dimension
-        out int                     fFirstRealOnLine,   // is this run the first in line; logically boolean (see above)
-        out int                     fPenPositionUsed,   // is pen position used to format object; logically boolean (see above)
-        out LsBrkCond               breakBefore,        // break condition before this object
-        out LsBrkCond               breakAfter          // break condition after this object
+        IntPtr pols,               // Line Layout context
+        Plsrun plsrun,             // plsrun
+        int lscpInline,         // first cp of the run
+        int currentPosition,    // inline's current pen location in text direction
+        int rightMargin,        // right margin
+        ref ObjDim pobjDim,            // object dimension
+        out int fFirstRealOnLine,   // is this run the first in line; logically boolean (see above)
+        out int fPenPositionUsed,   // is pen position used to format object; logically boolean (see above)
+        out LsBrkCond breakBefore,        // break condition before this object
+        out LsBrkCond breakAfter          // break condition after this object
         );
 
     internal delegate LsErr InlineDraw(
-        IntPtr                      pols,               // Line Layout context
-        Plsrun                      plsrun,             // plsrun
-        ref LSPOINT                 runOrigin,          // pen position at which to render the object
-        LsTFlow                     textFlow,           // text flow direction
-        int                         runWidth            // object width
+        IntPtr pols,               // Line Layout context
+        Plsrun plsrun,             // plsrun
+        ref LSPOINT runOrigin,          // pen position at which to render the object
+        LsTFlow textFlow,           // text flow direction
+        int runWidth            // object width
         );
 
 
@@ -384,36 +384,36 @@ namespace MS.Internal.TextFormatting
     //  handle to text run opaque to Line Services
     internal enum Plsrun : uint
     {
-        CloseAnchor             = 0,
-        Reverse                 = 1,
-        FakeLineBreak           = 2, // simulated line break for security mitigation
-        FormatAnchor            = 3,
-        Hidden                  = 4,
-        Text                    = 5, // run with type starting at this point is stored
-        InlineObject            = 6,
-        LineBreak               = 7,
-        ParaBreak               = 8,
+        CloseAnchor = 0,
+        Reverse = 1,
+        FakeLineBreak = 2, // simulated line break for security mitigation
+        FormatAnchor = 3,
+        Hidden = 4,
+        Text = 5, // run with type starting at this point is stored
+        InlineObject = 6,
+        LineBreak = 7,
+        ParaBreak = 8,
 
-        Undefined               = 0x80000000,   // Bit 31 cannot be set without causing an overflow exception in LineServices so we reserve it as a 'undefined' Plsrun value
-        IsMarker                = 0x40000000,   // Bit indicates this run is part of marker symbol
-        UseNewCharacterBuffer   = 0x20000000,   // Bit indicates this run uses dynamically allocated heap buffer for run characters
-        IsSymbol                = 0x10000000,   // Bit indicates run uses a non-Unicode font; don't change this value without updating unmanaged GetBreakingClasses callback
-        UnmaskAll               = 0x0FFFFFFF,   // Value to unmask all the masking bits
+        Undefined = 0x80000000,   // Bit 31 cannot be set without causing an overflow exception in LineServices so we reserve it as a 'undefined' Plsrun value
+        IsMarker = 0x40000000,   // Bit indicates this run is part of marker symbol
+        UseNewCharacterBuffer = 0x20000000,   // Bit indicates this run uses dynamically allocated heap buffer for run characters
+        IsSymbol = 0x10000000,   // Bit indicates run uses a non-Unicode font; don't change this value without updating unmanaged GetBreakingClasses callback
+        UnmaskAll = 0x0FFFFFFF,   // Value to unmask all the masking bits
     }
 
 
     // Unmanaged enum counterpart is in LSLO.H. 
     // == Both sides must be binary compatible ==
-    [Flags]    
-    internal enum LineFlags 
+    [Flags]
+    internal enum LineFlags
     {
         // line break flags
-        None                = 0,
-        BreakClassWide      = 0x00000001,
-        BreakClassStrict    = 0x00000002,
-        BreakAlways         = 0x00000004,
-        MinMax              = 0x00000008,
-        KeepState           = 0x00000010,
+        None = 0,
+        BreakClassWide = 0x00000001,
+        BreakClassStrict = 0x00000002,
+        BreakAlways = 0x00000004,
+        MinMax = 0x00000008,
+        KeepState = 0x00000010,
     }
 
 
@@ -453,14 +453,14 @@ namespace MS.Internal.TextFormatting
         lskjSnapGrid
     }
 
-    internal enum LsKAlign 
+    internal enum LsKAlign
     {
         lskalLeft,
         lskalCentered,
         lskalRight,
     }
 
-    internal enum LsKEOP   
+    internal enum LsKEOP
     {
         lskeopEndPara1,
         lskeopEndPara2,
@@ -477,10 +477,10 @@ namespace MS.Internal.TextFormatting
         lsktChar
     }
 
-    internal enum LsTFlow 
+    internal enum LsTFlow
     {
         lstflowDefault = 0,
-        lstflowES      = 0,
+        lstflowES = 0,
         lstflowEN,
         lstflowSE,
         lstflowSW,
@@ -498,13 +498,13 @@ namespace MS.Internal.TextFormatting
         Must
     }
 
-    internal enum LsDevice 
+    internal enum LsDevice
     {
         Presentation,
         Reference,
     }
 
-    internal enum LsExpType : byte 
+    internal enum LsExpType : byte
     {
         None = 0,
         AddWhiteSpace,
@@ -559,78 +559,78 @@ namespace MS.Internal.TextFormatting
         lshqBad
     }
 
-    internal enum LsErr 
+    internal enum LsErr
     {
-        None                                    = 0,
-        InvalidParameter                        = -1,
-        OutOfMemory                             = -2,
-        NullOutputParameter                     = -3,
-        InvalidContext                          = -4,
-        InvalidLine                             = -5,
-        InvalidDnode                            = -6,
-        InvalidDeviceResolution                 = -7,
-        InvalidRun                              = -8,
-        MismatchLineContext                     = -9,
-        ContextInUse                            = -10,
-        DuplicateSpecialCharacter               = -11,
-        InvalidAutonumRun                       = -12,
-        FormattingFunctionDisabled              = -13,
-        UnfinishedDnode                         = -14,
-        InvalidDnodeType                        = -15,
-        InvalidPenDnode                         = -16,
-        InvalidNonPenDnode                      = -17,
-        InvalidBaselinePenDnode                 = -18,
-        InvalidFormatterResult                  = -19,
-        InvalidObjectIdFetched                  = -20,
-        InvalidDcpFetched                       = -21,
-        InvalidCpContentFetched                 = -22,
-        InvalidBookmarkType                     = -23,
-        SetDocDisabled                          = -24,
-        FiniFunctionDisabled                    = -25,
-        CurrentDnodeIsNotTab                    = -26,
-        PendingTabIsNotResolved                 = -27,
-        WrongFiniFunction                       = -28,
-        InvalidBreakingClass                    = -29,
-        BreakingTableNotSet                     = -30,
-        InvalidModWidthClass                    = -31,
-        ModWidthPairsNotSet                     = -32,
-        WrongTruncationPoint                    = -33,
-        WrongBreak                              = -34,
-        DupInvalid                              = -35,
-        RubyInvalidVersion                      = -36,
-        TatenakayokoInvalidVersion              = -37,
-        WarichuInvalidVersion                   = -38,
-        WarichuInvalidData                      = -39,
-        CreateSublineDisabled                   = -40,
-        CurrentSublineDoesNotExist              = -41,
-        CpOutsideSubline                        = -42,
-        HihInvalidVersion                       = -43,
-        InsufficientQueryDepth                  = -44,
-        InvalidBreakRecord                      = -45,
-        InvalidPap                              = -46,
-        ContradictoryQueryInput                 = -47,
-        LineIsNotActive                         = -48,
-        TooLongParagraph                        = -49,
-        TooManyCharsToGlyph                     = -50,
-        WrongHyphenationPosition                = -51,
-        TooManyPriorities                       = -52,
-        WrongGivenCp                            = -53,
-        WrongCpFirstForGetBreaks                = -54,
-        WrongJustTypeForGetBreaks               = -55,
-        WrongJustTypeForCreateLineGivenCp       = -56,
-        TooLongGlyphContext                     = -57,
-        InvalidCharToGlyphMapping               = -58, 
-        InvalidMathUsage                        = -59,
-        InconsistentChp                         = -60,
-        StoppedInSubline                        = -61,
-        PenPositionCouldNotBeUsed               = -62,
-        DebugFlagsInShip                        = -63,
-        InvalidOrderTabs                        = -64,
-        OutputArrayTooSmall                     = -110,
-        SystemRestrictionsExceeded              = -100,
-        LsInternalError                         = -1000,
-        NotImplemented                          = -10000,
-        ClientAbort                             = -100000,
+        None = 0,
+        InvalidParameter = -1,
+        OutOfMemory = -2,
+        NullOutputParameter = -3,
+        InvalidContext = -4,
+        InvalidLine = -5,
+        InvalidDnode = -6,
+        InvalidDeviceResolution = -7,
+        InvalidRun = -8,
+        MismatchLineContext = -9,
+        ContextInUse = -10,
+        DuplicateSpecialCharacter = -11,
+        InvalidAutonumRun = -12,
+        FormattingFunctionDisabled = -13,
+        UnfinishedDnode = -14,
+        InvalidDnodeType = -15,
+        InvalidPenDnode = -16,
+        InvalidNonPenDnode = -17,
+        InvalidBaselinePenDnode = -18,
+        InvalidFormatterResult = -19,
+        InvalidObjectIdFetched = -20,
+        InvalidDcpFetched = -21,
+        InvalidCpContentFetched = -22,
+        InvalidBookmarkType = -23,
+        SetDocDisabled = -24,
+        FiniFunctionDisabled = -25,
+        CurrentDnodeIsNotTab = -26,
+        PendingTabIsNotResolved = -27,
+        WrongFiniFunction = -28,
+        InvalidBreakingClass = -29,
+        BreakingTableNotSet = -30,
+        InvalidModWidthClass = -31,
+        ModWidthPairsNotSet = -32,
+        WrongTruncationPoint = -33,
+        WrongBreak = -34,
+        DupInvalid = -35,
+        RubyInvalidVersion = -36,
+        TatenakayokoInvalidVersion = -37,
+        WarichuInvalidVersion = -38,
+        WarichuInvalidData = -39,
+        CreateSublineDisabled = -40,
+        CurrentSublineDoesNotExist = -41,
+        CpOutsideSubline = -42,
+        HihInvalidVersion = -43,
+        InsufficientQueryDepth = -44,
+        InvalidBreakRecord = -45,
+        InvalidPap = -46,
+        ContradictoryQueryInput = -47,
+        LineIsNotActive = -48,
+        TooLongParagraph = -49,
+        TooManyCharsToGlyph = -50,
+        WrongHyphenationPosition = -51,
+        TooManyPriorities = -52,
+        WrongGivenCp = -53,
+        WrongCpFirstForGetBreaks = -54,
+        WrongJustTypeForGetBreaks = -55,
+        WrongJustTypeForCreateLineGivenCp = -56,
+        TooLongGlyphContext = -57,
+        InvalidCharToGlyphMapping = -58,
+        InvalidMathUsage = -59,
+        InconsistentChp = -60,
+        StoppedInSubline = -61,
+        PenPositionCouldNotBeUsed = -62,
+        DebugFlagsInShip = -63,
+        InvalidOrderTabs = -64,
+        OutputArrayTooSmall = -110,
+        SystemRestrictionsExceeded = -100,
+        LsInternalError = -1000,
+        NotImplemented = -10000,
+        ClientAbort = -100000,
     }
 
     //
@@ -660,10 +660,10 @@ namespace MS.Internal.TextFormatting
         public int bottom;
         internal LSRECT(int x1, int y1, int x2, int y2)
         {
-            left    = x1;
-            top     = y1;
-            right   = x2;
-            bottom  = y2;
+            left = x1;
+            top = y1;
+            right = x2;
+            bottom = y2;
         }
     }
 
@@ -677,73 +677,73 @@ namespace MS.Internal.TextFormatting
     [StructLayout(LayoutKind.Sequential)]
     internal struct EscStringInfo
     {
-        public IntPtr   szParaSeparator;
-        public IntPtr   szLineSeparator;
-        public IntPtr   szHidden;
-        public IntPtr   szNbsp;
-        public IntPtr   szObjectTerminator;
-        public IntPtr   szObjectReplacement;
+        public IntPtr szParaSeparator;
+        public IntPtr szLineSeparator;
+        public IntPtr szHidden;
+        public IntPtr szNbsp;
+        public IntPtr szObjectTerminator;
+        public IntPtr szObjectReplacement;
     }
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct ObjDim
     {
-        public LsHeights    heightsRef;
-        public LsHeights    heightsPres;
-        public int          dur;
+        public LsHeights heightsRef;
+        public LsHeights heightsPres;
+        public int dur;
     }
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct LsTbd
     {
-        public LsKTab       lskt;
-        public int          ur;
+        public LsKTab lskt;
+        public int ur;
 
         [MarshalAs(UnmanagedType.U2)]
-        public char         wchTabLeader;
+        public char wchTabLeader;
 
         [MarshalAs(UnmanagedType.U2)]
-        public char         wchCharTab;
+        public char wchCharTab;
     }
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct LsTabs
     {
-        public int       durIncrementalTab;
-        public int       iTabUserDefMac;
-        public IntPtr    plsTbd;
+        public int durIncrementalTab;
+        public int iTabUserDefMac;
+        public IntPtr plsTbd;
     }
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct LsULInfo
     {
-        public uint     kulBase;
-        public int      cNumberOfLines;
-        public int      dvpUnderlineOriginOffset;
-        public int      dvpFirstUnderlineOffset;
-        public int      dvpFirstUnderlineSize;
-        public int      dvpGapBetweenLines;
-        public int      dvpSecondUnderlineSize;
+        public uint kulBase;
+        public int cNumberOfLines;
+        public int dvpUnderlineOriginOffset;
+        public int dvpFirstUnderlineOffset;
+        public int dvpFirstUnderlineSize;
+        public int dvpGapBetweenLines;
+        public int dvpSecondUnderlineSize;
     }
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct LsStInfo
     {
-        public uint     kstBase;
-        public int      cNumberOfLines;
-        public int      dvpLowerStrikethroughOffset;
-        public int      dvpLowerStrikethroughSize;
-        public int      dvpUpperStrikethroughOffset;
-        public int      dvpUpperStrikethroughSize;
+        public uint kstBase;
+        public int cNumberOfLines;
+        public int dvpLowerStrikethroughOffset;
+        public int dvpLowerStrikethroughSize;
+        public int dvpUpperStrikethroughOffset;
+        public int dvpUpperStrikethroughSize;
     }
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     internal struct LsHyph
     {
-        public LsKysr               kysr;
-        public char                 wchYsr;
-        public char                 wchYsr2;
-        public LsHyphenQuality      lshq;
+        public LsKysr kysr;
+        public char wchYsr;
+        public char wchYsr2;
+        public LsHyphenQuality lshq;
     }
 
 
@@ -803,9 +803,9 @@ namespace MS.Internal.TextFormatting
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     internal struct LscbkRedefined
     {
-        public FetchRunRedefined        pfnFetchRunRedefined;
-        public GetGlyphsRedefined       pfnGetGlyphsRedefined;
-        public FetchLineProps           pfnFetchLineProps;
+        public FetchRunRedefined pfnFetchRunRedefined;
+        public GetGlyphsRedefined pfnGetGlyphsRedefined;
+        public FetchLineProps pfnFetchLineProps;
     }
 
 
@@ -813,199 +813,199 @@ namespace MS.Internal.TextFormatting
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     internal unsafe struct LsContextInfo
     {
-        public uint                             version;            // version number
-        public int                              cInstalledHandlers; // total installed object handlers
-        public IntPtr                           plsimethods;        // array of installed objects LSIMETHODS
+        public uint version;            // version number
+        public int cInstalledHandlers; // total installed object handlers
+        public IntPtr plsimethods;        // array of installed objects LSIMETHODS
 
         // Text config (LSTXTCFG)
-        public int                              cEstimatedCharsPerLine;
+        public int cEstimatedCharsPerLine;
         // used for input array size for all four FullMixed justification callbacks (cPriorityLevelMax)
-        public int                              cJustPriorityLim;   
+        public int cJustPriorityLim;
 
-        public char                             wchUndef;
-        public char                             wchNull;
-        public char                             wchSpace;
-        public char                             wchHyphen;
-        public char                             wchTab;
-        public char                             wchPosTab;
-        public char                             wchEndPara1;
-        public char                             wchEndPara2;
-        public char                             wchAltEndPara;
-        public char                             wchEndLineInPara;
-        public char                             wchColumnBreak;
-        public char                             wchSectionBreak;
-        public char                             wchPageBreak;
-        public char                             wchNonBreakSpace;
-        public char                             wchNonBreakHyphen;
-        public char                             wchNonReqHyphen;
-        public char                             wchEmDash;
-        public char                             wchEnDash;
-        public char                             wchEmSpace;
-        public char                             wchEnSpace;
-        public char                             wchNarrowSpace;
-        public char                             wchOptBreak;
-        public char                             wchNoBreak;
-        public char                             wchFESpace;
-        public char                             wchJoiner;
-        public char                             wchNonJoiner;
-        public char                             wchToReplace;
-        public char                             wchReplace;
+        public char wchUndef;
+        public char wchNull;
+        public char wchSpace;
+        public char wchHyphen;
+        public char wchTab;
+        public char wchPosTab;
+        public char wchEndPara1;
+        public char wchEndPara2;
+        public char wchAltEndPara;
+        public char wchEndLineInPara;
+        public char wchColumnBreak;
+        public char wchSectionBreak;
+        public char wchPageBreak;
+        public char wchNonBreakSpace;
+        public char wchNonBreakHyphen;
+        public char wchNonReqHyphen;
+        public char wchEmDash;
+        public char wchEnDash;
+        public char wchEmSpace;
+        public char wchEnSpace;
+        public char wchNarrowSpace;
+        public char wchOptBreak;
+        public char wchNoBreak;
+        public char wchFESpace;
+        public char wchJoiner;
+        public char wchNonJoiner;
+        public char wchToReplace;
+        public char wchReplace;
 
-        public char                             wchVisiNull;
-        public char                             wchVisiAltEndPara;
-        public char                             wchVisiEndLineInPara;
-        public char                             wchVisiEndPara;
-        public char                             wchVisiSpace;
-        public char                             wchVisiNonBreakSpace;
-        public char                             wchVisiNonBreakHyphen;
-        public char                             wchVisiNonReqHyphen;
-        public char                             wchVisiTab;
-        public char                             wchVisiPosTab;
-        public char                             wchVisiEmSpace;
-        public char                             wchVisiEnSpace;
-        public char                             wchVisiNarrowSpace;
-        public char                             wchVisiOptBreak;
-        public char                             wchVisiNoBreak;
-        public char                             wchVisiFESpace;
-        public char                             wchEscAnmRun;
-        public char                             wchPad;
+        public char wchVisiNull;
+        public char wchVisiAltEndPara;
+        public char wchVisiEndLineInPara;
+        public char wchVisiEndPara;
+        public char wchVisiSpace;
+        public char wchVisiNonBreakSpace;
+        public char wchVisiNonBreakHyphen;
+        public char wchVisiNonReqHyphen;
+        public char wchVisiTab;
+        public char wchVisiPosTab;
+        public char wchVisiEmSpace;
+        public char wchVisiEnSpace;
+        public char wchVisiNarrowSpace;
+        public char wchVisiOptBreak;
+        public char wchVisiNoBreak;
+        public char wchVisiFESpace;
+        public char wchEscAnmRun;
+        public char wchPad;
 
 
         //  More LSCONTEXTINFO
-        public IntPtr                           pols;  // Opaque client object
-    
+        public IntPtr pols;  // Opaque client object
+
         // Memory management on unmanaged heap
-        public IntPtr                           pfnNewPtr;
-        public IntPtr                           pfnDisposePtr;
-        public IntPtr                           pfnReallocPtr;
+        public IntPtr pfnNewPtr;
+        public IntPtr pfnDisposePtr;
+        public IntPtr pfnReallocPtr;
 
         // General application callbacks
-        public IntPtr                           pfnFetchRun;
-        public GetAutoNumberInfo                pfnGetAutoNumberInfo;
-        public IntPtr                           pfnGetNumericSeparators;
-        public IntPtr                           pfnCheckForDigit;
-        public FetchPap                         pfnFetchPap;
-        public FetchLineProps                   pfnFetchLineProps;
-        public IntPtr                           pfnFetchTabs;
-        public IntPtr                           pfnReleaseTabsBuffer;
-        public IntPtr                           pfnGetBreakThroughTab;
-        public IntPtr                           pfnGetPosTabProps;        
-        public IntPtr                           pfnFGetLastLineJustification;
-        public IntPtr                           pfnCheckParaBoundaries;
-        public GetRunCharWidths                 pfnGetRunCharWidths;
-        public IntPtr                           pfnCheckRunKernability;
-        public IntPtr                           pfnGetRunCharKerning;
-        public GetRunTextMetrics                pfnGetRunTextMetrics;
-        public GetRunUnderlineInfo              pfnGetRunUnderlineInfo;
-        public GetRunStrikethroughInfo          pfnGetRunStrikethroughInfo;
-        public IntPtr                           pfnGetBorderInfo;
-        public IntPtr                           pfnReleaseRun;
-        public IntPtr                           pfnReleaseRunBuffer;
-        public Hyphenate                        pfnHyphenate;
-        public GetPrevHyphenOpp                 pfnGetPrevHyphenOpp;
-        public GetNextHyphenOpp                 pfnGetNextHyphenOpp;
-        public IntPtr                           pfnGetHyphenInfo;
-        public DrawUnderline                    pfnDrawUnderline;
-        public DrawStrikethrough                pfnDrawStrikethrough;
-        public IntPtr                           pfnDrawBorder;
-        public IntPtr                           pfnFInterruptUnderline;
-        public IntPtr                           pfnFInterruptShade;
-        public IntPtr                           pfnFInterruptBorder;
-        public IntPtr                           pfnShadeRectangle;
-        public DrawTextRun                      pfnDrawTextRun;
-        public IntPtr                           pfnDrawSplatLine;
-        public FInterruptShaping                pfnFInterruptShaping;
-        public IntPtr                           pfnGetGlyphs;
-        public GetGlyphPositions                pfnGetGlyphPositions;
-        public DrawGlyphs                       pfnDrawGlyphs;
-        public IntPtr                           pfnReleaseGlyphBuffers;
-        public IntPtr                           pfnGetGlyphExpansionInfo;
-        public IntPtr                           pfnGetGlyphExpansionInkInfo;
-        public IntPtr                           pfnGetGlyphRunInk;
-        public IntPtr                           pfnGetEms;
-        public IntPtr                           pfnPunctStartLine;
-        public IntPtr                           pfnModWidthOnRun;
-        public IntPtr                           pfnModWidthSpace;
-        public IntPtr                           pfnCompOnRun;
-        public IntPtr                           pfnCompWidthSpace;
-        public IntPtr                           pfnExpOnRun;
-        public IntPtr                           pfnExpWidthSpace;
-        public IntPtr                           pfnGetModWidthClasses;
-        public IntPtr                           pfnGetBreakingClasses;
-        public IntPtr                           pfnFTruncateBefore;
-        public IntPtr                           pfnCanBreakBeforeChar;
-        public IntPtr                           pfnCanBreakAfterChar;
-        public IntPtr                           pfnFHangingPunct;
-        public IntPtr                           pfnGetSnapGrid;
-        public IntPtr                           pfnDrawEffects;
-        public IntPtr                           pfnFCancelHangingPunct;
-        public IntPtr                           pfnModifyCompAtLastChar;
-        public GetDurMaxExpandRagged            pfnGetDurMaxExpandRagged;
-        public GetCharExpansionInfoFullMixed    pfnGetCharExpansionInfoFullMixed;
-        public GetGlyphExpansionInfoFullMixed   pfnGetGlyphExpansionInfoFullMixed;
-        public GetCharCompressionInfoFullMixed  pfnGetCharCompressionInfoFullMixed;
+        public IntPtr pfnFetchRun;
+        public GetAutoNumberInfo pfnGetAutoNumberInfo;
+        public IntPtr pfnGetNumericSeparators;
+        public IntPtr pfnCheckForDigit;
+        public FetchPap pfnFetchPap;
+        public FetchLineProps pfnFetchLineProps;
+        public IntPtr pfnFetchTabs;
+        public IntPtr pfnReleaseTabsBuffer;
+        public IntPtr pfnGetBreakThroughTab;
+        public IntPtr pfnGetPosTabProps;
+        public IntPtr pfnFGetLastLineJustification;
+        public IntPtr pfnCheckParaBoundaries;
+        public GetRunCharWidths pfnGetRunCharWidths;
+        public IntPtr pfnCheckRunKernability;
+        public IntPtr pfnGetRunCharKerning;
+        public GetRunTextMetrics pfnGetRunTextMetrics;
+        public GetRunUnderlineInfo pfnGetRunUnderlineInfo;
+        public GetRunStrikethroughInfo pfnGetRunStrikethroughInfo;
+        public IntPtr pfnGetBorderInfo;
+        public IntPtr pfnReleaseRun;
+        public IntPtr pfnReleaseRunBuffer;
+        public Hyphenate pfnHyphenate;
+        public GetPrevHyphenOpp pfnGetPrevHyphenOpp;
+        public GetNextHyphenOpp pfnGetNextHyphenOpp;
+        public IntPtr pfnGetHyphenInfo;
+        public DrawUnderline pfnDrawUnderline;
+        public DrawStrikethrough pfnDrawStrikethrough;
+        public IntPtr pfnDrawBorder;
+        public IntPtr pfnFInterruptUnderline;
+        public IntPtr pfnFInterruptShade;
+        public IntPtr pfnFInterruptBorder;
+        public IntPtr pfnShadeRectangle;
+        public DrawTextRun pfnDrawTextRun;
+        public IntPtr pfnDrawSplatLine;
+        public FInterruptShaping pfnFInterruptShaping;
+        public IntPtr pfnGetGlyphs;
+        public GetGlyphPositions pfnGetGlyphPositions;
+        public DrawGlyphs pfnDrawGlyphs;
+        public IntPtr pfnReleaseGlyphBuffers;
+        public IntPtr pfnGetGlyphExpansionInfo;
+        public IntPtr pfnGetGlyphExpansionInkInfo;
+        public IntPtr pfnGetGlyphRunInk;
+        public IntPtr pfnGetEms;
+        public IntPtr pfnPunctStartLine;
+        public IntPtr pfnModWidthOnRun;
+        public IntPtr pfnModWidthSpace;
+        public IntPtr pfnCompOnRun;
+        public IntPtr pfnCompWidthSpace;
+        public IntPtr pfnExpOnRun;
+        public IntPtr pfnExpWidthSpace;
+        public IntPtr pfnGetModWidthClasses;
+        public IntPtr pfnGetBreakingClasses;
+        public IntPtr pfnFTruncateBefore;
+        public IntPtr pfnCanBreakBeforeChar;
+        public IntPtr pfnCanBreakAfterChar;
+        public IntPtr pfnFHangingPunct;
+        public IntPtr pfnGetSnapGrid;
+        public IntPtr pfnDrawEffects;
+        public IntPtr pfnFCancelHangingPunct;
+        public IntPtr pfnModifyCompAtLastChar;
+        public GetDurMaxExpandRagged pfnGetDurMaxExpandRagged;
+        public GetCharExpansionInfoFullMixed pfnGetCharExpansionInfoFullMixed;
+        public GetGlyphExpansionInfoFullMixed pfnGetGlyphExpansionInfoFullMixed;
+        public GetCharCompressionInfoFullMixed pfnGetCharCompressionInfoFullMixed;
         public GetGlyphCompressionInfoFullMixed pfnGetGlyphCompressionInfoFullMixed;
-        public IntPtr                           pfnGetCharAlignmentStartLine;
-        public IntPtr                           pfnGetCharAlignmentEndLine;
-        public IntPtr                           pfnGetGlyphAlignmentStartLine;
-        public IntPtr                           pfnGetGlyphAlignmentEndLine;
-        public IntPtr                           pfnGetPriorityForGoodTypography;
+        public IntPtr pfnGetCharAlignmentStartLine;
+        public IntPtr pfnGetCharAlignmentEndLine;
+        public IntPtr pfnGetGlyphAlignmentStartLine;
+        public IntPtr pfnGetGlyphAlignmentEndLine;
+        public IntPtr pfnGetPriorityForGoodTypography;
 
-        public EnumText                         pfnEnumText;
-        public EnumTab                          pfnEnumTab;
-        public IntPtr                           pfnEnumPen;
-        public GetObjectHandlerInfo             pfnGetObjectHandlerInfo;      
-    
+        public EnumText pfnEnumText;
+        public EnumTab pfnEnumTab;
+        public IntPtr pfnEnumPen;
+        public GetObjectHandlerInfo pfnGetObjectHandlerInfo;
+
         // Debugging
-        public IntPtr                           pfnAssertFailedPtr;
+        public IntPtr pfnAssertFailedPtr;
 
         // Even more LSCONTEXTINFO
-        public int                              fDontReleaseRuns;
+        public int fDontReleaseRuns;
     }
 
     // Presentation/Rendering device resolutions (LSDEVRES)
     [StructLayout(LayoutKind.Sequential)]
     internal struct LsDevRes
     {
-        public uint   dxpInch;
-        public uint   dypInch;
-        public uint   dxrInch;
-        public uint   dyrInch;
+        public uint dxpInch;
+        public uint dypInch;
+        public uint dxrInch;
+        public uint dyrInch;
     }
 
     // Presentation/Rendering device resolutions (LSDEVRES)
     [StructLayout(LayoutKind.Sequential)]
     internal struct LsLInfo
     {
-        public int                  dvpAscent;
-        public int                  dvrAscent;
-        public int                  dvpDescent;
-        public int                  dvrDescent;
-        public int                  dvpMultiLineHeight;
-        public int                  dvrMultiLineHeight;
-        public int                  dvpAscentAutoNumber;
-        public int                  dvrAscentAutoNumber;
-        public int                  dvpDescentAutoNumber;
-        public int                  dvrDescentAutoNumber;
-        public int                  cpLimToContinue;
-        public int                  cpLimToStay;
-        public int                  dcpDepend;
-        public int                  cpFirstVis;
-        public LsEndRes             endr;
-        public int                  fAdvanced;
-        public int                  vaAdvance;
-        public int                  fFirstLineInPara;
-        public int                  fTabInMarginExLine;
-        public int                  fForcedBreak;
-        public uint                 EffectsFlags;
+        public int dvpAscent;
+        public int dvrAscent;
+        public int dvpDescent;
+        public int dvrDescent;
+        public int dvpMultiLineHeight;
+        public int dvrMultiLineHeight;
+        public int dvpAscentAutoNumber;
+        public int dvrAscentAutoNumber;
+        public int dvpDescentAutoNumber;
+        public int dvrDescentAutoNumber;
+        public int cpLimToContinue;
+        public int cpLimToStay;
+        public int dcpDepend;
+        public int cpFirstVis;
+        public LsEndRes endr;
+        public int fAdvanced;
+        public int vaAdvance;
+        public int fFirstLineInPara;
+        public int fTabInMarginExLine;
+        public int fForcedBreak;
+        public uint EffectsFlags;
     }
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct LsBreakRecSubl
     {
-        public int      lscpFetch;
-        public int      idobj;
-        public IntPtr   pbreakrecobj;
+        public int lscpFetch;
+        public int idobj;
+        public IntPtr pbreakrecobj;
     }
 
 
@@ -1014,8 +1014,8 @@ namespace MS.Internal.TextFormatting
     [StructLayout(LayoutKind.Sequential)]
     internal struct LsPap
     {
-        public int          cpFirst;            // First CP
-        public int          cpFirstContent;     // First content CP
+        public int cpFirst;            // First CP
+        public int cpFirstContent;     // First content CP
 
         [Flags]
         public enum Flags : uint
@@ -1023,55 +1023,55 @@ namespace MS.Internal.TextFormatting
             None = 0,
 
             //  Visi flags
-            fFmiVisiCondHyphens             = 0x00000001,
-            fFmiVisiParaMarks               = 0x00000002,
-            fFmiVisiSpaces                  = 0x00000004,
-            fFmiVisiTabs                    = 0x00000008,
-            fFmiVisiSplats                  = 0x00000010,
-            fFmiVisiBreaks                  = 0x00000020,
+            fFmiVisiCondHyphens = 0x00000001,
+            fFmiVisiParaMarks = 0x00000002,
+            fFmiVisiSpaces = 0x00000004,
+            fFmiVisiTabs = 0x00000008,
+            fFmiVisiSplats = 0x00000010,
+            fFmiVisiBreaks = 0x00000020,
 
             //  Advanced typography
-            fFmiApplyBreakingRules          = 0x00000040,
-            fFmiApplyOpticalAlignment       = 0x00000080,
-            fFmiPunctStartLine              = 0x00000100,
-            fFmiHangingPunct                = 0x00000200,
+            fFmiApplyBreakingRules = 0x00000040,
+            fFmiApplyOpticalAlignment = 0x00000080,
+            fFmiPunctStartLine = 0x00000100,
+            fFmiHangingPunct = 0x00000200,
 
             //  WYSIWYG flags
-            fFmiPresSuppressWiggle          = 0x00000400,
-            fFmiPresExactSync               = 0x00000800,
+            fFmiPresSuppressWiggle = 0x00000400,
+            fFmiPresExactSync = 0x00000800,
 
             //  AutoNumbering flags
-            fFmiAnm                         = 0x00001000,
+            fFmiAnm = 0x00001000,
 
             //  Misc.
-            fFmiAutoDecimalTab              = 0x00002000,
-            fFmiUnderlineTrailSpacesRM      = 0x00004000,
-            fFmiSpacesInfluenceHeight       = 0x00008000,
-            fFmiIgnoreSplatBreak            = 0x00010000,
-            fFmiLimSplat                    = 0x00020000,
-            fFmiAllowSplatLine              = 0x00040000,
-            fFmiForceBreakAsNext            = 0x00080000,
-            fFmiAllowHyphenation            = 0x00100000,
-            fFmiDrawInCharCodes             = 0x00200000,
-            fFmiTreatHyphenAsRegular        = 0x00400000,
-            fFmiWrapTrailingSpaces          = 0x00800000,
-            fFmiWrapAllSpaces               = 0x01000000,
+            fFmiAutoDecimalTab = 0x00002000,
+            fFmiUnderlineTrailSpacesRM = 0x00004000,
+            fFmiSpacesInfluenceHeight = 0x00008000,
+            fFmiIgnoreSplatBreak = 0x00010000,
+            fFmiLimSplat = 0x00020000,
+            fFmiAllowSplatLine = 0x00040000,
+            fFmiForceBreakAsNext = 0x00080000,
+            fFmiAllowHyphenation = 0x00100000,
+            fFmiDrawInCharCodes = 0x00200000,
+            fFmiTreatHyphenAsRegular = 0x00400000,
+            fFmiWrapTrailingSpaces = 0x00800000,
+            fFmiWrapAllSpaces = 0x01000000,
 
             //  Compatibility flags for bugs in older versions of Word
-            fFmiFCheckTruncateBefore        = 0x02000000,
-            fFmiForgetLastTabAlignment      = 0x10000000,
-            fFmiIndentChangesHyphenZone     = 0x20000000,
-            fFmiNoPunctAfterAutoNumber      = 0x40000000,
-            fFmiResolveTabsAsWord97         = 0x80000000,
+            fFmiFCheckTruncateBefore = 0x02000000,
+            fFmiForgetLastTabAlignment = 0x10000000,
+            fFmiIndentChangesHyphenZone = 0x20000000,
+            fFmiNoPunctAfterAutoNumber = 0x40000000,
+            fFmiResolveTabsAsWord97 = 0x80000000,
         }
 
-        public Flags        grpf;
-        public LsBreakJust  lsbrj;
-        public LsKJust      lskj;
-        public int          fJustify;
-        public int          durAutoDecimalTab;
-        public LsKEOP       lskeop;
-        public LsTFlow      lstflow;
+        public Flags grpf;
+        public LsBreakJust lsbrj;
+        public LsKJust lskj;
+        public int fJustify;
+        public int durAutoDecimalTab;
+        public LsKEOP lskeop;
+        public LsTFlow lstflow;
     }
 
 
@@ -1080,12 +1080,12 @@ namespace MS.Internal.TextFormatting
     [StructLayout(LayoutKind.Sequential)]
     internal struct LsLineProps
     {
-        public LsKAlign     lskal;                  // Alignment type
-        public int          durLeft;                // Left line boundary
-        public int          durRightBreak;          // Right linebreak boundary
-        public int          durRightJustify;        // Right justification boundary
-        public int          fProhibitHyphenation;   // prohibit hyphenation on this line?
-        public int          durHyphenationZone;     // hyphenation zone for non-optimal breaking
+        public LsKAlign lskal;                  // Alignment type
+        public int durLeft;                // Left line boundary
+        public int durRightBreak;          // Right linebreak boundary
+        public int durRightJustify;        // Right justification boundary
+        public int fProhibitHyphenation;   // prohibit hyphenation on this line?
+        public int durHyphenationZone;     // hyphenation zone for non-optimal breaking
     }
 
 
@@ -1094,39 +1094,39 @@ namespace MS.Internal.TextFormatting
     [StructLayout(LayoutKind.Sequential)]
     internal struct LsChp
     {
-        public ushort       idObj;
-        public ushort       dcpMaxContent;
-        public uint         effectsFlags;
+        public ushort idObj;
+        public ushort dcpMaxContent;
+        public uint effectsFlags;
 
         [Flags]
         public enum Flags : uint
         {
             None = 0,
-            fApplyKern              = 0x0001,
-            fModWidthOnRun          = 0x0002,
-            fModWidthSpace          = 0x0004,
-            fModWidthPairs          = 0x0008,
-            fCompressOnRun          = 0x0010,
-            fCompressSpace          = 0x0020,
-            fCompressTable          = 0x0040,
-            fExpandOnRun            = 0x0080,
-            fExpandSpace            = 0x0100,
-            fExpandTable            = 0x0200,
-            fGlyphBased             = 0x0400,
+            fApplyKern = 0x0001,
+            fModWidthOnRun = 0x0002,
+            fModWidthSpace = 0x0004,
+            fModWidthPairs = 0x0008,
+            fCompressOnRun = 0x0010,
+            fCompressSpace = 0x0020,
+            fCompressTable = 0x0040,
+            fExpandOnRun = 0x0080,
+            fExpandSpace = 0x0100,
+            fExpandTable = 0x0200,
+            fGlyphBased = 0x0400,
             // 5 bits of padding to align to next word
-            fInvisible              = 0x00010000,
-            fUnderline              = 0x00020000,               
-            fStrike                 = 0x00040000,
-            fShade                  = 0x00080000,
-            fBorder                 = 0x00100000,
-            fSymbol                 = 0x00200000,
-            fHyphen                 = 0x00400000,   // Hyphenation opportunity (YSR info)
-            fCheckForReplaceChar    = 0x00800000,   // Activate the replace char mechanizm for Yen
+            fInvisible = 0x00010000,
+            fUnderline = 0x00020000,
+            fStrike = 0x00040000,
+            fShade = 0x00080000,
+            fBorder = 0x00100000,
+            fSymbol = 0x00200000,
+            fHyphen = 0x00400000,   // Hyphenation opportunity (YSR info)
+            fCheckForReplaceChar = 0x00800000,   // Activate the replace char mechanizm for Yen
             // 8 bits of padding
         }
 
-        public Flags        flags;      // bitfields
-        public int          dvpPos;
+        public Flags flags;      // bitfields
+        public int dvpPos;
     }
 
     // TextMetrics (LSTXM)
@@ -1134,10 +1134,10 @@ namespace MS.Internal.TextFormatting
     [StructLayout(LayoutKind.Sequential)]
     internal struct LsTxM
     {
-        public int      dvAscent;
-        public int      dvDescent;
-        public int      dvMultiLineHeight;
-        public int      fMonospaced;         // BOOL
+        public int dvAscent;
+        public int dvDescent;
+        public int dvMultiLineHeight;
+        public int fMonospaced;         // BOOL
     }
 
     // Heights (heights)
@@ -1145,127 +1145,127 @@ namespace MS.Internal.TextFormatting
     [StructLayout(LayoutKind.Sequential)]
     internal struct LsHeights
     {
-        public int      dvAscent;
-        public int      dvDescent;
-        public int      dvMultiLineHeight;
+        public int dvAscent;
+        public int dvDescent;
+        public int dvMultiLineHeight;
     }
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct LsQSubInfo
     {
-        public LsTFlow     lstflowSubLine;
-        public int         lscpFirstSubLine;
-        public int         lsdcpSubLine;
-        public LSPOINT     pointUvStartSubLine;
-        public LsHeights   lsHeightsPresSubLine;
-        public int         dupSubLine;
+        public LsTFlow lstflowSubLine;
+        public int lscpFirstSubLine;
+        public int lsdcpSubLine;
+        public LSPOINT pointUvStartSubLine;
+        public LsHeights lsHeightsPresSubLine;
+        public int dupSubLine;
 
-        public uint        idobj;
-        public IntPtr      plsrun;
-        public int         lscpFirstRun;
-        public int         lsdcpRun;
-        public LSPOINT     pointUvStartRun;
-        public LsHeights   lsHeightsPresRun;
-        public int         dupRun;
-        public int         dvpPosRun;
-        public int         dupBorderBefore;
-        public int         dupBorderAfter;
+        public uint idobj;
+        public IntPtr plsrun;
+        public int lscpFirstRun;
+        public int lsdcpRun;
+        public LSPOINT pointUvStartRun;
+        public LsHeights lsHeightsPresRun;
+        public int dupRun;
+        public int dvpPosRun;
+        public int dupBorderBefore;
+        public int dupBorderAfter;
 
-        public LSPOINT     pointUvStartObj;
-        public LsHeights   lsHeightsPresObj;
-        public int         dupObj;
+        public LSPOINT pointUvStartObj;
+        public LsHeights lsHeightsPresObj;
+        public int dupObj;
     }
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct LsTextCell
     {
-        public int       lscpStartCell;
-        public int       lscpEndCell;
-        public LSPOINT   pointUvStartCell;
-        public int       dupCell;
-        public int       cCharsInCell;
-        public int       cGlyphsInCell;
-        public IntPtr    plsCellDetails;  // client-defined structure
+        public int lscpStartCell;
+        public int lscpEndCell;
+        public LSPOINT pointUvStartCell;
+        public int dupCell;
+        public int cCharsInCell;
+        public int cGlyphsInCell;
+        public IntPtr plsCellDetails;  // client-defined structure
     }
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct LsLineWidths
     {
-        public int      upStartMarker;      // column start to marker start
-        public int      upLimMarker;        // column start to marker end
-        public int      upStartMainText;    // column start to main text start
-        public int      upStartTrailing;    // column start to trailing space start
-        public int      upLimLine;          // column start to line end
-        public int      upMinStartTrailing; // the smallest upStartTrailing possible
-        public int      upMinLimLine;       // the smallest upLimLine possible
+        public int upStartMarker;      // column start to marker start
+        public int upLimMarker;        // column start to marker end
+        public int upStartMainText;    // column start to main text start
+        public int upStartTrailing;    // column start to trailing space start
+        public int upLimLine;          // column start to line end
+        public int upMinStartTrailing; // the smallest upStartTrailing possible
+        public int upMinLimLine;       // the smallest upLimLine possible
     }
 
 
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe struct LsBreaks
     {
-        public int              cBreaks;                // number of total breaks
-        
-        public LsLInfo*         plslinfoArray;          // array of LSLINFO structs, each per each break
-        
-        public IntPtr*          plinepenaltyArray;      // array of unsafe handle to TSLINEPENALITYINFO struct, each per each break
-        
-        public IntPtr*          pplolineArray;          // array of unsafe handle to Loline struct, each per each break
+        public int cBreaks;                // number of total breaks
+
+        public LsLInfo* plslinfoArray;          // array of LSLINFO structs, each per each break
+
+        public IntPtr* plinepenaltyArray;      // array of unsafe handle to TSLINEPENALITYINFO struct, each per each break
+
+        public IntPtr* pplolineArray;          // array of unsafe handle to Loline struct, each per each break
     }
 
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct LsNeighborInfo
     {
-        public uint                         fNeighborIsPresent;
-        public uint                         fNeighborIsText;
-        public Plsrun                       plsrun;
+        public uint fNeighborIsPresent;
+        public uint fNeighborIsText;
+        public Plsrun plsrun;
         [MarshalAs(UnmanagedType.U2)]
-        public char                         wch;
-        public uint                         fGlyphBased;
-        public ushort                       chprop;
-        public ushort                       gindex;
-        public uint                         gprop;
+        public char wch;
+        public uint fGlyphBased;
+        public ushort chprop;
+        public ushort gindex;
+        public uint gprop;
     }
 
 
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe struct LsGlyphRunInfo
     {
-        public Plsrun                       plsrun;
-        
-        public char*                        pwch;           // array of character codes
-        
-        public ushort*                      rggmap;         // wchar->glyph mapping
-        
-        public ushort*                       rgchprop;       // array of char properties as returned by GetGlyphs
-        public int                          cwch;           // number of characters
-        public int                          duChangeRight;  // nominal-to-ideal changes on the right side of the run
-        
-        public ushort*                      rggindex;       // glyph indices
-        
-        public uint*                        rggprop;        // array of glyph properties as returned by GetGlyphs
-        
-        public int*                         rgduWidth;      // array of glyph widths as returned by GetGlypPositions
-        
-        public GlyphOffset*                 rggoffset;      // array of glyph offset as returned by GetGlypPositions
-        public int                          cgindex;        // number of glyphs
+        public Plsrun plsrun;
+
+        public char* pwch;           // array of character codes
+
+        public ushort* rggmap;         // wchar->glyph mapping
+
+        public ushort* rgchprop;       // array of char properties as returned by GetGlyphs
+        public int cwch;           // number of characters
+        public int duChangeRight;  // nominal-to-ideal changes on the right side of the run
+
+        public ushort* rggindex;       // glyph indices
+
+        public uint* rggprop;        // array of glyph properties as returned by GetGlyphs
+
+        public int* rgduWidth;      // array of glyph widths as returned by GetGlypPositions
+
+        public GlyphOffset* rggoffset;      // array of glyph offset as returned by GetGlypPositions
+        public int cgindex;        // number of glyphs
     }
 
 
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe struct LsCharRunInfo
     {
-        public Plsrun   plsrun;
-        
-        public char*    pwch;                   // array of character codes
-        
-        public int*     rgduNominalWidth;       // array of nominal widths
-        
-        public int*     rgduChangeLeft;         // array of nominal-to-ideal changes on the left side
-        
-        public int*     rgduChangeRight;        // array of nominal-to-ideal changes on the right side
-        public int      cwch;                   // number of characters
+        public Plsrun plsrun;
+
+        public char* pwch;                   // array of character codes
+
+        public int* rgduNominalWidth;       // array of nominal widths
+
+        public int* rgduChangeLeft;         // array of nominal-to-ideal changes on the left side
+
+        public int* rgduChangeRight;        // array of nominal-to-ideal changes on the right side
+        public int cwch;                   // number of characters
     }
 
 
@@ -1277,9 +1277,9 @@ namespace MS.Internal.TextFormatting
     [StructLayout(LayoutKind.Sequential)]
     internal struct InlineInit
     {
-        public uint             dwVersion;
-        public InlineFormat     pfnFormat;
-        public InlineDraw       pfnDraw;
+        public uint dwVersion;
+        public InlineFormat pfnFormat;
+        public InlineDraw pfnDraw;
     }
 
 
@@ -1290,7 +1290,7 @@ namespace MS.Internal.TextFormatting
     {
         public const double DefaultRealToIdeal = 28800.0 / 96;
         public const double DefaultIdealToReal = 1 / DefaultRealToIdeal;
-        public const int    IdealInfiniteWidth = 0x3FFFFFFE;
+        public const int IdealInfiniteWidth = 0x3FFFFFFE;
         public const double RealInfiniteWidth = IdealInfiniteWidth * DefaultIdealToReal;
 
         // A reasonable maximum interword spacing for normal text is half an em
@@ -1340,14 +1340,14 @@ namespace MS.Internal.TextFormatting
         public const int MinCchToCacheBeforeAndAfter = 16;
     }
 
-    
+
     /// <summary>
     /// Helper functions to convert to and from LS enum values
     /// </summary>
     internal sealed class Convert
     {
         // Helper class not instantiable
-        private Convert() {}
+        private Convert() { }
 
         /// <summary>
         /// From LsTFlow to FlowDirection
@@ -1376,7 +1376,7 @@ namespace MS.Internal.TextFormatting
             return FlowDirection.LeftToRight;
         }
 
-        
+
         /// <summary>
         /// From TabAlignment to LsKTab
         /// </summary>
@@ -1397,7 +1397,7 @@ namespace MS.Internal.TextFormatting
         }
     }
 
-    
+
     //
     //  Line Services exported functions
     //
@@ -1405,155 +1405,155 @@ namespace MS.Internal.TextFormatting
 
     internal static class UnsafeNativeMethods
     {
-        [DllImport(DllImport.PresentationNative, EntryPoint="LoCreateContext")]
+        [DllImport(DllImport.PresentationNative, EntryPoint = "LoCreateContext")]
         internal static extern LsErr LoCreateContext(
-            ref LsContextInfo               contextInfo,      // const
-            ref LscbkRedefined              lscbkRedef,
-            out IntPtr                      ploc
+            ref LsContextInfo contextInfo,      // const
+            ref LscbkRedefined lscbkRedef,
+            out IntPtr ploc
             );
 
-        [DllImport(DllImport.PresentationNative, EntryPoint="LoDestroyContext")]
+        [DllImport(DllImport.PresentationNative, EntryPoint = "LoDestroyContext")]
         internal static extern LsErr LoDestroyContext(
-            IntPtr                  ploc
+            IntPtr ploc
             );
 
-        [DllImport(DllImport.PresentationNative, EntryPoint="LoCreateLine")]
+        [DllImport(DllImport.PresentationNative, EntryPoint = "LoCreateLine")]
         internal static extern LsErr LoCreateLine(
-            IntPtr                  ploc,
-            int                     cp,
-            int                     ccpLim,
-            int                     durColumn,
-            uint                    dwLineFlags,
-            IntPtr                  pInputBreakRec,
-            out LsLInfo             plslinfo,
-            out IntPtr              pploline,
-            out int                 maxDepth,
-            out LsLineWidths        lineWidths
+            IntPtr ploc,
+            int cp,
+            int ccpLim,
+            int durColumn,
+            uint dwLineFlags,
+            IntPtr pInputBreakRec,
+            out LsLInfo plslinfo,
+            out IntPtr pploline,
+            out int maxDepth,
+            out LsLineWidths lineWidths
             );
 
-        [DllImport(DllImport.PresentationNative, EntryPoint="LoDisposeLine")]
+        [DllImport(DllImport.PresentationNative, EntryPoint = "LoDisposeLine")]
         internal static extern LsErr LoDisposeLine(
-            IntPtr                  ploline,
+            IntPtr ploline,
             [MarshalAs(UnmanagedType.Bool)]
             bool                    finalizing
             );
 
-        [DllImport(DllImport.PresentationNative, EntryPoint="LoAcquireBreakRecord")]
+        [DllImport(DllImport.PresentationNative, EntryPoint = "LoAcquireBreakRecord")]
         internal static extern LsErr LoAcquireBreakRecord(
-            IntPtr                  ploline,
-            out IntPtr              pbreakrec
+            IntPtr ploline,
+            out IntPtr pbreakrec
             );
 
-        [DllImport(DllImport.PresentationNative, EntryPoint="LoDisposeBreakRecord")]
+        [DllImport(DllImport.PresentationNative, EntryPoint = "LoDisposeBreakRecord")]
         internal static extern LsErr LoDisposeBreakRecord(
-            IntPtr                  pBreakRec,
+            IntPtr pBreakRec,
             [MarshalAs(UnmanagedType.Bool)]
             bool                    finalizing
             );
 
-        [DllImport(DllImport.PresentationNative, EntryPoint="LoCloneBreakRecord")]
+        [DllImport(DllImport.PresentationNative, EntryPoint = "LoCloneBreakRecord")]
         internal static extern LsErr LoCloneBreakRecord(
-            IntPtr                  pBreakRec,
-            out IntPtr              pBreakRecClone
+            IntPtr pBreakRec,
+            out IntPtr pBreakRecClone
             );
 
         [DllImport(DllImport.PresentationNative, EntryPoint = "LoRelievePenaltyResource")]
         internal static extern LsErr LoRelievePenaltyResource(
-            IntPtr                  ploline
+            IntPtr ploline
             );
 
-        [DllImport(DllImport.PresentationNative, EntryPoint="LoSetBreaking")]
+        [DllImport(DllImport.PresentationNative, EntryPoint = "LoSetBreaking")]
         internal static extern LsErr LoSetBreaking(
-            IntPtr                  ploc,
-            int                     strategy
+            IntPtr ploc,
+            int strategy
             );
 
-        [DllImport(DllImport.PresentationNative, EntryPoint="LoSetDoc")]
+        [DllImport(DllImport.PresentationNative, EntryPoint = "LoSetDoc")]
         internal static extern LsErr LoSetDoc(
-            IntPtr                  ploc,
-            int                     isDisplay,
-            int                     isReferencePresentationEqual,
-            ref LsDevRes            deviceInfo
+            IntPtr ploc,
+            int isDisplay,
+            int isReferencePresentationEqual,
+            ref LsDevRes deviceInfo
             );
 
-        [DllImport(DllImport.PresentationNative, EntryPoint="LoSetTabs")]
+        [DllImport(DllImport.PresentationNative, EntryPoint = "LoSetTabs")]
         internal static unsafe extern LsErr LoSetTabs(
-            IntPtr                  ploc,
-            int                     durIncrementalTab,
-            int                     tabCount,
-            LsTbd*                  pTabs
+            IntPtr ploc,
+            int durIncrementalTab,
+            int tabCount,
+            LsTbd* pTabs
             );
 
-        [DllImport(DllImport.PresentationNative, EntryPoint="LoDisplayLine")]
+        [DllImport(DllImport.PresentationNative, EntryPoint = "LoDisplayLine")]
         internal static extern LsErr LoDisplayLine(
-            IntPtr                  ploline,
-            ref LSPOINT             pt,
-            uint                    displayMode,
-            ref LSRECT              clipRect
+            IntPtr ploline,
+            ref LSPOINT pt,
+            uint displayMode,
+            ref LSRECT clipRect
             );
 
-        [DllImport(DllImport.PresentationNative, EntryPoint="LoEnumLine")]
+        [DllImport(DllImport.PresentationNative, EntryPoint = "LoEnumLine")]
         internal static extern LsErr LoEnumLine(
-            IntPtr                  ploline,
-            bool                    reverseOder,
-            bool                    fGeometryneeded,
-            ref LSPOINT             pt
+            IntPtr ploline,
+            bool reverseOder,
+            bool fGeometryneeded,
+            ref LSPOINT pt
             );
 
-        [DllImport(DllImport.PresentationNative, EntryPoint="LoQueryLineCpPpoint")]
+        [DllImport(DllImport.PresentationNative, EntryPoint = "LoQueryLineCpPpoint")]
         internal static extern LsErr LoQueryLineCpPpoint(
-            IntPtr                  ploline,
-            int                     lscpQuery,
-            int                     depthQueryMax,
-            IntPtr                  pSubLineInfo,   // passing raw pinned pointer for out array
-            out int                 actualDepthQuery,
-            out LsTextCell          lsTextCell
+            IntPtr ploline,
+            int lscpQuery,
+            int depthQueryMax,
+            IntPtr pSubLineInfo,   // passing raw pinned pointer for out array
+            out int actualDepthQuery,
+            out LsTextCell lsTextCell
             );
 
-        [DllImport(DllImport.PresentationNative, EntryPoint="LoQueryLinePointPcp")]
+        [DllImport(DllImport.PresentationNative, EntryPoint = "LoQueryLinePointPcp")]
         internal static extern LsErr LoQueryLinePointPcp(
-            IntPtr                  ploline,
-            ref LSPOINT             ptQuery,        //  use POINT as POINTUV
-            int                     depthQueryMax,
-            IntPtr                  pSubLineInfo,   // passing raw pinned pointer for out array
-            out int                 actualDepthQuery,
-            out LsTextCell          lsTextCell
+            IntPtr ploline,
+            ref LSPOINT ptQuery,        //  use POINT as POINTUV
+            int depthQueryMax,
+            IntPtr pSubLineInfo,   // passing raw pinned pointer for out array
+            out int actualDepthQuery,
+            out LsTextCell lsTextCell
             );
 
-        [DllImport(DllImport.PresentationNative, EntryPoint="LoCreateBreaks")]
+        [DllImport(DllImport.PresentationNative, EntryPoint = "LoCreateBreaks")]
         internal static extern LsErr LoCreateBreaks(
-            IntPtr                  ploc,               // Line Services context
-            int                     cpFirst,
-            IntPtr                  previousBreakRecord,
-            IntPtr                  ploparabreak,
-            IntPtr                  ptslinevariantRestriction,
-            ref LsBreaks            lsbreaks,
-            out int                 bestFitIndex            
+            IntPtr ploc,               // Line Services context
+            int cpFirst,
+            IntPtr previousBreakRecord,
+            IntPtr ploparabreak,
+            IntPtr ptslinevariantRestriction,
+            ref LsBreaks lsbreaks,
+            out int bestFitIndex
             );
 
-        [DllImport(DllImport.PresentationNative, EntryPoint="LoCreateParaBreakingSession")]
+        [DllImport(DllImport.PresentationNative, EntryPoint = "LoCreateParaBreakingSession")]
         internal static extern LsErr LoCreateParaBreakingSession(
-            IntPtr                  ploc,               // Line Services context
-            int                     cpParagraphFirst,
-            int                     maxWidth,
-            IntPtr                  previousParaBreakRecord,
-            ref IntPtr              pploparabreak,
+            IntPtr ploc,               // Line Services context
+            int cpParagraphFirst,
+            int maxWidth,
+            IntPtr previousParaBreakRecord,
+            ref IntPtr pploparabreak,
             [MarshalAs(UnmanagedType.Bool)]
             ref bool                fParagraphJustified
             );
 
-        [DllImport(DllImport.PresentationNative, EntryPoint="LoDisposeParaBreakingSession")]
+        [DllImport(DllImport.PresentationNative, EntryPoint = "LoDisposeParaBreakingSession")]
         internal static extern LsErr LoDisposeParaBreakingSession(
-            IntPtr                  ploparabreak,
+            IntPtr ploparabreak,
             [MarshalAs(UnmanagedType.Bool)]
             bool                    finalizing
             );
 
-        [DllImport(DllImport.PresentationNative, EntryPoint="LocbkGetObjectHandlerInfo")]
+        [DllImport(DllImport.PresentationNative, EntryPoint = "LocbkGetObjectHandlerInfo")]
         internal unsafe static extern LsErr LocbkGetObjectHandlerInfo(
-            IntPtr                  ploc,               // Line Services context
-            uint                    objectId,           // installed object id
-            void*                   objectInfo          // object handler info
+            IntPtr ploc,               // Line Services context
+            uint objectId,           // installed object id
+            void* objectInfo          // object handler info
             );
 
         internal static void LoGetEscString(
@@ -1569,19 +1569,19 @@ namespace MS.Internal.TextFormatting
 
         [DllImport(DllImport.PresentationNative, EntryPoint = "LoAcquirePenaltyModule")]
         internal static extern LsErr LoAcquirePenaltyModule(
-            IntPtr                  ploc,       // Line Services context
-            out IntPtr              penaltyModuleHandle
+            IntPtr ploc,       // Line Services context
+            out IntPtr penaltyModuleHandle
             );
 
         [DllImport(DllImport.PresentationNative, EntryPoint = "LoDisposePenaltyModule")]
         internal static extern LsErr LoDisposePenaltyModule(
-            IntPtr                  penaltyModuleHandle
+            IntPtr penaltyModuleHandle
             );
 
         [DllImport(DllImport.PresentationNative, EntryPoint = "LoGetPenaltyModuleInternalHandle")]
         internal static extern LsErr LoGetPenaltyModuleInternalHandle(
-            IntPtr                  penaltyModuleHandle,
-            out IntPtr              penaltyModuleInternalHandle
+            IntPtr penaltyModuleHandle,
+            out IntPtr penaltyModuleInternalHandle
             );
 
         /// <summary>
@@ -1609,13 +1609,13 @@ namespace MS.Internal.TextFormatting
         /// </summary>
         [DllImport(DllImport.PresentationNative, EntryPoint = "CreateTextAnalysisSource")]
         internal unsafe static extern int CreateTextAnalysisSource(char* text,
-                                                                   uint    length,
-                                                                   char*   culture,
-                                                                   void*   factory,
-                                                                   bool    isRightToLeft,
-                                                                   char*   numberCulture,
-                                                                   bool    ignoreUserOverride,
-                                                                   uint    numberSubstitutionMethod,
-                                                                   void**  ppTextAnalysisSource);
+                                                                   uint length,
+                                                                   char* culture,
+                                                                   void* factory,
+                                                                   bool isRightToLeft,
+                                                                   char* numberCulture,
+                                                                   bool ignoreUserOverride,
+                                                                   uint numberSubstitutionMethod,
+                                                                   void** ppTextAnalysisSource);
     }
 }

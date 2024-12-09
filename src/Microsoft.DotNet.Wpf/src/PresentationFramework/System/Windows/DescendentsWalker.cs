@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Collections;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using System.Windows.Controls.Primitives;
 
 namespace System.Windows
 {
@@ -91,7 +91,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    Debug.Assert( false, "Tree walk priority should be Visual first or Logical first - but this instance of DescendentsWalker has an invalid priority setting that's neither of the two." );
+                    Debug.Assert(false, "Tree walk priority should be Visual first or Logical first - but this instance of DescendentsWalker has an invalid priority setting that's neither of the two.");
                 }
             }
             else if (d is FrameworkContentElement fce)
@@ -100,7 +100,7 @@ namespace System.Windows
                 // Walk logical children
                 if (fce.HasLogicalChildren)
                 {
-                    WalkLogicalChildren( null, fce, fce.LogicalChildren );
+                    WalkLogicalChildren(null, fce, fce.LogicalChildren);
                 }
             }
             else
@@ -124,14 +124,14 @@ namespace System.Windows
         ///     Given a object of type Visual, call VisitNode on each of its
         /// Visual children.
         /// </summary>
-        private void WalkVisualChildren( Visual v )
+        private void WalkVisualChildren(Visual v)
         {
             v.IsVisualChildrenIterationInProgress = true;
 
             try
             {
                 int count = v.InternalVisual2DOr3DChildrenCount;
-                for(int i = 0; i < count; i++)
+                for (int i = 0; i < count; i++)
                 {
                     DependencyObject childVisual = v.InternalGet2DOr3DVisualChild(i);
                     if (childVisual != null)
@@ -139,7 +139,7 @@ namespace System.Windows
                         bool visitedViaVisualTree = true;
                         VisitNode(childVisual, visitedViaVisualTree);
                     }
-                }             
+                }
             }
             finally
             {
@@ -151,14 +151,14 @@ namespace System.Windows
         ///     Given a object of type Visual3D, call VisitNode on each of its
         ///     children.
         /// </summary>
-        private void WalkVisualChildren( Visual3D v )
+        private void WalkVisualChildren(Visual3D v)
         {
             v.IsVisualChildrenIterationInProgress = true;
 
             try
             {
                 int count = v.InternalVisual2DOr3DChildrenCount;
-                for(int i = 0; i < count; i++)
+                for (int i = 0; i < count; i++)
                 {
                     DependencyObject childVisual = v.InternalGet2DOr3DVisualChild(i);
                     if (childVisual != null)
@@ -166,7 +166,7 @@ namespace System.Windows
                         bool visitedViaVisualTree = true;
                         VisitNode(childVisual, visitedViaVisualTree);
                     }
-                }             
+                }
             }
             finally
             {
@@ -178,10 +178,10 @@ namespace System.Windows
         ///     Given an enumerator for Logical children, call VisitNode on each
         /// of the nodes in the enumeration.
         /// </summary>
-        private void WalkLogicalChildren( 
-            FrameworkElement        feParent, 
-            FrameworkContentElement fceParent, 
-            IEnumerator             logicalChildren )
+        private void WalkLogicalChildren(
+            FrameworkElement feParent,
+            FrameworkContentElement fceParent,
+            IEnumerator logicalChildren)
         {
             if (feParent != null)
                 feParent.IsLogicalChildrenIterationInProgress = true;
@@ -211,7 +211,7 @@ namespace System.Windows
                     fceParent.IsLogicalChildrenIterationInProgress = false;
             }
         }
-            
+
         /// <summary>
         ///     FrameworkElement objects have both a visual and a logical tree.
         /// This variant walks the visual children first
@@ -222,9 +222,9 @@ namespace System.Windows
         /// to be smarter than the generic logical children walk.
         /// </remarks>
         private void WalkFrameworkElementVisualThenLogicalChildren(
-            FrameworkElement feParent, bool hasLogicalChildren )
+            FrameworkElement feParent, bool hasLogicalChildren)
         {
-            WalkVisualChildren( feParent );
+            WalkVisualChildren(feParent);
 
             //
             // If a popup is attached to the framework element visit each popup node.
@@ -238,7 +238,7 @@ namespace System.Windows
                     bool visitedViaVisualTree = false;
                     VisitNode(p, visitedViaVisualTree);
                 }
-            }     
+            }
 
             feParent.IsLogicalChildrenIterationInProgress = true;
 
@@ -299,7 +299,7 @@ namespace System.Windows
         {
             if (hasLogicalChildren)
             {
-                WalkLogicalChildren( feParent, null, feParent.LogicalChildren );
+                WalkLogicalChildren(feParent, null, feParent.LogicalChildren);
             }
 
             feParent.IsVisualChildrenIterationInProgress = true;
@@ -308,8 +308,8 @@ namespace System.Windows
             {
                 // Optimized variant of WalkVisualChildren
                 int count = feParent.InternalVisualChildrenCount;
-                
-                for(int i = 0; i < count; i++)
+
+                for (int i = 0; i < count; i++)
                 {
                     Visual child = feParent.InternalGetVisualChild(i);
                     if (child != null && child is FrameworkElement fe)
@@ -343,7 +343,7 @@ namespace System.Windows
                     VisitNode(p, visitedViaVisualTree);
                 }
             }
-            
+
         }
 
         private void VisitNode(FrameworkElement fe, bool visitedViaVisualTree)
@@ -355,7 +355,7 @@ namespace System.Windows
                 // this node will not be visited another time because
                 // any node can be reached at most two times, once
                 // via its visual parent and once via its logical parent
-                
+
                 int index = _nodes.IndexOf(fe);
 
                 // If index is not -1, then fe was in the list, remove it
@@ -387,7 +387,7 @@ namespace System.Windows
                 throw new InvalidOperationException(SR.LogicalTreeLoop);
             }
         }
-            
+
         private void VisitNode(DependencyObject d, bool visitedViaVisualTree)
         {
             if (_recursionDepth <= ContextLayoutManager.s_LayoutRecursionLimit)
@@ -442,6 +442,6 @@ namespace System.Windows
     ///     Callback for each visited node
     /// </summary>
     internal delegate bool VisitedCallback<T>(DependencyObject d, T data, bool visitedViaVisualTree);
-    
+
 }
 

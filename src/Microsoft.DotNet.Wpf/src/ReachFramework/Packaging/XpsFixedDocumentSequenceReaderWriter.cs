@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,12 +15,11 @@
 
 
 --*/
-using System.IO;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.IO.Packaging;
-using System.Xml;
 using System.Printing;
-
+using System.Xml;
 using MS.Internal.IO.Packaging.Extensions;
 using PackUriHelper = System.IO.Packaging.PackUriHelper;
 
@@ -49,7 +48,7 @@ namespace System.Windows.Xps.Packaging
         /// </returns>
         IXpsFixedDocumentReader
         GetFixedDocument(
-            Uri         documentSource
+            Uri documentSource
             );
 
         #endregion Public methods
@@ -77,12 +76,13 @@ namespace System.Windows.Xps.Packaging
         /// <value>
         /// Value is a Collection containing IXpsFixedDocumentReader interfaces.
         /// </value>
-        ReadOnlyCollection<IXpsFixedDocumentReader>  FixedDocuments { get; }
+        ReadOnlyCollection<IXpsFixedDocumentReader> FixedDocuments { get; }
         /// <summary>
         /// thumbnail image associated with this sequence
         /// </summary>
         XpsThumbnail
-        Thumbnail{ get; }
+        Thumbnail
+        { get; }
 
         #endregion Public properties
     }
@@ -120,7 +120,7 @@ namespace System.Windows.Xps.Packaging
         /// </summary>
         XpsThumbnail
         AddThumbnail(
-            XpsImageType  imageType 
+            XpsImageType imageType
             );
 
         /// <summary>
@@ -190,9 +190,9 @@ namespace System.Windows.Xps.Packaging
         /// <exception cref="ArgumentNullException">part is null.</exception>
         internal
         XpsFixedDocumentSequenceReaderWriter(
-            XpsManager    xpsManager,
-            INode           parent,
-            PackagePart     part
+            XpsManager xpsManager,
+            INode parent,
+            PackagePart part
             )
             : base(xpsManager)
         {
@@ -226,7 +226,7 @@ namespace System.Windows.Xps.Packaging
         {
             get
             {
-                if( _printTicket == null )
+                if (_printTicket == null)
                 {
                     _printTicket = CurrentXpsManager.EnsurePrintTicket(Uri);
                 }
@@ -234,7 +234,7 @@ namespace System.Windows.Xps.Packaging
             }
             set
             {
-                if(value != null)
+                if (value != null)
                 {
                     if (_isPrintTicketCommitted)
                     {
@@ -306,9 +306,9 @@ namespace System.Windows.Xps.Packaging
             // Create the part and coresponding writer
             //
             PackagePart metroPart = CurrentXpsManager.GenerateUniquePart(XpsS0Markup.FixedDocumentContentType);
-            XpsFixedDocumentReaderWriter fixedDocument = new XpsFixedDocumentReaderWriter(CurrentXpsManager, this, metroPart,_documentsWritten + 1);
+            XpsFixedDocumentReaderWriter fixedDocument = new XpsFixedDocumentReaderWriter(CurrentXpsManager, this, metroPart, _documentsWritten + 1);
 
-             
+
             //Here we used to add the fixed document to _documentCache, but _documentCache is never accessed if this object was created as an IXpsFixedDocumentSequenceWriter.
             //So instead keep a separate documentsWritten count and forget about the cache when using this method.
             _documentsWritten++;
@@ -334,11 +334,11 @@ namespace System.Windows.Xps.Packaging
         public
         XpsThumbnail
         AddThumbnail(
-            XpsImageType  imageType 
+            XpsImageType imageType
             )
         {
-            _thumbnail = CurrentXpsManager.AddThumbnail( imageType, this, Thumbnail );
-            _metroPart.CreateRelationship( _thumbnail.Uri,
+            _thumbnail = CurrentXpsManager.AddThumbnail(imageType, this, Thumbnail);
+            _metroPart.CreateRelationship(_thumbnail.Uri,
                                              TargetMode.Internal,
                                              XpsS0Markup.ThumbnailRelationshipName
                                            );
@@ -359,19 +359,20 @@ namespace System.Windows.Xps.Packaging
         public
         IXpsFixedDocumentReader
         GetFixedDocument(
-            Uri         documentUri
+            Uri documentUri
             )
         {
             UpdateDocumentCache();
-            IXpsFixedDocumentReader fixedDocument  = null;
+            IXpsFixedDocumentReader fixedDocument = null;
             //
             // Check the cache for the requested document
             //
             foreach (IXpsFixedDocumentReader reader in _documentCache)
             {
-                if( documentUri == reader.Uri )
+                if (documentUri == reader.Uri)
                 {
-                    fixedDocument = reader;                }
+                    fixedDocument = reader;
+                }
             }
 
             return fixedDocument;
@@ -409,18 +410,18 @@ namespace System.Windows.Xps.Packaging
                 _partEditor.Close();
 
 
-                _partEditor     = null;
-                _metroPart      = null;
+                _partEditor = null;
+                _metroPart = null;
 
-                _documentCache  = null;
-                
+                _documentCache = null;
+
                 _documentsWritten = 0;
 
-                _thumbnail      = null;
+                _thumbnail = null;
 
-                _parentNode     = null;
+                _parentNode = null;
                 _hasParsedDocuments = false;
-           }
+            }
         }
 
 
@@ -434,9 +435,9 @@ namespace System.Windows.Xps.Packaging
         internal
         void
         CollectSelfAndDependents(
-            Dictionary<Uri,Uri>                     dependentList,
-            List<PackageRelationshipSelector>       selectorList,
-            XpsDigSigPartAlteringRestrictions       restrictions
+            Dictionary<Uri, Uri> dependentList,
+            List<PackageRelationshipSelector> selectorList,
+            XpsDigSigPartAlteringRestrictions restrictions
             )
         {
             //
@@ -447,13 +448,13 @@ namespace System.Windows.Xps.Packaging
             //
             //  Add my dependents
             //
-            CollectDependents( dependentList, selectorList,  restrictions);
-}
+            CollectDependents(dependentList, selectorList, restrictions);
+        }
 
         internal
         void
         CollectXmlPartsAndDepenedents(
-            List<PackagePart>                       xmlPartList
+            List<PackagePart> xmlPartList
             )
         {
             //
@@ -475,7 +476,7 @@ namespace System.Windows.Xps.Packaging
         private
         void
         AddDocumentToSequence(
-            Uri         partUri
+            Uri partUri
             )
         {
             _partEditor.PrepareXmlWriter(XpsS0Markup.FixedDocumentSequence, XpsS0Markup.DocumentSequenceNamespace);
@@ -502,9 +503,9 @@ namespace System.Windows.Xps.Packaging
             //
             // Flush the PrintTicket if needed
             //
-            if (!_isPrintTicketCommitted )
+            if (!_isPrintTicketCommitted)
             {
-                if(null != _printTicket)
+                if (null != _printTicket)
                 {
                     CurrentXpsManager.WritePrintTicket(this, _metroPart, _printTicket);
                 }
@@ -524,7 +525,7 @@ namespace System.Windows.Xps.Packaging
         void
         UpdateDocumentCache()
         {
-           if( !_hasParsedDocuments )
+            if (!_hasParsedDocuments)
             {
                 ParseDocuments();
                 _hasParsedDocuments = true;
@@ -563,7 +564,7 @@ namespace System.Windows.Xps.Packaging
                     }
                 }
             }
-             
+
         }
 
         /// <summary>
@@ -572,17 +573,17 @@ namespace System.Windows.Xps.Packaging
         private
         void
         CollectDependents(
-            Dictionary<Uri,Uri>                     dependents,
-            List<PackageRelationshipSelector>       selectorList,
-            XpsDigSigPartAlteringRestrictions       restrictions
+            Dictionary<Uri, Uri> dependents,
+            List<PackageRelationshipSelector> selectorList,
+            XpsDigSigPartAlteringRestrictions restrictions
             )
         {
             UpdateDocumentCache();
             // Add all documents
-            foreach( IXpsFixedDocumentReader reader in _documentCache)
+            foreach (IXpsFixedDocumentReader reader in _documentCache)
             {
                 (reader as XpsFixedDocumentReaderWriter).
-                    CollectSelfAndDependents( 
+                    CollectSelfAndDependents(
                         dependents,
                         selectorList,
                         restrictions);
@@ -593,9 +594,9 @@ namespace System.Windows.Xps.Packaging
         void
         EnsureThumbnail()
         {
-            if( _thumbnail == null )
+            if (_thumbnail == null)
             {
-                _thumbnail = CurrentXpsManager.EnsureThumbnail( this, _metroPart );
+                _thumbnail = CurrentXpsManager.EnsureThumbnail(this, _metroPart);
             }
         }
 
@@ -609,7 +610,7 @@ namespace System.Windows.Xps.Packaging
             PackagePart documentPart = CurrentXpsManager.GetPart(documentUri);
             if (documentPart == null)
             {
-                 throw new XpsPackagingException(SR.ReachPackaging_PartNotFound);
+                throw new XpsPackagingException(SR.ReachPackaging_PartNotFound);
             }
 
             //
@@ -623,12 +624,12 @@ namespace System.Windows.Xps.Packaging
             //
             // Create the reader/writer for the part
             //
-            IXpsFixedDocumentReader  fixedDocument = new XpsFixedDocumentReaderWriter(CurrentXpsManager, null, documentPart, _documentCache.Count+1);
+            IXpsFixedDocumentReader fixedDocument = new XpsFixedDocumentReaderWriter(CurrentXpsManager, null, documentPart, _documentCache.Count + 1);
 
             //
             // Cache the new reader/writer for later
             //
-            _documentCache.Add( fixedDocument );
+            _documentCache.Add(fixedDocument);
             return fixedDocument;
         }
 
@@ -642,7 +643,7 @@ namespace System.Windows.Xps.Packaging
 
         private XmlPartEditor _partEditor;
 
-        private List<IXpsFixedDocumentReader>_documentCache;
+        private List<IXpsFixedDocumentReader> _documentCache;
 
         //
         // This variable is used to keep a count of pages written via AddFixedDocument
@@ -703,11 +704,11 @@ namespace System.Windows.Xps.Packaging
             //
             // Create the relationship between the package and the tumbnail
             //
-            if( _thumbnail != null )
+            if (_thumbnail != null)
             {
                 _thumbnail = null;
             }
-}
+        }
 
         void
         INode.CommitInternal(

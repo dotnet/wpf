@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,7 +21,7 @@ namespace System.Windows.Media.Media3D
         //------------------------------------------------------
 
         ///<summary />
-        public OrthographicCamera() {}
+        public OrthographicCamera() { }
 
         ///<summary />
         public OrthographicCamera(Point3D position, Vector3D lookDirection, Vector3D upDirection, double width)
@@ -55,16 +55,16 @@ namespace System.Windows.Media.Media3D
         internal Matrix3D GetProjectionMatrix(double aspectRatio, double zn, double zf)
         {
             double w = Width;
-            double h = w/aspectRatio;
+            double h = w / aspectRatio;
 
-            double m22 = 1/(zn-zf);
-            double m32 = zn*m22;
+            double m22 = 1 / (zn - zf);
+            double m32 = zn * m22;
 
             return new Matrix3D(
-                2/w,   0,    0,  0,
-                0,   2/h,    0,  0,
-                0,     0,  m22,  0,
-                0,     0,  m32,  1);
+                2 / w, 0, 0, 0,
+                0, 2 / h, 0, 0,
+                0, 0, m22, 0,
+                0, 0, m32, 1);
         }
 
         internal override Matrix3D GetProjectionMatrix(double aspectRatio)
@@ -86,14 +86,14 @@ namespace System.Windows.Media.Media3D
             //
             //  Compute rayParameters
             //
-            
+
             // Find the point on the projection plane in post-projective space where
             // the viewport maps to a 2x2 square from (-1,1)-(1,-1).
             Point np = M3DUtil.GetNormalizedPoint(p, viewSize);
 
             double aspectRatio = M3DUtil.GetAspectRatio(viewSize);
             double w = width;
-            double h = w/aspectRatio;
+            double h = w / aspectRatio;
 
             // Direction is always perpendicular to the viewing surface.
             Vector3D direction = new Vector3D(0, 0, -1);
@@ -113,7 +113,7 @@ namespace System.Windows.Media.Media3D
             // the scene bounds without changing what the ray intersects.
             // If the near plane is sufficiently far from the scene bounds
             // we make this adjustment below to increase precision.
-            
+
             Rect3D transformedBoundingBox =
                 M3DUtil.ComputeTransformedAxisAlignedBoundingBox(
                     ref boundingRect,
@@ -145,7 +145,7 @@ namespace System.Windows.Media.Media3D
             //          transformed scene bounds that determines the near
             //          plane distance.
 
-            double zn2 = - AddEpsilon(transformedBoundingBox.Z+transformedBoundingBox.SizeZ);
+            double zn2 = -AddEpsilon(transformedBoundingBox.Z + transformedBoundingBox.SizeZ);
 
             if (zn2 > zn)
             {
@@ -173,7 +173,7 @@ namespace System.Windows.Media.Media3D
             // width/height.  In camera space we are looking down the negative Z axis
             // so we just set Z to be -zn which puts us on the projection plane
             // (Windows OS #1005064).
-            Point3D origin = new Point3D(np.X*(w/2), np.Y*(h/2), -zn);
+            Point3D origin = new Point3D(np.X * (w / 2), np.Y * (h / 2), -zn);
 
             invView.MultiplyPoint(ref origin);
             invView.MultiplyVector(ref direction);
@@ -193,18 +193,18 @@ namespace System.Windows.Media.Media3D
             // viewport coordinates, with an additional 2D translation
             // to put the ray at the origin.
             Matrix3D viewportMatrix = new Matrix3D();
-            viewportMatrix.TranslatePrepend(new Vector3D(-p.X, viewSize.Height-p.Y, 0));
-            viewportMatrix.ScalePrepend(new Vector3D(viewSize.Width/2, -viewSize.Height/2, 1));
+            viewportMatrix.TranslatePrepend(new Vector3D(-p.X, viewSize.Height - p.Y, 0));
+            viewportMatrix.ScalePrepend(new Vector3D(viewSize.Width / 2, -viewSize.Height / 2, 1));
             viewportMatrix.TranslatePrepend(new Vector3D(1, 1, 0));
-            
+
             // First, world-to-camera, then camera's projection, then normalized clip space to viewport.
-            rayParameters.HitTestProjectionMatrix = 
+            rayParameters.HitTestProjectionMatrix =
                 viewMatrix *
                 projectionMatrix *
                 viewportMatrix;
-                
+
             return rayParameters;
-}
+        }
 
         #endregion Internal Methods
 
@@ -221,7 +221,7 @@ namespace System.Windows.Media.Media3D
             // sufficiently large to act as an epsilon.  If it's not, then
             // 0.1*Math.Abs(x) sufficiently large.
             //
-            return x + 0.1*Math.Abs(x) + 1.0;
+            return x + 0.1 * Math.Abs(x) + 1.0;
         }
 
         //------------------------------------------------------

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,11 +10,11 @@ namespace System.Windows.Media.Animation
     /// </summary>
     internal class IndependentlyAnimatedPropertyMetadata : UIPropertyMetadata
     {
-        internal IndependentlyAnimatedPropertyMetadata(object defaultValue) : base(defaultValue) {}
+        internal IndependentlyAnimatedPropertyMetadata(object defaultValue) : base(defaultValue) { }
 
-        internal IndependentlyAnimatedPropertyMetadata(object defaultValue, 
-            PropertyChangedCallback propertyChangedCallback, CoerceValueCallback coerceValueCallback) 
-            : base(defaultValue, propertyChangedCallback, coerceValueCallback) {}
+        internal IndependentlyAnimatedPropertyMetadata(object defaultValue,
+            PropertyChangedCallback propertyChangedCallback, CoerceValueCallback coerceValueCallback)
+            : base(defaultValue, propertyChangedCallback, coerceValueCallback) { }
 
         /// <summary>
         ///     Creates a new instance of this property metadata.  This method is used
@@ -23,8 +23,9 @@ namespace System.Windows.Media.Animation
         ///     Deriving classes must override this and return a new instance of 
         ///     themselves.
         /// </summary>
-        internal override PropertyMetadata CreateInstance() {
+        internal override PropertyMetadata CreateInstance()
+        {
             return new IndependentlyAnimatedPropertyMetadata(DefaultValue);
         }
-}
+    }
 }

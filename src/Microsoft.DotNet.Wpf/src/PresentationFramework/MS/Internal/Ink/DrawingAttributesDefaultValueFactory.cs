@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,7 +22,7 @@ namespace MS.Internal.Ink
         ///     Returns an "immutable" default value. Since we can't make the default value
         ///     read only we'll return a new one every time.
         /// </summary>
-        internal override object DefaultValue 
+        internal override object DefaultValue
         {
             get
             {
@@ -40,7 +40,7 @@ namespace MS.Internal.Ink
 
             // Add event handlers for tracking the changes on the default value instance.
             DrawingAttributesDefaultPromoter promoter = new DrawingAttributesDefaultPromoter((InkCanvas)owner);
-            
+
             defaultValue.AttributeChanged += new PropertyDataChangedEventHandler(promoter.OnDrawingAttributesChanged);
             defaultValue.PropertyDataChanged += new PropertyDataChangedEventHandler(promoter.OnDrawingAttributesChanged);
 

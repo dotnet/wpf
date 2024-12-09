@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,11 +15,10 @@ Abstract:
 
 --*/
 
-using System.Xml;
 using System.Collections.ObjectModel;
 using System.Globalization;
-
 using System.Printing;
+using System.Xml;
 
 #pragma warning disable 1634, 1691 // Allows suppression of certain PreSharp messages
 
@@ -28,7 +27,7 @@ namespace MS.Internal.Printing.Configuration
     /// <summary>
     /// Represents a page resolution option.
     /// </summary>
-    internal class ResolutionOption: PrintCapabilityOption
+    internal class ResolutionOption : PrintCapabilityOption
     {
         #region Constructors
 
@@ -134,8 +133,10 @@ namespace MS.Internal.Printing.Configuration
 
         internal static PrintCapabilityFeature NewFeatureCallback(InternalPrintCapabilities printCap)
         {
-            PageResolutionCapability cap = new PageResolutionCapability(printCap);
-            cap._resolutions = new Collection<ResolutionOption>();
+            PageResolutionCapability cap = new PageResolutionCapability(printCap)
+            {
+                _resolutions = new Collection<ResolutionOption>()
+            };
 
             return cap;
         }
@@ -200,16 +201,16 @@ namespace MS.Internal.Printing.Configuration
                         option._resolutionX = reader.GetCurrentPropertyIntValueWithException();
                     }
                     // We want to catch internal FormatException to skip recoverable XML content syntax error
-                    #pragma warning suppress 56502
-                    #if _DEBUG
+#pragma warning suppress 56502
+#if _DEBUG
                     catch (FormatException e)
-                    #else
+#else
                     catch (FormatException)
-                    #endif
+#endif
                     {
-                        #if _DEBUG
+#if _DEBUG
                         Trace.WriteLine("-Error- " + e.Message);
-                        #endif
+#endif
                     }
                 }
                 else if (reader.CurrentElementNameAttrValue == PrintSchemaTags.Keywords.PageResolutionKeys.ResolutionY)
@@ -219,16 +220,16 @@ namespace MS.Internal.Printing.Configuration
                         option._resolutionY = reader.GetCurrentPropertyIntValueWithException();
                     }
                     // We want to catch internal FormatException to skip recoverable XML content syntax error
-                    #pragma warning suppress 56502
-                    #if _DEBUG
+#pragma warning suppress 56502
+#if _DEBUG
                     catch (FormatException e)
-                    #else
+#else
                     catch (FormatException)
-                    #endif
+#endif
                     {
-                        #if _DEBUG
+#if _DEBUG
                         Trace.WriteLine("-Error- " + e.Message);
-                        #endif
+#endif
                     }
                 }
                 else if (reader.CurrentElementNameAttrValue == PrintSchemaTags.Keywords.PageResolutionKeys.QualitativeResolution)
@@ -247,12 +248,12 @@ namespace MS.Internal.Printing.Configuration
                 {
                     handled = false;
 
-                    #if _DEBUG
+#if _DEBUG
                     Trace.WriteLine("-Warning- skip unknown ScoredProperty '" +
                                     reader.CurrentElementNameAttrValue + "' at line " +
                                     reader._xmlReader.LineNumber + ", position " +
                                     reader._xmlReader.LinePosition);
-                    #endif
+#endif
                 }
             }
 

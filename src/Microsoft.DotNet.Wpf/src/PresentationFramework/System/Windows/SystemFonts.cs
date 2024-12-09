@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -233,7 +233,7 @@ namespace System.Windows
             {
                 if (_smallCaptionFontTextDecorations == null)
                 {
-                   _smallCaptionFontTextDecorations = new TextDecorationCollection();
+                    _smallCaptionFontTextDecorations = new TextDecorationCollection();
 
                     if (SystemParameters.NonClientMetrics.lfSmCaptionFont.lfUnderline != 0)
                     {
@@ -310,7 +310,7 @@ namespace System.Windows
             {
                 if (_menuFontTextDecorations == null)
                 {
-                   _menuFontTextDecorations = new TextDecorationCollection();
+                    _menuFontTextDecorations = new TextDecorationCollection();
 
                     if (SystemParameters.NonClientMetrics.lfMenuFont.lfUnderline != 0)
                     {
@@ -391,9 +391,9 @@ namespace System.Windows
 
                 if (_statusFontTextDecorations == null)
                 {
-                   _statusFontTextDecorations = new TextDecorationCollection();
+                    _statusFontTextDecorations = new TextDecorationCollection();
 
-                    if (SystemParameters.NonClientMetrics.lfStatusFont.lfUnderline!= 0)
+                    if (SystemParameters.NonClientMetrics.lfStatusFont.lfUnderline != 0)
                     {
                         CopyTextDecorationCollection(TextDecorations.Underline, _statusFontTextDecorations);
                     }
@@ -425,10 +425,10 @@ namespace System.Windows
             get
             {
                 // TODO : Find a better solution to this. Difference in default size of font in Fluent and other themes.
-                if(ThemeManager.IsFluentThemeEnabled 
+                if (ThemeManager.IsFluentThemeEnabled
                     || ThemeManager.IsFluentThemeDictionaryIncluded())
                 {
-                    return MessageFontSize * ThemeManager.DefaultFluentFontSizeFactor ;
+                    return MessageFontSize * ThemeManager.DefaultFluentFontSizeFactor;
                 }
 
                 return MessageFontSize;

@@ -1,19 +1,18 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal; // Invariant
-using MS.Internal.IO.Packaging;
-using System.Xml;
-using System.Windows.Markup; // TypeConvertContext, ParserContext
-using System.Windows.Controls; // Image
 using System.Globalization; // CultureInfo
-
-using System.Windows.Media; // ImageSource
-using System.Windows.Media.Imaging; // BitmapEncoder
 using System.IO; // MemoryStream
 using System.IO.Packaging; // Package
 using System.Threading; // Interlocked.Increment
+using System.Windows.Controls; // Image
+using System.Windows.Markup; // TypeConvertContext, ParserContext
+using System.Windows.Media; // ImageSource
+using System.Windows.Media.Imaging; // BitmapEncoder
+using System.Xml;
+using MS.Internal; // Invariant
+using MS.Internal.IO.Packaging;
 
 //
 // Description: Helper class for creating and accessing WPF Payloads in packages
@@ -60,18 +59,18 @@ namespace System.Windows.Documents
         private const string XamlContentType = "application/vnd.ms-wpf.xaml+xml";
 
         // Content types for various kinds of images
-        internal const string ImageBmpContentType  = "image/bmp";
-        private const string ImageGifContentType  = "image/gif";
+        internal const string ImageBmpContentType = "image/bmp";
+        private const string ImageGifContentType = "image/gif";
         private const string ImageJpegContentType = "image/jpeg";
         private const string ImageTiffContentType = "image/tiff";
-        private const string ImagePngContentType  = "image/png";
+        private const string ImagePngContentType = "image/png";
 
-        private const string ImageBmpFileExtension  = ".bmp";
-        private const string ImageGifFileExtension  = ".gif";
+        private const string ImageBmpFileExtension = ".bmp";
+        private const string ImageGifFileExtension = ".gif";
         private const string ImageJpegFileExtension = ".jpeg";
-        private const string ImageJpgFileExtension  = ".jpg";
+        private const string ImageJpgFileExtension = ".jpg";
         private const string ImageTiffFileExtension = ".tiff";
-        private const string ImagePngFileExtension  = ".png";
+        private const string ImagePngFileExtension = ".png";
 
         // Relationship uri for xaml payload entry part. The relationship is established
         // between the whole package and a part representing an entry point for xaml payload.
@@ -320,8 +319,10 @@ namespace System.Windows.Documents
                     PackageStore.AddPackage(packageUri, wpfPayload.Package); // Register the package
 
                     // Set this temporary uri as a base uri for xaml parser
-                    ParserContext parserContext = new ParserContext();
-                    parserContext.BaseUri = entryPartUri;
+                    ParserContext parserContext = new ParserContext
+                    {
+                        BaseUri = entryPartUri
+                    };
 
                     // Call xaml parser
                     xamlObject = XamlReader.Load(xamlEntryPart.GetSeekableStream(), parserContext, useRestrictiveXamlReader: true);
@@ -603,7 +604,7 @@ namespace System.Windows.Documents
                 case ImageJpegContentType:
                     imageFileExtension = ImageJpegFileExtension;
                     break;
-                case ImageTiffContentType :
+                case ImageTiffContentType:
                     imageFileExtension = ImageTiffFileExtension;
                     break;
                 case ImagePngContentType:
@@ -767,16 +768,16 @@ namespace System.Windows.Documents
 
             // Create the main xaml part
             PackagePart part = _package.CreatePart(entryPartUri, XamlContentType, CompressionOption.Normal);
-                // Compression is turned off in this mode.
-                //NotCompressed = -1,
-                // Compression is optimized for a resonable compromise between size and performance.
-                //Normal = 0,
-                // Compression is optimized for size.
-                //Maximum = 1,
-                // Compression is optimized for performance.
-                //Fast = 2 ,
-                // Compression is optimized for super performance.
-                //SuperFast = 3,
+            // Compression is turned off in this mode.
+            //NotCompressed = -1,
+            // Compression is optimized for a resonable compromise between size and performance.
+            //Normal = 0,
+            // Compression is optimized for size.
+            //Maximum = 1,
+            // Compression is optimized for performance.
+            //Fast = 2 ,
+            // Compression is optimized for super performance.
+            //SuperFast = 3,
 
             // Create the relationship referring to the entry part
             PackageRelationship entryRelationship = _package.CreateRelationship(entryPartUri, TargetMode.Internal, XamlRelationshipFromPackageToEntryPart);

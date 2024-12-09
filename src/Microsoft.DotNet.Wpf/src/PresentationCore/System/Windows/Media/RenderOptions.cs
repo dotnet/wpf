@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,8 +9,8 @@
 //      which will control rendering.
 //
 
-using MS.Win32.PresentationCore;
 using System.Windows.Interop;
+using MS.Win32.PresentationCore;
 
 namespace System.Windows.Media
 {
@@ -24,17 +24,17 @@ namespace System.Windows.Media
         //
         // EdgeMode
         //
-        
+
         /// <summary>
         /// EdgeModeProperty - Enum which descibes the manner in which we render edges of non-text primitives.
         /// </summary>
         public static readonly DependencyProperty EdgeModeProperty =
-            DependencyProperty.RegisterAttached("EdgeMode", 
-                                                typeof(EdgeMode), 
+            DependencyProperty.RegisterAttached("EdgeMode",
+                                                typeof(EdgeMode),
                                                 typeof(RenderOptions),
                                                 new UIPropertyMetadata(EdgeMode.Unspecified),
                                                 new ValidateValueCallback(System.Windows.Media.ValidateEnums.IsEdgeModeValid));
-        
+
         /// <summary>
         /// Reads the attached property EdgeMode from the given object.
         /// </summary>
@@ -62,12 +62,12 @@ namespace System.Windows.Media
         /// BitmapScalingModeProperty - Enum which describes the manner in which we scale the images.
         /// </summary>
         public static readonly DependencyProperty BitmapScalingModeProperty =
-            DependencyProperty.RegisterAttached("BitmapScalingMode", 
-                                                typeof(BitmapScalingMode), 
+            DependencyProperty.RegisterAttached("BitmapScalingMode",
+                                                typeof(BitmapScalingMode),
                                                 typeof(RenderOptions),
                                                 new UIPropertyMetadata(BitmapScalingMode.Unspecified),
                                                 new ValidateValueCallback(System.Windows.Media.ValidateEnums.IsBitmapScalingModeValid));
-        
+
         /// <summary>
         /// Reads the attached property BitmapScalingMode from the given object.
         /// </summary>
@@ -85,22 +85,22 @@ namespace System.Windows.Media
         {
             ArgumentNullException.ThrowIfNull(target);
             target.SetValue(BitmapScalingModeProperty, bitmapScalingMode);
-        }       
+        }
 
         //
         // ClearTypeHint
         // 
-   
+
         /// <summary>
         /// ClearTypeHint - Enum which describes the ability to re-enable ClearType rendering in intermediates.
         /// </summary>
         public static readonly DependencyProperty ClearTypeHintProperty =
-            DependencyProperty.RegisterAttached("ClearTypeHint", 
-                                                typeof(ClearTypeHint), 
+            DependencyProperty.RegisterAttached("ClearTypeHint",
+                                                typeof(ClearTypeHint),
                                                 typeof(RenderOptions),
                                                 new UIPropertyMetadata(ClearTypeHint.Auto),
                                                 new ValidateValueCallback(System.Windows.Media.ValidateEnums.IsClearTypeHintValid));
-        
+
         /// <summary>
         /// Reads the attached property ClearTypeHint from the given object.
         /// </summary>
@@ -118,7 +118,7 @@ namespace System.Windows.Media
         {
             ArgumentNullException.ThrowIfNull(target);
             target.SetValue(ClearTypeHintProperty, clearTypeHint);
-        } 
+        }
 
         //
         // CachingHint
@@ -129,12 +129,12 @@ namespace System.Windows.Media
         /// when possible.  This is currently supported on TileBrush.
         /// </summary>
         public static readonly DependencyProperty CachingHintProperty =
-            DependencyProperty.RegisterAttached("CachingHint", 
-                                                typeof(CachingHint), 
+            DependencyProperty.RegisterAttached("CachingHint",
+                                                typeof(CachingHint),
                                                 typeof(RenderOptions),
                                                 new UIPropertyMetadata(CachingHint.Unspecified),
                                                 new ValidateValueCallback(System.Windows.Media.ValidateEnums.IsCachingHintValid));
-        
+
         /// <summary>
         /// Reads the attached property CachingHint from the given object.
         /// </summary>
@@ -162,12 +162,12 @@ namespace System.Windows.Media
         /// CacheInvalidationThresholdMinimum - 
         /// </summary>
         public static readonly DependencyProperty CacheInvalidationThresholdMinimumProperty =
-            DependencyProperty.RegisterAttached("CacheInvalidationThresholdMinimum", 
-                                                typeof(double), 
+            DependencyProperty.RegisterAttached("CacheInvalidationThresholdMinimum",
+                                                typeof(double),
                                                 typeof(RenderOptions),
                                                 new UIPropertyMetadata(0.707),
                                                 /* ValidateValueCallback */ null);
-        
+
         /// <summary>
         /// Reads the attached property CacheInvalidationThresholdMinimum from the given object.
         /// </summary>
@@ -195,12 +195,12 @@ namespace System.Windows.Media
         /// CacheInvalidationThresholdMaximum - 
         /// </summary>
         public static readonly DependencyProperty CacheInvalidationThresholdMaximumProperty =
-            DependencyProperty.RegisterAttached("CacheInvalidationThresholdMaximum", 
-                                                typeof(double), 
+            DependencyProperty.RegisterAttached("CacheInvalidationThresholdMaximum",
+                                                typeof(double),
                                                 typeof(RenderOptions),
                                                 new UIPropertyMetadata(1.414),
                                                 /* ValidateValueCallback */ null);
-        
+
         /// <summary>
         /// Reads the attached property CacheInvalidationThresholdMaximum from the given object.
         /// </summary>
@@ -218,7 +218,7 @@ namespace System.Windows.Media
         {
             ArgumentNullException.ThrowIfNull(target);
             target.SetValue(CacheInvalidationThresholdMaximumProperty, cacheInvalidationThresholdMaximum);
-        }     
+        }
 
         /// <summary>
         /// Specifies the render mode preference for the process
@@ -243,7 +243,7 @@ namespace System.Windows.Media
                 {
                     throw new System.ComponentModel.InvalidEnumArgumentException("value", (int)value, typeof(RenderMode));
                 }
-                
+
                 UnsafeNativeMethods.MilCoreApi.RenderOptions_ForceSoftwareRenderingModeForProcess(
                     value == RenderMode.SoftwareOnly
                     );

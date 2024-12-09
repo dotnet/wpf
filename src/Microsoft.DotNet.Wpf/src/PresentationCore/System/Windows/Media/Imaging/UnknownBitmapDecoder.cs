@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -58,7 +58,7 @@ namespace System.Windows.Media.Imaging
             bool originalWritable,
             Stream uriStream,
             UnmanagedMemoryStream unmanagedMemoryStream,
-            SafeFileHandle safeFilehandle             
+            SafeFileHandle safeFilehandle
             ) : base(decoderHandle, decoder, baseUri, uri, stream, createOptions, cacheOption, insertInDecoderCache, originalWritable, uriStream, unmanagedMemoryStream, safeFilehandle)
         {
         }
@@ -77,8 +77,8 @@ namespace System.Windows.Media.Imaging
         /// Store a safe handle to take care of calling CoInitialize
         /// and CoUninitialize for us when the object is created/disposed.
         /// </summary>
-        private CoInitSafeHandle _safeHandle = new CoInitSafeHandle(); 
-}
+        private CoInitSafeHandle _safeHandle = new CoInitSafeHandle();
+    }
 
     #endregion
 }

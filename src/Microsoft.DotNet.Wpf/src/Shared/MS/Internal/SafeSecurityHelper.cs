@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -49,9 +49,9 @@ namespace System.Xaml
         ///</summary>
         internal static void TransformLocalRectToScreen(HandleRef hwnd, ref NativeMethods.RECT rcWindowCoords)
         {
-            int retval = MS.Internal.WindowsBase.NativeMethodsSetLastError.MapWindowPoints(hwnd , new HandleRef(null, IntPtr.Zero), ref rcWindowCoords, 2);
+            int retval = MS.Internal.WindowsBase.NativeMethodsSetLastError.MapWindowPoints(hwnd, new HandleRef(null, IntPtr.Zero), ref rcWindowCoords, 2);
             int win32Err = Marshal.GetLastWin32Error();
-            if(retval == 0 && win32Err != 0)
+            if (retval == 0 && win32Err != 0)
             {
                 throw new System.ComponentModel.Win32Exception(win32Err);
             }
@@ -84,8 +84,10 @@ namespace System.Xaml
                                     Assembly protoAssembly,
                                     string partialName)
         {
-            AssemblyName name = new AssemblyName(protoAssembly.FullName);
-            name.Name = partialName;
+            AssemblyName name = new AssemblyName(protoAssembly.FullName)
+            {
+                Name = partialName
+            };
             return name.FullName;
         }
 
@@ -165,12 +167,12 @@ namespace System.Xaml
                     _assemblies = new Dictionary<object, AssemblyName>();
                 }
                 else
-	            {
+                {
                     if (_assemblies.TryGetValue(key, out result))
                     {
                         return result;
                     }
-	            }
+                }
                 //
                 // We use AssemblyName ctor here because GetName demands FileIOPermission
                 // and does load more than just the required information.
@@ -183,7 +185,7 @@ namespace System.Xaml
                 {
                     // Make sure we clean up the cache if/when this dynamic assembly is GCed
                     GCNotificationToken.RegisterCallback(_cleanupCollectedAssemblies, null);
-                    _isGCCallbackPending  = true;
+                    _isGCCallbackPending = true;
                 }
                 return result;
             }
@@ -249,32 +251,32 @@ namespace System.Xaml
 #endif
         static bool IsSameKeyToken(byte[] reqKeyToken, byte[] curKeyToken)
         {
-           bool isSame = false;
+            bool isSame = false;
 
-           if (reqKeyToken == null && curKeyToken == null)
-           {
-               // Both Key Tokens are not set, treat them as same.
-               isSame = true;
-           }
-           else if (reqKeyToken != null && curKeyToken != null)
-           {
-               // Both KeyTokens are set.
-               if (reqKeyToken.Length == curKeyToken.Length)
-               {
-                   isSame = true;
+            if (reqKeyToken == null && curKeyToken == null)
+            {
+                // Both Key Tokens are not set, treat them as same.
+                isSame = true;
+            }
+            else if (reqKeyToken != null && curKeyToken != null)
+            {
+                // Both KeyTokens are set.
+                if (reqKeyToken.Length == curKeyToken.Length)
+                {
+                    isSame = true;
 
-                   for (int i = 0; i < reqKeyToken.Length; i++)
-                   {
-                      if (reqKeyToken[i] != curKeyToken[i])
-                      {
-                         isSame = false;
-                         break;
-                      }
-                   }
-               }
-           }
+                    for (int i = 0; i < reqKeyToken.Length; i++)
+                    {
+                        if (reqKeyToken[i] != curKeyToken[i])
+                        {
+                            isSame = false;
+                            break;
+                        }
+                    }
+                }
+            }
 
-           return isSame;
+            return isSame;
         }
 #endif //!REACHFRAMEWORK
 
@@ -300,7 +302,7 @@ namespace System.Xaml
     class WeakRefKey : WeakReference
     {
         public WeakRefKey(object target)
-            :base(target)
+            : base(target)
         {
             Debug.Assert(target != null);
             _hashCode = target.GetHashCode();

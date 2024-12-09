@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,16 +6,16 @@
 // Description: Set of layout tree verification utilities. 
 //
 
-using System.IO;
-using System.Xml;
-using System.Windows;
-using System.Globalization;
 using System.Collections;
 using System.Collections.ObjectModel;
-using System.Windows.Media;
-using System.Windows.Documents;
+using System.Globalization;
+using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Documents;
+using System.Windows.Media;
+using System.Xml;
 using MS.Internal.Documents;
 using MS.Internal.PtsHost;
 
@@ -42,10 +42,11 @@ namespace MS.Internal
         internal static string DumpLayoutAndVisualTreeToString(string tagName, Visual root)
         {
             StringWriter stringWriter = new StringWriter(CultureInfo.InvariantCulture);
-            XmlTextWriter writer = new XmlTextWriter(stringWriter);
-
-            writer.Formatting = Formatting.Indented;
-            writer.Indentation = 2;
+            XmlTextWriter writer = new XmlTextWriter(stringWriter)
+            {
+                Formatting = Formatting.Indented,
+                Indentation = 2
+            };
 
             DumpLayoutAndVisualTree(writer, tagName, root);
 
@@ -102,10 +103,11 @@ namespace MS.Internal
         internal static string DumpLayoutTreeToString(string tagName, UIElement root)
         {
             StringWriter stringWriter = new StringWriter(CultureInfo.InvariantCulture);
-            XmlTextWriter writer = new XmlTextWriter(stringWriter);
-
-            writer.Formatting = Formatting.Indented;
-            writer.Indentation = 2;
+            XmlTextWriter writer = new XmlTextWriter(stringWriter)
+            {
+                Formatting = Formatting.Indented,
+                Indentation = 2
+            };
 
             DumpLayoutTree(writer, tagName, root);
 
@@ -206,7 +208,7 @@ namespace MS.Internal
 
                 // Dump visual bounds
                 Rect bounds = visual.VisualContentBounds;
-                if(!bounds.IsEmpty)
+                if (!bounds.IsEmpty)
                 {
                     DumpRect(writer, "ContentRect", bounds);
                 }
@@ -229,7 +231,7 @@ namespace MS.Internal
 
                 // Dump visual children
                 DumpVisualChildren(writer, "Children", visual);
-                
+
                 writer.WriteEndElement();
             }
         }
@@ -263,8 +265,8 @@ namespace MS.Internal
             bool childrenHandled = false;
             Type t = element.GetType();
             DumpCustomUIElement dumpElement = null;
-            while(dumpElement==null && t!=null)
-            {                
+            while (dumpElement == null && t != null)
+            {
                 dumpElement = _elementToDumpHandler[t] as DumpCustomUIElement;
                 t = t.BaseType;
             }
@@ -272,7 +274,7 @@ namespace MS.Internal
             {
                 childrenHandled = dumpElement(writer, element, uiElementsOnly);
             }
-            
+
             if (!childrenHandled)
             {
                 if (uiElementsOnly)
@@ -312,15 +314,15 @@ namespace MS.Internal
                 // Dump page specific information
                 Type t = page.GetType();
                 DumpCustomDocumentPage dumpDocumentPage = null;
-                while(dumpDocumentPage==null && t!=null)
-                {                
+                while (dumpDocumentPage == null && t != null)
+                {
                     dumpDocumentPage = _documentPageToDumpHandler[t] as DumpCustomDocumentPage;
                     t = t.BaseType;
                 }
                 if (dumpDocumentPage != null)
                 {
                     dumpDocumentPage(writer, page);
-                }                
+                }
             }
 
             writer.WriteEndElement();
@@ -333,12 +335,12 @@ namespace MS.Internal
         {
             int count = VisualTreeHelper.GetChildrenCount(visualParent);
 
-            if (count>0)
+            if (count > 0)
             {
                 writer.WriteStartElement(tagName);
                 writer.WriteAttributeString("Count", count.ToString(CultureInfo.InvariantCulture));
 
-                for(int i = 0; i < count; i++)
+                for (int i = 0; i < count; i++)
                 {
                     DumpVisual(writer, visualParent.InternalGetVisualChild(i), visualParent);
                 }
@@ -378,7 +380,7 @@ namespace MS.Internal
         {
             writer.WriteStartElement(tagName);
             writer.WriteAttributeString("Left", point.X.ToString("F", CultureInfo.InvariantCulture));
-            writer.WriteAttributeString("Top",  point.Y.ToString("F", CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("Top", point.Y.ToString("F", CultureInfo.InvariantCulture));
             writer.WriteEndElement();
         }
 
@@ -388,7 +390,7 @@ namespace MS.Internal
         internal static void DumpSize(XmlTextWriter writer, string tagName, Size size)
         {
             writer.WriteStartElement(tagName);
-            writer.WriteAttributeString("Width",  size.Width.ToString ("F", CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("Width", size.Width.ToString("F", CultureInfo.InvariantCulture));
             writer.WriteAttributeString("Height", size.Height.ToString("F", CultureInfo.InvariantCulture));
             writer.WriteEndElement();
         }
@@ -399,9 +401,9 @@ namespace MS.Internal
         internal static void DumpRect(XmlTextWriter writer, string tagName, Rect rect)
         {
             writer.WriteStartElement(tagName);
-            writer.WriteAttributeString("Left",   rect.Left.ToString  ("F", CultureInfo.InvariantCulture));
-            writer.WriteAttributeString("Top",    rect.Top.ToString   ("F", CultureInfo.InvariantCulture));
-            writer.WriteAttributeString("Width",  rect.Width.ToString ("F", CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("Left", rect.Left.ToString("F", CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("Top", rect.Top.ToString("F", CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("Width", rect.Width.ToString("F", CultureInfo.InvariantCulture));
             writer.WriteAttributeString("Height", rect.Height.ToString("F", CultureInfo.InvariantCulture));
             writer.WriteEndElement();
         }
@@ -417,8 +419,8 @@ namespace MS.Internal
         internal static void GetUIElementsFromVisual(Visual visual, List<UIElement> uiElements)
         {
             int count = VisualTreeHelper.GetChildrenCount(visual);
-            
-            for(int i = 0; i < count; i++)
+
+            for (int i = 0; i < count; i++)
             {
                 Visual child = visual.InternalGetVisualChild(i);
                 if (child is UIElement)
@@ -832,18 +834,18 @@ namespace MS.Internal
             ReadOnlyCollection<ParagraphResult> rowParagraphs = paragraph.Paragraphs;
 
             int count1 = VisualTreeHelper.GetChildrenCount(visual);
-            for(int i = 0; i < count1; i++)
+            for (int i = 0; i < count1; i++)
             {
                 Visual rowVisual = visual.InternalGetVisualChild(i);
                 int count2 = VisualTreeHelper.GetChildrenCount(rowVisual);
 
                 ReadOnlyCollection<ParagraphResult> cellParagraphs = ((RowParagraphResult)rowParagraphs[i]).CellParagraphs;
-                for(int j = 0; j < count2; j++)
+                for (int j = 0; j < count2; j++)
                 {
                     Visual cellVisual = rowVisual.InternalGetVisualChild(j);
                     DumpTableCell(writer, cellParagraphs[j], cellVisual, visual);
                 }
-            }           
+            }
 
             writer.WriteEndElement();
         }
@@ -905,7 +907,7 @@ namespace MS.Internal
             Visual visual = (Visual)prop.GetValue(paraClient, null);
 
             // Dump transform relative to its parent
-            if(visualParent.IsAncestorOf(visual))
+            if (visualParent.IsAncestorOf(visual))
             {
                 GeneralTransform g = visual.TransformToAncestor(visualParent);
                 Point point = new Point(0.0f, 0.0f);
@@ -943,7 +945,7 @@ namespace MS.Internal
         private static void DumpTableCell(XmlTextWriter writer, ParagraphResult paragraph, Visual cellVisual, Visual tableVisual)
         {
             Type paragraphResultType = paragraph.GetType();
-            System.Reflection.FieldInfo fieldOfParaClient = paragraphResultType.GetField("_paraClient", 
+            System.Reflection.FieldInfo fieldOfParaClient = paragraphResultType.GetField("_paraClient",
                 System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
 
             if (fieldOfParaClient == null)
@@ -951,7 +953,7 @@ namespace MS.Internal
                 return;
             }
 
-            CellParaClient cellParaClient = (CellParaClient) fieldOfParaClient.GetValue(paragraph);
+            CellParaClient cellParaClient = (CellParaClient)fieldOfParaClient.GetValue(paragraph);
             CellParagraph cellParagraph = cellParaClient.CellParagraph;
             TableCell cell = cellParagraph.Cell;
 
@@ -959,7 +961,7 @@ namespace MS.Internal
 
             Type typeOfCell = cell.GetType();
 
-            System.Reflection.PropertyInfo propOfColumnIndex = typeOfCell.GetProperty("ColumnIndex", 
+            System.Reflection.PropertyInfo propOfColumnIndex = typeOfCell.GetProperty("ColumnIndex",
                 System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.DeclaredOnly);
             if (propOfColumnIndex != null)
             {
@@ -967,7 +969,7 @@ namespace MS.Internal
                 writer.WriteAttributeString("ColumnIndex", columnIndex.ToString(CultureInfo.InvariantCulture));
             }
 
-            System.Reflection.PropertyInfo propOfRowIndex = typeOfCell.GetProperty("RowIndex", 
+            System.Reflection.PropertyInfo propOfRowIndex = typeOfCell.GetProperty("RowIndex",
                 System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.DeclaredOnly);
             if (propOfRowIndex != null)
             {

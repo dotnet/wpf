@@ -1,19 +1,19 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
+using System.Collections;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
+using System.Windows.Markup; // IAddChild, ContentPropertyAttribute
+using System.Windows.Media;
 using MS.Internal;
 using MS.Internal.Controls;
 using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;
-using System.Collections;
-using System.Collections.ObjectModel;
-using System.Windows.Controls.Primitives;
-using System.ComponentModel;
-using System.Windows.Media;
-using System.Windows.Input;
-using System.Windows.Markup; // IAddChild, ContentPropertyAttribute
 
 namespace System.Windows.Controls
 {
@@ -113,7 +113,7 @@ namespace System.Windows.Controls
         /// </summary>
         public Orientation Orientation
         {
-            get { return (Orientation) GetValue(OrientationProperty); }
+            get { return (Orientation)GetValue(OrientationProperty); }
             set { SetValue(OrientationProperty, value); }
         }
 
@@ -126,7 +126,7 @@ namespace System.Windows.Controls
                                 typeof(bool),
                                 typeof(ToolBarTray),
                                 new FrameworkPropertyMetadata(
-                                            BooleanBoxes.FalseBox, 
+                                            BooleanBoxes.FalseBox,
                                             FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace System.Windows.Controls
         /// </summary>
         public bool IsLocked
         {
-            get { return (bool) GetValue(IsLockedProperty); }
+            get { return (bool)GetValue(IsLockedProperty); }
             set { SetValue(IsLockedProperty, value); }
         }
 
@@ -419,7 +419,7 @@ namespace System.Windows.Controls
             for (bandIndex = 0; bandIndex < _bands.Count; bandIndex++)
             {
                 List<ToolBar> band = _bands[bandIndex].Band;
-                
+
                 double bandThickness = _bands[bandIndex].Thickness;
 
                 if (fHorizontal)
@@ -430,7 +430,7 @@ namespace System.Windows.Controls
                 for (toolBarIndex = 0; toolBarIndex < band.Count; toolBarIndex++)
                 {
                     ToolBar toolBar = band[toolBarIndex];
-                    Size toolBarArrangeSize = new Size(fHorizontal ? toolBar.DesiredSize.Width : bandThickness, fHorizontal ? bandThickness : toolBar.DesiredSize.Height );
+                    Size toolBarArrangeSize = new Size(fHorizontal ? toolBar.DesiredSize.Width : bandThickness, fHorizontal ? bandThickness : toolBar.DesiredSize.Height);
                     rcChild.Size = toolBarArrangeSize;
                     toolBar.Arrange(rcChild);
                     if (fHorizontal)
@@ -563,7 +563,7 @@ namespace System.Windows.Controls
                                     band[toolBarIndex] = prevToolBar;
 
                                     toolBar.BandIndex = toolBarIndex - 1;
-                                    band[toolBarIndex-1] = toolBar;
+                                    band[toolBarIndex - 1] = toolBar;
 
                                     if (toolBarIndex + 1 == band.Count) // If toolBar was the last item in the band
                                     {
@@ -597,7 +597,7 @@ namespace System.Windows.Controls
                             {
                                 ExpandToolBars(band, 0, toolBarIndex - 1, thumbChange);
                             }
-                            else 
+                            else
                             {
                                 if (toolBarIndex < band.Count - 1) // Swap toolbars
                                 {

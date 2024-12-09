@@ -1,13 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Collections; // ArrayList
-using System.Windows.Media; // Brush, Transform
 using System.Windows.Controls.Primitives; // TextBoxBase
 using System.Windows.Input; // InputLanguageManager
-using MS.Win32;             // TextServices
+using System.Windows.Media; // Brush, Transform
 using MS.Internal; // Invariant
+using MS.Win32;             // TextServices
 
 //
 // Description: Composition adorner to render the composition display attribute.
@@ -30,7 +30,7 @@ namespace System.Windows.Documents
             // Provide a new default value for the composition adorner so that it is not hit-testable.
             IsEnabledProperty.OverrideMetadata(typeof(CompositionAdorner), new FrameworkPropertyMetadata(false));
         }
-        
+
         /// <summary>
         /// Creates new instance of CompositionAdorner.
         /// </summary>
@@ -83,15 +83,15 @@ namespace System.Windows.Documents
         /// Transform to apply to the adorner
         /// </returns>
         public override GeneralTransform GetDesiredTransform(GeneralTransform transform)
-        {            
+        {
             TranslateTransform translation;
             GeneralTransformGroup group = new GeneralTransformGroup();
 
             // Get the matrix transform out, skip all non affine transforms
             Transform t = transform.AffineTransform;
             if (t == null)
-            {                
-                t = Transform.Identity;                
+            {
+                t = Transform.Identity;
             }
 
             // Translate the adorner to (0, 0) point
@@ -114,7 +114,7 @@ namespace System.Windows.Documents
         //  Protected Methods
         //
         //------------------------------------------------------
- 
+
         #region Protected Methods
 
         /// <summary>
@@ -241,7 +241,7 @@ namespace System.Windows.Documents
                     // to the closest area of the bottom text.
                     Point startPoint = new Point(compositionLine.StartPoint.X + clauseGap, compositionLine.StartPoint.Y - halfLineHeight);
                     Point endPoint = new Point(compositionLine.EndPoint.X - clauseGap, compositionLine.EndPoint.Y - halfLineHeight);
-                    
+
                     // Apply composition line color which is actually the foreground of text as well
                     pen.Brush = new SolidColorBrush(compositionLine.LineColor);
 
@@ -254,14 +254,14 @@ namespace System.Windows.Documents
                     {
                         Rect rect = Rect.Union(compositionLine.StartRect, compositionLine.EndRect);
                         rect = transform.TransformBounds(rect);
-                        
+
                         drawingContext.PushOpacity(selectionOpacity);
-                    
+
                         drawingContext.DrawRectangle(selectionBrush, selectionPen, rect);
-                    
+
                         drawingContext.Pop();
                     }
-                    
+
                     if (squiggle)
                     {
                         // Draw the squiggle line with using of the PathFigure and DrawGemetry.
@@ -270,8 +270,10 @@ namespace System.Windows.Documents
 
                         double squiggleGap = halfLineHeight;
 
-                        PathFigure pathFigure = new PathFigure();
-                        pathFigure.StartPoint = pathPoint;
+                        PathFigure pathFigure = new PathFigure
+                        {
+                            StartPoint = pathPoint
+                        };
 
                         int indexPoint = 0;
 
@@ -718,23 +720,23 @@ namespace System.Windows.Documents
             /// </summary>
             internal Rect StartRect
             {
-                get 
-                { 
-                    return _startRect; 
+                get
+                {
+                    return _startRect;
                 }
             }
-            
+
             /// <summary>
             /// End rect of the composition line draw
             /// </summary>
             internal Rect EndRect
             {
-                get 
-                { 
-                    return _endRect; 
+                get
+                {
+                    return _endRect;
                 }
             }
-            
+
             /// <summary>
             /// Color of the composition line draw
             /// </summary>

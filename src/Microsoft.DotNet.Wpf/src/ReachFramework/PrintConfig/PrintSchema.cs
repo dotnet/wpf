@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1514,7 +1514,7 @@ namespace MS.Internal.Printing.Configuration
         #region Constructors
 
         // Prevents the class from being instantiated.
-        private PrintSchema() {}
+        private PrintSchema() { }
 
         #endregion Constructors
 
@@ -1550,9 +1550,9 @@ namespace MS.Internal.Printing.Configuration
 
         internal struct StdMediaSizeEntry
         {
-            public PageMediaSizeName          SizeValue;
-            public int                        SizeW;
-            public int                        SizeH;
+            public PageMediaSizeName SizeValue;
+            public int SizeW;
+            public int SizeH;
 
             public StdMediaSizeEntry(PageMediaSizeName value, int width, int height)
             {
@@ -1814,34 +1814,34 @@ namespace MS.Internal.Printing.Configuration
     [Flags]
     internal enum PrintSchemaNodeTypes
     {
-        None            = 0x0000,
+        None = 0x0000,
 
-        Attribute       = 0x0001,
+        Attribute = 0x0001,
 
-        AttributeSet    = 0x0002,
+        AttributeSet = 0x0002,
 
         AttributeSetRef = 0x0004,
 
-        Feature         = 0x0008,
+        Feature = 0x0008,
 
-        Option          = 0x0010,
+        Option = 0x0010,
 
-        ParameterDef    = 0x0020,
+        ParameterDef = 0x0020,
 
-        ParameterRef    = 0x0040,
+        ParameterRef = 0x0040,
 
-        Parameter       = 0x0080,
+        Parameter = 0x0080,
 
-        Property        = 0x0100,
+        Property = 0x0100,
 
-        ScoredProperty  = 0x0200,
+        ScoredProperty = 0x0200,
 
-        Value           = 0x0400,
+        Value = 0x0400,
 
         /// <summary>
         /// Root level types could be Feature, ParameterDef, Property
         /// </summary>
-        RootLevelTypes  = Feature | ParameterDef | Property,
+        RootLevelTypes = Feature | ParameterDef | Property,
 
         /// <summary>
         /// Parent-Feature level types could be Feature, Option, Property
@@ -1869,7 +1869,7 @@ namespace MS.Internal.Printing.Configuration
     /// </summary>
     internal class PrintSchemaNamespaces
     {
-        private PrintSchemaNamespaces() {}
+        private PrintSchemaNamespaces() { }
 
         public const string Framework = "http://schemas.microsoft.com/windows/2003/08/printing/printschemaframework";
         public const string StandardKeywordSet = "http://schemas.microsoft.com/windows/2003/08/printing/printschemakeywords";
@@ -1888,13 +1888,13 @@ namespace MS.Internal.Printing.Configuration
     /// </summary>
     internal class PrintSchemaPrefixes
     {
-        private PrintSchemaPrefixes() {}
+        private PrintSchemaPrefixes() { }
 
-        public const string Framework =             "psf";
-        public const string StandardKeywordSet =    "psk";
-        public const string xsi =                   "xsi";
-        public const string xsd =                   "xsd";
-        public const string xmlns =                 "xmlns";
+        public const string Framework = "psf";
+        public const string StandardKeywordSet = "psk";
+        public const string xsi = "xsi";
+        public const string xsd = "xsd";
+        public const string xmlns = "xmlns";
     }
 
     /// <summary>
@@ -1902,11 +1902,11 @@ namespace MS.Internal.Printing.Configuration
     /// </summary>
     internal class PrintSchemaXsiTypes
     {
-        private PrintSchemaXsiTypes() {}
+        private PrintSchemaXsiTypes() { }
 
         public const string Integer = "integer";
-        public const string String =  "string";
-        public const string QName =   "QName";
+        public const string String = "string";
+        public const string QName = "QName";
     }
 
     /// <summary>
@@ -1914,12 +1914,12 @@ namespace MS.Internal.Printing.Configuration
     /// </summary>
     internal class PrintSchemaTags
     {
-        private PrintSchemaTags() {}
+        private PrintSchemaTags() { }
 
         internal struct MapEntry
         {
             public string SchemaName;
-            public int    EnumValue;
+            public int EnumValue;
             public MapEntry(string schemaName, int enumValue)
             {
                 this.SchemaName = schemaName;
@@ -1929,21 +1929,21 @@ namespace MS.Internal.Printing.Configuration
 
         internal class Framework
         {
-            private Framework() {}
+            private Framework() { }
 
             internal const decimal SchemaVersion = 1;
 
-            internal const string PrintTicketRoot =   "PrintTicket";
-            internal const string PrintCapRoot =      "PrintCapabilities";
+            internal const string PrintTicketRoot = "PrintTicket";
+            internal const string PrintCapRoot = "PrintCapabilities";
 
-            internal const string Feature =           "Feature";
-            internal const string Option =            "Option";
-            internal const string ParameterDef =      "ParameterDef";
-            internal const string ParameterRef =      "ParameterRef";
-            internal const string ParameterInit =     "ParameterInit";
-            internal const string Property =          "Property";
-            internal const string ScoredProperty =    "ScoredProperty";
-            internal const string Value =             "Value";
+            internal const string Feature = "Feature";
+            internal const string Option = "Option";
+            internal const string ParameterDef = "ParameterDef";
+            internal const string ParameterRef = "ParameterRef";
+            internal const string ParameterInit = "ParameterInit";
+            internal const string Property = "Property";
+            internal const string ScoredProperty = "ScoredProperty";
+            internal const string Value = "Value";
 
             internal static MapEntry[] NodeTypeMapTable = {
                 new MapEntry(Feature,        (int)PrintSchemaNodeTypes.Feature),
@@ -1956,10 +1956,10 @@ namespace MS.Internal.Printing.Configuration
             };
 
             internal const string OptionNameProperty = "OptionName";
-            internal const string RootVersionAttr =    "version";
-            internal const string NameAttr =           "name";
-            internal const string Unspecified =        "Unspecified";
-            internal const string Unknown     =        "Unknown";
+            internal const string RootVersionAttr = "version";
+            internal const string NameAttr = "name";
+            internal const string Unspecified = "Unspecified";
+            internal const string Unknown = "Unknown";
 
             internal const string EmptyPrintTicket =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
@@ -1974,7 +1974,7 @@ namespace MS.Internal.Printing.Configuration
 
         internal class Keywords
         {
-            private Keywords() {}
+            private Keywords() { }
 
             internal class CollateKeys
             {
@@ -1998,7 +1998,7 @@ namespace MS.Internal.Printing.Configuration
 
             internal class NUpKeys
             {
-                private NUpKeys() {}
+                private NUpKeys() { }
 
                 internal const string JobNUp = "JobNUpAllDocumentsContiguously";
                 internal const string PagesPerSheet = "PagesPerSheet";
@@ -2010,7 +2010,7 @@ namespace MS.Internal.Printing.Configuration
 
             internal class StapleKeys
             {
-                private StapleKeys() {}
+                private StapleKeys() { }
 
                 internal const string JobStaple = "JobStapleAllDocuments";
 
@@ -2020,7 +2020,7 @@ namespace MS.Internal.Printing.Configuration
 
             internal class PageDeviceFontSubstitutionKeys
             {
-                private PageDeviceFontSubstitutionKeys() {}
+                private PageDeviceFontSubstitutionKeys() { }
 
                 internal const string Self = "PageDeviceFontSubstitution";
 
@@ -2032,16 +2032,16 @@ namespace MS.Internal.Printing.Configuration
             {
                 private PageMediaSizeKeys() { }
 
-                internal const string Self =                  "PageMediaSize";
-                internal const string MediaSizeWidth        = "MediaSizeWidth";
-                internal const string MediaSizeHeight       = "MediaSizeHeight";
+                internal const string Self = "PageMediaSize";
+                internal const string MediaSizeWidth = "MediaSizeWidth";
+                internal const string MediaSizeHeight = "MediaSizeHeight";
 
-                internal const string CustomMediaSize       = "CustomMediaSize";
+                internal const string CustomMediaSize = "CustomMediaSize";
                 // CustomMediaSizeWidth/Height strings are only used internally for PTPropMapEntry[] to
                 // differentiate from fixed size MediaSizeWidth/Height. In XML document, PageMediaSize option has
                 // same scored properties "MediaSizeWidth/Height" for both fixed and non-PS custom sizes.
-                internal const string CustomMediaSizeWidth =        "CustomMediaSizeWidth";
-                internal const string CustomMediaSizeHeight =       "CustomMediaSizeHeight";
+                internal const string CustomMediaSizeWidth = "CustomMediaSizeWidth";
+                internal const string CustomMediaSizeHeight = "CustomMediaSizeHeight";
 
                 internal static string[] MediaSizeNames = Enum.GetNames(typeof(PageMediaSizeName));
                 internal static int[] MediaSizeEnums = (int[])(Array)Enum.GetValues<PageMediaSizeName>();
@@ -2051,23 +2051,23 @@ namespace MS.Internal.Printing.Configuration
             {
                 private PageImageableSizeKeys() { }
 
-                internal const string Self                   = "PageImageableSize";
-                internal const string ImageableSizeWidth     = "ImageableSizeWidth";
-                internal const string ImageableSizeHeight    = "ImageableSizeHeight";
+                internal const string Self = "PageImageableSize";
+                internal const string ImageableSizeWidth = "ImageableSizeWidth";
+                internal const string ImageableSizeHeight = "ImageableSizeHeight";
 
-                internal const string ImageableArea          = "ImageableArea";
+                internal const string ImageableArea = "ImageableArea";
 
-                internal const string OriginWidth        =     "OriginWidth";
-                internal const string OriginHeight       =     "OriginHeight";
-                internal const string ExtentWidth        =     "ExtentWidth";
-                internal const string ExtentHeight       =     "ExtentHeight";
+                internal const string OriginWidth = "OriginWidth";
+                internal const string OriginHeight = "OriginHeight";
+                internal const string ExtentWidth = "ExtentWidth";
+                internal const string ExtentHeight = "ExtentHeight";
             }
 
             internal class PageMediaTypeKeys
             {
-                private PageMediaTypeKeys() {}
+                private PageMediaTypeKeys() { }
 
-                internal const string Self =         "PageMediaType";
+                internal const string Self = "PageMediaType";
 
                 internal static string[] MediaTypeNames = Enum.GetNames(typeof(PageMediaType));
                 internal static int[] MediaTypeEnums = (int[])(Array)Enum.GetValues<PageMediaType>();
@@ -2075,7 +2075,7 @@ namespace MS.Internal.Printing.Configuration
 
             internal class PageOrientationKeys
             {
-                private PageOrientationKeys() {}
+                private PageOrientationKeys() { }
 
                 internal const string Self = "PageOrientation";
 
@@ -2085,9 +2085,9 @@ namespace MS.Internal.Printing.Configuration
 
             internal class PageOutputColorKeys
             {
-                private PageOutputColorKeys() {}
+                private PageOutputColorKeys() { }
 
-                internal const string Self =   "PageOutputColor";
+                internal const string Self = "PageOutputColor";
 
                 internal static string[] ColorNames = Enum.GetNames(typeof(OutputColor));
                 internal static int[] ColorEnums = (int[])(Array)Enum.GetValues<OutputColor>();
@@ -2095,11 +2095,11 @@ namespace MS.Internal.Printing.Configuration
 
             internal class PageResolutionKeys
             {
-                private PageResolutionKeys() {}
+                private PageResolutionKeys() { }
 
-                internal const string Self =                  "PageResolution";
-                internal const string ResolutionX =           "ResolutionX";
-                internal const string ResolutionY =           "ResolutionY";
+                internal const string Self = "PageResolution";
+                internal const string ResolutionX = "ResolutionX";
+                internal const string ResolutionY = "ResolutionY";
                 internal const string QualitativeResolution = "QualitativeResolution";
 
                 internal static string[] QualityNames = Enum.GetNames(typeof(PageQualitativeResolution));
@@ -2110,10 +2110,10 @@ namespace MS.Internal.Printing.Configuration
             {
                 private PageScalingKeys() { }
 
-                internal const string Self =               "PageScaling";
-                internal const string CustomScaleWidth   = "ScaleWidth";
-                internal const string CustomScaleHeight  = "ScaleHeight";
-                internal const string CustomSquareScale  = "Scale";
+                internal const string Self = "PageScaling";
+                internal const string CustomScaleWidth = "ScaleWidth";
+                internal const string CustomScaleHeight = "ScaleHeight";
+                internal const string CustomSquareScale = "Scale";
 
                 internal static string[] ScalingNames = Enum.GetNames(typeof(PageScaling));
                 internal static int[] ScalingEnums = (int[])(Array)Enum.GetValues<PageScaling>();
@@ -2183,26 +2183,26 @@ namespace MS.Internal.Printing.Configuration
 
             internal class ParameterProps
             {
-                private ParameterProps() {}
+                private ParameterProps() { }
 
                 internal const string DefaultValue = "DefaultValue";
-                internal const string MinValue =     "MinValue";
-                internal const string MaxValue =     "MaxValue";
+                internal const string MinValue = "MinValue";
+                internal const string MaxValue = "MaxValue";
             }
 
             internal class ParameterDefs
             {
-                private ParameterDefs() {}
+                private ParameterDefs() { }
 
                 internal const string JobCopyCount = "JobCopiesAllDocuments";
 
                 // for non-PS custom media size.
-                internal const string PageMediaSizeMediaSizeWidth        = "PageMediaSizeMediaSizeWidth";
-                internal const string PageMediaSizeMediaSizeHeight       = "PageMediaSizeMediaSizeHeight";
+                internal const string PageMediaSizeMediaSizeWidth = "PageMediaSizeMediaSizeWidth";
+                internal const string PageMediaSizeMediaSizeHeight = "PageMediaSizeMediaSizeHeight";
 
-                internal const string PageScalingScaleWidth   = "PageScalingScaleWidth";
-                internal const string PageScalingScaleHeight  = "PageScalingScaleHeight";
-                internal const string PageSquareScalingScale  = "PageScalingScale";
+                internal const string PageScalingScaleWidth = "PageScalingScaleWidth";
+                internal const string PageScalingScaleHeight = "PageScalingScaleHeight";
+                internal const string PageSquareScalingScale = "PageScalingScale";
             }
 
             internal static MapEntry[] FeatureMapTable = {
@@ -2250,7 +2250,7 @@ namespace MS.Internal.Printing.Configuration
 
     internal class UnitConverter
     {
-        private UnitConverter() {}
+        private UnitConverter() { }
 
         /// <summary>
         /// Converts internal micron length value to DIP length value (in 1/96 inch unit).
@@ -2289,7 +2289,7 @@ namespace MS.Internal.Printing.Configuration
         {
             int enumValue = -1;
 
-            for (int i=0; i < map.Length; i++)
+            for (int i = 0; i < map.Length; i++)
             {
                 if (map[i].SchemaName == schemaName)
                 {
@@ -2305,7 +2305,7 @@ namespace MS.Internal.Printing.Configuration
                                                          int[] enumValues,
                                                          string schemaName)
         {
-            #if _DEBUG
+#if _DEBUG
             if (((enumNames[0] != PrintSchemaTags.Framework.Unspecified) &&
                  (enumNames[0] != PrintSchemaTags.Framework.Unknown)) ||
                 (enumValues[0] != 0) ||
@@ -2314,12 +2314,12 @@ namespace MS.Internal.Printing.Configuration
                 // This is for internal checking of correct enum defintion only
                 throw new InvalidOperationException("_DEBUG: enum definition error: should be 'Unknown/Unspecified' and 0 and equal array length");
             }
-            #endif
+#endif
 
             int enumValue = -1;
 
             // We need to skip the first enum value "Unspecified" or "Unknown"
-            for (int i=1; i < enumNames.Length; i++)
+            for (int i = 1; i < enumNames.Length; i++)
             {
                 if (enumNames[i] == schemaName)
                 {
@@ -2338,7 +2338,7 @@ namespace MS.Internal.Printing.Configuration
         /// <exception cref="XmlException">XML is not well-formed.</exception>
         public static bool CurrentPropertyQValueToEnumValue(XmlPrintCapReader reader,
                                                             string[] schemaNames,
-                                                            int[]    schemaEnums,
+                                                            int[] schemaEnums,
                                                             out int enumValue)
         {
             bool foundMatch = false;
@@ -2351,16 +2351,16 @@ namespace MS.Internal.Printing.Configuration
                 valueLocalName = reader.GetCurrentPropertyQNameValueWithException();
             }
             // We want to catch internal FormatException to skip recoverable XML content syntax error
-            #pragma warning suppress 56502
-            #if _DEBUG
+#pragma warning suppress 56502
+#if _DEBUG
             catch (FormatException e)
-            #else
+#else
             catch (FormatException)
-            #endif
+#endif
             {
-                #if _DEBUG
+#if _DEBUG
                 Trace.WriteLine("-Error- " + e.Message);
-                #endif
+#endif
             }
 
             if (valueLocalName != null)
@@ -2373,13 +2373,13 @@ namespace MS.Internal.Printing.Configuration
                 }
                 else
                 {
-                    #if _DEBUG
+#if _DEBUG
                     Trace.Assert(enumValue != 0, "THIS SHOULD NOT HAPPEN: 'Unspecified' enum matched");
                     Trace.WriteLine("-Warning- Value element at line number " +
                                     reader._xmlReader.LineNumber + ", line position " +
                                     reader._xmlReader.LinePosition + " has unknown public text value '" +
                                     valueLocalName + "'");
-                    #endif
+#endif
                 }
             }
 
@@ -2390,7 +2390,7 @@ namespace MS.Internal.Printing.Configuration
                                                             int[] enumValues,
                                                             int enumValue)
         {
-            #if _DEBUG
+#if _DEBUG
             if (((enumNames[0] != PrintSchemaTags.Framework.Unspecified) &&
                  (enumNames[0] != PrintSchemaTags.Framework.Unknown)) ||
                 (enumValues[0] != 0) ||
@@ -2399,12 +2399,12 @@ namespace MS.Internal.Printing.Configuration
                 // This is for internal checking of correct enum defintion only
                 throw new InvalidOperationException("_DEBUG: enum definition error: should be 'Unknown/Unspecified' and 0 and equal array length");
             }
-            #endif
+#endif
 
             string schemaName = null;
 
             // We need to skip the first enum value "Unspecified" or "Unknown"
-            for (int i=1; i < enumNames.Length; i++)
+            for (int i = 1; i < enumNames.Length; i++)
             {
                 if (enumValues[i] == enumValue)
                 {

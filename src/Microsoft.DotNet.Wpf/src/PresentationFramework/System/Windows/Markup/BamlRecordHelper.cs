@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,9 +22,9 @@ namespace System.Windows.Markup
         // This method checks to see if the baml record type is one of the records used
         // to build up the map table, e.g. type information.
         //
-        static internal bool IsMapTableRecordType( BamlRecordType bamlRecordType )
+        static internal bool IsMapTableRecordType(BamlRecordType bamlRecordType)
         {
-            switch( bamlRecordType )
+            switch (bamlRecordType)
             {
                 case BamlRecordType.PIMapping:
                 case BamlRecordType.AssemblyInfo:
@@ -41,8 +41,8 @@ namespace System.Windows.Markup
 
         internal static bool IsDebugBamlRecordType(BamlRecordType recordType)
         {
-            if (   recordType == BamlRecordType.LineNumberAndPosition
-                || recordType == BamlRecordType.LinePosition )
+            if (recordType == BamlRecordType.LineNumberAndPosition
+                || recordType == BamlRecordType.LinePosition)
             {
                 return true;
             }
@@ -65,7 +65,7 @@ namespace System.Windows.Markup
 
         internal static bool DoesRecordTypeHaveDebugExtension(BamlRecordType recordType)
         {
-            switch(recordType)
+            switch (recordType)
             {
                 case BamlRecordType.ElementStart:
                 case BamlRecordType.ElementEnd:

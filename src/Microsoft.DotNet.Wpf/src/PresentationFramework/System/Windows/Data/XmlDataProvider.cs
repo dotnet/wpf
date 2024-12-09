@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,20 +9,20 @@
 //              XmlDataSource.mht
 //
 
-using System.IO;                    // Stream
 using System.ComponentModel;        // ISupportInitialize, AsyncCompletedEventHandler, [DesignerSerialization*], [DefaultValue]
+using System.IO;                    // Stream
 using System.IO.Packaging;          // PackUriHelper
 using System.Net;                   // WebRequest, IWebRequestCreate
 using System.Threading;             // ThreadPool, WaitCallback
+using System.Windows.Markup; // IUriContext, [XamlDesignerSerializer]
+using System.Windows.Threading;     // Dispatcher*
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;     // IXmlSerializable
 using System.Xml.XPath;
-using System.Windows.Threading;     // Dispatcher*
-using System.Windows.Markup; // IUriContext, [XamlDesignerSerializer]
 using MS.Internal;                  // CriticalExceptions
-using MS.Internal.Utility;          // BindUriHelper
 using MS.Internal.Data;             // XmlDataCollection
+using MS.Internal.Utility;          // BindUriHelper
 
 namespace System.Windows.Data
 {
@@ -118,7 +118,7 @@ namespace System.Windows.Data
                     OnPropertyChanged(new PropertyChangedEventArgs("Source"));
 
                     ChangeDocument(value); // set immediately so that next get_Document returns this value,
-                                       // even when data provider is in deferred or asynch mode
+                                           // even when data provider is in deferred or asynch mode
 
                     if (!IsRefreshDeferred)
                         Refresh();
@@ -448,7 +448,7 @@ namespace System.Windows.Data
         // this method can run on a worker thread!
         private void CreateDocFromInlineXmlAsync(object arg)
         {
-            XmlReader xmlReader = (XmlReader) arg;
+            XmlReader xmlReader = (XmlReader)arg;
             CreateDocFromInlineXml(xmlReader);
         }
 
@@ -546,7 +546,7 @@ namespace System.Windows.Data
         // this method can run on a worker thread!
         private void CreateDocFromExternalSourceAsynch(object arg)
         {
-            WebRequest request = (WebRequest) arg;
+            WebRequest request = (WebRequest)arg;
             CreateDocFromExternalSource(request);
         }
 
@@ -636,7 +636,7 @@ namespace System.Windows.Data
         // this method can run on a worker thread!
         private void BuildNodeCollectionAsynch(object arg)
         {
-            XmlDocument doc = (XmlDocument) arg;
+            XmlDocument doc = (XmlDocument)arg;
             BuildNodeCollection(doc);
         }
 
@@ -690,7 +690,7 @@ namespace System.Windows.Data
                                         TraceData.Identify(Data)));
             }
 
-            ChangeDocument((XmlDocument) arg);
+            ChangeDocument((XmlDocument)arg);
             return null;
         }
 
@@ -752,7 +752,7 @@ namespace System.Windows.Data
 
             UnHook();
 
-            XmlNodeList nodes = GetResultNodeList((XmlDocument) sender);
+            XmlNodeList nodes = GetResultNodeList((XmlDocument)sender);
 
             // Compare the entire new list with the old,
             // and make all the necessary insert/remove changes.
@@ -801,9 +801,9 @@ namespace System.Windows.Data
         //
         //------------------------------------------------------
 
-        private XmlDataCollection  XmlDataCollection
+        private XmlDataCollection XmlDataCollection
         {
-            get { return (XmlDataCollection) this.Data; }
+            get { return (XmlDataCollection)this.Data; }
         }
 
         private DispatcherOperationCallback CompletedCallback
@@ -832,19 +832,19 @@ namespace System.Windows.Data
         //
         //------------------------------------------------------
 
-        private XmlDocument         _document;  // the active XML DOM document
-        private XmlDocument         _domSetDocument;  // a DOM set by user
-        private XmlDocument         _savedDocument; // stored copy of Inline Xml for rollback
-        private ManualResetEvent    _waitForInlineDoc; // serializer waits on this for inline doc
+        private XmlDocument _document;  // the active XML DOM document
+        private XmlDocument _domSetDocument;  // a DOM set by user
+        private XmlDocument _savedDocument; // stored copy of Inline Xml for rollback
+        private ManualResetEvent _waitForInlineDoc; // serializer waits on this for inline doc
         private XmlNamespaceManager _nsMgr;
-        private Uri     _source;
-        private Uri     _baseUri;
-        private string  _xPath = string.Empty;
-        private bool    _tryInlineDoc = true;
-        private bool    _isListening = false;
+        private Uri _source;
+        private Uri _baseUri;
+        private string _xPath = string.Empty;
+        private bool _tryInlineDoc = true;
+        private bool _isListening = false;
         private XmlIslandSerializer _xmlSerializer;
-        bool            _isAsynchronous = true;
-        bool            _inEndInit;
+        bool _isAsynchronous = true;
+        bool _inEndInit;
         private DispatcherOperationCallback _onCompletedCallback;
         private XmlNodeChangedEventHandler _nodeChangedHandler;
     }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,14 +8,14 @@
 #pragma warning disable 1634, 1691
 
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Automation;
-using System.Windows.Automation.Text;
 using System.Windows.Automation.Provider;
-using System.Diagnostics;
-using MS.Win32;
+using System.Windows.Automation.Text;
 using Microsoft.Internal;
+using MS.Win32;
 
 namespace MS.Internal.Automation
 {
@@ -124,8 +124,8 @@ namespace MS.Internal.Automation
 
             public TreeScope TreeScope { get { return _scope; } }
             public AutomationElementMode AutomationElementMode { get { return _automationElementMode; } }
-            public AutomationProperty [] Properties { get { return _properties; } }
-            public AutomationPattern [] Patterns { get { return _patterns; } }
+            public AutomationProperty[] Properties { get { return _properties; } }
+            public AutomationPattern[] Patterns { get { return _patterns; } }
 
             internal UiaCacheRequest(Condition condition,
                                      TreeScope scope,
@@ -206,7 +206,7 @@ namespace MS.Internal.Automation
                 // converted where a 'rude unload' (eg. by a host such as Yukon) could cause a handle leak,
                 // would need to change the underlying API to avoid this. May consider that in Beta2,
                 // but for Beta1, this does the job.
-                for(int objIndex = 0 ; objIndex < data.GetLength(0) ; objIndex++ )
+                for (int objIndex = 0; objIndex < data.GetLength(0); objIndex++)
                 {
                     // Handle position 0, which can be a hnode...
                     if (request._automationElementMode == AutomationElementMode.Full)
@@ -365,7 +365,7 @@ namespace MS.Internal.Automation
             UiaMiniCacheRequest miniCR = new UiaMiniCacheRequest(request, request._condition._safeHandle.DangerousGetHandle());
             CheckError(RawUiaNodeFromPoint(x, y, miniCR, out requestedData, out treeStructure));
             GC.KeepAlive(request._condition); // keep condition (and associated unmanaged memory) alive during call
-            
+
             return new UiaCacheResponse(requestedData, treeStructure, request);
         }
 
@@ -453,7 +453,7 @@ namespace MS.Internal.Automation
             if (requestedData == null)
             {
                 Debug.Assert(offsets == null && treeStructures == null, "if nothin found, all out params shoud be null");
-                return new UiaCacheResponse[] {}; // Return empty cacheresponse, not null.
+                return new UiaCacheResponse[] { }; // Return empty cacheresponse, not null.
             }
 
             Debug.Assert(offsets.Length == treeStructures.Length);
@@ -562,17 +562,17 @@ namespace MS.Internal.Automation
 
         internal static bool UiaNodeRelease(IntPtr hnode)
         {
-            return RawUiaNodeRelease( hnode );
+            return RawUiaNodeRelease(hnode);
         }
 
         internal static bool UiaPatternRelease(IntPtr hobj)
         {
-            return RawUiaPatternRelease( hobj );
+            return RawUiaPatternRelease(hobj);
         }
 
         internal static bool UiaTextRangeRelease(IntPtr hobj)
         {
-            return RawUiaTextRangeRelease( hobj );
+            return RawUiaTextRangeRelease(hobj);
         }
 
         #endregion Client methods
@@ -827,7 +827,7 @@ namespace MS.Internal.Automation
         {
             CheckError(RawWindowPattern_SetWindowVisualState(hobj, state));
         }
-        
+
         internal static bool WindowPattern_WaitForInputIdle(SafePatternHandle hobj, int milliseconds)
         {
             bool result;
@@ -835,17 +835,17 @@ namespace MS.Internal.Automation
             return result;
         }
 
-        
+
         internal static void SynchronizedInputPattern_StartListening(SafePatternHandle hobj, SynchronizedInputType inputType)
         {
             CheckError(RawSynchronizedInputPattern_StartListening(hobj, inputType));
-           
+
         }
-        
+
         internal static void SynchronizedInputPattern_Cancel(SafePatternHandle hobj)
         {
             CheckError(RawSynchronizedInputPattern_Cancel(hobj));
-            
+
         }
 
         internal static void VirtualizedItemPattern_Realize(SafePatternHandle hobj)
@@ -866,7 +866,7 @@ namespace MS.Internal.Automation
         //
         #region Text methods
 
-        internal static SafeTextRangeHandle [] TextPattern_GetSelection(SafePatternHandle hobj)
+        internal static SafeTextRangeHandle[] TextPattern_GetSelection(SafePatternHandle hobj)
         {
             object[] arr;
             CheckError(RawTextPattern_GetSelection(hobj, out arr));
@@ -1030,7 +1030,7 @@ namespace MS.Internal.Automation
                 double y = doubles[scan++];
                 double width = doubles[scan++];
                 double height = doubles[scan++];
-                if(width <= 0 || height <= 0)
+                if (width <= 0 || height <= 0)
                     rects[i] = Rect.Empty;
                 else
                     rects[i] = new Rect(x, y, width, height);
@@ -1126,12 +1126,12 @@ namespace MS.Internal.Automation
             // implements IErrorInfo, and effectively "passes through" uiacore).
             // IsComObject returns true only for non-CLR (eg. unmanaged) objects, so we have to check
             // for CLR Exception objects (with "is Exception") separately.
-            if(arr[1] != null
+            if (arr[1] != null
                 && !Marshal.IsComObject(arr[1])
-                && !(arr[1] is Exception) )
+                && !(arr[1] is Exception))
                 return false;
 
-            if(throwException)
+            if (throwException)
             {
                 int hr = (int)arr[0];
                 object errorInfo = arr[1];
@@ -1352,10 +1352,10 @@ namespace MS.Internal.Automation
 
         [DllImport(DllImport.UIAutomationCore, EntryPoint = "WindowPattern_WaitForInputIdle", CharSet = CharSet.Unicode)]
         private static extern int RawWindowPattern_WaitForInputIdle(SafePatternHandle hobj, int milliseconds, out bool pResult);
-        
+
         [DllImport(DllImport.UIAutomationCore, EntryPoint = "SynchronizedInputPattern_StartListening", CharSet = CharSet.Unicode)]
         private static extern int RawSynchronizedInputPattern_StartListening(SafePatternHandle hobj, SynchronizedInputType inputType);
-        
+
         [DllImport(DllImport.UIAutomationCore, EntryPoint = "SynchronizedInputPattern_Cancel", CharSet = CharSet.Unicode)]
         private static extern int RawSynchronizedInputPattern_Cancel(SafePatternHandle hobj);
 
@@ -1370,10 +1370,10 @@ namespace MS.Internal.Automation
         #region Text methods
 
         [DllImport(DllImport.UIAutomationCore, EntryPoint = "TextPattern_GetSelection", CharSet = CharSet.Unicode)]
-        private static extern int RawTextPattern_GetSelection(SafePatternHandle hobj, [MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_VARIANT)]out object[] result);
+        private static extern int RawTextPattern_GetSelection(SafePatternHandle hobj, [MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_VARIANT)] out object[] result);
 
         [DllImport(DllImport.UIAutomationCore, EntryPoint = "TextPattern_GetVisibleRanges", CharSet = CharSet.Unicode)]
-        private static extern int RawTextPattern_GetVisibleRanges(SafePatternHandle hobj, [MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_VARIANT)]out object[] result);
+        private static extern int RawTextPattern_GetVisibleRanges(SafePatternHandle hobj, [MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_VARIANT)] out object[] result);
 
         [DllImport(DllImport.UIAutomationCore, EntryPoint = "TextPattern_RangeFromChild", CharSet = CharSet.Unicode)]
         private static extern int RawTextPattern_RangeFromChild(SafePatternHandle hobj, SafeNodeHandle childElement, out SafeTextRangeHandle result);
@@ -1566,7 +1566,7 @@ namespace MS.Internal.Automation
         }
 
         static private
-        IRawElementProviderSimple [] OnGetProvider(IntPtr hwnd, ProviderType providerType)
+        IRawElementProviderSimple[] OnGetProvider(IntPtr hwnd, ProviderType providerType)
         {
             IRawElementProviderSimple provider;
             try

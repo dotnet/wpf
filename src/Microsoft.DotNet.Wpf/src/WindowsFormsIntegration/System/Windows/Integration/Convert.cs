@@ -1,14 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Collections.Generic;
-
 using SD = System.Drawing;
 using SDI = System.Drawing.Imaging;
-using SWF = System.Windows.Forms;
-
 using SW = System.Windows;
+using SWF = System.Windows.Forms;
 using SWI = System.Windows.Input;
 using SWM = System.Windows.Media;
 using SWMI = System.Windows.Media.Imaging;
@@ -169,15 +167,16 @@ namespace System.Windows.Forms.Integration
         /// <returns></returns>
         internal static System.Windows.Interop.MSG ToSystemWindowsInteropMSG(SWF.Message msg)
         {
-            SW.Interop.MSG msg2 = new SW.Interop.MSG();
-
-            msg2.hwnd = msg.HWnd;
-            msg2.lParam = msg.LParam;
-            msg2.message = msg.Msg;
-            msg2.pt_x = 0;
-            msg2.pt_y = 0;
-            msg2.time = MS.Win32.SafeNativeMethods.GetMessageTime();
-            msg2.wParam = msg.WParam;
+            SW.Interop.MSG msg2 = new SW.Interop.MSG
+            {
+                hwnd = msg.HWnd,
+                lParam = msg.LParam,
+                message = msg.Msg,
+                pt_x = 0,
+                pt_y = 0,
+                time = MS.Win32.SafeNativeMethods.GetMessageTime(),
+                wParam = msg.WParam
+            };
             return msg2;
         }
 
@@ -236,7 +235,7 @@ namespace System.Windows.Forms.Integration
             Size returnSize = new Size((double)size.Width, (double)size.Height);
             // Adjust for WFH scaling
 
-            returnSize.Width  /= ScaleFactor(scale.X, Orientation.Horizontal);
+            returnSize.Width /= ScaleFactor(scale.X, Orientation.Horizontal);
             returnSize.Height /= ScaleFactor(scale.Y, Orientation.Vertical);
 
             return returnSize;
@@ -272,7 +271,8 @@ namespace System.Windows.Forms.Integration
         private static double ScaleFactor(double value, Orientation orientation)
         {
             //This is a guard against possible unset scale value (which shouldn't happen)
-            if (HostUtils.IsZero(value)) { value = 1.0; }
+            if (HostUtils.IsZero(value))
+            { value = 1.0; }
 
             return value * HostUtils.PixelsPerInch(orientation) / systemWindowsPixelsPerInch;
         }
@@ -280,7 +280,8 @@ namespace System.Windows.Forms.Integration
         private static double ScaleFactor(double value, Orientation orientation, double dpiScale)
         {
             //This is a guard against possible unset scale value (which shouldn't happen)
-            if (HostUtils.IsZero(value)) { value = 1.0; }
+            if (HostUtils.IsZero(value))
+            { value = 1.0; }
 
             return value * dpiScale;
         }
@@ -289,8 +290,10 @@ namespace System.Windows.Forms.Integration
         {
             // Convert WPF constraint to a System.Drawing.Size.  For SD.Size, 0 represents unconstrained,
             // while for SW.Size, this is represented by double.PositiveInfinity
-            if (size.Width  == double.PositiveInfinity) { size.Width  = 0; }
-            if (size.Height == double.PositiveInfinity) { size.Height = 0; }
+            if (size.Width == double.PositiveInfinity)
+            { size.Width = 0; }
+            if (size.Height == double.PositiveInfinity)
+            { size.Height = 0; }
             return ToSystemDrawingSize(size, scale, dpiScaleX, dpiScaleY);
         }
 
@@ -330,12 +333,13 @@ namespace System.Windows.Forms.Integration
         /// <returns></returns>
         internal static SWF.Message ToSystemWindowsFormsMessage(System.Windows.Interop.MSG msg)
         {
-            SWF.Message msg2 = new SWF.Message();
-
-            msg2.HWnd = msg.hwnd;
-            msg2.LParam = msg.lParam;
-            msg2.Msg = msg.message;
-            msg2.WParam = msg.wParam;
+            SWF.Message msg2 = new SWF.Message
+            {
+                HWnd = msg.hwnd,
+                LParam = msg.lParam,
+                Msg = msg.message,
+                WParam = msg.wParam
+            };
 
             return msg2;
         }

@@ -1,12 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Runtime.InteropServices;
+using Microsoft.Win32.SafeHandles;
 using MS.Internal;
 using MS.Win32;
-using Microsoft.Win32.SafeHandles;
-
 using UnsafeNativeMethodsMilCoreApi = MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 namespace System.Windows.Media
@@ -81,7 +80,7 @@ namespace System.Windows.Media
         internal void GetColorProfileFromHandle(byte[] buffer, ref uint bufferSize)
         {
             Invariant.Assert(buffer == null || bufferSize <= buffer.Length);
-            
+
             if (IsInvalid)
             {
                 throw new InvalidOperationException(SR.Image_ColorContextInvalid);

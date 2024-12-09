@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -25,7 +25,7 @@ namespace System.Windows.Media.Media3D
         /// <summary>
         ///     Default constructor
         /// </summary>
-        public MatrixCamera() {}
+        public MatrixCamera() { }
 
         /// <summary>
         ///     Construct a MatrixCamera from view and projection matrices
@@ -67,7 +67,7 @@ namespace System.Windows.Media.Media3D
             PrependInverseTransform(Transform, ref viewMatrix);
             return viewMatrix;
         }
-        
+
         internal override Matrix3D GetProjectionMatrix(double aspectRatio) { return ProjectionMatrix; }
 
         internal override RayHitTestParameters RayFromViewportPoint(Point p, Size viewSize, Rect3D boundingRect, out double distanceAdjustment)
@@ -75,14 +75,14 @@ namespace System.Windows.Media.Media3D
             //
             //  Compute rayParameters
             //
-            
+
             // Find the point on the projection plane in post-projective space where
             // the viewport maps to a 2x2 square from (-1,1)-(1,-1).
             Point np = M3DUtil.GetNormalizedPoint(p, viewSize);
 
             // This ray is consistent with a left-handed camera
             // MatrixCamera should be right-handed and should be updated to be so.
-            
+
             // So (conceptually) the user clicked on the point (np.X,
             // np.Y, 0) in post-projection clipping space and the ray
             // extends in the direction (0, 0, 1) because our ray
@@ -103,13 +103,13 @@ namespace System.Windows.Media.Media3D
                 // Need to handle singular matrix cameras
                 throw new NotSupportedException(SR.HitTest_Singular);
             }
-            
+
             cameraToWorld.Invert();
 
-            Point4D origin4D = new Point4D(np.X,np.Y,0,1) * cameraToWorld;
-            Point3D origin = new Point3D( origin4D.X/origin4D.W,
-                                          origin4D.Y/origin4D.W,
-                                          origin4D.Z/origin4D.W );
+            Point4D origin4D = new Point4D(np.X, np.Y, 0, 1) * cameraToWorld;
+            Point3D origin = new Point3D(origin4D.X / origin4D.W,
+                                          origin4D.Y / origin4D.W,
+                                          origin4D.Z / origin4D.W);
 
             // To transform the direction we use the Jacobian of
             // cameraToWorld at the point np.X,np.Y,0 that we just
@@ -149,7 +149,7 @@ namespace System.Windows.Media.Media3D
 
             // Then multiply that matrix by (0, 0, 1) which is
             // the direction of the ray in post-projection space.
-            Vector3D direction = new Vector3D( J31, J32, J33 );
+            Vector3D direction = new Vector3D(J31, J32, J33);
             direction.Normalize();
 
             // We multiplied by the Jacobian times W, so we need to
@@ -158,7 +158,7 @@ namespace System.Windows.Media.Media3D
             {
                 direction = -direction;
             }
-            
+
             RayHitTestParameters rayParameters = new RayHitTestParameters(origin, direction);
 
             //
@@ -169,12 +169,12 @@ namespace System.Windows.Media.Media3D
             // viewport coordinates, with an additional 2D translation
             // to put the ray at the origin.
             Matrix3D viewportMatrix = new Matrix3D();
-            viewportMatrix.TranslatePrepend(new Vector3D(-p.X,viewSize.Height-p.Y,0));
-            viewportMatrix.ScalePrepend(new Vector3D(viewSize.Width/2,-viewSize.Height/2,1));
-            viewportMatrix.TranslatePrepend(new Vector3D(1,1,0));
-            
+            viewportMatrix.TranslatePrepend(new Vector3D(-p.X, viewSize.Height - p.Y, 0));
+            viewportMatrix.ScalePrepend(new Vector3D(viewSize.Width / 2, -viewSize.Height / 2, 1));
+            viewportMatrix.TranslatePrepend(new Vector3D(1, 1, 0));
+
             // First, world-to-camera, then camera's projection, then normalized clip space to viewport.
-            rayParameters.HitTestProjectionMatrix = 
+            rayParameters.HitTestProjectionMatrix =
                 worldToCamera *
                 viewportMatrix;
 

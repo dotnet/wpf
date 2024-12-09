@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -76,8 +76,8 @@ namespace System.Windows.Media.Media3D
         /// <returns>Result of addition.</returns>
         public static Point4D operator +(Point4D point1, Point4D point2)
         {
-            return new Point4D(point1._x + point2._x, 
-                               point1._y + point2._y, 
+            return new Point4D(point1._x + point2._x,
+                               point1._y + point2._y,
                                point1._z + point2._z,
                                point1._w + point2._w);
         }
@@ -90,12 +90,12 @@ namespace System.Windows.Media.Media3D
         /// <returns>Result of addition.</returns>
         public static Point4D Add(Point4D point1, Point4D point2)
         {
-            return new Point4D(point1._x + point2._x, 
-                               point1._y + point2._y, 
+            return new Point4D(point1._x + point2._x,
+                               point1._y + point2._y,
                                point1._z + point2._z,
                                point1._w + point2._w);
         }
-        
+
         /// <summary>
         /// Subtraction.
         /// </summary>
@@ -104,8 +104,8 @@ namespace System.Windows.Media.Media3D
         /// <returns>Vector between the two points.</returns>
         public static Point4D operator -(Point4D point1, Point4D point2)
         {
-            return new Point4D(point1._x - point2._x, 
-                               point1._y - point2._y, 
+            return new Point4D(point1._x - point2._x,
+                               point1._y - point2._y,
                                point1._z - point2._z,
                                point1._w - point2._w);
         }
@@ -118,8 +118,8 @@ namespace System.Windows.Media.Media3D
         /// <returns>Vector between the two points.</returns>
         public static Point4D Subtract(Point4D point1, Point4D point2)
         {
-            return new Point4D(point1._x - point2._x, 
-                               point1._y - point2._y, 
+            return new Point4D(point1._x - point2._x,
+                               point1._y - point2._y,
                                point1._z - point2._z,
                                point1._w - point2._w);
         }

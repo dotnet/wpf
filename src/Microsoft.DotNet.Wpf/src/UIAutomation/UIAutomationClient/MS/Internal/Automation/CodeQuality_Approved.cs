@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -47,7 +47,7 @@ using System.Diagnostics.CodeAnalysis;
 [module: SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Scope = "member", Target = "System.Windows.Automation.Provider.AutomationInteropProvider.RaiseAutomationEvent(System.Windows.Automation.AutomationEvent,System.Windows.Automation.Provider.IRawElementProviderSimple,System.Windows.Automation.AutomationEventArgs):System.Void")]
 [module: SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Scope = "member", Target = "System.Windows.Automation.Automation.PropertyName(System.Windows.Automation.AutomationProperty):System.String")]
 [module: SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Scope = "member", Target = "System.Windows.Automation.Automation.PatternName(System.Windows.Automation.AutomationPattern):System.String")]
-[module: SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix", Scope="type", Target="System.Windows.Automation.AutomationFocusChangedEventArgs")]
+[module: SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix", Scope = "type", Target = "System.Windows.Automation.AutomationFocusChangedEventArgs")]
 // The rule doesn't apply to non-public namespaces
 [module: SuppressMessage("Microsoft.MSInternal", "CA904:DeclareTypesInMicrosoftOrSystemNamespace", Scope = "namespace", Target = "MS.Internal")]
 [module: SuppressMessage("Microsoft.MSInternal", "CA904:DeclareTypesInMicrosoftOrSystemNamespace", Scope = "namespace", Target = "MS.Win32")]
@@ -121,7 +121,7 @@ using System.Diagnostics.CodeAnalysis;
 // Not exposed for V1; Consider this rule for V2
 [module: SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes", Scope = "type", Target = "System.Windows.Automation.ClientSideProviderDescription")]
 // False positives
-[module: SuppressMessage("Microsoft.Reliability", "CA2004:RemoveCallsToGCKeepAlive", Scope="member", Target="System.Windows.Automation.AutomationElement.Find(System.Windows.Automation.TreeScope,System.Windows.Automation.Condition,MS.Internal.Automation.UiaCoreApi+UiaCacheRequest,System.Boolean,System.ComponentModel.BackgroundWorker):MS.Internal.Automation.UiaCoreApi+UiaCacheResponse[]")]
+[module: SuppressMessage("Microsoft.Reliability", "CA2004:RemoveCallsToGCKeepAlive", Scope = "member", Target = "System.Windows.Automation.AutomationElement.Find(System.Windows.Automation.TreeScope,System.Windows.Automation.Condition,MS.Internal.Automation.UiaCoreApi+UiaCacheRequest,System.Boolean,System.ComponentModel.BackgroundWorker):MS.Internal.Automation.UiaCoreApi+UiaCacheResponse[]")]
 // Not required for non-public code
 [module: SuppressMessage("Microsoft.MSInternal", "CA905:SystemAndMicrosoftNamespacesRequireApproval", Scope = "namespace", Target = "System.Windows.Automation")]
 [module: SuppressMessage("Microsoft.MSInternal", "CA905:SystemAndMicrosoftNamespacesRequireApproval", Scope = "namespace", Target = "System.Windows.Automation.Provider")]
@@ -165,8 +165,8 @@ using System.Diagnostics.CodeAnalysis;
 [module: SuppressMessage("Microsoft.Reliability", "CA2006:UseSafeHandleToEncapsulateNativeResources", Scope = "member", Target = "MS.Win32.UnsafeNativeMethods+MOUSEINPUT.dwExtraInfo")]
 
 // The method uses a large switch as a covertion table.  Safe to exclude.
-[module: SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Scope="member", Target="System.Windows.Input.KeyInterop.KeyFromVirtualKey(System.Int32):System.Windows.Input.Key")]
-[module: SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Scope="member", Target="System.Windows.Input.KeyInterop.VirtualKeyFromKey(System.Windows.Input.Key):System.Int32")]
+[module: SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Scope = "member", Target = "System.Windows.Input.KeyInterop.KeyFromVirtualKey(System.Int32):System.Windows.Input.Key")]
+[module: SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Scope = "member", Target = "System.Windows.Input.KeyInterop.VirtualKeyFromKey(System.Windows.Input.Key):System.Int32")]
 
 // SafeHandle is not marshalled when in Structs.  See comments in code.
 [module: SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", Scope = "member", Target = "MS.Internal.Automation.UiaCoreApi.UiaNodeFromFocus(MS.Internal.Automation.UiaCoreApi+UiaCacheRequest):MS.Internal.Automation.UiaCoreApi+UiaCacheResponse", MessageId = "System.Runtime.InteropServices.SafeHandle.DangerousGetHandle")]

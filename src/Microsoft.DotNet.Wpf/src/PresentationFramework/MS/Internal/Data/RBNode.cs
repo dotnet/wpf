@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -526,7 +526,8 @@ namespace MS.Internal.Data
 
         protected void ChangeSize(int delta)
         {
-            if (delta == 0) return;
+            if (delta == 0)
+                return;
 
             // clear slots that are no longer used
             for (int k = Size + delta; k < Size; ++k)
@@ -549,8 +550,10 @@ namespace MS.Internal.Data
             sub.Parent = node.Parent;
             sub.IsRed = node.IsRed;
 
-            if (sub.LeftChild != null) sub.LeftChild.Parent = sub;
-            if (sub.RightChild != null) sub.RightChild.Parent = sub;
+            if (sub.LeftChild != null)
+                sub.LeftChild.Parent = sub;
+            if (sub.RightChild != null)
+                sub.RightChild.Parent = sub;
             return sub;
         }
 
@@ -625,7 +628,8 @@ namespace MS.Internal.Data
             node.IsRed = this.IsRed;
             node.Parent = this.Parent;
             this.RightChild = node.LeftChild;
-            if (this.RightChild != null) this.RightChild.Parent = this;
+            if (this.RightChild != null)
+                this.RightChild.Parent = this;
             node.LeftChild = this;
             this.IsRed = true;
             this.Parent = node;
@@ -639,7 +643,8 @@ namespace MS.Internal.Data
             node.IsRed = this.IsRed;
             node.Parent = this.Parent;
             this.LeftChild = node.RightChild;
-            if (this.LeftChild != null) this.LeftChild.Parent = this;
+            if (this.LeftChild != null)
+                this.LeftChild.Parent = this;
             node.RightChild = this;
             this.IsRed = true;
             this.Parent = node;
@@ -705,7 +710,8 @@ namespace MS.Internal.Data
 
             if (node == null)
             {
-                if (BlackHeight < 0) BlackHeight = blackDepth;
+                if (BlackHeight < 0)
+                    BlackHeight = blackDepth;
                 size = 0;
 
                 if (blackDepth != BlackHeight)
@@ -744,12 +750,12 @@ namespace MS.Internal.Data
 
                 for (int k = 1; k < node.Size; ++k)
                 {
-                    if (comparison(node.GetItemAt(k-1), node.GetItemAt(k)) > 0)
+                    if (comparison(node.GetItemAt(k - 1), node.GetItemAt(k)) > 0)
                         result = false; // k-th item is out of order
                 }
             }
 
-            for (int j=node.Size; j<MaxSize; ++j)
+            for (int j = node.Size; j < MaxSize; ++j)
             {
                 if (!System.Windows.Controls.ItemsControl.EqualsEx(node.GetItemAt(j), default(T)))
                     result = false;     // someone didn't clean up the array
@@ -823,13 +829,13 @@ namespace MS.Internal.Data
 
             index = s.IndexOf(',');         // read Size
             node.Size = Int32.Parse(s.Substring(0, index), TypeConverterHelper.InvariantEnglishUS);
-            s = s.Substring(index+1);
+            s = s.Substring(index + 1);
 
-            for (int k = 0; k < node.Size-1; ++k) // read data
+            for (int k = 0; k < node.Size - 1; ++k) // read data
             {
                 index = s.IndexOf(',');
                 node.SetItemAt(k, AsT(Int32.Parse(s.Substring(0, index), TypeConverterHelper.InvariantEnglishUS)));
-                s = s.Substring(index+1);
+                s = s.Substring(index + 1);
             }
             index = s.IndexOf('(');
             node.SetItemAt(node.Size - 1, AsT(Int32.Parse(s.Substring(0, index), TypeConverterHelper.InvariantEnglishUS)));
@@ -837,8 +843,10 @@ namespace MS.Internal.Data
 
             node.LeftChild = LoadTree(ref s);   // read subtrees
             node.RightChild = LoadTree(ref s);
-            if (node.LeftChild != null) node.LeftChild.Parent = node;
-            if (node.RightChild != null) node.RightChild.Parent = node;
+            if (node.LeftChild != null)
+                node.LeftChild.Parent = node;
+            if (node.RightChild != null)
+                node.RightChild.Parent = node;
 
             s = s.Substring(1);             // skip ')'
 

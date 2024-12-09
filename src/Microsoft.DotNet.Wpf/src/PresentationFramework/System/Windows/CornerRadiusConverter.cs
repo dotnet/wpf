@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -68,8 +68,8 @@ namespace System.Windows
         public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType)
         {
             // We can convert to an InstanceDescriptor or to a string.
-            if (    destinationType == typeof(InstanceDescriptor) 
-                ||  destinationType == typeof(string))
+            if (destinationType == typeof(InstanceDescriptor)
+                || destinationType == typeof(string))
             {
                 return true;
             }
@@ -99,13 +99,15 @@ namespace System.Windows
         {
             if (source != null)
             {
-                if (source is string) { return FromString((string)source, cultureInfo); }
-                else                  { return new CornerRadius(Convert.ToDouble(source, cultureInfo)); }
+                if (source is string)
+                { return FromString((string)source, cultureInfo); }
+                else
+                { return new CornerRadius(Convert.ToDouble(source, cultureInfo)); }
             }
             throw GetConvertFromException(source);
         }
 
-//Workaround for PreSharp bug - it complains about value being possibly null even though there is a check above
+        //Workaround for PreSharp bug - it complains about value being possibly null even though there is a check above
 #pragma warning disable 56506
 
         /// <summary>
@@ -133,12 +135,13 @@ namespace System.Windows
 
             if (!(value is CornerRadius))
             {
-                #pragma warning suppress 6506 // value is obviously not null
+#pragma warning suppress 6506 // value is obviously not null
                 throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(CornerRadius)), "value");
             }
 
             CornerRadius cr = (CornerRadius)value;
-            if (destinationType == typeof(string)) { return ToString(cr, cultureInfo); }
+            if (destinationType == typeof(string))
+            { return ToString(cr, cultureInfo); }
             if (destinationType == typeof(InstanceDescriptor))
             {
                 ConstructorInfo ci = typeof(CornerRadius).GetConstructor(new Type[] { typeof(double), typeof(double), typeof(double), typeof(double) });
@@ -148,7 +151,7 @@ namespace System.Windows
             throw new ArgumentException(SR.Format(SR.CannotConvertType, typeof(CornerRadius), destinationType.FullName));
         }
 
-//Workaround for PreSharp bug - it complains about value being possibly null even though there is a check above
+        //Workaround for PreSharp bug - it complains about value being possibly null even though there is a check above
 #pragma warning restore 56506
 
         #endregion Public Methods

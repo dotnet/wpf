@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -108,7 +108,7 @@ namespace System.Windows.Input
         /// </summary>
         public static RoutedUICommand NextPage
         {
-            get {return _EnsureCommand(CommandId.NextPage);}
+            get { return _EnsureCommand(CommandId.NextPage); }
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace System.Windows.Input
         /// </summary>
         public static RoutedUICommand PreviousPage
         {
-            get {return _EnsureCommand(CommandId.PreviousPage);}
+            get { return _EnsureCommand(CommandId.PreviousPage); }
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace System.Windows.Input
         /// </summary>
         public static RoutedUICommand FirstPage
         {
-            get {return _EnsureCommand(CommandId.FirstPage);}
+            get { return _EnsureCommand(CommandId.FirstPage); }
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace System.Windows.Input
         /// </summary>
         public static RoutedUICommand LastPage
         {
-            get {return _EnsureCommand(CommandId.LastPage);}
+            get { return _EnsureCommand(CommandId.LastPage); }
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace System.Windows.Input
         /// </summary>
         public static RoutedUICommand GoToPage
         {
-            get {return _EnsureCommand(CommandId.GoToPage);}
+            get { return _EnsureCommand(CommandId.GoToPage); }
         }
 
         /// <summary>
@@ -167,22 +167,54 @@ namespace System.Windows.Input
 
             switch (commandId)
             {
-                case CommandId.BrowseBack: propertyName = "BrowseBack"; break;
-                case CommandId.BrowseForward: propertyName = "BrowseForward"; break;
-                case CommandId.BrowseHome: propertyName = "BrowseHome"; break;
-                case CommandId.BrowseStop: propertyName = "BrowseStop"; break;
-                case CommandId.Refresh: propertyName = "Refresh"; break;
-                case CommandId.Favorites: propertyName = "Favorites"; break;
-                case CommandId.Search: propertyName = "Search"; break;
-                case CommandId.IncreaseZoom: propertyName = "IncreaseZoom"; break;
-                case CommandId.DecreaseZoom: propertyName = "DecreaseZoom"; break;
-                case CommandId.Zoom: propertyName = "Zoom"; break;
-                case CommandId.NextPage: propertyName = "NextPage"; break;
-                case CommandId.PreviousPage: propertyName = "PreviousPage"; break;
-                case CommandId.FirstPage: propertyName = "FirstPage"; break;
-                case CommandId.LastPage: propertyName = "LastPage"; break;
-                case CommandId.GoToPage: propertyName = "GoToPage"; break;
-                case CommandId.NavigateJournal: propertyName = "NavigateJournal"; break;
+                case CommandId.BrowseBack:
+                    propertyName = "BrowseBack";
+                    break;
+                case CommandId.BrowseForward:
+                    propertyName = "BrowseForward";
+                    break;
+                case CommandId.BrowseHome:
+                    propertyName = "BrowseHome";
+                    break;
+                case CommandId.BrowseStop:
+                    propertyName = "BrowseStop";
+                    break;
+                case CommandId.Refresh:
+                    propertyName = "Refresh";
+                    break;
+                case CommandId.Favorites:
+                    propertyName = "Favorites";
+                    break;
+                case CommandId.Search:
+                    propertyName = "Search";
+                    break;
+                case CommandId.IncreaseZoom:
+                    propertyName = "IncreaseZoom";
+                    break;
+                case CommandId.DecreaseZoom:
+                    propertyName = "DecreaseZoom";
+                    break;
+                case CommandId.Zoom:
+                    propertyName = "Zoom";
+                    break;
+                case CommandId.NextPage:
+                    propertyName = "NextPage";
+                    break;
+                case CommandId.PreviousPage:
+                    propertyName = "PreviousPage";
+                    break;
+                case CommandId.FirstPage:
+                    propertyName = "FirstPage";
+                    break;
+                case CommandId.LastPage:
+                    propertyName = "LastPage";
+                    break;
+                case CommandId.GoToPage:
+                    propertyName = "GoToPage";
+                    break;
+                case CommandId.NavigateJournal:
+                    propertyName = "NavigateJournal";
+                    break;
             }
             return propertyName;
         }
@@ -193,22 +225,54 @@ namespace System.Windows.Input
 
             switch ((CommandId)commandId)
             {
-                case  CommandId.BrowseBack: uiText = SR.BrowseBackText; break;
-                case  CommandId.BrowseForward: uiText = SR.BrowseForwardText; break;
-                case  CommandId.BrowseHome: uiText = SR.BrowseHomeText; break;
-                case  CommandId.BrowseStop: uiText = SR.BrowseStopText; break;
-                case  CommandId.Refresh: uiText = SR.RefreshText; break;
-                case  CommandId.Favorites: uiText = SR.FavoritesText; break;
-                case  CommandId.Search: uiText = SR.SearchText; break;
-                case  CommandId.IncreaseZoom: uiText = SR.IncreaseZoomText; break;
-                case  CommandId.DecreaseZoom: uiText = SR.DecreaseZoomText; break;
-                case  CommandId.Zoom: uiText = SR.ZoomText; break;
-                case  CommandId.NextPage: uiText = SR.NextPageText; break;
-                case  CommandId.PreviousPage: uiText = SR.PreviousPageText; break;
-                case  CommandId.FirstPage: uiText = SR.FirstPageText; break;
-                case  CommandId.LastPage: uiText = SR.LastPageText; break;
-                case  CommandId.GoToPage: uiText = SR.GoToPageText; break;
-                case  CommandId.NavigateJournal: uiText = SR.NavigateJournalText; break;
+                case CommandId.BrowseBack:
+                    uiText = SR.BrowseBackText;
+                    break;
+                case CommandId.BrowseForward:
+                    uiText = SR.BrowseForwardText;
+                    break;
+                case CommandId.BrowseHome:
+                    uiText = SR.BrowseHomeText;
+                    break;
+                case CommandId.BrowseStop:
+                    uiText = SR.BrowseStopText;
+                    break;
+                case CommandId.Refresh:
+                    uiText = SR.RefreshText;
+                    break;
+                case CommandId.Favorites:
+                    uiText = SR.FavoritesText;
+                    break;
+                case CommandId.Search:
+                    uiText = SR.SearchText;
+                    break;
+                case CommandId.IncreaseZoom:
+                    uiText = SR.IncreaseZoomText;
+                    break;
+                case CommandId.DecreaseZoom:
+                    uiText = SR.DecreaseZoomText;
+                    break;
+                case CommandId.Zoom:
+                    uiText = SR.ZoomText;
+                    break;
+                case CommandId.NextPage:
+                    uiText = SR.NextPageText;
+                    break;
+                case CommandId.PreviousPage:
+                    uiText = SR.PreviousPageText;
+                    break;
+                case CommandId.FirstPage:
+                    uiText = SR.FirstPageText;
+                    break;
+                case CommandId.LastPage:
+                    uiText = SR.LastPageText;
+                    break;
+                case CommandId.GoToPage:
+                    uiText = SR.GoToPageText;
+                    break;
+                case CommandId.NavigateJournal:
+                    uiText = SR.NavigateJournalText;
+                    break;
             }
             return uiText;
         }
@@ -220,97 +284,97 @@ namespace System.Windows.Input
             //Standard Commands
             switch ((CommandId)commandId)
             {
-                case  CommandId.BrowseBack:
+                case CommandId.BrowseBack:
                     KeyGesture.AddGesturesFromResourceStrings(
                         BrowseBackKey,
                         SR.BrowseBackKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.BrowseForward:
+                case CommandId.BrowseForward:
                     KeyGesture.AddGesturesFromResourceStrings(
                         BrowseForwardKey,
                         SR.BrowseForwardKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.BrowseHome:
+                case CommandId.BrowseHome:
                     KeyGesture.AddGesturesFromResourceStrings(
                         BrowseHomeKey,
                         SR.BrowseHomeKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.BrowseStop:
+                case CommandId.BrowseStop:
                     KeyGesture.AddGesturesFromResourceStrings(
                         BrowseStopKey,
                         SR.BrowseStopKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.Refresh:
+                case CommandId.Refresh:
                     KeyGesture.AddGesturesFromResourceStrings(
                         RefreshKey,
                         SR.RefreshKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.Favorites:
+                case CommandId.Favorites:
                     KeyGesture.AddGesturesFromResourceStrings(
                         FavoritesKey,
                         SR.FavoritesKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.Search:
+                case CommandId.Search:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SearchKey,
                         SR.SearchKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.IncreaseZoom:
+                case CommandId.IncreaseZoom:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.IncreaseZoomKey,
                         SR.IncreaseZoomKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.DecreaseZoom:
+                case CommandId.DecreaseZoom:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.DecreaseZoomKey,
                         SR.DecreaseZoomKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.Zoom:
+                case CommandId.Zoom:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.ZoomKey,
                         SR.ZoomKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.NextPage:
+                case CommandId.NextPage:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.NextPageKey,
                         SR.NextPageKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.PreviousPage:
+                case CommandId.PreviousPage:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.PreviousPageKey,
                         SR.PreviousPageKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.FirstPage:
+                case CommandId.FirstPage:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.FirstPageKey,
                         SR.FirstPageKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.LastPage:
+                case CommandId.LastPage:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.LastPageKey,
                         SR.LastPageKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.GoToPage:
+                case CommandId.GoToPage:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.GoToPageKey,
                         SR.GoToPageKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.NavigateJournal:
+                case CommandId.NavigateJournal:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.NavigateJournalKey,
                         SR.NavigateJournalKeyDisplayString,

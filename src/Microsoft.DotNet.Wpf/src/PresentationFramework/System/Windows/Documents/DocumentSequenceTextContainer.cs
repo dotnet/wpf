@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using MS.Internal;
 using MS.Internal.Documents;
-using System.Collections.Specialized;
-using System.Collections.ObjectModel;
 
 //
 // Description:
@@ -311,7 +311,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                #pragma warning suppress 56503
+#pragma warning suppress 56503
                 throw new NotImplementedException();
             }
         }
@@ -525,12 +525,12 @@ namespace System.Windows.Documents
             //if we have at least one document, start and end pointers should be set to valid child blocks not to the placeholders
             if (_parent.References.Count != 0)
             {
-                _start = new DocumentSequenceTextPointer(_doclistHead.NextBlock,  _doclistHead.NextBlock.ChildContainer.Start);
+                _start = new DocumentSequenceTextPointer(_doclistHead.NextBlock, _doclistHead.NextBlock.ChildContainer.Start);
                 _end = new DocumentSequenceTextPointer(_doclistTail.PreviousBlock, _doclistTail.PreviousBlock.ChildContainer.End);
             }
             else
             {
-                _start = new DocumentSequenceTextPointer(_doclistHead,  _doclistHead.ChildContainer.Start);
+                _start = new DocumentSequenceTextPointer(_doclistHead, _doclistHead.ChildContainer.Start);
                 _end = new DocumentSequenceTextPointer(_doclistTail, _doclistTail.ChildContainer.End);
             }
 
@@ -606,38 +606,38 @@ namespace System.Windows.Documents
                 }
                 else
                 {
-                        object item = args.NewItems[0];
-                        int startingIndex = args.NewStartingIndex;
+                    object item = args.NewItems[0];
+                    int startingIndex = args.NewStartingIndex;
 
-                        if (startingIndex != _parent.References.Count - 1)
-                        {
-                            throw new NotSupportedException(SR.Format(SR.UnexpectedCollectionChangeAction, args.Action));
-                        }
+                    if (startingIndex != _parent.References.Count - 1)
+                    {
+                        throw new NotSupportedException(SR.Format(SR.UnexpectedCollectionChangeAction, args.Action));
+                    }
 
-                        ChildDocumentBlock newBlock = new ChildDocumentBlock(this, (DocumentReference)item);
+                    ChildDocumentBlock newBlock = new ChildDocumentBlock(this, (DocumentReference)item);
 
-                        ChildDocumentBlock insertAfter = _doclistTail.PreviousBlock;
-                        insertAfter.InsertNextBlock(newBlock);
-                        DocumentSequenceTextPointer changeStart =
-                            new DocumentSequenceTextPointer(insertAfter, insertAfter.End);
+                    ChildDocumentBlock insertAfter = _doclistTail.PreviousBlock;
+                    insertAfter.InsertNextBlock(newBlock);
+                    DocumentSequenceTextPointer changeStart =
+                        new DocumentSequenceTextPointer(insertAfter, insertAfter.End);
 
-                        //Update end pointer
-                        _end = new DocumentSequenceTextPointer(newBlock, newBlock.ChildContainer.End);
+                    //Update end pointer
+                    _end = new DocumentSequenceTextPointer(newBlock, newBlock.ChildContainer.End);
 
-                        if (newBlock.NextBlock == _doclistTail && newBlock.PreviousBlock == _doclistHead)
-                        {
-                            //Update start pointer for the first block
-                            _start = new DocumentSequenceTextPointer(newBlock,  newBlock.ChildContainer.Start);
-                        }
+                    if (newBlock.NextBlock == _doclistTail && newBlock.PreviousBlock == _doclistHead)
+                    {
+                        //Update start pointer for the first block
+                        _start = new DocumentSequenceTextPointer(newBlock, newBlock.ChildContainer.Start);
+                    }
 
 
-                        // Record Change Notifications
-                        ITextContainer container = newBlock.ChildContainer;
-                        int symbolCount = 1; // takes too long to calculate for large documents, and no one will use this info
+                    // Record Change Notifications
+                    ITextContainer container = newBlock.ChildContainer;
+                    int symbolCount = 1; // takes too long to calculate for large documents, and no one will use this info
 
-                        // this does not affect state, only fires event handlers
-                        AddChange(changeStart, symbolCount, PrecursorTextChangeType.ContentAdded);
-                  }
+                    // this does not affect state, only fires event handlers
+                    AddChange(changeStart, symbolCount, PrecursorTextChangeType.ContentAdded);
+                }
             }
             else
             {
@@ -718,13 +718,13 @@ namespace System.Windows.Documents
             // TextContainer, we fire a change notification.
             //
             int idxScan = 0;
-            DocumentSequenceTextPointer  tsScan  = null;
-            ChildDocumentBlock cdbScan =  null;
-            List<TextSegment>  rangeArray = new List<TextSegment>(4);
+            DocumentSequenceTextPointer tsScan = null;
+            ChildDocumentBlock cdbScan = null;
+            List<TextSegment> rangeArray = new List<TextSegment>(4);
             while (idxScan < args.Ranges.Count)
             {
                 TextSegment ts = (TextSegment)args.Ranges[idxScan];
-                DocumentSequenceTextPointer tsEnd   = (DocumentSequenceTextPointer)ts.End;
+                DocumentSequenceTextPointer tsEnd = (DocumentSequenceTextPointer)ts.End;
                 ITextPointer tpChildStart, tpChildEnd;
                 ChildDocumentBlock lastBlock;
 
@@ -764,7 +764,7 @@ namespace System.Windows.Documents
 
                     // Move on to next block;
                     cdbScan = cdbScan.NextBlock;
-                    tsScan  = new DocumentSequenceTextPointer(cdbScan, cdbScan.ChildContainer.Start);
+                    tsScan = new DocumentSequenceTextPointer(cdbScan, cdbScan.ChildContainer.Start);
                     rangeArray.Clear();
                 }
                 else
@@ -798,11 +798,11 @@ namespace System.Windows.Documents
         //---------------------------------------------------------------------
 
         #region Private Fields
-        private readonly FixedDocumentSequence   _parent;    // The content aggregator, supplied in ctor
+        private readonly FixedDocumentSequence _parent;    // The content aggregator, supplied in ctor
         private DocumentSequenceTextPointer _start;    // Start of the aggregated TextContainer
         private DocumentSequenceTextPointer _end;      // End of the aggregated TextContainer
-        private ChildDocumentBlock  _doclistHead;       // Head of the doubly linked list of child TextContainer entries
-        private ChildDocumentBlock  _doclistTail;       // Tail of the doubly linked list of child TextContainer entries
+        private ChildDocumentBlock _doclistHead;       // Head of the doubly linked list of child TextContainer entries
+        private ChildDocumentBlock _doclistTail;       // Tail of the doubly linked list of child TextContainer entries
         private ITextSelection _textSelection;
 
         // Collection of highlights applied to TextContainer content.
@@ -824,7 +824,7 @@ namespace System.Windows.Documents
 
 #if DEBUG
         // The container generation, increamented whenever container content changes.
-        private uint  _generation;
+        private uint _generation;
         private uint _debugId = (DocumentSequenceTextContainer._debugIdCounter++);
         private static uint _debugIdCounter = 0;
 #endif

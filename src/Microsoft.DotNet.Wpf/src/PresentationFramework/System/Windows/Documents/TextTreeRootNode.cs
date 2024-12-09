@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,8 +6,8 @@
 // Description: The root node of a TextContainer.
 //
 
-using MS.Internal;
 using System.Windows.Threading;
+using MS.Internal;
 
 namespace System.Windows.Documents
 {
@@ -40,9 +40,9 @@ namespace System.Windows.Documents
             // CaretUnitBoundaryCache always starts unset.
             _caretUnitBoundaryCacheOffset = -1;
         }
- 
+
         #endregion Constructors
- 
+
         //------------------------------------------------------
         //
         //  Public Methods
@@ -104,7 +104,7 @@ namespace System.Windows.Documents
             {
                 return null;
             }
-            
+
             set
             {
                 Invariant.Assert(false, "Can't set ParentNode on TextContainer root!");
@@ -118,7 +118,7 @@ namespace System.Windows.Documents
             {
                 return _containedNode;
             }
-            
+
             set
             {
                 _containedNode = (TextTreeNode)value;
@@ -162,7 +162,7 @@ namespace System.Windows.Documents
             {
                 return null;
             }
-            
+
             set
             {
                 Invariant.Assert(false, "TextContainer root never has sibling nodes!");
@@ -176,7 +176,7 @@ namespace System.Windows.Documents
             {
                 return null;
             }
-            
+
             set
             {
                 Invariant.Assert(false, "TextContainer root never has sibling nodes!");
@@ -190,7 +190,7 @@ namespace System.Windows.Documents
             {
                 return _generation;
             }
-            
+
             set
             {
                 _generation = value;
@@ -237,7 +237,7 @@ namespace System.Windows.Documents
             {
                 return 0;
             }
-            
+
             set
             {
                 Invariant.Assert(value == 0, "Bad SymbolOffsetCache on TextContainer root!");
@@ -252,7 +252,7 @@ namespace System.Windows.Documents
             {
                 return _symbolCount;
             }
-            
+
             set
             {
                 Invariant.Assert(value >= 2, "Bad _symbolCount on TextContainer root!");

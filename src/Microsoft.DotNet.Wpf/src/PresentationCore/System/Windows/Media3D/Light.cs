@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -30,7 +30,7 @@ namespace System.Windows.Media.Media3D
         #region Constructors
 
         // Prevent 3rd parties from extending this abstract base class.
-        internal Light() {}
+        internal Light() { }
 
         #endregion Constructors
 
@@ -39,7 +39,7 @@ namespace System.Windows.Media.Media3D
         //  Public Methods
         //
         //------------------------------------------------------
-        
+
         //------------------------------------------------------
         //
         //  Public Properties
@@ -53,12 +53,12 @@ namespace System.Windows.Media.Media3D
             // Lights are considered to be part of the model graph, but they
             // have no geometry and therefore can not be hit tested.            
         }
-        
+
         internal override Rect3D CalculateSubgraphBoundsInnerSpace()
-        { 
+        {
             // Lights are considered to be part of the model graph, but they
             // have no geometry and therefore no bounds.
-            
+
             return Rect3D.Empty;
         }
 

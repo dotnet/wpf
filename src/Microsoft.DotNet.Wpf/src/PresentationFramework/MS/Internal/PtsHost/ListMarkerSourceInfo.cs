@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,11 +8,11 @@
 // This file must always be kept up to date with changes in TextMarkerSource
 //
 
+using System.Text;                // StringBuilder
 using System.Windows;
 using System.Windows.Documents;   // List
-using MS.Internal.Text;
 using System.Windows.Media;       // FormattedText and Brush
-using System.Text;                // StringBuilder
+using MS.Internal.Text;
 
 namespace MS.Internal.PtsHost
 {
@@ -79,10 +79,10 @@ namespace MS.Internal.PtsHost
 
                 // Create new formatted text with typeface using a symbol font, e.g. Wingdings
                 Typeface typeface = DynamicPropertyReader.GetModifiedTypeface(list, new FontFamily("Wingdings"));
-                
+
                 formattedMarker = new FormattedText(markerString, DynamicPropertyReader.GetCultureInfo(list), list.FlowDirection,
                                       typeface, list.FontSize, list.Foreground, pixelsPerDip);
-}
+            }
             else if (IsKnownIndexMarkerStyle(list.MarkerStyle))
             {
                 // Assume at least one element will be added and format accordingly
@@ -246,7 +246,7 @@ namespace MS.Internal.PtsHost
             {
                 // Do quick search by looking only at size increments
                 int thousands = highestIndex / 1000;
-                highestIndex = highestIndex % 1000;            
+                highestIndex = highestIndex % 1000;
                 for (int i = 0; i < RomanNumericSizeIncrements.Length; i++)
                 {
                     Invariant.Assert(highestIndex >= RomanNumericSizeIncrements[i]);
@@ -391,11 +391,11 @@ namespace MS.Internal.PtsHost
 
         private static string[][] RomanNumerics = new string[][]
         {
-            new string[] { "m??", "cdm", "xlc", "ivx" }, 
+            new string[] { "m??", "cdm", "xlc", "ivx" },
             new string[] { "M??", "CDM", "XLC", "IVX" }
         };
 
         private static ReadOnlySpan<int> RomanNumericSizeIncrements => [1, 2, 3, 8, 18, 28, 38, 88, 188, 288, 388, 888];
-}
+    }
 }
 

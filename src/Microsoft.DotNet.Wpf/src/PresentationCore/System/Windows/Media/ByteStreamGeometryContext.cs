@@ -1,14 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // This class is used by the StreamGeometry class to generate an inlined,
 // flattened geometry stream.
 
-using MS.Utility;
-using MS.Internal;
 using System.Runtime.InteropServices;
 using System.Windows.Media.Composition;
+using MS.Internal;
+using MS.Utility;
 
 namespace System.Windows.Media
 {
@@ -38,7 +38,7 @@ namespace System.Windows.Media
         }
 
         #endregion Constructors
-        
+
         #region Public Methods
 
         /// <summary>
@@ -154,9 +154,9 @@ namespace System.Windows.Media
         {
             VerifyApi();
 
-            GenericPolyTo(points, 
-                          isStroked, 
-                          isSmoothJoin, 
+            GenericPolyTo(points,
+                          isStroked,
+                          isSmoothJoin,
                           false /* does not have curves */,
                           1 /* pointCountMultiple */,
                           MIL_SEGMENT_TYPE.MilSegmentPolyLine);
@@ -169,9 +169,9 @@ namespace System.Windows.Media
         {
             VerifyApi();
 
-            GenericPolyTo(points, 
-                          isStroked, 
-                          isSmoothJoin, 
+            GenericPolyTo(points,
+                          isStroked,
+                          isSmoothJoin,
                           true /* has curves */,
                           2 /* pointCountMultiple */,
                           MIL_SEGMENT_TYPE.MilSegmentPolyQuadraticBezier);
@@ -184,9 +184,9 @@ namespace System.Windows.Media
         {
             VerifyApi();
 
-            GenericPolyTo(points, 
-                          isStroked, 
-                          isSmoothJoin, 
+            GenericPolyTo(points,
+                          isStroked,
+                          isSmoothJoin,
                           true /* has curves */,
                           3 /* pointCountMultiple */,
                           MIL_SEGMENT_TYPE.MilSegmentPolyBezier);
@@ -206,8 +206,10 @@ namespace System.Windows.Media
 
             FinishSegment();
 
-            MIL_SEGMENT_ARC arcToSegment = new MIL_SEGMENT_ARC();
-            arcToSegment.Type = MIL_SEGMENT_TYPE.MilSegmentArc;
+            MIL_SEGMENT_ARC arcToSegment = new MIL_SEGMENT_ARC
+            {
+                Type = MIL_SEGMENT_TYPE.MilSegmentArc
+            };
 
             arcToSegment.Flags |= isStroked ? 0 : MILCoreSegFlags.SegIsAGap;
             arcToSegment.Flags |= isSmoothJoin ? MILCoreSegFlags.SegSmoothJoin : 0;
@@ -232,13 +234,13 @@ namespace System.Windows.Media
             _currentPathFigureData.Flags |= isStroked ? 0 : MilPathFigureFlags.HasGaps;
 
             _currentPathFigureData.Flags |= MilPathFigureFlags.HasCurves;
-            
+
             _currentPathFigureData.Count++;
 
             // Always keep the OffsetToLastSegment and Size accurate
             _currentPathFigureData.Size = (UInt32)(_currOffset - _currentPathFigureDataOffset);
 
-            _currentPathFigureData.OffsetToLastSegment = 
+            _currentPathFigureData.OffsetToLastSegment =
                 (UInt32)(offsetToArcToSegment - _currentPathFigureDataOffset);
         }
 
@@ -267,11 +269,11 @@ namespace System.Windows.Media
             _currentPathFigureData.Flags &= ~MilPathFigureFlags.IsClosed;
             _currentPathFigureData.Flags |= isClosed ? MilPathFigureFlags.IsClosed : 0;
         }
-        
+
         #endregion Internal Methods
 
         #region Private Methods
-        
+
         /// <summary>
         /// This verifies that the API can be called at this time. 
         /// </summary>
@@ -286,7 +288,7 @@ namespace System.Windows.Media
         /// CloseCore - This method is implemented by derived classes to hand off the content 
         /// to its eventual destination.
         /// </summary>
-        protected virtual void CloseCore(byte[] geometryData) {}
+        protected virtual void CloseCore(byte[] geometryData) { }
 
         /// <summary>
         /// This is the same as the Close call:
@@ -314,7 +316,7 @@ namespace System.Windows.Media
 
                     fixed (MIL_PATHGEOMETRY* pCurrentPathGeometryData = &_currentPathGeometryData)
                     {
-                        OverwriteData((byte *)pCurrentPathGeometryData, 0, sizeof(MIL_PATHGEOMETRY));
+                        OverwriteData((byte*)pCurrentPathGeometryData, 0, sizeof(MIL_PATHGEOMETRY));
                     }
                 }
 
@@ -326,7 +328,7 @@ namespace System.Windows.Media
             }
         }
 
-/// <summary>
+        /// <summary>
         /// ReadData - reads data from a specified location in the buffer
         /// </summary>
         /// <param name="pbData">
@@ -348,12 +350,12 @@ namespace System.Windows.Media
 
             checked
             {
-                Invariant.Assert(_currOffset >= bufferOffset+cbDataSize);
+                Invariant.Assert(_currOffset >= bufferOffset + cbDataSize);
             }
 
             ReadWriteData(true /* reading */, pbData, cbDataSize, 0, ref bufferOffset);
         }
-        
+
         /// <summary>
         /// OverwriteData - overwrite data in the buffer.
         /// </summary>
@@ -377,7 +379,7 @@ namespace System.Windows.Media
 
             ReadWriteData(false /* writing */, pbData, cbDataSize, 0, ref bufferOffset);
         }
-        
+
         /// <summary>
         /// AppendData - append data to the buffer.
         /// </summary>
@@ -403,11 +405,11 @@ namespace System.Windows.Media
                 _chunkList.Add(chunk);
             }
 
-            ReadWriteData(false /* writing */, pbData, cbDataSize, _chunkList.Count-1, ref _currChunkOffset);
+            ReadWriteData(false /* writing */, pbData, cbDataSize, _chunkList.Count - 1, ref _currChunkOffset);
 
             _currOffset = newOffset;
         }
-        
+
         /// <summary>
         /// ShrinkToFit - Shrink the data to fit in exactly one chunk
         /// </summary>
@@ -418,11 +420,11 @@ namespace System.Windows.Media
             if (_chunkList.Count > 1 ||
                 _chunkList[0].Length != _currOffset)
             {
-                byte [] buffer = new byte[_currOffset];
+                byte[] buffer = new byte[_currOffset];
 
                 unsafe
                 {
-                    fixed (byte *pbData = buffer)
+                    fixed (byte* pbData = buffer)
                     {
                         ReadData(pbData, 0, _currOffset);
                     }
@@ -444,7 +446,7 @@ namespace System.Windows.Media
                 }
             }
         }
-    
+
         /// <summary>
         /// ReadWriteData - read from/write to buffer.
         /// </summary>
@@ -481,7 +483,7 @@ namespace System.Windows.Media
                 {
                     // At this point, _buffer must be non-null and
                     // _buffer.Length must be >= newOffset
-                    Invariant.Assert((_chunkList[currentChunk] != null) 
+                    Invariant.Assert((_chunkList[currentChunk] != null)
                         && (_chunkList[currentChunk].Length >= bufferOffset + cbDataForThisChunk));
 
                     // Also, because pinning a 0-length buffer fails, we assert this too.
@@ -503,14 +505,15 @@ namespace System.Windows.Media
 
                 if (cbDataSize > 0)
                 {
-                    checked {currentChunk++;}
+                    checked
+                    { currentChunk++; }
 
                     if (_chunkList.Count == currentChunk)
                     {
                         Invariant.Assert(!reading);
 
                         // Exponential growth early on. Later, linear growth.
-                        int newChunkSize = Math.Min(2*_chunkList[_chunkList.Count-1].Length, c_maxChunkSize);
+                        int newChunkSize = Math.Min(2 * _chunkList[_chunkList.Count - 1].Length, c_maxChunkSize);
 
                         _chunkList.Add(new byte[newChunkSize]);
                     }
@@ -532,7 +535,7 @@ namespace System.Windows.Media
             if (_currentPathFigureDataOffset != -1)
             {
                 FinishSegment();
-                
+
                 unsafe
                 {
                     // We have to have at least this much data already in the stream
@@ -543,7 +546,7 @@ namespace System.Windows.Media
 
                     fixed (MIL_PATHFIGURE* pCurrentPathFigureData = &_currentPathFigureData)
                     {
-                        OverwriteData((byte *)pCurrentPathFigureData, _currentPathFigureDataOffset, sizeof(MIL_PATHFIGURE));
+                        OverwriteData((byte*)pCurrentPathFigureData, _currentPathFigureDataOffset, sizeof(MIL_PATHFIGURE));
                     }
                 }
 
@@ -583,7 +586,7 @@ namespace System.Windows.Media
 
                     fixed (MIL_SEGMENT_POLY* pCurrentPolySegmentData = &_currentPolySegmentData)
                     {
-                        OverwriteData((byte *)pCurrentPolySegmentData, _currentPolySegmentDataOffset, sizeof(MIL_SEGMENT_POLY));
+                        OverwriteData((byte*)pCurrentPolySegmentData, _currentPolySegmentDataOffset, sizeof(MIL_SEGMENT_POLY));
                     }
 
                     _lastSegmentSize = (UInt32)(sizeof(MIL_SEGMENT_POLY) + (sizeof(Point) * _currentPolySegmentData.Count));
@@ -605,7 +608,7 @@ namespace System.Windows.Media
                 // Always keep the OffsetToLastSegment and Size accurate
                 _currentPathFigureData.Size = (UInt32)(_currOffset - _currentPathFigureDataOffset);
 
-                _currentPathFigureData.OffsetToLastSegment = 
+                _currentPathFigureData.OffsetToLastSegment =
                     (UInt32)(_currentPolySegmentDataOffset - _currentPathFigureDataOffset);
 
                 // Initialize _currentPolySegmentData (this really just 0's out the memory)
@@ -615,7 +618,7 @@ namespace System.Windows.Media
         }
 
         private void GenericPolyTo(IList<Point> points,
-                                   bool isStroked, 
+                                   bool isStroked,
                                    bool isSmoothJoin,
                                    bool hasCurves,
                                    int pointCountMultiple,
@@ -715,7 +718,7 @@ namespace System.Windows.Media
                          (_currentPolySegmentData.Type == segmentType) &&
                          (((_currentPolySegmentData.Flags & MILCoreSegFlags.SegIsAGap) == 0) == isStroked) &&
                          (((_currentPolySegmentData.Flags & MILCoreSegFlags.SegSmoothJoin) != 0) == isSmoothJoin));
-}
+        }
 
         /// <summary>
         /// Grab a pre-allocated chunk (default-sized byte array) from the pool.
@@ -749,12 +752,12 @@ namespace System.Windows.Media
         }
 
         #endregion Private Methods
-        
+
         #region Fields
 
         private bool _disposed;
         private int _currChunkOffset;
-        FrugalStructList<byte []> _chunkList;
+        FrugalStructList<byte[]> _chunkList;
         private int _currOffset;
         private MIL_PATHGEOMETRY _currentPathGeometryData;
         private MIL_PATHFIGURE _currentPathFigureData;
@@ -764,8 +767,8 @@ namespace System.Windows.Media
         private UInt32 _lastSegmentSize = 0;
         private UInt32 _lastFigureSize = 0;
 
-        private const int c_defaultChunkSize = 2*1024;
-        private const int c_maxChunkSize = 1024*1024;
+        private const int c_defaultChunkSize = 2 * 1024;
+        private const int c_maxChunkSize = 1024 * 1024;
 
         [ThreadStatic]
         static byte[] _pooledChunk;

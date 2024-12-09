@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -34,7 +34,7 @@ namespace MS.Internal
         /// <param name="preCallback">the callback to be called before a node's children are visited</param>
         /// <param name="postCallback">the callback to be called after a node's children are visited</param>
         /// <param name="data">the data passed to each callback</param>
-        public PrePostDescendentsWalker(TreeWalkPriority priority, VisitedCallback<T> preCallback, VisitedCallback<T> postCallback, T data) : 
+        public PrePostDescendentsWalker(TreeWalkPriority priority, VisitedCallback<T> preCallback, VisitedCallback<T> postCallback, T data) :
             base(priority, preCallback, data)
         {
             _postCallback = postCallback;
@@ -79,7 +79,7 @@ namespace MS.Internal
         }
 
         #endregion Public Methods
-        
+
         //------------------------------------------------------
         //
         //  Protected Methods
@@ -110,7 +110,7 @@ namespace MS.Internal
         }
 
         #endregion Protected Methods      
-        
+
         //------------------------------------------------------
         //
         //  Private Properties

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -37,7 +37,7 @@ namespace System.Windows.Shapes
         /// Points property
         /// </summary>
         public static readonly DependencyProperty PointsProperty = DependencyProperty.Register(
-                "Points", typeof(PointCollection), typeof(Polyline), 
+                "Points", typeof(PointCollection), typeof(Polyline),
                 new FrameworkPropertyMetadata(new FreezableDefaultValueFactory(PointCollection.Empty), FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
 
         /// <summary>
@@ -59,11 +59,11 @@ namespace System.Windows.Shapes
         /// FillRule property
         /// </summary>
         public static readonly DependencyProperty FillRuleProperty = DependencyProperty.Register(
-            "FillRule", 
-            typeof(FillRule), 
-            typeof(Polyline), 
+            "FillRule",
+            typeof(FillRule),
+            typeof(Polyline),
             new FrameworkPropertyMetadata(
-                FillRule.EvenOdd, 
+                FillRule.EvenOdd,
                 FrameworkPropertyMetadataOptions.AffectsRender),
             new ValidateValueCallback(System.Windows.Media.ValidateEnums.IsFillRuleValid)
             );
@@ -101,7 +101,7 @@ namespace System.Windows.Shapes
         #endregion
 
         #region Internal methods
-        
+
         internal override void CacheDefiningGeometry()
         {
             PointCollection pointCollection = Points;
@@ -159,5 +159,5 @@ namespace System.Windows.Shapes
         private Geometry _polylineGeometry;
 
         #endregion
-   }
+    }
 }

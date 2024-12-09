@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -41,9 +41,9 @@ namespace MS.Win32
         [DllImport("Advapi32.dll", ExactSpelling = true, EntryPoint = "EventRegister", CharSet = System.Runtime.InteropServices.CharSet.Unicode)]
         internal static extern unsafe uint EventRegister(
                     [In] ref Guid providerId,
-                    [In]EtwEnableCallback enableCallback,
-                    [In]void* callbackContext,
-                    [In][Out]ref ulong registrationHandle
+                    [In] EtwEnableCallback enableCallback,
+                    [In] void* callbackContext,
+                    [In][Out] ref ulong registrationHandle
                     );
 
         [DllImport("Advapi32.dll", ExactSpelling = true, EntryPoint = "EventUnregister", CharSet = System.Runtime.InteropServices.CharSet.Unicode)]
@@ -97,7 +97,7 @@ namespace MS.Win32
         internal struct TRACE_GUID_REGISTRATION
         {
             internal unsafe Guid* Guid;
-            
+
             internal unsafe void* RegHandle;
         }
 

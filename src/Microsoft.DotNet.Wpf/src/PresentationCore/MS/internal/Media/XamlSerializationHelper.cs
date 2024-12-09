@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -46,11 +46,11 @@ namespace MS.Internal.Media
     internal class ThreeDoublesMarkup
     {
 
-        internal ThreeDoublesMarkup( double X, double Y, double Z) 
+        internal ThreeDoublesMarkup(double X, double Y, double Z)
         {
-            _x = X; 
-            _y = Y; 
-            _z = Z; 
+            _x = X;
+            _y = Y;
+            _z = Z;
         }
 
         internal double X
@@ -69,18 +69,18 @@ namespace MS.Internal.Media
             }
         }
 
-        internal double Z 
+        internal double Z
         {
             get
             {
                 return _z;
             }
         }
-        
-        double _x ;
-        double _y ; 
-        double _z ; 
-            
+
+        double _x;
+        double _y;
+        double _z;
+
     }
 
     internal struct Point
@@ -95,7 +95,7 @@ namespace MS.Internal.Media
         {
             set
             {
-                _x = value; 
+                _x = value;
             }
             get
             {
@@ -107,7 +107,7 @@ namespace MS.Internal.Media
         {
             set
             {
-                _y = value; 
+                _y = value;
             }
             get
             {
@@ -116,7 +116,7 @@ namespace MS.Internal.Media
         }
 
         private double _x;
-        private double _y;                 
+        private double _y;
     }
 
     internal struct Size
@@ -131,34 +131,34 @@ namespace MS.Internal.Media
         {
             set
             {
-                _width = value; 
+                _width = value;
             }
             get
             {
-                return _width; 
+                return _width;
             }
         }
-        
-        internal double Height            
+
+        internal double Height
         {
             set
             {
-               _height = value; 
+                _height = value;
             }
             get
             {
-                return _height; 
+                return _height;
             }
         }
 
         private double _width;
-        private double _height;                 
+        private double _height;
     }
- 
 
-#endif 
 
-    internal static class XamlSerializationHelper 
+#endif
+
+    internal static class XamlSerializationHelper
     {
         // =====================================================
         // 
@@ -166,16 +166,16 @@ namespace MS.Internal.Media
         // 
         // ======================================================
 
-        
+
 
         internal enum SerializationFloatType : byte
         {
             Unknown = 0,
             Zero = 1,
-            One = 2, 
-            MinusOne = 3, 
+            One = 2,
+            MinusOne = 3,
             ScaledInteger = 4,
-            Double = 5, 
+            Double = 5,
             Other
         }
 
@@ -189,27 +189,27 @@ namespace MS.Internal.Media
         internal static bool SerializePoint3D(BinaryWriter writer, string stringValues)
         {
 #if PBTCOMPILER            
-            List<ThreeDoublesMarkup> point3Ds = ParseThreeDoublesCollection(stringValues, TypeConverterHelper.InvariantEnglishUS); 
-            ThreeDoublesMarkup curPoint; 
+            List<ThreeDoublesMarkup> point3Ds = ParseThreeDoublesCollection(stringValues, TypeConverterHelper.InvariantEnglishUS);
+            ThreeDoublesMarkup curPoint;
 #else
-            Point3DCollection point3Ds = Point3DCollection.Parse( stringValues ) ; 
-            Point3D curPoint ; 
+            Point3DCollection point3Ds = Point3DCollection.Parse(stringValues);
+            Point3D curPoint;
 #endif
 
             // Write out the size.
-            writer.Write( ( uint ) point3Ds.Count  ) ; 
-            
-            // Write out the doubles. 
-            for ( int i = 0; i < point3Ds.Count  ; i ++ ) 
-            {
-                curPoint = point3Ds[i] ;                 
+            writer.Write((uint)point3Ds.Count);
 
-                WriteDouble( writer, curPoint.X); 
-                WriteDouble( writer, curPoint.Y); 
-                WriteDouble( writer, curPoint.Z); 
+            // Write out the doubles. 
+            for (int i = 0; i < point3Ds.Count; i++)
+            {
+                curPoint = point3Ds[i];
+
+                WriteDouble(writer, curPoint.X);
+                WriteDouble(writer, curPoint.Y);
+                WriteDouble(writer, curPoint.Z);
             }
 
-            return true ; 
+            return true;
         }
 
         ///<summary>
@@ -221,29 +221,29 @@ namespace MS.Internal.Media
         internal static bool SerializeVector3D(BinaryWriter writer, string stringValues)
         {
 #if PBTCOMPILER            
-            List<ThreeDoublesMarkup> points = ParseThreeDoublesCollection(stringValues, TypeConverterHelper.InvariantEnglishUS); 
-            ThreeDoublesMarkup curPoint; 
+            List<ThreeDoublesMarkup> points = ParseThreeDoublesCollection(stringValues, TypeConverterHelper.InvariantEnglishUS);
+            ThreeDoublesMarkup curPoint;
 #else
-            Vector3DCollection points = Vector3DCollection.Parse( stringValues ) ;             
-            Vector3D curPoint ; 
+            Vector3DCollection points = Vector3DCollection.Parse(stringValues);
+            Vector3D curPoint;
 #endif
 
             // Write out the size.         
-            writer.Write( ( uint ) points.Count  ) ; 
-            
-            // Write out the doubles. 
-            for ( int i = 0; i < points.Count ; i ++ ) 
-            {
-                curPoint = points[ i ] ;                 
+            writer.Write((uint)points.Count);
 
-                WriteDouble( writer, curPoint.X); 
-                WriteDouble( writer, curPoint.Y); 
-                WriteDouble( writer, curPoint.Z); 
+            // Write out the doubles. 
+            for (int i = 0; i < points.Count; i++)
+            {
+                curPoint = points[i];
+
+                WriteDouble(writer, curPoint.X);
+                WriteDouble(writer, curPoint.Y);
+                WriteDouble(writer, curPoint.Z);
             }
 
-            return true ; 
+            return true;
         }
-        
+
         ///<summary>
         /// Serialize this object using the passed writer in compact BAML binary format.
         ///</summary>
@@ -253,31 +253,31 @@ namespace MS.Internal.Media
         internal static bool SerializePoint(BinaryWriter writer, string stringValue)
         {
 #if PBTCOMPILER            
-            List<Point> points = ParsePointCollection(stringValue, TypeConverterHelper.InvariantEnglishUS); 
-            Point curPoint; 
+            List<Point> points = ParsePointCollection(stringValue, TypeConverterHelper.InvariantEnglishUS);
+            Point curPoint;
 #else
-            PointCollection points = PointCollection.Parse( stringValue ) ; 
-            Point curPoint ; 
+            PointCollection points = PointCollection.Parse(stringValue);
+            Point curPoint;
 #endif
 
             // Write out the size.          
-            writer.Write( ( uint ) points.Count  ) ; 
-            
-            // Write out the doubles. 
-            for ( int i = 0; i < points.Count ; i ++ ) 
-            {
-                curPoint = points[ i ] ;                 
+            writer.Write((uint)points.Count);
 
-                WriteDouble( writer, curPoint.X); 
-                WriteDouble( writer, curPoint.Y); 
+            // Write out the doubles. 
+            for (int i = 0; i < points.Count; i++)
+            {
+                curPoint = points[i];
+
+                WriteDouble(writer, curPoint.X);
+                WriteDouble(writer, curPoint.Y);
             }
 
-            return true ; 
+            return true;
         }
 
-        private const double scaleFactor = 1000000 ; // approx ==  2^20 
-        private const double inverseScaleFactor = 0.000001 ; // approx = 1 / 2^20 
-        
+        private const double scaleFactor = 1000000; // approx ==  2^20 
+        private const double inverseScaleFactor = 0.000001; // approx = 1 / 2^20 
+
         //
         // Write a double into our internal binary format
         //
@@ -285,35 +285,35 @@ namespace MS.Internal.Media
         //  The format is : 
         //          <Byte indicating enum type> ( <4 bytes for scaledinteger> | < 8 bytes for double> )
         //
-        internal static void WriteDouble( BinaryWriter writer, Double value  ) 
+        internal static void WriteDouble(BinaryWriter writer, Double value)
         {
-            if ( value == 0.0 ) 
+            if (value == 0.0)
             {
-                writer.Write( (byte) SerializationFloatType.Zero ) ; 
+                writer.Write((byte)SerializationFloatType.Zero);
             }
-            else if ( value == 1.0 ) 
+            else if (value == 1.0)
             {
-                writer.Write( (byte) SerializationFloatType.One ) ; 
+                writer.Write((byte)SerializationFloatType.One);
             }
-            else if ( value == -1.0 ) 
+            else if (value == -1.0)
             {
-                writer.Write( (byte) SerializationFloatType.MinusOne ) ; 
-            }            
+                writer.Write((byte)SerializationFloatType.MinusOne);
+            }
             else
             {
-                int intValue = 0 ; 
-                
-                if (  CanConvertToInteger( value, ref intValue ) ) 
+                int intValue = 0;
+
+                if (CanConvertToInteger(value, ref intValue))
                 {
-                    writer.Write( (byte) SerializationFloatType.ScaledInteger ) ; 
-                    writer.Write( intValue ) ; 
+                    writer.Write((byte)SerializationFloatType.ScaledInteger);
+                    writer.Write(intValue);
                 }
                 else
                 {
-                    writer.Write( (byte) SerializationFloatType.Double ) ; 
-                    writer.Write( value ) ; 
+                    writer.Write((byte)SerializationFloatType.Double);
+                    writer.Write(value);
                 }
-            }                
+            }
         }
 
 #if !PBTCOMPILER
@@ -321,45 +321,45 @@ namespace MS.Internal.Media
         // Read a double from our internal binary format. 
         //      We assume that the binary reader is at the start of a byte. 
         //          
-        internal static double ReadDouble( BinaryReader reader ) 
+        internal static double ReadDouble(BinaryReader reader)
         {
-            SerializationFloatType type = ( SerializationFloatType ) reader.ReadByte(); 
+            SerializationFloatType type = (SerializationFloatType)reader.ReadByte();
 
-            switch( type ) 
+            switch (type)
             {
-                case SerializationFloatType.Zero :
-                    return 0.0 ; 
+                case SerializationFloatType.Zero:
+                    return 0.0;
 
-                case SerializationFloatType.One :
-                    return 1.0 ; 
+                case SerializationFloatType.One:
+                    return 1.0;
 
-                case SerializationFloatType.MinusOne :
-                    return -1.0 ; 
+                case SerializationFloatType.MinusOne:
+                    return -1.0;
 
-                case SerializationFloatType.ScaledInteger : 
-                    return ReadScaledInteger( reader ); 
+                case SerializationFloatType.ScaledInteger:
+                    return ReadScaledInteger(reader);
 
-                case SerializationFloatType.Double :
-                    return reader.ReadDouble(); 
+                case SerializationFloatType.Double:
+                    return reader.ReadDouble();
 
-                default: 
-                    throw new ArgumentException(SR.FloatUnknownBamlType);                 
+                default:
+                    throw new ArgumentException(SR.FloatUnknownBamlType);
             }
-}
-
-        internal static double ReadScaledInteger(BinaryReader reader )
-        {
-            double value = (double) reader.ReadInt32(); 
-            value = value * inverseScaleFactor ; 
-
-            return value ; 
         }
-        
-#endif                     
+
+        internal static double ReadScaledInteger(BinaryReader reader)
+        {
+            double value = (double)reader.ReadInt32();
+            value = value * inverseScaleFactor;
+
+            return value;
+        }
+
+#endif
 
 #if PBTCOMPILER
 
-        
+
         /// <summary>
         /// Parse - returns an instance converted from the provided string.
         /// <param name="source"> string with Point3DCollection data </param>
@@ -369,8 +369,8 @@ namespace MS.Internal.Media
         {
             TokenizerHelper th = new TokenizerHelper(source, formatProvider);
 
-            
-            List<ThreeDoublesMarkup> resource = new List<ThreeDoublesMarkup>( source.Length/ 8 ) ;  // SWAG the length of the collection. 
+
+            List<ThreeDoublesMarkup> resource = new List<ThreeDoublesMarkup>(source.Length / 8);  // SWAG the length of the collection. 
 
             ThreeDoublesMarkup value;
 
@@ -385,8 +385,8 @@ namespace MS.Internal.Media
             }
 
             return resource;
-        }        
-        
+        }
+
         /// <summary>
         /// Parse - returns an instance converted from the provided string.
         /// <param name="source"> string with Point3DCollection data </param>
@@ -395,8 +395,8 @@ namespace MS.Internal.Media
         private static List<Point> ParsePointCollection(string source, IFormatProvider formatProvider)
         {
             TokenizerHelper th = new TokenizerHelper(source, formatProvider);
-            
-            List<Point> resource = new List<Point>(source.Length/ 8 ); // SWAG the length of the collection. 
+
+            List<Point> resource = new List<Point>(source.Length / 8); // SWAG the length of the collection. 
 
             Point value;
 
@@ -404,13 +404,13 @@ namespace MS.Internal.Media
             {
                 value = new Point(
                     Convert.ToDouble(th.GetCurrentToken(), formatProvider),
-                    Convert.ToDouble(th.NextTokenRequired(), formatProvider) );
+                    Convert.ToDouble(th.NextTokenRequired(), formatProvider));
 
                 resource.Add(value);
             }
 
             return resource;
-        }     
+        }
 #endif
 
         //
@@ -422,30 +422,30 @@ namespace MS.Internal.Media
         //
         //      as a result this routine will convert doubles with six-digits precision  between +/- 2048 
         // 
-        internal static bool CanConvertToInteger( Double doubleValue , ref int intValue ) 
+        internal static bool CanConvertToInteger(Double doubleValue, ref int intValue)
         {
-            double scaledValue ; 
-            double scaledInteger ; 
+            double scaledValue;
+            double scaledInteger;
 
-            scaledValue = doubleValue * scaleFactor ; 
-            scaledInteger = Math.Floor( scaledValue ) ; 
-        
-            if ( !( scaledInteger <= Int32.MaxValue )  // equivalent to scaledInteger > MaxValue, but take care of NaN. 
-                    || 
-                  !( scaledInteger >= Int32.MinValue ) ) // equivalent to scaledInteger < Minvalue but take care of NaN.
+            scaledValue = doubleValue * scaleFactor;
+            scaledInteger = Math.Floor(scaledValue);
+
+            if (!(scaledInteger <= Int32.MaxValue)  // equivalent to scaledInteger > MaxValue, but take care of NaN. 
+                    ||
+                  !(scaledInteger >= Int32.MinValue)) // equivalent to scaledInteger < Minvalue but take care of NaN.
             {
-                return false ; 
+                return false;
             }
-            else if ( ( scaledValue - scaledInteger ) > Double.Epsilon )  
+            else if ((scaledValue - scaledInteger) > Double.Epsilon)
             {
-                return false ;
+                return false;
             }
             else
             {
-                intValue = (int) scaledValue ; 
-                
-                return true ; 
-            }                     
+                intValue = (int)scaledValue;
+
+                return true;
+            }
         }
-}
+    }
 }

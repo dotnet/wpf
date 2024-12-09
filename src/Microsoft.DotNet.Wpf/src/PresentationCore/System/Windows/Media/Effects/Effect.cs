@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,12 +17,12 @@ namespace System.Windows.Media.Effects
             // the implicit input if the exact color matches.  Note that this
             // color will be matched in native code that recognized
             // ImplicitInput, so don't change.
-            
+
             // This specific brush is used as a placeholder for the implicit input 
             // texture. This is a little hacky, but *way* easier than adding a new 
             // Brush subclass for the implicit input and having it work properly 
             // as a real brush.
-            
+
             ImplicitInput = new ImplicitInputBrush();
             ImplicitInput.Freeze();
         }
@@ -82,13 +82,13 @@ namespace System.Windows.Media.Effects
                                                                     Rect worldBounds)
         {
             GeneralTransform result;
-            
+
             // First, if the gt is identity, just return it straight away.
             if (gt == Transform.Identity)
             {
                 result = Transform.Identity;
             }
-            else 
+            else
             {
                 // Maintain an MRU cache of GeneralTransforms with exactly one in
                 // it.  May want to extend in the future.  Note that this will
@@ -112,9 +112,9 @@ namespace System.Windows.Media.Effects
         {
             return new Point(
                 worldBounds.Left + unitPoint.X * worldBounds.Width,
-                worldBounds.Top  + unitPoint.Y * worldBounds.Height);
+                worldBounds.Top + unitPoint.Y * worldBounds.Height);
         }
-        
+
         internal static Point? UnitToWorld(Point unitPoint, Rect worldBounds)
         {
             return worldBounds.IsEmpty ? null : new Nullable<Point>(UnitToWorldUnsafe(unitPoint, worldBounds));
@@ -129,12 +129,12 @@ namespace System.Windows.Media.Effects
 
             return new Point(
                 (worldPoint.X - worldBounds.Left) / worldBounds.Width,
-                (worldPoint.Y - worldBounds.Top)  / worldBounds.Height);
+                (worldPoint.Y - worldBounds.Top) / worldBounds.Height);
         }
 
         internal static Rect UnitToWorld(Rect unitRect, Rect worldBounds)
         {
-            return worldBounds.IsEmpty 
+            return worldBounds.IsEmpty
                 ? Rect.Empty
                 : new Rect(UnitToWorldUnsafe(unitRect.TopLeft, worldBounds),
                                 UnitToWorldUnsafe(unitRect.BottomRight, worldBounds));
@@ -144,7 +144,7 @@ namespace System.Windows.Media.Effects
         {
             Point? tl = WorldToUnit(worldRect.TopLeft, worldBounds);
             Point? br = WorldToUnit(worldRect.BottomRight, worldBounds);
-            
+
             if (tl == null || br == null)
             {
                 return null;
@@ -153,7 +153,7 @@ namespace System.Windows.Media.Effects
             return new Rect(tl.Value, br.Value);
         }
 
-        
+
         // Private GeneralTransform subclass that's all about transforming from
         // and to the unit square.
         private class UnitSpaceCoercingGeneralTransform : GeneralTransform
@@ -167,7 +167,7 @@ namespace System.Windows.Media.Effects
 
             public override GeneralTransform Inverse
             {
-                get 
+                get
                 {
                     if (_inverseTransform == null)
                     {
@@ -186,10 +186,10 @@ namespace System.Windows.Media.Effects
                 // point to the point transformer.
                 Point topLeftResult = new Point();
                 Point bottomRightResult = new Point();
-                
+
                 bool ok = TryTransform(rect.TopLeft, out topLeftResult)
                        && TryTransform(rect.BottomRight, out bottomRightResult);
-                
+
                 if (!ok)
                 {
                     return Rect.Empty;
@@ -251,17 +251,17 @@ namespace System.Windows.Media.Effects
                 {
                     result = _innerTransform;
                 }
-                
+
                 return result;
             }
-            
+
             private readonly Rect _worldBounds;
             private readonly GeneralTransform _innerTransform;
             private GeneralTransform _innerTransformInverse = null;
             private bool _isInverse;
             private UnitSpaceCoercingGeneralTransform _inverseTransform = null;
         }
-        
+
 
         // Stores the "cache" of bounds x inner transform -> world space transform.
         private Rect _mruWorldBounds = Rect.Empty;

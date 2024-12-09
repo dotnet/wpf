@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -62,9 +62,9 @@ namespace System.Windows
 
 
         // Clone a copy of this expression (this is used by Freezable.Copy)
-        internal override Expression Copy( DependencyObject targetObject, DependencyProperty targetDP )
+        internal override Expression Copy(DependencyObject targetObject, DependencyProperty targetDP)
         {
-            return new ResourceReferenceExpression( ResourceKey );
+            return new ResourceReferenceExpression(ResourceKey);
         }
 
 
@@ -205,9 +205,10 @@ namespace System.Windows
             _targetObject = d;
             _targetProperty = dp;
 
-            FrameworkObject fo = new FrameworkObject(_targetObject);
-
-            fo.HasResourceReference = true;
+            FrameworkObject fo = new FrameworkObject(_targetObject)
+            {
+                HasResourceReference = true
+            };
 
             if (!fo.IsValid)
             {
@@ -406,7 +407,7 @@ namespace System.Windows
                 //  to listen to its changed event in order to properly update
                 //  the cache.
                 Freezable resourceAsFreezable = resource as Freezable;
-                if( resourceAsFreezable != null && !resourceAsFreezable.IsFrozen )
+                if (resourceAsFreezable != null && !resourceAsFreezable.IsFrozen)
                 {
                     if (_weakContainerRRE == null)
                     {
@@ -509,12 +510,12 @@ namespace System.Windows
         [Flags]
         private enum InternalState : byte
         {
-            Default                       = 0x00,
-            HasCachedResourceValue        = 0x01,
-            IsMentorCacheValid            = 0x02,
+            Default = 0x00,
+            HasCachedResourceValue = 0x01,
+            IsMentorCacheValid = 0x02,
             DisableThrowOnResourceFailure = 0x04,
-            IsListeningForFreezableChanges= 0x08,
-            IsListeningForInflated        = 0x10,
+            IsListeningForFreezableChanges = 0x08,
+            IsListeningForInflated = 0x10,
         }
 
         #region ResourceReferenceExpressionWeakContainer
@@ -526,7 +527,7 @@ namespace System.Windows
         private class ResourceReferenceExpressionWeakContainer : WeakReference
         {
             public ResourceReferenceExpressionWeakContainer(ResourceReferenceExpression target)
-                : base(target) {}
+                : base(target) { }
 
             private void InvalidateTargetSubProperty(object sender, EventArgs args)
             {

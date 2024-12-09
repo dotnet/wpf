@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 using System.ComponentModel;
-using System.Windows.Threading;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls.Primitives;
+using System.Windows.Threading;
 using MS.Internal.KnownBoxes;
 
 namespace System.Windows.Controls
@@ -152,7 +152,7 @@ namespace System.Windows.Controls
 
         private static void OnIsOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ToolTip t = (ToolTip) d;
+            ToolTip t = (ToolTip)d;
 
             if ((bool)e.NewValue)
             {
@@ -182,7 +182,7 @@ namespace System.Windows.Controls
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public bool IsOpen
         {
-            get { return (bool) GetValue(IsOpenProperty); }
+            get { return (bool)GetValue(IsOpenProperty); }
             set { SetValue(IsOpenProperty, value); }
         }
 
@@ -238,7 +238,7 @@ namespace System.Windows.Controls
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public UIElement PlacementTarget
         {
-            get { return (UIElement) GetValue(PlacementTargetProperty); }
+            get { return (UIElement)GetValue(PlacementTargetProperty); }
             set { SetValue(PlacementTargetProperty, value); }
         }
 
@@ -261,7 +261,7 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Layout")]
         public Rect PlacementRectangle
         {
-            get { return (Rect) GetValue(PlacementRectangleProperty); }
+            get { return (Rect)GetValue(PlacementRectangleProperty); }
             set { SetValue(PlacementRectangleProperty, value); }
         }
 
@@ -285,7 +285,7 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Layout")]
         public PlacementMode Placement
         {
-            get { return (PlacementMode) GetValue(PlacementProperty); }
+            get { return (PlacementMode)GetValue(PlacementProperty); }
             set { SetValue(PlacementProperty, value); }
         }
 
@@ -303,7 +303,7 @@ namespace System.Windows.Controls
         [Bindable(false), Category("Layout")]
         public CustomPopupPlacementCallback CustomPopupPlacementCallback
         {
-            get { return (CustomPopupPlacementCallback) GetValue(CustomPopupPlacementCallbackProperty); }
+            get { return (CustomPopupPlacementCallback)GetValue(CustomPopupPlacementCallbackProperty); }
             set { SetValue(CustomPopupPlacementCallbackProperty, value); }
         }
 
@@ -322,7 +322,7 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Behavior")]
         public bool StaysOpen
         {
-            get { return (bool) GetValue(StaysOpenProperty); }
+            get { return (bool)GetValue(StaysOpenProperty); }
             set { SetValue(StaysOpenProperty, value); }
         }
 
@@ -414,7 +414,7 @@ namespace System.Windows.Controls
 
         #region Protected Methods
 
-         /// <summary>
+        /// <summary>
         ///     Change to the correct visual state for the ButtonBase.
         /// </summary>
         /// <param name="useTransitions">
@@ -431,7 +431,7 @@ namespace System.Windows.Controls
             {
                 VisualStateManager.GoToState(this, VisualStates.StateClosed, useTransitions);
             }
-                        
+
             base.ChangeVisualState(useTransitions);
         }
 
@@ -483,7 +483,7 @@ namespace System.Windows.Controls
             // complaining that the ServiceOwned ToolTip is wrapping another nested ToolTip. The condition here 
             // detects this case and merely dismisses the old ToolTip and displays the new ToolTip instead thus 
             // avoiding the use of a wrapper ToolTip.
-            
+
             if (this == popupControlService.CurrentToolTip &&
                 (bool)GetValue(PopupControlService.ServiceOwnedProperty) &&
                 newContent is ToolTip)
@@ -500,13 +500,14 @@ namespace System.Windows.Controls
         {
             Debug.Assert(_parentPopup == null, "_parentPopup should be null");
 
-            _parentPopup = new Popup();
+            _parentPopup = new Popup
+            {
+                AllowsTransparency = true,
 
-            _parentPopup.AllowsTransparency = true;
-
-            // When StaysOpen is true (default), make the popup window WS_EX_Transparent
-            // to allow mouse input to go through the tooltip
-            _parentPopup.HitTestable = !StaysOpen;
+                // When StaysOpen is true (default), make the popup window WS_EX_Transparent
+                // to allow mouse input to go through the tooltip
+                HitTestable = !StaysOpen
+            };
 
             // Coerce HasDropShadow property in case popup can't be transparent
             CoerceValue(HasDropShadowProperty);
@@ -546,7 +547,7 @@ namespace System.Windows.Controls
                 if (peer != null)
                 {
                     // We raise the event async to allow PopupRoot to hookup
-                    Dispatcher.BeginInvoke(DispatcherPriority.Input, new DispatcherOperationCallback(delegate(object param)
+                    Dispatcher.BeginInvoke(DispatcherPriority.Input, new DispatcherOperationCallback(delegate (object param)
                     {
                         peer.RaiseAutomationEvent(AutomationEvents.ToolTipOpened);
                         return null;

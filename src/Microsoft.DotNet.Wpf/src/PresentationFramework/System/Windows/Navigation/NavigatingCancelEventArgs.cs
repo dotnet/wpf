@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -30,10 +30,10 @@ namespace System.Windows.Navigation
         // <param name="uri">URI of the markup page being navigated to.</param>
         // <param name="content">Root of the element tree being navigated to.</param>
         // <param name="navigationMode">Enum {New, Back, Forward, Refresh}</param>
-	    // <param name="Naviagtor">navigator that raised this event</param>
+        // <param name="Naviagtor">navigator that raised this event</param>
         internal NavigatingCancelEventArgs(
             Uri uri, Object content, CustomContentState customContentState,
-            Object extraData, NavigationMode navigationMode, 
+            Object extraData, NavigationMode navigationMode,
             WebRequest request, object Navigator, bool isNavInitiator)
         {
             _uri = uri;
@@ -145,7 +145,7 @@ namespace System.Windows.Navigation
             {
                 return _isNavInitiator;
             }
-        }        
+        }
 
         /// <summary>
         /// The navigator that raised this event
@@ -158,13 +158,13 @@ namespace System.Windows.Navigation
             }
         }
 
-	    private Uri _uri;
+        private Uri _uri;
         private Object _content;
         private CustomContentState _targetContentState, _contentStateToSave;
         private Object _extraData;
         private NavigationMode _navigationMode;
         private WebRequest _webRequest;
         private bool _isNavInitiator;
-	    object _navigator;
+        object _navigator;
     }
 }

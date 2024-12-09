@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -41,7 +41,7 @@ namespace System.Windows.Automation.Peers
             // Hence need to remove it from children collection.
             if (Owner is IFlowDocumentViewer && children != null && children.Count > 0)
             {
-                if (children[children.Count-1] is DocumentAutomationPeer)
+                if (children[children.Count - 1] is DocumentAutomationPeer)
                 {
                     children.RemoveAt(children.Count - 1);
                     if (children.Count == 0)

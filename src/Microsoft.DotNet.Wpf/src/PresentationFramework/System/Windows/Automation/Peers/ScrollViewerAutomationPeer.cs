@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,9 +14,9 @@ namespace System.Windows.Automation.Peers
     public class ScrollViewerAutomationPeer : FrameworkElementAutomationPeer, IScrollProvider
     {
         ///
-        public ScrollViewerAutomationPeer(ScrollViewer owner): base(owner)
-        {}
-    
+        public ScrollViewerAutomationPeer(ScrollViewer owner) : base(owner)
+        { }
+
         ///
         override protected string GetClassNameCore()
         {
@@ -73,7 +73,7 @@ namespace System.Windows.Automation.Peers
         /// <see cref="IScrollProvider.Scroll"/>
         void IScrollProvider.Scroll(ScrollAmount horizontalAmount, ScrollAmount verticalAmount)
         {
-            if(!IsEnabled())
+            if (!IsEnabled())
                 throw new ElementNotEnabledException();
 
             bool scrollHorizontally = (horizontalAmount != ScrollAmount.NoAmount);
@@ -136,7 +136,7 @@ namespace System.Windows.Automation.Peers
         /// <see cref="IScrollProvider.SetScrollPercent"/>
         void IScrollProvider.SetScrollPercent(double horizontalPercent, double verticalPercent)
         {
-            if(!IsEnabled())
+            if (!IsEnabled())
                 throw new ElementNotEnabledException();
 
             bool scrollHorizontally = (horizontalPercent != (double)ScrollPatternIdentifiers.NoScroll);
@@ -176,7 +176,8 @@ namespace System.Windows.Automation.Peers
         {
             get
             {
-                if (!HorizontallyScrollable) { return ScrollPatternIdentifiers.NoScroll; }
+                if (!HorizontallyScrollable)
+                { return ScrollPatternIdentifiers.NoScroll; }
                 ScrollViewer owner = (ScrollViewer)Owner;
                 return (double)(owner.HorizontalOffset * 100.0 / (owner.ExtentWidth - owner.ViewportWidth));
             }
@@ -190,7 +191,8 @@ namespace System.Windows.Automation.Peers
         {
             get
             {
-                if (!VerticallyScrollable) { return ScrollPatternIdentifiers.NoScroll; }
+                if (!VerticallyScrollable)
+                { return ScrollPatternIdentifiers.NoScroll; }
                 ScrollViewer owner = (ScrollViewer)Owner;
                 return (double)(owner.VerticalOffset * 100.0 / (owner.ExtentHeight - owner.ViewportHeight));
             }
@@ -205,7 +207,8 @@ namespace System.Windows.Automation.Peers
             get
             {
                 ScrollViewer owner = (ScrollViewer)Owner;
-                if (owner.ScrollInfo == null || DoubleUtil.IsZero(owner.ExtentWidth)) { return 100.0; }
+                if (owner.ScrollInfo == null || DoubleUtil.IsZero(owner.ExtentWidth))
+                { return 100.0; }
                 return Math.Min(100.0, (double)(owner.ViewportWidth * 100.0 / owner.ExtentWidth));
             }
         }
@@ -219,7 +222,8 @@ namespace System.Windows.Automation.Peers
             get
             {
                 ScrollViewer owner = (ScrollViewer)Owner;
-                if (owner.ScrollInfo == null || DoubleUtil.IsZero(owner.ExtentHeight)) { return 100f; }
+                if (owner.ScrollInfo == null || DoubleUtil.IsZero(owner.ExtentHeight))
+                { return 100f; }
                 return Math.Min(100.0, (double)(owner.ViewportHeight * 100.0 / owner.ExtentHeight));
             }
         }
@@ -244,36 +248,38 @@ namespace System.Windows.Automation.Peers
 
         private static bool AutomationIsScrollable(double extent, double viewport)
         {
-            return DoubleUtil.GreaterThan(extent, viewport); 
+            return DoubleUtil.GreaterThan(extent, viewport);
         }
 
         private static double AutomationGetScrollPercent(double extent, double viewport, double actualOffset)
         {
-            if (!AutomationIsScrollable(extent, viewport)) { return ScrollPatternIdentifiers.NoScroll; }
+            if (!AutomationIsScrollable(extent, viewport))
+            { return ScrollPatternIdentifiers.NoScroll; }
             return (double)(actualOffset * 100.0 / (extent - viewport));
         }
 
         private static double AutomationGetViewSize(double extent, double viewport)
         {
-            if (DoubleUtil.IsZero(extent)) { return 100.0; }
+            if (DoubleUtil.IsZero(extent))
+            { return 100.0; }
             return Math.Min(100.0, (double)(viewport * 100.0 / extent));
         }
 
         // Private *Scrollable properties used to determine scrollability for IScrollProvider implemenation.
         private bool HorizontallyScrollable
         {
-            get 
-            { 
+            get
+            {
                 ScrollViewer owner = (ScrollViewer)Owner;
-                return owner.ScrollInfo != null && DoubleUtil.GreaterThan(owner.ExtentWidth, owner.ViewportWidth); 
+                return owner.ScrollInfo != null && DoubleUtil.GreaterThan(owner.ExtentWidth, owner.ViewportWidth);
             }
         }
         private bool VerticallyScrollable
         {
-            get 
-            { 
+            get
+            {
                 ScrollViewer owner = (ScrollViewer)Owner;
-                return owner.ScrollInfo != null && DoubleUtil.GreaterThan(owner.ExtentHeight, owner.ViewportHeight); 
+                return owner.ScrollInfo != null && DoubleUtil.GreaterThan(owner.ExtentHeight, owner.ViewportHeight);
             }
         }
 
@@ -288,47 +294,47 @@ namespace System.Windows.Automation.Peers
                                           double offsetY)
         {
             IScrollProvider isp = (IScrollProvider)this;
-            
+
             if (AutomationIsScrollable(extentX, viewportX) != isp.HorizontallyScrollable)
             {
                 RaisePropertyChangedEvent(
-                    ScrollPatternIdentifiers.HorizontallyScrollableProperty, 
-                    AutomationIsScrollable(extentX, viewportX), 
+                    ScrollPatternIdentifiers.HorizontallyScrollableProperty,
+                    AutomationIsScrollable(extentX, viewportX),
                     isp.HorizontallyScrollable);
             }
             if (AutomationIsScrollable(extentY, viewportY) != isp.VerticallyScrollable)
             {
                 RaisePropertyChangedEvent(
-                    ScrollPatternIdentifiers.VerticallyScrollableProperty, 
-                    AutomationIsScrollable(extentY, viewportY), 
+                    ScrollPatternIdentifiers.VerticallyScrollableProperty,
+                    AutomationIsScrollable(extentY, viewportY),
                     isp.VerticallyScrollable);
             }
             if (AutomationGetViewSize(extentX, viewportX) != isp.HorizontalViewSize)
             {
                 RaisePropertyChangedEvent(
-                    ScrollPatternIdentifiers.HorizontalViewSizeProperty, 
-                    AutomationGetViewSize(extentX, viewportX), 
+                    ScrollPatternIdentifiers.HorizontalViewSizeProperty,
+                    AutomationGetViewSize(extentX, viewportX),
                     isp.HorizontalViewSize);
             }
             if (AutomationGetViewSize(extentY, viewportY) != isp.VerticalViewSize)
             {
                 RaisePropertyChangedEvent(
-                    ScrollPatternIdentifiers.VerticalViewSizeProperty, 
-                    AutomationGetViewSize(extentY, viewportY), 
+                    ScrollPatternIdentifiers.VerticalViewSizeProperty,
+                    AutomationGetViewSize(extentY, viewportY),
                     isp.VerticalViewSize);
             }
             if (AutomationGetScrollPercent(extentX, viewportX, offsetX) != isp.HorizontalScrollPercent)
             {
                 RaisePropertyChangedEvent(
-                    ScrollPatternIdentifiers.HorizontalScrollPercentProperty, 
-                    AutomationGetScrollPercent(extentX, viewportX, offsetX), 
+                    ScrollPatternIdentifiers.HorizontalScrollPercentProperty,
+                    AutomationGetScrollPercent(extentX, viewportX, offsetX),
                     isp.HorizontalScrollPercent);
             }
             if (AutomationGetScrollPercent(extentY, viewportY, offsetY) != isp.VerticalScrollPercent)
             {
                 RaisePropertyChangedEvent(
-                    ScrollPatternIdentifiers.VerticalScrollPercentProperty, 
-                    AutomationGetScrollPercent(extentY, viewportY, offsetY), 
+                    ScrollPatternIdentifiers.VerticalScrollPercentProperty,
+                    AutomationGetScrollPercent(extentY, viewportY, offsetY),
                     isp.VerticalScrollPercent);
             }
         }

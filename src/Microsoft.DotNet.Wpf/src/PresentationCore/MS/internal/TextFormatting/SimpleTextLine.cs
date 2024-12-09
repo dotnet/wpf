@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,10 +9,10 @@
 //
 //
 
+using System.Collections;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
-using System.Collections;
 
 namespace MS.Internal.TextFormatting
 {
@@ -31,36 +31,36 @@ namespace MS.Internal.TextFormatting
     /// </summary>
     internal class SimpleTextLine : TextLine
     {
-        private SimpleRun[]             _runs;                  // contained runs
-        private int                     _cpFirst;               // line first cp
-        private int                     _cpLength;              // all characters
-        private int                     _cpLengthEOT;           // newline characters
-        private double                  _widthAtTrailing;       // width excluding trailing space
-        private double                  _width;                 // whole width
-        private double                  _paragraphWidth;        // paragraph width
-        private double                  _height;                // line height
-        private double                  _offset;                // offset to the first character
-        private int                     _idealOffsetUnRounded;  // unrounded offset to the first character in ideal units.
-                                                                // This offset is not snapped to pixels in Display mode.
-                                                                // The reason we use this variable is to achieve similar
-                                                                // results to those obtained from full shaping.
-                                                                // In computing the baseline origin, the full shaping
-                                                                // path rounds the sum of the offsets.
-                                                                // Thus we need to keep track of the unrounded offset using
-                                                                // this variable.
-        private double                  _baselineOffset;        // offset to baseline
-        private int                     _trailing;              // trailing spaces
-        private Rect                    _boundingBox;           // line bounding rectangle
-        private StatusFlags             _statusFlags;           // status flags
-        private FormatSettings          _settings;              // formatting settings (only kept in an overflowed line for collapsing purpose only)
+        private SimpleRun[] _runs;                  // contained runs
+        private int _cpFirst;               // line first cp
+        private int _cpLength;              // all characters
+        private int _cpLengthEOT;           // newline characters
+        private double _widthAtTrailing;       // width excluding trailing space
+        private double _width;                 // whole width
+        private double _paragraphWidth;        // paragraph width
+        private double _height;                // line height
+        private double _offset;                // offset to the first character
+        private int _idealOffsetUnRounded;  // unrounded offset to the first character in ideal units.
+                                            // This offset is not snapped to pixels in Display mode.
+                                            // The reason we use this variable is to achieve similar
+                                            // results to those obtained from full shaping.
+                                            // In computing the baseline origin, the full shaping
+                                            // path rounds the sum of the offsets.
+                                            // Thus we need to keep track of the unrounded offset using
+                                            // this variable.
+        private double _baselineOffset;        // offset to baseline
+        private int _trailing;              // trailing spaces
+        private Rect _boundingBox;           // line bounding rectangle
+        private StatusFlags _statusFlags;           // status flags
+        private FormatSettings _settings;              // formatting settings (only kept in an overflowed line for collapsing purpose only)
 
 
         [Flags]
         private enum StatusFlags
         {
-            None                = 0,
+            None = 0,
             BoundingBoxComputed = 0x00000001,   // bounding box has been computed
-            HasOverflowed       = 0x00000002,   // line width overflows paragraph width
+            HasOverflowed = 0x00000002,   // line width overflows paragraph width
         }
 
 
@@ -76,18 +76,18 @@ namespace MS.Internal.TextFormatting
         /// This method breaks line using Ideal width such that it will be
         /// consistent with FullTextLine
         /// </remarks>
-        static public TextLine  Create(
-            FormatSettings          settings,
-            int                     cpFirst,
-            int                     paragraphWidth,
-            double                  pixelsPerDip
+        static public TextLine Create(
+            FormatSettings settings,
+            int cpFirst,
+            int paragraphWidth,
+            double pixelsPerDip
             )
         {
             ParaProp pap = settings.Pap;
 
-            if(    pap.RightToLeft
+            if (pap.RightToLeft
                 || pap.Justify
-                || (   pap.FirstLineInParagraph
+                || (pap.FirstLineInParagraph
                     && pap.TextMarkerProperties != null)
                 || settings.TextIndent != 0
                 || pap.ParagraphIndent != 0
@@ -120,16 +120,16 @@ namespace MS.Internal.TextFormatting
                 );
 
 
-            if(run == null)
+            if (run == null)
             {
                 // fail to create run e.g. complex content encountered
                 return null;
             }
-            else if(!run.EOT && run.IdealWidth <= widthLeft)
+            else if (!run.EOT && run.IdealWidth <= widthLeft)
             {
                 // create next run
                 cp += run.Length;
-                widthLeft               -= run.IdealWidth;
+                widthLeft -= run.IdealWidth;
                 idealRunOffsetUnRounded += run.IdealWidth;
                 prev = run;
 
@@ -143,7 +143,7 @@ namespace MS.Internal.TextFormatting
                     pixelsPerDip
                     );
 
-                if(run == null)
+                if (run == null)
                 {
                     return null;
                 }
@@ -153,14 +153,14 @@ namespace MS.Internal.TextFormatting
             int trailing = 0;
             ArrayList runs = new ArrayList(2);
 
-            if(prev != null)
+            if (prev != null)
             {
                 AddRun(runs, prev, ref nonHiddenLength);
             }
 
             do
             {
-                if(!run.EOT && run.IdealWidth > widthLeft)
+                if (!run.EOT && run.IdealWidth > widthLeft)
                 {
                     // linebreaking required, even simple text requires classification-based linebreaking,
                     // we'll now let LS handle this line.
@@ -181,10 +181,10 @@ namespace MS.Internal.TextFormatting
 
                 prev = run;
                 cp += run.Length;
-                widthLeft               -= run.IdealWidth;
+                widthLeft -= run.IdealWidth;
                 idealRunOffsetUnRounded += run.IdealWidth;
 
-                if(run.EOT)
+                if (run.EOT)
                 {
                     // we're done
                     break;
@@ -200,8 +200,8 @@ namespace MS.Internal.TextFormatting
                     pixelsPerDip
                     );
 
-                if(    run == null
-                    || (   run.Underline != null
+                if (run == null
+                    || (run.Underline != null
                         && prev != null
                         && prev.Underline != null
                         && !prev.IsUnderlineCompatible(run))
@@ -211,7 +211,7 @@ namespace MS.Internal.TextFormatting
                     // runs cannot support averaging underline
                     return null;
                 }
-} while(true);
+            } while (true);
 
             int trailingSpaceWidth = 0;
 
@@ -250,12 +250,12 @@ namespace MS.Internal.TextFormatting
         /// behavior is consistent with the FullTextLine
         /// </Remarks>
         public SimpleTextLine(
-            FormatSettings          settings,
-            int                     cpFirst,
-            int                     paragraphWidth,
-            ArrayList               runs,
-            ref int                 trailing,
-            ref int                 trailingSpaceWidth,
+            FormatSettings settings,
+            int cpFirst,
+            int paragraphWidth,
+            ArrayList runs,
+            ref int trailing,
+            ref int trailingSpaceWidth,
             double pixelsPerDip
             ) : base(pixelsPerDip)
         {
@@ -272,13 +272,13 @@ namespace MS.Internal.TextFormatting
             TextFormatterImp formatter = settings.Formatter;
 
             int idealWidth = 0;
-            while(count < runs.Count)
+            while (count < runs.Count)
             {
                 SimpleRun run = (SimpleRun)runs[count];
 
-                if(run.Length > 0)
+                if (run.Length > 0)
                 {
-                    if(run.EOT)
+                    if (run.EOT)
                     {
                         // EOT run has no effect on height, it is part of trailing spaces
                         trailing += run.Length;
@@ -317,7 +317,7 @@ namespace MS.Internal.TextFormatting
                 _height = formatter.IdealToReal(TextFormatterImp.RealToIdeal(realAscent) + TextFormatterImp.RealToIdeal(realDescent), PixelsPerDip);
             }
 
-            if(_height <= 0)
+            if (_height <= 0)
             {
                 //  line is empty (containing only EOP)
                 //  we need to work out the line height
@@ -330,7 +330,7 @@ namespace MS.Internal.TextFormatting
             // Initialize the array of runs and set the TrimTrailingUnderline flag
             // for runs that contain trailing spaces at the end of the line.
             _runs = new SimpleRun[count];
-            for(int i = count - 1, t = trailing; i >= 0; --i)
+            for (int i = count - 1, t = trailing; i >= 0; --i)
             {
                 SimpleRun run = (SimpleRun)runs[i];
 
@@ -348,9 +348,9 @@ namespace MS.Internal.TextFormatting
 
             int idealWidthAtTrailing = idealWidth - trailingSpaceWidth;
 
-            if(pap.Align != TextAlignment.Left)
+            if (pap.Align != TextAlignment.Left)
             {
-                switch(pap.Align)
+                switch (pap.Align)
                 {
                     case TextAlignment.Right:
                         _idealOffsetUnRounded = paragraphWidth - idealWidthAtTrailing;
@@ -381,7 +381,7 @@ namespace MS.Internal.TextFormatting
         /// <summary>
         /// Nothing to release
         /// </summary>
-        public override void Dispose() {}
+        public override void Dispose() { }
 
 
         /// <summary>
@@ -392,10 +392,10 @@ namespace MS.Internal.TextFormatting
         /// <param name="trailing">trailing spaces</param>
         /// <param name="trailingSpaceWidth">trailing spaces width in ideal values</param>
         static private void CollectTrailingSpaces(
-            ArrayList           runs,
-            TextFormatterImp    formatter,
-            ref int             trailing,
-            ref int             trailingSpaceWidth
+            ArrayList runs,
+            TextFormatterImp formatter,
+            ref int trailing,
+            ref int trailingSpaceWidth
             )
         {
             int left = runs != null ? runs.Count : 0;
@@ -403,7 +403,7 @@ namespace MS.Internal.TextFormatting
             SimpleRun run = null;
             bool continueCollecting = true;
 
-            while(left > 0 && continueCollecting)
+            while (left > 0 && continueCollecting)
             {
                 run = (SimpleRun)runs[--left];
 
@@ -420,12 +420,12 @@ namespace MS.Internal.TextFormatting
         /// Collecting glyph runs
         /// </summary>
         static private void AddRun(
-            ArrayList       runs,
-            SimpleRun       run,
-            ref int         nonHiddenLength
+            ArrayList runs,
+            SimpleRun run,
+            ref int nonHiddenLength
             )
         {
-            if(run.Length > 0)
+            if (run.Length > 0)
             {
                 // dont add 0-length run
                 runs.Add(run);
@@ -449,11 +449,11 @@ namespace MS.Internal.TextFormatting
             int idealAdvance = 0;
             int dcp = currentIndex - _cpFirst;
 
-            foreach(SimpleRun run in _runs)
+            foreach (SimpleRun run in _runs)
             {
                 idealAdvance += run.DistanceFromDcp(dcp);
 
-                if(dcp <= run.Length)
+                if (dcp <= run.Length)
                 {
                     break;
                 }
@@ -473,9 +473,9 @@ namespace MS.Internal.TextFormatting
         /// <param name="origin">drawing origin</param>
         /// <param name="inversion">indicate the inversion of the drawing surface</param>
         public override void Draw(
-            DrawingContext      drawingContext,
-            Point               origin,
-            InvertAxes          inversion
+            DrawingContext drawingContext,
+            Point origin,
+            InvertAxes inversion
             )
         {
             ArgumentNullException.ThrowIfNull(drawingContext);
@@ -512,7 +512,7 @@ namespace MS.Internal.TextFormatting
         /// </summary>
         /// <param name="collapsingPropertiesList">a list of collapsing properties</param>
         public override TextLine Collapse(
-            params TextCollapsingProperties[]   collapsingPropertiesList
+            params TextCollapsingProperties[] collapsingPropertiesList
             )
         {
             if (!HasOverflowed)
@@ -572,7 +572,7 @@ namespace MS.Internal.TextFormatting
         /// <returns>a drawing bounding box</returns>
         private void DrawTextLine(
             DrawingContext drawingContext,
-            Point          origin
+            Point origin
             )
         {
             if (_runs.Length <= 0)
@@ -616,7 +616,7 @@ namespace MS.Internal.TextFormatting
                 }
             }
 
-            if(boundingBox.IsEmpty)
+            if (boundingBox.IsEmpty)
             {
                 boundingBox = new Rect(Start, 0, 0, 0);
             }
@@ -639,7 +639,7 @@ namespace MS.Internal.TextFormatting
         /// <param name="distance">distance in text flow direction from the beginning of the line</param>
         /// <returns>character hit</returns>
         public override CharacterHit GetCharacterHitFromDistance(
-            double      distance
+            double distance
             )
         {
             int idealAdvance = TextFormatterImp.RealToIdeal(distance) - _idealOffsetUnRounded;
@@ -655,7 +655,7 @@ namespace MS.Internal.TextFormatting
             SimpleRun run = null;
             CharacterHit runIndex = new CharacterHit();
 
-            for(int i = 0; i < _runs.Length;  i++)
+            for (int i = 0; i < _runs.Length; i++)
             {
                 run = (SimpleRun)_runs[i];
 
@@ -685,7 +685,7 @@ namespace MS.Internal.TextFormatting
         /// <param name="characterHit">character hit of the character to query the distance.</param>
         /// <returns>distance in text flow direction from the beginning of the line.</returns>
         public override double GetDistanceFromCharacterHit(
-            CharacterHit    characterHit
+            CharacterHit characterHit
             )
         {
             TextFormatterImp.VerifyCaretCharacterHit(characterHit, _cpFirst, _cpLength);
@@ -699,7 +699,7 @@ namespace MS.Internal.TextFormatting
         /// <param name="characterHit">the current character hit</param>
         /// <returns>the next character hit</returns>
         public override CharacterHit GetNextCaretCharacterHit(
-            CharacterHit    characterHit
+            CharacterHit characterHit
             )
         {
             TextFormatterImp.VerifyCaretCharacterHit(characterHit, _cpFirst, _cpLength);
@@ -734,7 +734,7 @@ namespace MS.Internal.TextFormatting
         /// <param name="characterHit">the current character hit</param>
         /// <returns>the previous character hit</returns>
         public override CharacterHit GetPreviousCaretCharacterHit(
-            CharacterHit    characterHit
+            CharacterHit characterHit
             )
         {
             TextFormatterImp.VerifyCaretCharacterHit(characterHit, _cpFirst, _cpLength);
@@ -779,7 +779,7 @@ namespace MS.Internal.TextFormatting
         /// <param name="characterHit">the current character hit</param>
         /// <returns>the character hit after backspacing</returns>
         public override CharacterHit GetBackspaceCaretCharacterHit(
-            CharacterHit    characterHit
+            CharacterHit characterHit
             )
         {
             // same operation as move-to-previous
@@ -794,8 +794,8 @@ namespace MS.Internal.TextFormatting
         /// <param name="textLength">number of characters of the specified range</param>
         /// <returns>an array of bounding rectangles.</returns>
         public override IList<TextBounds> GetTextBounds(
-            int     firstTextSourceCharacterIndex,
-            int     textLength
+            int firstTextSourceCharacterIndex,
+            int textLength
             )
         {
             ArgumentOutOfRangeException.ThrowIfZero(textLength);
@@ -832,13 +832,13 @@ namespace MS.Internal.TextFormatting
 
             boundsList = new List<TextRunBounds>(2);
 
-            foreach(SimpleRun run in _runs)
+            foreach (SimpleRun run in _runs)
             {
-                if(     !run.EOT
-                    &&  !run.Ghost
-                    &&  ich + run.Length > dcp)
+                if (!run.EOT
+                    && !run.Ghost
+                    && ich + run.Length > dcp)
                 {
-                    if(ich >= dcp + textLength)
+                    if (ich >= dcp + textLength)
                         break;
 
                     int first = Math.Max(ich, dcp) + _cpFirst;
@@ -908,7 +908,7 @@ namespace MS.Internal.TextFormatting
             Point start = new Point(0, 0);
             int currentCp = _cpFirst;
 
-            foreach(SimpleRun run in _runs)
+            foreach (SimpleRun run in _runs)
             {
                 if (run.Length > 0 && !run.Ghost)
                 {
@@ -1266,7 +1266,7 @@ namespace MS.Internal.TextFormatting
             )
         {
             Invariant.Assert(cp >= _cpFirst && cp < _cpFirst + _cpLength);
-            cpRunStart= _cpFirst;
+            cpRunStart = _cpFirst;
             runIndex = 0;
 
             // Find the span that contains the given cp
@@ -1284,12 +1284,12 @@ namespace MS.Internal.TextFormatting
     internal sealed class SimpleRun
     {
         public CharacterBufferReference CharBufferReference;    // character buffer reference
-        public int                      Length;                 // CP length
-        public int[]                    NominalAdvances;        // nominal glyph advance widths in ideal units
-        public int                      IdealWidth;             // Ideal width of the line. Use ideal width to be consistent with FullTextLine in linebreaking
-        public TextRun                  TextRun;                // text run
-        public TextDecoration           Underline;              // only support single underline
-        public Flags                    RunFlags;               // run flags
+        public int Length;                 // CP length
+        public int[] NominalAdvances;        // nominal glyph advance widths in ideal units
+        public int IdealWidth;             // Ideal width of the line. Use ideal width to be consistent with FullTextLine in linebreaking
+        public TextRun TextRun;                // text run
+        public TextDecoration Underline;              // only support single underline
+        public Flags RunFlags;               // run flags
 
         private TextFormatterImp _textFormatterImp;
         private double _pixelsPerDip;
@@ -1297,11 +1297,11 @@ namespace MS.Internal.TextFormatting
         [Flags]
         internal enum Flags : ushort
         {
-            None                  = 0,
-            EOT                   = 0x0001,   // end-of-text mark
-            Ghost                 = 0x0002,   // non-existence run - only consume cp
+            None = 0,
+            EOT = 0x0001,   // end-of-text mark
+            Ghost = 0x0002,   // non-existence run - only consume cp
             TrimTrailingUnderline = 0x0004,   // trailing whitespace should not be underlined
-            Tab                   = 0x0008,   // run representing Tab character
+            Tab = 0x0008,   // run representing Tab character
         }
 
         internal bool EOT
@@ -1390,13 +1390,13 @@ namespace MS.Internal.TextFormatting
         /// <param name="idealRunOffsetUnRounded">run's offset from the beginning of the line</param>
         /// <returns>a SimpleRun object</returns>
         static public SimpleRun Create(
-            FormatSettings          settings,
-            int                     cp,
-            int                     cpFirst,
-            int                     widthLeft,
-            int                     widthMax,
-            int                     idealRunOffsetUnRounded,
-            double                  pixelsPerDip
+            FormatSettings settings,
+            int cp,
+            int cpFirst,
+            int widthLeft,
+            int widthMax,
+            int idealRunOffsetUnRounded,
+            double pixelsPerDip
             )
         {
             TextRun textRun;
@@ -1437,23 +1437,23 @@ namespace MS.Internal.TextFormatting
         /// <param name="idealRunOffsetUnRounded">run's offset from the beginning of the line</param>
         /// <returns>a SimpleRun object</returns>
         static public SimpleRun Create(
-            FormatSettings          settings,
-            CharacterBufferRange    charString,
-            TextRun                 textRun,
-            int                     cp,
-            int                     cpFirst,
-            int                     runLength,
-            int                     widthLeft,
-            int                     idealRunOffsetUnRounded,
-            double                  pixelsPerDip
+            FormatSettings settings,
+            CharacterBufferRange charString,
+            TextRun textRun,
+            int cp,
+            int cpFirst,
+            int runLength,
+            int widthLeft,
+            int idealRunOffsetUnRounded,
+            double pixelsPerDip
             )
         {
             SimpleRun run = null;
 
             if (textRun is TextCharacters)
             {
-                if (    textRun.Properties.BaselineAlignment != BaselineAlignment.Baseline
-                    ||  (textRun.Properties.TextEffects != null && textRun.Properties.TextEffects.Count != 0)
+                if (textRun.Properties.BaselineAlignment != BaselineAlignment.Baseline
+                    || (textRun.Properties.TextEffects != null && textRun.Properties.TextEffects.Count != 0)
                     )
                 {
                     // fast path does not handle the following conditions
@@ -1464,9 +1464,9 @@ namespace MS.Internal.TextFormatting
 
                 TextDecorationCollection textDecorations = textRun.Properties.TextDecorations;
 
-                if (    textDecorations != null
-                    &&  textDecorations.Count != 0
-                    &&  !textDecorations.ValueEquals(TextDecorations.Underline))
+                if (textDecorations != null
+                    && textDecorations.Count != 0
+                    && !textDecorations.ValueEquals(TextDecorations.Underline))
                 {
                     // we only support a single underline
                     return null;
@@ -1518,7 +1518,7 @@ namespace MS.Internal.TextFormatting
                             TextRun mergedTextRun = new TextCharacters(characterArray, 0, lengthOfRun, textRun.Properties);
                             return new SimpleRun(lengthOfRun, mergedTextRun, (Flags.EOT | Flags.Ghost), settings.Formatter, pixelsPerDip);
                         }
-}
+                    }
                     return new SimpleRun(runLength, textRun, (Flags.EOT | Flags.Ghost), settings.Formatter, pixelsPerDip);
                 }
                 else if (charString[0] == TextStore.CharLineFeed)
@@ -1554,7 +1554,7 @@ namespace MS.Internal.TextFormatting
                 }
 
                 // Check for underline condition
-                if (textDecorations != null && textDecorations.Count == 1 )
+                if (textDecorations != null && textDecorations.Count == 1)
                 {
                     run.Underline = textDecorations[0];
                 }
@@ -1610,8 +1610,10 @@ namespace MS.Internal.TextFormatting
             // a complex character, we need to do the same thing as the full shaping path and draw a space for each tab.
             TextRun modifedTextRun = new TextCharacters(" ", textRun.Properties);
             CharacterBufferRange characterBufferRange = new CharacterBufferRange(modifedTextRun);
-            SimpleRun run = new SimpleRun(1, modifedTextRun, Flags.Tab, settings.Formatter, pixelsPerDip);
-            run.CharBufferReference = characterBufferRange.CharacterBufferReference;
+            SimpleRun run = new SimpleRun(1, modifedTextRun, Flags.Tab, settings.Formatter, pixelsPerDip)
+            {
+                CharBufferReference = characterBufferRange.CharacterBufferReference
+            };
             run.TextRun.Properties.Typeface.GetCharacterNominalWidthsAndIdealWidth(
                     characterBufferRange,
                     run.EmSize,
@@ -1638,7 +1640,7 @@ namespace MS.Internal.TextFormatting
         /// in the simple shaping path.
         /// </summary>
         static private bool CanProcessTabsInSimpleShapingPath(
-            ParaProp           textParagraphProperties,
+            ParaProp textParagraphProperties,
             TextFormattingMode textFormattingMode
             )
         {
@@ -1650,20 +1652,22 @@ namespace MS.Internal.TextFormatting
         /// returning null if the specified text run cannot be correctly formatted as simple run
         /// </summary>
         static internal SimpleRun CreateSimpleTextRun(
-            CharacterBufferRange    charBufferRange,
-            TextRun                 textRun,
-            TextFormatterImp        formatter,
-            int                     widthLeft,
-            bool                    emergencyWrap,
-            bool                    breakOnTabs,
-            double                  pixelsPerDip
+            CharacterBufferRange charBufferRange,
+            TextRun textRun,
+            TextFormatterImp formatter,
+            int widthLeft,
+            bool emergencyWrap,
+            bool breakOnTabs,
+            double pixelsPerDip
             )
         {
             Invariant.Assert(textRun is TextCharacters);
 
-            SimpleRun run = new SimpleRun(formatter, pixelsPerDip);
-            run.CharBufferReference = charBufferRange.CharacterBufferReference;
-            run.TextRun = textRun;
+            SimpleRun run = new SimpleRun(formatter, pixelsPerDip)
+            {
+                CharBufferReference = charBufferRange.CharacterBufferReference,
+                TextRun = textRun
+            };
 
             if (!run.TextRun.Properties.Typeface.CheckFastPathNominalGlyphs(
                 charBufferRange,
@@ -1709,9 +1713,9 @@ namespace MS.Internal.TextFormatting
         /// <param name="textRun">text run</param>
         /// <param name="flags">run flags</param>
         private SimpleRun(
-            int              length,
-            TextRun          textRun,
-            Flags            flags,
+            int length,
+            TextRun textRun,
+            Flags flags,
             TextFormatterImp textFormatterImp,
             double pixelsPerDip
             )
@@ -1729,10 +1733,10 @@ namespace MS.Internal.TextFormatting
         /// </summary>
         /// <returns>drawing bounding box</returns>
         internal Rect Draw(
-            DrawingContext      drawingContext,
-            double              x,
-            double              y,
-            bool                visiCodePath
+            DrawingContext drawingContext,
+            double x,
+            double y,
+            bool visiCodePath
             )
         {
             if (Length <= 0 || this.Ghost)
@@ -1742,11 +1746,11 @@ namespace MS.Internal.TextFormatting
 
             Brush foregroundBrush = TextRun.Properties.ForegroundBrush;
 
-            if(visiCodePath && foregroundBrush is SolidColorBrush)
+            if (visiCodePath && foregroundBrush is SolidColorBrush)
             {
                 Color color = ((SolidColorBrush)foregroundBrush).Color;
                 foregroundBrush = new SolidColorBrush(Color.FromArgb(
-                    (byte)(color.A>>2), // * 0.25
+                    (byte)(color.A >> 2), // * 0.25
                     color.R,
                     color.G,
                     color.B
@@ -1893,17 +1897,17 @@ namespace MS.Internal.TextFormatting
         /// <returns>continue collecting the previous run?</returns>
         internal bool CollectTrailingSpaces(
             TextFormatterImp formatter,
-            ref int          trailing,
-            ref int          trailingSpaceWidth
+            ref int trailing,
+            ref int trailingSpaceWidth
             )
         {
             // As we are collecting trailing space cp, we also collect the trailing space width.
             // In Full text line, TrailingSpaceWidth = ToReal(Sumof(ToIdeal(glyphsWidths));
             // we do the same thing here so that trailing space width is exactly the same
             // as Full Text Line.
-            if(Ghost)
+            if (Ghost)
             {
-                if(!EOT)
+                if (!EOT)
                 {
                     trailing += Length;
                     trailingSpaceWidth += IdealWidth;
@@ -1949,7 +1953,7 @@ namespace MS.Internal.TextFormatting
 
         internal bool IsUnderlineCompatible(SimpleRun nextRun)
         {
-            return     Typeface.Equals(nextRun.Typeface)
+            return Typeface.Equals(nextRun.Typeface)
                     && EmSize == nextRun.EmSize
                     && Baseline == nextRun.Baseline;
         }
@@ -1969,7 +1973,7 @@ namespace MS.Internal.TextFormatting
 
             int idealDistance = 0;
 
-            for(int i = 0; i < dcp; i++)
+            for (int i = 0; i < dcp; i++)
             {
                 idealDistance += NominalAdvances[i];
             }

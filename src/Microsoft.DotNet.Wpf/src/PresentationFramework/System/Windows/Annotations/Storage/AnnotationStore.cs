@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,7 +22,7 @@ namespace System.Windows.Annotations.Storage
         //  Constructors
         //
         //------------------------------------------------------
-        
+
         #region Constructors
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace System.Windows.Annotations.Storage
         //  Public Methods
         //
         //------------------------------------------------------
-        
+
         #region Public Methods     
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace System.Windows.Annotations.Storage
         /// </summary>
         /// <exception cref="ObjectDisposedException">if object has been disposed</exception>
         /// <returns>annotations list. Can return an empty list, but never null.</returns>
-        public abstract IList <Annotation> GetAnnotations();
+        public abstract IList<Annotation> GetAnnotations();
 
         /// <summary>
         /// Finds annotation by Id
@@ -110,7 +110,7 @@ namespace System.Windows.Annotations.Storage
         /// </remarks>
         /// <exception cref="ObjectDisposedException">if object has been disposed</exception>
         /// <seealso cref="AutoFlush"/>
-        public abstract void Flush();                
+        public abstract void Flush();
 
         /// <summary>
         ///     Disposes of any managed and unmanaged resources used by this
@@ -129,7 +129,7 @@ namespace System.Windows.Annotations.Storage
         //  Public Operators
         //
         //------------------------------------------------------
-        
+
         //------------------------------------------------------
         //
         //  Public Properties
@@ -293,7 +293,7 @@ namespace System.Windows.Annotations.Storage
             // Ignore null resources added to an annotation
             if (args.Resource == null)
                 return;
-            
+
             lock (SyncRoot)
             {
                 cargoChanged = CargoChanged;
@@ -344,7 +344,7 @@ namespace System.Windows.Annotations.Storage
         //------------------------------------------------------
 
         #region Protected Properties
- 
+
         /// <summary>
         /// This object should be used for synchronization
         /// by all AnnotationStore implementations
@@ -369,7 +369,7 @@ namespace System.Windows.Annotations.Storage
                 return _disposed;
             }
         }
-        
+
         #endregion Protected Properties
 
         //------------------------------------------------------

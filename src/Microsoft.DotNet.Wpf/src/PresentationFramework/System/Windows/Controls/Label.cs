@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,9 +8,9 @@
 * Implements label control.
 *
 \***************************************************************************/
+using System.ComponentModel;
 using System.Windows.Input;
 using System.Windows.Markup;
-using System.ComponentModel;
 using MS.Internal.Telemetry.PresentationFramework;
 
 namespace System.Windows.Controls
@@ -35,7 +35,7 @@ namespace System.Windows.Controls
         //  Constructors
         //
         //------------------------------------------------------
-        
+
         #region Constructors
         /// <summary>
         /// Static constructor
@@ -80,11 +80,11 @@ namespace System.Windows.Controls
         /// </summary>
         public static readonly DependencyProperty TargetProperty =
                 DependencyProperty.Register(
-                        "Target", 
-                        typeof(UIElement), 
+                        "Target",
+                        typeof(UIElement),
                         typeof(Label),
                         new FrameworkPropertyMetadata(
-                                (UIElement) null,
+                                (UIElement)null,
                                 new PropertyChangedCallback(OnTargetChanged)));
 
         /// <summary>
@@ -95,16 +95,16 @@ namespace System.Windows.Controls
         [TypeConverter(typeof(NameReferenceConverter))]
         public UIElement Target
         {
-            get { return (UIElement) GetValue(TargetProperty); }
+            get { return (UIElement)GetValue(TargetProperty); }
             set { SetValue(TargetProperty, value); }
         }
 
         private static void OnTargetChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Label label = (Label) d;
+            Label label = (Label)d;
 
-            UIElement oldElement = (UIElement) e.OldValue;
-            UIElement newElement = (UIElement) e.NewValue;
+            UIElement oldElement = (UIElement)e.OldValue;
+            UIElement newElement = (UIElement)e.NewValue;
 
             // If the Target property has changed, set the LabeledByProperty on 
             // the new Target and clear the LabeledByProperty on the old Target.
@@ -132,9 +132,9 @@ namespace System.Windows.Controls
         /// </summary>
         private static readonly DependencyProperty LabeledByProperty =
                 DependencyProperty.RegisterAttached(
-                        "LabeledBy", 
-                        typeof(Label), 
-                        typeof(Label), 
+                        "LabeledBy",
+                        typeof(Label),
+                        typeof(Label),
                         new FrameworkPropertyMetadata((Label)null));
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// Creates AutomationPeer (<see cref="UIElement.OnCreateAutomationPeer"/>)
         /// </summary>
-        protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() 
+        protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer()
         {
             return new System.Windows.Automation.Peers.LabelAutomationPeer(this);
         }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -31,7 +31,7 @@ namespace System.Windows.Xps
         /// <param name="message"></param>
         public
         XpsException(
-            string              message
+            string message
             )
             : base(message)
         {
@@ -44,8 +44,8 @@ namespace System.Windows.Xps
         /// <param name="innerException"></param>
         public
         XpsException(
-            string              message,
-            Exception           innerException
+            string message,
+            Exception innerException
             )
             : base(message, innerException)
         {
@@ -59,8 +59,8 @@ namespace System.Windows.Xps
 #pragma warning disable SYSLIB0051 // Type or member is obsolete
         protected
         XpsException(
-            SerializationInfo   info,
-            StreamingContext    context
+            SerializationInfo info,
+            StreamingContext context
             )
             : base(info, context)
         {

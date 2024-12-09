@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,10 +9,10 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
 using System.ComponentModel;
 using System.Windows.Markup;
 using System.Windows.Media.Media3D.Converters;
+using MS.Internal;
 // These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows.Media.Media3D
@@ -44,7 +44,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         /// <param name='quaternion1'>The first Quaternion to compare</param>
         /// <param name='quaternion2'>The second Quaternion to compare</param>
-        public static bool operator == (Quaternion quaternion1, Quaternion quaternion2)
+        public static bool operator ==(Quaternion quaternion1, Quaternion quaternion2)
         {
             if (quaternion1.IsDistinguishedIdentity || quaternion2.IsDistinguishedIdentity)
             {
@@ -70,7 +70,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         /// <param name='quaternion1'>The first Quaternion to compare</param>
         /// <param name='quaternion2'>The second Quaternion to compare</param>
-        public static bool operator != (Quaternion quaternion1, Quaternion quaternion2)
+        public static bool operator !=(Quaternion quaternion1, Quaternion quaternion2)
         {
             return !(quaternion1 == quaternion2);
         }
@@ -86,7 +86,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         /// <param name='quaternion1'>The first Quaternion to compare</param>
         /// <param name='quaternion2'>The second Quaternion to compare</param>
-        public static bool Equals (Quaternion quaternion1, Quaternion quaternion2)
+        public static bool Equals(Quaternion quaternion1, Quaternion quaternion2)
         {
             if (quaternion1.IsDistinguishedIdentity || quaternion2.IsDistinguishedIdentity)
             {
@@ -120,7 +120,7 @@ namespace System.Windows.Media.Media3D
             }
 
             Quaternion value = (Quaternion)o;
-            return Quaternion.Equals(this,value);
+            return Quaternion.Equals(this, value);
         }
 
         /// <summary>

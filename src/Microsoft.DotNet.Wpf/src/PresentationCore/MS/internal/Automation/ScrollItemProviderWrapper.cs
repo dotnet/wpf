@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,9 +9,9 @@
 //
 //
 
-using System.Windows.Threading;
-using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
+using System.Windows.Automation.Provider;
+using System.Windows.Threading;
 
 namespace MS.Internal.Automation
 {
@@ -28,14 +28,14 @@ namespace MS.Internal.Automation
     // * private methods - one for each interface entry point - which get called back
     //   on the right context. These call through to the peer that's actually
     //   implenting the I...Provider version of the interface. 
-    internal class ScrollItemProviderWrapper: MarshalByRefObject, IScrollItemProvider
+    internal class ScrollItemProviderWrapper : MarshalByRefObject, IScrollItemProvider
     {
         //------------------------------------------------------
         //
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         private ScrollItemProviderWrapper(AutomationPeer peer, IScrollItemProvider iface)
@@ -52,12 +52,12 @@ namespace MS.Internal.Automation
         //  Interface IInvokeProvider
         //
         //------------------------------------------------------
- 
+
         #region Interface IScrollItemProvider
 
         public void ScrollIntoView()
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( ScrollIntoView ), null );
+            ElementUtil.Invoke(_peer, new DispatcherOperationCallback(ScrollIntoView), null);
         }
 
         #endregion Interface IScrollItemProvider
@@ -68,10 +68,10 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
-        internal static object Wrap( AutomationPeer peer, object iface )
+        internal static object Wrap(AutomationPeer peer, object iface)
         {
             return new ScrollItemProviderWrapper(peer, (IScrollItemProvider)iface);
         }
@@ -83,7 +83,7 @@ namespace MS.Internal.Automation
         //  Private Methods
         //
         //------------------------------------------------------
- 
+
         #region Private Methods
 
         private object ScrollIntoView(object unused)
@@ -100,7 +100,7 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private AutomationPeer _peer;

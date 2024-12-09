@@ -1,11 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.IO;
-using System.Globalization;
 using System.Diagnostics;
-
+using System.Globalization;
+using System.IO;
 using MS.Internal.IO.Packaging.CompoundFile;
 
 #if PBTCOMPILER
@@ -59,7 +58,7 @@ namespace System.Windows.Markup
 
 
 #if !PBTCOMPILER
-        internal void  LoadVersion(BinaryReader bamlBinaryReader)
+        internal void LoadVersion(BinaryReader bamlBinaryReader)
         {
 #if DEBUG
             long posStart = bamlBinaryReader.BaseStream.Position;
@@ -69,7 +68,7 @@ namespace System.Windows.Markup
 
 #if DEBUG
             long posEnd = bamlBinaryReader.BaseStream.Position;
-            Debug.Assert((posEnd-posStart) == BamlVersionHeader.BinarySerializationSize,
+            Debug.Assert((posEnd - posStart) == BamlVersionHeader.BinarySerializationSize,
                              "Incorrect Baml Version Header Size");
 #endif
 
@@ -97,7 +96,7 @@ namespace System.Windows.Markup
 
 #if DEBUG
             long posEnd = bamlBinaryWriter.BaseStream.Position;
-            if(-1 == posStart)
+            if (-1 == posStart)
             {
                 long length = bamlBinaryWriter.BaseStream.Length;
                 Debug.Assert(length == BamlVersionHeader.BinarySerializationSize,
@@ -105,7 +104,7 @@ namespace System.Windows.Markup
             }
             else
             {
-                Debug.Assert((posEnd-posStart) == BamlVersionHeader.BinarySerializationSize,
+                Debug.Assert((posEnd - posStart) == BamlVersionHeader.BinarySerializationSize,
                                  "Incorrect Baml Version Header Size");
             }
 #endif

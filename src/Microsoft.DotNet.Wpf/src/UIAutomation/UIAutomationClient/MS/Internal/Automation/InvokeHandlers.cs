@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -48,9 +48,9 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
-        
+
         // The method that gets called from CallbackQueue's thread.  Uses Post to invoke the callback on the proper thread.
         internal static void InvokeClientHandler(Delegate clientCallback, AutomationElement srcEl, AutomationEventArgs args)
         {
@@ -111,7 +111,7 @@ namespace MS.Internal.Automation
         //  Internal Fields
         //
         //------------------------------------------------------
- 
+
         #region Internal Fields
 
         internal static uint _lastFocusEventTime;

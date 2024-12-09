@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -65,7 +65,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     18, // [18, 19] for 5
                     20, // [20, 21] for 6
                     22};// [22, 23] for 7
-}
+        }
 
         /// <summary>
         /// FindPacketAlgoByte
@@ -178,7 +178,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         internal byte FindPropAlgoByte(byte[] input)
         {
             // Empty buffer case
-            if(0 == input.Length)
+            if (0 == input.Length)
             {
                 return 0;
             }
@@ -213,7 +213,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             //   First half of Word data, if there is int data, there MUST be word data
             //   First quarter of byte data.
             uint n = 0;
-            for(n = 0; n < countOfInts; ++n)
+            for (n = 0; n < countOfInts; ++n)
             {
                 Debug.Assert(intReader != null);
                 Debug.Assert(shortReader != null);
@@ -226,7 +226,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             //   Second half of short data, if there were int data,
             //   or all of short data, if there were no int data
             //   Upto half of byte data
-            for(; n < countOfShorts; ++n)
+            for (; n < countOfShorts; ++n)
             {
                 Debug.Assert(shortReader != null);
                 maxByte = Math.Max(input[n], maxByte);
@@ -274,7 +274,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 }
             }
             // Compare the best with int
-            if(countOfInts > 0)
+            if (countOfInts > 0)
             {
                 int intBitCount = 0;
                 // Find the Math.Abs max for int
@@ -518,7 +518,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             uint bitData = 0;
             BitStreamReader reader = new BitStreamReader(input, inputIndex);
 
-            if(dtxf != null)
+            if (dtxf != null)
             {
                 while (!reader.EndOfStream)
                 {
@@ -658,13 +658,13 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 min = n;
             }
         }
-       
+
         /// <summary>
         /// Private statics
         /// </summary>
-        private static GorillaAlgoByte[]    _gorIndexMap;
-        private static byte[]               _gorIndexOffset;
-}
+        private static GorillaAlgoByte[] _gorIndexMap;
+        private static byte[] _gorIndexOffset;
+    }
 
     /// <summary>
     /// Helper struct

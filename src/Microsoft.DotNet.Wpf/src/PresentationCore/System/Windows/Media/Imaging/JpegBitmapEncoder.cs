@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -89,22 +89,22 @@ namespace System.Windows.Media.Imaging
                 Rotate180 = false;
                 Rotate270 = false;
 
-                switch(value)
+                switch (value)
                 {
-                    case(Rotation.Rotate0):
+                    case (Rotation.Rotate0):
                         // do nothing, we reset everything above
                         // case statement is here for clearness
                         break;
 
-                    case(Rotation.Rotate90):
+                    case (Rotation.Rotate90):
                         Rotate90 = true;
                         break;
 
-                    case(Rotation.Rotate180):
+                    case (Rotation.Rotate180):
                         Rotate180 = true;
                         break;
 
-                    case(Rotation.Rotate270):
+                    case (Rotation.Rotate270):
                         Rotate270 = true;
                         break;
                 }
@@ -193,7 +193,7 @@ namespace System.Windows.Media.Imaging
                 try
                 {
                     propBag.Init("BitmapTransform");
-                    propValue.Init((byte) _transformation);
+                    propValue.Init((byte)_transformation);
 
                     HRESULT.Check(UnsafeNativeMethods.IPropertyBag2.Write(
                         encoderOptions,
@@ -213,7 +213,7 @@ namespace System.Windows.Media.Imaging
                 try
                 {
                     propBag.Init("ImageQuality");
-                    propValue.Init( ((float)_qualityLevel) / 100.0f);
+                    propValue.Init(((float)_qualityLevel) / 100.0f);
 
                     HRESULT.Check(UnsafeNativeMethods.IPropertyBag2.Write(
                         encoderOptions,

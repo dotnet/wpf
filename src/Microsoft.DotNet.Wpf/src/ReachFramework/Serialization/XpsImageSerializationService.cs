@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -61,7 +61,7 @@ namespace System.Windows.Xps.Serialization
                     encoder = BitmapEncoder.Create(codecInfo.ContainerFormat);
 
                     // Avoid GIF encoder which does not save transparency well
-                    if ( !( encoder is JpegBitmapEncoder || 
+                    if (!(encoder is JpegBitmapEncoder ||
                             encoder is PngBitmapEncoder ||
                             encoder is TiffBitmapEncoder ||
                             encoder is WmpBitmapEncoder)
@@ -119,13 +119,13 @@ namespace System.Windows.Xps.Serialization
                 // used for this specific BitmapSource.
                 //
                 BitmapFrame bitmapFrame = bitmapSource as BitmapFrame;
-                
+
                 if (bitmapFrame != null && bitmapFrame.Decoder != null)
                 {
                     codecInfo = bitmapFrame.Decoder.CodecInfo;
                 }
             }
-            
+
             if (codecInfo != null)
             {
                 imageMimeType = codecInfo.MimeTypes;
@@ -136,30 +136,30 @@ namespace System.Windows.Xps.Serialization
             //
             // Test all strings before commas
             //
-            if( comma != -1 )
+            if (comma != -1)
             {
                 while (comma != -1 && !foundType)
                 {
-                    string subString =  imageMimeType.Substring(start, comma);
-                    foundType = XpsManager.SupportedImageType( new ContentType(subString) );
-                    start = comma+1;
+                    string subString = imageMimeType.Substring(start, comma);
+                    foundType = XpsManager.SupportedImageType(new ContentType(subString));
+                    start = comma + 1;
                     comma = imageMimeType.IndexOf(',', start);
                 }
-                
+
             }
-            
+
             //
             // If we still have not found a supported type
             // Test the remainder of the string
             //
-            if( !foundType )
+            if (!foundType)
             {
-                foundType = XpsManager.SupportedImageType( new ContentType(imageMimeType.Substring(start)) );
+                foundType = XpsManager.SupportedImageType(new ContentType(imageMimeType.Substring(start)));
             }
-        
+
             return foundType;
         }
-        
+
         /// <summary>
         /// This method verifies whether a given BitmapSource
         /// is serializable by this service.

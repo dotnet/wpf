@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -533,7 +533,7 @@ namespace MS.Internal.Interop
         IFILTER_FLAGS Init(
             [In] IFILTER_INIT grfFlags,         // IFILTER_INIT value     
             [In] uint cAttributes,              // number of items in aAttributes
-            [In, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)] 
+            [In, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)]
             FULLPROPSPEC[] aAttributes);        // restrict responses to the specified attributes
 
         /// <summary>
@@ -562,7 +562,7 @@ namespace MS.Internal.Interop
         /// <param name="origPos"></param>
         /// <param name="riid"></param>
         /// <returns></returns>
-        IntPtr BindRegion([In]  FILTERREGION origPos, [In] ref Guid riid);
+        IntPtr BindRegion([In] FILTERREGION origPos, [In] ref Guid riid);
     }
     #endregion IFilter Interface
 

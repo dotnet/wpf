@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,23 +21,23 @@ namespace System.Windows.Media.TextFormatting
     internal class TextFormatterContext
 #endif
     {
-        private IntPtr  _ploc;              // Line Services context
-        private LineServicesCallbacks               _callbacks;         // object to hold all delegates for callback
-        private State                               _state;             // internal state flags
-        private BreakStrategies                     _breaking;          // context's breaking strategy
-        private static Dictionary<char,bool>        _specialCharacters; // special characters
+        private IntPtr _ploc;              // Line Services context
+        private LineServicesCallbacks _callbacks;         // object to hold all delegates for callback
+        private State _state;             // internal state flags
+        private BreakStrategies _breaking;          // context's breaking strategy
+        private static Dictionary<char, bool> _specialCharacters; // special characters
 
 
         public TextFormatterContext()
         {
-            _ploc =  IntPtr.Zero;
+            _ploc = IntPtr.Zero;
             Init();
         }
 
 
         private void Init()
         {
-            if(_ploc == System.IntPtr.Zero)
+            if (_ploc == System.IntPtr.Zero)
             {
                 // Initializing context
                 LsErr lserr = LsErr.None;
@@ -50,63 +50,63 @@ namespace System.Windows.Media.TextFormatting
 
 
                 contextInfo.version = 4;            // we should set this right, they might check it in the future
-                contextInfo.pols  = IntPtr.Zero;    // This will be filled in the un-managed code
-                contextInfo.cEstimatedCharsPerLine  = TextStore.TypicalCharactersPerLine;
-                contextInfo.fDontReleaseRuns        = 1; // dont waste time
+                contextInfo.pols = IntPtr.Zero;    // This will be filled in the un-managed code
+                contextInfo.cEstimatedCharsPerLine = TextStore.TypicalCharactersPerLine;
+                contextInfo.fDontReleaseRuns = 1; // dont waste time
 
                 // There are 3 justification priorities right now with one considered good
                 // and the other two provided for emergency expansion.
                 // Future development to enable international justification will likely change this.
                 // e.g. Kashida justification would require more than one good priorities.
-                contextInfo.cJustPriorityLim        = 3;
+                contextInfo.cJustPriorityLim = 3;
 
                 // Fill up text configuration
-                contextInfo.wchNull                 = '\u0000';
-                contextInfo.wchUndef                = '\u0001';
-                contextInfo.wchTab                  = '\u0009';
-                contextInfo.wchPosTab               = contextInfo.wchUndef;
-                contextInfo.wchEndPara1             = TextStore.CharParaSeparator;  // Unicode para separator
-                contextInfo.wchEndPara2             = contextInfo.wchUndef;
-                contextInfo.wchSpace                = '\u0020';
+                contextInfo.wchNull = '\u0000';
+                contextInfo.wchUndef = '\u0001';
+                contextInfo.wchTab = '\u0009';
+                contextInfo.wchPosTab = contextInfo.wchUndef;
+                contextInfo.wchEndPara1 = TextStore.CharParaSeparator;  // Unicode para separator
+                contextInfo.wchEndPara2 = contextInfo.wchUndef;
+                contextInfo.wchSpace = '\u0020';
 
-                contextInfo.wchHyphen               = MS.Internal.Text.TextInterface.TextAnalyzer.CharHyphen; //'\x002d';
-                contextInfo.wchNonReqHyphen         = '\u00AD';
-                contextInfo.wchNonBreakHyphen       = '\u2011';
-                contextInfo.wchEnDash               = '\u2013';
-                contextInfo.wchEmDash               = '\u2014';
-                contextInfo.wchEnSpace              = '\u2002';
-                contextInfo.wchEmSpace              = '\u2003';
-                contextInfo.wchNarrowSpace          = '\u2009';
-                contextInfo.wchJoiner               = '\u200D';
-                contextInfo.wchNonJoiner            = '\u200C';
-                contextInfo.wchVisiNull             = '\u2050';
-                contextInfo.wchVisiAltEndPara       = '\u2051';
-                contextInfo.wchVisiEndLineInPara    = '\u2052';
-                contextInfo.wchVisiEndPara          = '\u2053';
-                contextInfo.wchVisiSpace            = '\u2054';
-                contextInfo.wchVisiNonBreakSpace    = '\u2055';
-                contextInfo.wchVisiNonBreakHyphen   = '\u2056';
-                contextInfo.wchVisiNonReqHyphen     = '\u2057';
-                contextInfo.wchVisiTab              = '\u2058';
-                contextInfo.wchVisiPosTab           = contextInfo.wchUndef;
-                contextInfo.wchVisiEmSpace          = '\u2059';
-                contextInfo.wchVisiEnSpace          = '\u205A';
-                contextInfo.wchVisiNarrowSpace      = '\u205B';
-                contextInfo.wchVisiOptBreak         = '\u205C';
-                contextInfo.wchVisiNoBreak          = '\u205D';
-                contextInfo.wchVisiFESpace          = '\u205E';
-                contextInfo.wchFESpace              = '\u3000';
-                contextInfo.wchEscAnmRun            = TextStore.CharParaSeparator;
-                contextInfo.wchAltEndPara           = contextInfo.wchUndef;
-                contextInfo.wchEndLineInPara        = TextStore.CharLineSeparator;
-                contextInfo.wchSectionBreak         = contextInfo.wchUndef;
-                contextInfo.wchNonBreakSpace        = '\u00A0';
-                contextInfo.wchNoBreak              = contextInfo.wchUndef;
-                contextInfo.wchColumnBreak          = contextInfo.wchUndef;
-                contextInfo.wchPageBreak            = contextInfo.wchUndef;
-                contextInfo.wchOptBreak             = contextInfo.wchUndef;
-                contextInfo.wchToReplace            = contextInfo.wchUndef;
-                contextInfo.wchReplace              = contextInfo.wchUndef;
+                contextInfo.wchHyphen = MS.Internal.Text.TextInterface.TextAnalyzer.CharHyphen; //'\x002d';
+                contextInfo.wchNonReqHyphen = '\u00AD';
+                contextInfo.wchNonBreakHyphen = '\u2011';
+                contextInfo.wchEnDash = '\u2013';
+                contextInfo.wchEmDash = '\u2014';
+                contextInfo.wchEnSpace = '\u2002';
+                contextInfo.wchEmSpace = '\u2003';
+                contextInfo.wchNarrowSpace = '\u2009';
+                contextInfo.wchJoiner = '\u200D';
+                contextInfo.wchNonJoiner = '\u200C';
+                contextInfo.wchVisiNull = '\u2050';
+                contextInfo.wchVisiAltEndPara = '\u2051';
+                contextInfo.wchVisiEndLineInPara = '\u2052';
+                contextInfo.wchVisiEndPara = '\u2053';
+                contextInfo.wchVisiSpace = '\u2054';
+                contextInfo.wchVisiNonBreakSpace = '\u2055';
+                contextInfo.wchVisiNonBreakHyphen = '\u2056';
+                contextInfo.wchVisiNonReqHyphen = '\u2057';
+                contextInfo.wchVisiTab = '\u2058';
+                contextInfo.wchVisiPosTab = contextInfo.wchUndef;
+                contextInfo.wchVisiEmSpace = '\u2059';
+                contextInfo.wchVisiEnSpace = '\u205A';
+                contextInfo.wchVisiNarrowSpace = '\u205B';
+                contextInfo.wchVisiOptBreak = '\u205C';
+                contextInfo.wchVisiNoBreak = '\u205D';
+                contextInfo.wchVisiFESpace = '\u205E';
+                contextInfo.wchFESpace = '\u3000';
+                contextInfo.wchEscAnmRun = TextStore.CharParaSeparator;
+                contextInfo.wchAltEndPara = contextInfo.wchUndef;
+                contextInfo.wchEndLineInPara = TextStore.CharLineSeparator;
+                contextInfo.wchSectionBreak = contextInfo.wchUndef;
+                contextInfo.wchNonBreakSpace = '\u00A0';
+                contextInfo.wchNoBreak = contextInfo.wchUndef;
+                contextInfo.wchColumnBreak = contextInfo.wchUndef;
+                contextInfo.wchPageBreak = contextInfo.wchUndef;
+                contextInfo.wchOptBreak = contextInfo.wchUndef;
+                contextInfo.wchToReplace = contextInfo.wchUndef;
+                contextInfo.wchReplace = contextInfo.wchUndef;
 
                 IntPtr ploc = IntPtr.Zero;
                 IntPtr ppenaltyModule = IntPtr.Zero;
@@ -239,7 +239,7 @@ namespace System.Windows.Media.TextFormatting
         /// </summary>
         internal void Destroy()
         {
-            if(_ploc != System.IntPtr.Zero)
+            if (_ploc != System.IntPtr.Zero)
             {
                 UnsafeNativeMethods.LoDestroyContext(_ploc);
                 _ploc = IntPtr.Zero;
@@ -252,10 +252,10 @@ namespace System.Windows.Media.TextFormatting
         /// </summary>
         internal void SetBreaking(BreakStrategies breaking)
         {
-            if (_state == State.Uninitialized ||  breaking != _breaking)
+            if (_state == State.Uninitialized || breaking != _breaking)
             {
                 Invariant.Assert(_ploc != System.IntPtr.Zero);
-                LsErr lserr = UnsafeNativeMethods.LoSetBreaking(_ploc, (int) breaking);
+                LsErr lserr = UnsafeNativeMethods.LoSetBreaking(_ploc, (int)breaking);
 
                 if (lserr != LsErr.None)
                 {
@@ -273,15 +273,15 @@ namespace System.Windows.Media.TextFormatting
         //
         //
         internal LsErr CreateLine(
-            int                 cpFirst,
-            int                 lineLength,
-            int                 maxWidth,
-            LineFlags           lineFlags,
-            IntPtr              previousLineBreakRecord,
-            out IntPtr          ploline,
-            out LsLInfo         plslineInfo,
-            out int             maxDepth,
-            out LsLineWidths    lineWidths
+            int cpFirst,
+            int lineLength,
+            int maxWidth,
+            LineFlags lineFlags,
+            IntPtr previousLineBreakRecord,
+            out IntPtr ploline,
+            out LsLInfo plslineInfo,
+            out int maxDepth,
+            out LsLineWidths lineWidths
             )
         {
             Invariant.Assert(_ploc != System.IntPtr.Zero);
@@ -302,12 +302,12 @@ namespace System.Windows.Media.TextFormatting
 
 
         internal LsErr CreateBreaks(
-            int             cpFirst,
-            IntPtr          previousLineBreakRecord,
-            IntPtr          ploparabreak,
-            IntPtr          ptslinevariantRestriction,
-            ref LsBreaks    lsbreaks,
-            out int         bestFitIndex
+            int cpFirst,
+            IntPtr previousLineBreakRecord,
+            IntPtr ploparabreak,
+            IntPtr ptslinevariantRestriction,
+            ref LsBreaks lsbreaks,
+            out int bestFitIndex
             )
         {
             Invariant.Assert(_ploc != System.IntPtr.Zero);
@@ -325,11 +325,11 @@ namespace System.Windows.Media.TextFormatting
 
 
         internal LsErr CreateParaBreakingSession(
-            int             cpFirst,
-            int             maxWidth,
-            IntPtr          previousLineBreakRecord,
-            ref IntPtr      ploparabreak,
-            ref bool        penalizedAsJustified
+            int cpFirst,
+            int maxWidth,
+            IntPtr previousLineBreakRecord,
+            ref IntPtr ploparabreak,
+            ref bool penalizedAsJustified
             )
         {
             Invariant.Assert(_ploc != System.IntPtr.Zero);
@@ -346,9 +346,9 @@ namespace System.Windows.Media.TextFormatting
 
 
         internal void SetDoc(
-            bool            isDisplay,
-            bool            isReferencePresentationEqual,
-            ref LsDevRes    deviceInfo
+            bool isDisplay,
+            bool isReferencePresentationEqual,
+            ref LsDevRes deviceInfo
             )
         {
             Invariant.Assert(_ploc != System.IntPtr.Zero);
@@ -359,16 +359,16 @@ namespace System.Windows.Media.TextFormatting
                 ref deviceInfo
                 );
 
-            if(lserr != LsErr.None)
+            if (lserr != LsErr.None)
             {
                 ThrowExceptionFromLsError(SR.Format(SR.SetDocFailure, lserr), lserr);
             }
         }
 
         internal unsafe void SetTabs(
-            int         incrementalTab,
-            LsTbd*      tabStops,
-            int         tabStopCount
+            int incrementalTab,
+            LsTbd* tabStops,
+            int tabStopCount
             )
         {
             Invariant.Assert(_ploc != System.IntPtr.Zero);
@@ -379,7 +379,7 @@ namespace System.Windows.Media.TextFormatting
                 tabStops
                 );
 
-            if(lserr != LsErr.None)
+            if (lserr != LsErr.None)
             {
                 ThrowExceptionFromLsError(SR.Format(SR.SetTabsFailure, lserr), lserr);
             }
@@ -389,7 +389,7 @@ namespace System.Windows.Media.TextFormatting
         static internal void ThrowExceptionFromLsError(string message, LsErr lserr)
         {
             if (lserr == LsErr.OutOfMemory)
-                throw new OutOfMemoryException (message);
+                throw new OutOfMemoryException(message);
 
             throw new Exception(message);
         }
@@ -402,7 +402,7 @@ namespace System.Windows.Media.TextFormatting
 
         static private void SetSpecialCharacters(ref LsContextInfo contextInfo)
         {
-            Dictionary<char,bool> dict = new Dictionary<char,bool>();
+            Dictionary<char, bool> dict = new Dictionary<char, bool>();
 
             /* The first three char fields do not designate special characters
             dict[contextInfo.wchUndef] = true;
@@ -458,7 +458,7 @@ namespace System.Windows.Media.TextFormatting
             dict.Remove(contextInfo.wchUndef);
 
             // Remember the result.  First thread to get here wins.
-            System.Threading.Interlocked.CompareExchange<Dictionary<char,bool>>(ref _specialCharacters, dict, null);
+            System.Threading.Interlocked.CompareExchange<Dictionary<char, bool>>(ref _specialCharacters, dict, null);
         }
 
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,10 +9,10 @@
 //
 //
 
-using System.Windows.Threading;
 using System.Windows.Automation;
-using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
+using System.Windows.Automation.Provider;
+using System.Windows.Threading;
 
 namespace MS.Internal.Automation
 {
@@ -29,17 +29,17 @@ namespace MS.Internal.Automation
     // * private methods - one for each interface entry point - which get called back
     //   on the right context. These call through to the peer that's actually
     //   implenting the I...Provider version of the interface. 
-    internal class ExpandCollapseProviderWrapper: MarshalByRefObject, IExpandCollapseProvider
+    internal class ExpandCollapseProviderWrapper : MarshalByRefObject, IExpandCollapseProvider
     {
         //------------------------------------------------------
         //
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
-        private ExpandCollapseProviderWrapper( AutomationPeer peer, IExpandCollapseProvider iface )
+        private ExpandCollapseProviderWrapper(AutomationPeer peer, IExpandCollapseProvider iface)
         {
             _peer = peer;
             _iface = iface;
@@ -53,24 +53,24 @@ namespace MS.Internal.Automation
         //  Interface IExpandCollapseProvider
         //
         //------------------------------------------------------
- 
+
         #region Interface IExpandCollapseProvider
 
         public void Expand()
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( Expand ), null );
+            ElementUtil.Invoke(_peer, new DispatcherOperationCallback(Expand), null);
         }
 
         public void Collapse()
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( Collapse ), null );
+            ElementUtil.Invoke(_peer, new DispatcherOperationCallback(Collapse), null);
         }
 
         public ExpandCollapseState ExpandCollapseState
         {
             get
             {
-                return (ExpandCollapseState) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetExpandCollapseState ), null );
+                return (ExpandCollapseState)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetExpandCollapseState), null);
             }
         }
 
@@ -82,12 +82,12 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
-        internal static object Wrap( AutomationPeer peer, object iface )
+        internal static object Wrap(AutomationPeer peer, object iface)
         {
-            return new ExpandCollapseProviderWrapper( peer, (IExpandCollapseProvider) iface );
+            return new ExpandCollapseProviderWrapper(peer, (IExpandCollapseProvider)iface);
         }
 
         #endregion Internal Methods
@@ -97,22 +97,22 @@ namespace MS.Internal.Automation
         //  Private Methods
         //
         //------------------------------------------------------
- 
+
         #region Private Methods
 
-        private object Expand( object unused )
+        private object Expand(object unused)
         {
             _iface.Expand();
             return null;
         }
 
-        private object Collapse( object unused )
+        private object Collapse(object unused)
         {
             _iface.Collapse();
             return null;
         }
 
-        private object GetExpandCollapseState( object unused )
+        private object GetExpandCollapseState(object unused)
         {
             return _iface.ExpandCollapseState;
         }
@@ -125,7 +125,7 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private AutomationPeer _peer;

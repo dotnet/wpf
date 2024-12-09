@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Windows.Markup;
 using System.ComponentModel;
-using System.Windows.Data;
 using System.Globalization;
+using System.Windows.Data;
+using System.Windows.Markup;
 
 namespace System.Windows
 {
@@ -13,7 +13,7 @@ namespace System.Windows
     ///     Condition for a multiple property or data trigger
     /// </summary>
     [XamlSetMarkupExtensionAttribute("ReceiveMarkupExtension")]
-    [XamlSetTypeConverterAttribute("ReceiveTypeConverter")] 
+    [XamlSetTypeConverterAttribute("ReceiveTypeConverter")]
     public sealed class Condition : ISupportInitialize
     {
         /// <summary>
@@ -28,7 +28,7 @@ namespace System.Windows
         /// <summary>
         ///     Constructor for creating a Condition
         /// </summary>
-        public Condition( DependencyProperty conditionProperty, object conditionValue ) :
+        public Condition(DependencyProperty conditionProperty, object conditionValue) :
             this(conditionProperty, conditionValue, null)
         {
             // Call Forwarded
@@ -43,7 +43,7 @@ namespace System.Windows
         /// happen until Seal() is called.  We can do it here because we get
         /// both at the same time.
         /// </remarks>
-        public Condition( DependencyProperty conditionProperty, object conditionValue, string sourceName )
+        public Condition(DependencyProperty conditionProperty, object conditionValue, string sourceName)
         {
             ArgumentNullException.ThrowIfNull(conditionProperty);
 
@@ -53,7 +53,7 @@ namespace System.Windows
             }
 
             _property = conditionProperty;
-            Value    = conditionValue;
+            Value = conditionValue;
             _sourceName = sourceName;
         }
 
@@ -61,12 +61,12 @@ namespace System.Windows
         ///     Constructor for creating a Condition with the given binding declaration.
         /// and value.
         /// </summary>
-        public Condition( BindingBase binding, object conditionValue )
+        public Condition(BindingBase binding, object conditionValue)
         {
             ArgumentNullException.ThrowIfNull(binding);
 
             Binding = binding;
-            Value  = conditionValue;
+            Value = conditionValue;
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace System.Windows
                     throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "Condition"));
                 }
 
-                if(_property != null)
+                if (_property != null)
                 {
                     throw new InvalidOperationException(SR.ConditionCannotUseBothPropertyAndBinding);
                 }
@@ -136,7 +136,7 @@ namespace System.Windows
                                                        value.GetType().Name));
                 }
 
-                if(value is Expression)
+                if (value is Expression)
                 {
                     throw new ArgumentException(SR.ConditionValueOfExpressionNotSupported);
                 }
@@ -160,7 +160,7 @@ namespace System.Windows
             }
             set
             {
-                if(_sealed)
+                if (_sealed)
                 {
                     throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "Condition"));
                 }

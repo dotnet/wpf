@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,11 +9,11 @@
 *
 *
 \***************************************************************************/
-using MS.Internal;
-using MS.Utility;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
+using MS.Internal;
+using MS.Utility;
 
 namespace System.Windows
 {
@@ -32,10 +32,10 @@ namespace System.Windows
         ///     references during a tree change operation.
         /// </summary>
         internal static void InvalidateOnTreeChange(
-            FrameworkElement        fe,
+            FrameworkElement fe,
             FrameworkContentElement fce,
-            DependencyObject        parent,
-            bool                    isAddOperation)
+            DependencyObject parent,
+            bool isAddOperation)
         {
             Debug.Assert(fe != null || fce != null, "Node with the tree change notification must be an FE or an FCE.");
             Debug.Assert(parent != null, "Must have a parent that the current node is connected to or disconnected from.");
@@ -161,8 +161,8 @@ namespace System.Windows
         /// </summary>
         private static bool OnAncestorChanged(
             DependencyObject d,
-            TreeChangeInfo   info,
-            bool             visitedViaVisualTree)
+            TreeChangeInfo info,
+            bool visitedViaVisualTree)
         {
             // Invalidate properties on current instance
             FrameworkObject fo = new FrameworkObject(d, true);
@@ -178,11 +178,11 @@ namespace System.Windows
         ///     tree node is.
         /// </summary>
         private static void OnAncestorChanged(
-            FrameworkElement        fe,
+            FrameworkElement fe,
             FrameworkContentElement fce,
-            TreeChangeInfo          info)
+            TreeChangeInfo info)
         {
-            if (fe!= null)
+            if (fe != null)
             {
                 fe.OnAncestorChangedInternal(info);
             }
@@ -198,8 +198,8 @@ namespace System.Windows
         /// </summary>
         private static bool OnPostAncestorChanged(
             DependencyObject d,
-            TreeChangeInfo   info,
-            bool             visitedViaVisualTree)
+            TreeChangeInfo info,
+            bool visitedViaVisualTree)
         {
             // If the given node is the root of a collapsed subtree, we're
             // done with that subtree now and from this point forward, the given
@@ -228,16 +228,16 @@ namespace System.Windows
         ///     This method is called during an [FE/FCE].OnAncestorChange
         /// </remarks>
         internal static FrugalObjectList<DependencyProperty> InvalidateTreeDependentProperties(
-            TreeChangeInfo                       info,
-            FrameworkElement                     fe,
-            FrameworkContentElement              fce,
-            Style                                selfStyle,
-            Style                                selfThemeStyle,
-            ref ChildRecord                      childRecord,
-            bool                                 isChildRecordValid,
-            bool                                 hasStyleChanged,
-            bool                                 isSelfInheritanceParent,
-            bool                                 wasSelfInheritanceParent)
+            TreeChangeInfo info,
+            FrameworkElement fe,
+            FrameworkContentElement fce,
+            Style selfStyle,
+            Style selfThemeStyle,
+            ref ChildRecord childRecord,
+            bool isChildRecordValid,
+            bool hasStyleChanged,
+            bool isSelfInheritanceParent,
+            bool wasSelfInheritanceParent)
         {
             Debug.Assert(fe != null || fce != null, "Must have non-null current node");
             DependencyObject d = fe != null ? (DependencyObject)fe : (DependencyObject)fce;
@@ -248,7 +248,7 @@ namespace System.Windows
 
             // Loop through all cached inheritable
             // to see if they should be invalidated.
-            int inheritablePropertiesCount = parentInheritableProperties  != null ? parentInheritableProperties.Count : 0;
+            int inheritablePropertiesCount = parentInheritableProperties != null ? parentInheritableProperties.Count : 0;
 
             FrugalObjectList<DependencyProperty> currentInheritableProperties = null;
             if (HasChildren(fe, fce))
@@ -301,18 +301,18 @@ namespace System.Windows
         ///     - It is not acquired from a style/template
         /// </summary>
         private static bool InvalidateTreeDependentProperty(
-            TreeChangeInfo              info,
-            DependencyObject            d,
-        ref FrameworkObject             fo,
-            DependencyProperty          dp,
-            FrameworkPropertyMetadata   fMetadata,
-            Style                       selfStyle,
-            Style                       selfThemeStyle,
-            ref ChildRecord             childRecord,
-            bool                        isChildRecordValid,
-            bool                        hasStyleChanged,
-            bool                        isSelfInheritanceParent,
-            bool                        wasSelfInheritanceParent)
+            TreeChangeInfo info,
+            DependencyObject d,
+        ref FrameworkObject fo,
+            DependencyProperty dp,
+            FrameworkPropertyMetadata fMetadata,
+            Style selfStyle,
+            Style selfThemeStyle,
+            ref ChildRecord childRecord,
+            bool isChildRecordValid,
+            bool hasStyleChanged,
+            bool isSelfInheritanceParent,
+            bool wasSelfInheritanceParent)
         {
             Debug.Assert(d != null, "Must have non-null current node");
 
@@ -410,8 +410,8 @@ namespace System.Windows
                                 operationType)
                             & (UpdateResult.ValueChanged | UpdateResult.InheritedValueOverridden))
                             == UpdateResult.ValueChanged;
-                        // return false if either the value didn't change or
-                        // it changed because the inherited value was overridden by coercion or animation.
+                    // return false if either the value didn't change or
+                    // it changed because the inherited value was overridden by coercion or animation.
                 }
                 else if (isForceInheritedProperty)
                 {
@@ -430,8 +430,8 @@ namespace System.Windows
                                 operationType)
                             & (UpdateResult.ValueChanged | UpdateResult.InheritedValueOverridden))
                             == UpdateResult.ValueChanged;
-                        // return false if either the value didn't change or
-                        // it changed because the inherited value was overridden by coercion or animation.
+                    // return false if either the value didn't change or
+                    // it changed because the inherited value was overridden by coercion or animation.
                 }
             }
 
@@ -447,18 +447,18 @@ namespace System.Windows
         ///     that are referring to the resource[s] that are changing.
         /// </summary>
         internal static void InvalidateOnResourcesChange(
-            FrameworkElement        fe,
+            FrameworkElement fe,
             FrameworkContentElement fce,
-            ResourcesChangeInfo     info)
+            ResourcesChangeInfo info)
         {
             Debug.Assert(fe != null || fce != null, "Node with the resources change notification must be an FE or an FCE.");
 
             // Here we are syncing the window's Theme mode if resource dictionary changes.
             // The IgnoreWindowResourcesChange is a flag set to make sure the ThemeMode change does not cause an infinite loop of resource changes.
-            if(fe is Window currentWindow)
+            if (fe is Window currentWindow)
             {
                 currentWindow.AreResourcesInitialized = true;
-                if(!ThemeManager.IgnoreWindowResourcesChange)
+                if (!ThemeManager.IgnoreWindowResourcesChange)
                 {
                     ThemeManager.SyncWindowThemeMode(currentWindow);
                 }
@@ -500,9 +500,9 @@ namespace System.Windows
         ///     during a resources change.
         /// </summary>
         private static bool OnResourcesChangedCallback(
-            DependencyObject    d,
+            DependencyObject d,
             ResourcesChangeInfo info,
-            bool                visitedViaVisualTree)
+            bool visitedViaVisualTree)
         {
             OnResourcesChanged(d, info, true);
 
@@ -516,7 +516,7 @@ namespace System.Windows
         ///     Return true if the DO has resource references.
         /// </summary>
         internal static void OnResourcesChanged(
-            DependencyObject    d,
+            DependencyObject d,
             ResourcesChangeInfo info,
             bool raiseResourceChangedEvent)
         {
@@ -571,7 +571,7 @@ namespace System.Windows
                     // change. This is because the style/template change would have
                     // already invalidated all the container dependents and all the
                     // resources references on the container would have been a part of it.
-                    if ((!isStyleResourcesChange && !isTemplateResourcesChange ) || !isContainer)
+                    if ((!isStyleResourcesChange && !isTemplateResourcesChange) || !isContainer)
                     {
                         InvalidateStyleAndReferences(d, info, containsTypeOfKey);
                     }
@@ -627,7 +627,7 @@ namespace System.Windows
                     // change. This is because the style/template change would have
                     // already invalidated all the container dependents and all the
                     // resources references on the container would have been a part of it.
-                    if ((!isStyleResourcesChange && !isTemplateResourcesChange ) || !isContainer)
+                    if ((!isStyleResourcesChange && !isTemplateResourcesChange) || !isContainer)
                     {
                         InvalidateStyleAndReferences(d, info, containsTypeOfKey);
                     }
@@ -682,7 +682,7 @@ namespace System.Windows
         ///     3) A modification to a single entry in a dictionary
         /// </remarks>
         private static void InvalidateResourceReferences(
-            DependencyObject    d,
+            DependencyObject d,
             ResourcesChangeInfo info)
         {
             Debug.Assert(d != null, "Must have non-null current node");
@@ -715,7 +715,7 @@ namespace System.Windows
                         // to a resource that is being changed
                         if (info.Contains(resource.ResourceKey, false /*isImplicitStyleKey*/))
                         {
-                            resources[invalidationCount]  = resource;
+                            resources[invalidationCount] = resource;
                             invalidationCount++;
                         }
                     }
@@ -744,9 +744,9 @@ namespace System.Windows
         ///     2) A modification to a single entry in a dictionary
         /// </remarks>
         private static void InvalidateStyleAndReferences(
-            DependencyObject    d,
+            DependencyObject d,
             ResourcesChangeInfo info,
-            bool                containsTypeOfKey)
+            bool containsTypeOfKey)
         {
             Debug.Assert(d != null, "Must have non-null current node");
 
@@ -903,10 +903,10 @@ namespace System.Windows
         /// <summary>
         /// </summary>
         internal static void InvalidateOnInheritablePropertyChange(
-            FrameworkElement              fe,
-            FrameworkContentElement       fce,
+            FrameworkElement fe,
+            FrameworkContentElement fce,
             InheritablePropertyChangeInfo info,
-            bool                          skipStartNode)
+            bool skipStartNode)
         {
             DependencyProperty dp = info.Property;
             FrameworkObject fo = new FrameworkObject(fe, fce);
@@ -938,9 +938,9 @@ namespace System.Windows
         ///     during an inheritable property change
         /// </summary>
         private static bool OnInheritablePropertyChanged(
-            DependencyObject              d,
+            DependencyObject d,
             InheritablePropertyChangeInfo info,
-            bool                          visitedViaVisualTree)
+            bool visitedViaVisualTree)
         {
             Debug.Assert(d != null, "Must have non-null current node");
 
@@ -1001,7 +1001,7 @@ namespace System.Windows
                                         dp,
                                         metadata,
                                         RequestFlags.RawEntry);
-                 }
+                }
 
                 // If the oldValueSource is of lower precedence than Inheritance
                 // only then do we need to Invalidate the property
@@ -1119,8 +1119,8 @@ namespace System.Windows
         ///     This is called by both InvalidateTree and GetValueCore
         /// </remarks>
         internal static bool IsInheritanceNode(
-            DependencyObject    d,
-            DependencyProperty  dp,
+            DependencyObject d,
+            DependencyProperty dp,
         out InheritanceBehavior inheritanceBehavior)
         {
             // Assume can continue search
@@ -1171,8 +1171,8 @@ namespace System.Windows
         ///     FrameworkElement variant of IsInheritanceNode
         /// </summary>
         internal static bool IsInheritanceNode(
-            FrameworkElement        fe,
-            DependencyProperty      dp,
+            FrameworkElement fe,
+            DependencyProperty dp,
             out InheritanceBehavior inheritanceBehavior)
         {
             // Assume can continue search
@@ -1203,7 +1203,7 @@ namespace System.Windows
         /// </summary>
         internal static bool IsInheritanceNode(
             FrameworkContentElement fce,
-            DependencyProperty      dp,
+            DependencyProperty dp,
             out InheritanceBehavior inheritanceBehavior)
         {
             // Assume can continue search
@@ -1269,7 +1269,7 @@ namespace System.Windows
         internal static bool HasChildren(FrameworkElement fe, FrameworkContentElement fce)
         {
             // See if we have logical or visual children, in which case this is a real tree invalidation.
-            return ( (fe != null && (fe.HasLogicalChildren ||
+            return ((fe != null && (fe.HasLogicalChildren ||
                                                fe.HasVisualChildren ||
                                                (Popup.RegisteredPopupsField.GetValue(fe) != null)
                                               )

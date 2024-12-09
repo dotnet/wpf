@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,12 +11,10 @@
 //------------------------------------------------------------------------------
 
 using System;
-using System.IO;
-
-using System.Globalization;
 using System.Diagnostics;
+using System.Globalization;
+using System.IO;
 using System.Reflection;
-
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using MS.Utility;
@@ -50,7 +48,7 @@ namespace MS.Internal.Tasks
 
             string avalonFileVersion = acFileVersionInfo.FileVersion;
 
-            log.LogMessage(MessageImportance.Low,Environment.NewLine);
+            log.LogMessage(MessageImportance.Low, Environment.NewLine);
             log.LogMessageFromResources(MessageImportance.Low, nameof(SR.TaskLogo), taskName, avalonFileVersion);
             log.LogMessageFromResources(MessageImportance.Low, nameof(SR.TaskRight));
             log.LogMessage(MessageImportance.Low, Environment.NewLine);
@@ -66,7 +64,7 @@ namespace MS.Internal.Tasks
         internal static string CreateFullFilePath(string thePath, string rootPath)
         {
             // make it an absolute path if not already so
-            if (!Path.IsPathRooted(thePath) )
+            if (!Path.IsPathRooted(thePath))
             {
                 thePath = rootPath + thePath;
             }
@@ -97,12 +95,12 @@ namespace MS.Internal.Tasks
             // make sure path1 and Path2 are both full path
             // so that they can be compared on right base.
 
-            fullpath1 = CreateFullFilePath (path1, sourceDir);
-            fullpath2 = CreateFullFilePath (path2, sourceDir);
+            fullpath1 = CreateFullFilePath(path1, sourceDir);
+            fullpath2 = CreateFullFilePath(path2, sourceDir);
 
             if (fullpath2.StartsWith(fullpath1, StringComparison.OrdinalIgnoreCase))
             {
-                relPath = fullpath2.Substring (fullpath1.Length);
+                relPath = fullpath2.Substring(fullpath1.Length);
             }
 
             return relPath;
@@ -118,7 +116,7 @@ namespace MS.Internal.Tasks
         // otherwise false.</returns>
         internal static bool BooleanStringValue(string str)
         {
-            bool  isBoolean = false;
+            bool isBoolean = false;
 
             if (str != null && str.Length > 0)
             {
@@ -157,7 +155,7 @@ namespace MS.Internal.Tasks
         internal static bool IsValidCultureName(string name)
         {
 
-            bool  bValid = true;
+            bool bValid = true;
 
             try
             {
@@ -169,7 +167,7 @@ namespace MS.Internal.Tasks
                 //
                 if (name != null && name.Length > 0)
                 {
-                    CultureInfo   cl;
+                    CultureInfo cl;
 
                     cl = new CultureInfo(name);
 
@@ -177,7 +175,7 @@ namespace MS.Internal.Tasks
                     // treat it as invalid culture name.
 
                     if (cl == null)
-                      bValid = false;
+                        bValid = false;
                 }
             }
             catch (ArgumentException)
@@ -223,7 +221,7 @@ namespace MS.Internal.Tasks
 
         #endregion Internal Methods
 
-     }
+    }
 
     #endregion TaskHelper class
 }

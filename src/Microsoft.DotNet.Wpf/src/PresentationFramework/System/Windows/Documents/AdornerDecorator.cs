@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -31,12 +31,12 @@ namespace System.Windows.Documents
                 if (IntChild != value)
                 {
                     this.RemoveVisualChild(IntChild);
-                    this.RemoveVisualChild(AdornerLayer);                    
+                    this.RemoveVisualChild(AdornerLayer);
                     IntChild = value;
-                    if(value != null)
+                    if (value != null)
                     {
                         this.AddVisualChild(value);
-                        this.AddVisualChild(AdornerLayer);                        
+                        this.AddVisualChild(AdornerLayer);
                     }
 
                     InvalidateMeasure();
@@ -117,15 +117,15 @@ namespace System.Windows.Documents
         /// </param>
         protected override Size MeasureOverride(Size constraint)
         {
-                Size desiredSize = base.MeasureOverride(constraint);
-                if (VisualTreeHelper.GetParent(_adornerLayer) != null)
-                {
-                    // We don't really care about the size of the AdornerLayer-- we'll
-                    // always just make the AdornerDecorator the full desiredSize.  But
-                    // we need to measure it anyway, to make sure Adorners render.
-                    _adornerLayer.Measure(constraint);
-                }
-                return desiredSize;
+            Size desiredSize = base.MeasureOverride(constraint);
+            if (VisualTreeHelper.GetParent(_adornerLayer) != null)
+            {
+                // We don't really care about the size of the AdornerLayer-- we'll
+                // always just make the AdornerDecorator the full desiredSize.  But
+                // we need to measure it anyway, to make sure Adorners render.
+                _adornerLayer.Measure(constraint);
+            }
+            return desiredSize;
         }
 
         /// <summary>
@@ -135,14 +135,14 @@ namespace System.Windows.Documents
         /// <returns>The actual ink area of the element, typically the same as finalSize</returns>
         protected override Size ArrangeOverride(Size finalSize)
         {
-                Size inkSize = base.ArrangeOverride(finalSize);
+            Size inkSize = base.ArrangeOverride(finalSize);
 
-                if (VisualTreeHelper.GetParent(_adornerLayer) != null)
-                {
-                    _adornerLayer.Arrange(new Rect(finalSize));
-                }
+            if (VisualTreeHelper.GetParent(_adornerLayer) != null)
+            {
+                _adornerLayer.Arrange(new Rect(finalSize));
+            }
 
-                return (inkSize);
+            return (inkSize);
         }
 
 
@@ -163,7 +163,7 @@ namespace System.Windows.Documents
                 {
                     return;
                 }
-                
+
                 if (value == null)
                 {
                     base.Child = null;
@@ -177,16 +177,16 @@ namespace System.Windows.Documents
                         AddVisualChild(_adornerLayer);
                     }
                 }
-            }  
-        }                                
+            }
+        }
 
         /// <summary>
         /// Returns the Visual children count.
         /// </summary>
         protected override int VisualChildrenCount
         {
-            get 
-            { 
+            get
+            {
                 if (base.Child != null)
                 {
                     return 2; // One for the child and one for the adorner layer.
@@ -211,7 +211,7 @@ namespace System.Windows.Documents
             {
                 switch (index)
                 {
-                    case 0: 
+                    case 0:
                         return base.Child;
 
                     case 1:
@@ -242,7 +242,7 @@ namespace System.Windows.Documents
         {
             get { return 6; }
         }
-        
+
         readonly AdornerLayer _adornerLayer;
 
         #endregion Private Members

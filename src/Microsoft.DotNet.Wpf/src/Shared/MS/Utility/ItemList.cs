@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -26,7 +26,7 @@ namespace MS.Utility
         public int Count;
 
         public void EnsureIndex(int index)
-        {   
+        {
             int delta = (index + 1) - Count;
             if (delta > 0)
             {
@@ -42,7 +42,7 @@ namespace MS.Utility
         public int IndexOf(T value)
         {
             int index = -1;
-            
+
             for (int i = 0; i < Count; i++)
             {
                 if (List[i].Equals(value))
@@ -95,7 +95,7 @@ namespace MS.Utility
         {
             return Add(delta, true);
         }
-        
+
         // Increase size of array by delta, fill with default values
         // Allow disable of automatic Count increment so that cases where
         // non-default values are to be added to the list can be done before
@@ -181,11 +181,11 @@ namespace MS.Utility
             if (index != -1)
             {
                 // Shift entries down
-                Array.Copy(List, index + 1, List, index, (Count - index - 1));                
+                Array.Copy(List, index + 1, List, index, (Count - index - 1));
 
                 // Return now unused entries back to default
                 Array.Clear(List, Count - 1, 1);
-        
+
                 Count--;
             }
         }

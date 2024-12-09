@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -94,14 +94,14 @@ namespace System.Windows.Controls
         /// <value></value>
         public bool IsMainMenu
         {
-            get { return (bool) GetValue(IsMainMenuProperty); }
+            get { return (bool)GetValue(IsMainMenuProperty); }
             set { SetValue(IsMainMenuProperty, BooleanBoxes.Box(value)); }
         }
 
         private static void OnIsMainMenuChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Menu menu = d as Menu;
-            if ((bool) e.NewValue)
+            if ((bool)e.NewValue)
             {
                 menu.SetupMainMenu();
             }
@@ -137,8 +137,8 @@ namespace System.Windows.Controls
             {
                 _enterMenuModeHandler = new KeyboardNavigation.EnterMenuModeEventHandler(OnEnterMenuMode);
                 KeyboardNavigation.Current.EnterMenuMode += _enterMenuModeHandler;
-           }
-       }
+            }
+        }
 
         private void CleanupMainMenu()
         {
@@ -179,7 +179,8 @@ namespace System.Windows.Controls
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
-            if (e.Handled) return;
+            if (e.Handled)
+                return;
 
             Key key = e.Key;
             switch (key)
@@ -222,7 +223,8 @@ namespace System.Windows.Controls
         protected override void OnTextInput(TextCompositionEventArgs e)
         {
             base.OnTextInput(e);
-            if (e.Handled) return;
+            if (e.Handled)
+                return;
 
             // We don't use win32 menu's, so we need to emulate the win32
             // behavior for hitting Space while in menu mode.  Alt+Space

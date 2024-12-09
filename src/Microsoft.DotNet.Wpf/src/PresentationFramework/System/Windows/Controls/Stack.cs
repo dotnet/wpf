@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,12 +9,12 @@
 
 //#define Profiling
 
-using MS.Internal;
-using MS.Internal.Telemetry.PresentationFramework;
-using MS.Utility;
 using System.ComponentModel;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
+using MS.Internal;
+using MS.Internal.Telemetry.PresentationFramework;
+using MS.Utility;
 
 namespace System.Windows.Controls
 {
@@ -236,10 +236,10 @@ namespace System.Windows.Controls
 
             // We can only work on visuals that are us or children.
             // An empty rect has no size or position.  We can't meaningfully use it.
-            if (    rectangle.IsEmpty
-                ||  visual == null
-                ||  visual == (Visual)this
-                ||  !this.IsAncestorOf(visual))
+            if (rectangle.IsEmpty
+                || visual == null
+                || visual == (Visual)this
+                || !this.IsAncestorOf(visual))
             {
                 return Rect.Empty;
             }
@@ -296,7 +296,7 @@ namespace System.Windows.Controls
         /// </summary>
         public Orientation Orientation
         {
-            get { return (Orientation) GetValue(OrientationProperty); }
+            get { return (Orientation)GetValue(OrientationProperty); }
             set { SetValue(OrientationProperty, value); }
         }
 
@@ -345,7 +345,8 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_scrollData == null) { return false; }
+                if (_scrollData == null)
+                { return false; }
                 return _scrollData._allowHorizontal;
             }
             set
@@ -368,7 +369,8 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_scrollData == null) { return false; }
+                if (_scrollData == null)
+                { return false; }
                 return _scrollData._allowVertical;
             }
             set
@@ -389,7 +391,8 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_scrollData == null) { return 0.0; }
+                if (_scrollData == null)
+                { return 0.0; }
                 return _scrollData._extent.Width;
             }
         }
@@ -401,7 +404,8 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_scrollData == null) { return 0.0; }
+                if (_scrollData == null)
+                { return 0.0; }
                 return _scrollData._extent.Height;
             }
         }
@@ -413,7 +417,8 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_scrollData == null) { return 0.0; }
+                if (_scrollData == null)
+                { return 0.0; }
                 return _scrollData._viewport.Width;
             }
         }
@@ -425,7 +430,8 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_scrollData == null) { return 0.0; }
+                if (_scrollData == null)
+                { return 0.0; }
                 return _scrollData._viewport.Height;
             }
         }
@@ -438,7 +444,8 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_scrollData == null) { return 0.0; }
+                if (_scrollData == null)
+                { return 0.0; }
                 return _scrollData._computedOffset.X;
             }
         }
@@ -451,7 +458,8 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_scrollData == null) { return 0.0; }
+                if (_scrollData == null)
+                { return 0.0; }
                 return _scrollData._computedOffset.Y;
             }
         }
@@ -564,14 +572,16 @@ namespace System.Windows.Controls
             if (fHorizontal)
             {
                 layoutSlotSize.Width = Double.PositiveInfinity;
-                if (measureElement.IsScrolling && measureElement.CanVerticallyScroll) { layoutSlotSize.Height = Double.PositiveInfinity; }
+                if (measureElement.IsScrolling && measureElement.CanVerticallyScroll)
+                { layoutSlotSize.Height = Double.PositiveInfinity; }
                 firstViewport = (measureElement.IsScrolling) ? CoerceOffsetToInteger(scrollData.Offset.X, children.Count) : 0;
                 logicalVisibleSpace = constraint.Width;
             }
             else
             {
                 layoutSlotSize.Height = Double.PositiveInfinity;
-                if (measureElement.IsScrolling && measureElement.CanHorizontallyScroll) { layoutSlotSize.Width = Double.PositiveInfinity; }
+                if (measureElement.IsScrolling && measureElement.CanHorizontallyScroll)
+                { layoutSlotSize.Width = Double.PositiveInfinity; }
                 firstViewport = (measureElement.IsScrolling) ? CoerceOffsetToInteger(scrollData.Offset.Y, children.Count) : 0;
                 logicalVisibleSpace = constraint.Height;
             }
@@ -585,7 +595,8 @@ namespace System.Windows.Controls
                 // Get next child.
                 UIElement child = children[i];
 
-                if (child == null) { continue; }
+                if (child == null)
+                { continue; }
 
                 // Measure the child.
                 child.Measure(layoutSlotSize);
@@ -628,7 +639,8 @@ namespace System.Windows.Controls
                 Vector offset = scrollData.Offset;
 
                 // If we have not yet set the last child in the viewport, set it to the last child.
-                if (lastViewport == -1) { lastViewport = children.Count - 1; }
+                if (lastViewport == -1)
+                { lastViewport = children.Count - 1; }
 
                 // If we or children have resized, it's possible that we can now display more content.
                 // This is true if we started at a nonzero offeset and still have space remaining.
@@ -636,11 +648,14 @@ namespace System.Windows.Controls
                 while (firstViewport > 0)
                 {
                     double projectedLogicalVisibleSpace = logicalVisibleSpace;
-                    if (fHorizontal) { projectedLogicalVisibleSpace -= children[firstViewport - 1].DesiredSize.Width; }
-                    else { projectedLogicalVisibleSpace -= children[firstViewport - 1].DesiredSize.Height; }
+                    if (fHorizontal)
+                    { projectedLogicalVisibleSpace -= children[firstViewport - 1].DesiredSize.Width; }
+                    else
+                    { projectedLogicalVisibleSpace -= children[firstViewport - 1].DesiredSize.Height; }
 
                     // If we have run out of room, break.
-                    if (DoubleUtil.LessThan(projectedLogicalVisibleSpace, 0.0)) { break; }
+                    if (DoubleUtil.LessThan(projectedLogicalVisibleSpace, 0.0))
+                    { break; }
 
                     // Adjust viewport
                     firstViewport--;
@@ -652,7 +667,8 @@ namespace System.Windows.Controls
 
                 // We are conservative when estimating a viewport, not including the last element in case it is only partially visible.
                 // We want to count it if it is fully visible (>= 0 space remaining) or the only element in the viewport.
-                if (logicalViewport == 0 || DoubleUtil.GreaterThanOrClose(logicalVisibleSpace, 0.0)) { logicalViewport++; }
+                if (logicalViewport == 0 || DoubleUtil.GreaterThanOrClose(logicalVisibleSpace, 0.0))
+                { logicalViewport++; }
 
                 if (fHorizontal)
                 {
@@ -745,7 +761,8 @@ namespace System.Windows.Controls
             {
                 UIElement child = (UIElement)children[i];
 
-                if (child == null) { continue; }
+                if (child == null)
+                { continue; }
 
                 if (fHorizontal)
                 {
@@ -780,7 +797,8 @@ namespace System.Windows.Controls
 
         private void EnsureScrollData()
         {
-            if (_scrollData == null) { _scrollData = new ScrollData(); }
+            if (_scrollData == null)
+            { _scrollData = new ScrollData(); }
         }
 
         private static void ResetScrolling(StackPanel element)
@@ -798,7 +816,8 @@ namespace System.Windows.Controls
         // At the time this method is called, scrolling state is in its new, valid state.
         private void OnScrollChange()
         {
-            if (ScrollOwner != null) { ScrollOwner.InvalidateScrollInfo(); }
+            if (ScrollOwner != null)
+            { ScrollOwner.InvalidateScrollInfo(); }
         }
 
         private static void VerifyScrollingData(IStackMeasure measureElement, IStackMeasureScrollData scrollData, Size viewport, Size extent, Vector offset)
@@ -854,7 +873,7 @@ namespace System.Windows.Controls
                 parent = VisualTreeHelper.GetParent(dependencyObjectChild);
                 if (parent == null)
                 {
-                    throw new ArgumentException(SR.Stack_VisualInDifferentSubTree,"child");
+                    throw new ArgumentException(SR.Stack_VisualInDifferentSubTree, "child");
                 }
             }
 
@@ -1094,7 +1113,7 @@ namespace System.Windows.Controls
         // Standard "extra pointer always for less data sometimes" cache savings model:
         //      !Scroll [1xReference]
         //      Scroll  [1xReference] + [6xDouble + 1xReference]
-        private class ScrollData: IStackMeasureScrollData
+        private class ScrollData : IStackMeasureScrollData
         {
             // Clears layout generated data.
             // Does not clear scrollOwner, because unless resetting due to a scrollOwner change, we won't get reattached.
@@ -1111,7 +1130,7 @@ namespace System.Windows.Controls
             internal bool _allowHorizontal;
             internal bool _allowVertical;
             internal Vector _offset;            // Scroll offset of content.  Positive corresponds to a visually upward offset.
-            internal Vector _computedOffset = new Vector(0,0);
+            internal Vector _computedOffset = new Vector(0, 0);
             internal Size _viewport;            // ViewportSize is in {pixels x items} (or vice-versa).
             internal Size _extent;              // Extent is the total number of children (logical dimension) or physical size
             internal double _physicalViewport;  // The physical size of the viewport for the items dimension above.

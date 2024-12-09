@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Threading;
-using System.Runtime.InteropServices;
-using MS.Win32;
 using Microsoft.Win32;
+using MS.Win32;
 
 namespace System.Windows.Input
 {
@@ -270,7 +270,7 @@ namespace System.Windows.Input
         //  Protected Methods
         //
         //------------------------------------------------------
- 
+
         //------------------------------------------------------
         //
         //  Internal Methods
@@ -310,9 +310,11 @@ namespace System.Windows.Input
             }
 
             composition.Stage = TextCompositionStage.Started;
-            TextCompositionEventArgs textargs = new TextCompositionEventArgs(composition._InputDevice, composition);
-            textargs.RoutedEvent=TextCompositionManager.PreviewTextInputStartEvent;
-            textargs.Source= composition.Source;
+            TextCompositionEventArgs textargs = new TextCompositionEventArgs(composition._InputDevice, composition)
+            {
+                RoutedEvent = TextCompositionManager.PreviewTextInputStartEvent,
+                Source = composition.Source
+            };
             return composition._InputManager.ProcessInput(textargs);
         }
 
@@ -335,9 +337,11 @@ namespace System.Windows.Input
                 throw new ArgumentException(SR.Format(SR.TextCompositionManager_TextCompositionHasDone, "composition"));
             }
 
-            TextCompositionEventArgs textargs = new TextCompositionEventArgs(composition._InputDevice, composition);
-            textargs.RoutedEvent=TextCompositionManager.PreviewTextInputUpdateEvent;
-            textargs.Source= composition.Source;
+            TextCompositionEventArgs textargs = new TextCompositionEventArgs(composition._InputDevice, composition)
+            {
+                RoutedEvent = TextCompositionManager.PreviewTextInputUpdateEvent,
+                Source = composition.Source
+            };
             return composition._InputManager.ProcessInput(textargs);
         }
 
@@ -361,15 +365,17 @@ namespace System.Windows.Input
             }
 
             composition.Stage = TextCompositionStage.Done;
-            TextCompositionEventArgs textargs = new TextCompositionEventArgs(composition._InputDevice, composition);
-            textargs.RoutedEvent=TextCompositionManager.PreviewTextInputEvent;
-            textargs.Source= composition.Source;
+            TextCompositionEventArgs textargs = new TextCompositionEventArgs(composition._InputDevice, composition)
+            {
+                RoutedEvent = TextCompositionManager.PreviewTextInputEvent,
+                Source = composition.Source
+            };
             return composition._InputManager.ProcessInput(textargs);
         }
 
         private static string GetCurrentOEMCPEncoding(int code)
         {
-            int cp =  UnsafeNativeMethods.GetOEMCP();
+            int cp = UnsafeNativeMethods.GetOEMCP();
             return CharacterEncoding(cp, code);
         }
 
@@ -380,14 +386,14 @@ namespace System.Windows.Input
             StringBuilder sbuilder = new StringBuilder(EncodingBufferLen);
 
             // Win32K uses MB_PRECOMPOSED | MB_USEGLYPHCHARS.
-            int nret = UnsafeNativeMethods.MultiByteToWideChar(cp, 
+            int nret = UnsafeNativeMethods.MultiByteToWideChar(cp,
                                                    UnsafeNativeMethods.MB_PRECOMPOSED | UnsafeNativeMethods.MB_USEGLYPHCHARS,
                                                    bytes, bytes.Length,
                                                    sbuilder, EncodingBufferLen);
 
             if (nret == 0)
             {
-                int win32Err = Marshal.GetLastWin32Error(); 
+                int win32Err = Marshal.GetLastWin32Error();
                 throw new System.ComponentModel.Win32Exception(win32Err);
             }
 
@@ -407,7 +413,7 @@ namespace System.Windows.Input
             //
             if (e.StagingItem.Input.RoutedEvent == Keyboard.KeyDownEvent)
             {
-                KeyEventArgs keyArgs = (KeyEventArgs) e.StagingItem.Input;
+                KeyEventArgs keyArgs = (KeyEventArgs)e.StagingItem.Input;
                 if (!keyArgs.Handled)
                 {
                     if (!_altNumpadEntryMode)
@@ -432,7 +438,7 @@ namespace System.Windows.Input
                             // We ate this key for AltNumPad entry. None will be able to handle this.
                             e.Cancel();
                         }
-                        else 
+                        else
                         {
                             // alt numpad entry was reset so composition needs to be finalized.
                             if (_altNumpadcomposition != null)
@@ -443,8 +449,8 @@ namespace System.Windows.Input
                             }
                         }
                     }
-}
-}
+                }
+            }
 
             if (e.StagingItem.Input.RoutedEvent == Keyboard.PreviewKeyDownEvent)
             {
@@ -460,29 +466,29 @@ namespace System.Windows.Input
                 }
             }
         }
-        
+
         // PostProcessInput event handler
         private void PostProcessInput(object sender, ProcessInputEventArgs e)
         {
             // KeyUp
-            if(e.StagingItem.Input.RoutedEvent == Keyboard.KeyUpEvent)
+            if (e.StagingItem.Input.RoutedEvent == Keyboard.KeyUpEvent)
             {
-                KeyEventArgs keyArgs = (KeyEventArgs) e.StagingItem.Input;
-                if(!keyArgs.Handled)
+                KeyEventArgs keyArgs = (KeyEventArgs)e.StagingItem.Input;
+                if (!keyArgs.Handled)
                 {
-                    if(keyArgs.RealKey == Key.LeftAlt || keyArgs.RealKey == Key.RightAlt)
+                    if (keyArgs.RealKey == Key.LeftAlt || keyArgs.RealKey == Key.RightAlt)
                     {
                         // Make sure both Alt keys are up.
                         ModifierKeys modifiers = keyArgs.KeyboardDevice.Modifiers;
-                        if((modifiers & ModifierKeys.Alt) == 0)
+                        if ((modifiers & ModifierKeys.Alt) == 0)
                         {
-                            if(_altNumpadEntryMode)
+                            if (_altNumpadEntryMode)
                             {
                                 _altNumpadEntryMode = false;
 
                                 // Generate the Unicode equivalent if we
                                 // actually entered a number via the numpad.
-                                if(_altNumpadEntry != 0)
+                                if (_altNumpadEntry != 0)
                                 {
                                     _altNumpadcomposition.ClearTexts();
                                     if (_altNumpadConversionMode == AltNumpadConversionMode.OEMCodePage)
@@ -497,7 +503,7 @@ namespace System.Windows.Input
                                     else if (_altNumpadConversionMode == AltNumpadConversionMode.HexUnicode)
                                     {
                                         Char[] chars = new Char[1];
-                                        chars[0] = (Char) _altNumpadEntry;
+                                        chars[0] = (Char)_altNumpadEntry;
                                         _altNumpadcomposition.SetText(new string(chars));
                                     }
                                 }
@@ -515,49 +521,55 @@ namespace System.Windows.Input
             }
 
             // PreviewTextInputBegin --> TextInputStart
-            else if(e.StagingItem.Input.RoutedEvent == TextCompositionManager.PreviewTextInputStartEvent)
+            else if (e.StagingItem.Input.RoutedEvent == TextCompositionManager.PreviewTextInputStartEvent)
             {
-                TextCompositionEventArgs textArgs = (TextCompositionEventArgs) e.StagingItem.Input;
-                if(!textArgs.Handled)
+                TextCompositionEventArgs textArgs = (TextCompositionEventArgs)e.StagingItem.Input;
+                if (!textArgs.Handled)
                 {
-                    TextCompositionEventArgs text = new TextCompositionEventArgs(textArgs.Device, textArgs.TextComposition);
-                    text.RoutedEvent=TextCompositionManager.TextInputStartEvent;
-                    text.Source= textArgs.TextComposition.Source;
+                    TextCompositionEventArgs text = new TextCompositionEventArgs(textArgs.Device, textArgs.TextComposition)
+                    {
+                        RoutedEvent = TextCompositionManager.TextInputStartEvent,
+                        Source = textArgs.TextComposition.Source
+                    };
                     e.PushInput(text, e.StagingItem);
                 }
             }
 
             // PreviewTextInputUpdate --> TextInputUpdate
-            else if(e.StagingItem.Input.RoutedEvent == TextCompositionManager.PreviewTextInputUpdateEvent)
+            else if (e.StagingItem.Input.RoutedEvent == TextCompositionManager.PreviewTextInputUpdateEvent)
             {
-                TextCompositionEventArgs textArgs = (TextCompositionEventArgs) e.StagingItem.Input;
-                if(!textArgs.Handled)
+                TextCompositionEventArgs textArgs = (TextCompositionEventArgs)e.StagingItem.Input;
+                if (!textArgs.Handled)
                 {
-                    TextCompositionEventArgs text = new TextCompositionEventArgs(textArgs.Device, textArgs.TextComposition);
-                    text.RoutedEvent=TextCompositionManager.TextInputUpdateEvent;
-                    text.Source= textArgs.TextComposition.Source;
+                    TextCompositionEventArgs text = new TextCompositionEventArgs(textArgs.Device, textArgs.TextComposition)
+                    {
+                        RoutedEvent = TextCompositionManager.TextInputUpdateEvent,
+                        Source = textArgs.TextComposition.Source
+                    };
                     e.PushInput(text, e.StagingItem);
                 }
             }
 
             // PreviewTextInput --> TextInput
-            else if(e.StagingItem.Input.RoutedEvent == TextCompositionManager.PreviewTextInputEvent)
+            else if (e.StagingItem.Input.RoutedEvent == TextCompositionManager.PreviewTextInputEvent)
             {
-                TextCompositionEventArgs textArgs = (TextCompositionEventArgs) e.StagingItem.Input;
-                if(!textArgs.Handled)
+                TextCompositionEventArgs textArgs = (TextCompositionEventArgs)e.StagingItem.Input;
+                if (!textArgs.Handled)
                 {
-                    TextCompositionEventArgs text = new TextCompositionEventArgs(textArgs.Device, textArgs.TextComposition);
-                    text.RoutedEvent=TextCompositionManager.TextInputEvent;
-                    text.Source= textArgs.TextComposition.Source;
+                    TextCompositionEventArgs text = new TextCompositionEventArgs(textArgs.Device, textArgs.TextComposition)
+                    {
+                        RoutedEvent = TextCompositionManager.TextInputEvent,
+                        Source = textArgs.TextComposition.Source
+                    };
                     e.PushInput(text, e.StagingItem);
                 }
             }
 
             // TextCompositioniBegin --> TextInput if this is AutomaticComplete.
-            else if(e.StagingItem.Input.RoutedEvent == TextCompositionManager.TextInputStartEvent)
+            else if (e.StagingItem.Input.RoutedEvent == TextCompositionManager.TextInputStartEvent)
             {
-                TextCompositionEventArgs textArgs = (TextCompositionEventArgs) e.StagingItem.Input;
-                if(!textArgs.Handled)
+                TextCompositionEventArgs textArgs = (TextCompositionEventArgs)e.StagingItem.Input;
+                if (!textArgs.Handled)
                 {
                     if (textArgs.TextComposition.AutoComplete == TextCompositionAutoComplete.On)
                     {
@@ -567,10 +579,10 @@ namespace System.Windows.Input
             }
 
             // TextCompositionUpdate --> TextInput if this is AutomaticComplete.
-            else if(e.StagingItem.Input.RoutedEvent == TextCompositionManager.TextInputUpdateEvent)
+            else if (e.StagingItem.Input.RoutedEvent == TextCompositionManager.TextInputUpdateEvent)
             {
-                TextCompositionEventArgs textArgs = (TextCompositionEventArgs) e.StagingItem.Input;
-                if(!textArgs.Handled)
+                TextCompositionEventArgs textArgs = (TextCompositionEventArgs)e.StagingItem.Input;
+                if (!textArgs.Handled)
                 {
                     if ((textArgs.TextComposition == _deadCharTextComposition) &&
                          (_deadCharTextComposition.Composed))
@@ -583,12 +595,12 @@ namespace System.Windows.Input
                 }
             }
 
-            
+
             // Raw to StartComposition.
             InputReportEventArgs input = e.StagingItem.Input as InputReportEventArgs;
-            if(input != null)
+            if (input != null)
             {
-                if(input.Report.Type == InputType.Text && input.RoutedEvent == InputManager.InputReportEvent)
+                if (input.Report.Type == InputType.Text && input.RoutedEvent == InputManager.InputReportEvent)
                 {
                     RawTextInputReport textInput;
                     textInput = (RawTextInputReport)input.Report;
@@ -623,7 +635,7 @@ namespace System.Windows.Input
                     {
                         if (textInput.IsDeadCharacter)
                         {
-                            _deadCharTextComposition = new DeadCharTextComposition(_inputManager, (IInputElement)null, inputText , TextCompositionAutoComplete.Off, InputManager.Current.PrimaryKeyboardDevice);
+                            _deadCharTextComposition = new DeadCharTextComposition(_inputManager, (IInputElement)null, inputText, TextCompositionAutoComplete.Off, InputManager.Current.PrimaryKeyboardDevice);
                             if (textInput.IsSystemCharacter)
                             {
                                 _deadCharTextComposition.MakeSystem();
@@ -696,9 +708,9 @@ namespace System.Windows.Input
         private bool EnterAltNumpadEntryMode(Key key)
         {
             bool handled = false;
-            if(key == Key.LeftAlt || key == Key.RightAlt)
+            if (key == Key.LeftAlt || key == Key.RightAlt)
             {
-                if(!_altNumpadEntryMode)
+                if (!_altNumpadEntryMode)
                 {
                     _altNumpadEntryMode = true;
                     _altNumpadEntry = 0;
@@ -727,7 +739,7 @@ namespace System.Windows.Input
             {
                 return false;
             }
-  
+
             //
             // Windows has historically offered a back-door for entering
             // characters that are not available on the keyboard.  The
@@ -806,22 +818,38 @@ namespace System.Windows.Input
                 switch (key)
                 {
                     // We accept digit keys and A-F in HexConversionMode.
-                    case Key.D0: return 0x00;
-                    case Key.D1: return 0x01;
-                    case Key.D2: return 0x02;
-                    case Key.D3: return 0x03;
-                    case Key.D4: return 0x04;
-                    case Key.D5: return 0x05;
-                    case Key.D6: return 0x06;
-                    case Key.D7: return 0x07;
-                    case Key.D8: return 0x08;
-                    case Key.D9: return 0x09;
-                    case Key.A:  return 0x0A;
-                    case Key.B:  return 0x0B;
-                    case Key.C:  return 0x0C;
-                    case Key.D:  return 0x0D;
-                    case Key.E:  return 0x0E;
-                    case Key.F:  return 0x0F;
+                    case Key.D0:
+                        return 0x00;
+                    case Key.D1:
+                        return 0x01;
+                    case Key.D2:
+                        return 0x02;
+                    case Key.D3:
+                        return 0x03;
+                    case Key.D4:
+                        return 0x04;
+                    case Key.D5:
+                        return 0x05;
+                    case Key.D6:
+                        return 0x06;
+                    case Key.D7:
+                        return 0x07;
+                    case Key.D8:
+                        return 0x08;
+                    case Key.D9:
+                        return 0x09;
+                    case Key.A:
+                        return 0x0A;
+                    case Key.B:
+                        return 0x0B;
+                    case Key.C:
+                        return 0x0C;
+                    case Key.D:
+                        return 0x0D;
+                    case Key.E:
+                        return 0x0E;
+                    case Key.F:
+                        return 0x0F;
                 }
             }
 
@@ -864,7 +892,7 @@ namespace System.Windows.Input
         // Return true if we're in hex conversion mode.
         private bool HexConversionMode
         {
-            get 
+            get
             {
                 if ((_altNumpadConversionMode == AltNumpadConversionMode.HexDefaultCodePage) ||
                     (_altNumpadConversionMode == AltNumpadConversionMode.HexUnicode))
@@ -878,7 +906,7 @@ namespace System.Windows.Input
         /// </summary>
         private static bool IsHexNumpadEnabled
         {
-            get 
+            get
             {
                 if (!_isHexNumpadRegistryChecked)
                 {
@@ -910,7 +938,7 @@ namespace System.Windows.Input
         //------------------------------------------------------
 
         // InputManager for this TextCompositionManager
-        
+
         private readonly InputManager _inputManager;
 
         // The current dead char composition.
@@ -935,7 +963,7 @@ namespace System.Windows.Input
         private static bool _isHexNumpadEnabled = false;
 
         // Character encoding length.
-        private const int EncodingBufferLen  =  4;
+        private const int EncodingBufferLen = 4;
 
         // ScanCode of Numpad keys.
         internal static class NumpadScanCode
@@ -944,31 +972,41 @@ namespace System.Windows.Input
             {
                 switch (scanCode)
                 {
-                    case Numpad0: return 0;
-                    case Numpad1: return 1;
-                    case Numpad2: return 2;
-                    case Numpad3: return 3;
-                    case Numpad4: return 4;
-                    case Numpad5: return 5;
-                    case Numpad6: return 6;
-                    case Numpad7: return 7;
-                    case Numpad8: return 8;
-                    case Numpad9: return 9;
+                    case Numpad0:
+                        return 0;
+                    case Numpad1:
+                        return 1;
+                    case Numpad2:
+                        return 2;
+                    case Numpad3:
+                        return 3;
+                    case Numpad4:
+                        return 4;
+                    case Numpad5:
+                        return 5;
+                    case Numpad6:
+                        return 6;
+                    case Numpad7:
+                        return 7;
+                    case Numpad8:
+                        return 8;
+                    case Numpad9:
+                        return 9;
                 }
                 return -1;
             }
-            internal const int NumpadDot      =  0x53;
-            internal const int NumpadPlus     =  0x4e;
-            internal const int Numpad0        =  0x52;
-            internal const int Numpad1        =  0x4f;
-            internal const int Numpad2        =  0x50;
-            internal const int Numpad3        =  0x51;
-            internal const int Numpad4        =  0x4b;
-            internal const int Numpad5        =  0x4c;
-            internal const int Numpad6        =  0x4d;
-            internal const int Numpad7        =  0x47;
-            internal const int Numpad8        =  0x48;
-            internal const int Numpad9        =  0x49;
+            internal const int NumpadDot = 0x53;
+            internal const int NumpadPlus = 0x4e;
+            internal const int Numpad0 = 0x52;
+            internal const int Numpad1 = 0x4f;
+            internal const int Numpad2 = 0x50;
+            internal const int Numpad3 = 0x51;
+            internal const int Numpad4 = 0x4b;
+            internal const int Numpad5 = 0x4c;
+            internal const int Numpad6 = 0x4d;
+            internal const int Numpad7 = 0x47;
+            internal const int Numpad8 = 0x48;
+            internal const int Numpad9 = 0x49;
         }
     }
 }

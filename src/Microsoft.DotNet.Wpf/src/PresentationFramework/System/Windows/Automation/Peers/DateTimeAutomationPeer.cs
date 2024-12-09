@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,7 +12,7 @@ namespace System.Windows.Automation.Peers
     /// <summary>
     /// AutomationPeer for CalendarDayButton and CalendarButton
     /// </summary>
-    public sealed class DateTimeAutomationPeer : AutomationPeer, IGridItemProvider, ISelectionItemProvider, ITableItemProvider, IInvokeProvider , IVirtualizedItemProvider
+    public sealed class DateTimeAutomationPeer : AutomationPeer, IGridItemProvider, ISelectionItemProvider, ITableItemProvider, IInvokeProvider, IVirtualizedItemProvider
     {
         /// <summary>
         /// Initializes a new instance of the DateTimeAutomationPeer class.
@@ -129,7 +129,7 @@ namespace System.Windows.Automation.Peers
         #endregion Private Properties
 
         #region AutomationPeer override Methods
-                
+
         protected override string GetAcceleratorKeyCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
@@ -159,12 +159,12 @@ namespace System.Windows.Automation.Peers
 
             return String.Empty;
         }
-        
+
         protected override AutomationControlType GetAutomationControlTypeCore()
         {
             return AutomationControlType.Button;
         }
-        
+
         protected override string GetAutomationIdCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
@@ -179,7 +179,7 @@ namespace System.Windows.Automation.Peers
 
             return String.Empty;
         }
-        
+
         protected override Rect GetBoundingRectangleCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
@@ -213,7 +213,7 @@ namespace System.Windows.Automation.Peers
         protected override string GetClassNameCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
-            return (wrapperPeer != null) ? wrapperPeer.GetClassName() : (IsDayButton)? "CalendarDayButton" : "CalendarButton";
+            return (wrapperPeer != null) ? wrapperPeer.GetClassName() : (IsDayButton) ? "CalendarDayButton" : "CalendarButton";
         }
 
         protected override Point GetClickablePointCore()
@@ -241,7 +241,7 @@ namespace System.Windows.Automation.Peers
 
             return dateString;
         }
-    
+
         protected override string GetItemStatusCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
@@ -455,7 +455,7 @@ namespace System.Windows.Automation.Peers
             AutomationPeer wrapperPeer = WrapperPeer;
             AutomationHeadingLevel headingLevel = AutomationHeadingLevel.None;
 
-            if(wrapperPeer != null)
+            if (wrapperPeer != null)
             {
                 headingLevel = wrapperPeer.GetHeadingLevel();
             }
@@ -562,7 +562,7 @@ namespace System.Windows.Automation.Peers
 
             return false;
         }
-        
+
         protected override bool IsOffscreenCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
@@ -592,7 +592,7 @@ namespace System.Windows.Automation.Peers
 
             return false;
         }
-        
+
         protected override bool IsRequiredForFormCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
@@ -607,7 +607,7 @@ namespace System.Windows.Automation.Peers
 
             return false;
         }
-        
+
         protected override void SetFocusCore()
         {
             UIElementAutomationPeer wrapperPeer = WrapperPeer;
@@ -736,9 +736,9 @@ namespace System.Windows.Automation.Peers
         /// <summary>
         /// True if the owning CalendarDayButton is selected.
         /// </summary>
-        bool ISelectionItemProvider.IsSelected 
-        { 
-            get 
+        bool ISelectionItemProvider.IsSelected
+        {
+            get
             {
                 if (IsDayButton)
                 {
@@ -746,7 +746,7 @@ namespace System.Windows.Automation.Peers
                 }
 
                 return false;
-            } 
+            }
         }
 
         /// <summary>
@@ -862,7 +862,7 @@ namespace System.Windows.Automation.Peers
         #endregion ITableItemProvider
 
         #region IInvokeProvider
-        
+
         void IInvokeProvider.Invoke()
         {
             Button owningButton = OwningButton;
@@ -871,17 +871,17 @@ namespace System.Windows.Automation.Peers
 
             // Async call of click event
             // In ClickHandler opens a dialog and suspend the execution we don't want to block this thread
-            Dispatcher.BeginInvoke(DispatcherPriority.Input, new DispatcherOperationCallback(delegate(object param)
+            Dispatcher.BeginInvoke(DispatcherPriority.Input, new DispatcherOperationCallback(delegate (object param)
             {
                 owningButton.AutomationButtonBaseClick();
-               
+
                 return null;
             }), null);
         }
-        
+
         #endregion IInvokeProvider
 
-        # region IVirtualizedItemProvider
+        #region IVirtualizedItemProvider
 
         void IVirtualizedItemProvider.Realize()
         {
@@ -890,7 +890,7 @@ namespace System.Windows.Automation.Peers
             {
                 OwningCalendar.DisplayMode = ButtonMode;
             }
-            
+
             // Bring into view
             OwningCalendar.DisplayDate = this.Date;
         }
@@ -930,7 +930,8 @@ namespace System.Windows.Automation.Peers
             AutomationPeer parent = this.GetParent();
             if (this.Index != -1 && parent != null && parent.Children != null && this.Index < parent.Children.Count && parent.Children[this.Index] == this)
                 return true;
-            else return false;
+            else
+                return false;
         }
 
         private void ThrowElementNotAvailableException()

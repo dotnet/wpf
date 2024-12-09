@@ -1,14 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Windows.Input.Tracing;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.KnownBoxes;
 using MS.Utility;
-using System.Windows.Input.Tracing;
 
 namespace System.Windows.Input
 {
@@ -31,7 +31,7 @@ namespace System.Windows.Input
             _deviceId = deviceId;
             _inputManager = InputManager.UnsecureCurrent;
 
-            
+
             // If this is instantiated and the derived type is not a StylusTouchDevice then it is a 3rd party
             // custom touch device.
             StylusLogic stylusLogic = StylusLogic.CurrentStylusLogic;
@@ -492,7 +492,7 @@ namespace System.Windows.Input
             if (_reevaluateCapture == null)
             {
                 _reevaluateCapture = Dispatcher.BeginInvoke(DispatcherPriority.Input,
-                    (DispatcherOperationCallback)delegate(object args)
+                    (DispatcherOperationCallback)delegate (object args)
                     {
                         TouchDevice thisRef = (TouchDevice)args;
                         thisRef._reevaluateCapture = null;
@@ -579,7 +579,7 @@ namespace System.Windows.Input
                 if (_reevaluateCapture == null)
                 {
                     _reevaluateCapture = Dispatcher.BeginInvoke(DispatcherPriority.Input,
-                        (DispatcherOperationCallback)delegate(object args)
+                        (DispatcherOperationCallback)delegate (object args)
                         {
                             TouchDevice thisRef = (TouchDevice)args;
                             thisRef._reevaluateCapture = null;
@@ -834,7 +834,7 @@ namespace System.Windows.Input
             if (_reevaluateOver == null)
             {
                 _reevaluateOver = Dispatcher.BeginInvoke(DispatcherPriority.Input,
-                    (DispatcherOperationCallback)delegate(object args)
+                    (DispatcherOperationCallback)delegate (object args)
                     {
                         TouchDevice thisRef = (TouchDevice)args;
                         thisRef._reevaluateOver = null;
@@ -937,8 +937,10 @@ namespace System.Windows.Input
         private TouchEventArgs CreateEventArgs(RoutedEvent routedEvent)
         {
             // review timestamps
-            TouchEventArgs touchEventArgs = new TouchEventArgs(this, Environment.TickCount);
-            touchEventArgs.RoutedEvent = routedEvent;
+            TouchEventArgs touchEventArgs = new TouchEventArgs(this, Environment.TickCount)
+            {
+                RoutedEvent = routedEvent
+            };
             return touchEventArgs;
         }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -37,11 +37,11 @@ namespace System.Windows.Controls
                         visible = true;
                         break;
                     case DataGridHeadersVisibility.Column:
-                        visible = parameterAsDataGridHeadersVisibility == DataGridHeadersVisibility.Column || 
+                        visible = parameterAsDataGridHeadersVisibility == DataGridHeadersVisibility.Column ||
                                     parameterAsDataGridHeadersVisibility == DataGridHeadersVisibility.None;
                         break;
                     case DataGridHeadersVisibility.Row:
-                        visible = parameterAsDataGridHeadersVisibility == DataGridHeadersVisibility.Row || 
+                        visible = parameterAsDataGridHeadersVisibility == DataGridHeadersVisibility.Row ||
                                     parameterAsDataGridHeadersVisibility == DataGridHeadersVisibility.None;
                         break;
                 }
@@ -62,7 +62,7 @@ namespace System.Windows.Controls
         /// </summary>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-           throw new NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

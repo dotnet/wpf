@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -25,7 +25,7 @@ namespace System.Windows.Xps.Serialization
         /// <summary>
         /// </summary>
         public
-        XpsFontSerializationService( 
+        XpsFontSerializationService(
             BasePackagingPolicy packagingPolicy
             )
         {
@@ -35,22 +35,22 @@ namespace System.Windows.Xps.Serialization
 
         public
         bool
-        SignalCommit( Type type )
+        SignalCommit(Type type)
         {
             FontSubsetterCommitPolicies signal;
-            if(type == typeof(FixedDocumentSequence))
+            if (type == typeof(FixedDocumentSequence))
             {
                 signal = FontSubsetterCommitPolicies.CommitEntireSequence;
             }
-            else if(type ==  typeof(FixedDocument))
+            else if (type == typeof(FixedDocument))
             {
                 signal = FontSubsetterCommitPolicies.CommitPerDocument;
             }
-            else if(type== typeof(FixedPage))
+            else if (type == typeof(FixedPage))
             {
                 signal = FontSubsetterCommitPolicies.CommitPerPage;
             }
-            else if(type == typeof(Visual))
+            else if (type == typeof(Visual))
             {
                 signal = FontSubsetterCommitPolicies.CommitPerPage;
             }
@@ -60,7 +60,7 @@ namespace System.Windows.Xps.Serialization
             }
             return _fontSubsetter.CommitFontSubsetsSignal(signal);
         }
-        
+
         /// <summary>
         /// This method retieves a XpsFontSubsetter for
         /// serializing a font to a Xps package. 
@@ -70,7 +70,7 @@ namespace System.Windows.Xps.Serialization
         /// <returns>
         /// A reference to a XpsFontSubsetter instance.
         /// </returns>
-        public 
+        public
         XpsFontSubsetter
         FontSubsetter
         {

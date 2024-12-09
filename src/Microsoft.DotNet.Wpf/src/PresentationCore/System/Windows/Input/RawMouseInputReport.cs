@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -44,12 +44,12 @@ namespace System.Windows.Input
         /// </param>
         public RawMouseInputReport(
             InputMode mode,
-            int timestamp, 
+            int timestamp,
             PresentationSource inputSource,
-            RawMouseActions actions, 
-            int x, 
-            int y, 
-            int wheel, 
+            RawMouseActions actions,
+            int x,
+            int y,
+            int wheel,
             IntPtr extraInformation) : base(inputSource, InputType.Mouse, mode, timestamp)
         {
             if (!IsValidRawMouseActions(actions))
@@ -66,22 +66,22 @@ namespace System.Windows.Input
         /// <summary>
         ///     Read-only access to the set of actions that were reported.
         /// </summary>
-        public RawMouseActions Actions {get {return _actions;}}
+        public RawMouseActions Actions { get { return _actions; } }
 
         /// <summary>
         ///     Read-only access to the horizontal position that was reported.
         /// </summary>
-        public int X {get {return _x;}}
+        public int X { get { return _x; } }
 
         /// <summary>
         ///     Read-only access to the vertical position that was reported.
         /// </summary>
-        public int Y {get {return _y;}}
+        public int Y { get { return _y; } }
 
         /// <summary>
         ///     Read-only access to the wheel delta that was reported.
         /// </summary>
-        public int Wheel {get {return _wheel;}}
+        public int Wheel { get { return _wheel; } }
 
         /// <summary>
         ///     Read-only access to the extra information was provided along
@@ -95,7 +95,7 @@ namespace System.Windows.Input
             if (actions == RawMouseActions.None)
                 return true;
 
-            if ((( RawMouseActions.AttributesChanged | RawMouseActions.Activate | RawMouseActions.Deactivate |
+            if (((RawMouseActions.AttributesChanged | RawMouseActions.Activate | RawMouseActions.Deactivate |
                   RawMouseActions.RelativeMove | RawMouseActions.AbsoluteMove | RawMouseActions.VirtualDesktopMove |
                   RawMouseActions.Button1Press | RawMouseActions.Button1Release |
                   RawMouseActions.Button2Press | RawMouseActions.Button2Release |
@@ -106,7 +106,7 @@ namespace System.Windows.Input
                   RawMouseActions.CancelCapture |
                   RawMouseActions.QueryCursor) & actions) == actions)
             {
-                if (!(((RawMouseActions.Deactivate & actions) == actions && RawMouseActions.Deactivate != actions ) ||
+                if (!(((RawMouseActions.Deactivate & actions) == actions && RawMouseActions.Deactivate != actions) ||
                       (((RawMouseActions.Button1Press | RawMouseActions.Button1Release) & actions) == (RawMouseActions.Button1Press | RawMouseActions.Button1Release)) ||
                       (((RawMouseActions.Button2Press | RawMouseActions.Button2Release) & actions) == (RawMouseActions.Button2Press | RawMouseActions.Button2Release)) ||
                       (((RawMouseActions.Button3Press | RawMouseActions.Button3Release) & actions) == (RawMouseActions.Button3Press | RawMouseActions.Button3Release)) ||
@@ -123,9 +123,9 @@ namespace System.Windows.Input
         private int _x;
         private int _y;
         private int _wheel;
-        
+
         internal bool _isSynchronize; // Set from MouseDevice.Synchronize.
-        
+
         private readonly IntPtr _extraInformation;
-    }    
+    }
 }

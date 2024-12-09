@@ -1,4 +1,4 @@
-namespace System.Collections.Specialized
+﻿namespace System.Collections.Specialized
 {
     public partial class CollectionChangedEventManager : System.Windows.WeakEventManager
     {
@@ -46,7 +46,7 @@ namespace System.ComponentModel
     }
     public sealed partial class DependencyPropertyDescriptor : System.ComponentModel.PropertyDescriptor
     {
-        internal DependencyPropertyDescriptor() : base (default(System.ComponentModel.MemberDescriptor)) { }
+        internal DependencyPropertyDescriptor() : base(default(System.ComponentModel.MemberDescriptor)) { }
         public override System.ComponentModel.AttributeCollection Attributes { get { throw null; } }
         public override string Category { get { throw null; } }
         public override System.Type ComponentType { get { throw null; } }
@@ -644,7 +644,7 @@ namespace System.Windows
         protected AttachedPropertyBrowsableAttribute() { }
         internal abstract bool IsBrowsable(System.Windows.DependencyObject d, System.Windows.DependencyProperty dp);
     }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Method, AllowMultiple=true)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Method, AllowMultiple = true)]
     public sealed partial class AttachedPropertyBrowsableForTypeAttribute : System.Windows.AttachedPropertyBrowsableAttribute
     {
         public AttachedPropertyBrowsableForTypeAttribute(System.Type targetType) { }
@@ -654,7 +654,7 @@ namespace System.Windows
         public override int GetHashCode() { throw null; }
         internal override bool IsBrowsable(System.Windows.DependencyObject d, System.Windows.DependencyProperty dp) { throw null; }
     }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Method, AllowMultiple=false)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Method, AllowMultiple = false)]
     public sealed partial class AttachedPropertyBrowsableWhenAttributePresentAttribute : System.Windows.AttachedPropertyBrowsableAttribute
     {
         public AttachedPropertyBrowsableWhenAttributePresentAttribute(System.Type attributeType) { }
@@ -881,7 +881,7 @@ namespace System.Windows
         public bool Remove(System.Collections.Generic.KeyValuePair<string, object> item) { throw null; }
         public bool Remove(string key) { throw null; }
         public static void SetNameScope(System.Windows.DependencyObject dependencyObject, System.Windows.Markup.INameScope value) { }
-        System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, object>> System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.GetEnumerator() { throw null; }
+        System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, object>> System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<System.String, System.Object>>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public bool TryGetValue(string key, out object value) { throw null; }
         public void UnregisterName(string name) { }
@@ -902,8 +902,8 @@ namespace System.Windows
         public void Offset(double offsetX, double offsetY) { }
         public static System.Windows.Point operator +(System.Windows.Point point, System.Windows.Vector vector) { throw null; }
         public static bool operator ==(System.Windows.Point point1, System.Windows.Point point2) { throw null; }
-        public static explicit operator System.Windows.Size (System.Windows.Point point) { throw null; }
-        public static explicit operator System.Windows.Vector (System.Windows.Point point) { throw null; }
+        public static explicit operator System.Windows.Size(System.Windows.Point point) { throw null; }
+        public static explicit operator System.Windows.Vector(System.Windows.Point point) { throw null; }
         public static bool operator !=(System.Windows.Point point1, System.Windows.Point point2) { throw null; }
         public static System.Windows.Point operator *(System.Windows.Point point, System.Windows.Media.Matrix matrix) { throw null; }
         public static System.Windows.Vector operator -(System.Windows.Point point1, System.Windows.Point point2) { throw null; }
@@ -1017,8 +1017,8 @@ namespace System.Windows
         public static bool Equals(System.Windows.Size size1, System.Windows.Size size2) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(System.Windows.Size size1, System.Windows.Size size2) { throw null; }
-        public static explicit operator System.Windows.Point (System.Windows.Size size) { throw null; }
-        public static explicit operator System.Windows.Vector (System.Windows.Size size) { throw null; }
+        public static explicit operator System.Windows.Point(System.Windows.Size size) { throw null; }
+        public static explicit operator System.Windows.Vector(System.Windows.Size size) { throw null; }
         public static bool operator !=(System.Windows.Size size1, System.Windows.Size size2) { throw null; }
         public static System.Windows.Size Parse(string source) { throw null; }
         string System.IFormattable.ToString(string format, System.IFormatProvider provider) { throw null; }
@@ -1071,8 +1071,8 @@ namespace System.Windows
         public static System.Windows.Vector operator +(System.Windows.Vector vector1, System.Windows.Vector vector2) { throw null; }
         public static System.Windows.Vector operator /(System.Windows.Vector vector, double scalar) { throw null; }
         public static bool operator ==(System.Windows.Vector vector1, System.Windows.Vector vector2) { throw null; }
-        public static explicit operator System.Windows.Point (System.Windows.Vector vector) { throw null; }
-        public static explicit operator System.Windows.Size (System.Windows.Vector vector) { throw null; }
+        public static explicit operator System.Windows.Point(System.Windows.Vector vector) { throw null; }
+        public static explicit operator System.Windows.Size(System.Windows.Vector vector) { throw null; }
         public static bool operator !=(System.Windows.Vector vector1, System.Windows.Vector vector2) { throw null; }
         public static System.Windows.Vector operator *(double scalar, System.Windows.Vector vector) { throw null; }
         public static System.Windows.Vector operator *(System.Windows.Vector vector, double scalar) { throw null; }
@@ -1550,7 +1550,7 @@ namespace System.Windows.Markup
     {
         SerializeAsAttribute = 1,
     }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Field | System.AttributeTargets.Method | System.AttributeTargets.Property, AllowMultiple=false)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Field | System.AttributeTargets.Method | System.AttributeTargets.Property, AllowMultiple = false)]
     public sealed partial class DesignerSerializationOptionsAttribute : System.Attribute
     {
         public DesignerSerializationOptionsAttribute(System.Windows.Markup.DesignerSerializationOptions designerSerializationOptions) { }
@@ -1613,7 +1613,7 @@ namespace System.Windows.Markup.Primitives
 }
 namespace System.Windows.Media
 {
-    [System.AttributeUsageAttribute(System.AttributeTargets.Assembly, AllowMultiple=false)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Assembly, AllowMultiple = false)]
     public sealed partial class DisableDpiAwarenessAttribute : System.Attribute
     {
         public DisableDpiAwarenessAttribute() { }
@@ -1883,9 +1883,9 @@ namespace System.Windows.Threading
         public override System.Threading.SynchronizationContext CreateCopy() { throw null; }
         public override void Post(System.Threading.SendOrPostCallback d, object state) { }
         public override void Send(System.Threading.SendOrPostCallback d, object state) { }
-        #pragma warning disable SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.  
+#pragma warning disable SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.  
         [System.Runtime.ConstrainedExecution.PrePrepareMethodAttribute]
-        #pragma warning restore SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported. 
+#pragma warning restore SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported. 
         public override int Wait(System.IntPtr[] waitHandles, bool waitAll, int millisecondsTimeout) { throw null; }
     }
     public partial class DispatcherTimer

@@ -52,19 +52,32 @@ namespace WinRT
             {
                 switch (type.Name)
                 {
-                    case "SByte": return "i1";
-                    case "Byte": return "u1";
-                    case "Int16": return "i2";
-                    case "UInt16": return "u2";
-                    case "Int32": return "i4";
-                    case "UInt32": return "u4";
-                    case "Int64": return "i8";
-                    case "UInt64": return "u8";
-                    case "Single": return "f4";
-                    case "Double": return "f8";
-                    case "Boolean": return "b1";
-                    case "Char": return "c2";
-                    case "Guid": return "g16";
+                    case "SByte":
+                        return "i1";
+                    case "Byte":
+                        return "u1";
+                    case "Int16":
+                        return "i2";
+                    case "UInt16":
+                        return "u2";
+                    case "Int32":
+                        return "i4";
+                    case "UInt32":
+                        return "u4";
+                    case "Int64":
+                        return "i8";
+                    case "UInt64":
+                        return "u8";
+                    case "Single":
+                        return "f4";
+                    case "Double":
+                        return "f8";
+                    case "Boolean":
+                        return "b1";
+                    case "Char":
+                        return "c2";
+                    case "Guid":
+                        return "g16";
                     default:
                         {
                             if (type.IsEnum)

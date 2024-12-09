@@ -1,10 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows.Ink;
 
 namespace MS.Win32.Recognizer
@@ -45,7 +45,7 @@ namespace MS.Win32.Recognizer
         internal static extern int DestroyAlternate([In] IntPtr hRecAtls);
 
         [DllImport(ExternDll.Mshwgst, CallingConvention = CallingConvention.Winapi, CharSet = CharSet.Unicode)]
-        internal static extern int GetString([In] IntPtr hRecAtls, [Out] out RECO_RANGE recoRange, [In, Out]ref uint size, [In, Out] StringBuilder recoString);
+        internal static extern int GetString([In] IntPtr hRecAtls, [Out] out RECO_RANGE recoRange, [In, Out] ref uint size, [In, Out] StringBuilder recoString);
 
         [DllImport(ExternDll.Mshwgst, CallingConvention = CallingConvention.Winapi)]
         internal static extern int GetConfidenceLevel([In] IntPtr hRecAtls, [Out] out RECO_RANGE recoRange, [Out] out RecognitionConfidence confidenceLevel);
@@ -58,7 +58,7 @@ namespace MS.Win32.Recognizer
     }
 
 
-    
+
     /// <summary>
     /// RecognizerSafeHandle
     /// </summary>
@@ -79,7 +79,7 @@ namespace MS.Win32.Recognizer
         // Do not provide a finalizer - SafeHandle's critical finalizer will
         // call ReleaseHandle for you.
         public override bool IsInvalid
-        { 
+        {
             get
             {
                 return IsClosed || handle == IntPtr.Zero;
@@ -120,7 +120,7 @@ namespace MS.Win32.Recognizer
                 return IsClosed || handle == IntPtr.Zero;
             }
         }
-  
+
         override protected bool ReleaseHandle()
         {
             //Note: It is not an error to have already called DestroyRecognizer
@@ -146,7 +146,7 @@ namespace MS.Win32.Recognizer
 
         private RecognizerSafeHandle _recognizerHandle;
     }
-    
+
     // The structure has been copied from public\internal\drivers\inc\tpcshrd.h
     //typedef struct _PROPERTY_METRICS
     //    {
@@ -231,7 +231,7 @@ namespace MS.Win32.Recognizer
     internal enum ALT_BREAKS
     {
         ALT_BREAKS_SAME = 0,
-        ALT_BREAKS_UNIQUE   = 1,
+        ALT_BREAKS_UNIQUE = 1,
         ALT_BREAKS_FULL = 2
     }
 
@@ -256,9 +256,9 @@ namespace MS.Win32.Recognizer
     [StructLayout(LayoutKind.Sequential)]
     internal struct RECO_LATTICE_PROPERTY
     {
-        public Guid     guidProperty;
-        public ushort   cbPropertyValue;
-        public IntPtr   pPropertyValue;
+        public Guid guidProperty;
+        public ushort cbPropertyValue;
+        public IntPtr pPropertyValue;
     }
 
     // The structure has been copied from public\internal\drivers\inc\rectypes.h
@@ -270,8 +270,8 @@ namespace MS.Win32.Recognizer
     [StructLayout(LayoutKind.Sequential)]
     internal struct RECO_LATTICE_PROPERTIES
     {
-        public uint     cProperties;
-        public IntPtr   apProps;
+        public uint cProperties;
+        public IntPtr apProps;
     }
 
     // The structure has been copied from public\internal\drivers\inc\rectypes.h
@@ -289,11 +289,11 @@ namespace MS.Win32.Recognizer
     [StructLayout(LayoutKind.Sequential)]
     internal struct RECO_LATTICE_ELEMENT
     {
-        public int      score;
-        public ushort   type;
-        public IntPtr   pData;
-        public uint     ulNextColumn;
-        public uint     ulStrokeNumber;
+        public int score;
+        public ushort type;
+        public IntPtr pData;
+        public uint ulNextColumn;
+        public uint ulStrokeNumber;
         public RECO_LATTICE_PROPERTIES epProp;
     }
 
@@ -310,12 +310,12 @@ namespace MS.Win32.Recognizer
     [StructLayout(LayoutKind.Sequential)]
     internal struct RECO_LATTICE_COLUMN
     {
-        public uint     key;
+        public uint key;
         public RECO_LATTICE_PROPERTIES cpProp;
-        public uint     cStrokes;
-        public IntPtr   pStrokes;
-        public uint     cLatticeElements;
-        public IntPtr   pLatticeElements;
+        public uint cStrokes;
+        public IntPtr pStrokes;
+        public uint cLatticeElements;
+        public IntPtr pLatticeElements;
     }
 
     // The structure has been copied from public\internal\drivers\inc\rectypes.h
@@ -332,12 +332,12 @@ namespace MS.Win32.Recognizer
     [StructLayout(LayoutKind.Sequential)]
     internal struct RECO_LATTICE
     {
-        public uint     ulColumnCount;
-        public IntPtr   pLatticeColumns;
-        public uint     ulPropertyCount;
-        public IntPtr   pGuidProperties;
-        public uint     ulBestResultColumnCount;
-        public IntPtr   pulBestResultColumns;
-        public IntPtr   pulBestResultIndexes;
+        public uint ulColumnCount;
+        public IntPtr pLatticeColumns;
+        public uint ulPropertyCount;
+        public IntPtr pGuidProperties;
+        public uint ulBestResultColumnCount;
+        public IntPtr pulBestResultColumns;
+        public IntPtr pulBestResultIndexes;
     }
 }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -39,7 +39,7 @@ namespace System.Windows.Annotations
         //  Constructors
         //
         //------------------------------------------------------
-        
+
         #region Constructors
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace System.Windows.Annotations
         //  Public Methods
         //
         //------------------------------------------------------
-        
+
         #region Public Methods
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace System.Windows.Annotations
             Invariant.Assert(locator.Parts != null, "Locator has null Parts property.");
 
             // If this locator is shorter than matchList, then this can't contain matchList.            
-            #pragma warning suppress 6506 // Invariant.Assert(locator.Parts != null)
+#pragma warning suppress 6506 // Invariant.Assert(locator.Parts != null)
             if (this.Parts.Count < locator.Parts.Count)
             {
                 return false;
@@ -170,7 +170,7 @@ namespace System.Windows.Annotations
                 prefix = writer.LookupPrefix(part.PartType.Namespace);
                 if (String.IsNullOrEmpty(prefix))
                 {
-                    prefix = "tmp";                    
+                    prefix = "tmp";
                 }
 
                 // ContentLocatorParts cannot write themselves out becuase the element
@@ -223,7 +223,7 @@ namespace System.Windows.Annotations
                     }
 
                     ContentLocatorPart part = new ContentLocatorPart(new XmlQualifiedName(reader.LocalName, reader.NamespaceURI));
-                    
+
                     // Read each of the Item elements within the ContentLocatorPart
                     if (!reader.IsEmptyElement)
                     {
@@ -454,7 +454,7 @@ namespace System.Windows.Annotations
         {
             Invariant.Assert(other != null, "Parameter 'other' is null.");
 
-            foreach(ContentLocatorPart part in other.Parts)
+            foreach (ContentLocatorPart part in other.Parts)
             {
                 this.Parts.Add((ContentLocatorPart)part.Clone());
             }

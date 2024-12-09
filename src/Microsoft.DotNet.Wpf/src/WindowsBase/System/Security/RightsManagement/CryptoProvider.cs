@@ -1,10 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Collections.ObjectModel;
-using MS.Internal.Security.RightsManagement;
 using MS.Internal;
+using MS.Internal.Security.RightsManagement;
 
 namespace System.Security.RightsManagement
 {
@@ -38,7 +38,7 @@ namespace System.Security.RightsManagement
             GC.SuppressFinalize(this);
         }
 
-         /// <summary>    
+        /// <summary>    
         /// This function encrypts clear text content.
         /// An application is expected to create a padding scheme based on the value returned from 
         /// BlockSize property. BlockSize property should be used to determine the amount of extra 
@@ -61,17 +61,17 @@ namespace System.Security.RightsManagement
             {
                 throw new RightsManagementException(RightsManagementFailureCode.EncryptionNotPermitted);
             }
-            
+
             // first get the size
-            uint outputBufferSize=0;
+            uint outputBufferSize = 0;
             byte[] outputBuffer = null;
             int hr;
 
 #if DEBUG
-            hr= SafeNativeMethods.DRMEncrypt(
-                            EncryptorHandle, 
-                            0, 
-                            (uint)clearText.Length, 
+            hr = SafeNativeMethods.DRMEncrypt(
+                            EncryptorHandle,
+                            0,
+                            (uint)clearText.Length,
                             clearText,
                             ref outputBufferSize,
                             null);
@@ -80,7 +80,7 @@ namespace System.Security.RightsManagement
 
             // We do not expect Decryption to change the size of the buffer; otherwise it will break 
             // basic assumptions behind the encrypted compound file envelope format
-            Invariant.Assert(outputBufferSize == clearText.Length); 
+            Invariant.Assert(outputBufferSize == clearText.Length);
 #else
             outputBufferSize = (uint)clearText.Length;
 #endif
@@ -117,17 +117,17 @@ namespace System.Security.RightsManagement
             {
                 throw new RightsManagementException(RightsManagementFailureCode.RightNotGranted);
             }
-            
+
             // first get the size
-            uint outputBufferSize=0;
+            uint outputBufferSize = 0;
             byte[] outputBuffer = null;
             int hr;
 
 #if DEBUG
-            hr= SafeNativeMethods.DRMDecrypt(
+            hr = SafeNativeMethods.DRMDecrypt(
                             DecryptorHandle,
-                            0, 
-                            (uint)cryptoText.Length, 
+                            0,
+                            (uint)cryptoText.Length,
                             cryptoText,
                             ref outputBufferSize,
                             null);
@@ -135,7 +135,7 @@ namespace System.Security.RightsManagement
 
             // We do not expect Decryption changing the size of the buffer; otherwise it will break 
             // basic assumptions behind the encrypted compound file envelope format
-            Invariant.Assert(outputBufferSize == cryptoText.Length); 
+            Invariant.Assert(outputBufferSize == cryptoText.Length);
 #else
             outputBufferSize = (uint)cryptoText.Length;
 #endif
@@ -175,20 +175,20 @@ namespace System.Security.RightsManagement
                 {
                     if (_decryptorHandle != null && !_decryptorHandle.IsInvalid)
                         _decryptorHandle.Close();
-                    
+
                     if (_encryptorHandle != null && !_encryptorHandle.IsInvalid)
                         _encryptorHandle.Close();
 
                     if (_boundLicenseOwnerViewRightsHandle != null && !_boundLicenseOwnerViewRightsHandle.IsInvalid)
                         _boundLicenseOwnerViewRightsHandle.Close();
-                
+
                     // dispose collection of the bound licenses that we have 
                     if (_boundLicenseHandleList != null)
                     {
-                        foreach(SafeRightsManagementHandle boundLicenseHandle in _boundLicenseHandleList)
+                        foreach (SafeRightsManagementHandle boundLicenseHandle in _boundLicenseHandleList)
                         {
-                            if (boundLicenseHandle != null && !boundLicenseHandle.IsInvalid) 
-                                boundLicenseHandle.Close(); 
+                            if (boundLicenseHandle != null && !boundLicenseHandle.IsInvalid)
+                                boundLicenseHandle.Close();
                         }
                     }
                 }
@@ -198,8 +198,8 @@ namespace System.Security.RightsManagement
                 _disposed = true;
                 _boundLicenseHandleList = null;
                 _boundLicenseOwnerViewRightsHandle = null;
-                _decryptorHandle    = null;
-                _encryptorHandle    = null;               
+                _decryptorHandle = null;
+                _encryptorHandle = null;
             }
         }
 
@@ -217,12 +217,12 @@ namespace System.Security.RightsManagement
             get
             {
                 CheckDisposed();
-            
-                if (_blockSize ==0)
+
+                if (_blockSize == 0)
                 {
-                    _blockSize = QueryBlockSize(); 
+                    _blockSize = QueryBlockSize();
                 }
-                return _blockSize; 
+                return _blockSize;
             }
         }
 
@@ -230,12 +230,12 @@ namespace System.Security.RightsManagement
         /// This bollean indicates wheter Encrypt Decrypt calls can be made on buffers that are multiple of the BlockSize value.
         /// If the value is false Encrypt Decrypt calls must be made on buffers of the size that is exactly equal to the BlockSize.
         /// </summary>    
-        public bool CanMergeBlocks 
+        public bool CanMergeBlocks
         {
             get
             {
                 CheckDisposed();
-            
+
                 // convention is to return 1 for stream ciphers
                 // Stream ciphers (although currently not used) return 1.
                 // Block ciphers return size of the block that is always greater than 1.
@@ -245,7 +245,7 @@ namespace System.Security.RightsManagement
                 return (BlockSize > 1);
             }
         }
-        
+
         /// <summary>    
         /// This is a read only property. It enable client application to enumerate list of rights that were 
         /// granted to the user, and also passed all the verification checks.
@@ -262,7 +262,7 @@ namespace System.Security.RightsManagement
                     // we ignore the rights that we can not translate for forward compatibility reasons 
                     List<ContentGrant> grantList = new List<ContentGrant>(_boundRightsInfoList.Count);
 
-                    foreach(RightNameExpirationInfoPair rightsInfo in _boundRightsInfoList)
+                    foreach (RightNameExpirationInfoPair rightsInfo in _boundRightsInfoList)
                     {
                         Nullable<ContentRight> contentRight = ClientSession.GetRightFromString(rightsInfo.RightName);
 
@@ -271,7 +271,7 @@ namespace System.Security.RightsManagement
                             grantList.Add(new ContentGrant(_owner, contentRight.Value, rightsInfo.ValidFrom, rightsInfo.ValidUntil));
                         }
                     }
-                    _boundGrantReadOnlyCollection = new ReadOnlyCollection<ContentGrant> (grantList);
+                    _boundGrantReadOnlyCollection = new ReadOnlyCollection<ContentGrant>(grantList);
                 }
                 return _boundGrantReadOnlyCollection;
             }
@@ -283,7 +283,7 @@ namespace System.Security.RightsManagement
         /// this property checks whether user was granted rights to encrypt, which means that he or she was granted 
         /// either an Edit or an Owner right.
         /// </summary>    
-        public bool CanEncrypt 
+        public bool CanEncrypt
         {
             get
             {
@@ -292,13 +292,13 @@ namespace System.Security.RightsManagement
                 return (!EncryptorHandle.IsInvalid);
             }
         }
-        
+
         /// <summary>    
         /// Depending on the set of rights granted to the user he or she can do Encryption, Decryption or both.
         /// this property checks whether user was granted rights to decrypt. Decryption is given to a user if he or 
         /// she was able to successfully bind any right (View, Edit, Print, Owner, ....)
         /// </summary>    
-        public bool CanDecrypt 
+        public bool CanDecrypt
         {
             get
             {
@@ -317,7 +317,7 @@ namespace System.Security.RightsManagement
         /// <summary>
         /// Constructor.
         /// </summary>
-        internal CryptoProvider(List<SafeRightsManagementHandle> boundLicenseHandleList, 
+        internal CryptoProvider(List<SafeRightsManagementHandle> boundLicenseHandleList,
                                                         List<RightNameExpirationInfoPair> rightsInfoList,
                                                         ContentUser owner)
         {
@@ -330,11 +330,11 @@ namespace System.Security.RightsManagement
             // we expect a match between lists of the Right Information and the bound license handles 
             // we will be mapping those lists based on indexes 
             Invariant.Assert(rightsInfoList.Count == boundLicenseHandleList.Count);
-                
+
             Invariant.Assert(owner != null);
 
             _boundLicenseHandleList = boundLicenseHandleList;
-            _boundRightsInfoList = rightsInfoList; 
+            _boundRightsInfoList = rightsInfoList;
 
             _owner = owner;
         }
@@ -349,10 +349,10 @@ namespace System.Security.RightsManagement
         {
             Invariant.Assert(serializedPublishLicense != null);
 
-            if ((BoundLicenseOwnerViewRightsHandle == null ) || BoundLicenseOwnerViewRightsHandle.IsInvalid)
+            if ((BoundLicenseOwnerViewRightsHandle == null) || BoundLicenseOwnerViewRightsHandle.IsInvalid)
             {
                 throw new RightsManagementException(RightsManagementFailureCode.RightNotGranted);
-            }            
+            }
             else
             {
                 return new UnsignedPublishLicense(BoundLicenseOwnerViewRightsHandle, serializedPublishLicense);
@@ -379,7 +379,7 @@ namespace System.Security.RightsManagement
         {
             uint attributeSize = 0;
             byte[] dataBuffer = null;
-            
+
             uint encodingType;
 
             int hr = SafeNativeMethods.DRMGetInfo(DecryptorHandle,
@@ -401,7 +401,7 @@ namespace System.Security.RightsManagement
                                                 dataBuffer);
             Errors.ThrowOnErrorCode(hr);
 
-            return BitConverter.ToInt32(dataBuffer,0);
+            return BitConverter.ToInt32(dataBuffer, 0);
         }
 
         //------------------------------------------------------
@@ -414,42 +414,42 @@ namespace System.Security.RightsManagement
         {
             get
             {
-                if(!_decryptorHandleCalculated)
+                if (!_decryptorHandleCalculated)
                 {
-                    for(int i=0; i< _boundLicenseHandleList.Count; i++)
+                    for (int i = 0; i < _boundLicenseHandleList.Count; i++)
                     {
                         SafeRightsManagementHandle decryptorHandle = null;
 
                         int hr = SafeNativeMethods.DRMCreateEnablingBitsDecryptor(
                             _boundLicenseHandleList[i],
                             _boundRightsInfoList[i].RightName,
-                            0, 
-                            null, 
+                            0,
+                            null,
                             out decryptorHandle);
 
-                        if (hr == 0) 
+                        if (hr == 0)
                         {
                             Debug.Assert(decryptorHandle != null);
 
                             _decryptorHandle = decryptorHandle;
-                             _decryptorHandleCalculated = true;
-                             return _decryptorHandle;
+                            _decryptorHandleCalculated = true;
+                            return _decryptorHandle;
                         }
                     }
                     _decryptorHandleCalculated = true; // if we got here it means we couldn't find anything; regardless 
-                                                                         // we should still mark this calculation as complete  
+                                                       // we should still mark this calculation as complete  
                 }
                 return _decryptorHandle;
             }
         }
 
-        private SafeRightsManagementHandle EncryptorHandle 
+        private SafeRightsManagementHandle EncryptorHandle
         {
             get
             {
-                if(!_encryptorHandleCalculated)
+                if (!_encryptorHandleCalculated)
                 {
-                    for(int i=0; i< _boundLicenseHandleList.Count; i++)
+                    for (int i = 0; i < _boundLicenseHandleList.Count; i++)
                     {
                         SafeRightsManagementHandle encryptorHandle = null;
                         int hr = SafeNativeMethods.DRMCreateEnablingBitsEncryptor(
@@ -459,41 +459,41 @@ namespace System.Security.RightsManagement
                             null,
                             out encryptorHandle);
 
-                        if (hr == 0) 
+                        if (hr == 0)
                         {
                             Debug.Assert(encryptorHandle != null);
 
                             _encryptorHandle = encryptorHandle;
                             _encryptorHandleCalculated = true;
-                            return _encryptorHandle; 
+                            return _encryptorHandle;
                         }
                     }
                     _encryptorHandleCalculated = true; // if we got here it means we couldn't find anything; regardless 
-                                                                             // we should still mark this calculation as complete  
+                                                       // we should still mark this calculation as complete  
                 }
                 return _encryptorHandle;
             }
         }
 
-   
-        private SafeRightsManagementHandle BoundLicenseOwnerViewRightsHandle 
+
+        private SafeRightsManagementHandle BoundLicenseOwnerViewRightsHandle
         {
             get
             {
-                if(!_boundLicenseOwnerViewRightsHandleCalculated)
+                if (!_boundLicenseOwnerViewRightsHandleCalculated)
                 {
-                    for(int i=0; i< _boundLicenseHandleList.Count; i++)
+                    for (int i = 0; i < _boundLicenseHandleList.Count; i++)
                     {
-                        Nullable<ContentRight> right = 
+                        Nullable<ContentRight> right =
                                         ClientSession.GetRightFromString(_boundRightsInfoList[i].RightName);
-                            
-                        if ((right != null) 
+
+                        if ((right != null)
                                 &&
-                            ((right.Value == ContentRight.Owner) ||(right.Value== ContentRight.ViewRightsData)))
+                            ((right.Value == ContentRight.Owner) || (right.Value == ContentRight.ViewRightsData)))
                         {
                             _boundLicenseOwnerViewRightsHandle = _boundLicenseHandleList[i];
                             _boundLicenseOwnerViewRightsHandleCalculated = true;
-                            return _boundLicenseOwnerViewRightsHandle; 
+                            return _boundLicenseOwnerViewRightsHandle;
                         }
                     }
                     _boundLicenseOwnerViewRightsHandleCalculated = true; // if we got here it means we couldn't find anything; regardless 
@@ -502,7 +502,7 @@ namespace System.Security.RightsManagement
                 return _boundLicenseOwnerViewRightsHandle;
             }
         }
-   
+
         //------------------------------------------------------
         //
         //  Private Fields
@@ -511,7 +511,7 @@ namespace System.Security.RightsManagement
 
         private int _blockSize;
 
-        private SafeRightsManagementHandle _decryptorHandle = SafeRightsManagementHandle.InvalidHandle;            
+        private SafeRightsManagementHandle _decryptorHandle = SafeRightsManagementHandle.InvalidHandle;
         private bool _decryptorHandleCalculated;
 
         private SafeRightsManagementHandle _encryptorHandle = SafeRightsManagementHandle.InvalidHandle;
@@ -523,7 +523,7 @@ namespace System.Security.RightsManagement
         // if this is Invalid, we are disposed
         private List<SafeRightsManagementHandle> _boundLicenseHandleList;
         private List<RightNameExpirationInfoPair> _boundRightsInfoList;
-                                                            
+
         private ReadOnlyCollection<ContentGrant> _boundGrantReadOnlyCollection;
         private ContentUser _owner;
 

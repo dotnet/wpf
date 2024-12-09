@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -40,7 +40,7 @@ namespace System.Windows.Media.Effects
         protected override void UpdateUnmanagedPropertyState(SafeHandle unmanagedEffect)
         {
         }
-        
+
         /// <summary>
         /// An ImageEffect can be used to emulate a DropShadowBitmapEffect with certain restrictions. This
         /// method returns true when it is possible to emulate the DropShadowBitmapEffect using an ImageEffect.
@@ -59,7 +59,7 @@ namespace System.Windows.Media.Effects
             {
                 return _imageEffectEmulation;
             }
-            
+
             if (_imageEffectEmulation == null)
             {
                 _imageEffectEmulation = new DropShadowEffect();
@@ -138,7 +138,7 @@ namespace System.Windows.Media.Effects
             }
 
             return _imageEffectEmulation;
-        }        
+        }
 
         DropShadowEffect _imageEffectEmulation;
 

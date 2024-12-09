@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -20,29 +20,29 @@ namespace System.Windows
     public enum BaseValueSource
     {
         /// <summary> The source is not known by the Framework. </summary>
-        Unknown                 = BaseValueSourceInternal.Unknown,
+        Unknown = BaseValueSourceInternal.Unknown,
         /// <summary> Default value, as defined by property metadata. </summary>
-        Default                 = BaseValueSourceInternal.Default,
+        Default = BaseValueSourceInternal.Default,
         /// <summary> Inherited from an ancestor. </summary>
-        Inherited               = BaseValueSourceInternal.Inherited,
+        Inherited = BaseValueSourceInternal.Inherited,
         /// <summary> Default Style for the current theme. </summary>
-        DefaultStyle            = BaseValueSourceInternal.ThemeStyle,
+        DefaultStyle = BaseValueSourceInternal.ThemeStyle,
         /// <summary> Trigger in the default Style for the current theme. </summary>
-        DefaultStyleTrigger     = BaseValueSourceInternal.ThemeStyleTrigger,
+        DefaultStyleTrigger = BaseValueSourceInternal.ThemeStyleTrigger,
         /// <summary> Style setter. </summary>
-        Style                   = BaseValueSourceInternal.Style,
+        Style = BaseValueSourceInternal.Style,
         /// <summary> Trigger in the Template. </summary>
-        TemplateTrigger         = BaseValueSourceInternal.TemplateTrigger,
+        TemplateTrigger = BaseValueSourceInternal.TemplateTrigger,
         /// <summary> Trigger in the Style. </summary>
-        StyleTrigger            = BaseValueSourceInternal.StyleTrigger,
+        StyleTrigger = BaseValueSourceInternal.StyleTrigger,
         /// <summary> Implicit Style reference. </summary>
-        ImplicitStyleReference  = BaseValueSourceInternal.ImplicitReference,
+        ImplicitStyleReference = BaseValueSourceInternal.ImplicitReference,
         /// <summary> Template that created the element. </summary>
-        ParentTemplate          = BaseValueSourceInternal.ParentTemplate,
+        ParentTemplate = BaseValueSourceInternal.ParentTemplate,
         /// <summary> Trigger in the Template that created the element. </summary>
-        ParentTemplateTrigger   = BaseValueSourceInternal.ParentTemplateTrigger,
+        ParentTemplateTrigger = BaseValueSourceInternal.ParentTemplateTrigger,
         /// <summary> Local value. </summary>
-        Local                   = BaseValueSourceInternal.Local,
+        Local = BaseValueSourceInternal.Local,
     }
 
     /// <summary>
@@ -122,7 +122,7 @@ namespace System.Windows
             {
                 ValueSource that = (ValueSource)o;
 
-                return  this._baseValueSource == that._baseValueSource &&
+                return this._baseValueSource == that._baseValueSource &&
                         this._isExpression == that._isExpression &&
                         this._isAnimated == that._isAnimated &&
                         this._isCoerced == that._isCoerced;
@@ -136,7 +136,7 @@ namespace System.Windows
         /// <summary>
         /// True if the two arguments are equal.
         /// </summary>
-        public static bool operator==(ValueSource vs1, ValueSource vs2)
+        public static bool operator ==(ValueSource vs1, ValueSource vs2)
         {
             return vs1.Equals(vs2);
         }
@@ -144,7 +144,7 @@ namespace System.Windows
         /// <summary>
         /// True if the two arguments are unequal.
         /// </summary>
-        public static bool operator!=(ValueSource vs1, ValueSource vs2)
+        public static bool operator !=(ValueSource vs1, ValueSource vs2)
         {
             return !vs1.Equals(vs2);
         }
@@ -152,10 +152,10 @@ namespace System.Windows
         #endregion Object overrides - required by FxCop
 
         BaseValueSource _baseValueSource;
-        bool            _isExpression;
-        bool            _isAnimated;
-        bool            _isCoerced;
-        bool            _isCurrent;
+        bool _isExpression;
+        bool _isAnimated;
+        bool _isCoerced;
+        bool _isCurrent;
     }
 
     /// <summary>

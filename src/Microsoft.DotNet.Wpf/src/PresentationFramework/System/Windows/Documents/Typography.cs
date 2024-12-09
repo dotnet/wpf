@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,7 +19,7 @@ namespace System.Windows.Documents
     {
         static private readonly Type _typeofThis = typeof(Typography);
         static private readonly Type _typeofBool = typeof(bool);
-        
+
         #region Constructors
 
         /// <summary>
@@ -52,308 +52,308 @@ namespace System.Windows.Documents
         /// <summary> StandardLigatures property </summary>
         public bool StandardLigatures
         {
-            get { return (bool) _owner.GetValue(StandardLigaturesProperty); }
+            get { return (bool)_owner.GetValue(StandardLigaturesProperty); }
             set { _owner.SetValue(StandardLigaturesProperty, value); }
         }
 
         ///<summary> ContextualLigatures Property</summary>
         public bool ContextualLigatures
         {
-            get { return (bool) _owner.GetValue(ContextualLigaturesProperty); }
+            get { return (bool)_owner.GetValue(ContextualLigaturesProperty); }
             set { _owner.SetValue(ContextualLigaturesProperty, value); }
         }
 
         ///<summary> DiscretionaryLigatures Property</summary>
         public bool DiscretionaryLigatures
         {
-            get { return (bool) _owner.GetValue(DiscretionaryLigaturesProperty); }
+            get { return (bool)_owner.GetValue(DiscretionaryLigaturesProperty); }
             set { _owner.SetValue(DiscretionaryLigaturesProperty, value); }
         }
 
         ///<summary> HistoricalLigatures Property</summary>
         public bool HistoricalLigatures
         {
-            get { return (bool) _owner.GetValue(HistoricalLigaturesProperty); }
+            get { return (bool)_owner.GetValue(HistoricalLigaturesProperty); }
             set { _owner.SetValue(HistoricalLigaturesProperty, value); }
         }
 
         ///<summary> AnnotationAlternates Property</summary>
         public int AnnotationAlternates
         {
-            get { return (int) _owner.GetValue(AnnotationAlternatesProperty); }
+            get { return (int)_owner.GetValue(AnnotationAlternatesProperty); }
             set { _owner.SetValue(AnnotationAlternatesProperty, value); }
         }
 
         ///<summary> ContextualAlternates Property</summary>
         public bool ContextualAlternates
         {
-            get { return (bool) _owner.GetValue(ContextualAlternatesProperty); }
+            get { return (bool)_owner.GetValue(ContextualAlternatesProperty); }
             set { _owner.SetValue(ContextualAlternatesProperty, value); }
         }
 
         ///<summary> HistoricalForms Property</summary>
         public bool HistoricalForms
         {
-            get { return (bool) _owner.GetValue(HistoricalFormsProperty); }
+            get { return (bool)_owner.GetValue(HistoricalFormsProperty); }
             set { _owner.SetValue(HistoricalFormsProperty, value); }
         }
 
         ///<summary> Kerning Property</summary>
         public bool Kerning
         {
-            get { return (bool) _owner.GetValue(KerningProperty); }
+            get { return (bool)_owner.GetValue(KerningProperty); }
             set { _owner.SetValue(KerningProperty, value); }
         }
 
         ///<summary> CapitalSpacing Property</summary>
         public bool CapitalSpacing
         {
-            get { return (bool) _owner.GetValue(CapitalSpacingProperty); }
+            get { return (bool)_owner.GetValue(CapitalSpacingProperty); }
             set { _owner.SetValue(CapitalSpacingProperty, value); }
         }
 
         ///<summary> CaseSensitiveForms Property</summary>
         public bool CaseSensitiveForms
         {
-            get { return (bool) _owner.GetValue(CaseSensitiveFormsProperty); }
+            get { return (bool)_owner.GetValue(CaseSensitiveFormsProperty); }
             set { _owner.SetValue(CaseSensitiveFormsProperty, value); }
         }
 
         ///<summary> StylisticSet1 Property</summary>
         public bool StylisticSet1
         {
-            get { return (bool) _owner.GetValue(StylisticSet1Property); }
+            get { return (bool)_owner.GetValue(StylisticSet1Property); }
             set { _owner.SetValue(StylisticSet1Property, value); }
         }
 
         ///<summary> StylisticSet2 Property</summary>
         public bool StylisticSet2
         {
-            get { return (bool) _owner.GetValue(StylisticSet2Property); }
+            get { return (bool)_owner.GetValue(StylisticSet2Property); }
             set { _owner.SetValue(StylisticSet2Property, value); }
         }
 
         ///<summary> StylisticSet3 Property</summary>
         public bool StylisticSet3
         {
-            get { return (bool) _owner.GetValue(StylisticSet3Property); }
+            get { return (bool)_owner.GetValue(StylisticSet3Property); }
             set { _owner.SetValue(StylisticSet3Property, value); }
         }
 
         ///<summary> StylisticSet4 Property</summary>
         public bool StylisticSet4
         {
-            get { return (bool) _owner.GetValue(StylisticSet4Property); }
+            get { return (bool)_owner.GetValue(StylisticSet4Property); }
             set { _owner.SetValue(StylisticSet4Property, value); }
         }
 
         ///<summary> StylisticSet5 Property</summary>
         public bool StylisticSet5
         {
-            get { return (bool) _owner.GetValue(StylisticSet5Property); }
+            get { return (bool)_owner.GetValue(StylisticSet5Property); }
             set { _owner.SetValue(StylisticSet5Property, value); }
         }
 
         ///<summary> StylisticSet6 Property</summary>
         public bool StylisticSet6
         {
-            get { return (bool) _owner.GetValue(StylisticSet6Property); }
+            get { return (bool)_owner.GetValue(StylisticSet6Property); }
             set { _owner.SetValue(StylisticSet6Property, value); }
         }
 
         ///<summary> StylisticSet7 Property</summary>
         public bool StylisticSet7
         {
-            get { return (bool) _owner.GetValue(StylisticSet7Property); }
+            get { return (bool)_owner.GetValue(StylisticSet7Property); }
             set { _owner.SetValue(StylisticSet7Property, value); }
         }
 
         ///<summary> StylisticSet8 Property</summary>
         public bool StylisticSet8
         {
-            get { return (bool) _owner.GetValue(StylisticSet8Property); }
+            get { return (bool)_owner.GetValue(StylisticSet8Property); }
             set { _owner.SetValue(StylisticSet8Property, value); }
         }
 
         ///<summary> StylisticSet9 Property</summary>
         public bool StylisticSet9
         {
-            get { return (bool) _owner.GetValue(StylisticSet9Property); }
+            get { return (bool)_owner.GetValue(StylisticSet9Property); }
             set { _owner.SetValue(StylisticSet9Property, value); }
         }
 
         ///<summary> StylisticSet10 Property</summary>
         public bool StylisticSet10
         {
-            get { return (bool) _owner.GetValue(StylisticSet10Property); }
+            get { return (bool)_owner.GetValue(StylisticSet10Property); }
             set { _owner.SetValue(StylisticSet10Property, value); }
         }
 
         ///<summary> StylisticSet11 Property</summary>
         public bool StylisticSet11
         {
-            get { return (bool) _owner.GetValue(StylisticSet11Property); }
+            get { return (bool)_owner.GetValue(StylisticSet11Property); }
             set { _owner.SetValue(StylisticSet11Property, value); }
         }
 
         ///<summary> StylisticSet12 Property</summary>
         public bool StylisticSet12
         {
-            get { return (bool) _owner.GetValue(StylisticSet12Property); }
+            get { return (bool)_owner.GetValue(StylisticSet12Property); }
             set { _owner.SetValue(StylisticSet12Property, value); }
         }
 
         ///<summary> StylisticSet13 Property</summary>
         public bool StylisticSet13
         {
-            get { return (bool) _owner.GetValue(StylisticSet13Property); }
+            get { return (bool)_owner.GetValue(StylisticSet13Property); }
             set { _owner.SetValue(StylisticSet13Property, value); }
         }
 
         ///<summary> StylisticSet14 Property</summary>
         public bool StylisticSet14
         {
-            get { return (bool) _owner.GetValue(StylisticSet14Property); }
+            get { return (bool)_owner.GetValue(StylisticSet14Property); }
             set { _owner.SetValue(StylisticSet14Property, value); }
         }
 
         ///<summary> StylisticSet15 Property</summary>
         public bool StylisticSet15
         {
-            get { return (bool) _owner.GetValue(StylisticSet15Property); }
+            get { return (bool)_owner.GetValue(StylisticSet15Property); }
             set { _owner.SetValue(StylisticSet15Property, value); }
         }
 
         ///<summary> StylisticSet16 Property</summary>
         public bool StylisticSet16
         {
-            get { return (bool) _owner.GetValue(StylisticSet16Property); }
+            get { return (bool)_owner.GetValue(StylisticSet16Property); }
             set { _owner.SetValue(StylisticSet16Property, value); }
         }
 
         ///<summary> StylisticSet17 Property</summary>
         public bool StylisticSet17
         {
-            get { return (bool) _owner.GetValue(StylisticSet17Property); }
+            get { return (bool)_owner.GetValue(StylisticSet17Property); }
             set { _owner.SetValue(StylisticSet17Property, value); }
         }
 
         ///<summary> StylisticSet18 Property</summary>
         public bool StylisticSet18
         {
-            get { return (bool) _owner.GetValue(StylisticSet18Property); }
+            get { return (bool)_owner.GetValue(StylisticSet18Property); }
             set { _owner.SetValue(StylisticSet18Property, value); }
         }
 
         ///<summary> StylisticSet19 Property</summary>
         public bool StylisticSet19
         {
-            get { return (bool) _owner.GetValue(StylisticSet19Property); }
+            get { return (bool)_owner.GetValue(StylisticSet19Property); }
             set { _owner.SetValue(StylisticSet19Property, value); }
         }
 
         ///<summary> StylisticSet20 Property</summary>
         public bool StylisticSet20
         {
-            get { return (bool) _owner.GetValue(StylisticSet20Property); }
+            get { return (bool)_owner.GetValue(StylisticSet20Property); }
             set { _owner.SetValue(StylisticSet20Property, value); }
         }
 
         ///<summary> Fraction Property</summary>
         public FontFraction Fraction
         {
-            get { return (FontFraction) _owner.GetValue(FractionProperty); }
+            get { return (FontFraction)_owner.GetValue(FractionProperty); }
             set { _owner.SetValue(FractionProperty, value); }
         }
 
         ///<summary> SlashedZero Property</summary>
         public bool SlashedZero
         {
-            get { return (bool) _owner.GetValue(SlashedZeroProperty); }
+            get { return (bool)_owner.GetValue(SlashedZeroProperty); }
             set { _owner.SetValue(SlashedZeroProperty, value); }
         }
 
         ///<summary> MathematicalGreek Property</summary>
         public bool MathematicalGreek
         {
-            get { return (bool) _owner.GetValue(MathematicalGreekProperty); }
+            get { return (bool)_owner.GetValue(MathematicalGreekProperty); }
             set { _owner.SetValue(MathematicalGreekProperty, value); }
         }
 
         ///<summary> EastAsianExpertForms Property</summary>
         public bool EastAsianExpertForms
         {
-            get { return (bool) _owner.GetValue(EastAsianExpertFormsProperty); }
+            get { return (bool)_owner.GetValue(EastAsianExpertFormsProperty); }
             set { _owner.SetValue(EastAsianExpertFormsProperty, value); }
         }
 
         ///<summary> Variants Property</summary>
         public FontVariants Variants
         {
-            get { return (FontVariants) _owner.GetValue(VariantsProperty); }
+            get { return (FontVariants)_owner.GetValue(VariantsProperty); }
             set { _owner.SetValue(VariantsProperty, value); }
         }
 
         ///<summary> Capitals Property</summary>
         public FontCapitals Capitals
         {
-            get { return (FontCapitals) _owner.GetValue(CapitalsProperty); }
+            get { return (FontCapitals)_owner.GetValue(CapitalsProperty); }
             set { _owner.SetValue(CapitalsProperty, value); }
         }
 
         ///<summary> NumeralStyle Property</summary>
         public FontNumeralStyle NumeralStyle
         {
-            get { return (FontNumeralStyle) _owner.GetValue(NumeralStyleProperty); }
+            get { return (FontNumeralStyle)_owner.GetValue(NumeralStyleProperty); }
             set { _owner.SetValue(NumeralStyleProperty, value); }
         }
 
         ///<summary> NumeralAlignment Property</summary>
         public FontNumeralAlignment NumeralAlignment
         {
-            get { return (FontNumeralAlignment) _owner.GetValue(NumeralAlignmentProperty); }
+            get { return (FontNumeralAlignment)_owner.GetValue(NumeralAlignmentProperty); }
             set { _owner.SetValue(NumeralAlignmentProperty, value); }
         }
 
         ///<summary> EastAsianWidths Property</summary>
         public FontEastAsianWidths EastAsianWidths
         {
-            get { return (FontEastAsianWidths) _owner.GetValue(EastAsianWidthsProperty); }
+            get { return (FontEastAsianWidths)_owner.GetValue(EastAsianWidthsProperty); }
             set { _owner.SetValue(EastAsianWidthsProperty, value); }
         }
 
         ///<summary> EastAsianLanguage Property</summary>
         public FontEastAsianLanguage EastAsianLanguage
         {
-            get { return (FontEastAsianLanguage) _owner.GetValue(EastAsianLanguageProperty); }
+            get { return (FontEastAsianLanguage)_owner.GetValue(EastAsianLanguageProperty); }
             set { _owner.SetValue(EastAsianLanguageProperty, value); }
         }
 
         ///<summary> StandardSwashes Property</summary>
         public int StandardSwashes
         {
-            get { return (int) _owner.GetValue(StandardSwashesProperty); }
+            get { return (int)_owner.GetValue(StandardSwashesProperty); }
             set { _owner.SetValue(StandardSwashesProperty, value); }
         }
 
         ///<summary> ContextualSwashes Property</summary>
         public int ContextualSwashes
         {
-            get { return (int) _owner.GetValue(ContextualSwashesProperty); }
+            get { return (int)_owner.GetValue(ContextualSwashesProperty); }
             set { _owner.SetValue(ContextualSwashesProperty, value); }
         }
 
         ///<summary> StylisticAlternates Property</summary>
         public int StylisticAlternates
         {
-            get { return (int) _owner.GetValue(StylisticAlternatesProperty); }
+            get { return (int)_owner.GetValue(StylisticAlternatesProperty); }
             set { _owner.SetValue(StylisticAlternatesProperty, value); }
         }
 
         #endregion Public properties
 
         #region Attached Properties Setters
- 
+
         /// <summary>
         /// Writes the attached property StandardLigatures to the given element.
         /// </summary>
@@ -1479,8 +1479,8 @@ namespace System.Windows.Documents
         /// <summary> StandardLigatures Property </summary>
         public static readonly DependencyProperty StandardLigaturesProperty =
                 DependencyProperty.RegisterAttached(
-                        "StandardLigatures", 
-                        _typeofBool, 
+                        "StandardLigatures",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 true,
@@ -1489,8 +1489,8 @@ namespace System.Windows.Documents
         /// <summary> ContextualLigatures Property </summary>
         public static readonly DependencyProperty ContextualLigaturesProperty =
                 DependencyProperty.RegisterAttached(
-                        "ContextualLigatures", 
-                        _typeofBool, 
+                        "ContextualLigatures",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 true,
@@ -1499,8 +1499,8 @@ namespace System.Windows.Documents
         /// <summary> DiscretionaryLigatures Property </summary>
         public static readonly DependencyProperty DiscretionaryLigaturesProperty =
                 DependencyProperty.RegisterAttached(
-                        "DiscretionaryLigatures", 
-                        _typeofBool, 
+                        "DiscretionaryLigatures",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 false,
@@ -1509,8 +1509,8 @@ namespace System.Windows.Documents
         /// <summary> HistoricalLigatures Property </summary>
         public static readonly DependencyProperty HistoricalLigaturesProperty =
                 DependencyProperty.RegisterAttached(
-                        "HistoricalLigatures", 
-                        _typeofBool, 
+                        "HistoricalLigatures",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 false,
@@ -1519,8 +1519,8 @@ namespace System.Windows.Documents
         /// <summary> AnnotationAlternates Property </summary>
         public static readonly DependencyProperty AnnotationAlternatesProperty =
                 DependencyProperty.RegisterAttached(
-                        "AnnotationAlternates", 
-                        typeof(int), 
+                        "AnnotationAlternates",
+                        typeof(int),
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 0,
@@ -1529,8 +1529,8 @@ namespace System.Windows.Documents
         /// <summary> ContextualAlternates Property </summary>
         public static readonly DependencyProperty ContextualAlternatesProperty =
                 DependencyProperty.RegisterAttached(
-                        "ContextualAlternates", 
-                        _typeofBool, 
+                        "ContextualAlternates",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 true,
@@ -1539,8 +1539,8 @@ namespace System.Windows.Documents
         /// <summary> HistoricalForms Property </summary>
         public static readonly DependencyProperty HistoricalFormsProperty =
                 DependencyProperty.RegisterAttached(
-                        "HistoricalForms", 
-                        _typeofBool, 
+                        "HistoricalForms",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 false,
@@ -1549,8 +1549,8 @@ namespace System.Windows.Documents
         /// <summary> Kerning Property </summary>
         public static readonly DependencyProperty KerningProperty =
                 DependencyProperty.RegisterAttached(
-                        "Kerning", 
-                        _typeofBool, 
+                        "Kerning",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 true,
@@ -1559,8 +1559,8 @@ namespace System.Windows.Documents
         /// <summary> CapitalSpacing Property </summary>
         public static readonly DependencyProperty CapitalSpacingProperty =
                 DependencyProperty.RegisterAttached(
-                        "CapitalSpacing", 
-                        _typeofBool, 
+                        "CapitalSpacing",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 false,
@@ -1569,8 +1569,8 @@ namespace System.Windows.Documents
         /// <summary> CaseSensitiveForms Property </summary>
         public static readonly DependencyProperty CaseSensitiveFormsProperty =
                 DependencyProperty.RegisterAttached(
-                        "CaseSensitiveForms", 
-                        _typeofBool, 
+                        "CaseSensitiveForms",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 false,
@@ -1579,8 +1579,8 @@ namespace System.Windows.Documents
         /// <summary> StylisticSet1 Property </summary>
         public static readonly DependencyProperty StylisticSet1Property =
                 DependencyProperty.RegisterAttached(
-                        "StylisticSet1", 
-                        _typeofBool, 
+                        "StylisticSet1",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 false,
@@ -1589,8 +1589,8 @@ namespace System.Windows.Documents
         /// <summary> StylisticSet2 Property </summary>
         public static readonly DependencyProperty StylisticSet2Property =
                 DependencyProperty.RegisterAttached(
-                        "StylisticSet2", 
-                        _typeofBool, 
+                        "StylisticSet2",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 false,
@@ -1599,8 +1599,8 @@ namespace System.Windows.Documents
         /// <summary> StylisticSet3 Property </summary>
         public static readonly DependencyProperty StylisticSet3Property =
                 DependencyProperty.RegisterAttached(
-                        "StylisticSet3", 
-                        _typeofBool, 
+                        "StylisticSet3",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 false,
@@ -1609,8 +1609,8 @@ namespace System.Windows.Documents
         /// <summary> StylisticSet4 Property </summary>
         public static readonly DependencyProperty StylisticSet4Property =
                 DependencyProperty.RegisterAttached(
-                        "StylisticSet4", 
-                        _typeofBool, 
+                        "StylisticSet4",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 false,
@@ -1619,8 +1619,8 @@ namespace System.Windows.Documents
         /// <summary> StylisticSet5 Property </summary>
         public static readonly DependencyProperty StylisticSet5Property =
                 DependencyProperty.RegisterAttached(
-                        "StylisticSet5", 
-                        _typeofBool, 
+                        "StylisticSet5",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 false,
@@ -1629,8 +1629,8 @@ namespace System.Windows.Documents
         /// <summary> StylisticSet6 Property </summary>
         public static readonly DependencyProperty StylisticSet6Property =
                 DependencyProperty.RegisterAttached(
-                        "StylisticSet6", 
-                        _typeofBool, 
+                        "StylisticSet6",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 false,
@@ -1639,8 +1639,8 @@ namespace System.Windows.Documents
         /// <summary> StylisticSet7 Property </summary>
         public static readonly DependencyProperty StylisticSet7Property =
                 DependencyProperty.RegisterAttached(
-                        "StylisticSet7", 
-                        _typeofBool, 
+                        "StylisticSet7",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 false,
@@ -1649,8 +1649,8 @@ namespace System.Windows.Documents
         /// <summary> StylisticSet8 Property </summary>
         public static readonly DependencyProperty StylisticSet8Property =
                 DependencyProperty.RegisterAttached(
-                        "StylisticSet8", 
-                        _typeofBool, 
+                        "StylisticSet8",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 false,
@@ -1659,8 +1659,8 @@ namespace System.Windows.Documents
         /// <summary> StylisticSet9 Property </summary>
         public static readonly DependencyProperty StylisticSet9Property =
                 DependencyProperty.RegisterAttached(
-                        "StylisticSet9", 
-                        _typeofBool, 
+                        "StylisticSet9",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 false,
@@ -1669,8 +1669,8 @@ namespace System.Windows.Documents
         /// <summary> StylisticSet10 Property </summary>
         public static readonly DependencyProperty StylisticSet10Property =
                 DependencyProperty.RegisterAttached(
-                        "StylisticSet10", 
-                        _typeofBool, 
+                        "StylisticSet10",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 false,
@@ -1679,8 +1679,8 @@ namespace System.Windows.Documents
         /// <summary> StylisticSet11 Property </summary>
         public static readonly DependencyProperty StylisticSet11Property =
                 DependencyProperty.RegisterAttached(
-                        "StylisticSet11", 
-                        _typeofBool, 
+                        "StylisticSet11",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 false,
@@ -1689,8 +1689,8 @@ namespace System.Windows.Documents
         /// <summary> StylisticSet12 Property </summary>
         public static readonly DependencyProperty StylisticSet12Property =
                 DependencyProperty.RegisterAttached(
-                        "StylisticSet12", 
-                        _typeofBool, 
+                        "StylisticSet12",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 false,
@@ -1699,8 +1699,8 @@ namespace System.Windows.Documents
         /// <summary> StylisticSet13 Property </summary>
         public static readonly DependencyProperty StylisticSet13Property =
                 DependencyProperty.RegisterAttached(
-                        "StylisticSet13", 
-                        _typeofBool, 
+                        "StylisticSet13",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 false,
@@ -1709,8 +1709,8 @@ namespace System.Windows.Documents
         /// <summary> StylisticSet14 Property </summary>
         public static readonly DependencyProperty StylisticSet14Property =
                 DependencyProperty.RegisterAttached(
-                        "StylisticSet14", 
-                        _typeofBool, 
+                        "StylisticSet14",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 false,
@@ -1719,8 +1719,8 @@ namespace System.Windows.Documents
         /// <summary> StylisticSet15 Property </summary>
         public static readonly DependencyProperty StylisticSet15Property =
                 DependencyProperty.RegisterAttached(
-                        "StylisticSet15", 
-                        _typeofBool, 
+                        "StylisticSet15",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 false,
@@ -1729,8 +1729,8 @@ namespace System.Windows.Documents
         /// <summary> StylisticSet16 Property </summary>
         public static readonly DependencyProperty StylisticSet16Property =
                 DependencyProperty.RegisterAttached(
-                        "StylisticSet16", 
-                        _typeofBool, 
+                        "StylisticSet16",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 false,
@@ -1739,8 +1739,8 @@ namespace System.Windows.Documents
         /// <summary> StylisticSet17 Property </summary>
         public static readonly DependencyProperty StylisticSet17Property =
                 DependencyProperty.RegisterAttached(
-                        "StylisticSet17", 
-                        _typeofBool, 
+                        "StylisticSet17",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 false,
@@ -1749,8 +1749,8 @@ namespace System.Windows.Documents
         /// <summary> StylisticSet18 Property </summary>
         public static readonly DependencyProperty StylisticSet18Property =
                 DependencyProperty.RegisterAttached(
-                        "StylisticSet18", 
-                        _typeofBool, 
+                        "StylisticSet18",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 false,
@@ -1759,8 +1759,8 @@ namespace System.Windows.Documents
         /// <summary> StylisticSet19 Property </summary>
         public static readonly DependencyProperty StylisticSet19Property =
                 DependencyProperty.RegisterAttached(
-                        "StylisticSet19", 
-                        _typeofBool, 
+                        "StylisticSet19",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 false,
@@ -1769,8 +1769,8 @@ namespace System.Windows.Documents
         /// <summary> StylisticSet20 Property </summary>
         public static readonly DependencyProperty StylisticSet20Property =
                 DependencyProperty.RegisterAttached(
-                        "StylisticSet20", 
-                        _typeofBool, 
+                        "StylisticSet20",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 false,
@@ -1779,8 +1779,8 @@ namespace System.Windows.Documents
         /// <summary> Fraction Property </summary>
         public static readonly DependencyProperty FractionProperty =
                 DependencyProperty.RegisterAttached(
-                        "Fraction", 
-                        typeof(FontFraction), 
+                        "Fraction",
+                        typeof(FontFraction),
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 FontFraction.Normal,
@@ -1789,8 +1789,8 @@ namespace System.Windows.Documents
         /// <summary> SlashedZero Property </summary>
         public static readonly DependencyProperty SlashedZeroProperty =
                 DependencyProperty.RegisterAttached(
-                        "SlashedZero", 
-                        _typeofBool, 
+                        "SlashedZero",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 false,
@@ -1799,8 +1799,8 @@ namespace System.Windows.Documents
         /// <summary> MathematicalGreek Property </summary>
         public static readonly DependencyProperty MathematicalGreekProperty =
                 DependencyProperty.RegisterAttached(
-                        "MathematicalGreek", 
-                        _typeofBool, 
+                        "MathematicalGreek",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 false,
@@ -1809,8 +1809,8 @@ namespace System.Windows.Documents
         /// <summary> EastAsianExpertForms Property </summary>
         public static readonly DependencyProperty EastAsianExpertFormsProperty =
                 DependencyProperty.RegisterAttached(
-                        "EastAsianExpertForms", 
-                        _typeofBool, 
+                        "EastAsianExpertForms",
+                        _typeofBool,
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 false,
@@ -1819,8 +1819,8 @@ namespace System.Windows.Documents
         /// <summary> Variants Property </summary>
         public static readonly DependencyProperty VariantsProperty =
                 DependencyProperty.RegisterAttached(
-                        "Variants", 
-                        typeof(FontVariants), 
+                        "Variants",
+                        typeof(FontVariants),
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 FontVariants.Normal,
@@ -1829,8 +1829,8 @@ namespace System.Windows.Documents
         /// <summary> Capitals Property </summary>
         public static readonly DependencyProperty CapitalsProperty =
                 DependencyProperty.RegisterAttached(
-                        "Capitals", 
-                        typeof(FontCapitals), 
+                        "Capitals",
+                        typeof(FontCapitals),
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 FontCapitals.Normal,
@@ -1839,8 +1839,8 @@ namespace System.Windows.Documents
         /// <summary> NumeralStyle Property </summary>
         public static readonly DependencyProperty NumeralStyleProperty =
                 DependencyProperty.RegisterAttached(
-                        "NumeralStyle", 
-                        typeof(FontNumeralStyle), 
+                        "NumeralStyle",
+                        typeof(FontNumeralStyle),
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 FontNumeralStyle.Normal,
@@ -1849,8 +1849,8 @@ namespace System.Windows.Documents
         /// <summary> NumeralAlignment Property </summary>
         public static readonly DependencyProperty NumeralAlignmentProperty =
                 DependencyProperty.RegisterAttached(
-                        "NumeralAlignment", 
-                        typeof(FontNumeralAlignment), 
+                        "NumeralAlignment",
+                        typeof(FontNumeralAlignment),
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 FontNumeralAlignment.Normal,
@@ -1859,8 +1859,8 @@ namespace System.Windows.Documents
         /// <summary> EastAsianWidths Property </summary>
         public static readonly DependencyProperty EastAsianWidthsProperty =
                 DependencyProperty.RegisterAttached(
-                        "EastAsianWidths", 
-                        typeof(FontEastAsianWidths), 
+                        "EastAsianWidths",
+                        typeof(FontEastAsianWidths),
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 FontEastAsianWidths.Normal,
@@ -1869,8 +1869,8 @@ namespace System.Windows.Documents
         /// <summary> EastAsianLanguage Property </summary>
         public static readonly DependencyProperty EastAsianLanguageProperty =
                 DependencyProperty.RegisterAttached(
-                        "EastAsianLanguage", 
-                        typeof(FontEastAsianLanguage), 
+                        "EastAsianLanguage",
+                        typeof(FontEastAsianLanguage),
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 FontEastAsianLanguage.Normal,
@@ -1879,8 +1879,8 @@ namespace System.Windows.Documents
         /// <summary> StandardSwashes Property </summary>
         public static readonly DependencyProperty StandardSwashesProperty =
                 DependencyProperty.RegisterAttached(
-                        "StandardSwashes", 
-                        typeof(int), 
+                        "StandardSwashes",
+                        typeof(int),
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 0,
@@ -1889,8 +1889,8 @@ namespace System.Windows.Documents
         /// <summary>  ContextualSwashes Property </summary>
         public static readonly DependencyProperty ContextualSwashesProperty =
                 DependencyProperty.RegisterAttached(
-                        "ContextualSwashes", 
-                        typeof(int), 
+                        "ContextualSwashes",
+                        typeof(int),
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 0,
@@ -1899,8 +1899,8 @@ namespace System.Windows.Documents
         /// <summary> StylisticAlternates Property </summary>
         public static readonly DependencyProperty StylisticAlternatesProperty =
                 DependencyProperty.RegisterAttached(
-                        "StylisticAlternates", 
-                        typeof(int), 
+                        "StylisticAlternates",
+                        typeof(int),
                         _typeofThis,
                         new FrameworkPropertyMetadata(
                                 0,

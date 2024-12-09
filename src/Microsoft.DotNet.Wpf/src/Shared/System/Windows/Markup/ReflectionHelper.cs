@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,13 +7,13 @@
 //  Description: Specifies that the whitespace surrounding an element should be trimmed.
 
 using System;
-using System.IO;
-using System.Reflection;
-using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
+using System.IO;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using MS.Internal;
 
@@ -75,7 +75,7 @@ namespace System.Xaml
         }
 #endif
 
-#region Type
+        #region Type
         /// <summary>
         /// Parse and get the type of the passed-in string.
         /// </summary>
@@ -208,7 +208,7 @@ namespace System.Xaml
         }
 #endif
 
-#endregion Type
+        #endregion Type
 
         #region Attributes
 
@@ -371,14 +371,14 @@ namespace System.Xaml
             return attrValue;
         }
 
-#endregion Attributes
+        #endregion Attributes
 
-#region Assembly Loading
+        #region Assembly Loading
 
 #if !PBTCOMPILER
         //
         // Clean up the cache entry for the given assembly, so that it can be reloaded.
-         //
+        //
         internal static void ResetCacheForAssembly(string assemblyName)
         {
             string assemblyNameLookup = assemblyName.ToUpper(CultureInfo.InvariantCulture);

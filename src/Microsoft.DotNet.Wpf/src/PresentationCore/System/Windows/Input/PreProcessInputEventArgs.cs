@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,14 +19,14 @@ namespace System.Windows.Input
     public sealed class PreProcessInputEventArgs : ProcessInputEventArgs
     {
         // Only we can make these.  Note that we cache and reuse instances.
-        internal PreProcessInputEventArgs() {}
+        internal PreProcessInputEventArgs() { }
 
         internal override void Reset(StagingAreaInputItem input, InputManager inputManager)
         {
             _canceled = false;
             base.Reset(input, inputManager);
         }
-        
+
         /// <summary>
         ///     Cancels the processing of the input event.
         /// </summary>
@@ -38,7 +38,7 @@ namespace System.Windows.Input
         /// <summary>
         ///     Whether or not the input event processing was canceled.
         /// </summary>
-        public bool Canceled {get {return _canceled;}}
+        public bool Canceled { get { return _canceled; } }
 
         private bool _canceled;
     }

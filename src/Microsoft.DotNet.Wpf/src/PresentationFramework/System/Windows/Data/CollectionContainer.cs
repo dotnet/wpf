@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,8 +14,8 @@ using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using MS.Internal;              // Invariant.Assert
-using MS.Internal.Utility;
 using MS.Internal.Data;         // IndexedEnumerable
+using MS.Internal.Utility;
 
 namespace System.Windows.Data
 {
@@ -69,7 +69,7 @@ namespace System.Windows.Data
         /// </summary>
         public IEnumerable Collection
         {
-            get { return (IEnumerable) GetValue(CollectionContainer.CollectionProperty); }
+            get { return (IEnumerable)GetValue(CollectionContainer.CollectionProperty); }
             set { SetValue(CollectionContainer.CollectionProperty, value); }
         }
 
@@ -228,11 +228,11 @@ namespace System.Windows.Data
                 CollectionView cv = _view as CollectionView;
                 if (cv != null)
                 {
-                    cv.GetCollectionChangedSources(level+1, format, sources);
+                    cv.GetCollectionChangedSources(level + 1, format, sources);
                 }
                 else
                 {
-                    format(level+1, _view, true, sources);
+                    format(level + 1, _view, true, sources);
                 }
             }
         }
@@ -246,8 +246,8 @@ namespace System.Windows.Data
         /// </summary>
         event NotifyCollectionChangedEventHandler INotifyCollectionChanged.CollectionChanged
         {
-            add     { CollectionChanged += value; }
-            remove  { CollectionChanged -= value; }
+            add { CollectionChanged += value; }
+            remove { CollectionChanged -= value; }
         }
 
         /// <summary>
@@ -319,14 +319,14 @@ namespace System.Windows.Data
         // called when value of CollectionProperty is required by property store
         private static object OnGetCollection(DependencyObject d)
         {
-            return ((CollectionContainer) d).Collection;
+            return ((CollectionContainer)d).Collection;
         }
 
         // Called when CollectionProperty is changed on "d."
         private static void OnCollectionPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CollectionContainer cc = (CollectionContainer) d;
-            cc.HookUpToCollection((IEnumerable) e.NewValue, true);
+            CollectionContainer cc = (CollectionContainer)d;
+            cc.HookUpToCollection((IEnumerable)e.NewValue, true);
         }
 
         // To prevent CollectionContainer memory leak:
@@ -394,7 +394,7 @@ namespace System.Windows.Data
 
         #region Private Fields
 
-        private TraceLog        _traceLog;
+        private TraceLog _traceLog;
         private ICollectionView _view;
         private IndexedEnumerable _viewList;      // cache of list wrapper for view
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,12 +14,12 @@
 --*/
 using System.Collections;
 using System.ComponentModel;
-using System.Reflection;
-using System.Xml;
 using System.ComponentModel.Design.Serialization;
-using System.Windows.Xps.Packaging;
-using System.Windows.Markup;
 using System.Printing;
+using System.Reflection;
+using System.Windows.Markup;
+using System.Windows.Xps.Packaging;
+using System.Xml;
 
 namespace System.Windows.Xps.Serialization
 {
@@ -31,7 +31,7 @@ namespace System.Windows.Xps.Serialization
     /// type converters for different type of objects to produce the correct
     /// serialized content in the package.
     /// </summary>
-    public abstract class PackageSerializationManager : 
+    public abstract class PackageSerializationManager :
                           IDisposable
     {
         #region Constructors
@@ -40,12 +40,12 @@ namespace System.Windows.Xps.Serialization
         /// Constructor to create and initialize the base 
         /// PackageSerializationManager class.
         /// </summary>
-        protected 
+        protected
         PackageSerializationManager(
             )
         {
-            _serializersCacheManager            = new SerializersCacheManager(this);
-            _graphContextStack                  = new ContextStack();
+            _serializersCacheManager = new SerializersCacheManager(this);
+            _graphContextStack = new ContextStack();
             this._rootSerializableObjectContext = null;
         }
 
@@ -64,7 +64,7 @@ namespace System.Windows.Xps.Serialization
         abstract
         void
         SaveAsXaml(
-            Object  serializedObject
+            Object serializedObject
             );
 
         #endregion Public Methods
@@ -94,7 +94,7 @@ namespace System.Windows.Xps.Serialization
         abstract
         String
         GetXmlNSForType(
-            Type    objectType
+            Type objectType
             );
 
 
@@ -145,7 +145,7 @@ namespace System.Windows.Xps.Serialization
         internal
         virtual
         TypeConverter
-        GetTypeConverter (
+        GetTypeConverter(
             Object serializedObject
             )
         {
@@ -163,7 +163,7 @@ namespace System.Windows.Xps.Serialization
         internal
         virtual
         TypeConverter
-        GetTypeConverter (
+        GetTypeConverter(
             Type serializedObjectType
             )
         {
@@ -181,7 +181,7 @@ namespace System.Windows.Xps.Serialization
         abstract
         XmlWriter
         AcquireXmlWriter(
-            Type    writerType
+            Type writerType
             );
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace System.Windows.Xps.Serialization
         abstract
         void
         ReleaseXmlWriter(
-            Type    writerType
+            Type writerType
             );
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace System.Windows.Xps.Serialization
         abstract
         XpsResourceStream
         AcquireResourceStream(
-            Type    resourceType
+            Type resourceType
             );
 
         /// <summary>
@@ -231,8 +231,8 @@ namespace System.Windows.Xps.Serialization
         abstract
         XpsResourceStream
         AcquireResourceStream(
-            Type    resourceType,
-            String  resourceID
+            Type resourceType,
+            String resourceID
             );
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace System.Windows.Xps.Serialization
         abstract
         void
         ReleaseResourceStream(
-            Type    resourceType
+            Type resourceType
             );
 
         /// <summary>
@@ -268,8 +268,8 @@ namespace System.Windows.Xps.Serialization
         abstract
         void
         ReleaseResourceStream(
-            Type    resourceType,
-            String  resourceID
+            Type resourceType,
+            String resourceID
             );
 
         internal
@@ -284,7 +284,7 @@ namespace System.Windows.Xps.Serialization
         virtual
         bool
         CanSerializeDependencyProperty(
-            Object                      serializableObject,
+            Object serializableObject,
             TypeDependencyPropertyCache dependencyProperty
             )
         {
@@ -295,8 +295,8 @@ namespace System.Windows.Xps.Serialization
         virtual
         bool
         CanSerializeClrProperty(
-            Object              serializableObject,
-            TypePropertyCache   property
+            Object serializableObject,
+            TypePropertyCache property
             )
         {
             return true;
@@ -351,7 +351,7 @@ namespace System.Windows.Xps.Serialization
         {
             get
             {
-                return  _serializersCacheManager;
+                return _serializersCacheManager;
             }
         }
 
@@ -403,12 +403,12 @@ namespace System.Windows.Xps.Serialization
         internal
         int
         JobIdentifier
-        {                
+        {
             set
             {
                 _jobIdentifier = value;
             }
-                    
+
             get
             {
                 return _jobIdentifier;
@@ -420,19 +420,19 @@ namespace System.Windows.Xps.Serialization
         #region Private Data Members
 
         private
-        SerializersCacheManager     _serializersCacheManager;
+        SerializersCacheManager _serializersCacheManager;
 
         private
-        ContextStack                _graphContextStack;
+        ContextStack _graphContextStack;
 
         private
-        SerializableObjectContext   _rootSerializableObjectContext;
+        SerializableObjectContext _rootSerializableObjectContext;
 
         private
-        XmlLanguage                 _language;
+        XmlLanguage _language;
 
-        private 
-        int                         _jobIdentifier;
+        private
+        int _jobIdentifier;
 
         #endregion Private Data Members
     };
@@ -444,8 +444,8 @@ namespace System.Windows.Xps.Serialization
     delegate
     void
     XpsSerializationPrintTicketRequiredEventHandler(
-        object                                          sender,
-        XpsSerializationPrintTicketRequiredEventArgs    e
+        object sender,
+        XpsSerializationPrintTicketRequiredEventArgs e
         );
 
 
@@ -472,7 +472,7 @@ namespace System.Windows.Xps.Serialization
         /// </param>
         public
         SerializersCacheManager(
-            PackageSerializationManager   serializationManager
+            PackageSerializationManager serializationManager
             )
         {
             this._serializationManager = serializationManager;
@@ -480,8 +480,8 @@ namespace System.Windows.Xps.Serialization
             // Allocate all necessary hashtables for storing
             // the cache information
             //
-            _typesCacheTable                     = new Hashtable(20);
-            _serializersTable                    = new Hashtable(20);
+            _typesCacheTable = new Hashtable(20);
+            _serializersTable = new Hashtable(20);
             _typesDependencyPropertiesCacheTable = new Hashtable(20);
         }
 
@@ -498,7 +498,7 @@ namespace System.Windows.Xps.Serialization
         public
         ReachSerializer
         GetSerializer(
-            Object  serializedObject
+            Object serializedObject
             )
         {
             ArgumentNullException.ThrowIfNull(serializedObject);
@@ -507,14 +507,14 @@ namespace System.Windows.Xps.Serialization
 
             TypeCacheItem cacheItem = GetTypeCacheItem(serializedObject);
 
-            if(cacheItem != null)
+            if (cacheItem != null)
             {
                 Type serializerType = cacheItem.SerializerType;
 
                 //
                 // Instantiate the metro serializer based on this type
                 //
-                if(serializerType!=null)
+                if (serializerType != null)
                 {
                     reachSerializer = (ReachSerializer)_serializersTable[serializerType];
 
@@ -545,21 +545,21 @@ namespace System.Windows.Xps.Serialization
             Object serializableObject
             )
         {
-            TypeCacheItem         item                        = GetTypeCacheItem(serializableObject);
-            TypePropertyCache[]   clrProperties               = item.GetClrSerializableProperties(this);
-            int[]                 serializableIndeces         = new int[clrProperties.Length];
-            int                   serializablePropertiesIndex = 0;
+            TypeCacheItem item = GetTypeCacheItem(serializableObject);
+            TypePropertyCache[] clrProperties = item.GetClrSerializableProperties(this);
+            int[] serializableIndeces = new int[clrProperties.Length];
+            int serializablePropertiesIndex = 0;
 
             //
             // Not everything we get can be serializable, so we have to figure out which
             // ones are but checking if we can also serialize the value of the property
             // values would be added to the cache as well.
             //
-            for(int indexInClrProperties = 0;
+            for (int indexInClrProperties = 0;
                  indexInClrProperties < clrProperties.Length;
                  indexInClrProperties++)
             {
-                if(CanSerializeValue(serializableObject,
+                if (CanSerializeValue(serializableObject,
                                      clrProperties[indexInClrProperties]) &&
                    _serializationManager.CanSerializeClrProperty(serializableObject,
                                                                  clrProperties[indexInClrProperties]))
@@ -568,9 +568,9 @@ namespace System.Windows.Xps.Serialization
                 }
             }
 
-            TypePropertyCache[]  clrSerializableProperties = new TypePropertyCache[serializablePropertiesIndex];
+            TypePropertyCache[] clrSerializableProperties = new TypePropertyCache[serializablePropertiesIndex];
 
-            for(int indexInClrSerializableProperties = 0;
+            for (int indexInClrSerializableProperties = 0;
                 indexInClrSerializableProperties < serializablePropertiesIndex;
                 indexInClrSerializableProperties++)
             {
@@ -580,9 +580,10 @@ namespace System.Windows.Xps.Serialization
                                                                                     propertyCache.SerializerTypeForProperty,
                                                                                     propertyCache.TypeConverterForProperty,
                                                                                     propertyCache.DefaultValueAttr,
-                                                                                    propertyCache.DesignerSerializationOptionsAttr);
-
-                serializablePropertyCache.PropertyValue = propertyCache.PropertyValue;
+                                                                                    propertyCache.DesignerSerializationOptionsAttr)
+                {
+                    PropertyValue = propertyCache.PropertyValue
+                };
 
                 clrSerializableProperties[indexInClrSerializableProperties] = serializablePropertyCache;
             }
@@ -590,7 +591,7 @@ namespace System.Windows.Xps.Serialization
             //
             // Clear all set values
             //
-            for(int indexInClrProperties = 0;
+            for (int indexInClrProperties = 0;
                 indexInClrProperties < clrProperties.Length;
                 indexInClrProperties++)
             {
@@ -613,26 +614,26 @@ namespace System.Windows.Xps.Serialization
             Object serializableObject
             )
         {
-            TypeDependencyPropertyCache[]  serializableDependencyProperties = null;
+            TypeDependencyPropertyCache[] serializableDependencyProperties = null;
 
             TypeDependencyPropertiesCacheItem item = GetTypeDependencyPropertiesCacheItem(serializableObject);
 
-            if(item != null)
+            if (item != null)
             {
-                TypeDependencyPropertyCache[]  dependencyProperties        = item.GetSerializableDependencyProperties();
-                int[]                          serializableIndeces         = new int[dependencyProperties.Length];
-                int                            serializablePropertiesIndex = 0;
+                TypeDependencyPropertyCache[] dependencyProperties = item.GetSerializableDependencyProperties();
+                int[] serializableIndeces = new int[dependencyProperties.Length];
+                int serializablePropertiesIndex = 0;
 
                 //
                 // Not everything we get can be serializable, so we have to figure out which
                 // ones are by checking if we can also serialize the value of the property
                 // values would be added to the cache as well.
                 //
-                for(int indexInDependencyProperties = 0;
+                for (int indexInDependencyProperties = 0;
                      indexInDependencyProperties < dependencyProperties.Length;
                      indexInDependencyProperties++)
                 {
-                    if(TypeDependencyPropertyCache.
+                    if (TypeDependencyPropertyCache.
                        CanSerializeValue(serializableObject,
                                          dependencyProperties[indexInDependencyProperties]) &&
                        _serializationManager.CanSerializeDependencyProperty(serializableObject,
@@ -644,7 +645,7 @@ namespace System.Windows.Xps.Serialization
 
                 serializableDependencyProperties = new TypeDependencyPropertyCache[serializablePropertiesIndex];
 
-                for(int indexInSerializableDependencyProperties = 0;
+                for (int indexInSerializableDependencyProperties = 0;
                     indexInSerializableDependencyProperties < serializablePropertiesIndex;
                     indexInSerializableDependencyProperties++)
                 {
@@ -656,9 +657,10 @@ namespace System.Windows.Xps.Serialization
                                                     propertyCache.SerializerTypeForProperty,
                                                     propertyCache.TypeConverterForProperty,
                                                     propertyCache.DefaultValueAttr,
-                                                    propertyCache.DesignerSerializationOptionsAttr);
-
-                    serializablePropertyCache.PropertyValue = propertyCache.PropertyValue;
+                                                    propertyCache.DesignerSerializationOptionsAttr)
+                    {
+                        PropertyValue = propertyCache.PropertyValue
+                    };
 
                     serializableDependencyProperties[indexInSerializableDependencyProperties] = serializablePropertyCache;
                 }
@@ -666,7 +668,7 @@ namespace System.Windows.Xps.Serialization
                 //
                 // Clear all set values
                 //
-                for(int indexInDependencyProperties = 0;
+                for (int indexInDependencyProperties = 0;
                     indexInDependencyProperties < dependencyProperties.Length;
                     indexInDependencyProperties++)
                 {
@@ -690,7 +692,7 @@ namespace System.Windows.Xps.Serialization
         internal
         TypeCacheItem
         GetTypeCacheItem(
-            Object  serializableObject
+            Object serializableObject
             )
         {
             ArgumentNullException.ThrowIfNull(serializableObject);
@@ -699,7 +701,7 @@ namespace System.Windows.Xps.Serialization
 
             TypeCacheItem typeCacheItem = (TypeCacheItem)_typesCacheTable[type];
 
-            if(typeCacheItem == null)
+            if (typeCacheItem == null)
             {
                 //
                 // This means that the type was not seen before
@@ -707,7 +709,7 @@ namespace System.Windows.Xps.Serialization
                 //
                 Type serializerType = _serializationManager.GetSerializerType(type);
 
-                if(serializerType!=null)
+                if (serializerType != null)
                 {
                     typeCacheItem = new TypeCacheItem(type, serializerType);
 
@@ -721,7 +723,7 @@ namespace System.Windows.Xps.Serialization
                     //
                     TypeConverter typeConverter = _serializationManager.GetTypeConverter(serializableObject);
 
-                    if(typeConverter != null)
+                    if (typeConverter != null)
                     {
                         typeCacheItem = new TypeCacheItem(type, typeConverter);
 
@@ -749,7 +751,7 @@ namespace System.Windows.Xps.Serialization
         internal
         TypeDependencyPropertiesCacheItem
         GetTypeDependencyPropertiesCacheItem(
-            Object  serializableObject
+            Object serializableObject
             )
         {
             ArgumentNullException.ThrowIfNull(serializableObject);
@@ -759,7 +761,7 @@ namespace System.Windows.Xps.Serialization
             TypeDependencyPropertiesCacheItem
             cachedItem = (TypeDependencyPropertiesCacheItem)_typesDependencyPropertiesCacheTable[type];
 
-            if(cachedItem == null)
+            if (cachedItem == null)
             {
                 //
                 // This means that the type was not seen before
@@ -777,7 +779,7 @@ namespace System.Windows.Xps.Serialization
                     //
                     DependencyPropertyList list = new DependencyPropertyList(1);
 
-                    for(LocalValueEnumerator localValues = objectAsDependencyObject.GetLocalValueEnumerator();
+                    for (LocalValueEnumerator localValues = objectAsDependencyObject.GetLocalValueEnumerator();
                         localValues.MoveNext();)
                     {
                         DependencyProperty dependencyProperty = localValues.Current.Property;
@@ -785,125 +787,125 @@ namespace System.Windows.Xps.Serialization
                         list.Add(dependencyProperty);
                     }
 
-                    if(list.Count > 0)
+                    if (list.Count > 0)
                     {
                         int numOfSerializableDependencyProperties = 0;
 
                         TypeDependencyPropertyCache[] dependencyPropertiesCache = new TypeDependencyPropertyCache[list.Count];
 
-                        for (int indexInDependencyPropertyList=0;
-                             indexInDependencyPropertyList<list.Count;
+                        for (int indexInDependencyPropertyList = 0;
+                             indexInDependencyPropertyList < list.Count;
                              indexInDependencyPropertyList++)
                         {
 
-                              DependencyProperty dependencyProperty = list.List[indexInDependencyPropertyList];
+                            DependencyProperty dependencyProperty = list.List[indexInDependencyPropertyList];
 
-                              DesignerSerializationVisibility visibility                  = DesignerSerializationVisibility.Visible;
-                              Type                            serializerTypeForProperty   = null;
-                              TypeConverter                   typeConverterForProperty    = null;
-                              DefaultValueAttribute           defaultValueAttr            = null;
-                              DesignerSerializationOptionsAttribute
-                              designerSerializationFlagsAttr                              = null;
-                              Type propertyType                                           = dependencyProperty.PropertyType;
+                            DesignerSerializationVisibility visibility = DesignerSerializationVisibility.Visible;
+                            Type serializerTypeForProperty = null;
+                            TypeConverter typeConverterForProperty = null;
+                            DefaultValueAttribute defaultValueAttr = null;
+                            DesignerSerializationOptionsAttribute
+                            designerSerializationFlagsAttr = null;
+                            Type propertyType = dependencyProperty.PropertyType;
 
-                              //
-                              // Get the static setter member for the DependencyProperty
-                              //
-                              MemberInfo memberInfo = dependencyProperty.
-                                                    OwnerType.
-                                                    GetMethod("Get" + dependencyProperty.Name,
-                                                             BindingFlags.Public | BindingFlags.NonPublic |
-                                                             BindingFlags.Static | BindingFlags.FlattenHierarchy);
+                            //
+                            // Get the static setter member for the DependencyProperty
+                            //
+                            MemberInfo memberInfo = dependencyProperty.
+                                                  OwnerType.
+                                                  GetMethod("Get" + dependencyProperty.Name,
+                                                           BindingFlags.Public | BindingFlags.NonPublic |
+                                                           BindingFlags.Static | BindingFlags.FlattenHierarchy);
 
-                              // Note: This is because the IService model does not abide
-                              // by this pattern of declaring the DependencyProperty on
-                              // the OwnerType. That is the only exception case.
-                              if (memberInfo == null)
-                              {
-                                  //
-                                  // Create a PropertyInfo
-                                  //
-                                  
-                                  PropertyInfo propertyInfo = null;
-                                  
-                                  PropertyInfo[] properties = dependencyProperty.OwnerType.GetProperties();
-                                  
-                                  String name = dependencyProperty.Name;
-                                  
-                                  for (int i=0;
-                                       i<properties.Length && propertyInfo == null;
-                                       i++)
-                                  {
-                                      if (properties[i].Name == name)
-                                      {
-                                          propertyInfo = properties[i];
-                                      }
-                                  }
+                            // Note: This is because the IService model does not abide
+                            // by this pattern of declaring the DependencyProperty on
+                            // the OwnerType. That is the only exception case.
+                            if (memberInfo == null)
+                            {
+                                //
+                                // Create a PropertyInfo
+                                //
 
-                                  if (propertyInfo != null)
-                                  {
-                                       Debug.Assert(propertyInfo.PropertyType == dependencyProperty.PropertyType, 
-                                        "The property type of the CLR wrapper must match that of the DependencyProperty itself.");
-                                       
-                                       memberInfo = propertyInfo;
-                                    
-                                       //
-                                       // We have to special case Print Tickets here.
-                                       // Print Tickets are defined on as dependency properties on
-                                       // fixed objects of types:
-                                       // o FixedDocumentSequence
-                                       // o FixedDocument
-                                       // o FixedPage
-                                       // and in order to eliminate the dependency between
-                                       // PresentationFramework and System.printing assemblies,
-                                       // those dependency properties are defined as of type "object"
-                                       // and hence if we are here and we have a property of name
-                                       // "PrintTicket" and owned by one of the above mentioned types
-                                       // we try to get the serializer for the PrintTicket object
-                                       //
-                                       if( propertyInfo.Name == XpsNamedProperties.PrintTicketProperty &&
-                                           ((dependencyProperty.OwnerType == typeof(System.Windows.Documents.FixedPage)) ||
-                                            (dependencyProperty.OwnerType == typeof(System.Windows.Documents.FixedDocument)) ||
-                                            (dependencyProperty.OwnerType == typeof(System.Windows.Documents.FixedDocumentSequence))))
-                                       {
-                                           propertyType = typeof(PrintTicket);
-                                       }
-                                  }
-                              }
+                                PropertyInfo propertyInfo = null;
 
-                              if(memberInfo != null && 
-                                 TypeDependencyPropertyCache.
-                                 CanSerializeProperty(memberInfo,
-                                                      this,
-                                                      out visibility,
-                                                      out serializerTypeForProperty,
-                                                      out typeConverterForProperty,
-                                                      out defaultValueAttr,
-                                                      out designerSerializationFlagsAttr) == true)
-                              {
-                                  TypeCacheItem typeCacheItem = GetTypeCacheItem(propertyType);
-                                  serializerTypeForProperty = serializerTypeForProperty == null ? typeCacheItem.SerializerType : serializerTypeForProperty;
-                                  typeConverterForProperty  = typeConverterForProperty == null ? typeCacheItem.TypeConverter : typeConverterForProperty;
+                                PropertyInfo[] properties = dependencyProperty.OwnerType.GetProperties();
 
-                                  TypeDependencyPropertyCache
-                                  dependencyPropertyCache = new TypeDependencyPropertyCache(memberInfo,
-                                                                                           dependencyProperty,
-                                                                                           visibility,
-                                                                                           serializerTypeForProperty,
-                                                                                           typeConverterForProperty,
-                                                                                           defaultValueAttr,
-                                                                                           designerSerializationFlagsAttr);
-                                  
-                                  dependencyPropertiesCache[numOfSerializableDependencyProperties++] = dependencyPropertyCache;
-                              }
+                                String name = dependencyProperty.Name;
+
+                                for (int i = 0;
+                                     i < properties.Length && propertyInfo == null;
+                                     i++)
+                                {
+                                    if (properties[i].Name == name)
+                                    {
+                                        propertyInfo = properties[i];
+                                    }
+                                }
+
+                                if (propertyInfo != null)
+                                {
+                                    Debug.Assert(propertyInfo.PropertyType == dependencyProperty.PropertyType,
+                                     "The property type of the CLR wrapper must match that of the DependencyProperty itself.");
+
+                                    memberInfo = propertyInfo;
+
+                                    //
+                                    // We have to special case Print Tickets here.
+                                    // Print Tickets are defined on as dependency properties on
+                                    // fixed objects of types:
+                                    // o FixedDocumentSequence
+                                    // o FixedDocument
+                                    // o FixedPage
+                                    // and in order to eliminate the dependency between
+                                    // PresentationFramework and System.printing assemblies,
+                                    // those dependency properties are defined as of type "object"
+                                    // and hence if we are here and we have a property of name
+                                    // "PrintTicket" and owned by one of the above mentioned types
+                                    // we try to get the serializer for the PrintTicket object
+                                    //
+                                    if (propertyInfo.Name == XpsNamedProperties.PrintTicketProperty &&
+                                        ((dependencyProperty.OwnerType == typeof(System.Windows.Documents.FixedPage)) ||
+                                         (dependencyProperty.OwnerType == typeof(System.Windows.Documents.FixedDocument)) ||
+                                         (dependencyProperty.OwnerType == typeof(System.Windows.Documents.FixedDocumentSequence))))
+                                    {
+                                        propertyType = typeof(PrintTicket);
+                                    }
+                                }
+                            }
+
+                            if (memberInfo != null &&
+                               TypeDependencyPropertyCache.
+                               CanSerializeProperty(memberInfo,
+                                                    this,
+                                                    out visibility,
+                                                    out serializerTypeForProperty,
+                                                    out typeConverterForProperty,
+                                                    out defaultValueAttr,
+                                                    out designerSerializationFlagsAttr) == true)
+                            {
+                                TypeCacheItem typeCacheItem = GetTypeCacheItem(propertyType);
+                                serializerTypeForProperty = serializerTypeForProperty == null ? typeCacheItem.SerializerType : serializerTypeForProperty;
+                                typeConverterForProperty = typeConverterForProperty == null ? typeCacheItem.TypeConverter : typeConverterForProperty;
+
+                                TypeDependencyPropertyCache
+                                dependencyPropertyCache = new TypeDependencyPropertyCache(memberInfo,
+                                                                                         dependencyProperty,
+                                                                                         visibility,
+                                                                                         serializerTypeForProperty,
+                                                                                         typeConverterForProperty,
+                                                                                         defaultValueAttr,
+                                                                                         designerSerializationFlagsAttr);
+
+                                dependencyPropertiesCache[numOfSerializableDependencyProperties++] = dependencyPropertyCache;
+                            }
                         }
 
-                        if(numOfSerializableDependencyProperties>0)
+                        if (numOfSerializableDependencyProperties > 0)
                         {
                             TypeDependencyPropertyCache[] serializableDependencyPropertiesCache =
                             new TypeDependencyPropertyCache[numOfSerializableDependencyProperties];
 
-                            for(int indexInSerializableProperties = 0;
+                            for (int indexInSerializableProperties = 0;
                                 indexInSerializableProperties < numOfSerializableDependencyProperties;
                                 indexInSerializableProperties++)
                             {
@@ -936,14 +938,14 @@ namespace System.Windows.Xps.Serialization
         internal
         TypeCacheItem
         GetTypeCacheItem(
-            Type  serializableObjectType
+            Type serializableObjectType
             )
         {
             ArgumentNullException.ThrowIfNull(serializableObjectType);
 
             TypeCacheItem typeCacheItem = (TypeCacheItem)_typesCacheTable[serializableObjectType];
 
-            if(typeCacheItem == null)
+            if (typeCacheItem == null)
             {
                 //
                 // This means that the type was not seen before
@@ -951,7 +953,7 @@ namespace System.Windows.Xps.Serialization
                 //
                 Type serializerType = _serializationManager.GetSerializerType(serializableObjectType);
 
-                if(serializerType!=null)
+                if (serializerType != null)
                 {
                     typeCacheItem = new TypeCacheItem(serializableObjectType, serializerType);
 
@@ -965,7 +967,7 @@ namespace System.Windows.Xps.Serialization
                     //
                     TypeConverter typeConverter = _serializationManager.GetTypeConverter(serializableObjectType);
 
-                    if(typeConverter != null)
+                    if (typeConverter != null)
                     {
                         typeCacheItem = new TypeCacheItem(serializableObjectType, typeConverter);
 
@@ -1017,8 +1019,8 @@ namespace System.Windows.Xps.Serialization
         private
         bool
         CanSerializeValue(
-            object                serializableObject,
-            TypePropertyCache     propertyCache
+            object serializableObject,
+            TypePropertyCache propertyCache
             )
         {
             bool canSerializeValue = false;
@@ -1050,7 +1052,7 @@ namespace System.Windows.Xps.Serialization
                 canSerializeValue = !object.Equals(propertyCache.DefaultValueAttr.Value,
                                                    propertyCache.PropertyValue);
 
-                if(!canSerializeValue)
+                if (!canSerializeValue)
                 {
                     propertyCache.PropertyValue = null;
                 }
@@ -1059,7 +1061,7 @@ namespace System.Windows.Xps.Serialization
             return canSerializeValue;
         }
 
-        private 
+        private
         ReachSerializer
         CreateReachSerializer(Type serializerType)
         {
@@ -1082,8 +1084,8 @@ namespace System.Windows.Xps.Serialization
 
         #region Private Data Members
 
-        private 
-        PackageSerializationManager   _serializationManager;
+        private
+        PackageSerializationManager _serializationManager;
 
         //
         // The following is being cached for future reference and to
@@ -1097,13 +1099,13 @@ namespace System.Windows.Xps.Serialization
         //
 
         private
-        IDictionary                 _typesCacheTable;
+        IDictionary _typesCacheTable;
 
         private
-        IDictionary                 _serializersTable;
+        IDictionary _serializersTable;
 
         private
-        IDictionary                 _typesDependencyPropertiesCacheTable;
+        IDictionary _typesDependencyPropertiesCacheTable;
 
         #endregion Private Data Members
     };

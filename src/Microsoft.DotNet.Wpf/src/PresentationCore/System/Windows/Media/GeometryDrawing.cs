@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -38,9 +38,9 @@ namespace System.Windows.Media
             Brush = brush;
             Pen = pen;
             Geometry = geometry;
-        }               
+        }
 
-        #endregion        
+        #endregion
 
         #region Internal methods
 
@@ -54,12 +54,12 @@ namespace System.Windows.Media
             // about when ShouldStopWalking is set.  Guard that assumption with an
             // assertion.  See DrawingGroup.WalkCurrentValue comment for more details.
             Debug.Assert(!ctx.ShouldStopWalking);
-            
+
             ctx.DrawGeometry(
                 Brush,
                 Pen,
                 Geometry
-                );            
+                );
         }
 
         #endregion Internal methods

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -62,8 +62,8 @@
 using System.Reflection;            // MethodInfo
 using System.Threading;             // Interlocked
 using System.Windows.Threading;     // DispatcherObject
-using MS.Utility;                   // FrugalList
 using MS.Internal;                  // Invariant
+using MS.Utility;                   // FrugalList
 
 namespace System.Windows
 {
@@ -489,7 +489,7 @@ namespace System.Windows
         //  Private Fields
         //
 
-        private WeakEventTable  _table;
+        private WeakEventTable _table;
         private static readonly object StaticSource = new NamedObject("StaticSource");
         private static MethodInfo s_DeliverEventMethodInfo;
 
@@ -602,7 +602,7 @@ namespace System.Windows
             public void Remove(IWeakEventListener listener)
             {
                 Invariant.Assert(_users == 0, "Cannot modify a ListenerList that is in use");
-                for (int i=_list.Count-1; i>=0; --i)
+                for (int i = _list.Count - 1; i >= 0; --i)
                 {
                     if (_list[i].Target == listener)
                     {
@@ -669,7 +669,7 @@ namespace System.Windows
                     target = StaticSource;
 
                 // remove the record from the main list
-                for (int i=_list.Count-1; i>=0; --i)
+                for (int i = _list.Count - 1; i >= 0; --i)
                 {
                     if (_list[i].Matches(target, handler))
                     {
@@ -753,7 +753,7 @@ namespace System.Windows
             {
                 bool foundStaleEntries = false;
 
-                for (int k=0, n=Count; k<n; ++k)
+                for (int k = 0, n = Count; k < n; ++k)
                 {
                     Listener listener = GetListener(k);
                     foundStaleEntries |= DeliverEvent(ref listener, sender, args, managerType);
@@ -810,7 +810,7 @@ namespace System.Windows
                 Invariant.Assert(_users == 0, "Cannot modify a ListenerList that is in use");
                 bool foundDirt = false;
 
-                for (int j=_list.Count-1; j>=0; --j)
+                for (int j = _list.Count - 1; j >= 0; --j)
                 {
                     if (_list[j].Target == null)
                     {
@@ -836,7 +836,7 @@ namespace System.Windows
             {
                 IWeakEventListener iwel;
 
-                for (int k=0, n=Count; k<n; ++k)
+                for (int k = 0, n = Count; k < n; ++k)
                 {
                     Listener listener = GetListener(k);
                     if (listener.Target != null)
@@ -888,15 +888,15 @@ namespace System.Windows
         protected class ListenerList<TEventArgs> : ListenerList
             where TEventArgs : EventArgs
         {
-            public ListenerList() : base() {}
-            public ListenerList(int capacity) : base(capacity) {}
+            public ListenerList() : base() { }
+            public ListenerList(int capacity) : base(capacity) { }
 
             public override bool DeliverEvent(object sender, EventArgs e, Type managerType)
             {
                 TEventArgs args = (TEventArgs)e;
                 bool foundStaleEntries = false;
 
-                for (int k=0, n=Count; k<n; ++k)
+                for (int k = 0, n = Count; k < n; ++k)
                 {
                     Listener listener = GetListener(k);
                     if (listener.Target != null)

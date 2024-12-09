@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,13 +17,12 @@
 --*/
 using System.IO;
 using System.IO.Packaging;
-using System.Security.Cryptography.X509Certificates;
 using System.Printing;
-
+using System.Security.Cryptography.X509Certificates;
 using MS.Internal;
 using Package = System.IO.Packaging.Package;
-using PackUriHelper = System.IO.Packaging.PackUriHelper;
 using PackageRelationship = System.IO.Packaging.PackageRelationship;
+using PackUriHelper = System.IO.Packaging.PackUriHelper;
 
 namespace System.Windows.Xps.Packaging
 {
@@ -68,18 +67,18 @@ namespace System.Windows.Xps.Packaging
         /// </param>
         internal
         XpsManager(
-            Package                     metroPackage,
-            CompressionOption           compressionOption
+            Package metroPackage,
+            CompressionOption compressionOption
             )
         {
             bool streaming = false;
             _ownsPackage = false;
-            if( metroPackage != null )
+            if (metroPackage != null)
             {
                 //streaming = metroPackage.InStreamingCreation();
             }
 
-            Initialize( metroPackage,
+            Initialize(metroPackage,
                         compressionOption,
                         streaming);
         }
@@ -101,30 +100,30 @@ namespace System.Windows.Xps.Packaging
         /// </param>
         internal
         XpsManager(
-            string                      path,
-            FileAccess                  packageAccess,
-            CompressionOption           compressionOption
+            string path,
+            FileAccess packageAccess,
+            CompressionOption compressionOption
             )
         {
             _ownsPackage = true;
-            
+
             _uri = new Uri(path, UriKind.RelativeOrAbsolute);
             //
             //The URI has to be absolute
             //If the path passed in is relative append it to the
             //current working directory
             //
-            if( !_uri.IsAbsoluteUri)
+            if (!_uri.IsAbsoluteUri)
             {
-                _uri = new Uri( new Uri(Directory.GetCurrentDirectory()+"/"), path );
+                _uri = new Uri(new Uri(Directory.GetCurrentDirectory() + "/"), path);
             }
 
-            Package package =  PackageStore.GetPackage( _uri );
+            Package package = PackageStore.GetPackage(_uri);
             // Consider collapsing these since we don't have streaming anymore.
             bool streaming = false;
-            if( package == null )
+            if (package == null)
             {
-                if( packageAccess == FileAccess.Write )
+                if (packageAccess == FileAccess.Write)
                 {
                     // In .NET Core 3.0 System.IO.Compression's ZipArchive does not allow creation of ZipArchiveEntries when
                     // a prior ZipArchiveEntry is still open.  XPS Serialization requires this as part of its implementation.
@@ -139,13 +138,13 @@ namespace System.Windows.Xps.Packaging
                 else
                 {
                     package = Package.Open(path,
-                                          (packageAccess== FileAccess.Read) ?  FileMode.Open: FileMode.OpenOrCreate,
+                                          (packageAccess == FileAccess.Read) ? FileMode.Open : FileMode.OpenOrCreate,
                                            packageAccess,
-                                          (packageAccess== FileAccess.Read) ?  FileShare.Read: FileShare.None
+                                          (packageAccess == FileAccess.Read) ? FileShare.Read : FileShare.None
                                           );
                 }
-                    
-                AddPackageToCache( _uri, package );               
+
+                AddPackageToCache(_uri, package);
             }
             else
             {
@@ -154,14 +153,14 @@ namespace System.Windows.Xps.Packaging
                 // this open request is not File Access Read
                 // throw UnauthorizedAccessException
                 //
-                if( packageAccess != FileAccess.Read ||
-                    package.FileOpenAccess != FileAccess.Read )
+                if (packageAccess != FileAccess.Read ||
+                    package.FileOpenAccess != FileAccess.Read)
                 {
                     throw new UnauthorizedAccessException();
                 }
-                AddPackageReference( _uri );
+                AddPackageReference(_uri);
             }
-            Initialize( package,
+            Initialize(package,
                         compressionOption,
                         streaming);
         }
@@ -169,7 +168,7 @@ namespace System.Windows.Xps.Packaging
         static XpsManager()
         {
             _globalLock = new Object();
-            _packageCache = new Dictionary<Uri,int>();
+            _packageCache = new Dictionary<Uri, int>();
         }
         #endregion Constructors
 
@@ -197,7 +196,7 @@ namespace System.Windows.Xps.Packaging
             set
             {
                 ObjectDisposedException.ThrowIf(_metroPackage is null, typeof(XpsManager));
-                if ( !Streaming && null != GetXpsDocumentStartingPart(_metroPackage))
+                if (!Streaming && null != GetXpsDocumentStartingPart(_metroPackage))
                 {
                     throw new XpsPackagingException(SR.ReachPackaging_AlreadyHasStartingPart);
                 }
@@ -235,7 +234,7 @@ namespace System.Windows.Xps.Packaging
             {
                 if (null == _metroPackage)
                 {
-                    return false ;
+                    return false;
                 }
 
                 return _metroPackage.FileOpenAccess != System.IO.FileAccess.Read;
@@ -287,9 +286,9 @@ namespace System.Windows.Xps.Packaging
         PackagePart
         GeneratePart(
             ContentType contentType,
-            Uri      	partUri
+            Uri partUri
             )
-       {
+        {
             ObjectDisposedException.ThrowIf(_metroPackage is null, typeof(XpsManager));
             if (!IsWriter)
             {
@@ -300,7 +299,7 @@ namespace System.Windows.Xps.Packaging
             {
                 throw new ArgumentException(SR.Format(SR.ReachPackaging_InvalidContentType, contentType), "contentType");
             }
-            
+
             //Do not compress image Content Types
             CompressionOption compressionOption = _compressionOption;
 
@@ -356,8 +355,8 @@ namespace System.Windows.Xps.Packaging
             //
             System.Uri partUri = GenerateUniqueUri(contentType);
 
-            return GeneratePart( contentType, partUri);
-       }
+            return GeneratePart(contentType, partUri);
+        }
 
         public
         PrintTicket
@@ -367,9 +366,9 @@ namespace System.Windows.Xps.Packaging
         {
             PrintTicket printTicket = null;
             PackagePart printTicketPart = GetPrintTicketPart(partUri);
-            if( printTicketPart != null )
+            if (printTicketPart != null)
             {
-                 printTicket = new PrintTicket(printTicketPart.GetStream());
+                printTicket = new PrintTicket(printTicketPart.GetStream());
             }
             return printTicket;
         }
@@ -427,9 +426,9 @@ namespace System.Windows.Xps.Packaging
         public
         void
         WritePrintTicket(
-            XpsPartBase     relatedPart,
-            PackagePart     metroPart,
-            PrintTicket     printTicket
+            XpsPartBase relatedPart,
+            PackagePart metroPart,
+            PrintTicket printTicket
             )
         {
             ArgumentNullException.ThrowIfNull(relatedPart);
@@ -483,13 +482,13 @@ namespace System.Windows.Xps.Packaging
         public
         void
         WriteEmptyPrintTicket(
-            XpsPartBase     relatedPart,
-            PackagePart     metroPart
+            XpsPartBase relatedPart,
+            PackagePart metroPart
             )
         {
             ArgumentNullException.ThrowIfNull(relatedPart);
             ArgumentNullException.ThrowIfNull(metroPart);
-            if( Streaming )
+            if (Streaming)
             {
                 // Generate Uri
                 //
@@ -511,7 +510,7 @@ namespace System.Windows.Xps.Packaging
                 printTicket.SaveTo(stream);
                 stream.Close();
             }
-         }
+        }
 
         /// <summary>
         /// This method retrieves a part from the package.
@@ -526,7 +525,7 @@ namespace System.Windows.Xps.Packaging
         public
         PackagePart
         GetPart(
-            Uri         uri
+            Uri uri
             )
         {
             ObjectDisposedException.ThrowIf(_metroPackage is null, typeof(XpsManager));
@@ -556,9 +555,9 @@ namespace System.Windows.Xps.Packaging
             //
             PackagePart sigDefPart = GetSignatureDefinitionPart(documentPart.Uri);
 
-            if( sigDefPart == null )
+            if (sigDefPart == null)
             {
-                sigDefPart = GenerateUniquePart(XpsS0Markup.SignatureDefintionType );
+                sigDefPart = GenerateUniquePart(XpsS0Markup.SignatureDefintionType);
                 documentPart.CreateRelationship(
                     sigDefPart.Uri,
                     TargetMode.Internal,
@@ -572,12 +571,12 @@ namespace System.Windows.Xps.Packaging
         PackagePart
         GetSignatureDefinitionPart(Uri documentUri)
         {
-            PackagePart documentPart = _metroPackage.GetPart( documentUri );
+            PackagePart documentPart = _metroPackage.GetPart(documentUri);
             PackagePart sigDefPart = null;
 
-            if( documentPart == null )
+            if (documentPart == null)
             {
-              throw new InvalidDataException(SR.ReachPackaging_InvalidDocUri);
+                throw new InvalidDataException(SR.ReachPackaging_InvalidDocUri);
             }
 
             ContentType SignitureDefType =
@@ -614,8 +613,8 @@ namespace System.Windows.Xps.Packaging
 
             if (propertiesPartRelationship != null)
             {
-                Uri propertiesPartUri = 
-                    PackUriHelper.ResolvePartUri(propertiesPartRelationship.SourceUri, 
+                Uri propertiesPartUri =
+                    PackUriHelper.ResolvePartUri(propertiesPartRelationship.SourceUri,
                                                  propertiesPartRelationship.TargetUri);
 
                 if (package.PartExists(propertiesPartUri))
@@ -632,9 +631,9 @@ namespace System.Windows.Xps.Packaging
         GetThumbnailPart(PackagePart parent)
         {
             PackageRelationship thumbNailRel = null;
-            PackagePart         thumbNailPart = null;
+            PackagePart thumbNailPart = null;
             PackageRelationshipCollection thumbnailCollection = null;
-            if( parent != null )
+            if (parent != null)
             {
                 thumbnailCollection = parent.
                     GetRelationshipsByType(XpsS0Markup.ThumbnailRelationshipName);
@@ -645,13 +644,13 @@ namespace System.Windows.Xps.Packaging
                     GetRelationshipsByType(XpsS0Markup.ThumbnailRelationshipName);
             }
 
-            foreach( PackageRelationship rel in thumbnailCollection )
+            foreach (PackageRelationship rel in thumbnailCollection)
             {
-                if( thumbNailRel != null )
+                if (thumbNailRel != null)
                 {
                     throw new InvalidDataException(SR.ReachPackaging_MoreThanOneThumbnailPart);
                 }
-                thumbNailRel =  rel;
+                thumbNailRel = rel;
             }
             if (thumbNailRel != null)
             {
@@ -664,12 +663,12 @@ namespace System.Windows.Xps.Packaging
         PackagePart
         GetPrintTicketPart(Uri documentUri)
         {
-            PackagePart documentPart = _metroPackage.GetPart( documentUri );
+            PackagePart documentPart = _metroPackage.GetPart(documentUri);
             PackagePart printTicketPart = null;
 
-            if( documentPart == null )
+            if (documentPart == null)
             {
-              throw new InvalidDataException(SR.ReachPackaging_InvalidDocUri);
+                throw new InvalidDataException(SR.ReachPackaging_InvalidDocUri);
             }
 
             string printTicketRelName =
@@ -703,28 +702,28 @@ namespace System.Windows.Xps.Packaging
             //
             PackagePart propertiesPart = GetDocumentPropertiesPart();
 
-            if( propertiesPart == null )
+            if (propertiesPart == null)
             {
-                propertiesPart = GenerateUniquePart(XpsS0Markup.CoreDocumentPropertiesType );
-                _metroPackage.CreateRelationship(propertiesPart.Uri, TargetMode.Internal, XpsS0Markup.CorePropertiesRelationshipType );
+                propertiesPart = GenerateUniquePart(XpsS0Markup.CoreDocumentPropertiesType);
+                _metroPackage.CreateRelationship(propertiesPart.Uri, TargetMode.Internal, XpsS0Markup.CorePropertiesRelationshipType);
             }
             return propertiesPart;
         }
 
         public
         XpsThumbnail
-        AddThumbnail(XpsImageType imageType, INode parent, XpsThumbnail oldThumbnail )
+        AddThumbnail(XpsImageType imageType, INode parent, XpsThumbnail oldThumbnail)
         {
             XpsThumbnail newThumbnail = null;
-            if( oldThumbnail != null )
+            if (oldThumbnail != null)
             {
                 throw new XpsPackagingException(SR.ReachPackaging_AlreadyHasThumbnail);
-            }    
-            if( !( imageType == XpsImageType.JpegImageType ||
-                    imageType == XpsImageType.PngImageType ) )
+            }
+            if (!(imageType == XpsImageType.JpegImageType ||
+                    imageType == XpsImageType.PngImageType))
             {
                 throw new XpsPackagingException(SR.ReachPackaging_UnsupportedThumbnailImageType);
-            }   
+            }
             newThumbnail = new XpsThumbnail(this,
                                         parent,
                                         GenerateUniquePart(ImageTypeToString(imageType))
@@ -734,11 +733,11 @@ namespace System.Windows.Xps.Packaging
 
         public
         XpsThumbnail
-        EnsureThumbnail( INode parent, PackagePart part )
+        EnsureThumbnail(INode parent, PackagePart part)
         {
             XpsThumbnail thumbnail = null;
             PackagePart thumbNailPart = GetThumbnailPart(part);
-            if( thumbNailPart != null )
+            if (thumbNailPart != null)
             {
                 thumbnail = new XpsThumbnail(this,
                                             parent,
@@ -765,14 +764,14 @@ namespace System.Windows.Xps.Packaging
         public
         void
         CollectPropertiesForSigning(
-            Dictionary<Uri,Uri> dependents,
+            Dictionary<Uri, Uri> dependents,
             XpsDigSigPartAlteringRestrictions restrictions
             )
         {
             PackagePart propertiesPart = GetDocumentPropertiesPart();
-            if( (restrictions & XpsDigSigPartAlteringRestrictions.CoreMetadata) != 0 )
+            if ((restrictions & XpsDigSigPartAlteringRestrictions.CoreMetadata) != 0)
             {
-                if( propertiesPart != null )
+                if (propertiesPart != null)
                 {
                     dependents[propertiesPart.Uri] = propertiesPart.Uri;
                 }
@@ -807,7 +806,7 @@ namespace System.Windows.Xps.Packaging
             XpsDigSigPartAlteringRestrictions restrictions
             )
         {
-            if( (restrictions & XpsDigSigPartAlteringRestrictions.SignatureOrigin) != 0 )
+            if ((restrictions & XpsDigSigPartAlteringRestrictions.SignatureOrigin) != 0)
             {
                 Uri SigOriginUri = GetSignatureOriginUri();
                 selectorList.Add(new PackageRelationshipSelector(
@@ -843,18 +842,18 @@ namespace System.Windows.Xps.Packaging
         public
         PackageDigitalSignature
         Sign(
-            IEnumerable<System.Uri>                     partList,
-            X509Certificate                             certificate,
-            bool                                        embedCertificate,
-            IEnumerable<PackageRelationshipSelector>    relationshipSelectors,
-            string                                      id
+            IEnumerable<System.Uri> partList,
+            X509Certificate certificate,
+            bool embedCertificate,
+            IEnumerable<PackageRelationshipSelector> relationshipSelectors,
+            string id
             )
         {
             PackageDigitalSignature signature = null;
             ObjectDisposedException.ThrowIf(_metroPackage is null, typeof(XpsManager));
 
             PackageDigitalSignatureManager dsm = new PackageDigitalSignatureManager(_metroPackage);
-            if( embedCertificate )
+            if (embedCertificate)
             {
                 dsm.CertificateOption = CertificateEmbeddingOption.InCertificatePart;
             }
@@ -863,13 +862,13 @@ namespace System.Windows.Xps.Packaging
                 dsm.CertificateOption = CertificateEmbeddingOption.NotEmbedded;
             }
 
-            if( id != null )
+            if (id != null)
             {
-               signature = dsm.Sign(partList,  certificate, relationshipSelectors, id );
+                signature = dsm.Sign(partList, certificate, relationshipSelectors, id);
             }
             else
             {
-                signature = dsm.Sign(partList,  certificate, relationshipSelectors );
+                signature = dsm.Sign(partList, certificate, relationshipSelectors);
             }
             return signature;
         }
@@ -893,9 +892,9 @@ namespace System.Windows.Xps.Packaging
                 _metroPackage.Flush();
             }
 
-            if( _ownsPackage )
+            if (_ownsPackage)
             {
-               RemovePackageReference(_uri, _metroPackage);
+                RemovePackageReference(_uri, _metroPackage);
             }
 
             GC.SuppressFinalize(this);
@@ -917,16 +916,16 @@ namespace System.Windows.Xps.Packaging
         )
         {
             string docContentKey = GetContentCounterKey(XpsS0Markup.FixedDocumentContentType);
-             int docCounter = 0;
- 
+            int docCounter = 0;
+
             if (_contentTypes.ContainsKey(docContentKey))
             {
-                docCounter = _contentTypes[docContentKey]-1;
+                docCounter = _contentTypes[docContentKey] - 1;
             }
 
             return new Uri("/Documents/" + docCounter + "/Structure/DocStructure.struct",
                            UriKind.Relative);
-      }
+        }
 
         /// <summary>
         /// This method is used to create unique Uri for document structure.
@@ -940,16 +939,16 @@ namespace System.Windows.Xps.Packaging
         )
         {
             string docContentKey = GetContentCounterKey(XpsS0Markup.FixedDocumentContentType);
-             int docCounter = 0;
- 
+            int docCounter = 0;
+
             if (_contentTypes.ContainsKey(docContentKey))
             {
-                docCounter = _contentTypes[docContentKey]-1;
+                docCounter = _contentTypes[docContentKey] - 1;
             }
 
-            return new Uri("/Documents/" + docCounter + "/Structure/Fragments/"+pageNumber+".frag",
+            return new Uri("/Documents/" + docCounter + "/Structure/Fragments/" + pageNumber + ".frag",
                            UriKind.Relative);
-      }
+        }
         #region Private methods
 
         /// <summary>
@@ -968,9 +967,9 @@ namespace System.Windows.Xps.Packaging
         private
         void
         Initialize(
-            Package                     metroPackage,
-            CompressionOption           compressionOption,
-            bool                        streaming
+            Package metroPackage,
+            CompressionOption compressionOption,
+            bool streaming
             )
         {
             ArgumentNullException.ThrowIfNull(metroPackage);
@@ -979,7 +978,7 @@ namespace System.Windows.Xps.Packaging
             _metroPackage = metroPackage;
             _compressionOption = compressionOption;
             _streaming = streaming;
- 
+
 
             _contentTypes = new Dictionary<string, int>(11);
             _cachedParts = new Dictionary<Uri, PackagePart>(11);
@@ -1005,25 +1004,25 @@ namespace System.Windows.Xps.Packaging
         {
             ArgumentNullException.ThrowIfNull(relatedPart);
             string uniqueUri = "";
-            
-            if( relatedPart is XpsFixedDocumentSequenceReaderWriter )
+
+            if (relatedPart is XpsFixedDocumentSequenceReaderWriter)
             {
-               uniqueUri = "/MetaData/Job_PT.xml"; 
+                uniqueUri = "/MetaData/Job_PT.xml";
             }
-            else if( relatedPart is XpsFixedDocumentReaderWriter )
+            else if (relatedPart is XpsFixedDocumentReaderWriter)
             {
                 XpsFixedDocumentReaderWriter doc = relatedPart as XpsFixedDocumentReaderWriter;
-                uniqueUri = "/Documents/" + doc.DocumentNumber + "/Document_PT.xml"; 
+                uniqueUri = "/Documents/" + doc.DocumentNumber + "/Document_PT.xml";
             }
-            else if( relatedPart is XpsFixedPageReaderWriter )
+            else if (relatedPart is XpsFixedPageReaderWriter)
             {
                 XpsFixedPageReaderWriter page = relatedPart as XpsFixedPageReaderWriter;
                 XpsFixedDocumentReaderWriter doc = (relatedPart as XpsFixedPageReaderWriter).Parent as XpsFixedDocumentReaderWriter;
-                uniqueUri = "/Documents/" + doc.DocumentNumber + "/Page" + page.PageNumber+ "_PT.xml"; 
+                uniqueUri = "/Documents/" + doc.DocumentNumber + "/Page" + page.PageNumber + "_PT.xml";
             }
-                
+
             return PackUriHelper.CreatePartUri(new Uri(uniqueUri, UriKind.Relative));
-       }
+        }
 
         /// <summary>
         /// Generates a unique Uri for a print ticket
@@ -1061,7 +1060,7 @@ namespace System.Windows.Xps.Packaging
 
             return PackUriHelper.CreatePartUri(new Uri(uniqueUri, UriKind.Relative));
         }
-            
+
 
         /// <summary>
         /// Generates a unique Uri based on the content-type
@@ -1076,32 +1075,32 @@ namespace System.Windows.Xps.Packaging
         internal
         Uri
         GenerateUniqueUri(
-            ContentType      contentType
+            ContentType contentType
             )
         {
             string contentKey = GetContentCounterKey(contentType);
             string docContentKey = GetContentCounterKey(XpsS0Markup.FixedDocumentContentType);
             int counter = _contentTypes[contentKey];
             int docCounter = 0;
-            Guid   uniqueName = Guid.NewGuid();
+            Guid uniqueName = Guid.NewGuid();
             string uniqueUri;
 
             if (_contentTypes.ContainsKey(docContentKey))
             {
-                docCounter = _contentTypes[docContentKey]-1;
+                docCounter = _contentTypes[docContentKey] - 1;
             }
 
             if (contentType.AreTypeAndSubTypeEqual(XpsS0Markup.DocumentSequenceContentType))
             {
-                 uniqueUri = String.Format(System.Globalization.CultureInfo.InvariantCulture,
-                                          "{0}.fdseq",
-                                          new object[] { contentKey });
+                uniqueUri = String.Format(System.Globalization.CultureInfo.InvariantCulture,
+                                         "{0}.fdseq",
+                                         new object[] { contentKey });
             }
             else if (contentType.AreTypeAndSubTypeEqual(XpsS0Markup.FixedDocumentContentType))
             {
                 uniqueUri = String.Format(System.Globalization.CultureInfo.InvariantCulture,
                                           "/Documents/{0}/FixedDocument.fdoc",
-                                          new object[] {  counter });
+                                          new object[] { counter });
                 string pageContentKey = GetContentCounterKey(XpsS0Markup.FixedPageContentType);
                 _contentTypes[pageContentKey] = 1;
             }
@@ -1173,7 +1172,7 @@ namespace System.Windows.Xps.Packaging
         private
         string
         GetContentCounterKey(
-            ContentType  contentType
+            ContentType contentType
             )
         {
             if (ContentType.Empty.AreTypeAndSubTypeEqual(contentType))
@@ -1224,7 +1223,7 @@ namespace System.Windows.Xps.Packaging
                 else
                 {
                     key = contentType.SubTypeComponent;
-                }                
+                }
             }
 
             //
@@ -1258,28 +1257,28 @@ namespace System.Windows.Xps.Packaging
 
         private
         void
-        AddPackageToCache(Uri uri, Package package )
+        AddPackageToCache(Uri uri, Package package)
         {
             lock (_globalLock)
             {
                 _packageCache[uri] = 1;
             }
-            PackageStore.AddPackage( uri, package );
+            PackageStore.AddPackage(uri, package);
         }
 
         private
         void
-        AddPackageReference( Uri uri )
+        AddPackageReference(Uri uri)
         {
             lock (_globalLock)
             {
-                _packageCache[uri] = _packageCache[uri]+1;
+                _packageCache[uri] = _packageCache[uri] + 1;
             }
         }
 
         private
         void
-        RemovePackageReference( Uri uri, Package package )
+        RemovePackageReference(Uri uri, Package package)
         {
             int reference = 0;
             lock (_globalLock)
@@ -1287,8 +1286,8 @@ namespace System.Windows.Xps.Packaging
                 reference = _packageCache[uri];
 
                 reference -= 1;
-                
-                if(reference > 0 )
+
+                if (reference > 0)
                 {
                     _packageCache[uri] = reference;
                 }
@@ -1296,14 +1295,14 @@ namespace System.Windows.Xps.Packaging
                 {
                     // do the _packageCache manipulation inside the lock,
                     //   but defer additional cleanup work to do outside of the lock.
-                    _packageCache.Remove( uri );
+                    _packageCache.Remove(uri);
                 }
             }
 
             // outside of the context of the lock, perform any necessary additional cleanup
             if (reference <= 0)
             {
-                PackageStore.RemovePackage( uri );
+                PackageStore.RemovePackage(uri);
                 package.Close();
             }
         }
@@ -1311,21 +1310,21 @@ namespace System.Windows.Xps.Packaging
 
         #region Private data
 
-        private XpsDocument                     _xpsDocument;
-        private Package                         _metroPackage;
-        private Uri                             _uri;
+        private XpsDocument _xpsDocument;
+        private Package _metroPackage;
+        private Uri _uri;
 
-        private CompressionOption               _compressionOption;
+        private CompressionOption _compressionOption;
 
 
-        private Dictionary<string, int>         _contentTypes;
-        private Dictionary<Uri, PackagePart>    _cachedParts;
-        private bool                            _streaming;
-        private bool                            _ownsPackage;
+        private Dictionary<string, int> _contentTypes;
+        private Dictionary<Uri, PackagePart> _cachedParts;
+        private bool _streaming;
+        private bool _ownsPackage;
 
-        internal static Dictionary<Uri, int>    _packageCache;
-        internal static Object                  _globalLock;
-        
+        internal static Dictionary<Uri, int> _packageCache;
+        internal static Object _globalLock;
+
         #endregion Private data
 
         #region IDisposable implementation
@@ -1378,9 +1377,9 @@ namespace System.Windows.Xps.Packaging
             {
                 extention = XpsS0Markup.WdpExtension;
             }
-            return extention;                
+            return extention;
         }
-        
+
         #endregion Private static methods
 
         #region Internal static data
@@ -1402,7 +1401,7 @@ namespace System.Windows.Xps.Packaging
         static
         PackagePart
         GetXpsDocumentStartingPart(
-            Package         package
+            Package package
             )
         {
             Debug.Assert(package != null, "package cannot be null");
@@ -1421,7 +1420,7 @@ namespace System.Windows.Xps.Packaging
 
             if (startingPartRelationship != null)
             {
-                Uri startPartUri = PackUriHelper.ResolvePartUri(startingPartRelationship.SourceUri, 
+                Uri startPartUri = PackUriHelper.ResolvePartUri(startingPartRelationship.SourceUri,
                                                                 startingPartRelationship.TargetUri);
 
                 if (package.PartExists(startPartUri))
@@ -1446,8 +1445,8 @@ namespace System.Windows.Xps.Packaging
         static
         void
         SetXpsDocumentStartingPart(
-            Package         package,
-            PackagePart     startingPart
+            Package package,
+            PackagePart startingPart
             )
         {
             Debug.Assert(package != null, "package cannot be null");
@@ -1476,7 +1475,7 @@ namespace System.Windows.Xps.Packaging
                 throw new ArgumentException(SR.ReachPackaging_PartFromDifferentContainer);
             }
 
-                package.CreateRelationship(startingPart.Uri, TargetMode.Internal, XpsS0Markup.ReachPackageStartingPartRelationshipType);
+            package.CreateRelationship(startingPart.Uri, TargetMode.Internal, XpsS0Markup.ReachPackageStartingPartRelationshipType);
         }
 
         #endregion Internal static methods
@@ -1501,8 +1500,8 @@ namespace System.Windows.Xps.Packaging
         static
         string
         MakeRelativePath(
-            Uri         baseUri,
-            Uri         fileUri
+            Uri baseUri,
+            Uri fileUri
             )
         {
             Uri dummyAbsoluteUri = new Uri("http://dummy");
@@ -1520,13 +1519,13 @@ namespace System.Windows.Xps.Packaging
 
             Uri relativeUri = baseUri.MakeRelativeUri(fileUri);
             Uri unescapedUri = new Uri(relativeUri.GetComponents(UriComponents.SerializationInfoString, UriFormat.SafeUnescaped), UriKind.RelativeOrAbsolute);
-            
+
             return unescapedUri.GetComponents(UriComponents.SerializationInfoString, UriFormat.UriEscaped);
         }
         public
         static
         bool
-        SupportedImageType( ContentType imageContentType )
+        SupportedImageType(ContentType imageContentType)
         {
             bool result = false;
             if (imageContentType.AreTypeAndSubTypeEqual(XpsS0Markup.JpgContentType) ||
@@ -1543,19 +1542,19 @@ namespace System.Windows.Xps.Packaging
         public
         static
         ContentType
-        ImageTypeToString( XpsImageType imageType )
+        ImageTypeToString(XpsImageType imageType)
         {
             ContentType imageContentType = new ContentType("");
-            switch( imageType )
+            switch (imageType)
             {
                 case XpsImageType.JpegImageType:
                     imageContentType = XpsS0Markup.JpgContentType;
                     break;
-                    
+
                 case XpsImageType.PngImageType:
                     imageContentType = XpsS0Markup.PngContentType;
                     break;
-                    
+
                 case XpsImageType.TiffImageType:
                     imageContentType = XpsS0Markup.TifContentType;
                     break;

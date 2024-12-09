@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -36,7 +36,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
             // Compute the variance of the delta delta
             uint n = 2;
-            for(; n < input.Length; n++)
+            for (; n < input.Length; n++)
             {
                 xfDelDel.Transform(input[n], ref xfData, ref exData);
                 if (0 == exData)
@@ -47,9 +47,9 @@ namespace MS.Internal.Ink.InkSerializedFormat
             sumSq *= (0.205625 / (n - 1.0));
 
             int i = DefaultFirstSquareRoot.Length - 2;
-            for(; i > 1; i--)
+            for (; i > 1; i--)
             {
-                if(sumSq > DefaultFirstSquareRoot[i])
+                if (sumSq > DefaultFirstSquareRoot[i])
                 {
                     break;
                 }
@@ -98,7 +98,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 bool testDelDel = ((compression & 0x20) != 0);
                 compression =
                     this.GorillaCodec.FindPacketAlgoByte(input, testDelDel);
-                
+
                 DeltaDelta dtxf = null;
                 if ((compression & 0x20) != 0)
                 {
@@ -111,7 +111,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     //multibyteencode the first two values
                     int xfData = 0;
                     int xfExtra = 0;
-                    
+
                     dtxf.ResetState();
                     dtxf.Transform(input[0], ref xfData, ref xfExtra);
                     this.MultiByteCodec.SignEncode(xfData, compressedData);
@@ -125,7 +125,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                 //Gorllia time
                 int bitCount = (compression & 0x1F);
-                this.GorillaCodec.Compress( bitCount,           //the max count of bits required for each int
+                this.GorillaCodec.Compress(bitCount,           //the max count of bits required for each int
                                             input,              //the input array to compress
                                             inputIndex,         //the index to start compressing at
                                             dtxf,               //data transform to use when compressing, can be null
@@ -202,7 +202,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                             dtxf.ResetState();
 
-                            uint bytesRead = 
+                            uint bytesRead =
                                 this.MultiByteCodec.SignDecode(input, inputIndex, ref xfData);
                             //advance our index
                             inputIndex += (int)bytesRead;
@@ -222,7 +222,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                         }
 
                         totalBytesRead +=
-                            this.GorillaCodec.Uncompress(  bitCount,    //the max count of bits required for each int
+                            this.GorillaCodec.Uncompress(bitCount,    //the max count of bits required for each int
                                                            input,       //the input array to uncompress
                                                            inputIndex,  //the index to start uncompressing at
                                                            dtxf,        //data transform to use when compressing, can be null
@@ -235,7 +235,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     {
                         throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("Invalid decompression algo byte"));
                     }
-}
+            }
         }
 
         /// <summary>
@@ -283,7 +283,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 type = GorillaEncodingType.Short;
                 unitCount >>= 1;
             }
-            
+
 
             BitStreamReader reader = new BitStreamReader(input);
 
@@ -347,7 +347,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 BitStreamReader reader = new BitStreamReader(input, inputIndex);
                 return this.GorillaCodec.Uncompress(bitCount, reader, type, unitsToDecode);
             }
-}
+        }
 
         /// <summary>
         /// Private lazy init'd member
@@ -427,11 +427,11 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <summary>
         /// Privates, lazy initialized, do not reference directly
         /// </summary>
-        private HuffModule          _huffModule;
-        private MultiByteCodec      _multiByteCodec;
-        private DeltaDelta          _deltaDelta;
-        private GorillaCodec        _gorillaCodec;
-        private LZCodec             _lzCodec;
+        private HuffModule _huffModule;
+        private MultiByteCodec _multiByteCodec;
+        private DeltaDelta _deltaDelta;
+        private GorillaCodec _gorillaCodec;
+        private LZCodec _lzCodec;
 
         /// <summary>
         /// Static members defined in Penimc code

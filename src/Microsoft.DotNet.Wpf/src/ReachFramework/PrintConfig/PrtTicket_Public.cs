@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,11 +13,10 @@ Abstract:
 
 --*/
 
-using System.Xml;
-using System.IO;
 using System.Globalization;
-
+using System.IO;
 using System.Printing;
+using System.Xml;
 
 namespace MS.Internal.Printing.Configuration
 {
@@ -33,9 +32,9 @@ namespace MS.Internal.Printing.Configuration
         /// </summary>
         public InternalPrintTicket()
         {
-            #if _DEBUG
+#if _DEBUG
             InitTrace();
-            #endif
+#endif
 
             _xmlDoc = new XmlDocument();
 
@@ -83,8 +82,8 @@ namespace MS.Internal.Printing.Configuration
 
                 XmlDeclaration xmlDecl = _xmlDoc.FirstChild as XmlDeclaration;
 
-		        // WARNING: windows/wcp/Print/Reach/PrintConfig/PrtTicket_Public_Simple.cs
-		        //          assumes that our xml stream is _always_ UTF-8 encoded
+                // WARNING: windows/wcp/Print/Reach/PrintConfig/PrtTicket_Public_Simple.cs
+                //          assumes that our xml stream is _always_ UTF-8 encoded
                 if (xmlDecl != null)
                 {
                     // XML declaration already exists in the input PrintTicket XML stream.
@@ -610,14 +609,14 @@ namespace MS.Internal.Printing.Configuration
 
         #region Private Methods
 
-        #if _DEBUG
+#if _DEBUG
         private void InitTrace()
         {
             // direct Trace output to console
             Trace.Listeners.Clear();
             Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
         }
-        #endif
+#endif
 
         private void SetupNamespaceManager()
         {
@@ -633,32 +632,32 @@ namespace MS.Internal.Printing.Configuration
 
         #region Private Fields
 
-        private XmlDocument             _xmlDoc;
-        private XmlNamespaceManager     _nsMgr;
+        private XmlDocument _xmlDoc;
+        private XmlNamespaceManager _nsMgr;
 
         // Features
-        private DocumentCollateSetting  _docCollate;
-        private JobDuplexSetting        _jobDuplex;
-        private JobNUpSetting           _jobNUp;
-        private JobStapleSetting        _jobStaple;
+        private DocumentCollateSetting _docCollate;
+        private JobDuplexSetting _jobDuplex;
+        private JobNUpSetting _jobNUp;
+        private JobStapleSetting _jobStaple;
         private PageDeviceFontSubstitutionSetting _pageDeviceFontSubst;
-        private PageMediaSizeSetting    _pageMediaSize;
-        private PageMediaTypeSetting    _pageMediaType;
-        private PageOrientationSetting  _pageOrientation;
-        private PageOutputColorSetting  _pageOutputColor;
-        private PageResolutionSetting   _pageResolution;
-        private PageScalingSetting      _pageScaling;
+        private PageMediaSizeSetting _pageMediaSize;
+        private PageMediaTypeSetting _pageMediaType;
+        private PageOrientationSetting _pageOrientation;
+        private PageOutputColorSetting _pageOutputColor;
+        private PageResolutionSetting _pageResolution;
+        private PageScalingSetting _pageScaling;
         private PageTrueTypeFontModeSetting _pageTrueTypeFontMode;
-        private JobPageOrderSetting     _jobPageOrder;
+        private JobPageOrderSetting _jobPageOrder;
         private PagePhotoPrintingIntentSetting _pagePhotoIntent;
-        private PageBorderlessSetting   _pageBorderless;
+        private PageBorderlessSetting _pageBorderless;
         private PageOutputQualitySetting _pageOutputQuality;
-        private JobInputBinSetting       _jobInputBin;
-        private DocumentInputBinSetting  _documentInputBin;
-        private PageInputBinSetting      _pageInputBin;
+        private JobInputBinSetting _jobInputBin;
+        private DocumentInputBinSetting _documentInputBin;
+        private PageInputBinSetting _pageInputBin;
 
         // Parameters
-        private JobCopyCountSetting      _jobCopyCount;
+        private JobCopyCountSetting _jobCopyCount;
 
         #endregion Private Fields
     }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,7 +15,7 @@ namespace System.Windows.Markup
         internal BamlCollectionHolder()
         {
         }
-        
+
         internal BamlCollectionHolder(BamlRecordReader reader, object parent, short attributeId) :
             this(reader, parent, attributeId, true)
         {
@@ -23,16 +23,16 @@ namespace System.Windows.Markup
 
         internal BamlCollectionHolder(BamlRecordReader reader, object parent, short attributeId, bool needDefault)
         {
-            _reader      = reader;
-            _parent      = parent;
-            _propDef     = new WpfPropertyDefinition(reader, attributeId, parent is DependencyObject);
+            _reader = reader;
+            _parent = parent;
+            _propDef = new WpfPropertyDefinition(reader, attributeId, parent is DependencyObject);
             _attributeId = attributeId;
 
             if (needDefault)
             {
                 InitDefaultValue();
             }
-            
+
             CheckReadOnly();
         }
 
@@ -117,7 +117,7 @@ namespace System.Windows.Markup
             if (!_isPropertyValueSet)
             {
                 _isPropertyValueSet = true;
-                
+
                 // the order of precedence is the fast-tracked Resources property, then DP, then the attached property
                 // setter, then the property info
                 if (_resourcesParent != null)
@@ -142,7 +142,7 @@ namespace System.Windows.Markup
                     PropertyDefinition.PropertyInfo.SetValue(Parent,
                                     Collection, BindingFlags.Instance |
                                     BindingFlags.Public | BindingFlags.FlattenHierarchy,
-                                    null,  null, TypeConverterHelper.InvariantEnglishUS);
+                                    null, null, TypeConverterHelper.InvariantEnglishUS);
                 }
                 else
                 {
@@ -177,10 +177,10 @@ namespace System.Windows.Markup
                 if (PropertyDefinition.IsInternal)
                 {
                     _defaultCollection = XamlTypeMapper.GetInternalPropertyValue(_reader.ParserContext,
-                                                                                 _reader.ParserContext.RootElement, 
+                                                                                 _reader.ParserContext.RootElement,
                                                                                  PropertyDefinition.PropertyInfo,
                                                                                  Parent);
-                    
+
                     if (_defaultCollection == null)
                     {
                         _reader.ThrowException(nameof(SR.ParserCantGetProperty), PropertyDefinition.Name);
@@ -219,16 +219,16 @@ namespace System.Windows.Markup
             }
         }
 
-        private object             _collection;
-        private object             _defaultCollection;
-        private short              _attributeId;
+        private object _collection;
+        private object _defaultCollection;
+        private short _attributeId;
         private WpfPropertyDefinition _propDef;
-        private object             _parent;
-        private BamlRecordReader   _reader;
-        private IHaveResources     _resourcesParent;  // for fast-tracking Resources properties
-        private bool               _readonly;
-        private bool               _isClosed;
-        private bool               _isPropertyValueSet;
+        private object _parent;
+        private BamlRecordReader _reader;
+        private IHaveResources _resourcesParent;  // for fast-tracking Resources properties
+        private bool _readonly;
+        private bool _isClosed;
+        private bool _isPropertyValueSet;
     }
 }
 

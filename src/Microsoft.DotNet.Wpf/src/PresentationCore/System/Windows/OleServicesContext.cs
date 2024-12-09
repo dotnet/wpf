@@ -1,16 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: Ole Services for DragDrop and Clipboard.
 
-using MS.Win32;
-using MS.Internal;
 using System.Runtime.InteropServices;
 using System.Threading;
-using System.Windows.Threading;
 using System.Windows.Input;
-
+using System.Windows.Threading;
+using MS.Internal;
+using MS.Win32;
 using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
 namespace System.Windows
@@ -138,7 +137,7 @@ namespace System.Windows
 
         /// <summary>
         /// OleIsCurrentClipboard - OleIsCurrentClipboard only works for the data object 
-        /// used in the OleSetClipboard. This means that it can�t be called by the consumer 
+        /// used in the OleSetClipboard. This means that it can’t be called by the consumer 
         /// of the data object to determine if the object that was on the clipboard at the 
         /// previous OleGetClipboard call is still on the Clipboard.
         /// </summary>

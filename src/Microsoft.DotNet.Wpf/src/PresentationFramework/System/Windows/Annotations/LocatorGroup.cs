@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -108,7 +108,7 @@ namespace System.Windows.Annotations
                 {
                     AnnotationResource.ListSerializer.Serialize(writer, locator);
                 }
-            }            
+            }
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace System.Windows.Annotations
                     // If a child node is a <ContentLocatorBase>, deserialize a ContentLocatorBase
                     if (AnnotationXmlConstants.Elements.ContentLocator == reader.LocalName)
                     {
-                        ContentLocator locator = (ContentLocator)AnnotationResource.ListSerializer.Deserialize(reader);                        
+                        ContentLocator locator = (ContentLocator)AnnotationResource.ListSerializer.Deserialize(reader);
                         _locators.Add(locator);
                     }
                     else
@@ -187,7 +187,7 @@ namespace System.Windows.Annotations
         }
 
         #endregion Public Properties
-        
+
         //------------------------------------------------------
         //
         //  Internal Methods
@@ -248,7 +248,7 @@ namespace System.Windows.Annotations
                 ContentLocator otherLoc = other as ContentLocator;
                 Invariant.Assert(otherLoc != null, "other should be of type ContentLocator");  // Only other possible type for the ContentLocatorBase
 
-                foreach(ContentLocator loc in this.Locators)
+                foreach (ContentLocator loc in this.Locators)
                 {
                     loc.Append(otherLoc);
                 }
@@ -300,13 +300,13 @@ namespace System.Windows.Annotations
         //  Private Fields
         //
         //------------------------------------------------------
-        
+
         #region Private Fields
 
         /// <summary>
         /// Private data structure holding the ContentLocatorBase.
         /// </summary>
-        private AnnotationObservableCollection<ContentLocator>   _locators;
+        private AnnotationObservableCollection<ContentLocator> _locators;
 
         #endregion Private Fields
     }

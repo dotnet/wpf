@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,10 +7,10 @@
 //
 
 using System.Collections;
-using System.Text;
-using System.Windows.Media; // Color
 using System.Globalization;
 using System.IO;
+using System.Text;
+using System.Windows.Media; // Color
 using MS.Internal.Globalization;
 using MS.Internal.Text;
 
@@ -867,7 +867,7 @@ namespace System.Windows.Documents
             // Write child contents
             int nIndex = documentNode.Index;
             int nStart = nIndex + 1;
-            
+
             for (; nStart <= nIndex + documentNode.ChildCount; nStart++)
             {
                 DocumentNode documentNodeChild = dna.EntryAt(nStart);
@@ -1701,7 +1701,7 @@ namespace System.Windows.Documents
             long lastCellX = 0;
             long tableWidth = 0;
 
-            for (int tableChildIndex = dnTable.Index+1; tableChildIndex <= dnTable.Index+dnTable.ChildCount; tableChildIndex++)
+            for (int tableChildIndex = dnTable.Index + 1; tableChildIndex <= dnTable.Index + dnTable.ChildCount; tableChildIndex++)
             {
                 DocumentNode dnChild = _converterState.DocumentNodeArray.EntryAt(tableChildIndex);
 
@@ -2623,7 +2623,7 @@ namespace System.Windows.Documents
                 if (converterState.DocumentNodeArray.FindPending(DocumentNodeType.dnParagraph) >= 0 ||
                     converterState.DocumentNodeArray.FindPending(DocumentNodeType.dnInline) >= 0)
                 {
-                    for (int i = 0; i < xaml.Length; )
+                    for (int i = 0; i < xaml.Length;)
                     {
                         int iStart = i;
                         int iEnd = i;

@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.IO;
-using System.Xml;
-using System.Text;
 using System.Globalization;
+using System.IO;
+using System.Text;
 using System.Windows.Markup;
+using System.Xml;
 
 //
 // Description:
@@ -21,7 +21,7 @@ namespace System.Windows.Documents
         //Searches for the specified pattern and updates start *or* end pointers depending on search direction
         //At the end of the operation, start or end should be pointing to the beginning/end of the page
         //of occurance of pattern respectively
-        internal static TextRange Find  ( ITextPointer start, 
+        internal static TextRange Find(ITextPointer start,
                                            ITextPointer end,
                                            string findPattern,
                                            CultureInfo cultureInfo,
@@ -34,10 +34,10 @@ namespace System.Windows.Documents
         {
             Debug.Assert(start != null);
             Debug.Assert(end != null);
-            Debug.Assert( ((start is DocumentSequenceTextPointer) && (end is DocumentSequenceTextPointer)) ||
-                          ((start is FixedTextPointer) && (end is FixedTextPointer)) );
+            Debug.Assert(((start is DocumentSequenceTextPointer) && (end is DocumentSequenceTextPointer)) ||
+                          ((start is FixedTextPointer) && (end is FixedTextPointer)));
             Debug.Assert(findPattern != null);
-            
+
             if (findPattern.Length == 0)
             {
                 return null;
@@ -46,21 +46,21 @@ namespace System.Windows.Documents
             IDocumentPaginatorSource paginatorSource = start.TextContainer.Parent as IDocumentPaginatorSource;
             DynamicDocumentPaginator paginator = paginatorSource.DocumentPaginator as DynamicDocumentPaginator;
             Debug.Assert(paginator != null);
-            
+
             int pageNumber = -1;
             int endPageNumber = -1;
 
             if (matchLast)
             {
-                endPageNumber = paginator.GetPageNumber( (ContentPosition) start);
-                pageNumber = paginator.GetPageNumber( (ContentPosition) end);
+                endPageNumber = paginator.GetPageNumber((ContentPosition)start);
+                pageNumber = paginator.GetPageNumber((ContentPosition)end);
             }
             else
             {
-                endPageNumber = paginator.GetPageNumber( (ContentPosition) end);
-                pageNumber = paginator.GetPageNumber( (ContentPosition) start);
+                endPageNumber = paginator.GetPageNumber((ContentPosition)end);
+                pageNumber = paginator.GetPageNumber((ContentPosition)start);
             }
-            
+
             TextRange result = null;
 
             CompareInfo compareInfo = cultureInfo.CompareInfo;
@@ -77,24 +77,24 @@ namespace System.Windows.Documents
             {
                 documentSequence.TranslatePageNumber(pageNumber, out childPaginator, out translatedPageNumber);
             }
-            
+
             if (pageNumber - endPageNumber != 0)
             {
                 ITextPointer firstSearchPageStart = null;
                 ITextPointer firstSearchPageEnd = null;
-                    
+
                 _GetFirstPageSearchPointers(start, end, translatedPageNumber, matchLast, out firstSearchPageStart, out firstSearchPageEnd);
 
                 Debug.Assert(firstSearchPageStart != null);
                 Debug.Assert(firstSearchPageEnd != null);
 
                 //Need to search the first page using TextFindEngine to start exactly from the requested search location to avoid false positives
-                result = TextFindEngine.InternalFind( firstSearchPageStart, 
-                                                      firstSearchPageEnd, 
-                                                      findPattern, 
-                                                      cultureInfo, 
-                                                      matchCase, 
-                                                      matchWholeWord, 
+                result = TextFindEngine.InternalFind(firstSearchPageStart,
+                                                      firstSearchPageEnd,
+                                                      findPattern,
+                                                      cultureInfo,
+                                                      matchCase,
+                                                      matchWholeWord,
                                                       matchLast,
                                                       matchDiacritics,
                                                       matchKashida,
@@ -102,9 +102,9 @@ namespace System.Windows.Documents
                 if (result == null)
                 {
                     //Start from the next page and check all pages until the end
-                    pageNumber = matchLast ? pageNumber-1 : pageNumber+1;
+                    pageNumber = matchLast ? pageNumber - 1 : pageNumber + 1;
                     int increment = matchLast ? -1 : 1;
-                    for (; matchLast ? pageNumber >= endPageNumber : pageNumber <= endPageNumber; pageNumber+=increment)
+                    for (; matchLast ? pageNumber >= endPageNumber : pageNumber <= endPageNumber; pageNumber += increment)
                     {
                         FixedDocument fixedDoc = null;
 
@@ -113,34 +113,34 @@ namespace System.Windows.Documents
                         if (documentSequence != null)
                         {
                             documentSequence.TranslatePageNumber(pageNumber, out childPaginator, out translatedPageNumber);
-                            fixedDoc = (FixedDocument) childPaginator.Source;
+                            fixedDoc = (FixedDocument)childPaginator.Source;
                         }
-                        else 
+                        else
                         {
                             fixedDoc = paginatorSource as FixedDocument;
                         }
-                        
+
                         Debug.Assert(fixedDoc != null);
-                        
+
                         String pageString = _GetPageString(fixedDoc, translatedPageNumber, replaceAlefWithAlefHamza);
 
                         if (pageString == null)
                         {
                             //This is not a page-per-stream
                             //Default back to slow search
-                           return TextFindEngine.InternalFind( start, 
-                                                      end, 
-                                                      findPattern, 
-                                                      cultureInfo, 
-                                                      matchCase, 
-                                                      matchWholeWord, 
-                                                      matchLast,
-                                                      matchDiacritics,
-                                                      matchKashida,
-                                                      matchAlefHamza);
+                            return TextFindEngine.InternalFind(start,
+                                                       end,
+                                                       findPattern,
+                                                       cultureInfo,
+                                                       matchCase,
+                                                       matchWholeWord,
+                                                       matchLast,
+                                                       matchDiacritics,
+                                                       matchKashida,
+                                                       matchAlefHamza);
                         }
 
-                        if ( _FoundOnPage(pageString, findPattern, cultureInfo, compareOptions) )
+                        if (_FoundOnPage(pageString, findPattern, cultureInfo, compareOptions))
                         {
                             //Update end or start pointer depending on search direction
                             if (documentSequence != null)
@@ -172,12 +172,12 @@ namespace System.Windows.Documents
                                     end = new FixedTextPointer(false, LogicalDirection.Backward, textBuilder.GetPageEndFlowPosition(pageNumber));
                                 }
                             }
-                            result =  TextFindEngine.InternalFind( start, 
-                                                  end, 
-                                                  findPattern, 
-                                                  cultureInfo, 
-                                                  matchCase, 
-                                                  matchWholeWord, 
+                            result = TextFindEngine.InternalFind(start,
+                                                  end,
+                                                  findPattern,
+                                                  cultureInfo,
+                                                  matchCase,
+                                                  matchWholeWord,
                                                   matchLast,
                                                   matchDiacritics,
                                                   matchKashida,
@@ -192,7 +192,7 @@ namespace System.Windows.Documents
                     }
                 }
             }
-            
+
             else
             {
                 //Make sure fast search result and slow search result are consistent
@@ -202,25 +202,25 @@ namespace System.Windows.Documents
                     _FoundOnPage(pageString, findPattern, cultureInfo, compareOptions))
                 {
                     //The search is only limited to the current page
-                    result = TextFindEngine.InternalFind( start, 
-                                                      end, 
-                                                      findPattern, 
-                                                      cultureInfo, 
-                                                      matchCase, 
-                                                      matchWholeWord, 
+                    result = TextFindEngine.InternalFind(start,
+                                                      end,
+                                                      findPattern,
+                                                      cultureInfo,
+                                                      matchCase,
+                                                      matchWholeWord,
                                                       matchLast,
                                                       matchDiacritics,
                                                       matchKashida,
                                                       matchAlefHamza);
                 }
             }
-            
+
             return result;
         }
 
-        private static bool _FoundOnPage(string pageString, 
-                                                string findPattern, 
-                                                CultureInfo cultureInfo, 
+        private static bool _FoundOnPage(string pageString,
+                                                string findPattern,
+                                                CultureInfo cultureInfo,
                                                 CompareOptions compareOptions)
         {
             CompareInfo compareInfo = cultureInfo.CompareInfo;
@@ -243,16 +243,16 @@ namespace System.Windows.Documents
             return true;
         }
 
-        private static CompareOptions _InitializeSearch (CultureInfo cultureInfo, 
-                                                            bool matchCase, 
-                                                            bool matchAlefHamza, 
-                                                            bool matchDiacritics, 
-                                                            ref string findPattern, 
+        private static CompareOptions _InitializeSearch(CultureInfo cultureInfo,
+                                                            bool matchCase,
+                                                            bool matchAlefHamza,
+                                                            bool matchDiacritics,
+                                                            ref string findPattern,
                                                             out bool replaceAlefWithAlefHamza)
         {
             CompareOptions compareOptions = CompareOptions.None;
             replaceAlefWithAlefHamza = false;
-            
+
             if (!matchCase)
             {
                 compareOptions |= CompareOptions.IgnoreCase;
@@ -264,8 +264,8 @@ namespace System.Windows.Documents
             // Initialize Bidi flags whether the string contains the bidi characters
             // or alef character.
             TextFindEngine.InitializeBidiFlags(
-                findPattern, 
-                out stringContainedBidiCharacter, 
+                findPattern,
+                out stringContainedBidiCharacter,
                 out stringContainedAlefCharacter);
 
             if (stringContainedAlefCharacter && !matchAlefHamza)
@@ -285,11 +285,11 @@ namespace System.Windows.Documents
         }
 
 
-        private static void _GetFirstPageSearchPointers ( ITextPointer start, 
-                                                                   ITextPointer end, 
+        private static void _GetFirstPageSearchPointers(ITextPointer start,
+                                                                   ITextPointer end,
                                                                    int pageNumber,
                                                                    bool matchLast,
-                                                                   out ITextPointer firstSearchPageStart, 
+                                                                   out ITextPointer firstSearchPageStart,
                                                                    out ITextPointer firstSearchPageEnd)
         {
             if (matchLast)
@@ -300,8 +300,8 @@ namespace System.Windows.Documents
                 if (endAsDSTP != null)
                 {
                     FlowPosition pageStartFlowPosition = ((FixedTextContainer)(endAsDSTP.ChildBlock.ChildContainer)).FixedTextBuilder.GetPageStartFlowPosition(pageNumber);
-                    firstSearchPageStart = new DocumentSequenceTextPointer(endAsDSTP.ChildBlock, 
-                                                                           new FixedTextPointer(false, LogicalDirection.Forward,pageStartFlowPosition));
+                    firstSearchPageStart = new DocumentSequenceTextPointer(endAsDSTP.ChildBlock,
+                                                                           new FixedTextPointer(false, LogicalDirection.Forward, pageStartFlowPosition));
                 }
                 else
                 {
@@ -309,7 +309,7 @@ namespace System.Windows.Documents
                     Debug.Assert(endAsFTP != null);
                     firstSearchPageStart = new FixedTextPointer(false, LogicalDirection.Forward, endAsFTP.FixedTextContainer.FixedTextBuilder.GetPageStartFlowPosition(pageNumber));
                 }
-               
+
                 firstSearchPageEnd = end;
             }
             else
@@ -320,7 +320,7 @@ namespace System.Windows.Documents
                 if (startAsDSTP != null)
                 {
                     FlowPosition pageEndFlowPosition = ((FixedTextContainer)startAsDSTP.ChildBlock.ChildContainer).FixedTextBuilder.GetPageEndFlowPosition(pageNumber);
-                    firstSearchPageEnd = new DocumentSequenceTextPointer( startAsDSTP.ChildBlock,
+                    firstSearchPageEnd = new DocumentSequenceTextPointer(startAsDSTP.ChildBlock,
                                                                           new FixedTextPointer(false, LogicalDirection.Backward, pageEndFlowPosition));
                 }
                 else
@@ -336,10 +336,10 @@ namespace System.Windows.Documents
         private static String _GetPageString(FixedDocument doc, int translatedPageNo, bool replaceAlefWithAlefHamza)
         {
             String pageString = null;
-            
+
             Debug.Assert(doc != null);
             Debug.Assert(translatedPageNo >= 0 && translatedPageNo < doc.PageCount);
-            
+
             PageContent pageContent = doc.Pages[translatedPageNo];
             using Stream pageStream = pageContent.GetPageStream();
             bool reverseRTL = true;
@@ -355,7 +355,7 @@ namespace System.Windows.Documents
                 {
                     // Replace the alef-hamza with the alef.
                     pageString = TextFindEngine.ReplaceAlefHamzaWithAlef(pageString);
-                }                
+                }
             }
             return pageString;
         }
@@ -364,16 +364,18 @@ namespace System.Windows.Documents
         private static String _ConstructPageString(Stream pageStream, bool reverseRTL)
         {
             Debug.Assert(pageStream != null);
-            
+
             XmlTextReader xmlTextReader = new XmlTextReader(pageStream);
 
             //Wrap around a compatibility reader
             XmlReader xmlReader = new XmlCompatibilityReader(xmlTextReader, _predefinedNamespaces);
 
-            XmlReaderSettings settings = new XmlReaderSettings();
-            settings.IgnoreWhitespace = true;
-            settings.IgnoreComments = true;
-            settings.ProhibitDtd = true;
+            XmlReaderSettings settings = new XmlReaderSettings
+            {
+                IgnoreWhitespace = true,
+                IgnoreComments = true,
+                ProhibitDtd = true
+            };
 
             xmlReader = XmlReader.Create(xmlReader, settings);
 
@@ -381,72 +383,72 @@ namespace System.Windows.Documents
 
             StringBuilder pageString = new StringBuilder();
             string unicodeStr = null;
-            
+
             while (xmlReader.Read())
             {
                 switch (xmlReader.NodeType)
                 {
                     case XmlNodeType.Element:
-                    {
-                        if (xmlReader.Name == "Glyphs")
                         {
-                            unicodeStr = xmlReader.GetAttribute("UnicodeString");
-
-                            if (!string.IsNullOrEmpty(unicodeStr))
+                            if (xmlReader.Name == "Glyphs")
                             {
-                                string sidewaysString = xmlReader.GetAttribute("IsSideways");
-                                bool isSideways = string.Equals(sidewaysString, "True", StringComparison.OrdinalIgnoreCase);
-                                
-                                if (reverseRTL)
-                                {
-                                    //This is to cover for MXDW generation
-                                    //RTL Glyphs are saved LTR and bidi level is not set
-                                    //In this case we need to reverse the UnicodeString
-                                    string bidiLevelAsString = xmlReader.GetAttribute("BidiLevel");
-                                    int bidiLevel = 0;
-                                    if (!String.IsNullOrEmpty(bidiLevelAsString))
-                                    {
-                                        try
-                                        {
-                                            bidiLevel = Convert.ToInt32(bidiLevelAsString, CultureInfo.InvariantCulture);
-                                        }
-                                        catch (Exception)
-                                        {
-                                        }
-                                    }
-                                
-                                    string caretStops = xmlReader.GetAttribute("CaretStops");
-                                                                        
-                                    if (bidiLevel == 0 && 
-                                        !isSideways &&
-                                        String.IsNullOrEmpty(caretStops) &&
-                                        FixedTextBuilder.MostlyRTL(unicodeStr))
-                                    {
-                                        char[] chars = unicodeStr.ToCharArray();
-                                        Array.Reverse(chars);
-                                        unicodeStr = new String(chars);
-                                    }
-                                }
-                                
+                                unicodeStr = xmlReader.GetAttribute("UnicodeString");
 
-                                pageString.Append(unicodeStr);
+                                if (!string.IsNullOrEmpty(unicodeStr))
+                                {
+                                    string sidewaysString = xmlReader.GetAttribute("IsSideways");
+                                    bool isSideways = string.Equals(sidewaysString, "True", StringComparison.OrdinalIgnoreCase);
+
+                                    if (reverseRTL)
+                                    {
+                                        //This is to cover for MXDW generation
+                                        //RTL Glyphs are saved LTR and bidi level is not set
+                                        //In this case we need to reverse the UnicodeString
+                                        string bidiLevelAsString = xmlReader.GetAttribute("BidiLevel");
+                                        int bidiLevel = 0;
+                                        if (!String.IsNullOrEmpty(bidiLevelAsString))
+                                        {
+                                            try
+                                            {
+                                                bidiLevel = Convert.ToInt32(bidiLevelAsString, CultureInfo.InvariantCulture);
+                                            }
+                                            catch (Exception)
+                                            {
+                                            }
+                                        }
+
+                                        string caretStops = xmlReader.GetAttribute("CaretStops");
+
+                                        if (bidiLevel == 0 &&
+                                            !isSideways &&
+                                            String.IsNullOrEmpty(caretStops) &&
+                                            FixedTextBuilder.MostlyRTL(unicodeStr))
+                                        {
+                                            char[] chars = unicodeStr.ToCharArray();
+                                            Array.Reverse(chars);
+                                            unicodeStr = new String(chars);
+                                        }
+                                    }
+
+
+                                    pageString.Append(unicodeStr);
+                                }
                             }
                         }
-                    }
-                    break;
+                        break;
                 }
             }
             return pageString.ToString();
         }
 
-     
+
         //Private constructor to prevent the compiler from generating a default constructor (fxcop)
         private FixedFindEngine()
         {
         }
 
 
-        static private string [] _predefinedNamespaces = new string [2] { 
+        static private string[] _predefinedNamespaces = new string[2] {
             "http://schemas.microsoft.com/xps/2005/06",
             XamlReaderHelper.DefinitionMetroNamespaceURI
         };

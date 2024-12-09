@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,8 +13,8 @@ Abstract:
 
 --*/
 
-using System.Xml;
 using System.Globalization;
+using System.Xml;
 
 #pragma warning disable 1634, 1691 // Allows suppression of certain PreSharp messages
 
@@ -86,7 +86,7 @@ namespace MS.Internal.Printing.Configuration
 
             // Feature could have parameter-ref scored properties, so we also need to take care of deleting
             // the feature's parameter-init XML element.
-            for (int i=0; i<_propertyMaps.Length; i++)
+            for (int i = 0; i < _propertyMaps.Length; i++)
             {
                 if (_propertyMaps[i].PropType == PTPropValueTypes.IntParamRefValue)
                 {
@@ -146,9 +146,9 @@ namespace MS.Internal.Printing.Configuration
 
                 PTPropertyMapEntry map = LookupPropertyMap(propertyName);
 
-                #if _DEBUG
+#if _DEBUG
                 Trace.WriteLine("-Trace- reading " + this._featureName + " " + propertyName);
-                #endif
+#endif
 
                 // Set the default value first.
                 if (map.PropType == PTPropValueTypes.EnumStringValue)
@@ -234,9 +234,9 @@ namespace MS.Internal.Printing.Configuration
                     }
                     else
                     {
-                        #if _DEBUG
+#if _DEBUG
                         throw new InvalidOperationException("_DEBUG: unknown property value type");
-                        #endif
+#endif
                     }
                 }
 
@@ -300,13 +300,13 @@ namespace MS.Internal.Printing.Configuration
                                                                map.PropEnumValues,
                                                                value);
 
-                    #if _DEBUG
+#if _DEBUG
                     // stringValue should never be null since derived class must verify "value"
                     if (stringValue == null)
                     {
                         throw new InvalidOperationException("_DEBUG: stringValue should never be null here");
                     }
-                    #endif
+#endif
 
                     if (propertyName == PrintSchemaTags.Framework.OptionNameProperty)
                     {
@@ -329,9 +329,9 @@ namespace MS.Internal.Printing.Configuration
                 }
                 else
                 {
-                    #if _DEBUG
+#if _DEBUG
                     throw new InvalidOperationException("_DEBUG: unknown property value type");
-                    #endif
+#endif
                 }
             }
         }
@@ -341,10 +341,10 @@ namespace MS.Internal.Printing.Configuration
         #region Internal Fields
 
         internal InternalPrintTicket _ownerPrintTicket;
-        internal PrintTicketFeature   _parentFeature;
+        internal PrintTicketFeature _parentFeature;
 
         // Following internal fields should be initialized by subclass constructor
-        internal string               _featureName;
+        internal string _featureName;
         internal PTPropertyMapEntry[] _propertyMaps;
 
         #endregion Internal Fields
@@ -355,7 +355,7 @@ namespace MS.Internal.Printing.Configuration
         {
             PTPropertyMapEntry map = null;
 
-            for (int i=0; i<_propertyMaps.Length; i++)
+            for (int i = 0; i < _propertyMaps.Length; i++)
             {
                 if (_propertyMaps[i].PropName == propertyName)
                 {
@@ -364,12 +364,12 @@ namespace MS.Internal.Printing.Configuration
                 }
             }
 
-            #if _DEBUG
+#if _DEBUG
             if (map == null)
             {
                 throw new InvalidOperationException("_DEBUG: LookupPropertyMap should never return null");
             }
-            #endif
+#endif
             return map;
         }
 
@@ -526,18 +526,18 @@ namespace MS.Internal.Printing.Configuration
                 found = true;
             }
             // We want to catch internal FormatException to skip recoverable XML content syntax error
-            #pragma warning suppress 56502
-            #if _DEBUG
+#pragma warning suppress 56502
+#if _DEBUG
             catch (FormatException e)
-            #else
+#else
             catch (FormatException)
-            #endif
+#endif
             {
-                #if _DEBUG
+#if _DEBUG
                 Trace.WriteLine("-Warning- ignore invalid property value '" + valueText +
                                 "' for feature '" + this.OwnerFeature._featureName +
                                 "' property '" + propertyName + "' : " + e.Message);
-                #endif
+#endif
             }
 
             return found;
@@ -823,11 +823,11 @@ namespace MS.Internal.Printing.Configuration
                 (valueNode.FirstChild == null) ||
                 (valueNode.FirstChild.NodeType != XmlNodeType.Text))
             {
-                #if _DEBUG
+#if _DEBUG
                 Trace.WriteLine("-Warning- feature '" + this.OwnerFeature._featureName +
                                 "' property '" + propertyName + "' is missing value element" +
                                 " or value element is missing text child");
-                #endif
+#endif
 
                 return null;
             }
@@ -841,7 +841,7 @@ namespace MS.Internal.Printing.Configuration
         #region Private Fields
 
         private PrintTicketFeature _ownerFeature;
-        private XmlElement         _featureElement;
+        private XmlElement _featureElement;
 
         #endregion Private Fields
     }
@@ -912,12 +912,12 @@ namespace MS.Internal.Printing.Configuration
         {
             get
             {
-                #if _DEBUG
+#if _DEBUG
                 if (PropType != PTPropValueTypes.IntParamRefValue)
                 {
                     throw new InvalidOperationException("_DEBUG: Invalid property value type");
                 }
-                #endif
+#endif
                 // We don't do object caching here. Always return a new object.
                 return new PrintTicketParameter(OwnerFeature._ownerPrintTicket,
                                                 ParamRefName,
@@ -930,19 +930,19 @@ namespace MS.Internal.Printing.Configuration
 
         #region Public Fields
 
-        public PrintTicketFeature  OwnerFeature;
-        public string            PropName;
-        public PTPropValueTypes  PropType;
+        public PrintTicketFeature OwnerFeature;
+        public string PropName;
+        public PTPropValueTypes PropType;
 
         // These 2 arrays are used to map between Print Schema standard property string values
         // and their corresponding enum values
-        public string[]          PropEnumStrings;
-        public int[]             PropEnumValues;
+        public string[] PropEnumStrings;
+        public int[] PropEnumValues;
 
         // These 2 are only needed for parameterized property. The first is the XML property name,
         // the second is the ParameterRef "name" attribute value.
-        public string            ParamPropName;
-        public string            ParamRefName;
+        public string ParamPropName;
+        public string ParamRefName;
 
         #endregion Public Fields
     }
@@ -976,9 +976,9 @@ namespace MS.Internal.Printing.Configuration
         // own properties. Internal PrintTicket parameter initializers can just use the base class.
         #region Constructors
 
-        internal PrintTicketParameter(InternalPrintTicket        ownerPrintTicket,
-                                      string                     paramName,
-                                      PrintTicketParamTypes      paramType,
+        internal PrintTicketParameter(InternalPrintTicket ownerPrintTicket,
+                                      string paramName,
+                                      PrintTicketParamTypes paramType,
                                       PrintTicketParamValueTypes paramValueType)
         {
             this._ownerPrintTicket = ownerPrintTicket;
@@ -996,9 +996,9 @@ namespace MS.Internal.Printing.Configuration
             }
             else
             {
-                #if _DEBUG
+#if _DEBUG
                 throw new InvalidOperationException("_DEBUG: invalid paramType.");
-                #endif
+#endif
             }
         }
 
@@ -1058,16 +1058,16 @@ namespace MS.Internal.Printing.Configuration
         {
             get
             {
-                #if _DEBUG
+#if _DEBUG
                 if (_parameterValueType != PrintTicketParamValueTypes.IntValue)
                 {
                     throw new InvalidOperationException("_DEBUG: Parameter value type mismatch");
                 }
-                #endif
+#endif
 
-                #if _DEBUG
+#if _DEBUG
                 Trace.WriteLine("-Trace- reading " + this._parameterName);
-                #endif
+#endif
 
                 // Sets the default value first.
                 int intValue = PrintSchema.UnspecifiedIntValue;
@@ -1087,12 +1087,12 @@ namespace MS.Internal.Printing.Configuration
             }
             set
             {
-                #if _DEBUG
+#if _DEBUG
                 if (_parameterValueType != PrintTicketParamValueTypes.IntValue)
                 {
                     throw new InvalidOperationException("_DEBUG: Parameter value type mismatch");
                 }
-                #endif
+#endif
 
                 // "value" must be verified to be in range before derived feature class
                 // calls this base class property setter.
@@ -1122,16 +1122,16 @@ namespace MS.Internal.Printing.Configuration
         {
             get
             {
-                #if _DEBUG
+#if _DEBUG
                 if (_parameterValueType != PrintTicketParamValueTypes.StringValue)
                 {
                     throw new InvalidOperationException("_DEBUG: Parameter value type mismatch");
                 }
-                #endif
+#endif
 
-                #if _DEBUG
+#if _DEBUG
                 Trace.WriteLine("-Trace- reading " + this._parameterName);
-                #endif
+#endif
 
                 // Sets the default value first.
                 string stringValue = "";
@@ -1151,12 +1151,12 @@ namespace MS.Internal.Printing.Configuration
             }
             set
             {
-                #if _DEBUG
+#if _DEBUG
                 if (_parameterValueType != PrintTicketParamValueTypes.StringValue)
                 {
                     throw new InvalidOperationException("_DEBUG: Parameter value type mismatch");
                 }
-                #endif
+#endif
 
                 if (ParameterNode == null)
                 {
@@ -1176,11 +1176,11 @@ namespace MS.Internal.Printing.Configuration
         #region Internal Fields
 
         // Following internal fields should be initialized by subclass constructor
-        internal InternalPrintTicket        _ownerPrintTicket;
-        internal string                     _parameterName;
-        internal PrintTicketParamTypes      _parameterType;
+        internal InternalPrintTicket _ownerPrintTicket;
+        internal string _parameterName;
+        internal PrintTicketParamTypes _parameterType;
         internal PrintTicketParamValueTypes _parameterValueType;
-        internal string                     _parameterNodeTagName;
+        internal string _parameterNodeTagName;
 
         #endregion Internal Fields
     }
@@ -1257,18 +1257,18 @@ namespace MS.Internal.Printing.Configuration
                 found = true;
             }
             // We want to catch internal FormatException to skip recoverable XML content syntax error
-            #pragma warning suppress 56502
-            #if _DEBUG
+#pragma warning suppress 56502
+#if _DEBUG
             catch (FormatException e)
-            #else
+#else
             catch (FormatException)
-            #endif
+#endif
             {
-                #if _DEBUG
+#if _DEBUG
                 Trace.WriteLine("-Warning- ignore invalid parameter value '" + valueText +
                                 "' for parameter '" + this.OwnerParameter._parameterName +
                                 "' : " + e.Message);
-                #endif
+#endif
             }
 
             return found;
@@ -1295,10 +1295,10 @@ namespace MS.Internal.Printing.Configuration
                 (valueNode.FirstChild == null) ||
                 (valueNode.FirstChild.NodeType != XmlNodeType.Text))
             {
-                #if _DEBUG
+#if _DEBUG
                 Trace.WriteLine("-Warning- parameter '" + this.OwnerParameter._parameterName +
                                 "' is missing value element or value element is missing text child");
-                #endif
+#endif
 
                 return false;
             }
@@ -1370,7 +1370,7 @@ namespace MS.Internal.Printing.Configuration
         #region Private Fields
 
         private PrintTicketParameter _ownerParameter;
-        private XmlElement           _parameterElement;
+        private XmlElement _parameterElement;
 
         #endregion Private Fields
     }

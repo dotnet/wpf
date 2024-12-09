@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,29 +21,29 @@ namespace System.Windows.Media
     /// there may be multiple Visuals in a single Adorner).
     /// </summary>
     public class AdornerHitTestResult : PointHitTestResult
-	{
-		private readonly Adorner _adorner;
+    {
+        private readonly Adorner _adorner;
 
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="visual">Visual that was hit</param>
-		/// <param name="pt">Point that was hit, in visual's coordinate space</param>
-		/// <param name="adorner">Adorner that was hit</param>
-		internal AdornerHitTestResult(Visual visual, Point pt, Adorner adorner) : base(visual, pt)
-		{
-			_adorner = adorner;
-		}
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="visual">Visual that was hit</param>
+        /// <param name="pt">Point that was hit, in visual's coordinate space</param>
+        /// <param name="adorner">Adorner that was hit</param>
+        internal AdornerHitTestResult(Visual visual, Point pt, Adorner adorner) : base(visual, pt)
+        {
+            _adorner = adorner;
+        }
 
-		/// <summary>
-		/// Returns the visual that was hit.
-		/// </summary>
-		public Adorner Adorner
-		{
-			get
-			{
-				return _adorner;
-			}
-		}
-	}
+        /// <summary>
+        /// Returns the visual that was hit.
+        /// </summary>
+        public Adorner Adorner
+        {
+            get
+            {
+                return _adorner;
+            }
+        }
+    }
 }

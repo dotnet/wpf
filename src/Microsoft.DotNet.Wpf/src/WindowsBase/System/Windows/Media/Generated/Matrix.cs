@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,10 +9,10 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
 using System.ComponentModel;
 using System.Windows.Markup;
 using System.Windows.Media.Converters;
+using MS.Internal;
 // These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows.Media
@@ -44,7 +44,7 @@ namespace System.Windows.Media
         /// </returns>
         /// <param name='matrix1'>The first Matrix to compare</param>
         /// <param name='matrix2'>The second Matrix to compare</param>
-        public static bool operator == (Matrix matrix1, Matrix matrix2)
+        public static bool operator ==(Matrix matrix1, Matrix matrix2)
         {
             if (matrix1.IsDistinguishedIdentity || matrix2.IsDistinguishedIdentity)
             {
@@ -72,7 +72,7 @@ namespace System.Windows.Media
         /// </returns>
         /// <param name='matrix1'>The first Matrix to compare</param>
         /// <param name='matrix2'>The second Matrix to compare</param>
-        public static bool operator != (Matrix matrix1, Matrix matrix2)
+        public static bool operator !=(Matrix matrix1, Matrix matrix2)
         {
             return !(matrix1 == matrix2);
         }
@@ -88,7 +88,7 @@ namespace System.Windows.Media
         /// </returns>
         /// <param name='matrix1'>The first Matrix to compare</param>
         /// <param name='matrix2'>The second Matrix to compare</param>
-        public static bool Equals (Matrix matrix1, Matrix matrix2)
+        public static bool Equals(Matrix matrix1, Matrix matrix2)
         {
             if (matrix1.IsDistinguishedIdentity || matrix2.IsDistinguishedIdentity)
             {
@@ -124,7 +124,7 @@ namespace System.Windows.Media
             }
 
             Matrix value = (Matrix)o;
-            return Matrix.Equals(this,value);
+            return Matrix.Equals(this, value);
         }
 
         /// <summary>

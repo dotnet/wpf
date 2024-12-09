@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -89,9 +89,9 @@ namespace MS.Internal
         {
             object oResult = null;
             return ExecuteWithinLockInternal(
-                _rwLock.EnterReadLock, 
-                _rwLock.ExitReadLock, 
-                ref oResult, 
+                _rwLock.EnterReadLock,
+                _rwLock.ExitReadLock,
+                ref oResult,
                 criticalAction, null);
         }
 
@@ -100,16 +100,16 @@ namespace MS.Internal
             object oResult = null;
 
             return ExecuteWithinLockInternal(
-                _rwLock.EnterReadLock, 
-                _rwLock.ExitReadLock, 
-                ref oResult, 
+                _rwLock.EnterReadLock,
+                _rwLock.ExitReadLock,
+                ref oResult,
                 criticalAction, arg);
         }
 
         internal bool WithReadLock<T, TResult>(Func<T, TResult> criticalAction, T arg, out TResult result)
         {
             object oResult = null;
-            bool success = false; 
+            bool success = false;
 
             try
             {
@@ -171,12 +171,12 @@ namespace MS.Internal
 
         internal bool WithWriteLock<T>(Action<T> criticalAction, T arg)
         {
-            object oResult = null; 
+            object oResult = null;
 
             return ExecuteWithinLockInternal(
-                        _rwLock.EnterWriteLock, 
-                        _rwLock.ExitWriteLock, 
-                        ref oResult, 
+                        _rwLock.EnterWriteLock,
+                        _rwLock.ExitWriteLock,
+                        ref oResult,
                         criticalAction, arg);
         }
 

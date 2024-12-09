@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,13 +11,12 @@
 //---------------------------------------------------------------------------------------
 
 using System;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
-
-using Microsoft.Build.Tasks.Windows;
 using Microsoft.Build.Framework;
+using Microsoft.Build.Tasks.Windows;
 
 namespace MS.Internal.Tasks
 {
@@ -27,18 +26,18 @@ namespace MS.Internal.Tasks
     [Flags]
     internal enum RecompileCategory : byte
     {
-        NoRecompile        = 0x00,
-        ApplicationFile    = 0x01,
-        ModifiedPages      = 0x02,
+        NoRecompile = 0x00,
+        ApplicationFile = 0x01,
+        ModifiedPages = 0x02,
         PagesWithLocalType = 0x04,
-        ContentFiles       = 0x08,
-        All                = 0x0F
+        ContentFiles = 0x08,
+        All = 0x0F
     }
 
     // <summary>
     // IncrementalCompileAnalyzer
     // </summary>
-    internal class IncrementalCompileAnalyzer  
+    internal class IncrementalCompileAnalyzer
     {
         // <summary>
         // ctor of IncrementalCompileAnalyzer
@@ -171,8 +170,8 @@ namespace MS.Internal.Tasks
             if (CompilerLocalReference.CacheFileExists())
             {
                 if (IsSettingModified(CompilerState.DefineConstants, _mcPass1.DefineConstants) ||
-                    IsSettingModified(CompilerState.SourceCodeFiles, _mcPass1.SourceCodeFilesCache) || 
-                    IsFileListChanged(_mcPass1.SourceCodeFiles) )
+                    IsSettingModified(CompilerState.SourceCodeFiles, _mcPass1.SourceCodeFilesCache) ||
+                    IsFileListChanged(_mcPass1.SourceCodeFiles))
                 {
                     _analyzeResult |= RecompileCategory.PagesWithLocalType;
                 }
@@ -223,7 +222,7 @@ namespace MS.Internal.Tasks
                         // files we previously built to the cache file.  Retrieve that list and see if 
                         // this xaml file is already in it.  If so, we'll skip compiling this xaml file, 
                         // else, this xaml file was just added to the project and thus compile it.
-                        
+
                         if (!CompilerState.PageMarkupFileNames.Contains(fileName))
                         {
                             modifiedXamlFiles.Add(new FileUnit(filepath, linkAlias, logicalName));
@@ -239,7 +238,7 @@ namespace MS.Internal.Tasks
                     {
                         _analyzeResult |= RecompileCategory.PagesWithLocalType;
                     }
-                }      
+                }
             }
 
             // Check for the case where a required Pass2 wasn't run, e.g. because the build was aborted,
@@ -308,7 +307,7 @@ namespace MS.Internal.Tasks
         {
             get { return _mcPass1.TaskFileService; }
         }
-        
+
         private DateTime LastCompileTime
         {
             get
@@ -460,8 +459,8 @@ namespace MS.Internal.Tasks
                 for (int i = 0; i < count; i++)
                 {
                     ITaskItem taskItem = _mcPass1.PageMarkup[i];
-                    _recompileMarkupPages[i] = new FileUnit( 
-                        Path.GetFullPath(taskItem.ItemSpec), 
+                    _recompileMarkupPages[i] = new FileUnit(
+                        Path.GetFullPath(taskItem.ItemSpec),
                         taskItem.GetMetadata(SharedStrings.Link),
                         taskItem.GetMetadata(SharedStrings.LogicalName));
                 }
@@ -498,7 +497,7 @@ namespace MS.Internal.Tasks
 
                         if (String.IsNullOrEmpty(relContentFilePath))
                         {
-                           relContentFilePath = Path.GetFileName(fullPath);
+                            relContentFilePath = Path.GetFileName(fullPath);
                         }
 
                         _contentFiles[i] = relContentFilePath;
@@ -530,7 +529,7 @@ namespace MS.Internal.Tasks
                 {
                     ITaskItem taskItem = _mcPass1.ApplicationMarkup[0];
                     _recompileApplicationFile = new FileUnit(
-                                                    _mcPass1.ApplicationFile, 
+                                                    _mcPass1.ApplicationFile,
                                                     taskItem.GetMetadata(SharedStrings.Link),
                                                     taskItem.GetMetadata(SharedStrings.LogicalName));
                 }
@@ -590,7 +589,7 @@ namespace MS.Internal.Tasks
         }
 
         // A helper to detect if the list is not empty.
-        private bool ListIsNotEmpty(object [] list)
+        private bool ListIsNotEmpty(object[] list)
         {
             bool isNotEmpty = false;
 
@@ -607,12 +606,12 @@ namespace MS.Internal.Tasks
         #region private data
 
         private MarkupCompilePass1 _mcPass1;
-        private RecompileCategory  _analyzeResult;
-        private DateTime           _lastCompileTime = new DateTime(0);
+        private RecompileCategory _analyzeResult;
+        private DateTime _lastCompileTime = new DateTime(0);
 
-        private FileUnit[]         _recompileMarkupPages = null;
-        private FileUnit           _recompileApplicationFile = FileUnit.Empty;
-        private string[]           _contentFiles = null;
+        private FileUnit[] _recompileMarkupPages = null;
+        private FileUnit _recompileApplicationFile = FileUnit.Empty;
+        private string[] _contentFiles = null;
 
         #endregion
 

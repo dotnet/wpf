@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -31,20 +31,20 @@ namespace System.Windows.Media.Media3D
             Model3D modelHit,
             MeshGeometry3D meshHit,
             Point3D pointHit,
-            double distanceToRayOrigin, 
+            double distanceToRayOrigin,
             int vertexIndex1,
             int vertexIndex2,
             int vertexIndex3,
-            Point barycentricCoordinate) : base (visualHit, modelHit)
-            {
-                _meshHit = meshHit;
-                _pointHit = pointHit;
-                _distanceToRayOrigin = distanceToRayOrigin;
-                _vertexIndex1 = vertexIndex1;
-                _vertexIndex2 = vertexIndex2;
-                _vertexIndex3 = vertexIndex3;
-                _barycentricCoordinate = barycentricCoordinate;
-            }
+            Point barycentricCoordinate) : base(visualHit, modelHit)
+        {
+            _meshHit = meshHit;
+            _pointHit = pointHit;
+            _distanceToRayOrigin = distanceToRayOrigin;
+            _vertexIndex1 = vertexIndex1;
+            _vertexIndex2 = vertexIndex2;
+            _vertexIndex3 = vertexIndex3;
+            _barycentricCoordinate = barycentricCoordinate;
+        }
 
         #endregion Constructors
 

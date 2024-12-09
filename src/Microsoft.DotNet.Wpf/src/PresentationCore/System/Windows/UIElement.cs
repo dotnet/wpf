@@ -1,18 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 //
 //
 
-using MS.Internal;
-using MS.Internal.Interop;
-using MS.Internal.KnownBoxes;
-using MS.Internal.Media;
-using MS.Internal.PresentationCore;
-using MS.Utility;
 using System.Collections;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
 using System.Windows.Input;
@@ -24,7 +19,12 @@ using System.Windows.Media.Composition;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Media3D;
 using System.Windows.Threading;
-using System.Runtime.InteropServices;
+using MS.Internal;
+using MS.Internal.Interop;
+using MS.Internal.KnownBoxes;
+using MS.Internal.Media;
+using MS.Internal.PresentationCore;
+using MS.Utility;
 using MS.Win32;
 
 namespace System.Windows
@@ -113,9 +113,9 @@ namespace System.Windows
             NeverMeasured = true;
             NeverArranged = true;
 
-            SnapsToDevicePixelsCache = (bool) SnapsToDevicePixelsProperty.GetDefaultValue(DependencyObjectType);
-            ClipToBoundsCache        = (bool) ClipToBoundsProperty.GetDefaultValue(DependencyObjectType);
-            VisibilityCache          = (Visibility) VisibilityProperty.GetDefaultValue(DependencyObjectType);
+            SnapsToDevicePixelsCache = (bool)SnapsToDevicePixelsProperty.GetDefaultValue(DependencyObjectType);
+            ClipToBoundsCache = (bool)ClipToBoundsProperty.GetDefaultValue(DependencyObjectType);
+            VisibilityCache = (Visibility)VisibilityProperty.GetDefaultValue(DependencyObjectType);
 
             SetFlags(true, VisualFlags.IsUIElement);
 
@@ -144,7 +144,7 @@ namespace System.Windows
         /// </summary>
         public bool AllowDrop
         {
-            get { return (bool) GetValue(AllowDropProperty); }
+            get { return (bool)GetValue(AllowDropProperty); }
             set { SetValue(AllowDropProperty, BooleanBoxes.Box(value)); }
         }
 
@@ -175,8 +175,8 @@ namespace System.Windows
         {
             get
             {
-                if(this.Visibility == Visibility.Collapsed)
-                    return new Size(0,0);
+                if (this.Visibility == Visibility.Collapsed)
+                    return new Size(0, 0);
                 else
                     return _desiredSize;
             }
@@ -196,14 +196,14 @@ namespace System.Windows
             //elements that were created but never invalidated/measured are clean
             //from layout perspective, but we still don't want to render them
             //because they don't have state build up enough for that.
-            if(NeverMeasured || NeverArranged)
+            if (NeverMeasured || NeverArranged)
                 return false;
 
             //if element is collapsed, no rendering is needed
             //it is not only perf optimization, but also protection from
             //UIElement to break itself since RenderSize is reported as (0,0)
             //when UIElement is Collapsed
-            if(ReadFlag(CoreFlags.IsCollapsed))
+            if (ReadFlag(CoreFlags.IsCollapsed))
                 return false;
 
             return IsMeasureValid && IsArrangeValid;
@@ -253,14 +253,14 @@ namespace System.Windows
         /// </summary>
         public void InvalidateMeasure()
         {
-            if(     !MeasureDirty
-                &&  !MeasureInProgress )
+            if (!MeasureDirty
+                && !MeasureInProgress)
             {
                 Debug.Assert(MeasureRequest == null, "can't be clean and still have MeasureRequest");
 
-//                 VerifyAccess();
+                //                 VerifyAccess();
 
-                if(!NeverMeasured) //only measured once elements are allowed in *update* queue
+                if (!NeverMeasured) //only measured once elements are allowed in *update* queue
                 {
                     ContextLayoutManager ContextLayoutManager = ContextLayoutManager.From(Dispatcher);
                     if (EventTrace.IsEnabled(EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose))
@@ -286,14 +286,14 @@ namespace System.Windows
         /// </summary>
         public void InvalidateArrange()
         {
-            if(   !ArrangeDirty
+            if (!ArrangeDirty
                && !ArrangeInProgress)
             {
                 Debug.Assert(ArrangeRequest == null, "can't be clean and still have MeasureRequest");
 
-//                 VerifyAccess();
+                //                 VerifyAccess();
 
-                if(!NeverArranged)
+                if (!NeverArranged)
                 {
                     ContextLayoutManager ContextLayoutManager = ContextLayoutManager.From(Dispatcher);
                     ContextLayoutManager.ArrangeQueue.Add(this);
@@ -327,7 +327,7 @@ namespace System.Windows
         /// </remarks>
         protected virtual void OnChildDesiredSizeChanged(UIElement child)
         {
-            if(IsMeasureValid)
+            if (IsMeasureValid)
             {
                 InvalidateMeasure();
             }
@@ -343,7 +343,7 @@ namespace System.Windows
             {
                 LayoutEventList.ListItem item = getLayoutUpdatedHandler(value);
 
-                if(item == null)
+                if (item == null)
                 {
                     //set a weak ref in LM
                     item = ContextLayoutManager.From(Dispatcher).LayoutEvents.Add(value);
@@ -354,7 +354,7 @@ namespace System.Windows
             {
                 LayoutEventList.ListItem item = getLayoutUpdatedHandler(value);
 
-                if(item != null)
+                if (item != null)
                 {
                     removeLayoutUpdatedHandler(value);
                     //remove a weak ref from LM
@@ -368,15 +368,15 @@ namespace System.Windows
         {
             object cachedLayoutUpdatedItems = LayoutUpdatedListItemsField.GetValue(this);
 
-            if(cachedLayoutUpdatedItems == null)
+            if (cachedLayoutUpdatedItems == null)
             {
-               LayoutUpdatedListItemsField.SetValue(this, item);
-               LayoutUpdatedHandlersField.SetValue(this, handler);
+                LayoutUpdatedListItemsField.SetValue(this, item);
+                LayoutUpdatedHandlersField.SetValue(this, handler);
             }
             else
             {
                 EventHandler cachedLayoutUpdatedHandler = LayoutUpdatedHandlersField.GetValue(this);
-                if(cachedLayoutUpdatedHandler != null)
+                if (cachedLayoutUpdatedHandler != null)
                 {
                     //second unique handler is coming in.
                     //allocate a datastructure
@@ -389,7 +389,7 @@ namespace System.Windows
                     list.Add(handler, item);
 
                     LayoutUpdatedHandlersField.ClearValue(this);
-                    LayoutUpdatedListItemsField.SetValue(this,list);
+                    LayoutUpdatedListItemsField.SetValue(this, list);
                 }
                 else //already have a list
                 {
@@ -403,16 +403,17 @@ namespace System.Windows
         {
             object cachedLayoutUpdatedItems = LayoutUpdatedListItemsField.GetValue(this);
 
-            if(cachedLayoutUpdatedItems == null)
+            if (cachedLayoutUpdatedItems == null)
             {
-               return null;
+                return null;
             }
             else
             {
                 EventHandler cachedLayoutUpdatedHandler = LayoutUpdatedHandlersField.GetValue(this);
-                if(cachedLayoutUpdatedHandler != null)
+                if (cachedLayoutUpdatedHandler != null)
                 {
-                    if(cachedLayoutUpdatedHandler == d) return (LayoutEventList.ListItem)cachedLayoutUpdatedItems;
+                    if (cachedLayoutUpdatedHandler == d)
+                        return (LayoutEventList.ListItem)cachedLayoutUpdatedItems;
                 }
                 else //already have a list
                 {
@@ -429,9 +430,9 @@ namespace System.Windows
             object cachedLayoutUpdatedItems = LayoutUpdatedListItemsField.GetValue(this);
             EventHandler cachedLayoutUpdatedHandler = LayoutUpdatedHandlersField.GetValue(this);
 
-            if(cachedLayoutUpdatedHandler != null) //single handler
+            if (cachedLayoutUpdatedHandler != null) //single handler
             {
-                if(cachedLayoutUpdatedHandler == d)
+                if (cachedLayoutUpdatedHandler == d)
                 {
                     LayoutUpdatedListItemsField.ClearValue(this);
                     LayoutUpdatedHandlersField.ClearValue(this);
@@ -449,16 +450,18 @@ namespace System.Windows
         /// </summary>
         internal static void PropagateSuspendLayout(Visual v)
         {
-            if(v.CheckFlagsAnd(VisualFlags.IsLayoutIslandRoot)) return;
+            if (v.CheckFlagsAnd(VisualFlags.IsLayoutIslandRoot))
+                return;
 
             //the subtree is already suspended - happens when already suspended tree is further disassembled
             //no need to walk down in this case
-            if(v.CheckFlagsAnd(VisualFlags.IsLayoutSuspended)) return;
+            if (v.CheckFlagsAnd(VisualFlags.IsLayoutSuspended))
+                return;
 
             //  Assert that a UIElement has not being
             //  removed from the visual tree while updating layout.
-            if (    Invariant.Strict
-                &&  v.CheckFlagsAnd(VisualFlags.IsUIElement)    )
+            if (Invariant.Strict
+                && v.CheckFlagsAnd(VisualFlags.IsUIElement))
             {
                 UIElement e = (UIElement)v;
                 Invariant.Assert(!e.MeasureInProgress && !e.ArrangeInProgress);
@@ -486,7 +489,8 @@ namespace System.Windows
         /// </summary>
         internal static void PropagateResumeLayout(Visual parent, Visual v)
         {
-            if(v.CheckFlagsAnd(VisualFlags.IsLayoutIslandRoot)) return;
+            if (v.CheckFlagsAnd(VisualFlags.IsLayoutIslandRoot))
+                return;
 
             //the subtree is already active - happens when new elements are added to the active tree
             //elements are created layout-active so they don't need to be specifically unsuspended
@@ -495,9 +499,10 @@ namespace System.Windows
 
             //that can be true only on top of recursion, if suspended v is being connected to suspended parent.
             bool parentIsSuspended = parent == null ? false : parent.CheckFlagsAnd(VisualFlags.IsLayoutSuspended);
-            uint parentTreeLevel   = parent == null ? 0     : parent.TreeLevel;
+            uint parentTreeLevel = parent == null ? 0 : parent.TreeLevel;
 
-            if(parentIsSuspended) return;
+            if (parentIsSuspended)
+                return;
 
             v.SetFlags(false, VisualFlags.IsLayoutSuspended);
             v.TreeLevel = parentTreeLevel + 1;
@@ -713,18 +718,19 @@ namespace System.Windows
             }
         }
 
-         //only one will be returned, whichever found first
+        //only one will be returned, whichever found first
         internal void GetUIParentOrICH(out UIElement uiParent, out IContentHost ich)
         {
             ich = null;
             uiParent = null;
 
-            for(Visual v = VisualTreeHelper.GetParent(this) as Visual; v != null; v = VisualTreeHelper.GetParent(v) as Visual)
+            for (Visual v = VisualTreeHelper.GetParent(this) as Visual; v != null; v = VisualTreeHelper.GetParent(v) as Visual)
             {
                 ich = v as IContentHost;
-                if (ich != null) break;
+                if (ich != null)
+                    break;
 
-                if(v.CheckFlagsAnd(VisualFlags.IsUIElement))
+                if (v.CheckFlagsAnd(VisualFlags.IsUIElement))
                 {
                     uiParent = (UIElement)v;
                     break;
@@ -732,19 +738,19 @@ namespace System.Windows
             }
         }
 
-         //walks visual tree up to find UIElement parent within Element Layout Island, so stops the walk if the island's root is found
+        //walks visual tree up to find UIElement parent within Element Layout Island, so stops the walk if the island's root is found
         internal UIElement GetUIParentWithinLayoutIsland()
         {
             UIElement uiParent = null;
 
-            for(Visual v = VisualTreeHelper.GetParent(this) as Visual; v != null; v = VisualTreeHelper.GetParent(v) as Visual)
+            for (Visual v = VisualTreeHelper.GetParent(this) as Visual; v != null; v = VisualTreeHelper.GetParent(v) as Visual)
             {
                 if (v.CheckFlagsAnd(VisualFlags.IsLayoutIslandRoot))
                 {
                     break;
                 }
 
-                if(v.CheckFlagsAnd(VisualFlags.IsUIElement))
+                if (v.CheckFlagsAnd(VisualFlags.IsUIElement))
                 {
                     uiParent = (UIElement)v;
                     break;
@@ -977,7 +983,7 @@ namespace System.Windows
 
         private void updatePixelSnappingGuidelines()
         {
-            if((!SnapsToDevicePixels) || (_drawingContent == null))
+            if ((!SnapsToDevicePixels) || (_drawingContent == null))
             {
                 this.VisualXSnappingGuidelines = this.VisualYSnappingGuidelines = null;
             }
@@ -985,7 +991,7 @@ namespace System.Windows
             {
                 DoubleCollection xLines = this.VisualXSnappingGuidelines;
 
-                if(xLines == null)
+                if (xLines == null)
                 {
                     xLines = new DoubleCollection();
                     xLines.Add(0d);
@@ -994,15 +1000,15 @@ namespace System.Windows
                 }
                 else
                 {
-                // xLines[0] = 0d;  - this already should be so
-                // check to avoid potential dirtiness in renderer
+                    // xLines[0] = 0d;  - this already should be so
+                    // check to avoid potential dirtiness in renderer
                     int lastGuideline = xLines.Count - 1;
-                    if(!DoubleUtil.AreClose(xLines[lastGuideline], this.RenderSize.Width))
+                    if (!DoubleUtil.AreClose(xLines[lastGuideline], this.RenderSize.Width))
                         xLines[lastGuideline] = this.RenderSize.Width;
                 }
 
                 DoubleCollection yLines = this.VisualYSnappingGuidelines;
-                if(yLines == null)
+                if (yLines == null)
                 {
                     yLines = new DoubleCollection();
                     yLines.Add(0d);
@@ -1011,10 +1017,10 @@ namespace System.Windows
                 }
                 else
                 {
-                // yLines[0] = 0d;  - this already should be so
-                // check to avoid potential dirtiness in renderer
+                    // yLines[0] = 0d;  - this already should be so
+                    // check to avoid potential dirtiness in renderer
                     int lastGuideline = yLines.Count - 1;
-                    if(!DoubleUtil.AreClose(yLines[lastGuideline], this.RenderSize.Height))
+                    if (!DoubleUtil.AreClose(yLines[lastGuideline], this.RenderSize.Height))
                         yLines[lastGuideline] = this.RenderSize.Height;
                 }
             }
@@ -1028,12 +1034,12 @@ namespace System.Windows
 
             SizeChangedInfo info = sizeChangedInfo;
 
-            if(info != null)
+            if (info != null)
             {
                 info.Update(widthChanged, heightChanged);
                 return true;
             }
-            else if(widthChanged || heightChanged)
+            else if (widthChanged || heightChanged)
             {
                 info = new SizeChangedInfo(this, oldSize, widthChanged, heightChanged);
                 sizeChangedInfo = info;
@@ -1173,7 +1179,7 @@ namespace System.Windows
         /// <param name="info">Packaged parameters (<seealso cref="SizeChangedInfo"/>, includes
         /// old and new sizes and which dimension actually changes. </param>
         protected internal virtual void OnRenderSizeChanged(SizeChangedInfo info)
-        {}
+        { }
 
         /// <summary>
         /// Measurement override. Implement your size-to-content logic here.
@@ -1222,7 +1228,7 @@ namespace System.Windows
         {
             //can not return availableSize here - this is too "greedy" and can cause the Infinity to be
             //returned. So the next "reasonable" choice is (0,0).
-            return new Size(0,0);
+            return new Size(0, 0);
         }
 
         /// <summary>
@@ -1260,7 +1266,7 @@ namespace System.Windows
             //Set transform to reflect the offset of finalRect - parents that have multiple children
             //pass offset in the finalRect to communicate the location of this child withing the parent.
             Transform renderTransform = RenderTransform;
-            if(renderTransform == Transform.Identity)
+            if (renderTransform == Transform.Identity)
                 renderTransform = null;
 
             Vector oldOffset = VisualOffset;
@@ -1358,7 +1364,7 @@ namespace System.Windows
         /// </summary>
         public Transform RenderTransform
         {
-            get { return (Transform) GetValue(RenderTransformProperty); }
+            get { return (Transform)GetValue(RenderTransformProperty); }
             set { SetValue(RenderTransformProperty, value); }
         }
 
@@ -1367,7 +1373,7 @@ namespace System.Windows
             UIElement uie = (UIElement)d;
 
             //if never measured, then nothing to do, it should be measured at some point
-            if(!uie.NeverMeasured && !uie.NeverArranged)
+            if (!uie.NeverMeasured && !uie.NeverArranged)
             {
                 // If the change is simply a subproperty change, there is no
                 //  need to Arrange. (which combines RenderTransform with all the
@@ -1390,7 +1396,7 @@ namespace System.Windows
                                 typeof(Point),
                                 typeof(UIElement),
                                 new PropertyMetadata(
-                                            new Point(0d,0d),
+                                            new Point(0d, 0d),
                                             new PropertyChangedCallback(RenderTransformOrigin_Changed)),
                                 new ValidateValueCallback(IsRenderTransformOriginValid));
 
@@ -1398,7 +1404,7 @@ namespace System.Windows
         private static bool IsRenderTransformOriginValid(object value)
         {
             Point v = (Point)value;
-            return (    (!double.IsNaN(v.X) && !Double.IsPositiveInfinity(v.X) && !Double.IsNegativeInfinity(v.X))
+            return ((!double.IsNaN(v.X) && !Double.IsPositiveInfinity(v.X) && !Double.IsNegativeInfinity(v.X))
                      && (!double.IsNaN(v.Y) && !Double.IsPositiveInfinity(v.Y) && !Double.IsNegativeInfinity(v.Y)));
         }
 
@@ -1420,7 +1426,7 @@ namespace System.Windows
             UIElement uie = (UIElement)d;
 
             //if never measured, then nothing to do, it should be measured at some point
-            if(!uie.NeverMeasured && !uie.NeverArranged)
+            if (!uie.NeverMeasured && !uie.NeverArranged)
             {
                 uie.InvalidateArrange();
                 uie.AreTransformsClean = false;
@@ -1493,11 +1499,11 @@ namespace System.Windows
                     // order to bridge the gap.  Now we can stop.
                     if (oldParent is Visual)
                     {
-                        ((Visual) oldParent).VisualAncestorChanged -= new AncestorChangedEventHandler(OnVisualAncestorChanged_ForceInherit);
+                        ((Visual)oldParent).VisualAncestorChanged -= new AncestorChangedEventHandler(OnVisualAncestorChanged_ForceInherit);
                     }
                     else if (oldParent is Visual3D)
                     {
-                        ((Visual3D) oldParent).VisualAncestorChanged -= new AncestorChangedEventHandler(OnVisualAncestorChanged_ForceInherit);
+                        ((Visual3D)oldParent).VisualAncestorChanged -= new AncestorChangedEventHandler(OnVisualAncestorChanged_ForceInherit);
                     }
 
                     // Try to find a UIElement ancestor to use for coersion.
@@ -1535,7 +1541,7 @@ namespace System.Windows
             // properties change.
 
             DependencyObject parent = null;
-            if(e.OldParent == null)
+            if (e.OldParent == null)
             {
                 // We were plugged into something.
 
@@ -1544,7 +1550,7 @@ namespace System.Windows
 
                 // See if this parent is a child of the ancestor who's parent changed.
                 // If so, we don't care about changes that happen above us.
-                if(parent != null && VisualTreeHelper.IsAncestorOf(e.Ancestor, parent))
+                if (parent != null && VisualTreeHelper.IsAncestorOf(e.Ancestor, parent))
                 {
                     parent = null;
                 }
@@ -1556,7 +1562,7 @@ namespace System.Windows
                 // Find our nearest UIElement parent.
                 parent = InputElement.GetContainingUIElement(_parent);
 
-                if(parent != null)
+                if (parent != null)
                 {
                     // If we found a UIElement parent in our subtree, the
                     // break in the visual tree must have been above it,
@@ -1572,7 +1578,7 @@ namespace System.Windows
                 }
             }
 
-            if(parent != null)
+            if (parent != null)
             {
                 SynchronizeForceInheritProperties(this, null, null, parent);
             }
@@ -1581,7 +1587,7 @@ namespace System.Windows
         internal void OnVisualAncestorChanged(object sender, AncestorChangedEventArgs e)
         {
             UIElement uie = sender as UIElement;
-            if(null != uie)
+            if (null != uie)
                 PresentationSource.OnVisualAncestorChanged(uie, e);
         }
 
@@ -1638,7 +1644,7 @@ namespace System.Windows
         /// </remarks>
         public void UpdateLayout()
         {
-//             VerifyAccess();
+            //             VerifyAccess();
             ContextLayoutManager.From(Dispatcher).UpdateLayout();
         }
 
@@ -1739,7 +1745,7 @@ namespace System.Windows
 
                     // Invoke BuildRouteCore
                     bool continuePastVisualTree = false;
-                                        if (uiElement != null)
+                    if (uiElement != null)
                     {
                         //Add a Synchronized input pre-opportunity handler just before the class and instance handlers
                         uiElement.AddSynchronizedInputPreOpportunityHandler(route, args);
@@ -1860,7 +1866,7 @@ namespace System.Windows
         // Called by automation peer, when called this element will be the listening element for synchronized input.
         internal bool StartListeningSynchronizedInput(SynchronizedInputType inputType)
         {
-            if(InputManager.IsSynchronizedInput)
+            if (InputManager.IsSynchronizedInput)
             {
                 return false;
             }
@@ -1957,7 +1963,7 @@ namespace System.Windows
         internal virtual void OnPresentationSourceChanged(bool attached)
         {
             // Reset the FocusedElementProperty in order to get LostFocus event
-            if (!attached && FocusManager.GetFocusedElement(this)!=null)
+            if (!attached && FocusManager.GetFocusedElement(this) != null)
                 FocusManager.SetFocusedElement(this, null);
         }
 
@@ -2119,16 +2125,16 @@ namespace System.Windows
         {
             HitTestFilterBehavior behavior = HitTestFilterBehavior.Continue;
 
-            if(UIElementHelper.IsUIElementOrUIElement3D(currentNode))
+            if (UIElementHelper.IsUIElementOrUIElement3D(currentNode))
             {
-                if(!UIElementHelper.IsVisible(currentNode))
+                if (!UIElementHelper.IsVisible(currentNode))
                 {
                     // The element we are currently processing is not visible,
                     // so we do not allow hit testing to continue down this
                     // subtree.
                     behavior = HitTestFilterBehavior.ContinueSkipSelfAndChildren;
                 }
-                if(!UIElementHelper.IsHitTestVisible(currentNode))
+                if (!UIElementHelper.IsHitTestVisible(currentNode))
                 {
                     // The element we are currently processing is not visible for hit testing,
                     // so we do not allow hit testing to continue down this
@@ -2185,24 +2191,24 @@ namespace System.Windows
         {
             RoutedEvent newEvent = null;
 
-            switch(e.ChangedButton)
+            switch (e.ChangedButton)
             {
                 case MouseButton.Left:
-                    if(e.RoutedEvent == Mouse.PreviewMouseDownEvent)
+                    if (e.RoutedEvent == Mouse.PreviewMouseDownEvent)
                         newEvent = UIElement.PreviewMouseLeftButtonDownEvent;
-                    else if(e.RoutedEvent == Mouse.MouseDownEvent)
+                    else if (e.RoutedEvent == Mouse.MouseDownEvent)
                         newEvent = UIElement.MouseLeftButtonDownEvent;
-                    else if(e.RoutedEvent == Mouse.PreviewMouseUpEvent)
+                    else if (e.RoutedEvent == Mouse.PreviewMouseUpEvent)
                         newEvent = UIElement.PreviewMouseLeftButtonUpEvent;
                     else
                         newEvent = UIElement.MouseLeftButtonUpEvent;
                     break;
                 case MouseButton.Right:
-                    if(e.RoutedEvent == Mouse.PreviewMouseDownEvent)
+                    if (e.RoutedEvent == Mouse.PreviewMouseDownEvent)
                         newEvent = UIElement.PreviewMouseRightButtonDownEvent;
-                    else if(e.RoutedEvent == Mouse.MouseDownEvent)
+                    else if (e.RoutedEvent == Mouse.MouseDownEvent)
                         newEvent = UIElement.MouseRightButtonDownEvent;
-                    else if(e.RoutedEvent == Mouse.PreviewMouseUpEvent)
+                    else if (e.RoutedEvent == Mouse.PreviewMouseUpEvent)
                         newEvent = UIElement.PreviewMouseRightButtonUpEvent;
                     else
                         newEvent = UIElement.MouseRightButtonUpEvent;
@@ -2211,7 +2217,7 @@ namespace System.Windows
                     // No wrappers exposed for the other buttons.
                     break;
             }
-            return ( newEvent );
+            return (newEvent);
         }
 
         private static void CrackMouseButtonEventAndReRaiseEvent(DependencyObject sender, MouseButtonEventArgs e)
@@ -2241,14 +2247,14 @@ namespace System.Windows
         {
             // Preseve and change the RoutedEvent
             RoutedEvent preservedRoutedEvent = args.RoutedEvent;
-            args.OverrideRoutedEvent( newEvent );
+            args.OverrideRoutedEvent(newEvent);
 
             // Preserve Source
             object preservedSource = args.Source;
 
             EventRoute route = EventRouteFactory.FetchObject(args.RoutedEvent);
 
-            if( TraceRoutedEvent.IsEnabled )
+            if (TraceRoutedEvent.IsEnabled)
             {
                 TraceRoutedEvent.Trace(
                     TraceEventType.Start,
@@ -2256,7 +2262,7 @@ namespace System.Windows
                     args.RoutedEvent,
                     sender,
                     args,
-                    args.Handled );
+                    args.Handled);
             }
 
             try
@@ -2276,7 +2282,7 @@ namespace System.Windows
 
             finally
             {
-                if( TraceRoutedEvent.IsEnabled )
+                if (TraceRoutedEvent.IsEnabled)
                 {
                     TraceRoutedEvent.Trace(
                         TraceEventType.Stop,
@@ -2284,7 +2290,7 @@ namespace System.Windows
                         args.RoutedEvent,
                         sender,
                         args,
-                        args.Handled );
+                        args.Handled);
                 }
             }
 
@@ -2300,7 +2306,7 @@ namespace System.Windows
         {
             EventRoute route = EventRouteFactory.FetchObject(args.RoutedEvent);
 
-            if( TraceRoutedEvent.IsEnabled )
+            if (TraceRoutedEvent.IsEnabled)
             {
                 TraceRoutedEvent.Trace(
                     TraceEventType.Start,
@@ -2308,7 +2314,7 @@ namespace System.Windows
                     args.RoutedEvent,
                     sender,
                     args,
-                    args.Handled );
+                    args.Handled);
             }
 
             try
@@ -2326,7 +2332,7 @@ namespace System.Windows
 
             finally
             {
-                if( TraceRoutedEvent.IsEnabled )
+                if (TraceRoutedEvent.IsEnabled)
                 {
                     TraceRoutedEvent.Trace(
                         TraceEventType.Stop,
@@ -2334,7 +2340,7 @@ namespace System.Windows
                         args.RoutedEvent,
                         sender,
                         args,
-                        args.Handled );
+                        args.Handled);
                 }
             }
 
@@ -2368,35 +2374,35 @@ namespace System.Windows
             return (Mouse.DirectlyOver == this);
         }
 
-#region new
+        #region new
         /// <summary>
         ///     Asynchronously re-evaluate the reverse-inherited properties.
         /// </summary>
         internal void SynchronizeReverseInheritPropertyFlags(DependencyObject oldParent, bool isCoreParent)
         {
-            if(IsKeyboardFocusWithin)
+            if (IsKeyboardFocusWithin)
             {
                 Keyboard.PrimaryDevice.ReevaluateFocusAsync(this, oldParent, isCoreParent);
             }
 
             // Reevelauate the stylus properties first to guarentee that our property change
             // notifications fire before mouse properties.
-            if(IsStylusOver)
+            if (IsStylusOver)
             {
                 StylusLogic.CurrentStylusLogicReevaluateStylusOver(this, oldParent, isCoreParent);
             }
 
-            if(IsStylusCaptureWithin)
+            if (IsStylusCaptureWithin)
             {
                 StylusLogic.CurrentStylusLogicReevaluateCapture(this, oldParent, isCoreParent);
             }
 
-            if(IsMouseOver)
+            if (IsMouseOver)
             {
                 Mouse.PrimaryDevice.ReevaluateMouseOver(this, oldParent, isCoreParent);
             }
 
-            if(IsMouseCaptureWithin)
+            if (IsMouseCaptureWithin)
             {
                 Mouse.PrimaryDevice.ReevaluateCapture(this, oldParent, isCoreParent);
             }
@@ -2456,14 +2462,14 @@ namespace System.Windows
             }
         }
 
-#endregion new
+        #endregion new
 
         /// <summary>
         ///     A property indicating if the mouse is captured to this element or not.
         /// </summary>
         public bool IsMouseCaptured
         {
-            get { return (bool) GetValue(IsMouseCapturedProperty); }
+            get { return (bool)GetValue(IsMouseCapturedProperty); }
         }
 
         /// <summary>
@@ -2529,7 +2535,7 @@ namespace System.Windows
         /// </summary>
         public bool IsStylusCaptured
         {
-            get { return (bool) GetValue(IsStylusCapturedProperty); }
+            get { return (bool)GetValue(IsStylusCapturedProperty); }
         }
 
         /// <summary>
@@ -2595,7 +2601,7 @@ namespace System.Windows
         {
             if (Keyboard.Focus(this) == this)
             {
-                
+
                 // In order to show the touch keyboard we need to prompt the WinRT InputPane API.
                 // We only do this when the keyboard focus has changed as the keyboard focus dictates
                 // our current input targets for the touch and physical keyboards.
@@ -2660,7 +2666,7 @@ namespace System.Windows
         /// </summary>
         public bool IsInputMethodEnabled
         {
-            get { return (bool) GetValue(InputMethod.IsInputMethodEnabledProperty); }
+            get { return (bool)GetValue(InputMethod.IsInputMethodEnabledProperty); }
         }
 
         /// <summary>
@@ -2678,7 +2684,7 @@ namespace System.Windows
 
         private static void Opacity_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            UIElement uie = (UIElement) d;
+            UIElement uie = (UIElement)d;
             uie.pushOpacity();
         }
 
@@ -2689,13 +2695,13 @@ namespace System.Windows
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
         public double Opacity
         {
-            get { return (double) GetValue(OpacityProperty); }
+            get { return (double)GetValue(OpacityProperty); }
             set { SetValue(OpacityProperty, value); }
         }
 
         private void pushOpacity()
         {
-            if(this.Visibility == Visibility.Visible)
+            if (this.Visibility == Visibility.Visible)
             {
                 base.VisualOpacity = Opacity;
             }
@@ -2710,7 +2716,7 @@ namespace System.Windows
 
         private static void OpacityMask_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            UIElement uie = (UIElement) d;
+            UIElement uie = (UIElement)d;
             uie.pushOpacityMask();
         }
 
@@ -2721,7 +2727,7 @@ namespace System.Windows
         /// </summary>
         public Brush OpacityMask
         {
-            get { return (Brush) GetValue(OpacityMaskProperty); }
+            get { return (Brush)GetValue(OpacityMaskProperty); }
             set { SetValue(OpacityMaskProperty, value); }
         }
 
@@ -2752,7 +2758,7 @@ namespace System.Windows
         [Obsolete(MS.Internal.Media.VisualTreeUtils.BitmapEffectObsoleteMessage)]
         public BitmapEffect BitmapEffect
         {
-            get { return (BitmapEffect) GetValue(BitmapEffectProperty); }
+            get { return (BitmapEffect)GetValue(BitmapEffectProperty); }
             set { SetValue(BitmapEffectProperty, value); }
         }
 
@@ -2785,7 +2791,7 @@ namespace System.Windows
         /// </summary>
         public Effect Effect
         {
-            get { return (Effect) GetValue(EffectProperty); }
+            get { return (Effect)GetValue(EffectProperty); }
             set { SetValue(EffectProperty, value); }
         }
 
@@ -2806,7 +2812,7 @@ namespace System.Windows
 
         private static void OnBitmapEffectInputChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((UIElement) d).pushBitmapEffectInput((BitmapEffectInput) e.NewValue);
+            ((UIElement)d).pushBitmapEffectInput((BitmapEffectInput)e.NewValue);
         }
 
         /// <summary>
@@ -2815,7 +2821,7 @@ namespace System.Windows
         [Obsolete(MS.Internal.Media.VisualTreeUtils.BitmapEffectObsoleteMessage)]
         public BitmapEffectInput BitmapEffectInput
         {
-            get { return (BitmapEffectInput) GetValue(BitmapEffectInputProperty); }
+            get { return (BitmapEffectInput)GetValue(BitmapEffectInputProperty); }
             set { SetValue(BitmapEffectInputProperty, value); }
         }
 
@@ -2829,7 +2835,7 @@ namespace System.Windows
 
         private static void EdgeMode_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            UIElement uie = (UIElement) d;
+            UIElement uie = (UIElement)d;
             uie.pushEdgeMode();
         }
 
@@ -2840,7 +2846,7 @@ namespace System.Windows
 
         private static void BitmapScalingMode_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            UIElement uie = (UIElement) d;
+            UIElement uie = (UIElement)d;
             uie.pushBitmapScalingMode();
         }
 
@@ -2851,7 +2857,7 @@ namespace System.Windows
 
         private static void ClearTypeHint_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            UIElement uie = (UIElement) d;
+            UIElement uie = (UIElement)d;
             uie.pushClearTypeHint();
         }
 
@@ -2862,7 +2868,7 @@ namespace System.Windows
 
         private static void TextHintingMode_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            UIElement uie = (UIElement) d;
+            UIElement uie = (UIElement)d;
             uie.pushTextHintingMode();
         }
 
@@ -2893,7 +2899,7 @@ namespace System.Windows
         /// </summary>
         public CacheMode CacheMode
         {
-            get { return (CacheMode) GetValue(CacheModeProperty); }
+            get { return (CacheMode)GetValue(CacheModeProperty); }
             set { SetValue(CacheModeProperty, value); }
         }
 
@@ -2956,9 +2962,9 @@ namespace System.Windows
 
         private static void OnVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            UIElement uie = (UIElement) d;
+            UIElement uie = (UIElement)d;
 
-            Visibility newVisibility = (Visibility) e.NewValue;
+            Visibility newVisibility = (Visibility)e.NewValue;
             uie.VisibilityCache = newVisibility;
             uie.switchVisibilityIfNeeded(newVisibility);
 
@@ -2968,7 +2974,7 @@ namespace System.Windows
 
         private static bool ValidateVisibility(object o)
         {
-            Visibility value = (Visibility) o;
+            Visibility value = (Visibility)o;
             return (value == Visibility.Visible) || (value == Visibility.Hidden) || (value == Visibility.Collapsed);
         }
 
@@ -2984,7 +2990,7 @@ namespace System.Windows
 
         private void switchVisibilityIfNeeded(Visibility visibility)
         {
-            switch(visibility)
+            switch (visibility)
             {
                 case Visibility.Visible:
                     ensureVisible();
@@ -3002,12 +3008,12 @@ namespace System.Windows
 
         private void ensureVisible()
         {
-            if(ReadFlag(CoreFlags.IsOpacitySuppressed))
+            if (ReadFlag(CoreFlags.IsOpacitySuppressed))
             {
                 //restore Opacity
                 base.VisualOpacity = Opacity;
 
-                if(ReadFlag(CoreFlags.IsCollapsed))
+                if (ReadFlag(CoreFlags.IsCollapsed))
                 {
                     WriteFlag(CoreFlags.IsCollapsed, false);
 
@@ -3027,20 +3033,20 @@ namespace System.Windows
 
         private void ensureInvisible(bool collapsed)
         {
-            if(!ReadFlag(CoreFlags.IsOpacitySuppressed))
+            if (!ReadFlag(CoreFlags.IsOpacitySuppressed))
             {
                 base.VisualOpacity = 0;
                 WriteFlag(CoreFlags.IsOpacitySuppressed, true);
             }
 
-            if(!ReadFlag(CoreFlags.IsCollapsed) && collapsed) //Hidden or Visible->Collapsed
+            if (!ReadFlag(CoreFlags.IsCollapsed) && collapsed) //Hidden or Visible->Collapsed
             {
                 WriteFlag(CoreFlags.IsCollapsed, true);
 
                 //invalidate parent
                 signalDesiredSizeChange();
             }
-            else if(ReadFlag(CoreFlags.IsCollapsed) && !collapsed) //Collapsed -> Hidden
+            else if (ReadFlag(CoreFlags.IsCollapsed) && !collapsed) //Collapsed -> Hidden
             {
                 WriteFlag(CoreFlags.IsCollapsed, false);
 
@@ -3056,9 +3062,9 @@ namespace System.Windows
 
             GetUIParentOrICH(out p, out ich); //only one will be returned
 
-            if(p != null)
+            if (p != null)
                 p.OnChildDesiredSizeChanged(this);
-            else if(ich != null)
+            else if (ich != null)
                 ich.OnChildDesiredSizeChanged(this);
         }
 
@@ -3066,9 +3072,9 @@ namespace System.Windows
         {
             Geometry clipGeometry = GetLayoutClip(layoutSlotSize);
 
-            if(Clip != null)
+            if (Clip != null)
             {
-                if(clipGeometry == null)
+                if (clipGeometry == null)
                     clipGeometry = Clip;
                 else
                 {
@@ -3138,7 +3144,7 @@ namespace System.Windows
             IDrawingContent oldContent = _drawingContent;
 
             //this element does not render - return
-            if(oldContent == null && newContent == null)
+            if (oldContent == null && newContent == null)
                 return;
 
             //
@@ -3321,7 +3327,7 @@ namespace System.Windows
             // Convert our content to a DrawingGroup, if content exists
             if (_drawingContent != null)
             {
-                drawingGroupContent = DrawingServices.DrawingGroupFromRenderData((RenderData) _drawingContent);
+                drawingGroupContent = DrawingServices.DrawingGroupFromRenderData((RenderData)_drawingContent);
             }
 
             return drawingGroupContent;
@@ -3336,7 +3342,7 @@ namespace System.Windows
         /// <returns>Geometry to use as additional clip if ClipToBounds=true</returns>
         protected virtual Geometry GetLayoutClip(Size layoutSlotSize)
         {
-            if(ClipToBounds)
+            if (ClipToBounds)
             {
                 RectangleGeometry rect = new RectangleGeometry(new Rect(RenderSize));
                 rect.Freeze();
@@ -3361,11 +3367,11 @@ namespace System.Windows
 
         private static void ClipToBounds_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            UIElement uie = (UIElement) d;
-            uie.ClipToBoundsCache = (bool) e.NewValue;
+            UIElement uie = (UIElement)d;
+            uie.ClipToBoundsCache = (bool)e.NewValue;
 
             //if never measured, then nothing to do, it should be measured at some point
-            if(!uie.NeverMeasured || !uie.NeverArranged)
+            if (!uie.NeverMeasured || !uie.NeverArranged)
             {
                 uie.InvalidateArrange();
             }
@@ -3397,15 +3403,15 @@ namespace System.Windows
                                 typeof(Geometry),
                                 typeof(UIElement),
                                 new PropertyMetadata(
-                                            (Geometry) null,
+                                            (Geometry)null,
                                             new PropertyChangedCallback(Clip_Changed)));
 
         private static void Clip_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            UIElement uie = (UIElement) d;
+            UIElement uie = (UIElement)d;
 
             // if never measured, then nothing to do, it should be measured at some point
-            if(!uie.NeverMeasured || !uie.NeverArranged)
+            if (!uie.NeverMeasured || !uie.NeverArranged)
             {
                 uie.InvalidateArrange();
             }
@@ -3416,7 +3422,7 @@ namespace System.Windows
         /// </summary>
         public Geometry Clip
         {
-            get { return (Geometry) GetValue(ClipProperty); }
+            get { return (Geometry)GetValue(ClipProperty); }
             set { SetValue(ClipProperty, value); }
         }
 
@@ -3434,11 +3440,11 @@ namespace System.Windows
 
         private static void SnapsToDevicePixels_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            UIElement uie = (UIElement) d;
-            uie.SnapsToDevicePixelsCache = (bool) e.NewValue;
+            UIElement uie = (UIElement)d;
+            uie.SnapsToDevicePixelsCache = (bool)e.NewValue;
 
             // if never measured, then nothing to do, it should be measured at some point
-            if(!uie.NeverMeasured || !uie.NeverArranged)
+            if (!uie.NeverMeasured || !uie.NeverArranged)
             {
                 uie.InvalidateArrange();
             }
@@ -3526,7 +3532,7 @@ namespace System.Windows
         {
             UIElement uiElement = ((UIElement)d);
 
-            if ((bool) e.NewValue)
+            if ((bool)e.NewValue)
             {
                 uiElement.OnGotFocus(new RoutedEventArgs(GotFocusEvent, uiElement));
             }
@@ -3559,7 +3565,7 @@ namespace System.Windows
         /// </summary>
         public bool IsFocused
         {
-            get { return (bool) GetValue(IsFocusedProperty); }
+            get { return (bool)GetValue(IsFocusedProperty); }
         }
 
         //*********************************************************************
@@ -3586,7 +3592,7 @@ namespace System.Windows
         /// </summary>
         public bool IsEnabled
         {
-            get { return (bool) GetValue(IsEnabledProperty);}
+            get { return (bool)GetValue(IsEnabledProperty); }
             set { SetValue(IsEnabledProperty, BooleanBoxes.Box(value)); }
         }
 
@@ -3595,8 +3601,8 @@ namespace System.Windows
         /// </summary>
         public event DependencyPropertyChangedEventHandler IsEnabledChanged
         {
-            add {EventHandlersStoreAdd(IsEnabledChangedKey, value);}
-            remove {EventHandlersStoreRemove(IsEnabledChangedKey, value);}
+            add { EventHandlersStoreAdd(IsEnabledChangedKey, value); }
+            remove { EventHandlersStoreRemove(IsEnabledChangedKey, value); }
         }
         internal static readonly EventPrivateKey IsEnabledChangedKey = new EventPrivateKey(); // Used by ContentElement
 
@@ -3624,14 +3630,14 @@ namespace System.Windows
 
         private static object CoerceIsEnabled(DependencyObject d, object value)
         {
-            UIElement uie = (UIElement) d;
+            UIElement uie = (UIElement)d;
 
             // We must be false if our parent is false, but we can be
             // either true or false if our parent is true.
             //
             // Another way of saying this is that we can only be true
             // if our parent is true, but we can always be false.
-            if((bool) value)
+            if ((bool)value)
             {
                 // Our parent can constrain us.  We can be plugged into either
                 // a "visual" or "content" tree.  If we are plugged into a
@@ -3643,12 +3649,12 @@ namespace System.Windows
                 // "logical" links lead to a content tree.
                 //
                 DependencyObject parent = uie.GetUIParentCore() as ContentElement;
-                if(parent == null)
+                if (parent == null)
                 {
                     parent = InputElement.GetContainingUIElement(uie._parent);
                 }
 
-                if(parent == null || (bool)parent.GetValue(IsEnabledProperty))
+                if (parent == null || (bool)parent.GetValue(IsEnabledProperty))
                 {
                     return BooleanBoxes.Box(uie.IsEnabledCore);
                 }
@@ -3680,7 +3686,7 @@ namespace System.Windows
 
             //Notify Automation in case it is interested.
             AutomationPeer peer = uie.GetAutomationPeer();
-            if(peer != null)
+            if (peer != null)
                 peer.InvalidatePeer();
 
         }
@@ -3712,7 +3718,7 @@ namespace System.Windows
         /// </summary>
         public bool IsHitTestVisible
         {
-            get { return (bool) GetValue(IsHitTestVisibleProperty); }
+            get { return (bool)GetValue(IsHitTestVisibleProperty); }
             set { SetValue(IsHitTestVisibleProperty, BooleanBoxes.Box(value)); }
         }
 
@@ -3721,21 +3727,21 @@ namespace System.Windows
         /// </summary>
         public event DependencyPropertyChangedEventHandler IsHitTestVisibleChanged
         {
-            add {EventHandlersStoreAdd(IsHitTestVisibleChangedKey, value);}
-            remove {EventHandlersStoreRemove(IsHitTestVisibleChangedKey, value);}
+            add { EventHandlersStoreAdd(IsHitTestVisibleChangedKey, value); }
+            remove { EventHandlersStoreRemove(IsHitTestVisibleChangedKey, value); }
         }
         internal static readonly EventPrivateKey IsHitTestVisibleChangedKey = new EventPrivateKey(); // Used by ContentElement
 
         private static object CoerceIsHitTestVisible(DependencyObject d, object value)
         {
-            UIElement uie = (UIElement) d;
+            UIElement uie = (UIElement)d;
 
             // We must be false if our parent is false, but we can be
             // either true or false if our parent is true.
             //
             // Another way of saying this is that we can only be true
             // if our parent is true, but we can always be false.
-            if((bool) value)
+            if ((bool)value)
             {
                 // Our parent can constrain us.  We can be plugged into either
                 // a "visual" or "content" tree.  If we are plugged into a
@@ -3827,8 +3833,8 @@ namespace System.Windows
         /// </summary>
         public event DependencyPropertyChangedEventHandler IsVisibleChanged
         {
-            add {EventHandlersStoreAdd(IsVisibleChangedKey, value);}
-            remove {EventHandlersStoreRemove(IsVisibleChangedKey, value);}
+            add { EventHandlersStoreAdd(IsVisibleChangedKey, value); }
+            remove { EventHandlersStoreRemove(IsVisibleChangedKey, value); }
         }
         internal static readonly EventPrivateKey IsVisibleChangedKey = new EventPrivateKey(); // Used by ContentElement
 
@@ -3843,7 +3849,7 @@ namespace System.Windows
             //
             // Another way of saying this is that we can only be true
             // if our parent is true, but we can always be false.
-            if(isVisible)
+            if (isVisible)
             {
                 bool constraintAllowsVisible = false;
 
@@ -3861,7 +3867,7 @@ namespace System.Windows
                 //
                 DependencyObject parent = InputElement.GetContainingUIElement(_parent);
 
-                if(parent != null)
+                if (parent != null)
                 {
                     constraintAllowsVisible = UIElementHelper.IsVisible(parent);
                 }
@@ -3870,7 +3876,7 @@ namespace System.Windows
                     // We cannot be visible if we have no visual parent, unless:
                     // 1) We are the root, connected to a PresentationHost.
                     PresentationSource presentationSource = PresentationSource.CriticalFromVisual(this);
-                    if(presentationSource != null)
+                    if (presentationSource != null)
                     {
                         constraintAllowsVisible = true;
                     }
@@ -3881,13 +3887,13 @@ namespace System.Windows
 
                 }
 
-                if(!constraintAllowsVisible)
+                if (!constraintAllowsVisible)
                 {
                     isVisible = false;
                 }
             }
 
-            if(isVisible != IsVisible)
+            if (isVisible != IsVisible)
             {
                 // Our IsVisible force-inherited property has changed.  Update our
                 // cache and raise a change notification.
@@ -3899,7 +3905,7 @@ namespace System.Windows
 
         private static void OnIsVisibleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            UIElement uie = (UIElement) d;
+            UIElement uie = (UIElement)d;
 
             // Raise the public changed event.
             uie.RaiseDependencyPropertyChanged(IsVisibleChangedKey, e);
@@ -3939,7 +3945,7 @@ namespace System.Windows
         /// </summary>
         public bool Focusable
         {
-            get { return (bool) GetValue(FocusableProperty); }
+            get { return (bool)GetValue(FocusableProperty); }
             set { SetValue(FocusableProperty, BooleanBoxes.Box(value)); }
         }
 
@@ -3948,14 +3954,14 @@ namespace System.Windows
         /// </summary>
         public event DependencyPropertyChangedEventHandler FocusableChanged
         {
-            add {EventHandlersStoreAdd(FocusableChangedKey, value);}
-            remove {EventHandlersStoreRemove(FocusableChangedKey, value);}
+            add { EventHandlersStoreAdd(FocusableChangedKey, value); }
+            remove { EventHandlersStoreRemove(FocusableChangedKey, value); }
         }
         internal static readonly EventPrivateKey FocusableChangedKey = new EventPrivateKey(); // Used by ContentElement
 
         private static void OnFocusableChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            UIElement uie = (UIElement) d;
+            UIElement uie = (UIElement)d;
 
             // Raise the public changed event.
             uie.RaiseDependencyPropertyChanged(FocusableChangedKey, e);
@@ -3993,7 +3999,7 @@ namespace System.Windows
 
             AutomationPeer ap = null;
 
-            if(HasAutomationPeer)
+            if (HasAutomationPeer)
             {
                 ap = AutomationPeerField.GetValue(this);
             }
@@ -4021,7 +4027,7 @@ namespace System.Windows
                     ap = OnCreateAutomationPeer();
                 }
 
-                if(ap != null)
+                if (ap != null)
                 {
                     AutomationPeerField.SetValue(this, ap);
                     HasAutomationPeer = true;
@@ -4039,7 +4045,7 @@ namespace System.Windows
         {
             VerifyAccess();
 
-            if(HasAutomationPeer)
+            if (HasAutomationPeer)
                 return AutomationPeerField.GetValue(this);
 
             return null;
@@ -4058,7 +4064,7 @@ namespace System.Windows
             AutomationPeer ap = null;
 
             // If some peer was already created, specific or generic - use it.
-            if(HasAutomationPeer)
+            if (HasAutomationPeer)
             {
                 ap = AutomationPeerField.GetValue(this);
             }
@@ -4149,13 +4155,13 @@ namespace System.Windows
                 switch (value)
                 {
                     case Visibility.Visible:
-                        SetFlags(true,  VisualFlags.VisibilityCache_Visible);
+                        SetFlags(true, VisualFlags.VisibilityCache_Visible);
                         SetFlags(false, VisualFlags.VisibilityCache_TakesSpace);
                         break;
 
                     case Visibility.Hidden:
                         SetFlags(false, VisualFlags.VisibilityCache_Visible);
-                        SetFlags(true,  VisualFlags.VisibilityCache_TakesSpace);
+                        SetFlags(true, VisualFlags.VisibilityCache_TakesSpace);
                         break;
 
                     case Visibility.Collapsed:
@@ -4170,15 +4176,15 @@ namespace System.Windows
 
         // Also called by FrameworkContentElement
         internal static void SynchronizeForceInheritProperties(
-            UIElement        uiElement,
-            ContentElement   contentElement,
-            UIElement3D      uiElement3D,
+            UIElement uiElement,
+            ContentElement contentElement,
+            UIElement3D uiElement3D,
             DependencyObject parent)
         {
-            if(uiElement != null || uiElement3D != null)
+            if (uiElement != null || uiElement3D != null)
             {
-                bool parentValue = (bool) parent.GetValue(IsEnabledProperty);
-                if(!parentValue)
+                bool parentValue = (bool)parent.GetValue(IsEnabledProperty);
+                if (!parentValue)
                 {
                     // For Read/Write force-inherited properties, use the standard coersion pattern.
                     //
@@ -4193,8 +4199,8 @@ namespace System.Windows
                     }
                 }
 
-                parentValue = (bool) parent.GetValue(IsHitTestVisibleProperty);
-                if(!parentValue)
+                parentValue = (bool)parent.GetValue(IsHitTestVisibleProperty);
+                if (!parentValue)
                 {
                     // For Read/Write force-inherited properties, use the standard coersion pattern.
                     //
@@ -4209,8 +4215,8 @@ namespace System.Windows
                     }
                 }
 
-                parentValue = (bool) parent.GetValue(IsVisibleProperty);
-                if(parentValue)
+                parentValue = (bool)parent.GetValue(IsVisibleProperty);
+                if (parentValue)
                 {
                     // For Read-Only force-inherited properties, use a private update method.
                     //
@@ -4225,10 +4231,10 @@ namespace System.Windows
                     }
                 }
             }
-            else if(contentElement != null)
+            else if (contentElement != null)
             {
-                bool parentValue = (bool) parent.GetValue(IsEnabledProperty);
-                if(!parentValue)
+                bool parentValue = (bool)parent.GetValue(IsEnabledProperty);
+                if (!parentValue)
                 {
                     // The IsEnabled property must be coerced false if the parent is false.
                     contentElement.CoerceValue(IsEnabledProperty);
@@ -4251,7 +4257,7 @@ namespace System.Windows
 
                     if (element != null)
                     {
-                        if(property == IsVisibleProperty)
+                        if (property == IsVisibleProperty)
                         {
                             // For Read-Only force-inherited properties, use
                             // a private update method.
@@ -4278,9 +4284,9 @@ namespace System.Windows
                     {
                         UIElement3D element3D = v3DChild as UIElement3D;
 
-                        if(element3D != null)
+                        if (element3D != null)
                         {
-                            if(property == IsVisibleProperty)
+                            if (property == IsVisibleProperty)
                             {
                                 // For Read-Only force-inherited properties, use
                                 // a private update method.
@@ -4675,13 +4681,13 @@ namespace System.Windows
         internal static readonly UncommonField<EventHandlersStore> EventHandlersStoreField = new UncommonField<EventHandlersStore>();
         internal static readonly UncommonField<InputBindingCollection> InputBindingCollectionField = new UncommonField<InputBindingCollection>();
         internal static readonly UncommonField<CommandBindingCollection> CommandBindingCollectionField = new UncommonField<CommandBindingCollection>();
-        private  static readonly UncommonField<object> LayoutUpdatedListItemsField = new UncommonField<object>();
-        private  static readonly UncommonField<EventHandler> LayoutUpdatedHandlersField = new UncommonField<EventHandler>();
-        private  static readonly UncommonField<StylusPlugInCollection> StylusPlugInsField = new UncommonField<StylusPlugInCollection>();
-        private  static readonly UncommonField<AutomationPeer> AutomationPeerField = new UncommonField<AutomationPeer>();
+        private static readonly UncommonField<object> LayoutUpdatedListItemsField = new UncommonField<object>();
+        private static readonly UncommonField<EventHandler> LayoutUpdatedHandlersField = new UncommonField<EventHandler>();
+        private static readonly UncommonField<StylusPlugInCollection> StylusPlugInsField = new UncommonField<StylusPlugInCollection>();
+        private static readonly UncommonField<AutomationPeer> AutomationPeerField = new UncommonField<AutomationPeer>();
         // This field serves to link this UIElement with another UIElement better suited to provide PositionInSet and SizeOfSet Automation properties.
-        private  static readonly UncommonField<WeakReference<UIElement>> _positionAndSizeOfSetController = new UncommonField<WeakReference<UIElement>>();
-        private  static readonly UncommonField<bool> AutomationNotSupportedByDefaultField = new UncommonField<bool>();
+        private static readonly UncommonField<WeakReference<UIElement>> _positionAndSizeOfSetController = new UncommonField<WeakReference<UIElement>>();
+        private static readonly UncommonField<bool> AutomationNotSupportedByDefaultField = new UncommonField<bool>();
 
         internal SizeChangedInfo sizeChangedInfo;
 
@@ -4790,46 +4796,46 @@ namespace System.Windows
         internal static readonly StylusCaptureWithinProperty StylusCaptureWithinProperty = new StylusCaptureWithinProperty();
         internal static readonly TouchesOverProperty TouchesOverProperty = new TouchesOverProperty();
         internal static readonly TouchesCapturedWithinProperty TouchesCapturedWithinProperty = new TouchesCapturedWithinProperty();
-        private Size               _size;
+        private Size _size;
         internal const int MAX_ELEMENTS_IN_ROUTE = 4096;
     }
 
     [Flags]
     internal enum CoreFlags : uint
     {
-        None                            = 0x00000000,
-        SnapsToDevicePixelsCache        = 0x00000001,
-        ClipToBoundsCache               = 0x00000002,
-        MeasureDirty                    = 0x00000004,
-        ArrangeDirty                    = 0x00000008,
-        MeasureInProgress               = 0x00000010,
-        ArrangeInProgress               = 0x00000020,
-        NeverMeasured                   = 0x00000040,
-        NeverArranged                   = 0x00000080,
-        MeasureDuringArrange            = 0x00000100,
-        IsCollapsed                     = 0x00000200,
-        IsKeyboardFocusWithinCache      = 0x00000400,
-        IsKeyboardFocusWithinChanged    = 0x00000800,
-        IsMouseOverCache                = 0x00001000,
-        IsMouseOverChanged              = 0x00002000,
-        IsMouseCaptureWithinCache       = 0x00004000,
-        IsMouseCaptureWithinChanged     = 0x00008000,
-        IsStylusOverCache               = 0x00010000,
-        IsStylusOverChanged             = 0x00020000,
-        IsStylusCaptureWithinCache      = 0x00040000,
-        IsStylusCaptureWithinChanged    = 0x00080000,
-        HasAutomationPeer               = 0x00100000,
-        RenderingInvalidated            = 0x00200000,
-        IsVisibleCache                  = 0x00400000,
-        AreTransformsClean              = 0x00800000,
-        IsOpacitySuppressed             = 0x01000000,
-        ExistsEventHandlersStore        = 0x02000000,
-        TouchesOverCache                = 0x04000000,
-        TouchesOverChanged              = 0x08000000,
-        TouchesCapturedWithinCache      = 0x10000000,
-        TouchesCapturedWithinChanged    = 0x20000000,
-        TouchLeaveCache                 = 0x40000000,
-        TouchEnterCache                 = 0x80000000,
+        None = 0x00000000,
+        SnapsToDevicePixelsCache = 0x00000001,
+        ClipToBoundsCache = 0x00000002,
+        MeasureDirty = 0x00000004,
+        ArrangeDirty = 0x00000008,
+        MeasureInProgress = 0x00000010,
+        ArrangeInProgress = 0x00000020,
+        NeverMeasured = 0x00000040,
+        NeverArranged = 0x00000080,
+        MeasureDuringArrange = 0x00000100,
+        IsCollapsed = 0x00000200,
+        IsKeyboardFocusWithinCache = 0x00000400,
+        IsKeyboardFocusWithinChanged = 0x00000800,
+        IsMouseOverCache = 0x00001000,
+        IsMouseOverChanged = 0x00002000,
+        IsMouseCaptureWithinCache = 0x00004000,
+        IsMouseCaptureWithinChanged = 0x00008000,
+        IsStylusOverCache = 0x00010000,
+        IsStylusOverChanged = 0x00020000,
+        IsStylusCaptureWithinCache = 0x00040000,
+        IsStylusCaptureWithinChanged = 0x00080000,
+        HasAutomationPeer = 0x00100000,
+        RenderingInvalidated = 0x00200000,
+        IsVisibleCache = 0x00400000,
+        AreTransformsClean = 0x00800000,
+        IsOpacitySuppressed = 0x01000000,
+        ExistsEventHandlersStore = 0x02000000,
+        TouchesOverCache = 0x04000000,
+        TouchesOverChanged = 0x08000000,
+        TouchesCapturedWithinCache = 0x10000000,
+        TouchesCapturedWithinChanged = 0x20000000,
+        TouchLeaveCache = 0x40000000,
+        TouchEnterCache = 0x80000000,
     }
 }
 

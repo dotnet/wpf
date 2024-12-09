@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -256,7 +256,7 @@ namespace MS.Internal.Xaml.Runtime
 
         public override TConverterBase GetConverterInstance<TConverterBase>(XamlValueConverter<TConverterBase> converter)
         {
-            if (!MemberAccessPermissionDenied ||  converter.IsPublic || !IsDefaultConverter(converter))
+            if (!MemberAccessPermissionDenied || converter.IsPublic || !IsDefaultConverter(converter))
             {
                 try
                 {
@@ -416,8 +416,10 @@ namespace MS.Internal.Xaml.Runtime
             if (_elevatedRuntime == null)
             {
                 _elevatedRuntime = new DynamicMethodRuntime(
-                    _transparentRuntime.GetSettings(), _schemaContext, _accessLevel);
-                _elevatedRuntime.LineInfo = LineInfo;
+                    _transparentRuntime.GetSettings(), _schemaContext, _accessLevel)
+                {
+                    LineInfo = LineInfo
+                };
             }
         }
 

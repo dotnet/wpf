@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -18,16 +18,16 @@ namespace System.Windows.Baml2006
         [Flags]
         private enum BoolTypeBits
         {
-            Frozen                              = 0x0004,
-            WhitespaceSignificantCollection     = 0x0008,
-            UsableDurintInit                    = 0x0010,
-            HasSpecialValueConverter            = 0x0020,
+            Frozen = 0x0004,
+            WhitespaceSignificantCollection = 0x0008,
+            UsableDurintInit = 0x0010,
+            HasSpecialValueConverter = 0x0020,
         }
 
         private static Attribute[] s_EmptyAttributes;
         short _bamlNumber;
         string _name;
-        Type _underlyingType;       
+        Type _underlyingType;
         string _contentPropertyName;
         string _runtimeNamePropertyName;
         string _dictionaryKeyPropertyName;
@@ -72,7 +72,7 @@ namespace System.Windows.Baml2006
         public WpfKnownType(XamlSchemaContext schema,
             int bamlNumber,
             string name,
-            Type underlyingType, 
+            Type underlyingType,
             bool isBamlType,
             bool useV3Rules)
             : base(underlyingType, schema, isBamlType, useV3Rules)
@@ -217,7 +217,7 @@ namespace System.Windows.Baml2006
             {
                 return schema.GetTypeConverter(_typeConverterType);
             }
-            
+
             if (HasSpecialValueConverter)
             {
                 // This is for "object/string" syntax.

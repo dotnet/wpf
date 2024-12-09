@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -43,7 +43,7 @@ namespace System.Windows.Documents
         }
 
         #endregion Constructors
- 
+
         //------------------------------------------------------
         //
         //  Public Methods
@@ -59,8 +59,8 @@ namespace System.Windows.Documents
         /// </summary>
         public object Current
         {
-            get 
-            { 
+            get
+            {
                 int runLength;
                 int offset;
 
@@ -68,7 +68,7 @@ namespace System.Windows.Documents
                 {
                     // Disable presharp 6503: Property get methods should not throw exceptions.
                     // We must throw here -- it's part of the IEnumerator contract.
-                    #pragma warning suppress 6503
+#pragma warning suppress 6503
                     throw new InvalidOperationException(SR.EnumeratorNotStarted);
                 }
 
@@ -83,7 +83,7 @@ namespace System.Windows.Documents
 
                 if (_navigator.CompareTo(_end) >= 0)
                 {
-                    #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+#pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
                     throw new InvalidOperationException(SR.EnumeratorReachedEnd);
                 }
 
@@ -93,7 +93,7 @@ namespace System.Windows.Documents
                 // which in turn can modify the TextContainer.
                 if (_generation != _start.TextContainer.Generation && !IsLogicalChildrenIterationInProgress)
                 {
-                    #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+#pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
                     throw new InvalidOperationException(SR.EnumeratorVersionChanged);
                 }
 
@@ -248,7 +248,7 @@ namespace System.Windows.Documents
         //  Protected Methods
         //
         //------------------------------------------------------
- 
+
         #region Protected Methods
 
         #endregion Protected Events
@@ -293,7 +293,7 @@ namespace System.Windows.Documents
 
         private void EnsureBufferCapacity(int size)
         {
-            char [] newBuffer;
+            char[] newBuffer;
 
             if (_buffer == null)
             {
@@ -301,7 +301,7 @@ namespace System.Windows.Documents
             }
             else if (_buffer.Length < size)
             {
-                newBuffer = new char[Math.Max(2*_buffer.Length, size)];
+                newBuffer = new char[Math.Max(2 * _buffer.Length, size)];
                 _buffer.CopyTo(newBuffer, 0);
                 _buffer = newBuffer;
             }
@@ -319,7 +319,7 @@ namespace System.Windows.Documents
 
         private bool IsLogicalChildrenIterationInProgress
         {
-            get 
+            get
             {
                 DependencyObject node = _start.Parent;
 
@@ -373,7 +373,7 @@ namespace System.Windows.Documents
         private object _currentCache;
 
         // Buffer to text content retrieval.
-        private char [] _buffer;
+        private char[] _buffer;
 
         #endregion Private Fields
     }

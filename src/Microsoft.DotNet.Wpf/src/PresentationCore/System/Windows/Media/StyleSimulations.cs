@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -27,15 +27,15 @@ namespace System.Windows.Media
         /// <summary>
         /// No font style simulation
         /// </summary>
-        None                 = 0,
+        None = 0,
         /// <summary>
         /// Bold style simulation
         /// </summary>
-        BoldSimulation       = 1,
+        BoldSimulation = 1,
         /// <summary>
         /// Italic style simulation
         /// </summary>
-        ItalicSimulation     = 2,
+        ItalicSimulation = 2,
         /// <summary>
         /// Bold and Italic style simulation.
         /// </summary>

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -211,8 +211,10 @@ namespace System.Windows.Documents
             }
             else
             {
-                change = new TextChange();
-                change.Offset = offset;
+                change = new TextChange
+                {
+                    Offset = offset
+                };
                 Changes.Add(offset, change);
                 keyIndex = Changes.IndexOfKey(offset);
             }
@@ -338,7 +340,7 @@ namespace System.Windows.Documents
                 }
                 _changes = newChanges;
             }
-            
+
             DeleteChangeIfEmpty(change);
 
 #if PROPERTY_CHANGES
@@ -388,7 +390,7 @@ namespace System.Windows.Documents
                 }
             }
 #endif
-            
+
             if (oldChange.Offset + oldChange.AddedLength >= newChange.Offset)
             {
                 // If any text was deleted in the new change, adjust the added count of the
@@ -445,7 +447,7 @@ namespace System.Windows.Documents
                 // Don't need to adjust oldChange.PropertyCount, since oldChange is about to be removed
             }
 #endif
-            
+
             // adjust removed count
             if (addedLengthOverlap >= oldChange.AddedLength)
             {
@@ -481,7 +483,7 @@ namespace System.Windows.Documents
 #endif
 
         #endregion Private Methods
-        
+
         //------------------------------------------------------
         //
         //  Private Fields

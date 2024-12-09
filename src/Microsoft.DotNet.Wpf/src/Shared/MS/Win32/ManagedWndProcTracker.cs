@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -67,8 +67,8 @@ namespace MS.Win32
                 {
                     IntPtr hwnd = (IntPtr)entry.Value;
 
-                    int windowStyle = UnsafeNativeMethods.GetWindowLong(new HandleRef(null,hwnd), NativeMethods.GWL_STYLE);
-                    if((windowStyle & NativeMethods.WS_CHILD) != 0)
+                    int windowStyle = UnsafeNativeMethods.GetWindowLong(new HandleRef(null, hwnd), NativeMethods.GWL_STYLE);
+                    if ((windowStyle & NativeMethods.WS_CHILD) != 0)
                     {
                         // Tell all the HwndSubclass WndProcs for WS_CHILD windows
                         // to detach themselves. This is particularly important when
@@ -88,7 +88,7 @@ namespace MS.Win32
 
                         UnsafeNativeMethods.SendMessage(hwnd, HwndSubclass.DetachMessage,
                                                             IntPtr.Zero /* wildcard */,
-                                                            (IntPtr) 2 /* force and forward */);
+                                                            (IntPtr)2 /* force and forward */);
                     }
 
                     // the last WndProc on the chain might be managed as well
@@ -96,7 +96,7 @@ namespace MS.Win32
                     // Just in case, restore the DefaultWindowProc.
                     HookUpDefWindowProc(hwnd);
                 }
-}
+            }
         }
 
         private static void HookUpDefWindowProc(IntPtr hwnd)
@@ -106,7 +106,7 @@ namespace MS.Win32
             LogFinishHWND(hwnd, "Core HookUpDWP");
 #endif
 
-            IntPtr result = IntPtr.Zero ;
+            IntPtr result = IntPtr.Zero;
 
             // We've already cleaned up, return immediately.
             if (hwnd == IntPtr.Zero)
@@ -120,9 +120,9 @@ namespace MS.Win32
             {
                 try
                 {
-                    result = UnsafeNativeMethods.SetWindowLong(new HandleRef(null,hwnd), NativeMethods.GWL_WNDPROC, defWindowProc);
-}
-                catch(System.ComponentModel.Win32Exception e)
+                    result = UnsafeNativeMethods.SetWindowLong(new HandleRef(null, hwnd), NativeMethods.GWL_WNDPROC, defWindowProc);
+                }
+                catch (System.ComponentModel.Win32Exception e)
                 {
                     // We failed to change the window proc.  Now what?
 
@@ -134,9 +134,9 @@ namespace MS.Win32
                         throw;
                     }
                 }
-                if (result != IntPtr.Zero )
+                if (result != IntPtr.Zero)
                 {
-                    UnsafeNativeMethods.PostMessage(new HandleRef(null,hwnd), WindowMessage.WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
+                    UnsafeNativeMethods.PostMessage(new HandleRef(null, hwnd), WindowMessage.WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
                 }
             }
         }
@@ -147,7 +147,7 @@ namespace MS.Win32
         {
             // We need to swap back in the DefWindowProc, but which one we use depends on
             // what the Unicode-ness of the window.
-            if (SafeNativeMethods.IsWindowUnicode(new HandleRef(null,hwnd)))
+            if (SafeNativeMethods.IsWindowUnicode(new HandleRef(null, hwnd)))
             {
                 if (_cachedDefWindowProcW == IntPtr.Zero)
                 {
@@ -160,7 +160,7 @@ namespace MS.Win32
             {
                 if (_cachedDefWindowProcA == IntPtr.Zero)
                 {
-                    _cachedDefWindowProcA = GetUser32ProcAddress("DefWindowProcA") ;
+                    _cachedDefWindowProcA = GetUser32ProcAddress("DefWindowProcA");
                 }
 
                 return _cachedDefWindowProcA;
@@ -175,7 +175,7 @@ namespace MS.Win32
             if (hModule != IntPtr.Zero)
             {
                 return UnsafeNativeMethods.GetProcAddress(new HandleRef(null, hModule), export);
-}
+            }
             return IntPtr.Zero;
         }
 

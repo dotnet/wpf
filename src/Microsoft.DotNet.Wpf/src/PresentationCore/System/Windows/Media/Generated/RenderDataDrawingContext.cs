@@ -1,14 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // This file was generated, please do not edit it directly.
 // Please see MilCodeGen.html for more information.
 
-using MS.Internal;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 using System.Windows.Media.Effects;
+using MS.Internal;
 
 namespace System.Windows.Media
 {
@@ -38,9 +38,9 @@ namespace System.Windows.Media
             }
 
 
-        #if DEBUG
+#if DEBUG
             MediaTrace.DrawingContextOp.Trace("DrawLine(const)");
-        #endif
+#endif
 
             unsafe
             {
@@ -49,7 +49,7 @@ namespace System.Windows.Media
                 // Always assume visual and drawing brushes need realization updates
 
                 MILCMD_DRAW_LINE record =
-                    new MILCMD_DRAW_LINE (
+                    new MILCMD_DRAW_LINE(
                         _renderData.AddDependentResource(pen),
                         point0,
                         point1
@@ -61,8 +61,8 @@ namespace System.Windows.Media
                 _renderData.WriteDataRecord(MILCMD.MilDrawLine,
                                             (byte*)&record,
                                             40 /* sizeof(MILCMD_DRAW_LINE) */);
-            }                           
-}
+            }
+        }
 
         /// <summary>
         ///     DrawLine - 
@@ -89,9 +89,9 @@ namespace System.Windows.Media
             }
 
 
-        #if DEBUG
+#if DEBUG
             MediaTrace.DrawingContextOp.Trace("DrawLine(animate)");
-        #endif
+#endif
 
             unsafe
             {
@@ -105,7 +105,7 @@ namespace System.Windows.Media
                 hPoint1Animations = UseAnimations(point1, point1Animations);
 
                 MILCMD_DRAW_LINE_ANIMATE record =
-                    new MILCMD_DRAW_LINE_ANIMATE (
+                    new MILCMD_DRAW_LINE_ANIMATE(
                         _renderData.AddDependentResource(pen),
                         point0,
                         hPoint0Animations,
@@ -119,8 +119,8 @@ namespace System.Windows.Media
                 _renderData.WriteDataRecord(MILCMD.MilDrawLineAnimate,
                                             (byte*)&record,
                                             48 /* sizeof(MILCMD_DRAW_LINE_ANIMATE) */);
-            }                            
-}
+            }
+        }
         /// <summary>
         ///     DrawRectangle - 
         ///     Draw a rectangle with the provided Brush and/or Pen.
@@ -148,9 +148,9 @@ namespace System.Windows.Media
             }
 
 
-        #if DEBUG
+#if DEBUG
             MediaTrace.DrawingContextOp.Trace("DrawRectangle(const)");
-        #endif
+#endif
 
             unsafe
             {
@@ -159,7 +159,7 @@ namespace System.Windows.Media
                 // Always assume visual and drawing brushes need realization updates
 
                 MILCMD_DRAW_RECTANGLE record =
-                    new MILCMD_DRAW_RECTANGLE (
+                    new MILCMD_DRAW_RECTANGLE(
                         _renderData.AddDependentResource(brush),
                         _renderData.AddDependentResource(pen),
                         rectangle
@@ -171,8 +171,8 @@ namespace System.Windows.Media
                 _renderData.WriteDataRecord(MILCMD.MilDrawRectangle,
                                             (byte*)&record,
                                             40 /* sizeof(MILCMD_DRAW_RECTANGLE) */);
-            }                           
-}
+            }
+        }
 
         /// <summary>
         ///     DrawRectangle - 
@@ -203,9 +203,9 @@ namespace System.Windows.Media
             }
 
 
-        #if DEBUG
+#if DEBUG
             MediaTrace.DrawingContextOp.Trace("DrawRectangle(animate)");
-        #endif
+#endif
 
             unsafe
             {
@@ -217,7 +217,7 @@ namespace System.Windows.Media
                 hRectangleAnimations = UseAnimations(rectangle, rectangleAnimations);
 
                 MILCMD_DRAW_RECTANGLE_ANIMATE record =
-                    new MILCMD_DRAW_RECTANGLE_ANIMATE (
+                    new MILCMD_DRAW_RECTANGLE_ANIMATE(
                         _renderData.AddDependentResource(brush),
                         _renderData.AddDependentResource(pen),
                         rectangle,
@@ -230,8 +230,8 @@ namespace System.Windows.Media
                 _renderData.WriteDataRecord(MILCMD.MilDrawRectangleAnimate,
                                             (byte*)&record,
                                             48 /* sizeof(MILCMD_DRAW_RECTANGLE_ANIMATE) */);
-            }                            
-}
+            }
+        }
         /// <summary>
         ///     DrawRoundedRectangle - 
         ///     Draw a rounded rectangle with the provided Brush and/or Pen.
@@ -269,9 +269,9 @@ namespace System.Windows.Media
             }
 
 
-        #if DEBUG
+#if DEBUG
             MediaTrace.DrawingContextOp.Trace("DrawRoundedRectangle(const)");
-        #endif
+#endif
 
             unsafe
             {
@@ -280,7 +280,7 @@ namespace System.Windows.Media
                 // Always assume visual and drawing brushes need realization updates
 
                 MILCMD_DRAW_ROUNDED_RECTANGLE record =
-                    new MILCMD_DRAW_ROUNDED_RECTANGLE (
+                    new MILCMD_DRAW_ROUNDED_RECTANGLE(
                         _renderData.AddDependentResource(brush),
                         _renderData.AddDependentResource(pen),
                         rectangle,
@@ -294,8 +294,8 @@ namespace System.Windows.Media
                 _renderData.WriteDataRecord(MILCMD.MilDrawRoundedRectangle,
                                             (byte*)&record,
                                             56 /* sizeof(MILCMD_DRAW_ROUNDED_RECTANGLE) */);
-            }                           
-}
+            }
+        }
 
         /// <summary>
         ///     DrawRoundedRectangle - 
@@ -340,9 +340,9 @@ namespace System.Windows.Media
             }
 
 
-        #if DEBUG
+#if DEBUG
             MediaTrace.DrawingContextOp.Trace("DrawRoundedRectangle(animate)");
-        #endif
+#endif
 
             unsafe
             {
@@ -358,7 +358,7 @@ namespace System.Windows.Media
                 hRadiusYAnimations = UseAnimations(radiusY, radiusYAnimations);
 
                 MILCMD_DRAW_ROUNDED_RECTANGLE_ANIMATE record =
-                    new MILCMD_DRAW_ROUNDED_RECTANGLE_ANIMATE (
+                    new MILCMD_DRAW_ROUNDED_RECTANGLE_ANIMATE(
                         _renderData.AddDependentResource(brush),
                         _renderData.AddDependentResource(pen),
                         rectangle,
@@ -375,8 +375,8 @@ namespace System.Windows.Media
                 _renderData.WriteDataRecord(MILCMD.MilDrawRoundedRectangleAnimate,
                                             (byte*)&record,
                                             72 /* sizeof(MILCMD_DRAW_ROUNDED_RECTANGLE_ANIMATE) */);
-            }                            
-}
+            }
+        }
         /// <summary>
         ///     DrawEllipse - 
         ///     Draw an ellipse with the provided Brush and/or Pen.
@@ -416,9 +416,9 @@ namespace System.Windows.Media
             }
 
 
-        #if DEBUG
+#if DEBUG
             MediaTrace.DrawingContextOp.Trace("DrawEllipse(const)");
-        #endif
+#endif
 
             unsafe
             {
@@ -427,7 +427,7 @@ namespace System.Windows.Media
                 // Always assume visual and drawing brushes need realization updates
 
                 MILCMD_DRAW_ELLIPSE record =
-                    new MILCMD_DRAW_ELLIPSE (
+                    new MILCMD_DRAW_ELLIPSE(
                         _renderData.AddDependentResource(brush),
                         _renderData.AddDependentResource(pen),
                         center,
@@ -441,8 +441,8 @@ namespace System.Windows.Media
                 _renderData.WriteDataRecord(MILCMD.MilDrawEllipse,
                                             (byte*)&record,
                                             40 /* sizeof(MILCMD_DRAW_ELLIPSE) */);
-            }                           
-}
+            }
+        }
 
         /// <summary>
         ///     DrawEllipse - 
@@ -489,9 +489,9 @@ namespace System.Windows.Media
             }
 
 
-        #if DEBUG
+#if DEBUG
             MediaTrace.DrawingContextOp.Trace("DrawEllipse(animate)");
-        #endif
+#endif
 
             unsafe
             {
@@ -507,7 +507,7 @@ namespace System.Windows.Media
                 hRadiusYAnimations = UseAnimations(radiusY, radiusYAnimations);
 
                 MILCMD_DRAW_ELLIPSE_ANIMATE record =
-                    new MILCMD_DRAW_ELLIPSE_ANIMATE (
+                    new MILCMD_DRAW_ELLIPSE_ANIMATE(
                         _renderData.AddDependentResource(brush),
                         _renderData.AddDependentResource(pen),
                         center,
@@ -524,8 +524,8 @@ namespace System.Windows.Media
                 _renderData.WriteDataRecord(MILCMD.MilDrawEllipseAnimate,
                                             (byte*)&record,
                                             56 /* sizeof(MILCMD_DRAW_ELLIPSE_ANIMATE) */);
-            }                            
-}
+            }
+        }
         /// <summary>
         ///     DrawGeometry - 
         ///     Draw a Geometry with the provided Brush and/or Pen.
@@ -553,9 +553,9 @@ namespace System.Windows.Media
             }
 
 
-        #if DEBUG
+#if DEBUG
             MediaTrace.DrawingContextOp.Trace("DrawGeometry(const)");
-        #endif
+#endif
 
             unsafe
             {
@@ -564,7 +564,7 @@ namespace System.Windows.Media
                 // Always assume visual and drawing brushes need realization updates
 
                 MILCMD_DRAW_GEOMETRY record =
-                    new MILCMD_DRAW_GEOMETRY (
+                    new MILCMD_DRAW_GEOMETRY(
                         _renderData.AddDependentResource(brush),
                         _renderData.AddDependentResource(pen),
                         _renderData.AddDependentResource(geometry)
@@ -576,8 +576,8 @@ namespace System.Windows.Media
                 _renderData.WriteDataRecord(MILCMD.MilDrawGeometry,
                                             (byte*)&record,
                                             16 /* sizeof(MILCMD_DRAW_GEOMETRY) */);
-            }                           
-}
+            }
+        }
 
         /// <summary>
         ///     DrawImage - 
@@ -602,9 +602,9 @@ namespace System.Windows.Media
             }
 
 
-        #if DEBUG
+#if DEBUG
             MediaTrace.DrawingContextOp.Trace("DrawImage(const)");
-        #endif
+#endif
 
             unsafe
             {
@@ -613,7 +613,7 @@ namespace System.Windows.Media
 
 
                 MILCMD_DRAW_IMAGE record =
-                    new MILCMD_DRAW_IMAGE (
+                    new MILCMD_DRAW_IMAGE(
                         _renderData.AddDependentResource(imageSource),
                         rectangle
                         );
@@ -624,8 +624,8 @@ namespace System.Windows.Media
                 _renderData.WriteDataRecord(MILCMD.MilDrawImage,
                                             (byte*)&record,
                                             40 /* sizeof(MILCMD_DRAW_IMAGE) */);
-            }                           
-}
+            }
+        }
 
         /// <summary>
         ///     DrawImage - 
@@ -652,9 +652,9 @@ namespace System.Windows.Media
             }
 
 
-        #if DEBUG
+#if DEBUG
             MediaTrace.DrawingContextOp.Trace("DrawImage(animate)");
-        #endif
+#endif
 
             unsafe
             {
@@ -666,7 +666,7 @@ namespace System.Windows.Media
                 hRectangleAnimations = UseAnimations(rectangle, rectangleAnimations);
 
                 MILCMD_DRAW_IMAGE_ANIMATE record =
-                    new MILCMD_DRAW_IMAGE_ANIMATE (
+                    new MILCMD_DRAW_IMAGE_ANIMATE(
                         _renderData.AddDependentResource(imageSource),
                         rectangle,
                         hRectangleAnimations
@@ -678,8 +678,8 @@ namespace System.Windows.Media
                 _renderData.WriteDataRecord(MILCMD.MilDrawImageAnimate,
                                             (byte*)&record,
                                             40 /* sizeof(MILCMD_DRAW_IMAGE_ANIMATE) */);
-            }                            
-}
+            }
+        }
         /// <summary>
         ///     DrawGlyphRun - 
         ///     Draw a GlyphRun
@@ -700,9 +700,9 @@ namespace System.Windows.Media
             }
 
 
-        #if DEBUG
+#if DEBUG
             MediaTrace.DrawingContextOp.Trace("DrawGlyphRun(const)");
-        #endif
+#endif
 
             unsafe
             {
@@ -711,7 +711,7 @@ namespace System.Windows.Media
                 // Always assume visual and drawing brushes need realization updates
 
                 MILCMD_DRAW_GLYPH_RUN record =
-                    new MILCMD_DRAW_GLYPH_RUN (
+                    new MILCMD_DRAW_GLYPH_RUN(
                         _renderData.AddDependentResource(foregroundBrush),
                         _renderData.AddDependentResource(glyphRun)
                         );
@@ -722,8 +722,8 @@ namespace System.Windows.Media
                 _renderData.WriteDataRecord(MILCMD.MilDrawGlyphRun,
                                             (byte*)&record,
                                             8 /* sizeof(MILCMD_DRAW_GLYPH_RUN) */);
-            }                           
-}
+            }
+        }
 
         /// <summary>
         ///     DrawDrawing - 
@@ -741,9 +741,9 @@ namespace System.Windows.Media
             }
 
 
-        #if DEBUG
+#if DEBUG
             MediaTrace.DrawingContextOp.Trace("DrawDrawing(const)");
-        #endif
+#endif
 
             unsafe
             {
@@ -752,7 +752,7 @@ namespace System.Windows.Media
 
 
                 MILCMD_DRAW_DRAWING record =
-                    new MILCMD_DRAW_DRAWING (
+                    new MILCMD_DRAW_DRAWING(
                         _renderData.AddDependentResource(drawing)
                         );
 
@@ -762,8 +762,8 @@ namespace System.Windows.Media
                 _renderData.WriteDataRecord(MILCMD.MilDrawDrawing,
                                             (byte*)&record,
                                             8 /* sizeof(MILCMD_DRAW_DRAWING) */);
-            }                           
-}
+            }
+        }
 
         /// <summary>
         ///     DrawVideo - 
@@ -786,9 +786,9 @@ namespace System.Windows.Media
             }
 
 
-        #if DEBUG
+#if DEBUG
             MediaTrace.DrawingContextOp.Trace("DrawVideo(const)");
-        #endif
+#endif
 
             unsafe
             {
@@ -797,7 +797,7 @@ namespace System.Windows.Media
 
 
                 MILCMD_DRAW_VIDEO record =
-                    new MILCMD_DRAW_VIDEO (
+                    new MILCMD_DRAW_VIDEO(
                         _renderData.AddDependentResource(player),
                         rectangle
                         );
@@ -808,8 +808,8 @@ namespace System.Windows.Media
                 _renderData.WriteDataRecord(MILCMD.MilDrawVideo,
                                             (byte*)&record,
                                             40 /* sizeof(MILCMD_DRAW_VIDEO) */);
-            }                           
-}
+            }
+        }
 
         /// <summary>
         ///     DrawVideo - 
@@ -834,9 +834,9 @@ namespace System.Windows.Media
             }
 
 
-        #if DEBUG
+#if DEBUG
             MediaTrace.DrawingContextOp.Trace("DrawVideo(animate)");
-        #endif
+#endif
 
             unsafe
             {
@@ -848,7 +848,7 @@ namespace System.Windows.Media
                 hRectangleAnimations = UseAnimations(rectangle, rectangleAnimations);
 
                 MILCMD_DRAW_VIDEO_ANIMATE record =
-                    new MILCMD_DRAW_VIDEO_ANIMATE (
+                    new MILCMD_DRAW_VIDEO_ANIMATE(
                         _renderData.AddDependentResource(player),
                         rectangle,
                         hRectangleAnimations
@@ -860,8 +860,8 @@ namespace System.Windows.Media
                 _renderData.WriteDataRecord(MILCMD.MilDrawVideoAnimate,
                                             (byte*)&record,
                                             40 /* sizeof(MILCMD_DRAW_VIDEO_ANIMATE) */);
-            }                            
-}
+            }
+        }
         /// <summary>
         ///     PushClip - 
         ///     Push a clip region, which will apply to all drawing primitives until the 
@@ -875,9 +875,9 @@ namespace System.Windows.Media
 
 
 
-        #if DEBUG
+#if DEBUG
             MediaTrace.DrawingContextOp.Trace("PushClip(const)");
-        #endif
+#endif
 
             unsafe
             {
@@ -886,7 +886,7 @@ namespace System.Windows.Media
 
 
                 MILCMD_PUSH_CLIP record =
-                    new MILCMD_PUSH_CLIP (
+                    new MILCMD_PUSH_CLIP(
                         _renderData.AddDependentResource(clipGeometry)
                         );
 
@@ -896,10 +896,10 @@ namespace System.Windows.Media
                 _renderData.WriteDataRecord(MILCMD.MilPushClip,
                                             (byte*)&record,
                                             8 /* sizeof(MILCMD_PUSH_CLIP) */);
-            }                           
+            }
 
-            _stackDepth++;                            
-}
+            _stackDepth++;
+        }
 
         /// <summary>
         ///     PushOpacityMask - 
@@ -914,9 +914,9 @@ namespace System.Windows.Media
 
 
 
-        #if DEBUG
+#if DEBUG
             MediaTrace.DrawingContextOp.Trace("PushOpacityMask(const)");
-        #endif
+#endif
 
             unsafe
             {
@@ -925,7 +925,7 @@ namespace System.Windows.Media
                 // Always assume visual and drawing brushes need realization updates
 
                 MILCMD_PUSH_OPACITY_MASK record =
-                    new MILCMD_PUSH_OPACITY_MASK (
+                    new MILCMD_PUSH_OPACITY_MASK(
                         _renderData.AddDependentResource(opacityMask)
                         );
 
@@ -935,10 +935,10 @@ namespace System.Windows.Media
                 _renderData.WriteDataRecord(MILCMD.MilPushOpacityMask,
                                             (byte*)&record,
                                             24 /* sizeof(MILCMD_PUSH_OPACITY_MASK) */);
-            }                           
+            }
 
-            _stackDepth++;                            
-}
+            _stackDepth++;
+        }
 
         /// <summary>
         ///     PushOpacity - 
@@ -955,9 +955,9 @@ namespace System.Windows.Media
 
 
 
-        #if DEBUG
+#if DEBUG
             MediaTrace.DrawingContextOp.Trace("PushOpacity(const)");
-        #endif
+#endif
 
             unsafe
             {
@@ -966,7 +966,7 @@ namespace System.Windows.Media
 
 
                 MILCMD_PUSH_OPACITY record =
-                    new MILCMD_PUSH_OPACITY (
+                    new MILCMD_PUSH_OPACITY(
                         opacity
                         );
 
@@ -976,10 +976,10 @@ namespace System.Windows.Media
                 _renderData.WriteDataRecord(MILCMD.MilPushOpacity,
                                             (byte*)&record,
                                             8 /* sizeof(MILCMD_PUSH_OPACITY) */);
-            }                           
+            }
 
-            _stackDepth++;                            
-}
+            _stackDepth++;
+        }
 
         /// <summary>
         ///     PushOpacity - 
@@ -998,9 +998,9 @@ namespace System.Windows.Media
 
 
 
-        #if DEBUG
+#if DEBUG
             MediaTrace.DrawingContextOp.Trace("PushOpacity(animate)");
-        #endif
+#endif
 
             unsafe
             {
@@ -1012,7 +1012,7 @@ namespace System.Windows.Media
                 hOpacityAnimations = UseAnimations(opacity, opacityAnimations);
 
                 MILCMD_PUSH_OPACITY_ANIMATE record =
-                    new MILCMD_PUSH_OPACITY_ANIMATE (
+                    new MILCMD_PUSH_OPACITY_ANIMATE(
                         opacity,
                         hOpacityAnimations
                         );
@@ -1023,10 +1023,10 @@ namespace System.Windows.Media
                 _renderData.WriteDataRecord(MILCMD.MilPushOpacityAnimate,
                                             (byte*)&record,
                                             16 /* sizeof(MILCMD_PUSH_OPACITY_ANIMATE) */);
-            }                            
+            }
 
             _stackDepth++;
-}
+        }
         /// <summary>
         ///     PushTransform - 
         ///     Push a Transform which will apply to all drawing operations until the corresponding 
@@ -1040,9 +1040,9 @@ namespace System.Windows.Media
 
 
 
-        #if DEBUG
+#if DEBUG
             MediaTrace.DrawingContextOp.Trace("PushTransform(const)");
-        #endif
+#endif
 
             unsafe
             {
@@ -1051,7 +1051,7 @@ namespace System.Windows.Media
 
 
                 MILCMD_PUSH_TRANSFORM record =
-                    new MILCMD_PUSH_TRANSFORM (
+                    new MILCMD_PUSH_TRANSFORM(
                         _renderData.AddDependentResource(transform)
                         );
 
@@ -1061,10 +1061,10 @@ namespace System.Windows.Media
                 _renderData.WriteDataRecord(MILCMD.MilPushTransform,
                                             (byte*)&record,
                                             8 /* sizeof(MILCMD_PUSH_TRANSFORM) */);
-            }                           
+            }
 
-            _stackDepth++;                            
-}
+            _stackDepth++;
+        }
 
         /// <summary>
         ///     PushGuidelineSet - 
@@ -1079,9 +1079,9 @@ namespace System.Windows.Media
 
 
 
-        #if DEBUG
+#if DEBUG
             MediaTrace.DrawingContextOp.Trace("PushGuidelineSet(const)");
-        #endif
+#endif
 
             unsafe
             {
@@ -1129,7 +1129,7 @@ namespace System.Windows.Media
                 else
                 {
                     MILCMD_PUSH_GUIDELINE_SET record =
-                        new MILCMD_PUSH_GUIDELINE_SET (
+                        new MILCMD_PUSH_GUIDELINE_SET(
                             _renderData.AddDependentResource(guidelines)
                             );
 
@@ -1157,9 +1157,9 @@ namespace System.Windows.Media
 
 
 
-        #if DEBUG
+#if DEBUG
             MediaTrace.DrawingContextOp.Trace("PushGuidelineY1(const)");
-        #endif
+#endif
 
             unsafe
             {
@@ -1168,7 +1168,7 @@ namespace System.Windows.Media
 
 
                 MILCMD_PUSH_GUIDELINE_Y1 record =
-                    new MILCMD_PUSH_GUIDELINE_Y1 (
+                    new MILCMD_PUSH_GUIDELINE_Y1(
                         coordinate
                         );
 
@@ -1178,10 +1178,10 @@ namespace System.Windows.Media
                 _renderData.WriteDataRecord(MILCMD.MilPushGuidelineY1,
                                             (byte*)&record,
                                             8 /* sizeof(MILCMD_PUSH_GUIDELINE_Y1) */);
-            }                           
+            }
 
-            _stackDepth++;                            
-}
+            _stackDepth++;
+        }
 
         /// <summary>
         ///     PushGuidelineY2 - 
@@ -1201,9 +1201,9 @@ namespace System.Windows.Media
 
 
 
-        #if DEBUG
+#if DEBUG
             MediaTrace.DrawingContextOp.Trace("PushGuidelineY2(const)");
-        #endif
+#endif
 
             unsafe
             {
@@ -1212,7 +1212,7 @@ namespace System.Windows.Media
 
 
                 MILCMD_PUSH_GUIDELINE_Y2 record =
-                    new MILCMD_PUSH_GUIDELINE_Y2 (
+                    new MILCMD_PUSH_GUIDELINE_Y2(
                         leadingCoordinate,
                         offsetToDrivenCoordinate
                         );
@@ -1223,10 +1223,10 @@ namespace System.Windows.Media
                 _renderData.WriteDataRecord(MILCMD.MilPushGuidelineY2,
                                             (byte*)&record,
                                             16 /* sizeof(MILCMD_PUSH_GUIDELINE_Y2) */);
-            }                           
+            }
 
-            _stackDepth++;                            
-}
+            _stackDepth++;
+        }
 
         /// <summary>
         ///     PushEffect - 
@@ -1244,9 +1244,9 @@ namespace System.Windows.Media
 
 
 
-        #if DEBUG
+#if DEBUG
             MediaTrace.DrawingContextOp.Trace("PushEffect(const)");
-        #endif
+#endif
 
             unsafe
             {
@@ -1255,7 +1255,7 @@ namespace System.Windows.Media
 
 
                 MILCMD_PUSH_EFFECT record =
-                    new MILCMD_PUSH_EFFECT (
+                    new MILCMD_PUSH_EFFECT(
                         _renderData.AddDependentResource(effect),
                         _renderData.AddDependentResource(effectInput)
                         );
@@ -1266,13 +1266,13 @@ namespace System.Windows.Media
                 _renderData.WriteDataRecord(MILCMD.MilPushEffect,
                                             (byte*)&record,
                                             8 /* sizeof(MILCMD_PUSH_EFFECT) */);
-            }                           
+            }
 
-            _stackDepth++;                            
+            _stackDepth++;
             if (_renderData.BitmapEffectStackDepth == 0)
             {
                 _renderData.BeginTopLevelBitmapEffect(_stackDepth);
-            }                                                                                  
+            }
         }
 
         /// <summary>
@@ -1288,9 +1288,9 @@ namespace System.Windows.Media
                 throw new InvalidOperationException(SR.DrawingContext_TooManyPops);
             }
 
-        #if DEBUG
+#if DEBUG
             MediaTrace.DrawingContextOp.Trace("Pop(const)");
-        #endif
+#endif
 
             unsafe
             {
@@ -1299,7 +1299,7 @@ namespace System.Windows.Media
 
 
                 MILCMD_POP record =
-                    new MILCMD_POP (
+                    new MILCMD_POP(
 
                         );
 
@@ -1310,16 +1310,16 @@ namespace System.Windows.Media
                 _renderData.WriteDataRecord(MILCMD.MilPop,
                                             (byte*)&record,
                                             0 /* sizeof(MILCMD_POP) */);
-            }                           
+            }
 
-            _stackDepth--;                            
+            _stackDepth--;
             // end the top level effect, if we are popping the top
             // level push effect instruction
             if (_renderData.BitmapEffectStackDepth == (_stackDepth + 1))
             {
                 _renderData.EndTopLevelBitmapEffect();
             }
-}
+        }
 
         private UInt32 UseAnimations(
             Double baseValue,

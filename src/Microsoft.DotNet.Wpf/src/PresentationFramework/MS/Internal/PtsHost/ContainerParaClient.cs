@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,12 +11,11 @@
 
 using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Documents;
+using System.Windows.Media;
 using MS.Internal.Documents;
-using MS.Internal.Text;
-
 using MS.Internal.PtsHost.UnsafeNativeMethods;
+using MS.Internal.Text;
 
 namespace MS.Internal.PtsHost
 {
@@ -50,7 +49,7 @@ namespace MS.Internal.PtsHost
             // Adjust rectangle and offset to take into account MBPs
             MbpInfo mbp = MbpInfo.FromElement(Paragraph.Element, Paragraph.StructuralCache.TextFormatterHost.PixelsPerDip);
 
-            if(ParentFlowDirection != PageFlowDirection)
+            if (ParentFlowDirection != PageFlowDirection)
             {
                 mbp.MirrorMargin();
             }
@@ -58,8 +57,8 @@ namespace MS.Internal.PtsHost
             _rect.u += mbp.MarginLeft;
             _rect.du -= mbp.MarginLeft + mbp.MarginRight;
 
-            _rect.du = Math.Max(TextDpi.ToTextDpi(TextDpi.MinWidth), _rect.du); 
-            _rect.dv = Math.Max(TextDpi.ToTextDpi(TextDpi.MinWidth), _rect.dv); 
+            _rect.du = Math.Max(TextDpi.ToTextDpi(TextDpi.MinWidth), _rect.du);
+            _rect.dv = Math.Max(TextDpi.ToTextDpi(TextDpi.MinWidth), _rect.dv);
 
             uint fswdirSubtrack = PTS.FlowDirectionToFswdir(_flowDirection);
 
@@ -67,7 +66,7 @@ namespace MS.Internal.PtsHost
             if (subtrackDetails.cParas != 0)
             {
                 // Get list of paragraphs
-                PTS.FSPARADESCRIPTION [] arrayParaDesc;
+                PTS.FSPARADESCRIPTION[] arrayParaDesc;
                 PtsHelper.ParaListFromSubtrack(PtsContext, _paraHandle, ref subtrackDetails, out arrayParaDesc);
 
                 PtsHelper.ArrangeParaList(PtsContext, subtrackDetails.fsrc, arrayParaDesc, fswdirSubtrack);
@@ -96,7 +95,7 @@ namespace MS.Internal.PtsHost
             if (subtrackDetails.cParas != 0)
             {
                 // Get list of paragraphs
-                PTS.FSPARADESCRIPTION [] arrayParaDesc;
+                PTS.FSPARADESCRIPTION[] arrayParaDesc;
                 PtsHelper.ParaListFromSubtrack(PtsContext, _paraHandle, ref subtrackDetails, out arrayParaDesc);
 
                 // Render list of paragraphs
@@ -161,7 +160,7 @@ namespace MS.Internal.PtsHost
             }
 
             // Rectangles must be non-null
-            Invariant.Assert(rectangles != null);    
+            Invariant.Assert(rectangles != null);
             return rectangles;
         }
 
@@ -182,7 +181,7 @@ namespace MS.Internal.PtsHost
             // Adjust rectangle and offset to take into account MBPs
             MbpInfo mbp = MbpInfo.FromElement(Paragraph.Element, Paragraph.StructuralCache.TextFormatterHost.PixelsPerDip);
 
-            if(ThisFlowDirection != PageFlowDirection)
+            if (ThisFlowDirection != PageFlowDirection)
             {
                 mbp.MirrorBP();
             }
@@ -194,7 +193,7 @@ namespace MS.Internal.PtsHost
             if (subtrackDetails.cParas != 0)
             {
                 // Get list of paragraphs
-                PTS.FSPARADESCRIPTION [] arrayParaDesc;
+                PTS.FSPARADESCRIPTION[] arrayParaDesc;
                 PtsHelper.ParaListFromSubtrack(PtsContext, _paraHandle, ref subtrackDetails, out arrayParaDesc);
 
                 // Render list of paragraphs
@@ -222,7 +221,7 @@ namespace MS.Internal.PtsHost
             if (subtrackDetails.cParas != 0)
             {
                 // Get list of paragraphs
-                PTS.FSPARADESCRIPTION [] arrayParaDesc;
+                PTS.FSPARADESCRIPTION[] arrayParaDesc;
                 PtsHelper.ParaListFromSubtrack(PtsContext, _paraHandle, ref subtrackDetails, out arrayParaDesc);
 
                 // Render list of paragraphs
@@ -265,7 +264,7 @@ namespace MS.Internal.PtsHost
             BaseParaClient paraClient;
             PTS.FSSUBTRACKDETAILS subtrackDetails;
             PTS.FSPARADESCRIPTION[] arrayParaDesc;
-            
+
             Invariant.Assert(elementOwner != null, "Expecting TextElement as owner of ContainerParagraph.");
 
             // Query paragraph details
@@ -328,13 +327,13 @@ namespace MS.Internal.PtsHost
             // hasTextContent is set to true if any of the children paragraphs has text content, not just attached objects
             hasTextContent = false;
 
-            if (subtrackDetails.cParas == 0) 
+            if (subtrackDetails.cParas == 0)
             {
                 return new ReadOnlyCollection<ParagraphResult>(new List<ParagraphResult>(0));
             }
 
             // Get list of paragraphs
-            PTS.FSPARADESCRIPTION [] arrayParaDesc;
+            PTS.FSPARADESCRIPTION[] arrayParaDesc;
             PtsHelper.ParaListFromSubtrack(PtsContext, _paraHandle, ref subtrackDetails, out arrayParaDesc);
 
             List<ParagraphResult> paragraphResults = new List<ParagraphResult>(arrayParaDesc.Length);
@@ -375,13 +374,13 @@ namespace MS.Internal.PtsHost
             PTS.FSSUBTRACKDETAILS subtrackDetails;
             PTS.Validate(PTS.FsQuerySubtrackDetails(PtsContext.Context, _paraHandle, out subtrackDetails));
 
-            if (subtrackDetails.cParas == 0) 
+            if (subtrackDetails.cParas == 0)
             {
                 return _rect.v;
             }
 
             // Get list of paragraphs
-            PTS.FSPARADESCRIPTION [] arrayParaDesc;
+            PTS.FSPARADESCRIPTION[] arrayParaDesc;
             PtsHelper.ParaListFromSubtrack(PtsContext, _paraHandle, ref subtrackDetails, out arrayParaDesc);
 
             BaseParaClient paraClient = PtsContext.HandleToObject(arrayParaDesc[0].pfsparaclient) as BaseParaClient;
@@ -410,24 +409,24 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// Is this the first chunk of paginated content.
         /// </summary>
-        internal override bool IsFirstChunk 
-        { 
-            get 
-            { 
-                return _isFirstChunk; 
-            } 
+        internal override bool IsFirstChunk
+        {
+            get
+            {
+                return _isFirstChunk;
+            }
         }
         private bool _isFirstChunk;
 
         /// <summary>
         /// Is this the last chunk of paginated content.
         /// </summary>
-        internal override bool IsLastChunk 
-        { 
-            get 
-            { 
-                return _isLastChunk; 
-            } 
+        internal override bool IsLastChunk
+        {
+            get
+            {
+                return _isLastChunk;
+            }
         }
         private bool _isLastChunk;
     }

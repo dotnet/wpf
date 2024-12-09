@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -38,12 +38,12 @@ namespace System.Windows.Markup
         // Internal only class.         
         //  We actually create a class here - to avoid jitting for use of struct/value type
         // 
-#if PBTCOMPILER       
+#if PBTCOMPILER
         internal class IntegerMarkup
         {
-            internal IntegerMarkup( int value) 
+            internal IntegerMarkup(int value)
             {
-                _value = value; 
+                _value = value;
             }
 
             internal int Value
@@ -55,10 +55,10 @@ namespace System.Windows.Markup
             }
 
             int _value;
-        }    
+        }
 #endif
 
-#region Construction
+        #region Construction
 
         /// <summary>
         ///     Constructor for XamlInt32CollectionSerializer
@@ -67,46 +67,46 @@ namespace System.Windows.Markup
         {
         }
 
-        
-#endregion Construction
 
-#region Conversions
+        #endregion Construction
+
+        #region Conversions
 
         /// <summary>
         ///   Convert a string into a compact binary representation and write it out
         ///   to the passed BinaryWriter.
         /// </summary>
-        public override bool ConvertStringToCustomBinary (
-            BinaryWriter   writer,           // Writer into the baml stream
-            string         stringValue)      // String to convert
+        public override bool ConvertStringToCustomBinary(
+            BinaryWriter writer,           // Writer into the baml stream
+            string stringValue)      // String to convert
         {
 #if PBTCOMPILER            
-            List<IntegerMarkup> ints = Parse( stringValue); 
+            List<IntegerMarkup> ints = Parse(stringValue);
 #else
-            Int32Collection ints = Int32Collection.Parse( stringValue ); 
+            Int32Collection ints = Int32Collection.Parse(stringValue);
 #endif
-            int cur, last , count,  max = 0 ; 
+            int cur, last, count, max = 0;
 
-            count = ints.Count ; 
-            
+            count = ints.Count;
+
             // loop through the collection testing for 
             // if the numbers are consecutive, and what's the max. 
 
-            bool consecutive = true; 
-            bool allPositive = true ; 
-            for ( int i = 1; i < count; i++)
+            bool consecutive = true;
+            bool allPositive = true;
+            for (int i = 1; i < count; i++)
             {
 #if PBTCOMPILER 
-                last = ints[i-1].Value; 
-                cur = ints[i].Value; 
+                last = ints[i - 1].Value;
+                cur = ints[i].Value;
 #else
-                last = ints.Internal_GetItem(i-1); 
-                cur = ints.Internal_GetItem(i); 
+                last = ints.Internal_GetItem(i - 1);
+                cur = ints.Internal_GetItem(i);
 #endif
-    
-                if ( consecutive && ( last + 1 != cur )) 
+
+                if (consecutive && (last + 1 != cur))
                 {
-                    consecutive = false; 
+                    consecutive = false;
                 }
 
                 // 
@@ -115,102 +115,102 @@ namespace System.Windows.Markup
                 //  We could handle this by encoding the min/max and creating a different number of bit encoding. 
                 //  For now - we're seeing enough gains with this change. 
                 // 
-                if ( cur < 0 ) 
+                if (cur < 0)
                 {
-                    allPositive = false ; 
+                    allPositive = false;
                 }
-                
-                if ( cur > max )
+
+                if (cur > max)
                 {
-                    max = cur; 
-                }                    
+                    max = cur;
+                }
             }
-            
-            if ( consecutive ) 
+
+            if (consecutive)
             {
-                writer.Write( (byte) IntegerCollectionType.Consecutive ); 
-                writer.Write( count ); // Write the count 
+                writer.Write((byte)IntegerCollectionType.Consecutive);
+                writer.Write(count); // Write the count 
 
                 // Write the first number. 
 #if PBTCOMPILER                
-                writer.Write( ints[0].Value ); 
+                writer.Write(ints[0].Value);
 #else
-                writer.Write( ints.Internal_GetItem(0)); 
+                writer.Write(ints.Internal_GetItem(0));
 #endif
             }
             else
             {
-                IntegerCollectionType type; 
-                
-                if ( allPositive && max <= 255 )
+                IntegerCollectionType type;
+
+                if (allPositive && max <= 255)
                 {
-                    type = IntegerCollectionType.Byte; 
+                    type = IntegerCollectionType.Byte;
                 }
-                else if ( allPositive && max <= UInt16.MaxValue ) 
+                else if (allPositive && max <= UInt16.MaxValue)
                 {
-                    type = IntegerCollectionType.UShort; 
+                    type = IntegerCollectionType.UShort;
                 }
-                else 
+                else
                 {
-                    type = IntegerCollectionType.Integer; 
+                    type = IntegerCollectionType.Integer;
                 }
 
-                writer.Write( (byte) type ); 
-                writer.Write( count ); // Write the count 
-                
-                switch( type ) 
+                writer.Write((byte)type);
+                writer.Write(count); // Write the count 
+
+                switch (type)
                 {
-                    case IntegerCollectionType.Byte: 
-                    {
-                        for( int i = 0; i < count; i++ ) 
+                    case IntegerCollectionType.Byte:
                         {
-                                writer.Write( (byte) 
-#if PBTCOMPILER 
+                            for (int i = 0; i < count; i++)
+                            {
+                                writer.Write((byte)
+#if PBTCOMPILER
                                                 ints[i].Value
 #else
                                                 ints.Internal_GetItem(i)
 #endif 
-                                              ) ; 
-                        }                            
-                    }
-                    break; 
-                        
-                    case IntegerCollectionType.UShort: 
-                    {
-                        for( int i = 0; i < count; i++ ) 
-                        {                        
-                            writer.Write( (ushort) 
-#if PBTCOMPILER 
-                                            ints[i].Value 
-#else
-                                            ints.Internal_GetItem(i)
-#endif 
-                                         ); 
-                        }    
-                    }
-                    break; 
+                                              );
+                            }
+                        }
+                        break;
 
-                    case IntegerCollectionType.Integer:
-                    {
-                        for( int i = 0; i < count; i++ ) 
-                        {   
-                            writer.Write( 
+                    case IntegerCollectionType.UShort:
+                        {
+                            for (int i = 0; i < count; i++)
+                            {
+                                writer.Write((ushort)
 #if PBTCOMPILER
                                             ints[i].Value
 #else
-                                            ints.Internal_GetItem(i)
-#endif                                  
-                                        );
+                                                ints.Internal_GetItem(i)
+#endif
+                                             );
+                            }
                         }
-                    }
-                    break; 
-                }                
+                        break;
+
+                    case IntegerCollectionType.Integer:
+                        {
+                            for (int i = 0; i < count; i++)
+                            {
+                                writer.Write(
+#if PBTCOMPILER
+                                            ints[i].Value
+#else
+                                                ints.Internal_GetItem(i)
+#endif
+                                            );
+                            }
+                        }
+                        break;
+                }
             }
 
-            return true;             
+            return true;
         }
 
-#if PBTCOMPILER 
+#if PBTCOMPILER
         public static List<IntegerMarkup> Parse(string source)
         {
             IFormatProvider formatProvider = TypeConverterHelper.InvariantEnglishUS;
@@ -224,16 +224,16 @@ namespace System.Windows.Markup
             {
                 value = Convert.ToInt32(th.GetCurrentToken(), formatProvider);
 
-                resource.Add( new IntegerMarkup(value) );
+                resource.Add(new IntegerMarkup(value));
 
             }
 
             return resource;
         }
-#endif 
+#endif
 
 #if !PBTCOMPILER
-        
+
         /// <summary>
         ///   Convert a compact binary representation of a collection 
         ///     into a Point3DCollection into and instance
@@ -244,8 +244,8 @@ namespace System.Windows.Markup
         public override object ConvertCustomBinaryToObject(
             BinaryReader reader)
         {
-            return DeserializeFrom( reader ); 
-        }  
+            return DeserializeFrom(reader);
+        }
 
         /// <summary>
         ///   Convert a compact binary representation of a collection 
@@ -257,88 +257,88 @@ namespace System.Windows.Markup
         public static object StaticConvertCustomBinaryToObject(
             BinaryReader reader)
         {
-            return DeserializeFrom( reader ); 
-        }          
+            return DeserializeFrom(reader);
+        }
 
 
-        private static Int32Collection DeserializeFrom( BinaryReader reader )
+        private static Int32Collection DeserializeFrom(BinaryReader reader)
         {
-            Int32Collection theCollection; 
-            IntegerCollectionType type; 
+            Int32Collection theCollection;
+            IntegerCollectionType type;
 
-            type = (IntegerCollectionType) reader.ReadByte(); 
+            type = (IntegerCollectionType)reader.ReadByte();
 
-            int count = reader.ReadInt32(); 
+            int count = reader.ReadInt32();
 
 
-            if ( count < 0 ) 
+            if (count < 0)
             {
-                throw new ArgumentException(SR.IntegerCollectionLengthLessThanZero); 
-            }                
-                    
-            theCollection = new Int32Collection( count ); 
-                                
-            if ( type == IntegerCollectionType.Consecutive ) 
+                throw new ArgumentException(SR.IntegerCollectionLengthLessThanZero);
+            }
+
+            theCollection = new Int32Collection(count);
+
+            if (type == IntegerCollectionType.Consecutive)
             {
                 // Get the first integer 
-                int first = reader.ReadInt32(); 
+                int first = reader.ReadInt32();
 
-                for( int i = 0; i < count; i ++)
+                for (int i = 0; i < count; i++)
                 {
-                    theCollection.Add( first + i ); 
+                    theCollection.Add(first + i);
                 }
             }
             else
             {
-                switch( type ) 
+                switch (type)
                 {
-                    case IntegerCollectionType.Byte : 
-                    {
-                        for ( int i = 0; i < count; i++ ) 
-                        {                        
-                            theCollection.Add( (int) reader.ReadByte()); 
+                    case IntegerCollectionType.Byte:
+                        {
+                            for (int i = 0; i < count; i++)
+                            {
+                                theCollection.Add((int)reader.ReadByte());
+                            }
                         }
-                    }
-                    break; 
-                        
-                    case IntegerCollectionType.UShort : 
-                    {
-                        for ( int i = 0; i < count; i++ ) 
-                        {                    
-                            theCollection.Add( (int) reader.ReadUInt16()); 
-                        }
-                    }
-                    break; 
-                        
-                    case IntegerCollectionType.Integer : 
-                    {                    
-                        for ( int i = 0; i < count; i++ ) 
-                        {                    
-                            int value = reader.ReadInt32(); 
+                        break;
 
-                            theCollection.Add( value);
-                        }                            
-                    }                            
-                    break; 
-                    
+                    case IntegerCollectionType.UShort:
+                        {
+                            for (int i = 0; i < count; i++)
+                            {
+                                theCollection.Add((int)reader.ReadUInt16());
+                            }
+                        }
+                        break;
+
+                    case IntegerCollectionType.Integer:
+                        {
+                            for (int i = 0; i < count; i++)
+                            {
+                                int value = reader.ReadInt32();
+
+                                theCollection.Add(value);
+                            }
+                        }
+                        break;
+
                     default:
-                        throw new ArgumentException(SR.UnknownIndexType); 
+                        throw new ArgumentException(SR.UnknownIndexType);
                 }
             }
 
-            return theCollection; 
+            return theCollection;
         }
 #endif
 
-#endregion Conversions
+        #endregion Conversions
 
         internal enum IntegerCollectionType : byte
         {
             Unknown = 0,
             Consecutive = 1,
-            Byte = 2, 
-            UShort= 3, 
-            Integer=  4
+            Byte = 2,
+            UShort = 3,
+            Integer = 4
         }
     }
 }

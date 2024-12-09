@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,12 +8,12 @@
 //
 //
 
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+using System.Windows.Media.Animation;
+using System.Windows.Media.Composition;
 using MS.Internal;
 using MS.Win32.PresentationCore;
-using System.ComponentModel;
-using System.Windows.Media.Composition;
-using System.Windows.Media.Animation;
-using System.Runtime.InteropServices;
 
 namespace System.Windows.Media
 {
@@ -44,19 +44,19 @@ namespace System.Windows.Media
                 return s_empty;
             }
         }
-        
+
         /// <summary>
         /// Gets the bounds of this Geometry as an axis-aligned bounding box
         /// </summary>
-        public virtual Rect Bounds 
-        { 
+        public virtual Rect Bounds
+        {
             get
             {
                 return PathGeometry.GetPathBounds(
                     GetPathGeometryData(),
                     null,   // pen
-                    Matrix.Identity, 
-                    StandardFlatteningTolerance, 
+                    Matrix.Identity,
+                    StandardFlatteningTolerance,
                     ToleranceType.Absolute,
                     false); // Do not skip non-fillable figures
             }
@@ -114,7 +114,7 @@ namespace System.Windows.Media
         /// </summary>
         internal virtual bool AreClose(Geometry geometry)
         {
-           return false;
+            return false;
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace System.Windows.Media
                 type,
                 true); /* skip hollows */
         }
-        
+
         /// <summary>
         /// Returns the axis-aligned bounding rectangle when stroked with a pen, after applying
         /// the supplied transform (if non-null).
@@ -150,14 +150,14 @@ namespace System.Windows.Media
 
 
         internal unsafe static Rect GetBoundsHelper(
-            Pen pen, 
-            Matrix *pWorldMatrix, 
-            Point* pPoints, 
-            byte *pTypes, 
+            Pen pen,
+            Matrix* pWorldMatrix,
+            Point* pPoints,
+            byte* pTypes,
             uint pointCount,
             uint segmentCount,
-            Matrix *pGeometryMatrix,
-            double tolerance, 
+            Matrix* pGeometryMatrix,
+            double tolerance,
             ToleranceType type,
             bool fSkipHollows)
         {
@@ -184,7 +184,7 @@ namespace System.Windows.Media
 
             Rect bounds;
 
-            fixed (double *pDashArray = dashArray)
+            fixed (double* pDashArray = dashArray)
             {
                 int hr = MilCoreApi.MilUtility_PolygonBounds(
                     &worldMatrix,
@@ -330,7 +330,7 @@ namespace System.Windows.Media
         public abstract bool MayHaveCurves();
 
         #endregion Public Methods
-        
+
         #region Hit Testing
         /// <summary>
         /// Returns true if point is inside the fill region defined by this geometry.
@@ -393,7 +393,7 @@ namespace System.Windows.Media
             bool contains = false;
 
             unsafe
-            {   
+            {
                 MIL_PEN_DATA penData;
                 double[] dashArray = null;
 
@@ -407,7 +407,7 @@ namespace System.Windows.Media
                 {
                     Debug.Assert(pbPathData != (byte*)0);
 
-                    fixed (double * dashArrayFixed = dashArray)
+                    fixed (double* dashArrayFixed = dashArray)
                     {
                         int hr = MilCoreApi.MilUtility_PathGeometryHitTest(
                                 &pathData.Matrix,
@@ -441,8 +441,8 @@ namespace System.Windows.Media
         /// <summary>
         /// Helper method to be used by derived implementations of ContainsInternal.
         /// </summary>
-        internal unsafe bool ContainsInternal(Pen pen, Point hitPoint, double tolerance, ToleranceType type, 
-                                                Point *pPoints, uint pointCount, byte *pTypes, uint typeCount)
+        internal unsafe bool ContainsInternal(Pen pen, Point hitPoint, double tolerance, ToleranceType type,
+                                                Point* pPoints, uint pointCount, byte* pTypes, uint typeCount)
         {
             bool contains = false;
 
@@ -456,7 +456,7 @@ namespace System.Windows.Media
                 pen.GetBasicPenData(&penData, out dashArray);
             }
 
-            fixed (double *dashArrayFixed = dashArray)
+            fixed (double* dashArrayFixed = dashArray)
             {
                 int hr = MilCoreApi.MilUtility_PolygonHitTest(
                         &matrix,
@@ -563,7 +563,7 @@ namespace System.Windows.Media
             PathGeometry pathGeometry1 = GetWidenedPathGeometry(pen);
 
             return PathGeometry.HitTestWithPathGeometry(pathGeometry1, geometry, tolerance, type);
-        }               
+        }
 
         /// <summary>
         /// Returns if a given geometry is inside the stroke defined by a given pen on this geometry.
@@ -605,14 +605,14 @@ namespace System.Windows.Media
 
             unsafe
             {
-                fixed (byte *pbPathData = pathData.SerializedData)
+                fixed (byte* pbPathData = pathData.SerializedData)
                 {
                     Debug.Assert(pbPathData != (byte*)0);
 
                     FillRule fillRule = FillRule.Nonzero;
 
                     PathGeometry.FigureList list = new PathGeometry.FigureList();
-                    
+
                     int hr = UnsafeNativeMethods.MilCoreApi.MilUtility_PathGeometryFlatten(
                         &pathData.Matrix,
                         pathData.FillRule,
@@ -689,7 +689,7 @@ namespace System.Windows.Media
 
                 pen.GetBasicPenData(&penData, out dashArray);
 
-                fixed (byte *pbPathData = pathData.SerializedData)
+                fixed (byte* pbPathData = pathData.SerializedData)
                 {
                     Debug.Assert(pbPathData != (byte*)0);
 
@@ -741,7 +741,7 @@ namespace System.Windows.Media
                             handle.Free();
                         }
                     }
-}
+                }
 
                 return resultGeometry;
             }
@@ -759,7 +759,7 @@ namespace System.Windows.Media
         }
 
         #endregion Widen
-       
+
         #region Combine
 
         /// <summary>
@@ -796,11 +796,11 @@ namespace System.Windows.Media
             Transform transform)
         {
             return PathGeometry.InternalCombine(
-                geometry1, 
-                geometry2, 
-                mode, 
-                transform, 
-                Geometry.StandardFlatteningTolerance, 
+                geometry1,
+                geometry2,
+                mode,
+                transform,
+                Geometry.StandardFlatteningTolerance,
                 ToleranceType.Absolute);
         }
 
@@ -883,7 +883,7 @@ namespace System.Windows.Media
         #region Internal
 
         internal abstract PathGeometry GetAsPathGeometry();
-        
+
         /// <summary>
         /// GetPathGeometryData - returns a struct which contains this Geometry represented
         /// as a path geometry's serialized format.
@@ -945,7 +945,7 @@ namespace System.Windows.Media
 
                 unsafe
                 {
-                    fixed (byte *pbPathData = SerializedData)
+                    fixed (byte* pbPathData = SerializedData)
                     {
                         MIL_PATHGEOMETRY* pPathGeometry = (MIL_PATHGEOMETRY*)pbPathData;
 
@@ -969,11 +969,11 @@ namespace System.Windows.Media
 
                     unsafe
                     {
-                        fixed (byte *pbPathData = SerializedData)
+                        fixed (byte* pbPathData = SerializedData)
                         {
                             MIL_PATHGEOMETRY* pPathGeometryData = (MIL_PATHGEOMETRY*)pbPathData;
                             uint size = pPathGeometryData == null ? 0 : pPathGeometryData->Size;
-                            
+
                             Invariant.Assert(size <= (uint)SerializedData.Length);
 
                             return size;
@@ -987,16 +987,18 @@ namespace System.Windows.Media
         {
             return s_emptyPathGeometryData;
         }
-        
+
         #endregion Internal 
 
         #region Private
 
         private static PathGeometryData MakeEmptyPathGeometryData()
         {
-            PathGeometryData data = new PathGeometryData();
-            data.FillRule = FillRule.EvenOdd;
-            data.Matrix = CompositionResourceManager.MatrixToMilMatrix3x2D(Matrix.Identity);
+            PathGeometryData data = new PathGeometryData
+            {
+                FillRule = FillRule.EvenOdd,
+                Matrix = CompositionResourceManager.MatrixToMilMatrix3x2D(Matrix.Identity)
+            };
 
             unsafe
             {
@@ -1004,9 +1006,9 @@ namespace System.Windows.Media
 
                 data.SerializedData = new byte[size];
 
-                fixed (byte *pbData = data.SerializedData)
+                fixed (byte* pbData = data.SerializedData)
                 {
-                    MIL_PATHGEOMETRY *pPathGeometry = (MIL_PATHGEOMETRY*)pbData;
+                    MIL_PATHGEOMETRY* pPathGeometry = (MIL_PATHGEOMETRY*)pbData;
 
                     // implicitly set pPathGeometry->Flags = 0;
                     pPathGeometry->FigureCount = 0;
@@ -1023,7 +1025,7 @@ namespace System.Windows.Media
             empty.Freeze();
             return empty;
         }
-        
+
         private const double c_tolerance = 0.25;
 
         private static Geometry s_empty = MakeEmptyGeometry();

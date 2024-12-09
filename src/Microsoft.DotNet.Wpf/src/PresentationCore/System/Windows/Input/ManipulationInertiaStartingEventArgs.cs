@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,7 +19,7 @@ namespace System.Windows.Input
         ///     Instantiates a new instance of this class.
         /// </summary>
         internal ManipulationInertiaStartingEventArgs(
-            ManipulationDevice manipulationDevice, 
+            ManipulationDevice manipulationDevice,
             int timestamp,
             IInputElement manipulationContainer,
             Point origin,
@@ -233,7 +233,7 @@ namespace System.Windows.Input
             processor.InitialOriginY = (float)ManipulationOrigin.Y;
 
             ManipulationVelocities velocities = InitialVelocities;
-            
+
             InertiaTranslationBehavior.ApplyParameters(_translationBehavior, processor, velocities.LinearVelocity);
             InertiaRotationBehavior.ApplyParameters(_rotationBehavior, processor, velocities.AngularVelocity);
             InertiaExpansionBehavior.ApplyParameters(_expansionBehavior, processor, velocities.ExpansionVelocity);
@@ -268,10 +268,10 @@ namespace System.Windows.Input
         [Flags]
         private enum Behaviors
         {
-            None         = 0,
-            Translation  = 0x00000001,
-            Rotation     = 0x00000002,
-            Expansion    = 0x00000004
+            None = 0,
+            Translation = 0x00000001,
+            Rotation = 0x00000002,
+            Expansion = 0x00000004
         }
     }
 }

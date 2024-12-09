@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -30,17 +30,17 @@ namespace System.Windows.Xps.Serialization
         /// </param>
         public
         ReachPageContentSerializerAsync(
-            PackageSerializationManager   manager
-            ):
+            PackageSerializationManager manager
+            ) :
         base(manager)
         {
-            
+
         }
 
         #endregion Constructor
-        
+
         #region Public Methods
-        
+
         /// <summary>
         ///
         /// </summary>
@@ -51,31 +51,31 @@ namespace System.Windows.Xps.Serialization
             ReachSerializerContext context
             )
         {
-            if(context == null)
+            if (context == null)
             {
 
             }
-           
-            switch (context.Action) 
+
+            switch (context.Action)
             {
                 case SerializerAction.serializePage:
-                {
-                    SerializePage(context.ObjectContext);
-                    break;
-                }
-                
+                    {
+                        SerializePage(context.ObjectContext);
+                        break;
+                    }
+
                 default:
-                {
-                    base.AsyncOperation(context);
-                    break;
-                }
+                    {
+                        base.AsyncOperation(context);
+                        break;
+                    }
             }
         }
-        
+
 
         #endregion
 
-        
+
         #region Internal Methods
 
         /// <summary>
@@ -89,10 +89,10 @@ namespace System.Windows.Xps.Serialization
         override
         void
         PersistObjectData(
-            SerializableObjectContext   serializableObjectContext
+            SerializableObjectContext serializableObjectContext
             )
         {
-            if(serializableObjectContext.IsComplexValue)
+            if (serializableObjectContext.IsComplexValue)
             {
                 ReachSerializerContext context = new ReachSerializerContext(this,
                                                                             serializableObjectContext,
@@ -109,26 +109,26 @@ namespace System.Windows.Xps.Serialization
         private
         void
         SerializePage(
-            SerializableObjectContext   serializableObjectContext
+            SerializableObjectContext serializableObjectContext
             )
         {
             FixedPage fixedPage = Toolbox.GetPageRoot(serializableObjectContext.TargetObject);
 
-            if(fixedPage != null)
+            if (fixedPage != null)
             {
                 ReachSerializer serializer = SerializationManager.GetSerializer(fixedPage);
 
-                if(serializer!=null)
+                if (serializer != null)
                 {
-                    XpsSerializationPrintTicketRequiredEventArgs e = 
+                    XpsSerializationPrintTicketRequiredEventArgs e =
                         new XpsSerializationPrintTicketRequiredEventArgs(PrintTicketLevel.FixedPagePrintTicket,
                                                          0);
                     ((IXpsSerializationManager)SerializationManager).OnXPSSerializationPrintTicketRequired(e);
 
                     PrintTicket printTicket = null;
-                    if( e.Modified )
+                    if (e.Modified)
                     {
-                        printTicket =  e.PrintTicket;
+                        printTicket = e.PrintTicket;
                     }
                     Toolbox.Layout(fixedPage, printTicket);
 

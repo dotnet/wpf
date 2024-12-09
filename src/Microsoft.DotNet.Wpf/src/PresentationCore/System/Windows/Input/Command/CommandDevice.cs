@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,7 +15,7 @@ namespace System.Windows.Input
     /// </summary>
     internal sealed class CommandDevice : InputDevice
     {
-        internal CommandDevice( InputManager inputManager )
+        internal CommandDevice(InputManager inputManager)
         {
             _inputManager = inputManager;
             _inputManager.PreProcessInput += new PreProcessInputEventHandler(PreProcessInput);
@@ -40,13 +40,13 @@ namespace System.Windows.Input
         public override PresentationSource ActiveSource
         {
             get
-            {  
-                
+            {
+
                 return null;
             }
         }
 
-        private void PreProcessInput( object sender, PreProcessInputEventArgs e )
+        private void PreProcessInput(object sender, PreProcessInputEventArgs e)
         {
             InputReportEventArgs input = e.StagingItem.Input as InputReportEventArgs;
             if (input != null)
@@ -73,7 +73,7 @@ namespace System.Windows.Input
                                              typeof(CommandDeviceEventHandler),
                                              typeof(CommandDevice));
 
-        private void PostProcessInput( object sender, ProcessInputEventArgs e )
+        private void PostProcessInput(object sender, ProcessInputEventArgs e)
         {
             if (e.StagingItem.Input.RoutedEvent == InputManager.InputReportEvent)
             {
@@ -93,9 +93,11 @@ namespace System.Windows.Input
                                 {
                                     // Send the app command to the tree to be handled by UIElements and ContentElements
                                     // that will forward the event to CommandManager.
-                                    CommandDeviceEventArgs args = new CommandDeviceEventArgs(this, rawAppCommandInputReport.Timestamp, command);
-                                    args.RoutedEvent = CommandDeviceEvent;
-                                    args.Source = commandTarget;
+                                    CommandDeviceEventArgs args = new CommandDeviceEventArgs(this, rawAppCommandInputReport.Timestamp, command)
+                                    {
+                                        RoutedEvent = CommandDeviceEvent,
+                                        Source = commandTarget
+                                    };
                                     e.PushInput(args, e.StagingItem);
                                 }
                             }
@@ -113,11 +115,11 @@ namespace System.Windows.Input
         }
 
         // Maps the Windows WM_APPCOMMANDS to regular Commands.
-        private RoutedCommand GetRoutedCommand( int appCommandId )
+        private RoutedCommand GetRoutedCommand(int appCommandId)
         {
             RoutedCommand appCommand = null;
             switch (appCommandId)
-            {                            
+            {
                 case NativeMethods.APPCOMMAND_BROWSER_BACKWARD:
                     appCommand = NavigationCommands.BrowseBack;
                     break;
@@ -138,7 +140,7 @@ namespace System.Windows.Input
                     break;
                 case NativeMethods.APPCOMMAND_BROWSER_HOME:
                     appCommand = NavigationCommands.BrowseHome;
-                    break;                     
+                    break;
                 case NativeMethods.APPCOMMAND_VOLUME_MUTE:
                     appCommand = MediaCommands.MuteVolume;
                     break;
@@ -260,7 +262,7 @@ namespace System.Windows.Input
                 case NativeMethods.APPCOMMAND_MEDIA_CHANNEL_DOWN:
                     appCommand = MediaCommands.ChannelDown;
                     break;
-            } 
+            }
             return appCommand;
         }
 

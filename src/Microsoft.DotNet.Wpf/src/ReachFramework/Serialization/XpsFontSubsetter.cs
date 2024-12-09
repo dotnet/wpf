@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,8 +12,8 @@
 using System.IO;
 using System.Windows.Media;
 using System.Windows.Xps.Packaging;
-using MS.Internal.Utility;
 using MS.Internal.IO.Packaging;
+using MS.Internal.Utility;
 
 namespace System.Windows.Xps.Serialization
 {
@@ -29,22 +29,22 @@ namespace System.Windows.Xps.Serialization
         /// No font subsettint, the entire font is copied
         /// fonts are assumed shared accross all documents
         /// </summary>
-        None                        = 0x00000000,
+        None = 0x00000000,
         /// <summary>
         /// Font parts will be generted for the fonts 
         /// used in a single page
         /// </summary>
-        CommitPerPage               = 0x00000001,
+        CommitPerPage = 0x00000001,
         /// <summary>
         /// Font parts will be generted for the fonts 
         /// used in a single document
         /// </summary>
-        CommitPerDocument           = 0x00000002,
+        CommitPerDocument = 0x00000002,
         /// <summary>
         /// Font parts will be generted for all fonts 
         /// used in accros the entire sequence
         /// </summary> 
-        CommitEntireSequence       =  0x00000003,
+        CommitEntireSequence = 0x00000003,
     };
 
     /// <summary>
@@ -57,27 +57,27 @@ namespace System.Windows.Xps.Serialization
         /// <summary>
         /// No action
         /// </summary>
-        None                       = 0x00000000,
+        None = 0x00000000,
         /// <summary>
         /// Obfuscate and subset the font
         /// </summary>
-        ObfuscateSubsetFont        = 0x00000001,
-    
+        ObfuscateSubsetFont = 0x00000001,
+
         /// <summary>
         /// Obfuscate but copy the data 
         /// directly from the font stream
         /// </summary>
-        ObfuscateOnlyFont         = 0x00000002,
+        ObfuscateOnlyFont = 0x00000002,
 
         /// <summary>
         /// Generate Images of glyps using Image Brush
         /// directly from the font stream
         /// </summary>
-        ImageOnlyFont             = 0x00000004,
+        ImageOnlyFont = 0x00000004,
 
     }
 
-    
+
     /// <summary>
     /// Implements the functionality to generate font subsets
     /// based on glyph runs obtained.  This class uses the
@@ -123,7 +123,7 @@ namespace System.Windows.Xps.Serialization
         public
         Uri
         ComputeFontSubset(
-            GlyphRun        glyphRun
+            GlyphRun glyphRun
             )
         {
             ArgumentNullException.ThrowIfNull(glyphRun);
@@ -142,14 +142,14 @@ namespace System.Windows.Xps.Serialization
             }
             else
             {
-                 FEMCacheItem cacheItem = AcquireCacheItem(
-                                            glyphRun.GlyphTypeface
-                                            );
+                FEMCacheItem cacheItem = AcquireCacheItem(
+                                           glyphRun.GlyphTypeface
+                                           );
                 if (cacheItem != null)
                 {
                     cacheItem.CurrentPageReferences = true;
-                    if( _commitPolicy == FontSubsetterCommitPolicies.None &&
-                        !cacheItem.IsStreamWritten )
+                    if (_commitPolicy == FontSubsetterCommitPolicies.None &&
+                        !cacheItem.IsStreamWritten)
                     {
                         fontUri = cacheItem.CopyFontStream();
                     }
@@ -185,7 +185,7 @@ namespace System.Windows.Xps.Serialization
             // flag indicating if this signal completed a subset
             //
             bool completedSubset = false;
-            if( signal == FontSubsetterCommitPolicies.CommitPerPage )
+            if (signal == FontSubsetterCommitPolicies.CommitPerPage)
             {
                 foreach (FEMCacheItem item in _fontEmbeddingManagerCache.Values)
                 {
@@ -198,8 +198,8 @@ namespace System.Windows.Xps.Serialization
 
             }
             else
-            if( signal == FontSubsetterCommitPolicies.CommitPerDocument &&
-                _commitPolicy == FontSubsetterCommitPolicies.CommitEntireSequence )
+            if (signal == FontSubsetterCommitPolicies.CommitPerDocument &&
+                _commitPolicy == FontSubsetterCommitPolicies.CommitEntireSequence)
             {
                 foreach (FEMCacheItem item in _fontEmbeddingManagerCache.Values)
                 {
@@ -209,19 +209,19 @@ namespace System.Windows.Xps.Serialization
                     }
                 }
 
-            }      
+            }
             //
             // If we recieve a signal to commit a superset of what we are commiting on
             // i.e. Document Signal with commit Policy is per page
             // we must commit
             //
-            if( signal >= _commitPolicy )
+            if (signal >= _commitPolicy)
             {
                 if (signal == _commitPolicy)
                 {
                     _currentCommitCnt++;
                 }
-                if( signal > _commitPolicy || _currentCommitCnt%_commitCountPolicy == 0 )
+                if (signal > _commitPolicy || _currentCommitCnt % _commitCountPolicy == 0)
                 {
                     foreach (FEMCacheItem item in _fontEmbeddingManagerCache.Values)
                     {
@@ -248,7 +248,7 @@ namespace System.Windows.Xps.Serialization
             return completedSubset;
         }
 
-        
+
         /// <summery>
         /// Determines Embedding action based
         /// on flags in the fsType field
@@ -273,7 +273,7 @@ namespace System.Windows.Xps.Serialization
         {
             FontEmbeddingAction action = FontEmbeddingAction.ObfuscateSubsetFont;
 
-            switch( fsType )
+            switch (fsType)
             {
                 case FontEmbeddingRight.RestrictedLicense:
                 case FontEmbeddingRight.PreviewAndPrintButWithBitmapsOnly:
@@ -291,13 +291,13 @@ namespace System.Windows.Xps.Serialization
                     action = FontEmbeddingAction.ObfuscateSubsetFont;
                     break;
 
-                case FontEmbeddingRight.EditableButNoSubsetting:                    
+                case FontEmbeddingRight.EditableButNoSubsetting:
                 case FontEmbeddingRight.PreviewAndPrintButNoSubsetting:
                 case FontEmbeddingRight.InstallableButNoSubsetting:
                     action = FontEmbeddingAction.ObfuscateOnlyFont;
-                    break;           
+                    break;
             }
-            return action;            
+            return action;
         }
 
         /// <summery>
@@ -324,29 +324,29 @@ namespace System.Windows.Xps.Serialization
         {
             bool isRestrictedFont = false;
 
-            switch( fsType )
-            {                    
+            switch (fsType)
+            {
                 case FontEmbeddingRight.PreviewAndPrintButNoSubsetting:
                 case FontEmbeddingRight.PreviewAndPrint:
                     isRestrictedFont = true;
                     break;
-           }
-           return isRestrictedFont;            
+            }
+            return isRestrictedFont;
         }
-        
+
         /// <summary> 
         /// Determines on what signal subsets will be commited
         ///</summary> 
         public
         void
-        SetSubsetCommitPolicy( FontSubsetterCommitPolicies policy )
+        SetSubsetCommitPolicy(FontSubsetterCommitPolicies policy)
         {
-           if( policy == FontSubsetterCommitPolicies.CommitEntireSequence &&
-                _commitCountPolicy != 1 )
+            if (policy == FontSubsetterCommitPolicies.CommitEntireSequence &&
+                 _commitCountPolicy != 1)
             {
                 throw new ArgumentOutOfRangeException(SR.ReachPackaging_SequenceCntMustBe1);
             }
-          _commitPolicy = policy;
+            _commitPolicy = policy;
         }
 
         /// <summary> 
@@ -354,29 +354,29 @@ namespace System.Windows.Xps.Serialization
         ///</summary> 
         public
         void
-        SetSubsetCommitCountPolicy( int commitCount )
+        SetSubsetCommitCountPolicy(int commitCount)
         {
-            if( _commitPolicy == FontSubsetterCommitPolicies.CommitEntireSequence &&
-                commitCount != 1 )
+            if (_commitPolicy == FontSubsetterCommitPolicies.CommitEntireSequence &&
+                commitCount != 1)
             {
                 throw new ArgumentOutOfRangeException(SR.ReachPackaging_SequenceCntMustBe1);
             }
             else
-            if( commitCount < 1 )
+            if (commitCount < 1)
             {
                 throw new ArgumentOutOfRangeException(SR.ReachPackaging_CommitCountPolicyLessThan1);
             }
             _commitCountPolicy = commitCount;
         }
         #endregion Public methods
-        
+
         #region Private data
 
-        private IDictionary<Uri, FEMCacheItem>  _fontEmbeddingManagerCache;
-        private BasePackagingPolicy             _packagingPolicy;
-        private FontSubsetterCommitPolicies     _commitPolicy = FontSubsetterCommitPolicies.CommitEntireSequence;
-        private int                             _commitCountPolicy = 1;
-        private int                             _currentCommitCnt = 0;
+        private IDictionary<Uri, FEMCacheItem> _fontEmbeddingManagerCache;
+        private BasePackagingPolicy _packagingPolicy;
+        private FontSubsetterCommitPolicies _commitPolicy = FontSubsetterCommitPolicies.CommitEntireSequence;
+        private int _commitCountPolicy = 1;
+        private int _currentCommitCnt = 0;
         #endregion Private data
 
         #region Private methods
@@ -394,7 +394,7 @@ namespace System.Windows.Xps.Serialization
         private
         FEMCacheItem
         AcquireCacheItem(
-            GlyphTypeface         glyphTypeface
+            GlyphTypeface glyphTypeface
             )
         {
             FEMCacheItem manager = null;
@@ -433,8 +433,8 @@ namespace System.Windows.Xps.Serialization
         /// </param>
         public
         FEMCacheItem(
-            GlyphTypeface                   glyphTypeface,
-            BasePackagingPolicy             packagingPolicy
+            GlyphTypeface glyphTypeface,
+            BasePackagingPolicy packagingPolicy
             )
         {
             ArgumentNullException.ThrowIfNull(packagingPolicy);
@@ -451,16 +451,16 @@ namespace System.Windows.Xps.Serialization
             _fontEmbeddingManager = new FontEmbeddingManager();
             _glyphTypeface = glyphTypeface;
             _fontUri = glyphTypeface.FontUri;
-            
+
             Uri fontUri = new Uri(_fontUri.GetComponents(UriComponents.SerializationInfoString, UriFormat.SafeUnescaped), UriKind.RelativeOrAbsolute);
             string fontUriAsString = fontUri.GetComponents(UriComponents.SerializationInfoString, UriFormat.UriEscaped);
             _fontResourceStream = packagingPolicy.AcquireResourceStreamForXpsFont(fontUriAsString);
-            
+
             //
             // Aquiring the Resource stream will instantiate the font
             // and add the require resource relationship
             //
-            _curPageRelAdded = true; 
+            _curPageRelAdded = true;
         }
 
         #endregion Constructors
@@ -480,12 +480,12 @@ namespace System.Windows.Xps.Serialization
         public
         Uri
         AddGlyphRunUsage(
-            GlyphRun        glyphRun
+            GlyphRun glyphRun
             )
         {
             Uri fontUri = null;
-            FontEmbeddingAction action = XpsFontSubsetter.DetermineEmbeddingAction( _glyphTypeface );
-            switch( action )
+            FontEmbeddingAction action = XpsFontSubsetter.DetermineEmbeddingAction(_glyphTypeface);
+            switch (action)
             {
                 //
                 // Provide an empty image stream.  The Glyphs serializer 
@@ -494,12 +494,12 @@ namespace System.Windows.Xps.Serialization
                 //
                 case FontEmbeddingAction.ImageOnlyFont:
                     break;
-                    
+
                 case FontEmbeddingAction.ObfuscateOnlyFont:
                     fontUri = _fontResourceStream.Uri;
                     // nothing to do here since the entire font will be added
                     break;
-                    
+
                 case FontEmbeddingAction.ObfuscateSubsetFont:
                     _fontEmbeddingManager.RecordUsage(glyphRun);
                     fontUri = _fontResourceStream.Uri;
@@ -518,17 +518,17 @@ namespace System.Windows.Xps.Serialization
         Commit(
             )
         {
-            FontEmbeddingAction action = XpsFontSubsetter.DetermineEmbeddingAction( _glyphTypeface );
-            switch( action )
+            FontEmbeddingAction action = XpsFontSubsetter.DetermineEmbeddingAction(_glyphTypeface);
+            switch (action)
             {
                 case FontEmbeddingAction.ImageOnlyFont:
                     // nothing to do here since the glyph runs have already been converted
                     break;
-                    
+
                 case FontEmbeddingAction.ObfuscateOnlyFont:
                     CopyFontStream();
                     break;
-                    
+
                 case FontEmbeddingAction.ObfuscateSubsetFont:
                     SubSetFont(
                         _fontEmbeddingManager.GetUsedGlyphs(_fontUri),
@@ -544,35 +544,36 @@ namespace System.Windows.Xps.Serialization
         AddRestrictedRelationship(
             )
         {
-            FontEmbeddingAction action = XpsFontSubsetter.DetermineEmbeddingAction( _glyphTypeface );
-            if( action != FontEmbeddingAction.ImageOnlyFont &&             
-                XpsFontSubsetter.IsRestrictedFont(_glyphTypeface) )
+            FontEmbeddingAction action = XpsFontSubsetter.DetermineEmbeddingAction(_glyphTypeface);
+            if (action != FontEmbeddingAction.ImageOnlyFont &&
+                XpsFontSubsetter.IsRestrictedFont(_glyphTypeface))
             {
                 _packagingPolicy.
                    RelateRestrictedFontToCurrentDocument(
                     _fontResourceStream.Uri
                     );
-            }        }
+            }
+        }
         public
         void
         AddRelationship(
             )
         {
-            if( !_curPageRelAdded && CurrentPageReferences)
+            if (!_curPageRelAdded && CurrentPageReferences)
             {
-                FontEmbeddingAction action = XpsFontSubsetter.DetermineEmbeddingAction( _glyphTypeface );
-                switch( action )
+                FontEmbeddingAction action = XpsFontSubsetter.DetermineEmbeddingAction(_glyphTypeface);
+                switch (action)
                 {
                     case FontEmbeddingAction.ImageOnlyFont:
                         break;
-                        
+
                     case FontEmbeddingAction.ObfuscateOnlyFont:
                     case FontEmbeddingAction.ObfuscateSubsetFont:
                         _packagingPolicy.
                             RelateResourceToCurrentPage(
-                            _fontResourceStream.Uri, 
-                            XpsS0Markup.ResourceRelationshipName); 
-                         break;
+                            _fontResourceStream.Uri,
+                            XpsS0Markup.ResourceRelationshipName);
+                        break;
                 }
             }
 
@@ -592,16 +593,16 @@ namespace System.Windows.Xps.Serialization
             )
         {
             byte[] fontData = _glyphTypeface.ComputeSubset(glyphs);
-            
+
             Guid guid = ParseGuidFromUri(_fontResourceStream.Uri);
             ObfuscateData(fontData, guid);
- 
+
             stream.Write(fontData, 0, fontData.Length);
 
             Uri fontUri = new Uri(_fontUri.GetComponents(UriComponents.SerializationInfoString, UriFormat.SafeUnescaped), UriKind.RelativeOrAbsolute);
             string fontUriAsString = fontUri.GetComponents(UriComponents.SerializationInfoString, UriFormat.UriEscaped);
             _packagingPolicy.ReleaseResourceStreamForXpsFont(fontUriAsString);
-            
+
             _streamWritten = true;
         }
 
@@ -609,35 +610,35 @@ namespace System.Windows.Xps.Serialization
         Uri
         CopyFontStream()
         {
-            Uri sourceUri =     _fontUri;
-            Uri destUri =       _fontResourceStream.Uri;
+            Uri sourceUri = _fontUri;
+            Uri destUri = _fontResourceStream.Uri;
             Stream destStream = _fontResourceStream.Stream;
             Stream sourceStream = null;
-            byte [] memoryFont;
+            byte[] memoryFont;
             GlyphTypeface glyphTypeface = new GlyphTypeface(sourceUri);
 
             sourceStream = glyphTypeface.GetFontStream();
-            
+
             memoryFont = new byte[_readBlockSize];
             Guid guid = ParseGuidFromUri(destUri);
-            
-            int bytesRead = PackagingUtilities.ReliableRead(sourceStream, memoryFont,0,_readBlockSize);
+
+            int bytesRead = PackagingUtilities.ReliableRead(sourceStream, memoryFont, 0, _readBlockSize);
             if (bytesRead > 0)
             {
-                 // Obfuscate the first block
-                ObfuscateData(memoryFont, guid );
+                // Obfuscate the first block
+                ObfuscateData(memoryFont, guid);
             }
-            
-            while( bytesRead > 0 )
+
+            while (bytesRead > 0)
             {
                 destStream.Write(memoryFont, 0, bytesRead);
-                bytesRead = PackagingUtilities.ReliableRead( sourceStream, memoryFont, 0, _readBlockSize);  
+                bytesRead = PackagingUtilities.ReliableRead(sourceStream, memoryFont, 0, _readBlockSize);
             }
 
             Uri fontUri = new Uri(_fontUri.GetComponents(UriComponents.SerializationInfoString, UriFormat.SafeUnescaped), UriKind.RelativeOrAbsolute);
             string fontUriAsString = fontUri.GetComponents(UriComponents.SerializationInfoString, UriFormat.UriEscaped);
             _packagingPolicy.ReleaseResourceStreamForXpsFont(fontUriAsString);
-            
+
             _streamWritten = true;
             return destUri;
         }
@@ -656,14 +657,14 @@ namespace System.Windows.Xps.Serialization
         private
         static
         Guid
-        ParseGuidFromUri( Uri uri )
+        ParseGuidFromUri(Uri uri)
         {
-            string fileName = System.IO.Path.GetFileNameWithoutExtension( 
-                                BindUriHelper.UriToString(uri) 
+            string fileName = System.IO.Path.GetFileNameWithoutExtension(
+                                BindUriHelper.UriToString(uri)
                               );
-            return new Guid( fileName );
+            return new Guid(fileName);
         }
-        
+
         /// <summary>
         /// Obfuscate font data  
         /// in accordence with 6.2.7.3  Embedded Font Obfuscation
@@ -678,36 +679,36 @@ namespace System.Windows.Xps.Serialization
         public
         static
         void
-        ObfuscateData( byte[] fontData, Guid guid )
+        ObfuscateData(byte[] fontData, Guid guid)
         {
             // Convert the GUID into string in 32 digits format (xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx)
             Span<byte> guidByteArray = stackalloc byte[16];
             string guidString = guid.ToString("N");
-  
+
             for (int i = 0; i < guidByteArray.Length; i++)
             {
                 guidByteArray[i] = Convert.ToByte(guidString.Substring(i * 2, 2), 16);
             }
- 
-            for( int j = 0; j < 2; j++ )
+
+            for (int j = 0; j < 2; j++)
             {
-                for( int i = 0; i < 16; i ++ )
+                for (int i = 0; i < 16; i++)
                 {
-                    fontData[i+j*16] ^= guidByteArray[15-i];
+                    fontData[i + j * 16] ^= guidByteArray[15 - i];
                 }
             }
         }
         #endregion Private static methods
-        
+
         #region Public Properties
         public
         bool
         IsStreamWritten
         {
-         get
-         {
-            return _streamWritten;
-         }
+            get
+            {
+                return _streamWritten;
+            }
         }
 
         public
@@ -727,13 +728,13 @@ namespace System.Windows.Xps.Serialization
 
         #region Private data
 
-        private bool                    _currentPageReferences;
-        private bool                    _curPageRelAdded;
-        private FontEmbeddingManager    _fontEmbeddingManager;
-        private BasePackagingPolicy     _packagingPolicy;
-        private XpsResourceStream       _fontResourceStream;
-        private GlyphTypeface           _glyphTypeface;
-        private bool                    _streamWritten; 
+        private bool _currentPageReferences;
+        private bool _curPageRelAdded;
+        private FontEmbeddingManager _fontEmbeddingManager;
+        private BasePackagingPolicy _packagingPolicy;
+        private XpsResourceStream _fontResourceStream;
+        private GlyphTypeface _glyphTypeface;
+        private bool _streamWritten;
         private Uri _fontUri;
         private static readonly int _readBlockSize = 1048576; //1MB
 

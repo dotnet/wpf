@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -45,8 +45,8 @@ namespace System.Windows.Input
             if (destinationType == typeof(string))
             {
                 // When invoked by the serialization engine we can convert to string only for known type
-                if (context != null && context.Instance != null && 
-					context.Instance is ModifierKeys)
+                if (context != null && context.Instance != null &&
+                    context.Instance is ModifierKeys)
                 {
                     return (IsDefinedModifierKeys((ModifierKeys)context.Instance));
                 }
@@ -103,7 +103,7 @@ namespace System.Windows.Input
 
                     if ((modifiers & ModifierKeys.Alt) == ModifierKeys.Alt)
                     {
-                        if (strModifiers.Length > 0) 
+                        if (strModifiers.Length > 0)
                             strModifiers += Modifier_Delimiter;
 
                         strModifiers += MatchModifiers(ModifierKeys.Alt);
@@ -114,7 +114,8 @@ namespace System.Windows.Input
                         if (strModifiers.Length > 0)
                             strModifiers += Modifier_Delimiter;
 
-                        strModifiers += MatchModifiers(ModifierKeys.Windows); ;
+                        strModifiers += MatchModifiers(ModifierKeys.Windows);
+                        ;
                     }
 
                     if ((modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
@@ -122,13 +123,14 @@ namespace System.Windows.Input
                         if (strModifiers.Length > 0)
                             strModifiers += Modifier_Delimiter;
 
-                        strModifiers += MatchModifiers(ModifierKeys.Shift); ;
+                        strModifiers += MatchModifiers(ModifierKeys.Shift);
+                        ;
                     }
 
                     return strModifiers;
                 }
             }
-            throw GetConvertToException(value,destinationType);
+            throw GetConvertToException(value, destinationType);
         }
 
         private ModifierKeys GetModifierKeys(string modifiersToken, CultureInfo culture)
@@ -149,12 +151,12 @@ namespace System.Windows.Input
 
                     switch (token)
                     {
-                        case "CONTROL" :
-                        case "CTRL" : 
+                        case "CONTROL":
+                        case "CTRL":
                             modifiers |= ModifierKeys.Control;
                             break;
 
-                        case "SHIFT" : 
+                        case "SHIFT":
                             modifiers |= ModifierKeys.Shift;
                             break;
 
@@ -185,20 +187,28 @@ namespace System.Windows.Input
             return (modifierKeys == ModifierKeys.None || (((int)modifierKeys & ~((int)ModifierKeysFlag)) == 0));
         }
 
-	    private const char Modifier_Delimiter = '+';
+        private const char Modifier_Delimiter = '+';
 
-        private static ModifierKeys ModifierKeysFlag  =  ModifierKeys.Windows | ModifierKeys.Shift | 
-                                                         ModifierKeys.Alt     | ModifierKeys.Control ;
+        private static ModifierKeys ModifierKeysFlag = ModifierKeys.Windows | ModifierKeys.Shift |
+                                                         ModifierKeys.Alt | ModifierKeys.Control;
 
         internal static string MatchModifiers(ModifierKeys modifierKeys)
         {
-            string modifiers = String.Empty; 
+            string modifiers = String.Empty;
             switch (modifierKeys)
             {
-                case ModifierKeys.Control: modifiers="Ctrl";break;
-                case ModifierKeys.Shift  : modifiers="Shift";break;
-                case ModifierKeys.Alt    : modifiers="Alt";break;
-                case ModifierKeys.Windows: modifiers="Windows";break;
+                case ModifierKeys.Control:
+                    modifiers = "Ctrl";
+                    break;
+                case ModifierKeys.Shift:
+                    modifiers = "Shift";
+                    break;
+                case ModifierKeys.Alt:
+                    modifiers = "Alt";
+                    break;
+                case ModifierKeys.Windows:
+                    modifiers = "Windows";
+                    break;
             }
             return modifiers;
         }

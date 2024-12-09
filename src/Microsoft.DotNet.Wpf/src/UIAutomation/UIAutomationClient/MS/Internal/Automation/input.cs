@@ -1,14 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: Provides mouse and keyboard input functionality
 
-using System.Windows.Input;
-using System.Runtime.InteropServices;
-using MS.Win32;
-
 using System;
+using System.Runtime.InteropServices;
+using System.Windows.Input;
+using MS.Win32;
 
 namespace MS.Internal.Automation
 {
@@ -22,7 +21,7 @@ namespace MS.Internal.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         // Static class - Private to prevent creation
@@ -43,24 +42,26 @@ namespace MS.Internal.Automation
         // 
         // Inject keyboard input into the system
         // 
-        internal static void SendKeyboardInput( Key key, bool press )
+        internal static void SendKeyboardInput(Key key, bool press)
         {
-            UnsafeNativeMethods.INPUT ki = new UnsafeNativeMethods.INPUT();
-            ki.type = UnsafeNativeMethods.INPUT_KEYBOARD;
-            ki.union.keyboardInput.wVk = (short) KeyInterop.VirtualKeyFromKey( key );
-            ki.union.keyboardInput.wScan = (short) UnsafeNativeMethods.MapVirtualKey( ki.union.keyboardInput.wVk, 0 );
+            UnsafeNativeMethods.INPUT ki = new UnsafeNativeMethods.INPUT
+            {
+                type = UnsafeNativeMethods.INPUT_KEYBOARD
+            };
+            ki.union.keyboardInput.wVk = (short)KeyInterop.VirtualKeyFromKey(key);
+            ki.union.keyboardInput.wScan = (short)UnsafeNativeMethods.MapVirtualKey(ki.union.keyboardInput.wVk, 0);
             int dwFlags = 0;
-            if( ki.union.keyboardInput.wScan > 0 )
+            if (ki.union.keyboardInput.wScan > 0)
                 dwFlags |= UnsafeNativeMethods.KEYEVENTF_SCANCODE;
-            if( !press )
+            if (!press)
                 dwFlags |= UnsafeNativeMethods.KEYEVENTF_KEYUP;
             ki.union.keyboardInput.dwFlags = dwFlags;
-            if( IsExtendedKey( key ) )
+            if (IsExtendedKey(key))
             {
                 ki.union.keyboardInput.dwFlags |= UnsafeNativeMethods.KEYEVENTF_EXTENDEDKEY;
             }
             ki.union.keyboardInput.time = 0;
-            ki.union.keyboardInput.dwExtraInfo = new IntPtr( 0 );
+            ki.union.keyboardInput.dwExtraInfo = new IntPtr(0);
 
             Misc.SendInput(1, ref ki, Marshal.SizeOf(ki));
         }
@@ -69,15 +70,17 @@ namespace MS.Internal.Automation
         // itself - because it uses a VK that's not on the keyboard, it needs
         // to send the VK directly, not the scan code, which regular
         // SendKeyboardInput does.
-        internal static void SendKeyboardInputVK( byte vk, bool press )
+        internal static void SendKeyboardInputVK(byte vk, bool press)
         {
-            UnsafeNativeMethods.INPUT ki = new UnsafeNativeMethods.INPUT();
-            ki.type = UnsafeNativeMethods.INPUT_KEYBOARD;
+            UnsafeNativeMethods.INPUT ki = new UnsafeNativeMethods.INPUT
+            {
+                type = UnsafeNativeMethods.INPUT_KEYBOARD
+            };
             ki.union.keyboardInput.wVk = vk;
             ki.union.keyboardInput.wScan = 0;
             ki.union.keyboardInput.dwFlags = press ? 0 : UnsafeNativeMethods.KEYEVENTF_KEYUP;
             ki.union.keyboardInput.time = 0;
-            ki.union.keyboardInput.dwExtraInfo = new IntPtr( 0 );
+            ki.union.keyboardInput.dwExtraInfo = new IntPtr(0);
 
             Misc.SendInput(1, ref ki, Marshal.SizeOf(ki));
         }
@@ -94,7 +97,7 @@ namespace MS.Internal.Automation
         #region Private Methods
 
 
-        private static bool IsExtendedKey( Key key )
+        private static bool IsExtendedKey(Key key)
         {
             // From the SDK:
             // The extended-key flag indicates whether the keystroke message originated from one of
@@ -135,7 +138,7 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         // Stateless object, has no private fields

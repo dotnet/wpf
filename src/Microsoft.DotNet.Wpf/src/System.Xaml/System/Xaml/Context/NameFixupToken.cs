@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -106,9 +106,11 @@ namespace MS.Internal.Xaml.Context
         {
             _names = new List<string>();
             _nameScopeDictionaryList = new List<XAML3.INameScopeDictionary>();
-            Target = new FixupTarget();
-            Target.TemporaryCollectionIndex = -1;
-            Target.InstanceIsOnTheStack = true;
+            Target = new FixupTarget
+            {
+                TemporaryCollectionIndex = -1,
+                InstanceIsOnTheStack = true
+            };
         }
 
         public bool CanAssignDirectly { get; set; }

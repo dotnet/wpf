@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -59,7 +59,7 @@ namespace System.Windows
         /// </summary>
         public BindingBase ItemsSource
         {
-            get {  return _itemsSourceBinding; }
+            get { return _itemsSourceBinding; }
             set
             {
                 CheckSealed();
@@ -75,7 +75,7 @@ namespace System.Windows
         /// </summary>
         public DataTemplate ItemTemplate
         {
-            get {  return _itemTemplate; }
+            get { return _itemTemplate; }
             set
             {
                 CheckSealed();
@@ -92,7 +92,7 @@ namespace System.Windows
         /// </summary>
         public DataTemplateSelector ItemTemplateSelector
         {
-            get {  return _itemTemplateSelector; }
+            get { return _itemTemplateSelector; }
             set
             {
                 CheckSealed();
@@ -108,7 +108,7 @@ namespace System.Windows
         /// </summary>
         public Style ItemContainerStyle
         {
-            get {  return _itemContainerStyle; }
+            get { return _itemContainerStyle; }
             set
             {
                 CheckSealed();
@@ -124,7 +124,7 @@ namespace System.Windows
         /// </summary>
         public StyleSelector ItemContainerStyleSelector
         {
-            get {  return _itemContainerStyleSelector; }
+            get { return _itemContainerStyleSelector; }
             set
             {
                 CheckSealed();
@@ -141,7 +141,7 @@ namespace System.Windows
         /// </summary>
         public string ItemStringFormat
         {
-            get {  return _itemStringFormat; }
+            get { return _itemStringFormat; }
             set
             {
                 CheckSealed();
@@ -158,7 +158,7 @@ namespace System.Windows
         /// </summary>
         public int AlternationCount
         {
-            get {  return _alternationCount; }
+            get { return _alternationCount; }
             set
             {
                 CheckSealed();
@@ -175,7 +175,7 @@ namespace System.Windows
         /// </summary>
         public BindingGroup ItemBindingGroup
         {
-            get {  return _itemBindingGroup; }
+            get { return _itemBindingGroup; }
             set
             {
                 CheckSealed();
@@ -233,22 +233,22 @@ namespace System.Windows
 
         #region Data
 
-        private BindingBase          _itemsSourceBinding;
-        private DataTemplate         _itemTemplate;
+        private BindingBase _itemsSourceBinding;
+        private DataTemplate _itemTemplate;
         private DataTemplateSelector _itemTemplateSelector;
-        private Style                _itemContainerStyle;
-        private StyleSelector        _itemContainerStyleSelector;
-        private string               _itemStringFormat;
-        private int                  _alternationCount;
-        private BindingGroup         _itemBindingGroup;
+        private Style _itemContainerStyle;
+        private StyleSelector _itemContainerStyleSelector;
+        private string _itemStringFormat;
+        private int _alternationCount;
+        private BindingGroup _itemBindingGroup;
 
-        private bool                 _itemTemplateSet;
-        private bool                 _itemTemplateSelectorSet;
-        private bool                 _itemContainerStyleSet;
-        private bool                 _itemContainerStyleSelectorSet;
-        private bool                 _itemStringFormatSet;
-        private bool                 _alternationCountSet;
-        private bool                 _itemBindingGroupSet;
+        private bool _itemTemplateSet;
+        private bool _itemTemplateSelectorSet;
+        private bool _itemContainerStyleSet;
+        private bool _itemContainerStyleSelectorSet;
+        private bool _itemStringFormatSet;
+        private bool _alternationCountSet;
+        private bool _itemBindingGroupSet;
 
         #endregion Data
     }

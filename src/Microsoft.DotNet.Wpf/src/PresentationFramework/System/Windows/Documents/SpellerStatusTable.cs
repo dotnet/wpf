@@ -1,9 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal;
 using System.Collections;
+using MS.Internal;
 
 //
 // Description: Run-length table of document status for use the by the Speller.
@@ -41,9 +41,9 @@ namespace System.Windows.Documents
 
             _runList.Add(new Run(textContainerStart, RunType.Dirty));
         }
- 
+
         #endregion Constructors
- 
+
         //------------------------------------------------------
         //
         //  Internal Methods
@@ -198,7 +198,7 @@ namespace System.Windows.Documents
                 }
                 else
                 {
-                    for (i = index+1; i < _runList.Count; i++)
+                    for (i = index + 1; i < _runList.Count; i++)
                     {
                         if (IsErrorRun(i))
                         {
@@ -635,9 +635,9 @@ namespace System.Windows.Documents
             // just remove it.
             if (index < _runList.Count)
             {
-                NotifyHighlightLayerBeforeRunChange(index); 
+                NotifyHighlightLayerBeforeRunChange(index);
                 _runList.RemoveAt(index); // just one char, unless it's an error run.
-                
+
                 // Finally, merge the following run with the run at index
                 // if it happens to also be dirty.
                 if (index < _runList.Count && GetRun(index).RunType == RunType.Dirty)
@@ -801,7 +801,7 @@ namespace System.Windows.Documents
             }
 
             internal ITextPointer Position
-            { 
+            {
                 get { return _position; }
                 set { _position = value; }
             }

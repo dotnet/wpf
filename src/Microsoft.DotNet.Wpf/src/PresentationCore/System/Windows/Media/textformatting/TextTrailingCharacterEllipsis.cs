@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,8 +19,8 @@ namespace System.Windows.Media.TextFormatting
     /// </summary>
     public class TextTrailingCharacterEllipsis : TextCollapsingProperties
     {
-        private double      _width;
-        private TextRun     _ellipsis;
+        private double _width;
+        private TextRun _ellipsis;
 
         private const string StringHorizontalEllipsis = "\x2026";
 
@@ -33,8 +33,8 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="width">width in which collapsing is constrained to</param>
         /// <param name="textRunProperties">text run properties of ellispis symbol</param>
         public TextTrailingCharacterEllipsis(
-            double              width,
-            TextRunProperties   textRunProperties
+            double width,
+            TextRunProperties textRunProperties
             )
         {
             _width = width;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,8 +10,8 @@
 //
 
 
-using System.Windows.Input;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace MS.Internal.Ink
@@ -106,7 +106,7 @@ namespace MS.Internal.Ink
         /// </summary>
         public void UpdateTransform()
         {
-            if ( !EditingCoordinator.IsTransformValid(this) )
+            if (!EditingCoordinator.IsTransformValid(this))
             {
                 OnTransformChanged();
             }
@@ -135,7 +135,7 @@ namespace MS.Internal.Ink
             get
             {
                 // If the cursor instance hasn't been created or is dirty, we will create a new instance.
-                if ( _cachedCursor == null || !EditingCoordinator.IsCursorValid(this) )
+                if (_cachedCursor == null || !EditingCoordinator.IsCursorValid(this))
                 {
                     // Invoke the virtual method to get cursor. Then cache it.
                     _cachedCursor = GetCurrentCursor();
@@ -152,7 +152,7 @@ namespace MS.Internal.Ink
         // Protected Methods
         //
         //-------------------------------------------------------------------------------
-        
+
         #region Protected Methods
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace MS.Internal.Ink
         {
             get { return _inkCanvas; }
         }
-        
+
         /// <summary>
         /// Provides access to the EditingStack this EditingBehavior is on
         /// </summary>
@@ -261,17 +261,17 @@ namespace MS.Internal.Ink
         /// <summary>
         /// The InkCanvas this EditingBehavior is operating on
         /// </summary>
-        private InkCanvas           _inkCanvas;
-        
+        private InkCanvas _inkCanvas;
+
         /// <summary>
         /// The EditingStack this EditingBehavior is on
         /// </summary>
-        private EditingCoordinator  _editingCoordinator;
+        private EditingCoordinator _editingCoordinator;
 
         /// <summary>
         /// Fields related to the cursor
         /// </summary>
-        private Cursor              _cachedCursor;
+        private Cursor _cachedCursor;
 
         #endregion Private Fields
     }

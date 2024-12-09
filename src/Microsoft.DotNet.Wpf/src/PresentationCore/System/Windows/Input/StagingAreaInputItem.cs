@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,20 +21,20 @@ namespace System.Windows.Input
         {
             _isMarker = isMarker;
         }
-        
+
         // For performace reasons, we try to reuse these event args.
         // Allow an existing item to be promoted by keeping the existing dictionary. 
         internal void Reset(InputEventArgs input, StagingAreaInputItem promote)
         {
             _input = input;
 
-            if(promote != null && promote._dictionary != null)
+            if (promote != null && promote._dictionary != null)
             {
-                _dictionary = (Hashtable) promote._dictionary.Clone();
+                _dictionary = (Hashtable)promote._dictionary.Clone();
             }
             else
             {
-                if(_dictionary != null)
+                if (_dictionary != null)
                 {
                     _dictionary.Clear();
                 }
@@ -50,7 +50,7 @@ namespace System.Windows.Input
         /// </summary>
         public InputEventArgs Input
         {
-            get {return _input;}
+            get { return _input; }
         }
 
         /// <summary>
@@ -83,8 +83,8 @@ namespace System.Windows.Input
             _dictionary[key] = value;
         }
 
-        internal bool IsMarker {get {return _isMarker;}}
-        
+        internal bool IsMarker { get { return _isMarker; } }
+
         private bool _isMarker;
         private InputEventArgs _input;
         private Hashtable _dictionary;

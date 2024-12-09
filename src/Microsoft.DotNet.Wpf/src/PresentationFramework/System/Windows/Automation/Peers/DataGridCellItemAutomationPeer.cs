@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -356,7 +356,7 @@ namespace System.Windows.Automation.Peers
             AutomationPeer wrapperPeer = OwningCellPeer;
             AutomationHeadingLevel headingLevel = AutomationHeadingLevel.None;
 
-            if(wrapperPeer != null)
+            if (wrapperPeer != null)
             {
                 headingLevel = wrapperPeer.GetHeadingLevel();
             }
@@ -649,7 +649,7 @@ namespace System.Windows.Automation.Peers
 
             // Invoke on a NewItemPlaceholder row creates a new item.
             // BeginEdit on a NewItemPlaceholder row returns false.
-            if (!success  && !IsNewItemPlaceholder)
+            if (!success && !IsNewItemPlaceholder)
             {
                 throw new InvalidOperationException(SR.DataGrid_AutomationInvokeFailed);
             }
@@ -811,7 +811,8 @@ namespace System.Windows.Automation.Peers
             AutomationPeer parent = this.GetParent();
             if (this.Index != -1 && parent != null && parent.Children != null && this.Index < parent.Children.Count && parent.Children[this.Index] == this)
                 return true;
-            else return false;
+            else
+                return false;
         }
 
         #endregion
@@ -894,7 +895,7 @@ namespace System.Windows.Automation.Peers
 
         internal object Item
         {
-            get {  return (_item == null) ? null : _item.Target; }
+            get { return (_item == null) ? null : _item.Target; }
         }
 
         private DataGridItemAutomationPeer OwningItemPeer

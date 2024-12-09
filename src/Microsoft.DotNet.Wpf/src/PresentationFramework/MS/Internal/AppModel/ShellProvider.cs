@@ -1,13 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
-using MS.Win32;
 using MS.Internal.Interop;
-
+using MS.Win32;
 // Some COM interfaces and Win32 structures are already declared in the framework.
 // Interesting ones to remember in System.Runtime.InteropServices.ComTypes are:
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
@@ -16,10 +15,10 @@ using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
 namespace MS.Internal.AppModel
 {
+    using HRESULT = MS.Internal.Interop.HRESULT;
     // There are THREE definitions of HRESULT. Two in ErrorCodes, and one in wgx_render.cs.
     // wgx_render.cs wins if we don't put this inside of the namespace.
     using Win32Error = MS.Internal.Interop.Win32Error;
-    using HRESULT = MS.Internal.Interop.HRESULT;
 
     #region Structs
 

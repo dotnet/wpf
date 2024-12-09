@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: Wraps some of IAccessible to support Focus and top-level window creates
 
 using System;
-using Accessibility;
 using System.Diagnostics;
+using Accessibility;
 using MS.Win32;
 
 // PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
@@ -22,27 +22,27 @@ namespace MS.Internal.Automation
             _acc = acc;
             _child = child;
         }
-        
+
         // Create an Accessible object; may return null
-        internal static Accessible Create( IntPtr hwnd, int idObject, int idChild )
+        internal static Accessible Create(IntPtr hwnd, int idObject, int idChild)
         {
             IAccessible acc = null;
             object child = null;
-            if( UnsafeNativeMethods.AccessibleObjectFromEvent( hwnd, idObject, idChild, ref acc, ref child ) != 0 /*S_OK*/ || acc == null )
+            if (UnsafeNativeMethods.AccessibleObjectFromEvent(hwnd, idObject, idChild, ref acc, ref child) != 0 /*S_OK*/ || acc == null)
                 return null;
 
             // Per SDK must use the ppacc and pvarChild from AccessibleObjectFromEvent
             // to access information about this UI element.
-            return new Accessible( acc, child );
+            return new Accessible(acc, child);
         }
 
         internal int State
-        { 
-            get 
-            { 
+        {
+            get
+            {
                 try
                 {
-                    return (int)_acc.get_accState(_child); 
+                    return (int)_acc.get_accState(_child);
                 }
                 catch (Exception e)
                 {
@@ -54,7 +54,7 @@ namespace MS.Internal.Automation
 
                     return UnsafeNativeMethods.STATE_SYSTEM_UNAVAILABLE;
                 }
-            } 
+            }
         }
 
         internal IntPtr Window
@@ -70,7 +70,7 @@ namespace MS.Internal.Automation
                             _hwnd = IntPtr.Zero;
                         }
                     }
-                    catch( Exception e )
+                    catch (Exception e)
                     {
                         if (IsCriticalMSAAException(e))
                             // PRESHARP will flag this as a warning 56503/6503: Property get methods should not throw exceptions

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,15 +17,15 @@ namespace System.Windows
     /// The attribute can be specified on Class, Property and Method
     /// </summary>
     [AttributeUsage(
-           AttributeTargets.Class     
-         | AttributeTargets.Property 
-         | AttributeTargets.Field    
-         | AttributeTargets.Enum     
+           AttributeTargets.Class
+         | AttributeTargets.Property
+         | AttributeTargets.Field
+         | AttributeTargets.Enum
          | AttributeTargets.Struct,
-         AllowMultiple = false, 
+         AllowMultiple = false,
          Inherited = true)
     ]
-    public sealed class LocalizabilityAttribute : Attribute 
+    public sealed class LocalizabilityAttribute : Attribute
     {
         /// <summary>
         /// Construct a LocalizabilityAttribute to describe the localizability of a property.
@@ -35,22 +35,22 @@ namespace System.Windows
         /// <param name="category">the string category given to the item</param>
         public LocalizabilityAttribute(LocalizationCategory category)
         {
-            if ( category < LocalizationCategory.None
+            if (category < LocalizationCategory.None
               || category > LocalizationCategory.NeverLocalize)
             {
                 throw new InvalidEnumArgumentException(
-                    "category", 
-                    (int)category, 
+                    "category",
+                    (int)category,
                     typeof(LocalizationCategory)
                     );
             }
 
-            _category      = category;
-            _readability   = Readability.Readable;
+            _category = category;
+            _readability = Readability.Readable;
             _modifiability = Modifiability.Modifiable;
         }
 
-      
+
         /// <summary>
         /// String category
         /// </summary>
@@ -58,8 +58,8 @@ namespace System.Windows
         public LocalizationCategory Category
         {
             // should have only getter, because it is a required parameter to the constructor
-            get { return _category; }         
-        }      
+            get { return _category; }
+        }
 
         /// <summary>
         /// Get or set the readability of the attribute's targeted value
@@ -68,13 +68,13 @@ namespace System.Windows
         public Readability Readability
         {
             get { return _readability; }
-            set 
-            { 
-                if (  value != Readability.Unreadable 
-                   && value != Readability.Readable 
+            set
+            {
+                if (value != Readability.Unreadable
+                   && value != Readability.Readable
                    && value != Readability.Inherit)
                 {
-                    throw new InvalidEnumArgumentException("Readability", (int) value, typeof(Readability));
+                    throw new InvalidEnumArgumentException("Readability", (int)value, typeof(Readability));
                 }
 
                 _readability = value;
@@ -88,24 +88,24 @@ namespace System.Windows
         public Modifiability Modifiability
         {
             get { return _modifiability; }
-            set 
+            set
             {
-                if (   value != Modifiability.Unmodifiable
+                if (value != Modifiability.Unmodifiable
                     && value != Modifiability.Modifiable
                     && value != Modifiability.Inherit)
                 {
-                    throw new InvalidEnumArgumentException("Modifiability", (int) value, typeof(Modifiability));
+                    throw new InvalidEnumArgumentException("Modifiability", (int)value, typeof(Modifiability));
                 }
 
                 _modifiability = value;
-            }            
+            }
         }
 
         //--------------------------------------------
         // Private members
         //--------------------------------------------
         private LocalizationCategory _category;
-        private Readability          _readability;
-        private Modifiability        _modifiability;
-}
+        private Readability _readability;
+        private Modifiability _modifiability;
+    }
 }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,10 +7,10 @@
 //   base Parser class that parses XML markup into an Avalon Element Tree
 //
 
-using System.Xml;
 using System.IO;
 using System.Text;
 using System.Windows.Markup.Primitives;
+using System.Xml;
 
 namespace System.Windows.Markup
 {
@@ -19,7 +19,7 @@ namespace System.Windows.Markup
     /// </summary>
     public static class XamlWriter
     {
-#region Public Methods
+        #region Public Methods
 
         /// <summary>
         ///     Save gets the xml respresentation 
@@ -52,7 +52,7 @@ namespace System.Windows.Markup
                 // Close writer
                 writer.Close();
             }
-            
+
             return sb.ToString();
         }
 
@@ -160,7 +160,7 @@ namespace System.Windows.Markup
             MarkupWriter.SaveAsXml(manager.XmlWriter, obj, manager);
         }
 
-#endregion Public Methods
+        #endregion Public Methods
     }
 }
 

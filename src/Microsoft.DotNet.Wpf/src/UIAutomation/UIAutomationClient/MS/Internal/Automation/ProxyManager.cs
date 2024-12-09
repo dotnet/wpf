@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,14 +8,14 @@
 #pragma warning disable 1634, 1691
 
 using System;
+using System.Collections;
+using System.Diagnostics;
+using System.Globalization;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System.Text;
-using System.Globalization;
-using System.Collections;
-using System.Runtime.InteropServices;
-using System.Reflection;
-using System.Diagnostics;
 using MS.Win32;
 
 namespace MS.Internal.Automation
@@ -27,7 +27,7 @@ namespace MS.Internal.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         // Static class - Private constructor to prevent creation
@@ -43,33 +43,33 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         #region Proxy registration and table management
 
         // load proxies from specified assembly
-        internal static void RegisterProxyAssembly ( AssemblyName assemblyName )
+        internal static void RegisterProxyAssembly(AssemblyName assemblyName)
         {
             Assembly a = null;
             try
             {
-                a = Assembly.Load( assemblyName );
+                a = Assembly.Load(assemblyName);
             }
-            catch(System.IO.FileNotFoundException)
+            catch (System.IO.FileNotFoundException)
             {
-                throw new ProxyAssemblyNotLoadedException(SR.Format(SR.Assembly0NotFound,assemblyName));
-            } 
-            
+                throw new ProxyAssemblyNotLoadedException(SR.Format(SR.Assembly0NotFound, assemblyName));
+            }
+
             string typeName = assemblyName.Name + ".UIAutomationClientSideProviders";
-            Type t = a.GetType( typeName );
-            if( t == null )
+            Type t = a.GetType(typeName);
+            if (t == null)
             {
                 throw new ProxyAssemblyNotLoadedException(SR.Format(SR.CouldNotFindType0InAssembly1, typeName, assemblyName));
             }
 
             FieldInfo fi = t.GetField("ClientSideProviderDescriptionTable", BindingFlags.Static | BindingFlags.Public);
-            if (fi == null || fi.FieldType !=  typeof(ClientSideProviderDescription[]))
+            if (fi == null || fi.FieldType != typeof(ClientSideProviderDescription[]))
             {
                 throw new ProxyAssemblyNotLoadedException(SR.Format(SR.CouldNotFindRegisterMethodOnType0InAssembly1, typeName, assemblyName));
             }
@@ -79,18 +79,18 @@ namespace MS.Internal.Automation
             {
                 ClientSettings.RegisterClientSideProviders(table);
             }
-        } 
-        
+        }
+
         // register specified proxies
         internal static void RegisterWindowHandlers(ClientSideProviderDescription[] proxyInfo)
         {
             // If a client registers a proxy before the defaults proxies are loaded because of use, 
             // we should load the defaults first.
             LoadDefaultProxies();
-            
+
             lock (_lockObj)
             {
-                AddToProxyDescriptionTable( proxyInfo );
+                AddToProxyDescriptionTable(proxyInfo);
             }
         }
 
@@ -100,17 +100,17 @@ namespace MS.Internal.Automation
             lock (_lockObj)
             {
                 // This method replaces the entire table.  So clear all the collections
-                for( int i = 0 ; i < _pseudoProxies.Length ; i++ )
+                for (int i = 0; i < _pseudoProxies.Length; i++)
                 {
-                    _pseudoProxies[ i ] = null;
+                    _pseudoProxies[i] = null;
                 }
 
-                _classHandlers.Clear(); 
+                _classHandlers.Clear();
                 _partialClassHandlers.Clear();
                 _imageOnlyHandlers.Clear();
                 _fallbackHandlers.Clear();
 
-                AddToProxyDescriptionTable( proxyInfo );
+                AddToProxyDescriptionTable(proxyInfo);
 
                 // if someone calls this method before the default proxies are 
                 // loaded assume they don't want us to add the defaults on top 
@@ -127,19 +127,19 @@ namespace MS.Internal.Automation
 
             // If a client gets the table before the defaults proxies  are loaded because of use, it should return the default proxies
             LoadDefaultProxies();
-            
+
             lock (_lockObj)
             {
                 int count = 0;
-                IEnumerable [ ] sourceProxyDescription = {_classHandlers, _partialClassHandlers, _imageOnlyHandlers, _fallbackHandlers};
+                IEnumerable[] sourceProxyDescription = { _classHandlers, _partialClassHandlers, _imageOnlyHandlers, _fallbackHandlers };
 
                 // figure out how many there are
-                foreach ( IEnumerable e in sourceProxyDescription )
+                foreach (IEnumerable e in sourceProxyDescription)
                 {
-                    foreach ( Object item in e )
+                    foreach (Object item in e)
                     {
                         Object o = item;
-                        if( o is DictionaryEntry )
+                        if (o is DictionaryEntry)
                             o = ((DictionaryEntry)o).Value;
 
                         if (o is ClientSideProviderDescription)
@@ -159,15 +159,15 @@ namespace MS.Internal.Automation
 
                 ClientSideProviderDescription[] proxyDescriptions = new ClientSideProviderDescription[count];
                 count = 0;
-                
+
                 // Because the four collections have a simular stucture in common we can treat like they are the same 
                 // and build the array in the correct order from each one.
-                foreach ( IEnumerable e in sourceProxyDescription )
+                foreach (IEnumerable e in sourceProxyDescription)
                 {
-                    foreach ( Object item in e )
+                    foreach (Object item in e)
                     {
                         Object o = item;
-                        if( o is DictionaryEntry )
+                        if (o is DictionaryEntry)
                             o = ((DictionaryEntry)o).Value;
 
                         if (o is ClientSideProviderDescription)
@@ -182,48 +182,48 @@ namespace MS.Internal.Automation
                         }
                         else
                         {
-                            foreach( Object o1 in (ArrayList) o )
+                            foreach (Object o1 in (ArrayList)o)
                             {
                                 proxyDescriptions[count++] = (ClientSideProviderDescription)o1;
                             }
                         }
                     }
                 }
-                
+
                 return proxyDescriptions;
-            }            
+            }
         }
-        
+
         #endregion Proxy registration and table management
 
         #region Methods that return a proxy or native object
 
         // helper to return the non-client area provider
-        internal static IRawElementProviderSimple GetNonClientProvider( IntPtr hwnd )
+        internal static IRawElementProviderSimple GetNonClientProvider(IntPtr hwnd)
         {
             ClientSideProviderFactoryCallback nonClientFactory = ProxyManager.NonClientProxyFactory;
-            if( nonClientFactory == null )
+            if (nonClientFactory == null)
                 return null;
 
-            return nonClientFactory( hwnd, 0, UnsafeNativeMethods.OBJID_CLIENT );
+            return nonClientFactory(hwnd, 0, UnsafeNativeMethods.OBJID_CLIENT);
         }
 
         // helper to return the User32FocusedMenu provider
-        internal static IRawElementProviderSimple GetUser32FocusedMenuProvider( IntPtr hwnd )
+        internal static IRawElementProviderSimple GetUser32FocusedMenuProvider(IntPtr hwnd)
         {
             ClientSideProviderFactoryCallback menuFactory = ProxyManager.User32FocusedMenuProxyFactory;
-            if( menuFactory == null )
+            if (menuFactory == null)
                 return null;
 
-            return menuFactory( hwnd, 0, UnsafeNativeMethods.OBJID_CLIENT );
+            return menuFactory(hwnd, 0, UnsafeNativeMethods.OBJID_CLIENT);
         }
 
         #endregion Methods that return a proxy or native object
 
         #region miscellaneous HWND rountines
-        internal static string GetClassName( NativeMethods.HWND hwnd )
+        internal static string GetClassName(NativeMethods.HWND hwnd)
         {
-            StringBuilder str = new StringBuilder( NativeMethods.MAX_PATH );
+            StringBuilder str = new StringBuilder(NativeMethods.MAX_PATH);
 
             int result = SafeNativeMethods.GetClassName(hwnd, str, NativeMethods.MAX_PATH);
             int lastWin32Error = Marshal.GetLastWin32Error();
@@ -235,9 +235,9 @@ namespace MS.Internal.Automation
             return str.ToString();
         }
 
-        internal static string RealGetWindowClass( NativeMethods.HWND hwnd )
+        internal static string RealGetWindowClass(NativeMethods.HWND hwnd)
         {
-            StringBuilder str = new StringBuilder( NativeMethods.MAX_PATH );
+            StringBuilder str = new StringBuilder(NativeMethods.MAX_PATH);
 
             int result = SafeNativeMethods.RealGetWindowClass(hwnd, str, NativeMethods.MAX_PATH);
             int lastWin32Error = Marshal.GetLastWin32Error();
@@ -249,7 +249,7 @@ namespace MS.Internal.Automation
             return str.ToString();
         }
 
-        private static string [] BadImplClassnames = new string []
+        private static string[] BadImplClassnames = new string[]
         {
             // The following classes are known to not check the lParam to WM_GETOBJECT, so avoid them:
             // Keep list in sync with UiaNodeFactory.cpp
@@ -261,9 +261,9 @@ namespace MS.Internal.Automation
             "WMP Plugin UI Host",
         };
 
-        internal static bool IsKnownBadWindow( NativeMethods.HWND hwnd )
+        internal static bool IsKnownBadWindow(NativeMethods.HWND hwnd)
         {
-            string className = GetClassName( hwnd );
+            string className = GetClassName(hwnd);
 
             foreach (string str in BadImplClassnames)
             {
@@ -297,10 +297,10 @@ namespace MS.Internal.Automation
         // find the name of the image for this HWND.  If this fails for any reason just return null. 
         // Review: Getting the image name is expessive if the image name starts to be used a lot
         // we could cache it in a static hash using the PID as the key.
-        internal static string GetImageName( NativeMethods.HWND hwnd )
+        internal static string GetImageName(NativeMethods.HWND hwnd)
         {
             int instance = Misc.GetWindowLong(hwnd, SafeNativeMethods.GWL_HINSTANCE);
-            if ( instance == 0 )
+            if (instance == 0)
             {
                 return null;
             }
@@ -323,7 +323,7 @@ namespace MS.Internal.Automation
         }
         #endregion miscellaneous HWND rountines
 
-        internal static void LoadDefaultProxies( )
+        internal static void LoadDefaultProxies()
         {
             //No need to load the default providers if they are already loaded
             if (!_defaultProxiesNeeded)
@@ -333,7 +333,7 @@ namespace MS.Internal.Automation
             // a problem we don't want to go thru the following overhead for every hwnd.  We just try this
             // once per process.
             _defaultProxiesNeeded = false;
-            
+
 #if (INTERNAL_COMPILE || INTERNALTESTUIAUTOMATION)
             ClientSettings.RegisterClientSideProviders(UIAutomationClientsideProviders.UIAutomationClientSideProviders.ClientSideProviderDescriptionTable);
 #else
@@ -343,15 +343,15 @@ namespace MS.Internal.Automation
 
             // Walk up the stack looking for the first assembly that is different than the ExecutingAssembly
             // This would be the assembly that called us.
-            StackTrace st = new StackTrace(); 
-            for ( int i=0; i < st.FrameCount; i++ ) 
+            StackTrace st = new StackTrace();
+            for (int i = 0; i < st.FrameCount; i++)
             {
                 StackFrame sf = st.GetFrame(i);
                 MethodBase mb = sf.GetMethod();
                 Type t = mb.ReflectedType;
                 Assembly a = t.Assembly;
 
-                if ( a.GetName().Name != currentAssembly.GetName().Name )
+                if (a.GetName().Name != currentAssembly.GetName().Name)
                 {
                     callingAssembly = a;
                     break;
@@ -359,44 +359,46 @@ namespace MS.Internal.Automation
             }
 
             AssemblyName ourAssembly = Assembly.GetAssembly(typeof(ProxyManager)).GetName();
-            
+
             // Attempt to discover the version of UIA that the caller is linked against,
             // and then use the correpsonding proxy dll version. If we can't do that,
             // we'll use the default version.
-            AssemblyName proxyAssemblyName = new AssemblyName();
-            proxyAssemblyName.Name = _defaultProxyAssembly;
-            proxyAssemblyName.Version = ourAssembly.Version;
-            proxyAssemblyName.CultureInfo = ourAssembly.CultureInfo;
-            proxyAssemblyName.SetPublicKeyToken( ourAssembly.GetPublicKeyToken() );
+            AssemblyName proxyAssemblyName = new AssemblyName
+            {
+                Name = _defaultProxyAssembly,
+                Version = ourAssembly.Version,
+                CultureInfo = ourAssembly.CultureInfo
+            };
+            proxyAssemblyName.SetPublicKeyToken(ourAssembly.GetPublicKeyToken());
 
-            if ( callingAssembly != null )
+            if (callingAssembly != null)
             {
                 // find the name of the UIAutomation dll referenced by this assembly because it my be different
                 // from the one that acually got loaded.  We want to load the proxy dll that matches this one.
                 // This simulates behave simular to fusion side-by-side.
                 AssemblyName assemblyName = new AssemblyName();
-                foreach ( AssemblyName name in callingAssembly.GetReferencedAssemblies() )
+                foreach (AssemblyName name in callingAssembly.GetReferencedAssemblies())
                 {
-                    if ( name.Name == ourAssembly.Name )
+                    if (name.Name == ourAssembly.Name)
                     {
                         assemblyName = name;
                         break;
                     }
                 }
 
-                if ( assemblyName.Name != null )
+                if (assemblyName.Name != null)
                 {
                     proxyAssemblyName.Version = assemblyName.Version;
                     proxyAssemblyName.CultureInfo = assemblyName.CultureInfo;
-                    proxyAssemblyName.SetPublicKeyToken( assemblyName.GetPublicKeyToken() );
+                    proxyAssemblyName.SetPublicKeyToken(assemblyName.GetPublicKeyToken());
                 }
             }
 
-            RegisterProxyAssembly( proxyAssemblyName );
+            RegisterProxyAssembly(proxyAssemblyName);
 #endif
         }
         #endregion Internal Methods
-        
+
 
 
         //------------------------------------------------------
@@ -419,7 +421,7 @@ namespace MS.Internal.Automation
         {
             get
             {
-                return _pseudoProxies[ (int)PseudoProxy.NonClient ];
+                return _pseudoProxies[(int)PseudoProxy.NonClient];
             }
         }
 
@@ -427,7 +429,7 @@ namespace MS.Internal.Automation
         {
             get
             {
-                return _pseudoProxies[ (int)PseudoProxy.NonClientMenuBar ];
+                return _pseudoProxies[(int)PseudoProxy.NonClientMenuBar];
             }
         }
 
@@ -435,7 +437,7 @@ namespace MS.Internal.Automation
         {
             get
             {
-                return _pseudoProxies[ (int)PseudoProxy.NonClientSysMenu ];
+                return _pseudoProxies[(int)PseudoProxy.NonClientSysMenu];
             }
         }
 
@@ -443,7 +445,7 @@ namespace MS.Internal.Automation
         {
             get
             {
-                return _pseudoProxies[ (int)PseudoProxy.User32FocusedMenu ];
+                return _pseudoProxies[(int)PseudoProxy.User32FocusedMenu];
             }
         }
 
@@ -455,7 +457,7 @@ namespace MS.Internal.Automation
         //  Private Methods
         //
         //------------------------------------------------------
- 
+
         #region Private Methods
 
         // Get a proxy for a given hwnd
@@ -488,9 +490,9 @@ namespace MS.Internal.Automation
                 return null;
             }
 
-            LoadDefaultProxies ();
+            LoadDefaultProxies();
 
-            string className = GetClassName (hwnd).ToLower (CultureInfo.InvariantCulture);
+            string className = GetClassName(hwnd).ToLower(CultureInfo.InvariantCulture);
             object proxyDescOrArrayList = null;
 
             lock (_lockObj)
@@ -528,10 +530,10 @@ namespace MS.Internal.Automation
                     proxy = FindProxyInEntryOrArrayList(ProxyScoping.PartialMatchRealClassName, _partialClassHandlers, ref imageName, hwnd, idChild, idObject, baseClassName);
                 }
             }
-            
+
             // There is no match yet look for entry that just specified an image name
             // this is like a fallback proxy for a particular image
-            if( proxy == null )
+            if (proxy == null)
             {
                 proxy = FindProxyFromImageFallback(ref imageName, hwnd, idChild, idObject);
             }
@@ -607,7 +609,7 @@ namespace MS.Internal.Automation
             // this is a for loop because we need this to be thread safe and ClientSideProviderFactoryCallback calls out
             // so there would have been a lock in force when the call out was made which causes
             // deadlock.  We need to make our locks as narrow as possible.
-            for( int i = 0; i < count; i++ )
+            for (int i = 0; i < count; i++)
             {
                 object entry;
                 lock (_lockObj)
@@ -616,7 +618,7 @@ namespace MS.Internal.Automation
                 }
 
                 proxy = GetProxyFromEntry(findType, entry, ref imageName, hwnd, idChild, idObject, classNameForPartialMatch);
-                if( proxy != null )
+                if (proxy != null)
                     break;
             }
 
@@ -700,9 +702,9 @@ namespace MS.Internal.Automation
             {
                 return factoryCallback(hwnd, idChild, idObject);
             }
-            catch( Exception e )
+            catch (Exception e)
             {
-                if( Misc.IsCriticalException( e ) )
+                if (Misc.IsCriticalException(e))
                     throw;
 
                 return null;
@@ -718,18 +720,18 @@ namespace MS.Internal.Automation
             // proxy.  In order to make that work we go through the array backwards so the the entries first
             // in the table get inserted in front of the ones that came later.  This also works if 
             // RegisterWindowHandlers is called more than once.
-            for( int i = proxyInfo.Length - 1;  i >= 0; i-- )
+            for (int i = proxyInfo.Length - 1; i >= 0; i--)
             {
                 pi = proxyInfo[i];
 
                 // Check for pseudo-proxy names...
-                if( pi.ClassName != null && pi.ClassName.Length > 0 && pi.ClassName[ 0 ] == '#' )
+                if (pi.ClassName != null && pi.ClassName.Length > 0 && pi.ClassName[0] == '#')
                 {
-                    for( int j = 0 ; j < _pseudoProxyClassNames.Length ; j++ )
+                    for (int j = 0; j < _pseudoProxyClassNames.Length; j++)
                     {
-                        if( pi.ClassName.Equals( _pseudoProxyClassNames[ j ] ) )
+                        if (pi.ClassName.Equals(_pseudoProxyClassNames[j]))
                         {
-                            if( pi.ImageName != null || pi.Flags != 0 )
+                            if (pi.ImageName != null || pi.Flags != 0)
                             {
                                 throw new ArgumentException(SR.NonclientClassnameCannotBeUsedWithFlagsOrImagename);
                             }
@@ -741,67 +743,67 @@ namespace MS.Internal.Automation
                     // fall through to add to table as usual, that ensures that it appears in a 'get' operation.
                 }
 
-                if( pi.ClassName == null && pi.ImageName == null )
+                if (pi.ClassName == null && pi.ImageName == null)
                 {
                     _fallbackHandlers.Insert(0, pi.ClientSideProviderFactoryCallback);
                 }
-                else if ( pi.ClassName == null )
+                else if (pi.ClassName == null)
                 {
                     AddToHashTable(_imageOnlyHandlers, pi.ImageName, pi.ClientSideProviderFactoryCallback);
                 }
                 else if ((pi.Flags & ClientSideProviderMatchIndicator.AllowSubstringMatch) != 0)
                 {
-                    _partialClassHandlers.Insert( 0, pi );
+                    _partialClassHandlers.Insert(0, pi);
                 }
                 else
                 {
-                    AddToHashTable( _classHandlers, pi.ClassName, pi );
+                    AddToHashTable(_classHandlers, pi.ClassName, pi);
                 }
             }
         }
-        
-        private static void AddToHashTable( Hashtable table, string key, object data )
+
+        private static void AddToHashTable(Hashtable table, string key, object data)
         {
-            object o = table[ key ];
-            if( o == null )
+            object o = table[key];
+            if (o == null)
             {
-                table.Add( key, data );
+                table.Add(key, data);
             }
             else
             {
                 ArrayList l = o as ArrayList;
-                if( l == null )
+                if (l == null)
                 {
                     l = new ArrayList();
-                    l.Insert( 0, o );
+                    l.Insert(0, o);
                 }
-                l.Insert( 0, data );
+                l.Insert(0, data);
 
-                table[ key ] = l;
+                table[key] = l;
             }
         }
 
 
         // find the name of the base class for this HWND.  If this fails for any reason just return null. 
-        private static string GetBaseClassName( NativeMethods.HWND hwnd )
+        private static string GetBaseClassName(NativeMethods.HWND hwnd)
         {
             const int OBJID_QUERYCLASSNAMEIDX = unchecked(unchecked((int)0xFFFFFFF4));
             const int QUERYCLASSNAME_BASE = 65536;
 
-            if( IsKnownBadWindow( hwnd ) )
+            if (IsKnownBadWindow(hwnd))
             {
-                return RealGetWindowClass( hwnd ).ToLower( CultureInfo.InvariantCulture );
+                return RealGetWindowClass(hwnd).ToLower(CultureInfo.InvariantCulture);
             }
 
             IntPtr result = Misc.SendMessageTimeout(hwnd, UnsafeNativeMethods.WM_GETOBJECT, IntPtr.Zero, (IntPtr)OBJID_QUERYCLASSNAMEIDX);
             int index = (int)result;
-            if ( index >= QUERYCLASSNAME_BASE && index - QUERYCLASSNAME_BASE < _classNames.Length )
+            if (index >= QUERYCLASSNAME_BASE && index - QUERYCLASSNAME_BASE < _classNames.Length)
             {
-                return _classNames[index - QUERYCLASSNAME_BASE].ToLower( CultureInfo.InvariantCulture );
+                return _classNames[index - QUERYCLASSNAME_BASE].ToLower(CultureInfo.InvariantCulture);
             }
             else
             {
-                return RealGetWindowClass( hwnd ).ToLower( CultureInfo.InvariantCulture );
+                return RealGetWindowClass(hwnd).ToLower(CultureInfo.InvariantCulture);
             }
         }
 
@@ -813,7 +815,7 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
         private enum ProxyScoping
         {
@@ -824,24 +826,24 @@ namespace MS.Internal.Automation
             ImageOnlyHandlers,
             FallbackHandlers,
         }
-        
+
         private static readonly object _lockObj = new object();
 
         // contains ClientSideProviderDescription structs or an Arraylist of ClientSideProviderDescription structs
         private static Hashtable _classHandlers = new Hashtable(22, 1.0f);
-        private static ArrayList _partialClassHandlers  = new ArrayList(12);
+        private static ArrayList _partialClassHandlers = new ArrayList(12);
 
         // contains a ClientSideProviderFactoryCallback delagate or an Arraylist of delagates 
-        private static Hashtable _imageOnlyHandlers = new Hashtable(0,1.0f);
+        private static Hashtable _imageOnlyHandlers = new Hashtable(0, 1.0f);
 
         // contains ClientSideProviderFactoryCallback delagates 
         private static ArrayList _fallbackHandlers = new ArrayList(1);
-        
+
         private static bool _defaultProxiesNeeded = true;
 
         // The name of the default proxy assembly this will probably change before we ship
         private const string _defaultProxyAssembly = "UIAutomationClientsideProviders";
-        
+
         // used to plug in the non-client area and user32 focused menu proxy
         private static ClientSideProviderFactoryCallback[] _pseudoProxies = new ClientSideProviderFactoryCallback[(int)PseudoProxy.LAST];
 
@@ -856,7 +858,7 @@ namespace MS.Internal.Automation
 
         // Pseudo-proxy names - must be all lowercase, since we convert
         // to lowercase in proxyinfo ctor
-        private static string [ ] _pseudoProxyClassNames =
+        private static string[] _pseudoProxyClassNames =
         {
             "#nonclient",
             "#nonclientmenubar",
@@ -865,7 +867,7 @@ namespace MS.Internal.Automation
         };
 
 
-        private static string [ ] _classNames = 
+        private static string[] _classNames =
         {
             "ListBox",
             "#32768",

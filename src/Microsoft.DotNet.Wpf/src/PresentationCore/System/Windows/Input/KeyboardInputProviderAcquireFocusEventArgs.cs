@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -33,7 +33,7 @@ namespace System.Windows.Input
         /// </summary>
         public bool FocusAcquired
         {
-            get {return _focusAcquired;}
+            get { return _focusAcquired; }
         }
 
         /// <summary>
@@ -48,8 +48,8 @@ namespace System.Windows.Input
         /// </param>
         protected override void InvokeEventHandler(Delegate genericHandler, object genericTarget)
         {
-            KeyboardInputProviderAcquireFocusEventHandler handler = (KeyboardInputProviderAcquireFocusEventHandler) genericHandler;
-            
+            KeyboardInputProviderAcquireFocusEventHandler handler = (KeyboardInputProviderAcquireFocusEventHandler)genericHandler;
+
             handler(genericTarget, this);
         }
 

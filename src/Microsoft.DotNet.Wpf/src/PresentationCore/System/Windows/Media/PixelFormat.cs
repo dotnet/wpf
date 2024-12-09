@@ -1,46 +1,45 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 #pragma warning disable 1634, 1691 // Allow suppression of certain presharp messages
 
 using System.ComponentModel;
-using MS.Internal;
-
-using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 using System.Runtime.CompilerServices;
+using MS.Internal;
+using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 namespace System.Windows.Media
 {
     [System.Flags]
     internal enum PixelFormatFlags
     {
-        BitsPerPixelMask        = 0x00FF,
-        BitsPerPixelUndefined   = 0,
-        BitsPerPixel1           = 1,
-        BitsPerPixel2           = 2,
-        BitsPerPixel4           = 4,
-        BitsPerPixel8           = 8,
-        BitsPerPixel16          = 16,
-        BitsPerPixel24          = 24,
-        BitsPerPixel32          = 32,
-        BitsPerPixel48          = 48,
-        BitsPerPixel64          = 64,
-        BitsPerPixel96          = 96,
-        BitsPerPixel128         = 128,
-        IsGray                  = 0x00000100,   // Grayscale only
-        IsCMYK                  = 0x00000200,   // CMYK, not ARGB
-        IsSRGB                  = 0x00000400,   // Gamma is approximately 2.2
-        IsScRGB                 = 0x00000800,   // Gamma is 1.0
-        Premultiplied           = 0x00001000,   // Premultiplied Alpha
-        ChannelOrderMask        = 0x0001E000,
-        ChannelOrderRGB         = 0x00002000,
-        ChannelOrderBGR         = 0x00004000,
-        ChannelOrderARGB        = 0x00008000,
-        ChannelOrderABGR        = 0x00010000,
-        Palettized              = 0x00020000,   // Pixels are indexes into a palette
-        NChannelAlpha           = 0x00040000,   // N-Channel format with alpha
-        IsNChannel              = 0x00080000,   // N-Channel format
+        BitsPerPixelMask = 0x00FF,
+        BitsPerPixelUndefined = 0,
+        BitsPerPixel1 = 1,
+        BitsPerPixel2 = 2,
+        BitsPerPixel4 = 4,
+        BitsPerPixel8 = 8,
+        BitsPerPixel16 = 16,
+        BitsPerPixel24 = 24,
+        BitsPerPixel32 = 32,
+        BitsPerPixel48 = 48,
+        BitsPerPixel64 = 64,
+        BitsPerPixel96 = 96,
+        BitsPerPixel128 = 128,
+        IsGray = 0x00000100,   // Grayscale only
+        IsCMYK = 0x00000200,   // CMYK, not ARGB
+        IsSRGB = 0x00000400,   // Gamma is approximately 2.2
+        IsScRGB = 0x00000800,   // Gamma is 1.0
+        Premultiplied = 0x00001000,   // Premultiplied Alpha
+        ChannelOrderMask = 0x0001E000,
+        ChannelOrderRGB = 0x00002000,
+        ChannelOrderBGR = 0x00004000,
+        ChannelOrderARGB = 0x00008000,
+        ChannelOrderABGR = 0x00010000,
+        Palettized = 0x00020000,   // Pixels are indexes into a palette
+        NChannelAlpha = 0x00040000,   // N-Channel format with alpha
+        IsNChannel = 0x00080000,   // N-Channel format
     }
 
     #region PixelFormat
@@ -71,7 +70,7 @@ namespace System.Windows.Media
         /// <summary>
         /// op_equality - returns whether or not the two pixel format channel masks are equal
         /// </summary>
-        public static bool operator == (PixelFormatChannelMask left, PixelFormatChannelMask right)
+        public static bool operator ==(PixelFormatChannelMask left, PixelFormatChannelMask right)
         {
             return Equals(left, right);
         }
@@ -81,7 +80,7 @@ namespace System.Windows.Media
         /// </summary>
         public static bool Equals(PixelFormatChannelMask left, PixelFormatChannelMask right)
         {
-            int leftNumChannels  =  left._mask != null ?  left._mask.Length : 0;
+            int leftNumChannels = left._mask != null ? left._mask.Length : 0;
             int rightNumChannels = right._mask != null ? right._mask.Length : 0;
 
             if (leftNumChannels != rightNumChannels)
@@ -103,7 +102,7 @@ namespace System.Windows.Media
         /// <summary>
         /// op_inequality - returns whether or not the two pixel format channel masks are not equal
         /// </summary>
-        public static bool operator != (PixelFormatChannelMask left, PixelFormatChannelMask right)
+        public static bool operator !=(PixelFormatChannelMask left, PixelFormatChannelMask right)
         {
             return !(left == right);
         }
@@ -141,7 +140,7 @@ namespace System.Windows.Media
     /// <summary>
     /// Pixel Format Definition for images and pixel-based surfaces
     /// </summary>
-    [TypeConverter (typeof(PixelFormatConverter))]
+    [TypeConverter(typeof(PixelFormatConverter))]
     [Serializable]
     public struct PixelFormat : IEquatable<PixelFormat>
     {
@@ -150,15 +149,15 @@ namespace System.Windows.Media
             unsafe
             {
                 Guid guidWicPixelFormat = WICPixelFormatGUIDs.WICPixelFormatDontCare;
-                byte * pGuidPixelFormat = (byte*) &guidPixelFormat;
-                byte * pGuidBuiltIn = (byte*) &guidWicPixelFormat;
+                byte* pGuidPixelFormat = (byte*)&guidPixelFormat;
+                byte* pGuidBuiltIn = (byte*)&guidWicPixelFormat;
 
                 // Compare only the first 15 bytes of the GUID.  If the first
                 // 15 bytes match the WIC pixel formats, then the 16th byte
                 // will be the format enum value.
                 Debug.Assert(Unsafe.SizeOf<Guid>() == 16);
                 int compareCount = 15;
-                
+
                 bool fBuiltIn = true;
                 for (int i = 0; i < compareCount; ++i)
                 {
@@ -168,12 +167,12 @@ namespace System.Windows.Media
                         break;
                     }
                 }
-                
+
                 // If it looks like a built-in WIC pixel format, verify that
                 // the format enum value is known to us.
                 if (fBuiltIn && pGuidPixelFormat[compareCount] <= (byte)PixelFormatEnum.Cmyk32)
                 {
-                    _format = (PixelFormatEnum) pGuidPixelFormat[compareCount];
+                    _format = (PixelFormatEnum)pGuidPixelFormat[compareCount];
                 }
                 else
                 {
@@ -320,7 +319,7 @@ namespace System.Windows.Media
                     break;
 
                 default:
-                    throw new System.ArgumentException (SR.Format(SR.Image_BadPixelFormat, pixelFormatString),
+                    throw new System.ArgumentException(SR.Format(SR.Image_BadPixelFormat, pixelFormatString),
                             "pixelFormatString");
             }
 
@@ -414,7 +413,7 @@ namespace System.Windows.Media
                     return WICPixelFormatGUIDs.WICPixelFormat32bppCMYK;
             }
 
-            throw new System.ArgumentException (SR.Format(SR.Image_BadPixelFormat, format), "format");
+            throw new System.ArgumentException(SR.Format(SR.Image_BadPixelFormat, format), "format");
         }
 
         private PixelFormatFlags FormatFlags
@@ -428,7 +427,7 @@ namespace System.Windows.Media
         /// <summary>
         /// op_equality - returns whether or not the two pixel formats are equal
         /// </summary>
-        public static bool operator == (PixelFormat left, PixelFormat right)
+        public static bool operator ==(PixelFormat left, PixelFormat right)
         {
             return (left.Guid == right.Guid);
         }
@@ -436,7 +435,7 @@ namespace System.Windows.Media
         /// <summary>
         /// op_inequality - returns whether or not the two pixel formats are not equal
         /// </summary>
-        public static bool operator != (PixelFormat left, PixelFormat right)
+        public static bool operator !=(PixelFormat left, PixelFormat right)
         {
             return (left.Guid != right.Guid);
         }
@@ -526,7 +525,7 @@ namespace System.Windows.Media
 
                             byte[] channelMask = new byte[cbBytes];
 
-                            fixed (byte *pbChannelMask = channelMask)
+                            fixed (byte* pbChannelMask = channelMask)
                             {
                                 HRESULT.Check(UnsafeNativeMethods.WICPixelFormatInfo.GetChannelMask(
                                     pixelFormatInfo, i, cbBytes, pbChannelMask, out cbBytes));
@@ -619,7 +618,7 @@ namespace System.Windows.Media
                     _bitsPerPixel = bpp;
                 }
 
-                return (int) _bitsPerPixel;
+                return (int)_bitsPerPixel;
             }
         }
 
@@ -661,12 +660,12 @@ namespace System.Windows.Media
         /// Convert a PixelFormat to a string that represents it.
         /// </summary>
         /// <returns></returns>
-        public override string ToString ()
+        public override string ToString()
         {
             return _format.ToString();
         }
 
-        internal static PixelFormat GetPixelFormat (
+        internal static PixelFormat GetPixelFormat(
             SafeMILHandle /* IWICBitmapSource */ bitmapSource
             )
         {
@@ -685,7 +684,7 @@ namespace System.Windows.Media
         internal static PixelFormat GetPixelFormat(Guid pixelFormatGuid)
         {
             byte[] guidBytes = pixelFormatGuid.ToByteArray();
-            return GetPixelFormat( (PixelFormatEnum)guidBytes[guidBytes.Length-1] );
+            return GetPixelFormat((PixelFormatEnum)guidBytes[guidBytes.Length - 1]);
         }
 
         /// <summary>
@@ -1080,7 +1079,7 @@ namespace System.Windows.Media
         private static readonly Guid WICPixelFormatPhotonFirst = new Guid(0x6fddc324, 0x4e03, 0x4bfe, 0xb1, 0x85, 0x3d, 0x77, 0x76, 0x8d, 0xc9, 0x1d);
 
         [NonSerialized]
-        private static readonly Guid WICPixelFormatPhotonLast  = new Guid(0x6fddc324, 0x4e03, 0x4bfe, 0xb1, 0x85, 0x3d, 0x77, 0x76, 0x8d, 0xc9, 0x42);
+        private static readonly Guid WICPixelFormatPhotonLast = new Guid(0x6fddc324, 0x4e03, 0x4bfe, 0xb1, 0x85, 0x3d, 0x77, 0x76, 0x8d, 0xc9, 0x42);
     }
     #endregion // PixelFormat
 }

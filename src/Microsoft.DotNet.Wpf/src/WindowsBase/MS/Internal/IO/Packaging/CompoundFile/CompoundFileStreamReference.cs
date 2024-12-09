@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -20,7 +20,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <summary>
         /// Full path from the root to this stream
         /// </summary>
-        public override string FullName 
+        public override string FullName
         {
             get
             {
@@ -52,7 +52,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <exception cref="ArgumentException">streamName cannot be null or empty</exception>
         public CompoundFileStreamReference(string storageName, string streamName)
         {
-            ContainerUtilities.CheckStringAgainstNullAndEmpty( streamName, "streamName" );
+            ContainerUtilities.CheckStringAgainstNullAndEmpty(streamName, "streamName");
 
             if ((storageName == null) || (storageName.Length == 0))
             {

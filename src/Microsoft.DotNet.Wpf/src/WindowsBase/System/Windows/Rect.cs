@@ -1,9 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal;
 using System.Windows.Media;
+using MS.Internal;
 
 namespace System.Windows
 {
@@ -49,10 +49,10 @@ namespace System.Windows
                 throw new System.ArgumentException(SR.Size_WidthAndHeightCannotBeNegative);
             }
 
-            _x    = x;
-            _y     = y;
-            _width   = width;
-            _height  = height;
+            _x = x;
+            _y = y;
+            _width = width;
+            _height = height;
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace System.Windows
         /// which results from point + vector.
         /// </summary>
         public Rect(Point point,
-                    Vector vector): this(point, point+vector)
+                    Vector vector) : this(point, point + vector)
         {
         }
 
@@ -84,7 +84,7 @@ namespace System.Windows
         /// </summary>
         public Rect(Size size)
         {
-            if(size.IsEmpty)
+            if (size.IsEmpty)
             {
                 this = s_empty;
             }
@@ -148,7 +148,7 @@ namespace System.Windows
                 {
                     throw new System.InvalidOperationException(SR.Rect_CannotModifyEmptyRect);
                 }
-                
+
                 _x = value._x;
                 _y = value._y;
             }
@@ -204,7 +204,7 @@ namespace System.Windows
 
                 _x = value;
             }
-}
+        }
 
         /// <summary>
         /// Y - The Y coordinate of the Location
@@ -245,7 +245,7 @@ namespace System.Windows
                 {
                     throw new System.InvalidOperationException(SR.Rect_CannotModifyEmptyRect);
                 }
-                                
+
                 if (value < 0)
                 {
                     throw new System.ArgumentException(SR.Size_WidthCannotBeNegative);
@@ -422,7 +422,7 @@ namespace System.Windows
                 return false;
             }
 
-            return ContainsInternal(x,y);
+            return ContainsInternal(x, y);
         }
 
         /// <summary>
@@ -439,8 +439,8 @@ namespace System.Windows
 
             return (_x <= rect._x &&
                     _y <= rect._y &&
-                    _x+_width >= rect._x+rect._width &&
-                    _y+_height >= rect._y+rect._height );
+                    _x + _width >= rect._x + rect._width &&
+                    _y + _height >= rect._y + rect._height);
         }
 
         /// <summary>
@@ -480,9 +480,9 @@ namespace System.Windows
             }
             else
             {
-                double left   = Math.Max(Left, rect.Left);
-                double top    = Math.Max(Top, rect.Top);
-                
+                double left = Math.Max(Left, rect.Left);
+                double top = Math.Max(Top, rect.Top);
+
                 //  Max with 0 to prevent double weirdness from causing us to be (-epsilon..0)
                 _width = Math.Max(Math.Min(Right, rect.Right) - left, 0);
                 _height = Math.Max(Math.Min(Bottom, rect.Bottom) - top, 0);
@@ -516,7 +516,7 @@ namespace System.Windows
                 double left = Math.Min(Left, rect.Left);
                 double top = Math.Min(Top, rect.Top);
 
-                
+
                 // We need this check so that the math does not result in NaN
                 if ((rect.Width == Double.PositiveInfinity) || (Width == Double.PositiveInfinity))
                 {
@@ -645,7 +645,7 @@ namespace System.Windows
 
             _x -= width;
             _y -= height;
-            
+
             // Do two additions rather than multiplication by 2 to avoid spurious overflow
             // That is: (A + 2 * B) != ((A + B) + B) if 2*B overflows.
             // Note that multiplication by 2 might work in this case because A should start
@@ -659,7 +659,7 @@ namespace System.Windows
             // maintains the invariant that either the Rect is Empty or _width and _height are
             // non-negative, even if the user parameters were NaN, though this isn't strictly maintained
             // by other methods.
-            if ( !(_width >= 0 && _height >= 0) )
+            if (!(_width >= 0 && _height >= 0))
             {
                 this = s_empty;
             }
@@ -699,7 +699,7 @@ namespace System.Windows
             MatrixUtil.TransformRect(ref rect, ref matrix);
             return rect;
         }
-    
+
         /// <summary>
         /// Updates rectangle to be the bounds of the original value transformed
         /// by the matrix.
@@ -773,13 +773,15 @@ namespace System.Windows
 
         static private Rect CreateEmptyRect()
         {
-            Rect rect = new Rect();
-            // We can't set these via the property setters because negatives widths
-            // are rejected in those APIs.
-            rect._x = Double.PositiveInfinity;
-            rect._y = Double.PositiveInfinity;
-            rect._width = Double.NegativeInfinity;
-            rect._height = Double.NegativeInfinity;
+            Rect rect = new Rect
+            {
+                // We can't set these via the property setters because negatives widths
+                // are rejected in those APIs.
+                _x = Double.PositiveInfinity,
+                _y = Double.PositiveInfinity,
+                _width = Double.NegativeInfinity,
+                _height = Double.NegativeInfinity
+            };
             return rect;
         }
 

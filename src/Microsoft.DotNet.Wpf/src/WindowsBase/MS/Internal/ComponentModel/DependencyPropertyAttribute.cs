@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,7 +11,7 @@ namespace MS.Internal.ComponentModel
     ///     to relate a property descriptor back to a dependency property.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
-    internal sealed class DependencyPropertyAttribute : Attribute 
+    internal sealed class DependencyPropertyAttribute : Attribute
     {
         //------------------------------------------------------
         //
@@ -20,11 +20,11 @@ namespace MS.Internal.ComponentModel
         //------------------------------------------------------
 
         #region Constructors
-        
+
         /// <summary>
         ///     Creates a new DependencyPropertyAttribute for the given dependency property.
         /// </summary>
-        internal DependencyPropertyAttribute(DependencyProperty dependencyProperty, bool isAttached) 
+        internal DependencyPropertyAttribute(DependencyProperty dependencyProperty, bool isAttached)
         {
             ArgumentNullException.ThrowIfNull(dependencyProperty);
 
@@ -41,18 +41,18 @@ namespace MS.Internal.ComponentModel
         //------------------------------------------------------
 
         #region Public Methods
-        
+
         /// <summary>
         ///     Override of Object.Equals that returns true when the dependency
         ///     property contained within each attribute is the same.
         /// </summary>
-        public override bool Equals(object value) 
+        public override bool Equals(object value)
         {
             DependencyPropertyAttribute da = value as DependencyPropertyAttribute;
 
-            if (da != null && 
-                object.ReferenceEquals(da._dp, _dp) && 
-                da._isAttached == _isAttached) 
+            if (da != null &&
+                object.ReferenceEquals(da._dp, _dp) &&
+                da._isAttached == _isAttached)
             {
                 return true;
             }
@@ -63,13 +63,13 @@ namespace MS.Internal.ComponentModel
         /// <summary>
         ///     Override of Object.GetHashCode();
         /// </summary>
-        public override int GetHashCode() 
+        public override int GetHashCode()
         {
             return _dp.GetHashCode();
         }
 
         #endregion Public Methods
-        
+
         //------------------------------------------------------
         //
         //  Public Operators
@@ -88,7 +88,7 @@ namespace MS.Internal.ComponentModel
         ///     Overrides Attribute.TypeId to be unique with respect to
         ///     other dependency property attributes.c
         /// </summary>
-        public override object TypeId 
+        public override object TypeId
         {
             get { return typeof(DependencyPropertyAttribute); }
         }
@@ -109,7 +109,7 @@ namespace MS.Internal.ComponentModel
         //------------------------------------------------------
 
         #region Internal Properties
-        
+
         /// <summary>
         ///     Returns whether the dependency property is an attached
         ///     property.
@@ -118,12 +118,12 @@ namespace MS.Internal.ComponentModel
         {
             get { return _isAttached; }
         }
-        
+
         /// <summary>
         ///     Returns the dependency property instance this attribute is
         ///     associated with.
         /// </summary>
-        internal DependencyProperty DependencyProperty 
+        internal DependencyProperty DependencyProperty
         {
             get { return _dp; }
         }
@@ -137,7 +137,7 @@ namespace MS.Internal.ComponentModel
         //------------------------------------------------------
 
         #region Private Fields
-        
+
         private DependencyProperty _dp;
         private bool _isAttached;
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -103,7 +103,7 @@ namespace System.Windows.Media.Imaging
                 return BitmapPalettes.FromMILPaletteType(WICPaletteType.WICPaletteTypeFixedHalftone64, true);
             }
         }
-        
+
         /// <summary>
         /// Halftone125
         /// </summary>
@@ -344,7 +344,7 @@ namespace System.Windows.Media.Imaging
                 return s_opaquePalettes;
             }
         }
-        
+
         static private Imaging.BitmapPalette[] s_transparentPalettes;
         static private Imaging.BitmapPalette[] s_opaquePalettes;
 

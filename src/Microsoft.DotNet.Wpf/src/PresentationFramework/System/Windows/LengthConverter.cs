@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,9 +11,9 @@
 
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
-using System.Runtime.CompilerServices;
 using System.Globalization;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using MS.Internal;
 
 namespace System.Windows
@@ -22,7 +22,7 @@ namespace System.Windows
     /// <summary>
     /// LengthConverter - Converter class for converting instances of other types to and from double representing length.
     /// </summary> 
-    public class LengthConverter: TypeConverter
+    public class LengthConverter : TypeConverter
     {
         //-------------------------------------------------------------------
         //
@@ -57,7 +57,7 @@ namespace System.Windows
                 case TypeCode.UInt32:
                 case TypeCode.UInt64:
                     return true;
-                default: 
+                default:
                     return false;
             }
         }
@@ -70,11 +70,11 @@ namespace System.Windows
         /// </returns>
         /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
         /// <param name="destinationType"> The Type being queried for support. </param>
-        public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType) 
+        public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType)
         {
             // We can convert to an InstanceDescriptor or to a string.
             if (destinationType == typeof(InstanceDescriptor) ||
-                destinationType == typeof(string)) 
+                destinationType == typeof(string))
             {
                 return true;
             }
@@ -100,14 +100,16 @@ namespace System.Windows
         /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
         /// <param name="cultureInfo"> The CultureInfo which is respected when converting. </param>
         /// <param name="source"> The object to convert to a double. </param>
-        public override object ConvertFrom(ITypeDescriptorContext typeDescriptorContext, 
-                                           CultureInfo cultureInfo, 
+        public override object ConvertFrom(ITypeDescriptorContext typeDescriptorContext,
+                                           CultureInfo cultureInfo,
                                            object source)
         {
             if (source != null)
             {
-                if (source is string) { return FromString((string)source, cultureInfo); }
-                else                  { return (double)(Convert.ToDouble(source, cultureInfo)); }
+                if (source is string)
+                { return FromString((string)source, cultureInfo); }
+                else
+                { return (double)(Convert.ToDouble(source, cultureInfo)); }
             }
 
             throw GetConvertFromException(source);
@@ -130,23 +132,23 @@ namespace System.Windows
         /// <param name="cultureInfo"> The CultureInfo which is respected when converting. </param>
         /// <param name="value"> The double to convert. </param>
         /// <param name="destinationType">The type to which to convert the double. </param>
-        public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, 
+        public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext,
                                          CultureInfo cultureInfo,
                                          object value,
                                          Type destinationType)
         {
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            if (    value != null
-                &&  value is double )
+            if (value != null
+                && value is double)
             {
                 double l = (double)value;
-                if (destinationType == typeof(string)) 
-                { 
-                    if(double.IsNaN(l)) 
+                if (destinationType == typeof(string))
+                {
+                    if (double.IsNaN(l))
                         return "Auto";
-                    else 
-                        return Convert.ToString(l, cultureInfo); 
+                    else
+                        return Convert.ToString(l, cultureInfo);
                 }
                 else if (destinationType == typeof(InstanceDescriptor))
                 {

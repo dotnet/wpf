@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal;
-using System.Windows.Input;
 using System.Windows.Controls; // ScrollChangedEventArgs
 using System.Windows.Controls.Primitives;  // CharacterCasing, TextBoxBase
+using System.Windows.Input;
+using MS.Internal;
 using MS.Internal.Commands; // CommandHelpers
 
 //
@@ -35,7 +35,7 @@ namespace System.Windows.Documents
             ExecutedRoutedEventHandler nyiCommandHandler = new ExecutedRoutedEventHandler(OnNYICommand);
             CanExecuteRoutedEventHandler queryStatusCaretNavigationHandler = new CanExecuteRoutedEventHandler(OnQueryStatusCaretNavigation);
             CanExecuteRoutedEventHandler queryStatusKeyboardSelectionHandler = new CanExecuteRoutedEventHandler(OnQueryStatusKeyboardSelection);
-            
+
             // Standard Commands: Select All
             // -----------------------------
             CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.SelectAll, new ExecutedRoutedEventHandler(OnSelectAll), queryStatusKeyboardSelectionHandler, KeySelectAll, nameof(SR.KeySelectAllDisplayString));
@@ -82,7 +82,7 @@ namespace System.Windows.Documents
             CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectToDocumentStart, new ExecutedRoutedEventHandler(OnSelectToDocumentStart), queryStatusKeyboardSelectionHandler, KeyGesture.CreateFromResourceStrings(KeySelectToDocumentStart, nameof(SR.KeySelectToDocumentStartDisplayString)));
             CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.SelectToDocumentEnd, new ExecutedRoutedEventHandler(OnSelectToDocumentEnd), queryStatusKeyboardSelectionHandler, KeyGesture.CreateFromResourceStrings(KeySelectToDocumentEnd, nameof(SR.KeySelectToDocumentEndDisplayString)));
         }
-        
+
         /// <summary>
         /// Clears the suggestedX variable of passed TextEditor.
         /// </summary>
@@ -1092,7 +1092,7 @@ namespace System.Windows.Documents
                         }
                     }
                 }
-    
+
                 // Discard typing undo unit merging
                 TextEditorTyping._BreakTypingSequence(This);
 
@@ -2250,7 +2250,7 @@ namespace System.Windows.Documents
                         breakWidth = -breakWidth;
                     }
 
-                    This._suggestedX += breakWidth; 
+                    This._suggestedX += breakWidth;
                 }
             }
 

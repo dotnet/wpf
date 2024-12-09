@@ -1,21 +1,20 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System.ComponentModel;
 using System.Collections.Specialized;
-using System.Windows.Threading;
+using System.ComponentModel;
 using System.Windows.Automation.Peers;
-using System.Windows.Media;
-using System.Windows.Input;
-using System.Windows.Documents;
-using System.Windows.Interop;
 using System.Windows.Controls.Primitives;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Interop;
+using System.Windows.Media;
 using System.Windows.Shapes;
-
-using MS.Internal.KnownBoxes;
+using System.Windows.Threading;
 using MS.Internal;
+using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;
 
 namespace System.Windows.Controls
@@ -120,7 +119,7 @@ namespace System.Windows.Controls
         [Bindable(true), Browsable(false), Category("Appearance")]
         public bool IsDropDownOpen
         {
-            get { return (bool) GetValue(IsDropDownOpenProperty); }
+            get { return (bool)GetValue(IsDropDownOpenProperty); }
             set { SetValue(IsDropDownOpenProperty, BooleanBoxes.Box(value)); }
         }
 
@@ -143,15 +142,15 @@ namespace System.Windows.Controls
         public bool ShouldPreserveUserEnteredPrefix
         {
             get { return (bool)GetValue(ShouldPreserveUserEnteredPrefixProperty); }
-            set { SetValue(ShouldPreserveUserEnteredPrefixProperty, BooleanBoxes.Box(value));  }
+            set { SetValue(ShouldPreserveUserEnteredPrefixProperty, BooleanBoxes.Box(value)); }
         }
 
 
         private static object CoerceIsDropDownOpen(DependencyObject d, object value)
         {
-            if ((bool) value)
+            if ((bool)value)
             {
-                ComboBox cb = (ComboBox) d;
+                ComboBox cb = (ComboBox)d;
                 if (!cb.IsLoaded)
                 {
                     cb.RegisterToOpenOnLoad();
@@ -164,7 +163,7 @@ namespace System.Windows.Controls
 
         private static object CoerceToolTipIsEnabled(DependencyObject d, object value)
         {
-            ComboBox cb = (ComboBox) d;
+            ComboBox cb = (ComboBox)d;
             return cb.IsDropDownOpen ? BooleanBoxes.FalseBox : value;
         }
 
@@ -176,7 +175,7 @@ namespace System.Windows.Controls
         private void OpenOnLoad(object sender, RoutedEventArgs e)
         {
             // Open combobox after it has rendered (Loaded is fired before 1st render)
-            Dispatcher.BeginInvoke(DispatcherPriority.Input, new DispatcherOperationCallback(delegate(object param)
+            Dispatcher.BeginInvoke(DispatcherPriority.Input, new DispatcherOperationCallback(delegate (object param)
             {
                 CoerceValue(IsDropDownOpenProperty);
 
@@ -208,12 +207,12 @@ namespace System.Windows.Controls
 
             comboBox.HasMouseEnteredItemsHost = false;
 
-            bool newValue = (bool) e.NewValue;
+            bool newValue = (bool)e.NewValue;
             bool oldValue = !newValue;
 
             // Fire accessibility event
             ComboBoxAutomationPeer peer = UIElementAutomationPeer.FromElement(comboBox) as ComboBoxAutomationPeer;
-            if(peer != null)
+            if (peer != null)
             {
                 peer.RaiseExpandCollapseAutomationEvent(oldValue, newValue);
             }
@@ -231,7 +230,7 @@ namespace System.Windows.Controls
                 {
                     comboBox.Dispatcher.BeginInvoke(
                         DispatcherPriority.Loaded,
-                        (DispatcherOperationCallback) delegate(object arg)
+                        (DispatcherOperationCallback)delegate (object arg)
                         {
                             ComboBox cb = (ComboBox)arg;
                             cb.UpdateSelectionBoxItem();
@@ -257,7 +256,7 @@ namespace System.Windows.Controls
                 // do this work -- this is the soonest we can make this happen.
                 comboBox.Dispatcher.BeginInvoke(
                     DispatcherPriority.Send,
-                    (DispatcherOperationCallback) delegate(object arg)
+                    (DispatcherOperationCallback)delegate (object arg)
                     {
                         ComboBox cb = (ComboBox)arg;
                         if (cb.IsItemsHostVisible)
@@ -334,7 +333,7 @@ namespace System.Windows.Controls
         /// <value></value>
         public bool IsEditable
         {
-            get { return (bool) GetValue(IsEditableProperty); }
+            get { return (bool)GetValue(IsEditableProperty); }
             set { SetValue(IsEditableProperty, BooleanBoxes.Box(value)); }
         }
 
@@ -366,7 +365,7 @@ namespace System.Windows.Controls
         /// <value></value>
         public string Text
         {
-            get { return (string) GetValue(TextProperty); }
+            get { return (string)GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
         }
 
@@ -381,7 +380,7 @@ namespace System.Windows.Controls
         /// </summary>
         public bool IsReadOnly
         {
-            get { return (bool) GetValue(IsReadOnlyProperty); }
+            get { return (bool)GetValue(IsReadOnlyProperty); }
             set { SetValue(IsReadOnlyProperty, BooleanBoxes.Box(value)); }
         }
 
@@ -421,7 +420,7 @@ namespace System.Windows.Controls
         /// </summary>
         public DataTemplate SelectionBoxItemTemplate
         {
-            get { return (DataTemplate) GetValue(SelectionBoxItemTemplateProperty); }
+            get { return (DataTemplate)GetValue(SelectionBoxItemTemplateProperty); }
             private set { SetValue(SelectionBoxItemTemplatePropertyKey, value); }
         }
 
@@ -439,7 +438,7 @@ namespace System.Windows.Controls
         /// </summary>
         public String SelectionBoxItemStringFormat
         {
-            get { return (String) GetValue(SelectionBoxItemStringFormatProperty); }
+            get { return (String)GetValue(SelectionBoxItemStringFormatProperty); }
             private set { SetValue(SelectionBoxItemStringFormatPropertyKey, value); }
         }
 
@@ -566,10 +565,10 @@ namespace System.Windows.Controls
                 }
             }
 
-            if (    AutomationPeer.ListenerExists(AutomationEvents.SelectionPatternOnInvalidated)
-                ||  AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementSelected)
-                ||  AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementAddedToSelection)
-                ||  AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection)   )
+            if (AutomationPeer.ListenerExists(AutomationEvents.SelectionPatternOnInvalidated)
+                || AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementSelected)
+                || AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementAddedToSelection)
+                || AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection))
             {
                 ComboBoxAutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(this) as ComboBoxAutomationPeer;
                 if (peer != null)
@@ -896,16 +895,18 @@ namespace System.Windows.Controls
                     if (_clonedElement != null)
                     {
                         // Create visual copy of selected element
-                        VisualBrush visualBrush = new VisualBrush(_clonedElement);
-                        visualBrush.Stretch = Stretch.None;
+                        VisualBrush visualBrush = new VisualBrush(_clonedElement)
+                        {
+                            Stretch = Stretch.None,
 
-                        //Set position and dimension of content
-                        visualBrush.ViewboxUnits = BrushMappingMode.Absolute;
-                        visualBrush.Viewbox = new Rect(_clonedElement.RenderSize);
+                            //Set position and dimension of content
+                            ViewboxUnits = BrushMappingMode.Absolute,
+                            Viewbox = new Rect(_clonedElement.RenderSize),
 
-                        //Set position and dimension of tile
-                        visualBrush.ViewportUnits = BrushMappingMode.Absolute;
-                        visualBrush.Viewport = new Rect(_clonedElement.RenderSize);
+                            //Set position and dimension of tile
+                            ViewportUnits = BrushMappingMode.Absolute,
+                            Viewport = new Rect(_clonedElement.RenderSize)
+                        };
 
                         // We need to check if the item acquires a mirror transform through the visual tree
                         // below the ComboBox. If it does then the same mirror transform needs to be applied
@@ -927,10 +928,12 @@ namespace System.Windows.Controls
                         }
 
                         // Apply visual brush to a rectangle
-                        Rectangle rect = new Rectangle();
-                        rect.Fill = visualBrush;
-                        rect.Width = _clonedElement.RenderSize.Width;
-                        rect.Height = _clonedElement.RenderSize.Height;
+                        Rectangle rect = new Rectangle
+                        {
+                            Fill = visualBrush,
+                            Width = _clonedElement.RenderSize.Width,
+                            Height = _clonedElement.RenderSize.Height
+                        };
 
                         _clonedElement.LayoutUpdated += CloneLayoutUpdated;
 
@@ -1203,8 +1206,10 @@ namespace System.Windows.Controls
                 Debug.Assert(_autoScrollTimer == null, "IsMouseCaptured went from true to true");
                 if (_autoScrollTimer == null)
                 {
-                    _autoScrollTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
-                    _autoScrollTimer.Interval = AutoScrollTimeout;
+                    _autoScrollTimer = new DispatcherTimer(DispatcherPriority.SystemIdle)
+                    {
+                        Interval = AutoScrollTimeout
+                    };
                     _autoScrollTimer.Tick += new EventHandler(OnAutoScrollTimeout);
                     _autoScrollTimer.Start();
                 }
@@ -1604,7 +1609,7 @@ namespace System.Windows.Controls
             else if ((visual = d as Visual) != null)
             {
                 int count = VisualTreeHelper.GetChildrenCount(visual);
-                for(int i = 0; i < count; i++)
+                for (int i = 0; i < count; i++)
                 {
                     strValue += ExtractString((DependencyObject)(VisualTreeHelper.GetChild(visual, i)));
                 }
@@ -1877,7 +1882,7 @@ namespace System.Windows.Controls
         {
             if (IsDropDownOpen)
             {
-                  SetCurrentValueInternal(IsDropDownOpenProperty, false);
+                SetCurrentValueInternal(IsDropDownOpenProperty, false);
             }
         }
 
@@ -2027,11 +2032,11 @@ namespace System.Windows.Controls
         private DispatcherOperation _updateTextBoxOperation;
         private enum CacheBits
         {
-            IsMouseOverItemsHost        = 0x01,
-            HasMouseEnteredItemsHost    = 0x02,
-            IsContextMenuOpen           = 0x04,
-            UpdatingText                = 0x08,
-            UpdatingSelectedItem        = 0x10,
+            IsMouseOverItemsHost = 0x01,
+            HasMouseEnteredItemsHost = 0x02,
+            IsContextMenuOpen = 0x04,
+            UpdatingText = 0x08,
+            UpdatingSelectedItem = 0x10,
             IsWaitingForTextComposition = 0x20,
         }
 

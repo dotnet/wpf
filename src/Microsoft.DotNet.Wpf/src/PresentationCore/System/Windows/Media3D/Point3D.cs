@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -72,8 +72,8 @@ namespace System.Windows.Media.Media3D
         /// <returns>Result of addition.</returns>
         public static Point3D operator +(Point3D point, Vector3D vector)
         {
-            return new Point3D(point._x + vector._x, 
-                               point._y + vector._y, 
+            return new Point3D(point._x + vector._x,
+                               point._y + vector._y,
                                point._z + vector._z);
         }
 
@@ -85,11 +85,11 @@ namespace System.Windows.Media.Media3D
         /// <returns>Result of addition.</returns>
         public static Point3D Add(Point3D point, Vector3D vector)
         {
-            return new Point3D(point._x + vector._x, 
-                               point._y + vector._y, 
+            return new Point3D(point._x + vector._x,
+                               point._y + vector._y,
                                point._z + vector._z);
         }
-        
+
         /// <summary>
         /// Point3D - Vector3D subtraction.
         /// </summary>
@@ -98,8 +98,8 @@ namespace System.Windows.Media.Media3D
         /// <returns>Result of subtraction.</returns>
         public static Point3D operator -(Point3D point, Vector3D vector)
         {
-            return new Point3D(point._x - vector._x, 
-                               point._y - vector._y, 
+            return new Point3D(point._x - vector._x,
+                               point._y - vector._y,
                                point._z - vector._z);
         }
 
@@ -111,8 +111,8 @@ namespace System.Windows.Media.Media3D
         /// <returns>Result of subtraction.</returns>
         public static Point3D Subtract(Point3D point, Vector3D vector)
         {
-            return new Point3D(point._x - vector._x, 
-                               point._y - vector._y, 
+            return new Point3D(point._x - vector._x,
+                               point._y - vector._y,
                                point._z - vector._z);
         }
 
@@ -124,8 +124,8 @@ namespace System.Windows.Media.Media3D
         /// <returns>Vector between the two points.</returns>
         public static Vector3D operator -(Point3D point1, Point3D point2)
         {
-            return new Vector3D(point1._x - point2._x, 
-                                point1._y - point2._y, 
+            return new Vector3D(point1._x - point2._x,
+                                point1._y - point2._y,
                                 point1._z - point2._z);
         }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,17 +7,17 @@
 //
 
 
-using System.Runtime.InteropServices;
-using System.Windows.Threading;
-using System.Threading;
-using System.Globalization;
 using System.Collections;
+using System.Globalization;
 using System.IO;
-using MS.Internal;
-using System.Windows.Markup;        // for XmlLanguage
-using System.Windows.Media;
+using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Markup;        // for XmlLanguage
+using System.Windows.Media;
+using System.Windows.Threading;
+using MS.Internal;
 using MS.Internal.Documents;
 using MS.Win32;
 
@@ -124,7 +124,7 @@ namespace System.Windows.Documents
             if (flags == 0)
                 throw new COMException(SR.TextStore_BadLockFlags);
 
-            bool isReplayingIMEChanges =  (_replayingIMEChangeReentrancyCount > 0);
+            bool isReplayingIMEChanges = (_replayingIMEChangeReentrancyCount > 0);
 
             if (IsTracing)
             {
@@ -203,7 +203,7 @@ namespace System.Windows.Documents
                     // better than FailFast.
                     hrSession = DeferLockRequest(flags);
 
-                    #if NEVER
+#if NEVER
                     // An alternative is to grant synchronous requests that are
                     // known not to be of type A or B, namely read-only requests
                     // made when consistency has been restored.  But these might
@@ -220,13 +220,13 @@ namespace System.Windows.Documents
                     {
                         hrSession = DeferLockRequest(flags);
                     }
-                    #endif
+#endif
                 }
                 else if (_textChangeReentrencyCount != 0)
                 {
                     // Inside a OnTextChanged notification we don't want to allow
                     // even read-only locks, because that might trigger a layout update.
-                   hrSession = DeferLockRequest(flags);
+                    hrSession = DeferLockRequest(flags);
                 }
                 else
                 {
@@ -1250,7 +1250,7 @@ namespace System.Windows.Documents
             }
             else
             {
-               if (this.TextEditor.AcceptsRichContent && start.CompareTo(end) != 0)
+                if (this.TextEditor.AcceptsRichContent && start.CompareTo(end) != 0)
                 {
                     TextElement startElement = (TextElement)((TextPointer)start).Parent;
                     TextElement endElement = (TextElement)((TextPointer)end).Parent;
@@ -2074,13 +2074,13 @@ namespace System.Windows.Documents
         {
             get
             {
-                 if (this.TextEditor == null)
-                     return null;
+                if (this.TextEditor == null)
+                    return null;
 
-                 if (this.TextEditor.TextView == null)
-                     return null;
+                if (this.TextEditor.TextView == null)
+                    return null;
 
-                 return this.TextEditor.TextView.RenderScope;
+                return this.TextEditor.TextView.RenderScope;
             }
         }
 
@@ -2157,7 +2157,7 @@ namespace System.Windows.Documents
             get
             {
                 bool callerIsTrusted = true;
-                return( GetSourceWnd(callerIsTrusted) );
+                return (GetSourceWnd(callerIsTrusted));
             }
         }
 
@@ -2788,10 +2788,12 @@ namespace System.Windows.Documents
                         continue;
                 }
 
-                UnsafeNativeMethods.TS_ATTRVAL attrval = new UnsafeNativeMethods.TS_ATTRVAL();
-                attrval.attributeId = _supportingattributes[i].Guid;
-                attrval.overlappedId = (int)_supportingattributes[i].Style;
-                attrval.val = new NativeMethods.VARIANT();
+                UnsafeNativeMethods.TS_ATTRVAL attrval = new UnsafeNativeMethods.TS_ATTRVAL
+                {
+                    attributeId = _supportingattributes[i].Guid,
+                    overlappedId = (int)_supportingattributes[i].Style,
+                    val = new NativeMethods.VARIANT()
+                };
 
                 // This VARIANT is returned to the caller, which supposed to call VariantClear().
                 // GC does not have to clear it.
@@ -2843,7 +2845,7 @@ namespace System.Windows.Documents
                         if (source != null)
                         {
                             Visual root = source.RootVisual;
-                            if ((root !=  null) && (visual != null))
+                            if ((root != null) && (visual != null))
                             {
                                 //
                                 // Calc radian from Matirix. This is approximate calculation from the first row.
@@ -2975,19 +2977,19 @@ namespace System.Windows.Documents
             int btnState = 0;
             if (Mouse.LeftButton == MouseButtonState.Pressed)
             {
-               btnState |= NativeMethods.MK_LBUTTON;
+                btnState |= NativeMethods.MK_LBUTTON;
             }
             if (Mouse.RightButton == MouseButtonState.Pressed)
             {
-               btnState |= NativeMethods.MK_RBUTTON;
+                btnState |= NativeMethods.MK_RBUTTON;
             }
             if ((Keyboard.Modifiers & ModifierKeys.Shift) != 0)
             {
-               btnState |= NativeMethods.MK_SHIFT;
+                btnState |= NativeMethods.MK_SHIFT;
             }
             if ((Keyboard.Modifiers & ModifierKeys.Control) != 0)
             {
-               btnState |= NativeMethods.MK_CONTROL;
+                btnState |= NativeMethods.MK_CONTROL;
             }
 
             Point point = Mouse.GetPosition(RenderScope);
@@ -3071,16 +3073,16 @@ namespace System.Windows.Documents
                 mSink.Range.GetExtent(out start, out count);
 
                 if (edge < start)
-                   continue;
+                    continue;
 
                 if (edge > start + count)
-                   continue;
+                    continue;
 
                 if ((edge == start) && (quadrant <= 1))
-                   continue;
+                    continue;
 
                 if ((edge == start + count) && (quadrant >= 2))
-                   continue;
+                    continue;
 
                 mSink.Locked = true;
                 try
@@ -4084,7 +4086,7 @@ namespace System.Windows.Documents
                 // We're ready to merge.
                 int mergeCount = j - i;
 
-                for (int k = i+1; k <= i + mergeCount; k++)
+                for (int k = i + 1; k <= i + mergeCount; k++)
                 {
                     CompositionParentUndoUnit mergeSource = (CompositionParentUndoUnit)undoManager.GetUndoUnit(k);
                     unit.MergeCompositionUnit(mergeSource);
@@ -4278,7 +4280,7 @@ namespace System.Windows.Documents
                 GC.SuppressFinalize(this);
             }
 
-            public int Compare( Object x, Object y )
+            public int Compare(Object x, Object y)
             {
                 return (((MouseSink)x)._cookie - ((MouseSink)y)._cookie);
             }
@@ -4319,7 +4321,7 @@ namespace System.Windows.Documents
 
             internal UnsafeNativeMethods.ITfMouseSink Sink => _sink;
 
-            internal int Cookie {get{return _cookie;}}
+            internal int Cookie { get { return _cookie; } }
 
             private UnsafeNativeMethods.ITfRangeACP _range;
 
@@ -4446,7 +4448,7 @@ namespace System.Windows.Documents
         // Package for state saved during a composition start/update/end event.
         private class CompositionEventRecord
         {
-            internal CompositionEventRecord(CompositionStage stage, int startOffsetBefore, int endOffsetBefore, string text):
+            internal CompositionEventRecord(CompositionStage stage, int startOffsetBefore, int endOffsetBefore, string text) :
                 this(stage, startOffsetBefore, endOffsetBefore, text, false)
             {
             }
@@ -4745,7 +4747,7 @@ namespace System.Windows.Documents
             {
                 lock (s_TargetToTraceListMap)
                 {
-                    for (int i=0, n=s_TargetToTraceListMap.Count; i<n; ++i)
+                    for (int i = 0, n = s_TargetToTraceListMap.Count; i < n; ++i)
                     {
                         s_TargetToTraceListMap[i].Item2.Flush(-1);
                     }
@@ -4758,7 +4760,7 @@ namespace System.Windows.Documents
                 IMECompositionTraceRecord record = new IMECompositionTraceRecord(IMECompositionTraceOp.Mark, BuildDetail(args));
                 lock (s_TargetToTraceListMap)
                 {
-                    for (int i=0, n=s_TargetToTraceListMap.Count; i<n; ++i)
+                    for (int i = 0, n = s_TargetToTraceListMap.Count; i < n; ++i)
                     {
                         s_TargetToTraceListMap[i].Item2.Add(record);
                     }
@@ -4931,8 +4933,8 @@ namespace System.Windows.Documents
                 }
 
                 // add the trace record
-                int charCount=0, imeCharCount=0;
-                CompositionEventState eventState=(CompositionEventState)(-1);
+                int charCount = 0, imeCharCount = 0;
+                CompositionEventState eventState = (CompositionEventState)(-1);
                 if (textStore != null)
                 {
                     charCount = textStore._netCharCount;
@@ -4961,8 +4963,8 @@ namespace System.Windows.Documents
 
             #endregion instance members
 
-            private static List<Tuple<WeakReference<FrameworkElement>,TraceList>> s_TargetToTraceListMap
-                = new List<Tuple<WeakReference<FrameworkElement>,TraceList>>();
+            private static List<Tuple<WeakReference<FrameworkElement>, TraceList>> s_TargetToTraceListMap
+                = new List<Tuple<WeakReference<FrameworkElement>, TraceList>>();
             private static int s_seqno;
 
             static TraceList TraceListForUiScope(FrameworkElement target)
@@ -4972,7 +4974,7 @@ namespace System.Windows.Documents
                 lock (s_TargetToTraceListMap)
                 {
                     // if target is already in the map, use its tracelist
-                    for (int i=0, n=s_TargetToTraceListMap.Count; i<n; ++i)
+                    for (int i = 0, n = s_TargetToTraceListMap.Count; i < n; ++i)
                     {
                         WeakReference<FrameworkElement> wr = s_TargetToTraceListMap[i].Item1;
                         FrameworkElement fe;
@@ -5000,7 +5002,7 @@ namespace System.Windows.Documents
                 lock (s_TargetToTraceListMap)
                 {
                     PurgeMap();
-                    ++ s_seqno;
+                    ++s_seqno;
 
                     // get a name for the trace file
                     string filename = _fileName;
@@ -5011,7 +5013,8 @@ namespace System.Windows.Documents
                     if (filename != "none" && s_seqno > 1)
                     {
                         int dotIndex = filename.LastIndexOf(".", StringComparison.Ordinal);
-                        if (dotIndex < 0) dotIndex = filename.Length;
+                        if (dotIndex < 0)
+                            dotIndex = filename.Length;
                         filename = $"{filename.AsSpan(0, dotIndex)}{s_seqno}{filename.AsSpan(dotIndex)}";
                     }
 
@@ -5020,7 +5023,7 @@ namespace System.Windows.Documents
 
                     // add it to the map
                     s_TargetToTraceListMap.Add(
-                        new Tuple<WeakReference<FrameworkElement>,TraceList>(
+                        new Tuple<WeakReference<FrameworkElement>, TraceList>(
                             new WeakReference<FrameworkElement>(target),
                             traceList));
                 }
@@ -5031,7 +5034,7 @@ namespace System.Windows.Documents
             // Must be called under "lock (s_TargetToTraceListMap)"
             static void CloseAllTraceLists()
             {
-                for (int i=0, n=s_TargetToTraceListMap.Count; i<n; ++i)
+                for (int i = 0, n = s_TargetToTraceListMap.Count; i < n; ++i)
                 {
                     TraceList traceList = s_TargetToTraceListMap[i].Item2;
                     traceList.FlushAndClose();
@@ -5043,7 +5046,7 @@ namespace System.Windows.Documents
             // Must be called under "lock (s_TargetToTraceListMap)"
             private static void PurgeMap()
             {
-                for (int i=0; i<s_TargetToTraceListMap.Count; ++i)
+                for (int i = 0; i < s_TargetToTraceListMap.Count; ++i)
                 {
                     WeakReference<FrameworkElement> wr = s_TargetToTraceListMap[i].Item1;
                     FrameworkElement unused;
@@ -5063,7 +5066,7 @@ namespace System.Windows.Documents
             {
                 private List<IMECompositionTraceRecord> _traceList = new List<IMECompositionTraceRecord>();
                 private BinaryWriter _writer;
-                private int _flushIndex=0;  // where last flush ended
+                private int _flushIndex = 0;  // where last flush ended
 
                 internal TraceList(string filename)
                 {
@@ -5122,7 +5125,7 @@ namespace System.Windows.Documents
                 }
             }
 
-             #endregion TraceList
+            #endregion TraceList
         }
 
         #endregion IMECompositionTracer
@@ -5132,8 +5135,8 @@ namespace System.Windows.Documents
         // dynamic data associated with a TextStore that's being traced
         private class IMECompositionTracingInfo
         {
-            internal IMECompositionTracer   IMECompositionTracer    { get; private set; }
-            internal int            Generation      { get; set; }
+            internal IMECompositionTracer IMECompositionTracer { get; private set; }
+            internal int Generation { get; set; }
 
             internal IMECompositionTracingInfo(IMECompositionTracer tracer, int generation)
             {
@@ -5149,7 +5152,7 @@ namespace System.Windows.Documents
 
         #region IMECompositionTraceRecord and opcodes
 
-        private enum IMECompositionTraceOp: ushort
+        private enum IMECompositionTraceOp : ushort
         {
             NoOp,
             ID,
@@ -5230,14 +5233,14 @@ namespace System.Windows.Documents
 
             internal IMECompositionTraceRecord(IMECompositionTraceOp op, string detail)
                 : this(op, -1, 0, 0, (CompositionEventState)(-1), detail)
-            {}
+            { }
 
-            internal IMECompositionTraceOp  Op          { get; private set; }
-            internal int                    OpDepth     { get; private set; }
-            internal int                    NetCharCount{ get; private set; }
-            internal int                    IMECharCount{ get; private set; }
-            internal CompositionEventState  EventState  { get; private set; }
-            internal string                 Detail      { get; set; }
+            internal IMECompositionTraceOp Op { get; private set; }
+            internal int OpDepth { get; private set; }
+            internal int NetCharCount { get; private set; }
+            internal int IMECharCount { get; private set; }
+            internal CompositionEventState EventState { get; private set; }
+            internal string Detail { get; set; }
 
             public override string ToString()
             {

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,9 +7,8 @@
 //             FrameworkElementFactory
 //
 
-using System.ComponentModel;
 using System.Collections;
-
+using System.ComponentModel;
 using MS.Utility;
 
 namespace System.Windows.Markup.Primitives
@@ -33,7 +32,7 @@ namespace System.Windows.Markup.Primitives
 
         public override System.ComponentModel.AttributeCollection Attributes
         {
-            get 
+            get
             {
                 return TypeDescriptor.GetAttributes(ObjectType);
             }
@@ -41,7 +40,8 @@ namespace System.Windows.Markup.Primitives
 
         public override Type ObjectType
         {
-            get {
+            get
+            {
                 if (_factory.Type != null)
                     return _factory.Type;
                 else
@@ -119,7 +119,7 @@ namespace System.Windows.Markup.Primitives
     /// </summary>
     internal class FrameworkElementFactoryProperty : ElementPropertyBase
     {
-        public FrameworkElementFactoryProperty(PropertyValue propertyValue, FrameworkElementFactoryMarkupObject item): base(item.Manager)
+        public FrameworkElementFactoryProperty(PropertyValue propertyValue, FrameworkElementFactoryMarkupObject item) : base(item.Manager)
         {
             _propertyValue = propertyValue;
             _item = item;
@@ -127,7 +127,7 @@ namespace System.Windows.Markup.Primitives
 
         public override PropertyDescriptor PropertyDescriptor
         {
-            get 
+            get
             {
                 if (!_descriptorCalculated)
                 {
@@ -152,7 +152,7 @@ namespace System.Windows.Markup.Primitives
 
         public override AttributeCollection Attributes
         {
-            get 
+            get
             {
                 if (_descriptor != null)
                 {
@@ -183,7 +183,8 @@ namespace System.Windows.Markup.Primitives
 
         public override object Value
         {
-            get {
+            get
+            {
                 switch (_propertyValue.ValueType)
                 {
                     case PropertyValueType.Set:
@@ -222,7 +223,7 @@ namespace System.Windows.Markup.Primitives
     /// </summary>
     internal class FrameworkElementFactoryContent : ElementPropertyBase
     {
-        internal FrameworkElementFactoryContent(FrameworkElementFactory factory, FrameworkElementFactoryMarkupObject item): base(item.Manager)
+        internal FrameworkElementFactoryContent(FrameworkElementFactory factory, FrameworkElementFactoryMarkupObject item) : base(item.Manager)
         {
             _item = item;
             _factory = factory;
@@ -245,7 +246,7 @@ namespace System.Windows.Markup.Primitives
 
         public override IEnumerable<MarkupObject> Items
         {
-            get 
+            get
             {
                 FrameworkElementFactory child = _factory.FirstChild;
                 while (child != null)
@@ -273,7 +274,7 @@ namespace System.Windows.Markup.Primitives
 
         public override Type PropertyType
         {
-            get { return typeof(IEnumerable);  }
+            get { return typeof(IEnumerable); }
         }
 
         public override object Value

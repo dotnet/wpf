@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -54,7 +54,7 @@ namespace System.Windows.Media.Composition
         {
             get
             {
-                if (_tail == null) 
+                if (_tail == null)
                 {
                     return _head.Channel == null ? 0 : 1;
                 }
@@ -67,7 +67,7 @@ namespace System.Windows.Media.Composition
 
                     int tailLength = _tail.Length;
 
-                    bool lastTailIsEmpty = 
+                    bool lastTailIsEmpty =
                         _tail[tailLength - 1].Channel == null;
 
                     return 1 + tailLength - (lastTailIsEmpty ? 1 : 0);
@@ -108,15 +108,15 @@ namespace System.Windows.Media.Composition
         {
             int index = Find(channel);
 
-            if (index == PROXY_NOT_FOUND) 
+            if (index == PROXY_NOT_FOUND)
             {
                 return false;
             }
-            else if (index == PROXY_STORED_INLINE) 
+            else if (index == PROXY_STORED_INLINE)
             {
                 return !_head.Handle.IsNull;
             }
-            else 
+            else
             {
                 return !_tail[index].Handle.IsNull;
             }
@@ -134,13 +134,13 @@ namespace System.Windows.Media.Composition
             int index = Find(channel);
             int count = Count;
 
-            if (index == PROXY_NOT_FOUND) 
+            if (index == PROXY_NOT_FOUND)
             {
                 //
                 // This is the case where we have to create a new resource.
                 //
 
-                if (_head.Channel == null) 
+                if (_head.Channel == null)
                 {
                     //
                     // We're adding the first proxy.
@@ -156,12 +156,12 @@ namespace System.Windows.Media.Composition
 
                     channel.CreateOrAddRefOnChannel(
                         instance,
-                        ref _head.Handle, 
+                        ref _head.Handle,
                         resourceType);
                 }
                 else
                 {
-                    if (_tail == null) 
+                    if (_tail == null)
                     {
                         //
                         // We're adding the second proxy.
@@ -175,7 +175,7 @@ namespace System.Windows.Media.Composition
 
                         _tail = new Proxy[2];
                     }
-                    else if (count > _tail.Length) 
+                    else if (count > _tail.Length)
                     {
                         //
                         // Increase the tail size by 2.
@@ -201,7 +201,7 @@ namespace System.Windows.Media.Composition
 
                     channel.CreateOrAddRefOnChannel(
                         instance,
-                        ref proxy.Handle, 
+                        ref proxy.Handle,
                         resourceType);
 
                     _tail[count - 1] = proxy;
@@ -209,7 +209,7 @@ namespace System.Windows.Media.Composition
 
                 return /* created */ true;
             }
-            else if (index == PROXY_STORED_INLINE) 
+            else if (index == PROXY_STORED_INLINE)
             {
                 //
                 // We simply need to increase the reference count on head...
@@ -217,7 +217,7 @@ namespace System.Windows.Media.Composition
 
                 channel.CreateOrAddRefOnChannel(
                     instance,
-                    ref _head.Handle, 
+                    ref _head.Handle,
                     resourceType);
             }
             else
@@ -228,7 +228,7 @@ namespace System.Windows.Media.Composition
 
                 channel.CreateOrAddRefOnChannel(
                     instance,
-                    ref _tail[index].Handle, 
+                    ref _tail[index].Handle,
                     resourceType);
             }
 
@@ -246,9 +246,9 @@ namespace System.Windows.Media.Composition
             bool proxyRemoved = false;
             int count = Count;
 
-            if (index == PROXY_STORED_INLINE) 
+            if (index == PROXY_STORED_INLINE)
             {
-                if (channel.ReleaseOnChannel(_head.Handle)) 
+                if (channel.ReleaseOnChannel(_head.Handle))
                 {
                     //
                     // Need to move the last of the non-empty tail to head
@@ -256,7 +256,7 @@ namespace System.Windows.Media.Composition
                     // proxy.
                     //
 
-                    if (count == 1) 
+                    if (count == 1)
                     {
                         _head = new Proxy();
                     }
@@ -268,16 +268,16 @@ namespace System.Windows.Media.Composition
                     proxyRemoved = true;
                 }
             }
-            else if (index >= 0) 
+            else if (index >= 0)
             {
-                if (channel.ReleaseOnChannel(_tail[index].Handle)) 
+                if (channel.ReleaseOnChannel(_tail[index].Handle))
                 {
                     //
                     // Need to move the last of the non-empty tail to the
                     // removed index. Avoid in-place copying.
                     //
 
-                    if (index != count - 2) 
+                    if (index != count - 2)
                     {
                         _tail[index] = _tail[count - 2];
                     }
@@ -291,16 +291,16 @@ namespace System.Windows.Media.Composition
                 return false;
             }
 
-            if (proxyRemoved) 
+            if (proxyRemoved)
             {
-                if (_tail != null) 
+                if (_tail != null)
                 {
                     //
                     // Keep the tail short. We allow for one extra free element
                     // in tail to avoid constant allocations / reallocations.
                     //
 
-                    if (count == 2) 
+                    if (count == 2)
                     {
                         //                        ------------------
                         // Before removal: [head] [tail c-1] [empty]
@@ -310,7 +310,7 @@ namespace System.Windows.Media.Composition
 
                         _tail = null;
                     }
-                    else if (count == _tail.Length) 
+                    else if (count == _tail.Length)
                     {
                         //                        ---------------------------------------------------
                         // Before removal: [head] [tail 0] [tail 1] ... [tail c-3] [tail c-2] [empty]
@@ -344,19 +344,19 @@ namespace System.Windows.Media.Composition
         {
             Debug.Assert(index >= 0 && index < Count);
 
-            if (index < Count) 
+            if (index < Count)
             {
-                if (index == 0) 
+                if (index == 0)
                 {
                     return _head.Channel;
                 }
-                else if (index > 0) 
+                else if (index > 0)
                 {
                     return _tail[index - 1].Channel;
                 }
             }
 
-            return null;                
+            return null;
         }
 
         #endregion Internal Methods
@@ -387,19 +387,19 @@ namespace System.Windows.Media.Composition
         {
             Debug.Assert(index >= 0 && index < Count);
 
-            if (index < Count) 
+            if (index < Count)
             {
-                if (index == 0) 
+                if (index == 0)
                 {
                     return _head.Handle;
                 }
-                else if (index > 0) 
+                else if (index > 0)
                 {
                     return _tail[index - 1].Handle;
                 }
             }
 
-            return DUCE.ResourceHandle.Null;                
+            return DUCE.ResourceHandle.Null;
         }
 
         #endregion Internal Methods: resource handle getters
@@ -428,19 +428,19 @@ namespace System.Windows.Media.Composition
         /// </summary>
         internal VisualProxyFlags GetFlags(int index)
         {
-            if (index < Count) 
+            if (index < Count)
             {
-                if (index == 0) 
+                if (index == 0)
                 {
                     return _head.Flags;
                 }
-                else if (index > 0) 
+                else if (index > 0)
                 {
                     return _tail[index - 1].Flags;
                 }
             }
 
-            return VisualProxyFlags.None;                
+            return VisualProxyFlags.None;
         }
 
 
@@ -466,16 +466,16 @@ namespace System.Windows.Media.Composition
         {
             Debug.Assert(index >= 0 && index < Count);
 
-            if (index < Count) 
+            if (index < Count)
             {
-                if (index == 0) 
+                if (index == 0)
                 {
-                    _head.Flags = 
+                    _head.Flags =
                         value ? (_head.Flags | flags) : (_head.Flags & ~flags);
                 }
-                else if (index > 0) 
+                else if (index > 0)
                 {
-                    _tail[index - 1].Flags = 
+                    _tail[index - 1].Flags =
                         value ? (_tail[index - 1].Flags | flags) : (_tail[index - 1].Flags & ~flags);
                 }
             }
@@ -489,14 +489,14 @@ namespace System.Windows.Media.Composition
             bool value,
             VisualProxyFlags flags)
         {
-            if (_head.Channel != null) 
+            if (_head.Channel != null)
             {
-                _head.Flags = 
+                _head.Flags =
                     value ? (_head.Flags | flags) : (_head.Flags & ~flags);
 
-                for (int i = 0, limit = Count - 1; i < limit; i++) 
+                for (int i = 0, limit = Count - 1; i < limit; i++)
                 {
-                    _tail[i].Flags = 
+                    _tail[i].Flags =
                         value ? (_tail[i].Flags | flags) : (_tail[i].Flags & ~flags);
                 }
             }
@@ -509,12 +509,12 @@ namespace System.Windows.Media.Composition
         internal bool CheckFlagsOnAllChannels(
             VisualProxyFlags conjunctionFlags)
         {
-            if (_head.Channel != null) 
+            if (_head.Channel != null)
             {
                 if ((_head.Flags & conjunctionFlags) != conjunctionFlags)
                     return false;
 
-                for (int i = 0, limit = Count - 1; i < limit; i++) 
+                for (int i = 0, limit = Count - 1; i < limit; i++)
                 {
                     if ((_tail[i].Flags & conjunctionFlags) != conjunctionFlags)
                         return false;
@@ -540,15 +540,15 @@ namespace System.Windows.Media.Composition
         /// </summary>
         private int Find(DUCE.Channel channel)
         {
-            if (_head.Channel == channel) 
+            if (_head.Channel == channel)
             {
                 return PROXY_STORED_INLINE;
             }
-            else if (_tail != null) 
+            else if (_tail != null)
             {
-                for (int i = 0, limit = Count - 1; i < limit; i++) 
+                for (int i = 0, limit = Count - 1; i < limit; i++)
                 {
-                    if (_tail[i].Channel == channel) 
+                    if (_tail[i].Channel == channel)
                     {
                         return i;
                     }
@@ -573,7 +573,7 @@ namespace System.Windows.Media.Composition
 
             _tail = reallocatedTail;
         }
-        
+
         #endregion Private Methods
 
 

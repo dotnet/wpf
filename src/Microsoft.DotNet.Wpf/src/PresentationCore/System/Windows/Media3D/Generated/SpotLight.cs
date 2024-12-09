@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -55,21 +55,21 @@ namespace System.Windows.Media.Media3D
 
         private static void DirectionPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            SpotLight target = ((SpotLight) d);
+            SpotLight target = ((SpotLight)d);
 
 
             target.PropertyChanged(DirectionProperty);
         }
         private static void OuterConeAnglePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            SpotLight target = ((SpotLight) d);
+            SpotLight target = ((SpotLight)d);
 
 
             target.PropertyChanged(OuterConeAngleProperty);
         }
         private static void InnerConeAnglePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            SpotLight target = ((SpotLight) d);
+            SpotLight target = ((SpotLight)d);
 
 
             target.PropertyChanged(InnerConeAngleProperty);
@@ -85,7 +85,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Vector3D) GetValue(DirectionProperty);
+                return (Vector3D)GetValue(DirectionProperty);
             }
             set
             {
@@ -100,7 +100,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (double) GetValue(OuterConeAngleProperty);
+                return (double)GetValue(OuterConeAngleProperty);
             }
             set
             {
@@ -115,7 +115,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (double) GetValue(InnerConeAngleProperty);
+                return (double)GetValue(InnerConeAngleProperty);
             }
             set
             {
@@ -252,31 +252,33 @@ namespace System.Windows.Media.Media3D
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-                if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_SPOTLIGHT))
-                {
-                    Transform3D vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
+            if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_SPOTLIGHT))
+            {
+                Transform3D vTransform = Transform;
+                if (vTransform != null)
+                    ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
 
-                    AddRefOnChannelAnimations(channel);
+                AddRefOnChannelAnimations(channel);
 
 
-                    UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
-                }
+                UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
+            }
 
-                return _duceResource.GetHandle(channel);
-}
+            return _duceResource.GetHandle(channel);
+        }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-                Debug.Assert(_duceResource.IsOnChannel(channel));
+            Debug.Assert(_duceResource.IsOnChannel(channel));
 
-                if (_duceResource.ReleaseOnChannel(channel))
-                {
-                    Transform3D vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
+            if (_duceResource.ReleaseOnChannel(channel))
+            {
+                Transform3D vTransform = Transform;
+                if (vTransform != null)
+                    ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
 
-                    ReleaseOnChannelAnimations(channel);
-}
-}
+                ReleaseOnChannelAnimations(channel);
+            }
+        }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
             // Note that we are in a lock here already.
@@ -345,7 +347,7 @@ namespace System.Windows.Media.Media3D
 
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
 
-        internal static Vector3D s_Direction = new Vector3D(0,0,-1);
+        internal static Vector3D s_Direction = new Vector3D(0, 0, -1);
         internal const double c_OuterConeAngle = 90.0;
         internal const double c_InnerConeAngle = 180.0;
 
@@ -376,7 +378,7 @@ namespace System.Windows.Media.Media3D
                   RegisterProperty("Direction",
                                    typeof(Vector3D),
                                    typeofThis,
-                                   new Vector3D(0,0,-1),
+                                   new Vector3D(0, 0, -1),
                                    new PropertyChangedCallback(DirectionPropertyChanged),
                                    null,
                                    /* isIndependentlyAnimated  = */ true,

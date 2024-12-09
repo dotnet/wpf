@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,9 +9,9 @@
 //
 //
 
-using System.Windows.Threading;
-using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
+using System.Windows.Automation.Provider;
+using System.Windows.Threading;
 
 namespace MS.Internal.Automation
 {
@@ -29,17 +29,17 @@ namespace MS.Internal.Automation
     //   on the right context. These call through to the peer that's actually
     //   implenting the I...Provider version of the interface. 
 
-    internal class SelectionItemProviderWrapper: MarshalByRefObject, ISelectionItemProvider
+    internal class SelectionItemProviderWrapper : MarshalByRefObject, ISelectionItemProvider
     {
         //------------------------------------------------------
         //
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
-        private SelectionItemProviderWrapper( AutomationPeer peer, ISelectionItemProvider iface )
+        private SelectionItemProviderWrapper(AutomationPeer peer, ISelectionItemProvider iface)
         {
             _peer = peer;
             _iface = iface;
@@ -53,29 +53,29 @@ namespace MS.Internal.Automation
         //  Interface ISelectionItemProvider
         //
         //------------------------------------------------------
- 
+
         #region Interface ISelectionItemProvider
 
         public void Select()
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( Select ), null );
+            ElementUtil.Invoke(_peer, new DispatcherOperationCallback(Select), null);
         }
 
         public void AddToSelection()
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( AddToSelection ), null );
+            ElementUtil.Invoke(_peer, new DispatcherOperationCallback(AddToSelection), null);
         }
-        
+
         public void RemoveFromSelection()
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( RemoveFromSelection ), null );
+            ElementUtil.Invoke(_peer, new DispatcherOperationCallback(RemoveFromSelection), null);
         }
 
         public bool IsSelected
-        { 
+        {
             get
             {
-                return (bool) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetIsSelected ), null );
+                return (bool)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetIsSelected), null);
             }
         }
 
@@ -83,7 +83,7 @@ namespace MS.Internal.Automation
         {
             get
             {
-                return (IRawElementProviderSimple) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetSelectionContainer ), null );
+                return (IRawElementProviderSimple)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetSelectionContainer), null);
             }
         }
 
@@ -95,12 +95,12 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
-        internal static object Wrap( AutomationPeer peer, object iface )
+        internal static object Wrap(AutomationPeer peer, object iface)
         {
-            return new SelectionItemProviderWrapper( peer, (ISelectionItemProvider) iface );
+            return new SelectionItemProviderWrapper(peer, (ISelectionItemProvider)iface);
         }
 
         #endregion Internal Methods
@@ -110,33 +110,33 @@ namespace MS.Internal.Automation
         //  Private Methods
         //
         //------------------------------------------------------
- 
+
         #region Private Methods
 
-        private object Select( object unused )
+        private object Select(object unused)
         {
             _iface.Select();
             return null;
         }
 
-        private object AddToSelection( object unused )
+        private object AddToSelection(object unused)
         {
             _iface.AddToSelection();
             return null;
         }
-        
-        private object RemoveFromSelection( object unused )
+
+        private object RemoveFromSelection(object unused)
         {
             _iface.RemoveFromSelection();
             return null;
         }
 
-        private object GetIsSelected( object unused )
-        { 
+        private object GetIsSelected(object unused)
+        {
             return _iface.IsSelected;
         }
 
-        private object GetSelectionContainer( object unused )
+        private object GetSelectionContainer(object unused)
         {
             return _iface.SelectionContainer;
         }
@@ -149,7 +149,7 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private AutomationPeer _peer;

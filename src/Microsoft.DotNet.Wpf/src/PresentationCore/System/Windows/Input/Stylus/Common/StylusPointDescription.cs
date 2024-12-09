@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,9 +22,9 @@ namespace System.Windows.Input
         internal const int RequiredPressureIndex = 2;
         internal const int MaximumButtonCount = 31;
 
-        private int                         _buttonCount = 0;
-        private int                         _originalPressureIndex = RequiredPressureIndex;
-        private StylusPointPropertyInfo[]   _stylusPointPropertyInfos;
+        private int _buttonCount = 0;
+        private int _originalPressureIndex = RequiredPressureIndex;
+        private StylusPointPropertyInfo[] _stylusPointPropertyInfos;
 
         /// <summary>
         /// StylusPointDescription
@@ -32,7 +32,7 @@ namespace System.Windows.Input
         public StylusPointDescription()
         {
             //implement the default packet description
-            _stylusPointPropertyInfos = 
+            _stylusPointPropertyInfos =
                 new StylusPointPropertyInfo[]
                 {
                     StylusPointPropertyInfoDefaults.X,
@@ -102,7 +102,7 @@ namespace System.Windows.Input
         /// <param name="stylusPointPropertyInfos">stylusPointPropertyInfos</param>
         /// <param name="originalPressureIndex">originalPressureIndex - does the digitizer really support pressure?  If so, the index this was at</param>
         internal StylusPointDescription(IEnumerable<StylusPointPropertyInfo> stylusPointPropertyInfos, int originalPressureIndex)
-            : this (stylusPointPropertyInfos)
+            : this(stylusPointPropertyInfos)
         {
             _originalPressureIndex = originalPressureIndex;
         }
@@ -122,7 +122,7 @@ namespace System.Windows.Input
             }
             return true;
         }
-        
+
         /// <summary>
         /// The count of properties this StylusPointDescription contains
         /// </summary>
@@ -293,16 +293,16 @@ namespace System.Windows.Input
                 throw new ArgumentNullException("stylusPointDescription");
             }
 
-            #pragma warning disable 6506 // if a StylusPointDescription is not null, then _stylusPointPropertyInfos is not null.
+#pragma warning disable 6506 // if a StylusPointDescription is not null, then _stylusPointPropertyInfos is not null.
             //
             // ignore X, Y, Pressure - they are guaranteed to be the first3 members
             //
-            Debug.Assert(   stylusPointDescription1._stylusPointPropertyInfos.Length >= RequiredCountOfProperties &&
+            Debug.Assert(stylusPointDescription1._stylusPointPropertyInfos.Length >= RequiredCountOfProperties &&
                             stylusPointDescription1._stylusPointPropertyInfos[0].Id == StylusPointPropertyIds.X &&
                             stylusPointDescription1._stylusPointPropertyInfos[1].Id == StylusPointPropertyIds.Y &&
                             stylusPointDescription1._stylusPointPropertyInfos[2].Id == StylusPointPropertyIds.NormalPressure);
 
-            Debug.Assert(   stylusPointDescription2._stylusPointPropertyInfos.Length >= RequiredCountOfProperties &&
+            Debug.Assert(stylusPointDescription2._stylusPointPropertyInfos.Length >= RequiredCountOfProperties &&
                             stylusPointDescription2._stylusPointPropertyInfos[0].Id == StylusPointPropertyIds.X &&
                             stylusPointDescription2._stylusPointPropertyInfos[1].Id == StylusPointPropertyIds.Y &&
                             stylusPointDescription2._stylusPointPropertyInfos[2].Id == StylusPointPropertyIds.NormalPressure);
@@ -318,11 +318,11 @@ namespace System.Windows.Input
                     return false;
                 }
             }
-            #pragma warning restore 6506
+#pragma warning restore 6506
 
             return true;
         }
-        
+
         /// <summary>
         /// Returns a new StylusPointDescription with the common StylusPointProperties from both
         /// </summary>
@@ -361,15 +361,15 @@ namespace System.Windows.Input
             {
                 for (int y = RequiredCountOfProperties; y < stylusPointDescriptionPreserveInfo._stylusPointPropertyInfos.Length; y++)
                 {
-                    if (StylusPointPropertyInfo.AreCompatible(  stylusPointDescription._stylusPointPropertyInfos[x], 
+                    if (StylusPointPropertyInfo.AreCompatible(stylusPointDescription._stylusPointPropertyInfos[x],
                                                             stylusPointDescriptionPreserveInfo._stylusPointPropertyInfos[y]))
                     {
                         commonProperties.Add(stylusPointDescriptionPreserveInfo._stylusPointPropertyInfos[y]);
                     }
                 }
             }
-            #pragma warning restore 6506
-            
+#pragma warning restore 6506
+
             return new StylusPointDescription(commonProperties);
         }
 

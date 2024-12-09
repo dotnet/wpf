@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -50,11 +50,11 @@ namespace System.Windows.Xps.Packaging
 
         private
         const
-        String  _printTicketProperty = "PrintTicket";
+        String _printTicketProperty = "PrintTicket";
 
         private
         const
-        String  _clrProperty         = "Property";
+        String _clrProperty = "Property";
     };
 
     internal class XpsS0Markup
@@ -170,7 +170,7 @@ namespace System.Windows.Xps.Packaging
         }
 
 
- 
+
         static
         public
         String
@@ -453,7 +453,7 @@ namespace System.Windows.Xps.Packaging
         {
             get
             {
-                return  _applicationXaml;
+                return _applicationXaml;
             }
         }
 
@@ -464,7 +464,7 @@ namespace System.Windows.Xps.Packaging
         {
             get
             {
-                return  _documentSequenceContentType;
+                return _documentSequenceContentType;
             }
 
         }
@@ -473,11 +473,11 @@ namespace System.Windows.Xps.Packaging
         static
         public
         ContentType
-        FixedDocumentContentType      
+        FixedDocumentContentType
         {
             get
             {
-                return  _fixedDocumentContentType;
+                return _fixedDocumentContentType;
             }
         }
 
@@ -485,11 +485,11 @@ namespace System.Windows.Xps.Packaging
         static
         public
         ContentType
-        FixedPageContentType          
+        FixedPageContentType
         {
             get
             {
-                return  _fixedPageContentType;
+                return _fixedPageContentType;
             }
         }
 
@@ -497,11 +497,11 @@ namespace System.Windows.Xps.Packaging
         static
         public
         ContentType
-        DocumentStructureContentType          
+        DocumentStructureContentType
         {
             get
             {
-                return  _documentStructureContentType;
+                return _documentStructureContentType;
             }
         }
 
@@ -513,7 +513,7 @@ namespace System.Windows.Xps.Packaging
         {
             get
             {
-                return  _storyFragmentsContentType;
+                return _storyFragmentsContentType;
             }
         }
 
@@ -522,22 +522,22 @@ namespace System.Windows.Xps.Packaging
         static
         public
         ContentType
-        SignatureDefintionType          
+        SignatureDefintionType
         {
             get
             {
-                return  _signatureDefinitionType;
+                return _signatureDefinitionType;
             }
         }
 
         static
         public
         ContentType
-        CoreDocumentPropertiesType          
+        CoreDocumentPropertiesType
         {
             get
             {
-                return  _coreDocumentPropertiesContentType;
+                return _coreDocumentPropertiesContentType;
             }
         }
 
@@ -545,55 +545,55 @@ namespace System.Windows.Xps.Packaging
         static
         public
         ContentType
-        PrintTicketContentType       
+        PrintTicketContentType
         {
             get
             {
-                return  _printTicketContentType;
+                return _printTicketContentType;
             }
         }
 
         static
         public
         ContentType
-        ResourceContentType          
+        ResourceContentType
         {
             get
             {
-                return  _resourceContentType;
+                return _resourceContentType;
             }
         }
 
         static
         public
         ContentType
-        FontContentType              
+        FontContentType
         {
             get
             {
-                return  _fontContentType;
+                return _fontContentType;
             }
         }
 
         static
         public
         ContentType
-        FontObfuscatedContentType              
+        FontObfuscatedContentType
         {
             get
             {
-                return  _obfuscatedContentType;
+                return _obfuscatedContentType;
             }
         }
 
         static
         public
         ContentType
-        ColorContextContentType              
+        ColorContextContentType
         {
             get
             {
-                return  _colorContextContentType;
+                return _colorContextContentType;
             }
         }
 
@@ -602,132 +602,132 @@ namespace System.Windows.Xps.Packaging
         static
         public
         ContentType
-        JpgContentType              
+        JpgContentType
         {
             get
             {
-                return  _jpgContentType;
+                return _jpgContentType;
             }
         }
 
         static
         public
         ContentType
-        SigOriginContentType              
+        SigOriginContentType
         {
             get
             {
-                return  _sigOriginContentType;
+                return _sigOriginContentType;
             }
         }
 
         static
         public
         ContentType
-        SigCertContentType              
+        SigCertContentType
         {
             get
             {
-                return  _sigCertContentType;
+                return _sigCertContentType;
             }
         }
 
         static
         public
         ContentType
-        DiscardContentType              
+        DiscardContentType
         {
             get
             {
-                return  _discardContentType;
+                return _discardContentType;
             }
         }
-        
+
         static
         public
         ContentType
-        RelationshipContentType              
+        RelationshipContentType
         {
             get
             {
-                return  _relationshipContentType;
+                return _relationshipContentType;
             }
         }
 
         static
         public
         String
-        JpgExtension              
+        JpgExtension
         {
             get
             {
-                return  _jpgExtension;
+                return _jpgExtension;
             }
         }
 
         static
         public
         ContentType
-        PngContentType              
+        PngContentType
         {
             get
             {
-                return  _pngContentType;
+                return _pngContentType;
             }
         }
 
         static
         public
         String
-        PngExtension              
+        PngExtension
         {
             get
             {
-                return  _pngExtension;
+                return _pngExtension;
             }
         }
-        
+
         static
         public
         ContentType
-        TifContentType              
+        TifContentType
         {
             get
             {
-                return  _tifContentType;
+                return _tifContentType;
             }
         }
 
         static
         public
         String
-        TifExtension              
+        TifExtension
         {
             get
             {
-                return  _tifExtension;
+                return _tifExtension;
             }
         }
-        
+
         static
         public
         ContentType
-        WdpContentType              
+        WdpContentType
         {
             get
             {
-                return  _wdpContentType;
+                return _wdpContentType;
             }
         }
 
         static
         public
         String
-        WdpExtension              
+        WdpExtension
         {
             get
             {
-                return  _wdpExtension;
+                return _wdpExtension;
             }
         }
 
@@ -738,7 +738,7 @@ namespace System.Windows.Xps.Packaging
         {
             get
             {
-                return  _wmpContentType;
+                return _wmpContentType;
             }
         }
 
@@ -749,7 +749,7 @@ namespace System.Windows.Xps.Packaging
         {
             get
             {
-                return  _resourceDictionaryContentType;
+                return _resourceDictionaryContentType;
             }
         }
 
@@ -760,7 +760,7 @@ namespace System.Windows.Xps.Packaging
         {
             get
             {
-                return  _documentSequenceNamespace;
+                return _documentSequenceNamespace;
             }
         }
 
@@ -771,7 +771,7 @@ namespace System.Windows.Xps.Packaging
         {
             get
             {
-                return  _fixedDocumentNamespace;
+                return _fixedDocumentNamespace;
             }
         }
 
@@ -782,7 +782,7 @@ namespace System.Windows.Xps.Packaging
         {
             get
             {
-                return  _signatureDefinitionNamespace;
+                return _signatureDefinitionNamespace;
             }
         }
 
@@ -804,7 +804,7 @@ namespace System.Windows.Xps.Packaging
         {
             get
             {
-                return  _structureRelationshipName;
+                return _structureRelationshipName;
             }
         }
 
@@ -829,7 +829,7 @@ namespace System.Windows.Xps.Packaging
                 return _reachPackageStartingPartRelationshipType;
             }
         }
-        
+
         static
         public
         String
@@ -837,7 +837,7 @@ namespace System.Windows.Xps.Packaging
         {
             get
             {
-                return  _resourceRelationshipName;
+                return _resourceRelationshipName;
             }
         }
 
@@ -848,7 +848,7 @@ namespace System.Windows.Xps.Packaging
         {
             get
             {
-                return  _printTicketRelationshipName;
+                return _printTicketRelationshipName;
             }
         }
 
@@ -859,7 +859,7 @@ namespace System.Windows.Xps.Packaging
         {
             get
             {
-                return  _signatureDefinitionRelationshipName;
+                return _signatureDefinitionRelationshipName;
             }
         }
 
@@ -870,7 +870,7 @@ namespace System.Windows.Xps.Packaging
         {
             get
             {
-                return  _restrictedFontRelationshipType;
+                return _restrictedFontRelationshipType;
             }
         }
 
@@ -881,7 +881,7 @@ namespace System.Windows.Xps.Packaging
         {
             get
             {
-                return  _ditialSignatureRelationshipType;
+                return _ditialSignatureRelationshipType;
             }
         }
 
@@ -893,7 +893,7 @@ namespace System.Windows.Xps.Packaging
         {
             get
             {
-                return  _thumbnailRelationshipName;
+                return _thumbnailRelationshipName;
             }
         }
 
@@ -904,12 +904,12 @@ namespace System.Windows.Xps.Packaging
         {
             get
             {
-                return  _versionExtensiblityNamespace;
+                return _versionExtensiblityNamespace;
             }
         }
         internal class XmlnsUriContainer
         {
-            
+
             public
             XmlnsUriContainer(
                 )
@@ -928,310 +928,310 @@ namespace System.Windows.Xps.Packaging
 
         private
         const
-        String  _packageRelationshipUri             = "/_rels/.rels";
+        String _packageRelationshipUri = "/_rels/.rels";
 
         private
         const
-        String  _obfuscatedFontExt 		            = ".ODTTF";
+        String _obfuscatedFontExt = ".ODTTF";
 
         private
         const
-        String  _pageWidth              	        = "Width";
+        String _pageWidth = "Width";
 
         private
         const
-        String  _pageHeight                         = "Height";
+        String _pageHeight = "Height";
 
         private
         const
-        String  _fixedPage                          = "FixedPage";
+        String _fixedPage = "FixedPage";
 
         private
         const
-        String  _fixedDocument                      = "FixedDocument";
+        String _fixedDocument = "FixedDocument";
 
         private
         const
-        String  _fixedDocumentSequence              = "FixedDocumentSequence";
+        String _fixedDocumentSequence = "FixedDocumentSequence";
 
         private
         const
-        String  _pageContent                        = "PageContent";
+        String _pageContent = "PageContent";
 
         private
         const
-        String  _documentReference                  = "DocumentReference";
+        String _documentReference = "DocumentReference";
 
         private
         const
-        String _storyFragments                      = "StoryFragments";
+        String _storyFragments = "StoryFragments";
 
         private
         const
-        String  _xmlns                              = "xmlns";
+        String _xmlns = "xmlns";
 
         private
         const
-        String  _xmlnsX                             = "xmlns:x";
+        String _xmlnsX = "xmlns:x";
 
         private
         const
-        String  _xmlLang                            = "xml:lang";
+        String _xmlLang = "xml:lang";
 
         private
         const
-        String  _xmlLangValue                       = "und";
+        String _xmlLangValue = "und";
 
         private
         const
-        String _xmlEngLangValue                     = "en-us";
+        String _xmlEngLangValue = "en-us";
 
         private
         const
-        String  _xmlnsXSchema                       = "http://schemas.microsoft.com/xps/2005/06/resourcedictionary-key";
+        String _xmlnsXSchema = "http://schemas.microsoft.com/xps/2005/06/resourcedictionary-key";
 
         private
         const
-        String  _imageUriPlaceHolder                = "placeholder";
+        String _imageUriPlaceHolder = "placeholder";
 
         private
         const
-        String  _colorContextUriPlaceHolder         = "placeholder";
+        String _colorContextUriPlaceHolder = "placeholder";
 
         private
         const
-        String  _resourceDictionaryUriPlaceHolder   = "placeholder";
+        String _resourceDictionaryUriPlaceHolder = "placeholder";
 
         private
         const
-        String  _fontUriPlaceHolder                 = "placeholder";
+        String _fontUriPlaceHolder = "placeholder";
 
         private
         const
-        String  _resourceDictionary                 = "ResourceDictionary";
+        String _resourceDictionary = "ResourceDictionary";
 
         private
         const
-        String  _pageResources                      = "FixedPage.Resources";
+        String _pageResources = "FixedPage.Resources";
 
         private
         const
-        String  _signatureDefinitions               = "SignatureDefinitions";
+        String _signatureDefinitions = "SignatureDefinitions";
 
         private
         const
-        String  _signatureDefinition                = "SignatureDefinition";
+        String _signatureDefinition = "SignatureDefinition";
 
         private
         const
-        String  _requestedSigner                    = "SignerName";
+        String _requestedSigner = "SignerName";
 
         private
         const
-        String  _spotLocation                       = "SpotLocation";
+        String _spotLocation = "SpotLocation";
 
         private
         const
-        String  _pageUri                            = "PageURI";
+        String _pageUri = "PageURI";
 
         private
         const
-        String  _startX                             = "StartX";
+        String _startX = "StartX";
 
         private
         const
-        String  _startY                             = "StartY";
+        String _startY = "StartY";
 
         private
         const
-        String  _intent                             = "Intent";
+        String _intent = "Intent";
 
         private
         const
-        String  _signBy                             = "SignBy";
+        String _signBy = "SignBy";
 
         private
         const
-        String  _signingLocale                      = "SigningLocation";
+        String _signingLocale = "SigningLocation";
 
         private
         const
-        String  _spotId                             = "SpotID";
+        String _spotId = "SpotID";
 
         static
         private
         readonly
-        String[]  _xmlnsUri                         = {"http://schemas.microsoft.com/xps/2005/06",
+        String[] _xmlnsUri = {"http://schemas.microsoft.com/xps/2005/06",
                                                        "http://schemas.microsoft.com/xps/2005/06",
                                                        "http://schemas.microsoft.com/xps/2005/06"};
 
         static
         private
-        ContentType _applicationXaml                     = new ContentType("application/xaml+xml");
+        ContentType _applicationXaml = new ContentType("application/xaml+xml");
 
         static
         private
-        ContentType _documentSequenceContentType         = new ContentType("application/vnd.ms-package.xps-fixeddocumentsequence+xml");
+        ContentType _documentSequenceContentType = new ContentType("application/vnd.ms-package.xps-fixeddocumentsequence+xml");
 
         static
         private
-        ContentType _fixedDocumentContentType            = new ContentType("application/vnd.ms-package.xps-fixeddocument+xml");
+        ContentType _fixedDocumentContentType = new ContentType("application/vnd.ms-package.xps-fixeddocument+xml");
 
         static
         private
-        ContentType _fixedPageContentType                = new ContentType("application/vnd.ms-package.xps-fixedpage+xml");
+        ContentType _fixedPageContentType = new ContentType("application/vnd.ms-package.xps-fixedpage+xml");
 
         static
         private
-        ContentType _documentStructureContentType        = new ContentType("application/vnd.ms-package.xps-documentstructure+xml");
+        ContentType _documentStructureContentType = new ContentType("application/vnd.ms-package.xps-documentstructure+xml");
 
         static
         private
-        ContentType _storyFragmentsContentType           = new ContentType("application/vnd.ms-package.xps-storyfragments+xml");
+        ContentType _storyFragmentsContentType = new ContentType("application/vnd.ms-package.xps-storyfragments+xml");
 
         static
         private
-        ContentType _printTicketContentType              = new ContentType("application/vnd.ms-printing.printticket+xml");
+        ContentType _printTicketContentType = new ContentType("application/vnd.ms-printing.printticket+xml");
 
         static
         private
-        ContentType _signatureDefinitionType             = new ContentType("application/xml");
+        ContentType _signatureDefinitionType = new ContentType("application/xml");
 
         static
         private
-        ContentType _coreDocumentPropertiesContentType   = new ContentType("application/vnd.openxmlformats-package.core-properties+xml");
+        ContentType _coreDocumentPropertiesContentType = new ContentType("application/vnd.openxmlformats-package.core-properties+xml");
 
         static
         private
-        ContentType _resourceContentType                 = new ContentType("application/resource-PLACEHOLDER");
+        ContentType _resourceContentType = new ContentType("application/resource-PLACEHOLDER");
 
         static
         private
-        ContentType _fontContentType                     = new ContentType("application/vnd.ms-opentype");
+        ContentType _fontContentType = new ContentType("application/vnd.ms-opentype");
 
         static
         private
-        ContentType _colorContextContentType             = new ContentType("application/vnd.ms-color.iccprofile");
+        ContentType _colorContextContentType = new ContentType("application/vnd.ms-color.iccprofile");
 
         static
         private
-        ContentType _obfuscatedContentType               = new ContentType("application/vnd.ms-package.obfuscated-opentype");
+        ContentType _obfuscatedContentType = new ContentType("application/vnd.ms-package.obfuscated-opentype");
 
         static
         private
-        ContentType _jpgContentType                      = new ContentType("image/jpeg");
+        ContentType _jpgContentType = new ContentType("image/jpeg");
 
         static
         private
-        ContentType _sigOriginContentType                      = new ContentType("application/vnd.openxmlformats-package.digital-signature-origin");
+        ContentType _sigOriginContentType = new ContentType("application/vnd.openxmlformats-package.digital-signature-origin");
 
         static
         private
-        ContentType _sigCertContentType                      = new ContentType("application/vnd.openxmlformats-package.digital-signature-certificate");
+        ContentType _sigCertContentType = new ContentType("application/vnd.openxmlformats-package.digital-signature-certificate");
 
         static
         private
-        ContentType _discardContentType                      = new ContentType("application/vnd.ms-package.xps-discard-control+xml");
+        ContentType _discardContentType = new ContentType("application/vnd.ms-package.xps-discard-control+xml");
 
         static
         private
-        ContentType _relationshipContentType                 = new ContentType("application/vnd.openxmlformats-package.relationships+xml");
+        ContentType _relationshipContentType = new ContentType("application/vnd.openxmlformats-package.relationships+xml");
 
         private
         const
-        string _jpgExtension                             = "jpg";
+        string _jpgExtension = "jpg";
 
         static
         private
-        ContentType _pngContentType                      = new ContentType("image/png");
+        ContentType _pngContentType = new ContentType("image/png");
 
         private
         const
-        string _pngExtension                             = "png";
+        string _pngExtension = "png";
 
         static
         private
-        ContentType _tifContentType                      = new ContentType("image/tiff");
+        ContentType _tifContentType = new ContentType("image/tiff");
 
         static
         private
-        string _tifExtension                             = "tif";
+        string _tifExtension = "tif";
 
         static
         private
-        ContentType _wdpContentType                      = new ContentType("image/vnd.ms-photo");
+        ContentType _wdpContentType = new ContentType("image/vnd.ms-photo");
 
         private
         const
-        string _wdpExtension                             = "wdp";
+        string _wdpExtension = "wdp";
 
         static
         private
-        ContentType _wmpContentType                      = new ContentType("image/vnd.ms-photo");
+        ContentType _wmpContentType = new ContentType("image/vnd.ms-photo");
 
         static
         private
-        ContentType _resourceDictionaryContentType       = new ContentType("application/vnd.ms-package.xps-resourcedictionary+xml");
+        ContentType _resourceDictionaryContentType = new ContentType("application/vnd.ms-package.xps-resourcedictionary+xml");
 
         private
         const
-        string _documentSequenceNamespace                = "http://schemas.microsoft.com/xps/2005/06";
+        string _documentSequenceNamespace = "http://schemas.microsoft.com/xps/2005/06";
 
         private
         const
-        string _fixedDocumentNamespace                   = "http://schemas.microsoft.com/xps/2005/06";
+        string _fixedDocumentNamespace = "http://schemas.microsoft.com/xps/2005/06";
 
         private
         const
-        string _signatureDefinitionNamespace             = "http://schemas.microsoft.com/xps/2005/06/signature-definitions";
+        string _signatureDefinitionNamespace = "http://schemas.microsoft.com/xps/2005/06/signature-definitions";
 
         private
         const
-        string _resourceRelationshipName                 = "http://schemas.microsoft.com/xps/2005/06/required-resource";
+        string _resourceRelationshipName = "http://schemas.microsoft.com/xps/2005/06/required-resource";
 
         private
         const
-        string _structureRelationshipName                = "http://schemas.microsoft.com/xps/2005/06/documentstructure";
+        string _structureRelationshipName = "http://schemas.microsoft.com/xps/2005/06/documentstructure";
 
         private
         const
-        string _storyFragmentsRelationshipName           = "http://schemas.microsoft.com/xps/2005/06/storyfragments";
+        string _storyFragmentsRelationshipName = "http://schemas.microsoft.com/xps/2005/06/storyfragments";
 
         private
         const
-        string _printTicketRelationshipName              = "http://schemas.microsoft.com/xps/2005/06/printticket";
+        string _printTicketRelationshipName = "http://schemas.microsoft.com/xps/2005/06/printticket";
 
         private
         const
-        string _signatureDefinitionRelationshipName      = "http://schemas.microsoft.com/xps/2005/06/signature-definitions";
+        string _signatureDefinitionRelationshipName = "http://schemas.microsoft.com/xps/2005/06/signature-definitions";
 
         private
         const
-        string _thumbnailRelationshipName                = "http://schemas.openxmlformats.org/package/2006/relationships/metadata/thumbnail";
+        string _thumbnailRelationshipName = "http://schemas.openxmlformats.org/package/2006/relationships/metadata/thumbnail";
 
         private
         const
-        string _coreDocumentPropertiesRelationshipType   = "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties";
+        string _coreDocumentPropertiesRelationshipType = "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties";
 
         private
         const
         string _reachPackageStartingPartRelationshipType = "http://schemas.microsoft.com/xps/2005/06/fixedrepresentation";
- 
-        private
-        const
-        string _restrictedFontRelationshipType           = "http://schemas.microsoft.com/xps/2005/06/restricted-font";
 
         private
         const
-        string _ditialSignatureRelationshipType           = "http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/signature";
-   
+        string _restrictedFontRelationshipType = "http://schemas.microsoft.com/xps/2005/06/restricted-font";
+
+        private
+        const
+        string _ditialSignatureRelationshipType = "http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/signature";
+
         static
         private
-        XmlnsUriContainer  _xmlnsUriContainer            = new XmlnsUriContainer();
+        XmlnsUriContainer _xmlnsUriContainer = new XmlnsUriContainer();
 
         private
         const
-        string  _versionExtensiblityNamespace           ="http://schemas.openxmlformats.org/markup-compatibility/2006";
+        string _versionExtensiblityNamespace = "http://schemas.openxmlformats.org/markup-compatibility/2006";
     };
 
     internal class XmlTags
@@ -1251,11 +1251,11 @@ namespace System.Windows.Xps.Packaging
             {
                 return _source;
             }
-        }                      
+        }
 
         private
         const
-        String  _source = "Source";
+        String _source = "Source";
     };
 }
 

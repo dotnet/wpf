@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -39,7 +39,7 @@ namespace System.Windows
         ///     This variant is called when the Trigger lives in a Style, and
         /// hence given a reference to its corresponding Style object.
         /// </remarks>
-        internal abstract void Invoke( FrameworkElement fe,
+        internal abstract void Invoke(FrameworkElement fe,
                                       FrameworkContentElement fce,
                                       Style targetStyle,
                                       FrameworkTemplate targetTemplate,
@@ -54,7 +54,7 @@ namespace System.Windows
         ///     This variant is called when the Trigger lives on an element, as
         /// opposed to Style, so it is given only the reference to the element.
         /// </remarks>
-        internal abstract void Invoke( FrameworkElement fe );
+        internal abstract void Invoke(FrameworkElement fe);
 
         /// <summary>
         ///     The EventTrigger object that contains this action.
@@ -81,9 +81,9 @@ namespace System.Windows
         /// TriggerAction objects.  We do some check here then call the
         /// parameter-less Seal() so subclasses can also do what they need to do.
         /// </remarks>
-        internal void Seal( TriggerBase containingTrigger )
+        internal void Seal(TriggerBase containingTrigger)
         {
-            if( IsSealed && containingTrigger != _containingTrigger )
+            if (IsSealed && containingTrigger != _containingTrigger)
             {
                 throw new InvalidOperationException(SR.TriggerActionMustBelongToASingleTrigger);
             }
@@ -98,7 +98,7 @@ namespace System.Windows
         /// </summary>
         internal override void Seal()
         {
-            if( IsSealed )
+            if (IsSealed)
             {
                 throw new InvalidOperationException(SR.TriggerActionAlreadySealed);
             }
@@ -110,7 +110,7 @@ namespace System.Windows
         /// </summary>
         internal void CheckSealed()
         {
-            if( IsSealed )
+            if (IsSealed)
             {
                 throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "TriggerAction"));
             }

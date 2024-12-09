@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -215,13 +215,13 @@ namespace MS.Internal.Xaml.Context
         {
             None = 0,
             WasAssignedAtCreation = 0x01,
-            IsObjectFromMember    = 0x02,
-            IsPropertyValueSet    = 0x04,
-            IsKeySet              = 0x08,
+            IsObjectFromMember = 0x02,
+            IsPropertyValueSet = 0x04,
+            IsKeySet = 0x08,
             IsTypeConvertedObject = 0x10,
-            KeyIsUnconverted      = 0x20,
-            ShouldConvertChildKeys     = 0x40,
-            ShouldNotConvertChildKeys  = 0x80
+            KeyIsUnconverted = 0x20,
+            ShouldConvertChildKeys = 0x40,
+            ShouldNotConvertChildKeys = 0x80
         }
     }
 }

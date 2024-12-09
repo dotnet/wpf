@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -34,7 +34,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         HostInBrowser = 0x01,
 
         /// <summary></summary>
-        Writable      = 0x02,
+        Writable = 0x02,
 
         /// Remove this after transition to Metro
         /// 0x04 is skipped just in case a new flag needs to be added before we have chance to remove Metro

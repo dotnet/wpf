@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,8 +7,8 @@
 //
 
 using System.Windows.Media;
-using MS.Win32;
 using MS.Internal;
+using MS.Win32;
 
 namespace System.Windows.Documents
 {
@@ -62,7 +62,7 @@ namespace System.Windows.Documents
             //
             //   need to support line color and line style.
             //
-             
+
 #if NOT_YET
             if (_attr.crText.type != UnsafeNativeMethods.TF_DA_COLORTYPE.TF_CT_NONE)
             {
@@ -106,7 +106,7 @@ namespace System.Windows.Documents
         {
             return GetColor(_attr.crLine, position);
         }
-        
+
         /// <summary>
         /// Line style of the composition line draw
         /// </summary>
@@ -131,7 +131,7 @@ namespace System.Windows.Documents
 
         internal UnsafeNativeMethods.TF_DA_ATTR_INFO AttrInfo
         {
-            get 
+            get
             {
                 return _attr.bAttr;
             }
@@ -140,21 +140,21 @@ namespace System.Windows.Documents
         /**
          * Shift count and bit mask for A, R, G, B components
          */
-        private const int AlphaShift  = 24;
-        private const int RedShift    = 16;
-        private const int GreenShift  = 8;
-        private const int BlueShift   = 0;
+        private const int AlphaShift = 24;
+        private const int RedShift = 16;
+        private const int GreenShift = 8;
+        private const int BlueShift = 0;
 
-        private const int Win32RedShift    = 0;
-        private const int Win32GreenShift  = 8;
-        private const int Win32BlueShift   = 16;
+        private const int Win32RedShift = 0;
+        private const int Win32GreenShift = 8;
+        private const int Win32BlueShift = 16;
 
-        private static int Encode(int alpha, int red, int green, int blue) 
+        private static int Encode(int alpha, int red, int green, int blue)
         {
             return red << RedShift | green << GreenShift | blue << BlueShift | alpha << AlphaShift;
         }
 
-        private static int FromWin32Value(int value) 
+        private static int FromWin32Value(int value)
         {
             return Encode(255,
                 (value >> Win32RedShift) & 0xFF,
@@ -174,7 +174,7 @@ namespace System.Windows.Documents
             int color = SafeNativeMethods.GetSysColor(index);
 
             argb = (uint)FromWin32Value(color);
-            return Color.FromArgb((byte)((argb&0xff000000)>>24), (byte)((argb&0x00ff0000)>>16),(byte)((argb&0x0000ff00)>>8), (byte)(argb&0x000000ff));
+            return Color.FromArgb((byte)((argb & 0xff000000) >> 24), (byte)((argb & 0x00ff0000) >> 16), (byte)((argb & 0x0000ff00) >> 8), (byte)(argb & 0x000000ff));
         }
 
         //------------------------------------------------------

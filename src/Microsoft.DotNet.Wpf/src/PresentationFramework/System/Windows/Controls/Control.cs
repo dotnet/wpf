@@ -1,14 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 using System.ComponentModel;
-
-using System.Windows.Threading;
-using System.Windows.Media;
-using System.Windows.Input;
 using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Threading;
 using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationFramework;
 using MS.Utility;
@@ -47,7 +46,7 @@ namespace System.Windows.Controls
             // Initialize the _templateCache to the default value for TemplateProperty.
             // If the default value is non-null then wire it to the current instance.
             PropertyMetadata metadata = TemplateProperty.GetMetadata(DependencyObjectType);
-            ControlTemplate defaultValue = (ControlTemplate) metadata.DefaultValue;
+            ControlTemplate defaultValue = (ControlTemplate)metadata.DefaultValue;
             if (defaultValue != null)
             {
                 OnTemplateChanged(this, new DependencyPropertyChangedEventArgs(TemplateProperty, metadata, null, defaultValue));
@@ -76,7 +75,7 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Appearance")]
         public Brush BorderBrush
         {
-            get { return (Brush) GetValue(BorderBrushProperty); }
+            get { return (Brush)GetValue(BorderBrushProperty); }
             set { SetValue(BorderBrushProperty, value); }
         }
 
@@ -98,7 +97,7 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Appearance")]
         public Thickness BorderThickness
         {
-            get { return (Thickness) GetValue(BorderThicknessProperty); }
+            get { return (Thickness)GetValue(BorderThicknessProperty); }
             set { SetValue(BorderThicknessProperty, value); }
         }
 
@@ -121,7 +120,7 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Appearance")]
         public Brush Background
         {
-            get { return (Brush) GetValue(BackgroundProperty); }
+            get { return (Brush)GetValue(BackgroundProperty); }
             set { SetValue(BackgroundProperty, value); }
         }
 
@@ -145,7 +144,7 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Appearance")]
         public Brush Foreground
         {
-            get { return (Brush) GetValue(ForegroundProperty); }
+            get { return (Brush)GetValue(ForegroundProperty); }
             set { SetValue(ForegroundProperty, value); }
         }
 
@@ -170,7 +169,7 @@ namespace System.Windows.Controls
         [Localizability(LocalizationCategory.Font)]
         public FontFamily FontFamily
         {
-            get { return (FontFamily) GetValue(FontFamilyProperty); }
+            get { return (FontFamily)GetValue(FontFamilyProperty); }
             set { SetValue(FontFamilyProperty, value); }
         }
 
@@ -196,7 +195,7 @@ namespace System.Windows.Controls
         [Localizability(LocalizationCategory.None)]
         public double FontSize
         {
-            get { return (double) GetValue(FontSizeProperty); }
+            get { return (double)GetValue(FontSizeProperty); }
             set { SetValue(FontSizeProperty, value); }
         }
 
@@ -219,7 +218,7 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Appearance")]
         public FontStretch FontStretch
         {
-            get { return (FontStretch) GetValue(FontStretchProperty); }
+            get { return (FontStretch)GetValue(FontStretchProperty); }
             set { SetValue(FontStretchProperty, value); }
         }
 
@@ -243,7 +242,7 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Appearance")]
         public FontStyle FontStyle
         {
-            get { return (FontStyle) GetValue(FontStyleProperty); }
+            get { return (FontStyle)GetValue(FontStyleProperty); }
             set { SetValue(FontStyleProperty, value); }
         }
 
@@ -267,7 +266,7 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Appearance")]
         public FontWeight FontWeight
         {
-            get { return (FontWeight) GetValue(FontWeightProperty); }
+            get { return (FontWeight)GetValue(FontWeightProperty); }
             set { SetValue(FontWeightProperty, value); }
         }
 
@@ -293,9 +292,9 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Layout")]
         public HorizontalAlignment HorizontalContentAlignment
         {
-            get { return (HorizontalAlignment) GetValue(HorizontalContentAlignmentProperty); }
+            get { return (HorizontalAlignment)GetValue(HorizontalContentAlignmentProperty); }
             set { SetValue(HorizontalContentAlignmentProperty, value); }
-         }
+        }
 
         /// <summary>
         /// VerticalContentAlignment Dependency Property.
@@ -319,7 +318,7 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Layout")]
         public VerticalAlignment VerticalContentAlignment
         {
-            get { return (VerticalAlignment) GetValue(VerticalContentAlignmentProperty); }
+            get { return (VerticalAlignment)GetValue(VerticalContentAlignmentProperty); }
             set { SetValue(VerticalContentAlignmentProperty, value); }
         }
 
@@ -337,7 +336,7 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Behavior")]
         public int TabIndex
         {
-            get { return (int) GetValue(TabIndexProperty); }
+            get { return (int)GetValue(TabIndexProperty); }
             set { SetValue(TabIndexProperty, value); }
         }
 
@@ -355,7 +354,7 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Behavior")]
         public bool IsTabStop
         {
-            get { return (bool) GetValue(IsTabStopProperty); }
+            get { return (bool)GetValue(IsTabStopProperty); }
             set { SetValue(IsTabStopProperty, BooleanBoxes.Box(value)); }
         }
 
@@ -364,7 +363,7 @@ namespace System.Windows.Controls
         /// </summary>
         [CommonDependencyProperty]
         public static readonly DependencyProperty PaddingProperty
-            = DependencyProperty.Register( "Padding",
+            = DependencyProperty.Register("Padding",
                                         typeof(Thickness), typeof(Control),
                                         new FrameworkPropertyMetadata(
                                                 new Thickness(),
@@ -385,7 +384,7 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Layout")]
         public Thickness Padding
         {
-            get { return (Thickness) GetValue(PaddingProperty); }
+            get { return (Thickness)GetValue(PaddingProperty); }
             set { SetValue(PaddingProperty, value); }
         }
 
@@ -399,7 +398,7 @@ namespace System.Windows.Controls
                         typeof(ControlTemplate),
                         typeof(Control),
                         new FrameworkPropertyMetadata(
-                                (ControlTemplate) null,  // default value
+                                (ControlTemplate)null,  // default value
                                 FrameworkPropertyMetadataOptions.AffectsMeasure,
                                 new PropertyChangedCallback(OnTemplateChanged)));
 
@@ -423,7 +422,7 @@ namespace System.Windows.Controls
         internal override FrameworkTemplate TemplateCache
         {
             get { return _templateCache; }
-            set { _templateCache = (ControlTemplate) value; }
+            set { _templateCache = (ControlTemplate)value; }
         }
 
         // Internal helper so FrameworkElement could see call the template changed virtual
@@ -435,8 +434,8 @@ namespace System.Windows.Controls
         // Property invalidation callback invoked when TemplateProperty is invalidated
         private static void OnTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Control c = (Control) d;
-            StyleHelper.UpdateTemplateCache(c, (FrameworkTemplate) e.OldValue, (FrameworkTemplate) e.NewValue, TemplateProperty);
+            Control c = (Control)d;
+            StyleHelper.UpdateTemplateCache(c, (FrameworkTemplate)e.OldValue, (FrameworkTemplate)e.NewValue, TemplateProperty);
         }
 
         /// <summary>
@@ -488,7 +487,8 @@ namespace System.Windows.Controls
             else
             {
                 //Not on dispatcher, try posting to the dispatcher with 20ms timeout
-                plainText = (string)Dispatcher.Invoke(DispatcherPriority.Send, new TimeSpan(0, 0, 0, 0, 20), new DispatcherOperationCallback(delegate(object o) {
+                plainText = (string)Dispatcher.Invoke(DispatcherPriority.Send, new TimeSpan(0, 0, 0, 0, 20), new DispatcherOperationCallback(delegate (object o)
+                {
                     return GetPlainText();
                 }), null);
             }
@@ -715,7 +715,7 @@ namespace System.Windows.Controls
         {
             int count = this.VisualChildrenCount;
 
-            if (count>0)
+            if (count > 0)
             {
                 UIElement child = (UIElement)(this.GetVisualChild(0));
                 if (child != null)
@@ -749,20 +749,20 @@ namespace System.Windows.Controls
 
         internal enum ControlBoolFlags : ushort
         {
-            ContentIsNotLogical                 = 0x0001,            // used in contentcontrol.cs
-            IsSpaceKeyDown                      = 0x0002,            // used in ButtonBase.cs
-            HeaderIsNotLogical                  = 0x0004,            // used in HeaderedContentControl.cs, HeaderedItemsControl.cs
-            CommandDisabled                     = 0x0008,            // used in ButtonBase.cs, MenuItem.cs
-            ContentIsItem                       = 0x0010,            // used in contentcontrol.cs
-            HeaderIsItem                        = 0x0020,            // used in HeaderedContentControl.cs, HeaderedItemsControl.cs
-            ScrollHostValid                     = 0x0040,            // used in ItemsControl.cs
-            ContainsSelection                   = 0x0080,            // used in TreeViewItem.cs
-            VisualStateChangeSuspended          = 0x0100,            // used in Control.cs
+            ContentIsNotLogical = 0x0001,            // used in contentcontrol.cs
+            IsSpaceKeyDown = 0x0002,            // used in ButtonBase.cs
+            HeaderIsNotLogical = 0x0004,            // used in HeaderedContentControl.cs, HeaderedItemsControl.cs
+            CommandDisabled = 0x0008,            // used in ButtonBase.cs, MenuItem.cs
+            ContentIsItem = 0x0010,            // used in contentcontrol.cs
+            HeaderIsItem = 0x0020,            // used in HeaderedContentControl.cs, HeaderedItemsControl.cs
+            ScrollHostValid = 0x0040,            // used in ItemsControl.cs
+            ContainsSelection = 0x0080,            // used in TreeViewItem.cs
+            VisualStateChangeSuspended = 0x0100,            // used in Control.cs
         }
 
         // Property caches
-        private ControlTemplate         _templateCache;
-        internal ControlBoolFlags       _controlBoolField;   // Cache valid bits
+        private ControlTemplate _templateCache;
+        internal ControlBoolFlags _controlBoolField;   // Cache valid bits
 
         #endregion
     }

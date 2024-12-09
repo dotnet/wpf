@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,16 +10,15 @@
 using System.Collections;
 using System.Collections.ObjectModel; // Collection<T>
 using System.ComponentModel;
-
 using System.Reflection;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data; // BindingBase
 using System.Windows.Markup; // IProvideValueTarget
 using System.Windows.Media;
 using System.Windows.Threading;
 using MS.Internal.Hashing.PresentationFramework;
-using System.Windows.Controls.Primitives;
-using System.Windows.Controls;
 
 namespace MS.Internal
 {
@@ -79,15 +78,15 @@ namespace MS.Internal
             // sure the tree get the right resource updated while the Application
             // level resource is changed later dynamically.
             //
-//            DependencyObject root = GetAbsoluteRoot(target);
-//            bool isInWindowCollection = IsInWindowCollection (root);
-//            if ( isInWindowCollection )
+            //            DependencyObject root = GetAbsoluteRoot(target);
+            //            bool isInWindowCollection = IsInWindowCollection (root);
+            //            if ( isInWindowCollection )
 
             Application app = Application.Current;
             if (app != null)
             {
                 // If the element is rooted to a Window and App exists, defer to App.
-                for (k = 0;  k < bestMatch;  ++k)
+                for (k = 0; k < bestMatch; ++k)
                 {
                     object appResource = Application.Current.FindResourceInternal(keys[k]);
                     if (appResource != null)
@@ -106,7 +105,7 @@ namespace MS.Internal
             if (bestMatch >= exactMatch)
             {
                 // Try the system resource collection.
-                for (k = 0;  k < bestMatch;  ++k)
+                for (k = 0; k < bestMatch; ++k)
                 {
                     object sysResource = SystemResources.FindResourceInternal(keys[k]);
                     if (sysResource != null)
@@ -123,51 +122,51 @@ namespace MS.Internal
             return resource;
         }
 
-/*
-        // Returns the absolute root of the tree by walking through frames.
-        internal static DependencyObject GetAbsoluteRoot(DependencyObject iLogical)
-        {
-            DependencyObject currentRoot = iLogical;
-            Visual visual;
-            Visual parentVisual;
-            bool bDone = false;
-
-            if (currentRoot == null)
-            {
-                return null;
-            }
-
-            while (!bDone)
-            {
-                // Try logical parent.
-                DependencyObject parent = LogicalTreeHelper.GetParent(currentRoot);
-
-                if (parent != null)
+        /*
+                // Returns the absolute root of the tree by walking through frames.
+                internal static DependencyObject GetAbsoluteRoot(DependencyObject iLogical)
                 {
-                    currentRoot = parent;
-                }
-                else
-                {
-                    // Try visual parent
-                    Visual visual = currentRoot as Visual;
-                    if (visual != null)
+                    DependencyObject currentRoot = iLogical;
+                    Visual visual;
+                    Visual parentVisual;
+                    bool bDone = false;
+
+                    if (currentRoot == null)
                     {
-                        Visual parentVisual = VisualTreeHelper.GetParent(visual);
-                        if (parentVisual != null)
+                        return null;
+                    }
+
+                    while (!bDone)
+                    {
+                        // Try logical parent.
+                        DependencyObject parent = LogicalTreeHelper.GetParent(currentRoot);
+
+                        if (parent != null)
                         {
-                            currentRoot = parentVisual;
-                            continue;
+                            currentRoot = parent;
+                        }
+                        else
+                        {
+                            // Try visual parent
+                            Visual visual = currentRoot as Visual;
+                            if (visual != null)
+                            {
+                                Visual parentVisual = VisualTreeHelper.GetParent(visual);
+                                if (parentVisual != null)
+                                {
+                                    currentRoot = parentVisual;
+                                    continue;
+                                }
+                            }
+
+                            // No logical or visual parent, so we're done.
+                            bDone = true;
                         }
                     }
 
-                    // No logical or visual parent, so we're done.
-                    bDone = true;
+                    return currentRoot;
                 }
-            }
-
-            return currentRoot;
-        }
-*/
+        */
 
         /// <summary>
         ///     This method finds the mentor by looking up the InheritanceContext
@@ -397,7 +396,7 @@ namespace MS.Internal
         internal static object FindNameInTemplate(string name, DependencyObject templatedParent)
         {
             FrameworkElement fe = templatedParent as FrameworkElement;
-            Debug.Assert( fe != null );
+            Debug.Assert(fe != null);
 
             return fe.TemplateInternal.FindName(name, fe);
         }
@@ -418,7 +417,7 @@ namespace MS.Internal
                 while (element != null)
                 {
                     d = element;
-                    element= GetTemplatedParent(element);
+                    element = GetTemplatedParent(element);
 
                     // Special case to display the selected item in a ComboBox, when
                     // the items are XmlNodes and the DisplayMemberPath is an XPath
@@ -560,10 +559,10 @@ namespace MS.Internal
         /// a DynamicResource or Binding MarkupExtension.
         /// </summary>
         internal static void CheckCanReceiveMarkupExtension(
-                MarkupExtension     markupExtension,
-                IServiceProvider    serviceProvider,
-            out DependencyObject    targetDependencyObject,
-            out DependencyProperty  targetDependencyProperty)
+                MarkupExtension markupExtension,
+                IServiceProvider serviceProvider,
+            out DependencyObject targetDependencyObject,
+            out DependencyProperty targetDependencyProperty)
         {
             targetDependencyObject = null;
             targetDependencyProperty = null;
@@ -937,7 +936,7 @@ namespace MS.Internal
                             if (entry.IsCoercedWithCurrentValue)
                             {
                                 // call ClearCurrentValue  (when it exists - for now, use the substitute - (see comment at DO.InvalidateProperty)
-                                container.InvalidateProperty(dp, preserveCurrentValue:false);
+                                container.InvalidateProperty(dp, preserveCurrentValue: false);
 
                                 // side-effects may move the entry - re-fetch it
                                 entryIndex = container.LookupEntry(dpIndex);
@@ -1034,7 +1033,7 @@ namespace MS.Internal
             {
                 foreach (List<KeyValuePair<int, object>> itemValuesList in itemValueStorage.Values)
                 {
-                    for (int i=0; i<itemValuesList.Count; i++)
+                    for (int i = 0; i < itemValuesList.Count; i++)
                     {
                         KeyValuePair<int, object> itemValue = itemValuesList[i];
                         if (itemValue.Key == ItemValueStorageField.GlobalIndex)
@@ -1042,7 +1041,7 @@ namespace MS.Internal
                             ClearItemValueStorageRecursive((WeakDictionary<object, List<KeyValuePair<int, object>>>)itemValue.Value, dpIndices);
                         }
 
-                        for (int j=0; j<dpIndices.Length; j++)
+                        for (int j = 0; j < dpIndices.Length; j++)
                         {
                             if (itemValue.Key == dpIndices[j])
                             {
@@ -1188,11 +1187,11 @@ namespace MS.Internal
                     // so to avoid the crash we'll artificially clamp the correction.
                     if (itemsCorrectionFactor.Bottom < 0)
                     {
-                        #if DEBUG
+#if DEBUG
                         Debugger.Break();
                         // Debug.Assert would be better, but we're in layout where
                         // Dispatcher events are disabled - can't pop up a dialog
-                        #endif
+#endif
                         itemsCorrectionFactor.Bottom = 0;
                     }
                 }
@@ -1391,7 +1390,7 @@ namespace MS.Internal
             }
 
             int childrenCount = VisualTreeHelper.GetChildrenCount(d);
-            for (int i=0; i<childrenCount; i++)
+            for (int i = 0; i < childrenCount; i++)
             {
                 DependencyObject child = VisualTreeHelper.GetChild(d, i);
                 if (child != null)
@@ -1414,7 +1413,8 @@ namespace MS.Internal
             {
                 return false;
             }
-            return FindAnyAncestor(element, delegate(DependencyObject d) { return d == ancestor; }) != null;
+            return FindAnyAncestor(element, delegate (DependencyObject d)
+            { return d == ancestor; }) != null;
         }
 
         /// <summary>
@@ -1521,7 +1521,7 @@ namespace MS.Internal
         //
         //------------------------------------------------------
 
-        static readonly Type   NullableType = Type.GetType("System.Nullable`1");
+        static readonly Type NullableType = Type.GetType("System.Nullable`1");
         // ItemValueStorage.  For each data item it stores a list of (DP, value) pairs that we want to preserve on the container.
         private static readonly UncommonField<WeakDictionary<object, List<KeyValuePair<int, object>>>> ItemValueStorageField =
                             new UncommonField<WeakDictionary<object, List<KeyValuePair<int, object>>>>();

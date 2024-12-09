@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -26,8 +26,10 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(element);
             _element = element;
             _previousSize = info.PreviousSize;
-            if(info.WidthChanged) _bits |= _widthChangedBit;
-            if(info.HeightChanged) _bits |= _heightChangedBit;
+            if (info.WidthChanged)
+                _bits |= _widthChangedBit;
+            if (info.HeightChanged)
+                _bits |= _heightChangedBit;
         }
 
         /// <summary>
@@ -77,7 +79,7 @@ namespace System.Windows
         private Size _previousSize;
         private UIElement _element;
         private byte _bits;
-        
+
         private static byte _widthChangedBit = 0x1;
         private static byte _heightChangedBit = 0x2;
 
@@ -94,8 +96,8 @@ namespace System.Windows
         /// <ExternalAPI/> 
         protected override void InvokeEventHandler(Delegate genericHandler, object genericTarget)
         {
-            SizeChangedEventHandler handler = (SizeChangedEventHandler) genericHandler;
-            
+            SizeChangedEventHandler handler = (SizeChangedEventHandler)genericHandler;
+
             handler(genericTarget, this);
         }
     }

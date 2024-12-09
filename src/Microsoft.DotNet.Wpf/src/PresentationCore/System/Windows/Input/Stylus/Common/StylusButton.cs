@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -66,9 +66,9 @@ namespace System.Windows.Input
         ///		Returns the name of the button.
         /// </summary>
         public string Name
-        { 
+        {
             get
-            {	
+            {
                 return _name;
             }
         }
@@ -78,9 +78,9 @@ namespace System.Windows.Input
         ///		Returns StylusDevice object that owns this button.
         /// </summary>
         public StylusDevice StylusDevice
-        { 
+        {
             get
-            {	
+            {
                 return _stylusDevice.StylusDevice;
             }
         }
@@ -104,9 +104,9 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
 
-        StylusDeviceBase    _stylusDevice;
-        string          _name;
-        Guid            _guid;
+        StylusDeviceBase _stylusDevice;
+        string _name;
+        Guid _guid;
         StylusButtonState _cachedButtonState = StylusButtonState.Up;
     }
 }

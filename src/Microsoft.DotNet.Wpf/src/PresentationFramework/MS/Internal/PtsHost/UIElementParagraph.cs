@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,9 +11,9 @@
 
 using System.Windows;                           // UIElement
 using System.Windows.Documents;                 // BlockUIContainer
-using MS.Internal.Text;                         // TextDpi
 using MS.Internal.Documents;                    // UIElementIsland
 using MS.Internal.PtsHost.UnsafeNativeMethods;  // PTS
+using MS.Internal.Text;                         // TextDpi
 
 namespace MS.Internal.PtsHost
 {
@@ -118,7 +118,7 @@ namespace MS.Internal.PtsHost
             MarginCollapsingState mcsNew;
             int margin;
             MarginCollapsingState.CollapseTopMargin(PtsContext, mbp, mcs, out mcsNew, out margin);
-            
+
             if (suppressTopSpace)
             {
                 dvr = 0;
@@ -144,16 +144,18 @@ namespace MS.Internal.PtsHost
             uint fswdirTrack,                       // IN:  direction of track
             out PTS.FSFLOATERPROPS fsfloaterprops)  // OUT: properties of the floater
         {
-            fsfloaterprops = new PTS.FSFLOATERPROPS();
-            fsfloaterprops.fFloat = PTS.False;                     // Floater
-            fsfloaterprops.fskclear = PTS.WrapDirectionToFskclear((WrapDirection)Element.GetValue(Block.ClearFloatersProperty));
+            fsfloaterprops = new PTS.FSFLOATERPROPS
+            {
+                fFloat = PTS.False,                     // Floater
+                fskclear = PTS.WrapDirectionToFskclear((WrapDirection)Element.GetValue(Block.ClearFloatersProperty)),
 
-            // Set alignment to left alignment. Do not allow text wrap on any side
-            fsfloaterprops.fskfloatalignment = PTS.FSKFLOATALIGNMENT.fskfloatalignMin;
-            fsfloaterprops.fskwr = PTS.FSKWRAP.fskwrNone;
+                // Set alignment to left alignment. Do not allow text wrap on any side
+                fskfloatalignment = PTS.FSKFLOATALIGNMENT.fskfloatalignMin,
+                fskwr = PTS.FSKWRAP.fskwrNone,
 
-            // Always delay UIElement if there is no progress
-            fsfloaterprops.fDelayNoProgress = PTS.True;
+                // Always delay UIElement if there is no progress
+                fDelayNoProgress = PTS.True
+            };
         }
 
         //-------------------------------------------------------------------
@@ -171,7 +173,7 @@ namespace MS.Internal.PtsHost
             int durAvailable,                   // IN:  width of available space
             int dvrAvailable,                   // IN:  height of available space
             PTS.FSKSUPPRESSHARDBREAKBEFOREFIRSTPARA fsksuppresshardbreakbeforefirstparaIn,
-                                                // IN: suppress breaks at track start?
+            // IN: suppress breaks at track start?
             out PTS.FSFMTR fsfmtr,              // OUT: result of formatting
             out IntPtr pfsFloatContent,         // OUT: opaque for PTS pointer pointer to formatted content
             out IntPtr pbrkrecOut,              // OUT: pointer to the floater content break record
@@ -189,12 +191,16 @@ namespace MS.Internal.PtsHost
                 // Do not format if not at max width, and if fEmptyOk is true
                 durFloaterWidth = dvrFloaterHeight = 0;
                 cPolygons = cVertices = 0;
-                fsfmtr = new PTS.FSFMTR();
-                fsfmtr.kstop = PTS.FSFMTRKSTOP.fmtrNoProgressOutOfSpace;
-                fsfmtr.fContainsItemThatStoppedBeforeFootnote = PTS.False;
-                fsfmtr.fForcedProgress = PTS.False;
-                fsbbox = new PTS.FSBBOX();
-                fsbbox.fDefined = PTS.False;
+                fsfmtr = new PTS.FSFMTR
+                {
+                    kstop = PTS.FSFMTRKSTOP.fmtrNoProgressOutOfSpace,
+                    fContainsItemThatStoppedBeforeFootnote = PTS.False,
+                    fForcedProgress = PTS.False
+                };
+                fsbbox = new PTS.FSBBOX
+                {
+                    fDefined = PTS.False
+                };
                 pbrkrecOut = IntPtr.Zero;
                 pfsFloatContent = IntPtr.Zero;
             }
@@ -216,9 +222,11 @@ namespace MS.Internal.PtsHost
                     ClearUIElementIsland();
 
                     MbpInfo mbp = MbpInfo.FromElement(Element, StructuralCache.TextFormatterHost.PixelsPerDip);
-                    fsbbox.fsrc = new PTS.FSRECT();
-                    fsbbox.fsrc.du = durAvailable;
-                    fsbbox.fsrc.dv = mbp.BPTop + mbp.BPBottom;
+                    fsbbox.fsrc = new PTS.FSRECT
+                    {
+                        du = durAvailable,
+                        dv = mbp.BPTop + mbp.BPBottom
+                    };
                 }
 
                 durFloaterWidth = fsbbox.fsrc.du;
@@ -227,10 +235,14 @@ namespace MS.Internal.PtsHost
                 {
                     // Will not fit in available space. Since fEmptyOk is true, we can return null floater
                     durFloaterWidth = dvrFloaterHeight = 0;
-                    fsfmtr = new PTS.FSFMTR();
-                    fsfmtr.kstop = PTS.FSFMTRKSTOP.fmtrNoProgressOutOfSpace;
-                    fsbbox = new PTS.FSBBOX();
-                    fsbbox.fDefined = PTS.False;
+                    fsfmtr = new PTS.FSFMTR
+                    {
+                        kstop = PTS.FSFMTRKSTOP.fmtrNoProgressOutOfSpace
+                    };
+                    fsbbox = new PTS.FSBBOX
+                    {
+                        fDefined = PTS.False
+                    };
                     pfsFloatContent = IntPtr.Zero;
                 }
                 else
@@ -283,8 +295,10 @@ namespace MS.Internal.PtsHost
                 dvrFloaterHeight = dvrAvailable + 1;
                 cPolygons = cVertices = 0;
                 fsfmtrbl = PTS.FSFMTRBL.fmtrblInterrupted;
-                fsbbox = new PTS.FSBBOX();
-                fsbbox.fDefined = PTS.False;
+                fsbbox = new PTS.FSBBOX
+                {
+                    fDefined = PTS.False
+                };
                 pfsFloatContent = IntPtr.Zero;
             }
             else
@@ -309,9 +323,11 @@ namespace MS.Internal.PtsHost
                     ClearUIElementIsland();
 
                     MbpInfo mbp = MbpInfo.FromElement(Element, StructuralCache.TextFormatterHost.PixelsPerDip);
-                    fsbbox.fsrc = new PTS.FSRECT();
-                    fsbbox.fsrc.du = durAvailable;
-                    fsbbox.fsrc.dv = mbp.BPTop + mbp.BPBottom;
+                    fsbbox.fsrc = new PTS.FSRECT
+                    {
+                        du = durAvailable,
+                        dv = mbp.BPTop + mbp.BPBottom
+                    };
                     fsbbox.fDefined = PTS.True;
                     pfsFloatContent = paraClient.Handle;
                     fsfmtrbl = PTS.FSFMTRBL.fmtrblGoalReached;
@@ -396,19 +412,21 @@ namespace MS.Internal.PtsHost
                 }
                 else
                 {
-                    Figure figure = (Figure) ((BlockUIContainer)Element).Parent;
+                    Figure figure = (Figure)((BlockUIContainer)Element).Parent;
                     Invariant.Assert(figure.Height.IsAbsolute);
                     elementHeight = figure.Height.Value;
                 }
 
                 elementHeight = Math.Max(TextDpi.FromTextDpi(1), elementHeight - TextDpi.FromTextDpi(mbp.MBPTop + mbp.MBPBottom));
                 UIElementIsland.DoLayout(new Size(elementWidth, elementHeight), false, false);
-   
+
                 // Create fsbbox. Set width to available width since we want block ui container to occupy the full column
                 // and UIElement to be algined within it. Set dv to elementHeight. 
-                fsbbox.fsrc = new PTS.FSRECT();
-                fsbbox.fsrc.du = durAvailable;
-                fsbbox.fsrc.dv = TextDpi.ToTextDpi(elementHeight) + mbp.BPTop + mbp.BPBottom;
+                fsbbox.fsrc = new PTS.FSRECT
+                {
+                    du = durAvailable,
+                    dv = TextDpi.ToTextDpi(elementHeight) + mbp.BPTop + mbp.BPBottom
+                };
                 fsbbox.fDefined = PTS.True;
             }
             else
@@ -433,9 +451,11 @@ namespace MS.Internal.PtsHost
 
                 // Create fsbbox. Set width to available width since we want block ui container to occupy the full column
                 // and UIElement to be algined within it
-                fsbbox.fsrc = new PTS.FSRECT();
-                fsbbox.fsrc.du = durAvailable;
-                fsbbox.fsrc.dv = TextDpi.ToTextDpi(uiIslandSize.Height) + mbp.BPTop + mbp.BPBottom;
+                fsbbox.fsrc = new PTS.FSRECT
+                {
+                    du = durAvailable,
+                    dv = TextDpi.ToTextDpi(uiIslandSize.Height) + mbp.BPTop + mbp.BPBottom
+                };
                 fsbbox.fDefined = PTS.True;
             }
         }

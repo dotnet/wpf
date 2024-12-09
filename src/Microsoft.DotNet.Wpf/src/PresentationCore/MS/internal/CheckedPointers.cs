@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,18 +21,18 @@ namespace MS.Internal
     /// <summary>
     /// Checked pointer for (Char*)
     /// </summary>
-    internal struct CheckedCharPointer    
+    internal struct CheckedCharPointer
     {
-        internal unsafe CheckedCharPointer(char * pointer, int length)
+        internal unsafe CheckedCharPointer(char* pointer, int length)
         {
             _checkedPointer = new CheckedPointer(pointer, length * sizeof(char));
         }
 
-        internal unsafe char * Probe(int offset, int length)
+        internal unsafe char* Probe(int offset, int length)
         {
-            return (char*) _checkedPointer.Probe(offset * sizeof(char), length * sizeof(char));
+            return (char*)_checkedPointer.Probe(offset * sizeof(char), length * sizeof(char));
         }
-        
+
         private CheckedPointer _checkedPointer;
     }
 
@@ -41,16 +41,16 @@ namespace MS.Internal
     /// </summary>
     internal struct CheckedIntPointer
     {
-        internal unsafe CheckedIntPointer(int * pointer, int length)
+        internal unsafe CheckedIntPointer(int* pointer, int length)
         {
             _checkedPointer = new CheckedPointer(pointer, length * sizeof(int));
         }
-        
-        internal unsafe int * Probe(int offset, int length)
+
+        internal unsafe int* Probe(int offset, int length)
         {
-            return (int *) _checkedPointer.Probe(offset * sizeof(int), length * sizeof(int));
+            return (int*)_checkedPointer.Probe(offset * sizeof(int), length * sizeof(int));
         }
-        
+
         private CheckedPointer _checkedPointer;
     }
 
@@ -59,14 +59,14 @@ namespace MS.Internal
     /// </summary>
     internal struct CheckedUShortPointer
     {
-        internal unsafe CheckedUShortPointer(ushort * pointer, int length)
+        internal unsafe CheckedUShortPointer(ushort* pointer, int length)
         {
             _checkedPointer = new CheckedPointer(pointer, length * sizeof(ushort));
         }
 
-        internal unsafe ushort * Probe(int offset, int length)
+        internal unsafe ushort* Probe(int offset, int length)
         {
-            return (ushort *) _checkedPointer.Probe(offset * sizeof(ushort), length * sizeof(ushort));
+            return (ushort*)_checkedPointer.Probe(offset * sizeof(ushort), length * sizeof(ushort));
         }
 
         private CheckedPointer _checkedPointer;

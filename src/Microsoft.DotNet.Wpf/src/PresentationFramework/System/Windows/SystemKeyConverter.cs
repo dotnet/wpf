@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -41,7 +41,7 @@ namespace System.Windows.Markup
 
             return base.CanConvertFrom(context, sourceType);
         }
-    
+
         /// <summary>
         ///     TypeConverter method override.
         /// </summary>
@@ -54,19 +54,19 @@ namespace System.Windows.Markup
         /// <returns>
         ///     true if conversion is possible
         /// </returns>
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) 
+        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
             // Validate Input Arguments
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            if ( destinationType == typeof(MarkupExtension) && context is IValueSerializerContext  )
+            if (destinationType == typeof(MarkupExtension) && context is IValueSerializerContext)
             {
                 return true;
             }
-            
+
             return base.CanConvertTo(context, destinationType);
         }
-        
+
         /// <summary>
         ///     TypeConverter method implementation.
         /// </summary>
@@ -114,36 +114,36 @@ namespace System.Windows.Markup
 
             if (destinationType == typeof(MarkupExtension)
                 &&
-                CanConvertTo(context, destinationType) )
+                CanConvertTo(context, destinationType))
             {
                 SystemResourceKeyID keyId;
 
                 // Get the SystemResourceKeyID
-                
-                if( value is SystemResourceKey )
+
+                if (value is SystemResourceKey)
                 {
                     keyId = (value as SystemResourceKey).InternalKey;
                 }
-                else if( value is SystemThemeKey )
+                else if (value is SystemThemeKey)
                 {
                     keyId = (value as SystemThemeKey).InternalKey;
                 }
                 else
                 {
-                    throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "SystemResourceKey or SystemThemeKey")); 
+                    throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "SystemResourceKey or SystemThemeKey"));
                 }
 
                 // System resource keys can be converted into a MarkupExtension (StaticExtension)
-                
+
                 Type keyType = SystemKeyConverter.GetSystemClassType(keyId);
 
                 // Get the value serialization context
                 IValueSerializerContext valueSerializerContext = context as IValueSerializerContext;
-                if( valueSerializerContext != null )
+                if (valueSerializerContext != null)
                 {
                     // And from that get a System.Type serializer
                     ValueSerializer typeSerializer = valueSerializerContext.GetValueSerializerFor(typeof(Type));
-                    if( typeSerializer != null )
+                    if (typeSerializer != null)
                     {
                         // And use that to create the string-ized class name
                         string systemClassName = typeSerializer.ConvertToString(keyType, valueSerializerContext);
@@ -153,7 +153,7 @@ namespace System.Windows.Markup
                     }
                 }
             }
-            
+
             return base.CanConvertTo(context, destinationType);
         }
 
@@ -162,7 +162,7 @@ namespace System.Windows.Markup
         internal static Type GetSystemClassType(SystemResourceKeyID id)
         {
             if (((SystemResourceKeyID.InternalSystemColorsStart < id) &&
-                  (id < SystemResourceKeyID.InternalSystemColorsEnd))||
+                  (id < SystemResourceKeyID.InternalSystemColorsEnd)) ||
                 ((SystemResourceKeyID.InternalSystemColorsExtendedStart < id) &&
                   (id < SystemResourceKeyID.InternalSystemColorsExtendedEnd)))
             {
@@ -203,7 +203,7 @@ namespace System.Windows.Markup
         internal static string GetSystemClassName(SystemResourceKeyID id)
         {
             if (((SystemResourceKeyID.InternalSystemColorsStart < id) &&
-                  (id < SystemResourceKeyID.InternalSystemColorsEnd))||
+                  (id < SystemResourceKeyID.InternalSystemColorsEnd)) ||
                 ((SystemResourceKeyID.InternalSystemColorsExtendedStart < id) &&
                   (id < SystemResourceKeyID.InternalSystemColorsExtendedEnd)))
             {
@@ -244,9 +244,9 @@ namespace System.Windows.Markup
         internal static string GetSystemKeyName(SystemResourceKeyID id)
         {
             if (((SystemResourceKeyID.InternalSystemColorsStart < id) &&
-                  (id < SystemResourceKeyID.InternalSystemParametersEnd))||
+                  (id < SystemResourceKeyID.InternalSystemParametersEnd)) ||
                 ((SystemResourceKeyID.InternalSystemColorsExtendedStart < id) &&
-                  (id < SystemResourceKeyID.InternalSystemColorsExtendedEnd))||
+                  (id < SystemResourceKeyID.InternalSystemColorsExtendedEnd)) ||
                 ((SystemResourceKeyID.GridViewScrollViewerStyle <= id) &&
                  (id <= SystemResourceKeyID.GridViewItemContainerStyle)))
             {

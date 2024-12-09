@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -37,16 +37,21 @@ namespace MS.Internal.Text
         // ------------------------------------------------------------------
         internal static int ToTextDpi(double d)
         {
-            if (DoubleUtil.IsZero(d)) { return 0; }
+            if (DoubleUtil.IsZero(d))
+            { return 0; }
             else if (d > 0)
             {
-                if (d > _maxSize) { d = _maxSize; }
-                else if (d < _minSize) { d = _minSize; }
+                if (d > _maxSize)
+                { d = _maxSize; }
+                else if (d < _minSize)
+                { d = _minSize; }
             }
             else
             {
-                if (d < -_maxSize) { d = -_maxSize; }
-                else if (d > -_minSize) { d = -_minSize; }
+                if (d < -_maxSize)
+                { d = -_maxSize; }
+                else if (d > -_minSize)
+                { d = -_minSize; }
             }
             return (int)Math.Round(d * _scale);
         }
@@ -68,9 +73,11 @@ namespace MS.Internal.Text
         // ------------------------------------------------------------------
         internal static PTS.FSPOINT ToTextPoint(Point point)
         {
-            PTS.FSPOINT fspoint = new PTS.FSPOINT();
-            fspoint.u = ToTextDpi(point.X);
-            fspoint.v = ToTextDpi(point.Y);
+            PTS.FSPOINT fspoint = new PTS.FSPOINT
+            {
+                u = ToTextDpi(point.X),
+                v = ToTextDpi(point.Y)
+            };
             return fspoint;
         }
 
@@ -79,9 +86,11 @@ namespace MS.Internal.Text
         // ------------------------------------------------------------------
         internal static PTS.FSVECTOR ToTextSize(Size size)
         {
-            PTS.FSVECTOR fsvector = new PTS.FSVECTOR();
-            fsvector.du = ToTextDpi(size.Width);
-            fsvector.dv = ToTextDpi(size.Height);
+            PTS.FSVECTOR fsvector = new PTS.FSVECTOR
+            {
+                du = ToTextDpi(size.Width),
+                dv = ToTextDpi(size.Height)
+            };
             return fsvector;
         }
 
@@ -104,8 +113,10 @@ namespace MS.Internal.Text
         internal static void EnsureValidLineOffset(ref double offset)
         {
             // Offset has to be > min allowed size && < max allowed size.
-            if (offset > _maxSize) { offset = _maxSize; }
-            else if (offset < -_maxSize) { offset = -_maxSize; }
+            if (offset > _maxSize)
+            { offset = _maxSize; }
+            else if (offset < -_maxSize)
+            { offset = -_maxSize; }
         }
 
         // ------------------------------------------------------------------
@@ -123,20 +134,26 @@ namespace MS.Internal.Text
         internal static void EnsureValidLineWidth(ref double width)
         {
             // Line width has to be > 0 && < max allowed size.
-            if (width > _maxSize) { width = _maxSize; }
-            else if (width < _minSize) { width = _minSize; }
+            if (width > _maxSize)
+            { width = _maxSize; }
+            else if (width < _minSize)
+            { width = _minSize; }
         }
         internal static void EnsureValidLineWidth(ref Size size)
         {
             // Line width has to be > 0 && < max allowed size.
-            if (size.Width > _maxSize) { size.Width = _maxSize; }
-            else if (size.Width < _minSize) { size.Width = _minSize; }
+            if (size.Width > _maxSize)
+            { size.Width = _maxSize; }
+            else if (size.Width < _minSize)
+            { size.Width = _minSize; }
         }
         internal static void EnsureValidLineWidth(ref int width)
         {
             // Line width has to be > 0 && < max allowed size.
-            if (width > _maxSizeInt) { width = _maxSizeInt; }
-            else if (width < _minSizeInt) { width = _minSizeInt; }
+            if (width > _maxSizeInt)
+            { width = _maxSizeInt; }
+            else if (width < _minSizeInt)
+            { width = _minSizeInt; }
         }
 
         // ------------------------------------------------------------------
@@ -145,20 +162,27 @@ namespace MS.Internal.Text
         internal static void EnsureValidPageSize(ref Size size)
         {
             // Page size has to be > 0 && < max allowed size.
-            if (size.Width > _maxSize) { size.Width = _maxSize; }
-            else if (size.Width < _minSize) { size.Width = _minSize; }
-            if (size.Height > _maxSize) { size.Height = _maxSize; }
-            else if (size.Height < _minSize) { size.Height = _minSize; }
+            if (size.Width > _maxSize)
+            { size.Width = _maxSize; }
+            else if (size.Width < _minSize)
+            { size.Width = _minSize; }
+            if (size.Height > _maxSize)
+            { size.Height = _maxSize; }
+            else if (size.Height < _minSize)
+            { size.Height = _minSize; }
         }
         internal static void EnsureValidPageWidth(ref double width)
         {
             // Page size has to be > 0 && < max allowed size.
-            if (width > _maxSize) { width = _maxSize; }
-            else if (width < _minSize) { width = _minSize; }
+            if (width > _maxSize)
+            { width = _maxSize; }
+            else if (width < _minSize)
+            { width = _minSize; }
         }
         internal static void EnsureValidPageMargin(ref Thickness pageMargin, Size pageSize)
         {
-            if (pageMargin.Left >= pageSize.Width) { pageMargin.Right = 0.0; }
+            if (pageMargin.Left >= pageSize.Width)
+            { pageMargin.Right = 0.0; }
             if (pageMargin.Left + pageMargin.Right >= pageSize.Width)
             {
                 pageMargin.Right = Math.Max(0.0, pageSize.Width - pageMargin.Left - _minSize);
@@ -167,10 +191,12 @@ namespace MS.Internal.Text
                     pageMargin.Left = pageSize.Width - _minSize;
                 }
             }
-            if (pageMargin.Top >= pageSize.Height) { pageMargin.Bottom = 0.0; }
+            if (pageMargin.Top >= pageSize.Height)
+            { pageMargin.Bottom = 0.0; }
             if (pageMargin.Top + pageMargin.Bottom >= pageSize.Height)
             {
-                pageMargin.Bottom = Math.Max(0.0, pageSize.Height - pageMargin.Top - _minSize);;
+                pageMargin.Bottom = Math.Max(0.0, pageSize.Height - pageMargin.Top - _minSize);
+                ;
                 if (pageMargin.Top + pageMargin.Bottom >= pageSize.Height)
                 {
                     pageMargin.Top = pageSize.Height - _minSize;
@@ -185,8 +211,10 @@ namespace MS.Internal.Text
         {
             // Embedded object can have size == 0, but its width and height
             // have to be less than max allowed size.
-            if (size.Width > _maxObjSize) { size.Width = _maxObjSize; }
-            if (size.Height > _maxObjSize) { size.Height = _maxObjSize; }
+            if (size.Width > _maxObjSize)
+            { size.Width = _maxObjSize; }
+            if (size.Height > _maxObjSize)
+            { size.Height = _maxObjSize; }
         }
 
         // ------------------------------------------------------------------

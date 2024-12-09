@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -42,7 +42,7 @@ namespace System.Windows.Documents
         }
 
         #endregion Constructors
- 
+
         //------------------------------------------------------
         //
         //  Public Methods
@@ -61,7 +61,7 @@ namespace System.Windows.Documents
 
         object System.Collections.IEnumerator.Current
         {
-            get 
+            get
             {
                 return this.Current;
             }
@@ -80,17 +80,17 @@ namespace System.Windows.Documents
         /// </remarks>
         public TextElementType Current
         {
-            get 
-            { 
+            get
+            {
                 if (_navigator == null)
                 {
-                    #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+#pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
                     throw new InvalidOperationException(SR.EnumeratorNotStarted);
                 }
 
                 if (_current == null)
                 {
-                    #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+#pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
                     throw new InvalidOperationException(SR.EnumeratorReachedEnd);
                 }
 
@@ -195,7 +195,7 @@ namespace System.Windows.Documents
         //  Protected Methods
         //
         //------------------------------------------------------
- 
+
         #region Protected Methods
 
         #endregion Protected Events

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -31,9 +31,9 @@ namespace System.Windows
         /// </summary>
         public override bool Equals(object obj)
         {
-            if(obj is LocalValueEnumerator)
+            if (obj is LocalValueEnumerator)
             {
-                LocalValueEnumerator other = (LocalValueEnumerator) obj;
+                LocalValueEnumerator other = (LocalValueEnumerator)obj;
 
                 return (_count == other._count &&
                         _index == other._index &&
@@ -51,7 +51,7 @@ namespace System.Windows
         /// </summary>
         public static bool operator ==(LocalValueEnumerator obj1, LocalValueEnumerator obj2)
         {
-          return obj1.Equals(obj2);
+            return obj1.Equals(obj2);
         }
 
         /// <summary>
@@ -59,9 +59,9 @@ namespace System.Windows
         /// </summary>
         public static bool operator !=(LocalValueEnumerator obj1, LocalValueEnumerator obj2)
         {
-          return !(obj1 == obj2);
+            return !(obj1 == obj2);
         }
-        
+
         /// <summary>
         ///     Get current entry
         /// </summary>
@@ -69,18 +69,18 @@ namespace System.Windows
         {
             get
             {
-                if(_index == -1 )
+                if (_index == -1)
                 {
-                    #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+#pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
                     throw new InvalidOperationException(SR.LocalValueEnumerationReset);
                 }
 
-                if(_index >= Count )
+                if (_index >= Count)
                 {
-                    #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+#pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
                     throw new InvalidOperationException(SR.LocalValueEnumerationOutOfBounds);
                 }
-                
+
                 return _snapshot[_index];
             }
         }
@@ -100,7 +100,7 @@ namespace System.Windows
         public bool MoveNext()
         {
             _index++;
-            
+
             return _index < Count;
         }
 
@@ -127,9 +127,9 @@ namespace System.Windows
             _snapshot = snapshot;
         }
 
-        private int                     _index;
-        private LocalValueEntry[]       _snapshot;
-        private int                     _count;
+        private int _index;
+        private LocalValueEntry[] _snapshot;
+        private int _count;
     }
 
 
@@ -152,7 +152,7 @@ namespace System.Windows
         /// </summary>
         public override bool Equals(object obj)
         {
-            LocalValueEntry other = (LocalValueEntry) obj;
+            LocalValueEntry other = (LocalValueEntry)obj;
 
             return (_dp == other._dp &&
                     _value == other._value);
@@ -163,15 +163,15 @@ namespace System.Windows
         /// </summary>
         public static bool operator ==(LocalValueEntry obj1, LocalValueEntry obj2)
         {
-          return obj1.Equals(obj2);
+            return obj1.Equals(obj2);
         }
-        
+
         /// <summary>
         ///     Determine inequality
         /// </summary>
         public static bool operator !=(LocalValueEntry obj1, LocalValueEntry obj2)
         {
-          return !(obj1 == obj2);
+            return !(obj1 == obj2);
         }
 
         /// <summary>

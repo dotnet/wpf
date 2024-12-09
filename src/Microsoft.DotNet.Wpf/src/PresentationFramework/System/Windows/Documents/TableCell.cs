@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,13 +16,12 @@
 //      b)  base.OnPropertyInvalidated *always* creates DTR for the whole cell.
 //          Why even AffectsRender causes it? 
 
-using MS.Internal;
-using System.Windows.Automation.Peers;
-using System.Windows.Media;
-using System.Windows.Markup;
 using System.ComponentModel; // TypeConverter
+using System.Windows.Automation.Peers;
+using System.Windows.Markup;
+using System.Windows.Media;
+using MS.Internal;
 using MS.Internal.Documents;
-
 using MS.Internal.PtsHost.UnsafeNativeMethods;
 
 namespace System.Windows.Documents
@@ -84,15 +83,15 @@ namespace System.Windows.Documents
             DependencyObject oldParent = this.Parent;
             TableRow newParentTR = newParent as TableRow;
 
-            if((newParent != null) && (newParentTR == null))
+            if ((newParent != null) && (newParentTR == null))
             {
                 throw new InvalidOperationException(SR.Format(SR.TableInvalidParentNodeType, newParent.GetType().ToString()));
             }
 
-            if(oldParent != null)
+            if (oldParent != null)
             {
                 ((TableRow)oldParent).Cells.InternalRemove(this);
-            } 
+            }
 
             base.OnNewParent(newParent);
 
@@ -129,7 +128,7 @@ namespace System.Windows.Documents
         /// </summary>
         public int ColumnSpan
         {
-            get { return (int) GetValue(ColumnSpanProperty); }
+            get { return (int)GetValue(ColumnSpanProperty); }
             set { SetValue(ColumnSpanProperty, value); }
         }
 
@@ -138,7 +137,7 @@ namespace System.Windows.Documents
         /// </summary>
         public int RowSpan
         {
-            get { return (int) GetValue(RowSpanProperty); }
+            get { return (int)GetValue(RowSpanProperty); }
             set { SetValue(RowSpanProperty, value); }
         }
 
@@ -209,7 +208,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="BorderBrush" /> property.
         /// </summary>
-        public static readonly DependencyProperty BorderBrushProperty = 
+        public static readonly DependencyProperty BorderBrushProperty =
                 Block.BorderBrushProperty.AddOwner(
                         typeof(TableCell),
                         new FrameworkPropertyMetadata(
@@ -228,7 +227,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="TextAlignment" /> property.
         /// </summary>
-        public static readonly DependencyProperty TextAlignmentProperty = 
+        public static readonly DependencyProperty TextAlignmentProperty =
                 Block.TextAlignmentProperty.AddOwner(typeof(TableCell));
 
         /// <summary>
@@ -243,7 +242,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="FlowDirection" /> property.
         /// </summary>
-        public static readonly DependencyProperty FlowDirectionProperty = 
+        public static readonly DependencyProperty FlowDirectionProperty =
                 Block.FlowDirectionProperty.AddOwner(typeof(TableCell));
 
         /// <summary>
@@ -258,7 +257,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="LineHeight" /> property.
         /// </summary>
-        public static readonly DependencyProperty LineHeightProperty = 
+        public static readonly DependencyProperty LineHeightProperty =
                 Block.LineHeightProperty.AddOwner(typeof(TableCell));
 
         /// <summary>
@@ -323,7 +322,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal void OnEnterParentTree()
         {
-            if(Table != null)
+            if (Table != null)
             {
                 Table.OnStructureChanged();
             }
@@ -341,7 +340,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal void OnAfterExitParentTree(TableRow row)
         {
-            if(row.Table != null)
+            if (row.Table != null)
             {
                 row.Table.OnStructureChanged();
             }
@@ -384,11 +383,11 @@ namespace System.Windows.Documents
         /// </summary>
         internal int Index
         {
-            get 
+            get
             {
                 return (_parentIndex);
             }
-            set 
+            set
             {
                 Debug.Assert(value >= -1 && _parentIndex != value);
                 _parentIndex = value;
@@ -426,7 +425,7 @@ namespace System.Windows.Documents
         /// </remarks>
         internal int ColumnIndex
         {
-            get 
+            get
             {
                 return (_columnIndex);
             }
@@ -506,11 +505,11 @@ namespace System.Windows.Documents
         /// </summary>
         public static readonly DependencyProperty ColumnSpanProperty =
                 DependencyProperty.Register(
-                        "ColumnSpan", 
-                        typeof(int), 
+                        "ColumnSpan",
+                        typeof(int),
                         typeof(TableCell),
                         new FrameworkPropertyMetadata(
-                                1, 
+                                1,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure,
                                 new PropertyChangedCallback(OnColumnSpanChanged)),
                         new ValidateValueCallback(IsValidColumnSpan));
@@ -520,11 +519,11 @@ namespace System.Windows.Documents
         /// </summary>
         public static readonly DependencyProperty RowSpanProperty =
                 DependencyProperty.Register(
-                        "RowSpan", 
-                        typeof(int), 
+                        "RowSpan",
+                        typeof(int),
                         typeof(TableCell),
                         new FrameworkPropertyMetadata(
-                                1, 
+                                1,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure,
                                 new PropertyChangedCallback(OnRowSpanChanged)),
                         new ValidateValueCallback(IsValidRowSpan));
@@ -564,9 +563,9 @@ namespace System.Windows.Documents
         /// </summary>
         private static void OnColumnSpanChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            TableCell cell = (TableCell) d;
+            TableCell cell = (TableCell)d;
 
-            if(cell.Table != null)
+            if (cell.Table != null)
             {
                 cell.Table.OnStructureChanged();
             }
@@ -584,9 +583,9 @@ namespace System.Windows.Documents
         /// </summary>
         private static void OnRowSpanChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            TableCell cell = (TableCell) d;
+            TableCell cell = (TableCell)d;
 
-            if(cell.Table != null)
+            if (cell.Table != null)
             {
                 cell.Table.OnStructureChanged();
             }

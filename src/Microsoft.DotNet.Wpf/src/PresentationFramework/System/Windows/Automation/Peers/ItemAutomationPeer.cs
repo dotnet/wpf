@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -20,7 +20,7 @@ namespace System.Windows.Automation.Peers
     public abstract class ItemAutomationPeer : AutomationPeer, IVirtualizedItemProvider
     {
         ///
-        protected ItemAutomationPeer(object item, ItemsControlAutomationPeer itemsControlAutomationPeer): base()
+        protected ItemAutomationPeer(object item, ItemsControlAutomationPeer itemsControlAutomationPeer) : base()
         {
             Item = item;
             _itemsControlAutomationPeer = itemsControlAutomationPeer;
@@ -48,29 +48,29 @@ namespace System.Windows.Automation.Peers
         {
             if (patternInterface == PatternInterface.VirtualizedItem)
             {
-                if(VirtualizedItemPatternIdentifiers.Pattern != null)
+                if (VirtualizedItemPatternIdentifiers.Pattern != null)
                 {
-                    if(GetWrapperPeer() == null)
+                    if (GetWrapperPeer() == null)
                         return this;
                     else
                     {
                         // ItemsControlAutomationPeer can be null in case of TreeViewItems when parent TreeViewItem is also virtualized
                         // If the Item is in Automation Tree we consider it has Realized and need not return VirtualizeItem pattern.
-                        if(ItemsControlAutomationPeer != null && !IsItemInAutomationTree())
+                        if (ItemsControlAutomationPeer != null && !IsItemInAutomationTree())
                         {
                             return this;
                         }
 
-                        if(ItemsControlAutomationPeer == null)
+                        if (ItemsControlAutomationPeer == null)
                             return this;
                     }
                 }
                 return null;
             }
-            else if(patternInterface == PatternInterface.SynchronizedInput)
+            else if (patternInterface == PatternInterface.SynchronizedInput)
             {
                 UIElementAutomationPeer peer = GetWrapperPeer() as UIElementAutomationPeer;
-                if(peer != null)
+                if (peer != null)
                 {
                     return peer.GetPattern(patternInterface);
                 }
@@ -105,12 +105,12 @@ namespace System.Windows.Automation.Peers
         {
             AutomationPeer wrapperPeer = null;
             UIElement wrapper = GetWrapper();
-            if(wrapper != null)
+            if (wrapper != null)
             {
                 wrapperPeer = UIElementAutomationPeer.CreatePeerForElement(wrapper);
-                if(wrapperPeer == null) //fall back to default peer if there is no specific one
+                if (wrapperPeer == null) //fall back to default peer if there is no specific one
                 {
-                    if(wrapper is FrameworkElement)
+                    if (wrapper is FrameworkElement)
                         wrapperPeer = new FrameworkElementAutomationPeer((FrameworkElement)wrapper);
                     else
                         wrapperPeer = new UIElementAutomationPeer(wrapper);
@@ -132,9 +132,10 @@ namespace System.Windows.Automation.Peers
         private bool IsItemInAutomationTree()
         {
             AutomationPeer parent = this.GetParent();
-            if(this.Index != -1 && parent != null && parent.Children != null && this.Index < parent.Children.Count && parent.Children[this.Index] == this)
+            if (this.Index != -1 && parent != null && parent.Children != null && this.Index < parent.Children.Count && parent.Children[this.Index] == this)
                 return true;
-            else return false;
+            else
+                return false;
         }
 
 
@@ -162,7 +163,7 @@ namespace System.Windows.Automation.Peers
         override internal void AddToParentProxyWeakRefCache()
         {
             ItemsControlAutomationPeer itemsControlAutomationPeer = ItemsControlAutomationPeer;
-            if(itemsControlAutomationPeer != null)
+            if (itemsControlAutomationPeer != null)
             {
                 itemsControlAutomationPeer.AddProxyToWeakRefStorage(this.ElementProxyWeakReference, this);
             }
@@ -244,7 +245,7 @@ namespace System.Windows.Automation.Peers
             AutomationPeer wrapperPeer = GetWrapperPeer();
             AutomationHeadingLevel headingLevel = AutomationHeadingLevel.None;
 
-            if(wrapperPeer != null)
+            if (wrapperPeer != null)
             {
                 headingLevel = wrapperPeer.GetHeadingLevel();
             }
@@ -530,11 +531,11 @@ namespace System.Windows.Automation.Peers
             {
                 // For FE we can't use ToString as that provides extraneous information than just the plain text
                 FrameworkElement fe = item as FrameworkElement;
-                if(fe != null)
-                  name = fe.GetPlainText();
+                if (fe != null)
+                    name = fe.GetPlainText();
 
-                if(string.IsNullOrEmpty(name))
-                  name = item.ToString();
+                if (string.IsNullOrEmpty(name))
+                    name = item.ToString();
             }
 
             return name;
@@ -755,7 +756,7 @@ namespace System.Windows.Automation.Peers
                     {
                         // The items aren't generated, try at a later time
                         Dispatcher.BeginInvoke(DispatcherPriority.Loaded,
-                            (DispatcherOperationCallback)delegate(object arg)
+                            (DispatcherOperationCallback)delegate (object arg)
                             {
                                 if (AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures)
                                 {
@@ -785,7 +786,7 @@ namespace System.Windows.Automation.Peers
         {
             public ItemWeakReference(object o)
                 : base(o)
-            {}
+            { }
         }
     }
 }

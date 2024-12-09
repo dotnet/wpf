@@ -1,20 +1,19 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System.ComponentModel;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Windows.Data;
+using System.ComponentModel;
 using System.Windows.Automation.Peers;
+using System.Windows.Data;
 using System.Windows.Input;
 using MS.Internal;
+using MS.Internal.Controls;
 using MS.Internal.Data;
 using MS.Internal.KnownBoxes;
-using MS.Internal.Controls;
-
 using BuildInfo = MS.Internal.PresentationFramework.BuildInfo;
 
 // Disable CS3001: Warning as Error: not CLS-compliant
@@ -186,7 +185,7 @@ namespace System.Windows.Controls.Primitives
         public static bool GetIsSelectionActive(DependencyObject element)
         {
             ArgumentNullException.ThrowIfNull(element);
-            return (bool) element.GetValue(IsSelectionActiveProperty);
+            return (bool)element.GetValue(IsSelectionActiveProperty);
         }
 
         /// <summary>
@@ -211,7 +210,7 @@ namespace System.Windows.Controls.Primitives
         {
             ArgumentNullException.ThrowIfNull(element);
 
-            return (bool) element.GetValue(IsSelectedProperty);
+            return (bool)element.GetValue(IsSelectedProperty);
         }
 
 
@@ -251,7 +250,7 @@ namespace System.Windows.Controls.Primitives
         [Localizability(LocalizationCategory.NeverLocalize)] // not localizable
         public bool? IsSynchronizedWithCurrentItem
         {
-            get { return (bool?) GetValue(IsSynchronizedWithCurrentItemProperty); }
+            get { return (bool?)GetValue(IsSynchronizedWithCurrentItemProperty); }
             set { SetValue(IsSynchronizedWithCurrentItemProperty, value); }
         }
 
@@ -326,31 +325,31 @@ namespace System.Windows.Controls.Primitives
         [Localizability(LocalizationCategory.NeverLocalize)] // not localizable
         public int SelectedIndex
         {
-            get { return (int) GetValue(SelectedIndexProperty); }
+            get { return (int)GetValue(SelectedIndexProperty); }
             set { SetValue(SelectedIndexProperty, value); }
         }
 
         private static void OnSelectedIndexChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Selector s = (Selector) d;
+            Selector s = (Selector)d;
 
             // If we're in the middle of a selection change, ignore all changes
             if (!s.SelectionChange.IsActive)
             {
-                int newIndex = (int) e.NewValue;
+                int newIndex = (int)e.NewValue;
                 s.SelectionChange.SelectJustThisItem(s.ItemInfoFromIndex(newIndex), true /* assumeInItemsCollection */);
             }
         }
 
         private static bool ValidateSelectedIndex(object o)
         {
-            return ((int) o) >= -1;
+            return ((int)o) >= -1;
         }
 
         private static object CoerceSelectedIndex(DependencyObject d, object value)
         {
-            Selector s = (Selector) d;
-            if ((value is int) && (int) value >= s.Items.Count)
+            Selector s = (Selector)d;
+            if ((value is int) && (int)value >= s.Items.Count)
             {
                 return DependencyProperty.UnsetValue;
             }
@@ -386,7 +385,7 @@ namespace System.Windows.Controls.Primitives
 
         private static void OnSelectedItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Selector s = (Selector) d;
+            Selector s = (Selector)d;
 
             if (!s.SelectionChange.IsActive)
             {
@@ -396,13 +395,13 @@ namespace System.Windows.Controls.Primitives
 
         private static object CoerceSelectedItem(DependencyObject d, object value)
         {
-            Selector s = (Selector) d;
+            Selector s = (Selector)d;
             if (value == null || s.SkipCoerceSelectedItemCheck)
-                 return value;
+                return value;
 
             int selectedIndex = s.SelectedIndex;
 
-            if ( (selectedIndex > -1 && selectedIndex < s.Items.Count && s.Items[selectedIndex] == value)
+            if ((selectedIndex > -1 && selectedIndex < s.Items.Count && s.Items[selectedIndex] == value)
                 || s.Items.Contains(value))
             {
                 return value;
@@ -470,7 +469,7 @@ namespace System.Windows.Controls.Primitives
                         if (!s.SelectionChange.IsActive)
                         {
                             s._cacheValid[(int)CacheBits.SelectedValueDrivesSelection] = true;
-                            s.SelectionChange.SelectJustThisItem(info, assumeInItemsCollection:true);
+                            s.SelectionChange.SelectJustThisItem(info, assumeInItemsCollection: true);
                         }
                     }
                     finally
@@ -532,7 +531,7 @@ namespace System.Windows.Controls.Primitives
                             _cacheValid[(int)CacheBits.SelectedValueDrivesSelection] = true;
                             // We can assume it's in the collection because we just searched
                             // through the collection to find it.
-                            SelectionChange.SelectJustThisItem(info, assumeInItemsCollection:true);
+                            SelectionChange.SelectJustThisItem(info, assumeInItemsCollection: true);
                         }
                         finally
                         {
@@ -598,7 +597,7 @@ namespace System.Windows.Controls.Primitives
                 }
             }
 
-            Type selectedType = (value != null) ?  value.GetType() : null;
+            Type selectedType = (value != null) ? value.GetType() : null;
             object selectedValue = value;
             DynamicValueConverter converter = new DynamicValueConverter(false);
 
@@ -658,7 +657,7 @@ namespace System.Windows.Controls.Primitives
             {
                 // Otherwise, this is a user-initiated change to SelectedValue.
                 // Find the corresponding item.
-                object item = s.SelectItemWithValue(value, selectNow:false);
+                object item = s.SelectItemWithValue(value, selectNow: false);
 
                 // if the search fails, coerce the value to null.  Unless there
                 // are no items at all, in which case wait for the items to appear
@@ -692,7 +691,7 @@ namespace System.Windows.Controls.Primitives
         [Localizability(LocalizationCategory.NeverLocalize)] // not localizable
         public string SelectedValuePath
         {
-            get { return (string) GetValue(SelectedValuePathProperty); }
+            get { return (string)GetValue(SelectedValuePathProperty); }
             set { SetValue(SelectedValuePathProperty, value); }
         }
 
@@ -746,10 +745,11 @@ namespace System.Windows.Controls.Primitives
             if (bindingExpr == null)
             {
                 // create the binding
-                binding = new Binding();
-
-                // Set source to null so binding does not use ambient DataContext
-                binding.Source = null;
+                binding = new Binding
+                {
+                    // Set source to null so binding does not use ambient DataContext
+                    Source = null
+                };
 
                 if (useXml)
                 {
@@ -779,7 +779,7 @@ namespace System.Windows.Controls.Primitives
                         typeof(IList),
                         typeof(Selector),
                         new FrameworkPropertyMetadata(
-                                (IList) null));
+                                (IList)null));
 
 
         /// <summary>
@@ -811,7 +811,7 @@ namespace System.Windows.Controls.Primitives
             {
                 SelectionChange.Begin();
                 SelectionChange.CleanupDeferSelection();
-                ObservableCollection<object> oldSelectedItems = (ObservableCollection<object>) GetValue(SelectedItemsImplProperty);
+                ObservableCollection<object> oldSelectedItems = (ObservableCollection<object>)GetValue(SelectedItemsImplProperty);
 
                 try
                 {
@@ -866,7 +866,7 @@ namespace System.Windows.Controls.Primitives
             }
 
             SelectionChange.Begin();
-            bool succeeded=false;
+            bool succeeded = false;
             try
             {
                 switch (e.Action)
@@ -976,7 +976,7 @@ namespace System.Windows.Controls.Primitives
             base.ClearContainerForItemOverride(element, item);
 
             //This check ensures that selection is cleared only for generated containers.
-            if ( !((IGeneratorHost)this).IsItemItsOwnContainer(item) )
+            if (!((IGeneratorHost)this).IsItemItsOwnContainer(item))
             {
                 try
                 {
@@ -1136,112 +1136,112 @@ namespace System.Windows.Controls.Primitives
                 // This sets the selection from SelectedValue when SelectedValue
                 // was set prior to the arrival of any items to select, provided
                 // that SelectedIndex or SelectedItem didn't already do it.
-                SelectItemWithValue(SelectedValue, selectNow:true);
+                SelectItemWithValue(SelectedValue, selectNow: true);
             }
 
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                {
-                    SelectionChange.Begin();
-                    try
-                    {
-                        ItemInfo info = NewItemInfo(e.NewItems[0], null, e.NewStartingIndex);
-                        // If we added something, see if it was set be selected and sync.
-                        if (InfoGetIsSelected(info))
-                        {
-                            SelectionChange.Select(info, true /* assumeInItemsCollection */);
-                        }
-                    }
-                    finally
-                    {
-                        SelectionChange.End();
-                    }
-                    break;
-                }
-
-                case NotifyCollectionChangedAction.Replace:
-                {
-                    // RemoveFromSelection works, with one wrinkle.  If the
-                    // replaced item was selected, the old item is in _selectedItems,
-                    // but its container now holds the new item.  The Remove code will
-                    // update _selectedItems correctly, except for the step that
-                    // sets container.IsSelected=false.   We do that here as a special case.
-                    ItemSetIsSelected(ItemInfoFromIndex(e.NewStartingIndex), false);
-                    RemoveFromSelection(e);
-                    break;
-                }
-
-                case NotifyCollectionChangedAction.Remove:
-                {
-                    RemoveFromSelection(e);
-                    break;
-                }
-
-                case NotifyCollectionChangedAction.Move:
-                {
-                    // some panels (e.g. VSP) implement Move by removing containers
-                    // from the visual tree directly, bypassing the generator and
-                    // thus bypassing the notification Selector uses to adjust the
-                    // Container field of ItemInfos in the selected item list.
-                    // So do that adjustment now.  Otherwise we can end up with
-                    // multiple ItemInfos representing the same item.
-                    AdjustNewContainers();
-
-                    SelectionChange.Validate();
-                    break;
-                }
-
-                case NotifyCollectionChangedAction.Reset:
-                {
-                    // catastrophic update -- need to resynchronize everything.
-
-                    // If we remove all the items we clear the deferred selection
-                    if (Items.IsEmpty)
-                        SelectionChange.CleanupDeferSelection();
-
-                    // This is to support the MasterDetail scenario.
-                    // When the Items is refreshed, Items.Current could be the old selection for this view.
-                    if (Items.CurrentItem != null && IsSynchronizedWithCurrentItemPrivate == true)
-                    {
-                        // This won't work if the items are the containers and they have IsSelected=true.
-
-                        SetSelectedToCurrent();
-                    }
-                    else
                     {
                         SelectionChange.Begin();
                         try
                         {
-                            // Find where previously selected items have moved to
-                            LocateSelectedItems(deselectMissingItems:true);
-
-                            // Select everything in Items that is selected but isn't in the _selectedItems.
-                            if (ItemsSource == null)
+                            ItemInfo info = NewItemInfo(e.NewItems[0], null, e.NewStartingIndex);
+                            // If we added something, see if it was set be selected and sync.
+                            if (InfoGetIsSelected(info))
                             {
-                                for (int i = 0; i < Items.Count; i++)
-                                {
-                                    ItemInfo info = ItemInfoFromIndex(i);
-
-                                    // This only works for items that know they're selected:
-                                    // items that are UI elements or items that have had their UI generated.
-                                    if (InfoGetIsSelected(info))
-                                    {
-                                        if (!_selectedItems.Contains(info))
-                                        {
-                                            SelectionChange.Select(info, true /* assumeInItemsCollection */);
-                                        }
-                                    }
-                                }
+                                SelectionChange.Select(info, true /* assumeInItemsCollection */);
                             }
                         }
                         finally
                         {
                             SelectionChange.End();
                         }
+                        break;
                     }
-                    break;
-                }
+
+                case NotifyCollectionChangedAction.Replace:
+                    {
+                        // RemoveFromSelection works, with one wrinkle.  If the
+                        // replaced item was selected, the old item is in _selectedItems,
+                        // but its container now holds the new item.  The Remove code will
+                        // update _selectedItems correctly, except for the step that
+                        // sets container.IsSelected=false.   We do that here as a special case.
+                        ItemSetIsSelected(ItemInfoFromIndex(e.NewStartingIndex), false);
+                        RemoveFromSelection(e);
+                        break;
+                    }
+
+                case NotifyCollectionChangedAction.Remove:
+                    {
+                        RemoveFromSelection(e);
+                        break;
+                    }
+
+                case NotifyCollectionChangedAction.Move:
+                    {
+                        // some panels (e.g. VSP) implement Move by removing containers
+                        // from the visual tree directly, bypassing the generator and
+                        // thus bypassing the notification Selector uses to adjust the
+                        // Container field of ItemInfos in the selected item list.
+                        // So do that adjustment now.  Otherwise we can end up with
+                        // multiple ItemInfos representing the same item.
+                        AdjustNewContainers();
+
+                        SelectionChange.Validate();
+                        break;
+                    }
+
+                case NotifyCollectionChangedAction.Reset:
+                    {
+                        // catastrophic update -- need to resynchronize everything.
+
+                        // If we remove all the items we clear the deferred selection
+                        if (Items.IsEmpty)
+                            SelectionChange.CleanupDeferSelection();
+
+                        // This is to support the MasterDetail scenario.
+                        // When the Items is refreshed, Items.Current could be the old selection for this view.
+                        if (Items.CurrentItem != null && IsSynchronizedWithCurrentItemPrivate == true)
+                        {
+                            // This won't work if the items are the containers and they have IsSelected=true.
+
+                            SetSelectedToCurrent();
+                        }
+                        else
+                        {
+                            SelectionChange.Begin();
+                            try
+                            {
+                                // Find where previously selected items have moved to
+                                LocateSelectedItems(deselectMissingItems: true);
+
+                                // Select everything in Items that is selected but isn't in the _selectedItems.
+                                if (ItemsSource == null)
+                                {
+                                    for (int i = 0; i < Items.Count; i++)
+                                    {
+                                        ItemInfo info = ItemInfoFromIndex(i);
+
+                                        // This only works for items that know they're selected:
+                                        // items that are UI elements or items that have had their UI generated.
+                                        if (InfoGetIsSelected(info))
+                                        {
+                                            if (!_selectedItems.Contains(info))
+                                            {
+                                                SelectionChange.Select(info, true /* assumeInItemsCollection */);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            finally
+                            {
+                                SelectionChange.End();
+                            }
+                        }
+                        break;
+                    }
                 default:
                     throw new NotSupportedException(SR.Format(SR.UnexpectedCollectionChangeAction, e.Action));
             }
@@ -1519,7 +1519,7 @@ namespace System.Windows.Controls.Primitives
 
         internal virtual void AdjustItemInfosAfterGeneratorChangeOverride()
         {
-            AdjustItemInfosAfterGeneratorChange(_selectedItems, claimUniqueContainer:true);
+            AdjustItemInfosAfterGeneratorChange(_selectedItems, claimUniqueContainer: true);
         }
 
         private void SetSelectedToCurrent()
@@ -1608,7 +1608,7 @@ namespace System.Windows.Controls.Primitives
                 // copy the current SelectedItems list into a fast table, attaching
                 // the 1's-complement of the index to each item.  The sentinel
                 // container ensures that these are treated as separate items
-                for (int i=0; i < userSelectedItems.Count; ++i)
+                for (int i = 0; i < userSelectedItems.Count; ++i)
                 {
                     toRemove.Add(userSelectedItems[i], ItemInfo.SentinelContainer, ~i);
                 }
@@ -1683,13 +1683,13 @@ namespace System.Windows.Controls.Primitives
             ChangeInfoField.ClearValue(this);
 
             // Do the adds first, to avoid a transient empty state
-            for (int i=0; i<toAdd.Count; ++i)
+            for (int i = 0; i < toAdd.Count; ++i)
             {
                 userSelectedItems.Add(toAdd[i].Item);
             }
 
             // Now do the removals in reverse order, so that the indices we saved are valid
-            for (int i=toRemove.Count-1; i>=0; --i)
+            for (int i = toRemove.Count - 1; i >= 0; --i)
             {
                 userSelectedItems.RemoveAt(~toRemove[i].Index);
             }
@@ -1767,9 +1767,10 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         private void InvokeSelectionChanged(List<ItemInfo> unselectedInfos, List<ItemInfo> selectedInfos)
         {
-            SelectionChangedEventArgs selectionChanged = new SelectionChangedEventArgs(unselectedInfos, selectedInfos);
-
-            selectionChanged.Source=this;
+            SelectionChangedEventArgs selectionChanged = new SelectionChangedEventArgs(unselectedInfos, selectedInfos)
+            {
+                Source = this
+            };
 
             OnSelectionChanged(selectionChanged);
         }
@@ -1806,7 +1807,8 @@ namespace System.Windows.Controls.Primitives
 
         private void ItemSetIsSelected(ItemInfo info, bool value)
         {
-            if (info == null) return;
+            if (info == null)
+                return;
 
             DependencyObject container = info.Container;
 
@@ -1957,7 +1959,7 @@ namespace System.Windows.Controls.Primitives
         // If the caller provides a list, fill it with ranges describing the selection;
         // each range has the form <offset, length>.
         // Optionally remove from _selectedItems any entry for which no index can be found
-        internal void LocateSelectedItems(List<Tuple<int,int>> ranges = null, bool deselectMissingItems=false)
+        internal void LocateSelectedItems(List<Tuple<int, int>> ranges = null, bool deselectMissingItems = false)
         {
             List<int> knownIndices = new List<int>(_selectedItems.Count);
             int unknownCount = 0;
@@ -1968,7 +1970,7 @@ namespace System.Windows.Controls.Primitives
             {
                 if (info.Index < 0)
                 {
-                    ++ unknownCount;
+                    ++unknownCount;
                 }
                 else
                 {
@@ -1983,7 +1985,7 @@ namespace System.Windows.Controls.Primitives
 
             // Step 2. Walk through the Items collection, to fill in the unknown indices.
             ItemInfo key = new ItemInfo(null, ItemInfo.KeyContainer, -1);
-            for (int i=0; unknownCount > 0 && i<Items.Count; ++i)
+            for (int i = 0; unknownCount > 0 && i < Items.Count; ++i)
             {
                 // skip items whose index is already known
                 if (knownIndices.BinarySearch(0, knownCount, i, null) >= 0)
@@ -2025,7 +2027,7 @@ namespace System.Windows.Controls.Primitives
                         // emit the current range
                         if (startRange >= 0)
                         {
-                            ranges.Add(new Tuple<int, int>(startRange, endRange-startRange+1));
+                            ranges.Add(new Tuple<int, int>(startRange, endRange - startRange + 1));
                         }
 
                         // start a new range
@@ -2059,47 +2061,47 @@ namespace System.Windows.Controls.Primitives
 
         #region Private Properties
 
-// need to restructure this code -- it was relying on ReadLocalValue/WriteLocalValue
-// which I am removing
-/*
-        // Journaling the selection state is more complex than just a property.
-        // For one thing, the selection properties may never be referenced, and
-        // thus they might not have a value in the local store.  Second, one
-        // property might not be sufficient (say, SelectedIndex) and another might
-        // fail serialization (i.e. SelectedItems).  With a DP that has a
-        // ReadLocalValueOverride, it will be enumerated by the LocalValueEnumerator
-        // and the value can have custom serialization logic.
+        // need to restructure this code -- it was relying on ReadLocalValue/WriteLocalValue
+        // which I am removing
+        /*
+                // Journaling the selection state is more complex than just a property.
+                // For one thing, the selection properties may never be referenced, and
+                // thus they might not have a value in the local store.  Second, one
+                // property might not be sufficient (say, SelectedIndex) and another might
+                // fail serialization (i.e. SelectedItems).  With a DP that has a
+                // ReadLocalValueOverride, it will be enumerated by the LocalValueEnumerator
+                // and the value can have custom serialization logic.
 
-        private static readonly DependencyProperty PrivateJournaledSelectionProperty =
-            DependencyProperty.Register("PrivateJournaledSelection", typeof(object), typeof(Selector),
-                                        PrivateJournaledSelectionPropertyMetadata);
+                private static readonly DependencyProperty PrivateJournaledSelectionProperty =
+                    DependencyProperty.Register("PrivateJournaledSelection", typeof(object), typeof(Selector),
+                                                PrivateJournaledSelectionPropertyMetadata);
 
-        private static FrameworkPropertyMetadata PrivateJournaledSelectionPropertyMetadata
-        {
-            get
-            {
-                FrameworkPropertyMetadata fpm = new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Journal);
+                private static FrameworkPropertyMetadata PrivateJournaledSelectionPropertyMetadata
+                {
+                    get
+                    {
+                        FrameworkPropertyMetadata fpm = new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Journal);
 
-                fpm.ReadLocalValueOverride = new ReadLocalValueOverride(ReadPrivateJournaledSelection);
-                fpm.WriteLocalValueOverride = new WriteLocalValueOverride(WritePrivateJournaledSelection);
+                        fpm.ReadLocalValueOverride = new ReadLocalValueOverride(ReadPrivateJournaledSelection);
+                        fpm.WriteLocalValueOverride = new WriteLocalValueOverride(WritePrivateJournaledSelection);
 
-                return fpm;
-            }
-        }
+                        return fpm;
+                    }
+                }
 
-        private static object ReadPrivateJournaledSelection(DependencyObject d)
-        {
-            // For now, just do what we were doing before -- journal SelectedIndex
-            return ((Selector)d).InternalSelectedIndex;
-        }
+                private static object ReadPrivateJournaledSelection(DependencyObject d)
+                {
+                    // For now, just do what we were doing before -- journal SelectedIndex
+                    return ((Selector)d).InternalSelectedIndex;
+                }
 
-        private static void WritePrivateJournaledSelection(DependencyObject d, object value)
-        {
-            Selector s = (Selector)d;
-            // Issue: This could throw an exception if things aren't set up in time.
-            s.SelectedIndex = (int)value;
-        }
-*/
+                private static void WritePrivateJournaledSelection(DependencyObject d, object value)
+                {
+                    Selector s = (Selector)d;
+                    // Issue: This could throw an exception if things aren't set up in time.
+                    s.SelectedIndex = (int)value;
+                }
+        */
         #endregion
 
         //-------------------------------------------------------------------
@@ -2217,13 +2219,13 @@ namespace System.Windows.Controls.Primitives
             // is used to avoid reentrancy:  e.g. when the currency changes we want
             // to change the selection accordingly, but that selection change should
             // not try to change currency.
-            SyncingSelectionAndCurrency    = 0x00000001,
-            CanSelectMultiple              = 0x00000002,
-            IsSynchronizedWithCurrentItem  = 0x00000004,
-            SkipCoerceSelectedItemCheck    = 0x00000008,
-            SelectedValueDrivesSelection   = 0x00000010,
-            SelectedValueWaitsForItems     = 0x00000020,
-            NewContainersArePending        = 0x00000040,
+            SyncingSelectionAndCurrency = 0x00000001,
+            CanSelectMultiple = 0x00000002,
+            IsSynchronizedWithCurrentItem = 0x00000004,
+            SkipCoerceSelectedItemCheck = 0x00000008,
+            SelectedValueDrivesSelection = 0x00000010,
+            SelectedValueWaitsForItems = 0x00000020,
+            NewContainersArePending = 0x00000040,
         }
 
         private EventHandler _focusEnterMainFocusScopeEventHandler;
@@ -2498,7 +2500,8 @@ namespace System.Windows.Controls.Primitives
                 Debug.Assert(info != null, "parameter info should not be null");
 
                 // Disallow selecting !IsSelectable things
-                if (!ItemGetIsSelectable(info)) return false;
+                if (!ItemGetIsSelectable(info))
+                    return false;
 
                 // Disallow selecting things not in Items.FlatView
                 if (!assumeInItemsCollection)
@@ -2521,10 +2524,12 @@ namespace System.Windows.Controls.Primitives
                 }
 
                 // Ignore if the item is already selected
-                if (_owner._selectedItems.Contains(info)) return false;
+                if (_owner._selectedItems.Contains(info))
+                    return false;
 
                 // Ignore if the item has already been requested to be selected.
-                if (!key.IsKey && _toSelect.Contains(key)) return false;
+                if (!key.IsKey && _toSelect.Contains(key))
+                    return false;
 
                 // enforce that we only select one thing in the CanSelectMultiple=false case.
                 if (!_owner.CanSelectMultiple && _toSelect.Count > 0)
@@ -2565,10 +2570,12 @@ namespace System.Windows.Controls.Primitives
                 }
 
                 // Ignore if the item is not already selected
-                if (!_owner._selectedItems.Contains(key)) return false;
+                if (!_owner._selectedItems.Contains(key))
+                    return false;
 
                 // Ignore if the item has already been queued for unselection.
-                if (_toUnselect.Contains(info)) return false;
+                if (_toUnselect.Contains(info))
+                    return false;
 
                 _toUnselect.Add(info);
                 return true;
@@ -2673,7 +2680,7 @@ namespace System.Windows.Controls.Primitives
                 _set = new Dictionary<ItemInfo, ItemInfo>(capacity, equalityComparer);
             }
 
-            internal InternalSelectedItemsStorage(InternalSelectedItemsStorage collection, IEqualityComparer<ItemInfo> equalityComparer=null)
+            internal InternalSelectedItemsStorage(InternalSelectedItemsStorage collection, IEqualityComparer<ItemInfo> equalityComparer = null)
             {
                 _equalityComparer = equalityComparer ?? collection._equalityComparer;
 
@@ -2701,8 +2708,10 @@ namespace System.Windows.Controls.Primitives
                 }
                 _list.Add(info);
 
-                if (info.IsResolved)    ++_resolvedCount;
-                else                    ++_unresolvedCount;
+                if (info.IsResolved)
+                    ++_resolvedCount;
+                else
+                    ++_unresolvedCount;
             }
 
             public bool Remove(ItemInfo e)
@@ -2722,7 +2731,7 @@ namespace System.Windows.Controls.Primitives
                         {
                             // mark as removed - the real removal comes later
                             realInfo.Container = ItemInfo.RemovedContainer;
-                            ++ _batchRemove.RemovedCount;
+                            ++_batchRemove.RemovedCount;
                         }
                         else
                         {
@@ -2737,8 +2746,10 @@ namespace System.Windows.Controls.Primitives
 
                 if (removed)
                 {
-                    if (isResolved)     --_resolvedCount;
-                    else                --_unresolvedCount;
+                    if (isResolved)
+                        --_resolvedCount;
+                    else
+                        --_unresolvedCount;
                 }
 
                 return removed;
@@ -2814,10 +2825,10 @@ namespace System.Windows.Controls.Primitives
             // do the actual removal of entries marked as Removed
             private void DoBatchRemove()
             {
-                int j=0, n=_list.Count;
+                int j = 0, n = _list.Count;
 
                 // copy the surviving entries to the front of the list
-                for (int i=0; i<n; ++i)
+                for (int i = 0; i < n; ++i)
                 {
                     ItemInfo info = _list[i];
                     if (!info.IsRemoved)
@@ -2831,7 +2842,7 @@ namespace System.Windows.Controls.Primitives
                 }
 
                 // remove the remaining unneeded entries
-                _list.RemoveRange(j, n-j);
+                _list.RemoveRange(j, n - j);
             }
 
             public int ResolvedCount { get { return _resolvedCount; } }
@@ -2859,7 +2870,7 @@ namespace System.Windows.Controls.Primitives
                     if (value == true && _set == null)
                     {
                         _set = new Dictionary<ItemInfo, ItemInfo>(_list.Count);
-                        for (int i=0; i<_list.Count; ++i)
+                        for (int i = 0; i < _list.Count; ++i)
                         {
                             _set.Add(_list[i], _list[i]);
                         }
@@ -2894,13 +2905,13 @@ namespace System.Windows.Controls.Primitives
             // like IndexOf, but uses the equality comparer
             private int IndexInList(ItemInfo info)
             {
-                return _list.FindIndex( (ItemInfo x) => { return _equalityComparer.Equals(info, x); } );
+                return _list.FindIndex((ItemInfo x) => { return _equalityComparer.Equals(info, x); });
             }
 
             // like LastIndexOf, but uses the equality comparer
             private int LastIndexInList(ItemInfo info)
             {
-                return _list.FindLastIndex( (ItemInfo x) => { return _equalityComparer.Equals(info, x); } );
+                return _list.FindLastIndex((ItemInfo x) => { return _equalityComparer.Equals(info, x); });
             }
 
             private List<ItemInfo> _list;
@@ -2921,7 +2932,7 @@ namespace System.Windows.Controls.Primitives
 
                 public void Enter()
                 {
-                    ++ _level;
+                    ++_level;
                 }
 
                 public void Leave()

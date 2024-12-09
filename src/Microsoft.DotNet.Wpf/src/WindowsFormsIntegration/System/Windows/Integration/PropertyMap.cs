@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -25,7 +25,7 @@ namespace System.Windows.Forms.Integration
         private object _sourceObject;
         private Dictionary<string, PropertyTranslator> _defaultTranslators;
         private Dictionary<String, PropertyTranslator> _wrappedDictionary;
-    
+
         /// <summary>
         ///     Initializes a new instance of the PropertyMap class.
         /// </summary>
@@ -300,10 +300,10 @@ namespace System.Windows.Forms.Integration
             RunTranslator(translator, host, propertyName, value);
         }
 
-//Disable the PreSharp error 56500 Avoid `swallowing errors by catching non-specific exceptions.
-//In this specific case, we are catching the exception and firing an event which can be handled in user code
-//The user handling the event can make the determination on whether or not the exception should be rethrown
-//(Wrapped in an InvalidOperationException).
+        //Disable the PreSharp error 56500 Avoid `swallowing errors by catching non-specific exceptions.
+        //In this specific case, we are catching the exception and firing an event which can be handled in user code
+        //The user handling the event can make the determination on whether or not the exception should be rethrown
+        //(Wrapped in an InvalidOperationException).
 #pragma warning disable 1634, 1691
 #pragma warning disable 56500
         internal void RunTranslator(PropertyTranslator translator, object host, string propertyName, object value)

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -223,7 +223,8 @@ namespace MS.Internal.Documents
                         // Merge with the current position
                         _ranges[i * 2] = Math.Min(_ranges[i * 2], cpFirst);
                         _ranges[i * 2 + 1] = Math.Max(_ranges[i * 2 + 1], cpLast);
-                        while (MergeWithNext(i)) { }
+                        while (MergeWithNext(i))
+                        { }
                         break;
                     }
                     ++i;

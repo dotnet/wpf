@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,13 +13,13 @@
 
 
 using System.IO;
+using System.Windows.Markup;
 using System.Xml;
 using System.Xml.XPath;
 using MS.Internal;
 using MS.Internal.Annotations;
 using MS.Internal.Annotations.Storage;
 using MS.Utility;
-using System.Windows.Markup;
 
 namespace System.Windows.Annotations.Storage
 {
@@ -147,7 +147,7 @@ namespace System.Windows.Annotations.Storage
                     //fire trace event
                     EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordAnnotation, EventTrace.Event.AddAnnotationEnd);
                 }
-			}
+            }
 
             OnStoreContentChanged(new StoreContentChangedEventArgs(StoreContentAction.Added, newAnnotation));
         }
@@ -724,8 +724,10 @@ namespace System.Windows.Annotations.Storage
 
             lock (SyncRoot)
             {
-                _document = new XmlDocument();
-                _document.PreserveWhitespace = false;
+                _document = new XmlDocument
+                {
+                    PreserveWhitespace = false
+                };
                 if (_stream.Length == 0)
                 {
                     _document.LoadXml(
@@ -1044,6 +1046,6 @@ namespace System.Windows.Annotations.Storage
         // Serializer for Annotations
         private static readonly Serializer _serializer = new Serializer(typeof(Annotation));
 
-#endregion Private Fields
+        #endregion Private Fields
     }
 }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,7 +15,7 @@ namespace System.Windows.Controls
     ///     Represents the standard button component that inherently reacts to the Click event.
     /// The Button control is one of the most basic forms of user interface (UI).
     /// </summary>
-    public class Button: ButtonBase
+    public class Button : ButtonBase
     {
         #region Constructors
 
@@ -67,12 +67,12 @@ namespace System.Windows.Controls
         /// <value></value>
         public bool IsDefault
         {
-            get { return (bool) GetValue(IsDefaultProperty); } 
+            get { return (bool)GetValue(IsDefaultProperty); }
             set { SetValue(IsDefaultProperty, BooleanBoxes.Box(value)); }
         }
 
-        private static void OnIsDefaultChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) 
-        { 
+        private static void OnIsDefaultChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
             Button b = d as Button;
             KeyboardFocusChangedEventHandler focusChangedEventHandler = FocusChangedEventHandlerField.GetValue(b);
             if (focusChangedEventHandler == null)
@@ -80,8 +80,8 @@ namespace System.Windows.Controls
                 focusChangedEventHandler = new KeyboardFocusChangedEventHandler(b.OnFocusChanged);
                 FocusChangedEventHandlerField.SetValue(b, focusChangedEventHandler);
             }
-            
-            if ((bool) e.NewValue)
+
+            if ((bool)e.NewValue)
             {
                 AccessKeyManager.Register("\x000D", b);
                 KeyboardNavigation.Current.FocusChanged += focusChangedEventHandler;
@@ -118,8 +118,8 @@ namespace System.Windows.Controls
         /// </summary>
         public static readonly DependencyProperty IsCancelProperty =
                 DependencyProperty.Register(
-                        "IsCancel", 
-                        typeof(bool), 
+                        "IsCancel",
+                        typeof(bool),
                         typeof(Button),
                         new FrameworkPropertyMetadata(
                                 BooleanBoxes.FalseBox,
@@ -131,14 +131,14 @@ namespace System.Windows.Controls
         /// <value></value>
         public bool IsCancel
         {
-            get { return (bool) GetValue(IsCancelProperty); }
+            get { return (bool)GetValue(IsCancelProperty); }
             set { SetValue(IsCancelProperty, BooleanBoxes.Box(value)); }
         }
 
         private static void OnIsCancelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Button b = d as Button;
-            if ((bool) e.NewValue)
+            if ((bool)e.NewValue)
             {
                 AccessKeyManager.Register("\x001B", b);
             }
@@ -237,7 +237,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// Creates AutomationPeer (<see cref="UIElement.OnCreateAutomationPeer"/>)
         /// </summary>
-        protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() 
+        protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer()
         {
             return new System.Windows.Automation.Peers.ButtonAutomationPeer(this);
         }
@@ -276,7 +276,7 @@ namespace System.Windows.Controls
                 }
             }
         }
-        
+
         //
         //  This property
         //  1. Finds the correct initial size for the _effectiveValues store on the current DependencyObject
@@ -299,7 +299,7 @@ namespace System.Windows.Controls
         private static readonly UncommonField<KeyboardFocusChangedEventHandler> FocusChangedEventHandlerField = new UncommonField<KeyboardFocusChangedEventHandler>();
 
         #endregion
-        
+
         #region DTypeThemeStyleKey
 
         // Returns the DependencyObjectType for the registered ThemeStyleKey's default 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -24,24 +24,24 @@ namespace System.Windows.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         /// <summary>
         /// Constructor to create a condition that is true if all of the sub-conditions are true
         /// </summary>
         /// <param name="conditions">One or more sub-condition</param>
-        public AndCondition( params Condition [ ] conditions )
+        public AndCondition(params Condition[] conditions)
         {
             ArgumentNullException.ThrowIfNull(conditions);
-            Misc.ValidateArgument( conditions.Length >= 2, nameof(SR.MustBeAtLeastTwoConditions) );
-            foreach( Condition condition in conditions )
+            Misc.ValidateArgument(conditions.Length >= 2, nameof(SR.MustBeAtLeastTwoConditions));
+            foreach (Condition condition in conditions)
             {
                 ArgumentNullException.ThrowIfNull(condition, nameof(conditions));
             }
 
             // clone array to prevent accidental tampering
-            _conditions = (Condition [ ]) conditions.Clone();
+            _conditions = (Condition[])conditions.Clone();
             _conditionArrayHandle = SafeConditionMemoryHandle.AllocateConditionArrayHandle(_conditions);
             // DangerousGetHandle() reminds us that the IntPtr we get back could be collected/released/recycled. We're safe here,
             // because the Conditions are structured in a tree, with the root one (which gets passed to the Uia API) keeping all
@@ -55,7 +55,7 @@ namespace System.Windows.Automation
         //  Public Methods
         //
         //------------------------------------------------------
- 
+
         #region Public Methods
 
         /// <summary>
@@ -65,9 +65,9 @@ namespace System.Windows.Automation
         /// The returned array is a copy; modifying it will not affect the
         /// state of the condition.
         /// </remarks>
-        public Condition [ ] GetConditions()
+        public Condition[] GetConditions()
         {
-            return (Condition []) _conditions.Clone();
+            return (Condition[])_conditions.Clone();
         }
 
         #endregion Public Methods
@@ -78,10 +78,10 @@ namespace System.Windows.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
-        Condition [ ] _conditions;
+        Condition[] _conditions;
         SafeConditionMemoryHandle _conditionArrayHandle;
 
         #endregion Private Fields

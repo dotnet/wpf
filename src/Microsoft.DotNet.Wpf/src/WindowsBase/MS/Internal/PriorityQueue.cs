@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,23 +11,23 @@ namespace System.Windows.Threading
             // Build the collection of priority chains.
             _priorityChains = new SortedList<int, PriorityChain<T>>(); // NOTE: should be Priority
             _cacheReusableChains = new Stack<PriorityChain<T>>(10);
-                
+
             _head = _tail = null;
             _count = 0;
         }
 
         // NOTE: not used
         // public int Count {get{return _count;}}
-        
+
         public DispatcherPriority MaxPriority // NOTE: should be Priority
         {
             get
             {
                 int count = _priorityChains.Count;
-                
-                if(count > 0)
+
+                if (count > 0)
                 {
-                    return (DispatcherPriority) _priorityChains.Keys[count - 1];
+                    return (DispatcherPriority)_priorityChains.Keys[count - 1];
                 }
                 else
                 {
@@ -59,7 +59,7 @@ namespace System.Windows.Threading
         {
             // Get the max-priority chain.
             int count = _priorityChains.Count;
-            if(count > 0)
+            if (count > 0)
             {
                 PriorityChain<T> chain = _priorityChains.Values[count - 1];
                 Debug.Assert(chain != null, "PriorityQueue.Dequeue: a chain should exist.");
@@ -74,16 +74,16 @@ namespace System.Windows.Threading
             else
             {
                 throw new InvalidOperationException();
-}
+            }
         }
 
         public T Peek()
         {
             T data = default(T);
-            
+
             // Get the max-priority chain.
             int count = _priorityChains.Count;
-            if(count > 0)
+            if (count > 0)
             {
                 PriorityChain<T> chain = _priorityChains.Values[count - 1];
                 Debug.Assert(chain != null, "PriorityQueue.Peek: a chain should exist.");
@@ -96,7 +96,7 @@ namespace System.Windows.Threading
 
             return data;
         }
-        
+
         public void RemoveItem(PriorityItem<T> item)
         {
             Debug.Assert(item != null, "PriorityQueue.RemoveItem: invalid item.");
@@ -134,26 +134,26 @@ namespace System.Windows.Threading
             PriorityChain<T> chain = null;
 
             int count = _priorityChains.Count;
-            if(count > 0)
+            if (count > 0)
             {
-                if(priority == (DispatcherPriority) _priorityChains.Keys[0])
+                if (priority == (DispatcherPriority)_priorityChains.Keys[0])
                 {
                     chain = _priorityChains.Values[0];
                 }
-                else if(priority == (DispatcherPriority) _priorityChains.Keys[count - 1])
+                else if (priority == (DispatcherPriority)_priorityChains.Keys[count - 1])
                 {
                     chain = _priorityChains.Values[count - 1];
                 }
-                else if((priority > (DispatcherPriority) _priorityChains.Keys[0]) &&
-                        (priority < (DispatcherPriority) _priorityChains.Keys[count - 1]))
+                else if ((priority > (DispatcherPriority)_priorityChains.Keys[0]) &&
+                        (priority < (DispatcherPriority)_priorityChains.Keys[count - 1]))
                 {
                     _priorityChains.TryGetValue((int)priority, out chain);
                 }
             }
 
-            if(chain == null)            
+            if (chain == null)
             {
-                if(_cacheReusableChains.Count > 0)
+                if (_cacheReusableChains.Count > 0)
                 {
                     chain = _cacheReusableChains.Pop();
                     chain.Priority = priority;
@@ -162,20 +162,20 @@ namespace System.Windows.Threading
                 {
                     chain = new PriorityChain<T>(priority);
                 }
-                
+
                 _priorityChains.Add((int)priority, chain);
             }
 
             return chain;
         }
-        
+
         private void InsertItemInPriorityChain(PriorityItem<T> item, PriorityChain<T> chain)
         {
             // Scan along the sequential chain, in the previous direction,
             // looking for an item that is already in the new chain.  We will
             // insert ourselves after the item we found.  We can short-circuit
             // this search if the new chain is empty.
-            if(chain.Head == null)
+            if (chain.Head == null)
             {
                 Debug.Assert(chain.Tail == null, "PriorityQueue.InsertItemInPriorityChain: both the head and the tail should be null.");
                 InsertItemInPriorityChain(item, chain, null);
@@ -188,9 +188,9 @@ namespace System.Windows.Threading
 
                 // Search backwards along the sequential chain looking for an
                 // item already in this list.
-                for(after = item.SequentialPrev; after != null; after = after.SequentialPrev)
+                for (after = item.SequentialPrev; after != null; after = after.SequentialPrev)
                 {
-                    if(after.Chain == chain)
+                    if (after.Chain == chain)
                     {
                         break;
                     }
@@ -207,11 +207,11 @@ namespace System.Windows.Threading
 
             item.Chain = chain;
 
-            if(after == null)
+            if (after == null)
             {
                 // Note: passing null for after means insert at the head.
 
-                if(chain.Head != null)
+                if (chain.Head != null)
                 {
                     Debug.Assert(chain.Tail != null, "PriorityQueue.InsertItemInPriorityChain: both the head and the tail should not be null.");
 
@@ -230,7 +230,7 @@ namespace System.Windows.Threading
             {
                 item.PriorityPrev = after;
 
-                if(after.PriorityNext != null)
+                if (after.PriorityNext != null)
                 {
                     item.PriorityNext = after.PriorityNext;
                     after.PriorityNext.PriorityPrev = item;
@@ -253,7 +253,7 @@ namespace System.Windows.Threading
             Debug.Assert(item.Chain != null, "PriorityQueue.RemoveItemFromPriorityChain: a chain should exist.");
 
             // Step 1: Fix up the previous link
-            if(item.PriorityPrev != null)
+            if (item.PriorityPrev != null)
             {
                 Debug.Assert(item.Chain.Head != item, "PriorityQueue.RemoveItemFromPriorityChain: the head should not point to this item.");
 
@@ -267,7 +267,7 @@ namespace System.Windows.Threading
             }
 
             // Step 2: Fix up the next link
-            if(item.PriorityNext != null)
+            if (item.PriorityNext != null)
             {
                 Debug.Assert(item.Chain.Tail != item, "PriorityQueue.RemoveItemFromPriorityChain: the tail should not point to this item.");
 
@@ -283,24 +283,24 @@ namespace System.Windows.Threading
             // Step 3: cleanup
             item.PriorityPrev = item.PriorityNext = null;
             item.Chain.Count--;
-            if(item.Chain.Count == 0)
+            if (item.Chain.Count == 0)
             {
-                if(item.Chain.Priority == (DispatcherPriority) _priorityChains.Keys[_priorityChains.Count - 1])
+                if (item.Chain.Priority == (DispatcherPriority)_priorityChains.Keys[_priorityChains.Count - 1])
                 {
                     _priorityChains.RemoveAt(_priorityChains.Count - 1);
                 }
                 else
                 {
-                    _priorityChains.Remove((int) item.Chain.Priority);
+                    _priorityChains.Remove((int)item.Chain.Priority);
                 }
 
-                if(_cacheReusableChains.Count < 10)
+                if (_cacheReusableChains.Count < 10)
                 {
                     item.Chain.Priority = DispatcherPriority.Invalid; // NOTE: should be Priority.Invalid
                     _cacheReusableChains.Push(item.Chain);
                 }
             }
-            
+
             item.Chain = null;
         }
 
@@ -308,11 +308,11 @@ namespace System.Windows.Threading
         {
             Debug.Assert(item.SequentialPrev == null && item.SequentialNext == null, "PriorityQueue.InsertItemInSequentialChain: item must not already be in the sequential chain.");
 
-            if(after == null)
+            if (after == null)
             {
                 // Note: passing null for after means insert at the head.
 
-                if(_head != null)
+                if (_head != null)
                 {
                     Debug.Assert(_tail != null, "PriorityQueue.InsertItemInSequentialChain: both the head and the tail should not be null.");
 
@@ -331,7 +331,7 @@ namespace System.Windows.Threading
             {
                 item.SequentialPrev = after;
 
-                if(after.SequentialNext != null)
+                if (after.SequentialNext != null)
                 {
                     item.SequentialNext = after.SequentialNext;
                     after.SequentialNext.SequentialPrev = item;
@@ -353,7 +353,7 @@ namespace System.Windows.Threading
             Debug.Assert(item != null, "PriorityQueue.RemoveItemFromSequentialChain: invalid item.");
 
             // Step 1: Fix up the previous link
-            if(item.SequentialPrev != null)
+            if (item.SequentialPrev != null)
             {
                 Debug.Assert(_head != item, "PriorityQueue.RemoveItemFromSequentialChain: the head should not point to this item.");
 
@@ -367,7 +367,7 @@ namespace System.Windows.Threading
             }
 
             // Step 2: Fix up the next link
-            if(item.SequentialNext != null)
+            if (item.SequentialNext != null)
             {
                 Debug.Assert(_tail != item, "PriorityQueue.RemoveItemFromSequentialChain: the tail should not point to this item.");
 
@@ -388,7 +388,7 @@ namespace System.Windows.Threading
         // Priority chains...
         private SortedList<int, PriorityChain<T>> _priorityChains; // NOTE: should be Priority
         private Stack<PriorityChain<T>> _cacheReusableChains;
-        
+
         // Sequential chain...
         private PriorityItem<T> _head;
         private PriorityItem<T> _tail;

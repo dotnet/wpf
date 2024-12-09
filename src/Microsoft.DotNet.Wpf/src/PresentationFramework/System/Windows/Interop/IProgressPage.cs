@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,28 +14,28 @@ namespace System.Windows.Interop
         /// <summary>
         /// Path to Deployment Uri
         /// </summary>
-        Uri DeploymentPath { get; set;}
+        Uri DeploymentPath { get; set; }
 
         /// <summary>
         /// Callback when user hits stop
         /// </summary>
-        DispatcherOperationCallback StopCallback { get; set;}
+        DispatcherOperationCallback StopCallback { get; set; }
 
         /// <summary>
         /// Callback when user hits refresh
         /// </summary>
-        DispatcherOperationCallback RefreshCallback { get; set;}
+        DispatcherOperationCallback RefreshCallback { get; set; }
 
-       
+
         /// <summary>
         /// Name of Application
         /// </summary>
-        string ApplicationName { get; set;}
+        string ApplicationName { get; set; }
 
         /// <summary>
         /// Name of Publisher
         /// </summary>
-        string PublisherName { get; set;}
+        string PublisherName { get; set; }
 
         /// <summary>
         /// Updates progress

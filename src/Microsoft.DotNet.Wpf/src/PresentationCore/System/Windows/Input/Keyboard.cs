@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -273,7 +273,7 @@ namespace System.Windows.Input
             {
                 return Keyboard.PrimaryDevice.FocusedElement;
             }
-}
+        }
 
         /// <summary>
         ///     Clears focus.
@@ -303,7 +303,7 @@ namespace System.Windows.Input
             {
                 return Keyboard.PrimaryDevice.DefaultRestoreFocusMode;
             }
-            
+
             set
             {
                 Keyboard.PrimaryDevice.DefaultRestoreFocusMode = value;
@@ -380,15 +380,15 @@ namespace System.Windows.Input
             }
 
             UIElement uie = element as UIElement;
-            if(uie != null)
+            if (uie != null)
             {
-                if(uie.IsVisible == false)
+                if (uie.IsVisible == false)
                 {
                     return false;
                 }
             }
 
-            if((bool)element.GetValue(UIElement.IsEnabledProperty) == false)
+            if ((bool)element.GetValue(UIElement.IsEnabledProperty) == false)
             {
                 return false;
             }
@@ -400,23 +400,23 @@ namespace System.Windows.Input
             //
             bool hasModifiers = false;
             BaseValueSourceInternal valueSource = element.GetValueSource(UIElement.FocusableProperty, null, out hasModifiers);
-            bool focusable = (bool) element.GetValue(UIElement.FocusableProperty);
+            bool focusable = (bool)element.GetValue(UIElement.FocusableProperty);
 
-            if(!focusable && valueSource == BaseValueSourceInternal.Default && !hasModifiers)
+            if (!focusable && valueSource == BaseValueSourceInternal.Default && !hasModifiers)
             {
                 // The Focusable property was not explicitly set to anything.
                 // The default value is generally false, but true in a few cases.
 
-                if(FocusManager.GetIsFocusScope(element))
+                if (FocusManager.GetIsFocusScope(element))
                 {
                     // Focus scopes are considered focusable, even if
                     // the Focusable property is false.
                     return true;
                 }
-                else if(uie != null && uie.InternalVisualParent == null)
+                else if (uie != null && uie.InternalVisualParent == null)
                 {
                     PresentationSource presentationSource = PresentationSource.CriticalFromVisual(uie);
-                    if(presentationSource != null)
+                    if (presentationSource != null)
                     {
                         // A UIElements that is the root of a PresentationSource is considered focusable.
                         return true;

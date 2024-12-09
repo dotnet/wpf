@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -87,7 +87,7 @@ namespace MS.Internal.Text
             {
                 // Create TextPointer at dcp 
                 ITextPointer position = _owner.TextContainer.CreatePointerAtOffset(dcp, LogicalDirection.Backward);
-                
+
                 // Move backward until we find a position at the end of a text run, or reach start of TextContainer
                 while (position.GetPointerContext(LogicalDirection.Backward) != TextPointerContext.Text &&
                        position.CompareTo(_owner.TextContainer.Start) != 0)
@@ -97,17 +97,17 @@ namespace MS.Internal.Text
                 }
 
                 // Return text in run. If it is at start of TextContainer this will return an empty string                        
-                string precedingTextString = position.GetTextInRun(LogicalDirection.Backward);                            
-                precedingText = new CharacterBufferRange(precedingTextString, 0, precedingTextString.Length);                         
+                string precedingTextString = position.GetTextInRun(LogicalDirection.Backward);
+                precedingText = new CharacterBufferRange(precedingTextString, 0, precedingTextString.Length);
 
-                StaticTextPointer pointer = position.CreateStaticPointer();                
-                DependencyObject element = (pointer.Parent != null) ? pointer.Parent : _owner;                
-                culture = DynamicPropertyReader.GetCultureInfo(element);                
+                StaticTextPointer pointer = position.CreateStaticPointer();
+                DependencyObject element = (pointer.Parent != null) ? pointer.Parent : _owner;
+                culture = DynamicPropertyReader.GetCultureInfo(element);
             }
 
             return new TextSpan<CultureSpecificCharacterBufferRange>(
                 nonTextLength + precedingText.Length,
-                new CultureSpecificCharacterBufferRange(culture, precedingText)  
+                new CultureSpecificCharacterBufferRange(culture, precedingText)
                 );
         }
 
@@ -183,8 +183,8 @@ namespace MS.Internal.Text
                         FlowDirection parentFlowDirection = _owner.FlowDirection;
                         // Check parent's FlowDirection to determine if mirroring is needed
 
-                        DependencyObject parent = ((FrameworkElement)inlineObject.Element).Parent; 
-                        if(parent != null)
+                        DependencyObject parent = ((FrameworkElement)inlineObject.Element).Parent;
+                        if (parent != null)
                         {
                             parentFlowDirection = (FlowDirection)parent.GetValue(FrameworkElement.FlowDirectionProperty);
                         }
@@ -223,7 +223,7 @@ namespace MS.Internal.Text
         // Find out if there are any inline objects.
         // ------------------------------------------------------------------
         internal override bool HasInlineObjects()
-        { 
+        {
             bool hasInlineObjects = false;
 
             IList<TextSpan<TextRun>> runs = _line.GetTextRunSpans();
@@ -294,7 +294,7 @@ namespace MS.Internal.Text
                         // End of character. Look backward
                         type = position.GetPointerContext(LogicalDirection.Backward);
                     }
-             
+
                     // Get element only for Text & Start/End element, for all other positions
                     // return null (it means that the line owner has been hit).
                     if (type == TextPointerContext.Text || type == TextPointerContext.ElementEnd)
@@ -413,13 +413,13 @@ namespace MS.Internal.Text
                     FlowDirection inlineFlowDirection = inline.FlowDirection;
                     FlowDirection parentFlowDirection = inlineFlowDirection;
 
-                    if(parent != null)
+                    if (parent != null)
                     {
                         parentFlowDirection = (FlowDirection)parent.GetValue(FrameworkElement.FlowDirectionProperty);
                     }
 
                     TextDecorationCollection inlineTextDecorations = DynamicPropertyReader.GetTextDecorations(inline);
-                    
+
                     if (inlineFlowDirection != parentFlowDirection)
                     {
                         // Inline's flow direction is different from its parent. Need to create new TextSpanModifier with flow direction
@@ -485,7 +485,7 @@ namespace MS.Internal.Text
                 DependencyObject parent = inline.Parent;
                 FlowDirection parentFlowDirection = inline.FlowDirection;
 
-                if(parent != null)
+                if (parent != null)
                 {
                     parentFlowDirection = (FlowDirection)parent.GetValue(FrameworkElement.FlowDirectionProperty);
                 }
@@ -496,7 +496,7 @@ namespace MS.Internal.Text
                 }
                 else
                 {
-                    TextDecorationCollection textDecorations = DynamicPropertyReader.GetTextDecorations(inline);                
+                    TextDecorationCollection textDecorations = DynamicPropertyReader.GetTextDecorations(inline);
                     if (textDecorations == null || textDecorations.Count == 0)
                     {
                         // (2) End of inline element, hide CloseEdge character and continue

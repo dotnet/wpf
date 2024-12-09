@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,8 +12,8 @@
 // the NotSupportedException.
 // 
 
-using System.IO.Packaging;
 using System.IO;
+using System.IO.Packaging;
 using System.Windows.Navigation;
 
 namespace MS.Internal.AppModel
@@ -42,17 +42,17 @@ namespace MS.Internal.AppModel
                 // Calling FixFileUri because BaseDirectory will be a c:\\ style path
                 Uri siteOfOrigin = BaseUriHelper.FixFileUri(new Uri(System.AppDomain.CurrentDomain.BaseDirectory));
 #if DEBUG
-            if (_traceSwitch.Enabled)
-                System.Diagnostics.Trace.TraceInformation(
-                        DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        Environment.CurrentManagedThreadId + 
-                        ": SiteOfOriginContainer: returning site of origin " + siteOfOrigin);
+                if (_traceSwitch.Enabled)
+                    System.Diagnostics.Trace.TraceInformation(
+                            DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
+                            Environment.CurrentManagedThreadId +
+                            ": SiteOfOriginContainer: returning site of origin " + siteOfOrigin);
 #endif
 
                 return siteOfOrigin;
             }
         }
-       
+
         internal static Uri BrowserSource
         {
             get
@@ -60,11 +60,11 @@ namespace MS.Internal.AppModel
                 return _browserSource;
             }
             set
-            {    
-               _browserSource = value; 
+            {
+                _browserSource = value;
             }
         }
-   
+
         #endregion
 
         //------------------------------------------------------
@@ -79,7 +79,7 @@ namespace MS.Internal.AppModel
         /// Default Constructor
         /// </summary>
         internal SiteOfOriginContainer() : base(FileAccess.Read)
-        {         
+        {
         }
 
         #endregion
@@ -146,7 +146,7 @@ namespace MS.Internal.AppModel
             }
         }
 
-        internal static System.Diagnostics.BooleanSwitch _traceSwitch = 
+        internal static System.Diagnostics.BooleanSwitch _traceSwitch =
             new System.Diagnostics.BooleanSwitch("SiteOfOrigin", "SiteOfOriginContainer and SiteOfOriginPart trace messages");
 
         #endregion
@@ -192,7 +192,7 @@ namespace MS.Internal.AppModel
             if (_traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        Environment.CurrentManagedThreadId + 
+                        Environment.CurrentManagedThreadId +
                         ": SiteOfOriginContainer: Creating SiteOfOriginPart for Uri " + uri);
 #endif
             return new SiteOfOriginPart(this, uri);

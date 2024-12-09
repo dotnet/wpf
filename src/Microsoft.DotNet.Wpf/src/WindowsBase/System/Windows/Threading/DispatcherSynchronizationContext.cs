@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,7 +15,7 @@ namespace System.Windows.Threading
         ///     Constructs a new instance of the DispatcherSynchroniazationContext
         ///     using the current Dispatcher and normal post priority.
         /// </summary>
-        public DispatcherSynchronizationContext(): this(Dispatcher.CurrentDispatcher, DispatcherPriority.Normal)
+        public DispatcherSynchronizationContext() : this(Dispatcher.CurrentDispatcher, DispatcherPriority.Normal)
         {
         }
 
@@ -23,7 +23,7 @@ namespace System.Windows.Threading
         ///     Constructs a new instance of the DispatcherSynchroniazationContext
         ///     using the specified Dispatcher and normal post priority.
         /// </summary>
-        public DispatcherSynchronizationContext(Dispatcher dispatcher): this(dispatcher, DispatcherPriority.Normal)
+        public DispatcherSynchronizationContext(Dispatcher dispatcher) : this(dispatcher, DispatcherPriority.Normal)
         {
         }
 
@@ -36,14 +36,14 @@ namespace System.Windows.Threading
             ArgumentNullException.ThrowIfNull(dispatcher);
 
             Dispatcher.ValidatePriority(priority, "priority");
-            
+
             _dispatcher = dispatcher;
             _priority = priority;
 
             // Tell the CLR to call us when blocking.
-            SetWaitNotificationRequired();        
+            SetWaitNotificationRequired();
         }
-        
+
 
         /// <summary>
         ///     Synchronously invoke the callback in the SynchronizationContext.
@@ -52,7 +52,7 @@ namespace System.Windows.Threading
         {
             // Call the Invoke overload that preserves the behavior of passing
             // exceptions to Dispatcher.UnhandledException.  
-            if(BaseCompatibilityPreferences.GetInlineDispatcherSynchronizationContextSend() && _dispatcher.CheckAccess())
+            if (BaseCompatibilityPreferences.GetInlineDispatcherSynchronizationContextSend() && _dispatcher.CheckAccess())
             {
                 // Same-thread, use send priority to avoid any reentrancy.
                 _dispatcher.Invoke(DispatcherPriority.Send, d, state);
@@ -82,7 +82,7 @@ namespace System.Windows.Threading
         /// </summary>
         public override int Wait(IntPtr[] waitHandles, bool waitAll, int millisecondsTimeout)
         {
-            if(_dispatcher._disableProcessingCount > 0)
+            if (_dispatcher._disableProcessingCount > 0)
             {
                 // Call into native code directly in order to avoid the default
                 // CLR locking behavior which pumps messages under contention.
@@ -103,14 +103,14 @@ namespace System.Windows.Threading
         public override SynchronizationContext CreateCopy()
         {
             DispatcherSynchronizationContext copy;
-            
-            if(BaseCompatibilityPreferences.GetReuseDispatcherSynchronizationContextInstance())
+
+            if (BaseCompatibilityPreferences.GetReuseDispatcherSynchronizationContextInstance())
             {
                 copy = this;
             }
             else
             {
-                if(BaseCompatibilityPreferences.GetFlowDispatcherSynchronizationContextPriority())
+                if (BaseCompatibilityPreferences.GetFlowDispatcherSynchronizationContextPriority())
                 {
                     copy = new DispatcherSynchronizationContext(_dispatcher, _priority);
                 }

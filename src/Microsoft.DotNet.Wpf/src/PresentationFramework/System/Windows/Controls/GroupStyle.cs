@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -115,7 +115,7 @@ namespace System.Windows.Controls
         public Style ContainerStyle
         {
             get { return _containerStyle; }
-            set { _containerStyle = value;  OnPropertyChanged("ContainerStyle"); }
+            set { _containerStyle = value; OnPropertyChanged("ContainerStyle"); }
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace System.Windows.Controls
         public StyleSelector ContainerStyleSelector
         {
             get { return _containerStyleSelector; }
-            set { _containerStyleSelector = value;  OnPropertyChanged("ContainerStyleSelector"); }
+            set { _containerStyleSelector = value; OnPropertyChanged("ContainerStyleSelector"); }
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace System.Windows.Controls
         public DataTemplate HeaderTemplate
         {
             get { return _headerTemplate; }
-            set { _headerTemplate = value;  OnPropertyChanged("HeaderTemplate"); }
+            set { _headerTemplate = value; OnPropertyChanged("HeaderTemplate"); }
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace System.Windows.Controls
         public DataTemplateSelector HeaderTemplateSelector
         {
             get { return _headerTemplateSelector; }
-            set { _headerTemplateSelector = value;  OnPropertyChanged("HeaderTemplateSelector"); }
+            set { _headerTemplateSelector = value; OnPropertyChanged("HeaderTemplateSelector"); }
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace System.Windows.Controls
         public String HeaderStringFormat
         {
             get { return _headerStringFormat; }
-            set { _headerStringFormat = value;  OnPropertyChanged("HeaderStringFormat"); }
+            set { _headerStringFormat = value; OnPropertyChanged("HeaderStringFormat"); }
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace System.Windows.Controls
         public bool HidesIfEmpty
         {
             get { return _hidesIfEmpty; }
-            set { _hidesIfEmpty = value;  OnPropertyChanged("HidesIfEmpty"); }
+            set { _hidesIfEmpty = value; OnPropertyChanged("HidesIfEmpty"); }
         }
 
         /// <summary>
@@ -188,7 +188,7 @@ namespace System.Windows.Controls
             }
         }
 
-       /// <summary>The default panel template.</summary>
+        /// <summary>The default panel template.</summary>
         public static readonly ItemsPanelTemplate DefaultGroupPanel;
 
         /// <summary>The default GroupStyle.</summary>
@@ -220,17 +220,17 @@ namespace System.Windows.Controls
         //
         //------------------------------------------------------
 
-        ItemsPanelTemplate      _panel;
-        Style                   _containerStyle;
-        StyleSelector           _containerStyleSelector;
-        DataTemplate            _headerTemplate;
-        DataTemplateSelector    _headerTemplateSelector;
-        string                  _headerStringFormat;
-        bool                    _hidesIfEmpty;
-        bool                    _isAlternationCountSet;
-        int                     _alternationCount;
+        ItemsPanelTemplate _panel;
+        Style _containerStyle;
+        StyleSelector _containerStyleSelector;
+        DataTemplate _headerTemplate;
+        DataTemplateSelector _headerTemplateSelector;
+        string _headerStringFormat;
+        bool _hidesIfEmpty;
+        bool _isAlternationCountSet;
+        int _alternationCount;
 
-        static GroupStyle       s_DefaultGroupStyle;
+        static GroupStyle s_DefaultGroupStyle;
 
         /// <summary>The default panel template.</summary>
         internal static ItemsPanelTemplate DefaultStackPanel;

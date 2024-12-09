@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
+using System.ComponentModel;
 using System.Windows.Controls.Primitives;
 using MS.Internal.KnownBoxes;
-using System.ComponentModel;
 
 namespace System.Windows.Controls
 {
@@ -19,12 +19,12 @@ namespace System.Windows.Controls
         /// <summary>
         ///     The DependencyProperty for the ToolTip property.
         /// </summary>
-        public static readonly DependencyProperty ToolTipProperty = 
+        public static readonly DependencyProperty ToolTipProperty =
                 DependencyProperty.RegisterAttached(
                         "ToolTip",              // Name
                         typeof(object),         // Type
                         typeof(ToolTipService), // Owner
-                        new FrameworkPropertyMetadata((object) null));
+                        new FrameworkPropertyMetadata((object)null));
 
         /// <summary>
         ///     Gets the value of the ToolTip property on the specified object.
@@ -500,8 +500,8 @@ namespace System.Windows.Controls
         ///     (example: for delay-loading). Do not mark the event as handled 
         ///     in this case if the system is to show the ToolTip.
         /// </summary>
-        public static readonly RoutedEvent ToolTipOpeningEvent = 
-            EventManager.RegisterRoutedEvent("ToolTipOpening", 
+        public static readonly RoutedEvent ToolTipOpeningEvent =
+            EventManager.RegisterRoutedEvent("ToolTipOpening",
                                                RoutingStrategy.Direct,
                                                typeof(ToolTipEventHandler),
                                                typeof(ToolTipService));
@@ -531,9 +531,9 @@ namespace System.Windows.Controls
         ///     should now be hidden.
         /// </summary>
         public static readonly RoutedEvent ToolTipClosingEvent =
-            EventManager.RegisterRoutedEvent("ToolTipClosing", 
-                                               RoutingStrategy.Direct, 
-                                               typeof(ToolTipEventHandler), 
+            EventManager.RegisterRoutedEvent("ToolTipClosing",
+                                               RoutingStrategy.Direct,
+                                               typeof(ToolTipEventHandler),
                                                typeof(ToolTipService));
 
 

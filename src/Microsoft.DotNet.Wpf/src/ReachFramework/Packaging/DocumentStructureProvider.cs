@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -18,7 +18,7 @@ namespace System.Windows.Xps.Packaging
     /// </summary>
     public interface IDocumentStructureProvider
     {
-    #region Public methods
+        #region Public methods
         /// <summary>
         /// 
         /// </summary>
@@ -27,15 +27,15 @@ namespace System.Windows.Xps.Packaging
         AddDocumentStructure(
             );
 
-    #endregion Public methods
+        #endregion Public methods
     }
 
-     /// <summary>
+    /// <summary>
     /// This interface declares methods to add story fragments structure
     /// </summary>
     public interface IStoryFragmentProvider
     {
-    #region Public methods
+        #region Public methods
         /// <summary>
         /// 
         /// </summary>
@@ -44,7 +44,7 @@ namespace System.Windows.Xps.Packaging
         AddStoryFragment(
             );
 
-    #endregion Public methods
+        #endregion Public methods
     }
 }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -55,14 +55,14 @@ namespace System.Windows.Media
 
         private static void StartPointPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            LinearGradientBrush target = ((LinearGradientBrush) d);
+            LinearGradientBrush target = ((LinearGradientBrush)d);
 
 
             target.PropertyChanged(StartPointProperty);
         }
         private static void EndPointPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            LinearGradientBrush target = ((LinearGradientBrush) d);
+            LinearGradientBrush target = ((LinearGradientBrush)d);
 
 
             target.PropertyChanged(EndPointProperty);
@@ -78,7 +78,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Point) GetValue(StartPointProperty);
+                return (Point)GetValue(StartPointProperty);
             }
             set
             {
@@ -93,7 +93,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Point) GetValue(EndPointProperty);
+                return (Point)GetValue(EndPointProperty);
             }
             set
             {
@@ -139,35 +139,39 @@ namespace System.Windows.Media
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-                if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_LINEARGRADIENTBRUSH))
-                {
-                    Transform vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
-                    Transform vRelativeTransform = RelativeTransform;
-                    if (vRelativeTransform != null) ((DUCE.IResource)vRelativeTransform).AddRefOnChannel(channel);
+            if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_LINEARGRADIENTBRUSH))
+            {
+                Transform vTransform = Transform;
+                if (vTransform != null)
+                    ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
+                Transform vRelativeTransform = RelativeTransform;
+                if (vRelativeTransform != null)
+                    ((DUCE.IResource)vRelativeTransform).AddRefOnChannel(channel);
 
-                    AddRefOnChannelAnimations(channel);
+                AddRefOnChannelAnimations(channel);
 
 
-                    UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
-                }
+                UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
+            }
 
-                return _duceResource.GetHandle(channel);
-}
+            return _duceResource.GetHandle(channel);
+        }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-                Debug.Assert(_duceResource.IsOnChannel(channel));
+            Debug.Assert(_duceResource.IsOnChannel(channel));
 
-                if (_duceResource.ReleaseOnChannel(channel))
-                {
-                    Transform vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
-                    Transform vRelativeTransform = RelativeTransform;
-                    if (vRelativeTransform != null) ((DUCE.IResource)vRelativeTransform).ReleaseOnChannel(channel);
+            if (_duceResource.ReleaseOnChannel(channel))
+            {
+                Transform vTransform = Transform;
+                if (vTransform != null)
+                    ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
+                Transform vRelativeTransform = RelativeTransform;
+                if (vRelativeTransform != null)
+                    ((DUCE.IResource)vRelativeTransform).ReleaseOnChannel(channel);
 
-                    ReleaseOnChannelAnimations(channel);
-}
-}
+                ReleaseOnChannelAnimations(channel);
+            }
+        }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
             // Note that we are in a lock here already.
@@ -247,8 +251,8 @@ namespace System.Windows.Media
 
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
 
-        internal static Point s_StartPoint = new Point(0,0);
-        internal static Point s_EndPoint = new Point(1,1);
+        internal static Point s_StartPoint = new Point(0, 0);
+        internal static Point s_EndPoint = new Point(1, 1);
 
         #endregion Internal Fields
 
@@ -277,7 +281,7 @@ namespace System.Windows.Media
                   RegisterProperty("StartPoint",
                                    typeof(Point),
                                    typeofThis,
-                                   new Point(0,0),
+                                   new Point(0, 0),
                                    new PropertyChangedCallback(StartPointPropertyChanged),
                                    null,
                                    /* isIndependentlyAnimated  = */ true,
@@ -286,7 +290,7 @@ namespace System.Windows.Media
                   RegisterProperty("EndPoint",
                                    typeof(Point),
                                    typeofThis,
-                                   new Point(1,1),
+                                   new Point(1, 1),
                                    new PropertyChangedCallback(EndPointPropertyChanged),
                                    null,
                                    /* isIndependentlyAnimated  = */ true,

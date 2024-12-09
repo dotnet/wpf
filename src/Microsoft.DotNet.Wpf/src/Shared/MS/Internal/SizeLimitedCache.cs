@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -44,7 +44,7 @@ namespace MS.Internal
             // end of the list.
             _begin = new Node(default(K), default(V), false);
             _end = new Node(default(K), default(V), false);
-           _begin.Next = _end;
+            _begin.Next = _end;
             _end.Previous = _begin;
             _nodeLookup = new Dictionary<K, Node>();
         }
@@ -86,11 +86,11 @@ namespace MS.Internal
         public void Add(K key, V resource, bool isPermanent)
         {
 
-            if ( (object)key == null)
+            if ((object)key == null)
             {
                 throw new ArgumentNullException("key");
             }
-            if ( (object)resource == null)
+            if ((object)resource == null)
             {
                 throw new ArgumentNullException("resource");
             }
@@ -151,7 +151,7 @@ namespace MS.Internal
         /// </param>
         public void Remove(K key)
         {
-            if ( (object)key == null)
+            if ((object)key == null)
             {
                 throw new ArgumentNullException("key");
             }
@@ -187,7 +187,7 @@ namespace MS.Internal
         /// </returns>
         public V Get(K key)
         {
-            if ( (object)key == null)
+            if ((object)key == null)
             {
                 throw new ArgumentNullException("key");
             }

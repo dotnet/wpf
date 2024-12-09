@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+ï»¿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -89,7 +89,7 @@ namespace MS.Internal.Documents
         #region Internal Properties
 
         /// <summary>
-        /// Represents the beginning of the paragraph’s contents.
+        /// Represents the beginning of the paragraphâ€™s contents.
         /// </summary>
         internal ITextPointer StartPosition
         {
@@ -101,7 +101,7 @@ namespace MS.Internal.Documents
         }
 
         /// <summary>
-        /// Represents the end of the paragraph’s contents.
+        /// Represents the end of the paragraphâ€™s contents.
         /// </summary>
         internal ITextPointer EndPosition
         {

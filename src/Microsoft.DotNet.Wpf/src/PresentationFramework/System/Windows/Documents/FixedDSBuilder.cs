@@ -1,13 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Collections;
 using System.Windows.Controls;
+using System.Windows.Documents.DocumentStructures;
 using System.Windows.Markup;
 using System.Windows.Shapes;
-using System.Windows.Documents.DocumentStructures;
 using Ds = System.Windows.Documents.DocumentStructures;
-using System.Collections;
 
 //
 // Description:
@@ -28,7 +28,8 @@ namespace System.Windows.Documents
         {
             internal NameHashFixedNode(UIElement e, int i)
             {
-                uiElement = e; index = i;
+                uiElement = e;
+                index = i;
             }
             internal UIElement uiElement;
             internal int index;
@@ -47,7 +48,7 @@ namespace System.Windows.Documents
             if (!_nameHashTable.ContainsKey(Name))
             {
                 _nameHashTable.Add(Name,
-                    new NameHashFixedNode(e,indexToFixedNodes));
+                    new NameHashFixedNode(e, indexToFixedNodes));
             }
         }
 
@@ -86,7 +87,7 @@ namespace System.Windows.Documents
             //
             _flowBuilder.AddStartNode(FixedElement.ElementType.Paragraph);
 
-            for (int i = 0; i< _visitedArray.Count; i++ )
+            for (int i = 0; i < _visitedArray.Count; i++)
             {
                 if (_visitedArray[i] == false)
                 {
@@ -155,7 +156,7 @@ namespace System.Windows.Documents
                     _flowBuilder.AddStartNode(be.ElementType);
 
                     //Set the culture info on this node
-                    XmlLanguage language = (XmlLanguage) _fixedPage.GetValue(FrameworkElement.LanguageProperty);
+                    XmlLanguage language = (XmlLanguage)_fixedPage.GetValue(FrameworkElement.LanguageProperty);
                     _flowBuilder.FixedElement.SetValue(FixedElement.LanguageProperty, language);
 
                     SpecialProcessing(sbe);
@@ -197,14 +198,15 @@ namespace System.Windows.Documents
                 }
 
                 // Search forward to add all the nodes in order.
-                for (int i = startIndex+1; i < _fixedNodes.Count; i++)
+                for (int i = startIndex + 1; i < _fixedNodes.Count; i++)
                 {
                     fn = (FixedNode)_fixedNodes[i];
                     if (fn.ComparetoIndex(childIndex) == 0)
                     {
                         AddFixedNodeInFlow(i, null);
                     }
-                    else break;
+                    else
+                        break;
                 }
             }
         }
@@ -248,11 +250,11 @@ namespace System.Windows.Documents
         }
 
         private StoryFragments _storyFragments;
-        private FixedPage _fixedPage;  
+        private FixedPage _fixedPage;
         private List<FixedNode> _fixedNodes;
         private BitArray _visitedArray;
         private Dictionary<String, NameHashFixedNode> _nameHashTable;
         private FixedTextBuilder.FlowModelBuilder _flowBuilder;
-   }
+    }
 }
 

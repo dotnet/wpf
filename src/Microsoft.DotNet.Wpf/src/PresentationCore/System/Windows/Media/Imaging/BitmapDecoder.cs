@@ -1,20 +1,20 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 #pragma warning disable 1634, 1691 // Allow suppression of certain presharp messages
 
+using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Packaging;
-using System.Collections.ObjectModel;
-using MS.Internal;
-using MS.Win32.PresentationCore;
-using Microsoft.Win32.SafeHandles;
-using System.Windows.Threading;
-using MS.Internal.PresentationCore;
 using System.Net;
 using System.Net.Cache;
 using System.Text;
+using System.Windows.Threading;
+using Microsoft.Win32.SafeHandles;
+using MS.Internal;
+using MS.Internal.PresentationCore;
+using MS.Win32.PresentationCore;
 
 namespace System.Windows.Media.Imaging
 {
@@ -589,7 +589,7 @@ namespace System.Windows.Media.Imaging
                         BitmapSourceSafeMILHandle thumbHandle = new BitmapSourceSafeMILHandle(thumbnail);
                         SafeMILHandle unmanagedPalette = BitmapPalette.CreateInternalPalette();
                         BitmapPalette palette = null;
-                    
+
                         int hr = UnsafeNativeMethods.WICBitmapSource.CopyPalette(
                                     thumbHandle,
                                     unmanagedPalette
@@ -598,7 +598,7 @@ namespace System.Windows.Media.Imaging
                         {
                             palette = new BitmapPalette(unmanagedPalette);
                         }
-                    
+
                         _thumbnail = new UnmanagedBitmapWrapper(
                             BitmapSource.CreateCachedBitmap(
                                 null,
@@ -672,7 +672,7 @@ namespace System.Windows.Media.Imaging
                 // There should always be a codec info.
                 if (_codecInfo == null)
                 {
-                    SafeMILHandle /* IWICBitmapDecoderInfo */ codecInfoHandle =  new SafeMILHandle();
+                    SafeMILHandle /* IWICBitmapDecoderInfo */ codecInfoHandle = new SafeMILHandle();
 
                     HRESULT.Check(UnsafeNativeMethods.WICBitmapDecoder.GetDecoderInfo(
                         _decoderHandle,
@@ -743,7 +743,7 @@ namespace System.Windows.Media.Imaging
                         BitmapSourceSafeMILHandle previewHandle = new BitmapSourceSafeMILHandle(preview);
                         SafeMILHandle unmanagedPalette = BitmapPalette.CreateInternalPalette();
                         BitmapPalette palette = null;
-                    
+
                         int hr = UnsafeNativeMethods.WICBitmapSource.CopyPalette(
                                     previewHandle,
                                     unmanagedPalette
@@ -752,7 +752,7 @@ namespace System.Windows.Media.Imaging
                         {
                             palette = new BitmapPalette(unmanagedPalette);
                         }
-                    
+
                         _preview = new UnmanagedBitmapWrapper(
                             BitmapSource.CreateCachedBitmap(
                                 null,
@@ -763,7 +763,7 @@ namespace System.Windows.Media.Imaging
                                 ));
                         _preview.Freeze();
                     }
-                    
+
                     _isPreviewCached = true;
                 }
 
@@ -941,7 +941,7 @@ namespace System.Windows.Media.Imaging
         private int GetColorContexts(ref uint numContexts, IntPtr[] colorContextPtrs)
         {
             Invariant.Assert(colorContextPtrs == null || numContexts <= colorContextPtrs.Length);
-            
+
             return UnsafeNativeMethods.WICBitmapDecoder.GetColorContexts(_decoderHandle, numContexts, colorContextPtrs, out numContexts);
         }
 
@@ -1056,11 +1056,11 @@ namespace System.Windows.Media.Imaging
                             }
                             else if (uri.Scheme == Uri.UriSchemeHttp) // for http
                             {
-                                bitmapStream = ProcessHttpFiles(uri,stream);
+                                bitmapStream = ProcessHttpFiles(uri, stream);
                             }
                             else if (uri.Scheme == Uri.UriSchemeHttps) // for https
                             {
-                                bitmapStream = ProcessHttpsFiles(uri,stream);
+                                bitmapStream = ProcessHttpsFiles(uri, stream);
                             }
                             else
                             {
@@ -1071,12 +1071,12 @@ namespace System.Windows.Media.Imaging
                     }
                     else
                     {
-                        #pragma warning disable 6518
+#pragma warning disable 6518
                         // We don't have an absolute URI, so we don't necessarily know
                         // if it is a file, but we'll have to assume it is and try to
                         // create a stream from the original string.
                         bitmapStream = new System.IO.FileStream(uri.OriginalString, FileMode.Open, FileAccess.Read, FileShare.Read);
-                        #pragma warning restore 6518
+#pragma warning restore 6518
                     }
 
                     uriStream = bitmapStream;
@@ -1173,12 +1173,12 @@ namespace System.Windows.Media.Imaging
             catch
             {
                 bitmapStream.Close();
-                #pragma warning disable 6500
+#pragma warning disable 6500
 
                 decoderHandle = null;
                 throw;
 
-                #pragma warning restore 6500
+#pragma warning restore 6500
             }
             finally
             {
@@ -1212,7 +1212,7 @@ namespace System.Windows.Media.Imaging
         private static Stream ProcessHttpFiles(Uri uri, Stream stream)
         {
             WebRequest request = null;
-            Stream bitmapStream =  stream;
+            Stream bitmapStream = stream;
             // Download only if this content is not already downloaded or stream is not seekable
             if (bitmapStream == null || !bitmapStream.CanSeek)
             {
@@ -1504,7 +1504,7 @@ namespace System.Windows.Media.Imaging
         /// <returns></returns>
         private static IntPtr GetIStreamFromStream(ref System.IO.Stream bitmapStream)
         {
-            IntPtr  comStream = IntPtr.Zero;
+            IntPtr comStream = IntPtr.Zero;
 
             // ensure the stream is seekable
             bool seekable = bitmapStream.CanSeek;
@@ -1517,8 +1517,8 @@ namespace System.Windows.Media.Imaging
 
                 unsafe
                 {
-                   bufferPtr = (IntPtr) memoryStream.PositionPointer;
-                   length = (int) memoryStream.Length;
+                    bufferPtr = (IntPtr)memoryStream.PositionPointer;
+                    length = (int)memoryStream.Length;
                 }
 
                 if (bufferPtr != IntPtr.Zero)
@@ -1555,7 +1555,7 @@ namespace System.Windows.Media.Imaging
                                 SR.Image_CantDealWithStream);
                     }
                 }
-}
+            }
 
             if (comStream == IntPtr.Zero)
             {

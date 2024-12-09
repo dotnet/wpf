@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal;
-using MS.Internal.Media3D;
-using MS.Internal.KnownBoxes;
 using System.Windows.Markup;
+using MS.Internal;
+using MS.Internal.KnownBoxes;
+using MS.Internal.Media3D;
 
 namespace System.Windows.Media.Media3D
 {
@@ -28,20 +28,22 @@ namespace System.Windows.Media.Media3D
             // create holders for the content
             // We don't want this model to set itself as the IC for Geometry and Material 
             // so we set to to not be able to be an inheritance context.
-            GeometryModel3D model = new GeometryModel3D();
-            model.CanBeInheritanceContext = false;
-            
-            Visual3DModel = model; 
-        } 
-        
-        internal static bool Get3DPointFor2DCoordinate(Point point, 
+            GeometryModel3D model = new GeometryModel3D
+            {
+                CanBeInheritanceContext = false
+            };
+
+            Visual3DModel = model;
+        }
+
+        internal static bool Get3DPointFor2DCoordinate(Point point,
                                                        out Point3D point3D,
                                                        Point3DCollection positions,
                                                        PointCollection textureCoords,
                                                        Int32Collection triIndices)
         {
             point3D = new Point3D();
-            
+
             // walk through the triangles - and look for the triangles we care about
             Point3D[] p = new Point3D[3];
             Point[] uv = new Point[3];
@@ -51,12 +53,12 @@ namespace System.Windows.Media.Media3D
                 if (triIndices == null || triIndices.Count == 0)
                 {
                     int texCoordCount = textureCoords.Count;
-                
+
                     // in this case we have a non-indexed mesh
                     int count = positions.Count;
                     count = count - (count % 3);
 
-                    for (int i = 0; i < count; i+=3)
+                    for (int i = 0; i < count; i += 3)
                     {
                         for (int j = 0; j < 3; j++)
                         {
@@ -86,22 +88,22 @@ namespace System.Windows.Media.Media3D
                     // in this case we have an indexed mesh
                     int posLimit = positions.Count;
                     int texCoordLimit = textureCoords.Count;
-                    
-                    for (int i = 2, count=triIndices.Count; i < count; i += 3)
+
+                    for (int i = 2, count = triIndices.Count; i < count; i += 3)
                     {
                         bool validTextureCoordinates = true;
                         for (int j = 0; j < 3; j++)
                         {
                             // subtract 2 to take in to account we start i
                             // at the high range of indices                        
-                            int index = triIndices[(i-2) + j];
+                            int index = triIndices[(i - 2) + j];
 
                             // if a point or texture coordinate is out of range, end early since this is an error
                             if (index < 0 || index >= posLimit)
                             {
                                 // no need to look anymore - see MeshGeometry3D RayHitTestIndexedList for 
                                 // reasoning why we stop
-                                return false; 
+                                return false;
 
                             }
                             if (index < 0 || index >= texCoordLimit)
@@ -109,7 +111,7 @@ namespace System.Windows.Media.Media3D
                                 validTextureCoordinates = false;
                                 break;
                             }
-                            
+
                             p[j] = positions[index];
                             uv[j] = textureCoords[index];
                         }
@@ -121,13 +123,13 @@ namespace System.Windows.Media.Media3D
                                 return true;
                             }
                         }
-                    }                    
+                    }
                 }
             }
 
             return false;
         }
-        
+
         /// <summary>
         /// Converts a point given in texture coordinates to the corresponding
         /// 2D point on the UIElement passed in.
@@ -140,7 +142,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         internal static Point TextureCoordsToVisualCoords(Point uv, Visual visual)
         {
-            return TextureCoordsToVisualCoords(uv, visual.CalculateSubgraphRenderBoundsOuterSpace());           
+            return TextureCoordsToVisualCoords(uv, visual.CalculateSubgraphRenderBoundsOuterSpace());
         }
 
         // same as the above except we now take the rectangle giving the bounds of the visual
@@ -148,7 +150,7 @@ namespace System.Windows.Media.Media3D
         internal static Point TextureCoordsToVisualCoords(Point uv, Rect descBounds)
         {
             return new Point(uv.X * descBounds.Width + descBounds.Left,
-                             uv.Y * descBounds.Height + descBounds.Top);                             
+                             uv.Y * descBounds.Height + descBounds.Top);
         }
 
         /// <summary>
@@ -223,13 +225,13 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         internal static Point VisualCoordsToTextureCoords(Point pt, Visual visual)
         {
-            return VisualCoordsToTextureCoords(pt, visual.CalculateSubgraphRenderBoundsOuterSpace()); 
-        }        
+            return VisualCoordsToTextureCoords(pt, visual.CalculateSubgraphRenderBoundsOuterSpace());
+        }
 
         // same as the above except we now take the rectangle giving the bounds of the visual
         // rather than the visual itself
         internal static Point VisualCoordsToTextureCoords(Point pt, Rect descBounds)
-        {            
+        {
             return new Point((pt.X - descBounds.Left) / (descBounds.Right - descBounds.Left),
                              (pt.Y - descBounds.Top) / (descBounds.Bottom - descBounds.Top));
         }
@@ -251,13 +253,13 @@ namespace System.Windows.Media.Media3D
             }
 
             ((GeometryModel3D)Visual3DModel).Material = material;
-            
+
             if (material != null)
             {
                 SwapInCyclicBrush(material);
-            }       
+            }
         }
-        
+
         /// <summary>
         /// The visual applied to the VisualBrush, which is then used on the 3D object.
         /// 
@@ -293,7 +295,7 @@ namespace System.Windows.Media.Media3D
             get { return _bitmapCacheBrush; }
             set { _bitmapCacheBrush = value; }
         }
-        
+
         internal static void OnVisualChanged(Object sender, DependencyPropertyChangedEventArgs e)
         {
             Viewport2DVisual3D viewport2DVisual3D = ((Viewport2DVisual3D)sender);
@@ -303,7 +305,7 @@ namespace System.Windows.Media.Media3D
             Visual newValue = (Visual)e.NewValue;
 
             if (oldValue != newValue)
-            {   
+            {
                 //
                 // The following code deals with properly setting up the new child to have its inheritance context
                 // only point towards this Viewport2DVisual3D.
@@ -323,7 +325,7 @@ namespace System.Windows.Media.Media3D
                 if (viewport2DVisual3D.CacheMode as BitmapCache != null)
                 {
                     viewport2DVisual3D.InternalBitmapCacheBrush.Target = newValue;
-                    Debug.Assert((newValue == null || newValue.InheritanceContext == null), 
+                    Debug.Assert((newValue == null || newValue.InheritanceContext == null),
                                  "Expected BitmapCacheBrush to remove the InheritanceContext on newValue");
                 }
                 else
@@ -332,14 +334,14 @@ namespace System.Windows.Media.Media3D
                     viewport2DVisual3D.RemoveVisualChild(oldValue);
                     viewport2DVisual3D.AddVisualChild(newValue);
 
-                    Debug.Assert((newValue == null || newValue.InheritanceContext == null), 
+                    Debug.Assert((newValue == null || newValue.InheritanceContext == null),
                                  "Expected AddVisualChild to remove the InheritanceContext on newValue");
 
                     // Change the brush's target
                     viewport2DVisual3D.InternalVisualBrush.Visual = newValue;
 
                     // setting the visual brush to use this new child should not invalidate our previous condition
-                    Debug.Assert((newValue == null || newValue.InheritanceContext == null), 
+                    Debug.Assert((newValue == null || newValue.InheritanceContext == null),
                                  "Expected the InternalVisualBrush not to set the InheritanceContext");
                 }
             }
@@ -370,7 +372,7 @@ namespace System.Windows.Media.Media3D
             // NOTE: Since the 2D object is on a VisualBrush, it will allow it to handle
             // the dirtyness of the 2D object, realization information, as well as layout.  See
             // Visual(3D).AddVisualChild for the things they propagate on adding a new child
-            
+
             // Fire notifications
             this.OnVisualChildrenChanged(child, null /* no removed child */);
             child.FireOnVisualParentChanged(null);
@@ -396,12 +398,12 @@ namespace System.Windows.Media.Media3D
 
             // NOTE: We'll let the VisualBrush handle final cleanup from the channel
             //
-           
+
             child._parent = null;
 
             // NOTE: We also let the VisualBrush handle any flag propagation issues (so Visual(3D).RemoveVisualChild for
             //       the things they propagate) as well as layout.
-            
+
             // Fire notifications
             child.FireOnVisualParentChanged(this);
             OnVisualChildrenChanged(null /* no child added */, child);
@@ -414,24 +416,25 @@ namespace System.Windows.Media.Media3D
         /// <returns>The VisualBrush to hold the interactive 2D content</returns>
         private VisualBrush CreateVisualBrush()
         {
-            VisualBrush vb = new VisualBrush();
+            VisualBrush vb = new VisualBrush
+            {
+                // We don't want the VisualBrush being the InheritanceContext for the Visual it contains.  Rather we want
+                // that to be the Viewport2DVisual3D itself.
+                CanBeInheritanceContext = false,
 
-            // We don't want the VisualBrush being the InheritanceContext for the Visual it contains.  Rather we want
-            // that to be the Viewport2DVisual3D itself.
-            vb.CanBeInheritanceContext = false;
-            
-            vb.ViewportUnits = BrushMappingMode.Absolute;
-            vb.TileMode = TileMode.None;            
+                ViewportUnits = BrushMappingMode.Absolute,
+                TileMode = TileMode.None
+            };
 
             // set any rendering options in the visual brush - we do this to still give access to these caching hints
             // without exposing the visual brush
             RenderOptions.SetCachingHint(vb, (CachingHint)GetValue(CachingHintProperty));
             RenderOptions.SetCacheInvalidationThresholdMinimum(vb, (double)GetValue(CacheInvalidationThresholdMinimumProperty));
             RenderOptions.SetCacheInvalidationThresholdMaximum(vb, (double)GetValue(CacheInvalidationThresholdMaximumProperty));
-            
+
             return vb;
         }
-        
+
         /// <summary>
         /// Creates the BitmapCacheBrush that will be used to hold the interactive
         /// 2D content.
@@ -439,19 +442,20 @@ namespace System.Windows.Media.Media3D
         /// <returns>The BitmapCacheBrush to hold the interactive 2D content</returns>
         private BitmapCacheBrush CreateBitmapCacheBrush()
         {
-            BitmapCacheBrush bcb = new BitmapCacheBrush();
+            BitmapCacheBrush bcb = new BitmapCacheBrush
+            {
+                // We don't want the cache brush being the InheritanceContext for the Visual it contains.  Rather we want
+                // that to be the Viewport2DVisual3D itself.
+                CanBeInheritanceContext = false,
 
-            // We don't want the cache brush being the InheritanceContext for the Visual it contains.  Rather we want
-            // that to be the Viewport2DVisual3D itself.
-            bcb.CanBeInheritanceContext = false;
+                // Ensure that the brush supports rendering all properties on the Visual to match VisualBrush behavior.
+                AutoWrapTarget = true,
 
-            // Ensure that the brush supports rendering all properties on the Visual to match VisualBrush behavior.
-            bcb.AutoWrapTarget = true;
-            
-            bcb.BitmapCache = CacheMode as BitmapCache;
+                BitmapCache = CacheMode as BitmapCache
+            };
             return bcb;
         }
-        
+
         /// <summary>
         /// Replaces any instances of the sentinal brush with the internal brush
         /// </summary>
@@ -463,7 +467,7 @@ namespace System.Windows.Media.Media3D
             materialStack.Push(material);
 
             Brush internalBrush = (CacheMode as BitmapCache != null) ? (Brush)InternalBitmapCacheBrush : (Brush)InternalVisualBrush;
-            
+
             while (materialStack.Count > 0)
             {
                 Material currMaterial = materialStack.Pop();
@@ -507,10 +511,10 @@ namespace System.Windows.Media.Media3D
 
                     // iterate over the children and put them on the stack of materials to modify
                     MaterialCollection children = matGroup.Children;
-                    
+
                     if (children != null)
                     {
-                        for (int i=0, count = children.Count; i < count; i++)
+                        for (int i = 0, count = children.Count; i < count; i++)
                         {
                             Material m = children[i];
                             materialStack.Push(m);
@@ -529,7 +533,7 @@ namespace System.Windows.Media.Media3D
                 throw new ArgumentException(SR.Viewport2DVisual3D_MultipleInteractiveMaterials, "material");
             }
         }
-       
+
         /// <summary>
         /// The 3D geometry that the InteractiveModelVisual3D represents
         /// </summary>
@@ -576,7 +580,7 @@ namespace System.Windows.Media.Media3D
                 if (_positionsCache == null)
                 {
                     Debug.Assert(Geometry == null || Geometry is MeshGeometry3D);
-                    
+
                     MeshGeometry3D geometry = Geometry as MeshGeometry3D;
                     if (geometry != null)
                     {
@@ -604,11 +608,11 @@ namespace System.Windows.Media.Media3D
                 if (_textureCoordinatesCache == null)
                 {
                     Debug.Assert(Geometry == null || Geometry is MeshGeometry3D);
-                    
+
                     MeshGeometry3D geometry = Geometry as MeshGeometry3D;
                     if (geometry != null)
                     {
-                        _textureCoordinatesCache= geometry.TextureCoordinates;
+                        _textureCoordinatesCache = geometry.TextureCoordinates;
                         if (_textureCoordinatesCache != null)
                         {
                             _textureCoordinatesCache = (PointCollection)_textureCoordinatesCache.GetCurrentValueAsFrozen();
@@ -629,10 +633,10 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                if (_triangleIndicesCache== null)
+                if (_triangleIndicesCache == null)
                 {
                     Debug.Assert(Geometry == null || Geometry is MeshGeometry3D);
-                    
+
                     MeshGeometry3D geometry = Geometry as MeshGeometry3D;
                     if (geometry != null)
                     {
@@ -652,15 +656,15 @@ namespace System.Windows.Media.Media3D
             }
         }
 
-                
+
         /// <summary>
         /// The material used to visually represent the Viewport2DVisual3D
         /// </summary>
-        public static readonly DependencyProperty MaterialProperty = 
+        public static readonly DependencyProperty MaterialProperty =
                                             DependencyProperty.Register("Material",
                                                            typeof(Material),
                                                            typeof(Viewport2DVisual3D),
-                                                           new PropertyMetadata(null, 
+                                                           new PropertyMetadata(null,
                                                                                 new PropertyChangedCallback(OnMaterialPropertyChanged)));
 
         /// <summary>
@@ -676,7 +680,7 @@ namespace System.Windows.Media.Media3D
         {
             Viewport2DVisual3D viewport2DVisual3D = ((Viewport2DVisual3D)sender);
 
-            viewport2DVisual3D.GenerateMaterial();            
+            viewport2DVisual3D.GenerateMaterial();
         }
 
         /// <summary>
@@ -746,7 +750,7 @@ namespace System.Windows.Media.Media3D
                 // a dummy Visual node between the V2DV3D and its 2D Visual.  We then target the dummy
                 // node with the brush instead.
                 //
-                
+
                 if (oldValue == null)
                 {
                     //
@@ -757,8 +761,8 @@ namespace System.Windows.Media.Media3D
                     viewport2DVisual3D.RemoveVisualChild(viewport2DVisual3D.Visual);
                     viewport2DVisual3D.AddVisualChild(viewport2DVisual3D.InternalBitmapCacheBrush.InternalTarget);
 
-                    Debug.Assert(  (viewport2DVisual3D.InternalBitmapCacheBrush.InternalTarget == null 
-                                 || viewport2DVisual3D.InternalBitmapCacheBrush.InternalTarget.InheritanceContext == null), 
+                    Debug.Assert((viewport2DVisual3D.InternalBitmapCacheBrush.InternalTarget == null
+                                 || viewport2DVisual3D.InternalBitmapCacheBrush.InternalTarget.InheritanceContext == null),
                                 "Expected AddVisualChild to remove the InheritanceContext on InternalTarget");
 
                     // Swap the brush pointing to the visual.  The cache brush will re-parent the visual to the dummy.
@@ -766,8 +770,8 @@ namespace System.Windows.Media.Media3D
                     viewport2DVisual3D.InternalBitmapCacheBrush.Target = viewport2DVisual3D.Visual;
 
                     // setting the cache brush to use this new child should not invalidate our previous condition
-                    Debug.Assert(  (viewport2DVisual3D.InternalBitmapCacheBrush.InternalTarget == null 
-                                 || viewport2DVisual3D.InternalBitmapCacheBrush.InternalTarget.InheritanceContext == null), 
+                    Debug.Assert((viewport2DVisual3D.InternalBitmapCacheBrush.InternalTarget == null
+                                 || viewport2DVisual3D.InternalBitmapCacheBrush.InternalTarget.InheritanceContext == null),
                                  "Expected the InternalBitmapCacheBrush not to set the InheritanceContext");
                 }
 
@@ -781,12 +785,12 @@ namespace System.Windows.Media.Media3D
                     // of the visual.
                     viewport2DVisual3D.InternalBitmapCacheBrush.Target = null;
                     viewport2DVisual3D.InternalVisualBrush.Visual = viewport2DVisual3D.Visual;
-                    
+
                     // Remove the dummy child and re-add the visual as the V2DV3D's child.
                     viewport2DVisual3D.RemoveVisualChild(viewport2DVisual3D.InternalBitmapCacheBrush.InternalTarget);
                     viewport2DVisual3D.AddVisualChild(viewport2DVisual3D.Visual);
-                    
-                    Debug.Assert((viewport2DVisual3D.Visual == null || viewport2DVisual3D.Visual.InheritanceContext == null), 
+
+                    Debug.Assert((viewport2DVisual3D.Visual == null || viewport2DVisual3D.Visual.InheritanceContext == null),
                                  "Expected AddVisualChild to remove the InheritanceContext on Visual");
                 }
 
@@ -797,7 +801,7 @@ namespace System.Windows.Media.Media3D
                 }
             }
         }
-        
+
         /// <summary>
         ///  Derived classes override this property to enable the Visual code to enumerate
         ///  the Visual children. Derived classes need to return the number of children
@@ -827,7 +831,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         protected override Visual3D GetVisual3DChild(int index)
         {
-           throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+            throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
         }
 
         /// <summary>
@@ -861,7 +865,7 @@ namespace System.Windows.Media.Media3D
             {
                 throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
-            
+
             return visualChild;
         }
 
@@ -871,15 +875,15 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         private static readonly DependencyProperty CachingHintProperty =
             RenderOptions.CachingHintProperty.AddOwner(
-                                        typeof(Viewport2DVisual3D), 
+                                        typeof(Viewport2DVisual3D),
                                         new UIPropertyMetadata(
                                             new PropertyChangedCallback(OnCachingHintChanged)));
 
         private static void OnCachingHintChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Viewport2DVisual3D viewport2D = (Viewport2DVisual3D) d;
+            Viewport2DVisual3D viewport2D = (Viewport2DVisual3D)d;
 
-            RenderOptions.SetCachingHint(viewport2D._visualBrush, (CachingHint)e.NewValue);            
+            RenderOptions.SetCachingHint(viewport2D._visualBrush, (CachingHint)e.NewValue);
         }
 
         /// <summary>
@@ -887,16 +891,16 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         private static readonly DependencyProperty CacheInvalidationThresholdMinimumProperty =
             RenderOptions.CacheInvalidationThresholdMinimumProperty.AddOwner(
-                                        typeof(Viewport2DVisual3D), 
+                                        typeof(Viewport2DVisual3D),
                                         new UIPropertyMetadata(
                                             new PropertyChangedCallback(OnCacheInvalidationThresholdMinimumChanged)));
 
 
         private static void OnCacheInvalidationThresholdMinimumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Viewport2DVisual3D viewport2D = (Viewport2DVisual3D) d;
+            Viewport2DVisual3D viewport2D = (Viewport2DVisual3D)d;
 
-            RenderOptions.SetCacheInvalidationThresholdMinimum(viewport2D._visualBrush, (double)e.NewValue);            
+            RenderOptions.SetCacheInvalidationThresholdMinimum(viewport2D._visualBrush, (double)e.NewValue);
         }
 
         /// <summary>
@@ -904,23 +908,23 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         private static readonly DependencyProperty CacheInvalidationThresholdMaximumProperty =
             RenderOptions.CacheInvalidationThresholdMaximumProperty.AddOwner(
-                                        typeof(Viewport2DVisual3D), 
+                                        typeof(Viewport2DVisual3D),
                                         new UIPropertyMetadata(
                                             new PropertyChangedCallback(OnCacheInvalidationThresholdMaximumChanged)));
 
         private static void OnCacheInvalidationThresholdMaximumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Viewport2DVisual3D viewport2D = (Viewport2DVisual3D) d;
+            Viewport2DVisual3D viewport2D = (Viewport2DVisual3D)d;
 
-            RenderOptions.SetCacheInvalidationThresholdMaximum(viewport2D._visualBrush, (double)e.NewValue);            
+            RenderOptions.SetCacheInvalidationThresholdMaximum(viewport2D._visualBrush, (double)e.NewValue);
         }
-             
+
         //------------------------------------------------------------------------
         //
         // PRIVATE DATA
         //
         //------------------------------------------------------------------------
-        
+
         // the actual visual that is created        
         private VisualBrush _visualBrush;
         private BitmapCacheBrush _bitmapCacheBrush;

@@ -1,16 +1,16 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using MS.Internal;                          // For Invariant.Assert
-using MS.Internal.Documents;
-using System.Windows.Controls;              // Canvas
 using System.Collections;
+using System.Windows.Controls;              // Canvas
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.TextFormatting;  // CharacterHit
-using System.Windows.Input;
+using MS.Internal;                          // For Invariant.Assert
+using MS.Internal.Documents;
 
 namespace System.Windows.Documents
 {
@@ -191,7 +191,7 @@ namespace System.Windows.Documents
             //create image of appropriate size
             double dpi = 96; // default screen dpi, in fact no other dpi seems to work if you want something at 100% scale
             double scale = dpi / 96.0;
-            RenderTargetBitmap data = new RenderTargetBitmap((int)(scale * _selectionRect.Width), (int)(scale * _selectionRect.Height),dpi,dpi, PixelFormats.Pbgra32);
+            RenderTargetBitmap data = new RenderTargetBitmap((int)(scale * _selectionRect.Width), (int)(scale * _selectionRect.Height), dpi, dpi, PixelFormats.Pbgra32);
 
             data.Render(v);
             return data;
@@ -203,7 +203,7 @@ namespace System.Windows.Documents
             DrawingVisual visual = new DrawingVisual();
 
             root.Children.Add(visual);
-            visual.Offset  = new Vector(offsetX, offsetY);
+            visual.Offset = new Vector(offsetX, offsetY);
 
             DrawingContext dc = visual.RenderOpen();
             dc.DrawDrawing(_page.GetDrawing());
@@ -241,7 +241,7 @@ namespace System.Windows.Documents
             dc.Close();
 
             int count = VisualTreeHelper.GetChildrenCount(old);
-            for(int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
                 Visual child = old.InternalGetVisualChild(i);
                 CloneVisualTree(visual, child);
@@ -281,8 +281,10 @@ namespace System.Windows.Documents
                             if (textRange == null || begin > 0)
                             {
                                 //begin new text range
-                                textRange = new TextPositionPair();
-                                textRange.first = _GetTextPosition(node, begin);
+                                textRange = new TextPositionPair
+                                {
+                                    first = _GetTextPosition(node, begin)
+                                };
                                 ranges.Add(textRange);
                             }
 
@@ -441,7 +443,7 @@ namespace System.Windows.Documents
                 {
                     if (d2 > dStart)
                     {
-                    dStart = d2;
+                        dStart = d2;
                     }
                     if (d1 < dEnd)
                     {

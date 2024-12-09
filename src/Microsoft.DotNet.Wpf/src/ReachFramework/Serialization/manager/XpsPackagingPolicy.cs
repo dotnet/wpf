@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,10 +10,10 @@
         between the serializer and the package
 --*/
 using System.Collections;
-using System.Xml;
 using System.IO;
-using System.Windows.Xps.Packaging;
 using System.Printing;
+using System.Windows.Xps.Packaging;
+using System.Xml;
 
 namespace System.Windows.Xps.Serialization
 {
@@ -33,11 +33,11 @@ namespace System.Windows.Xps.Serialization
         public
         XpsResourceStream(
             Stream stream,
-            Uri    uri
+            Uri uri
             )
         {
             this._stream = stream;
-            this._uri    = uri;
+            this._uri = uri;
         }
 
         #endregion Constructor
@@ -82,17 +82,17 @@ namespace System.Windows.Xps.Serialization
         Initialize(
             )
         {
-            _uri    = null;
+            _uri = null;
             _stream = null;
         }
 
         #endregion Public Methods
 
         private
-        Stream  _stream;
+        Stream _stream;
 
         private
-        Uri     _uri;
+        Uri _uri;
     };
 
     /// <summary>
@@ -162,7 +162,7 @@ namespace System.Windows.Xps.Serialization
         Release(
             )
         {
-            if(_resourceStreamRefCount>0)
+            if (_resourceStreamRefCount > 0)
             {
                 _resourceStreamRefCount--;
             }
@@ -176,13 +176,13 @@ namespace System.Windows.Xps.Serialization
         #region Private Data
 
         private
-        XpsResourceStream  _resourceStream;
+        XpsResourceStream _resourceStream;
 
         private
-        XpsResource   _reachResource;
+        XpsResource _reachResource;
 
         private
-        int             _resourceStreamRefCount;
+        int _resourceStreamRefCount;
 
         #endregion Private Data
     };
@@ -213,61 +213,61 @@ namespace System.Windows.Xps.Serialization
 
         #region Public Base methods
 
-         /// <summary>
-         /// Acquire an Xml Writer for a DocumentSequence
-         /// </summary>
+        /// <summary>
+        /// Acquire an Xml Writer for a DocumentSequence
+        /// </summary>
         public
         abstract
         XmlWriter
         AcquireXmlWriterForFixedDocumentSequence(
             );
 
-         /// <summary>
-         /// Release a reference to the current DocumentSequence
-         /// </summary>
+        /// <summary>
+        /// Release a reference to the current DocumentSequence
+        /// </summary>
         public
         abstract
         void
         ReleaseXmlWriterForFixedDocumentSequence(
             );
 
-         /// <summary>
-         /// Acquire a XmlWriter for a FixedDocument 
-         /// </summary>
+        /// <summary>
+        /// Acquire a XmlWriter for a FixedDocument 
+        /// </summary>
         public
         abstract
         XmlWriter
         AcquireXmlWriterForFixedDocument(
             );
 
-         /// <summary>
-         /// Release a reference to the current FixedDocument
-         /// </summary>
+        /// <summary>
+        /// Release a reference to the current FixedDocument
+        /// </summary>
         public
         abstract
         void
         ReleaseXmlWriterForFixedDocument(
             );
 
-         /// <summary>
-         /// Acquire an XmlWriter for a FixedPage
-         /// </summary>
+        /// <summary>
+        /// Acquire an XmlWriter for a FixedPage
+        /// </summary>
         public
         abstract
         XmlWriter
         AcquireXmlWriterForFixedPage(
             );
 
-         /// <summary>
-         /// Release a reference to the current XmlWriter
-         /// </summary>
+        /// <summary>
+        /// Release a reference to the current XmlWriter
+        /// </summary>
         public
         abstract
         void
         ReleaseXmlWriterForFixedPage(
             );
 
-            
+
         /// <summary>
         ///
         /// </summary>
@@ -275,8 +275,8 @@ namespace System.Windows.Xps.Serialization
         abstract
         void
         RelateResourceToCurrentPage(
-            Uri     targetUri,
-            string  relationshipName
+            Uri targetUri,
+            string relationshipName
             );
 
 
@@ -372,7 +372,7 @@ namespace System.Windows.Xps.Serialization
         abstract
         void
         ReleaseResourceStreamForXpsFont(
-            );     
+            );
 
         /// <summary>
         /// Release a reference to the current XpsFont ResourceStream
@@ -407,7 +407,7 @@ namespace System.Windows.Xps.Serialization
         abstract
         void
         ReleaseResourceStreamForXpsImage(
-            );    
+            );
 
         /// <Summary>
         /// Acquire a ResourceSTream for a XpsColorContext
@@ -451,13 +451,13 @@ namespace System.Windows.Xps.Serialization
         abstract
         void
         ReleaseResourceStreamForXpsResourceDictionary(
-            );    
+            );
 
         #endregion Public Base Methods
 
         #region Public Properties
 
-         /// <summary>
+        /// <summary>
         ///
         /// </summary>
         public
@@ -504,7 +504,7 @@ namespace System.Windows.Xps.Serialization
         public
         XpsPackagingPolicy(
             System.Windows.Xps.Packaging.XpsDocument xpsPackage
-            ): this( xpsPackage, PackageInterleavingOrder.None )
+            ) : this(xpsPackage, PackageInterleavingOrder.None)
         {
         }
 
@@ -515,8 +515,8 @@ namespace System.Windows.Xps.Serialization
         public
         XpsPackagingPolicy(
             System.Windows.Xps.Packaging.XpsDocument xpsPackage,
-            PackageInterleavingOrder                 interleavingType
-            ):
+            PackageInterleavingOrder interleavingType
+            ) :
         base()
         {
             ArgumentNullException.ThrowIfNull(xpsPackage);
@@ -525,8 +525,8 @@ namespace System.Windows.Xps.Serialization
             Initialize();
 
             _interleavingPolicy = new XpsInterleavingPolicy(interleavingType, true);
-            _interleavingPolicy.AddItem((INode)xpsPackage,0,null);
-            
+            _interleavingPolicy.AddItem((INode)xpsPackage, 0, null);
+
             _fontAcquireMode = ResourceAcquireMode.NoneAcquired;
             _fontsCache = new Hashtable(11);
 
@@ -553,7 +553,7 @@ namespace System.Windows.Xps.Serialization
         {
             XmlWriter xmlWriter = null;
 
-            if(_currentDocumentSequenceWriterRef == 0)
+            if (_currentDocumentSequenceWriterRef == 0)
             {
                 //
                 // We need to create the corresponding part in the Xps package
@@ -564,10 +564,10 @@ namespace System.Windows.Xps.Serialization
                 //
                 // retreive the appropriate writer from the reach package api layer
                 //
-                if(_currentFixedDocumentSequenceWriter != null)
+                if (_currentFixedDocumentSequenceWriter != null)
                 {
-                     _currentDSWriter = ((XpsFixedDocumentSequenceReaderWriter)_currentFixedDocumentSequenceWriter).XmlWriter;
-                     _interleavingPolicy.AddItem((INode)_currentFixedDocumentSequenceWriter, 0, (INode) _reachPackage);
+                    _currentDSWriter = ((XpsFixedDocumentSequenceReaderWriter)_currentFixedDocumentSequenceWriter).XmlWriter;
+                    _interleavingPolicy.AddItem((INode)_currentFixedDocumentSequenceWriter, 0, (INode)_reachPackage);
                 }
             }
 
@@ -587,12 +587,12 @@ namespace System.Windows.Xps.Serialization
         ReleaseXmlWriterForFixedDocumentSequence(
             )
         {
-            if(_currentFixedDocumentSequenceWriter != null &&
+            if (_currentFixedDocumentSequenceWriter != null &&
                _currentDocumentSequenceWriterRef > 0)
             {
                 _currentDocumentSequenceWriterRef--;
 
-                if(_currentDocumentSequenceWriterRef == 0)
+                if (_currentDocumentSequenceWriterRef == 0)
                 {
                     //
                     // if any of the other low level writer exist, then
@@ -600,7 +600,7 @@ namespace System.Windows.Xps.Serialization
                     // them and consider that if any additional call on them
                     // would be the one that throws the expcetion
                     //
-                    _interleavingPolicy.Commit((INode) _currentFixedDocumentSequenceWriter);
+                    _interleavingPolicy.Commit((INode)_currentFixedDocumentSequenceWriter);
                     Initialize();
                 }
             }
@@ -621,23 +621,23 @@ namespace System.Windows.Xps.Serialization
         {
             XmlWriter xmlWriter = null;
 
-            if(_currentFixedDocumentWriterRef == 0)
+            if (_currentFixedDocumentWriterRef == 0)
             {
                 //
                 // We need to create the corresponding part in the Xps package
                 // and then acquire the writer
                 //
-                if(_currentFixedDocumentSequenceWriter != null)
+                if (_currentFixedDocumentSequenceWriter != null)
                 {
                     _currentFixedDocumentWriter = _currentFixedDocumentSequenceWriter.AddFixedDocument();
-                    _interleavingPolicy.AddItem((INode)_currentFixedDocumentWriter, 0, (INode) _currentFixedDocumentSequenceWriter);
+                    _interleavingPolicy.AddItem((INode)_currentFixedDocumentWriter, 0, (INode)_currentFixedDocumentSequenceWriter);
                 }
                 //
                 // retreive the appropriate writer from the reach package api layer
                 //
-                if(_currentFixedDocumentWriter!=null)
+                if (_currentFixedDocumentWriter != null)
                 {
-                     _currentFDWriter = ((XpsFixedDocumentReaderWriter)_currentFixedDocumentWriter).XmlWriter;
+                    _currentFDWriter = ((XpsFixedDocumentReaderWriter)_currentFixedDocumentWriter).XmlWriter;
                 }
             }
 
@@ -657,12 +657,12 @@ namespace System.Windows.Xps.Serialization
         ReleaseXmlWriterForFixedDocument(
             )
         {
-            if(_currentFixedDocumentWriter != null &&
+            if (_currentFixedDocumentWriter != null &&
                _currentFixedDocumentWriterRef > 0)
             {
                 _currentFixedDocumentWriterRef--;
 
-                if(_currentFixedDocumentWriterRef == 0)
+                if (_currentFixedDocumentWriterRef == 0)
                 {
                     //
                     // if any of the other low level writer exist, then
@@ -670,13 +670,13 @@ namespace System.Windows.Xps.Serialization
                     // them and consider that if any additional call on them
                     // would be the one that throws the expcetion
                     //
-                    _interleavingPolicy.Commit((INode) _currentFixedDocumentWriter);
+                    _interleavingPolicy.Commit((INode)_currentFixedDocumentWriter);
                     //
                     // All current lower references should be cleared
                     //
-                    _currentFixedDocumentWriter  = null;
-                    _currentFixedPageWriter      = null;
-                    _currentFixedPageWriterRef   = 0;
+                    _currentFixedDocumentWriter = null;
+                    _currentFixedPageWriter = null;
+                    _currentFixedPageWriterRef = 0;
                 }
             }
             else
@@ -696,13 +696,13 @@ namespace System.Windows.Xps.Serialization
         {
             XmlWriter xmlWriter = null;
 
-            if(_currentFixedPageWriterRef == 0)
+            if (_currentFixedPageWriterRef == 0)
             {
                 //
                 // We need to create the corresponding part in the Xps package
                 // and then acquire the writer
                 //
-                if(_currentFixedDocumentWriter != null)
+                if (_currentFixedDocumentWriter != null)
                 {
                     _currentFixedPageWriter = _currentFixedDocumentWriter.AddFixedPage();
                     _interleavingPolicy.AddItem((INode)_currentFixedPageWriter, 0, (INode)_currentFixedDocumentWriter);
@@ -711,9 +711,9 @@ namespace System.Windows.Xps.Serialization
                 //
                 // retreive the appropriate writer from the reach package api layer
                 //
-                if(_currentFixedPageWriter != null)
+                if (_currentFixedPageWriter != null)
                 {
-                     _currentFPWriter = ((XpsFixedPageReaderWriter)_currentFixedPageWriter).XmlWriter;
+                    _currentFPWriter = ((XpsFixedPageReaderWriter)_currentFixedPageWriter).XmlWriter;
                 }
             }
 
@@ -733,12 +733,12 @@ namespace System.Windows.Xps.Serialization
         ReleaseXmlWriterForFixedPage(
             )
         {
-            if(_currentFixedPageWriter!=null &&
-               _currentFixedPageWriterRef>0)
+            if (_currentFixedPageWriter != null &&
+               _currentFixedPageWriterRef > 0)
             {
                 _currentFixedPageWriterRef--;
 
-                if(_currentFixedPageWriterRef == 0)
+                if (_currentFixedPageWriterRef == 0)
                 {
                     //
                     // if any of the other low level writer exist, then
@@ -777,20 +777,20 @@ namespace System.Windows.Xps.Serialization
         {
             XpsResourceStream resourceStream = null;
 
-            if(_fontAcquireMode != ResourceAcquireMode.MultipleAcquired)
+            if (_fontAcquireMode != ResourceAcquireMode.MultipleAcquired)
             {
-                if(_fontAcquireMode == ResourceAcquireMode.NoneAcquired)
+                if (_fontAcquireMode == ResourceAcquireMode.NoneAcquired)
                 {
                     _fontAcquireMode = ResourceAcquireMode.SingleAcquired;
                 }
 
-                if(_currentXpsFontRef == 0)
+                if (_currentXpsFontRef == 0)
                 {
                     //
                     // We need to create the corresponding part in the Xps package
                     // and then acquire the Stream
                     //
-                    if(_currentFixedPageWriter != null)
+                    if (_currentFixedPageWriter != null)
                     {
                         _currentXpsFont = _currentFixedPageWriter.AddFont();
                         _interleavingPolicy.AddItem((INode)_currentXpsFont, 0, (INode)_currentFixedPageWriter);
@@ -803,10 +803,10 @@ namespace System.Windows.Xps.Serialization
                     //
                     // retreive the appropriate stream and uri from the reach package api layer
                     //
-                    if(_currentXpsFont != null)
+                    if (_currentXpsFont != null)
                     {
-                         _fontResourceStream = new XpsResourceStream(_currentXpsFont.GetStream(),
-                                                                  _currentXpsFont.Uri);
+                        _fontResourceStream = new XpsResourceStream(_currentXpsFont.GetStream(),
+                                                                 _currentXpsFont.Uri);
                     }
                 }
 
@@ -834,16 +834,16 @@ namespace System.Windows.Xps.Serialization
         {
             XpsResourceStream resourceStream = null;
 
-            if(_fontAcquireMode != ResourceAcquireMode.SingleAcquired)
+            if (_fontAcquireMode != ResourceAcquireMode.SingleAcquired)
             {
-                if(_fontAcquireMode == ResourceAcquireMode.NoneAcquired)
+                if (_fontAcquireMode == ResourceAcquireMode.NoneAcquired)
                 {
                     _fontAcquireMode = ResourceAcquireMode.MultipleAcquired;
                 }
 
                 ResourceStreamCacheItem resourceStreamCacheItem = (ResourceStreamCacheItem)_fontsCache[resourceId];
 
-                if(resourceStreamCacheItem == null)
+                if (resourceStreamCacheItem == null)
                 {
                     resourceStreamCacheItem = new ResourceStreamCacheItem();
 
@@ -851,22 +851,22 @@ namespace System.Windows.Xps.Serialization
                     // We need to create the corresponding part in the Xps package
                     // and then acquire the Stream
                     //
-                    if(_currentFixedPageWriter != null)
+                    if (_currentFixedPageWriter != null)
                     {
                         XpsFont reachFont = _currentFixedPageWriter.AddFont();
-    
-                        if(reachFont != null)
+
+                        if (reachFont != null)
                         {
-                            _interleavingPolicy.AddItem((INode)reachFont, 0, (INode) _currentFixedPageWriter);
+                            _interleavingPolicy.AddItem((INode)reachFont, 0, (INode)_currentFixedPageWriter);
                             resourceStreamCacheItem.XpsResource = (XpsResource)reachFont;
                             //
                             // retreive the appropriate stream and uri from the reach package api layer
                             //
                             _fontResourceStream = new XpsResourceStream(reachFont.GetStream(),
                                                                      reachFont.Uri);
-                                                  
+
                             resourceStreamCacheItem.XpsResourceStream = _fontResourceStream;
-    
+
                             _fontsCache[resourceId] = resourceStreamCacheItem;
 
                             resourceStream = _fontResourceStream;
@@ -896,20 +896,20 @@ namespace System.Windows.Xps.Serialization
         ReleaseResourceStreamForXpsFont(
             )
         {
-            if(_fontAcquireMode == ResourceAcquireMode.SingleAcquired)
+            if (_fontAcquireMode == ResourceAcquireMode.SingleAcquired)
             {
-                if(_currentXpsFont != null &&
+                if (_currentXpsFont != null &&
                    _currentXpsFontRef > 0)
                 {
                     _currentXpsFontRef--;
 
-                    if(_currentXpsFontRef == 0)
+                    if (_currentXpsFontRef == 0)
                     {
                         _interleavingPolicy.Commit((INode)_currentXpsFont);
                         _fontResourceStream.Initialize();
-                        _currentXpsFont   = null;
+                        _currentXpsFont = null;
                         _fontResourceStream = null;
-                        _fontAcquireMode    = ResourceAcquireMode.NoneAcquired;
+                        _fontAcquireMode = ResourceAcquireMode.NoneAcquired;
                     }
                 }
                 else
@@ -932,18 +932,18 @@ namespace System.Windows.Xps.Serialization
             String resourceId
             )
         {
-            if(_fontAcquireMode == ResourceAcquireMode.MultipleAcquired)
+            if (_fontAcquireMode == ResourceAcquireMode.MultipleAcquired)
             {
                 ResourceStreamCacheItem resourceStreamCacheItem = (ResourceStreamCacheItem)_fontsCache[resourceId];
 
-                if(resourceStreamCacheItem != null)
+                if (resourceStreamCacheItem != null)
                 {
-                    if(resourceStreamCacheItem.Release() == 0)
+                    if (resourceStreamCacheItem.Release() == 0)
                     {
                         _interleavingPolicy.Commit((INode)resourceStreamCacheItem.XpsResource);
                         _fontsCache.Remove(resourceId);
 
-                        if(_fontsCache.Count == 0)
+                        if (_fontsCache.Count == 0)
                         {
                             _fontAcquireMode = ResourceAcquireMode.NoneAcquired;
                         }
@@ -971,16 +971,16 @@ namespace System.Windows.Xps.Serialization
         {
             XpsResourceStream resourceStream = null;
 
-            if(_currentXpsImageRef == 0)
+            if (_currentXpsImageRef == 0)
             {
                 //
                 // We need to create the corresponding part in the Xps package
                 // and then acquire the Stream
                 //
-                if(_currentFixedPageWriter != null)
+                if (_currentFixedPageWriter != null)
                 {
                     _currentXpsImage = _currentFixedPageWriter.AddImage(resourceId);
-                    _interleavingPolicy.AddItem((INode)_currentXpsImage, 0, (INode) _currentFixedPageWriter);
+                    _interleavingPolicy.AddItem((INode)_currentXpsImage, 0, (INode)_currentFixedPageWriter);
                 }
                 else
                 {
@@ -990,7 +990,7 @@ namespace System.Windows.Xps.Serialization
                 //
                 // retreive the appropriate stream and uri from the reach package api layer
                 //
-                if(_currentXpsImage != null)
+                if (_currentXpsImage != null)
                 {
                     _imageResourceStream = new XpsResourceStream(_currentXpsImage.GetStream(),
                                                                _currentXpsImage.Uri);
@@ -1013,12 +1013,12 @@ namespace System.Windows.Xps.Serialization
         ReleaseResourceStreamForXpsImage(
             )
         {
-            if(_currentXpsImage != null &&
+            if (_currentXpsImage != null &&
                _currentXpsImageRef > 0)
             {
                 _currentXpsImageRef--;
 
-                if(_currentXpsImageRef == 0)
+                if (_currentXpsImageRef == 0)
                 {
                     _interleavingPolicy.Commit((INode)_currentXpsImage);
                     _imageResourceStream.Initialize();
@@ -1047,16 +1047,16 @@ namespace System.Windows.Xps.Serialization
         {
             XpsResourceStream resourceStream = null;
 
-            if(_currentXpsColorContextRef == 0)
+            if (_currentXpsColorContextRef == 0)
             {
                 //
                 // We need to create the corresponding part in the Xps package
                 // and then acquire the Stream
                 //
-                if(_currentFixedPageWriter != null)
+                if (_currentFixedPageWriter != null)
                 {
                     _currentXpsColorContext = _currentFixedPageWriter.AddColorContext();
-                    _interleavingPolicy.AddItem((INode)_currentXpsColorContext, 0, (INode) _currentFixedPageWriter);
+                    _interleavingPolicy.AddItem((INode)_currentXpsColorContext, 0, (INode)_currentFixedPageWriter);
                 }
                 else
                 {
@@ -1066,10 +1066,10 @@ namespace System.Windows.Xps.Serialization
                 //
                 // retreive the appropriate stream and uri from the reach package api layer
                 //
-                if(_currentXpsColorContext != null)
+                if (_currentXpsColorContext != null)
                 {
-                     _colorContextResourceStream = new XpsResourceStream(_currentXpsColorContext.GetStream(),
-                                                               _currentXpsColorContext.Uri);
+                    _colorContextResourceStream = new XpsResourceStream(_currentXpsColorContext.GetStream(),
+                                                              _currentXpsColorContext.Uri);
                 }
             }
 
@@ -1089,14 +1089,14 @@ namespace System.Windows.Xps.Serialization
         ReleaseResourceStreamForXpsColorContext(
             )
         {
-            if(_currentXpsColorContext != null &&
+            if (_currentXpsColorContext != null &&
                _currentXpsColorContextRef > 0)
             {
                 _currentXpsColorContextRef--;
 
-                if(_currentXpsColorContextRef == 0)
+                if (_currentXpsColorContextRef == 0)
                 {
-                    _interleavingPolicy.Commit((INode) _currentXpsColorContext);
+                    _interleavingPolicy.Commit((INode)_currentXpsColorContext);
                     _colorContextResourceStream.Initialize();
                     _currentXpsColorContext = null;
                     _colorContextResourceStream = null;
@@ -1123,16 +1123,16 @@ namespace System.Windows.Xps.Serialization
         {
             XpsResourceStream resourceStream = null;
 
-            if(_currentXpsResourceDictionaryRef == 0)
+            if (_currentXpsResourceDictionaryRef == 0)
             {
                 //
                 // We need to create the corresponding part in the Xps package
                 // and then acquire the Stream
                 //
-                if(_currentFixedPageWriter != null)
+                if (_currentFixedPageWriter != null)
                 {
                     _currentXpsResourceDictionary = _currentFixedPageWriter.AddResourceDictionary();
-                    _interleavingPolicy.AddItem((INode) _currentXpsResourceDictionary, 0, (INode) _currentFixedPageWriter);
+                    _interleavingPolicy.AddItem((INode)_currentXpsResourceDictionary, 0, (INode)_currentFixedPageWriter);
                 }
                 else
                 {
@@ -1142,10 +1142,10 @@ namespace System.Windows.Xps.Serialization
                 //
                 // retreive the appropriate stream and uri from the reach package api layer
                 //
-                if(_currentXpsResourceDictionary != null)
+                if (_currentXpsResourceDictionary != null)
                 {
-                     _resourceDictionaryResourceStream = new XpsResourceStream(_currentXpsResourceDictionary.GetStream(),
-                                                               _currentXpsResourceDictionary.Uri);
+                    _resourceDictionaryResourceStream = new XpsResourceStream(_currentXpsResourceDictionary.GetStream(),
+                                                              _currentXpsResourceDictionary.Uri);
                 }
             }
 
@@ -1165,16 +1165,16 @@ namespace System.Windows.Xps.Serialization
         ReleaseResourceStreamForXpsResourceDictionary(
             )
         {
-            if(_currentXpsResourceDictionary != null &&
+            if (_currentXpsResourceDictionary != null &&
                _currentXpsResourceDictionaryRef > 0)
             {
                 _currentXpsResourceDictionaryRef--;
 
-                if(_currentXpsResourceDictionaryRef == 0)
+                if (_currentXpsResourceDictionaryRef == 0)
                 {
                     _interleavingPolicy.Commit((INode)_currentXpsResourceDictionary);
                     _resourceDictionaryResourceStream.Initialize();
-                    _currentXpsResourceDictionary   = null;
+                    _currentXpsResourceDictionary = null;
                     _resourceDictionaryResourceStream = null;
                 }
             }
@@ -1198,8 +1198,8 @@ namespace System.Windows.Xps.Serialization
         override
         void
         RelateResourceToCurrentPage(
-            Uri     targetUri,
-            string  relationshipName
+            Uri targetUri,
+            string relationshipName
             )
         {
             if (_currentFixedPageWriter != null)
@@ -1221,12 +1221,12 @@ namespace System.Windows.Xps.Serialization
         void
         RelateRestrictedFontToCurrentDocument(
             Uri targetUri
-            )     
+            )
         {
             if (_currentFixedDocumentWriter != null)
             {
-               ((XpsFixedDocumentReaderWriter)_currentFixedDocumentWriter).AddRelationship(targetUri, XpsS0Markup.RestrictedFontRelationshipType);
-     
+                ((XpsFixedDocumentReaderWriter)_currentFixedDocumentWriter).AddRelationship(targetUri, XpsS0Markup.RestrictedFontRelationshipType);
+
                 //
                 // This code is in for restricted fonts and should be
                 // enabled later when we figure out a way to commit
@@ -1261,11 +1261,11 @@ namespace System.Windows.Xps.Serialization
             {
                 _currentFixedPageWriter.PrintTicket = printTicket;
             }
-            else if(_currentFixedDocumentWriter != null)
+            else if (_currentFixedDocumentWriter != null)
             {
                 _currentFixedDocumentWriter.PrintTicket = printTicket;
             }
-            else if(_currentFixedDocumentSequenceWriter != null)
+            else if (_currentFixedDocumentSequenceWriter != null)
             {
                 _currentFixedDocumentSequenceWriter.PrintTicket = printTicket;
             }
@@ -1354,7 +1354,7 @@ namespace System.Windows.Xps.Serialization
             {
                 if (_currentFixedDocumentWriter != null)
                 {
-                    return _currentFixedDocumentWriter.Uri;                  
+                    return _currentFixedDocumentWriter.Uri;
                 }
                 else
                 {
@@ -1395,8 +1395,8 @@ namespace System.Windows.Xps.Serialization
         event
         PackagingProgressEventHandler PackagingProgressEvent
         {
-            add{ InterleavingPolicy.PackagingProgressEvent += value; }
-            remove{ InterleavingPolicy.PackagingProgressEvent -= value; }
+            add { InterleavingPolicy.PackagingProgressEvent += value; }
+            remove { InterleavingPolicy.PackagingProgressEvent -= value; }
         }
         internal
         XpsInterleavingPolicy
@@ -1409,7 +1409,7 @@ namespace System.Windows.Xps.Serialization
         }
 
         #endregion Public Properties
-        
+
 
 
         #region Private Methods
@@ -1419,10 +1419,10 @@ namespace System.Windows.Xps.Serialization
         Initialize(
             )
         {
-            _currentFixedDocumentSequenceWriter  = null;
+            _currentFixedDocumentSequenceWriter = null;
             _currentFixedDocumentWriter = null;
             _currentFixedPageWriter = null;
-            
+
             _currentDocumentSequenceWriterRef = 0;
             _currentFixedDocumentWriterRef = 0;
             _currentFixedPageWriterRef = 0;
@@ -1437,28 +1437,28 @@ namespace System.Windows.Xps.Serialization
             _currentXpsImage = null;
             _currentXpsColorContext = null;
             _currentXpsResourceDictionary = null;
-            
+
             _currentXpsFontRef = 0;
             _currentXpsImageRef = 0;
             _currentXpsColorContextRef = 0;
             _currentXpsResourceDictionaryRef = 0;
 
-            if(_fontResourceStream!=null)
+            if (_fontResourceStream != null)
             {
                 _fontResourceStream.Initialize();
             }
 
-            if(_imageResourceStream!=null)
+            if (_imageResourceStream != null)
             {
                 _imageResourceStream.Initialize();
             }
 
-            if(_colorContextResourceStream!=null)
+            if (_colorContextResourceStream != null)
             {
                 _colorContextResourceStream.Initialize();
             }
 
-            if(_resourceDictionaryResourceStream!=null)
+            if (_resourceDictionaryResourceStream != null)
             {
                 _resourceDictionaryResourceStream.Initialize();
             }
@@ -1466,7 +1466,7 @@ namespace System.Windows.Xps.Serialization
 
         }
 
-       
+
 
         #endregion Private Methods
 
@@ -1477,84 +1477,84 @@ namespace System.Windows.Xps.Serialization
         Windows.
         Xps.
         Packaging.
-        XpsDocument                _reachPackage;
+        XpsDocument _reachPackage;
 
         private
-        XpsInterleavingPolicy       _interleavingPolicy;
-        
-        private
-        IXpsFixedDocumentSequenceWriter     _currentFixedDocumentSequenceWriter;
+        XpsInterleavingPolicy _interleavingPolicy;
 
         private
-        IXpsFixedDocumentWriter        _currentFixedDocumentWriter;
+        IXpsFixedDocumentSequenceWriter _currentFixedDocumentSequenceWriter;
 
         private
-        IXpsFixedPageWriter            _currentFixedPageWriter;
+        IXpsFixedDocumentWriter _currentFixedDocumentWriter;
 
         private
-        int                         _currentDocumentSequenceWriterRef;
+        IXpsFixedPageWriter _currentFixedPageWriter;
 
         private
-        int                         _currentFixedDocumentWriterRef;
+        int _currentDocumentSequenceWriterRef;
 
         private
-        int                         _currentFixedPageWriterRef;
+        int _currentFixedDocumentWriterRef;
 
         private
-        XmlWriter                   _currentDSWriter;
+        int _currentFixedPageWriterRef;
 
         private
-        XmlWriter                   _currentFDWriter;
+        XmlWriter _currentDSWriter;
 
         private
-        XmlWriter                   _currentFPWriter;
+        XmlWriter _currentFDWriter;
 
         private
-        XpsFont                   _currentXpsFont;
+        XmlWriter _currentFPWriter;
 
         private
-        XpsImage                  _currentXpsImage;
+        XpsFont _currentXpsFont;
 
         private
-        XpsColorContext           _currentXpsColorContext;
+        XpsImage _currentXpsImage;
 
         private
-        XpsResourceDictionary           _currentXpsResourceDictionary;
+        XpsColorContext _currentXpsColorContext;
 
         private
-        int                         _currentXpsFontRef;
+        XpsResourceDictionary _currentXpsResourceDictionary;
 
         private
-        int                         _currentXpsImageRef;
+        int _currentXpsFontRef;
 
         private
-        int                         _currentXpsColorContextRef;
+        int _currentXpsImageRef;
 
         private
-        int                         _currentXpsResourceDictionaryRef;
+        int _currentXpsColorContextRef;
 
         private
-        XpsResourceStream           _fontResourceStream;
+        int _currentXpsResourceDictionaryRef;
 
         private
-        XpsResourceStream           _imageResourceStream;
+        XpsResourceStream _fontResourceStream;
 
         private
-        XpsResourceStream           _colorContextResourceStream;
-        
-        private
-        XpsResourceStream           _resourceDictionaryResourceStream;
+        XpsResourceStream _imageResourceStream;
 
         private
-        ResourceAcquireMode         _fontAcquireMode;
+        XpsResourceStream _colorContextResourceStream;
 
         private
-        Hashtable                   _fontsCache;
+        XpsResourceStream _resourceDictionaryResourceStream;
+
+        private
+        ResourceAcquireMode _fontAcquireMode;
+
+        private
+        Hashtable _fontsCache;
 
         private enum ResourceAcquireMode
         {
-            NoneAcquired     = 0,
-            SingleAcquired   = 1,
+            NoneAcquired = 0,
+            SingleAcquired = 1,
             MultipleAcquired = 2
         };
 

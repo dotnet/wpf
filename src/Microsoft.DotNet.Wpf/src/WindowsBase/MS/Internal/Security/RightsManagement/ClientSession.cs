@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,9 +7,9 @@
 //  Promethium Rights Management SDK APIs 
 
 using System.Collections;
+using System.Globalization;
 using System.Security.RightsManagement;
 using System.Text;
-using System.Globalization;
 using Microsoft.Win32;
 
 namespace MS.Internal.Security.RightsManagement
@@ -254,10 +254,10 @@ namespace MS.Internal.Security.RightsManagement
                 null,  // requested data is reserved and not used
                 null, // custom data 
                 url.AbsoluteUri,  // We are using Uri class as a basic validation mechanism. These URIs come from unmanaged 
-                // code libraries and go back as parameters into the unmanaged code libraries. 
-                // We use AbsoluteUri property as means of verifying that it is actually an absolute and 
-                // well formed Uri. If by any chance it happened to be a relative URI, an exception will 
-                // be thrown here. This will perform the necessary escaping.
+                                  // code libraries and go back as parameters into the unmanaged code libraries. 
+                                  // We use AbsoluteUri property as means of verifying that it is actually an absolute and 
+                                  // well formed Uri. If by any chance it happened to be a relative URI, an exception will 
+                                  // be thrown here. This will perform the necessary escaping.
 
                 IntPtr.Zero);    // context
 
@@ -759,7 +759,7 @@ namespace MS.Internal.Security.RightsManagement
             CheckDisposed();
 
             Invariant.Assert(serializedUseLicense != null);
-            
+
             int hr = 0;
             int theFirstHrFailureCode = 0;
 
@@ -772,12 +772,13 @@ namespace MS.Internal.Security.RightsManagement
             List<RightNameExpirationInfoPair> unboundRightsList =
                         GetRightsInfoFromUseLicense(serializedUseLicense, out rightsGroupName);
 
-            BoundLicenseParams boundLicenseParams = new BoundLicenseParams();
-
-            boundLicenseParams.uVersion = 0;
-            boundLicenseParams.hEnablingPrincipal = 0;
-            boundLicenseParams.hSecureStore = 0;
-            boundLicenseParams.wszRightsGroup = rightsGroupName;
+            BoundLicenseParams boundLicenseParams = new BoundLicenseParams
+            {
+                uVersion = 0,
+                hEnablingPrincipal = 0,
+                hSecureStore = 0,
+                wszRightsGroup = rightsGroupName
+            };
 
             string contentId;
             string contentIdType;
@@ -975,15 +976,17 @@ namespace MS.Internal.Security.RightsManagement
 
             if (url != null)
             {
-                activationServer = new ActivationServerInfo();
-                activationServer.PubKey = null;
-                activationServer.Url = url.AbsoluteUri;  // We are using Uri class as a basic validation mechanism. These URIs come from unmanaged 
-                // code libraries and go back as parameters into the unmanaged code libraries. 
-                // We use AbsoluteUri property as means of verifying that it is actually an absolute and 
-                // well formed Uri. If by any chance it happened to be a relative URI, an exception will 
-                // be thrown here. This will perform the necessary escaping.
+                activationServer = new ActivationServerInfo
+                {
+                    PubKey = null,
+                    Url = url.AbsoluteUri,  // We are using Uri class as a basic validation mechanism. These URIs come from unmanaged 
+                                            // code libraries and go back as parameters into the unmanaged code libraries. 
+                                            // We use AbsoluteUri property as means of verifying that it is actually an absolute and 
+                                            // well formed Uri. If by any chance it happened to be a relative URI, an exception will 
+                                            // be thrown here. This will perform the necessary escaping.
 
-                activationServer.Version = NativeConstants.DrmCallbackVersion;
+                    Version = NativeConstants.DrmCallbackVersion
+                };
             }
 
             int hr = SafeNativeMethods.DRMActivate(
@@ -1127,7 +1130,7 @@ namespace MS.Internal.Security.RightsManagement
 #if DEBUG
         static private string GetBoundLicenseStringAttribute(
             SafeRightsManagementHandle queryHandle,
-            string attributeType, 
+            string attributeType,
             uint attributeIndex)
         {
             uint attributeSize = 0;
@@ -1449,7 +1452,7 @@ namespace MS.Internal.Security.RightsManagement
         }
 
         #region Debug
-        // We currently don�t use these two methods, but they may be useful in the future. 
+        // We currently don’t use these two methods, but they may be useful in the future. 
         // So we keep them in the debug build only, and changed them from internal methods 
         // to private methods to remove them from asmmeta files.
 #if DEBUG
@@ -1763,7 +1766,7 @@ namespace MS.Internal.Security.RightsManagement
 
         internal static void GetReferralInfoFromPublishLicense(
                             string publishLicense,
-                            out string referralInfoName, 
+                            out string referralInfoName,
                             out Uri referralInfoUri)
         {
             string nameAttributeValue;
@@ -1954,7 +1957,7 @@ namespace MS.Internal.Security.RightsManagement
         /// </summary>
         private void CheckDisposed()
         {
-            ObjectDisposedException.ThrowIf((_hSession == null) ||(_hSession.IsInvalid), typeof(SecureEnvironment));
+            ObjectDisposedException.ThrowIf((_hSession == null) || (_hSession.IsInvalid), typeof(SecureEnvironment));
         }
 
         private const string _defaultUserName = @"DefaultUser@DefaultDomain.DefaultCom";     // RM default user name
@@ -1988,7 +1991,7 @@ namespace MS.Internal.Security.RightsManagement
                                         ContentRight.Extract,
                                         ContentRight.ObjectModel,
                                         ContentRight.Owner,
-                                        ContentRight.ViewRightsData, 
+                                        ContentRight.ViewRightsData,
                                         ContentRight.Forward,
                                         ContentRight.Reply,
                                         ContentRight.ReplyAll,
@@ -2004,7 +2007,7 @@ namespace MS.Internal.Security.RightsManagement
                                         "EXTRACT",
                                         "OBJMODEL",
                                         "OWNER",
-                                        "VIEWRIGHTSDATA", 
+                                        "VIEWRIGHTSDATA",
                                         "FORWARD",
                                         "REPLY",
                                         "REPLYALL",

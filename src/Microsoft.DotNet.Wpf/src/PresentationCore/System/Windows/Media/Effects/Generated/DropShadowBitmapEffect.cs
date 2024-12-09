@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -53,42 +53,42 @@ namespace System.Windows.Media.Effects
 
         private static void ShadowDepthPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            DropShadowBitmapEffect target = ((DropShadowBitmapEffect) d);
+            DropShadowBitmapEffect target = ((DropShadowBitmapEffect)d);
 
 
             target.PropertyChanged(ShadowDepthProperty);
         }
         private static void ColorPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            DropShadowBitmapEffect target = ((DropShadowBitmapEffect) d);
+            DropShadowBitmapEffect target = ((DropShadowBitmapEffect)d);
 
 
             target.PropertyChanged(ColorProperty);
         }
         private static void DirectionPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            DropShadowBitmapEffect target = ((DropShadowBitmapEffect) d);
+            DropShadowBitmapEffect target = ((DropShadowBitmapEffect)d);
 
 
             target.PropertyChanged(DirectionProperty);
         }
         private static void NoisePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            DropShadowBitmapEffect target = ((DropShadowBitmapEffect) d);
+            DropShadowBitmapEffect target = ((DropShadowBitmapEffect)d);
 
 
             target.PropertyChanged(NoiseProperty);
         }
         private static void OpacityPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            DropShadowBitmapEffect target = ((DropShadowBitmapEffect) d);
+            DropShadowBitmapEffect target = ((DropShadowBitmapEffect)d);
 
 
             target.PropertyChanged(OpacityProperty);
         }
         private static void SoftnessPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            DropShadowBitmapEffect target = ((DropShadowBitmapEffect) d);
+            DropShadowBitmapEffect target = ((DropShadowBitmapEffect)d);
 
 
             target.PropertyChanged(SoftnessProperty);
@@ -104,7 +104,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double) GetValue(ShadowDepthProperty);
+                return (double)GetValue(ShadowDepthProperty);
             }
             set
             {
@@ -119,7 +119,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (Color) GetValue(ColorProperty);
+                return (Color)GetValue(ColorProperty);
             }
             set
             {
@@ -134,7 +134,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double) GetValue(DirectionProperty);
+                return (double)GetValue(DirectionProperty);
             }
             set
             {
@@ -149,7 +149,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double) GetValue(NoiseProperty);
+                return (double)GetValue(NoiseProperty);
             }
             set
             {
@@ -164,7 +164,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double) GetValue(OpacityProperty);
+                return (double)GetValue(OpacityProperty);
             }
             set
             {
@@ -179,7 +179,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double) GetValue(SoftnessProperty);
+                return (double)GetValue(SoftnessProperty);
             }
             set
             {

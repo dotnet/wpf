@@ -1,17 +1,17 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Windows.Threading;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Runtime.InteropServices;
-using System.Reflection;
+using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.Interop;
 using MS.Internal.PresentationCore;                        // SecurityHelper
-using MS.Win32;
 using MS.Utility;
+using MS.Win32;
 
 namespace System.Windows.Interop
 {
@@ -30,7 +30,7 @@ namespace System.Windows.Interop
 
         public void Dispose()
         {
-            if(_site != null)
+            if (_site != null)
             {
                 //Console.WriteLine("Disposing");
 
@@ -40,12 +40,12 @@ namespace System.Windows.Interop
                 // If we have capture, release it.
                 try
                 {
-                    if(_source.HasCapture)
+                    if (_source.HasCapture)
                     {
                         SafeNativeMethods.ReleaseCapture();
                     }
                 }
-                catch(System.ComponentModel.Win32Exception)
+                catch (System.ComponentModel.Win32Exception)
                 {
                     System.Diagnostics.Debug.WriteLine("HwndMouseInputProvider: Dispose: GetCapture failed!");
                 }
@@ -56,7 +56,7 @@ namespace System.Windows.Interop
                     IntPtr hwndCapture = SafeNativeMethods.GetCapture();
                     PossiblyDeactivate(hwndCapture, false);
                 }
-                catch(System.ComponentModel.Win32Exception)
+                catch (System.ComponentModel.Win32Exception)
                 {
                     System.Diagnostics.Debug.WriteLine("HwndMouseInputProvider: Dispose: GetCapture failed!");
                 }
@@ -74,7 +74,7 @@ namespace System.Windows.Interop
 
         void IInputProvider.NotifyDeactivate()
         {
-            if(_active)
+            if (_active)
             {
                 StopTracking(_source.CriticalHandle);
 
@@ -92,25 +92,25 @@ namespace System.Windows.Interop
             // - this is set if we have received a WM_MOUSEMOVE without a prior WM_SETCURSOR, a scenario
             //   that occurs during "Help Mode" where Win32 has set the cursor to an arrow with a question mark
             //   and does not want the underlying window changing it.
-            if(_setCursorState != SetCursorState.SetCursorDisabled)
+            if (_setCursorState != SetCursorState.SetCursorDisabled)
             {
                 try
                 {
-                    SafeNativeMethods.SetCursor( cursor.Handle );
+                    SafeNativeMethods.SetCursor(cursor.Handle);
                     success = true;
                 }
-                catch(System.ComponentModel.Win32Exception)
+                catch (System.ComponentModel.Win32Exception)
                 {
                     System.Diagnostics.Debug.WriteLine("HwndMouseInputProvider: SetCursor failed!");
                 }
-}
+            }
 
             return success;
         }
 
         bool IMouseInputProvider.CaptureMouse()
         {
-            if(_isDwmProcess)
+            if (_isDwmProcess)
             {
                 return true;
             }
@@ -128,14 +128,14 @@ namespace System.Windows.Interop
                     success = false;
                 }
             }
-            catch(System.ComponentModel.Win32Exception)
+            catch (System.ComponentModel.Win32Exception)
             {
                 System.Diagnostics.Debug.WriteLine("HwndMouseInputProvider: SetCapture or GetCapture failed!");
 
                 success = false;
             }
 
-            if(success)
+            if (success)
             {
                 _haveCapture = true;
             }
@@ -147,20 +147,20 @@ namespace System.Windows.Interop
 
                 success = UnsafeNativeMethods.TryGetCursorPos(ref ptCursor);
 
-                if(success)
+                if (success)
                 {
                     try
                     {
                         SafeNativeMethods.ScreenToClient(new HandleRef(this, _source.CriticalHandle), ref ptCursor);
                     }
-                    catch(System.ComponentModel.Win32Exception)
+                    catch (System.ComponentModel.Win32Exception)
                     {
                         System.Diagnostics.Debug.WriteLine("HwndMouseInputProvider: ScreenToClient failed!");
 
                         success = false;
                     }
 
-                    if(success)
+                    if (success)
                     {
                         ReportInput(_source.CriticalHandle,
                                     InputMode.Foreground,
@@ -181,7 +181,7 @@ namespace System.Windows.Interop
             // MITIGATION_SETCURSOR
             _haveCapture = false;
 
-            if(_isDwmProcess)
+            if (_isDwmProcess)
             {
                 return;
             }
@@ -190,7 +190,7 @@ namespace System.Windows.Interop
             {
                 SafeNativeMethods.ReleaseCapture();
             }
-            catch(System.ComponentModel.Win32Exception)
+            catch (System.ComponentModel.Win32Exception)
             {
                 System.Diagnostics.Debug.WriteLine("HwndMouseInputProvider: ReleaseCapture failed!");
             }
@@ -215,13 +215,13 @@ namespace System.Windows.Interop
 
                     if (inputSource != null)
                     {
-                        int nVirtualWidth  = UnsafeNativeMethods.GetSystemMetrics(SM.CXVIRTUALSCREEN);
+                        int nVirtualWidth = UnsafeNativeMethods.GetSystemMetrics(SM.CXVIRTUALSCREEN);
                         int nVirtualHeight = UnsafeNativeMethods.GetSystemMetrics(SM.CYVIRTUALSCREEN);
-                        int nVirtualLeft   = UnsafeNativeMethods.GetSystemMetrics(SM.XVIRTUALSCREEN);
-                        int nVirtualTop    = UnsafeNativeMethods.GetSystemMetrics(SM.YVIRTUALSCREEN);
-                        uint mode           = NativeMethods.GMMP_USE_DISPLAY_POINTS;
+                        int nVirtualLeft = UnsafeNativeMethods.GetSystemMetrics(SM.XVIRTUALSCREEN);
+                        int nVirtualTop = UnsafeNativeMethods.GetSystemMetrics(SM.YVIRTUALSCREEN);
+                        uint mode = NativeMethods.GMMP_USE_DISPLAY_POINTS;
 
-                        NativeMethods.MOUSEMOVEPOINT mp_in  = new NativeMethods.MOUSEMOVEPOINT();
+                        NativeMethods.MOUSEMOVEPOINT mp_in = new NativeMethods.MOUSEMOVEPOINT();
                         NativeMethods.MOUSEMOVEPOINT[] mp_out = new NativeMethods.MOUSEMOVEPOINT[64];
 
                         mp_in.x = _latestMovePoint.x;
@@ -304,7 +304,7 @@ namespace System.Windows.Interop
                     }
                 }
             }
-            catch(System.ComponentModel.Win32Exception)
+            catch (System.ComponentModel.Win32Exception)
             {
                 System.Diagnostics.Debug.WriteLine("HwndMouseInputProvider: GetIntermediatePoints failed!");
 
@@ -317,10 +317,10 @@ namespace System.Windows.Interop
 
         internal IntPtr FilterMessage(IntPtr hwnd, WindowMessage msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            IntPtr result = IntPtr.Zero ;
+            IntPtr result = IntPtr.Zero;
 
             // It is possible to be re-entered during disposal.  Just return.
-            if(_source is null)
+            if (_source is null)
             {
                 return result;
             }
@@ -345,7 +345,7 @@ namespace System.Windows.Interop
             {
                 _msgTime = SafeNativeMethods.GetMessageTime();
             }
-            catch(System.ComponentModel.Win32Exception)
+            catch (System.ComponentModel.Win32Exception)
             {
                 System.Diagnostics.Debug.WriteLine("HwndMouseInputProvider: GetMessageTime failed!");
             }
@@ -353,7 +353,7 @@ namespace System.Windows.Interop
             // Remove focus hacks once DWM DesktopSource is implemented.
             if (msg == WindowMessage.WM_MOUSEQUERY)
             {
-                if(!_isDwmProcess)
+                if (!_isDwmProcess)
                 {
                     _isDwmProcess = true;
                 }
@@ -362,7 +362,7 @@ namespace System.Windows.Interop
                 {
                     // Currently only sending WM_MOUSEMOVE through until we rip out the prototype bits.
                     UnsafeNativeMethods.MOUSEQUERY* pmq = (UnsafeNativeMethods.MOUSEQUERY*)lParam;
-                    if((WindowMessage)pmq->uMsg == WindowMessage.WM_MOUSEMOVE)
+                    if ((WindowMessage)pmq->uMsg == WindowMessage.WM_MOUSEMOVE)
                     {
                         msg = (WindowMessage)pmq->uMsg;
                         wParam = pmq->wParam;
@@ -371,7 +371,7 @@ namespace System.Windows.Interop
                 }
             }
 
-            switch(msg)
+            switch (msg)
             {
                 // Compatibility Note:
                 //
@@ -390,55 +390,55 @@ namespace System.Windows.Interop
                 // calling EnableMouseInPointer(false).  If WPF ever supports
                 // the WM_POINTER messages, we need to be careful not to break
                 // Blend.
-                
-                case WindowMessage.WM_NCDESTROY:
-                {
-                    //Console.WriteLine("WM_NCDESTROY");
 
-                    // This is the normal clean-up path.  HwndSource destroys the
-                    // HWND first, which should trigger this code, before it
-                    // explicitly disposes us.  This allows us to call
-                    // PossiblyDeactivate since our window is no longer on the
-                    // screen.
-                    Dispose();
-                }
-                break;
+                case WindowMessage.WM_NCDESTROY:
+                    {
+                        //Console.WriteLine("WM_NCDESTROY");
+
+                        // This is the normal clean-up path.  HwndSource destroys the
+                        // HWND first, which should trigger this code, before it
+                        // explicitly disposes us.  This allows us to call
+                        // PossiblyDeactivate since our window is no longer on the
+                        // screen.
+                        Dispose();
+                    }
+                    break;
 
                 case WindowMessage.WM_MOUSEMOVE:
-                {
-                    int x = NativeMethods.SignedLOWORD(lParam);
-                    int y = NativeMethods.SignedHIWORD(lParam);
-
-                    //Console.WriteLine("WM_MOUSEMOVE: " + x + "," + y);
-
-                    // Abort the pending operation waiting to update the cursor, because we
-                    // are going to update it as part of this mouse move processing.
-                    if (_queryCursorOperation != null)
                     {
-                        _queryCursorOperation.Abort();
-                        _queryCursorOperation = null;
-                    }
+                        int x = NativeMethods.SignedLOWORD(lParam);
+                        int y = NativeMethods.SignedHIWORD(lParam);
 
-                    // MITIGATION_SETCURSOR
-                    if (_haveCapture)
-                    {
-                        // When we have capture we don't receive WM_SETCURSOR
-                        // prior to a mouse move.  So that we don't erroneously think
-                        // we're in "Help Mode" we'll pretend we've received a set
-                        // cursor message.
-                        _setCursorState = SetCursorState.SetCursorReceived;
-                    }
-                    else
-                    {
-                        if (_setCursorState == SetCursorState.SetCursorNotReceived)
+                        //Console.WriteLine("WM_MOUSEMOVE: " + x + "," + y);
+
+                        // Abort the pending operation waiting to update the cursor, because we
+                        // are going to update it as part of this mouse move processing.
+                        if (_queryCursorOperation != null)
                         {
-                            _setCursorState = SetCursorState.SetCursorDisabled;
+                            _queryCursorOperation.Abort();
+                            _queryCursorOperation = null;
                         }
-                        else if(_setCursorState == SetCursorState.SetCursorReceived)
+
+                        // MITIGATION_SETCURSOR
+                        if (_haveCapture)
                         {
-                            _setCursorState = SetCursorState.SetCursorNotReceived;
+                            // When we have capture we don't receive WM_SETCURSOR
+                            // prior to a mouse move.  So that we don't erroneously think
+                            // we're in "Help Mode" we'll pretend we've received a set
+                            // cursor message.
+                            _setCursorState = SetCursorState.SetCursorReceived;
                         }
-                    }
+                        else
+                        {
+                            if (_setCursorState == SetCursorState.SetCursorNotReceived)
+                            {
+                                _setCursorState = SetCursorState.SetCursorDisabled;
+                            }
+                            else if (_setCursorState == SetCursorState.SetCursorReceived)
+                            {
+                                _setCursorState = SetCursorState.SetCursorNotReceived;
+                            }
+                        }
 
                         // Should we report the various modifier keys?  I think these are async states.
 
@@ -449,23 +449,23 @@ namespace System.Windows.Interop
                                           x,
                                           y,
                                           0);
-                }
-                break;
+                    }
+                    break;
 
                 case WindowMessage.WM_MOUSEWHEEL:
-                {
-                    int wheel = NativeMethods.SignedHIWORD(wParam);
-                    int x = NativeMethods.SignedLOWORD(lParam);
-                    int y = NativeMethods.SignedHIWORD(lParam);
-
-                    // The WM_MOUSEWHEEL gives the coordinates relative to the desktop.
-                    NativeMethods.POINT pt = new NativeMethods.POINT(x,y);
-                    try
                     {
-                        SafeNativeMethods.ScreenToClient(new HandleRef(this,hwnd), ref pt);
+                        int wheel = NativeMethods.SignedHIWORD(wParam);
+                        int x = NativeMethods.SignedLOWORD(lParam);
+                        int y = NativeMethods.SignedHIWORD(lParam);
 
-                        x = pt.x;
-                        y = pt.y;
+                        // The WM_MOUSEWHEEL gives the coordinates relative to the desktop.
+                        NativeMethods.POINT pt = new NativeMethods.POINT(x, y);
+                        try
+                        {
+                            SafeNativeMethods.ScreenToClient(new HandleRef(this, hwnd), ref pt);
+
+                            x = pt.x;
+                            y = pt.y;
 
                             //Console.WriteLine("WM_MOUSEWHEEL: " + x + "," + y + "," + wheel);
 
@@ -478,19 +478,19 @@ namespace System.Windows.Interop
                                               x,
                                               y,
                                               wheel);
+                        }
+                        catch (System.ComponentModel.Win32Exception)
+                        {
+                            System.Diagnostics.Debug.WriteLine("HwndMouseInputProvider: ScreenToClient failed!");
+                        }
                     }
-                    catch(System.ComponentModel.Win32Exception)
-                    {
-                        System.Diagnostics.Debug.WriteLine("HwndMouseInputProvider: ScreenToClient failed!");
-                    }
-                }
-                break;
+                    break;
 
                 case WindowMessage.WM_LBUTTONDBLCLK:
                 case WindowMessage.WM_LBUTTONDOWN:
-                {
-                    int x = NativeMethods.SignedLOWORD(lParam);
-                    int y = NativeMethods.SignedHIWORD(lParam);
+                    {
+                        int x = NativeMethods.SignedLOWORD(lParam);
+                        int y = NativeMethods.SignedHIWORD(lParam);
 
                         //Console.WriteLine("WM_LBUTTONDOWN: " + x + "," + y);
 
@@ -503,13 +503,13 @@ namespace System.Windows.Interop
                                           x,
                                           y,
                                           0);
-                }
-                break;
+                    }
+                    break;
 
                 case WindowMessage.WM_LBUTTONUP:
-                {
-                    int x = NativeMethods.SignedLOWORD(lParam);
-                    int y = NativeMethods.SignedHIWORD(lParam);
+                    {
+                        int x = NativeMethods.SignedLOWORD(lParam);
+                        int y = NativeMethods.SignedHIWORD(lParam);
 
                         //Console.WriteLine("WM_LBUTTONUP: " + x + "," + y);
 
@@ -522,14 +522,14 @@ namespace System.Windows.Interop
                                           x,
                                           y,
                                           0);
-                }
-                break;
+                    }
+                    break;
 
                 case WindowMessage.WM_RBUTTONDBLCLK:
                 case WindowMessage.WM_RBUTTONDOWN:
-                {
-                    int x = NativeMethods.SignedLOWORD(lParam);
-                    int y = NativeMethods.SignedHIWORD(lParam);
+                    {
+                        int x = NativeMethods.SignedLOWORD(lParam);
+                        int y = NativeMethods.SignedHIWORD(lParam);
 
                         // Should we report the various modifier keys?  I think these are async states.
 
@@ -540,13 +540,13 @@ namespace System.Windows.Interop
                                           x,
                                           y,
                                           0);
-                }
-                break;
+                    }
+                    break;
 
                 case WindowMessage.WM_RBUTTONUP:
-                {
-                    int x = NativeMethods.SignedLOWORD(lParam);
-                    int y = NativeMethods.SignedHIWORD(lParam);
+                    {
+                        int x = NativeMethods.SignedLOWORD(lParam);
+                        int y = NativeMethods.SignedHIWORD(lParam);
 
                         // Should we report the various modifier keys?  I think these are async states.
 
@@ -557,14 +557,14 @@ namespace System.Windows.Interop
                                           x,
                                           y,
                                           0);
-                }
-                break;
+                    }
+                    break;
 
                 case WindowMessage.WM_MBUTTONDBLCLK:
                 case WindowMessage.WM_MBUTTONDOWN:
-                {
-                    int x = NativeMethods.SignedLOWORD(lParam);
-                    int y = NativeMethods.SignedHIWORD(lParam);
+                    {
+                        int x = NativeMethods.SignedLOWORD(lParam);
+                        int y = NativeMethods.SignedHIWORD(lParam);
 
                         // Should we report the various modifier keys?  I think these are async states.
 
@@ -575,13 +575,13 @@ namespace System.Windows.Interop
                                           x,
                                           y,
                                           0);
-                }
-                break;
+                    }
+                    break;
 
                 case WindowMessage.WM_MBUTTONUP:
-                {
-                    int x = NativeMethods.SignedLOWORD(lParam);
-                    int y = NativeMethods.SignedHIWORD(lParam);
+                    {
+                        int x = NativeMethods.SignedLOWORD(lParam);
+                        int y = NativeMethods.SignedHIWORD(lParam);
 
                         // Should we report the various modifier keys?  I think these are async states.
 
@@ -592,25 +592,25 @@ namespace System.Windows.Interop
                                           x,
                                           y,
                                           0);
-                }
-                break;
+                    }
+                    break;
 
                 case WindowMessage.WM_XBUTTONDBLCLK:
                 case WindowMessage.WM_XBUTTONDOWN:
-                {
-                    int button = NativeMethods.SignedHIWORD(wParam);
-                    int x = NativeMethods.SignedLOWORD(lParam);
-                    int y = NativeMethods.SignedHIWORD(lParam);
+                    {
+                        int button = NativeMethods.SignedHIWORD(wParam);
+                        int x = NativeMethods.SignedLOWORD(lParam);
+                        int y = NativeMethods.SignedHIWORD(lParam);
 
-                    RawMouseActions actions = 0;
-                    if(button == 1)
-                    {
-                        actions = RawMouseActions.Button4Press;
-                    }
-                    else if(button == 2)
-                    {
-                        actions = RawMouseActions.Button5Press;
-                    }
+                        RawMouseActions actions = 0;
+                        if (button == 1)
+                        {
+                            actions = RawMouseActions.Button4Press;
+                        }
+                        else if (button == 2)
+                        {
+                            actions = RawMouseActions.Button5Press;
+                        }
 
                         // Should we report the various modifier keys?  I think these are async states.
 
@@ -621,24 +621,24 @@ namespace System.Windows.Interop
                                           x,
                                           y,
                                           0);
-                }
-                break;
+                    }
+                    break;
 
                 case WindowMessage.WM_XBUTTONUP:
-                {
-                    int button = NativeMethods.SignedHIWORD(wParam);
-                    int x = NativeMethods.SignedLOWORD(lParam);
-                    int y = NativeMethods.SignedHIWORD(lParam);
+                    {
+                        int button = NativeMethods.SignedHIWORD(wParam);
+                        int x = NativeMethods.SignedLOWORD(lParam);
+                        int y = NativeMethods.SignedHIWORD(lParam);
 
-                    RawMouseActions actions = 0;
-                    if(button == 1)
-                    {
-                        actions = RawMouseActions.Button4Release;
-                    }
-                    else if(button == 2)
-                    {
-                        actions = RawMouseActions.Button5Release;
-                    }
+                        RawMouseActions actions = 0;
+                        if (button == 1)
+                        {
+                            actions = RawMouseActions.Button4Release;
+                        }
+                        else if (button == 2)
+                        {
+                            actions = RawMouseActions.Button5Release;
+                        }
 
                         // Should we report the various modifier keys?  I think these are async states.
 
@@ -649,211 +649,211 @@ namespace System.Windows.Interop
                                           x,
                                           y,
                                           0);
-                }
-                break;
+                    }
+                    break;
 
                 case WindowMessage.WM_MOUSELEAVE:
-                {
-                    //Console.WriteLine("WM_MOUSELEAVE");
-
-                    // When the mouse moves off the window, we receive a
-                    // WM_MOUSELEAVE.   We'll start tracking again when the
-                    // mouse moves back over us.
-                    StopTracking(hwnd);
-
-                    // It is possible that we have capture but we still receive
-                    // a mouse leave event.  This can happen in the case of
-                    // "soft capture".  In such cases, we defer the actual
-                    // deactivation until the capture is lost.
-                    //
-                    // See the note on WM_CAPTURECHANGED for more details.
-                    try
                     {
-                        IntPtr hwndCapture = SafeNativeMethods.GetCapture();
-                        IntPtr hwndCurrent = _source.CriticalHandle;
-                        if (hwndCapture != hwndCurrent)
+                        //Console.WriteLine("WM_MOUSELEAVE");
+
+                        // When the mouse moves off the window, we receive a
+                        // WM_MOUSELEAVE.   We'll start tracking again when the
+                        // mouse moves back over us.
+                        StopTracking(hwnd);
+
+                        // It is possible that we have capture but we still receive
+                        // a mouse leave event.  This can happen in the case of
+                        // "soft capture".  In such cases, we defer the actual
+                        // deactivation until the capture is lost.
+                        //
+                        // See the note on WM_CAPTURECHANGED for more details.
+                        try
                         {
-                            PossiblyDeactivate(hwndCapture, false);
+                            IntPtr hwndCapture = SafeNativeMethods.GetCapture();
+                            IntPtr hwndCurrent = _source.CriticalHandle;
+                            if (hwndCapture != hwndCurrent)
+                            {
+                                PossiblyDeactivate(hwndCapture, false);
+                            }
+                        }
+                        catch (System.ComponentModel.Win32Exception)
+                        {
+                            System.Diagnostics.Debug.WriteLine("HwndMouseInputProvider: GetCapture failed!");
                         }
                     }
-                    catch(System.ComponentModel.Win32Exception)
-                    {
-                        System.Diagnostics.Debug.WriteLine("HwndMouseInputProvider: GetCapture failed!");
-                    }
-}
-                break;
+                    break;
 
                 case WindowMessage.WM_CAPTURECHANGED:
-                {
-                    //Console.WriteLine("WM_CAPTURECHANGED");
-
-                    // Win32 has two concepts for capture:
-                    //
-                    // Hard Capture
-                    // When a mouse button is pressed, Win32 finds the window
-                    // underneath the mouse and assigns it as the MouseOwner.
-                    // All mouse input is directed to this window until the
-                    // mouse is button released.  The window does not even
-                    // have to request capture.  Certain window types are
-                    // excluded from this processing.
-                    //
-                    // Soft Capture
-                    // This is accessed via the SetCapture API.  It assigns
-                    // the window that should receive mouse input for the
-                    // queue.  Win32 decides which queue the mouse input
-                    // should go to without considering this type of capture.
-                    // Once the input is in the queue, it is sent to the
-                    // window with capture.  This means that the mouse
-                    // messages will generally be sent to the specified window
-                    // in the application, but other applications will work
-                    // too.
-                    //
-                    // If another application calls SetCapture, the current
-                    // application will receive a WM_CAPTURECHANGED.
-                    //
-                    // If the window took capture while Win32 was enforcing
-                    // Hard Capture, and releases capture when the mouse
-                    // button is released, then everything works as you
-                    // probably expect.  But if the application retains
-                    // capture after the mouse button is released, it is
-                    // possible to receive a WM_MOUSELEAVE even though the
-                    // window still has capture.
-
-                    // Losing capture *after* a WM_MOUSELEAVE means we
-                    // probably want to deactivate the mouse input stream.
-                    // If someone else is taking capture, we may need
-                    // to deactivate the mouse input stream too.
-
-                    if(lParam != _source.CriticalHandle) // Ignore odd messages that claim we are losing capture to ourselves.
                     {
-                        // MITIGATION_SETCURSOR
-                        _haveCapture = false;
+                        //Console.WriteLine("WM_CAPTURECHANGED");
 
-                        if(_setCursorState == SetCursorState.SetCursorReceived)
-                        {
-                            _setCursorState = SetCursorState.SetCursorNotReceived;
-                        }
+                        // Win32 has two concepts for capture:
+                        //
+                        // Hard Capture
+                        // When a mouse button is pressed, Win32 finds the window
+                        // underneath the mouse and assigns it as the MouseOwner.
+                        // All mouse input is directed to this window until the
+                        // mouse is button released.  The window does not even
+                        // have to request capture.  Certain window types are
+                        // excluded from this processing.
+                        //
+                        // Soft Capture
+                        // This is accessed via the SetCapture API.  It assigns
+                        // the window that should receive mouse input for the
+                        // queue.  Win32 decides which queue the mouse input
+                        // should go to without considering this type of capture.
+                        // Once the input is in the queue, it is sent to the
+                        // window with capture.  This means that the mouse
+                        // messages will generally be sent to the specified window
+                        // in the application, but other applications will work
+                        // too.
+                        //
+                        // If another application calls SetCapture, the current
+                        // application will receive a WM_CAPTURECHANGED.
+                        //
+                        // If the window took capture while Win32 was enforcing
+                        // Hard Capture, and releases capture when the mouse
+                        // button is released, then everything works as you
+                        // probably expect.  But if the application retains
+                        // capture after the mouse button is released, it is
+                        // possible to receive a WM_MOUSELEAVE even though the
+                        // window still has capture.
 
-                        if(!IsOurWindow(lParam) && _active)
-                        {
-                            ReportInput(hwnd,
-                                        InputMode.Foreground,
-                                        _msgTime,
-                                        RawMouseActions.CancelCapture,
-                                        0,
-                                        0,
-                                        0);
-                        }
+                        // Losing capture *after* a WM_MOUSELEAVE means we
+                        // probably want to deactivate the mouse input stream.
+                        // If someone else is taking capture, we may need
+                        // to deactivate the mouse input stream too.
 
-                        if(lParam != IntPtr.Zero || // someone else took capture
-                           !_tracking)              // OR no one has capture and the mouse is not over us
+                        if (lParam != _source.CriticalHandle) // Ignore odd messages that claim we are losing capture to ourselves.
                         {
-                            PossiblyDeactivate(lParam, true);
+                            // MITIGATION_SETCURSOR
+                            _haveCapture = false;
+
+                            if (_setCursorState == SetCursorState.SetCursorReceived)
+                            {
+                                _setCursorState = SetCursorState.SetCursorNotReceived;
+                            }
+
+                            if (!IsOurWindow(lParam) && _active)
+                            {
+                                ReportInput(hwnd,
+                                            InputMode.Foreground,
+                                            _msgTime,
+                                            RawMouseActions.CancelCapture,
+                                            0,
+                                            0,
+                                            0);
+                            }
+
+                            if (lParam != IntPtr.Zero || // someone else took capture
+                               !_tracking)              // OR no one has capture and the mouse is not over us
+                            {
+                                PossiblyDeactivate(lParam, true);
+                            }
                         }
                     }
-                }
-                break;
+                    break;
 
                 case WindowMessage.WM_CANCELMODE:
-                {
-                    // MITIGATION: NESTED_MESSAGE_PUMPS_INTERFERE_WITH_INPUT
-                    //
-                    // When a nested message pump runs, it intercepts all messages
-                    // before they are dispatched, and thus before they can be sent
-                    // to the window with capture.
-                    //
-                    // This means that an element can take capture on MouseDown,
-                    // expecting to receive either MouseUp or LostCapture.  But, in
-                    // fact, neither event may be raised if a nested message pump
-                    // runs.
-                    //
-                    // An example of this is displaying a dialog box in response to
-                    // MouseDown.
-                    //
-                    // There isn't much we can do about the general case, but
-                    // well-behaved message pumps (such as a dialog box) are
-                    // supposed to send the WM_CANCELMODE message.  In response
-                    // to this we release capture if we currently have it.
-                    try
                     {
-                        if(_source.HasCapture)
+                        // MITIGATION: NESTED_MESSAGE_PUMPS_INTERFERE_WITH_INPUT
+                        //
+                        // When a nested message pump runs, it intercepts all messages
+                        // before they are dispatched, and thus before they can be sent
+                        // to the window with capture.
+                        //
+                        // This means that an element can take capture on MouseDown,
+                        // expecting to receive either MouseUp or LostCapture.  But, in
+                        // fact, neither event may be raised if a nested message pump
+                        // runs.
+                        //
+                        // An example of this is displaying a dialog box in response to
+                        // MouseDown.
+                        //
+                        // There isn't much we can do about the general case, but
+                        // well-behaved message pumps (such as a dialog box) are
+                        // supposed to send the WM_CANCELMODE message.  In response
+                        // to this we release capture if we currently have it.
+                        try
                         {
-                            SafeNativeMethods.ReleaseCapture();
+                            if (_source.HasCapture)
+                            {
+                                SafeNativeMethods.ReleaseCapture();
+                            }
+                        }
+                        catch (System.ComponentModel.Win32Exception)
+                        {
+                            System.Diagnostics.Debug.WriteLine("HwndMouseInputProvider: GetCapture failed!");
                         }
                     }
-                    catch(System.ComponentModel.Win32Exception)
-                    {
-                        System.Diagnostics.Debug.WriteLine("HwndMouseInputProvider: GetCapture failed!");
-                    }
-                }
-                break;
+                    break;
 
                 case WindowMessage.WM_SETCURSOR:
-                {
-                    if (_queryCursorOperation == null)
                     {
-                        // It is possible that a WM_SETCURSOR is not followed by a WM_MOUSEMOVE, in which
-                        // case we need a backup mechanism to query the cursor and update it. So we post to
-                        // the queue to do this work. If a WM_MOUSEMOVE comes in earlier, then the operation
-                        // is aborted, else it comes through and we update the cursor.
-                        _queryCursorOperation = Dispatcher.BeginInvoke(DispatcherPriority.Input,
-                            (DispatcherOperationCallback)(sender =>
-                            {
-                                HwndMouseInputProvider thisRef = (HwndMouseInputProvider)sender;
-
-                                // Since this is an asynchronous operation and an arbitrary amount of time has elapsed
-                                // since we received the WM_SETCURSOR, we need to be careful that the mouse hasn't
-                                // been deactivated in the meanwhile. This is also another reason that we do not ReportInput,
-                                // because the implicit assumption in doing that is to activate the MouseDevice. All we want
-                                // to do is passively try to update the cursor.
-                                if (thisRef._active)
+                        if (_queryCursorOperation == null)
+                        {
+                            // It is possible that a WM_SETCURSOR is not followed by a WM_MOUSEMOVE, in which
+                            // case we need a backup mechanism to query the cursor and update it. So we post to
+                            // the queue to do this work. If a WM_MOUSEMOVE comes in earlier, then the operation
+                            // is aborted, else it comes through and we update the cursor.
+                            _queryCursorOperation = Dispatcher.BeginInvoke(DispatcherPriority.Input,
+                                (DispatcherOperationCallback)(sender =>
                                 {
-                                    Mouse.UpdateCursor();
-                                }
+                                    HwndMouseInputProvider thisRef = (HwndMouseInputProvider)sender;
 
-                                thisRef._queryCursorOperation = null;
-                                return null;
-                            }),
-                            this);
+                                    // Since this is an asynchronous operation and an arbitrary amount of time has elapsed
+                                    // since we received the WM_SETCURSOR, we need to be careful that the mouse hasn't
+                                    // been deactivated in the meanwhile. This is also another reason that we do not ReportInput,
+                                    // because the implicit assumption in doing that is to activate the MouseDevice. All we want
+                                    // to do is passively try to update the cursor.
+                                    if (thisRef._active)
+                                    {
+                                        Mouse.UpdateCursor();
+                                    }
+
+                                    thisRef._queryCursorOperation = null;
+                                    return null;
+                                }),
+                                this);
+                        }
+
+                        // MITIGATION_SETCURSOR
+                        _setCursorState = SetCursorState.SetCursorReceived;
+
+                        // Note: We get this message BEFORE we get WM_MOUSEMOVE.  This means that Avalon
+                        //       still thinks the mouse is over the "old" element.  This is awkward, and we think
+                        //       people will find it confusing to get a QueryCursor event before a MouseMove event.
+                        //       Further, this means we would have to do a special hit-test, and route the
+                        //       QueryCursor event differently than the other mouse events.
+                        //
+                        //       Another difference is that Win32 passes us a hit-test code, which was calculated
+                        //       by an earlier WM_NCHITTEST message.  The problem with this is that it is a fixed
+                        //       enum.  We don't have a similar concept in Avalon.
+                        //
+                        //       So instead, the MouseDevice will raise the QueryCursor event after every MouseMove
+                        //       event.  We think this is a better ordering.  And the application can return whatever
+                        //       cursor they want (not limited to a fixed enum of hit-test codes).
+                        //
+                        //       Of course, this is different than Win32.  One example of where this can cause a
+                        //       problem is that sometimes Win32 will NOT send a WM_SETCURSOR message and just send
+                        //       a WM_MOUSEMOVE.  This is for cases like when the mouse is captured, or when the
+                        //       the "help mode" is active (clicking the little question mark in the title bar).
+                        //       To accomodate this, we use the _setCursorState to prevent the user from changing
+                        //       the cursor when we haven't received a WM_SETCURSOR message - which means that the
+                        //       cursor is NOT supposed to change as it moves over new windows/elements/etc.  Note
+                        //       that Avalon will raise the QueryCursor event, but the result is ignored.
+                        //
+                        // But:  We MUST mark this Win32 message as "handled" or windows will change the cursor to
+                        //       the default cursor, which will cause annoying flicker if the app is trying to set
+                        //       a custom one.  Of course, only do this for the client area.
+                        //
+                        int hittestCode = NativeMethods.SignedLOWORD((int)lParam);
+                        if (hittestCode == NativeMethods.HTCLIENT)
+                        {
+                            handled = true;
+                        }
                     }
-
-                    // MITIGATION_SETCURSOR
-                    _setCursorState = SetCursorState.SetCursorReceived;
-
-                    // Note: We get this message BEFORE we get WM_MOUSEMOVE.  This means that Avalon
-                    //       still thinks the mouse is over the "old" element.  This is awkward, and we think
-                    //       people will find it confusing to get a QueryCursor event before a MouseMove event.
-                    //       Further, this means we would have to do a special hit-test, and route the
-                    //       QueryCursor event differently than the other mouse events.
-                    //
-                    //       Another difference is that Win32 passes us a hit-test code, which was calculated
-                    //       by an earlier WM_NCHITTEST message.  The problem with this is that it is a fixed
-                    //       enum.  We don't have a similar concept in Avalon.
-                    //
-                    //       So instead, the MouseDevice will raise the QueryCursor event after every MouseMove
-                    //       event.  We think this is a better ordering.  And the application can return whatever
-                    //       cursor they want (not limited to a fixed enum of hit-test codes).
-                    //
-                    //       Of course, this is different than Win32.  One example of where this can cause a
-                    //       problem is that sometimes Win32 will NOT send a WM_SETCURSOR message and just send
-                    //       a WM_MOUSEMOVE.  This is for cases like when the mouse is captured, or when the
-                    //       the "help mode" is active (clicking the little question mark in the title bar).
-                    //       To accomodate this, we use the _setCursorState to prevent the user from changing
-                    //       the cursor when we haven't received a WM_SETCURSOR message - which means that the
-                    //       cursor is NOT supposed to change as it moves over new windows/elements/etc.  Note
-                    //       that Avalon will raise the QueryCursor event, but the result is ignored.
-                    //
-                    // But:  We MUST mark this Win32 message as "handled" or windows will change the cursor to
-                    //       the default cursor, which will cause annoying flicker if the app is trying to set
-                    //       a custom one.  Of course, only do this for the client area.
-                    //
-                    int hittestCode = NativeMethods.SignedLOWORD((int) lParam);
-                    if(hittestCode == NativeMethods.HTCLIENT)
-                    {
-                        handled = true;
-                    }
-                }
-                break;
+                    break;
             }
 
             if (handled && EventTrace.IsEnabled(EventTrace.Keyword.KeywordInput | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Info))
@@ -863,7 +863,7 @@ namespace System.Windows.Interop
                 // needs to check for that.
                 int dispatcherHashCode = 0;
 
-                if(_source != null && !_source.IsDisposed && _source.CompositionTarget != null)
+                if (_source != null && !_source.IsDisposed && _source.CompositionTarget != null)
                     dispatcherHashCode = _source.CompositionTarget.Dispatcher.GetHashCode();
 
                 // The ETW manifest for this event declares the lParam and
@@ -875,11 +875,12 @@ namespace System.Windows.Interop
                 // cast operator to used a checked block, which will throw an
                 // overflow exception if the IntPtr contains too big of a value.
                 // So we do the cast ourselves and ignore the overflow.
-                int wParamInt = (int) (long) wParam;;
-                int lParamInt = (int) (long) lParam;
-                
+                int wParamInt = (int)(long)wParam;
+                ;
+                int lParamInt = (int)(long)lParam;
+
                 EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientInputMessage, EventTrace.Keyword.KeywordInput | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Info, dispatcherHashCode, hwnd.ToInt64(), msg, wParamInt, lParamInt);
-}
+            }
 
             return result;
         }
@@ -893,7 +894,7 @@ namespace System.Windows.Interop
                 return;
             }
 
-            if(_isDwmProcess)
+            if (_isDwmProcess)
             {
                 return;
             }
@@ -909,7 +910,7 @@ namespace System.Windows.Interop
             // unnecessary transitions.
             //
             IntPtr hwndToCheck = hwndCapture;
-            if(hwndToCheck == IntPtr.Zero)
+            if (hwndToCheck == IntPtr.Zero)
             {
                 NativeMethods.POINT ptCursor = new NativeMethods.POINT();
                 int messagePos = 0;
@@ -917,7 +918,7 @@ namespace System.Windows.Interop
                 {
                     messagePos = SafeNativeMethods.GetMessagePos();
                 }
-                catch(System.ComponentModel.Win32Exception)
+                catch (System.ComponentModel.Win32Exception)
                 {
                     System.Diagnostics.Debug.WriteLine("HwndMouseInputProvider: GetMessagePos failed!");
                 }
@@ -930,7 +931,7 @@ namespace System.Windows.Interop
                 {
                     hwndToCheck = UnsafeNativeMethods.WindowFromPoint(ptCursor.x, ptCursor.y);
                 }
-                catch(System.ComponentModel.Win32Exception)
+                catch (System.ComponentModel.Win32Exception)
                 {
                     System.Diagnostics.Debug.WriteLine("HwndMouseInputProvider: WindowFromPoint failed!");
                 }
@@ -940,7 +941,7 @@ namespace System.Windows.Interop
                     hwndToCheck = IntPtr.Zero;
                 }
 
-                if(hwndToCheck != IntPtr.Zero)
+                if (hwndToCheck != IntPtr.Zero)
                 {
                     // We need to check if the point is over the client or
                     // non-client area.  We only care about being over the
@@ -948,9 +949,9 @@ namespace System.Windows.Interop
                     try
                     {
                         NativeMethods.RECT rcClient = GetEffectiveClientRect(hwndToCheck);
-                        SafeNativeMethods.ScreenToClient(new HandleRef(this,hwndToCheck), ref ptCursor);
+                        SafeNativeMethods.ScreenToClient(new HandleRef(this, hwndToCheck), ref ptCursor);
 
-                        if(ptCursor.x < rcClient.left || ptCursor.x >= rcClient.right ||
+                        if (ptCursor.x < rcClient.left || ptCursor.x >= rcClient.right ||
                            ptCursor.y < rcClient.top || ptCursor.y >= rcClient.bottom)
                         {
                             // We are not over the client area.  We can bail out.
@@ -960,7 +961,7 @@ namespace System.Windows.Interop
                             hwndToCheck = IntPtr.Zero;
                         }
                     }
-                    catch(System.ComponentModel.Win32Exception)
+                    catch (System.ComponentModel.Win32Exception)
                     {
                         System.Diagnostics.Debug.WriteLine("HwndMouseInputProvider: GetClientRect or ScreenToClient failed!");
                     }
@@ -975,7 +976,7 @@ namespace System.Windows.Interop
             //Console.WriteLine("  Deactivate=" + deactivate);
 
             // Only deactivate the mouse input stream if needed.
-            if(deactivate)
+            if (deactivate)
             {
                 ReportInput(_source.CriticalHandle,
                             InputMode.Foreground,
@@ -1035,7 +1036,7 @@ namespace System.Windows.Interop
             }
 
             // otherwise, return the native client rect
-            SafeNativeMethods.GetClientRect(new HandleRef(this,hwnd), ref rcClient);
+            SafeNativeMethods.GetClientRect(new HandleRef(this, hwnd), ref rcClient);
             return rcClient;
         }
 
@@ -1132,7 +1133,7 @@ namespace System.Windows.Interop
         }
         private void StartTracking(IntPtr hwnd)
         {
-            if(!_tracking && !_isDwmProcess)
+            if (!_tracking && !_isDwmProcess)
             {
                 _tme.hwndTrack = hwnd;
                 _tme.dwFlags = NativeMethods.TME_LEAVE;
@@ -1141,7 +1142,7 @@ namespace System.Windows.Interop
                     SafeNativeMethods.TrackMouseEvent(_tme);
                     _tracking = true;
                 }
-                catch(System.ComponentModel.Win32Exception)
+                catch (System.ComponentModel.Win32Exception)
                 {
                     System.Diagnostics.Debug.WriteLine("HwndMouseInputProvider: TrackMouseEvent failed!");
                 }
@@ -1150,7 +1151,7 @@ namespace System.Windows.Interop
 
         private void StopTracking(IntPtr hwnd)
         {
-            if(_tracking && !_isDwmProcess)
+            if (_tracking && !_isDwmProcess)
             {
                 _tme.hwndTrack = hwnd;
                 _tme.dwFlags = NativeMethods.TME_CANCEL | NativeMethods.TME_LEAVE;
@@ -1159,7 +1160,7 @@ namespace System.Windows.Interop
                     SafeNativeMethods.TrackMouseEvent(_tme);
                     _tracking = false;
                 }
-                catch(System.ComponentModel.Win32Exception)
+                catch (System.ComponentModel.Win32Exception)
                 {
                     System.Diagnostics.Debug.WriteLine("HwndMouseInputProvider: TrackMouseEvent failed!");
                 }
@@ -1168,7 +1169,7 @@ namespace System.Windows.Interop
 
         private IntPtr MakeLPARAM(int high, int low)
         {
-               return ((IntPtr)((high << 16) | (low & 0xffff)));
+            return ((IntPtr)((high << 16) | (low & 0xffff)));
         }
 
         private bool IsOurWindow(IntPtr hwnd)
@@ -1184,13 +1185,13 @@ namespace System.Windows.Interop
 
             Debug.Assert(_source is not null);
 
-            if(hwnd != IntPtr.Zero)
+            if (hwnd != IntPtr.Zero)
             {
                 hwndSource = HwndSource.CriticalFromHwnd(hwnd);
 
-                if(hwndSource != null)
+                if (hwndSource != null)
                 {
-                    if(hwndSource.Dispatcher == _source.Dispatcher)
+                    if (hwndSource.Dispatcher == _source.Dispatcher)
                     {
                         // The window has the same dispatcher, must be ours.
                         isOurWindow = true;
@@ -1237,9 +1238,9 @@ namespace System.Windows.Interop
             CompositionTarget ct = source.CompositionTarget;
 
             // Input reports should only be generated if the window is still valid.
-            if(_site == null || source.IsDisposed || ct == null )
+            if (_site == null || source.IsDisposed || ct == null)
             {
-                if(_active)
+                if (_active)
                 {
                     // We are still active, but the window is dead.  Force a deactivate.
                     actions = RawMouseActions.Deactivate;
@@ -1250,18 +1251,18 @@ namespace System.Windows.Interop
                 }
             }
 
-            if((actions & RawMouseActions.Deactivate) == RawMouseActions.Deactivate)
+            if ((actions & RawMouseActions.Deactivate) == RawMouseActions.Deactivate)
             {
                 // Stop tracking the mouse since we are deactivating.
                 StopTracking(hwnd);
 
                 _active = false;
             }
-            else if((actions & RawMouseActions.CancelCapture) == RawMouseActions.CancelCapture)
+            else if ((actions & RawMouseActions.CancelCapture) == RawMouseActions.CancelCapture)
             {
                 // We have lost capture, but don't do anything else.
             }
-            else if(!_active && (actions & RawMouseActions.VerticalWheelRotate) == RawMouseActions.VerticalWheelRotate)
+            else if (!_active && (actions & RawMouseActions.VerticalWheelRotate) == RawMouseActions.VerticalWheelRotate)
             {
                 // report mouse wheel events as if they came from the window that
                 // is under the mouse (even though they are reported to the window
@@ -1275,7 +1276,7 @@ namespace System.Windows.Interop
             else
             {
                 // If we are not active, we need to activate first.
-                if(!_active)
+                if (!_active)
                 {
                     // But first, check for "spurious" mouse events...
                     //
@@ -1290,7 +1291,7 @@ namespace System.Windows.Interop
                     // we verify that either "A" has capture, or the mouse is over "A"
 
                     IntPtr hwndToCheck = SafeNativeMethods.GetCapture();
-                    if(hwnd != hwndToCheck)
+                    if (hwnd != hwndToCheck)
                     {
                         // If we get this far, "A" does NOT have capture
                         // - now ensure mouse is over "A"
@@ -1299,7 +1300,7 @@ namespace System.Windows.Interop
                         {
                             UnsafeNativeMethods.GetCursorPos(ref ptCursor);
                         }
-                        catch(System.ComponentModel.Win32Exception)
+                        catch (System.ComponentModel.Win32Exception)
                         {
                             // Sometimes Win32 will fail this call, such as if you are
                             // not running in the interactive desktop.  For example,
@@ -1311,12 +1312,12 @@ namespace System.Windows.Interop
                         {
                             hwndToCheck = UnsafeNativeMethods.WindowFromPoint(ptCursor.x, ptCursor.y);
                         }
-                        catch(System.ComponentModel.Win32Exception)
+                        catch (System.ComponentModel.Win32Exception)
                         {
                             System.Diagnostics.Debug.WriteLine("HwndMouseInputProvider: WindowFromPoint failed!");
                         }
 
-                        if(hwnd != hwndToCheck)
+                        if (hwnd != hwndToCheck)
                         {
                             // If we get this far:
                             // - the mouse is NOT over "A"
@@ -1347,9 +1348,9 @@ namespace System.Windows.Interop
                 // Even if a move isn't explicitly reported, we still may need to
                 // report one if the coordinates are different.  This is to cover
                 // some ugly edge cases with context menus and such.
-                if((actions & RawMouseActions.AbsoluteMove) == 0)
+                if ((actions & RawMouseActions.AbsoluteMove) == 0)
                 {
-                    if(x != _lastX || y != _lastY)
+                    if (x != _lastX || y != _lastY)
                     {
                         actions |= RawMouseActions.AbsoluteMove;
                     }
@@ -1381,21 +1382,21 @@ namespace System.Windows.Interop
                 // problem, we un-mirror the input from Win32 before passing
                 // it into Avalon.
                 //
-                if((actions & (RawMouseActions.AbsoluteMove | RawMouseActions.Activate)) != 0)
+                if ((actions & (RawMouseActions.AbsoluteMove | RawMouseActions.Activate)) != 0)
                 {
                     try
                     {
                         //This has a SUC on it and accesses CriticalHandle
                         int windowStyle = SafeNativeMethods.GetWindowStyle(new HandleRef(this, _source.CriticalHandle), true);
 
-                        if((windowStyle & NativeMethods.WS_EX_LAYOUTRTL) == NativeMethods.WS_EX_LAYOUTRTL)
+                        if ((windowStyle & NativeMethods.WS_EX_LAYOUTRTL) == NativeMethods.WS_EX_LAYOUTRTL)
                         {
                             NativeMethods.RECT rcClient = new NativeMethods.RECT();
                             SafeNativeMethods.GetClientRect(new HandleRef(this, _source.Handle), ref rcClient);
                             x = rcClient.right - x;
                         }
                     }
-                    catch(System.ComponentModel.Win32Exception)
+                    catch (System.ComponentModel.Win32Exception)
                     {
                         System.Diagnostics.Debug.WriteLine("HwndMouseInputProvider: GetWindowStyle or GetClientRect failed!");
                     }
@@ -1410,7 +1411,7 @@ namespace System.Windows.Interop
             {
                 extraInformation = UnsafeNativeMethods.GetMessageExtraInfo();
             }
-            catch(System.ComponentModel.Win32Exception)
+            catch (System.ComponentModel.Win32Exception)
             {
                 System.Diagnostics.Debug.WriteLine("HwndMouseInputProvider: GetMessageExtraInfo failed!");
             }
@@ -1453,7 +1454,7 @@ namespace System.Windows.Interop
 
 
         private HwndSource _source;
-        private  InputProviderSite _site;
+        private InputProviderSite _site;
         private int _msgTime;
         private NativeMethods.MOUSEMOVEPOINT _latestMovePoint;      // screen coordinates
         private NativeMethods.MOUSEMOVEPOINT _previousMovePoint;    // screen coordinates

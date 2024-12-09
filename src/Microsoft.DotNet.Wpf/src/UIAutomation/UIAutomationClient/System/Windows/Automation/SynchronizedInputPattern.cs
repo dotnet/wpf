@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,7 +15,7 @@ namespace System.Windows.Automation
 #if (INTERNAL_COMPILE)
     internal class SynchronizedInputPattern: BasePattern
 #else
-    public class SynchronizedInputPattern: BasePattern
+    public class SynchronizedInputPattern : BasePattern
 #endif
     {
         //------------------------------------------------------
@@ -23,7 +23,7 @@ namespace System.Windows.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         private SynchronizedInputPattern(AutomationElement el, SafePatternHandle hPattern)
@@ -40,7 +40,7 @@ namespace System.Windows.Automation
         //  Public Constants / Readonly Fields
         //
         //------------------------------------------------------
- 
+
         #region Public Constants and Readonly Fields
 
         /// <summary>SynchronizedInputPattern pattern</summary>
@@ -71,40 +71,40 @@ namespace System.Windows.Automation
         //  Public Methods
         //
         //------------------------------------------------------
- 
+
         #region Public Methods
 
         /// <summary>
         /// The client calls this method to indicate the current element should start listening
         /// for input event of the given type.
         /// </summary>
-        
+
         public void StartListening(SynchronizedInputType inputType)
         {
-            UiaCoreApi.SynchronizedInputPattern_StartListening(_hPattern,inputType);
+            UiaCoreApi.SynchronizedInputPattern_StartListening(_hPattern, inputType);
         }
         /// <summary>
         /// If  the element is currently  listening, it will revert back to normal operation
         /// </summary>
         /// 
-        
+
         public void Cancel()
         {
             UiaCoreApi.SynchronizedInputPattern_Cancel(_hPattern);
         }
-        
-        
+
+
         #endregion Public Methods
 
 
-        
+
 
         //------------------------------------------------------
         //
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         internal static object Wrap(AutomationElement el, SafePatternHandle hPattern, bool cached)
@@ -120,7 +120,7 @@ namespace System.Windows.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private SafePatternHandle _hPattern;

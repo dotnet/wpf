@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,10 +15,9 @@ using System.IO;
 using System.Windows;
 using System.Windows.Markup;    // for XmlLanguage
 using System.Windows.Media;
-
-using MS.Win32;
 using MS.Internal.FontFace;
 using MS.Internal.Shaping;
+using MS.Win32;
 
 // Since we disable PreSharp warnings in this file, we first need to disable warnings about unknown message numbers and unknown pragmas.
 #pragma warning disable 1634, 1691
@@ -40,9 +39,9 @@ namespace MS.Internal.FontCache
         #region Private Fields
 
         private Text.TextInterface.FontCollection _fontCollection;
-        private Uri                               _folderUri;
-        private List<CompositeFontFamily>         _userCompositeFonts;
-        private static object                     _staticLock = new object();
+        private Uri _folderUri;
+        private List<CompositeFontFamily> _userCompositeFonts;
+        private static object _staticLock = new object();
 
         #endregion Private Fields
 
@@ -87,9 +86,9 @@ namespace MS.Internal.FontCache
 
         private static class LegacyArabicFonts
         {
-            private static bool              _usePrivateFontCollectionIsInitialized = false;
-            private static object            _staticLock = new object();
-            private static bool              _usePrivateFontCollectionForLegacyArabicFonts;
+            private static bool _usePrivateFontCollectionIsInitialized = false;
+            private static object _staticLock = new object();
+            private static bool _usePrivateFontCollectionForLegacyArabicFonts;
             private static readonly string[] _legacyArabicFonts;
             private static Text.TextInterface.FontCollection _legacyArabicFontCollection;
 
@@ -193,14 +192,14 @@ namespace MS.Internal.FontCache
             /// The number of the system composite fonts that ship with WPF is 4.
             internal const int NumOfSystemCompositeFonts = 4;
 
-            private static object                _systemCompositeFontsLock = new object();
-            private static readonly string[]     _systemCompositeFontsNames;
-            private static readonly string[]     _systemCompositeFontsFileNames;
+            private static object _systemCompositeFontsLock = new object();
+            private static readonly string[] _systemCompositeFontsNames;
+            private static readonly string[] _systemCompositeFontsFileNames;
             private static CompositeFontFamily[] _systemCompositeFonts;
 
             static SystemCompositeFonts()
             {
-                _systemCompositeFontsNames     = new string[] { "Global User Interface", "Global Monospace", "Global Sans Serif", "Global Serif" };
+                _systemCompositeFontsNames = new string[] { "Global User Interface", "Global Monospace", "Global Sans Serif", "Global Serif" };
                 _systemCompositeFontsFileNames = new string[] { "GlobalUserInterface", "GlobalMonospace", "GlobalSansSerif", "GlobalSerif" };
                 _systemCompositeFonts = new CompositeFontFamily[NumOfSystemCompositeFonts];
             }
@@ -240,9 +239,9 @@ namespace MS.Internal.FontCache
                         if (_systemCompositeFonts[index] == null)
                         {
                             FontSource fontSource = new FontSource(new Uri(Path.Combine(FamilyCollection.SxSFontsResourcePrefix, _systemCompositeFontsFileNames[index] + Util.CompositeFontExtension), UriKind.RelativeOrAbsolute),
-                                                                   skipDemand:true,
-                                                                   isComposite:true,
-                                                                   isInternalCompositeFont:true);
+                                                                   skipDemand: true,
+                                                                   isComposite: true,
+                                                                   isInternalCompositeFont: true);
 
                             CompositeFontInfo fontInfo = CompositeFontParser.LoadXml(fontSource.GetStream());
                             _systemCompositeFonts[index] = new CompositeFontFamily(fontInfo);
@@ -521,7 +520,7 @@ namespace MS.Internal.FontCache
                 _currentFamily = 0;
                 _firstEnumeration = true;
                 _familyCount = fontCollection.FamilyCount;
-}
+            }
 
             #region IEnumerator<Text.TextInterface.FontFamily> Members
 

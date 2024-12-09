@@ -1,13 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal;
-using System.Windows.Input;
 using System.Windows.Controls; // ScrollChangedEventArgs
 using System.Windows.Controls.Primitives;  // CharacterCasing, TextBoxBase
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using MS.Internal;
 
 // 
 // Description: A Component of TextEditor supporting mouse gestures.
@@ -599,7 +599,7 @@ namespace System.Windows.Documents
             // there's no way to prevent this, the best we can do is scroll back before layout
             // updates.  To do this, we listen to the ScrollChanged event that will get generated
             // as a result of the Focus() call we're about to make.
-            
+
             // This only works if a ScrollViewer is responsible for scrolling.  FrameworkElement
             // needs to provide a way to avoid scrolling to begin with. 
             // GetParent returns a DO which could be a 2D or 3D Visual.  Since we are searching for a
@@ -616,7 +616,7 @@ namespace System.Windows.Documents
 
             // Cache the selection.  We could be detached when Focus raises a public event.
             ITextSelection selection = This.Selection;
-            
+
             try
             {
                 selection.Changed += OnSelectionChangedDuringGotFocus;
@@ -626,7 +626,7 @@ namespace System.Windows.Documents
             finally
             {
                 selection.Changed -= OnSelectionChangedDuringGotFocus;
-            
+
                 // remove our scroll change handler
                 if (scrollViewer != null)
                 {
@@ -730,11 +730,11 @@ namespace System.Windows.Documents
 
             // Need to get Rect from TextView, since Rect returned by TextPointer.GetCharacterRect() 
             // is transformed to UiScope coordinates and we want RenderScope coordinates here.
-            
+
             ITextPointer otherEdgePosition = mouseMovePosition.GetNextContextPosition(mouseMovePosition.LogicalDirection);
             LogicalDirection otherEdgeDirection = (mouseMovePosition.LogicalDirection == LogicalDirection.Forward) ?
                 LogicalDirection.Backward : LogicalDirection.Forward;
-            
+
             // Normalize with correct gravity
             otherEdgePosition = otherEdgePosition.CreatePointer(0, otherEdgeDirection);
 
@@ -765,10 +765,12 @@ namespace System.Windows.Documents
             if (hitTestResult != null)
             {
                 bool check = false;
-                if(hitTestResult.VisualHit is Visual) check = ((Visual)hitTestResult.VisualHit).IsDescendantOf(renderScope);
-                if(hitTestResult.VisualHit is Visual3D) check = ((Visual3D)hitTestResult.VisualHit).IsDescendantOf(renderScope);
-                
-                if (hitTestResult.VisualHit == renderScope||
+                if (hitTestResult.VisualHit is Visual)
+                    check = ((Visual)hitTestResult.VisualHit).IsDescendantOf(renderScope);
+                if (hitTestResult.VisualHit is Visual3D)
+                    check = ((Visual3D)hitTestResult.VisualHit).IsDescendantOf(renderScope);
+
+                if (hitTestResult.VisualHit == renderScope ||
                     check ||
                     hitTestResult.VisualHit == caretElement)
                 {
@@ -780,7 +782,7 @@ namespace System.Windows.Documents
             while (hitElement != null)
             {
                 if (hitElement == textContainerOwner ||
-                    hitElement == renderScope || 
+                    hitElement == renderScope ||
                     hitElement == caretElement)
                 {
                     return true;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -57,8 +57,8 @@ namespace System.Windows.Controls
             if (data is DataGridClipboardCellContent)
             {
                 clipboardCellContent = (DataGridClipboardCellContent)data;
-                            
-                return 
+
+                return
                     (_column == clipboardCellContent._column) &&
                     (_content == clipboardCellContent._content) &&
                     (_item == clipboardCellContent._item);
@@ -76,7 +76,7 @@ namespace System.Windows.Controls
             return ((_column == null ? 0 : _column.GetHashCode()) ^
                 (_content == null ? 0 : _content.GetHashCode()) ^
                 (_item == null ? 0 : _item.GetHashCode()));
-        } 
+        }
 
         /// <summary>
         /// Field-by-field comparison to avoid reflection-based ValueType.Equals 
@@ -88,7 +88,7 @@ namespace System.Windows.Controls
             DataGridClipboardCellContent clipboardCellContent1,
             DataGridClipboardCellContent clipboardCellContent2)
         {
-            return 
+            return
                 (clipboardCellContent1._column == clipboardCellContent2._column) &&
                 (clipboardCellContent1._content == clipboardCellContent2._content) &&
                 (clipboardCellContent1._item == clipboardCellContent2._item);
@@ -101,7 +101,7 @@ namespace System.Windows.Controls
         /// <param name="clipboardCellContent2"/>
         /// <returns>True iff clipboardCellContent1 and clipboardCellContent2 are NOT equal</returns>
         public static bool operator !=(
-            DataGridClipboardCellContent clipboardCellContent1, 
+            DataGridClipboardCellContent clipboardCellContent1,
             DataGridClipboardCellContent clipboardCellContent2)
         {
             return

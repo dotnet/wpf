@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,12 +7,11 @@
 //
 
 using System.Runtime.InteropServices;
-using IEnumString = System.Windows.Documents.MsSpellCheckLib.RCW.IEnumString;
-using IEnumSpellingError = System.Windows.Documents.MsSpellCheckLib.RCW.IEnumSpellingError;
-using ISpellingError = System.Windows.Documents.MsSpellCheckLib.RCW.ISpellingError;
-
-using SpellingError = System.Windows.Documents.MsSpellCheckLib.SpellChecker.SpellingError;
 using CorrectiveAction = System.Windows.Documents.MsSpellCheckLib.SpellChecker.CorrectiveAction;
+using IEnumSpellingError = System.Windows.Documents.MsSpellCheckLib.RCW.IEnumSpellingError;
+using IEnumString = System.Windows.Documents.MsSpellCheckLib.RCW.IEnumString;
+using ISpellingError = System.Windows.Documents.MsSpellCheckLib.RCW.ISpellingError;
+using SpellingError = System.Windows.Documents.MsSpellCheckLib.SpellChecker.SpellingError;
 
 namespace System.Windows.Documents.MsSpellCheckLib
 {

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -35,8 +35,8 @@ namespace System.Windows.Input
             {
                 throw new InvalidEnumArgumentException(SR.Format(SR.Enum_Invalid, "systemGesture"));
             }
-            
-            _id        = systemGesture;
+
+            _id = systemGesture;
         }
 
         /////////////////////////////////////////////////////////////////////
@@ -65,9 +65,9 @@ namespace System.Windows.Input
         ///     Note: A flick gesture will pass the flick data in the parameter.
         /// </param>
         internal StylusSystemGestureEventArgs(
-                                StylusDevice stylusDevice, 
+                                StylusDevice stylusDevice,
                                 int timestamp,
-                                SystemGesture systemGesture, 
+                                SystemGesture systemGesture,
                                 int gestureX,
                                 int gestureY,
                                 int buttonState) :
@@ -78,10 +78,10 @@ namespace System.Windows.Input
                 throw new InvalidEnumArgumentException(SR.Format(SR.Enum_Invalid, "systemGesture"));
             }
 
-            _id          = systemGesture;
+            _id = systemGesture;
             _buttonState = buttonState;
-            _gestureX    = gestureX;
-            _gestureY    = gestureY;
+            _gestureX = gestureX;
+            _gestureY = gestureY;
         }
 
         /////////////////////////////////////////////////////////////////////
@@ -151,15 +151,15 @@ namespace System.Windows.Input
         /// </param>
         protected override void InvokeEventHandler(Delegate genericHandler, object genericTarget)
         {
-            StylusSystemGestureEventHandler handler = (StylusSystemGestureEventHandler) genericHandler;
+            StylusSystemGestureEventHandler handler = (StylusSystemGestureEventHandler)genericHandler;
             handler(genericTarget, this);
         }
 
         /////////////////////////////////////////////////////////////////////
 
-        SystemGesture     _id;
-        int               _buttonState;
-        int               _gestureX;
-        int               _gestureY;
+        SystemGesture _id;
+        int _buttonState;
+        int _gestureX;
+        int _gestureY;
     }
 }

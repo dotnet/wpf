@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,19 +17,19 @@ namespace MS.Internal.Text
     /// </summary>
     internal class TextSpanModifier : TextModifier
     {
-        private int                      _length;
-        
+        private int _length;
+
         private TextDecorationCollection _modifierDecorations;
-        private Brush                    _modifierBrush;
-        private FlowDirection            _flowDirection;
-        private bool                     _hasDirectionalEmbedding;
+        private Brush _modifierBrush;
+        private FlowDirection _flowDirection;
+        private bool _hasDirectionalEmbedding;
 
         /// <summary>
         /// Creates a TextSpanModifier with the specified length and
         /// properties to modify TextDecorations. 
         /// Instance created will not affect bidi embedding level. 
         /// </summary>
-        public TextSpanModifier(int length, TextDecorationCollection textDecorations, Brush foregroundBrush) 
+        public TextSpanModifier(int length, TextDecorationCollection textDecorations, Brush foregroundBrush)
         {
             _length = length;
             _modifierDecorations = textDecorations;
@@ -42,11 +42,11 @@ namespace MS.Internal.Text
         /// input TextDecorations is not null.
         /// </summary>
         public TextSpanModifier(int length, TextDecorationCollection textDecorations, Brush foregroundBrush, FlowDirection flowDirection)
-            : this (length, textDecorations, foregroundBrush)
+            : this(length, textDecorations, foregroundBrush)
         {
             _hasDirectionalEmbedding = true;
             _flowDirection = flowDirection;
-        }     
+        }
 
         /// <summary>
         /// Character length
@@ -77,7 +77,7 @@ namespace MS.Internal.Text
             // Get the text decorations applied to the text modifier run. If there are
             // none, we don't change anything.
             if (properties == null || _modifierDecorations == null || _modifierDecorations.Count == 0)
-                return properties;        
+                return properties;
 
             // Let brush be the foreground brush for the text modifier run. Any text
             // decorations defined at the text modifier scope that have a null Pen
@@ -174,7 +174,7 @@ namespace MS.Internal.Text
             TextDecorationCollection _textDecorations;
 
             internal MergedTextRunProperties(
-                TextRunProperties runProperties, 
+                TextRunProperties runProperties,
                 TextDecorationCollection textDecorations)
             {
                 _runProperties = runProperties;
@@ -183,8 +183,8 @@ namespace MS.Internal.Text
             }
 
             public override Typeface Typeface
-            { 
-                get { return _runProperties.Typeface; } 
+            {
+                get { return _runProperties.Typeface; }
             }
 
             public override double FontRenderingEmSize

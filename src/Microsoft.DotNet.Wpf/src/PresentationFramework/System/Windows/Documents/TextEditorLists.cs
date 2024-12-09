@@ -1,9 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal;
 using System.Windows.Input;
+using MS.Internal;
 using MS.Internal.Commands; // CommandHelpers
 
 //
@@ -27,11 +27,11 @@ namespace System.Windows.Documents
         // Registers all text editing command handlers for a given control type
         internal static void _RegisterClassHandlers(Type controlType, bool registerEventListeners)
         {
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.RemoveListMarkers   , new ExecutedRoutedEventHandler(OnListCommand) , new CanExecuteRoutedEventHandler(OnQueryStatusNYI), KeyGesture.CreateFromResourceStrings(KeyRemoveListMarkers, nameof(SR.KeyRemoveListMarkersDisplayString)));
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ToggleBullets       , new ExecutedRoutedEventHandler(OnListCommand) , new CanExecuteRoutedEventHandler(OnQueryStatusNYI), KeyGesture.CreateFromResourceStrings(KeyToggleBullets, nameof(SR.KeyToggleBulletsDisplayString)));
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ToggleNumbering     , new ExecutedRoutedEventHandler(OnListCommand) , new CanExecuteRoutedEventHandler(OnQueryStatusNYI), KeyGesture.CreateFromResourceStrings(KeyToggleNumbering, nameof(SR.KeyToggleNumberingDisplayString)));
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.IncreaseIndentation , new ExecutedRoutedEventHandler(OnListCommand) , new CanExecuteRoutedEventHandler(OnQueryStatusTab), KeyGesture.CreateFromResourceStrings(KeyIncreaseIndentation, nameof(SR.KeyIncreaseIndentationDisplayString)));
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.DecreaseIndentation , new ExecutedRoutedEventHandler(OnListCommand) , new CanExecuteRoutedEventHandler(OnQueryStatusTab), KeyGesture.CreateFromResourceStrings(KeyDecreaseIndentation, nameof(SR.KeyDecreaseIndentationDisplayString)));
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.RemoveListMarkers, new ExecutedRoutedEventHandler(OnListCommand), new CanExecuteRoutedEventHandler(OnQueryStatusNYI), KeyGesture.CreateFromResourceStrings(KeyRemoveListMarkers, nameof(SR.KeyRemoveListMarkersDisplayString)));
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ToggleBullets, new ExecutedRoutedEventHandler(OnListCommand), new CanExecuteRoutedEventHandler(OnQueryStatusNYI), KeyGesture.CreateFromResourceStrings(KeyToggleBullets, nameof(SR.KeyToggleBulletsDisplayString)));
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ToggleNumbering, new ExecutedRoutedEventHandler(OnListCommand), new CanExecuteRoutedEventHandler(OnQueryStatusNYI), KeyGesture.CreateFromResourceStrings(KeyToggleNumbering, nameof(SR.KeyToggleNumberingDisplayString)));
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.IncreaseIndentation, new ExecutedRoutedEventHandler(OnListCommand), new CanExecuteRoutedEventHandler(OnQueryStatusTab), KeyGesture.CreateFromResourceStrings(KeyIncreaseIndentation, nameof(SR.KeyIncreaseIndentationDisplayString)));
+            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.DecreaseIndentation, new ExecutedRoutedEventHandler(OnListCommand), new CanExecuteRoutedEventHandler(OnQueryStatusTab), KeyGesture.CreateFromResourceStrings(KeyDecreaseIndentation, nameof(SR.KeyDecreaseIndentationDisplayString)));
         }
 
         // Decreases the indent level of the Block at selection start.
@@ -83,7 +83,7 @@ namespace System.Windows.Documents
                 //  Checking for AcceptsTab does not reasonable here,
                 // but because this command is tied to Tab/Shift+Tab we have to do that
                 // or otherwise AcceptsTab property is ignored for TextBoxes.
-                args.CanExecute= true;
+                args.CanExecute = true;
             }
         }
 
@@ -364,7 +364,7 @@ namespace System.Windows.Documents
 
         private const string KeyDecreaseIndentation = "Ctrl+Shift+T";
         private const string KeyToggleBullets = "Ctrl+Shift+L";
-        private const string KeyToggleNumbering = "Ctrl+Shift+N"; 
+        private const string KeyToggleNumbering = "Ctrl+Shift+N";
         private const string KeyRemoveListMarkers = "Ctrl+Shift+R";
         private const string KeyIncreaseIndentation = "Ctrl+T";
     }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,9 +8,9 @@
 *
 \***************************************************************************/
 
-using System.Security;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
+using System.Security;
 using Microsoft.Win32;
 
 #if !PBTCOMPILER
@@ -70,46 +70,46 @@ namespace MS.Internal.Drt
         {
             Uri appBase = null;
             appBase = new Uri(domain.BaseDirectory);
-            return( appBase );
+            return (appBase);
         }
 
-         internal static int MapUrlToZoneWrapper(Uri uri)
-         {
-              int targetZone = NativeMethods.URLZONE_LOCAL_MACHINE ; // fail securely this is the most priveleged zone
-              int hr = NativeMethods.S_OK ;
-              object curSecMgr = null;
-              hr = UnsafeNativeMethods.CoInternetCreateSecurityManager(
-                                                                       null,
-                                                                       out curSecMgr ,
-                                                                       0 );
-              if ( NativeMethods.Failed( hr ))
-                  throw new Win32Exception( hr ) ;
+        internal static int MapUrlToZoneWrapper(Uri uri)
+        {
+            int targetZone = NativeMethods.URLZONE_LOCAL_MACHINE; // fail securely this is the most priveleged zone
+            int hr = NativeMethods.S_OK;
+            object curSecMgr = null;
+            hr = UnsafeNativeMethods.CoInternetCreateSecurityManager(
+                                                                     null,
+                                                                     out curSecMgr,
+                                                                     0);
+            if (NativeMethods.Failed(hr))
+                throw new Win32Exception(hr);
 
-              UnsafeNativeMethods.IInternetSecurityManager pSec = (UnsafeNativeMethods.IInternetSecurityManager) curSecMgr;
+            UnsafeNativeMethods.IInternetSecurityManager pSec = (UnsafeNativeMethods.IInternetSecurityManager)curSecMgr;
 
-              string uriString = BindUriHelper.UriToString( uri ) ;
-              //
-              // special case the condition if file is on local machine or UNC to ensure that content with mark of the web
-              // does not yield with an internet zone result
-              //
-              if (uri.IsFile)
-              {
-                  pSec.MapUrlToZone( uriString, out targetZone, MS.Win32.NativeMethods.MUTZ_NOSAVEDFILECHECK );
-              }
-              else
-              {
-                  pSec.MapUrlToZone( uriString, out targetZone, 0 );
-              }
-              //
-              // This is the condition for Invalid zone
-              //
-              if (targetZone < 0)
-              {
-                throw new SecurityException( SR.Invalid_URI );
-              }
-              pSec = null;
-              curSecMgr = null;
-              return targetZone;
+            string uriString = BindUriHelper.UriToString(uri);
+            //
+            // special case the condition if file is on local machine or UNC to ensure that content with mark of the web
+            // does not yield with an internet zone result
+            //
+            if (uri.IsFile)
+            {
+                pSec.MapUrlToZone(uriString, out targetZone, MS.Win32.NativeMethods.MUTZ_NOSAVEDFILECHECK);
+            }
+            else
+            {
+                pSec.MapUrlToZone(uriString, out targetZone, 0);
+            }
+            //
+            // This is the condition for Invalid zone
+            //
+            if (targetZone < 0)
+            {
+                throw new SecurityException(SR.Invalid_URI);
+            }
+            pSec = null;
+            curSecMgr = null;
+            return targetZone;
         }
 #endif
 
@@ -140,7 +140,7 @@ namespace MS.Internal.Drt
         {
             Marshal.ThrowExceptionForHR(hr, new IntPtr(-1));
         }
-        
+
         internal static int GetHRForException(Exception exception)
         {
             ArgumentNullException.ThrowIfNull(exception);
@@ -209,14 +209,14 @@ namespace MS.Internal.Drt
 #if WINDOWS_BASE
         ///
         /// Read and return a registry value.
-       static internal object ReadRegistryValue( RegistryKey baseRegistryKey, string keyName, string valueName )
-       {
+        static internal object ReadRegistryValue(RegistryKey baseRegistryKey, string keyName, string valueName)
+        {
             object value = null;
 
             RegistryKey key = baseRegistryKey.OpenSubKey(keyName);
             if (key != null)
             {
-                using( key )
+                using (key)
                 {
                     value = key.GetValue(valueName);
                 }
@@ -225,6 +225,6 @@ namespace MS.Internal.Drt
             return value;
         }
 #endif // WINDOWS_BASE
-}
+    }
 }
 

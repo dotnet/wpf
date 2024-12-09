@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,8 +8,8 @@
 *           Doing async parsing on a separate thread.
 *
 \***************************************************************************/
-using System.IO;
 using System.Collections;
+using System.IO;
 using System.Threading;
 
 
@@ -72,9 +72,9 @@ namespace System.Windows.Markup
             int bufferOffset;
             int bufferIndex;
 #if DEBUG
-            Debug.Assert(!WriteComplete,"Write called after close");
+            Debug.Assert(!WriteComplete, "Write called after close");
 #endif
-            Debug.Assert(null != buffer,"Null buffer past to the Writer");
+            Debug.Assert(null != buffer, "Null buffer past to the Writer");
 
             // if nothing to write then just return.
             if (0 == count)
@@ -83,13 +83,13 @@ namespace System.Windows.Markup
             }
 
             byte[] writeBuffer = GetBufferFromFilePosition(
-                                    WritePosition,false /*writer*/,
+                                    WritePosition, false /*writer*/,
                                     out bufferOffset, out bufferIndex);
 
-            Debug.Assert(null != writeBuffer,"Null writeBuffer returned");
+            Debug.Assert(null != writeBuffer, "Null writeBuffer returned");
 
             // see how many bits fit into this buffer.
-            int availableBytesInBuffer =  BufferSize - bufferOffset;
+            int availableBytesInBuffer = BufferSize - bufferOffset;
             int leftOverBytes = 0;
             int bufferWriteCount = 0;
 
@@ -106,12 +106,12 @@ namespace System.Windows.Markup
                 bufferWriteCount = count;
             }
 
-            Debug.Assert(0 < bufferWriteCount,"Not writing any bytes to the buffer");
+            Debug.Assert(0 < bufferWriteCount, "Not writing any bytes to the buffer");
 
             // now loop through writing out all or the number of bits that can fit in the buffer.
             for (int loopCount = 0; loopCount < bufferWriteCount; loopCount++)
             {
-                Debug.Assert(bufferOffset < BufferSize,"Trying to Read past bufer");
+                Debug.Assert(bufferOffset < BufferSize, "Trying to Read past bufer");
 
                 writeBuffer[bufferOffset++] = buffer[offset++];
             }
@@ -128,7 +128,7 @@ namespace System.Windows.Markup
             // if we have any leftOver Bytes call Write Again.
             if (leftOverBytes > 0)
             {
-                Write(buffer,offset,leftOverBytes);
+                Write(buffer, offset, leftOverBytes);
             }
         }
 
@@ -142,13 +142,13 @@ namespace System.Windows.Markup
         /// <returns></returns>
         internal long WriterSeek(long offset, SeekOrigin loc)
         {
-            switch(loc)
+            switch (loc)
             {
                 case SeekOrigin.Begin:
-                    WritePosition = (int) offset;
+                    WritePosition = (int)offset;
                     break;
                 case SeekOrigin.Current:
-                    WritePosition = (int) (WritePosition + offset);
+                    WritePosition = (int)(WritePosition + offset);
                     break;
                 case SeekOrigin.End:
                     throw new NotSupportedException(SR.ParserWriterNoSeekEnd);
@@ -156,11 +156,11 @@ namespace System.Windows.Markup
                     throw new ArgumentException(SR.ParserWriterUnknownOrigin);
             }
 
-            if( (!( WritePosition <= WriteLength ))
+            if ((!(WritePosition <= WriteLength))
                 ||
-                (!( WritePosition >= ReadLength  )) )
+                (!(WritePosition >= ReadLength)))
             {
-                throw new ArgumentOutOfRangeException( "offset" );
+                throw new ArgumentOutOfRangeException("offset");
             }
 
             return WritePosition;
@@ -177,7 +177,7 @@ namespace System.Windows.Markup
         {
             ArgumentOutOfRangeException.ThrowIfLessThan(position, ReadLength);
 #if DEBUG
-            Debug.Assert(!WriteComplete,"UpdateReaderLength called after close");
+            Debug.Assert(!WriteComplete, "UpdateReaderLength called after close");
 #endif
 
             ReadLength = position;
@@ -185,7 +185,7 @@ namespace System.Windows.Markup
             ArgumentOutOfRangeException.ThrowIfGreaterThan(position, WriteLength);
 
             // safe for them to check and remove unused buffers.
-            CheckIfCanRemoveFromArrayList(position,WriterBufferArrayList,
+            CheckIfCanRemoveFromArrayList(position, WriterBufferArrayList,
                                                 ref _writerFirstBufferPosition);
         }
 
@@ -218,14 +218,14 @@ namespace System.Windows.Markup
             int bufferIndex;
 
             byte[] readBuffer = GetBufferFromFilePosition(
-                ReadPosition,true /*reader*/,
+                ReadPosition, true /*reader*/,
                 out bufferOffset, out bufferIndex);
 
 
-            Debug.Assert(bufferOffset < BufferSize,"Calculated bufferOffset is greater than buffer");
+            Debug.Assert(bufferOffset < BufferSize, "Calculated bufferOffset is greater than buffer");
 
             // see how many bytes we can read from this buffer.
-            int availableBytesInBuffer =  BufferSize - bufferOffset;
+            int availableBytesInBuffer = BufferSize - bufferOffset;
             int leftOverBytes = 0;
             int bufferReadCount = 0;
 
@@ -242,12 +242,12 @@ namespace System.Windows.Markup
                 bufferReadCount = count;
             }
 
-            Debug.Assert(0 < bufferReadCount,"Not reading any bytes to the buffer");
+            Debug.Assert(0 < bufferReadCount, "Not reading any bytes to the buffer");
 
             for (int loopCount = 0; loopCount < bufferReadCount; loopCount++)
             {
                 // make sure not going over the buffer.
-                Debug.Assert(bufferOffset < BufferSize,"Trying ot read past buffer");
+                Debug.Assert(bufferOffset < BufferSize, "Trying ot read past buffer");
                 buffer[offset++] = readBuffer[bufferOffset++];
             }
 
@@ -257,7 +257,7 @@ namespace System.Windows.Markup
 
             if (leftOverBytes > 0)
             {
-                Read(buffer,offset,(int) leftOverBytes);
+                Read(buffer, offset, (int)leftOverBytes);
             }
 
             return count;
@@ -274,8 +274,8 @@ namespace System.Windows.Markup
             byte[] buffer = new byte[1];
 
             // uses Read to validate if reading past the end of the file.
-            Read(buffer,0,1);
-            return (int) buffer[0];
+            Read(buffer, 0, 1);
+            return (int)buffer[0];
         }
 
         /// <summary>
@@ -286,13 +286,13 @@ namespace System.Windows.Markup
         /// <returns></returns>
         internal long ReaderSeek(long offset, SeekOrigin loc)
         {
-            switch(loc)
+            switch (loc)
             {
                 case SeekOrigin.Begin:
-                    ReadPosition = (int) offset;
+                    ReadPosition = (int)offset;
                     break;
                 case SeekOrigin.Current:
-                    ReadPosition = (int) (ReadPosition + offset);
+                    ReadPosition = (int)(ReadPosition + offset);
                     break;
                 case SeekOrigin.End:
                     throw new NotSupportedException(SR.ParserWriterNoSeekEnd);
@@ -301,11 +301,11 @@ namespace System.Windows.Markup
             }
 
             // validate if at a good readPosition.
-            if((!(ReadPosition >= ReaderFirstBufferPosition))
+            if ((!(ReadPosition >= ReaderFirstBufferPosition))
                 ||
                (!(ReadPosition < ReadLength)))
             {
-                throw new ArgumentOutOfRangeException( "offset" );
+                throw new ArgumentOutOfRangeException("offset");
             }
 
             return ReadPosition;
@@ -321,7 +321,7 @@ namespace System.Windows.Markup
         {
             // call CheckIfCanRemove to update the readers BufferPositions
             // and do any cleanup.
-            CheckIfCanRemoveFromArrayList(position,ReaderBufferArrayList,
+            CheckIfCanRemoveFromArrayList(position, ReaderBufferArrayList,
                                 ref _readerFirstBufferPosition);
         }
 
@@ -334,9 +334,9 @@ namespace System.Windows.Markup
         /// <summary>
         /// Given a position in the Stream returns the buffer and
         /// start offset position in the buffer
-         /// </summary>
-        byte[] GetBufferFromFilePosition(long position,bool reader,
-            out int bufferOffset,out int bufferIndex)
+        /// </summary>
+        byte[] GetBufferFromFilePosition(long position, bool reader,
+            out int bufferOffset, out int bufferIndex)
         {
             byte[] buffer = null;
 
@@ -360,23 +360,23 @@ namespace System.Windows.Markup
             else
             {
                 bufferArray = WriterBufferArrayList;
-                firstBufferPosition =  WriterFirstBufferPosition;
+                firstBufferPosition = WriterFirstBufferPosition;
             }
 
             // calc get the bufferIndex
-            bufferIndex = (int) ((position - firstBufferPosition)/BufferSize);
+            bufferIndex = (int)((position - firstBufferPosition) / BufferSize);
 
             // calc the byte offset in the buffer for the position
             bufferOffset =
-                (int) ((position - firstBufferPosition) - (bufferIndex*BufferSize));
+                (int)((position - firstBufferPosition) - (bufferIndex * BufferSize));
 
-            Debug.Assert(bufferOffset < BufferSize,"Calculated bufferOffset is greater than buffer");
+            Debug.Assert(bufferOffset < BufferSize, "Calculated bufferOffset is greater than buffer");
 
             // check if we need to allocate a new buffer.
             if (bufferArray.Count <= bufferIndex)
             {
-                Debug.Assert(bufferArray.Count == bufferIndex,"Need to allocate more than one buffer");
-                Debug.Assert(false == reader,"Allocating a buffer on Read");
+                Debug.Assert(bufferArray.Count == bufferIndex, "Need to allocate more than one buffer");
+                Debug.Assert(false == reader, "Allocating a buffer on Read");
 
                 buffer = new byte[BufferSize];
 
@@ -387,7 +387,7 @@ namespace System.Windows.Markup
             else
             {
                 // just use the buffer that is there.
-                buffer =  bufferArray[bufferIndex] as byte[];
+                buffer = bufferArray[bufferIndex] as byte[];
             }
             _bufferLock.ReleaseWriterLock();
 
@@ -402,10 +402,10 @@ namespace System.Windows.Markup
         /// <param name="arrayList">ArrayList containing the Memory</param>
         /// <param name="firstBufferPosition">If any arrays are cleaned up returns the
         /// updated position that the first array in the buffer starts at</param>
-         void CheckIfCanRemoveFromArrayList(long position,ArrayList arrayList,ref long firstBufferPosition)
+        void CheckIfCanRemoveFromArrayList(long position, ArrayList arrayList, ref long firstBufferPosition)
         {
             // see if there are any buffers we can get rid of.
-            int bufferIndex = (int) ((position - firstBufferPosition)/BufferSize);
+            int bufferIndex = (int)((position - firstBufferPosition) / BufferSize);
 
             if (bufferIndex > 0)
             {
@@ -419,9 +419,9 @@ namespace System.Windows.Markup
 
                 // update buffer position offset for number of buffers to be
                 // removed.
-                firstBufferPosition += numBuffersToRemove*BufferSize;
+                firstBufferPosition += numBuffersToRemove * BufferSize;
 
-                arrayList.RemoveRange(0,bufferIndex);
+                arrayList.RemoveRange(0, bufferIndex);
 
                 _bufferLock.ReleaseWriterLock();
             }
@@ -472,7 +472,7 @@ namespace System.Windows.Markup
         /// </summary>
         internal long WritePosition
         {
-            get { return _writePosition ; }
+            get { return _writePosition; }
             set { _writePosition = value; }
         }
 
@@ -481,7 +481,7 @@ namespace System.Windows.Markup
         /// </summary>
         internal long WriteLength
         {
-            get { return _writeLength ; }
+            get { return _writeLength; }
             set { _writeLength = value; }
         }
 
@@ -500,7 +500,7 @@ namespace System.Windows.Markup
         /// </summary>
         long ReaderFirstBufferPosition
         {
-            get { return _readerFirstBufferPosition ; }
+            get { return _readerFirstBufferPosition; }
             set { _readerFirstBufferPosition = value; }
         }
 
@@ -509,7 +509,7 @@ namespace System.Windows.Markup
         /// </summary>
         long WriterFirstBufferPosition
         {
-            get { return _writerFirstBufferPosition ; }
+            get { return _writerFirstBufferPosition; }
             set { _writerFirstBufferPosition = value; }
         }
 
@@ -518,7 +518,7 @@ namespace System.Windows.Markup
         /// </summary>
         ArrayList ReaderBufferArrayList
         {
-            get { return _readerBufferArrayList ; }
+            get { return _readerBufferArrayList; }
             set { _readerBufferArrayList = value; }
         }
 
@@ -527,7 +527,7 @@ namespace System.Windows.Markup
         /// </summary>
         ArrayList WriterBufferArrayList
         {
-            get { return _writerBufferArrayList ; }
+            get { return _writerBufferArrayList; }
             set { _writerBufferArrayList = value; }
         }
 
@@ -618,7 +618,7 @@ namespace System.Windows.Markup
         /// </summary>
         public override void Close()
         {
-             StreamManager.WriterClose();
+            StreamManager.WriterClose();
         }
 
         /// <summary>
@@ -676,7 +676,7 @@ namespace System.Windows.Markup
         /// </summary>
         public override long Seek(long offset, SeekOrigin loc)
         {
-            return StreamManager.WriterSeek(offset,loc);
+            return StreamManager.WriterSeek(offset, loc);
         }
 
         /// <summary>
@@ -693,7 +693,7 @@ namespace System.Windows.Markup
         /// </summary>
         public override void Write(byte[] buffer, int offset, int count)
         {
-            StreamManager.Write(buffer,offset,count);
+            StreamManager.Write(buffer, offset, count);
         }
 
         #endregion overrides
@@ -781,7 +781,7 @@ namespace System.Windows.Markup
         /// </summary>
         public override void Close()
         {
-            Debug.Assert(false,"Close called on ReaderStream");
+            Debug.Assert(false, "Close called on ReaderStream");
         }
 
         /// <summary>
@@ -789,7 +789,7 @@ namespace System.Windows.Markup
         /// </summary>
         public override void Flush()
         {
-            Debug.Assert(false,"Flush called on ReaderStream");
+            Debug.Assert(false, "Flush called on ReaderStream");
         }
 
         /// <summary>
@@ -814,7 +814,7 @@ namespace System.Windows.Markup
             }
             set
             {
-                StreamManager.ReaderSeek(value,SeekOrigin.Begin);
+                StreamManager.ReaderSeek(value, SeekOrigin.Begin);
             }
         }
 
@@ -823,7 +823,7 @@ namespace System.Windows.Markup
         /// </summary>
         public override int Read(byte[] buffer, int offset, int count)
         {
-            return StreamManager.Read(buffer,offset,count);
+            return StreamManager.Read(buffer, offset, count);
         }
 
         /// <summary>
@@ -840,7 +840,7 @@ namespace System.Windows.Markup
         /// </summary>
         public override long Seek(long offset, SeekOrigin loc)
         {
-            return StreamManager.ReaderSeek(offset,loc);
+            return StreamManager.ReaderSeek(offset, loc);
         }
 
         /// <summary>
@@ -857,7 +857,7 @@ namespace System.Windows.Markup
         /// </summary>
         public override void Write(byte[] buffer, int offset, int count)
         {
-             throw new NotSupportedException();
+            throw new NotSupportedException();
         }
 
         #endregion Overrides
@@ -879,7 +879,7 @@ namespace System.Windows.Markup
 #if DEBUG
         internal bool IsWriteComplete
         {
-             get { return StreamManager.WriteComplete; }
+            get { return StreamManager.WriteComplete; }
         }
 #endif
         #endregion Methods

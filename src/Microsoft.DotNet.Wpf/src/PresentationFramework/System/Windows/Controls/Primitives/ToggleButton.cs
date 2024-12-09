@@ -1,13 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 using System.ComponentModel;
-using System.Windows.Threading;
-
 using System.Windows.Automation.Peers;
-
+using System.Windows.Threading;
 using MS.Internal.KnownBoxes;
 
 // Disable CS3001: Warning as Error: not CLS-compliant
@@ -147,7 +145,7 @@ namespace System.Windows.Controls.Primitives
             }
         }
 
-        private static object OnGetIsChecked(DependencyObject d) {return ((ToggleButton)d).IsChecked;}
+        private static object OnGetIsChecked(DependencyObject d) { return ((ToggleButton)d).IsChecked; }
 
         /// <summary>
         ///     Called when IsChecked is changed on "d."
@@ -157,8 +155,8 @@ namespace System.Windows.Controls.Primitives
         private static void OnIsCheckedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ToggleButton button = (ToggleButton)d;
-            bool? oldValue = (bool?) e.OldValue;
-            bool? newValue = (bool?) e.NewValue;
+            bool? oldValue = (bool?)e.OldValue;
+            bool? newValue = (bool?)e.NewValue;
 
             //doing soft casting here because the peer can be that of RadioButton and it is not derived from
             //ToggleButtonAutomationPeer - specifically to avoid implementing TogglePattern
@@ -230,7 +228,7 @@ namespace System.Windows.Controls.Primitives
         [Bindable(true), Category("Behavior")]
         public bool IsThreeState
         {
-            get { return (bool) GetValue(IsThreeStateProperty); }
+            get { return (bool)GetValue(IsThreeStateProperty); }
             set { SetValue(IsThreeStateProperty, BooleanBoxes.Box(value)); }
         }
 
@@ -300,7 +298,7 @@ namespace System.Windows.Controls.Primitives
             else
             {
                 //Not on dispatcher, try posting to the dispatcher with 20ms timeout
-                Dispatcher.Invoke(DispatcherPriority.Send, new TimeSpan(0, 0, 0, 0, 20), new DispatcherOperationCallback(delegate(object o)
+                Dispatcher.Invoke(DispatcherPriority.Send, new TimeSpan(0, 0, 0, 0, 20), new DispatcherOperationCallback(delegate (object o)
                 {
                     contentText = GetPlainText();
                     isChecked = IsChecked;

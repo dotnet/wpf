@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,8 +10,8 @@
 //
 
 
-using System.Windows.Media;
 using System.ComponentModel;
+using System.Windows.Media;
 using MS.Internal;
 using MS.Internal.PresentationFramework;
 
@@ -20,7 +20,7 @@ namespace System.Windows.Shapes
     /// <summary>
     /// Shape is a base class for shape elements
     /// </summary>
-    [Localizability(LocalizationCategory.None, Readability=Readability.Unreadable)]
+    [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
     public abstract class Shape : FrameworkElement
     {
         #region Constructors
@@ -65,7 +65,7 @@ namespace System.Windows.Shapes
                 EnsureRenderedGeometry();
 
                 Geometry geometry = _renderedGeometry.CloneCurrentValue();
-                if (geometry == null ||  geometry == Geometry.Empty)
+                if (geometry == null || geometry == Geometry.Empty)
                 {
                     return Geometry.Empty;
                 }
@@ -119,7 +119,7 @@ namespace System.Windows.Shapes
                         typeof(Brush),
                         typeof(Shape),
                         new FrameworkPropertyMetadata(
-                                (Brush) null,
+                                (Brush)null,
                                 FrameworkPropertyMetadataOptions.AffectsRender |
                                 FrameworkPropertyMetadataOptions.SubPropertiesDoNotAffectRender));
 
@@ -128,7 +128,7 @@ namespace System.Windows.Shapes
         /// </summary>
         public Brush Fill
         {
-            get { return (Brush) GetValue(FillProperty); }
+            get { return (Brush)GetValue(FillProperty); }
             set { SetValue(FillProperty, value); }
         }
 
@@ -142,9 +142,9 @@ namespace System.Windows.Shapes
                         typeof(Brush),
                         typeof(Shape),
                         new FrameworkPropertyMetadata(
-                                (Brush) null,
-                                FrameworkPropertyMetadataOptions.AffectsMeasure | 
-                                FrameworkPropertyMetadataOptions.AffectsRender | 
+                                (Brush)null,
+                                FrameworkPropertyMetadataOptions.AffectsMeasure |
+                                FrameworkPropertyMetadataOptions.AffectsRender |
                                 FrameworkPropertyMetadataOptions.SubPropertiesDoNotAffectRender,
                                 new PropertyChangedCallback(OnPenChanged)));
 
@@ -153,7 +153,7 @@ namespace System.Windows.Shapes
         /// </summary>
         public Brush Stroke
         {
-            get { return (Brush) GetValue(StrokeProperty); }
+            get { return (Brush)GetValue(StrokeProperty); }
             set { SetValue(StrokeProperty, value); }
         }
 
@@ -177,14 +177,14 @@ namespace System.Windows.Shapes
         [TypeConverter(typeof(LengthConverter))]
         public double StrokeThickness
         {
-            get { return (double) GetValue(StrokeThicknessProperty); }
+            get { return (double)GetValue(StrokeThicknessProperty); }
             set { SetValue(StrokeThicknessProperty, value); }
         }
 
         /// <summary>
         /// StrokeStartLineCap property
         /// </summary>
-        public static readonly DependencyProperty StrokeStartLineCapProperty  =
+        public static readonly DependencyProperty StrokeStartLineCapProperty =
                 DependencyProperty.Register(
                         "StrokeStartLineCap",
                         typeof(PenLineCap),
@@ -200,7 +200,7 @@ namespace System.Windows.Shapes
         /// </summary>
         public PenLineCap StrokeStartLineCap
         {
-            get { return (PenLineCap) GetValue(StrokeStartLineCapProperty); }
+            get { return (PenLineCap)GetValue(StrokeStartLineCapProperty); }
             set { SetValue(StrokeStartLineCapProperty, value); }
         }
 
@@ -224,7 +224,7 @@ namespace System.Windows.Shapes
         /// </summary>
         public PenLineCap StrokeEndLineCap
         {
-            get { return (PenLineCap) GetValue(StrokeEndLineCapProperty); }
+            get { return (PenLineCap)GetValue(StrokeEndLineCapProperty); }
             set { SetValue(StrokeEndLineCapProperty, value); }
         }
 
@@ -248,7 +248,7 @@ namespace System.Windows.Shapes
         /// </summary>
         public PenLineCap StrokeDashCap
         {
-            get { return (PenLineCap) GetValue(StrokeDashCapProperty); }
+            get { return (PenLineCap)GetValue(StrokeDashCapProperty); }
             set { SetValue(StrokeDashCapProperty, value); }
         }
 
@@ -271,7 +271,7 @@ namespace System.Windows.Shapes
         /// </summary>
         public PenLineJoin StrokeLineJoin
         {
-            get { return (PenLineJoin) GetValue(StrokeLineJoinProperty); }
+            get { return (PenLineJoin)GetValue(StrokeLineJoinProperty); }
             set { SetValue(StrokeLineJoinProperty, value); }
         }
 
@@ -293,7 +293,7 @@ namespace System.Windows.Shapes
         /// </summary>
         public double StrokeMiterLimit
         {
-            get { return (double) GetValue(StrokeMiterLimitProperty); }
+            get { return (double)GetValue(StrokeMiterLimitProperty); }
             set { SetValue(StrokeMiterLimitProperty, value); }
         }
 
@@ -315,7 +315,7 @@ namespace System.Windows.Shapes
         /// </summary>
         public double StrokeDashOffset
         {
-            get { return (double) GetValue(StrokeDashOffsetProperty); }
+            get { return (double)GetValue(StrokeDashOffsetProperty); }
             set { SetValue(StrokeDashOffsetProperty, value); }
         }
 
@@ -337,7 +337,7 @@ namespace System.Windows.Shapes
         /// </summary>
         public DoubleCollection StrokeDashArray
         {
-            get { return (DoubleCollection) GetValue(StrokeDashArrayProperty); }
+            get { return (DoubleCollection)GetValue(StrokeDashArrayProperty); }
             set { SetValue(StrokeDashArrayProperty, value); }
         }
 
@@ -369,7 +369,7 @@ namespace System.Windows.Shapes
             if (SizeIsInvalidOrEmpty(newSize))
             {
                 // We've encountered a numerical error. Don't draw anything.
-                newSize = new Size(0,0);
+                newSize = new Size(0, 0);
                 _renderedGeometry = Geometry.Empty;
             }
 
@@ -402,7 +402,7 @@ namespace System.Windows.Shapes
             if (SizeIsInvalidOrEmpty(newSize))
             {
                 // We've encountered a numerical error. Don't draw anything.
-                newSize = new Size(0,0);
+                newSize = new Size(0, 0);
                 _renderedGeometry = Geometry.Empty;
             }
 
@@ -464,7 +464,7 @@ namespace System.Windows.Shapes
             {
                 return Math.Abs(StrokeThickness);
             }
-}
+        }
 
         internal Pen GetPen()
         {
@@ -482,16 +482,18 @@ namespace System.Windows.Shapes
 
                 // This pen is internal to the system and
                 // must not participate in freezable treeness
-                _pen = new Pen();
-                _pen.CanBeInheritanceContext = false;
+                _pen = new Pen
+                {
+                    CanBeInheritanceContext = false,
 
-                _pen.Thickness = thickness;
-                _pen.Brush = Stroke;
-                _pen.StartLineCap = StrokeStartLineCap;
-                _pen.EndLineCap = StrokeEndLineCap;
-                _pen.DashCap = StrokeDashCap;
-                _pen.LineJoin = StrokeLineJoin;
-                _pen.MiterLimit = StrokeMiterLimit;
+                    Thickness = thickness,
+                    Brush = Stroke,
+                    StartLineCap = StrokeStartLineCap,
+                    EndLineCap = StrokeEndLineCap,
+                    DashCap = StrokeDashCap,
+                    LineJoin = StrokeLineJoin,
+                    MiterLimit = StrokeMiterLimit
+                };
 
                 // StrokeDashArray is usually going to be its default value and GetValue
                 // on a mutable default has a per-instance cost associated with it so we'll
@@ -532,7 +534,7 @@ namespace System.Windows.Shapes
             return !(Double.IsInfinity(d));
         }
 
-        internal virtual void CacheDefiningGeometry() {}
+        internal virtual void CacheDefiningGeometry() { }
 
         internal Size GetStretchedRenderSize(Stretch mode, double strokeThickness, Size availableSize, Rect geometryBounds)
         {
@@ -667,7 +669,7 @@ namespace System.Windows.Shapes
             {
                 xScale = yScale = 1;
                 dX = dY = 0;
-                stretchedSize = new Size(0,0);
+                stretchedSize = new Size(0, 0);
             }
         }
 
@@ -689,7 +691,7 @@ namespace System.Windows.Shapes
             //
             Pen pen = GetPen();
             DashStyle style = null;
-            
+
             if (pen != null)
             {
                 style = pen.DashStyle;
@@ -743,7 +745,7 @@ namespace System.Windows.Shapes
                         _renderedGeometry = currentValue;
                     }
 
-                    Transform renderedTransform  = _renderedGeometry.Transform;
+                    Transform renderedTransform = _renderedGeometry.Transform;
 
                     BoxedMatrix boxedStretchMatrix = StretchMatrixField.GetValue(this);
                     Matrix stretchMatrix = (boxedStretchMatrix == null) ? Matrix.Identity : boxedStretchMatrix.Value;

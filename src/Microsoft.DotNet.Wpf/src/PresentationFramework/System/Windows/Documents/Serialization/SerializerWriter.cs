@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -24,7 +24,7 @@ namespace System.Windows.Documents.Serialization
         /// </summary>
         public abstract void Write(Visual visual);
 
-       /// <summary>
+        /// <summary>
         /// Write a single Visual and close package
         /// </summary>
         public abstract void Write(Visual visual, PrintTicket printTicket);
@@ -39,14 +39,14 @@ namespace System.Windows.Documents.Serialization
         /// </summary>
         public abstract void WriteAsync(Visual visual, object userState);
 
- 
+
         /// <summary>
         /// Asynchronous Write a single Visual and close package
         /// </summary>
         public abstract void WriteAsync(Visual visual, PrintTicket printTicket);
 
 
-       /// <summary>
+        /// <summary>
         /// Asynchronous Write a single Visual and close package
         /// </summary>
         public abstract void WriteAsync(Visual visual, PrintTicket printTicket, object userState);
@@ -56,7 +56,7 @@ namespace System.Windows.Documents.Serialization
         /// </summary>
         public abstract void Write(DocumentPaginator documentPaginator);
 
-       /// <summary>
+        /// <summary>
         /// Write a single DocumentPaginator and close package
         /// </summary>
         public abstract void Write(DocumentPaginator documentPaginator, PrintTicket printTicket);
@@ -106,7 +106,7 @@ namespace System.Windows.Documents.Serialization
         /// </summary>
         public abstract void WriteAsync(FixedPage fixedPage, object userState);
 
-       /// <summary>
+        /// <summary>
         /// Asynchronous Write a single FixedPage and close package
         /// </summary>
         public abstract void WriteAsync(FixedPage fixedPage, PrintTicket printTicket, object userState);
@@ -201,11 +201,11 @@ namespace System.Windows.Documents.Serialization
         /// This event will be invoked if the writer is done
         /// </summary>
         public abstract event WritingCompletedEventHandler WritingCompleted;
-        
+
         /// <summary>
         /// This event will be invoked if the writer has been cancelled
         /// </summary>
-        public abstract event WritingCancelledEventHandler           WritingCancelled;
+        public abstract event WritingCancelledEventHandler WritingCancelled;
     }
 }
 #endif

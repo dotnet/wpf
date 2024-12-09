@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -32,7 +32,7 @@ namespace MS.Internal
         /// </summary>
         /// <param name="array"></param>
         public PartialArray(T[] array) : this(array, 0, array.Length)
-        {}
+        { }
 
         #region IList<T> Members
 
@@ -59,27 +59,27 @@ namespace MS.Internal
 
         public bool Remove(T item)
         {
-            throw new NotSupportedException(SR.CollectionIsFixedSize);                           
+            throw new NotSupportedException(SR.CollectionIsFixedSize);
         }
 
         public void RemoveAt(int index)
         {
-            throw new NotSupportedException(SR.CollectionIsFixedSize);                           
+            throw new NotSupportedException(SR.CollectionIsFixedSize);
         }
 
         public void Clear()
         {
-            throw new NotSupportedException();                           
+            throw new NotSupportedException();
         }
 
         public void Add(T item)
         {
-            throw new NotSupportedException(SR.CollectionIsFixedSize);                           
+            throw new NotSupportedException(SR.CollectionIsFixedSize);
         }
 
         public void Insert(int index, T item)
         {
-            throw new NotSupportedException(SR.CollectionIsFixedSize);                           
+            throw new NotSupportedException(SR.CollectionIsFixedSize);
         }
 
         public T this[int index]
@@ -127,8 +127,8 @@ namespace MS.Internal
             if (array.Rank != 1)
             {
                 throw new ArgumentException(
-                    SR.Collection_CopyTo_ArrayCannotBeMultidimensional, 
-                    "array");                
+                    SR.Collection_CopyTo_ArrayCannotBeMultidimensional,
+                    "array");
             }
 
             ArgumentOutOfRangeException.ThrowIfNegative(arrayIndex);
@@ -137,8 +137,8 @@ namespace MS.Internal
             {
                 throw new ArgumentException(
                     SR.Format(
-                        SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, 
-                        "arrayIndex", 
+                        SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength,
+                        "arrayIndex",
                         "array"),
                         "arrayIndex");
             }
@@ -150,8 +150,8 @@ namespace MS.Internal
                         SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength,
                         "arrayIndex",
                         "array"));
-            }           
-            
+            }
+
 
             // do the copying here
             for (int i = 0; i < Count; i++)

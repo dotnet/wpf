@@ -1,12 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using Microsoft.Win32; // for RegistryKey class
-using MS.Internal;
-using MS.Internal.Interop;
-using MS.Win32; // for *NativeMethods
 using System.IO;
 using System.Windows.Input.StylusPointer;
 using System.Windows.Input.StylusWisp;
@@ -14,6 +10,10 @@ using System.Windows.Input.Tracing;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
+using Microsoft.Win32; // for RegistryKey class
+using MS.Internal;
+using MS.Internal.Interop;
+using MS.Win32; // for *NativeMethods
 
 
 namespace System.Windows.Input
@@ -512,7 +512,7 @@ namespace System.Windows.Input
 
                 StylusTraceLogger.LogShutdown();
             }
-}
+        }
 
         #endregion
 

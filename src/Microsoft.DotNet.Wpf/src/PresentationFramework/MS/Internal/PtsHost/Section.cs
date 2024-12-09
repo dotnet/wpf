@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,9 +12,8 @@
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
-using MS.Internal.Text;
-
 using MS.Internal.PtsHost.UnsafeNativeMethods;
+using MS.Internal.Text;
 
 namespace MS.Internal.PtsHost
 {
@@ -70,7 +69,7 @@ namespace MS.Internal.PtsHost
         /// OUT: skip page due to odd/even page issue
         /// </param>
         internal void FSkipPage(
-            out int fSkip)                   
+            out int fSkip)
         {
             // Never skip a page
             fSkip = PTS.False;
@@ -79,7 +78,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         // GetPageDimensions
         // ------------------------------------------------------------------
-        
+
         /// <summary>
         /// Get page dimensions
         /// </summary>
@@ -99,11 +98,11 @@ namespace MS.Internal.PtsHost
         /// OUT: rectangle within page margins
         /// </param>
         internal void GetPageDimensions(
-            out uint fswdir,                
+            out uint fswdir,
             out int fHeaderFooterAtTopBottom,
-            out int durPage,                 
-            out int dvrPage,                 
-            ref PTS.FSRECT fsrcMargin)       
+            out int durPage,
+            out int dvrPage,
+            ref PTS.FSRECT fsrcMargin)
         {
             // Set page dimentions
             Size pageSize = _structuralCache.CurrentFormatContext.PageSize;
@@ -118,7 +117,7 @@ namespace MS.Internal.PtsHost
             fsrcMargin.du = durPage - TextDpi.ToTextDpi(pageMargin.Left + pageMargin.Right);
             fsrcMargin.dv = dvrPage - TextDpi.ToTextDpi(pageMargin.Top + pageMargin.Bottom);
 
-            StructuralCache.PageFlowDirection = (FlowDirection)_structuralCache.PropertyOwner.GetValue(FrameworkElement.FlowDirectionProperty); 
+            StructuralCache.PageFlowDirection = (FlowDirection)_structuralCache.PropertyOwner.GetValue(FrameworkElement.FlowDirectionProperty);
             fswdir = PTS.FlowDirectionToFswdir(StructuralCache.PageFlowDirection);
 
             //      Needs Header/footer support.
@@ -147,12 +146,12 @@ namespace MS.Internal.PtsHost
         /// OUT: cancel justification for the last column of the page?
         /// </param>
         internal unsafe void GetJustificationProperties(
-            IntPtr* rgnms,                  
-            int cnms,                        
-            int fLastSectionNotBroken,      
-            out int fJustify,                
-            out PTS.FSKALIGNPAGE fskal,      
-            out int fCancelAtLastColumn)     
+            IntPtr* rgnms,
+            int cnms,
+            int fLastSectionNotBroken,
+            out int fJustify,
+            out PTS.FSKALIGNPAGE fskal,
+            out int fCancelAtLastColumn)
         {
             // NOTE: use the first section to report values (array is only for word compat).
             fJustify = PTS.False;
@@ -170,8 +169,8 @@ namespace MS.Internal.PtsHost
         /// OUT: name of the next section
         /// </param>
         internal void GetNextSection(
-            out int fSuccess,                
-            out IntPtr nmsNext)              
+            out int fSuccess,
+            out IntPtr nmsNext)
         {
             fSuccess = PTS.False;
             nmsNext = IntPtr.Zero;
@@ -180,7 +179,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         // GetSectionProperties
         // ------------------------------------------------------------------
-        
+
         /// <summary>
         /// Get section properties
         /// </summary>
@@ -203,12 +202,12 @@ namespace MS.Internal.PtsHost
         /// OUT: number of height-defined columnsapn areas
         /// </param>
         internal void GetSectionProperties(
-            out int fNewPage,               
-            out uint fswdir,                 
-            out int fApplyColumnBalancing,   
-            out int ccol,                    
-            out int cSegmentDefinedColumnSpanAreas, 
-            out int cHeightDefinedColumnSpanAreas)  
+            out int fNewPage,
+            out uint fswdir,
+            out int fApplyColumnBalancing,
+            out int ccol,
+            out int cSegmentDefinedColumnSpanAreas,
+            out int cHeightDefinedColumnSpanAreas)
         {
             ColumnPropertiesGroup columnProperties = new ColumnPropertiesGroup(Element);
             Size pageSize = _structuralCache.CurrentFormatContext.PageSize;
@@ -233,7 +232,7 @@ namespace MS.Internal.PtsHost
         /// OUT: name of the main text segment for this section
         /// </param>
         internal void GetMainTextSegment(
-            out IntPtr nmSegment)           
+            out IntPtr nmSegment)
         {
             if (_mainTextSegment == null)
             {
@@ -271,14 +270,14 @@ namespace MS.Internal.PtsHost
         /// OUT: name of header segment
         /// </param>
         internal void GetHeaderSegment(
-            IntPtr pfsbrpagePrelim, 
-            uint fswdir,                     
-            out int fHeaderPresent,          
-            out int fHardMargin,             
-            out int dvrMaxHeight,            
-            out int dvrFromEdge,             
-            out uint fswdirHeader,           
-            out IntPtr nmsHeader)            
+            IntPtr pfsbrpagePrelim,
+            uint fswdir,
+            out int fHeaderPresent,
+            out int fHardMargin,
+            out int dvrMaxHeight,
+            out int dvrFromEdge,
+            out uint fswdirHeader,
+            out IntPtr nmsHeader)
         {
             fHeaderPresent = PTS.False;
             fHardMargin = PTS.False;
@@ -315,14 +314,14 @@ namespace MS.Internal.PtsHost
         /// OUT: name of footer segment
         /// </param>
         internal void GetFooterSegment(
-            IntPtr pfsbrpagePrelim, 
-            uint fswdir,                     
-            out int fFooterPresent,          
-            out int fHardMargin,             
-            out int dvrMaxHeight,            
-            out int dvrFromEdge,             
-            out uint fswdirFooter,           
-            out IntPtr nmsFooter)           
+            IntPtr pfsbrpagePrelim,
+            uint fswdir,
+            out int fFooterPresent,
+            out int fHardMargin,
+            out int dvrMaxHeight,
+            out int dvrFromEdge,
+            out uint fswdirFooter,
+            out IntPtr nmsFooter)
         {
             fFooterPresent = PTS.False;
             fHardMargin = PTS.False;
@@ -347,10 +346,10 @@ namespace MS.Internal.PtsHost
         /// OUT: actual number of the columns in the segment
         /// </param>
         internal unsafe void GetSectionColumnInfo(
-            uint fswdir,                    
-            int ncol,                        
-            PTS.FSCOLUMNINFO* pfscolinfo,    
-            out int ccol)                    
+            uint fswdir,
+            int ncol,
+            PTS.FSCOLUMNINFO* pfscolinfo,
+            out int ccol)
         {
             ColumnPropertiesGroup columnProperties = new ColumnPropertiesGroup(Element);
             Size pageSize = _structuralCache.CurrentFormatContext.PageSize;
@@ -374,8 +373,8 @@ namespace MS.Internal.PtsHost
         /// OUT: name of endnote segment
         /// </param>
         internal void GetEndnoteSegment(
-            out int fEndnotesPresent,        
-            out IntPtr nmsEndnotes)          
+            out int fEndnotesPresent,
+            out IntPtr nmsEndnotes)
         {
             fEndnotesPresent = PTS.False;
             nmsEndnotes = IntPtr.Zero;
@@ -394,9 +393,9 @@ namespace MS.Internal.PtsHost
         /// OUT: name of the endnote cont notice segment
         /// </param>
         internal void GetEndnoteSeparators(
-            out IntPtr nmsEndnoteSeparator,      
-            out IntPtr nmsEndnoteContSeparator,  
-            out IntPtr nmsEndnoteContNotice)    
+            out IntPtr nmsEndnoteSeparator,
+            out IntPtr nmsEndnoteContSeparator,
+            out IntPtr nmsEndnoteContNotice)
         {
             nmsEndnoteSeparator = IntPtr.Zero;
             nmsEndnoteContSeparator = IntPtr.Zero;
@@ -467,7 +466,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal void UpdateSegmentLastFormatPositions()
         {
-            if(_mainTextSegment != null)
+            if (_mainTextSegment != null)
             {
                 _mainTextSegment.UpdateLastFormatPositions();
             }
@@ -478,9 +477,9 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal bool CanUpdate
         {
-            get 
-            { 
-                return _mainTextSegment != null; 
+            get
+            {
+                return _mainTextSegment != null;
             }
         }
 
@@ -489,9 +488,9 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal StructuralCache StructuralCache
         {
-            get 
-            { 
-                return _structuralCache; 
+            get
+            {
+                return _structuralCache;
             }
         }
 
@@ -500,8 +499,8 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal DependencyObject Element
         {
-            get 
-            { 
+            get
+            {
                 return _structuralCache.PropertyOwner;
             }
         }
@@ -515,7 +514,7 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
 
         #region Private Fields
-        
+
         /// <summary>
         /// Main text segment. 
         /// </summary>

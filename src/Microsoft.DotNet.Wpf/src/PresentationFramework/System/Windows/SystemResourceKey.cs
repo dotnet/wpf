@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1869,64 +1869,64 @@ namespace System.Windows
         {
             switch (keyName)
             {
-                case "SystemParameters.FocusVisualStyleKey" :
+                case "SystemParameters.FocusVisualStyleKey":
                     return SystemParameters.FocusVisualStyleKey;
 
-                case "ToolBar.ButtonStyleKey" :
+                case "ToolBar.ButtonStyleKey":
                     return ToolBarButtonStyleKey;
 
-                case "ToolBar.ToggleButtonStyleKey" :
+                case "ToolBar.ToggleButtonStyleKey":
                     return ToolBarToggleButtonStyleKey;
 
-                case "ToolBar.CheckBoxStyleKey" :
+                case "ToolBar.CheckBoxStyleKey":
                     return ToolBarCheckBoxStyleKey;
 
-                case "ToolBar.RadioButtonStyleKey" :
+                case "ToolBar.RadioButtonStyleKey":
                     return ToolBarRadioButtonStyleKey;
 
-                case "ToolBar.ComboBoxStyleKey" :
+                case "ToolBar.ComboBoxStyleKey":
                     return ToolBarComboBoxStyleKey;
 
-                case "ToolBar.TextBoxStyleKey" :
+                case "ToolBar.TextBoxStyleKey":
                     return ToolBarTextBoxStyleKey;
 
-                case "ToolBar.MenuStyleKey" :
+                case "ToolBar.MenuStyleKey":
                     return ToolBarMenuStyleKey;
 
-                case "ToolBar.SeparatorStyleKey" :
+                case "ToolBar.SeparatorStyleKey":
                     return ToolBarSeparatorStyleKey;
 
-                case "MenuItem.SeparatorStyleKey" :
+                case "MenuItem.SeparatorStyleKey":
                     return MenuItemSeparatorStyleKey;
 
-                case "StatusBar.SeparatorStyleKey" :
+                case "StatusBar.SeparatorStyleKey":
                     return StatusBarSeparatorStyleKey;
 
-                case "SystemParameters.NavigationChromeStyleKey" :
+                case "SystemParameters.NavigationChromeStyleKey":
                     return SystemParameters.NavigationChromeStyleKey;
 
-                case "SystemParameters.NavigationChromeDownLevelStyleKey" :
+                case "SystemParameters.NavigationChromeDownLevelStyleKey":
                     return SystemParameters.NavigationChromeDownLevelStyleKey;
 
-                case "GridView.GridViewStyleKey" :
+                case "GridView.GridViewStyleKey":
                     return GridViewStyleKey;
 
-                case "GridView.GridViewScrollViewerStyleKey" :
+                case "GridView.GridViewScrollViewerStyleKey":
                     return GridViewScrollViewerStyleKey;
 
-                case "GridView.GridViewItemContainerStyleKey" :
+                case "GridView.GridViewItemContainerStyleKey":
                     return GridViewItemContainerStyleKey;
 
-                case "DataGridColumnHeader.ColumnFloatingHeaderStyleKey" :
+                case "DataGridColumnHeader.ColumnFloatingHeaderStyleKey":
                     return DataGridColumnHeaderColumnFloatingHeaderStyleKey;
 
-                case "DataGridColumnHeader.ColumnHeaderDropSeparatorStyleKey" :
+                case "DataGridColumnHeader.ColumnHeaderDropSeparatorStyleKey":
                     return DataGridColumnHeaderColumnHeaderDropSeparatorStyleKey;
 
-                case "DataGrid.FocusBorderBrushKey" :
+                case "DataGrid.FocusBorderBrushKey":
                     return DataGridFocusBorderBrushKey;
 
-                case "DataGridComboBoxColumn.TextBlockComboBoxStyleKey" :
+                case "DataGridComboBoxColumn.TextBlockComboBoxStyleKey":
                     return DataGridComboBoxColumnTextBlockComboBoxStyleKey;
             }
 

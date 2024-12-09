@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,10 +7,9 @@
 //              Spec at DockPanel.xml
 //
 
+using System.Windows.Media;
 using MS.Internal.PresentationFramework;
 using MS.Internal.Telemetry.PresentationFramework;
-
-using System.Windows.Media;
 
 namespace System.Windows.Controls
 {
@@ -100,7 +99,7 @@ namespace System.Windows.Controls
         {
             ArgumentNullException.ThrowIfNull(element);
 
-            return (Dock) element.GetValue(DockProperty);
+            return (Dock)element.GetValue(DockProperty);
         }
 
         /// <summary>
@@ -119,16 +118,16 @@ namespace System.Windows.Controls
         private static void OnDockChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             UIElement uie = d as UIElement; //it may be anyting, like FlowDocument... bug 1237275
-            if(uie != null)
+            if (uie != null)
             {
                 DockPanel p = VisualTreeHelper.GetParent(uie) as DockPanel;
-                if(p != null)
+                if (p != null)
                 {
                     p.InvalidateMeasure();
                 }
             }
         }
-        
+
         #endregion
 
         //-------------------------------------------------------------------
@@ -145,7 +144,7 @@ namespace System.Windows.Controls
         /// </summary>
         public bool LastChildFill
         {
-            get { return (bool) GetValue(LastChildFillProperty); }
+            get { return (bool)GetValue(LastChildFillProperty); }
             set { SetValue(LastChildFillProperty, value); }
         }
 
@@ -156,8 +155,8 @@ namespace System.Windows.Controls
         [CommonDependencyProperty]
         public static readonly DependencyProperty LastChildFillProperty =
                 DependencyProperty.Register(
-                        "LastChildFill", 
-                        typeof(bool), 
+                        "LastChildFill",
+                        typeof(bool),
                         typeof(DockPanel),
                         new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsArrange));
 
@@ -170,11 +169,11 @@ namespace System.Windows.Controls
         [CommonDependencyProperty]
         public static readonly DependencyProperty DockProperty =
                 DependencyProperty.RegisterAttached(
-                        "Dock", 
-                        typeof(Dock), 
+                        "Dock",
+                        typeof(Dock),
                         typeof(DockPanel),
                         new FrameworkPropertyMetadata(
-                            Dock.Left, 
+                            Dock.Left,
                             new PropertyChangedCallback(OnDockChanged)),
                         new ValidateValueCallback(IsValidDock));
 
@@ -203,18 +202,19 @@ namespace System.Windows.Controls
         {
             UIElementCollection children = InternalChildren;
 
-            double parentWidth       = 0;   // Our current required width due to children thus far.
-            double parentHeight      = 0;   // Our current required height due to children thus far.
-            double accumulatedWidth  = 0;   // Total width consumed by children.
+            double parentWidth = 0;   // Our current required width due to children thus far.
+            double parentHeight = 0;   // Our current required height due to children thus far.
+            double accumulatedWidth = 0;   // Total width consumed by children.
             double accumulatedHeight = 0;   // Total height consumed by children.
 
             for (int i = 0, count = children.Count; i < count; ++i)
             {
                 UIElement child = children[i];
-                Size   childConstraint;             // Contains the suggested input constraint for this child.
-                Size   childDesiredSize;            // Contains the return size from child measure.
+                Size childConstraint;             // Contains the suggested input constraint for this child.
+                Size childDesiredSize;            // Contains the return size from child measure.
 
-                if (child == null) { continue; }
+                if (child == null)
+                { continue; }
 
                 // Child constraint is the remaining size; this is total size minus size consumed by previous children.
                 childConstraint = new Size(Math.Max(0.0, constraint.Width - accumulatedWidth),
@@ -268,22 +268,23 @@ namespace System.Windows.Controls
             int totalChildrenCount = children.Count;
             int nonFillChildrenCount = totalChildrenCount - (LastChildFill ? 1 : 0);
 
-            double accumulatedLeft   = 0;
-            double accumulatedTop    = 0;
-            double accumulatedRight  = 0;
+            double accumulatedLeft = 0;
+            double accumulatedTop = 0;
+            double accumulatedRight = 0;
             double accumulatedBottom = 0;
 
             for (int i = 0; i < totalChildrenCount; ++i)
             {
                 UIElement child = children[i];
-                if (child == null) { continue; }
+                if (child == null)
+                { continue; }
 
                 Size childDesiredSize = child.DesiredSize;
                 Rect rcChild = new Rect(
-                    accumulatedLeft, 
+                    accumulatedLeft,
                     accumulatedTop,
-                    Math.Max(0.0, arrangeSize.Width - (accumulatedLeft + accumulatedRight)), 
-                    Math.Max(0.0, arrangeSize.Height - (accumulatedTop + accumulatedBottom))    );
+                    Math.Max(0.0, arrangeSize.Width - (accumulatedLeft + accumulatedRight)),
+                    Math.Max(0.0, arrangeSize.Height - (accumulatedTop + accumulatedBottom)));
 
                 if (i < nonFillChildrenCount)
                 {
@@ -333,12 +334,12 @@ namespace System.Windows.Controls
         {
             Dock dock = (Dock)o;
 
-            return (    dock == Dock.Left
-                    ||  dock == Dock.Top
-                    ||  dock == Dock.Right
-                    ||  dock == Dock.Bottom);
+            return (dock == Dock.Left
+                    || dock == Dock.Top
+                    || dock == Dock.Right
+                    || dock == Dock.Bottom);
         }
-        
+
         //
         //  This property
         //  1. Finds the correct initial size for the _effectiveValues store on the current DependencyObject

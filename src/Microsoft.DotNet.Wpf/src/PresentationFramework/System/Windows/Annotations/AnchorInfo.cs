@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,7 +17,7 @@ namespace System.Windows.Annotations
         /// <summary>
         /// The Annotation that this anchor information is for
         /// </summary>
-        Annotation Annotation { get;}
+        Annotation Annotation { get; }
 
         /// <summary>
         /// The specific anchor in the annotation object model that is represented
@@ -32,6 +32,6 @@ namespace System.Windows.Annotations
         /// pages of text content, but only one page is currently visible, this would be
         /// the visible page.
         /// </summary>
-        Object ResolvedAnchor { get;}
+        Object ResolvedAnchor { get; }
     }
 }

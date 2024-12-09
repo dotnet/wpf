@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -35,9 +35,9 @@ namespace MS.Internal.PresentationFramework
         internal static Thickness InterpolateThickness(Thickness from, Thickness to, double progress)
         {
             return new Thickness(
-                InterpolateDouble(from.Left,   to.Left,   progress),
-                InterpolateDouble(from.Top,    to.Top,    progress),
-                InterpolateDouble(from.Right,  to.Right,  progress),
+                InterpolateDouble(from.Left, to.Left, progress),
+                InterpolateDouble(from.Top, to.Top, progress),
+                InterpolateDouble(from.Right, to.Right, progress),
                 InterpolateDouble(from.Bottom, to.Bottom, progress));
         }
 
@@ -53,9 +53,9 @@ namespace MS.Internal.PresentationFramework
         internal static Thickness AddThickness(Thickness value1, Thickness value2)
         {
             return new Thickness(
-                AddDouble(value1.Left,   value2.Left),
-                AddDouble(value1.Top,    value2.Top),
-                AddDouble(value1.Right,  value2.Right),
+                AddDouble(value1.Left, value2.Left),
+                AddDouble(value1.Top, value2.Top),
+                AddDouble(value1.Right, value2.Right),
                 AddDouble(value1.Bottom, value2.Bottom));
         }
 
@@ -83,10 +83,10 @@ namespace MS.Internal.PresentationFramework
 
         internal static double GetSegmentLengthThickness(Thickness from, Thickness to)
         {
-            double totalLength = 
-                  Math.Pow(GetSegmentLengthDouble(from.Left,   to.Left),   2.0)
-                + Math.Pow(GetSegmentLengthDouble(from.Top,    to.Top),    2.0)
-                + Math.Pow(GetSegmentLengthDouble(from.Right,  to.Right),  2.0)
+            double totalLength =
+                  Math.Pow(GetSegmentLengthDouble(from.Left, to.Left), 2.0)
+                + Math.Pow(GetSegmentLengthDouble(from.Top, to.Top), 2.0)
+                + Math.Pow(GetSegmentLengthDouble(from.Right, to.Right), 2.0)
                 + Math.Pow(GetSegmentLengthDouble(from.Bottom, to.Bottom), 2.0);
 
             return Math.Sqrt(totalLength);
@@ -104,9 +104,9 @@ namespace MS.Internal.PresentationFramework
         internal static Thickness ScaleThickness(Thickness value, double factor)
         {
             return new Thickness(
-                ScaleDouble(value.Left,   factor),
-                ScaleDouble(value.Top,    factor),
-                ScaleDouble(value.Right,  factor),
+                ScaleDouble(value.Left, factor),
+                ScaleDouble(value.Top, factor),
+                ScaleDouble(value.Right, factor),
                 ScaleDouble(value.Bottom, factor));
         }
 
@@ -127,7 +127,7 @@ namespace MS.Internal.PresentationFramework
         internal static bool IsValidAnimationValueThickness(Thickness value)
         {
             // At least one of the sub-values must be an interpolatable length.
-            if (   IsValidAnimationValueDouble(value.Left)
+            if (IsValidAnimationValueDouble(value.Left)
                 || IsValidAnimationValueDouble(value.Top)
                 || IsValidAnimationValueDouble(value.Right)
                 || IsValidAnimationValueDouble(value.Bottom))

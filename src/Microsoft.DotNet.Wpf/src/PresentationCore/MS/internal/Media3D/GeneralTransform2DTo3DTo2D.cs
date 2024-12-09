@@ -53,7 +53,7 @@ namespace MS.Internal.Media3D
         // the transformed Point3D value
         internal Point _p1Transformed, _p2Transformed;
     }
-    
+
     /// <summary>
     /// This transform allows one to go from 2D through 3D and back in to 2D
     /// </summary>
@@ -70,10 +70,12 @@ namespace MS.Internal.Media3D
 
             // get a copy of the geometry information - we store our own model to reuse hit
             // test code on the GeometryModel3D
-            _geometry = new MeshGeometry3D();
-            _geometry.Positions = visual3D.InternalPositionsCache;
-            _geometry.TextureCoordinates = visual3D.InternalTextureCoordinatesCache;
-            _geometry.TriangleIndices = visual3D.InternalTriangleIndicesCache;
+            _geometry = new MeshGeometry3D
+            {
+                Positions = visual3D.InternalPositionsCache,
+                TextureCoordinates = visual3D.InternalTextureCoordinatesCache,
+                TriangleIndices = visual3D.InternalTriangleIndicesCache
+            };
             _geometry.Freeze();
 
             Visual visual3Dchild = visual3D.Visual;
@@ -114,7 +116,7 @@ namespace MS.Internal.Media3D
             {
                 _camera = (Camera)viewport3D.Camera.GetCurrentValueAsFrozen();
             }
-            
+
             _viewSize = viewport3D.Viewport.Size;
             _boundingRect = viewport3D.ComputeSubgraphBounds3D();
             _objectToViewport = visual3D.TransformToAncestor(viewport3D);
@@ -124,17 +126,17 @@ namespace MS.Internal.Media3D
             {
                 _objectToViewport.Freeze();
             }
-            
+
             // store the needed transformations for the various operations
             _worldTransformation = M3DUtil.GetWorldTransformationMatrix(visual3D);
 
-            _validEdgesCache = null;            
+            _validEdgesCache = null;
         }
 
         internal GeneralTransform2DTo3DTo2D()
         {
         }
-        
+
         /// <summary>
         /// Transforms a point
         /// </summary>
@@ -165,7 +167,7 @@ namespace MS.Internal.Media3D
             // set up the hit test parameters            
             double distanceAdjust;
             bool foundIntersection = false;
-            
+
             if (_camera != null)
             {
                 RayHitTestParameters rayHitTestParameters = _camera.RayFromViewportPoint(inPoint,
@@ -196,11 +198,11 @@ namespace MS.Internal.Media3D
                 // perform capture positioning if we didn't hit anything and something has capture
                 if (!foundIntersection)
                 {
-                    foundIntersection = HandleOffMesh(inPoint, out pointHit);                    
+                    foundIntersection = HandleOffMesh(inPoint, out pointHit);
                 }
-                
+
                 // compute final point
-                result = Viewport2DVisual3D.TextureCoordsToVisualCoords(pointHit, _visualBrushBounds);        
+                result = Viewport2DVisual3D.TextureCoordsToVisualCoords(pointHit, _visualBrushBounds);
             }
             else
             {
@@ -209,7 +211,7 @@ namespace MS.Internal.Media3D
 
             return foundIntersection;
         }
-        
+
         /// <summary>
         /// Function to deal with mouse capture when off the mesh.
         /// </summary>
@@ -222,10 +224,10 @@ namespace MS.Internal.Media3D
             if (_validEdgesCache == null)
             {
                 // get the points relative to the parent
-                visCorners[0] = _transform2D.Transform(new Point(_visualBounds.Left,  _visualBounds.Top));
-                visCorners[1] = _transform2D.Transform(new Point(_visualBounds.Right, _visualBounds.Top));         
+                visCorners[0] = _transform2D.Transform(new Point(_visualBounds.Left, _visualBounds.Top));
+                visCorners[1] = _transform2D.Transform(new Point(_visualBounds.Right, _visualBounds.Top));
                 visCorners[2] = _transform2D.Transform(new Point(_visualBounds.Right, _visualBounds.Bottom));
-                visCorners[3] = _transform2D.Transform(new Point(_visualBounds.Left,  _visualBounds.Bottom));
+                visCorners[3] = _transform2D.Transform(new Point(_visualBounds.Left, _visualBounds.Bottom));
 
                 // get the u,v texture coordinate values of the above points
                 Point[] texCoordsOfInterest = new Point[4];
@@ -237,7 +239,7 @@ namespace MS.Internal.Media3D
                 // get the edges that map to the given visual
                 _validEdgesCache = GrabValidEdges(texCoordsOfInterest);
             }
-            
+
             // find the closest intersection of the mouse position and the edge list
             return FindClosestIntersection(mousePos, _validEdgesCache, out outPoint);
         }
@@ -264,7 +266,7 @@ namespace MS.Internal.Media3D
             {
                 return new List<HitTestEdge>();
             }
-            
+
             // this call actually gets the object to camera transform, but we will invert it later, and because of that
             // the local variable is named cameraToObjecTransform.
             Matrix3D cameraToObjectTransform = _worldTransformation * _camera.GetViewMatrix();
@@ -295,12 +297,12 @@ namespace MS.Internal.Media3D
             if (triIndices == null || triIndices.Count == 0)
             {
                 int texCoordCount = textureCoords.Count;
-                
+
                 // in this case we have a non-indexed mesh
                 int count = positions.Count;
                 count = count - (count % 3);
 
-                for (int i = 0; i < count; i+=3)
+                for (int i = 0; i < count; i += 3)
                 {
                     // get the triangle indices
                     Rect triBBox = Rect.Empty;
@@ -318,7 +320,7 @@ namespace MS.Internal.Media3D
                             // In the case you have less texture coordinates than positions, MIL will set
                             // missing ones to be 0,0.  We do the same to stay consistent. 
                             // See CMILMesh3D::CopyTextureCoordinatesFromDoubles
-                            triangleTexCoords[j] = new Point(0,0);
+                            triangleTexCoords[j] = new Point(0, 0);
                         }
 
                         triBBox.Union(triangleTexCoords[j]);
@@ -337,7 +339,7 @@ namespace MS.Internal.Media3D
                 int posLimit = positions.Count;
                 int texCoordLimit = textureCoords.Count;
                 int[] indices = new int[3];
-            
+
                 for (int i = 2; i < count; i += 3)
                 {
                     // get the triangle indices
@@ -349,20 +351,20 @@ namespace MS.Internal.Media3D
                     {
                         // subtract 2 to take in to account we start i
                         // at the high range of indices
-                        indices[j] = triIndices[(i-2) + j];
+                        indices[j] = triIndices[(i - 2) + j];
 
                         // if a point or texture coordinate is out of range, end early since this is an error
                         if (indices[j] < 0 || indices[j] >= posLimit)
                         {
                             validPositions = false;
-                            break; 
+                            break;
                         }
                         if (indices[j] < 0 || indices[j] >= texCoordLimit)
                         {
                             validTextureCoordinates = false;
                             break;
                         }
-            
+
                         triangleVertices[j] = positions[indices[j]];
                         triangleTexCoords[j] = textureCoords[indices[j]];
 
@@ -382,7 +384,7 @@ namespace MS.Internal.Media3D
                     }
                 }
             }
-            
+
             // also handle the case of an edge that doesn't also have a backface - i.e a single plane            
             foreach (Edge edge in adjInformation.Keys)
             {
@@ -473,7 +475,7 @@ namespace MS.Internal.Media3D
                                                       List<HitTestEdge> edgeList)
         {
             Debug.Assert(uv.Length == p.Length, "vertices and texture coordinate sizes should match");
-            
+
             List<Point3D> pointList = new List<Point3D>();
             List<Point> uvList = new List<Point>();
 
@@ -1006,7 +1008,8 @@ namespace MS.Internal.Media3D
                 }
                 else
                 {
-                    if (sign != currSign) return false;
+                    if (sign != currSign)
+                        return false;
                 }
             }
 
@@ -1030,11 +1033,11 @@ namespace MS.Internal.Media3D
             finalPoint = new Point();
 
             // Find the closest point to the mouse position            
-            for (int i=0, count = edges.Count; i < count; i++)
+            for (int i = 0, count = edges.Count; i < count; i++)
             {
                 Vector v1 = mousePos - edges[i]._p1Transformed;
                 Vector v2 = edges[i]._p2Transformed - edges[i]._p1Transformed;
-                
+
                 Point currClosest;
                 double distance;
 
@@ -1075,24 +1078,24 @@ namespace MS.Internal.Media3D
                         }
                     }
 
-                    distance = (mousePos - currClosest).Length; 
+                    distance = (mousePos - currClosest).Length;
                 }
 
                 // see if we found a new closest distance
                 if (distance < closestDistance)
                 {
                     closestDistance = distance;
-                    
+
                     if (denom != 0)
                     {
-                        closestIntersection = ((currClosest - edges[i]._p1Transformed).Length / Math.Sqrt(denom) * 
+                        closestIntersection = ((currClosest - edges[i]._p1Transformed).Length / Math.Sqrt(denom) *
                                                (edges[i]._uv2 - edges[i]._uv1)) + edges[i]._uv1;
                     }
                     else
                     {
                         closestIntersection = edges[i]._uv1;
                     }
-                }                
+                }
             }
 
             if (closestDistance != Double.MaxValue)
@@ -1102,17 +1105,21 @@ namespace MS.Internal.Media3D
                 if (_transform2DInverse != null)
                 {
                     Point ptRelToCapture = _transform2DInverse.Transform(ptOnVisual);
-                    
+
                     // we want to "ring" around the outside so things like buttons are not pressed when we move off the mesh
                     // this code here does that - the +BUFFER_SIZE and -BUFFER_SIZE are to give a bit of a 
                     // buffer for any numerical issues
-                    if (ptRelToCapture.X <= _visualBounds.Left + 1)   ptRelToCapture.X -= BUFFER_SIZE;
-                    if (ptRelToCapture.Y <= _visualBounds.Top + 1)    ptRelToCapture.Y -= BUFFER_SIZE;
-                    if (ptRelToCapture.X >= _visualBounds.Right - 1)  ptRelToCapture.X += BUFFER_SIZE;
-                    if (ptRelToCapture.Y >= _visualBounds.Bottom - 1) ptRelToCapture.Y += BUFFER_SIZE;
+                    if (ptRelToCapture.X <= _visualBounds.Left + 1)
+                        ptRelToCapture.X -= BUFFER_SIZE;
+                    if (ptRelToCapture.Y <= _visualBounds.Top + 1)
+                        ptRelToCapture.Y -= BUFFER_SIZE;
+                    if (ptRelToCapture.X >= _visualBounds.Right - 1)
+                        ptRelToCapture.X += BUFFER_SIZE;
+                    if (ptRelToCapture.Y >= _visualBounds.Bottom - 1)
+                        ptRelToCapture.Y += BUFFER_SIZE;
 
                     Point finalVisualPoint = _transform2D.Transform(ptRelToCapture);
-                    finalPoint = Viewport2DVisual3D.VisualCoordsToTextureCoords(finalVisualPoint, _visualBrushBounds);      
+                    finalPoint = Viewport2DVisual3D.VisualCoordsToTextureCoords(finalVisualPoint, _visualBrushBounds);
 
                     success = true;
                 }
@@ -1120,7 +1127,7 @@ namespace MS.Internal.Media3D
 
             return success;
         }
-       
+
         /// <summary>
         /// Performs the transform that goes from 2D on 3D content contained within the 3D scene
         /// up to the containing Viewport3DVisual
@@ -1135,7 +1142,7 @@ namespace MS.Internal.Media3D
             // need to walk the texture coordinates and look for where this point intersects one of them
             Point3D point3D;
             if (_objectToViewport != null &&
-                Viewport2DVisual3D.Get3DPointFor2DCoordinate(texCoord, 
+                Viewport2DVisual3D.Get3DPointFor2DCoordinate(texCoord,
                                                            out point3D,
                                                            _geometry.Positions,
                                                            _geometry.TextureCoordinates,
@@ -1149,7 +1156,7 @@ namespace MS.Internal.Media3D
                 result = new Point();
                 return false;
             }
-        }        
+        }
 
         /// <summary>
         /// Transform the rect bounds into the smallest axis alligned bounding box that
@@ -1160,18 +1167,18 @@ namespace MS.Internal.Media3D
         public override Rect TransformBounds(Rect rect)
         {
             List<HitTestEdge> edges = null;
-            
+
             // intersect the rect given to us with the bounds of the visual brush to guarantee the rect we are
             // searching for is within the visual brush
             rect.Intersect(_visualBrushBounds);
 
             // get the texture coordinate values for the rect's corners
             Point[] texCoordsOfInterest = new Point[4];
-            texCoordsOfInterest[0] = Viewport2DVisual3D.VisualCoordsToTextureCoords(rect.TopLeft,     _visualBrushBounds);
-            texCoordsOfInterest[1] = Viewport2DVisual3D.VisualCoordsToTextureCoords(rect.TopRight,    _visualBrushBounds);
+            texCoordsOfInterest[0] = Viewport2DVisual3D.VisualCoordsToTextureCoords(rect.TopLeft, _visualBrushBounds);
+            texCoordsOfInterest[1] = Viewport2DVisual3D.VisualCoordsToTextureCoords(rect.TopRight, _visualBrushBounds);
             texCoordsOfInterest[2] = Viewport2DVisual3D.VisualCoordsToTextureCoords(rect.BottomRight, _visualBrushBounds);
-            texCoordsOfInterest[3] = Viewport2DVisual3D.VisualCoordsToTextureCoords(rect.BottomLeft,  _visualBrushBounds);
-                        
+            texCoordsOfInterest[3] = Viewport2DVisual3D.VisualCoordsToTextureCoords(rect.BottomLeft, _visualBrushBounds);
+
             // get the edges that map to the given rect
             edges = GrabValidEdges(texCoordsOfInterest);
 
@@ -1204,7 +1211,7 @@ namespace MS.Internal.Media3D
                 return inverseTransform;
             }
         }
-       
+
         /// <summary>
         /// Returns a best effort affine transform
         /// </summary>        
@@ -1280,7 +1287,7 @@ namespace MS.Internal.Media3D
             base.GetCurrentValueAsFrozenCore(sourceFreezable);
             CopyCommon(transform);
         }
-        
+
         /// <summary>
         /// Clones values that do not have corresponding DPs
         /// </summary>
@@ -1308,7 +1315,7 @@ namespace MS.Internal.Media3D
         }
 
         private bool _fInverse;
-        
+
         // the geometry of the 3D object
         private MeshGeometry3D _geometry;
 
@@ -1319,7 +1326,7 @@ namespace MS.Internal.Media3D
         // the transform to go in to and out of the coordinate space fo the visual we're
         // interested in
         private GeneralTransform _transform2D;
-        private GeneralTransform _transform2DInverse;      
+        private GeneralTransform _transform2DInverse;
 
         // the camera being used on the 3D viewport
         private Camera _camera;
@@ -1334,7 +1341,7 @@ namespace MS.Internal.Media3D
         List<HitTestEdge> _validEdgesCache = null;
 
         // the "ring" around the element with capture to use in the capture case
-        private const double BUFFER_SIZE = 2.0;                  
+        private const double BUFFER_SIZE = 2.0;
         private enum PolygonSide { FRONT, BACK };
     }
 }

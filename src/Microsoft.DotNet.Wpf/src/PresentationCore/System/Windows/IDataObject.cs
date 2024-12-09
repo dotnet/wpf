@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -99,7 +99,7 @@ namespace System.Windows
         /// <param name="data">The data to store.</param>
         void SetData(string format, object data);
 
-         /// <summary>
+        /// <summary>
         /// Stores the specified data and its associated class type in this
         /// instance.
         /// </summary>
@@ -117,7 +117,7 @@ namespace System.Windows
         /// <param name="autoConvert">true to allow the data to be converted to another format;
         /// Otherwise, false.</param>
         void SetData(string format, object data, bool autoConvert);
-     }
+    }
 
     #endregion IDataObject interface
 }

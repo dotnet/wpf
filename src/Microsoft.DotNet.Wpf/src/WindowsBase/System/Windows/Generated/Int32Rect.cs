@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,10 +9,10 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
 using System.ComponentModel;
-using System.Windows.Markup;
 using System.Windows.Converters;
+using System.Windows.Markup;
+using MS.Internal;
 // These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows
@@ -44,7 +44,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='int32Rect1'>The first Int32Rect to compare</param>
         /// <param name='int32Rect2'>The second Int32Rect to compare</param>
-        public static bool operator == (Int32Rect int32Rect1, Int32Rect int32Rect2)
+        public static bool operator ==(Int32Rect int32Rect1, Int32Rect int32Rect2)
         {
             return int32Rect1.X == int32Rect2.X &&
                    int32Rect1.Y == int32Rect2.Y &&
@@ -63,7 +63,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='int32Rect1'>The first Int32Rect to compare</param>
         /// <param name='int32Rect2'>The second Int32Rect to compare</param>
-        public static bool operator != (Int32Rect int32Rect1, Int32Rect int32Rect2)
+        public static bool operator !=(Int32Rect int32Rect1, Int32Rect int32Rect2)
         {
             return !(int32Rect1 == int32Rect2);
         }
@@ -79,7 +79,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='int32Rect1'>The first Int32Rect to compare</param>
         /// <param name='int32Rect2'>The second Int32Rect to compare</param>
-        public static bool Equals (Int32Rect int32Rect1, Int32Rect int32Rect2)
+        public static bool Equals(Int32Rect int32Rect1, Int32Rect int32Rect2)
         {
             if (int32Rect1.IsEmpty)
             {
@@ -113,7 +113,7 @@ namespace System.Windows
             }
 
             Int32Rect value = (Int32Rect)o;
-            return Int32Rect.Equals(this,value);
+            return Int32Rect.Equals(this, value);
         }
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace System.Windows
             {
                 _x = value;
             }
-}
+        }
 
         /// <summary>
         ///     Y - int.  Default value is 0.
@@ -232,7 +232,7 @@ namespace System.Windows
             {
                 _y = value;
             }
-}
+        }
 
         /// <summary>
         ///     Width - int.  Default value is 0.
@@ -248,7 +248,7 @@ namespace System.Windows
             {
                 _width = value;
             }
-}
+        }
 
         /// <summary>
         ///     Height - int.  Default value is 0.
@@ -264,7 +264,7 @@ namespace System.Windows
             {
                 _height = value;
             }
-}
+        }
 
         #endregion Public Properties
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -25,7 +25,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             int reserved, // Must be zero
             out UnsafeNativeIStorage ppstgOpen
             );
-        
+
         [DllImport("ole32.dll")]
         internal static extern int StgOpenStorageOnILockBytes(
             UnsafeNativeILockBytes plkbyt,
@@ -38,7 +38,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
         [DllImport("ole32.dll")]
         internal static extern int StgCreateStorageEx(
-            [In, MarshalAs( UnmanagedType.LPWStr )] string pwcsName,     //Pointer to path of compound file to create
+            [In, MarshalAs(UnmanagedType.LPWStr)] string pwcsName,     //Pointer to path of compound file to create
             int grfMode,       // Specifies the access mode for opening the storage object
             int stgfmt,        // Specifies the storage file format, 5 is DocFile
             int grfAttrs,      // Reserved; must be zero
@@ -50,7 +50,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
         [DllImport("ole32.dll")]
         internal static extern int StgOpenStorageEx(
-            [In, MarshalAs( UnmanagedType.LPWStr )] string pwcsName,     //Pointer to path of compound file to create
+            [In, MarshalAs(UnmanagedType.LPWStr)] string pwcsName,     //Pointer to path of compound file to create
             int grfMode,       // Specifies the access mode for opening the storage object
             int stgfmt,        // Specifies the storage file format, 5 is DocFile
             int grfAttrs,      // Reserved; must be zero
@@ -58,16 +58,16 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             IntPtr reserved2,  // Reserved; must be null
             ref Guid riid,     // Specifies the GUID of the interface pointer
             out UnsafeNativeIStorage ppObjectOpen       //Pointer to an interface pointer
-            );    
+            );
 
         [DllImport("ole32.dll")]
         internal static extern int PropVariantClear(ref PROPVARIANT pvar);
 
         internal class UnsafeLockBytesOnStream : UnsafeNativeILockBytes, IDisposable
         {
-            internal UnsafeLockBytesOnStream( Stream underlyingStream )
+            internal UnsafeLockBytesOnStream(Stream underlyingStream)
             {
-                if( !underlyingStream.CanSeek )
+                if (!underlyingStream.CanSeek)
                 {
                     throw new NotSupportedException(
                         SR.ILockBytesStreamMustSeek);
@@ -75,9 +75,9 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
                 _baseStream = underlyingStream;
             }
-            
+
             public void Dispose()
-            {              
+            {
                 Dispose(true);
                 GC.SuppressFinalize(this);
             }
@@ -101,21 +101,22 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             private void CheckDisposed()
             {
-                if (_baseStream==null)
+                if (_baseStream == null)
                 {
                     throw new ObjectDisposedException(null, SR.StreamObjectDisposed);
                 }
             }
 
-            void UnsafeNativeILockBytes.ReadAt (
+            void UnsafeNativeILockBytes.ReadAt(
                 UInt64 offset,
                 [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2), Out] Byte[] pv,
                 int cb,
                 out int pcbRead)
             {
                 CheckDisposed();
-                checked { _baseStream.Seek( (long)offset, SeekOrigin.Begin ); }
-                pcbRead = _baseStream.Read( pv, 0, cb );
+                checked
+                { _baseStream.Seek((long)offset, SeekOrigin.Begin); }
+                pcbRead = _baseStream.Read(pv, 0, cb);
             }
 
             void UnsafeNativeILockBytes.WriteAt(
@@ -125,8 +126,9 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 out int pcbWritten)
             {
                 CheckDisposed();
-                checked { _baseStream.Seek( (long)offset, SeekOrigin.Begin ); }
-                _baseStream.Write( pv, 0, cb );
+                checked
+                { _baseStream.Seek((long)offset, SeekOrigin.Begin); }
+                _baseStream.Write(pv, 0, cb);
 
                 // System.IO.Stream.Write does not return the number of bytes
                 //  written.  Presumably this means an exception will be thrown
@@ -142,16 +144,17 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             }
 
 
-            void UnsafeNativeILockBytes.SetSize( UInt64 cb )
+            void UnsafeNativeILockBytes.SetSize(UInt64 cb)
             {
                 CheckDisposed();
-                checked { _baseStream.SetLength((long)cb); }
+                checked
+                { _baseStream.SetLength((long)cb); }
             }
 
             void UnsafeNativeILockBytes.LockRegion(
                 UInt64 libOffset,
                 UInt64 cb,
-                int dwLockType )
+                int dwLockType)
             {
                 throw new NotSupportedException();
             }
@@ -160,7 +163,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             void UnsafeNativeILockBytes.UnlockRegion(
                 UInt64 libOffset,
                 UInt64 cb,
-                int dwLockType )
+                int dwLockType)
             {
                 throw new NotSupportedException();
             }
@@ -168,23 +171,24 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             void UnsafeNativeILockBytes.Stat(
                 out System.Runtime.InteropServices.ComTypes.STATSTG pstatstg,
-                int grfStatFlag )
+                int grfStatFlag)
             {
                 CheckDisposed();
 
-                if ((grfStatFlag & ~(SafeNativeCompoundFileConstants.STATFLAG_NONAME | 
-                                     SafeNativeCompoundFileConstants.STATFLAG_NOOPEN  )) != 0)
+                if ((grfStatFlag & ~(SafeNativeCompoundFileConstants.STATFLAG_NONAME |
+                                     SafeNativeCompoundFileConstants.STATFLAG_NOOPEN)) != 0)
                 {
                     // validate grfStatFlag's value
                     throw new ArgumentException(SR.Format(SR.InvalidArgumentValue, "grfStatFlag", grfStatFlag.ToString(CultureInfo.InvariantCulture)));
                 }
 
-                System.Runtime.InteropServices.ComTypes.STATSTG returnValue = new System.Runtime.InteropServices.ComTypes.STATSTG();
-                
-                returnValue.grfLocksSupported = 0 ; // No lock supported
+                System.Runtime.InteropServices.ComTypes.STATSTG returnValue = new System.Runtime.InteropServices.ComTypes.STATSTG
+                {
+                    grfLocksSupported = 0, // No lock supported
 
-                returnValue.cbSize = _baseStream.Length;
-                returnValue.type = SafeNativeCompoundFileConstants.STGTY_LOCKBYTES;
+                    cbSize = _baseStream.Length,
+                    type = SafeNativeCompoundFileConstants.STGTY_LOCKBYTES
+                };
 
                 pstatstg = returnValue;
             }
@@ -195,13 +199,13 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /////////////////////////////////////////////////////
         // Security Suppressed Private Interfaces
         /////////////////////////////////////////////////////
-        
+
         [Guid("0000000a-0000-0000-C000-000000000046")]
         [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         [ComImport]
         internal interface UnsafeNativeILockBytes
         {
-            void ReadAt (
+            void ReadAt(
                 UInt64 offset,
                 [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2), Out] Byte[] pv,
                 int cb,
@@ -212,18 +216,18 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 int cb,
                 out int pcbWritten);
             void Flush();
-            void SetSize( UInt64 cb );
+            void SetSize(UInt64 cb);
             void LockRegion(
                 UInt64 libOffset,
                 UInt64 cb,
-                int dwLockType );
+                int dwLockType);
             void UnlockRegion(
                 UInt64 libOffset,
                 UInt64 cb,
-                int dwLockType );
+                int dwLockType);
             void Stat(
                 out System.Runtime.InteropServices.ComTypes.STATSTG pstatstg,
-                int grfStatFlag );
+                int grfStatFlag);
         }
 
         // Partial interface definition for existing IStorage
@@ -233,70 +237,70 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         internal interface UnsafeNativeIStorage
         {
             [PreserveSig]
-            int CreateStream( 
-                [In, MarshalAs( UnmanagedType.LPWStr )] string pwcsName,
-                int grfMode, 
-                int reserved1, 
+            int CreateStream(
+                [In, MarshalAs(UnmanagedType.LPWStr)] string pwcsName,
+                int grfMode,
+                int reserved1,
                 int reserved2,
-                out UnsafeNativeIStream ppstm );
+                out UnsafeNativeIStream ppstm);
             [PreserveSig]
             int OpenStream(
-                [In, MarshalAs( UnmanagedType.LPWStr )] string pwcsName,
+                [In, MarshalAs(UnmanagedType.LPWStr)] string pwcsName,
                 int reserved1,
                 int grfMode,
                 int reserved2,
-                out UnsafeNativeIStream ppstm );
+                out UnsafeNativeIStream ppstm);
             [PreserveSig]
             int CreateStorage(
-                [In, MarshalAs( UnmanagedType.LPWStr )] string pwcsName,
+                [In, MarshalAs(UnmanagedType.LPWStr)] string pwcsName,
                 int grfMode,
                 int reserved1,
                 int reserved2,
-                out UnsafeNativeIStorage ppstg );
+                out UnsafeNativeIStorage ppstg);
             [PreserveSig]
             int OpenStorage(
-                [In, MarshalAs( UnmanagedType.LPWStr )] string pwcsName,
+                [In, MarshalAs(UnmanagedType.LPWStr)] string pwcsName,
                 UnsafeNativeIStorage pstgPriority,
                 int grfMode,
                 IntPtr snbExclude,// Not properly translated, must be NULL anyway
                 int reserved,
-                out UnsafeNativeIStorage ppstg );
+                out UnsafeNativeIStorage ppstg);
             void CopyTo(
                 int ciidExclude,
-                [MarshalAs(UnmanagedType.LPArray, SizeParamIndex=0)] Guid[] rgiidExclude,
+                [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] Guid[] rgiidExclude,
                 IntPtr snbExclude,// Not properly translated, use NULL to avoid `blow-up
-                UnsafeNativeIStorage ppstg );
+                UnsafeNativeIStorage ppstg);
             void MoveElementTo(
-                [In, MarshalAs( UnmanagedType.LPWStr )] string pwcsName,
+                [In, MarshalAs(UnmanagedType.LPWStr)] string pwcsName,
                 UnsafeNativeIStorage pstgDest,
-                [In, MarshalAs( UnmanagedType.LPWStr )] string pwcsNewName,
-                int grfFlags );
+                [In, MarshalAs(UnmanagedType.LPWStr)] string pwcsNewName,
+                int grfFlags);
             void Commit(
-                int grfCommitFlags );
+                int grfCommitFlags);
             void Revert();
             void EnumElements(
                 int reserved1,
                 IntPtr reserved2,
                 int reserved3,
-                out UnsafeNativeIEnumSTATSTG ppEnum );
+                out UnsafeNativeIEnumSTATSTG ppEnum);
             void DestroyElement(
-                [In, MarshalAs( UnmanagedType.LPWStr )] string pwcsName );
+                [In, MarshalAs(UnmanagedType.LPWStr)] string pwcsName);
             void RenameElement(
-                [In, MarshalAs( UnmanagedType.LPWStr )] string pwcsOldName,
-                [In, MarshalAs( UnmanagedType.LPWStr )] string pwcsNewName );
+                [In, MarshalAs(UnmanagedType.LPWStr)] string pwcsOldName,
+                [In, MarshalAs(UnmanagedType.LPWStr)] string pwcsNewName);
             void SetElementTimes(
-                [In, MarshalAs( UnmanagedType.LPWStr )] string pwcsName,
+                [In, MarshalAs(UnmanagedType.LPWStr)] string pwcsName,
                 System.Runtime.InteropServices.ComTypes.FILETIME pctime,
                 System.Runtime.InteropServices.ComTypes.FILETIME patime,
-                System.Runtime.InteropServices.ComTypes.FILETIME pmtime );
+                System.Runtime.InteropServices.ComTypes.FILETIME pmtime);
             void SetClass(
-                ref Guid clsid ); // Hopefully "ref" is how I tell it to use a pointer 
+                ref Guid clsid); // Hopefully "ref" is how I tell it to use a pointer 
             void SetStateBits(
                 int grfStateBits,
-                int grfMask );
+                int grfMask);
             void Stat(
                 out System.Runtime.InteropServices.ComTypes.STATSTG pstatstg,
-                int grfStatFlag );
+                int grfStatFlag);
         }
 
         [Guid("0000000c-0000-0000-C000-000000000046")]
@@ -467,16 +471,16 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         [Guid("00000139-0000-0000-C000-000000000046")]
         [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         internal interface UnsafeNativeIEnumSTATPROPSTG
-            {
-                //
-                // The caller must allocate an array of celt STATPROPSTG structures
-                // to receive the results.
-                //
-                // This method is PreserveSig because it can return a non-0 success
-                // code; S_FALSE => fewer than celt elements were returned.
-                //
+        {
+            //
+            // The caller must allocate an array of celt STATPROPSTG structures
+            // to receive the results.
+            //
+            // This method is PreserveSig because it can return a non-0 success
+            // code; S_FALSE => fewer than celt elements were returned.
+            //
             [PreserveSig]
-                int
+            int
             Next(
                     UInt32 celt,
                     [Out, MarshalAs(UnmanagedType.LPArray, SizeParamIndex=0)]
@@ -500,13 +504,13 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             void Next(
                 UInt32 celt,
                 out System.Runtime.InteropServices.ComTypes.STATSTG rgelt, // This should really be array, but we're OK if we stick with one item at a time.
-                    // Because marshalling an array of structs that have pointers to strings are troublesome.
-                out UInt32 pceltFetched );
+                                                                           // Because marshalling an array of structs that have pointers to strings are troublesome.
+                out UInt32 pceltFetched);
             void Skip(
-                UInt32 celt );
+                UInt32 celt);
             void Reset();
             void Clone(
-                out UnsafeNativeIEnumSTATSTG ppenum );
+                out UnsafeNativeIEnumSTATSTG ppenum);
         }
     }
 }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -228,7 +228,7 @@ namespace System.Windows.Input
                 if (sinkToRemove != null)
                 {
                     list.Remove(sinkToRemove);
-                    sinkToRemove.Detach(isOnOriginalThread:true);
+                    sinkToRemove.Detach(isOnOriginalThread: true);
                     RemoveHandlerFromCWT(handler, _cwt);
                 }
 
@@ -400,8 +400,8 @@ namespace System.Windows.Input
             {
                 get
                 {
-                    return  _source == null || !_source.IsAlive
-                        ||  _originalHandler == null || !_originalHandler.IsAlive;
+                    return _source == null || !_source.IsAlive
+                        || _originalHandler == null || !_originalHandler.IsAlive;
                 }
             }
 

@@ -1,14 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System.ComponentModel;
 using System.Collections.Specialized;
-using System.Windows.Input;
+using System.ComponentModel;
 using System.Windows.Automation.Peers;
-using System.Windows.Media;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
+using System.Windows.Media;
 using MS.Internal.Telemetry.PresentationFramework;
 
 namespace System.Windows.Controls
@@ -205,7 +205,7 @@ namespace System.Windows.Controls
         /// </summary>
         public String SelectedContentStringFormat
         {
-            get { return (String) GetValue(SelectedContentStringFormatProperty); }
+            get { return (String)GetValue(SelectedContentStringFormatProperty); }
             internal set { SetValue(SelectedContentStringFormatPropertyKey, value); }
         }
 
@@ -267,7 +267,7 @@ namespace System.Windows.Controls
                         "ContentStringFormat",
                         typeof(String),
                         typeof(TabControl),
-                        new FrameworkPropertyMetadata((String) null));
+                        new FrameworkPropertyMetadata((String)null));
 
 
         /// <summary>
@@ -277,7 +277,7 @@ namespace System.Windows.Controls
         /// </summary>
         public String ContentStringFormat
         {
-            get { return (String) GetValue(ContentStringFormatProperty); }
+            get { return (String)GetValue(ContentStringFormatProperty); }
             set { SetValue(ContentStringFormatProperty, value); }
         }
 
@@ -367,10 +367,10 @@ namespace System.Windows.Controls
                 base.OnSelectionChanged(e);
             }
 
-            if (    AutomationPeer.ListenerExists(AutomationEvents.SelectionPatternOnInvalidated)
-                ||  AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementSelected)
-                ||  AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementAddedToSelection)
-                ||  AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection)   )
+            if (AutomationPeer.ListenerExists(AutomationEvents.SelectionPatternOnInvalidated)
+                || AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementSelected)
+                || AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementAddedToSelection)
+                || AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection))
             {
                 TabControlAutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(this) as TabControlAutomationPeer;
                 if (peer != null)
@@ -581,7 +581,7 @@ namespace System.Windows.Controls
                     SelectedContentTemplateSelector = ContentTemplateSelector;
                     SelectedContentStringFormat = ContentStringFormat;
                 }
-             }
+            }
         }
 
         #endregion private helpers

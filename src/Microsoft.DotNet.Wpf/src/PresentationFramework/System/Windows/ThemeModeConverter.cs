@@ -1,13 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
-
 using System.ComponentModel.Design.Serialization;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
-using System.Diagnostics.CodeAnalysis;
 
 
 namespace System.Windows
@@ -16,7 +15,7 @@ namespace System.Windows
     /// Converts instances of other types to and from ThemeMode instances.
     /// </summary>
     [Experimental("WPF0001")]
-    public class ThemeModeConverter: TypeConverter
+    public class ThemeModeConverter : TypeConverter
     {
 
         #region Public Methods
@@ -31,7 +30,7 @@ namespace System.Windows
         /// </returns>
         public override bool CanConvertFrom(ITypeDescriptorContext typeDescriptorContext, Type sourceType)
         {
-           return Type.GetTypeCode(sourceType) == TypeCode.String;
+            return Type.GetTypeCode(sourceType) == TypeCode.String;
         }
 
         /// <summary>
@@ -42,7 +41,7 @@ namespace System.Windows
         /// <returns>
         /// <see langword="true" /> if this converter can convert to the provided type; otherwise, <see langword="false" />.
         /// </returns>
-        public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType) 
+        public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType)
         {
             // We can convert to an InstanceDescriptor or to a string.
             return destinationType == typeof(InstanceDescriptor) || destinationType == typeof(string);
@@ -60,8 +59,8 @@ namespace System.Windows
         /// <returns>
         /// The new <see cref="ThemeMode"/> instance.
         /// </returns>
-        public override object ConvertFrom(ITypeDescriptorContext typeDescriptorContext, 
-                                           CultureInfo cultureInfo, 
+        public override object ConvertFrom(ITypeDescriptorContext typeDescriptorContext,
+                                           CultureInfo cultureInfo,
                                            object source)
         {
             if (source != null)
@@ -88,7 +87,7 @@ namespace System.Windows
         /// <returns>
         /// The newly constructed object.
         /// </returns>
-        public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, 
+        public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext,
                                          CultureInfo cultureInfo,
                                          object value,
                                          Type destinationType)
@@ -97,8 +96,8 @@ namespace System.Windows
 
             if (value is ThemeMode themeMode)
             {
-                if (destinationType == typeof(string)) 
-                { 
+                if (destinationType == typeof(string))
+                {
                     return themeMode.Value;
                 }
                 else if (destinationType == typeof(InstanceDescriptor))

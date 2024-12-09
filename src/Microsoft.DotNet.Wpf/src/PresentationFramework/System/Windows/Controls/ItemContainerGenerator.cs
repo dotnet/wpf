@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,11 +13,10 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Globalization;     // for CultureInfo.InvariantCulture (event tracing)
-
-using System.Windows.Media;
+using System.Text;
 using System.Windows.Controls.Primitives;   // IItemContainerGenerator
 using System.Windows.Data;
-using System.Text;
+using System.Windows.Media;
 using MS.Internal;
 using MS.Internal.Controls;
 using MS.Utility;
@@ -286,7 +285,7 @@ namespace System.Windows.Controls
 
             // find the leftmost item to remove
             int offsetL = index;
-            for (block = _itemMap.Next;  block != _itemMap;  block = block.Next)
+            for (block = _itemMap.Next; block != _itemMap; block = block.Next)
             {
                 if (offsetL < block.ContainerCount)
                     break;
@@ -297,7 +296,7 @@ namespace System.Windows.Controls
 
             // find the rightmost item to remove
             int offsetR = offsetL + count - 1;
-            for (; block != _itemMap;  block = block.Next)
+            for (; block != _itemMap; block = block.Next)
             {
                 if (!(block is RealizedItemBlock))
                     throw new InvalidOperationException(SR.Format(SR.CannotRemoveUnrealizedItems, index, count));
@@ -347,7 +346,7 @@ namespace System.Windows.Controls
             // see whether the range hits the edge of a block on either side,
             // and whether the a`butting block is an unrealized gap
             bool edgeL = (offsetL == 0);
-            bool edgeR = (offsetR == blockR.ItemCount-1);
+            bool edgeR = (offsetR == blockR.ItemCount - 1);
             bool abutL = edgeL && (blockL.Prev is UnrealizedItemBlock);
             bool abutR = edgeR && (blockR.Next is UnrealizedItemBlock);
 
@@ -382,12 +381,12 @@ namespace System.Windows.Controls
             }
 
             // move items within the range to the target block
-            for (block = blockL;  block != blockR;  block = block.Next)
+            for (block = blockL; block != blockR; block = block.Next)
             {
                 int itemCount = block.ItemCount;
-                MoveItems(block, offsetL, itemCount-offsetL,
+                MoveItems(block, offsetL, itemCount - offsetL,
                             blockT, offsetT, deltaCount);
-                offsetT += itemCount-offsetL;
+                offsetT += itemCount - offsetL;
                 offsetL = 0;
                 deltaCount -= itemCount;
                 if (block.ItemCount == 0)
@@ -409,8 +408,8 @@ namespace System.Windows.Controls
                     blockX = new RealizedItemBlock();
                 }
 
-                MoveItems(block, offsetR+1, remaining,
-                            blockX, 0, offsetR+1);
+                MoveItems(block, offsetR + 1, remaining,
+                            blockX, 0, offsetR + 1);
             }
 
             // if we created any new blocks, insert them in the list
@@ -441,7 +440,7 @@ namespace System.Windows.Controls
                 // de-initialize the containers that are being removed
                 if (itemMap != null)
                 {
-                    for (ItemBlock block = itemMap.Next;  block != itemMap;  block = block.Next)
+                    for (ItemBlock block = itemMap.Next; block != itemMap; block = block.Next)
                     {
                         RealizedItemBlock rib = block as RealizedItemBlock;
                         if (rib != null)
@@ -535,7 +534,7 @@ namespace System.Windows.Controls
                 int itemIndex = 0;      // number of items we've skipped over
 
                 // locate container at the given index
-                for (ItemBlock block = _itemMap.Next;  block != _itemMap;  block = block.Next)
+                for (ItemBlock block = _itemMap.Next; block != _itemMap; block = block.Next)
                 {
                     if (index < block.ContainerCount)
                     {
@@ -840,7 +839,7 @@ namespace System.Windows.Controls
                 int n = count;
                 count = 0;
 
-                for (int i=0; i<n; ++i)
+                for (int i = 0; i < n; ++i)
                 {
                     CollectionViewGroup group = Items[i] as CollectionViewGroup;
                     count += (group == null) ? 1 : group.ItemCount;
@@ -891,7 +890,7 @@ namespace System.Windows.Controls
             }
 
 #if DEBUG
-            object target = (Parent == null) && (0 <= index  &&  index < Host.View.Count) ? Host.View[index] : null;
+            object target = (Parent == null) && (0 <= index && index < Host.View.Count) ? Host.View[index] : null;
 #endif
             int subIndex = 0;
 
@@ -900,7 +899,7 @@ namespace System.Windows.Controls
             {
                 int n;
                 subIndex = index;
-                for (index=0, n=ItemsInternal.Count;  index < n;  ++index)
+                for (index = 0, n = ItemsInternal.Count; index < n; ++index)
                 {
                     CollectionViewGroup group = ItemsInternal[index] as CollectionViewGroup;
                     int size = (group == null) ? 1 : group.ItemCount;
@@ -1001,7 +1000,7 @@ namespace System.Windows.Controls
 
             // compute accumulated count = sum of block counts
             int accumulatedCount = 0;
-            for (ItemBlock block = _itemMap.Next;  block != _itemMap;  block = block.Next)
+            for (ItemBlock block = _itemMap.Next; block != _itemMap; block = block.Next)
             {
                 accumulatedCount += block.ItemCount;
             }
@@ -1013,14 +1012,14 @@ namespace System.Windows.Controls
             }
 
             // compare items
-            int badItems=0, reportedItems=0;
-            int blockIndex=0;
-            for (ItemBlock block = _itemMap.Next;  block != _itemMap;  block = block.Next)
+            int badItems = 0, reportedItems = 0;
+            int blockIndex = 0;
+            for (ItemBlock block = _itemMap.Next; block != _itemMap; block = block.Next)
             {
                 RealizedItemBlock rib = block as RealizedItemBlock;
                 if (rib != null)
                 {
-                    for (int offset=0; offset<rib.ItemCount; ++offset)
+                    for (int offset = 0; offset < rib.ItemCount; ++offset)
                     {
                         int index = blockIndex + offset;
                         object genItem = rib.ItemAt(offset);
@@ -1030,9 +1029,9 @@ namespace System.Windows.Controls
                             if (reportedItems < 3)
                             {
                                 errors.Add(SR.Format(SR.Generator_ItemIsWrong, index, genItem, actualItem));
-                                ++ reportedItems;
+                                ++reportedItems;
                             }
-                            ++ badItems;
+                            ++badItems;
                         }
                     }
                 }
@@ -1064,7 +1063,7 @@ namespace System.Windows.Controls
                 // describe the details of the problem
                 StringBuilder sb = new StringBuilder();
                 sb.AppendLine(SR.Generator_Readme0);                          // Developer info:
-                sb.Append    (SR.Format(SR.Generator_Readme1, peer, name));              // The exception is thrown because...
+                sb.Append(SR.Format(SR.Generator_Readme1, peer, name));              // The exception is thrown because...
                 sb.Append("  ");
                 sb.AppendLine(SR.Generator_Readme2);                          // The following differences...
                 foreach (string s in errors)
@@ -1086,10 +1085,11 @@ namespace System.Windows.Controls
                 sb.AppendLine(SR.Generator_Readme5);                          // The most common causes...
                 sb.AppendLine();
 
-                sb.Append    (SR.Generator_Readme6); sb.Append("  ");         // Stack trace describes detection...
-                sb.Append    (SR.Format(SR.Generator_Readme7,                            // To get better detection...
+                sb.Append(SR.Generator_Readme6);
+                sb.Append("  ");         // Stack trace describes detection...
+                sb.Append(SR.Format(SR.Generator_Readme7,                            // To get better detection...
                                 "PresentationTraceSources.TraceLevel", "High"));
-                sb.Append    ("  ");
+                sb.Append("  ");
                 sb.AppendLine(SR.Format(SR.Generator_Readme8,                            // One way to do this ...
                                 "System.Diagnostics.PresentationTraceSources.SetTraceLevel(myItemsControl.ItemContainerGenerator, System.Diagnostics.PresentationTraceLevel.High)"));
                 sb.AppendLine(SR.Generator_Readme9);                          // This slows down the app.
@@ -1137,7 +1137,7 @@ namespace System.Windows.Controls
         void GetCollectionChangedSources(int level, Action<int, object, bool?, List<string>> format, List<string> sources)
         {
             format(level, this, false, sources);
-            Host.View.GetCollectionChangedSources(level+1, format, sources);
+            Host.View.GetCollectionChangedSources(level + 1, format, sources);
         }
 
         // called when the host's AlternationCount changes
@@ -1158,7 +1158,7 @@ namespace System.Windows.Controls
                 ItemBlock block = _itemMap.Next;
                 while (block != _itemMap)
                 {
-                    for (int offset = 0;  offset < block.ContainerCount;  ++offset)
+                    for (int offset = 0; offset < block.ContainerCount; ++offset)
                     {
                         GroupItem gi = ((RealizedItemBlock)block).ContainerAt(offset) as GroupItem;
                         if (gi != null)
@@ -1200,7 +1200,7 @@ namespace System.Windows.Controls
                 {
                     while (block != _itemMap)
                     {
-                        for (offset = 0;  offset < block.ContainerCount;  ++offset)
+                        for (offset = 0; offset < block.ContainerCount; ++offset)
                         {
                             ItemsControl.ClearAlternationIndex(((RealizedItemBlock)block).ContainerAt(offset));
                         }
@@ -1221,12 +1221,12 @@ namespace System.Windows.Controls
 
         internal ItemContainerGenerator Parent
         {
-            get { return _parent;}
+            get { return _parent; }
         }
 
         internal int Level
         {
-            get { return _level;}
+            get { return _level; }
         }
 
         // The group style that governs the generation of UI for the items.
@@ -1339,19 +1339,19 @@ namespace System.Windows.Controls
             //
             //------------------------------------------------------
 
-/* This method was requested for virtualization.  It's not being used right now
-(bug 1079525) but it probably will be when UI virtualization comes back.
-            /// <summary>
-            /// returns false if a call to GenerateNext is known to return null (indicating
-            /// that the generator is done).  Does not generate anything or change the
-            /// generator's state;  cheaper than GenerateNext.  Returning true does not
-            /// necessarily mean GenerateNext will produce anything.
-            /// </summary>
-            public bool IsActive
-            {
-                get { return !_done; }
-            }
-*/
+            /* This method was requested for virtualization.  It's not being used right now
+            (bug 1079525) but it probably will be when UI virtualization comes back.
+                        /// <summary>
+                        /// returns false if a call to GenerateNext is known to return null (indicating
+                        /// that the generator is done).  Does not generate anything or change the
+                        /// generator's state;  cheaper than GenerateNext.  Returning true does not
+                        /// necessarily mean GenerateNext will produce anything.
+                        /// </summary>
+                        public bool IsActive
+                        {
+                            get { return !_done; }
+                        }
+            */
 
             //------------------------------------------------------
             //
@@ -1570,10 +1570,10 @@ namespace System.Windows.Controls
             //
             //------------------------------------------------------
 
-            ItemContainerGenerator     _factory;
-            GeneratorDirection  _direction;
-            bool                _done;
-            GeneratorState      _cachedState;
+            ItemContainerGenerator _factory;
+            GeneratorDirection _direction;
+            bool _done;
+            GeneratorState _cachedState;
         }
 
         private class BatchGenerator : IDisposable
@@ -1675,7 +1675,7 @@ namespace System.Windows.Controls
             if (offset > 0)
             {
                 state.Block.MoveForward(ref state, true);
-                -- offset;
+                --offset;
 
                 while (offset > 0)
                 {
@@ -1690,7 +1690,7 @@ namespace System.Windows.Controls
                 }
 
                 state.Block.MoveBackward(ref state, true);
-                ++ offset;
+                ++offset;
 
                 while (offset < 0)
                 {
@@ -1764,7 +1764,7 @@ namespace System.Windows.Controls
                     UnrealizedItemBlock newUBlock = new UnrealizedItemBlock();
                     newUBlock.InsertAfter(block);
                     newBlock.InsertAfter(block);
-                    MoveItems(block, offset+1, block.ItemCount-offset-1, newUBlock, 0, offset+1);
+                    MoveItems(block, offset + 1, block.ItemCount - offset - 1, newUBlock, 0, offset + 1);
                     MoveItems(block, offset, 1, newBlock, 0, offset);
                 }
             }
@@ -1784,7 +1784,7 @@ namespace System.Windows.Controls
                 // coalesce adjacent unrealized blocks
                 if (block.Prev is UnrealizedItemBlock && block.Next is UnrealizedItemBlock)
                 {
-                    MoveItems(block.Next, 0, block.Next.ItemCount, block.Prev, block.Prev.ItemCount, -block.Prev.ItemCount-1);
+                    MoveItems(block.Next, 0, block.Next.ItemCount, block.Prev, block.Prev.ItemCount, -block.Prev.ItemCount - 1);
                     block.Next.Remove();
                 }
             }
@@ -1837,7 +1837,7 @@ namespace System.Windows.Controls
             if (direction != GeneratorDirection.Backward)
             {
                 // Forward.  Back up one container to determine the starting index
-                -- offset;
+                --offset;
                 while (offset < 0 || block is UnrealizedItemBlock)
                 {
                     block = block.Prev;
@@ -1848,7 +1848,7 @@ namespace System.Windows.Controls
                 index = (block == _itemMap) ? -1 : ItemsControl.GetAlternationIndex(rib.ContainerAt(offset));
 
                 // loop through the remaining containers, resetting each AlternationIndex
-                for (;;)
+                for (; ; )
                 {
                     // advance to next realized container
                     ++offset;
@@ -1873,7 +1873,7 @@ namespace System.Windows.Controls
             else
             {
                 // Backward.  Advance one container to determine the starting index
-                ++ offset;
+                ++offset;
                 while (offset >= block.ContainerCount || block is UnrealizedItemBlock)
                 {
                     block = block.Next;
@@ -1887,7 +1887,7 @@ namespace System.Windows.Controls
                 index = (block == _itemMap) ? 1 : ItemsControl.GetAlternationIndex(rib.ContainerAt(offset));
 
                 // loop through the remaining containers, resetting each AlternationIndex
-                for (;;)
+                for (; ; )
                 {
                     // retreat to next realized container
                     --offset;
@@ -2138,7 +2138,7 @@ namespace System.Windows.Controls
 
             int containerIndex = 0;
 
-            for (block = _itemMap.Next;  block != _itemMap;  block = block.Next)
+            for (block = _itemMap.Next; block != _itemMap; block = block.Next)
             {
                 if (offsetFromBlockStart >= block.ItemCount)
                 {
@@ -2157,7 +2157,7 @@ namespace System.Windows.Controls
                     else
                     {
                         // block has unrealized items
-                        position = new GeneratorPosition(containerIndex-1, offsetFromBlockStart+1);
+                        position = new GeneratorPosition(containerIndex - 1, offsetFromBlockStart + 1);
                     }
 
                     break;
@@ -2180,7 +2180,7 @@ namespace System.Windows.Controls
                 return;
             }
 
-            for (block = _itemMap.Next;  block != _itemMap;  block = block.Next)
+            for (block = _itemMap.Next; block != _itemMap; block = block.Next)
             {
                 UnrealizedItemBlock uib;
                 RealizedItemBlock rib = block as RealizedItemBlock;
@@ -2240,7 +2240,7 @@ namespace System.Windows.Controls
                         // we don't know where it is in this block, so assume
                         // it's the very first item.
                         offsetFromBlockStart = 0;
-                        position = new GeneratorPosition(containerIndex-1, 1);
+                        position = new GeneratorPosition(containerIndex - 1, 1);
                         break;
                     }
                 }
@@ -2268,14 +2268,14 @@ namespace System.Windows.Controls
             // for non-direct items, set the DataContext property
             if (container != item)
             {
-                #if DEBUG
+#if DEBUG
                 // Some ancient code at this point handled the case when DataContext
                 // was set via an Expression (presumably a binding).  I don't think
                 // this actually happens any more.  Just in case...
                 DependencyProperty dp = FrameworkElement.DataContextProperty;
                 EntryIndex entryIndex = container.LookupEntry(dp.GlobalIndex);
                 Debug.Assert(!container.HasExpression(entryIndex, dp), "DataContext set by expression (unexpectedly)");
-                #endif
+#endif
 
                 container.SetValue(FrameworkElement.DataContextProperty, item);
             }
@@ -2334,13 +2334,13 @@ namespace System.Windows.Controls
             {
                 DependencyProperty dp = FrameworkElement.DataContextProperty;
 
-                #if DEBUG
+#if DEBUG
                 // Some ancient code at this point handled the case when DataContext
                 // was set via an Expression (presumably a binding).  I don't think
                 // this actually happens any more.  Just in case...
                 EntryIndex entryIndex = container.LookupEntry(dp.GlobalIndex);
                 Debug.Assert(!container.HasExpression(entryIndex, dp), "DataContext set by expression (unexpectedly)");
-                #endif
+#endif
 
                 container.SetValue(dp, BindingExpressionBase.DisconnectedItem);
             }
@@ -2453,7 +2453,7 @@ namespace System.Windows.Controls
 
             ValidateAndCorrectIndex(item, ref index);
 
-            GeneratorPosition position = new GeneratorPosition(-1,0);
+            GeneratorPosition position = new GeneratorPosition(-1, 0);
 
             // find the block containing the new item
             ItemBlock block = _itemMap.Next;
@@ -2475,22 +2475,24 @@ namespace System.Windows.Controls
             UnrealizedItemBlock uib = block as UnrealizedItemBlock;
             if (uib != null)
             {
-                MoveItems(uib, offsetFromBlockStart, 1, uib, offsetFromBlockStart+1, 0);
-                ++ uib.ItemCount;
+                MoveItems(uib, offsetFromBlockStart, 1, uib, offsetFromBlockStart + 1, 0);
+                ++uib.ItemCount;
             }
 
             // if the item can be added to a previous unrealized block, do so
-            else if ((offsetFromBlockStart== 0 || block == _itemMap) &&
+            else if ((offsetFromBlockStart == 0 || block == _itemMap) &&
                     ((uib = block.Prev as UnrealizedItemBlock) != null))
             {
-                ++ uib.ItemCount;
+                ++uib.ItemCount;
             }
 
             // otherwise, create a new unrealized block
             else
             {
-                uib = new UnrealizedItemBlock();
-                uib.ItemCount = 1;
+                uib = new UnrealizedItemBlock
+                {
+                    ItemCount = 1
+                };
 
                 // split the current realized block, if necessary
                 RealizedItemBlock rib;
@@ -2668,7 +2670,7 @@ namespace System.Windows.Controls
             // now insert into the new spot.
             //
 
-            position = new GeneratorPosition(-1,0);
+            position = new GeneratorPosition(-1, 0);
             block = _itemMap.Next;
             offsetFromBlockStart = newIndex;
             while (block != _itemMap && offsetFromBlockStart >= block.ItemCount)
@@ -2692,22 +2694,24 @@ namespace System.Windows.Controls
             uib = block as UnrealizedItemBlock;
             if (uib != null)
             {
-                MoveItems(uib, offsetFromBlockStart, 1, uib, offsetFromBlockStart+1, 0);
-                ++ uib.ItemCount;
+                MoveItems(uib, offsetFromBlockStart, 1, uib, offsetFromBlockStart + 1, 0);
+                ++uib.ItemCount;
             }
 
             // if the item can be added to a previous unrealized block, do so
             else if ((offsetFromBlockStart == 0 || block == _itemMap) &&
                     ((uib = block.Prev as UnrealizedItemBlock) != null))
             {
-                ++ uib.ItemCount;
+                ++uib.ItemCount;
             }
 
             // otherwise, create a new unrealized block
             else
             {
-                uib = new UnrealizedItemBlock();
-                uib.ItemCount = 1;
+                uib = new UnrealizedItemBlock
+                {
+                    ItemCount = 1
+                };
 
                 // split the current realized block, if necessary
                 if (offsetFromBlockStart > 0 && (rib = block as RealizedItemBlock) != null)
@@ -2780,26 +2784,26 @@ namespace System.Windows.Controls
         //
         //------------------------------------------------------
 
-        private Generator       _generator;
-        private IGeneratorHost  _host;
-        private ItemBlock       _itemMap;
+        private Generator _generator;
+        private IGeneratorHost _host;
+        private ItemBlock _itemMap;
         private GeneratorStatus _status;
-        private int             _itemsGenerated;
-        private int             _startIndexForUIFromItem;
+        private int _itemsGenerated;
+        private int _startIndexForUIFromItem;
         private DependencyObject _peer;
-        private int             _level;
-        private IList           _items;
+        private int _level;
+        private IList _items;
         private ReadOnlyCollection<object> _itemsReadOnly;
-        private GroupStyle      _groupStyle;
+        private GroupStyle _groupStyle;
         private ItemContainerGenerator _parent;
-        private ArrayList       _emptyGroupItems;
-        private int             _alternationCount;
+        private ArrayList _emptyGroupItems;
+        private int _alternationCount;
 
-        private Type            _containerType;     // type of containers on the recycle queue
+        private Type _containerType;     // type of containers on the recycle queue
         private Queue<DependencyObject> _recyclableContainers = new Queue<DependencyObject>();
 
-        private bool            _generatesGroupItems; // Flag to indicate that this generates GroupItems
-        private bool            _isGeneratingBatches;
+        private bool _generatesGroupItems; // Flag to indicate that this generates GroupItems
+        private bool _isGeneratingBatches;
 
         event MapChangedHandler MapChanged;
 
@@ -2995,7 +2999,7 @@ namespace System.Windows.Controls
                 if (offset < newOffset)
                 {
                     // copy right-to-left
-                    for (k = count - 1;  k >= 0;  --k)
+                    for (k = count - 1; k >= 0; --k)
                     {
                         _entry[newOffset + k] = src._entry[offset + k];
                     }
@@ -3013,7 +3017,7 @@ namespace System.Windows.Controls
                 else
                 {
                     // copy left-to-right
-                    for (k = 0;  k < count;  ++k)
+                    for (k = 0; k < count; ++k)
                     {
                         _entry[newOffset + k] = src._entry[offset + k];
                     }
@@ -3032,7 +3036,7 @@ namespace System.Windows.Controls
 
             public void ClearEntries(int offset, int count)
             {
-                for (int i=0; i<count; ++i)
+                for (int i = 0; i < count; ++i)
                 {
                     _entry[offset + i].Item = null;
                     _entry[offset + i].Container = null;
@@ -3047,7 +3051,7 @@ namespace System.Windows.Controls
 
             public int OffsetOfItem(object item)
             {
-                for (int k=0; k < ItemCount; ++k)
+                for (int k = 0; k < ItemCount; ++k)
                 {
                     if (ItemsControl.EqualsEx(_entry[k].Item, item))
                         return k;
@@ -3062,26 +3066,26 @@ namespace System.Windows.Controls
         // an entry in the table maintained by RealizedItemBlock
         private struct BlockEntry
         {
-            public object Item          { get { return _item; }     set { _item = value; } }
-            public DependencyObject Container    { get { return _container; }  set { _container = value; } }
+            public object Item { get { return _item; } set { _item = value; } }
+            public DependencyObject Container { get { return _container; } set { _container = value; } }
 
-            private object      _item;
-            private DependencyObject   _container;
+            private object _item;
+            private DependencyObject _container;
         }
 
         // cached state of the factory's item map (updated by factory)
         // used to speed up calls to Generate
         private struct GeneratorState
         {
-            public ItemBlock Block  { get { return _block; }   set { _block = value; } }
-            public int Offset       { get { return _offset; }  set { _offset = value; } }
-            public int Count        { get { return _count; }   set { _count = value; } }
-            public int ItemIndex    { get { return _itemIndex; }   set { _itemIndex = value; } }
+            public ItemBlock Block { get { return _block; } set { _block = value; } }
+            public int Offset { get { return _offset; } set { _offset = value; } }
+            public int Count { get { return _count; } set { _count = value; } }
+            public int ItemIndex { get { return _itemIndex; } set { _itemIndex = value; } }
 
-            private ItemBlock   _block;     // some block in the map (most recently used)
-            private int         _offset;    // offset with the block
-            private int         _count;     // cumulative item count of blocks before the cached one
-            private int         _itemIndex; // index of current item
+            private ItemBlock _block;     // some block in the map (most recently used)
+            private int _offset;    // offset with the block
+            private int _count;     // cumulative item count of blocks before the cached one
+            private int _itemIndex; // index of current item
         }
 
 

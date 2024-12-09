@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,11 +14,10 @@ Abstract:
 
 --*/
 
-using System.Xml;
 using System.Collections.ObjectModel;
 using System.Globalization;
-
 using System.Printing;
+using System.Xml;
 
 #pragma warning disable 1634, 1691 // Allows suppression of certain PreSharp messages
 
@@ -131,8 +130,10 @@ namespace MS.Internal.Printing.Configuration
 
         internal static PrintCapabilityFeature NewFeatureCallback(InternalPrintCapabilities printCap)
         {
-            PageMediaSizeCapability cap = new PageMediaSizeCapability(printCap);
-            cap._fixedSizes = new Collection<FixedMediaSizeOption>();
+            PageMediaSizeCapability cap = new PageMediaSizeCapability(printCap)
+            {
+                _fixedSizes = new Collection<FixedMediaSizeOption>()
+            };
 
             return cap;
         }
@@ -212,8 +213,8 @@ namespace MS.Internal.Printing.Configuration
                         if (reader.CurrentElementNodeType == PrintSchemaNodeTypes.Value)
                         {
                             // Child property is Value for fixed media size
-                            int     intValue = 0;
-                            bool    convertOK = false;
+                            int intValue = 0;
+                            bool convertOK = false;
 
                             try
                             {
@@ -221,20 +222,20 @@ namespace MS.Internal.Printing.Configuration
                                 convertOK = true;
                             }
                             // We want to catch internal FormatException to skip recoverable XML content syntax error
-                            #pragma warning suppress 56502
-                            #if _DEBUG
+#pragma warning suppress 56502
+#if _DEBUG
                             catch (FormatException e)
-                            #else
+#else
                             catch (FormatException)
-                            #endif
+#endif
                             {
-                                #if _DEBUG
+#if _DEBUG
                                 Trace.WriteLine("-Error- Invalid int value '" +
                                                 reader.CurrentElementTextValue +
                                                 "' at line number " + reader._xmlReader.LineNumber +
                                                 ", line position " + reader._xmlReader.LinePosition +
                                                 ": " + e.Message);
-                                #endif
+#endif
                             }
 
                             if (convertOK)
@@ -252,23 +253,23 @@ namespace MS.Internal.Printing.Configuration
                     }
                     else
                     {
-                        #if _DEBUG
+#if _DEBUG
                         Trace.WriteLine("-Error- Missing required Value or ParameterRef child-element at line number " +
                                          reader._xmlReader.LineNumber + ", line position " +
                                          reader._xmlReader.LinePosition);
-                        #endif
+#endif
                     }
                 }
                 else
                 {
                     handled = false;
 
-                    #if _DEBUG
+#if _DEBUG
                     Trace.WriteLine("-Warning- skip unknown ScoredProperty '" +
                                     reader.CurrentElementNameAttrValue + "' at line " +
                                     reader._xmlReader.LineNumber + ", position " +
                                     reader._xmlReader.LinePosition);
-                    #endif
+#endif
                 }
             }
 
@@ -559,7 +560,7 @@ namespace MS.Internal.Printing.Configuration
 
             if (bSetWH)
             {
-                if ( (mediaSizeWidth <= 0) || (mediaSizeHeight <= 0) )
+                if ((mediaSizeWidth <= 0) || (mediaSizeHeight <= 0))
                 {
                     throw new ArgumentOutOfRangeException((mediaSizeWidth <= 0) ? "mediaSizeWidth" : "mediaSizeHeight",
                                   PTUtility.GetTextFromResource("ArgumentException.PositiveValue"));

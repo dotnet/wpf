@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,11 +17,11 @@ namespace MS.Internal
     /// </summary>
     internal class WeakReferenceList : CopyOnWriteList, IEnumerable
     {
-        public WeakReferenceList():base(null)
+        public WeakReferenceList() : base(null)
         {
         }
 
-        public WeakReferenceList(object syncRoot):base(syncRoot)
+        public WeakReferenceList(object syncRoot) : base(syncRoot)
         {
         }
 
@@ -62,7 +62,7 @@ namespace MS.Internal
                 }
                 return count;
             }
-}
+        }
 
         /// <summary>
         ///   Add a weak reference to the List.
@@ -71,16 +71,16 @@ namespace MS.Internal
         /// </summary>
         public override bool Add(object obj)
         {
-            Debug.Assert(null!=obj, "WeakReferenceList.Add() should not be passed null.");
+            Debug.Assert(null != obj, "WeakReferenceList.Add() should not be passed null.");
             return Add(obj, false /*skipFind*/);
-}
+        }
 
         //Will insert a new WeakREference into the list.
         //The object bein inserted MUST be unique as there is no check for it.
         public bool Add(object obj, bool skipFind)
         {
-            Debug.Assert(null!=obj, "WeakReferenceList.Add() should not be passed null.");
-            lock(base.SyncRoot)
+            Debug.Assert(null != obj, "WeakReferenceList.Add() should not be passed null.");
+            lock (base.SyncRoot)
             {
                 if (skipFind)
                 {
@@ -108,14 +108,14 @@ namespace MS.Internal
         /// </summary>
         public override bool Remove(object obj)
         {
-            Debug.Assert(null!=obj, "WeakReferenceList.Remove() should not be passed null.");
-            lock(base.SyncRoot)
+            Debug.Assert(null != obj, "WeakReferenceList.Remove() should not be passed null.");
+            lock (base.SyncRoot)
             {
                 int index = FindWeakReference(obj);
 
                 // If the object is not on the list then
                 // we are done.  (return false)
-                if(index < 0)
+                if (index < 0)
                     return false;
 
                 return base.RemoveAt(index);
@@ -129,87 +129,87 @@ namespace MS.Internal
         /// </summary>
         public bool Insert(int index, object obj)
         {
-            Debug.Assert(null!=obj, "WeakReferenceList.Add() should not be passed null.");
-            lock(base.SyncRoot)
+            Debug.Assert(null != obj, "WeakReferenceList.Add() should not be passed null.");
+            lock (base.SyncRoot)
             {
                 int existingIndex = FindWeakReference(obj);
 
                 // If the object is already on the list then
                 // we are done.  (return false)
-                if(existingIndex >=  0)
+                if (existingIndex >= 0)
                     return false;
 
                 return base.Internal_Insert(index, new WeakReference(obj));
             }
         }
 
-         /// <summary>
-         ///   Find an object on the List.
-         ///   Also cleans up dead weakreferences.
-         /// </summary>
-         private int FindWeakReference(object obj)
-         {
-             // syncRoot Lock MUST be held by the caller.
-             // Search the LiveList looking for the object, also remove any
-             // dead references we find.
-             //
-             // We use the "LiveList" to avoid snapping a Clone everytime we
-             // Change something.
-             // To do this correctly you need to understand how the base class
-             // virtualizes the Copy On Write.
-             bool foundDeadReferences = true;   // so that the while loop runs the first time
-             int foundItem = -1;
+        /// <summary>
+        ///   Find an object on the List.
+        ///   Also cleans up dead weakreferences.
+        /// </summary>
+        private int FindWeakReference(object obj)
+        {
+            // syncRoot Lock MUST be held by the caller.
+            // Search the LiveList looking for the object, also remove any
+            // dead references we find.
+            //
+            // We use the "LiveList" to avoid snapping a Clone everytime we
+            // Change something.
+            // To do this correctly you need to understand how the base class
+            // virtualizes the Copy On Write.
+            bool foundDeadReferences = true;   // so that the while loop runs the first time
+            int foundItem = -1;
 
-             while (foundDeadReferences)
-             {
-                 foundDeadReferences = false;
-                 ArrayList list = base.LiveList;
+            while (foundDeadReferences)
+            {
+                foundDeadReferences = false;
+                ArrayList list = base.LiveList;
 
-                 for(int i = 0; i < list.Count; i++)
-                 {
-                     WeakReference weakRef = (WeakReference) list[i];
-                     if(weakRef.IsAlive)
-                     {
-                         if(obj == weakRef.Target)
-                         {
-                             foundItem = i;
-                             break;
-                         }
-                     }
-                     else
-                     {
-                         foundDeadReferences = true;
-                     }
-                 }
+                for (int i = 0; i < list.Count; i++)
+                {
+                    WeakReference weakRef = (WeakReference)list[i];
+                    if (weakRef.IsAlive)
+                    {
+                        if (obj == weakRef.Target)
+                        {
+                            foundItem = i;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        foundDeadReferences = true;
+                    }
+                }
 
-                 if (foundDeadReferences)
-                 {
-                     // if there were dead references, take this opportunity
-                     // to clean up _all_ the dead references.  After doing this,
-                     // the foundItem index is no longer valid, so we just
-                     // compute it again.
-                     // Most of the time we expect no dead references, so the while
-                     // loop runs once and the for loop walks the list once.
-                     // Occasionally there will be dead references - the while loop
-                     // runs twice and the for loop walks the list twice.  Purge
-                     // also walks the list once, for a total of three times.
-                     Purge();
-                 }
-             }
+                if (foundDeadReferences)
+                {
+                    // if there were dead references, take this opportunity
+                    // to clean up _all_ the dead references.  After doing this,
+                    // the foundItem index is no longer valid, so we just
+                    // compute it again.
+                    // Most of the time we expect no dead references, so the while
+                    // loop runs once and the for loop walks the list once.
+                    // Occasionally there will be dead references - the while loop
+                    // runs twice and the for loop walks the list twice.  Purge
+                    // also walks the list once, for a total of three times.
+                    Purge();
+                }
+            }
 
-             return foundItem;
-         }
+            return foundItem;
+        }
 
-         // purge the list of dead references
-         // caller is expected to lock the SyncRoot
-         private void Purge()
-         {
+        // purge the list of dead references
+        // caller is expected to lock the SyncRoot
+        private void Purge()
+        {
             ArrayList list = base.LiveList;
             int destIndex;
             int n = list.Count;
 
             // skip over valid entries at the beginning of the list
-            for (destIndex=0; destIndex<n; ++destIndex)
+            for (destIndex = 0; destIndex < n; ++destIndex)
             {
                 WeakReference wr = (WeakReference)list[destIndex];
                 if (!wr.IsAlive)
@@ -226,7 +226,7 @@ namespace MS.Internal
 
             // move remaining valid entries toward the beginning, into one
             // contiguous block
-            for (int i=destIndex+1; i<n; ++i)
+            for (int i = destIndex + 1; i < n; ++i)
             {
                 WeakReference wr = (WeakReference)list[i];
                 if (wr.IsAlive)
@@ -249,7 +249,7 @@ namespace MS.Internal
                     list.Capacity = newCapacity;
                 }
             }
-         }
+        }
     }
 }
 

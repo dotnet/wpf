@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -18,7 +18,7 @@ namespace System.Windows.Input
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         /// <summary>
         ///     Constructs an instance of the InputLanguageEventArgs class.
         /// </summary>
@@ -39,7 +39,7 @@ namespace System.Windows.Input
         //  Public Properties
         //
         //------------------------------------------------------
- 
+
         /// <summary>
         ///     New Language Id.
         /// </summary>
@@ -61,7 +61,7 @@ namespace System.Windows.Input
         //  Private Fields
         //
         //------------------------------------------------------
-                
+
         #region Private Fields
         // the new input language.
         private CultureInfo _newLanguageId;
@@ -82,7 +82,7 @@ namespace System.Windows.Input
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         /// <summary>
         ///     Constructs an instance of the InputLanguageEventArgs class.
         /// </summary>
@@ -130,7 +130,7 @@ namespace System.Windows.Input
         //  Public Properties
         //
         //------------------------------------------------------
- 
+
         /// <summary>
         ///     This is a value to reject the input language change.
         /// </summary>
@@ -145,7 +145,7 @@ namespace System.Windows.Input
         //  Private Fields
         //
         //------------------------------------------------------
-                
+
         #region Private Fields
         // bool to reject the input language change.
         private bool _rejected;

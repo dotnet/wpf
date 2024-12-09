@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -41,7 +41,7 @@ namespace System.Windows.Input
         /// </summary>
         public IInputElement OldFocus
         {
-            get {return _oldFocus;}
+            get { return _oldFocus; }
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace System.Windows.Input
         /// </summary>
         public IInputElement NewFocus
         {
-            get {return _newFocus;}
+            get { return _newFocus; }
         }
 
         /// <summary>
@@ -64,8 +64,8 @@ namespace System.Windows.Input
         /// </param>
         protected override void InvokeEventHandler(Delegate genericHandler, object genericTarget)
         {
-            KeyboardFocusChangedEventHandler handler = (KeyboardFocusChangedEventHandler) genericHandler;
-            
+            KeyboardFocusChangedEventHandler handler = (KeyboardFocusChangedEventHandler)genericHandler;
+
             handler(genericTarget, this);
         }
 

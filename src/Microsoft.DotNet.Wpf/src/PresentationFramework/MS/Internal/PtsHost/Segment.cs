@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -24,9 +24,9 @@ namespace MS.Internal.PtsHost
         /// OUT: name of the first paragraph in segment
         /// </param>
         void GetFirstPara(
-            out int successful,                 
-            out IntPtr firstParaName);           
-        
+            out int successful,
+            out IntPtr firstParaName);
+
         /// <summary>
         /// Get next para 
         /// </summary>
@@ -40,9 +40,9 @@ namespace MS.Internal.PtsHost
         /// OUT: name of the next paragraph in section
         /// </param>
         void GetNextPara(
-            BaseParagraph currentParagraph,      
-            out int found,                       
-            out IntPtr nextParaName);           
+            BaseParagraph currentParagraph,
+            out int found,
+            out IntPtr nextParaName);
 
         /// <summary>
         /// Get first change in segment - part of update process
@@ -57,8 +57,8 @@ namespace MS.Internal.PtsHost
         /// OUT: name of paragraph before the change if !fChangeFirst
         /// </param>
         void UpdGetFirstChangeInSegment(
-            out int fFound,                     
-            out int fChangeFirst,                
-            out IntPtr nmpBeforeChange);         
+            out int fFound,
+            out int fChangeFirst,
+            out IntPtr nmpBeforeChange);
     }
 }

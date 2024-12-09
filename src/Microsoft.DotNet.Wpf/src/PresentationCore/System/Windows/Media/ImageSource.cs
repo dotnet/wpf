@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,9 +6,9 @@
 //
 
 using System.ComponentModel;
-using MS.Internal;
-using System.Windows.Media.Animation;
 using System.Windows.Markup;
+using System.Windows.Media.Animation;
+using MS.Internal;
 
 namespace System.Windows.Media
 {
@@ -65,7 +65,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return new Size(Width, Height);            
+                return new Size(Width, Height);
             }
         }
 

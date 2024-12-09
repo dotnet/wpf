@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,7 +19,7 @@ namespace Microsoft.Internal.AlphaFlattener
         private Rect m_bounds;
 
 #if DEBUG
-        private bool      m_debugRasterize;
+        private bool m_debugRasterize;
 #endif
 
         private int m_lowestPrimitive;     // lowest index in m_primitives
@@ -31,7 +31,7 @@ namespace Microsoft.Internal.AlphaFlattener
         public Cluster()
         {
             m_primitives = new List<int>();
-            m_bounds     = Rect.Empty;
+            m_bounds = Rect.Empty;
 
             m_lowestPrimitive = int.MaxValue;
         }
@@ -44,7 +44,7 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXRasterStart);
 
-            int width  = (int)Math.Round(m_bounds.Width * Configuration.RasterizationDPI / 96);
+            int width = (int)Math.Round(m_bounds.Width * Configuration.RasterizationDPI / 96);
             int height = (int)Math.Round(m_bounds.Height * Configuration.RasterizationDPI / 96);
 
             if ((width >= 1) && (height >= 1)) // Skip shape which is too small
@@ -89,13 +89,14 @@ namespace Microsoft.Internal.AlphaFlattener
                             }
                             else
                             {
-                                CombinedGeometry cg = new CombinedGeometry();
-
-                                // Opt-out of inheritance through the new Freezable.
-                                cg.CanBeInheritanceContext = false;
-                                cg.GeometryCombineMode     = GeometryCombineMode.Union;
-                                cg.Geometry1               = clip;
-                                cg.Geometry2               = geometry;
+                                CombinedGeometry cg = new CombinedGeometry
+                                {
+                                    // Opt-out of inheritance through the new Freezable.
+                                    CanBeInheritanceContext = false,
+                                    GeometryCombineMode = GeometryCombineMode.Union,
+                                    Geometry1 = clip,
+                                    Geometry2 = geometry
+                                };
 
                                 clip = cg;
                             }
@@ -301,7 +302,7 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             double clustersize = m_bounds.Width * m_bounds.Height;
 
-            double diff = - Configuration.RasterizationCost(m_bounds.Width, m_bounds.Height);
+            double diff = -Configuration.RasterizationCost(m_bounds.Width, m_bounds.Height);
 
             // Estimate cost of geometry operations (intersecting)
             double pathComplexity = 1;
@@ -386,7 +387,7 @@ namespace Microsoft.Internal.AlphaFlattener
             List<PrimitiveInfo> commands,
             int count,
             bool disjoint,
-            List<int> [] oldUnderlay,
+            List<int>[] oldUnderlay,
             List<Cluster> transparentCluster,
             bool[] addedPrimitives      // primitives added to clusters
             )
@@ -464,7 +465,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
         #endregion
 
-        #if DEBUG
+#if DEBUG
 
         internal List<int> DebugPrimitives
         {
@@ -490,6 +491,6 @@ namespace Microsoft.Internal.AlphaFlattener
             }
         }
 
-        #endif
+#endif
     }
 } // end of namespace

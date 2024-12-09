@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,9 +10,8 @@
 //
 
 
-using System.Text;
 using System.Globalization;
-
+using System.Text;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
@@ -24,9 +23,9 @@ namespace MS.Internal.TextFormatting
     /// </summary>
     internal sealed class TextMarkerSource : TextSource
     {
-        private char[]                      _characterArray;
-        private TextRunProperties           _textRunProperties;
-        private TextParagraphProperties     _textParagraphProperties;
+        private char[] _characterArray;
+        private TextRunProperties _textRunProperties;
+        private TextParagraphProperties _textParagraphProperties;
 
         private const char NumberSuffix = '.';
 
@@ -36,14 +35,14 @@ namespace MS.Internal.TextFormatting
 
         private static string[][] RomanNumerics = new string[][]
         {
-            new string[] { "m??", "cdm", "xlc", "ivx" }, 
+            new string[] { "m??", "cdm", "xlc", "ivx" },
             new string[] { "M??", "CDM", "XLC", "IVX" }
         };
 
         internal TextMarkerSource(
-            TextParagraphProperties     textParagraphProperties,
-            TextMarkerStyle             markerStyle,
-            int                         autoNumberingIndex
+            TextParagraphProperties textParagraphProperties,
+            TextMarkerStyle markerStyle,
+            int autoNumberingIndex
             )
         {
             Debug.Assert(markerStyle != TextMarkerStyle.None);
@@ -53,21 +52,25 @@ namespace MS.Internal.TextFormatting
             PixelsPerDip = defaultRunProperties.PixelsPerDip;
             string symbolString = null;
 
-            if(IsKnownSymbolMarkerStyle(markerStyle))
+            if (IsKnownSymbolMarkerStyle(markerStyle))
             {
-                switch(markerStyle)
+                switch (markerStyle)
                 {
                     case TextMarkerStyle.Disc:
-                        symbolString = "\x9f"; break;
+                        symbolString = "\x9f";
+                        break;
 
                     case TextMarkerStyle.Circle:
-                        symbolString = "\xa1"; break;
+                        symbolString = "\xa1";
+                        break;
 
                     case TextMarkerStyle.Square:
-                        symbolString = "\x71"; break;
+                        symbolString = "\x71";
+                        break;
 
                     case TextMarkerStyle.Box:
-                        symbolString = "\xa7"; break;
+                        symbolString = "\xa7";
+                        break;
                 }
 
                 Typeface defaultTypeface = defaultRunProperties.Typeface;
@@ -75,15 +78,15 @@ namespace MS.Internal.TextFormatting
                 // recreate a new marker run properties based on symbol typeface e.g. Wingding
                 _textRunProperties = new GenericTextRunProperties(
                     new Typeface(
-                        new FontFamily("Wingdings"), 
-                        defaultTypeface.Style, 
-                        defaultTypeface.Weight, 
+                        new FontFamily("Wingdings"),
+                        defaultTypeface.Style,
+                        defaultTypeface.Weight,
                         defaultTypeface.Stretch
                         ),
-                    defaultRunProperties.FontRenderingEmSize, 
+                    defaultRunProperties.FontRenderingEmSize,
                     defaultRunProperties.FontHintingEmSize,
-                    PixelsPerDip, 
-                    defaultRunProperties.TextDecorations, 
+                    PixelsPerDip,
+                    defaultRunProperties.TextDecorations,
                     defaultRunProperties.ForegroundBrush,
                     defaultRunProperties.BackgroundBrush,
                     defaultRunProperties.BaselineAlignment,
@@ -91,7 +94,7 @@ namespace MS.Internal.TextFormatting
                     null // default number substitution for culture
                     );
             }
-            else if(IsKnownIndexMarkerStyle(markerStyle))
+            else if (IsKnownIndexMarkerStyle(markerStyle))
             {
                 // Internal client code should have already validated this.
                 Debug.Assert(autoNumberingIndex > 0);
@@ -100,7 +103,7 @@ namespace MS.Internal.TextFormatting
 
                 int counter = autoNumberingIndex;
 
-                switch(markerStyle)
+                switch (markerStyle)
                 {
                     case TextMarkerStyle.Decimal:
                         _characterArray = ConvertNumberToString(counter, false, DecimalNumerics);
@@ -117,7 +120,7 @@ namespace MS.Internal.TextFormatting
                     case TextMarkerStyle.LowerRoman:
                         symbolString = ConvertNumberToRomanString(counter, false);
                         break;
-                            
+
                     case TextMarkerStyle.UpperRoman:
                         symbolString = ConvertNumberToRomanString(counter, true);
                         break;
@@ -128,7 +131,7 @@ namespace MS.Internal.TextFormatting
                 Debug.Assert(false, "Invalid marker style");
             }
 
-            if(symbolString != null)
+            if (symbolString != null)
             {
                 _characterArray = symbolString.ToCharArray();
             }
@@ -142,7 +145,7 @@ namespace MS.Internal.TextFormatting
         /// TextFormatter to get a text run started at specified text source position
         /// </summary>
         public override TextRun GetTextRun(
-            int         textSourceCharacterIndex
+            int textSourceCharacterIndex
             )
         {
             if (textSourceCharacterIndex < _characterArray.Length)
@@ -166,20 +169,20 @@ namespace MS.Internal.TextFormatting
         /// TextFormatter to get text immediately before specified text source position.
         /// </summary>        
         public override TextSpan<CultureSpecificCharacterBufferRange> GetPrecedingText(
-            int         textSourceCharacterIndexLimit
+            int textSourceCharacterIndexLimit
             )
         {
             CharacterBufferRange charString = CharacterBufferRange.Empty;
 
             if (textSourceCharacterIndexLimit > 0)
-            {   
+            {
                 charString = new CharacterBufferRange(
                     new CharacterBufferReference(_characterArray, 0),
                     Math.Min(_characterArray.Length, textSourceCharacterIndexLimit)
                     );
-            }        
+            }
 
-            return new TextSpan<CultureSpecificCharacterBufferRange> (
+            return new TextSpan<CultureSpecificCharacterBufferRange>(
                 textSourceCharacterIndexLimit,
                 new CultureSpecificCharacterBufferRange(CultureMapper.GetSpecificCulture(_textRunProperties.CultureInfo), charString)
                 );
@@ -359,8 +362,8 @@ namespace MS.Internal.TextFormatting
         /// 
         /// </remarks>
         private static string ConvertNumberToRomanString(
-            int     number,
-            bool    uppercase
+            int number,
+            bool uppercase
             )
         {
             if (number > 3999)
@@ -392,9 +395,9 @@ namespace MS.Internal.TextFormatting
         /// <param name="number">number to convert</param>
         /// <param name="oneFiveTen">Roman numeric char for one five and ten</param>
         private static void AddRomanNumeric(
-            StringBuilder       builder,
-            int                 number,
-            string              oneFiveTen
+            StringBuilder builder,
+            int number,
+            string oneFiveTen
             )
         {
             Debug.Assert(number >= 0 && number <= 9);
@@ -423,21 +426,21 @@ namespace MS.Internal.TextFormatting
         internal static bool IsKnownSymbolMarkerStyle(TextMarkerStyle markerStyle)
         {
             return (
-                    markerStyle == TextMarkerStyle.Disc 
-                ||  markerStyle == TextMarkerStyle.Circle 
-                ||  markerStyle == TextMarkerStyle.Square 
-                ||  markerStyle == TextMarkerStyle.Box
+                    markerStyle == TextMarkerStyle.Disc
+                || markerStyle == TextMarkerStyle.Circle
+                || markerStyle == TextMarkerStyle.Square
+                || markerStyle == TextMarkerStyle.Box
                 );
         }
 
         internal static bool IsKnownIndexMarkerStyle(TextMarkerStyle markerStyle)
         {
-            return  (   
+            return (
                     markerStyle == TextMarkerStyle.Decimal
-                ||  markerStyle == TextMarkerStyle.LowerLatin
-                ||  markerStyle == TextMarkerStyle.UpperLatin
-                ||  markerStyle == TextMarkerStyle.LowerRoman
-                ||  markerStyle == TextMarkerStyle.UpperRoman
+                || markerStyle == TextMarkerStyle.LowerLatin
+                || markerStyle == TextMarkerStyle.UpperLatin
+                || markerStyle == TextMarkerStyle.LowerRoman
+                || markerStyle == TextMarkerStyle.UpperRoman
                 );
         }
     }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -344,10 +344,12 @@ namespace MS.Internal.AutomationProxies
                 uint processId;
                 uint threadId = GetWindowThreadProcessId(hwnd, out processId);
 
-                UnsafeNativeMethods.ENUMTOOLTIPWINDOWINFO info = new UnsafeNativeMethods.ENUMTOOLTIPWINDOWINFO();
-                info.hwnd = hwnd;
-                info.id = item;
-                info.name = "";
+                UnsafeNativeMethods.ENUMTOOLTIPWINDOWINFO info = new UnsafeNativeMethods.ENUMTOOLTIPWINDOWINFO
+                {
+                    hwnd = hwnd,
+                    id = item,
+                    name = ""
+                };
 
                 UnsafeNativeMethods.EnumThreadWndProc enumToolTipWindows = new UnsafeNativeMethods.EnumThreadWndProc(EnumToolTipWindows);
                 GCHandle gch = GCHandle.Alloc(enumToolTipWindows);

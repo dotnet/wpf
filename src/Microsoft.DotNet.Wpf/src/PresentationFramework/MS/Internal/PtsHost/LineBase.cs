@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,10 +11,9 @@
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media.TextFormatting;
-using MS.Internal.Text;
 using MS.Internal.Documents;
-
 using MS.Internal.PtsHost.UnsafeNativeMethods;
+using MS.Internal.Text;
 
 #pragma warning disable 1634, 1691  // avoid generating warnings about unknown
 // message numbers and unknown pragmas for PRESharp contol
@@ -27,7 +26,7 @@ namespace MS.Internal.PtsHost
         {
             _paraClient = paraClient;
         }
-        
+
         // ------------------------------------------------------------------
         //
         //  TextSource Implementation
@@ -171,7 +170,7 @@ namespace MS.Internal.PtsHost
                     _paraClient.Paragraph.StructuralCache.TextFormatterHost.PixelsPerDip);
 
                 char[] textBuffer = new char[_elementEdgeCharacterLength * 2];
-                
+
                 // Assert that _elementEdgeCharacterLength is 1 before we use hard-coded indices
                 Invariant.Assert(_elementEdgeCharacterLength == 1, "Expected value of _elementEdgeCharacterLength is 1");
 
@@ -182,7 +181,7 @@ namespace MS.Internal.PtsHost
             }
             else
             {
-                Inline inline = (Inline) element;
+                Inline inline = (Inline)element;
                 DependencyObject parent = inline.Parent;
 
                 FlowDirection inlineFlowDirection = inline.FlowDirection;
@@ -190,7 +189,7 @@ namespace MS.Internal.PtsHost
 
                 TextDecorationCollection inlineTextDecorations = DynamicPropertyReader.GetTextDecorations(inline);
 
-                if(parent != null)
+                if (parent != null)
                 {
                     parentFlowDirection = (FlowDirection)parent.GetValue(FrameworkElement.FlowDirectionProperty);
                 }
@@ -260,11 +259,11 @@ namespace MS.Internal.PtsHost
             {
                 TextElement element = (TextElement)position.GetAdjacentElement(LogicalDirection.Forward);
                 Debug.Assert(element != null, "Element should be here.");
-                Inline inline = (Inline) element;
+                Inline inline = (Inline)element;
                 DependencyObject parent = inline.Parent;
                 FlowDirection parentFlowDirection = inline.FlowDirection;
 
-                if(parent != null)
+                if (parent != null)
                 {
                     parentFlowDirection = (FlowDirection)parent.GetValue(FrameworkElement.FlowDirectionProperty);
                 }
@@ -330,12 +329,12 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// Synthetic character length. 
         /// </summary>
-        internal static int SyntheticCharacterLength 
-        { 
-            get 
-            { 
-                return _syntheticCharacterLength; 
-            } 
+        internal static int SyntheticCharacterLength
+        {
+            get
+            {
+                return _syntheticCharacterLength;
+            }
         }
 
         /// <summary>

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -307,7 +307,7 @@ namespace System.Windows.Input.Manipulations
         /// Set parameters on the manipulation processor.
         /// </summary>
         /// <param name="parameters">Parameters to set.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification="The parameter gets verified."), 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "The parameter gets verified."),
         EditorBrowsable(EditorBrowsableState.Never)]
         public void SetParameters(ManipulationParameters2D parameters)
         {

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -36,7 +36,7 @@ namespace System.Windows.Documents
         }
 
         #endregion Constructors
- 
+
         //------------------------------------------------------
         //
         //  Public Methods
@@ -95,7 +95,7 @@ namespace System.Windows.Documents
         private readonly Type _type;
 
         // Collection of all local property values set on the extracted TextElement.
-        private readonly PropertyRecord []_localValues;
+        private readonly PropertyRecord[] _localValues;
 
         // Resources defined locally on the TextElement
         private readonly ResourceDictionary _resources;

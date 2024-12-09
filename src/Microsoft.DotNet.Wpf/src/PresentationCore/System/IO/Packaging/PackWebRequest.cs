@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,9 +14,9 @@
 
 using System.Net;
 using System.Net.Cache;                 // for RequestCachePolicy
+using MS.Internal;
 using MS.Internal.IO.Packaging;         // for PackageCacheEntry
 using MS.Internal.PresentationCore;     // for SR exception strings
-using MS.Internal;
 
 namespace System.IO.Packaging
 {
@@ -60,7 +60,7 @@ namespace System.IO.Packaging
         /// <param name="cachedPackageIsThreadSafe">is the cacheEntry thread-safe?</param>
         /// <remarks>This should only be called by PackWebRequestFactory</remarks>
         /// <exception cref="ArgumentException">Will throw an ArgumentException if the given URI is not of the correct scheme</exception>
-        #pragma warning disable SYSLIB0014 
+#pragma warning disable SYSLIB0014
         internal PackWebRequest(Uri uri, Uri packageUri, Uri partUri, Package cacheEntry,
             bool respectCachePolicy, bool cachedPackageIsThreadSafe)
         {
@@ -80,11 +80,11 @@ namespace System.IO.Packaging
             if (PackWebRequestFactory._traceSwitch.Enabled && (cacheEntry != null))
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        Environment.CurrentManagedThreadId + ": " + 
+                        Environment.CurrentManagedThreadId + ": " +
                         "PackWebRequest - working from Package Cache");
 #endif
         }
-        #pragma warning restore SYSLIB0014 
+#pragma warning restore SYSLIB0014
 
         //------------------------------------------------------
         //
@@ -110,7 +110,7 @@ namespace System.IO.Packaging
         public override WebResponse GetResponse()
         {
             bool cachedPackageAvailable = IsCachedPackage;
-            
+
             // if there is no cached package or it is from the public PackageStore, we must respect CachePolicy
             if (!cachedPackageAvailable || (cachedPackageAvailable && _respectCachePolicy))
             {
@@ -125,19 +125,22 @@ namespace System.IO.Packaging
                         {
                             // ignore cache entry
                             cachedPackageAvailable = false;
-                        } break;
+                        }
+                        break;
 
                     case RequestCacheLevel.CacheOnly:
                         {
                             // only use cached value
                             if (!cachedPackageAvailable)
                                 throw new WebException(SR.ResourceNotFoundUnderCacheOnlyPolicy);
-                        } break;
+                        }
+                        break;
 
                     case RequestCacheLevel.CacheIfAvailable:
                         {
                             // use cached value if possible - we need take no explicit action here
-                        } break;
+                        }
+                        break;
 
                     default:
                         {
@@ -145,14 +148,14 @@ namespace System.IO.Packaging
                         }
                 }
             }
-            
+
             if (cachedPackageAvailable)
             {
 #if DEBUG
                 if (PackWebRequestFactory._traceSwitch.Enabled)
                     System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        Environment.CurrentManagedThreadId + ": " + 
+                        Environment.CurrentManagedThreadId + ": " +
                         "PackWebRequest - Getting response from Package Cache");
 #endif
                 return new PackWebResponse(_uri, _innerUri, _partName, _cacheEntry, _cachedPackageIsThreadSafe);
@@ -168,7 +171,7 @@ namespace System.IO.Packaging
                 if (PackWebRequestFactory._traceSwitch.Enabled)
                     System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        Environment.CurrentManagedThreadId + ": " + 
+                        Environment.CurrentManagedThreadId + ": " +
                         "PackWebRequest - Getting new response");
 #endif
                 // Create a new response for every call
@@ -203,9 +206,12 @@ namespace System.IO.Packaging
                 {
                     switch (value.Level)
                     {
-                        case RequestCacheLevel.BypassCache: break;
-                        case RequestCacheLevel.CacheOnly: break;
-                        case RequestCacheLevel.CacheIfAvailable: break;
+                        case RequestCacheLevel.BypassCache:
+                            break;
+                        case RequestCacheLevel.CacheOnly:
+                            break;
+                        case RequestCacheLevel.CacheIfAvailable:
+                            break;
                         default:
                             throw new WebException(SR.PackWebRequestCachePolicyIllegal);
                     }
@@ -498,7 +504,7 @@ namespace System.IO.Packaging
                         {
                             ftpWebRequest.UsePassive = false;  // default but allow override
                         }
-}
+                    }
                     catch (NotSupportedException)
                     {
                         // If the inner Uri does not match any cache entry then we throw.
@@ -561,14 +567,14 @@ namespace System.IO.Packaging
         //  Private Fields
         //
         //------------------------------------------------------
-        private Uri                 _uri;                   // pack uri
-        private Uri                 _innerUri;              // inner uri extracted from the pack uri
-        private Uri                 _partName;              // name of PackagePart (if any) - null for full-container references
-        private WebRequest          _webRequest;            // our "real" webrequest counterpart - may be a PseudoWebRequest
-        private Package             _cacheEntry;            // non-null if we found this in a cache
-        private bool                _respectCachePolicy;    // do we throw if cache policy conflicts?
-        private bool                _cachedPackageIsThreadSafe; // pass to WebResponse so it can safely return streams
-        private RequestCachePolicy  _cachePolicy;           // outer cache-policy
+        private Uri _uri;                   // pack uri
+        private Uri _innerUri;              // inner uri extracted from the pack uri
+        private Uri _partName;              // name of PackagePart (if any) - null for full-container references
+        private WebRequest _webRequest;            // our "real" webrequest counterpart - may be a PseudoWebRequest
+        private Package _cacheEntry;            // non-null if we found this in a cache
+        private bool _respectCachePolicy;    // do we throw if cache policy conflicts?
+        private bool _cachedPackageIsThreadSafe; // pass to WebResponse so it can safely return streams
+        private RequestCachePolicy _cachePolicy;           // outer cache-policy
 
         // statics
         static private RequestCachePolicy _defaultCachePolicy = new RequestCachePolicy(RequestCacheLevel.CacheIfAvailable);

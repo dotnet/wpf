@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,8 +9,8 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
 using System.Windows.Media.Composition;
+using MS.Internal;
 // These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows.Media.Media3D
@@ -64,14 +64,14 @@ namespace System.Windows.Media.Media3D
             // needs to be marshalled to the compositor. We detect this scenario with the second condition 
             // e.OldValueSource != e.NewValueSource. Specifically in this scenario the OldValueSource will be 
             // Default and the NewValueSource will be Local.
-            if (e.IsASubPropertyChange && 
+            if (e.IsASubPropertyChange &&
                (e.OldValueSource == e.NewValueSource))
             {
                 return;
             }
 
 
-            MaterialGroup target = ((MaterialGroup) d);
+            MaterialGroup target = ((MaterialGroup)d);
 
 
             // If this is both non-null and mutable, we need to unhook the Changed event.
@@ -80,7 +80,7 @@ namespace System.Windows.Media.Media3D
 
             if ((e.OldValueSource != BaseValueSourceInternal.Default) || e.IsOldValueModified)
             {
-                oldCollection = (MaterialCollection) e.OldValue;
+                oldCollection = (MaterialCollection)e.OldValue;
                 if ((oldCollection != null) && !oldCollection.IsFrozen)
                 {
                     oldCollection.ItemRemoved -= target.ChildrenItemRemoved;
@@ -91,7 +91,7 @@ namespace System.Windows.Media.Media3D
             // If this is both non-null and mutable, we need to hook the Changed event.
             if ((e.NewValueSource != BaseValueSourceInternal.Default) || e.IsNewValueModified)
             {
-                newCollection = (MaterialCollection) e.NewValue;
+                newCollection = (MaterialCollection)e.NewValue;
                 if ((newCollection != null) && !newCollection.IsFrozen)
                 {
                     newCollection.ItemInserted += target.ChildrenItemInserted;
@@ -152,7 +152,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (MaterialCollection) GetValue(ChildrenProperty);
+                return (MaterialCollection)GetValue(ChildrenProperty);
             }
             set
             {
@@ -222,9 +222,10 @@ namespace System.Windows.Media.Media3D
 
 
                     // Copy this collection's elements (or their handles) to reserved data
-                    for(int i = 0; i < ChildrenCount; i++)
+                    for (int i = 0; i < ChildrenCount; i++)
                     {
-                        DUCE.ResourceHandle resource = ((DUCE.IResource)vChildren.Internal_GetItem(i)).GetHandle(channel);;
+                        DUCE.ResourceHandle resource = ((DUCE.IResource)vChildren.Internal_GetItem(i)).GetHandle(channel);
+                        ;
                         channel.AppendCommandData(
                             (byte*)&resource,
                             sizeof(DUCE.ResourceHandle)
@@ -237,45 +238,45 @@ namespace System.Windows.Media.Media3D
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-                if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_MATERIALGROUP))
+            if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_MATERIALGROUP))
+            {
+                MaterialCollection vChildren = Children;
+
+                if (vChildren != null)
                 {
-                    MaterialCollection vChildren = Children;
-
-                    if (vChildren != null)
+                    int count = vChildren.Count;
+                    for (int i = 0; i < count; i++)
                     {
-                        int count = vChildren.Count;
-                        for (int i = 0; i < count; i++)
-                        {
-                            ((DUCE.IResource) vChildren.Internal_GetItem(i)).AddRefOnChannel(channel);
-                        }
+                        ((DUCE.IResource)vChildren.Internal_GetItem(i)).AddRefOnChannel(channel);
                     }
-                    AddRefOnChannelAnimations(channel);
-
-
-                    UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
                 }
+                AddRefOnChannelAnimations(channel);
 
-                return _duceResource.GetHandle(channel);
-}
+
+                UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
+            }
+
+            return _duceResource.GetHandle(channel);
+        }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-                Debug.Assert(_duceResource.IsOnChannel(channel));
+            Debug.Assert(_duceResource.IsOnChannel(channel));
 
-                if (_duceResource.ReleaseOnChannel(channel))
+            if (_duceResource.ReleaseOnChannel(channel))
+            {
+                MaterialCollection vChildren = Children;
+
+                if (vChildren != null)
                 {
-                    MaterialCollection vChildren = Children;
-
-                    if (vChildren != null)
+                    int count = vChildren.Count;
+                    for (int i = 0; i < count; i++)
                     {
-                        int count = vChildren.Count;
-                        for (int i = 0; i < count; i++)
-                        {
-                            ((DUCE.IResource) vChildren.Internal_GetItem(i)).ReleaseOnChannel(channel);
-                        }
+                        ((DUCE.IResource)vChildren.Internal_GetItem(i)).ReleaseOnChannel(channel);
                     }
-                    ReleaseOnChannelAnimations(channel);
-}
-}
+                }
+                ReleaseOnChannelAnimations(channel);
+            }
+        }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
             // Note that we are in a lock here already.

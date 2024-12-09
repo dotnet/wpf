@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,8 +16,8 @@ namespace System.Windows.Input
         ///     for the current input manager.
         /// </summary>
         public static TabletDevice CurrentTabletDevice
-        { 
-            get 
+        {
+            get
             {
                 StylusDevice stylus = Stylus.CurrentStylusDevice;
                 if (stylus == null)
@@ -31,12 +31,12 @@ namespace System.Windows.Input
         ///		Returns the collection of Tablet Devices defined on this tablet. 
         /// </summary>
         public static TabletDeviceCollection TabletDevices
-        { 
-            get 
+        {
+            get
             {
                 // If there is no stylus logic (the stacks are disabled) return an empty collection.
                 return StylusLogic.CurrentStylusLogic?.TabletDevices ?? TabletDeviceCollection.EmptyTabletDeviceCollection;
-            } 
+            }
         }
-}
+    }
 }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -91,7 +91,7 @@ namespace System.Windows.Documents
         }
 
 
-        internal static RtfControlWordInfo[] ControlTable = 
+        internal static RtfControlWordInfo[] ControlTable =
         {
             new RtfControlWordInfo(RtfControlWord.Ctrl_AB, "ab", RTK_ACHARPROPS | RTK_TOGGLE ),
             new RtfControlWordInfo(RtfControlWord.Ctrl_ABSH, "absh", RTK_POSOBJ | RTK_VALUE ),

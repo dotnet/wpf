@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,8 +21,8 @@ namespace System.Windows.Media.TextFormatting
     public struct MinMaxParagraphWidth : IEquatable<MinMaxParagraphWidth>
     {
         internal MinMaxParagraphWidth(
-            double      minWidth,
-            double      maxWidth
+            double minWidth,
+            double maxWidth
             )
         {
             _minWidth = minWidth;
@@ -89,8 +89,8 @@ namespace System.Windows.Media.TextFormatting
             MinMaxParagraphWidth right
             )
         {
-            return  left._minWidth == right._minWidth
-                &&  left._maxWidth == right._maxWidth;
+            return left._minWidth == right._minWidth
+                && left._maxWidth == right._maxWidth;
         }
 
 

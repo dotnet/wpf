@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,7 +19,7 @@ namespace System.Windows.Input
         ///     Whether or not cursor was successfully changed.
         /// </returns>
         bool SetCursor(Cursor cursor);
-        
+
         /// <summary>
         ///     Requests that the mouse input be captured.
         /// </summary>
@@ -27,7 +27,7 @@ namespace System.Windows.Input
         ///     Whether or not the mouse input was successfully captured.
         /// </returns>
         bool CaptureMouse();
-        
+
         /// <summary>
         ///     Releases the mouse capture.
         /// </summary>

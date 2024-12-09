@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -218,7 +218,7 @@ namespace System.Windows.Media.Imaging
         private int GetColorContexts(ref uint numContexts, IntPtr[] colorContextPtrs)
         {
             Invariant.Assert(colorContextPtrs == null || numContexts <= colorContextPtrs.Length);
-            
+
             return UnsafeNativeMethods.WICBitmapFrameDecode.GetColorContexts(_frameSource, numContexts, colorContextPtrs, out numContexts);
         }
 
@@ -254,7 +254,7 @@ namespace System.Windows.Media.Imaging
                 }
 
                 return _readOnlycolorContexts;
-}
+            }
         }
 
         /// <summary>
@@ -496,7 +496,7 @@ namespace System.Windows.Media.Imaging
             decoder.DownloadCompleted -= OnDownloadCompleted;
             decoder.DownloadProgress -= OnDownloadProgress;
             decoder.DownloadFailed -= OnDownloadFailed;
-            
+
             FireChanged();
             _downloadEvent.InvokeEvents(this, null);
         }
@@ -521,7 +521,7 @@ namespace System.Windows.Media.Imaging
             decoder.DownloadCompleted -= OnDownloadCompleted;
             decoder.DownloadProgress -= OnDownloadProgress;
             decoder.DownloadFailed -= OnDownloadFailed;
-            
+
             _failedEvent.InvokeEvents(this, e);
         }
 

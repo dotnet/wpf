@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,7 +10,7 @@ namespace System.Windows.Input
     /// </summary>
     internal class RawUIStateInputReport : InputReport
     {
-         /// <summary>
+        /// <summary>
         ///     Constructs an instance of the RawUIStateInputReport class.
         /// </summary>
         /// <param name="inputSource">
@@ -47,12 +47,12 @@ namespace System.Windows.Input
         /// <summary>
         ///     Read-only access to the action that was reported.
         /// </summary>
-        public RawUIStateActions Action {get {return _action;}}
+        public RawUIStateActions Action { get { return _action; } }
 
         /// <summary>
         ///     Read-only access to the targets that were reported.
         /// </summary>
-        public RawUIStateTargets Targets {get {return _targets;}}
+        public RawUIStateTargets Targets { get { return _targets; } }
 
         // IsValid Method for RawUIStateActions.
         internal static bool IsValidRawUIStateAction(RawUIStateActions action)

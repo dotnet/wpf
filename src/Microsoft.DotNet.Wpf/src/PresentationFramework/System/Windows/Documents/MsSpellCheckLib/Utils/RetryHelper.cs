@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -46,10 +46,10 @@ namespace System.Windows.Documents.MsSpellCheckLib
         /// True upon successful execution of the method, otherwise False. If <paramref name="throwOnFailure"/> is True, then the method will never return False
         /// </returns>
         internal static bool TryCallAction(
-            Action action, 
-            RetryActionPreamble preamble, 
+            Action action,
+            RetryActionPreamble preamble,
             List<Type> ignoredExceptions,
-            int retries = 3, 
+            int retries = 3,
             bool throwOnFailure = false)
         {
             ValidateExceptionTypeList(ignoredExceptions);
@@ -161,17 +161,17 @@ namespace System.Windows.Documents.MsSpellCheckLib
         /// True upon successful execution of the method, otherwise False. If <paramref name="throwOnFailure"/> is True, then the method will never return False
         /// </returns>
         internal static bool TryExecuteFunction<TResult>(
-            Func<TResult> func, 
-            out TResult result, 
-            RetryFunctionPreamble<TResult> preamble, 
-            List<Type> ignoredExceptions, 
-            int retries = 3, 
+            Func<TResult> func,
+            out TResult result,
+            RetryFunctionPreamble<TResult> preamble,
+            List<Type> ignoredExceptions,
+            int retries = 3,
             bool throwOnFailure = false)
         {
             ValidateExceptionTypeList(ignoredExceptions);
 
             result = default(TResult);
-            
+
             int retryCount = retries;
             bool success = false;
 
@@ -185,7 +185,7 @@ namespace System.Windows.Documents.MsSpellCheckLib
                     {
                         result = func.Invoke();
                     }
-                    
+
                     success = true;
                     break;
                 }
@@ -196,7 +196,7 @@ namespace System.Windows.Documents.MsSpellCheckLib
                 retryCount--;
                 if (retryCount > 0)
                 {
-                    retryPreambleSucceeded = preamble(out func); 
+                    retryPreambleSucceeded = preamble(out func);
                 }
             }
             while ((retryCount > 0) && retryPreambleSucceeded);

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,8 +22,8 @@ namespace System.Windows.Media.TextFormatting
     /// </summary>
     public struct CharacterBufferRange : IEquatable<CharacterBufferRange>
     {
-        private CharacterBufferReference    _charBufferRef;
-        private int                         _length;
+        private CharacterBufferReference _charBufferRef;
+        private int _length;
 
         #region Constructor
 
@@ -35,15 +35,15 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="offsetToFirstChar">character buffer offset to the first character</param>
         /// <param name="characterLength">character length</param>
         public CharacterBufferRange(
-            char[]      characterArray,
-            int         offsetToFirstChar,
-            int         characterLength
+            char[] characterArray,
+            int offsetToFirstChar,
+            int characterLength
             )
             : this(
                 new CharacterBufferReference(characterArray, offsetToFirstChar),
                 characterLength
                 )
-        {}
+        { }
 
 
         /// <summary>
@@ -53,15 +53,15 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="offsetToFirstChar">character buffer offset to the first character</param>
         /// <param name="characterLength">character length</param>
         public CharacterBufferRange(
-            string      characterString,
-            int         offsetToFirstChar,
-            int         characterLength
+            string characterString,
+            int offsetToFirstChar,
+            int characterLength
             )
             : this(
                 new CharacterBufferReference(characterString, offsetToFirstChar),
                 characterLength
                 )
-        {}
+        { }
 
 
         /// <summary>
@@ -71,14 +71,14 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="characterLength">character length</param>
         [CLSCompliant(false)]
         public unsafe CharacterBufferRange(
-            char*       unsafeCharacterString,
-            int         characterLength
+            char* unsafeCharacterString,
+            int characterLength
             )
             : this(
-                new CharacterBufferReference(unsafeCharacterString, characterLength), 
+                new CharacterBufferReference(unsafeCharacterString, characterLength),
                 characterLength
                 )
-        {}
+        { }
 
 
         /// <summary>
@@ -87,8 +87,8 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="characterBufferReference">character buffer reference</param>
         /// <param name="characterLength">number of characters</param>
         internal CharacterBufferRange(
-            CharacterBufferReference    characterBufferReference,
-            int                         characterLength
+            CharacterBufferReference characterBufferReference,
+            int characterLength
             )
         {
             ArgumentOutOfRangeException.ThrowIfNegative(characterLength);
@@ -108,16 +108,16 @@ namespace System.Windows.Media.TextFormatting
         /// Construct a character string from part of another character string
         /// </summary>
         internal CharacterBufferRange(
-            CharacterBufferRange    characterBufferRange,
-            int                     offsetToFirstChar,
-            int                     characterLength
+            CharacterBufferRange characterBufferRange,
+            int offsetToFirstChar,
+            int characterLength
             ) :
-            this (
-                characterBufferRange.CharacterBuffer, 
+            this(
+                characterBufferRange.CharacterBuffer,
                 characterBufferRange.OffsetToFirstChar + offsetToFirstChar,
                 characterLength
                 )
-        {}
+        { }
 
 
         /// <summary>
@@ -125,28 +125,28 @@ namespace System.Windows.Media.TextFormatting
         /// </summary>
         internal CharacterBufferRange(
             string charString
-            ) : 
+            ) :
             this(
                 new StringCharacterBuffer(charString),
                 0,
                 charString.Length
                 )
-        {}
+        { }
 
 
         /// <summary>
         /// Construct character buffer from memory buffer
         /// </summary>
         internal CharacterBufferRange(
-            CharacterBuffer     charBuffer,
-            int                 offsetToFirstChar,
-            int                 characterLength
-            ) : 
+            CharacterBuffer charBuffer,
+            int offsetToFirstChar,
+            int characterLength
+            ) :
             this(
                 new CharacterBufferReference(charBuffer, offsetToFirstChar),
                 characterLength
                 )
-        {}
+        { }
 
 
         /// <summary>
@@ -190,8 +190,8 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="value"> The CharacterBufferRange value to test </param>
         public bool Equals(CharacterBufferRange value)
         {
-            return  _charBufferRef.Equals(value._charBufferRef)
-                &&  _length == value._length;
+            return _charBufferRef.Equals(value._charBufferRef)
+                && _length == value._length;
         }
 
 
@@ -202,9 +202,9 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="left">left operand</param>
         /// <param name="right">right operand</param>
         /// <returns>whether or not two operands are equal</returns>
-        public static bool operator == (
-            CharacterBufferRange  left,
-            CharacterBufferRange  right
+        public static bool operator ==(
+            CharacterBufferRange left,
+            CharacterBufferRange right
             )
         {
             return left.Equals(right);
@@ -216,9 +216,9 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="left">left operand</param>
         /// <param name="right">right operand</param>
         /// <returns>whether or not two operands are equal</returns>
-        public static bool operator != (
-            CharacterBufferRange  left,
-            CharacterBufferRange  right
+        public static bool operator !=(
+            CharacterBufferRange left,
+            CharacterBufferRange right
             )
         {
             return !(left == right);

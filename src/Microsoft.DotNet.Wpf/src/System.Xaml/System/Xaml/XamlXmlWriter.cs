@@ -105,7 +105,7 @@ namespace System.Xaml
             namespaceScopes = new Stack<Frame>();
             namespaceScopes.Push(new Frame { AllocatingNodeType = XamlNodeType.StartObject });
 
-            prefixAssignmentHistory = new Dictionary<string, string>() { {"xml", XamlLanguage.Xml1998Namespace} };
+            prefixAssignmentHistory = new Dictionary<string, string>() { { "xml", XamlLanguage.Xml1998Namespace } };
             meNodesStack = new Stack<List<XamlNode>>();
             meWriter = new XamlMarkupExtensionWriter(this);
 
@@ -1386,7 +1386,7 @@ namespace System.Xaml
                 {
                     WriteStartElementForObject(writer, type);
                     writer.currentState = InRecordTryAttributes.State;
-                 }
+                }
 
             }
         }

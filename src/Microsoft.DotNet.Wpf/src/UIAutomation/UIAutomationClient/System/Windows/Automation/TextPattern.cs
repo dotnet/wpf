@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,7 +22,7 @@ namespace System.Windows.Automation
 #if (INTERNAL_COMPILE)
     internal class TextPattern: BasePattern
 #else
-    public class TextPattern: BasePattern
+    public class TextPattern : BasePattern
 #endif
     {
         #region Constructors
@@ -37,13 +37,13 @@ namespace System.Windows.Automation
             _element = el;
         }
         #endregion Constructors
-        
+
         //------------------------------------------------------
         //
         //  Public Constants / Readonly Fields
         //
         //------------------------------------------------------
- 
+
         #region Public Constants and Readonly Fields
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace System.Windows.Automation
         //  Public Methods
         //
         //------------------------------------------------------
- 
+
         #region Public Methods
 
         /// <summary>
@@ -170,9 +170,9 @@ namespace System.Windows.Automation
         /// </summary>
         /// <returns>The range of text that is selected, or possibly null if there is
         /// no selection.</returns>
-        public TextPatternRange [] GetSelection()
+        public TextPatternRange[] GetSelection()
         {
-            SafeTextRangeHandle [] hTextRanges = UiaCoreApi.TextPattern_GetSelection(_hPattern);
+            SafeTextRangeHandle[] hTextRanges = UiaCoreApi.TextPattern_GetSelection(_hPattern);
             return TextPatternRange.Wrap(hTextRanges, this);
         }
 
@@ -183,9 +183,9 @@ namespace System.Windows.Automation
         /// text of the range could be obscured by an overlapping window.  Also, portions
         /// of the range at the beginning, in the middle, or at the end may not be visible
         /// because they are scrolled off to the side.</returns>
-        public TextPatternRange [] GetVisibleRanges()
+        public TextPatternRange[] GetVisibleRanges()
         {
-            SafeTextRangeHandle [] hTextRanges = UiaCoreApi.TextPattern_GetVisibleRanges(_hPattern);
+            SafeTextRangeHandle[] hTextRanges = UiaCoreApi.TextPattern_GetVisibleRanges(_hPattern);
             return TextPatternRange.Wrap(hTextRanges, this);
         }
 
@@ -226,13 +226,13 @@ namespace System.Windows.Automation
         }
 
         #endregion Public Methods
-        
+
         //------------------------------------------------------
         //
         //  Public Properties
         //
         //------------------------------------------------------
- 
+
         #region Public Properties
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace System.Windows.Automation
         /// headers, footnotes, or annotations may not be included. 
         /// </summary>
         public TextPatternRange DocumentRange
-        { 
+        {
             get
             {
                 SafeTextRangeHandle hTextRange = UiaCoreApi.TextPattern_get_DocumentRange(_hPattern);
@@ -267,7 +267,7 @@ namespace System.Windows.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
         static internal object Wrap(AutomationElement el, SafePatternHandle hPattern, bool cached)
         {
@@ -286,13 +286,13 @@ namespace System.Windows.Automation
         }
 
         #endregion Internal Methods
-        
+
         //------------------------------------------------------
         //
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private SafePatternHandle _hPattern;

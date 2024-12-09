@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+ï»¿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -75,8 +75,8 @@ namespace System.Windows.Media.Animation
             // Set the NeedsTicksWhenActive only if we have someone listening
             // to an event.
 
-            SetFlag(ClockFlags.NeedsTicksWhenActive, _eventHandlersStore != null);  
-                                                                                                
+            SetFlag(ClockFlags.NeedsTicksWhenActive, _eventHandlersStore != null);
+
             //
             // Cache values that won't change as the clock ticks
             //
@@ -112,7 +112,7 @@ namespace System.Windows.Media.Animation
             //
             // Initialize current state
             //
-   
+
             _currentClockState = ClockState.Stopped;
 
             if (_beginTime.HasValue)
@@ -187,7 +187,7 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-//                 VerifyAccess();
+                //                 VerifyAccess();
                 Debug.Assert(!IsTimeManager);
 
                 return _currentIteration;
@@ -205,7 +205,7 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-//                 VerifyAccess();
+                //                 VerifyAccess();
                 Debug.Assert(!IsTimeManager);
 
                 return _currentGlobalSpeed;
@@ -236,11 +236,11 @@ namespace System.Windows.Media.Animation
 
 
         /// <summary>
-        /// Gets a value indicating whether the Clock’s current time is inside the Active period
+        /// Gets a value indicating whether the Clockâ€™s current time is inside the Active period
         /// (meaning properties may change frame to frame), inside the Fill period, or Stopped.
         /// </summary>
         /// <remarks>
-        /// You can tell whether you’re in FillBegin or FillEnd by the value of CurrentProgress
+        /// You can tell whether youâ€™re in FillBegin or FillEnd by the value of CurrentProgress
         /// (0 for FillBegin, 1 for FillEnd).
         /// </remarks>
         public ClockState CurrentState
@@ -265,7 +265,7 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-//                 VerifyAccess();
+                //                 VerifyAccess();
                 Debug.Assert(!IsTimeManager);
 
                 return _currentTime;
@@ -296,7 +296,7 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-//                 VerifyAccess();
+                //                 VerifyAccess();
                 Debug.Assert(!IsTimeManager);
 
                 return IsInteractivelyPaused;
@@ -323,7 +323,7 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-//                 VerifyAccess();
+                //                 VerifyAccess();
                 Debug.Assert(!IsTimeManager);
 
                 // If our parent is the root clock, force a return value of null
@@ -351,7 +351,7 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-//                 VerifyAccess();
+                //                 VerifyAccess();
                 Debug.Assert(!IsTimeManager);
 
                 return _timeline;
@@ -391,12 +391,12 @@ namespace System.Windows.Media.Animation
         {
             add
             {
-//                VerifyAccess();
+                //                VerifyAccess();
                 AddEventHandler(Timeline.CurrentGlobalSpeedInvalidatedKey, value);
             }
             remove
             {
-//                VerifyAccess();
+                //                VerifyAccess();
                 RemoveEventHandler(Timeline.CurrentGlobalSpeedInvalidatedKey, value);
             }
         }
@@ -410,12 +410,12 @@ namespace System.Windows.Media.Animation
         {
             add
             {
-//                VerifyAccess();
+                //                VerifyAccess();
                 AddEventHandler(Timeline.CurrentStateInvalidatedKey, value);
             }
             remove
             {
-//                VerifyAccess();
+                //                VerifyAccess();
                 RemoveEventHandler(Timeline.CurrentStateInvalidatedKey, value);
             }
         }
@@ -428,12 +428,12 @@ namespace System.Windows.Media.Animation
         {
             add
             {
-//                VerifyAccess();
+                //                VerifyAccess();
                 AddEventHandler(Timeline.CurrentTimeInvalidatedKey, value);
             }
             remove
             {
-//                VerifyAccess();
+                //                VerifyAccess();
                 RemoveEventHandler(Timeline.CurrentTimeInvalidatedKey, value);
             }
         }
@@ -574,9 +574,9 @@ namespace System.Windows.Media.Animation
 
             ClockGroup clockGroup = clock as ClockGroup;
 
-            if (   clock._parent != null
-                || (   clockGroup != null
-                    && clockGroup.InternalChildren != null ))
+            if (clock._parent != null
+                || (clockGroup != null
+                    && clockGroup.InternalChildren != null))
             {
                 // The derived class is trying to fool us -- we require a new,
                 // fresh, unassociated clock here
@@ -655,12 +655,12 @@ namespace System.Windows.Media.Animation
             // so that each child clock will use that tree rather
             // than create a new one.
             rootClock.BuildClockSubTreeFromTimeline(rootClock.Timeline, hasControllableRoot);
-            
+
             rootClock.AddToTimeManager();
 
             return rootClock;
         }
-      
+
         internal virtual void ClearCurrentIntervalsToNull()
         {
         }
@@ -701,11 +701,11 @@ namespace System.Windows.Media.Animation
             Debug.Assert(!IsTimeManager);
 
             // Cache previous state values
-            ClockState  lastClockState          = _currentClockState;
-            TimeSpan?   lastCurrentTime         = _currentTime;
-            double?     lastCurrentGlobalSpeed  = _currentGlobalSpeed;
-            double?     lastCurrentProgress     = _currentProgress;
-            Int32?      lastCurrentIteration    = _currentIteration;
+            ClockState lastClockState = _currentClockState;
+            TimeSpan? lastCurrentTime = _currentTime;
+            double? lastCurrentGlobalSpeed = _currentGlobalSpeed;
+            double? lastCurrentProgress = _currentProgress;
+            Int32? lastCurrentIteration = _currentIteration;
 
             // Reset the PauseStateChangedDuringTick for this tick
             PauseStateChangedDuringTick = false;
@@ -755,7 +755,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         internal void InternalBegin()
         {
-            InternalSeek(TimeSpan.Zero);      
+            InternalSeek(TimeSpan.Zero);
         }
 
 
@@ -772,7 +772,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         internal void InternalPause()
         {
-//             VerifyAccess();
+            //             VerifyAccess();
             Debug.Assert(!IsTimeManager);
 
             // INVARIANT: we enforce 4 possible valid states:
@@ -817,7 +817,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         internal void InternalResume()
         {
-//             VerifyAccess();
+            //             VerifyAccess();
             Debug.Assert(!IsTimeManager);
 
             // INVARIANT: we enforce 4 possible valid states:
@@ -825,8 +825,8 @@ namespace System.Windows.Media.Animation
             //   2) !Paused, Pause pending
             //   3)  Paused
             //   4)  Paused, sd Resume pending
-            Debug.Assert( !(IsInteractivelyPaused && PendingInteractivePause));
-            Debug.Assert( !(!IsInteractivelyPaused && PendingInteractiveResume));
+            Debug.Assert(!(IsInteractivelyPaused && PendingInteractivePause));
+            Debug.Assert(!(!IsInteractivelyPaused && PendingInteractiveResume));
 
             if (PendingInteractivePause)  // Cancel existing pause request if made
             {
@@ -852,13 +852,13 @@ namespace System.Windows.Media.Animation
         /// </param>
         internal void InternalSeek(TimeSpan destination)
         {
-//             VerifyAccess();
+            //             VerifyAccess();
             Debug.Assert(IsRoot);
 
             IsInteractivelyStopped = false;
             PendingInteractiveStop = false;   // Cancel preceding stop;
             ResetNodesWithSlip();  // Reset sync tracking
-            
+
             _rootData.PendingSeekDestination = destination;
             RootBeginPending = false; // cancel a previous begin call
 
@@ -937,7 +937,7 @@ namespace System.Windows.Media.Animation
                 subtree.Current.RaiseAccumulatedEvents();
             }
         }
-            
+
         /// <summary>
         /// Internal helper for moving to new API. Sets a speed multiplier for the Clock's speed.
         /// </summary>
@@ -958,7 +958,7 @@ namespace System.Windows.Media.Animation
         internal void InternalSkipToFill()
         {
             Debug.Assert(IsRoot);
-            
+
             TimeSpan? effectiveDuration;
 
             effectiveDuration = ComputeEffectiveDuration();
@@ -1129,7 +1129,7 @@ namespace System.Windows.Media.Animation
         {
             Debug.Assert(!IsTimeManager);
 
-            CurrentTimeInvalidatedEventRaised   = true;
+            CurrentTimeInvalidatedEventRaised = true;
             if (!IsInEventQueue)
             {
                 _timeManager.AddToEventQueue(this);
@@ -1200,8 +1200,8 @@ namespace System.Windows.Media.Animation
         //
 
         #region Internal Properties
-                
-        
+
+
         /// <summary>
         /// Specifies the depth of this timeline in the timing tree. If the timeline does not have
         /// a parent, its depth value is zero.
@@ -1215,7 +1215,7 @@ namespace System.Windows.Media.Animation
                 return _depth;
             }
         }
-     
+
 
         /// <summary>
         /// Returns the last time this timeline will become non-active if it is not
@@ -1233,7 +1233,7 @@ namespace System.Windows.Media.Animation
                 }
 
                 // Computed expiration time with respect to repeat behavior and natural duration;
-                TimeSpan? expirationTime;       
+                TimeSpan? expirationTime;
 
                 ComputeExpirationTime(out expirationTime);
 
@@ -1306,7 +1306,7 @@ namespace System.Windows.Media.Animation
             {
                 _currentGlobalSpeed = value;
             }
-        }       
+        }
 
 
         /// <summary>
@@ -1461,7 +1461,7 @@ namespace System.Windows.Media.Animation
                 return returnValue;
             }
         }
-        
+
 
         //
         // Internal access to some of the flags
@@ -1659,7 +1659,7 @@ namespace System.Windows.Media.Animation
                 SetFlag(ClockFlags.PauseStateChangedDuringTick, value);
             }
         }
-     
+
         internal bool PendingInteractivePause
         {
             get
@@ -1707,7 +1707,7 @@ namespace System.Windows.Media.Animation
                 SetFlag(ClockFlags.PendingInteractiveStop, value);
             }
         }
-        
+
         internal bool RemoveRequestedEventRaised
         {
             get
@@ -1743,7 +1743,7 @@ namespace System.Windows.Media.Animation
                 SetFlag(ClockFlags.HasDescendantsWithUnresolvedDuration, value);
             }
         }
-         
+
         private bool HasSeekOccuredAfterLastTick
         {
             get
@@ -1860,11 +1860,11 @@ namespace System.Windows.Media.Animation
                     pendingSpeedRatio = 1;
                 }
 
-                Debug.Assert(_beginTime.HasValue);                
+                Debug.Assert(_beginTime.HasValue);
 
                 // Below code uses the above assumption that beginTime has a value
                 TimeSpan previewParentTime = CurrentGlobalTime;
-                
+
                 if (_currentIterationBeginTime.HasValue)
                 {
                     // Adjusting SpeedRatio is not a discontiuous event, we don't want to reset slip after doing this
@@ -1885,7 +1885,7 @@ namespace System.Windows.Media.Animation
 
                 // _rootData.InteractiveSpeedRatio represents the actual user set interactive
                 // speed ratio value even though we may override it if it's 0.
-                _rootData.InteractiveSpeedRatio = _rootData.PendingSpeedRatio.Value;  
+                _rootData.InteractiveSpeedRatio = _rootData.PendingSpeedRatio.Value;
 
                 // Clear out the new pending speed ratio since we've finished applying it.
                 _rootData.PendingSpeedRatio = null;
@@ -2076,7 +2076,7 @@ namespace System.Windows.Media.Animation
                         optimizedOffsetFromBegin = MultiplyTimeSpan(_resolvedDuration.TimeSpan, scalingFactor);
 
                         Debug_VerifyOffsetFromBegin(offsetFromBegin.Ticks, optimizedOffsetFromBegin.Ticks);
-                        
+
                         offsetFromBegin = optimizedOffsetFromBegin;
                     }
 
@@ -2265,11 +2265,11 @@ namespace System.Windows.Media.Animation
 
                 return true;  // Nothing more to compute here
             }
-            else if (   expirationTime.HasValue
+            else if (expirationTime.HasValue
                      && parentTime >= expirationTime) // We are in postfill zone
             {
                 RaiseCompletedForRoot(isInTick);
-                
+
                 if (fillBehavior == FillBehavior.HoldEnd)
 #if IMPLEMENTED  // Uncomment when we enable new FillBehaviors
                     || fillBehavior == FillBehavior.HoldBeginAndEnd)
@@ -2688,7 +2688,7 @@ namespace System.Windows.Media.Animation
             Debug.Assert(IsRoot);
 
             // Check for a pending stop first.  This allows us to exit early.
-            if (PendingInteractiveStop)  
+            if (PendingInteractiveStop)
             {
                 PendingInteractiveStop = false;
                 IsInteractivelyStopped = true;
@@ -2706,7 +2706,7 @@ namespace System.Windows.Media.Animation
                 PrefixSubtreeEnumerator subtree = new PrefixSubtreeEnumerator(this, true);
 
                 // revise this code for perf -- we may get by without the traversal.
-                while (subtree.MoveNext())  
+                while (subtree.MoveNext())
                 {
                     Clock current = subtree.Current;
 
@@ -2724,7 +2724,7 @@ namespace System.Windows.Media.Animation
                     }
                 }
             }
-          
+
             if (IsInteractivelyStopped)
             {
                 // If we are disabled, no other interactive state is kept
@@ -2737,7 +2737,7 @@ namespace System.Windows.Media.Animation
 
                 // Can't return here: still need to process pending pause and resume
                 // which can be set independent of the current state of the clock.
-                exitEarly = true;  
+                exitEarly = true;
             }
             else
             {
@@ -2825,7 +2825,7 @@ namespace System.Windows.Media.Animation
             }
         }
 
-        
+
         private void ComputeIntervalsWithParentIntersection(
             TimeIntervalCollection parentIntervalCollection,
             TimeIntervalCollection activePeriod,
@@ -2834,7 +2834,7 @@ namespace System.Windows.Media.Animation
         {
             // Make sure that our periodic function is aligned to the boundary of the current iteration, regardless of prior slip
             TimeSpan relativeBeginTime = _currentIterationBeginTime.HasValue ? _currentIterationBeginTime.Value : _beginTime.Value;
-            
+
             RaiseCurrentTimeInvalidated();
 
             // Check for state changing between Active and the union of (Filling, Stopped)
@@ -2884,12 +2884,12 @@ namespace System.Windows.Media.Animation
             TimeSpan? expirationTime;     // Computed expiration time with respect to repeat behavior and resolved duration;
             TimeSpan localProgress;       // Computed time inside simple duration
 
-            TimeSpan  parentTimeValue;
-            double?   parentSpeed;        // Parent's CurrentGlobalSpeed
+            TimeSpan parentTimeValue;
+            double? parentSpeed;        // Parent's CurrentGlobalSpeed
             TimeIntervalCollection parentIntervalCollection;
 
-            double    localSpeed; 
-            bool      returnDelayed = false;    // workaround for integrating new eventing logic
+            double localSpeed;
+            bool returnDelayed = false;    // workaround for integrating new eventing logic
 
             // In this function, 'true' return values allow us to exit early
 
@@ -3102,16 +3102,16 @@ namespace System.Windows.Media.Animation
                         parentTime = _rootData.CurrentAdjustedGlobalTime;
 
                         if (!parentIntervalCollection.IsEmptyOfRealPoints)
-                        { 
+                        {
                             parentIntervalCollection = parentIntervalCollection.SetBeginningOfConnectedInterval(
                                                                                  _rootData.LastAdjustedGlobalTime);
                         }
                     }
-                    else 
+                    else
                     {
                         parentTime = _timeManager.InternalCurrentGlobalTime;
                     }
-                    
+
                     return false;
                 }
             }
@@ -3144,7 +3144,7 @@ namespace System.Windows.Media.Animation
                 }
             }
         }
-   
+
         // Abbreviations for variables expressing time units:
         //   PT: Parent time (e.g. our begin time is expressed in parent time coordinates)
         //   LT: Local time  (e.g. our duration is expressed in local time coordinates)
@@ -3158,7 +3158,7 @@ namespace System.Windows.Media.Animation
             Debug.Assert(!IsTimeManager);
             Debug.Assert(_parent != null);
             Debug.Assert(_parent.CurrentState != ClockState.Stopped);
-            
+
             // Parent is not stopped, so its TIC cannot be empty
             Debug.Assert(HasSeekOccuredAfterLastTick ||
                         (!parentIntervalCollection.IsEmptyOfRealPoints && parentIntervalCollection.FirstNodeTime <= currentParentTimePT));
@@ -3317,7 +3317,7 @@ namespace System.Windows.Media.Animation
             TimeSpan syncElapsedTimeST = syncTimeST - _syncData.PreviousSyncClockTime;  // Elapsed from last tick
 
             if (syncElapsedTimeST > TimeSpan.Zero)  // Only store the last value if it is greater than
-                                                  //  the old value.  Note we can use either >= or > here.
+                                                    //  the old value.  Note we can use either >= or > here.
             {
                 // Check whether sync has reached the end of our effective duration
                 TimeSpan? effectiveDurationST = _syncData.SyncClockEffectiveDuration;
@@ -3345,7 +3345,7 @@ namespace System.Windows.Media.Animation
                 else  // Don't need to wrap around
                 {
                     _syncData.PreviousSyncClockTime = syncTimeST;
-                }                
+                }
             }
             else  // If the sync timeline went backwards, pretend it just didn't move.
             {
@@ -3376,7 +3376,7 @@ namespace System.Windows.Media.Animation
                 _beginTime += parentTimeSlipPT;
             }
 
-            UpdateSyncBeginTime();  
+            UpdateSyncBeginTime();
 
             parentIntervalCollection = parentIntervalCollection.SlipBeginningOfConnectedInterval(parentTimeSlipPT);
 
@@ -3647,7 +3647,7 @@ namespace System.Windows.Media.Animation
             {
                 RootBeginPending = true;
             }
-            
+
             NotifyNewEarliestFutureActivity();      // Make sure we get ticks
         }
 
@@ -3701,7 +3701,7 @@ namespace System.Windows.Media.Animation
                     break;
                 }
 
-                current = current._parent;  
+                current = current._parent;
             }
 
             if (_timeManager != null)
@@ -3771,7 +3771,7 @@ namespace System.Windows.Media.Animation
                 _flags &= ~(flagMask);
             }
         }
- 
+
 
         /// <summary>
         /// Sets the time manager for the subtree rooted at this timeline.
@@ -3812,7 +3812,7 @@ namespace System.Windows.Media.Animation
         {
             // Currently we'll set NeedsTicksWhenActive to true
             // if any of the three events are set on this clock.
-            
+
             // We should only need to set this when 
             // CurrentTimeInvalidated is set. 
 
@@ -3887,7 +3887,7 @@ namespace System.Windows.Media.Animation
                 SetFlag(ClockFlags.RootBeginPending, value);
             }
         }
-        
+
         #endregion // Private Properties
 
 
@@ -3900,33 +3900,33 @@ namespace System.Windows.Media.Animation
         [Flags]
         private enum ClockFlags : uint
         {
-            IsTimeManager                            = 1 << 0,
-            IsRoot                                   = 1 << 1,
-            IsBackwardsProgressingGlobal             = 1 << 2,
-            IsInteractivelyPaused                    = 1 << 3,
-            IsInteractivelyStopped                   = 1 << 4,
-            PendingInteractivePause                  = 1 << 5,
-            PendingInteractiveResume                 = 1 << 6,
-            PendingInteractiveStop                   = 1 << 7,
-            PendingInteractiveRemove                 = 1 << 8,
-            CanGrow                                  = 1 << 9,
-            CanSlip                                  = 1 << 10,
-            CurrentStateInvalidatedEventRaised       = 1 << 11,
-            CurrentTimeInvalidatedEventRaised        = 1 << 12,
+            IsTimeManager = 1 << 0,
+            IsRoot = 1 << 1,
+            IsBackwardsProgressingGlobal = 1 << 2,
+            IsInteractivelyPaused = 1 << 3,
+            IsInteractivelyStopped = 1 << 4,
+            PendingInteractivePause = 1 << 5,
+            PendingInteractiveResume = 1 << 6,
+            PendingInteractiveStop = 1 << 7,
+            PendingInteractiveRemove = 1 << 8,
+            CanGrow = 1 << 9,
+            CanSlip = 1 << 10,
+            CurrentStateInvalidatedEventRaised = 1 << 11,
+            CurrentTimeInvalidatedEventRaised = 1 << 12,
             CurrentGlobalSpeedInvalidatedEventRaised = 1 << 13,
-            CompletedEventRaised                     = 1 << 14,
-            RemoveRequestedEventRaised               = 1 << 15,
-            IsInEventQueue                           = 1 << 16,
-            NeedsTicksWhenActive                     = 1 << 17,
-            NeedsPostfixTraversal                    = 1 << 18,
-            PauseStateChangedDuringTick              = 1 << 19,
-            RootBeginPending                         = 1 << 20,
-            HasControllableRoot                      = 1 << 21,
-            HasResolvedDuration                      = 1 << 22,
-            HasDesiredFrameRate                      = 1 << 23,
-            HasDiscontinuousTimeMovementOccured      = 1 << 24,
-            HasDescendantsWithUnresolvedDuration     = 1 << 25,
-            HasSeekOccuredAfterLastTick              = 1 << 26,
+            CompletedEventRaised = 1 << 14,
+            RemoveRequestedEventRaised = 1 << 15,
+            IsInEventQueue = 1 << 16,
+            NeedsTicksWhenActive = 1 << 17,
+            NeedsPostfixTraversal = 1 << 18,
+            PauseStateChangedDuringTick = 1 << 19,
+            RootBeginPending = 1 << 20,
+            HasControllableRoot = 1 << 21,
+            HasResolvedDuration = 1 << 22,
+            HasDesiredFrameRate = 1 << 23,
+            HasDiscontinuousTimeMovementOccured = 1 << 24,
+            HasDescendantsWithUnresolvedDuration = 1 << 25,
+            HasSeekOccuredAfterLastTick = 1 << 26,
         }
 
         /// <summary>
@@ -4086,7 +4086,7 @@ namespace System.Windows.Media.Animation
 
             private Duration _syncClockResolvedDuration = Duration.Automatic;  // Duration -- *local* coordinates
             private TimeSpan? _syncClockEffectiveDuration;  // This reflects RepeatBehavior (local coordinates)
-            
+
             private TimeSpan? _syncClockBeginTime;
             private TimeSpan _previousSyncClockTime;
             private TimeSpan _previousRepeatTime;  // How many complete iterations we already have done
@@ -4187,8 +4187,10 @@ namespace System.Windows.Media.Animation
         /// </summary>
         internal void Dump()
         {
-            System.Text.StringBuilder builder = new System.Text.StringBuilder();
-            builder.Capacity = 1024;
+            System.Text.StringBuilder builder = new System.Text.StringBuilder
+            {
+                Capacity = 1024
+            };
             builder.Append("======================================================================\n");
             builder.Append("Clocks rooted at Clock ");
             builder.Append(_debugIdentity);
@@ -4303,7 +4305,7 @@ namespace System.Windows.Media.Animation
             // Recurse into the children. Don't use the enumerator because
             // that would remove dead references, which would be an undesirable
             // side-effect for a debug output method.
-            List<WeakReference> children = ((ClockGroup) this).InternalRootChildren;
+            List<WeakReference> children = ((ClockGroup)this).InternalRootChildren;
 
             for (int index = 0; index < children.Count; index++)
             {
@@ -4382,7 +4384,7 @@ namespace System.Windows.Media.Animation
                 // Identify dead references
                 foreach (DictionaryEntry e in _objectTable)
                 {
-                    WeakReference weakRef = (WeakReference) e.Value;
+                    WeakReference weakRef = (WeakReference)e.Value;
                     if (weakRef.Target == null)
                     {
                         removeTable[e.Key] = weakRef;
@@ -4407,16 +4409,16 @@ namespace System.Windows.Media.Animation
 
         #region Data
 
-        private ClockFlags          _flags;
+        private ClockFlags _flags;
 
-        private int?                _currentIteration;      // Precalculated current iteration
-        private double?             _currentProgress;       // Precalculated current progress value
-        private double?             _currentGlobalSpeed;    // Precalculated current global speed value
-        private TimeSpan?           _currentTime;           // Precalculated current global time
-        private ClockState          _currentClockState;     // Precalculated current clock state
+        private int? _currentIteration;      // Precalculated current iteration
+        private double? _currentProgress;       // Precalculated current progress value
+        private double? _currentGlobalSpeed;    // Precalculated current global speed value
+        private TimeSpan? _currentTime;           // Precalculated current global time
+        private ClockState _currentClockState;     // Precalculated current clock state
 
-        private RootData            _rootData = null;       // Keeps track of root-related data for DesiredFrameRate
-        internal SyncData           _syncData = null;       // Keeps track of sync-related data for SlipBehavior
+        private RootData _rootData = null;       // Keeps track of root-related data for DesiredFrameRate
+        internal SyncData _syncData = null;       // Keeps track of sync-related data for SlipBehavior
 
 
         // Stores the clock's begin time as an offset from the clock's
@@ -4427,20 +4429,20 @@ namespace System.Windows.Media.Animation
         // pauses, etc (see AdjustBeginTime())
         //
         // This must be null when the clock is stopped.
-        internal TimeSpan?          _beginTime;
+        internal TimeSpan? _beginTime;
 
         // This is only used for repeating timelines which have CanSlip children/descendants;
         // In this case, we use this variable instead of _beginTime to compute the current state
         // of the clock (in conjunction with _currentIteration, so we know how many we have
         // already completed.)  This makes us agnostic to slip/growth in our past iterations.
-        private  TimeSpan?          _currentIterationBeginTime;
+        private TimeSpan? _currentIterationBeginTime;
 
         // How soon this Clock needs another tick
-        internal TimeSpan?          _nextTickNeededTime = null;
+        internal TimeSpan? _nextTickNeededTime = null;
 
-        private WeakReference       _weakReference;          
-        private SubtreeFinalizer    _subtreeFinalizer;
-        private EventHandlersStore  _eventHandlersStore;
+        private WeakReference _weakReference;
+        private SubtreeFinalizer _subtreeFinalizer;
+        private EventHandlersStore _eventHandlersStore;
 
         /// <summary>
         /// Cache Duration for perf reasons and also to accommodate one time
@@ -4477,14 +4479,14 @@ namespace System.Windows.Media.Animation
 
         #region Linking data
 
-        internal Timeline           _timeline;
-        internal TimeManager        _timeManager;
-        internal ClockGroup         _parent; // Parents can only be ClockGroups since
-                                             // they're the only ones having children
-        internal int                _childIndex;
-        internal int                _depth;
+        internal Timeline _timeline;
+        internal TimeManager _timeManager;
+        internal ClockGroup _parent; // Parents can only be ClockGroups since
+                                     // they're the only ones having children
+        internal int _childIndex;
+        internal int _depth;
 
-        static Int64                 s_TimeSpanTicksPerSecond = TimeSpan.FromSeconds(1).Ticks;
+        static Int64 s_TimeSpanTicksPerSecond = TimeSpan.FromSeconds(1).Ticks;
 
         #endregion // Linking data
 
@@ -4492,11 +4494,11 @@ namespace System.Windows.Media.Animation
 
 #if DEBUG
 
-        internal int                _debugIdentity;
+        internal int _debugIdentity;
 
-        internal static int         _nextIdentity;
-        internal static Hashtable   _objectTable = new Hashtable();
-        internal static object      _debugLockObject = new object();
+        internal static int _nextIdentity;
+        internal static Hashtable _objectTable = new Hashtable();
+        internal static object _debugLockObject = new object();
 
 #endif // DEBUG
 

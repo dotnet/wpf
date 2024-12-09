@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Security.Cryptography.Xml;
-using System.Security.Cryptography.X509Certificates;
-using MS.Internal.IO.Packaging;
 using System.Collections.ObjectModel;
+using System.Security.Cryptography.X509Certificates;
+using System.Security.Cryptography.Xml;
+using MS.Internal.IO.Packaging;
 
 namespace System.IO.Packaging
 {
@@ -18,27 +18,27 @@ namespace System.IO.Packaging
         /// Verification succeeded
         /// </summary>
         Success,               // signature valid
-    
+
         /// <summary>
         /// Signature was invalid (tampering detected)
         /// </summary>
         InvalidSignature,      // hash incorrect
-    
+
         /// <summary>
         /// Certificate was not embedded in container and caller did not supply one
         /// </summary>
         CertificateRequired,   // no certificate is embedded in container - caller must provide one
-    
+
         /// <summary>
         /// Certificate was invalid (perhaps expired?)
         /// </summary>
         InvalidCertificate,    // certificate problem - verify does not fully verify cert
-    
+
         /// <summary>
         /// PackagePart was missing - signature invalid
         /// </summary>
         ReferenceNotFound,     // signature failed because a part is missing
-    
+
         /// <summary>
         /// Package not signed
         /// </summary>
@@ -63,7 +63,7 @@ namespace System.IO.Packaging
         /// <exception cref="InvalidOperationException">Thrown if associated digital signature has been deleted.</exception>
         public ReadOnlyCollection<Uri> SignedParts
         {
-            get 
+            get
             {
                 ThrowIfInvalidated();
 
@@ -113,7 +113,7 @@ namespace System.IO.Packaging
         /// </summary>
         /// <value>null if certificate was not embedded</value>
         /// <exception cref="InvalidOperationException">Thrown if associated digital signature has been deleted.</exception>
-        public X509Certificate Signer 
+        public X509Certificate Signer
         {
             get
             {
@@ -122,7 +122,7 @@ namespace System.IO.Packaging
                 return _processor.Signer;
             }
         }
- 
+
         /// <summary>
         /// Time signature was created - not a trusted TimeStamp
         /// </summary>
@@ -236,7 +236,7 @@ namespace System.IO.Packaging
                 }
             }
         }
-        
+
         //------------------------------------------------------
         //
         //  Public Methods
@@ -253,7 +253,7 @@ namespace System.IO.Packaging
             // no need to clone this for return as it's already a single-use collection
             return _processor.GetPartTransformList(partName);
         }
-        
+
         /// <summary>
         /// Verify
         /// </summary>
@@ -323,13 +323,13 @@ namespace System.IO.Packaging
         /// <param name="manager">digital signature manager - to consult for hash, embedding and other options</param>
         /// <param name="processor">digital signature manager - to consult for hash, embedding and other options</param>
         internal PackageDigitalSignature(
-            PackageDigitalSignatureManager manager, 
+            PackageDigitalSignatureManager manager,
             XmlDigitalSignatureProcessor processor)
         {
             Debug.Assert(processor.PackageSignature == null, "Logic Error: one processor per-signature");
             _manager = manager;
             _processor = processor;
-//            _processor.PackageSignature = this;
+            //            _processor.PackageSignature = this;
         }
 
         /// <summary>
@@ -388,10 +388,10 @@ namespace System.IO.Packaging
                 }
                 _alreadyLookedForCertPart = true;
             }
-            
+
             return _certificatePart;
         }
-        
+
         internal void SetCertificatePart(CertificatePart certificatePart)
         {
             Debug.Assert(certificatePart != null, "Logic Error: Not expecting setting certificate part to null on digital signature");
@@ -423,13 +423,13 @@ namespace System.IO.Packaging
         //  Private Fields
         //
         //------------------------------------------------------
-        private PackageDigitalSignatureManager                     _manager;
-        private XmlDigitalSignatureProcessor                       _processor;
-        private CertificatePart                                    _certificatePart;
-        private ReadOnlyCollection<Uri>                            _signedParts;
-        private ReadOnlyCollection<PackageRelationshipSelector>    _signedRelationshipSelectors;
-        private bool                                               _alreadyLookedForCertPart;
-        private bool                                               _invalid;   // have we been invalidated?
+        private PackageDigitalSignatureManager _manager;
+        private XmlDigitalSignatureProcessor _processor;
+        private CertificatePart _certificatePart;
+        private ReadOnlyCollection<Uri> _signedParts;
+        private ReadOnlyCollection<PackageRelationshipSelector> _signedRelationshipSelectors;
+        private bool _alreadyLookedForCertPart;
+        private bool _invalid;   // have we been invalidated?
     }
 }
 

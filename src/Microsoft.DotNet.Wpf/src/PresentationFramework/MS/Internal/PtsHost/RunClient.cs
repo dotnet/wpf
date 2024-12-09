@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,9 +14,9 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
-using MS.Internal.Text;
 using MS.Internal.Documents;
 using MS.Internal.PtsHost.UnsafeNativeMethods;
+using MS.Internal.Text;
 
 namespace MS.Internal.PtsHost
 {
@@ -56,7 +56,7 @@ namespace MS.Internal.PtsHost
             double baseline = desiredSize.Height;
             double baselineOffsetValue = (double)UIElementIsland.Root.GetValue(TextBlock.BaselineOffsetProperty);
 
-            if(!double.IsNaN(baselineOffsetValue))
+            if (!double.IsNaN(baselineOffsetValue))
             {
                 baseline = baselineOffsetValue;
             }
@@ -81,7 +81,7 @@ namespace MS.Internal.PtsHost
 
             if (!sideways && !double.IsNaN(baselineOffsetValue))
             {
-                baseline = (double) baselineOffsetValue;
+                baseline = (double)baselineOffsetValue;
             }
 
             return new Rect(0, -baseline, sideways ? size.Height : size.Width, sideways ? size.Width : size.Height);
@@ -114,7 +114,7 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// A set of properties shared by every characters in the run
         /// </summary>
-        public override TextRunProperties Properties { get { return _textProps;  } }
+        public override TextRunProperties Properties { get { return _textProps; } }
 
         /// <summary>
         /// Line break condition before the inline object.

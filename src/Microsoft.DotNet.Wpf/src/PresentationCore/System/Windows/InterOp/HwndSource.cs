@@ -1,17 +1,17 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.ComponentModel;
+using System.Runtime.InteropServices;
 using System.Threading;
-using System.Windows.Threading;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Runtime.InteropServices;
-using MS.Win32;
-using MS.Utility;
+using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.Interop;
-using System.ComponentModel;
+using MS.Utility;
+using MS.Win32;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -64,10 +64,12 @@ namespace System.Windows.Interop
             IntPtr parent)
         {
 
-            HwndSourceParameters param = new HwndSourceParameters(name);
-            param.WindowClassStyle = classStyle;
-            param.WindowStyle = style;
-            param.ExtendedWindowStyle = exStyle;
+            HwndSourceParameters param = new HwndSourceParameters(name)
+            {
+                WindowClassStyle = classStyle,
+                WindowStyle = style,
+                ExtendedWindowStyle = exStyle
+            };
             param.SetPosition(x, y);
             param.ParentWindow = parent;
             Initialize(param);
@@ -123,10 +125,12 @@ namespace System.Windows.Interop
                           bool adjustSizingForNonClientArea)
         {
 
-            HwndSourceParameters parameters = new HwndSourceParameters(name, width, height);
-            parameters.WindowClassStyle = classStyle;
-            parameters.WindowStyle = style;
-            parameters.ExtendedWindowStyle = exStyle;
+            HwndSourceParameters parameters = new HwndSourceParameters(name, width, height)
+            {
+                WindowClassStyle = classStyle,
+                WindowStyle = style,
+                ExtendedWindowStyle = exStyle
+            };
             parameters.SetPosition(x, y);
             parameters.ParentWindow = parent;
             parameters.AdjustSizingForNonClientArea = adjustSizingForNonClientArea;
@@ -179,10 +183,12 @@ namespace System.Windows.Interop
             IntPtr parent)
         {
 
-            HwndSourceParameters parameters = new HwndSourceParameters(name, width, height);
-            parameters.WindowClassStyle = classStyle;
-            parameters.WindowStyle = style;
-            parameters.ExtendedWindowStyle = exStyle;
+            HwndSourceParameters parameters = new HwndSourceParameters(name, width, height)
+            {
+                WindowClassStyle = classStyle,
+                WindowStyle = style,
+                ExtendedWindowStyle = exStyle
+            };
             parameters.SetPosition(x, y);
             parameters.ParentWindow = parent;
             Initialize(parameters);
@@ -229,7 +235,7 @@ namespace System.Windows.Interop
                 // In case there's more than one delegate, add these to the event storage backwards
                 // so they'll get invoked in the expected order.
                 Delegate[] handlers = parameters.HwndSourceHook.GetInvocationList();
-                for (int i = handlers.Length -1; i >= 0; --i)
+                for (int i = handlers.Length - 1; i >= 0; --i)
                 {
                     EventHelper.AddHandler(ref _hooks, (HwndSourceHook)handlers[i]);
                 }
@@ -261,9 +267,11 @@ namespace System.Windows.Interop
                                        parameters.ParentWindow,
                                        wrapperHooks);
 
-            _hwndTarget = new HwndTarget(_hwndWrapper.Handle);
-            _hwndTarget.UsesPerPixelOpacity = parameters.EffectivePerPixelOpacity;
-            if(_hwndTarget.UsesPerPixelOpacity)
+            _hwndTarget = new HwndTarget(_hwndWrapper.Handle)
+            {
+                UsesPerPixelOpacity = parameters.EffectivePerPixelOpacity
+            };
+            if (_hwndTarget.UsesPerPixelOpacity)
             {
                 _hwndTarget.BackgroundColor = Colors.Transparent;
 
@@ -292,7 +300,7 @@ namespace System.Windows.Interop
             // ourselves if the HWND is destroyed out from underneath us.
             _hwndWrapper.Disposed += new EventHandler(OnHwndDisposed);
 
-            
+
             // HwndStylusInputProvider must be initialized after _hwndWrapper as the wrapper
             // is used in setting up PenContexts for the Wisp based Stylus stack.
             // If stylus and touch are disabled, simply do not instantiate the provider.
@@ -358,7 +366,7 @@ namespace System.Windows.Interop
 
             CheckDisposed(true);
 
-            if(_hooks == null)
+            if (_hooks == null)
             {
                 _hwndWrapper.AddHook(_publicHook);
             }
@@ -380,7 +388,7 @@ namespace System.Windows.Interop
             //this.VerifyAccess();
 
             EventHelper.RemoveHandler(ref _hooks, hook);
-            if(_hooks == null)
+            if (_hooks == null)
             {
                 _hwndWrapper.RemoveHook(_publicHook);
             }
@@ -530,7 +538,7 @@ namespace System.Windows.Interop
         /// <summary>
         ///     Whether or not the object is disposed.
         /// </summary>
-        public override bool IsDisposed {get {return _isDisposed;}}
+        public override bool IsDisposed { get { return _isDisposed; } }
 
         /// <summary>
         /// The Root Visual for this window. If it is a UIElement
@@ -562,11 +570,11 @@ namespace System.Windows.Interop
                 {
                     Visual oldRoot = _rootVisual;
 
-                    if(value != null)
+                    if (value != null)
                     {
                         _rootVisual = value;
 
-                        if(_rootVisual is UIElement)
+                        if (_rootVisual is UIElement)
                         {
                             ((UIElement)(_rootVisual)).LayoutUpdated += new EventHandler(OnLayoutUpdated);
                         }
@@ -587,9 +595,9 @@ namespace System.Windows.Interop
                         }
                     }
 
-                    if(oldRoot != null)
+                    if (oldRoot != null)
                     {
-                        if(oldRoot is UIElement)
+                        if (oldRoot is UIElement)
                         {
                             ((UIElement)oldRoot).LayoutUpdated -= new EventHandler(OnLayoutUpdated);
                         }
@@ -696,7 +704,7 @@ namespace System.Windows.Interop
 
                 // Even though we created the HwndTarget, it can get disposed out from
                 // underneath us.
-                if (_hwndTarget!= null && _hwndTarget.IsDisposed == true)
+                if (_hwndTarget != null && _hwndTarget.IsDisposed == true)
                 {
                     return null;
                 }
@@ -728,7 +736,7 @@ namespace System.Windows.Interop
             // We opt-in this HwndSource to the new behavior for "exclusive"
             // menu mode only if AcquireHwndFocusInMenuMode is false.
             IsInExclusiveMenuMode = !_acquireHwndFocusInMenuMode;
-            if(IsInExclusiveMenuMode)
+            if (IsInExclusiveMenuMode)
             {
                 Debug.Assert(_weakMenuModeMessageHandler == null);
 
@@ -752,7 +760,7 @@ namespace System.Windows.Interop
         /// </remarks>
         internal override void OnLeaveMenuMode()
         {
-            if(IsInExclusiveMenuMode)
+            if (IsInExclusiveMenuMode)
             {
                 Debug.Assert(_weakMenuModeMessageHandler != null);
 
@@ -767,7 +775,7 @@ namespace System.Windows.Interop
             IsInExclusiveMenuMode = false;
         }
 
-        internal bool IsInExclusiveMenuMode{get; private set;}
+        internal bool IsInExclusiveMenuMode { get; private set; }
 
         /// <summary>
         ///     Event invoked when the layout causes the HwndSource to resize automatically.
@@ -781,10 +789,10 @@ namespace System.Windows.Interop
         {
             UIElement root = _rootVisual as UIElement;
 
-            if(root != null)
+            if (root != null)
             {
                 Size newSize = root.RenderSize;
-                if (   _previousSize == null
+                if (_previousSize == null
                     || !DoubleUtil.AreClose(_previousSize.Value.Width, newSize.Width)
                     || !DoubleUtil.AreClose(_previousSize.Value.Height, newSize.Height))
                 {
@@ -799,7 +807,7 @@ namespace System.Windows.Interop
                     //
                     // Don't resize while the Window is in Minimized mode.
                     //
-                    if (_sizeToContent != SizeToContent.Manual && !_isWindowInMinimizeState )
+                    if (_sizeToContent != SizeToContent.Manual && !_isWindowInMinimizeState)
                     {
                         Resize(newSize);
                     }
@@ -825,7 +833,7 @@ namespace System.Windows.Interop
                     int newHeight = rect.bottom - rect.top;
 
                     // Set the new window size
-                    UnsafeNativeMethods.SetWindowPos(new HandleRef(this,_hwndWrapper.Handle), new HandleRef(null,IntPtr.Zero),
+                    UnsafeNativeMethods.SetWindowPos(new HandleRef(this, _hwndWrapper.Handle), new HandleRef(null, IntPtr.Zero),
                                                    0, 0, newWidth, newHeight,
                                                    NativeMethods.SWP_NOMOVE | NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
 
@@ -942,7 +950,7 @@ namespace System.Windows.Interop
             {
                 IntPtr capture = SafeNativeMethods.GetCapture();
 
-                return ( capture == CriticalHandle );
+                return (capture == CriticalHandle);
             }
         }
 
@@ -950,7 +958,7 @@ namespace System.Windows.Interop
         {
             get
             {
-                return _hwndWrapper.Handle == IntPtr.Zero ;
+                return _hwndWrapper.Handle == IntPtr.Zero;
             }
         }
 
@@ -959,7 +967,7 @@ namespace System.Windows.Interop
         /// </summary>
         public HandleRef CreateHandleRef()
         {
-            return new HandleRef(this,Handle);
+            return new HandleRef(this, Handle);
         }
 
 
@@ -1007,7 +1015,7 @@ namespace System.Windows.Interop
 
         private bool IsLayoutActive()
         {
-            if ((_rootVisual is UIElement) && _hwndTarget!= null && _hwndTarget.IsDisposed == false)
+            if ((_rootVisual is UIElement) && _hwndTarget != null && _hwndTarget.IsDisposed == false)
             {
                 return true;
             }
@@ -1021,12 +1029,13 @@ namespace System.Windows.Interop
         /// </summary>
         private void SetLayoutSize()
         {
-            Debug.Assert(_hwndTarget!= null, "HwndTarget is null");
+            Debug.Assert(_hwndTarget != null, "HwndTarget is null");
             Debug.Assert(_hwndTarget.IsDisposed == false, "HwndTarget is disposed");
 
             UIElement rootUIElement = null;
             rootUIElement = _rootVisual as UIElement;
-            if (rootUIElement == null) return;
+            if (rootUIElement == null)
+                return;
 
             // InvalidateMeasure() call is necessary in the following scenario
             //
@@ -1046,7 +1055,7 @@ namespace System.Windows.Interop
 
             const EventTrace.Keyword etwKeywords = EventTrace.Keyword.KeywordLayout | EventTrace.Keyword.KeywordPerf;
             bool etwEnabled = EventTrace.IsEnabled(etwKeywords, EventTrace.Level.Info);
-            long  ctxHashCode = 0;
+            long ctxHashCode = 0;
 
             if (_sizeToContent == SizeToContent.WidthAndHeight)
             {
@@ -1100,9 +1109,12 @@ namespace System.Windows.Interop
                     EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientArrangeBegin, etwKeywords, EventTrace.Level.Info, ctxHashCode);
                 }
 
-                if (_sizeToContent == SizeToContent.Width) sz = new Size(rootUIElement.DesiredSize.Width, sizeFromHwndLogicalUnits.Height);
-                else if(_sizeToContent == SizeToContent.Height) sz = new Size(sizeFromHwndLogicalUnits.Width, rootUIElement.DesiredSize.Height);
-                else sz = sizeFromHwndLogicalUnits;
+                if (_sizeToContent == SizeToContent.Width)
+                    sz = new Size(rootUIElement.DesiredSize.Width, sizeFromHwndLogicalUnits.Height);
+                else if (_sizeToContent == SizeToContent.Height)
+                    sz = new Size(sizeFromHwndLogicalUnits.Width, rootUIElement.DesiredSize.Height);
+                else
+                    sz = sizeFromHwndLogicalUnits;
 
                 rootUIElement.Arrange(new Rect(new Point(), sz));
 
@@ -1129,7 +1141,7 @@ namespace System.Windows.Interop
                 CheckDisposed(true);
 
                 HwndTarget hwndTarget = CompositionTarget; // checks for disposed
-                if(_hwndTarget != null)
+                if (_hwndTarget != null)
                 {
                     return _hwndTarget.UsesPerPixelOpacity;
                 }
@@ -1151,7 +1163,7 @@ namespace System.Windows.Interop
             }
             else
             {
-                SafeNativeMethods.GetClientRect(new HandleRef(this,_hwndWrapper.Handle), ref rc);
+                SafeNativeMethods.GetClientRect(new HandleRef(this, _hwndWrapper.Handle), ref rc);
             }
 
             Point convertedPt = TransformFromDevice(new Point(rc.right - rc.left, rc.bottom - rc.top));
@@ -1160,7 +1172,7 @@ namespace System.Windows.Interop
 
         private IntPtr HwndTargetFilterMessage(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            IntPtr result = IntPtr.Zero ;
+            IntPtr result = IntPtr.Zero;
 
             if (IsUsable)
             {
@@ -1173,21 +1185,21 @@ namespace System.Windows.Interop
                         handled = true;
                     }
                 }
-}
+            }
 
             return result;
         }
 
         private IntPtr LayoutFilterMessage(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            IntPtr result = IntPtr.Zero ;
+            IntPtr result = IntPtr.Zero;
             WindowMessage message = (WindowMessage)msg;
 
             // We have to revalidate everything because the Access() call
             // could have caused the CLR to enter a nested message pump,
             // during which almost anything could have happened that might
             // invalidate our checks.
-            UIElement rootUIElement=null;
+            UIElement rootUIElement = null;
             rootUIElement = _rootVisual as UIElement;
             if (IsUsable && rootUIElement != null)
             {
@@ -1241,12 +1253,12 @@ namespace System.Windows.Interop
 
             // Certain messages need to be processed while we are in the middle
             // of construction - and thus an HwndTarget is not available.
-            if(!handled && (_constructionParameters != null || IsUsable))
+            if (!handled && (_constructionParameters != null || IsUsable))
             {
                 // Get the usesPerPixelOpacity from either the constructor parameters or the HwndTarget.
                 bool usesPerPixelOpacity = _constructionParameters != null ? ((HwndSourceParameters)_constructionParameters).EffectivePerPixelOpacity : _hwndTarget.UsesPerPixelOpacity;
 
-                switch(message)
+                switch (message)
                 {
                     case WindowMessage.WM_NCCALCSIZE:
                         {
@@ -1258,9 +1270,9 @@ namespace System.Windows.Interop
                             // area, so here we expand the client area to
                             // cover any non-client area.
                             //
-                            if(usesPerPixelOpacity)
+                            if (usesPerPixelOpacity)
                             {
-                                if(wParam == IntPtr.Zero)
+                                if (wParam == IntPtr.Zero)
                                 {
                                     // If wParam is FALSE, lParam points to a RECT
                                     // structure. On entry, the structure contains
@@ -1466,14 +1478,18 @@ namespace System.Windows.Interop
                 {
                     ctxHashCode = _hwndWrapper.Handle.ToInt64();
                     EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientLayoutBegin, etwKeywords, EventTrace.Level.Info, ctxHashCode, EventTrace.LayoutSource.HwndSource_WMSIZE);
-                    EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientMeasureBegin, etwKeywords, EventTrace.Level.Info, ctxHashCode);;
+                    EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientMeasureBegin, etwKeywords, EventTrace.Level.Info, ctxHashCode);
+                    ;
                 }
 
                 rootUIElement.Measure(sz);
 
-                if (_sizeToContent == SizeToContent.Width) sz = new Size(rootUIElement.DesiredSize.Width, relevantPt.Y);
-                else if (_sizeToContent == SizeToContent.Height) sz = new Size(relevantPt.X, rootUIElement.DesiredSize.Height);
-                else sz = new Size(relevantPt.X, relevantPt.Y);
+                if (_sizeToContent == SizeToContent.Width)
+                    sz = new Size(rootUIElement.DesiredSize.Width, relevantPt.Y);
+                else if (_sizeToContent == SizeToContent.Height)
+                    sz = new Size(relevantPt.X, rootUIElement.DesiredSize.Height);
+                else
+                    sz = new Size(relevantPt.X, relevantPt.Y);
 
                 if (etwEnabled)
                 {
@@ -1489,7 +1505,7 @@ namespace System.Windows.Interop
                     EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientLayoutEnd, etwKeywords, EventTrace.Level.Info);
                 }
                 rootUIElement.UpdateLayout(); //finalizes layout
-}
+            }
         }
 
         private void DisableSizeToContent(UIElement rootUIElement, IntPtr hwnd)
@@ -1530,7 +1546,7 @@ namespace System.Windows.Interop
 
             IntPtr hwndRoot = IntPtr.Zero;
 
-            if(_treatAncestorsAsNonClientArea)
+            if (_treatAncestorsAsNonClientArea)
             {
                 hwndRoot = UnsafeNativeMethods.GetAncestor(new HandleRef(this, CriticalHandle), NativeMethods.GA_ROOT);
             }
@@ -1544,7 +1560,7 @@ namespace System.Windows.Interop
 
         private IntPtr InputFilterMessage(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            IntPtr result = IntPtr.Zero ;
+            IntPtr result = IntPtr.Zero;
             WindowMessage message = (WindowMessage)msg;
 
             if (message == WindowMessage.WM_DESTROY)
@@ -1593,7 +1609,7 @@ namespace System.Windows.Interop
                 // However, if IKIS was ever used in the past, then the last keyboard
                 // message could be really old.  We need to flush out the last keybaord
                 // message here now that we know we have received it in the WndProc.
-                switch(message)
+                switch (message)
                 {
                     case WindowMessage.WM_SYSKEYDOWN:
                     case WindowMessage.WM_KEYDOWN:
@@ -1603,10 +1619,10 @@ namespace System.Windows.Interop
                     case WindowMessage.WM_DEADCHAR:
                     case WindowMessage.WM_SYSCHAR:
                     case WindowMessage.WM_SYSDEADCHAR:
-                    {
-                        _lastKeyboardMessage = new MSG();
-                    }
-                    break;
+                        {
+                            _lastKeyboardMessage = new MSG();
+                        }
+                        break;
                 }
             }
 
@@ -1625,7 +1641,7 @@ namespace System.Windows.Interop
         private IntPtr PublicHooksFilterMessage(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             // The default result for messages we handle is 0.
-            IntPtr result = IntPtr.Zero ;
+            IntPtr result = IntPtr.Zero;
             WindowMessage message = (WindowMessage)msg;
 
             // Call all of the public hooks
@@ -1634,11 +1650,11 @@ namespace System.Windows.Interop
             if (_hooks != null)
             {
                 Delegate[] handlers = _hooks.Item2;
-                for (int i = handlers.Length -1; i >= 0; --i)
+                for (int i = handlers.Length - 1; i >= 0; --i)
                 {
                     var hook = (HwndSourceHook)handlers[i];
                     result = hook(hwnd, msg, wParam, lParam, ref handled);
-                    if(handled)
+                    if (handled)
                     {
                         break;
                     }
@@ -1657,7 +1673,7 @@ namespace System.Windows.Interop
                     break;
                 case WindowMessage.WM_DESTROY:
                     {
-                        
+
                         // This used to be called under Dispose triggered from WM_NCDESTROY.
                         // The problem there is that this is the wrong time for WISP to undelegate
                         // input.  Thus shutting down the stack would lead to an assert since the
@@ -1690,7 +1706,7 @@ namespace System.Windows.Interop
             }
         }
 
-#region IKeyboardInputSink
+        #region IKeyboardInputSink
 
         /// General security note on the implementation pattern of this interface. In Dev10 it was chosen
         /// to expose the interface implementation for overriding to customers. We did so by keeping the
@@ -1727,7 +1743,7 @@ namespace System.Windows.Interop
         /// </summary>
         private void OnPreprocessMessageThunk(ref MSG msg, ref bool handled)
         {
-//             VerifyAccess();
+            //             VerifyAccess();
 
             if (handled)
             {
@@ -1737,43 +1753,45 @@ namespace System.Windows.Interop
             // We only do these message.
             switch ((WindowMessage)msg.message)
             {
-            case WindowMessage.WM_KEYUP:
-            case WindowMessage.WM_KEYDOWN:
-            case WindowMessage.WM_SYSKEYUP:
-            case WindowMessage.WM_SYSKEYDOWN:
-            case WindowMessage.WM_CHAR:
-            case WindowMessage.WM_SYSCHAR:
-            case WindowMessage.WM_DEADCHAR:
-            case WindowMessage.WM_SYSDEADCHAR:
-                MSGDATA msgdata = new MSGDATA();
-                msgdata.msg = msg;
-                msgdata.handled = handled;
+                case WindowMessage.WM_KEYUP:
+                case WindowMessage.WM_KEYDOWN:
+                case WindowMessage.WM_SYSKEYUP:
+                case WindowMessage.WM_SYSKEYDOWN:
+                case WindowMessage.WM_CHAR:
+                case WindowMessage.WM_SYSCHAR:
+                case WindowMessage.WM_DEADCHAR:
+                case WindowMessage.WM_SYSDEADCHAR:
+                    MSGDATA msgdata = new MSGDATA
+                    {
+                        msg = msg,
+                        handled = handled
+                    };
 
-                // Do this under the exception filter/handlers of the
-                // dispatcher for this thread.
-                //
-                // NOTE: we lose the "perf optimization" of passing everything
-                // around by-ref since we have to call through a delegate.
-                object result = Dispatcher.CurrentDispatcher.Invoke(
-                    DispatcherPriority.Send,
-                    new DispatcherOperationCallback(OnPreprocessMessage),
-                    msgdata);
+                    // Do this under the exception filter/handlers of the
+                    // dispatcher for this thread.
+                    //
+                    // NOTE: we lose the "perf optimization" of passing everything
+                    // around by-ref since we have to call through a delegate.
+                    object result = Dispatcher.CurrentDispatcher.Invoke(
+                        DispatcherPriority.Send,
+                        new DispatcherOperationCallback(OnPreprocessMessage),
+                        msgdata);
 
-                if (result != null)
-                {
-                    handled = (bool)result;
-                }
+                    if (result != null)
+                    {
+                        handled = (bool)result;
+                    }
 
-                // the semantics dictate that the callers could change this data.
-                msg = msgdata.msg;
-                break;
+                    // the semantics dictate that the callers could change this data.
+                    msg = msgdata.msg;
+                    break;
             }
         }
 
 
         private object OnPreprocessMessage(object param)
         {
-            MSGDATA msgdata = (MSGDATA) param;
+            MSGDATA msgdata = (MSGDATA)param;
 
             // Always process messages if this window is in menu mode.
             //
@@ -1793,102 +1811,102 @@ namespace System.Windows.Interop
             //
             switch ((WindowMessage)msgdata.msg.message)
             {
-            case WindowMessage.WM_SYSKEYDOWN:
-            case WindowMessage.WM_KEYDOWN:
-                // MITIGATION: HANDLED_KEYDOWN_STILL_GENERATES_CHARS
-                // In case a nested message pump is used before we return
-                // from processing this message, we disable processing the
-                // next WM_CHAR message because if the code pumps messages
-                // it should really mark the message as handled.
-                _eatCharMessages = true;
-                DispatcherOperation restoreCharMessages = Dispatcher.BeginInvoke(DispatcherPriority.Normal, new DispatcherOperationCallback(RestoreCharMessages), null);
-
-                // Force the Dispatcher to post a new message to service any
-                // pending operations, so that the operation we just posted
-                // is guaranteed to get dispatched after any pending WM_CHAR
-                // messages are dispatched.
-                Dispatcher.CriticalRequestProcessing(true);
-
-                msgdata.handled = CriticalTranslateAccelerator(ref msgdata.msg, modifierKeys);
-                if(!msgdata.handled)
-                {
+                case WindowMessage.WM_SYSKEYDOWN:
+                case WindowMessage.WM_KEYDOWN:
                     // MITIGATION: HANDLED_KEYDOWN_STILL_GENERATES_CHARS
-                    // We did not handle the WM_KEYDOWN, so it is OK to process WM_CHAR messages.
-                    // We can also abort the pending restore operation since we don't need it.
-                    _eatCharMessages = false;
-                    restoreCharMessages.Abort();
-                }
+                    // In case a nested message pump is used before we return
+                    // from processing this message, we disable processing the
+                    // next WM_CHAR message because if the code pumps messages
+                    // it should really mark the message as handled.
+                    _eatCharMessages = true;
+                    DispatcherOperation restoreCharMessages = Dispatcher.BeginInvoke(DispatcherPriority.Normal, new DispatcherOperationCallback(RestoreCharMessages), null);
 
-                // Menu mode handles all keyboard messages so that they don't
-                // get dispatched to some random window with focus.
-                if(IsInExclusiveMenuMode)
-                {
-                    // However, if the WM_KEYDOWN message was not explicitly
-                    // handled, then we need to generate WM_CHAR messages.  WPF
-                    // expects this, but when we return handled, the outer
-                    // message pump will skip the TranslateMessage and
-                    // DispatchMessage calls.  We mitigate this by calling
-                    // TranslateMessage directly.  This is the same trick that
-                    // Win32 does in its menu loop.
-                    if(!msgdata.handled)
-                    {
-                        UnsafeNativeMethods.TranslateMessage(ref msgdata.msg);
-                    }
+                    // Force the Dispatcher to post a new message to service any
+                    // pending operations, so that the operation we just posted
+                    // is guaranteed to get dispatched after any pending WM_CHAR
+                    // messages are dispatched.
+                    Dispatcher.CriticalRequestProcessing(true);
 
-                    msgdata.handled = true;
-                }
-
-                break;
-
-            case WindowMessage.WM_SYSKEYUP:
-            case WindowMessage.WM_KEYUP:
-                msgdata.handled = CriticalTranslateAccelerator(ref msgdata.msg, modifierKeys);
-
-                // Menu mode handles all keyboard messages so that they don't
-                // get dispatched to some random window with focus.
-                if(IsInExclusiveMenuMode)
-                {
-                    msgdata.handled = true;
-                }
-
-                break;
-
-            case WindowMessage.WM_CHAR:
-            case WindowMessage.WM_SYSCHAR:
-            case WindowMessage.WM_DEADCHAR:
-            case WindowMessage.WM_SYSDEADCHAR:
-                // MITIGATION: HANDLED_KEYDOWN_STILL_GENERATES_CHARS
-                if(!_eatCharMessages)
-                {
-                    msgdata.handled = ((IKeyboardInputSink)this).TranslateChar(ref msgdata.msg, modifierKeys);
-
+                    msgdata.handled = CriticalTranslateAccelerator(ref msgdata.msg, modifierKeys);
                     if (!msgdata.handled)
                     {
-                        msgdata.handled = ((IKeyboardInputSink)this).OnMnemonic(ref msgdata.msg, modifierKeys);
+                        // MITIGATION: HANDLED_KEYDOWN_STILL_GENERATES_CHARS
+                        // We did not handle the WM_KEYDOWN, so it is OK to process WM_CHAR messages.
+                        // We can also abort the pending restore operation since we don't need it.
+                        _eatCharMessages = false;
+                        restoreCharMessages.Abort();
                     }
 
-                    if (!msgdata.handled)
+                    // Menu mode handles all keyboard messages so that they don't
+                    // get dispatched to some random window with focus.
+                    if (IsInExclusiveMenuMode)
                     {
-                        _keyboard.ProcessTextInputAction(msgdata.msg.hwnd, (WindowMessage)msgdata.msg.message,
-                                                               msgdata.msg.wParam, msgdata.msg.lParam, ref msgdata.handled);
-                    }
-                }
+                        // However, if the WM_KEYDOWN message was not explicitly
+                        // handled, then we need to generate WM_CHAR messages.  WPF
+                        // expects this, but when we return handled, the outer
+                        // message pump will skip the TranslateMessage and
+                        // DispatchMessage calls.  We mitigate this by calling
+                        // TranslateMessage directly.  This is the same trick that
+                        // Win32 does in its menu loop.
+                        if (!msgdata.handled)
+                        {
+                            UnsafeNativeMethods.TranslateMessage(ref msgdata.msg);
+                        }
 
-                // Menu mode handles all keyboard messages so that they don't
-                // get dispatched to some random window with focus.
-                if(IsInExclusiveMenuMode)
-                {
-                    // If the WM_CHAR message is not explicitly handled, the
-                    // standard behavior is to beep.
-                    if(!msgdata.handled)
+                        msgdata.handled = true;
+                    }
+
+                    break;
+
+                case WindowMessage.WM_SYSKEYUP:
+                case WindowMessage.WM_KEYUP:
+                    msgdata.handled = CriticalTranslateAccelerator(ref msgdata.msg, modifierKeys);
+
+                    // Menu mode handles all keyboard messages so that they don't
+                    // get dispatched to some random window with focus.
+                    if (IsInExclusiveMenuMode)
                     {
-                        SafeNativeMethods.MessageBeep(0);
+                        msgdata.handled = true;
                     }
 
-                    msgdata.handled = true;
-                }
+                    break;
 
-                break;
+                case WindowMessage.WM_CHAR:
+                case WindowMessage.WM_SYSCHAR:
+                case WindowMessage.WM_DEADCHAR:
+                case WindowMessage.WM_SYSDEADCHAR:
+                    // MITIGATION: HANDLED_KEYDOWN_STILL_GENERATES_CHARS
+                    if (!_eatCharMessages)
+                    {
+                        msgdata.handled = ((IKeyboardInputSink)this).TranslateChar(ref msgdata.msg, modifierKeys);
+
+                        if (!msgdata.handled)
+                        {
+                            msgdata.handled = ((IKeyboardInputSink)this).OnMnemonic(ref msgdata.msg, modifierKeys);
+                        }
+
+                        if (!msgdata.handled)
+                        {
+                            _keyboard.ProcessTextInputAction(msgdata.msg.hwnd, (WindowMessage)msgdata.msg.message,
+                                                                   msgdata.msg.wParam, msgdata.msg.lParam, ref msgdata.handled);
+                        }
+                    }
+
+                    // Menu mode handles all keyboard messages so that they don't
+                    // get dispatched to some random window with focus.
+                    if (IsInExclusiveMenuMode)
+                    {
+                        // If the WM_CHAR message is not explicitly handled, the
+                        // standard behavior is to beep.
+                        if (!msgdata.handled)
+                        {
+                            SafeNativeMethods.MessageBeep(0);
+                        }
+
+                        msgdata.handled = true;
+                    }
+
+                    break;
             }
             return msgdata.handled;
         }
@@ -1945,7 +1963,7 @@ namespace System.Windows.Interop
         ///</remarks>
         protected virtual bool TranslateAcceleratorCore(ref MSG msg, ModifierKeys modifiers)
         {
-//             VerifyAccess();
+            //             VerifyAccess();
 
             return CriticalTranslateAccelerator(ref msg, modifiers);
         }
@@ -1966,8 +1984,8 @@ namespace System.Windows.Interop
 
             ArgumentNullException.ThrowIfNull(request);
 
-            UIElement root =_rootVisual as UIElement;
-            if(root != null)
+            UIElement root = _rootVisual as UIElement;
+            if (root != null)
             {
                 // atanask:
                 // request.Mode == FocusNavigationDirection.First will navigate to the fist tabstop including root
@@ -2037,8 +2055,8 @@ namespace System.Windows.Interop
         /// </summary>
         protected virtual bool OnMnemonicCore(ref MSG msg, ModifierKeys modifiers)
         {
-//             VerifyAccess();
-            switch((WindowMessage)msg.message)
+            //             VerifyAccess();
+            switch ((WindowMessage)msg.message)
             {
                 case WindowMessage.WM_SYSCHAR:
                 case WindowMessage.WM_SYSDEADCHAR:
@@ -2104,7 +2122,7 @@ namespace System.Windows.Interop
             // the IKIS children unless we are in menu mode.
             if (_keyboardInputSinkChildren != null && !IsInExclusiveMenuMode)
             {
-                foreach ( HwndSourceKeyboardInputSite childSite in _keyboardInputSinkChildren )
+                foreach (HwndSourceKeyboardInputSite childSite in _keyboardInputSinkChildren)
                 {
                     if (((IKeyboardInputSite)childSite).Sink.OnMnemonic(ref msg, modifiers))
                         return true;
@@ -2128,11 +2146,11 @@ namespace System.Windows.Interop
         /// </summary>
         protected virtual bool TranslateCharCore(ref MSG msg, ModifierKeys modifiers)
         {
-            if(HasFocus || IsInExclusiveMenuMode)
+            if (HasFocus || IsInExclusiveMenuMode)
                 return false;
 
             IKeyboardInputSink focusSink = this.ChildSinkWithFocus;
-            if(null != focusSink)
+            if (null != focusSink)
             {
                 return focusSink.TranslateChar(ref msg, modifiers);
             }
@@ -2149,7 +2167,7 @@ namespace System.Windows.Interop
         /// </summary>
         protected virtual bool HasFocusWithinCore()
         {
-            if(HasFocus)
+            if (HasFocus)
             {
                 return true;
             }
@@ -2196,7 +2214,7 @@ namespace System.Windows.Interop
         {
             get
             {
-                if(!_defaultAcquireHwndFocusInMenuMode.HasValue)
+                if (!_defaultAcquireHwndFocusInMenuMode.HasValue)
                 {
                     // The default value is true, for compat.
                     _defaultAcquireHwndFocusInMenuMode = true;
@@ -2232,7 +2250,7 @@ namespace System.Windows.Interop
         /// <param name="site">The Site that containes the sink to unregister</param>
         internal void CriticalUnregisterKeyboardInputSink(HwndSourceKeyboardInputSite site)
         {
-            if(_isDisposed)
+            if (_isDisposed)
                 return;
 
             if (null != _keyboardInputSinkChildren)
@@ -2248,9 +2266,9 @@ namespace System.Windows.Interop
         {
             get
             {
-                IKeyboardInputSink ikis=null;
+                IKeyboardInputSink ikis = null;
 
-                if(null == _keyboardInputSinkChildren)
+                if (null == _keyboardInputSinkChildren)
                     return null;
 
                 foreach (HwndSourceKeyboardInputSite site in _keyboardInputSinkChildren)
@@ -2264,7 +2282,7 @@ namespace System.Windows.Interop
                     }
                 }
                 // This private property should only be called correctly.
-                Debug.Assert(null!=ikis, "ChildSinkWithFocus called when none had focus");
+                Debug.Assert(null != ikis, "ChildSinkWithFocus called when none had focus");
                 return ikis;
             }
         }
@@ -2323,10 +2341,11 @@ namespace System.Windows.Interop
                     IKeyboardInputSink focusSink = ChildSinkWithFocus; // can be null!
                     IInputElement focusElement = (IInputElement)focusSink;
 
-                    try {
+                    try
+                    {
                         PerThreadData.TranslateAcceleratorCallDepth += 1;
                         Keyboard.PrimaryDevice.ForceTarget = focusElement;
-                       _keyboard.ProcessKeyAction(ref msg, ref handled);
+                        _keyboard.ProcessKeyAction(ref msg, ref handled);
                     }
                     finally
                     {
@@ -2334,7 +2353,7 @@ namespace System.Windows.Interop
                         PerThreadData.TranslateAcceleratorCallDepth -= 1;
                     }
                 }
-}
+            }
             // ELSE we have seen this MSG before, we are HwndSource decendant of an
             // HwndSource (that ancestor presumably did the processing above).
             // Here we raise the tunnel/bubble events without the once only keyboard
@@ -2346,20 +2365,20 @@ namespace System.Windows.Interop
                 bool isExtendedKey = HwndKeyboardInputProvider.IsExtendedKey(msg.lParam);
                 Key key = KeyInterop.KeyFromVirtualKey(virtualKey);
 
-                RoutedEvent keyPreviewEvent=null;
-                RoutedEvent keyEvent=null;
+                RoutedEvent keyPreviewEvent = null;
+                RoutedEvent keyEvent = null;
                 switch ((WindowMessage)msg.message)
                 {
-                case WindowMessage.WM_KEYUP:
-                case WindowMessage.WM_SYSKEYUP:
-                    keyPreviewEvent = Keyboard.PreviewKeyUpEvent;
-                    keyEvent = Keyboard.KeyUpEvent;
-                    break;
-                case WindowMessage.WM_KEYDOWN:
-                case WindowMessage.WM_SYSKEYDOWN:
-                    keyPreviewEvent = Keyboard.PreviewKeyDownEvent;
-                    keyEvent = Keyboard.KeyDownEvent;
-                    break;
+                    case WindowMessage.WM_KEYUP:
+                    case WindowMessage.WM_SYSKEYUP:
+                        keyPreviewEvent = Keyboard.PreviewKeyUpEvent;
+                        keyEvent = Keyboard.KeyUpEvent;
+                        break;
+                    case WindowMessage.WM_KEYDOWN:
+                    case WindowMessage.WM_SYSKEYDOWN:
+                        keyPreviewEvent = Keyboard.PreviewKeyDownEvent;
+                        keyEvent = Keyboard.KeyDownEvent;
+                        break;
                 }
 
                 bool hasFocus = HasFocus;
@@ -2382,26 +2401,31 @@ namespace System.Windows.Interop
                     }
                 }
 
-                try {
+                try
+                {
                     Keyboard.PrimaryDevice.ForceTarget = focusSink as IInputElement;
 
                     if (focusElement != null)
                     {
-                        KeyEventArgs tunnelArgs = new KeyEventArgs(Keyboard.PrimaryDevice, this, msg.time, key);
-                        tunnelArgs.ScanCode = scanCode;
-                        tunnelArgs.IsExtendedKey = isExtendedKey;
-                        tunnelArgs.RoutedEvent = keyPreviewEvent;
+                        KeyEventArgs tunnelArgs = new KeyEventArgs(Keyboard.PrimaryDevice, this, msg.time, key)
+                        {
+                            ScanCode = scanCode,
+                            IsExtendedKey = isExtendedKey,
+                            RoutedEvent = keyPreviewEvent
+                        };
                         focusElement.RaiseEvent(tunnelArgs);
 
                         handled = tunnelArgs.Handled;
                     }
                     if (!handled)
                     {
-                        KeyEventArgs bubbleArgs = new KeyEventArgs(Keyboard.PrimaryDevice, this, msg.time, key);
-                        bubbleArgs.ScanCode = scanCode;
-                        bubbleArgs.IsExtendedKey = isExtendedKey;
-                        bubbleArgs.RoutedEvent=keyEvent;
-                        if(focusElement != null)
+                        KeyEventArgs bubbleArgs = new KeyEventArgs(Keyboard.PrimaryDevice, this, msg.time, key)
+                        {
+                            ScanCode = scanCode,
+                            IsExtendedKey = isExtendedKey,
+                            RoutedEvent = keyEvent
+                        };
+                        if (focusElement != null)
                         {
                             focusElement.RaiseEvent(bubbleArgs);
                             handled = bubbleArgs.Handled;
@@ -2435,7 +2459,7 @@ namespace System.Windows.Interop
             return null;
         }
 
-#endregion IKeyboardInputSink
+        #endregion IKeyboardInputSink
 
 
         internal bool IsRepeatedKeyboardMessage(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam)
@@ -2493,10 +2517,10 @@ namespace System.Windows.Interop
         //
         private void Dispose(bool disposing)
         {
-            if(disposing)
+            if (disposing)
             {
                 // Make sure all access is synchronized.
-//                 this.VerifyAccess();
+                //                 this.VerifyAccess();
 
                 if (!_isDisposing)
                 {
@@ -2508,7 +2532,7 @@ namespace System.Windows.Interop
                     // Notify listeners that we are being disposed.  We do this
                     // before we dispose our internal stuff, in case the event
                     // listener needs to access something.
-                    if(Disposed != null)
+                    if (Disposed != null)
                     {
                         try
                         {
@@ -2544,11 +2568,11 @@ namespace System.Windows.Interop
 
                     if (!_inRealHwndDispose)
                     {
-                        
+
                         // Disposing the stylus provider can only be done here when
                         // we're not actually in an Hwnd WM_NCDESTROY scenario as
                         // we're then guaranteed that the HWND is still alive.
-                        
+
                         // In situations where the PenThread is busy, this dispose can
                         // cause re-entrancy.  If this re-entrancy triggers a layout
                         // WPF can throw if the HwndTarget has been disposed since there
@@ -2625,12 +2649,12 @@ namespace System.Windows.Interop
 
         private void CheckDisposed(bool verifyAccess)
         {
-            if(verifyAccess)
+            if (verifyAccess)
             {
-//                 this.VerifyAccess();
+                //                 this.VerifyAccess();
             }
 
-            if(_isDisposed)
+            if (_isDisposed)
             {
                 throw new ObjectDisposedException(null, SR.HwndSourceDisposed);
             }
@@ -2657,7 +2681,7 @@ namespace System.Windows.Interop
         private static bool IsValidSizeToContent(SizeToContent value)
         {
             return value == SizeToContent.Manual ||
-                   value == SizeToContent.Width  ||
+                   value == SizeToContent.Width ||
                    value == SizeToContent.Height ||
                    value == SizeToContent.WidthAndHeight;
         }
@@ -2673,24 +2697,24 @@ namespace System.Windows.Interop
             {
                 ThreadDataBlob data;
                 object obj = Thread.GetData(_threadSlot);
-                if(null == obj)
+                if (null == obj)
                 {
                     data = new ThreadDataBlob();
                     Thread.SetData(_threadSlot, data);
                 }
                 else
                 {
-                    data = (ThreadDataBlob) obj;
+                    data = (ThreadDataBlob)obj;
                 }
                 return data;
             }
         }
 
-#region WeakEventHandlers
+        #region WeakEventHandlers
 
-        private class WeakEventDispatcherShutdown: WeakReference
+        private class WeakEventDispatcherShutdown : WeakReference
         {
-            public WeakEventDispatcherShutdown(HwndSource source, Dispatcher that): base(source)
+            public WeakEventDispatcherShutdown(HwndSource source, Dispatcher that) : base(source)
             {
                 _that = that;
                 _that.ShutdownFinished += new EventHandler(this.OnShutdownFinished);
@@ -2699,7 +2723,7 @@ namespace System.Windows.Interop
             public void OnShutdownFinished(object sender, EventArgs e)
             {
                 HwndSource source = this.Target as HwndSource;
-                if(null != source)
+                if (null != source)
                 {
                     source.OnShutdownFinished(sender, e);
                 }
@@ -2711,23 +2735,23 @@ namespace System.Windows.Interop
 
             public void Dispose()
             {
-                if(null != _that)
+                if (null != _that)
                 {
-                    _that.ShutdownFinished-= new EventHandler(this.OnShutdownFinished);
+                    _that.ShutdownFinished -= new EventHandler(this.OnShutdownFinished);
                 }
             }
 
             private Dispatcher _that;
         }
 
-        private class WeakEventPreprocessMessage: WeakReference
+        private class WeakEventPreprocessMessage : WeakReference
         {
-            public WeakEventPreprocessMessage(HwndSource source, bool addToFront): base(source)
+            public WeakEventPreprocessMessage(HwndSource source, bool addToFront) : base(source)
             {
                 _addToFront = addToFront;
                 _handler = new ThreadMessageEventHandler(this.OnPreprocessMessage);
 
-                if(addToFront)
+                if (addToFront)
                 {
                     ComponentDispatcher.CriticalAddThreadPreprocessMessageHandlerFirst(_handler);
                 }
@@ -2740,7 +2764,7 @@ namespace System.Windows.Interop
             public void OnPreprocessMessage(ref MSG msg, ref bool handled)
             {
                 HwndSource source = this.Target as HwndSource;
-                if(null != source)
+                if (null != source)
                 {
                     source.OnPreprocessMessageThunk(ref msg, ref handled);
                 }
@@ -2753,7 +2777,7 @@ namespace System.Windows.Interop
 
             public void Dispose()
             {
-                if(_addToFront)
+                if (_addToFront)
                 {
                     ComponentDispatcher.CriticalRemoveThreadPreprocessMessageHandlerFirst(_handler);
                 }
@@ -2769,38 +2793,38 @@ namespace System.Windows.Interop
             private ThreadMessageEventHandler _handler;
         }
 
-#endregion WeakEventHandlers
+        #endregion WeakEventHandlers
 
-        private object                      _constructionParameters; // boxed HwndSourceParameters
+        private object _constructionParameters; // boxed HwndSourceParameters
 
-        private bool                        _isDisposed = false;
-        private bool                        _isDisposing = false;
-        private bool                        _inRealHwndDispose = false;
+        private bool _isDisposed = false;
+        private bool _isDisposing = false;
+        private bool _inRealHwndDispose = false;
 
-        private bool                        _adjustSizingForNonClientArea;
-        private bool                        _treatAncestorsAsNonClientArea;
+        private bool _adjustSizingForNonClientArea;
+        private bool _treatAncestorsAsNonClientArea;
 
-        private bool                        _myOwnUpdate;
-        private bool                        _isWindowInMinimizeState = false;
+        private bool _myOwnUpdate;
+        private bool _isWindowInMinimizeState = false;
 
-        private int                         _registeredDropTargetCount;
+        private int _registeredDropTargetCount;
 
-        private SizeToContent               _sizeToContent = SizeToContent.Manual;
-        private Size?                       _previousSize;
+        private SizeToContent _sizeToContent = SizeToContent.Manual;
+        private Size? _previousSize;
 
-        private HwndWrapper                 _hwndWrapper;
+        private HwndWrapper _hwndWrapper;
 
-        private HwndTarget                  _hwndTarget;
+        private HwndTarget _hwndTarget;
 
-        private Visual                      _rootVisual;
+        private Visual _rootVisual;
 
         private Tuple<HwndSourceHook, Delegate[]> _hooks;
 
-        private HwndMouseInputProvider      _mouse;
+        private HwndMouseInputProvider _mouse;
 
-        private HwndKeyboardInputProvider   _keyboard;
+        private HwndKeyboardInputProvider _keyboard;
 
-        private IStylusInputProvider        _stylus;
+        private IStylusInputProvider _stylus;
 
         private HwndAppCommandInputProvider _appCommand;
 
@@ -2816,21 +2840,21 @@ namespace System.Windows.Interop
         private static bool? _defaultAcquireHwndFocusInMenuMode;
         private bool _acquireHwndFocusInMenuMode;
 
-        private MSG                         _lastKeyboardMessage;
+        private MSG _lastKeyboardMessage;
         private List<HwndSourceKeyboardInputSite> _keyboardInputSinkChildren;
 
         // Be careful about accessing this field directly.
         // It's bound to IKeyboardInputSink.KeyboardInputSite, so if a derived class overrides
         // that property then this field will be incorrect.
-        private IKeyboardInputSite          _keyboardInputSite = null;
+        private IKeyboardInputSite _keyboardInputSite = null;
 
-        private HwndWrapperHook             _layoutHook;
+        private HwndWrapperHook _layoutHook;
 
-        private HwndWrapperHook             _inputHook;
+        private HwndWrapperHook _inputHook;
 
-        private HwndWrapperHook             _hwndTargetHook;
+        private HwndWrapperHook _hwndTargetHook;
 
-        private HwndWrapperHook             _publicHook;
+        private HwndWrapperHook _publicHook;
 
         // MITIGATION: HANDLED_KEYDOWN_STILL_GENERATES_CHARS
         //
@@ -2848,5 +2872,5 @@ namespace System.Windows.Interop
         //
         [ThreadStatic]
         internal static bool _eatCharMessages; // used from HwndKeyboardInputProvider
-}
+    }
 }

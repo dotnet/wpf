@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -119,7 +119,7 @@ namespace System.Windows
         /// </summary>
         internal HwndDpiChangedAfterParentEventArgs(HwndDpiChangedEventArgs e)
             : this(e.OldDpi, e.NewDpi, e.SuggestedRect)
-        {}
+        { }
 
         /// <summary>
         /// Dpi scale information before change
@@ -165,7 +165,7 @@ namespace System.Windows
         /// <summary>
         /// Constructs a DpiChangedEventArgs instance.
         /// </summary>
-        internal DpiChangedEventArgs(DpiScale oldDpi, DpiScale newDpi, RoutedEvent routedEvent, object source) : base(routedEvent, source )
+        internal DpiChangedEventArgs(DpiScale oldDpi, DpiScale newDpi, RoutedEvent routedEvent, object source) : base(routedEvent, source)
         {
             OldDpi = oldDpi;
             NewDpi = newDpi;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,9 +14,9 @@ namespace System.Windows.Diagnostics
     public class ResourceDictionaryInfo
     {
         internal ResourceDictionaryInfo(
-            Assembly assembly, 
-            Assembly resourceDictionaryAssembly, 
-            ResourceDictionary resourceDictionary, 
+            Assembly assembly,
+            Assembly resourceDictionaryAssembly,
+            ResourceDictionary resourceDictionary,
             Uri sourceUri)
         {
             Assembly = assembly;
@@ -29,7 +29,7 @@ namespace System.Windows.Diagnostics
         /// Assembly that uses the <see cref="ResourceDictionaryInfo.ResourceDictionary"/> loaded 
         /// from <see cref="ResourceDictionaryAssembly"/>
         /// </summary>
-        public Assembly Assembly {get; private set; }
+        public Assembly Assembly { get; private set; }
 
         /// <summary>
         /// Assembly from which resource dictionary is loaded.

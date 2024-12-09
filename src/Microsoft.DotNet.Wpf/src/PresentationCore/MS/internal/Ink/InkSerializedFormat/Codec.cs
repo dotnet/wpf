@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -81,7 +81,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             _d_i_2 = _d_i_1;
             _d_i_1 = data;
             // Most of the cases, the delta delta will be less than LONG_MAX
-            if ( Int32.MaxValue >= MathHelper.AbsNoThrow(llxfData) )
+            if (Int32.MaxValue >= MathHelper.AbsNoThrow(llxfData))
             {
                 // In those cases, we set 0 to nExtra and 
                 // assign the delta delta to xfData

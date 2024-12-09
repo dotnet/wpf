@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,7 +14,7 @@ namespace System.Windows.Media
     /// This is a internal class which is used by non context affinity objects
     /// to get access to a MIL factory object.
     /// </summary>
-    internal class FactoryMaker: IDisposable
+    internal class FactoryMaker : IDisposable
     {
         private bool _disposed = false;
         internal FactoryMaker()
@@ -48,50 +48,50 @@ namespace System.Windows.Media
         /// </summary>
         public void Dispose()
         {
-                Dispose(true);
+            Dispose(true);
         }
 
         protected virtual void Dispose(bool fDisposing)
         {
-                if (!_disposed)
+            if (!_disposed)
+            {
+                if (_fValidObject == true)
                 {
-                    if (_fValidObject == true)
+                    lock (s_factoryMakerLock)
                     {
-                        lock (s_factoryMakerLock)
+                        s_cInstance--;
+
+                        // Make sure we don't dispose twice
+                        _fValidObject = false;
+
+                        // If there is no FactoryMaker object out there, release
+                        // factory object
+
+                        if (s_cInstance == 0)
                         {
-                            s_cInstance--;
+                            UnsafeNativeMethods.MILUnknown.ReleaseInterface(ref s_pFactory);
 
-                            // Make sure we don't dispose twice
-                            _fValidObject = false;
-
-                            // If there is no FactoryMaker object out there, release
-                            // factory object
-
-                            if (s_cInstance == 0)
+                            if (s_pImagingFactory != IntPtr.Zero)
                             {
-                                UnsafeNativeMethods.MILUnknown.ReleaseInterface(ref s_pFactory);
-
-                                if (s_pImagingFactory != IntPtr.Zero)
-                                {
-                                    UnsafeNativeMethods.MILUnknown.ReleaseInterface(ref s_pImagingFactory);
-                                }
-
-                                s_pFactory = IntPtr.Zero;
-                                s_pImagingFactory = IntPtr.Zero;
+                                UnsafeNativeMethods.MILUnknown.ReleaseInterface(ref s_pImagingFactory);
                             }
+
+                            s_pFactory = IntPtr.Zero;
+                            s_pImagingFactory = IntPtr.Zero;
                         }
                     }
+                }
 
-                                
+
                 // Set the sentinel.
                 _disposed = true;
-   
+
                 // Suppress finalization of this disposed instance.
                 if (fDisposing)
                 {
                     GC.SuppressFinalize(this);
                 }
-                }
+            }
         }
 
         internal IntPtr FactoryPtr

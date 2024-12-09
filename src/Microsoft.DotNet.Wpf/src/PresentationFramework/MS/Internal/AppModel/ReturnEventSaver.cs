@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,9 +15,9 @@
 //               saved list to the calling pagefunction
 // 
 
-using System.Windows.Navigation;
-using System.Windows;
 using System.Reflection;
+using System.Windows;
+using System.Windows.Navigation;
 
 namespace MS.Internal.AppModel
 {

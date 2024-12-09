@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,15 +16,15 @@ namespace MS.Internal
         /// </summary>    
         public static CultureInfo Value
         {
-            get 
+            get
             {
                 // Get the UI Language from the string table
                 string uiLanguage = SR.WPF_UILanguage;
                 Invariant.Assert(!string.IsNullOrEmpty(uiLanguage), "No UILanguage was specified in stringtable.");
-    
+
                 // Return the CultureInfo for this UI language.
                 return new CultureInfo(uiLanguage);
             }
         }
-}
+    }
 }

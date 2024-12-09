@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -61,7 +61,7 @@ namespace MS.Internal.Ink
         internal double EndFIndex
         {
             get { return _endFIndex; }
-            set { _endFIndex = value;}
+            set { _endFIndex = value; }
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace MS.Internal.Ink
         public override string ToString()
         {
             return "{" + GetStringRepresentation(_beginFIndex) + "," + GetStringRepresentation(_endFIndex) + "}";
-		}
+        }
 
         /// <summary>
         /// Equals
@@ -158,7 +158,7 @@ namespace MS.Internal.Ink
         /// <summary>
         ///
         /// </summary>
-        internal bool IsFull { get { return ((DoubleUtil.AreClose(_beginFIndex, BeforeFirst)) && (DoubleUtil.AreClose(_endFIndex,AfterLast))); } }
+        internal bool IsFull { get { return ((DoubleUtil.AreClose(_beginFIndex, BeforeFirst)) && (DoubleUtil.AreClose(_endFIndex, AfterLast))); } }
 
 
 #if DEBUG

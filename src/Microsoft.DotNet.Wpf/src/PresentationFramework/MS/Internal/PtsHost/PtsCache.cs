@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,12 +22,12 @@
 
 using System.Threading;                         // Interlocked
 using System.Windows;                           // WrapDirection
+using System.Windows.Media;
 using System.Windows.Media.TextFormatting;      // TextFormatter
 using System.Windows.Threading;                 // Dispatcher
-using System.Windows.Media;
+using MS.Internal.PtsHost.UnsafeNativeMethods;  // PTS
 using MS.Internal.Text;                         // TextDpi
 using MS.Internal.TextFormatting;               // UnsafeTextPenaltyModule
-using MS.Internal.PtsHost.UnsafeNativeMethods;  // PTS
 
 namespace MS.Internal.PtsHost
 {
@@ -194,8 +194,10 @@ namespace MS.Internal.PtsHost
             {
                 _contextPool.Add(new ContextDesc());
                 _contextPool[index].IsOptimalParagraphEnabled = ptsContext.IsOptimalParagraphEnabled;
-                _contextPool[index].PtsHost = new PtsHost();
-                _contextPool[index].PtsHost.Context = CreatePTSContext(index, textFormattingMode);
+                _contextPool[index].PtsHost = new PtsHost
+                {
+                    Context = CreatePTSContext(index, textFormattingMode)
+                };
             }
 
             // Initialize TextFormatter, if optimal paragraph is enabled.

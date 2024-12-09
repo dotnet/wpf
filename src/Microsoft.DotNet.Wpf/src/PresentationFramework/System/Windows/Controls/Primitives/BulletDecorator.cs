@@ -1,15 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 
-using MS.Internal;
-using MS.Internal.Documents;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Windows.Documents;
 using System.Windows.Media;
+using MS.Internal;
+using MS.Internal.Documents;
 
 namespace System.Windows.Controls.Primitives
 {
@@ -213,7 +213,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         protected override Visual GetVisualChild(int index)
         {
-            if (index < 0 || index > VisualChildrenCount-1)
+            if (index < 0 || index > VisualChildrenCount - 1)
             {
                 throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
@@ -233,30 +233,30 @@ namespace System.Windows.Controls.Primitives
         /// <returns>BulletDecorator' desired size.</returns>
         protected override Size MeasureOverride(Size constraint)
         {
-                Size bulletSize = new Size();
-                Size contentSize = new Size();
-                UIElement bullet = Bullet;
-                UIElement content = Child;
+            Size bulletSize = new Size();
+            Size contentSize = new Size();
+            UIElement bullet = Bullet;
+            UIElement content = Child;
 
-                // If we have bullet we should measure it first
-                if (bullet != null)
-                {
-                    bullet.Measure(constraint);
-                    bulletSize = bullet.DesiredSize;
-                }
+            // If we have bullet we should measure it first
+            if (bullet != null)
+            {
+                bullet.Measure(constraint);
+                bulletSize = bullet.DesiredSize;
+            }
 
-                // If we have second child (content) we should measure it
-                if (content != null)
-                {
-                    Size contentConstraint = constraint;
-                    contentConstraint.Width = Math.Max(0.0, contentConstraint.Width - bulletSize.Width);
+            // If we have second child (content) we should measure it
+            if (content != null)
+            {
+                Size contentConstraint = constraint;
+                contentConstraint.Width = Math.Max(0.0, contentConstraint.Width - bulletSize.Width);
 
-                    content.Measure(contentConstraint);
-                    contentSize = content.DesiredSize;
-                }
+                content.Measure(contentConstraint);
+                contentSize = content.DesiredSize;
+            }
 
-                Size desiredSize = new Size(bulletSize.Width + contentSize.Width, Math.Max(bulletSize.Height, contentSize.Height));
-                return desiredSize;
+            Size desiredSize = new Size(bulletSize.Width + contentSize.Width, Math.Max(bulletSize.Height, contentSize.Height));
+            return desiredSize;
         }
 
         /// <summary>
@@ -266,47 +266,47 @@ namespace System.Windows.Controls.Primitives
         /// <param name="arrangeSize">Size that BulletDecorator will assume to position children.</param>
         protected override Size ArrangeOverride(Size arrangeSize)
         {
-                UIElement bullet = Bullet;
-                UIElement content = Child;
-                double contentOffsetX = 0;
+            UIElement bullet = Bullet;
+            UIElement content = Child;
+            double contentOffsetX = 0;
 
-                double bulletOffsetY = 0;
+            double bulletOffsetY = 0;
 
-                Size bulletSize = new Size();
+            Size bulletSize = new Size();
 
-                // Arrange the bullet if exist
+            // Arrange the bullet if exist
+            if (bullet != null)
+            {
+                bullet.Arrange(new Rect(bullet.DesiredSize));
+                bulletSize = bullet.RenderSize;
+
+                contentOffsetX = bulletSize.Width;
+            }
+
+            // Arrange the content if exist
+            if (content != null)
+            {
+                // Helper arranges child and may substitute a child's explicit properties for its DesiredSize.
+                // The actual size the child takes up is stored in its RenderSize.
+                Size contentSize = arrangeSize;
                 if (bullet != null)
                 {
-                    bullet.Arrange(new Rect(bullet.DesiredSize));
-                    bulletSize = bullet.RenderSize;
-
-                    contentOffsetX = bulletSize.Width;
+                    contentSize.Width = Math.Max(content.DesiredSize.Width, arrangeSize.Width - bullet.DesiredSize.Width);
+                    contentSize.Height = Math.Max(content.DesiredSize.Height, arrangeSize.Height);
                 }
+                content.Arrange(new Rect(contentOffsetX, 0, contentSize.Width, contentSize.Height));
 
-                // Arrange the content if exist
-                if (content != null)
-                {
-                    // Helper arranges child and may substitute a child's explicit properties for its DesiredSize.
-                    // The actual size the child takes up is stored in its RenderSize.
-                    Size contentSize = arrangeSize;
-                    if (bullet != null)
-                    {
-                        contentSize.Width = Math.Max(content.DesiredSize.Width, arrangeSize.Width - bullet.DesiredSize.Width);
-                        contentSize.Height = Math.Max(content.DesiredSize.Height, arrangeSize.Height);
-                    }
-                    content.Arrange(new Rect(contentOffsetX, 0, contentSize.Width, contentSize.Height));
+                double centerY = GetFirstLineHeight(content) * 0.5d;
+                bulletOffsetY += Math.Max(0d, centerY - bulletSize.Height * 0.5d);
+            }
 
-                    double centerY = GetFirstLineHeight(content) * 0.5d;
-                    bulletOffsetY += Math.Max(0d, centerY - bulletSize.Height * 0.5d);
-                }
+            // Re-Position the bullet if exist
+            if (bullet != null && !DoubleUtil.IsZero(bulletOffsetY))
+            {
+                bullet.Arrange(new Rect(0, bulletOffsetY, bullet.DesiredSize.Width, bullet.DesiredSize.Height));
+            }
 
-                // Re-Position the bullet if exist
-                if (bullet != null && !DoubleUtil.IsZero(bulletOffsetY))
-                {
-                    bullet.Arrange(new Rect(0, bulletOffsetY, bullet.DesiredSize.Width, bullet.DesiredSize.Height));
-                }
-
-                return arrangeSize;
+            return arrangeSize;
         }
 
         #endregion Protected Methods
@@ -424,7 +424,7 @@ namespace System.Windows.Controls.Primitives
             ContentPresenter cp = root as ContentPresenter;
             if (cp != null)
             {
-                if(VisualTreeHelper.GetChildrenCount(cp) == 1)
+                if (VisualTreeHelper.GetChildrenCount(cp) == 1)
                     return VisualTreeHelper.GetChild(cp, 0) as FlowDocumentScrollViewer;
             }
             return null;

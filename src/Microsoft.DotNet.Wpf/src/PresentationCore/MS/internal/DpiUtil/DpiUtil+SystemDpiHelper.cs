@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using MS.Win32;
 using System.Runtime.InteropServices;
 using System.Windows;
+using MS.Win32;
 
 namespace MS.Internal
 {
@@ -77,7 +77,7 @@ namespace MS.Internal
             /// <param name="systemDpiScale">Updated System DPI scale value</param>
             internal static void UpdateUIElementCacheForSystemDpi(DpiScale2 systemDpiScale)
             {
-                lock(UIElement.DpiLock)
+                lock (UIElement.DpiLock)
                 {
                     UIElement.DpiScaleXValues.Insert(0, systemDpiScale.DpiScaleX);
                     UIElement.DpiScaleYValues.Insert(0, systemDpiScale.DpiScaleY);

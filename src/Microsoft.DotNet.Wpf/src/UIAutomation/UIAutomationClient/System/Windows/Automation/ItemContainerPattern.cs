@@ -4,8 +4,8 @@
 
 // Description: Client-side wrapper for ItemContainer Pattern
 
-using MS.Internal.Automation;
 using System.Globalization;
+using MS.Internal.Automation;
 
 namespace System.Windows.Automation
 {
@@ -15,7 +15,7 @@ namespace System.Windows.Automation
 #if (INTERNAL_COMPILE)
     internal class ItemContainerPattern: BasePattern
 #else
-    public class ItemContainerPattern: BasePattern
+    public class ItemContainerPattern : BasePattern
 #endif
     {
         //------------------------------------------------------
@@ -23,7 +23,7 @@ namespace System.Windows.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         private ItemContainerPattern(AutomationElement el, SafePatternHandle hPattern)
@@ -40,7 +40,7 @@ namespace System.Windows.Automation
         //  Public Constants / Readonly Fields
         //
         //------------------------------------------------------
- 
+
         #region Public Constants and Readonly Fields
 
         /// <summary>ItemContainer pattern</summary>
@@ -54,7 +54,7 @@ namespace System.Windows.Automation
         //  Public Methods
         //
         //------------------------------------------------------
- 
+
         #region Public Methods
 
         /// <summary>
@@ -83,44 +83,44 @@ namespace System.Windows.Automation
         /// <returns>The first item which matches the searched criterion, if no item matches, it returns null  </returns>
         public AutomationElement FindItemByProperty(AutomationElement startAfter, AutomationProperty property, object value)
         {
-           SafeNodeHandle hNode;
-           
-           // Invalidate the "value" passed against the "property" before passing it to UIACore, Don't invalidate if search is being done for "null" property
-           // FindItemByProperty supports find for null property.
-           if (property != null)
-           {
-               value = PropertyValueValidateAndMap(property, value);
-           }
-           
-           if (startAfter != null)
-           {
-               if (property != null)
-                   hNode = UiaCoreApi.ItemContainerPattern_FindItemByProperty(_hPattern, startAfter.RawNode, property.Id, value);
-               else
-                   hNode = UiaCoreApi.ItemContainerPattern_FindItemByProperty(_hPattern, startAfter.RawNode, 0, null);
-           }
-           else
-           {
-               if (property != null)
-                   hNode = UiaCoreApi.ItemContainerPattern_FindItemByProperty(_hPattern, new SafeNodeHandle(), property.Id, value);
-               else
-                   hNode = UiaCoreApi.ItemContainerPattern_FindItemByProperty(_hPattern, new SafeNodeHandle(), 0, null);
-           }
-               
+            SafeNodeHandle hNode;
 
-           AutomationElement wrappedElement = AutomationElement.Wrap(hNode);
-           return wrappedElement;
+            // Invalidate the "value" passed against the "property" before passing it to UIACore, Don't invalidate if search is being done for "null" property
+            // FindItemByProperty supports find for null property.
+            if (property != null)
+            {
+                value = PropertyValueValidateAndMap(property, value);
+            }
+
+            if (startAfter != null)
+            {
+                if (property != null)
+                    hNode = UiaCoreApi.ItemContainerPattern_FindItemByProperty(_hPattern, startAfter.RawNode, property.Id, value);
+                else
+                    hNode = UiaCoreApi.ItemContainerPattern_FindItemByProperty(_hPattern, startAfter.RawNode, 0, null);
+            }
+            else
+            {
+                if (property != null)
+                    hNode = UiaCoreApi.ItemContainerPattern_FindItemByProperty(_hPattern, new SafeNodeHandle(), property.Id, value);
+                else
+                    hNode = UiaCoreApi.ItemContainerPattern_FindItemByProperty(_hPattern, new SafeNodeHandle(), 0, null);
+            }
+
+
+            AutomationElement wrappedElement = AutomationElement.Wrap(hNode);
+            return wrappedElement;
         }
 
         #endregion Public Methods
 
-       //------------------------------------------------------
-       //
-       //  Private Methods
-       //
-       //------------------------------------------------------
+        //------------------------------------------------------
+        //
+        //  Private Methods
+        //
+        //------------------------------------------------------
 
-       #region Private Methods
+        #region Private Methods
 
         private object PropertyValueValidateAndMap(AutomationProperty property, object value)
         {
@@ -194,7 +194,7 @@ namespace System.Windows.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private SafePatternHandle _hPattern;

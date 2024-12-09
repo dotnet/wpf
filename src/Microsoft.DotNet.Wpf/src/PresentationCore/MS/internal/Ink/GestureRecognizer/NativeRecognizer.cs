@@ -6,13 +6,13 @@
 //      A wrapper class which interoperates with the unmanaged recognition APIS
 //      in mshwgst.dll
 
-using Microsoft.Win32;
-using MS.Win32;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Windows.Media;
 using System.Windows.Ink;
 using System.Windows.Input;
+using System.Windows.Media;
+using Microsoft.Win32;
+using MS.Win32;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -131,7 +131,7 @@ namespace MS.Internal.Ink.GestureRecognition
             // Create an empty result.
             GestureRecognitionResult[] recResults = Array.Empty<GestureRecognitionResult>();
 
-            if ( strokes.Count == 0 )
+            if (strokes.Count == 0)
             {
                 return recResults;
             }
@@ -162,7 +162,7 @@ namespace MS.Internal.Ink.GestureRecognition
 
                 if (HRESULT.Succeeded(hr))
                 {
-                    if ( s_GetAlternateListExists )
+                    if (s_GetAlternateListExists)
                     {
                         recResults = InvokeGetAlternateList();
                     }
@@ -175,7 +175,7 @@ namespace MS.Internal.Ink.GestureRecognition
             finally
             {
                 // Check if we should report any error.
-                if ( HRESULT.Failed(hr) )
+                if (HRESULT.Failed(hr))
                 {
                     //don't throw a com exception here, we don't need to pass out any details
                     throw new InvalidOperationException(SR.UnspecifiedGestureException);
@@ -308,7 +308,7 @@ namespace MS.Internal.Ink.GestureRecognition
                     if (path == null)
                     {
                         return false;
-                    } 
+                    }
                 }
                 finally
                 {
@@ -321,21 +321,21 @@ namespace MS.Internal.Ink.GestureRecognition
                 // no key to close
                 return false;
             }
- 
+
             if (path != null)
             {
                 IntPtr hModule = MS.Win32.UnsafeNativeMethods.LoadLibrary(path);
 
                 // Check whether GetAlternateList exists in the loaded Dll.
                 s_GetAlternateListExists = false;
-                if ( hModule != IntPtr.Zero )
+                if (hModule != IntPtr.Zero)
                 {
                     s_GetAlternateListExists = MS.Win32.UnsafeNativeMethods.GetProcAddressNoThrow(
                         new HandleRef(null, hModule), "GetAlternateList") != IntPtr.Zero ?
                         true : false;
                 }
 
-                return hModule != IntPtr.Zero ? true : false; 
+                return hModule != IntPtr.Zero ? true : false;
             }
             return false; //path was null 
         }
@@ -366,21 +366,21 @@ namespace MS.Internal.Ink.GestureRecognition
             //              SetEnabledUnicodeRanges() with one range=(GESTURE_NULL,255).
 
             // Enabel gestures
-            uint cRanges = (uint)( enabledGestures.Length );
+            uint cRanges = (uint)(enabledGestures.Length);
 
             MS.Win32.Recognizer.CHARACTER_RANGE[] charRanges = new MS.Win32.Recognizer.CHARACTER_RANGE[cRanges];
 
-            if ( cRanges == 1 && enabledGestures[0] == ApplicationGesture.AllGestures )
+            if (cRanges == 1 && enabledGestures[0] == ApplicationGesture.AllGestures)
             {
                 charRanges[0].cChars = MAX_GESTURE_COUNT;
                 charRanges[0].wcLow = GESTURE_NULL;
             }
             else
             {
-                for ( int i = 0; i < cRanges; i++ )
+                for (int i = 0; i < cRanges; i++)
                 {
                     charRanges[i].cChars = 1;
-                    charRanges[i].wcLow = (ushort)( enabledGestures[i] );
+                    charRanges[i].wcLow = (ushort)(enabledGestures[i]);
                 }
             }
             int hr = MS.Win32.Recognizer.UnsafeNativeMethods.SetEnabledUnicodeRanges(recContext, cRanges, charRanges);
@@ -397,9 +397,9 @@ namespace MS.Internal.Ink.GestureRecognition
 
             int hr;
 
-            foreach ( Stroke stroke in strokes )
+            foreach (Stroke stroke in strokes)
             {
-                MS.Win32.Recognizer.PACKET_DESCRIPTION packetDescription = 
+                MS.Win32.Recognizer.PACKET_DESCRIPTION packetDescription =
                     new MS.Win32.Recognizer.PACKET_DESCRIPTION();
                 IntPtr packets = IntPtr.Zero;
                 try
@@ -413,7 +413,7 @@ namespace MS.Internal.Ink.GestureRecognition
                     }
 
                     hr = MS.Win32.Recognizer.UnsafeNativeMethods.AddStroke(recContext, ref packetDescription, (uint)countOfBytes, packets, xForm);
-                    if ( HRESULT.Failed(hr) )
+                    if (HRESULT.Failed(hr))
                     {
                         // Return from here. The finally block will free the memory and report the error properly.
                         return hr;
@@ -427,7 +427,7 @@ namespace MS.Internal.Ink.GestureRecognition
             }
 
             return MS.Win32.Recognizer.UnsafeNativeMethods.EndInkInput(recContext);
-}
+        }
 
         /// <summary>
         /// Retrieve the packet description, packets data and XFORM which is the information the native recognizer needs.
@@ -436,9 +436,9 @@ namespace MS.Internal.Ink.GestureRecognition
         private void GetPacketData
         (
             Stroke stroke,
-            out MS.Win32.Recognizer.PACKET_DESCRIPTION packetDescription, 
-            out int countOfBytes, 
-            out IntPtr packets, 
+            out MS.Win32.Recognizer.PACKET_DESCRIPTION packetDescription,
+            out int countOfBytes,
+            out IntPtr packets,
             out NativeMethods.XFORM xForm
         )
         {
@@ -499,20 +499,22 @@ namespace MS.Internal.Ink.GestureRecognition
             infosToUse[StylusPointDescription.RequiredPressureIndex] =
                 stylusPoints.Description.GetPropertyInfo(StylusPointProperties.NormalPressure);
 
-            MS.Win32.Recognizer.PACKET_PROPERTY[] packetProperties = 
+            MS.Win32.Recognizer.PACKET_PROPERTY[] packetProperties =
                 new MS.Win32.Recognizer.PACKET_PROPERTY[packetDescription.cPacketProperties];
-            
+
             StylusPointPropertyInfo propertyInfo;
-            for ( i = 0; i < packetDescription.cPacketProperties; i++ )
+            for (i = 0; i < packetDescription.cPacketProperties; i++)
             {
                 packetProperties[i].guid = propertyGuids[i];
                 propertyInfo = infosToUse[i];
 
-                MS.Win32.Recognizer.PROPERTY_METRICS propertyMetrics = new MS.Win32.Recognizer.PROPERTY_METRICS( );
-                propertyMetrics.nLogicalMin = propertyInfo.Minimum;
-                propertyMetrics.nLogicalMax = propertyInfo.Maximum;
-                propertyMetrics.Units = (int)(propertyInfo.Unit);
-                propertyMetrics.fResolution = propertyInfo.Resolution;
+                MS.Win32.Recognizer.PROPERTY_METRICS propertyMetrics = new MS.Win32.Recognizer.PROPERTY_METRICS
+                {
+                    nLogicalMin = propertyInfo.Minimum,
+                    nLogicalMax = propertyInfo.Maximum,
+                    Units = (int)(propertyInfo.Unit),
+                    fResolution = propertyInfo.Resolution
+                };
                 packetProperties[i].PropertyMetrics = propertyMetrics;
             }
 
@@ -520,10 +522,10 @@ namespace MS.Internal.Ink.GestureRecognition
             {
                 int allocationSize = (int)(Marshal.SizeOf(typeof(MS.Win32.Recognizer.PACKET_PROPERTY)) * packetDescription.cPacketProperties);
                 packetDescription.pPacketProperties = Marshal.AllocCoTaskMem(allocationSize);
-                MS.Win32.Recognizer.PACKET_PROPERTY* pPacketProperty = 
+                MS.Win32.Recognizer.PACKET_PROPERTY* pPacketProperty =
                     (MS.Win32.Recognizer.PACKET_PROPERTY*)(packetDescription.pPacketProperties.ToPointer());
                 MS.Win32.Recognizer.PACKET_PROPERTY* pElement = pPacketProperty;
-                for ( i = 0 ; i < packetDescription.cPacketProperties ; i ++ )
+                for (i = 0; i < packetDescription.cPacketProperties; i++)
                 {
                     Marshal.StructureToPtr(packetProperties[i], new IntPtr(pElement), false);
                     pElement++;
@@ -547,31 +549,31 @@ namespace MS.Internal.Ink.GestureRecognition
         /// </summary>
         private void ReleaseResourcesinPacketDescription(MS.Win32.Recognizer.PACKET_DESCRIPTION pd, IntPtr packets)
         {
-            if ( pd.pPacketProperties != IntPtr.Zero )
+            if (pd.pPacketProperties != IntPtr.Zero)
             {
                 unsafe
                 {
-                    MS.Win32.Recognizer.PACKET_PROPERTY* pPacketProperty = 
-                        (MS.Win32.Recognizer.PACKET_PROPERTY*)( pd.pPacketProperties.ToPointer( ) );
+                    MS.Win32.Recognizer.PACKET_PROPERTY* pPacketProperty =
+                        (MS.Win32.Recognizer.PACKET_PROPERTY*)(pd.pPacketProperties.ToPointer());
                     MS.Win32.Recognizer.PACKET_PROPERTY* pElement = pPacketProperty;
 
-                    for ( int i = 0; i < pd.cPacketProperties; i++ )
+                    for (int i = 0; i < pd.cPacketProperties; i++)
                     {
                         Marshal.DestroyStructure(new IntPtr(pElement), typeof(MS.Win32.Recognizer.PACKET_PROPERTY));
                         pElement++;
                     }
                 }
                 Marshal.FreeCoTaskMem(pd.pPacketProperties);
-                pd.pPacketProperties = IntPtr.Zero; 
+                pd.pPacketProperties = IntPtr.Zero;
             }
 
-            if ( pd.pguidButtons != IntPtr.Zero )
+            if (pd.pguidButtons != IntPtr.Zero)
             {
                 Marshal.FreeCoTaskMem(pd.pguidButtons);
                 pd.pguidButtons = IntPtr.Zero;
             }
 
-            if ( packets != IntPtr.Zero )
+            if (packets != IntPtr.Zero)
             {
                 Marshal.FreeCoTaskMem(packets);
                 packets = IntPtr.Zero;
@@ -597,18 +599,18 @@ namespace MS.Internal.Ink.GestureRecognition
             {
                 hr = MS.Win32.Recognizer.UnsafeNativeMethods.GetAlternateList(_hContext, ref recoRange, ref countOfAlternates, pRecoAlternates, MS.Win32.Recognizer.ALT_BREAKS.ALT_BREAKS_SAME);
 
-                if ( HRESULT.Succeeded(hr) && countOfAlternates != 0 )
+                if (HRESULT.Succeeded(hr) && countOfAlternates != 0)
                 {
                     List<GestureRecognitionResult> resultList = new List<GestureRecognitionResult>();
 
-                    for ( int i = 0; i < countOfAlternates; i++ )
+                    for (int i = 0; i < countOfAlternates; i++)
                     {
                         uint size = 1; // length of string == 1 since gesture id is a single WCHAR
                         StringBuilder recoString = new StringBuilder(1);
                         RecognitionConfidence confidenceLevel;
 
-                        if ( HRESULT.Failed(MS.Win32.Recognizer.UnsafeNativeMethods.GetString(pRecoAlternates[i], out recoRange, ref size, recoString))
-                            || HRESULT.Failed(MS.Win32.Recognizer.UnsafeNativeMethods.GetConfidenceLevel(pRecoAlternates[i], out recoRange, out confidenceLevel)) )
+                        if (HRESULT.Failed(MS.Win32.Recognizer.UnsafeNativeMethods.GetString(pRecoAlternates[i], out recoRange, ref size, recoString))
+                            || HRESULT.Failed(MS.Win32.Recognizer.UnsafeNativeMethods.GetConfidenceLevel(pRecoAlternates[i], out recoRange, out confidenceLevel)))
                         {
                             // Fail to retrieve the reco result, skip this one
                             continue;
@@ -628,11 +630,11 @@ namespace MS.Internal.Ink.GestureRecognition
             finally
             {
                 // Destroy the alternates
-                for ( int i = 0; i < countOfAlternates; i++ )
+                for (int i = 0; i < countOfAlternates; i++)
                 {
                     if (pRecoAlternates[i] != IntPtr.Zero)
                     {
-                        #pragma warning suppress 6031, 56031 // Return value ignored on purpose.
+#pragma warning suppress 6031, 56031 // Return value ignored on purpose.
                         MS.Win32.Recognizer.UnsafeNativeMethods.DestroyAlternate(pRecoAlternates[i]);
                         pRecoAlternates[i] = IntPtr.Zero;
                     }
@@ -650,15 +652,15 @@ namespace MS.Internal.Ink.GestureRecognition
         {
             GestureRecognitionResult[] recResults = Array.Empty<GestureRecognitionResult>();
 
-//            int hr = 0;
+            //            int hr = 0;
             IntPtr ptr = IntPtr.Zero;
 
             // NOTICE-2005/07/11-WAYNEZEN,
             // There is no need to free the returned the structure. 
             // The memory will be released when ResetContext, which is invoked in the callee - Recognize, is called.
-            if ( HRESULT.Succeeded(
+            if (HRESULT.Succeeded(
                 MS.Win32.Recognizer.UnsafeNativeMethods.GetLatticePtr(
-                _hContext, ref ptr)) )
+                _hContext, ref ptr)))
             {
                 unsafe
                 {
@@ -666,7 +668,7 @@ namespace MS.Internal.Ink.GestureRecognition
 
                     uint bestResultColumnCount = pRecoLattice->ulBestResultColumnCount;
                     Debug.Assert(!(bestResultColumnCount != 0 && pRecoLattice->pLatticeColumns == IntPtr.Zero), "Invalid results!");
-                    if ( bestResultColumnCount > 0 && pRecoLattice->pLatticeColumns != IntPtr.Zero )
+                    if (bestResultColumnCount > 0 && pRecoLattice->pLatticeColumns != IntPtr.Zero)
                     {
                         List<GestureRecognitionResult> resultList = new List<GestureRecognitionResult>();
 
@@ -674,21 +676,21 @@ namespace MS.Internal.Ink.GestureRecognition
                             (MS.Win32.Recognizer.RECO_LATTICE_COLUMN*)(pRecoLattice->pLatticeColumns);
                         ulong* pulBestResultColumns = (ulong*)(pRecoLattice->pulBestResultColumns);
 
-                        for ( uint i = 0; i < bestResultColumnCount; i++ )
+                        for (uint i = 0; i < bestResultColumnCount; i++)
                         {
                             ulong column = pulBestResultColumns[i];
                             MS.Win32.Recognizer.RECO_LATTICE_COLUMN recoColumn = pLatticeColumns[column];
 
                             Debug.Assert(0 < recoColumn.cLatticeElements, "Invalid results!");
 
-                            for ( int j = 0; j < recoColumn.cLatticeElements; j++ )
+                            for (int j = 0; j < recoColumn.cLatticeElements; j++)
                             {
                                 MS.Win32.Recognizer.RECO_LATTICE_ELEMENT recoElement =
                                     ((MS.Win32.Recognizer.RECO_LATTICE_ELEMENT*)(recoColumn.pLatticeElements))[j];
 
-                                Debug.Assert((RECO_TYPE)(recoElement.type) == RECO_TYPE.RECO_TYPE_WCHAR, "The Application gesture has to be WCHAR type" );
+                                Debug.Assert((RECO_TYPE)(recoElement.type) == RECO_TYPE.RECO_TYPE_WCHAR, "The Application gesture has to be WCHAR type");
 
-                                if ( (RECO_TYPE)(recoElement.type) == RECO_TYPE.RECO_TYPE_WCHAR )
+                                if ((RECO_TYPE)(recoElement.type) == RECO_TYPE.RECO_TYPE_WCHAR)
                                 {
                                     // Retrieve the confidence lever
                                     RecognitionConfidence confidenceLevel = RecognitionConfidence.Poor;
@@ -696,16 +698,16 @@ namespace MS.Internal.Ink.GestureRecognition
                                     MS.Win32.Recognizer.RECO_LATTICE_PROPERTIES recoProperties = recoElement.epProp;
 
                                     uint propertyCount = recoProperties.cProperties;
-                                    MS.Win32.Recognizer.RECO_LATTICE_PROPERTY** apProps = 
+                                    MS.Win32.Recognizer.RECO_LATTICE_PROPERTY** apProps =
                                         (MS.Win32.Recognizer.RECO_LATTICE_PROPERTY**)recoProperties.apProps;
-                                    for ( int k = 0; k < propertyCount; k++ )
+                                    for (int k = 0; k < propertyCount; k++)
                                     {
                                         MS.Win32.Recognizer.RECO_LATTICE_PROPERTY* pProps = apProps[k];
-                                        if ( pProps->guidProperty == GUID_CONFIDENCELEVEL )
+                                        if (pProps->guidProperty == GUID_CONFIDENCELEVEL)
                                         {
                                             Debug.Assert(pProps->cbPropertyValue == sizeof(uint) / sizeof(byte));
                                             RecognitionConfidence level = (RecognitionConfidence)(((uint*)pProps->pPropertyValue))[0];
-                                            if ( level >= RecognitionConfidence.Strong && level <= RecognitionConfidence.Poor )
+                                            if (level >= RecognitionConfidence.Strong && level <= RecognitionConfidence.Poor)
                                             {
                                                 confidenceLevel = level;
                                             }
@@ -719,11 +721,11 @@ namespace MS.Internal.Ink.GestureRecognition
                                     if (ApplicationGestureHelper.IsDefined(gesture))
                                     {
                                         // Get the gesture result
-                                        resultList.Add(new GestureRecognitionResult(confidenceLevel,gesture));
+                                        resultList.Add(new GestureRecognitionResult(confidenceLevel, gesture));
                                     }
                                 }
                             }
-}
+                        }
 
                         recResults = (GestureRecognitionResult[])(resultList.ToArray());
                     }
@@ -772,8 +774,8 @@ namespace MS.Internal.Ink.GestureRecognition
         private const string GestureRecognizerFullPath = "HKEY_LOCAL_MACHINE" + @"\" + GestureRecognizerPath;
         private const string GestureRecognizerValueName = "RECOGNIZER DLL";
         private const string GestureRecognizerGuid = "{BED9A940-7D48-48E3-9A68-F4887A5A1B2E}";
-        
-        
+
+
         // This constant is an identical value as the one in drivers\tablet\recognition\ink\core\common\inc\gesture\gesturedefs.h
         private const ushort MAX_GESTURE_COUNT = 256;
         // This constant is an identical value as the one in drivers\tablet\include\sdk\recdefs.h
@@ -791,7 +793,7 @@ namespace MS.Internal.Ink.GestureRecognition
         /// <summary>
         /// IDisposable support
         /// </summary>
-        private bool                                    _disposed = false;
+        private bool _disposed = false;
 
         /// <summary>
         /// Each NativeRecognizer instance has it's own recognizer context
@@ -801,7 +803,7 @@ namespace MS.Internal.Ink.GestureRecognition
         /// <summary>
         /// Used to lock for instancing the native recognizer handle
         /// </summary>
-        private static readonly object                  _syncRoot = new object();
+        private static readonly object _syncRoot = new object();
 
         /// <summary>
         /// All NativeRecognizer share a single handle to the recognizer
@@ -811,7 +813,7 @@ namespace MS.Internal.Ink.GestureRecognition
         /// <summary>
         /// The Guid of the GestureRecognizer used for registry lookup
         /// </summary>
-        private static Guid                             s_Gesture = new Guid(GestureRecognizerGuid);
+        private static Guid s_Gesture = new Guid(GestureRecognizerGuid);
 
         /// <summary>
         /// can we load the recognizer?
@@ -823,5 +825,5 @@ namespace MS.Internal.Ink.GestureRecognition
         /// GetAlternateList function in mshwgst.dll
         /// </summary>
         private static bool s_GetAlternateListExists;
-}
+    }
 }

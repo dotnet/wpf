@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -26,29 +26,29 @@ namespace MS.Internal.TextFormatting
         //----------------------------------
         internal ThousandthOfEmRealDoubles(
             double emSize,
-            int    capacity
+            int capacity
             )
         {
             Debug.Assert(capacity >= 0);
             _emSize = emSize;
             InitArrays(capacity);
         }
-        
+
         internal ThousandthOfEmRealDoubles(
-            double        emSize,
+            double emSize,
             IList<double> realValues
             )
         {
             Debug.Assert(realValues != null);
-            _emSize = emSize;            
-            InitArrays(realValues.Count);            
+            _emSize = emSize;
+            InitArrays(realValues.Count);
 
             // do the setting
             for (int i = 0; i < Count; i++)
             {
                 this[i] = realValues[i];
             }
-}
+        }
 
         //-------------------------------------
         // Internal properties
@@ -71,7 +71,7 @@ namespace MS.Internal.TextFormatting
         public bool IsReadOnly
         {
             get { return false; }
-        }        
+        }
 
         public double this[int index]
         {
@@ -79,7 +79,7 @@ namespace MS.Internal.TextFormatting
             {
                 // Let underlying array do boundary check
                 if (_shortList != null)
-                {                    
+                {
                     return ThousandthOfEmToReal(_shortList[index]);
                 }
                 else
@@ -131,8 +131,8 @@ namespace MS.Internal.TextFormatting
                 {
                     return i;
                 }
-            }            
-            
+            }
+
             return -1;
         }
 
@@ -168,8 +168,8 @@ namespace MS.Internal.TextFormatting
             if (array.Rank != 1)
             {
                 throw new ArgumentException(
-                    SR.Collection_CopyTo_ArrayCannotBeMultidimensional, 
-                    "array");                
+                    SR.Collection_CopyTo_ArrayCannotBeMultidimensional,
+                    "array");
             }
 
             ArgumentOutOfRangeException.ThrowIfNegative(arrayIndex);
@@ -178,8 +178,8 @@ namespace MS.Internal.TextFormatting
             {
                 throw new ArgumentException(
                     SR.Format(
-                        SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, 
-                        "arrayIndex", 
+                        SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength,
+                        "arrayIndex",
                         "array"),
                     "arrayIndex");
             }
@@ -191,8 +191,8 @@ namespace MS.Internal.TextFormatting
                         SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength,
                         "arrayIndex",
                         "array"));
-            }           
-            
+            }
+
 
             // do the copying here
             for (int i = 0; i < Count; i++)
@@ -207,9 +207,9 @@ namespace MS.Internal.TextFormatting
             {
                 yield return this[i];
             }
-        }        
+        }
 
-	System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return ((IEnumerable<double>)this).GetEnumerator();
         }
@@ -218,25 +218,25 @@ namespace MS.Internal.TextFormatting
         public void Add(double value)
         {
             // not supported, same as double[] 
-            throw new NotSupportedException(SR.CollectionIsFixedSize);                           
+            throw new NotSupportedException(SR.CollectionIsFixedSize);
         }
 
         public void Insert(int index, double item)
         {
             // not supported, same as double[] 
-            throw new NotSupportedException(SR.CollectionIsFixedSize);                           
+            throw new NotSupportedException(SR.CollectionIsFixedSize);
         }
 
         public bool Remove(double item)
         {
             // not supported, same as double[]             
-            throw new NotSupportedException(SR.CollectionIsFixedSize);                           
+            throw new NotSupportedException(SR.CollectionIsFixedSize);
         }
 
         public void RemoveAt(int index)
         {
             // not supported, same as double[]             
-            throw new NotSupportedException(SR.CollectionIsFixedSize);                           
+            throw new NotSupportedException(SR.CollectionIsFixedSize);
         }
 
         //---------------------------------------------
@@ -253,13 +253,13 @@ namespace MS.Internal.TextFormatting
             {
                 // store value as scaled short.
                 _shortList = new short[capacity];
-            }            
+            }
         }
 
         private bool RealToThousandthOfEm(double value, out short thousandthOfEm)
         {
             double scaled = (value / _emSize) * ToThousandthOfEm;
-            
+
             if (scaled > short.MaxValue || scaled < short.MinValue)
             {
                 // value too big to fit into a short
@@ -269,7 +269,7 @@ namespace MS.Internal.TextFormatting
             else
             {
                 // round to nearest short
-                thousandthOfEm = (short) Math.Round(scaled);
+                thousandthOfEm = (short)Math.Round(scaled);
                 return true;
             }
         }
@@ -277,21 +277,21 @@ namespace MS.Internal.TextFormatting
         private double ThousandthOfEmToReal(short thousandthOfEm)
         {
             return ((double)thousandthOfEm) * ToReal * _emSize;
-        }        
+        }
 
         //----------------------------------------
         // Private members
         //----------------------------------------
-        private short[]  _shortList;  // scaled short values
+        private short[] _shortList;  // scaled short values
         private double[] _doubleList; // fall-back double list, is null for most cases
-        private double   _emSize;     // em size to scaled with
+        private double _emSize;     // em size to scaled with
 
         // Default scaling is 1/1000 emsize.         
         private const double ToThousandthOfEm = 1000.0;
-        private const double ToReal           = 1.0 / ToThousandthOfEm;
+        private const double ToReal = 1.0 / ToThousandthOfEm;
 
         // To achieve precsion of no less than 1/2000 of an inch, font Em size must be no greater than 48. 
         // i.e. 48px is 1/2 inch. 1000th of Em size at 48px is 1/2000 inch.
-        private const double CutOffEmSize = 48;         
-}    
+        private const double CutOffEmSize = 48;
+    }
 }

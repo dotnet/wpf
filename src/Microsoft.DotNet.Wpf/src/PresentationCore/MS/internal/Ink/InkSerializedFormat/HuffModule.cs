@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -54,7 +54,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             {
                 return GetDefCodec((uint)codec);
             }
-            
+
             if ((int)codec >= _huffCodecs.Count + AlgoModule.DefaultBAACount)
             {
                 throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("invalid codec computed"));
@@ -98,11 +98,11 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <summary>
         /// Privates
         /// </summary>
-        private DeltaDelta          _defaultDtxf;
+        private DeltaDelta _defaultDtxf;
         //unused
         //private List<CodeLookup>    _lookupList = new List<CodeLookup>();
-        private List<HuffCodec>     _huffCodecs = new List<HuffCodec>();
-        private HuffCodec[]         _defaultHuffCodecs = new HuffCodec[AlgoModule.DefaultBAACount];
+        private List<HuffCodec> _huffCodecs = new List<HuffCodec>();
+        private HuffCodec[] _defaultHuffCodecs = new HuffCodec[AlgoModule.DefaultBAACount];
 
         //unused
         ///// <summary>

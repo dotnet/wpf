@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -18,7 +18,7 @@ namespace System.Windows.Input
         //  Public Methods
         //
         //------------------------------------------------------
-#region Public Methods
+        #region Public Methods
 
         /// <summary>
         /// Play Command
@@ -105,7 +105,7 @@ namespace System.Windows.Input
         /// </summary>
         public static RoutedUICommand TogglePlayPause
         {
-            get {return _EnsureCommand(CommandId.TogglePlayPause);}
+            get { return _EnsureCommand(CommandId.TogglePlayPause); }
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace System.Windows.Input
         /// </summary>
         public static RoutedUICommand Select
         {
-            get {return _EnsureCommand(CommandId.Select);}
+            get { return _EnsureCommand(CommandId.Select); }
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace System.Windows.Input
         {
             get { return _EnsureCommand(CommandId.ToggleMicrophoneOnOff); }
         }
-#endregion Public Methods
+        #endregion Public Methods
 
         //------------------------------------------------------
         //
@@ -216,31 +216,79 @@ namespace System.Windows.Input
 
             switch (commandId)
             {
-                case CommandId.Play : propertyName = "Play"; break;
-                case CommandId.Pause: propertyName = "Pause"; break;
-                case CommandId.Stop : propertyName = "Stop"; break;
-                case CommandId.Record: propertyName = "Record"; break;
-                case CommandId.NextTrack: propertyName = "NextTrack"; break;
-                case CommandId.PreviousTrack: propertyName = "PreviousTrack"; break;
-                case CommandId.FastForward: propertyName = "FastForward"; break;
-                case CommandId.Rewind: propertyName = "Rewind"; break;
-                case CommandId.ChannelUp: propertyName = "ChannelUp"; break;
-                case CommandId.ChannelDown: propertyName = "ChannelDown"; break;
-                case CommandId.TogglePlayPause: propertyName = "TogglePlayPause"; break;
-                case CommandId.IncreaseVolume: propertyName = "IncreaseVolume"; break;
-                case CommandId.DecreaseVolume: propertyName = "DecreaseVolume"; break;
-                case CommandId.MuteVolume: propertyName = "MuteVolume"; break;
-                case CommandId.IncreaseTreble: propertyName = "IncreaseTreble"; break;
-                case CommandId.DecreaseTreble: propertyName = "DecreaseTreble"; break;
-                case CommandId.IncreaseBass: propertyName = "IncreaseBass"; break;
-                case CommandId.DecreaseBass: propertyName = "DecreaseBass"; break;
-                case CommandId.BoostBass: propertyName = "BoostBass"; break;
-                case CommandId.IncreaseMicrophoneVolume: propertyName = "IncreaseMicrophoneVolume"; break;
-                case CommandId.DecreaseMicrophoneVolume: propertyName = "DecreaseMicrophoneVolume"; break;
-                case CommandId.MuteMicrophoneVolume: propertyName = "MuteMicrophoneVolume"; break;
-                case CommandId.ToggleMicrophoneOnOff: propertyName = "ToggleMicrophoneOnOff"; break;
-                case CommandId.Select:propertyName = "Select";break;
-        }
+                case CommandId.Play:
+                    propertyName = "Play";
+                    break;
+                case CommandId.Pause:
+                    propertyName = "Pause";
+                    break;
+                case CommandId.Stop:
+                    propertyName = "Stop";
+                    break;
+                case CommandId.Record:
+                    propertyName = "Record";
+                    break;
+                case CommandId.NextTrack:
+                    propertyName = "NextTrack";
+                    break;
+                case CommandId.PreviousTrack:
+                    propertyName = "PreviousTrack";
+                    break;
+                case CommandId.FastForward:
+                    propertyName = "FastForward";
+                    break;
+                case CommandId.Rewind:
+                    propertyName = "Rewind";
+                    break;
+                case CommandId.ChannelUp:
+                    propertyName = "ChannelUp";
+                    break;
+                case CommandId.ChannelDown:
+                    propertyName = "ChannelDown";
+                    break;
+                case CommandId.TogglePlayPause:
+                    propertyName = "TogglePlayPause";
+                    break;
+                case CommandId.IncreaseVolume:
+                    propertyName = "IncreaseVolume";
+                    break;
+                case CommandId.DecreaseVolume:
+                    propertyName = "DecreaseVolume";
+                    break;
+                case CommandId.MuteVolume:
+                    propertyName = "MuteVolume";
+                    break;
+                case CommandId.IncreaseTreble:
+                    propertyName = "IncreaseTreble";
+                    break;
+                case CommandId.DecreaseTreble:
+                    propertyName = "DecreaseTreble";
+                    break;
+                case CommandId.IncreaseBass:
+                    propertyName = "IncreaseBass";
+                    break;
+                case CommandId.DecreaseBass:
+                    propertyName = "DecreaseBass";
+                    break;
+                case CommandId.BoostBass:
+                    propertyName = "BoostBass";
+                    break;
+                case CommandId.IncreaseMicrophoneVolume:
+                    propertyName = "IncreaseMicrophoneVolume";
+                    break;
+                case CommandId.DecreaseMicrophoneVolume:
+                    propertyName = "DecreaseMicrophoneVolume";
+                    break;
+                case CommandId.MuteMicrophoneVolume:
+                    propertyName = "MuteMicrophoneVolume";
+                    break;
+                case CommandId.ToggleMicrophoneOnOff:
+                    propertyName = "ToggleMicrophoneOnOff";
+                    break;
+                case CommandId.Select:
+                    propertyName = "Select";
+                    break;
+            }
             return propertyName;
         }
 
@@ -250,30 +298,78 @@ namespace System.Windows.Input
 
             switch ((CommandId)commandId)
             {
-                case  CommandId.Play: uiText = SR.MediaPlayText; break;
-                case  CommandId.Pause: uiText = SR.MediaPauseText; break;
-                case  CommandId.Stop: uiText = SR.MediaStopText; break;
-                case  CommandId.Record: uiText = SR.MediaRecordText; break;
-                case  CommandId.NextTrack: uiText = SR.MediaNextTrackText; break;
-                case  CommandId.PreviousTrack: uiText = SR.MediaPreviousTrackText; break;
-                case  CommandId.FastForward: uiText = SR.MediaFastForwardText; break;
-                case  CommandId.Rewind: uiText = SR.MediaRewindText; break;
-                case  CommandId.ChannelUp: uiText = SR.MediaChannelUpText; break;
-                case  CommandId.ChannelDown: uiText = SR.MediaChannelDownText; break;
-                case  CommandId.TogglePlayPause: uiText = SR.MediaTogglePlayPauseText; break;
-                case  CommandId.IncreaseVolume: uiText = SR.MediaIncreaseVolumeText; break;
-                case  CommandId.DecreaseVolume: uiText = SR.MediaDecreaseVolumeText; break;
-                case  CommandId.MuteVolume: uiText = SR.MediaMuteVolumeText; break;
-                case  CommandId.IncreaseTreble: uiText = SR.MediaIncreaseTrebleText; break;
-                case  CommandId.DecreaseTreble: uiText = SR.MediaDecreaseTrebleText; break;
-                case  CommandId.IncreaseBass: uiText = SR.MediaIncreaseBassText; break;
-                case  CommandId.DecreaseBass: uiText = SR.MediaDecreaseBassText; break;
-                case  CommandId.BoostBass: uiText = SR.MediaBoostBassText; break;
-                case  CommandId.IncreaseMicrophoneVolume: uiText = SR.MediaIncreaseMicrophoneVolumeText; break;
-                case  CommandId.DecreaseMicrophoneVolume: uiText = SR.MediaDecreaseMicrophoneVolumeText; break;
-                case  CommandId.MuteMicrophoneVolume: uiText = SR.MediaMuteMicrophoneVolumeText; break;
-                case  CommandId.ToggleMicrophoneOnOff: uiText = SR.MediaToggleMicrophoneOnOffText; break;
-                case  CommandId.Select:uiText = SR.MediaSelectText;break;
+                case CommandId.Play:
+                    uiText = SR.MediaPlayText;
+                    break;
+                case CommandId.Pause:
+                    uiText = SR.MediaPauseText;
+                    break;
+                case CommandId.Stop:
+                    uiText = SR.MediaStopText;
+                    break;
+                case CommandId.Record:
+                    uiText = SR.MediaRecordText;
+                    break;
+                case CommandId.NextTrack:
+                    uiText = SR.MediaNextTrackText;
+                    break;
+                case CommandId.PreviousTrack:
+                    uiText = SR.MediaPreviousTrackText;
+                    break;
+                case CommandId.FastForward:
+                    uiText = SR.MediaFastForwardText;
+                    break;
+                case CommandId.Rewind:
+                    uiText = SR.MediaRewindText;
+                    break;
+                case CommandId.ChannelUp:
+                    uiText = SR.MediaChannelUpText;
+                    break;
+                case CommandId.ChannelDown:
+                    uiText = SR.MediaChannelDownText;
+                    break;
+                case CommandId.TogglePlayPause:
+                    uiText = SR.MediaTogglePlayPauseText;
+                    break;
+                case CommandId.IncreaseVolume:
+                    uiText = SR.MediaIncreaseVolumeText;
+                    break;
+                case CommandId.DecreaseVolume:
+                    uiText = SR.MediaDecreaseVolumeText;
+                    break;
+                case CommandId.MuteVolume:
+                    uiText = SR.MediaMuteVolumeText;
+                    break;
+                case CommandId.IncreaseTreble:
+                    uiText = SR.MediaIncreaseTrebleText;
+                    break;
+                case CommandId.DecreaseTreble:
+                    uiText = SR.MediaDecreaseTrebleText;
+                    break;
+                case CommandId.IncreaseBass:
+                    uiText = SR.MediaIncreaseBassText;
+                    break;
+                case CommandId.DecreaseBass:
+                    uiText = SR.MediaDecreaseBassText;
+                    break;
+                case CommandId.BoostBass:
+                    uiText = SR.MediaBoostBassText;
+                    break;
+                case CommandId.IncreaseMicrophoneVolume:
+                    uiText = SR.MediaIncreaseMicrophoneVolumeText;
+                    break;
+                case CommandId.DecreaseMicrophoneVolume:
+                    uiText = SR.MediaDecreaseMicrophoneVolumeText;
+                    break;
+                case CommandId.MuteMicrophoneVolume:
+                    uiText = SR.MediaMuteMicrophoneVolumeText;
+                    break;
+                case CommandId.ToggleMicrophoneOnOff:
+                    uiText = SR.MediaToggleMicrophoneOnOffText;
+                    break;
+                case CommandId.Select:
+                    uiText = SR.MediaSelectText;
+                    break;
             }
             return uiText;
         }
@@ -285,145 +381,145 @@ namespace System.Windows.Input
             //Standard Commands
             switch ((CommandId)commandId)
             {
-                case  CommandId.Play:
+                case CommandId.Play:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.MediaPlayKey,
                         SR.MediaPlayKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.Pause:
+                case CommandId.Pause:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.MediaPauseKey,
                         SR.MediaPauseKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.Stop:
+                case CommandId.Stop:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.MediaStopKey,
                         SR.MediaStopKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.Record:
+                case CommandId.Record:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.MediaRecordKey,
                         SR.MediaRecordKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.NextTrack:
+                case CommandId.NextTrack:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.MediaNextTrackKey,
                         SR.MediaNextTrackKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.PreviousTrack:
+                case CommandId.PreviousTrack:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.MediaPreviousTrackKey,
                         SR.MediaPreviousTrackKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.FastForward:
+                case CommandId.FastForward:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.MediaFastForwardKey,
                         SR.MediaFastForwardKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.Rewind:
+                case CommandId.Rewind:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.MediaRewindKey,
                         SR.MediaRewindKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.ChannelUp:
+                case CommandId.ChannelUp:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.MediaChannelUpKey,
                         SR.MediaChannelUpKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.ChannelDown:
+                case CommandId.ChannelDown:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.MediaChannelDownKey,
                         SR.MediaChannelDownKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.TogglePlayPause:
+                case CommandId.TogglePlayPause:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.MediaTogglePlayPauseKey,
                         SR.MediaTogglePlayPauseKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.IncreaseVolume:
+                case CommandId.IncreaseVolume:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.MediaIncreaseVolumeKey,
                         SR.MediaIncreaseVolumeKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.DecreaseVolume:
+                case CommandId.DecreaseVolume:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.MediaDecreaseVolumeKey,
                         SR.MediaDecreaseVolumeKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.MuteVolume:
+                case CommandId.MuteVolume:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.MediaMuteVolumeKey,
                         SR.MediaMuteVolumeKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.IncreaseTreble:
+                case CommandId.IncreaseTreble:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.MediaIncreaseTrebleKey,
                         SR.MediaIncreaseTrebleKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.DecreaseTreble:
+                case CommandId.DecreaseTreble:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.MediaDecreaseTrebleKey,
                         SR.MediaDecreaseTrebleKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.IncreaseBass:
+                case CommandId.IncreaseBass:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.MediaIncreaseBassKey,
                         SR.MediaIncreaseBassKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.DecreaseBass:
+                case CommandId.DecreaseBass:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.MediaDecreaseBassKey,
                         SR.MediaDecreaseBassKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.BoostBass:
+                case CommandId.BoostBass:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.MediaBoostBassKey,
                         SR.MediaBoostBassKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.IncreaseMicrophoneVolume:
+                case CommandId.IncreaseMicrophoneVolume:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.MediaIncreaseMicrophoneVolumeKey,
                         SR.MediaIncreaseMicrophoneVolumeKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.DecreaseMicrophoneVolume:
+                case CommandId.DecreaseMicrophoneVolume:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.MediaDecreaseMicrophoneVolumeKey,
                         SR.MediaDecreaseMicrophoneVolumeKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.MuteMicrophoneVolume:
+                case CommandId.MuteMicrophoneVolume:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.MediaMuteMicrophoneVolumeKey,
                         SR.MediaMuteMicrophoneVolumeKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.ToggleMicrophoneOnOff:
+                case CommandId.ToggleMicrophoneOnOff:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.MediaToggleMicrophoneOnOffKey,
                         SR.MediaToggleMicrophoneOnOffKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.Select:
+                case CommandId.Select:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.MediaSelectKey,
                         SR.MediaSelectKeyDisplayString,
@@ -441,8 +537,10 @@ namespace System.Windows.Input
                 {
                     if (_internalCommands[(int)idCommand] == null)
                     {
-                        RoutedUICommand newCommand = new RoutedUICommand(GetPropertyName(idCommand), typeof(MediaCommands), (byte)idCommand);
-                        newCommand.AreInputGesturesDelayLoaded = true;
+                        RoutedUICommand newCommand = new RoutedUICommand(GetPropertyName(idCommand), typeof(MediaCommands), (byte)idCommand)
+                        {
+                            AreInputGesturesDelayLoaded = true
+                        };
                         _internalCommands[(int)idCommand] = newCommand;
                     }
                 }

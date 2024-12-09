@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -55,7 +55,7 @@ namespace System.Windows.Documents
 
             if (!DocumentMode)
             {                       // Loose XAML, just check against schema, don't check content type
-                if (rootElement==null)
+                if (rootElement == null)
                 {
                     XmlReader reader = XmlReader.Create(stream, null, pc);
                     obj = XamlReader.Load(reader, pc, XamlParseMode.Synchronous, true, safeTypes);
@@ -169,7 +169,7 @@ namespace System.Windows.Documents
         }
 
 
-        internal void UriHitHandler(int node,Uri uri)
+        internal void UriHitHandler(int node, Uri uri)
         {
             if (_uniqueUriRef != null)
             {
@@ -186,7 +186,7 @@ namespace System.Windows.Documents
                 }
             }
             Hashtable validResources = _validResources.Peek();
-            if (validResources!=null)
+            if (validResources != null)
             {
                 if (!validResources.ContainsKey(uri))
                 {
@@ -195,7 +195,7 @@ namespace System.Windows.Documents
                     bool found = false;
                     foreach (Uri resUri in validResources.Keys)
                     {
-                        if (PackUriHelper.ComparePackUri(resUri,uri) == 0)
+                        if (PackUriHelper.ComparePackUri(resUri, uri) == 0)
                         {
                             validResources.Add(uri, validResources[resUri]);
                             found = true;
@@ -220,11 +220,11 @@ namespace System.Windows.Documents
         private Hashtable _uniqueUriRef;
 
         static
-        private 
-        bool _documentMode          = false;
+        private
+        bool _documentMode = false;
 
-        static 
-        private 
+        static
+        private
         string _requiredResourceRel = "http://schemas.microsoft.com/xps/2005/06/required-resource";
 
         static private XpsS0FixedPageSchema xpsS0FixedPageSchema = new XpsS0FixedPageSchema();
@@ -233,4 +233,4 @@ namespace System.Windows.Documents
     }
 }
 
-    
+

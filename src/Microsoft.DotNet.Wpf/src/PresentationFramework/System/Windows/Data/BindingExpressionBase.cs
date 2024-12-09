@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -37,30 +37,30 @@ namespace System.Windows.Data
         {
             // names used by Binding
 
-            OneWay                  = PrivateFlags.iSourceToTarget,
-            TwoWay                  = PrivateFlags.iSourceToTarget | PrivateFlags.iTargetToSource,
-            OneWayToSource          = PrivateFlags.iTargetToSource,
-            OneTime                 = 0,
-            PropDefault             = PrivateFlags.iPropDefault,
-            NotifyOnTargetUpdated   = PrivateFlags.iNotifyOnTargetUpdated,
-            NotifyOnSourceUpdated   = PrivateFlags.iNotifyOnSourceUpdated,
+            OneWay = PrivateFlags.iSourceToTarget,
+            TwoWay = PrivateFlags.iSourceToTarget | PrivateFlags.iTargetToSource,
+            OneWayToSource = PrivateFlags.iTargetToSource,
+            OneTime = 0,
+            PropDefault = PrivateFlags.iPropDefault,
+            NotifyOnTargetUpdated = PrivateFlags.iNotifyOnTargetUpdated,
+            NotifyOnSourceUpdated = PrivateFlags.iNotifyOnSourceUpdated,
             NotifyOnValidationError = PrivateFlags.iNotifyOnValidationError,
             UpdateOnPropertyChanged = 0,
-            UpdateOnLostFocus       = PrivateFlags.iUpdateOnLostFocus,
-            UpdateExplicitly        = PrivateFlags.iUpdateExplicitly,
-            UpdateDefault           = PrivateFlags.iUpdateDefault,
+            UpdateOnLostFocus = PrivateFlags.iUpdateOnLostFocus,
+            UpdateExplicitly = PrivateFlags.iUpdateExplicitly,
+            UpdateDefault = PrivateFlags.iUpdateDefault,
             PathGeneratedInternally = PrivateFlags.iPathGeneratedInternally,
-            ValidatesOnExceptions   = PrivateFlags.iValidatesOnExceptions,
-            ValidatesOnDataErrors   = PrivateFlags.iValidatesOnDataErrors,
+            ValidatesOnExceptions = PrivateFlags.iValidatesOnExceptions,
+            ValidatesOnDataErrors = PrivateFlags.iValidatesOnDataErrors,
             ValidatesOnNotifyDataErrors = PrivateFlags.iValidatesOnNotifyDataErrors,
 
-            Default                 = PropDefault | UpdateDefault,
+            Default = PropDefault | UpdateDefault,
 
             /// <summary> Error value, returned by FlagsFrom to indicate faulty input</summary>
-            IllegalInput                = PrivateFlags.iIllegalInput,
+            IllegalInput = PrivateFlags.iIllegalInput,
 
             PropagationMask = OneWay | TwoWay | OneWayToSource | OneTime | PropDefault,
-            UpdateMask      = UpdateOnPropertyChanged | UpdateOnLostFocus | UpdateExplicitly | UpdateDefault,
+            UpdateMask = UpdateOnPropertyChanged | UpdateOnLostFocus | UpdateExplicitly | UpdateDefault,
         }
 
         [Flags]
@@ -68,43 +68,43 @@ namespace System.Windows.Data
         {
             // internal use
 
-            iSourceToTarget             = 0x00000001,
-            iTargetToSource             = 0x00000002,
-            iPropDefault                = 0x00000004,
-            iNotifyOnTargetUpdated      = 0x00000008,
-            iDefaultValueConverter      = 0x00000010,
-            iInTransfer                 = 0x00000020,
-            iInUpdate                   = 0x00000040,
-            iTransferPending            = 0x00000080,
-            iNeedDataTransfer           = 0x00000100,
-            iTransferDeferred           = 0x00000200,   // used by MultiBindingExpression
-            iUpdateOnLostFocus          = 0x00000400,
-            iUpdateExplicitly           = 0x00000800,
-            iUpdateDefault              = iUpdateExplicitly | iUpdateOnLostFocus,
-            iNeedsUpdate                = 0x00001000,
-            iPathGeneratedInternally    = 0x00002000,
-            iUsingMentor                = 0x00004000,
-            iResolveNamesInTemplate     = 0x00008000,
-            iDetaching                  = 0x00010000,
-            iNeedsCollectionView        = 0x00020000,
-            iInPriorityBindingExpression= 0x00040000,
-            iInMultiBindingExpression   = 0x00080000,
-            iUsingFallbackValue         = 0x00100000,
-            iNotifyOnValidationError    = 0x00200000,
-            iAttaching                  = 0x00400000,
-            iNotifyOnSourceUpdated      = 0x00800000,
-            iValidatesOnExceptions      = 0x01000000,
-            iValidatesOnDataErrors      = 0x02000000,
-            iIllegalInput               = 0x04000000,
-            iNeedsValidation            = 0x08000000,
-            iTargetWantsXTNotification  = 0x10000000,
-            iValidatesOnNotifyDataErrors= 0x20000000,
-            iDataErrorsChangedPending   = 0x40000000,
-            iDeferUpdateForComposition  = 0x80000000,
+            iSourceToTarget = 0x00000001,
+            iTargetToSource = 0x00000002,
+            iPropDefault = 0x00000004,
+            iNotifyOnTargetUpdated = 0x00000008,
+            iDefaultValueConverter = 0x00000010,
+            iInTransfer = 0x00000020,
+            iInUpdate = 0x00000040,
+            iTransferPending = 0x00000080,
+            iNeedDataTransfer = 0x00000100,
+            iTransferDeferred = 0x00000200,   // used by MultiBindingExpression
+            iUpdateOnLostFocus = 0x00000400,
+            iUpdateExplicitly = 0x00000800,
+            iUpdateDefault = iUpdateExplicitly | iUpdateOnLostFocus,
+            iNeedsUpdate = 0x00001000,
+            iPathGeneratedInternally = 0x00002000,
+            iUsingMentor = 0x00004000,
+            iResolveNamesInTemplate = 0x00008000,
+            iDetaching = 0x00010000,
+            iNeedsCollectionView = 0x00020000,
+            iInPriorityBindingExpression = 0x00040000,
+            iInMultiBindingExpression = 0x00080000,
+            iUsingFallbackValue = 0x00100000,
+            iNotifyOnValidationError = 0x00200000,
+            iAttaching = 0x00400000,
+            iNotifyOnSourceUpdated = 0x00800000,
+            iValidatesOnExceptions = 0x01000000,
+            iValidatesOnDataErrors = 0x02000000,
+            iIllegalInput = 0x04000000,
+            iNeedsValidation = 0x08000000,
+            iTargetWantsXTNotification = 0x10000000,
+            iValidatesOnNotifyDataErrors = 0x20000000,
+            iDataErrorsChangedPending = 0x40000000,
+            iDeferUpdateForComposition = 0x80000000,
 
             iPropagationMask = iSourceToTarget | iTargetToSource | iPropDefault,
-            iUpdateMask      = iUpdateOnLostFocus | iUpdateExplicitly,
-            iAdoptionMask    = iSourceToTarget | iTargetToSource | iNeedsUpdate | iNeedsValidation,
+            iUpdateMask = iUpdateOnLostFocus | iUpdateExplicitly,
+            iAdoptionMask = iSourceToTarget | iTargetToSource | iNeedsUpdate | iNeedsValidation,
         }
 
         //------------------------------------------------------
@@ -193,7 +193,7 @@ namespace System.Windows.Data
         public DependencyProperty TargetProperty { get { return _targetProperty; } }
 
         /// <summary> Binding from which this BindingExpression was created </summary>
-        public BindingBase  ParentBindingBase  { get { return _binding; } }
+        public BindingBase ParentBindingBase { get { return _binding; } }
 
         /// <summary> The BindingGroup to which this BindingExpression belongs (or null) </summary>
         public BindingGroup BindingGroup
@@ -346,7 +346,7 @@ namespace System.Windows.Data
             return ValidateAndConvertProposedValue(out values);
         }
 
-#region Expression overrides
+        #region Expression overrides
 
         /// <summary>
         ///     Notification that the Expression has been set as a property's value
@@ -438,7 +438,7 @@ namespace System.Windows.Data
             {
                 Engine.Marshal(
                     new DispatcherOperationCallback(HandlePropertyInvalidationOperation),
-                    new object[]{d, args});
+                    new object[] { d, args });
             }
         }
 
@@ -456,7 +456,7 @@ namespace System.Windows.Data
             DependencySource[] result = new DependencySource[n];
 
             // convert the weak references into strong ones
-            for (j=0, k=0; k<n; ++k)
+            for (j = 0, k = 0; k < n; ++k)
             {
                 DependencyObject d = _sources[k].DependencyObject;
                 if (d != null)
@@ -479,12 +479,12 @@ namespace System.Windows.Data
         // We need this Clone method to copy a binding during Freezable.Copy.  We shouldn't be taking
         // the target object/dp parameters here, but Binding.ProvideValue requires it.  (Binding
         // could probably be re-factored so that we don't need this).
-        internal override Expression Copy( DependencyObject targetObject, DependencyProperty targetDP )
+        internal override Expression Copy(DependencyObject targetObject, DependencyProperty targetDP)
         {
             return ParentBindingBase.CreateBindingExpression(targetObject, targetDP);
         }
 
-#endregion  Expression overrides
+        #endregion  Expression overrides
 
         /// <summary>
         /// Handle events from the centralized event table
@@ -494,7 +494,7 @@ namespace System.Windows.Data
             return ReceiveWeakEvent(managerType, sender, e);
         }
 
-#region BindingExpressions with no target DP
+        #region BindingExpressions with no target DP
 
         //------------------------------------------------------
         //
@@ -543,7 +543,7 @@ namespace System.Windows.Data
 
         */
 
-#endregion BindingExpressions with no target DP
+        #endregion BindingExpressions with no target DP
 
         //------------------------------------------------------
         //
@@ -573,9 +573,12 @@ namespace System.Windows.Data
 
         private bool IsAttached
         {
-            get { return (_status != BindingStatusInternal.Unattached &&
+            get
+            {
+                return (_status != BindingStatusInternal.Unattached &&
                         _status != BindingStatusInternal.Detached &&
-                        !IsDetaching); }
+                        !IsDetaching);
+            }
         }
 
         /// <summary> True if this binding expression updates the target </summary>
@@ -583,8 +586,8 @@ namespace System.Windows.Data
         {
             get
             {
-                return (    TestFlag(PrivateFlags.iSourceToTarget)
-                        &&  (!IsInMultiBindingExpression || ParentMultiBindingExpression.IsDynamic));
+                return (TestFlag(PrivateFlags.iSourceToTarget)
+                        && (!IsInMultiBindingExpression || ParentMultiBindingExpression.IsDynamic));
             }
         }
 
@@ -593,8 +596,8 @@ namespace System.Windows.Data
         {
             get
             {
-                return (    TestFlag(PrivateFlags.iTargetToSource)
-                        &&  (!IsInMultiBindingExpression || ParentMultiBindingExpression.IsReflective));
+                return (TestFlag(PrivateFlags.iTargetToSource)
+                        && (!IsInMultiBindingExpression || ParentMultiBindingExpression.IsReflective));
             }
             set { ChangeFlag(PrivateFlags.iTargetToSource, value); }
         }
@@ -1193,7 +1196,7 @@ namespace System.Windows.Data
                                                     this);
                             }
 
-                            UpdateValidationError( new ValidationError(validationRule, this, validationResult.ErrorContent, null));
+                            UpdateValidationError(new ValidationError(validationRule, this, validationResult.ErrorContent, null));
                             return false; // kenlai: REVIEW: does not clear iNeedsUpdate flag
                         }
                     }
@@ -1242,9 +1245,9 @@ namespace System.Windows.Data
             internal object RawValue { get { return _rawValue; } }
             internal object ConvertedValue { get { return _convertedValue; } }
 
-            BindingExpression   _bindingExpression;
-            object              _rawValue;
-            object              _convertedValue;
+            BindingExpression _bindingExpression;
+            object _rawValue;
+            object _convertedValue;
         }
 
         /// <summary>
@@ -1282,7 +1285,7 @@ namespace System.Windows.Data
                         // CultureInfo DP rarely changes once a XAML document is loaded.
                         // To be 100% correct, changes to the CultureInfo attached DP should be tracked
                         // and cause a re-evaluation of this binding.
-                        _culture = ((XmlLanguage) target.GetValue(FrameworkElement.LanguageProperty)).GetSpecificCulture();
+                        _culture = ((XmlLanguage)target.GetValue(FrameworkElement.LanguageProperty)).GetSpecificCulture();
                     }
                 }
             }
@@ -1730,7 +1733,7 @@ namespace System.Windows.Data
                 DependencyProperty dataContextDP = FrameworkElement.DataContextProperty;
                 DependencyObject groupContextElement = bg.InheritanceContext;
                 if (groupContextElement == null ||
-                    !ItemsControl.EqualsEx( contextElement.GetValue(dataContextDP),
+                    !ItemsControl.EqualsEx(contextElement.GetValue(dataContextDP),
                                     groupContextElement.GetValue(dataContextDP)))
                 {
                     MarkAsNonGrouped();
@@ -1793,7 +1796,7 @@ namespace System.Windows.Data
         {
             BindingExpressionBase root = null;  // set to non-null by the next loop
 
-            for (   BindingExpressionBase bindingExpr = this;
+            for (BindingExpressionBase bindingExpr = this;
                     bindingExpr != null;
                     bindingExpr = bindingExpr.ParentBindingExpressionBase)
             {
@@ -1936,8 +1939,10 @@ namespace System.Windows.Data
 
         private void ChangeFlag(PrivateFlags flag, bool value)
         {
-            if (value)  _flags |=  flag;
-            else        _flags &= ~flag;
+            if (value)
+                _flags |= flag;
+            else
+                _flags &= ~flag;
         }
 
         //------------------------------------------------------
@@ -2191,11 +2196,11 @@ namespace System.Windows.Data
                 {
                     // PreSharp uses message numbers that the C# compiler doesn't know about.
                     // Disable the C# complaints, per the PreSharp documentation.
-                    #pragma warning disable 1634, 1691
+#pragma warning disable 1634, 1691
 
                     // PreSharp complains about catching NullReference (and other) exceptions.
                     // It doesn't recognize that IsCriticalException() handles these correctly.
-                    #pragma warning disable 56500
+#pragma warning disable 56500
 
                     try
                     {
@@ -2215,8 +2220,8 @@ namespace System.Windows.Data
                     {
                     }
 
-                    #pragma warning restore 56500
-                    #pragma warning restore 1634, 1691
+#pragma warning restore 56500
+#pragma warning restore 1634, 1691
                 }
 
                 if (!success)
@@ -2273,7 +2278,7 @@ namespace System.Windows.Data
             return true;
         }
 
-        internal void UpdateValidationError(ValidationError validationError, bool skipBindingGroup=false)
+        internal void UpdateValidationError(ValidationError validationError, bool skipBindingGroup = false)
         {
             // the steps are carefully ordered to avoid going through a "no error"
             // state while replacing one error with another
@@ -2353,12 +2358,12 @@ namespace System.Windows.Data
                 toAdd = new List<object>();
                 toRemove = new List<ValidationError>(previousErrors);
 
-                for (int i=errors.Count-1; i>=0; --i)
+                for (int i = errors.Count - 1; i >= 0; --i)
                 {
                     object errorContent = errors[i];
 
                     int j;
-                    for (j=toRemove.Count-1; j>=0; --j)
+                    for (j = toRemove.Count - 1; j >= 0; --j)
                     {
                         if (ItemsControl.EqualsEx(toRemove[j].ErrorContent, errorContent))
                         {
@@ -2368,7 +2373,7 @@ namespace System.Windows.Data
                         }
                     }
 
-                    if (j<0)
+                    if (j < 0)
                     {
                         // this error didn't appear on toRemove - add it to toAdd
                         toAdd.Add(errorContent);
@@ -2377,7 +2382,7 @@ namespace System.Windows.Data
             }
         }
 
-        internal void AddValidationError(ValidationError validationError, bool skipBindingGroup=false)
+        internal void AddValidationError(ValidationError validationError, bool skipBindingGroup = false)
         {
             // add the error to the target element
             Validation.AddValidationError(validationError, TargetElement, NotifyOnValidationError);
@@ -2393,7 +2398,7 @@ namespace System.Windows.Data
             }
         }
 
-        internal void RemoveValidationError(ValidationError validationError, bool skipBindingGroup=false)
+        internal void RemoveValidationError(ValidationError validationError, bool skipBindingGroup = false)
         {
             // remove the error from the target element
             Validation.RemoveValidationError(validationError, TargetElement, NotifyOnValidationError);
@@ -2457,7 +2462,7 @@ namespace System.Windows.Data
 
             if (commonSources != null)
             {
-                for (int i=0; i < commonSources.Length; ++i)
+                for (int i = 0; i < commonSources.Length; ++i)
                 {
                     tempList.Add(commonSources[i]);
                 }
@@ -2466,7 +2471,7 @@ namespace System.Windows.Data
             for (int i = 0; i < count; ++i)
             {
                 BindingExpressionBase bindExpr = bindingExpressions[i];
-                WeakDependencySource[] sources = (i==index) ? newSources :
+                WeakDependencySource[] sources = (i == index) ? newSources :
                                             (bindExpr != null) ? bindExpr.WeakSources :
                                             null;
                 int m = (sources == null) ? 0 : sources.Length;
@@ -2616,7 +2621,7 @@ namespace System.Windows.Data
             // if we need a string format, cache it
             if (targetType == typeof(String))
             {
-                #if NotToday
+#if NotToday
                 // special case: when these conditions all apply
                 //      a) target element belongs to a DataTemplate
                 //      b) template was found by implicit (type-based) lookup
@@ -2650,7 +2655,7 @@ namespace System.Windows.Data
                         }
                     }
                 }
-                #endif
+#endif
 
                 if (!String.IsNullOrEmpty(stringFormat))
                 {
@@ -2702,13 +2707,13 @@ namespace System.Windows.Data
             // pretty basic scenarios to work (e.g. binding a TextBox to a database
             // string field that supports DBNull).  It's painful, but can't be
             // helped.
-            #if TargetNullValueBC //BreakingChange
+#if TargetNullValueBC //BreakingChange
             // if no declared (or poorly declared) value, make one up
             if (targetNullValue == DependencyProperty.UnsetValue)
             {
                 targetNullValue = NullValueForType(targetType);
             }
-            #endif
+#endif
 
             SetValue(Feature.EffectiveTargetNullValue, targetNullValue, DependencyProperty.UnsetValue);
         }
@@ -2720,7 +2725,7 @@ namespace System.Windows.Data
             if (!IsReflective)
                 return;
             for (BindingExpressionBase ancestor = ParentBindingExpressionBase;
-                    ancestor != null;  ancestor = ancestor.ParentBindingExpressionBase)
+                    ancestor != null; ancestor = ancestor.ParentBindingExpressionBase)
             {
                 if (ancestor is MultiBindingExpression)
                     return;
@@ -2929,16 +2934,16 @@ namespace System.Windows.Data
         //
         //------------------------------------------------------
 
-        BindingBase         _binding;
-        WeakReference       _targetElement;
-        DependencyProperty  _targetProperty;
-        DataBindEngine      _engine;
-        PrivateFlags        _flags;
-        object              _value = DefaultValueObject;
+        BindingBase _binding;
+        WeakReference _targetElement;
+        DependencyProperty _targetProperty;
+        DataBindEngine _engine;
+        PrivateFlags _flags;
+        object _value = DefaultValueObject;
         BindingStatusInternal _status;
-        WeakDependencySource[]  _sources;
+        WeakDependencySource[] _sources;
 
-        object                  _culture = DefaultValueObject;
+        object _culture = DefaultValueObject;
 
         /// <summary> Sentinel meaning "field has its default value" </summary>
         internal static readonly object DefaultValueObject = new NamedObject("DefaultValue");
@@ -2980,12 +2985,12 @@ namespace System.Windows.Data
             LastFeatureId
         }
 
-        internal bool      HasValue(Feature id) { return _values.HasValue((int)id); }
-        internal object    GetValue(Feature id, object defaultValue) { return _values.GetValue((int)id, defaultValue); }
-        internal void      SetValue(Feature id, object value) { _values.SetValue((int)id, value); }
-        internal void      SetValue(Feature id, object value, object defaultValue) { if (Object.Equals(value, defaultValue)) _values.ClearValue((int)id); else _values.SetValue((int)id, value); }
-        internal void      ClearValue(Feature id) { _values.ClearValue((int)id); }
-        UncommonValueTable  _values;
+        internal bool HasValue(Feature id) { return _values.HasValue((int)id); }
+        internal object GetValue(Feature id, object defaultValue) { return _values.GetValue((int)id, defaultValue); }
+        internal void SetValue(Feature id, object value) { _values.SetValue((int)id, value); }
+        internal void SetValue(Feature id, object value, object defaultValue) { if (Object.Equals(value, defaultValue)) _values.ClearValue((int)id); else _values.SetValue((int)id, value); }
+        internal void ClearValue(Feature id) { _values.ClearValue((int)id); }
+        UncommonValueTable _values;
 
         #endregion Uncommon Values
     }

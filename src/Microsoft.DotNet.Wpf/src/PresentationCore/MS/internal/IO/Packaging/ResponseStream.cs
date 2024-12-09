@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -271,10 +271,10 @@ namespace MS.Internal.IO.Packaging
         //  Private Fields
         //
         //------------------------------------------------------
-        private bool            _closed;        // prevent recursion
-        private Stream          _innerStream;   // stream we are emulating
-        private System.IO.Packaging.Package         _container;     // container to release when we are closed
-        private Stream          _owningStream;  // stream under the _innerStream when opening a Part
+        private bool _closed;        // prevent recursion
+        private Stream _innerStream;   // stream we are emulating
+        private System.IO.Packaging.Package _container;     // container to release when we are closed
+        private Stream _owningStream;  // stream under the _innerStream when opening a Part
         private PackWebResponse _response;      // packWebResponse we can consult for reliable length
     }
 }

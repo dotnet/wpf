@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,8 +12,8 @@
 using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Windows.Threading;
 using System.Windows.Markup;
+using System.Windows.Threading;
 using MS.Utility;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
@@ -174,7 +174,7 @@ namespace System.Windows
                     !typeof(FrameworkContentElement).IsAssignableFrom(value) &&
                     !(DefaultTargetType == value))
                 {
-                    #pragma warning suppress 6506 // value is obviously not null
+#pragma warning suppress 6506 // value is obviously not null
                     throw new ArgumentException(SR.Format(SR.MustBeFrameworkDerived, value.Name));
                 }
 
@@ -208,7 +208,7 @@ namespace System.Windows
                     throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "Style"));
                 }
 
-                if( value == this )
+                if (value == this)
                 {
                     // Basing on self is not allowed.  This is a degenerate case
                     //  of circular reference chain, the full check for circular
@@ -261,7 +261,7 @@ namespace System.Windows
                 // Verify Context Access
                 VerifyAccess();
 
-                if( _setters == null )
+                if (_setters == null)
                 {
                     _setters = new SetterBaseCollection();
 
@@ -288,12 +288,13 @@ namespace System.Windows
                 // Verify Context Access
                 VerifyAccess();
 
-                if( _resources == null )
+                if (_resources == null)
                 {
-                    _resources = new ResourceDictionary();
-
-                    // A Style ResourceDictionary can be accessed across threads
-                    _resources.CanBeAccessedAcrossThreads = true;
+                    _resources = new ResourceDictionary
+                    {
+                        // A Style ResourceDictionary can be accessed across threads
+                        CanBeAccessedAcrossThreads = true
+                    };
 
                     // If the style has been sealed prior to this the newly
                     // created ResourceDictionary also needs to be sealed
@@ -309,7 +310,7 @@ namespace System.Windows
                 // Verify Context Access
                 VerifyAccess();
 
-                if( _sealed )
+                if (_sealed)
                 {
                     throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "Style"));
                 }
@@ -393,7 +394,7 @@ namespace System.Windows
         ///<param name="value">
         /// The object to add as a child; it must be a SetterBase subclass.
         ///</param>
-        void IAddChild.AddChild (Object value)
+        void IAddChild.AddChild(Object value)
         {
             // Verify Context Access
             VerifyAccess();
@@ -417,7 +418,7 @@ namespace System.Windows
         ///<param name="text">
         /// Text to add as a child.
         ///</param>
-        void IAddChild.AddText (string text)
+        void IAddChild.AddText(string text)
         {
             // Verify Context Access
             VerifyAccess();
@@ -436,16 +437,16 @@ namespace System.Windows
         {
             // Check for existing value on dp
             int existingIndex = -1;
-            for( int i = 0; i < PropertyValues.Count; i++ )
+            for (int i = 0; i < PropertyValues.Count; i++)
             {
-                if( PropertyValues[i].Property == dp )
+                if (PropertyValues[i].Property == dp)
                 {
                     existingIndex = i;
                     break;
                 }
             }
 
-            if( existingIndex >= 0 )
+            if (existingIndex >= 0)
             {
                 // Overwrite existing value for dp
                 PropertyValue propertyValue = PropertyValues[existingIndex];
@@ -457,11 +458,13 @@ namespace System.Windows
             else
             {
                 // Store original data
-                PropertyValue propertyValue = new PropertyValue();
-                propertyValue.ValueType = valueType;
-                propertyValue.ChildName = StyleHelper.SelfName;
-                propertyValue.Property = dp;
-                propertyValue.ValueInternal = value;
+                PropertyValue propertyValue = new PropertyValue
+                {
+                    ValueType = valueType,
+                    ChildName = StyleHelper.SelfName,
+                    Property = dp,
+                    ValueInternal = value
+                };
 
                 PropertyValues.Add(propertyValue);
             }
@@ -471,11 +474,11 @@ namespace System.Windows
         {
             // In the most common case TargetType is Default
             // and we can avoid a call to IsAssignableFrom() who's performance is unknown.
-            if(DefaultTargetType == TargetType)
+            if (DefaultTargetType == TargetType)
                 return;
 
             Type elementType = element.GetType();
-            if(!TargetType.IsAssignableFrom(elementType))
+            if (!TargetType.IsAssignableFrom(elementType))
             {
                 throw new InvalidOperationException(SR.Format(SR.StyleTargetTypeMismatchWithElement,
                                                     this.TargetType.Name,
@@ -506,7 +509,7 @@ namespace System.Windows
 
             if (_basedOn != null)
             {
-                if(DefaultTargetType != _basedOn.TargetType &&
+                if (DefaultTargetType != _basedOn.TargetType &&
                     !_basedOn.TargetType.IsAssignableFrom(_targetType))
                 {
                     throw new InvalidOperationException(SR.Format(SR.MustBaseOnStyleOfABaseType, _targetType.Name));
@@ -591,9 +594,9 @@ namespace System.Windows
             Stack basedOnHierarchy = new Stack(10);  // 10 because that's the default value (see MSDN) and the perf team wants us to specify something.
             Style latestBasedOn = this;
 
-            while( latestBasedOn != null )
+            while (latestBasedOn != null)
             {
-                if( basedOnHierarchy.Contains( latestBasedOn ) )
+                if (basedOnHierarchy.Contains(latestBasedOn))
                 {
                     // Uh-oh.  We've seen this Style before.  This means
                     //  the BasedOn hierarchy contains a loop.
@@ -607,7 +610,7 @@ namespace System.Windows
                 }
 
                 // Haven't seen it, push on stack and go to next level.
-                basedOnHierarchy.Push( latestBasedOn );
+                basedOnHierarchy.Push(latestBasedOn);
                 latestBasedOn = latestBasedOn.BasedOn;
             }
 
@@ -631,7 +634,7 @@ namespace System.Windows
 
             // On-demand create the PropertyValues list, so that we can specify the right size.
 
-            if(PropertyValues.Count == 0)
+            if (PropertyValues.Count == 0)
             {
                 PropertyValues = new FrugalStructList<System.Windows.PropertyValue>(style.Setters.Count);
             }
@@ -648,7 +651,7 @@ namespace System.Windows
                 if (setter != null)
                 {
                     // Style Setters are not allowed to have a child target name - since there are no child nodes in a Style.
-                    if( setter.TargetName != null )
+                    if (setter.TargetName != null)
                     {
                         throw new InvalidOperationException(SR.Format(SR.SetterOnStyleNotAllowedToHaveTarget, setter.TargetName));
                     }
@@ -658,11 +661,11 @@ namespace System.Windows
                         DynamicResourceExtension dynamicResource = setter.ValueInternal as DynamicResourceExtension;
                         if (dynamicResource == null)
                         {
-                            UpdatePropertyValueList( setter.Property, PropertyValueType.Set, setter.ValueInternal );
+                            UpdatePropertyValueList(setter.Property, PropertyValueType.Set, setter.ValueInternal);
                         }
                         else
                         {
-                            UpdatePropertyValueList( setter.Property, PropertyValueType.Resource, dynamicResource.ResourceKey );
+                            UpdatePropertyValueList(setter.Property, PropertyValueType.Resource, dynamicResource.ResourceKey);
                         }
                     }
                 }
@@ -758,9 +761,9 @@ namespace System.Windows
                         }
 
                         TriggerCondition[] conditions = propertyValue.Conditions;
-                        for (int k=0; k<conditions.Length; k++)
+                        for (int k = 0; k < conditions.Length; k++)
                         {
-                            if( conditions[k].SourceName != StyleHelper.SelfName )
+                            if (conditions[k].SourceName != StyleHelper.SelfName)
                             {
                                 throw new InvalidOperationException(SR.Format(SR.TriggerOnStyleNotAllowedToHaveSource, conditions[k].SourceName));
                             }
@@ -776,34 +779,34 @@ namespace System.Windows
                     }
 
                     // Set things up to handle TriggerActions
-                    if( trigger.HasEnterActions || trigger.HasExitActions )
+                    if (trigger.HasEnterActions || trigger.HasExitActions)
                     {
-                        if( trigger is Trigger )
+                        if (trigger is Trigger)
                         {
-                            StyleHelper.AddPropertyTriggerWithAction( trigger, ((Trigger)trigger).Property, ref this.PropertyTriggersWithActions );
+                            StyleHelper.AddPropertyTriggerWithAction(trigger, ((Trigger)trigger).Property, ref this.PropertyTriggersWithActions);
                         }
-                        else if( trigger is MultiTrigger )
+                        else if (trigger is MultiTrigger)
                         {
                             MultiTrigger multiTrigger = (MultiTrigger)trigger;
-                            for( int k = 0; k < multiTrigger.Conditions.Count; k++ )
+                            for (int k = 0; k < multiTrigger.Conditions.Count; k++)
                             {
                                 Condition triggerCondition = multiTrigger.Conditions[k];
 
-                                StyleHelper.AddPropertyTriggerWithAction( trigger, triggerCondition.Property, ref this.PropertyTriggersWithActions );
+                                StyleHelper.AddPropertyTriggerWithAction(trigger, triggerCondition.Property, ref this.PropertyTriggersWithActions);
                             }
                         }
-                        else if( trigger is DataTrigger )
+                        else if (trigger is DataTrigger)
                         {
-                            StyleHelper.AddDataTriggerWithAction( trigger, ((DataTrigger)trigger).Binding, ref this.DataTriggersWithActions );
+                            StyleHelper.AddDataTriggerWithAction(trigger, ((DataTrigger)trigger).Binding, ref this.DataTriggersWithActions);
                         }
-                        else if( trigger is MultiDataTrigger )
+                        else if (trigger is MultiDataTrigger)
                         {
                             MultiDataTrigger multiDataTrigger = (MultiDataTrigger)trigger;
-                            for( int k = 0; k < multiDataTrigger.Conditions.Count; k++ )
+                            for (int k = 0; k < multiDataTrigger.Conditions.Count; k++)
                             {
                                 Condition dataCondition = multiDataTrigger.Conditions[k];
 
-                                StyleHelper.AddDataTriggerWithAction( trigger, dataCondition.Binding, ref this.DataTriggersWithActions );
+                                StyleHelper.AddDataTriggerWithAction(trigger, dataCondition.Binding, ref this.DataTriggersWithActions);
                             }
                         }
                         else
@@ -814,9 +817,9 @@ namespace System.Windows
 
                     // Set things up to handle EventTrigger
                     EventTrigger eventTrigger = trigger as EventTrigger;
-                    if( eventTrigger != null )
+                    if (eventTrigger != null)
                     {
-                        if( eventTrigger.SourceName != null && eventTrigger.SourceName.Length > 0 )
+                        if (eventTrigger.SourceName != null && eventTrigger.SourceName.Length > 0)
                         {
                             throw new InvalidOperationException(SR.Format(SR.EventTriggerOnStyleNotAllowedToHaveTarget, eventTrigger.SourceName));
                         }
@@ -962,11 +965,13 @@ namespace System.Windows
         // of this style and its sub-tree.
         internal ResourceDictionary _resources = null;
 
-        /* property */ internal int GlobalIndex;
+        /* property */
+        internal int GlobalIndex;
 
         // Style tables
         // Synchronized (write locks, lock-free reads): Covered by Style instance lock
-        /* property */ internal FrugalStructList<ChildRecord> ChildRecordFromChildIndex = new FrugalStructList<ChildRecord>(); // Indexed by Child.ChildIndex
+        /* property */
+        internal FrugalStructList<ChildRecord> ChildRecordFromChildIndex = new FrugalStructList<ChildRecord>(); // Indexed by Child.ChildIndex
         // Synchronized (write locks, lock-free reads): Covered by Style instance lock
 
         //
@@ -979,24 +984,28 @@ namespace System.Windows
 
         // Original Style data (not including based-on data)
         // Synchronized (write locks, lock-free reads): Covered by Style instance lock
-        /* property */ internal FrugalStructList<System.Windows.PropertyValue> PropertyValues = new FrugalStructList<System.Windows.PropertyValue>();
+        /* property */
+        internal FrugalStructList<System.Windows.PropertyValue> PropertyValues = new FrugalStructList<System.Windows.PropertyValue>();
 
         // Properties driven on the container (by the Style) that should be
         // invalidated when the style gets applied/unapplied. These properties
         // could have been set via Style.SetValue or TriggerBase.SetValue
         // Synchronized (write locks, lock-free reads): Covered by Style instance lock
-        /* property */ internal FrugalStructList<ContainerDependent> ContainerDependents = new FrugalStructList<ContainerDependent>();
+        /* property */
+        internal FrugalStructList<ContainerDependent> ContainerDependents = new FrugalStructList<ContainerDependent>();
 
         // Properties driven by a resource that should be invalidated
         // when a resource dictionary changes
         // Synchronized (write locks, lock-free reads): Covered by Style instance lock
-        /* property */ internal FrugalStructList<ChildPropertyDependent> ResourceDependents = new FrugalStructList<ChildPropertyDependent>();
+        /* property */
+        internal FrugalStructList<ChildPropertyDependent> ResourceDependents = new FrugalStructList<ChildPropertyDependent>();
 
         // Events driven by a this style. An entry for every childIndex that has associated events.
         // childIndex '0' is used to represent events set on the style's TargetType. This data-structure
         // will be frequently looked up during event routing.
         // Synchronized (write locks, lock-free reads): Covered by Style instance lock
-        /* property */ internal ItemStructList<ChildEventDependent> EventDependents = new ItemStructList<ChildEventDependent>(1);
+        /* property */
+        internal ItemStructList<ChildEventDependent> EventDependents = new ItemStructList<ChildEventDependent>(1);
 
         // Used by EventTrigger: Maps a RoutedEventID to a set of TriggerAction objects
         //  to be performed.
@@ -1020,7 +1029,7 @@ namespace System.Windows
         internal static object Synchronized = new object();
 
         private const int TargetTypeID = 0x01;
-        internal const int BasedOnID    = 0x02;
+        internal const int BasedOnID = 0x02;
 
         // Using the modified flags to note whether we have an EventSetter.
         private const int HasEventSetter = 0x10;

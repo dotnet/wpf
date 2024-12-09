@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,10 +12,10 @@ using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
-using System.Windows.Threading;
 using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Markup;
+using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.Data;
 
@@ -110,9 +110,10 @@ namespace System.Windows.Data
 
             ObjectRef sourceRef = ParentBinding.SourceReference;
             DependencyObject mentor = !UsingMentor ? target : Helper.FindMentor(target);
-            ObjectRefArgs args = new ObjectRefArgs() {
-                                    ResolveNamesInTemplate = ResolveNamesInTemplate,
-                                    };
+            ObjectRefArgs args = new ObjectRefArgs()
+            {
+                ResolveNamesInTemplate = ResolveNamesInTemplate,
+            };
             object source = sourceRef.GetDataObject(mentor, args);
 
             if (source != DataItem)
@@ -199,7 +200,7 @@ namespace System.Windows.Data
             }
         }
 
-#region Expression overrides
+        #region Expression overrides
 
         /// <summary>
         ///     Notification that a Dependent that this Expression established has
@@ -241,7 +242,7 @@ namespace System.Windows.Data
             base.OnPropertyInvalidation(d, args);
         }
 
-#endregion  Expression overrides
+        #endregion  Expression overrides
 
         //------------------------------------------------------
         //
@@ -433,12 +434,12 @@ namespace System.Windows.Data
                 // null converter means failure to create one
                 if (converter == null && TraceData.IsEnabled)
                 {
-                     TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Error,
-                                    TraceData.CannotCreateDefaultValueConverter(
-                                        type,
-                                        TargetProperty.PropertyType,
-                                        (IsReflective ? "two-way" : "one-way")),
-                                    this );
+                    TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Error,
+                                   TraceData.CannotCreateDefaultValueConverter(
+                                       type,
+                                       TargetProperty.PropertyType,
+                                       (IsReflective ? "two-way" : "one-way")),
+                                   this);
                 }
 
                 if (converter == DefaultValueConverter.ValueConverterNotNeeded)
@@ -499,7 +500,7 @@ namespace System.Windows.Data
         //
         //------------------------------------------------------
 
-#region Attachment
+        #region Attachment
 
         /// <summary>
         /// Attach the binding expression to the given target object and property.
@@ -662,7 +663,7 @@ namespace System.Windows.Data
             }
 
             // if the binding uses a mentor, check that it exists
-            DependencyObject mentor = !UsingMentor ? target :  Helper.FindMentor(target);
+            DependencyObject mentor = !UsingMentor ? target : Helper.FindMentor(target);
             if (mentor == null)
             {
                 if (isExtendedTraceEnabled)
@@ -718,7 +719,7 @@ namespace System.Windows.Data
                 RelativeObjectRef ror = ParentBinding.SourceReference as RelativeObjectRef;
                 if (ror != null && ror.ReturnsDataContext)
                 {
-                    object o = ror.GetObject(mentor, new ObjectRefArgs() { IsTracing = traceObjectRef});
+                    object o = ror.GetObject(mentor, new ObjectRefArgs() { IsTracing = traceObjectRef });
                     contextElement = o as DependencyObject;    // ref to another element's DataContext
                     contextElementFound = (o != DependencyProperty.UnsetValue);
                 }
@@ -776,10 +777,11 @@ namespace System.Windows.Data
             }
             else if ((sourceRef = ParentBinding.SourceReference) != null)
             {
-                ObjectRefArgs args = new ObjectRefArgs() {
-                                        IsTracing = traceObjectRef,
-                                        ResolveNamesInTemplate = ResolveNamesInTemplate,
-                                        };
+                ObjectRefArgs args = new ObjectRefArgs()
+                {
+                    IsTracing = traceObjectRef,
+                    ResolveNamesInTemplate = ResolveNamesInTemplate,
+                };
                 source = sourceRef.GetDataObject(mentor, args);
 
                 // check that the source could be found
@@ -871,9 +873,9 @@ namespace System.Windows.Data
             _ctxElement = null;
         }
 
-#endregion Attachment
+        #endregion Attachment
 
-#region Activation
+        #region Activation
 
         // Activate the BindingExpression, if necessary and possible
         internal override void Activate()
@@ -1182,9 +1184,9 @@ namespace System.Windows.Data
             return SourceItem;
         }
 
-#endregion Activation
+        #endregion Activation
 
-#region Worker
+        #region Worker
 
         private void CreateWorker()
         {
@@ -1240,9 +1242,9 @@ namespace System.Windows.Data
             ChangeSources(newSources);
         }
 
-#endregion Worker
+        #endregion Worker
 
-#region Value
+        #region Value
 
         // transfer a value from the source to the target
         void TransferValue()
@@ -1292,9 +1294,9 @@ namespace System.Windows.Data
             // apply any necessary conversions
             if (value != DependencyProperty.UnsetValue)
             {
-            #if !TargetNullValueBC  //BreakingChange
+#if !TargetNullValueBC  //BreakingChange
                 bool doNotSetStatus = false;
-            #endif
+#endif
 
                 if (!UseDefaultValueConverter)
                 {
@@ -1319,7 +1321,7 @@ namespace System.Windows.Data
                     }
 
                     // chain in a default value converter if the returned value's type is not compatible with the targetType
-                    if (   ((value != null) && (value != Binding.DoNothing) && (value != DependencyProperty.UnsetValue))
+                    if (((value != null) && (value != Binding.DoNothing) && (value != DependencyProperty.UnsetValue))
                         && !targetType.IsAssignableFrom(value.GetType()))
                     {
                         // the dynamic converter is shared between Transfer and Update directions
@@ -1345,12 +1347,12 @@ namespace System.Windows.Data
                     // even if the user doesn't declare it.  We can't do this yet because
                     // of back-compat.  I wrote it both ways, and #if'd out the breaking
                     // change.
-                #if TargetNullValueBC   //BreakingChange
+#if TargetNullValueBC   //BreakingChange
                     if (IsNullValue(value))
-                #else
+#else
                     if (EffectiveTargetNullValue != DependencyProperty.UnsetValue &&
                         IsNullValue(value))
-                #endif
+#endif
                     {
                         value = EffectiveTargetNullValue;
 
@@ -1363,7 +1365,7 @@ namespace System.Windows.Data
                                                 this);
                         }
                     }
-                #if !TargetNullValueBC   //BreakingChange
+#if !TargetNullValueBC   //BreakingChange
                     // For DBNull, unless there's a user converter, we handle it here
                     else if ((value == DBNull.Value) && (Converter == null || UseDefaultValueConverter))
                     {
@@ -1389,7 +1391,7 @@ namespace System.Windows.Data
                                                 this);
                         }
                     }
-                #endif
+#endif
                     else if (implicitConverter != null || EffectiveStringFormat != null)
                     {
                         // call a DefaultValueConverter:
@@ -1414,9 +1416,9 @@ namespace System.Windows.Data
                 }
 
                 if (
-            #if !TargetNullValueBC   //BreakingChange
+#if !TargetNullValueBC   //BreakingChange
                     !doNotSetStatus &&
-            #endif
+#endif
                     value == DependencyProperty.UnsetValue)
                 {
                     SetStatus(BindingStatusInternal.UpdateTargetError);
@@ -1629,11 +1631,11 @@ namespace System.Windows.Data
 
             // PreSharp uses message numbers that the C# compiler doesn't know about.
             // Disable the C# complaints, per the PreSharp documentation.
-            #pragma warning disable 1634, 1691
+#pragma warning disable 1634, 1691
 
             // PreSharp complains about catching NullReference (and other) exceptions.
             // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-            #pragma warning disable 56500
+#pragma warning disable 56500
 
             object convertedValue = null;
             try
@@ -1684,8 +1686,8 @@ namespace System.Windows.Data
                 convertedValue = DependencyProperty.UnsetValue;
             }
 
-            #pragma warning restore 56500
-            #pragma warning restore 1634, 1691
+#pragma warning restore 56500
+#pragma warning restore 1634, 1691
 
             return convertedValue;
         }
@@ -1700,11 +1702,11 @@ namespace System.Windows.Data
 
             // PreSharp uses message numbers that the C# compiler doesn't know about.
             // Disable the C# complaints, per the PreSharp documentation.
-            #pragma warning disable 1634, 1691
+#pragma warning disable 1634, 1691
 
             // PreSharp complains about catching NullReference (and other) exceptions.
             // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-            #pragma warning disable 56500
+#pragma warning disable 56500
 
             object convertedValue = null;
             try
@@ -1748,8 +1750,8 @@ namespace System.Windows.Data
                 convertedValue = DependencyProperty.UnsetValue;
             }
 
-            #pragma warning restore 56500
-            #pragma warning restore 1634, 1691
+#pragma warning restore 56500
+#pragma warning restore 1634, 1691
 
             return convertedValue;
         }
@@ -1773,10 +1775,10 @@ namespace System.Windows.Data
                 DependencyObject target = TargetElement;
                 if (target != null)
                 {
-                    if (    !IsInMultiBindingExpression           // not an inner BindingExpression
-                        &&  (   !IsInPriorityBindingExpression
-                            ||  this == ParentPriorityBindingExpression.ActiveBindingExpression)    // in ProrityBinding, and either active
-                            ||  (IsAttaching && (StatusInternal==BindingStatusInternal.Active || UsingFallbackValue) // or about to become active
+                    if (!IsInMultiBindingExpression           // not an inner BindingExpression
+                        && (!IsInPriorityBindingExpression
+                            || this == ParentPriorityBindingExpression.ActiveBindingExpression)    // in ProrityBinding, and either active
+                            || (IsAttaching && (StatusInternal == BindingStatusInternal.Active || UsingFallbackValue) // or about to become active
                             )
                         )
                     {
@@ -1804,9 +1806,9 @@ namespace System.Windows.Data
                 DependencyObject target = TargetElement;
                 if (target != null)
                 {
-                    if (    !IsInMultiBindingExpression           // not an inner BindingExpression
-                        &&  (   !IsInPriorityBindingExpression
-                            ||  this == ParentPriorityBindingExpression.ActiveBindingExpression))   // not an inactive BindingExpression
+                    if (!IsInMultiBindingExpression           // not an inner BindingExpression
+                        && (!IsInPriorityBindingExpression
+                            || this == ParentPriorityBindingExpression.ActiveBindingExpression))   // not an inactive BindingExpression
                     {
                         OnSourceUpdated(target, TargetProperty);
                     }
@@ -1825,7 +1827,7 @@ namespace System.Windows.Data
         internal override bool UpdateOverride()
         {
             // various reasons not to update:
-            if (   !NeedsUpdate                     // nothing to do
+            if (!NeedsUpdate                     // nothing to do
                 || !IsReflective                    // no update desired
                 || IsInTransfer                     // in a transfer
                 || Worker == null                   // not activated
@@ -1997,11 +1999,11 @@ namespace System.Windows.Data
 
             // PreSharp uses message numbers that the C# compiler doesn't know about.
             // Disable the C# complaints, per the PreSharp documentation.
-            #pragma warning disable 1634, 1691
+#pragma warning disable 1634, 1691
 
             // PreSharp complains about catching NullReference (and other) exceptions.
             // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-            #pragma warning disable 56500
+#pragma warning disable 56500
 
             try
             {
@@ -2038,8 +2040,8 @@ namespace System.Windows.Data
                 EndSourceUpdate();
             }
 
-            #pragma warning restore 56500
-            #pragma warning restore 1634, 1691
+#pragma warning restore 56500
+#pragma warning restore 1634, 1691
 
             OnSourceUpdated();
 
@@ -2307,9 +2309,9 @@ namespace System.Windows.Data
             // check the rest of the path
             return !Worker.IsPathCurrent();
         }
-#endregion Value
+        #endregion Value
 
-#region INotifyDataErrorInfo
+        #region INotifyDataErrorInfo
 
         // fetch the current data errors from the source object (and its value),
         // and update the list of data-error ValidationResults accordingly
@@ -2371,7 +2373,7 @@ namespace System.Windows.Data
                 // read them, the enumerator will throw.   The interface doesn't provide
                 // any way to work around this, so we'll just try it a few times hoping
                 // for success.
-                for (int i=RetryCount; i>=0; --i)
+                for (int i = RetryCount; i >= 0; --i)
                 {
                     try
                     {
@@ -2413,9 +2415,9 @@ namespace System.Windows.Data
             return list1;
         }
 
-#endregion INotifyDataErrorInfo
+        #endregion INotifyDataErrorInfo
 
-#region Event handlers
+        #region Event handlers
 
         private void OnDataContextChanged(DependencyObject contextElement)
         {
@@ -2541,8 +2543,11 @@ namespace System.Windows.Data
                 // otherwise invoke an operation to do the work on the right context
                 IsDataErrorsChangedPending = true;
                 Engine.Marshal(
-                    (arg) => {  UpdateNotifyDataErrors(DependencyProperty.UnsetValue);
-                                 return null; }, null);
+                    (arg) =>
+                    {
+                        UpdateNotifyDataErrors(DependencyProperty.UnsetValue);
+                        return null;
+                    }, null);
             }
         }
 
@@ -2554,9 +2559,9 @@ namespace System.Windows.Data
             return false;   // this method is no longer used (but must remain, for compat)
         }
 
-#endregion Event handlers
+        #endregion Event handlers
 
-#region Helper functions
+        #region Helper functions
 
 
         //
@@ -2580,7 +2585,7 @@ namespace System.Windows.Data
 
         private bool ExceptionFilterExists()
         {
-            return ( (ParentBinding.UpdateSourceExceptionFilter != null) ||
+            return ((ParentBinding.UpdateSourceExceptionFilter != null) ||
                      (IsInMultiBindingExpression && ParentMultiBindingExpression.ParentMultiBinding.UpdateSourceExceptionFilter != null)
                    );
         }
@@ -2616,8 +2621,10 @@ namespace System.Windows.Data
         // raise the TargetUpdated event (explicit polymorphism)
         internal static void OnTargetUpdated(DependencyObject d, DependencyProperty dp)
         {
-            DataTransferEventArgs args = new DataTransferEventArgs(d, dp);
-            args.RoutedEvent = Binding.TargetUpdatedEvent;
+            DataTransferEventArgs args = new DataTransferEventArgs(d, dp)
+            {
+                RoutedEvent = Binding.TargetUpdatedEvent
+            };
             FrameworkObject fo = new FrameworkObject(d);
 
             if (!fo.IsValid && d != null)
@@ -2631,8 +2638,10 @@ namespace System.Windows.Data
         // raise the SourceUpdatedEvent event (explicit polymorphism)
         internal static void OnSourceUpdated(DependencyObject d, DependencyProperty dp)
         {
-            DataTransferEventArgs args = new DataTransferEventArgs(d, dp);
-            args.RoutedEvent = Binding.SourceUpdatedEvent;
+            DataTransferEventArgs args = new DataTransferEventArgs(d, dp)
+            {
+                RoutedEvent = Binding.SourceUpdatedEvent
+            };
             FrameworkObject fo = new FrameworkObject(d);
 
             if (!fo.IsValid && d != null)
@@ -2736,7 +2745,7 @@ namespace System.Windows.Data
             return null;
         }
 
-#endregion Helper functions
+        #endregion Helper functions
 
         //------------------------------------------------------
         //
@@ -2744,10 +2753,10 @@ namespace System.Windows.Data
         //
         //------------------------------------------------------
 
-        WeakReference           _ctxElement;
-        object                  _dataItem;
-        BindingWorker           _worker;
-        Type                    _sourceType;
+        WeakReference _ctxElement;
+        object _dataItem;
+        BindingWorker _worker;
+        Type _sourceType;
 
         internal static readonly object NullDataItem = new NamedObject("NullDataItem");
         internal static readonly object IgnoreDefaultValue = new NamedObject("IgnoreDefaultValue");

@@ -65,7 +65,7 @@ namespace WinRT
             int hr = VftblIUnknown.QueryInterface(ThisPtr, ref iid, out IntPtr thatPtr);
             if (hr >= 0)
             {
-                objRef = ObjectReference<T>.Attach(ref thatPtr); 
+                objRef = ObjectReference<T>.Attach(ref thatPtr);
             }
             return hr;
         }
@@ -223,7 +223,7 @@ namespace WinRT
         private readonly IntPtr _contextCallbackPtr;
 
         public ObjectReferenceWithContext(IntPtr thisPtr, IntPtr contextCallbackPtr)
-            :base(thisPtr)
+            : base(thisPtr)
         {
             _contextCallbackPtr = contextCallbackPtr;
         }

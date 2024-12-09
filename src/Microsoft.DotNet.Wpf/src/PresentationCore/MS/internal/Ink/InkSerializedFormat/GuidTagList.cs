@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -203,30 +203,30 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <returns></returns>
         public uint Save(Stream stream)
         {
-                // calculate the number of custom guids to persist
-                //   custom guids are those which are not reserved in ISF via 'tags'
+            // calculate the number of custom guids to persist
+            //   custom guids are those which are not reserved in ISF via 'tags'
             uint ul = (uint)(_customGuids.Count * Native.SizeOfGuid);
 
-                // if there are no custom guids, then the guid list can be persisted
-                //      without any cost ('tags' are freely storeable)
+            // if there are no custom guids, then the guid list can be persisted
+            //      without any cost ('tags' are freely storeable)
             if (ul == 0)
             {
                 return 0;
             }
-            
-                // if only the size was requested, return it
+
+            // if only the size was requested, return it
             if (null == stream)
             {
                 return (uint)(ul + SerializationHelper.VarSize(ul) + SerializationHelper.VarSize((uint)KnownTagCache.KnownTagIndex.GuidTable));
             }
 
-                // encode the guid table tag in the output stream
+            // encode the guid table tag in the output stream
             uint cbWrote = SerializationHelper.Encode(stream, (uint)KnownTagCache.KnownTagIndex.GuidTable);
 
-                // encode the size of the guid table
+            // encode the size of the guid table
             cbWrote += SerializationHelper.Encode(stream, ul);
 
-                // encode each guid in the table
+            // encode each guid in the table
             for (int i = 0; i < _customGuids.Count; i++)
             {
                 Guid guid = (Guid)_customGuids[i];
@@ -261,7 +261,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 uint bytesRead = StrokeCollectionSerializer.ReliableRead(strm, guids, Native.SizeOfGuid);
 
                 cbsize += bytesRead;
-                if ( bytesRead == Native.SizeOfGuid )
+                if (bytesRead == Native.SizeOfGuid)
                 {
                     _customGuids.Add(new Guid(guids));
                 }

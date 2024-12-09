@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,8 +12,8 @@
 //#define TRACE_ADDITIONAL    // DO NOT LEAVE ENABLED IN CHECKED IN CODE
 
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace MS.Internal.Ink
 {
@@ -33,7 +33,7 @@ namespace MS.Internal.Ink
         /// <summary>
         /// SelectionEditor constructor
         /// </summary>
-        internal SelectionEditor(EditingCoordinator editingCoordinator, InkCanvas inkCanvas) : base (editingCoordinator, inkCanvas)
+        internal SelectionEditor(EditingCoordinator editingCoordinator, InkCanvas inkCanvas) : base(editingCoordinator, inkCanvas)
         {
         }
 
@@ -91,7 +91,7 @@ namespace MS.Internal.Ink
             InkCanvas.SelectionAdorner.RemoveHandler(Mouse.MouseMoveEvent, new MouseEventHandler(OnAdornerMouseMoveEvent));
             InkCanvas.SelectionAdorner.RemoveHandler(Mouse.MouseEnterEvent, new MouseEventHandler(OnAdornerMouseMoveEvent));
             InkCanvas.SelectionAdorner.RemoveHandler(Mouse.MouseLeaveEvent, new MouseEventHandler(OnAdornerMouseLeaveEvent));
-}
+        }
 
         /// <summary>
         /// OnCommit
@@ -111,7 +111,7 @@ namespace MS.Internal.Ink
             // 
             // We only show the selection related cursor when the mouse is over the SelectionAdorner.
             // If mouse is outside of the SelectionAdorner, we let the system to pick up the default cursor.
-            if ( InkCanvas.SelectionAdorner.IsMouseOver )
+            if (InkCanvas.SelectionAdorner.IsMouseOver)
             {
                 return PenCursorManager.GetSelectionCursor(_hitResult,
                     (this.InkCanvas.FlowDirection == FlowDirection.RightToLeft));
@@ -141,7 +141,7 @@ namespace MS.Internal.Ink
         private void OnAdornerMouseButtonDownEvent(object sender, MouseButtonEventArgs args)
         {
             // If the ButtonDown is raised by RightMouse, we should just bail out.
-            if ( (args.StylusDevice == null && args.LeftButton != MouseButtonState.Pressed) )
+            if ((args.StylusDevice == null && args.LeftButton != MouseButtonState.Pressed))
             {
                 return;
             }
@@ -152,7 +152,7 @@ namespace MS.Internal.Ink
 
             // Check if we should start resizing/moving
             hitResult = HitTestOnSelectionAdorner(pointOnSelectionAdorner);
-            if ( hitResult != InkCanvasSelectionHitResult.None )
+            if (hitResult != InkCanvasSelectionHitResult.None)
             {
                 // We always use MouseDevice for the selection editing.
                 EditingCoordinator.ActivateDynamicBehavior(EditingCoordinator.SelectionEditingBehavior, args.Device);
@@ -199,19 +199,19 @@ namespace MS.Internal.Ink
         private InkCanvasSelectionHitResult HitTestOnSelectionAdorner(Point position)
         {
             InkCanvasSelectionHitResult hitResult = InkCanvasSelectionHitResult.None;
-            
-            if ( InkCanvas.InkCanvasSelection.HasSelection )
+
+            if (InkCanvas.InkCanvasSelection.HasSelection)
             {
                 // First, do hit test on the adorner
                 hitResult = InkCanvas.SelectionAdorner.SelectionHandleHitTest(position);
 
                 // Now, check if ResizeEnabled or MoveEnabled has been set.
                 // If so, reset the grab handle.
-                if ( hitResult >= InkCanvasSelectionHitResult.TopLeft && hitResult <= InkCanvasSelectionHitResult.Left )
+                if (hitResult >= InkCanvasSelectionHitResult.TopLeft && hitResult <= InkCanvasSelectionHitResult.Left)
                 {
                     hitResult = InkCanvas.ResizeEnabled ? hitResult : InkCanvasSelectionHitResult.None;
                 }
-                else if ( hitResult == InkCanvasSelectionHitResult.Selection )
+                else if (hitResult == InkCanvasSelectionHitResult.Selection)
                 {
                     hitResult = InkCanvas.MoveEnabled ? hitResult : InkCanvasSelectionHitResult.None;
                 }
@@ -230,7 +230,7 @@ namespace MS.Internal.Ink
         private void UpdateSelectionCursor(Point hitPoint)
         {
             InkCanvasSelectionHitResult hitResult = HitTestOnSelectionAdorner(hitPoint);
-            if ( _hitResult != hitResult )
+            if (_hitResult != hitResult)
             {
                 // Keep the current handle
                 _hitResult = hitResult;

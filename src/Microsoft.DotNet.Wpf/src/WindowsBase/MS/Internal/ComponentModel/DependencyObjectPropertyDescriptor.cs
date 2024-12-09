@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,7 +13,8 @@ namespace MS.Internal.ComponentModel
     ///     An inplementation of a property descriptor for DependencyProperties.
     ///     This supports both normal and attached properties.
     /// </summary>
-    internal sealed class DependencyObjectPropertyDescriptor : PropertyDescriptor {
+    internal sealed class DependencyObjectPropertyDescriptor : PropertyDescriptor
+    {
         //------------------------------------------------------
         //
         //  Constructors
@@ -30,7 +31,7 @@ namespace MS.Internal.ComponentModel
         ///     Attributes property and demand create the attributes at that time.
         /// </summary>
         internal DependencyObjectPropertyDescriptor(PropertyDescriptor property, DependencyProperty dp, Type objectType)
-            : base(dp.Name, null) 
+            : base(dp.Name, null)
         {
             _property = property;
             _dp = dp;
@@ -50,7 +51,7 @@ namespace MS.Internal.ComponentModel
         ///     Attributes property and demand create the attributes at that time.
         /// </summary>
         internal DependencyObjectPropertyDescriptor(DependencyProperty dp, Type ownerType)
-            : base(string.Concat(dp.OwnerType.Name, ".", dp.Name), null) 
+            : base(string.Concat(dp.OwnerType.Name, ".", dp.Name), null)
         {
             _dp = dp;
             _componentType = ownerType;
@@ -58,7 +59,7 @@ namespace MS.Internal.ComponentModel
         }
 
         #endregion Constructors
-        
+
 
         //------------------------------------------------------
         //
@@ -73,7 +74,7 @@ namespace MS.Internal.ComponentModel
         ///     We map this to true if there is a local value
         ///     on the DP.
         /// </summary>
-        public override bool CanResetValue(object component) 
+        public override bool CanResetValue(object component)
         {
             // All DPs that have values set can be reset
             return ShouldSerializeValue(component);
@@ -82,7 +83,7 @@ namespace MS.Internal.ComponentModel
         /// <summary>
         ///     Returns the value for this property.
         /// </summary>
-        public override object GetValue(object component) 
+        public override object GetValue(object component)
         {
             DependencyObject DO = FromObj(component);
             return DO.GetValue(_dp);
@@ -92,9 +93,9 @@ namespace MS.Internal.ComponentModel
         ///     Attempts to reset (or clear) the value in the
         ///     DP.
         /// </summary>
-        public override void ResetValue(object component) 
+        public override void ResetValue(object component)
         {
-            if (!_queriedResetMethod) 
+            if (!_queriedResetMethod)
             {
                 _resetMethod = GetSpecialMethod("Reset");
                 _queriedResetMethod = true;
@@ -102,16 +103,16 @@ namespace MS.Internal.ComponentModel
 
             DependencyObject DO = FromObj(component);
 
-            if (_resetMethod != null) 
+            if (_resetMethod != null)
             {
                 // See if we need to pass parameters to this method.  When
                 // _property == null, this is an attached property and
                 // the method is static.  When _property != null, this
                 // is a direct property and the method is instanced.
 
-                if (_property == null) 
+                if (_property == null)
                 {
-                    _resetMethod.Invoke(null, new object[] {DO});
+                    _resetMethod.Invoke(null, new object[] { DO });
                 }
                 else
                 {
@@ -127,7 +128,7 @@ namespace MS.Internal.ComponentModel
         /// <summary>
         ///     Sets the property value on the given object.
         /// </summary>
-        public override void SetValue(object component, object value) 
+        public override void SetValue(object component, object value)
         {
             DependencyObject DO = FromObj(component);
             DO.SetValue(_dp, value);
@@ -137,7 +138,7 @@ namespace MS.Internal.ComponentModel
         ///     Returns true if the property contains
         ///     a local value that should be serialized.
         /// </summary>
-        public override bool ShouldSerializeValue(object component) 
+        public override bool ShouldSerializeValue(object component)
         {
             DependencyObject DO = FromObj(component);
             bool shouldSerialize = DO.ShouldSerializeProperty(_dp);
@@ -149,11 +150,11 @@ namespace MS.Internal.ComponentModel
             {
                 // If we have a ShouldSerialize method, use it
 
-                if (!_queriedShouldSerializeMethod) 
+                if (!_queriedShouldSerializeMethod)
                 {
                     MethodInfo method = GetSpecialMethod("ShouldSerialize");
-                    
-                    if (method != null && method.ReturnType == BoolType) 
+
+                    if (method != null && method.ReturnType == BoolType)
                     {
                         _shouldSerializeMethod = method;
                     }
@@ -167,9 +168,9 @@ namespace MS.Internal.ComponentModel
                     // the method is static.  When _property != null, this
                     // is a direct property and the method is instanced.
 
-                    if (_property == null) 
+                    if (_property == null)
                     {
-                        shouldSerialize = (bool)_shouldSerializeMethod.Invoke(null, new object[] {DO});
+                        shouldSerialize = (bool)_shouldSerializeMethod.Invoke(null, new object[] { DO });
                     }
                     else
                     {
@@ -184,18 +185,18 @@ namespace MS.Internal.ComponentModel
         /// <summary>
         ///     Adds a change event handler to this descriptor.
         /// </summary>
-        public override void AddValueChanged(object component, EventHandler handler) 
+        public override void AddValueChanged(object component, EventHandler handler)
         {
             // Potentially optimize this if the individual cost of a change tracker is too high.
 
             DependencyObject DO = FromObj(component);
-            if (_trackers == null) 
+            if (_trackers == null)
             {
                 _trackers = new Dictionary<DependencyObject, PropertyChangeTracker>();
             }
 
             PropertyChangeTracker tracker;
-            if (!_trackers.TryGetValue(DO, out tracker)) 
+            if (!_trackers.TryGetValue(DO, out tracker))
             {
                 tracker = new PropertyChangeTracker(DO, _dp);
                 _trackers.Add(DO, tracker);
@@ -207,15 +208,17 @@ namespace MS.Internal.ComponentModel
         /// <summary>
         ///     Removes a previously added change handler.
         /// </summary>
-        public override void RemoveValueChanged(object component, EventHandler handler) {
-            if (_trackers == null) return;
+        public override void RemoveValueChanged(object component, EventHandler handler)
+        {
+            if (_trackers == null)
+                return;
             PropertyChangeTracker tracker;
             DependencyObject DO = FromObj(component);
 
-            if (_trackers.TryGetValue(DO, out tracker)) 
+            if (_trackers.TryGetValue(DO, out tracker))
             {
                 tracker.Changed -= handler;
-                if (tracker.CanClose) 
+                if (tracker.CanClose)
                 {
                     tracker.Close();
                     _trackers.Remove(DO);
@@ -233,13 +236,13 @@ namespace MS.Internal.ComponentModel
         //------------------------------------------------------
 
         #region Public Properties
-        
+
         /// <summary>
         ///     Returns the collection of attributes associated with this property.
         /// </summary>
-        public override AttributeCollection Attributes 
+        public override AttributeCollection Attributes
         {
-            get 
+            get
             {
                 // The Attributes
                 // property on PropertyDescriptor is not as thread
@@ -250,9 +253,9 @@ namespace MS.Internal.ComponentModel
                 // DependencyObjectPropertyDescriptors.  
 
                 AttributeCollection attrs = base.Attributes;
-                if (attrs == null) 
+                if (attrs == null)
                 {
-                    lock(_attributeSyncLock) 
+                    lock (_attributeSyncLock)
                     {
                         attrs = base.Attributes;
                         Debug.Assert(attrs != null);
@@ -266,7 +269,7 @@ namespace MS.Internal.ComponentModel
         /// <summary>
         ///     The type of object this property is describing.
         /// </summary>
-        public override Type ComponentType 
+        public override Type ComponentType
         {
             get { return _componentType; }
         }
@@ -274,15 +277,17 @@ namespace MS.Internal.ComponentModel
         /// <summary>
         ///     Returns true if the DP is read only.
         /// </summary>
-        public override bool IsReadOnly 
+        public override bool IsReadOnly
         {
-            get { 
+            get
+            {
                 // It is a lot cheaper to get DP metadata
                 // than it is to calculate attributes.  While
                 // the attributes do factor in DP metadata, short
                 // circuit for this common case.
                 bool readOnly = _dp.ReadOnly;
-                if (!readOnly) {
+                if (!readOnly)
+                {
                     readOnly = Attributes.Contains(ReadOnlyAttribute.Yes);
                 }
                 return readOnly;
@@ -292,7 +297,7 @@ namespace MS.Internal.ComponentModel
         /// <summary>
         ///     The type of the property.
         /// </summary>
-        public override Type PropertyType 
+        public override Type PropertyType
         {
             get { return _dp.PropertyType; }
         }
@@ -301,7 +306,7 @@ namespace MS.Internal.ComponentModel
         ///     Returns true if this property descriptor supports change
         ///     notifications.  All dependency property descriptors do.
         /// </summary>
-        public override bool SupportsChangeEvents 
+        public override bool SupportsChangeEvents
         {
             get { return true; }
         }
@@ -316,19 +321,19 @@ namespace MS.Internal.ComponentModel
         //------------------------------------------------------
 
         #region Internal Properties
-        
+
         /// <summary>
         ///     Returns the dependency property we're wrapping.
         /// </summary>
-        internal DependencyProperty DependencyProperty 
+        internal DependencyProperty DependencyProperty
         {
             get { return _dp; }
         }
 
 
-        internal bool IsAttached 
+        internal bool IsAttached
         {
-             get { return (_property == null); } 
+            get { return (_property == null); }
         }
 
         internal PropertyMetadata Metadata
@@ -337,7 +342,7 @@ namespace MS.Internal.ComponentModel
         }
 
         #endregion Internal Properties
-        
+
         //------------------------------------------------------
         //
         //  Internal Methods
@@ -345,19 +350,19 @@ namespace MS.Internal.ComponentModel
         //------------------------------------------------------
 
         #region Internal Methods
-        
+
         /// <summary>
         ///     This method is called when we should clear our cached state.  The cache
         ///     may become invalid if someone adds additional type description providers.
         /// </summary>
         internal static void ClearCache()
         {
-            lock (_getMethodCache) 
+            lock (_getMethodCache)
             {
                 _getMethodCache.Clear();
             }
 
-            lock(_setMethodCache)
+            lock (_setMethodCache)
             {
                 _setMethodCache.Clear();
             }
@@ -394,12 +399,14 @@ namespace MS.Internal.ComponentModel
             object methodObj = _getMethodCache[dp];
             method = methodObj as MethodInfo;
 
-            if (methodObj == null || (method != null && !object.ReferenceEquals(method.DeclaringType, reflectionType))) {
+            if (methodObj == null || (method != null && !object.ReferenceEquals(method.DeclaringType, reflectionType)))
+            {
                 BindingFlags f = BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly;
                 string methodName = string.Concat("Get", dp.Name);
                 method = reflectionType.GetMethod(methodName, f, _dpBinder, DpType, null);
 
-                lock(_getMethodCache) {
+                lock (_getMethodCache)
+                {
                     _getMethodCache[dp] = (method == null ? _nullMethodSentinel : method);
                 }
             }
@@ -420,7 +427,7 @@ namespace MS.Internal.ComponentModel
         /// <summary>
         ///     Overridden to lazily create our attributes.
         /// </summary>
-        protected override AttributeCollection CreateAttributeCollection() 
+        protected override AttributeCollection CreateAttributeCollection()
         {
             MergeAttributes();
             return base.CreateAttributeCollection();
@@ -436,11 +443,11 @@ namespace MS.Internal.ComponentModel
         //------------------------------------------------------
 
         #region Private Methods
-        
+
         /// <summary>
         ///     Helper method that recovers a dependency object from a value.
         /// </summary>
-        private static DependencyObject FromObj(object value) 
+        private static DependencyObject FromObj(object value)
         {
             // This indirection is necessary to support
             // the "association" feature of type descriptor.  This feature
@@ -452,11 +459,11 @@ namespace MS.Internal.ComponentModel
         ///     Additional metadata attributes for attached properties
         ///     are taken from the "Get" method.
         /// </summary>
-        private AttributeCollection GetAttachedPropertyAttributes() 
+        private AttributeCollection GetAttachedPropertyAttributes()
         {
             MethodInfo mi = GetAttachedPropertyMethod(_dp);
 
-            if (mi != null) 
+            if (mi != null)
             {
                 Type attrType = AttributeType;
                 Attribute[] attrArray = (Attribute[])mi.GetCustomAttributes(attrType, true);
@@ -479,30 +486,31 @@ namespace MS.Internal.ComponentModel
 
                 Attribute[] addAttrs = null;
 
-                foreach(Attribute attr in attrArray) 
+                foreach (Attribute attr in attrArray)
                 {
                     AttributeProviderAttribute pa = attr as AttributeProviderAttribute;
-                    if (pa != null) 
+                    if (pa != null)
                     {
                         Type providerType = Type.GetType(pa.TypeName);
-                        if (providerType != null) 
+                        if (providerType != null)
                         {
                             Attribute[] paAttrs = null;
-                            if (!string.IsNullOrEmpty(pa.PropertyName)) 
+                            if (!string.IsNullOrEmpty(pa.PropertyName))
                             {
                                 MemberInfo[] milist = providerType.GetMember(pa.PropertyName);
-                                if (milist.Length > 0 && milist[0] != null) 
+                                if (milist.Length > 0 && milist[0] != null)
                                 {
                                     paAttrs = (Attribute[])milist[0].GetCustomAttributes(typeof(Attribute), true);
                                 }
                             }
-                            else {
+                            else
+                            {
                                 paAttrs = (Attribute[])providerType.GetCustomAttributes(typeof(Attribute), true);
                             }
 
                             if (paAttrs != null)
                             {
-                                if (addAttrs == null) 
+                                if (addAttrs == null)
                                 {
                                     addAttrs = paAttrs;
                                 }
@@ -512,7 +520,7 @@ namespace MS.Internal.ComponentModel
                                     addAttrs.CopyTo(newArray, 0);
                                     paAttrs.CopyTo(newArray, addAttrs.Length);
                                     addAttrs = newArray;
-}
+                                }
                             }
                         }
                     }
@@ -520,7 +528,7 @@ namespace MS.Internal.ComponentModel
 
                 // See if we gathered additional attributes.  These are always lower priority
                 // and therefore get tacked onto the end of the list
-                if (addAttrs != null) 
+                if (addAttrs != null)
                 {
                     Attribute[] newArray = new Attribute[addAttrs.Length + attrArray.Length];
                     attrArray.CopyTo(newArray, 0);
@@ -560,18 +568,20 @@ namespace MS.Internal.ComponentModel
             object methodObj = _setMethodCache[dp];
             method = methodObj as MethodInfo;
 
-            if (methodObj == null || (method != null && !object.ReferenceEquals(method.DeclaringType, reflectionType))) {
+            if (methodObj == null || (method != null && !object.ReferenceEquals(method.DeclaringType, reflectionType)))
+            {
                 BindingFlags f = BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly;
                 string methodName = string.Concat("Set", dp.Name);
-    
+
                 Type[] paramTypes = new Type[] {
                     DpType[0],
                     TypeDescriptor.GetReflectionType(dp.PropertyType)
                 };
-    
+
                 method = reflectionType.GetMethod(methodName, f, _dpBinder, paramTypes, null);
 
-                lock(_setMethodCache) {
+                lock (_setMethodCache)
+                {
                     _setMethodCache[dp] = (method == null ? _nullMethodSentinel : method);
                 }
             }
@@ -591,12 +601,12 @@ namespace MS.Internal.ComponentModel
             Type[] types;
             Type reflectionType;
 
-            if (_property == null) 
+            if (_property == null)
             {
                 // Attached property
                 types = DpType;
                 flags |= BindingFlags.Static;
-                
+
                 // TypeDescriptor offers a feature called a "reflection type", which 
                 // is an indirection to another type we should reflect on.  Anywyere
                 // we rely on raw reflection we should be using GetReflectionType.
@@ -608,7 +618,7 @@ namespace MS.Internal.ComponentModel
                 // Direct property
                 types = Type.EmptyTypes;
                 flags |= BindingFlags.Instance;
-                
+
                 // TypeDescriptor offers a feature called a "reflection type", which 
                 // is an indirection to another type we should reflect on.  Anywyere
                 // we rely on raw reflection we should be using GetReflectionType.
@@ -624,35 +634,35 @@ namespace MS.Internal.ComponentModel
 
             MethodInfo methodInfo = reflectionType.GetMethod(methodName, flags, _dpBinder, types, null);
 
-            if (methodInfo != null) 
+            if (methodInfo != null)
             {
                 // We don't support non-public ShouldSerialize/ClearValue methods.  We could just look
                 // for public methods in the first place, but then authors might get confused as
                 // to why their non-public method didn't get found, especially because the CLR
                 // TypeDescriptor does find and use non-public methods.
-                if( !methodInfo.IsPublic )
+                if (!methodInfo.IsPublic)
                 {
                     throw new InvalidOperationException(SR.Format(SR.SpecialMethodMustBePublic, methodInfo.Name));
                 }
             }
 
             return methodInfo;
-}
+        }
 
         /// <summary>
         ///     This method is called on demand when we need to get at one or
         ///     more attributes for this property.  Because obtaining attributes
         ///     can be costly, we wait until now to do the job.
         /// </summary>
-        private void MergeAttributes() 
+        private void MergeAttributes()
         {
             AttributeCollection baseAttributes;
 
-            if (_property != null) 
+            if (_property != null)
             {
                 baseAttributes = _property.Attributes;
             }
-            else 
+            else
             {
                 baseAttributes = GetAttachedPropertyAttributes();
             }
@@ -661,18 +671,18 @@ namespace MS.Internal.ComponentModel
 
             bool readOnly = false;
 
-            foreach (Attribute a in baseAttributes) 
+            foreach (Attribute a in baseAttributes)
             {
                 Attribute attrToAdd = a;
                 DefaultValueAttribute defAttr = a as DefaultValueAttribute;
 
-                if (defAttr != null) 
+                if (defAttr != null)
                 {
                     // DP metadata always overrides CLR metadata for
                     // default value.
                     attrToAdd = null;
                 }
-                else 
+                else
                 {
                     ReadOnlyAttribute roAttr = a as ReadOnlyAttribute;
                     if (roAttr != null)
@@ -684,7 +694,8 @@ namespace MS.Internal.ComponentModel
                     }
                 }
 
-                if (attrToAdd != null) newAttributes.Add(attrToAdd);
+                if (attrToAdd != null)
+                    newAttributes.Add(attrToAdd);
             }
 
             // Always include the metadata choice
@@ -692,7 +703,8 @@ namespace MS.Internal.ComponentModel
 
             // If we are an attached property and non-read only, the lack of a
             // set method will make us read only.
-            if (_property == null && !readOnly && GetAttachedPropertySetMethod(_dp) == null) {
+            if (_property == null && !readOnly && GetAttachedPropertySetMethod(_dp) == null)
+            {
                 readOnly = true;
             }
 
@@ -702,13 +714,13 @@ namespace MS.Internal.ComponentModel
 
             // Add DefaultValueAttribute if the DP has a default
             // value
-            if (_metadata.DefaultValue != DependencyProperty.UnsetValue) 
+            if (_metadata.DefaultValue != DependencyProperty.UnsetValue)
             {
                 newAttributes.Add(new DefaultValueAttribute(_metadata.DefaultValue));
             }
 
             // And add a read only attribute if needed
-            if (readOnly) 
+            if (readOnly)
             {
                 newAttributes.Add(new ReadOnlyAttribute(true));
             }
@@ -723,7 +735,7 @@ namespace MS.Internal.ComponentModel
             // we need to reverse the array.
 
             Attribute[] attrArray = newAttributes.ToArray();
-            for (int idx = 0; idx < attrArray.Length / 2; idx++) 
+            for (int idx = 0; idx < attrArray.Length / 2; idx++)
             {
                 int swap = attrArray.Length - idx - 1;
                 Attribute t = attrArray[idx];
@@ -749,10 +761,13 @@ namespace MS.Internal.ComponentModel
         /// Helper to get the reflection version of typeof(AttachedPropertyBrowsableAttribute).  This is used by 
         /// the AttachInfo class.
         /// </summary>
-        internal static Type AttachedPropertyBrowsableAttributeType {
-            get {
+        internal static Type AttachedPropertyBrowsableAttributeType
+        {
+            get
+            {
                 Type attachedPropertyBrowsableType = _attachedPropertyBrowsableType;
-                if (attachedPropertyBrowsableType == null) {
+                if (attachedPropertyBrowsableType == null)
+                {
                     attachedPropertyBrowsableType = TypeDescriptor.GetReflectionType(typeof(AttachedPropertyBrowsableAttribute));
                     _attachedPropertyBrowsableType = attachedPropertyBrowsableType;
                 }
@@ -763,10 +778,13 @@ namespace MS.Internal.ComponentModel
         /// <summary>
         /// Helper to get the reflection version of typeof(Attribute)
         /// </summary>
-        private static Type AttributeType {
-            get {
+        private static Type AttributeType
+        {
+            get
+            {
                 Type attributeType = _attributeType;
-                if (attributeType == null) {
+                if (attributeType == null)
+                {
                     attributeType = TypeDescriptor.GetReflectionType(typeof(Attribute));
                     _attributeType = attributeType;
                 }
@@ -777,10 +795,13 @@ namespace MS.Internal.ComponentModel
         /// <summary>
         /// Helper to get the reflection version of typeof(bool)
         /// </summary>
-        private static Type BoolType {
-            get {
+        private static Type BoolType
+        {
+            get
+            {
                 Type boolType = _boolType;
-                if (boolType == null) {
+                if (boolType == null)
+                {
                     boolType = TypeDescriptor.GetReflectionType(typeof(bool));
                     _boolType = boolType;
                 }
@@ -791,10 +812,13 @@ namespace MS.Internal.ComponentModel
         /// <summary>
         /// Helper to get and cache the reflection version of a dependency object type array
         /// </summary>
-        private static Type[] DpType {
-            get {
+        private static Type[] DpType
+        {
+            get
+            {
                 Type[] dpType = _dpType;
-                if (dpType == null) {
+                if (dpType == null)
+                {
                     dpType = new Type[] { TypeDescriptor.GetReflectionType(typeof(DependencyObject)) };
                     _dpType = dpType;
                 }
@@ -812,7 +836,7 @@ namespace MS.Internal.ComponentModel
         //------------------------------------------------------
 
         #region Private Fields
-        
+
         private static Binder _dpBinder = new AttachedPropertyMethodSelector();
 
         private static object _nullMethodSentinel = new object();

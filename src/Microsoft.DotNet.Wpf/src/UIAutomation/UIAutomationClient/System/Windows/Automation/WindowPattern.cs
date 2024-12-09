@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,7 +16,7 @@ namespace System.Windows.Automation
 #if (INTERNAL_COMPILE)
     internal class WindowPattern: BasePattern
 #else
-    public class WindowPattern: BasePattern
+    public class WindowPattern : BasePattern
 #endif
     {
         //------------------------------------------------------
@@ -87,7 +87,7 @@ namespace System.Windows.Automation
         /// Changes the State of the window based on the passed enum.
         /// </summary>
         /// <param name="state">The requested state of the window.</param>
-        public void SetWindowVisualState( WindowVisualState state )
+        public void SetWindowVisualState(WindowVisualState state)
         {
             UiaCoreApi.WindowPattern_SetWindowVisualState(_hPattern, state);
         }
@@ -124,7 +124,7 @@ namespace System.Windows.Automation
         /// <returns>
         /// returns true if the window has reached the idle state and false if the timeout occurred.
         /// </returns>
-        public bool WaitForInputIdle( int milliseconds )
+        public bool WaitForInputIdle(int milliseconds)
         {
             return UiaCoreApi.WindowPattern_WaitForInputIdle(_hPattern, milliseconds);
         }

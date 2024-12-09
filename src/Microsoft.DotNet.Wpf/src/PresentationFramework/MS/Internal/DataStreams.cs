@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -32,7 +32,7 @@ namespace MS.Internal.AppModel
         internal byte[] _data;
     }
     #endregion SubStream struct
-    
+
     #region DataStreams class
     [Serializable]
     internal class DataStreams
@@ -44,7 +44,7 @@ namespace MS.Internal.AppModel
 
         internal bool HasAnyData
         {
-            get 
+            get
             {
                 return _subStreams != null && _subStreams.Count > 0
                     || _customJournaledObjects != null && _customJournaledObjects.Count > 0;
@@ -58,7 +58,7 @@ namespace MS.Internal.AppModel
 
         private ArrayList GetSubStreams(object key)
         {
-            ArrayList subStreams = (ArrayList) _subStreams[key];
+            ArrayList subStreams = (ArrayList)_subStreams[key];
             if (subStreams == null)
             {
                 subStreams = new ArrayList(3);
@@ -90,7 +90,7 @@ namespace MS.Internal.AppModel
                 {
                     LocalValueEntry localValueEntry = (LocalValueEntry)dpEnumerator.Current;
                     FrameworkPropertyMetadata metadata = localValueEntry.Property.GetMetadata(element.DependencyObjectType) as FrameworkPropertyMetadata;
-                                        
+
                     if (metadata == null)
                     {
                         continue;
@@ -132,17 +132,17 @@ namespace MS.Internal.AppModel
                                 Debug.Fail($"Unexpected exception writing binary formatted data. {ex.Message}");
                             }
 
-                            if(!success)
+                            if (!success)
                             {
-                                #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
+#pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
                                 this.Formatter.Serialize(byteStream, currentValue);
-                                #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete 
+#pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete 
                             }
-                            
-                            
+
+
                             bytes = byteStream.ToArray();
                             // Dispose the stream
-                            ((IDisposable)byteStream).Dispose( );
+                            ((IDisposable)byteStream).Dispose();
                         }
 
                         // Save the byte array by the property name
@@ -262,14 +262,14 @@ namespace MS.Internal.AppModel
                         }
 
                         //Using Binary formatter
-                        if(newValue == null)
+                        if (newValue == null)
                         {
                             dataStream.Position = 0;
-                            #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
+#pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
                             newValue = this.Formatter.Deserialize(dataStream);
-                            #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete 
+#pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete 
                         }
-                        
+
                     }
                     element.SetValue(dp, newValue);
                 }
@@ -300,7 +300,7 @@ namespace MS.Internal.AppModel
 
                 if (_customJournaledObjects != null && _customJournaledObjects.Contains(persistId))
                 {
-                    CustomJournalStateInternal state = 
+                    CustomJournalStateInternal state =
                         (CustomJournalStateInternal)_customJournaledObjects[persistId];
                     Debug.Assert(state != null);
                     IJournalState customJournalingObject = node as IJournalState;
@@ -366,21 +366,21 @@ namespace MS.Internal.AppModel
             {
                 _subStreams.Clear();
             }
-            WalkLogicalTree(root, new NodeOperation(this.SaveState));            
+            WalkLogicalTree(root, new NodeOperation(this.SaveState));
         }
 
         internal void Load(Object root)
         {
             if (this.HasAnyData)
             {
-                WalkLogicalTree(root, new NodeOperation(this.LoadState));               
+                WalkLogicalTree(root, new NodeOperation(this.LoadState));
             }
         }
 
         internal void Clear()
         {
             _subStreams = null;
-            _customJournaledObjects = null; 
+            _customJournaledObjects = null;
         }
 #pragma warning disable SYSLIB0011 // Type or member is obsolete
         #region Private and internal fields and properties

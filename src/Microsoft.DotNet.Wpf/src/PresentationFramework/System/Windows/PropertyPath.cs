@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,14 +13,13 @@
 //     * What we want is the Opacity property on that object.
 //
 
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
 using System.Text;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Windows.Data;
-
 using System.Windows.Markup;
 using MS.Internal;
 using MS.Internal.Data;
@@ -176,7 +175,7 @@ namespace System.Windows
 
             if (pi != null)
             {
-                mi =  pi.GetGetMethod();
+                mi = pi.GetGetMethod();
                 return mi != null && mi.IsStatic;
             }
 
@@ -269,7 +268,7 @@ namespace System.Windows
             // tree context to resolve the class name.
             int result = 0;
 
-            for (int k=Length-1; k>=0; --k)
+            for (int k = Length - 1; k >= 0; --k)
             {
                 if (_earlyBoundPathParts[k] == null)
                 {
@@ -279,7 +278,7 @@ namespace System.Windows
                         // a dot inside parens, when there's no early-bound accessor,
                         // is an unresolved PD name
                         if (name.Contains('.'))
-                            ++ result;
+                            ++result;
                     }
                 }
             }
@@ -387,7 +386,7 @@ namespace System.Windows
             StringBuilder builder = new StringBuilder();
             PathParameterCollection parameters = new PathParameterCollection();
 
-            for (int i=0; i<_arySVI.Length; ++i)
+            for (int i = 0; i < _arySVI.Length; ++i)
             {
                 switch (_arySVI[i].drillIn)
                 {
@@ -507,14 +506,14 @@ namespace System.Windows
             object context = null;
 
             TypeConvertContext typeConvertContext = typeDescriptorContext as TypeConvertContext;
-            if( typeConvertContext != null )
+            if (typeConvertContext != null)
                 context = typeConvertContext.ParserContext;
 
             if (context == null)
                 context = typeDescriptorContext;
             _earlyBoundPathParts = new object[Length];
 
-            for (int level=Length-1; level>=0; --level)
+            for (int level = Length - 1; level >= 0; --level)
             {
                 if (_arySVI[level].type == SourceValueType.Property)
                 {
@@ -565,13 +564,14 @@ namespace System.Windows
                 }
                 else if (throwOnError)
                     throw new InvalidOperationException(SR.Format(SR.PathParametersIndexOutOfRange, index, PathParameters.Count));
-                else return null;
+                else
+                    return null;
             }
 
             // handle attached-property syntax:  (TypeName.PropertyName)
             if (IsPropertyReference(name))
             {
-                name = name.Substring(1, name.Length-2);
+                name = name.Substring(1, name.Length - 2);
 
                 int lastIndex = name.LastIndexOf('.');
                 if (lastIndex >= 0)
@@ -672,7 +672,7 @@ namespace System.Windows
             {
                 try
                 {
-                    for (result = null;  result == null && ownerType != null;  ownerType = ownerType.BaseType)
+                    for (result = null; result == null && ownerType != null; ownerType = ownerType.BaseType)
                     {
                         result = ownerType.GetProperty(propertyName, BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public);
                     }
@@ -714,7 +714,7 @@ namespace System.Windows
                 {
                     // no value string "(2)" - value comes from PathParameter list
                     int index;
-                    if (Int32.TryParse( paramList[i].parenString.Trim(),
+                    if (Int32.TryParse(paramList[i].parenString.Trim(),
                                         NumberStyles.Integer,
                                         TypeConverterHelper.InvariantEnglishUS.NumberFormat,
                                         out index))
@@ -786,11 +786,11 @@ namespace System.Windows
             {
                 // PreSharp uses message numbers that the C# compiler doesn't know about.
                 // Disable the C# complaints, per the PreSharp documentation.
-                #pragma warning disable 1634, 1691
+#pragma warning disable 1634, 1691
 
                 // PreSharp complains about catching NullReference (and other) exceptions.
                 // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-                #pragma warning disable 56500
+#pragma warning disable 56500
 
                 try
                 {
@@ -816,8 +816,8 @@ namespace System.Windows
                         throw;
                 }
 
-                #pragma warning restore 56500
-                #pragma warning restore 1634, 1691
+#pragma warning restore 56500
+#pragma warning restore 1634, 1691
             }
 
             if (value == null && type.IsAssignableFrom(typeof(string)))
@@ -935,8 +935,8 @@ namespace System.Windows
         // determine if an object is one of the accessors we support
         static bool IsValidAccessor(object accessor)
         {
-            return  accessor is DependencyProperty ||
-                    accessor is PropertyInfo  ||
+            return accessor is DependencyProperty ||
+                    accessor is PropertyInfo ||
                     accessor is PropertyDescriptor ||
                     accessor is DynamicObjectAccessor;
         }
@@ -971,7 +971,7 @@ namespace System.Windows
         //------------------------------------------------------
 
         const string SingleStepPath = "(0)";
-        static readonly Char[] s_comma = new Char[]{','};
+        static readonly Char[] s_comma = new Char[] { ',' };
 
         //------------------------------------------------------
         //

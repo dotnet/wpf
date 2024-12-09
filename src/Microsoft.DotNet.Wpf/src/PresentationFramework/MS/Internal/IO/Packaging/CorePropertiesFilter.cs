@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,11 +10,11 @@
 //              EncryptedPackageEnvelope respectively.
 //
 
-using System.Windows;
-using System.IO.Packaging;
-using MS.Internal.Interop;
-using System.Runtime.InteropServices;
 using System.Globalization;
+using System.IO.Packaging;
+using System.Runtime.InteropServices;
+using System.Windows;
+using MS.Internal.Interop;
 
 namespace MS.Internal.IO.Packaging
 {
@@ -341,7 +341,7 @@ namespace MS.Internal.IO.Packaging
             // Move to next existing property with value present.
             while (_currentIndex < _attributes.Length)
             {
-                if (   _attributes[_currentIndex].Property.PropType == PropSpecType.Id
+                if (_attributes[_currentIndex].Property.PropType == PropSpecType.Id
                     && CurrentValue != null)
                 {
                     return true;
@@ -471,7 +471,7 @@ namespace MS.Internal.IO.Packaging
                         }
                         return null;
                 }
-}
+            }
             else if (guid == FormatId.DocumentSummaryInformation)
             {
                 switch (propId)

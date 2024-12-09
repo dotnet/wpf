@@ -1,10 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
 using System.Collections;
-using System.Drawing;
 using System.Diagnostics.CodeAnalysis;
+using System.Drawing;
 
 #nullable enable
 namespace System.Formats.Nrbf
@@ -158,7 +158,7 @@ namespace System.Formats.Nrbf
 
                 return true;
             }
-            }
+        }
 
         /// <summary>
         ///  Tries to get this object as a <see cref="ArrayList"/> of <see cref="PrimitiveType"/> values.

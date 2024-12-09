@@ -1,9 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Threading;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 
 namespace System.Windows.Interop
 {
@@ -36,14 +36,14 @@ namespace System.Windows.Interop
             {
                 ComponentDispatcherThread data;
                 object obj = Thread.GetData(_threadSlot);
-                if(null == obj)
+                if (null == obj)
                 {
                     data = new ComponentDispatcherThread();
                     Thread.SetData(_threadSlot, data);
                 }
                 else
                 {
-                    data = (ComponentDispatcherThread) obj;
+                    data = (ComponentDispatcherThread)obj;
                 }
                 return data;
             }
@@ -156,10 +156,12 @@ namespace System.Windows.Interop
         ///</summary>
         public static event EventHandler ThreadIdle
         {
-            add {
+            add
+            {
                 ComponentDispatcher.CurrentThreadData.ThreadIdle += value;
             }
-            remove {
+            remove
+            {
                 ComponentDispatcher.CurrentThreadData.ThreadIdle -= value;
             }
         }
@@ -170,10 +172,12 @@ namespace System.Windows.Interop
         ///</summary>
         public static event ThreadMessageEventHandler ThreadFilterMessage
         {
-            add {
+            add
+            {
                 ComponentDispatcher.CurrentThreadData.ThreadFilterMessage += value;
             }
-            remove {
+            remove
+            {
                 ComponentDispatcher.CurrentThreadData.ThreadFilterMessage -= value;
             }
         }
@@ -188,7 +192,8 @@ namespace System.Windows.Interop
             {
                 ComponentDispatcher.CurrentThreadData.ThreadPreprocessMessage += value;
             }
-            remove {
+            remove
+            {
                 ComponentDispatcher.CurrentThreadData.ThreadPreprocessMessage -= value;
             }
         }
@@ -217,10 +222,12 @@ namespace System.Windows.Interop
         ///</summary>
         public static event EventHandler EnterThreadModal
         {
-            add {
+            add
+            {
                 ComponentDispatcher.CurrentThreadData.EnterThreadModal += value;
             }
-            remove {
+            remove
+            {
                 ComponentDispatcher.CurrentThreadData.EnterThreadModal -= value;
             }
         }
@@ -235,7 +242,8 @@ namespace System.Windows.Interop
             {
                 ComponentDispatcher.CurrentThreadData.LeaveThreadModal += value;
             }
-            remove {
+            remove
+            {
                 ComponentDispatcher.CurrentThreadData.LeaveThreadModal -= value;
             }
         }

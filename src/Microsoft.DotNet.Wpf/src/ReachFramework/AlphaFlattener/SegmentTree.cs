@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,9 +11,9 @@ namespace Microsoft.Internal.AlphaFlattener
 {
     internal class Coordinate
     {
-        public double     value;
-        public int        index;
-        public bool       active;
+        public double value;
+        public int index;
+        public bool active;
         public Coordinate top;
         public Coordinate bottom;
 
@@ -141,10 +141,10 @@ namespace Microsoft.Internal.AlphaFlattener
     internal class RectangleIntersection
     {
         protected Coordinate[] _xCoord;  // = null;
-        protected int          _xCount;  // = 0;
+        protected int _xCount;  // = 0;
 
         protected Coordinate[] _yCoord;  // = null;
-        protected int          _yCount;  // = 0;
+        protected int _yCount;  // = 0;
 
         static Coordinate[] RemoveDuplication(Coordinate[] values)
         {
@@ -155,7 +155,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             for (int i = 1; i < len; i++)
             {
-                if (! Double.Equals(values[i].value, val))
+                if (!Double.Equals(values[i].value, val))
                 {
                     last++;
                     val = values[i].value;
@@ -172,7 +172,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 for (int i = 1; i < len; i++)
                 {
-                    if (! Double.Equals(values[i].value, newvalues[last].value))
+                    if (!Double.Equals(values[i].value, newvalues[last].value))
                     {
                         last++;
                         newvalues[last] = values[i];

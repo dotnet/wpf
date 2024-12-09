@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -49,7 +49,7 @@ namespace MS.Internal
                     index = ~index;
 
                     Array.Copy(_table, 0, newTable, 0, index);
-                    Array.Copy(_table, index, newTable, index+1, n-index);
+                    Array.Copy(_table, index, newTable, index + 1, n - index);
                     _table = newTable;
                 }
 
@@ -76,7 +76,7 @@ namespace MS.Internal
                 {
                     object[] newTable = new object[n];
                     Array.Copy(_table, 0, newTable, 0, index);
-                    Array.Copy(_table, index+1, newTable, index, n-index);
+                    Array.Copy(_table, index + 1, newTable, index, n - index);
                     _table = newTable;
                 }
 
@@ -114,13 +114,13 @@ namespace MS.Internal
                 // 1. Discard the bits at or above the given id
                 uint x = (_bitmask << (31 - id)) << 1;      // (x<<32) is undefined
                 // 2. Replace each 2-bit chunk with the count of 1's in that chunk
-                x = x - ((x>>1) & 0x55555555u);
+                x = x - ((x >> 1) & 0x55555555u);
                 // 3. Accumulate the counts within each 4-bit chunk
-                x = (x & 0x33333333u) + ((x>>2) & 0x33333333u);
+                x = (x & 0x33333333u) + ((x >> 2) & 0x33333333u);
                 // 4. Accumulate the counts within each 8-bit chunk (i.e. byte)
-                x = (x + (x>>4)) & 0x0F0F0F0Fu;
+                x = (x + (x >> 4)) & 0x0F0F0F0Fu;
                 // 5. Sum the byte counts into the msb, and move the answer back to the lsb
-                return (int) ((x * 0x01010101u) >> 24);
+                return (int)((x * 0x01010101u) >> 24);
 
                 // this method is often better than table-lookup methods, as it avoids
                 // cache-misses on the table.   Everything happens in registers.

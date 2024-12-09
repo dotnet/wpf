@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,10 +7,10 @@
 // Provides an internal Avalon API to replace Microsoft.Windows.EventTracing.dll
 
 #if !SILVERLIGHTXAML
-using MS.Win32;
-using MS.Internal;
-using System.Runtime.InteropServices;
 using System.Globalization; //for CultureInfo
+using System.Runtime.InteropServices;
+using MS.Internal;
+using MS.Win32;
 
 #pragma warning disable 1634, 1691  //disable warnings about unknown pragma
 
@@ -94,10 +94,10 @@ namespace MS.Utility
 
         internal bool IsEnabled(EventTrace.Keyword keyword, EventTrace.Level level)
         {
-           return _enabled &&
-                  (level <= _level) &&
-                  (keyword & _keywords) != 0 &&
-                  (keyword & _matchAllKeyword) == _matchAllKeyword;
+            return _enabled &&
+                   (level <= _level) &&
+                   (keyword & _keywords) != 0 &&
+                   (keyword & _matchAllKeyword) == _matchAllKeyword;
         }
 
         // Optimization for 0-1 arguments
@@ -127,7 +127,7 @@ namespace MS.Utility
 
             if (dataString != null)
             {
-                fixed(char* pdata = dataString)
+                fixed (char* pdata = dataString)
                 {
                     userData.Ptr = (ulong)pdata;
                     status = EventWrite(eventID, keywords, level, argCount, &userData);
@@ -152,8 +152,8 @@ namespace MS.Utility
 
             uint totalEventSize = 0;
             int stringIndex = 0;
-            int[] stringPosition =  new int[s_etwAPIMaxStringCount];
-            string [] dataString = new string[s_etwAPIMaxStringCount];
+            int[] stringPosition = new int[s_etwAPIMaxStringCount];
+            string[] dataString = new string[s_etwAPIMaxStringCount];
             EventData* userData = stackalloc EventData[argCount];
             EventData* userDataPtr = userData;
             byte* dataBuffer = stackalloc byte[s_basicTypeAllocationBufferSize * argCount];
@@ -183,7 +183,7 @@ namespace MS.Utility
                 return ErrorEventTooBig;
             }
 
-            fixed(char* s0 = dataString[0], s1 = dataString[1], s2 = dataString[2], s3 = dataString[3],
+            fixed (char* s0 = dataString[0], s1 = dataString[1], s2 = dataString[2], s3 = dataString[3],
                     s4 = dataString[4], s5 = dataString[5], s6 = dataString[6], s7 = dataString[7])
             {
                 userDataPtr = userData;
@@ -411,7 +411,7 @@ namespace MS.Utility
     internal sealed class ClassicTraceProvider : TraceProvider
     {
         private ulong _traceHandle = 0;
-        
+
         private static ClassicEtw.ControlCallback _etwProc;   // Trace Callback function
 
         internal ClassicTraceProvider()
@@ -429,8 +429,8 @@ namespace MS.Utility
             Guid dummyGuid = new Guid(0xb4955bf0,
                                       0x3af1,
                                       0x4740,
-                                      0xb4,0x75,
-                                      0x99,0x05,0x5d,0x3f,0xe9,0xaa);
+                                      0xb4, 0x75,
+                                      0x99, 0x05, 0x5d, 0x3f, 0xe9, 0xaa);
 
             _etwProc = new ClassicEtw.ControlCallback(EtwEnableCallback);
 
@@ -470,11 +470,11 @@ namespace MS.Utility
                 }
                 return 0;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 if (CriticalExceptions.IsCriticalException(e))
                 {
-                   throw;
+                    throw;
                 }
                 else
                 {
@@ -485,7 +485,7 @@ namespace MS.Utility
 
         ~ClassicTraceProvider()
         {
-            #pragma warning suppress 6031  //presharp suppression
+#pragma warning suppress 6031  //presharp suppression
             ClassicEtw.UnregisterTraceGuids(_registrationHandle);
         }
 
@@ -508,7 +508,7 @@ namespace MS.Utility
                 argc = ClassicEtw.MAX_MOF_FIELDS;
             }
 
-            header.Header.Size = (ushort) (argc * sizeof(EventData) + 48);
+            header.Header.Size = (ushort)(argc * sizeof(EventData) + 48);
             for (int x = 0; x < argc; x++)
             {
                 eventData[x].Ptr = argv[x].Ptr;
@@ -530,7 +530,7 @@ namespace MS.Utility
 
         internal unsafe override void Register(Guid providerGuid)
         {
-            _etwEnabledCallback =new ManifestEtw.EtwEnableCallback(EtwEnableCallback);
+            _etwEnabledCallback = new ManifestEtw.EtwEnableCallback(EtwEnableCallback);
             ulong registrationHandle = 0;
             ManifestEtw.EventRegister(ref providerGuid, _etwEnabledCallback, null, ref registrationHandle);
             _registrationHandle = registrationHandle;
@@ -540,15 +540,15 @@ namespace MS.Utility
         {
             _enabled = isEnabled > 0;
             _level = (EventTrace.Level)level;
-            _keywords = (EventTrace.Keyword) matchAnyKeywords;
-            _matchAllKeyword = (EventTrace.Keyword) matchAllKeywords;
+            _keywords = (EventTrace.Keyword)matchAnyKeywords;
+            _matchAllKeyword = (EventTrace.Keyword)matchAllKeywords;
 
             // parse data from EVENT_FILTER_DESCRIPTOR - see CLR EventProvider::GetDataFromController
         }
 
         ~ManifestTraceProvider()
         {
-            if(_registrationHandle != 0)
+            if (_registrationHandle != 0)
             {
                 try
                 {
@@ -564,7 +564,7 @@ namespace MS.Utility
         internal unsafe override uint EventWrite(EventTrace.Event eventID, EventTrace.Keyword keywords, EventTrace.Level level, int argc, EventData* argv)
         {
             ManifestEtw.EventDescriptor eventDescriptor;
-            eventDescriptor.Id = (ushort) eventID;
+            eventDescriptor.Id = (ushort)eventID;
             eventDescriptor.Version = EventTrace.GetVersionForEvent(eventID);
             eventDescriptor.Channel = 0x10; // Since Channel isn't supported on XP we only use a single default channel.
             eventDescriptor.Level = (byte)level;
@@ -578,7 +578,7 @@ namespace MS.Utility
 
             return ManifestEtw.EventWrite(_registrationHandle, ref eventDescriptor, (uint)argc, argv);
         }
-}
+    }
 }
 
 #endif

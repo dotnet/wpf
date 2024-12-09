@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -31,8 +31,8 @@ namespace MS.Internal.TextFormatting
     /// </summary>
     internal struct LexicalChunk
     {
-        private TextLexicalBreaks       _breaks;        // lexical breaks of chunk characters
-        private SpanVector<int>         _ichVector;     // spans of offsets to the ich-correspondence LSCP
+        private TextLexicalBreaks _breaks;        // lexical breaks of chunk characters
+        private SpanVector<int> _ichVector;     // spans of offsets to the ich-correspondence LSCP
 
 
         internal TextLexicalBreaks Breaks
@@ -54,8 +54,8 @@ namespace MS.Internal.TextFormatting
         /// Contruct lexical chunk from character analysis
         /// </summary>
         internal LexicalChunk(
-            TextLexicalBreaks   breaks,
-            SpanVector<int>     ichVector
+            TextLexicalBreaks breaks,
+            SpanVector<int> ichVector
             )
         {
             Invariant.Assert(breaks != null);

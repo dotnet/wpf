@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Collections;
-using System.Windows.Threading;
-using System.Globalization;
-using MS.Win32;
 using System.ComponentModel;
+using System.Globalization;
+using System.Windows.Threading;
+using MS.Win32;
 
 namespace System.Windows.Input
 {
@@ -94,7 +94,7 @@ namespace System.Windows.Input
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         private InputLanguageManager()
         {
             // register our default input language source.
@@ -106,7 +106,7 @@ namespace System.Windows.Input
         //  Public Methods
         //
         //------------------------------------------------------
- 
+
         #region Public Methods
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace System.Windows.Input
 
             _source = inputLanguageSource;
 
-            if (((_InputLanguageChanged != null) || 
+            if (((_InputLanguageChanged != null) ||
                  (_InputLanguageChanging != null)) &&
                 IsMultipleKeyboardLayout)
                 _source.Initialize();
@@ -140,7 +140,7 @@ namespace System.Windows.Input
         ///     The previous language id.
         /// </param>
         public void ReportInputLanguageChanged(
-                        CultureInfo newLanguageId, 
+                        CultureInfo newLanguageId,
                         CultureInfo previousLanguageId)
         {
             ArgumentNullException.ThrowIfNull(newLanguageId);
@@ -176,7 +176,7 @@ namespace System.Windows.Input
         ///     The previous language id.
         /// </param>
         public bool ReportInputLanguageChanging(
-                        CultureInfo newLanguageId, 
+                        CultureInfo newLanguageId,
                         CultureInfo previousLanguageId)
         {
             ArgumentNullException.ThrowIfNull(newLanguageId);
@@ -197,21 +197,21 @@ namespace System.Windows.Input
             }
             return accepted;
         }
- 
+
         #endregion Public Methods        
- 
+
         //------------------------------------------------------
         //
         //  Public Operators
         //
         //------------------------------------------------------
- 
+
         //------------------------------------------------------
         //
         //  Public Properties
         //
         //------------------------------------------------------
- 
+
         /// <summary>
         ///     Return the input language manager associated 
         ///     with the current context.
@@ -222,7 +222,7 @@ namespace System.Windows.Input
             {
                 // InputLanguageManager for the current Dispatcher is stored in InputMethod of
                 // the current Dispatcher.
-                if(InputMethod.Current.InputLanguageManager == null)
+                if (InputMethod.Current.InputLanguageManager == null)
                 {
                     InputMethod.Current.InputLanguageManager = new InputLanguageManager();
                 }
@@ -265,7 +265,7 @@ namespace System.Windows.Input
         /// <summary>
         /// Return enumerator for available input languages.
         /// </summary>
-        public IEnumerable AvailableInputLanguages 
+        public IEnumerable AvailableInputLanguages
         {
             get
             {
@@ -293,7 +293,7 @@ namespace System.Windows.Input
             {
                 ArgumentNullException.ThrowIfNull(value);
 
-                if ((_InputLanguageChanged == null) && 
+                if ((_InputLanguageChanged == null) &&
                     (_InputLanguageChanging == null) &&
                     IsMultipleKeyboardLayout &&
                     (_source != null))
@@ -306,7 +306,7 @@ namespace System.Windows.Input
                 ArgumentNullException.ThrowIfNull(value);
 
                 _InputLanguageChanged -= value;
-                if ((_InputLanguageChanged == null) && 
+                if ((_InputLanguageChanged == null) &&
                     (_InputLanguageChanging == null) &&
                     IsMultipleKeyboardLayout &&
                     (_source != null))
@@ -323,7 +323,7 @@ namespace System.Windows.Input
             {
                 ArgumentNullException.ThrowIfNull(value);
 
-                if ((_InputLanguageChanged == null) && 
+                if ((_InputLanguageChanged == null) &&
                     (_InputLanguageChanging == null) &&
                     IsMultipleKeyboardLayout &&
                     (_source != null))
@@ -336,7 +336,7 @@ namespace System.Windows.Input
                 ArgumentNullException.ThrowIfNull(value);
 
                 _InputLanguageChanging -= value;
-                if ((_InputLanguageChanged == null) && 
+                if ((_InputLanguageChanged == null) &&
                     (_InputLanguageChanging == null) &&
                     IsMultipleKeyboardLayout &&
                     (_source != null))
@@ -350,14 +350,14 @@ namespace System.Windows.Input
         //  Protected Methods
         //
         //------------------------------------------------------
- 
- 
+
+
         //------------------------------------------------------
         //
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         /// <summary>
@@ -375,7 +375,7 @@ namespace System.Windows.Input
                 //
                 culture = (CultureInfo)focus.GetValue(InputLanguageProperty);
             }
-            
+
             if ((culture == null) ||
                 (culture.Equals(CultureInfo.InvariantCulture)))
             {
@@ -413,15 +413,15 @@ namespace System.Windows.Input
             }
         }
 
- 
+
         #endregion Internal methods
-        
+
         //------------------------------------------------------
         //
         //  Internal Properties
         //
         //------------------------------------------------------
-        
+
         #region Internal Properties
 
         internal IInputLanguageSource Source
@@ -446,7 +446,7 @@ namespace System.Windows.Input
         }
 
         #endregion Internal Properties
- 
+
         //------------------------------------------------------
         //
         //  Private Methods
@@ -484,7 +484,7 @@ namespace System.Windows.Input
         //  Private Fields
         //
         //------------------------------------------------------
-                
+
         #region Private Fields
 
         // the previous input language id this is used for restring input language at

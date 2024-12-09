@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -87,10 +87,10 @@ namespace System.IO
         /// <param name="subFolder">desired subfolder of temp folder, or null (defaults to "WPF")</param>
         static internal FileStream CreateAndOpenTemporaryFile(
                     out string filePath,
-                    FileAccess fileAccess=FileAccess.Write,
-                    FileOptions fileOptions=FileOptions.None,
-                    string extension=null,
-                    string subFolder="WPF")
+                    FileAccess fileAccess = FileAccess.Write,
+                    FileOptions fileOptions = FileOptions.None,
+                    string extension = null,
+                    string subFolder = "WPF")
         {
             const int MaxRetries = 5;
             int retries = MaxRetries;
@@ -143,8 +143,8 @@ namespace System.IO
 
         // PreSharp uses message numbers that the C# compiler doesn't know about.
         // Disable the C# complaints, per the PreSharp documentation.
-        #pragma warning disable 1634, 1691
-        #pragma warning disable 56502 // disable PreSharp warning about empty catch blocks
+#pragma warning disable 1634, 1691
+#pragma warning disable 56502 // disable PreSharp warning about empty catch blocks
 
         ///<summary>
         /// Delete a temporary file robustly.
@@ -159,18 +159,18 @@ namespace System.IO
                 {
                     File.Delete(filePath);
                 }
-                catch(System.IO.IOException)
+                catch (System.IO.IOException)
                 {
                     // We may not be able to delete the file if it's being used by some other process (e.g. Anti-virus check).
                     // There's nothing we can do in that case, so just eat the exception and leave the file behind
                 }
-                catch(System.UnauthorizedAccessException)
+                catch (System.UnauthorizedAccessException)
                 {
                     // We may not be able to delete the file if we do not have rights to delete from the file folder.
                     // There's nothing we can do in that case, so just eat the exception and leave the file behind
                 }
             }
         }
-        #pragma warning restore 56502
+#pragma warning restore 56502
     }
 }

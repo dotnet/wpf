@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -34,7 +34,7 @@ namespace System.Windows.Xps.Serialization.RCW
         string GetTransformLookup();
 
         void SetColorInterpolationMode([In][ComAliasName("System.Windows.Xps.Serialization.RCW.XPS_COLOR_INTERPOLATION")] XPS_COLOR_INTERPOLATION colorInterpolationMode);
-        
+
         void SetSpreadMethod([In][ComAliasName("System.Windows.Xps.Serialization.RCW.XPS_SPREAD_METHOD")] XPS_SPREAD_METHOD spreadMethod);
 
         void SetTransformLocal([In] IXpsOMMatrixTransform transform);

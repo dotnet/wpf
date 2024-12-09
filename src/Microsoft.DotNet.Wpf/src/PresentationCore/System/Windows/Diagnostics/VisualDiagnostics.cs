@@ -1,15 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description:
 //      Visual tree diagnostic API.
 
-using Microsoft.Win32;
-using MS.Internal;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using Microsoft.Win32;
+using MS.Internal;
 
 namespace System.Windows.Diagnostics
 {
@@ -124,7 +124,7 @@ namespace System.Windows.Diagnostics
                     visualTreeChanged,
                     new VisualTreeChangeEventArgs(parent, child, index, changeType),
                     // see EnableHelper.IsChangePermitted
-                    isPotentialOuterChange: (changeType==VisualTreeChangeType.Add && index==0 && VisualTreeHelper.GetParent(parent) == null));
+                    isPotentialOuterChange: (changeType == VisualTreeChangeType.Add && index == 0 && VisualTreeHelper.GetParent(parent) == null));
             }
         }
 
@@ -191,7 +191,7 @@ namespace System.Windows.Diagnostics
 
         internal static bool IsEnabled
         {
-            get { return s_IsEnabled;}
+            get { return s_IsEnabled; }
         }
 
         // detect whether a VisualTreeChanged event is in progress.  If so,
@@ -317,7 +317,7 @@ namespace System.Windows.Diagnostics
             {
                 // if the outer change was type (a), OnVisualChildChanged saved
                 // the presentation source in s_ActiveHwndSource
-                return  (s_ActiveHwndSource != null) && (d != null) &&
+                return (s_ActiveHwndSource != null) && (d != null) &&
                         (s_ActiveHwndSource != PresentationSource.FromDependencyObject(d));
             }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,14 +10,14 @@
 namespace System.Windows.Documents
 {
 
-    internal abstract class FixedSOMPageElement :FixedSOMContainer
+    internal abstract class FixedSOMPageElement : FixedSOMContainer
     {
         //--------------------------------------------------------------------
         //
         // Constructors
         //
         //---------------------------------------------------------------------
-        
+
         #region Constructors
         public FixedSOMPageElement(FixedSOMPage page)
         {
@@ -30,7 +30,7 @@ namespace System.Windows.Documents
         // Public properties
         //
         //---------------------------------------------------------------------
-        
+
         #region Public properties
         public FixedSOMPage FixedSOMPage
         {
@@ -45,7 +45,7 @@ namespace System.Windows.Documents
             get;
         }
         #endregion Constructors        
-        
+
 
 
         //--------------------------------------------------------------------
@@ -57,7 +57,7 @@ namespace System.Windows.Documents
         #region Protected Fields
         protected FixedSOMPage _page;
         #endregion Protected Fields
-        
+
     }
 }
 

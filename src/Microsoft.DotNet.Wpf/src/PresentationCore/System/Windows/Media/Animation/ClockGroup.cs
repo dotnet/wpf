@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -47,7 +47,7 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-//                 VerifyAccess();
+                //                 VerifyAccess();
                 Debug.Assert(!IsTimeManager);
 
                 return new ClockCollection(this);
@@ -210,7 +210,7 @@ namespace System.Windows.Media.Animation
         internal void ComputeTreeState()
         {
             Debug.Assert(IsTimeManager);
-            
+
             // Revive all children
             WeakRefEnumerator<Clock> enumerator = new WeakRefEnumerator<Clock>(_rootChildren);
 
@@ -266,7 +266,7 @@ namespace System.Windows.Media.Animation
                     current.NeedsPostfixTraversal = false;  // Reset the flag
                 }
 
-                if(!InternalNextTickNeededTime.HasValue ||
+                if (!InternalNextTickNeededTime.HasValue ||
                     (enumerator.Current.InternalNextTickNeededTime.HasValue &&
                      enumerator.Current.InternalNextTickNeededTime < InternalNextTickNeededTime))
                 {
@@ -540,7 +540,7 @@ namespace System.Windows.Media.Animation
         internal override void UpdateDescendantsWithUnresolvedDuration()
         {
             // If the flag was already unset, or our own node doesn't know its duration yet, the flag will not change now.
-            if (!HasDescendantsWithUnresolvedDuration ||  !HasResolvedDuration)
+            if (!HasDescendantsWithUnresolvedDuration || !HasResolvedDuration)
             {
                 return;
             }
@@ -573,7 +573,7 @@ namespace System.Windows.Media.Animation
         {
             _currentIntervals.AddNullPoint();
         }
-        
+
         internal override void ComputeCurrentIntervals(TimeIntervalCollection parentIntervalCollection,
                                                        TimeSpan beginTime, TimeSpan? endTime,
                                                        Duration fillDuration, Duration period,
@@ -607,7 +607,7 @@ namespace System.Windows.Media.Animation
                 return _currentIntervals;
             }
         }
-        
+
         private List<Clock> _children;
         private List<WeakReference> _rootChildren;
         private TimeIntervalCollection _currentIntervals;

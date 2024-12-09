@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -18,8 +18,8 @@ namespace System.Windows.Media.TextFormatting
     /// </summary>
     public class TextEndOfLine : TextRun
     {
-        private int                 _length;
-        private TextRunProperties   _textRunProperties;
+        private int _length;
+        private TextRunProperties _textRunProperties;
 
         #region Constructors
 
@@ -28,7 +28,7 @@ namespace System.Windows.Media.TextFormatting
         /// </summary>
         /// <param name="length">number of characters</param>
         public TextEndOfLine(int length) : this(length, null)
-        {}
+        { }
 
 
         /// <summary>
@@ -37,8 +37,8 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="length">number of characters</param>
         /// <param name="textRunProperties">linebreak text run properties</param>
         public TextEndOfLine(
-            int                 length, 
-            TextRunProperties   textRunProperties
+            int length,
+            TextRunProperties textRunProperties
             )
         {
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(length);
@@ -61,7 +61,7 @@ namespace System.Windows.Media.TextFormatting
             get { return new CharacterBufferReference(); }
         }
 
-        
+
         /// <summary>
         /// Character length
         /// </summary>

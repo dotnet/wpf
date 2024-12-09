@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -133,7 +133,7 @@ namespace System.Windows.Media.Animation
 
         private void OnCurrentStateInvalidated(object sender, EventArgs args)
         {
-            Debug.Assert(_hasStickySnapshotValue, 
+            Debug.Assert(_hasStickySnapshotValue,
                 "_hasStickySnapshotValue should be set to true if OnCurrentStateInvalidated has been called.");
 
             _hasStickySnapshotValue = false;
@@ -228,7 +228,7 @@ namespace System.Windows.Media.Animation
             // we need to check the state of the first clock as well to avoid
             // potential first frame issues. In this case _hasStickySnapshotValue
             // will be updated to false shortly.
-            if (   _hasStickySnapshotValue
+            if (_hasStickySnapshotValue
                 && _animationClocks[0].CurrentState == ClockState.Stopped)
             {
                 return _snapshotValue;

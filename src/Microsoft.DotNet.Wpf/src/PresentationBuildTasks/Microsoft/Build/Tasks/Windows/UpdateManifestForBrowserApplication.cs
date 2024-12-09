@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,12 +10,11 @@
 
 using System;
 using System.Runtime.InteropServices;
+using System.Xml;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
-using System.Xml;
-
-using MS.Utility;
 using MS.Internal.Tasks;
+using MS.Utility;
 
 // Since we disable PreSharp warnings in this file, PreSharp warning is unknown to C# compiler.
 // We first need to disable warnings about unknown message numbers and unknown pragmas.
@@ -117,9 +116,11 @@ namespace Microsoft.Build.Tasks.Windows
                 // Update the manifest file.
                 try
                 {
-                    manifestWriter = new XmlTextWriter(appManifestFile, System.Text.Encoding.UTF8);
-                    manifestWriter.Formatting = Formatting.Indented;
-                    manifestWriter.Indentation = 4;
+                    manifestWriter = new XmlTextWriter(appManifestFile, System.Text.Encoding.UTF8)
+                    {
+                        Formatting = Formatting.Indented,
+                        Indentation = 4
+                    };
                     manifestDocument.WriteTo(manifestWriter);
                 }
                 finally
@@ -203,15 +204,15 @@ namespace Microsoft.Build.Tasks.Windows
         #region Private Fields
 
         private ITaskItem[] _applicationmanifest;
-        private bool        _hostInBrowser = false;
+        private bool _hostInBrowser = false;
 
         //
         // Put some predefined element or attribute name in below
         // const strings.
         //
         private const string c_entryPoint = "entryPoint";
-        private const string c_hostInBrowser ="hostInBrowser";
-        private const string c_asmv3= "urn:schemas-microsoft-com:asm.v3";
+        private const string c_hostInBrowser = "hostInBrowser";
+        private const string c_asmv3 = "urn:schemas-microsoft-com:asm.v3";
 
         #endregion Private Fields
 

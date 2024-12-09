@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,9 +9,9 @@
 //   See spec at: Find Spec.doc
 //
 
+using System.Globalization;
 using MS.Internal;
 using MS.Win32;
-using System.Globalization;
 
 namespace System.Windows.Documents
 {
@@ -24,31 +24,31 @@ namespace System.Windows.Documents
         /// <summary>
         /// None.
         /// </summary>
-        None                = 0x00000000,
+        None = 0x00000000,
         /// <summary>
         /// Match case.
         /// </summary>
-        MatchCase           = 0x00000001,
+        MatchCase = 0x00000001,
         /// <summary>
         /// Searches for last occurance.
         /// </summary>
-        FindInReverse       = 0x00000002,
+        FindInReverse = 0x00000002,
         /// <summary>
         /// Matches the entire word.
         /// </summary>
-        FindWholeWordsOnly  = 0x00000004,
+        FindWholeWordsOnly = 0x00000004,
         /// <summary>
         /// Matches Bidi diacritics.
         /// </summary>
-        MatchDiacritics     = 0x00000008,
+        MatchDiacritics = 0x00000008,
         /// <summary>
         /// Matches Arabic kashida.
         /// </summary>
-        MatchKashida        = 0x00000010,
+        MatchKashida = 0x00000010,
         /// <summary>
         /// Matches Arabic AlefHamza.
         /// </summary>
-        MatchAlefHamza      = 0x00000020,
+        MatchAlefHamza = 0x00000020,
     }
 
 
@@ -89,7 +89,7 @@ namespace System.Windows.Documents
                 || findContainerEndPosition == null
                 || findContainerStartPosition.CompareTo(findContainerEndPosition) == 0
                 || findPattern == null
-                || findPattern == string.Empty )
+                || findPattern == string.Empty)
             {
                 return (null);
             }
@@ -128,18 +128,18 @@ namespace System.Windows.Documents
             if (findContainerStartPosition is DocumentSequenceTextPointer ||
                 findContainerStartPosition is FixedTextPointer)
             {
-                return FixedFindEngine.Find(findContainerStartPosition, 
+                return FixedFindEngine.Find(findContainerStartPosition,
                                             findContainerEndPosition,
                                             findPattern,
                                             cultureInfo,
-                                            matchCase, 
+                                            matchCase,
                                             matchWholeWord,
                                             matchLast,
                                             matchDiacritics,
                                             matchKashida,
                                             matchAlefHamza);
             }
-            
+
             // Find the text with the specified option flags.
             findResult = InternalFind(
                 findContainerStartPosition,
@@ -198,7 +198,7 @@ namespace System.Windows.Documents
                 navigator = startPosition;
                 direction = LogicalDirection.Forward;
             }
-            
+
             // Set the text block size to read the find text content.
             // The block size must be bigger than the double of find pattern size
             // so that we can find matches intersected by neighboring blocks.
@@ -219,9 +219,9 @@ namespace System.Windows.Documents
                 // Set the find text content from reading text of the current text position.
                 // Set the find text position map as well to track of the text pointer of the text content.
                 findTextLength = SetFindTextAndFindTextPositionMap(
-                    startPosition, 
-                    endPosition, 
-                    navigator, 
+                    startPosition,
+                    endPosition,
+                    navigator,
                     direction,
                     matchLast,
                     findText,
@@ -267,10 +267,10 @@ namespace System.Windows.Documents
                         // Return the text range for the matched find text position.
 
                         ITextPointer startMatchPosition = startFindTextPosition.CreatePointer();
-                        startMatchPosition.MoveByOffset(matchLast ? - findTextPositionMap[textStartIndex + matchIndex] : findTextPositionMap[matchIndex]);
+                        startMatchPosition.MoveByOffset(matchLast ? -findTextPositionMap[textStartIndex + matchIndex] : findTextPositionMap[matchIndex]);
 
                         ITextPointer endMatchPosition = startFindTextPosition.CreatePointer();
-                        endMatchPosition.MoveByOffset(matchLast ? - findTextPositionMap[textStartIndex + matchIndex + matchLength] : findTextPositionMap[matchIndex + matchLength]);
+                        endMatchPosition.MoveByOffset(matchLast ? -findTextPositionMap[textStartIndex + matchIndex + matchLength] : findTextPositionMap[matchIndex + matchLength]);
 
                         return (new TextRange(startMatchPosition, endMatchPosition));
                     }
@@ -282,7 +282,7 @@ namespace System.Windows.Documents
                     {
                         // Need to set new pointer to jump the correct place of backing offset of the findPattern length
                         navigator = startFindTextPosition.CreatePointer();
-                        navigator.MoveByOffset(matchLast ? - findTextPositionMap[findText.Length - findTextLength + findPattern.Length] : findTextPositionMap[findTextLength - findPattern.Length]);
+                        navigator.MoveByOffset(matchLast ? -findTextPositionMap[findText.Length - findTextLength + findPattern.Length] : findTextPositionMap[findTextLength - findPattern.Length]);
                     }
                 }
             }
@@ -331,7 +331,7 @@ namespace System.Windows.Documents
 
             int maxCharCount = position.GetOffsetToPosition(nextPosition);
             char[] findText = new char[maxCharCount];
-            int []findTextPositionMap = new int[maxCharCount + 1];
+            int[] findTextPositionMap = new int[maxCharCount + 1];
             int findTextLength;
 
             findTextLength = SetFindTextAndFindTextPositionMap(
@@ -356,12 +356,12 @@ namespace System.Windows.Documents
             }
             else
             {
-                hasNeighboringSeparatorChar = IsSeparatorChar(findText[findTextLength-1]);
+                hasNeighboringSeparatorChar = IsSeparatorChar(findText[findTextLength - 1]);
             }
 
             return hasNeighboringSeparatorChar;
         }
-        
+
         /// <summary>
         /// Find text and return the matched index of the find text content.
         /// </summary>
@@ -632,9 +632,9 @@ namespace System.Windows.Documents
         /// Returns the number of characters actually loaded into the findText array.
         /// </returns>
         private static int SetFindTextAndFindTextPositionMap(
-            ITextPointer startPosition, 
-            ITextPointer endPosition, 
-            ITextPointer navigator, 
+            ITextPointer startPosition,
+            ITextPointer endPosition,
+            ITextPointer navigator,
             LogicalDirection direction,
             bool matchLast,
             char[] findText,
@@ -676,9 +676,9 @@ namespace System.Windows.Documents
                         {
                             runCount = Math.Min(runCount, startPosition.GetOffsetToPosition(navigator));
                             navigator.GetTextInRun(
-                                direction, 
+                                direction,
                                 findText,
-                                findText.Length - findTextLength - runCount, 
+                                findText.Length - findTextLength - runCount,
                                 runCount);
 
                             // Set the text offest for the amount of runCount from the last index
@@ -691,7 +691,7 @@ namespace System.Windows.Documents
                         }
 
                         // Move the navigator position for the amount of runCount
-                        navigator.MoveByOffset(matchLast ? - runCount : runCount);
+                        navigator.MoveByOffset(matchLast ? -runCount : runCount);
                         findTextLength += runCount;
                         break;
 
@@ -740,7 +740,7 @@ namespace System.Windows.Documents
                             findTextLength++;
 
                             // Set the private unicode value and text offset
-                            findText[findText.Length - findTextLength] = '\xf8ff'; 
+                            findText[findText.Length - findTextLength] = '\xf8ff';
                             findTextPositionMap[findText.Length - findTextLength] = findTextLength + inlineCount;
                         }
 
@@ -775,8 +775,8 @@ namespace System.Windows.Documents
 
         // Initialize bidi flags that check the bidi and alef character.
         internal static void InitializeBidiFlags(
-            string textString, 
-            out bool stringContainedBidiCharacter, 
+            string textString,
+            out bool stringContainedBidiCharacter,
             out bool stringContainedAlefCharacter)
         {
             stringContainedBidiCharacter = false;
@@ -937,15 +937,15 @@ namespace System.Windows.Documents
         #region Private Fields
 
         private const int TextBlockLength = 64;
-                                                                                    
-        private const char UnicodeBidiStart                 = '\u0590';
-        private const char UnicodeBidiEnd                   = '\u07bf';
 
-        private const char UnicodeArabicKashida             = '\u0640';
-        private const char UnicodeArabicAlefMaddaAbove      = '\u0622';
-        private const char UnicodeArabicAlefHamzaAbove      = '\u0623';
-        private const char UnicodeArabicAlefHamzaBelow      = '\u0625';
-        private const char UnicodeArabicAlef                = '\u0627';
+        private const char UnicodeBidiStart = '\u0590';
+        private const char UnicodeBidiEnd = '\u07bf';
+
+        private const char UnicodeArabicKashida = '\u0640';
+        private const char UnicodeArabicAlefMaddaAbove = '\u0622';
+        private const char UnicodeArabicAlefHamzaAbove = '\u0623';
+        private const char UnicodeArabicAlefHamzaBelow = '\u0625';
+        private const char UnicodeArabicAlef = '\u0627';
 
         #endregion Private Fields
     }

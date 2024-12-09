@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -42,7 +42,7 @@ namespace System.Windows.Input
         public RawTextInputReport(
             PresentationSource inputSource,
             InputMode mode,
-            int timestamp, 
+            int timestamp,
             bool isDeadCharacter,
             bool isSystemCharacter,
             bool isControlCharacter,
@@ -59,27 +59,27 @@ namespace System.Windows.Input
         /// <summary>
         ///     Read-only access to the state of dead character
         /// </summary>
-        public bool IsDeadCharacter {get {return _isDeadCharacter;}}
+        public bool IsDeadCharacter { get { return _isDeadCharacter; } }
 
         /// <summary>
         ///     Read-only access to the state of system character
         /// </summary>
-        public bool IsSystemCharacter {get {return _isSystemCharacter;}}
+        public bool IsSystemCharacter { get { return _isSystemCharacter; } }
 
         /// <summary>
         ///     Read-only access to the state of control character
         /// </summary>
-        public bool IsControlCharacter {get {return _isControlCharacter;}}
+        public bool IsControlCharacter { get { return _isControlCharacter; } }
 
         /// <summary>
         ///     Read-only access to the character code that was reported.
         /// </summary>
-        public char CharacterCode {get {return _characterCode;}}
+        public char CharacterCode { get { return _characterCode; } }
 
         private readonly bool _isDeadCharacter;
         private readonly bool _isSystemCharacter;
         private readonly bool _isControlCharacter;
         private readonly char _characterCode;
-    }    
+    }
 }
 

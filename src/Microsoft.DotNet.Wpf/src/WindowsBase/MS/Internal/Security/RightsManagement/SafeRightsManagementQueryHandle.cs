@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -32,24 +32,24 @@ namespace MS.Internal.Security.RightsManagement
         protected override bool ReleaseHandle()
         {
             int z = 0;
-            if (!IsInvalid) 
+            if (!IsInvalid)
             {
-                        // we can not use safe handle in the DrmClose... function
-                        // as the SafeHandle implementation marks this instance as an invalid by the time 
-                        // ReleaseHandle is called. After that marshalling code doesn't let the current instance 
-                        // of the Safe*Handle sub-class to cross managed/unmanaged boundary.
+                // we can not use safe handle in the DrmClose... function
+                // as the SafeHandle implementation marks this instance as an invalid by the time 
+                // ReleaseHandle is called. After that marshalling code doesn't let the current instance 
+                // of the Safe*Handle sub-class to cross managed/unmanaged boundary.
                 z = SafeNativeMethods.DRMCloseQueryHandle((uint)this.handle);
-        #if DEBUG
-                    Errors.ThrowOnErrorCode(z); 
-        #endif
+#if DEBUG
+                Errors.ThrowOnErrorCode(z);
+#endif
 
                 // This member might be called twice(depending on the client app). In order to 
                 // prevent Unmanaged RM SDK from returning an error (Handle is already closed) 
                 // we need to mark our handle as invalid after successful close call
-                base.SetHandle(IntPtr.Zero);   
+                base.SetHandle(IntPtr.Zero);
             }
-            
-            return (z>=0);
+
+            return (z >= 0);
         }
 
 

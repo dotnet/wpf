@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
-using System.Reflection;
 using System.Globalization;
+using System.Reflection;
 
 namespace System.Windows.Media
 {
@@ -55,12 +55,12 @@ namespace System.Windows.Media
         /// </summary>
         public new object ConvertFromString(String value)
         {
-            if ( null == value)
+            if (null == value)
             {
                 return null;
             }
 
-            return new PixelFormat (value);
+            return new PixelFormat(value);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace System.Windows.Media
         /// </summary>
         public override object ConvertFrom(ITypeDescriptorContext td, System.Globalization.CultureInfo ci, object o)
         {
-            if ( null == o)
+            if (null == o)
             {
                 return null;
             }
@@ -92,23 +92,23 @@ namespace System.Windows.Media
 
             if (!(value is PixelFormat))
             {
-                throw new ArgumentException(SR.Format(SR.General_Expected_Type,"PixelFormat"));
+                throw new ArgumentException(SR.Format(SR.General_Expected_Type, "PixelFormat"));
             }
 
             if (destinationType == typeof(InstanceDescriptor))
             {
-                ConstructorInfo ci = typeof(PixelFormat).GetConstructor(new Type[]{typeof(string)});
+                ConstructorInfo ci = typeof(PixelFormat).GetConstructor(new Type[] { typeof(string) });
                 PixelFormat p = (PixelFormat)value;
-                return new InstanceDescriptor(ci, new object[]{p.ToString()});
+                return new InstanceDescriptor(ci, new object[] { p.ToString() });
             }
             else if (destinationType == typeof(string))
             {
                 PixelFormat p = (PixelFormat)value;
-                return p.ToString ();
+                return p.ToString();
             }
 
             return base.ConvertTo(context, culture, value, destinationType);
         }
     }
-#endregion // PixelFormatConverter
+    #endregion // PixelFormatConverter
 }

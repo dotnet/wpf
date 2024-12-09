@@ -1,13 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: Class that tracks Win32 focus changes
 
 using System;
+using System.Diagnostics;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System.Diagnostics;
 using MS.Win32;
 
 namespace MS.Internal.Automation
@@ -20,12 +20,12 @@ namespace MS.Internal.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         // Ctor - provide the WinEvent identifiers used to track focus changes
         internal FocusTracker()
-            : base(_eventIds) 
+            : base(_eventIds)
         {
             // Intentionally not setting the callback for the base WinEventWrap since the WinEventProc override
             // in this class calls RaiseEventInThisClientOnly to actually raise the event to the client.
@@ -39,7 +39,7 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         // WinEventProc - override to process WinEvents
@@ -47,17 +47,35 @@ namespace MS.Internal.Automation
         {
             if (hwnd != IntPtr.Zero)
             {
-                switch(eventId)
+                switch (eventId)
                 {
-                    case NativeMethods.EVENT_OBJECT_FOCUS:          OnEventObjectFocus(eventId, hwnd, idObject, idChild, eventTime); break;
-                    case NativeMethods.EVENT_SYSTEM_MENUSTART:      OnEventSystemMenuStart(eventId, hwnd, idObject, idChild, eventTime); break;
-                    case NativeMethods.EVENT_SYSTEM_MENUEND:        OnEventSystemMenuEnd(eventId, hwnd, idObject, idChild, eventTime); break;
-                    case NativeMethods.EVENT_SYSTEM_SWITCHSTART:    OnEventSystemMenuStart(eventId, hwnd, idObject, idChild, eventTime); break;
-                    case NativeMethods.EVENT_SYSTEM_SWITCHEND:      OnEventSystemMenuEnd(eventId, hwnd, idObject, idChild, eventTime); break;
-                    case NativeMethods.EVENT_OBJECT_DESTROY:        OnEventObjectDestroy(eventId, hwnd, idObject, idChild, eventTime); break;
-                    case NativeMethods.EVENT_SYSTEM_MENUPOPUPSTART: OnEventSystemMenuPopupStart(eventId, hwnd, idObject, idChild, eventTime); break;
-                    case NativeMethods.EVENT_SYSTEM_CAPTURESTART:   OnEventSystemCaptureStart(eventId, hwnd, idObject, idChild, eventTime); break;
-                    case NativeMethods.EVENT_SYSTEM_CAPTUREEND:     OnEventSystemCaptureEnd(eventId, hwnd, idObject, idChild, eventTime); break;
+                    case NativeMethods.EVENT_OBJECT_FOCUS:
+                        OnEventObjectFocus(eventId, hwnd, idObject, idChild, eventTime);
+                        break;
+                    case NativeMethods.EVENT_SYSTEM_MENUSTART:
+                        OnEventSystemMenuStart(eventId, hwnd, idObject, idChild, eventTime);
+                        break;
+                    case NativeMethods.EVENT_SYSTEM_MENUEND:
+                        OnEventSystemMenuEnd(eventId, hwnd, idObject, idChild, eventTime);
+                        break;
+                    case NativeMethods.EVENT_SYSTEM_SWITCHSTART:
+                        OnEventSystemMenuStart(eventId, hwnd, idObject, idChild, eventTime);
+                        break;
+                    case NativeMethods.EVENT_SYSTEM_SWITCHEND:
+                        OnEventSystemMenuEnd(eventId, hwnd, idObject, idChild, eventTime);
+                        break;
+                    case NativeMethods.EVENT_OBJECT_DESTROY:
+                        OnEventObjectDestroy(eventId, hwnd, idObject, idChild, eventTime);
+                        break;
+                    case NativeMethods.EVENT_SYSTEM_MENUPOPUPSTART:
+                        OnEventSystemMenuPopupStart(eventId, hwnd, idObject, idChild, eventTime);
+                        break;
+                    case NativeMethods.EVENT_SYSTEM_CAPTURESTART:
+                        OnEventSystemCaptureStart(eventId, hwnd, idObject, idChild, eventTime);
+                        break;
+                    case NativeMethods.EVENT_SYSTEM_CAPTUREEND:
+                        OnEventSystemCaptureEnd(eventId, hwnd, idObject, idChild, eventTime);
+                        break;
                 }
             }
         }
@@ -70,7 +88,7 @@ namespace MS.Internal.Automation
         //  Private Methods
         //
         //------------------------------------------------------
- 
+
         #region Private Methods
 
         // HandleFocusChange - Called when a WinEvent we're listening to indicates the
@@ -105,7 +123,7 @@ namespace MS.Internal.Automation
                         return;
                     }
                 }
-                
+
                 // Do notifies
                 ClientEventManager.RaiseEventInThisClientOnly(AutomationElement.AutomationFocusChangedEvent, srcEl, e);
             }
@@ -162,7 +180,7 @@ namespace MS.Internal.Automation
                     provider = ProxyManager.ProxyProviderFromHwnd(NativeMethods.HWND.Cast(hwnd), idChild, idObject);
                 }
 
-                if(provider != null)
+                if (provider != null)
                 {
                     // Ask the fragment root if any of its children really have the focus
                     IRawElementProviderFragmentRoot fragment = provider as IRawElementProviderFragmentRoot;
@@ -172,7 +190,7 @@ namespace MS.Internal.Automation
                         // use that instead.  This is here to get the subset link in the listview but could be usefull
                         // for listview subitems as well.
                         IRawElementProviderSimple realFocus = fragment.GetFocus();
-                        if(realFocus != null && !Object.ReferenceEquals(realFocus, provider))
+                        if (realFocus != null && !Object.ReferenceEquals(realFocus, provider))
                         {
                             provider = realFocus;
                         }
@@ -187,9 +205,9 @@ namespace MS.Internal.Automation
                     return AutomationElement.FromHandle(hwnd);
                 }
             }
-            catch( Exception e )
+            catch (Exception e)
             {
-                if( Misc.IsCriticalException( e ) )
+                if (Misc.IsCriticalException(e))
                     throw;
 
                 return null;
@@ -256,9 +274,9 @@ namespace MS.Internal.Automation
                         fDead = true;
                     }
                 }
-                catch( Exception e )
+                catch (Exception e)
                 {
-                    if( Misc.IsCriticalException( e ) )
+                    if (Misc.IsCriticalException(e))
                         throw;
 
                     fDead = true;
@@ -276,7 +294,7 @@ namespace MS.Internal.Automation
         private void OnEventSystemMenuPopupStart(int eventId, IntPtr hwnd, int idObject, int idChild, uint eventTime)
         {
             Accessible acc = Accessible.Create(hwnd, idObject, idChild);
-            if( acc == null )
+            if (acc == null)
                 return;
 
             HandleFocusChange(hwnd, acc, idObject, idChild, eventTime);
@@ -334,10 +352,10 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
-        private static int [] _eventIds = new int [] {
+        private static int[] _eventIds = new int[] {
                 NativeMethods.EVENT_OBJECT_FOCUS,
                 NativeMethods.EVENT_SYSTEM_MENUSTART,
                 NativeMethods.EVENT_SYSTEM_MENUPOPUPSTART,
@@ -351,10 +369,10 @@ namespace MS.Internal.Automation
 
         private Accessible _accCurrent;            // the IAccessible currently being handled
         private Accessible _accLastBeforeMenu;     // the last IAccessible before a menu got focus
-        private IntPtr     _hwndLastBeforeMenu;    // the last hwnd before a menu got focus
-        private int        _idLastObject;          // the last idObject before a menu got focus
-        private int        _idLastChild;           // the last idChild before a menu got focus
-        private bool       _fInMenu;               // true if there's a menu up
+        private IntPtr _hwndLastBeforeMenu;    // the last hwnd before a menu got focus
+        private int _idLastObject;          // the last idObject before a menu got focus
+        private int _idLastChild;           // the last idChild before a menu got focus
+        private bool _fInMenu;               // true if there's a menu up
 
         #endregion Private Fields
     }

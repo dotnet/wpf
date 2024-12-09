@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -25,9 +25,9 @@ namespace MS.Internal.Shaping
     /// </summary>
     internal sealed class CompositeFontFamily : IFontFamily
     {
-        private readonly CompositeFontInfo   _fontInfo;
+        private readonly CompositeFontInfo _fontInfo;
 
-        private IFontFamily         _firstFontFamily;
+        private IFontFamily _firstFontFamily;
 
         #region Constructors
 
@@ -36,7 +36,7 @@ namespace MS.Internal.Shaping
         /// </summary>
         internal CompositeFontFamily()
             : this(new CompositeFontInfo())
-        {}
+        { }
 
 
         /// <summary>
@@ -52,13 +52,13 @@ namespace MS.Internal.Shaping
         /// Construct a composite font family with a single target family name
         /// </summary>
         internal CompositeFontFamily(
-            string      friendlyName
+            string friendlyName
             ) :
             this(
                 friendlyName,
                 null    // firstFontFamily
                 )
-        {}
+        { }
 
 
         /// <summary>
@@ -66,8 +66,8 @@ namespace MS.Internal.Shaping
         /// after the first font family in the target family is known
         /// </summary>
         internal CompositeFontFamily(
-            string          friendlyName,
-            IFontFamily     firstFontFamily
+            string friendlyName,
+            IFontFamily firstFontFamily
             ) :
             this()
         {
@@ -121,10 +121,10 @@ namespace MS.Internal.Shaping
                 // first fontfamily in the composite font.
                 else
                 {
-                    return GetFirstFontFamily().Baseline(emSize, toReal, pixelsPerDip, textFormattingMode);             
+                    return GetFirstFontFamily().Baseline(emSize, toReal, pixelsPerDip, textFormattingMode);
                 }
             }
-}
+        }
 
         public void SetBaseline(double value)
         {
@@ -135,7 +135,7 @@ namespace MS.Internal.Shaping
         /// Recommended baseline-to-baseline distance for text in this font.
         /// </summary>
         public double LineSpacing(double emSize, double toReal, double pixelsPerDip, TextFormattingMode textFormattingMode)
-        {            
+        {
             if (textFormattingMode == TextFormattingMode.Ideal)
             {
                 return ((IFontFamily)this).LineSpacingDesign * emSize;
@@ -154,7 +154,7 @@ namespace MS.Internal.Shaping
                 {
                     return GetFirstFontFamily().LineSpacing(emSize, toReal, pixelsPerDip, textFormattingMode);
                 }
-            }         
+            }
         }
 
         double IFontFamily.BaselineDesign
@@ -165,7 +165,7 @@ namespace MS.Internal.Shaping
                 {
                     _fontInfo.Baseline = GetFirstFontFamily().BaselineDesign;
                 }
-                return _fontInfo.Baseline;   
+                return _fontInfo.Baseline;
             }
         }
 
@@ -178,7 +178,7 @@ namespace MS.Internal.Shaping
                 {
                     _fontInfo.LineSpacing = GetFirstFontFamily().LineSpacingDesign;
                 }
-                return _fontInfo.LineSpacing; 
+                return _fontInfo.LineSpacing;
             }
         }
 
@@ -191,9 +191,9 @@ namespace MS.Internal.Shaping
         /// Get typeface metrics of the specified typeface
         /// </summary>
         ITypefaceMetrics IFontFamily.GetTypefaceMetrics(
-            FontStyle       style,
-            FontWeight      weight,
-            FontStretch     stretch
+            FontStyle style,
+            FontWeight weight,
+            FontStretch stretch
             )
         {
             if (_fontInfo.FamilyTypefaces == null &&
@@ -297,13 +297,13 @@ namespace MS.Internal.Shaping
             // skip all the leading joinder characters. They need to be shaped with the 
             // surrounding strong characters.
             cchAdvance = Classification.AdvanceWhile(unicodeString, ItemClass.JoinerClass);
-            
-            if (cchAdvance >= unicodeString.Length)            
+
+            if (cchAdvance >= unicodeString.Length)
             {
                 // It is rare that the run only contains joiner characters.
                 // If it really happens, just map them to the initial family map. 
                 return _fontInfo.GetFamilyMapOfChar(
-                    familyMaps, 
+                    familyMaps,
                     Classification.UnicodeScalar(unicodeString, out sizeofChar)
                     );
             }
@@ -316,14 +316,14 @@ namespace MS.Internal.Shaping
                 new CharacterBufferRange(unicodeString, cchAdvance, unicodeString.Length - cchAdvance),
                 out sizeofChar
                 );
-                
+
             bool hasBaseChar = !Classification.IsCombining(ch);
-                        
-            ch = digitMap[ch];            
+
+            ch = digitMap[ch];
             FontFamilyMap familyMap = _fontInfo.GetFamilyMapOfChar(familyMaps, ch);
-                
+
             Invariant.Assert(familyMap != null);
-            
+
             for (cchAdvance += sizeofChar; cchAdvance < unicodeString.Length; cchAdvance += sizeofChar)
             {
                 ch = Classification.UnicodeScalar(
@@ -336,7 +336,7 @@ namespace MS.Internal.Shaping
 
                 if (!Classification.IsCombining(ch))
                 {
-                    hasBaseChar = true; 
+                    hasBaseChar = true;
                 }
                 else if (hasBaseChar)
                 {
@@ -358,7 +358,7 @@ namespace MS.Internal.Shaping
         /// </summary>
         private IFontFamily GetFirstFontFamily()
         {
-            if(_firstFontFamily == null)
+            if (_firstFontFamily == null)
             {
                 if (_fontInfo.FamilyMaps.Count != 0)
                 {
@@ -376,9 +376,9 @@ namespace MS.Internal.Shaping
         }
 
         private ITypefaceMetrics FindTypefaceMetrics(
-            FontStyle       style,
-            FontWeight      weight,
-            FontStretch     stretch
+            FontStyle style,
+            FontWeight weight,
+            FontStretch stretch
             )
         {
             FamilyTypeface bestFace = FindNearestFamilyTypeface(style, weight, stretch);
@@ -443,7 +443,7 @@ namespace MS.Internal.Shaping
 
             foreach (FamilyTypeface currentFace in _fontInfo.FamilyTypefaces)
             {
-                MatchingStyle  currentMatch = new MatchingStyle(currentFace.Style, currentFace.Weight, currentFace.Stretch);
+                MatchingStyle currentMatch = new MatchingStyle(currentFace.Style, currentFace.Weight, currentFace.Stretch);
                 if (currentMatch == target)
                 {
                     return currentFace;

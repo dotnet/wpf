@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,7 +19,7 @@ namespace System.Windows.Documents
         // Constructors
         //
         //---------------------------------------------------------------------
-        
+
         #region Constructors
         public FixedSOMSemanticBox()
         {
@@ -61,22 +61,22 @@ namespace System.Windows.Documents
 
 #if DEBUG
         //For visualization purposes
-        public abstract void Render(DrawingContext dc, string label, DrawDebugVisual debugVisuals) ;
+        public abstract void Render(DrawingContext dc, string label, DrawDebugVisual debugVisuals);
         public void RenderLabel(DrawingContext dc, string label)
         {
             // This code only runs in DEBUG mode, and looks like has been abandoned for a while.
             // Initializing PixelsPerDip to system dpi as a safeguard, however, doesn't look like this is going to be used at all.
-            FormattedText ft = new FormattedText(label, 
+            FormattedText ft = new FormattedText(label,
                                         System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS,
                                         FlowDirection.LeftToRight,
-                                        new Typeface("Arial"), 
+                                        new Typeface("Arial"),
                                         10,
                                         Brushes.White,
                                         MS.Internal.FontCache.Util.PixelsPerDip);
 
-            Point labelLocation = new Point(_boundingRect.Left-25, (_boundingRect.Bottom + _boundingRect.Top)/2 - 10);
+            Point labelLocation = new Point(_boundingRect.Left - 25, (_boundingRect.Bottom + _boundingRect.Top) / 2 - 10);
             Geometry geom = ft.BuildHighlightGeometry(labelLocation);
-            Pen backgroundPen = new Pen(Brushes.Black,1);
+            Pen backgroundPen = new Pen(Brushes.Black, 1);
             dc.DrawGeometry(Brushes.Black, backgroundPen, geom);
             dc.DrawText(ft, labelLocation);
         }
@@ -96,7 +96,7 @@ namespace System.Windows.Documents
             }
 
             SpatialComparison compareHor = _CompareHorizontal(o as FixedSOMSemanticBox, false);
-            
+
             SpatialComparison compareVer = _CompareVertical(o as FixedSOMSemanticBox);
             Debug.Assert(compareHor != SpatialComparison.None && compareVer != SpatialComparison.None);
 
@@ -129,7 +129,7 @@ namespace System.Windows.Documents
             }
             else if (compareHor == SpatialComparison.Before)
             {
-                result = -1;        
+                result = -1;
             }
             else if (compareHor == SpatialComparison.After)
             {
@@ -158,7 +158,7 @@ namespace System.Windows.Documents
             }
             return result;
         }
-                
+
         #endregion Abstract Methods
 
 
@@ -213,8 +213,8 @@ namespace System.Windows.Documents
             {
                 double overlap = Math.Abs(thisRectRefX - otherRectRefX);
                 double longerWidth = thisRect.Width > otherRect.Width ? thisRect.Width : otherRect.Width;
-                
-                if (overlap/longerWidth < 0.1)
+
+                if (overlap / longerWidth < 0.1)
                 {
                     //If less than 10% overlap then assume these are equal in horizontal comparison
                     result = SpatialComparison.Equal;
@@ -227,7 +227,7 @@ namespace System.Windows.Documents
                 }
                 else
                 {
-                    result =  SpatialComparison.OverlapAfter;
+                    result = SpatialComparison.OverlapAfter;
                 }
             }
             if (RTL && result != SpatialComparison.Equal)
@@ -248,7 +248,7 @@ namespace System.Windows.Documents
 
             if (thisRect.Top == otherRect.Top)
             {
-                result =  SpatialComparison.Equal;
+                result = SpatialComparison.Equal;
             }
             else if (thisRect.Bottom <= otherRect.Top)
             {
@@ -269,7 +269,7 @@ namespace System.Windows.Documents
                 }
                 else
                 {
-                    result =  SpatialComparison.OverlapAfter;
+                    result = SpatialComparison.OverlapAfter;
                 }
             }
             return result;
@@ -277,25 +277,25 @@ namespace System.Windows.Documents
 
         protected int _SpatialToAbsoluteComparison(SpatialComparison comparison)
         {
-            int result=0;
-            
+            int result = 0;
+
             switch (comparison)
             {
-            case SpatialComparison.Before:
-            case SpatialComparison.OverlapBefore:
-                result = -1;
-                break;
+                case SpatialComparison.Before:
+                case SpatialComparison.OverlapBefore:
+                    result = -1;
+                    break;
 
-            case SpatialComparison.After:
-            case SpatialComparison.OverlapAfter:
-                result = 1;
-                break;
-            case SpatialComparison.Equal:
-                result = 0;
-                break;
-            default:
-                Debug.Assert(false);
-                break;
+                case SpatialComparison.After:
+                case SpatialComparison.OverlapAfter:
+                    result = 1;
+                    break;
+                case SpatialComparison.Equal:
+                    result = 0;
+                    break;
+                default:
+                    Debug.Assert(false);
+                    break;
             }
             return result;
         }
@@ -329,7 +329,7 @@ namespace System.Windows.Documents
         #region enums        
         protected enum SpatialComparison
         {
-            None =0,
+            None = 0,
             Before,
             OverlapBefore,
             Equal,

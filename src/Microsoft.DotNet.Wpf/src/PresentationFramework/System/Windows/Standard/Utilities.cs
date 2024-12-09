@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -33,42 +33,42 @@ namespace Standard
                 (byte)((color & 0x0000FF00) >> 8),
                 (byte)((color & 0x000000FF) >> 0));
         }
-        
+
         public static int GET_X_LPARAM(IntPtr lParam)
         {
             // Avoid overflow for negative coordinates https://github.com/dotnet/wpf/issues/6777
-            return LOWORD((int) lParam.ToInt64());
+            return LOWORD((int)lParam.ToInt64());
         }
 
-        
+
         public static int GET_Y_LPARAM(IntPtr lParam)
         {
             // Avoid overflow for negative coordinates https://github.com/dotnet/wpf/issues/6777
-            return HIWORD((int) lParam.ToInt64());
+            return HIWORD((int)lParam.ToInt64());
         }
-        
+
         public static int HIWORD(int i)
         {
             return (short)(i >> 16);
         }
-        
+
         public static int LOWORD(int i)
         {
             return (short)(i & 0xFFFF);
         }
-        
+
         public static bool IsFlagSet(int value, int mask)
         {
             return 0 != (value & mask);
-        }     
+        }
         public static bool IsFlagSet(uint value, uint mask)
         {
             return 0 != (value & mask);
-        }     
+        }
         public static bool IsFlagSet(long value, long mask)
         {
             return 0 != (value & mask);
-        }     
+        }
         public static bool IsFlagSet(ulong value, ulong mask)
         {
             return 0 != (value & mask);
@@ -76,7 +76,7 @@ namespace Standard
         public static bool IsOSVistaOrNewer
         {
             get { return _osVersion >= new Version(6, 0); }
-        }     
+        }
         public static bool IsOSWindows7OrNewer
         {
             get { return _osVersion >= new Version(6, 1); }
@@ -171,7 +171,7 @@ namespace Standard
 
         // This can be cached.  It's not going to change under reasonable circumstances.
         private static int s_bitDepth; // = 0;
-        
+
         private static int _GetBitDepth()
         {
             if (s_bitDepth == 0)
@@ -194,7 +194,7 @@ namespace Standard
                 NativeMethods.DeleteObject(p);
             }
         }
-    
+
         public static void SafeDestroyWindow(ref IntPtr hwnd)
         {
             IntPtr p = hwnd;
@@ -204,7 +204,7 @@ namespace Standard
                 NativeMethods.DestroyWindow(p);
             }
         }
-        
+
         public static void SafeRelease<T>(ref T comObject) where T : class
         {
             T t = comObject;

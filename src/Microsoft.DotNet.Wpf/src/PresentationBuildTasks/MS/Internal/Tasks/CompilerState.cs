@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,13 +11,12 @@
 //---------------------------------------------------------------------------------------
 
 using System;
-using System.IO;
 using System.Diagnostics;
-using System.Text;
 using System.Globalization;
-
-using Microsoft.Build.Tasks.Windows;
+using System.IO;
+using System.Text;
 using Microsoft.Build.Framework;
+using Microsoft.Build.Tasks.Windows;
 
 namespace MS.Internal.Tasks
 {
@@ -26,7 +25,7 @@ namespace MS.Internal.Tasks
     //
     internal enum CompilerStateType : int
     {
-        AssemblyName = 0x00,                  
+        AssemblyName = 0x00,
         AssemblyVersion,
         AssemblyPublicKeyToken,
         OutputType,
@@ -51,7 +50,7 @@ namespace MS.Internal.Tasks
     // <summary>
     // CompilerState
     // </summary>
-    internal class CompilerState  
+    internal class CompilerState
     {
         // <summary>
         // ctor of CompilerState
@@ -80,7 +79,7 @@ namespace MS.Internal.Tasks
         //
         internal void CleanupCache()
         {
-            if (StateFileExists() )
+            if (StateFileExists())
             {
                 _taskFileService.Delete(_stateFilePath);
             }
@@ -94,7 +93,7 @@ namespace MS.Internal.Tasks
 
             // Transfer the cache related information from mcPass1 to this instance.
 
-            AssemblyName = mcPass1.AssemblyName;                  
+            AssemblyName = mcPass1.AssemblyName;
             AssemblyVersion = mcPass1.AssemblyVersion;
             AssemblyPublicKeyToken = mcPass1.AssemblyPublicKeyToken;
             OutputType = mcPass1.OutputType;
@@ -129,7 +128,7 @@ namespace MS.Internal.Tasks
             // since TaskFileService.WriteFile adds it.
             using (StreamWriter sw = new StreamWriter(memStream, new UTF8Encoding(false)))
             {
-                for (int i =0; i<(int)CompilerStateType.MaxCount; i++)
+                for (int i = 0; i < (int)CompilerStateType.MaxCount; i++)
                 {
                     sw.WriteLine(_cacheInfoList[i]);
                 }
@@ -142,12 +141,12 @@ namespace MS.Internal.Tasks
 
             return bSuccess;
         }
-        
+
         //
         // Read the markupcompiler cache file, load the cached information
         // to the corresponding data fields in this class.
         //
-        internal bool LoadStateInformation( )
+        internal bool LoadStateInformation()
         {
             Debug.Assert(String.IsNullOrEmpty(_stateFilePath) != true, "_stateFilePath must be not be empty.");
             Debug.Assert(_cacheInfoList.Length == (int)CompilerStateType.MaxCount, "The Cache string array should be already allocated.");
@@ -235,7 +234,7 @@ namespace MS.Internal.Tasks
             if (fileItemList != null)
             {
                 StringBuilder sb = new StringBuilder();
-                
+
                 for (int i = 0; i < fileItemList.Length; i++)
                 {
                     sb.Append(fileItemList[i].ItemSpec);
@@ -300,7 +299,7 @@ namespace MS.Internal.Tasks
             get { return _stateFilePath; }
         }
 
-        internal string AssemblyName                  
+        internal string AssemblyName
         {
             get { return _cacheInfoList[(int)CompilerStateType.AssemblyName]; }
             set { _cacheInfoList[(int)CompilerStateType.AssemblyName] = value; }
@@ -377,7 +376,7 @@ namespace MS.Internal.Tasks
             get { return _cacheInfoList[(int)CompilerStateType.PageMarkup]; }
             set { _cacheInfoList[(int)CompilerStateType.PageMarkup] = value; }
         }
-            
+
         internal string ContentFiles
         {
             get { return _cacheInfoList[(int)CompilerStateType.ContentFiles]; }
@@ -418,8 +417,8 @@ namespace MS.Internal.Tasks
 
         #region private data
 
-        private String [] _cacheInfoList;
-        private string    _stateFilePath;
+        private String[] _cacheInfoList;
+        private string _stateFilePath;
         private ITaskFileService _taskFileService = null;
 
         #endregion

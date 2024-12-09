@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -56,7 +56,7 @@ namespace System.Windows.Media.Effects
 
         private static void UriSourcePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            PixelShader target = ((PixelShader) d);
+            PixelShader target = ((PixelShader)d);
 
 
             target.UriSourcePropertyChangedHook(e);
@@ -65,7 +65,7 @@ namespace System.Windows.Media.Effects
         }
         private static void ShaderRenderModePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            PixelShader target = ((PixelShader) d);
+            PixelShader target = ((PixelShader)d);
 
 
             target.PropertyChanged(ShaderRenderModeProperty);
@@ -81,7 +81,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (Uri) GetValue(UriSourceProperty);
+                return (Uri)GetValue(UriSourceProperty);
             }
             set
             {
@@ -96,7 +96,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (ShaderRenderMode) GetValue(ShaderRenderModeProperty);
+                return (ShaderRenderMode)GetValue(ShaderRenderModeProperty);
             }
             set
             {
@@ -142,7 +142,7 @@ namespace System.Windows.Media.Effects
         }
         DUCE.ResourceHandle DUCE.IResource.AddRefOnChannel(DUCE.Channel channel)
         {
-            using (CompositionEngineLock.Acquire()) 
+            using (CompositionEngineLock.Acquire())
             {
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_PIXELSHADER))
                 {
@@ -157,14 +157,14 @@ namespace System.Windows.Media.Effects
         }
         void DUCE.IResource.ReleaseOnChannel(DUCE.Channel channel)
         {
-            using (CompositionEngineLock.Acquire()) 
+            using (CompositionEngineLock.Acquire())
             {
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
                     ReleaseOnChannelAnimations(channel);
-}
+                }
             }
         }
         DUCE.ResourceHandle DUCE.IResource.GetHandle(DUCE.Channel channel)

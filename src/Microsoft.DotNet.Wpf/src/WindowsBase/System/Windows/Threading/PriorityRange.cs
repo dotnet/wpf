@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -26,7 +26,7 @@ namespace System.Windows.Threading
         {
             Initialize(min, true, max, true);
         }
-        
+
         /// <summary>
         ///     Constructs an instance of the PriorityRange class.
         /// </summary>
@@ -34,7 +34,7 @@ namespace System.Windows.Threading
         {
             Initialize(min, isMinInclusive, max, isMaxInclusive);
         }
-        
+
         /// <summary>
         ///     The minimum priority of this range.
         /// </summary>
@@ -67,7 +67,7 @@ namespace System.Windows.Threading
                 return _isMinInclusive;
             }
         }
-        
+
         /// <summary>
         ///     Whether or not the maximum priority in included in this range.
         /// </summary>
@@ -78,7 +78,7 @@ namespace System.Windows.Threading
                 return _isMaxInclusive;
             }
         }
-        
+
         /// <summary>
         ///     Whether or not this priority range is valid.
         /// </summary>
@@ -104,7 +104,7 @@ namespace System.Windows.Threading
                 return false;
             }
             */
-            if(priority <= DispatcherPriority.Invalid || priority > DispatcherPriority.Send)
+            if (priority <= DispatcherPriority.Invalid || priority > DispatcherPriority.Send)
             {
                 return false;
             }
@@ -139,7 +139,7 @@ namespace System.Windows.Threading
 
             return contains;
         }
-        
+
         /// <summary>
         ///     Whether or not this priority range contains the specified
         ///     priority range.
@@ -164,7 +164,7 @@ namespace System.Windows.Threading
             }
             else
             {
-                if(priorityRange.Min >= _min && priorityRange.Min < _max)
+                if (priorityRange.Min >= _min && priorityRange.Min < _max)
                 {
                     contains = true;
                 }
@@ -178,13 +178,13 @@ namespace System.Windows.Threading
                 }
                 else
                 {
-                    if(priorityRange.Max > _min && priorityRange.Max <= _max)
+                    if (priorityRange.Max > _min && priorityRange.Max <= _max)
                     {
                         contains = true;
                     }
                 }
             }
-                
+
             return contains;
         }
 
@@ -193,16 +193,16 @@ namespace System.Windows.Threading
         /// </summary>
         public override bool Equals(object o)
         {
-            if(o is PriorityRange)
+            if (o is PriorityRange)
             {
-                return Equals((PriorityRange) o);
+                return Equals((PriorityRange)o);
             }
             else
             {
                 return false;
             }
         }
-        
+
         /// <summary>
         ///     Equality method for two PriorityRange
         /// </summary>
@@ -217,7 +217,7 @@ namespace System.Windows.Threading
         /// <summary>
         ///     Equality operator
         /// </summary>
-        public static bool operator== (PriorityRange priorityRange1, PriorityRange priorityRange2)
+        public static bool operator ==(PriorityRange priorityRange1, PriorityRange priorityRange2)
         {
             return priorityRange1.Equals(priorityRange2);
         }
@@ -225,7 +225,7 @@ namespace System.Windows.Threading
         /// <summary>
         ///     Inequality operator
         /// </summary>
-        public static bool operator!= (PriorityRange priorityRange1, PriorityRange priorityRange2)
+        public static bool operator !=(PriorityRange priorityRange1, PriorityRange priorityRange2)
         {
             return !(priorityRange1 == priorityRange2);
         }
@@ -237,7 +237,7 @@ namespace System.Windows.Threading
         {
             return base.GetHashCode();
         }
-        
+
         private void Initialize(DispatcherPriority min, bool isMinInclusive, DispatcherPriority max, bool isMaxInclusive) // NOTE: should be Priority
         {
             /*
@@ -251,12 +251,12 @@ namespace System.Windows.Threading
                 throw new ArgumentException("Invalid priority.", "min");
             }
             */
-            if(min < DispatcherPriority.Invalid || min > DispatcherPriority.Send)
+            if (min < DispatcherPriority.Invalid || min > DispatcherPriority.Send)
             {
                 // If we move to a Priority class, this exception will have to change too.
                 throw new System.ComponentModel.InvalidEnumArgumentException("min", (int)min, typeof(DispatcherPriority));
             }
-            if(min == DispatcherPriority.Inactive)
+            if (min == DispatcherPriority.Inactive)
             {
                 throw new ArgumentException(SR.InvalidPriority, "min");
             }
@@ -272,16 +272,16 @@ namespace System.Windows.Threading
                 throw new ArgumentException("Invalid priority.", "max");
             }
             */
-            if(max < DispatcherPriority.Invalid || max > DispatcherPriority.Send)
+            if (max < DispatcherPriority.Invalid || max > DispatcherPriority.Send)
             {
                 // If we move to a Priority class, this exception will have to change too.
                 throw new System.ComponentModel.InvalidEnumArgumentException("max", (int)max, typeof(DispatcherPriority));
             }
-            if(max == DispatcherPriority.Inactive)
+            if (max == DispatcherPriority.Inactive)
             {
                 throw new ArgumentException(SR.InvalidPriority, "max");
             }
-            
+
             if (max < min)
             {
                 throw new ArgumentException(SR.InvalidPriorityRangeOrder);
@@ -306,5 +306,5 @@ namespace System.Windows.Threading
         private bool _isMinInclusive;
         private DispatcherPriority _max;  // NOTE: should be Priority
         private bool _isMaxInclusive;
-}
+    }
 }

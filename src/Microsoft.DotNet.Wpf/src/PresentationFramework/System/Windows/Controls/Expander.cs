@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
+using System.ComponentModel;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls.Primitives;
-using System.ComponentModel;
 using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;
 
@@ -79,7 +79,7 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Behavior")]
         public ExpandDirection ExpandDirection
         {
-            get { return (ExpandDirection) GetValue(ExpandDirectionProperty); }
+            get { return (ExpandDirection)GetValue(ExpandDirectionProperty); }
             set { SetValue(ExpandDirectionProperty, value); }
         }
 
@@ -124,13 +124,13 @@ namespace System.Windows.Controls
 
         private static void OnIsExpandedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Expander ep = (Expander) d;
-            
-            bool newValue = (bool) e.NewValue;
+            Expander ep = (Expander)d;
+
+            bool newValue = (bool)e.NewValue;
 
             // Fire accessibility event
             ExpanderAutomationPeer peer = UIElementAutomationPeer.FromElement(ep) as ExpanderAutomationPeer;
-            if(peer != null)
+            if (peer != null)
             {
                 peer.RaiseExpandCollapseAutomationEvent(!newValue, newValue);
             }
@@ -153,7 +153,7 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Appearance")]
         public bool IsExpanded
         {
-            get { return (bool) GetValue(IsExpandedProperty); }
+            get { return (bool)GetValue(IsExpandedProperty); }
             set { SetValue(IsExpandedProperty, BooleanBoxes.Box(value)); }
         }
 
@@ -230,7 +230,7 @@ namespace System.Windows.Controls
             {
                 VisualStates.GoToState(this, useTransitions, VisualStates.StateUnfocused);
             }
-        
+
             if (IsExpanded)
             {
                 VisualStates.GoToState(this, useTransitions, VisualStates.StateExpanded);
@@ -243,22 +243,22 @@ namespace System.Windows.Controls
             switch (ExpandDirection)
             {
                 case ExpandDirection.Down:
-                    VisualStates.GoToState(this, useTransitions, VisualStates.StateExpandDown); 
+                    VisualStates.GoToState(this, useTransitions, VisualStates.StateExpandDown);
                     break;
-                
+
                 case ExpandDirection.Up:
-                    VisualStates.GoToState(this, useTransitions, VisualStates.StateExpandUp); 
+                    VisualStates.GoToState(this, useTransitions, VisualStates.StateExpandUp);
                     break;
 
                 case ExpandDirection.Left:
-                    VisualStates.GoToState(this, useTransitions, VisualStates.StateExpandLeft); 
+                    VisualStates.GoToState(this, useTransitions, VisualStates.StateExpandLeft);
                     break;
-                
+
                 default:
-                    VisualStates.GoToState(this, useTransitions, VisualStates.StateExpandRight); 
+                    VisualStates.GoToState(this, useTransitions, VisualStates.StateExpandRight);
                     break;
             }
-            
+
             base.ChangeVisualState(useTransitions);
         }
 
@@ -268,9 +268,11 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnExpanded()
         {
-            RoutedEventArgs args = new RoutedEventArgs();
-            args.RoutedEvent = Expander.ExpandedEvent;
-            args.Source = this;
+            RoutedEventArgs args = new RoutedEventArgs
+            {
+                RoutedEvent = Expander.ExpandedEvent,
+                Source = this
+            };
             RaiseEvent(args);
         }
 
@@ -284,13 +286,13 @@ namespace System.Windows.Controls
         }
 
         #endregion
-        
+
         #region Accessibility
 
         /// <summary>
         /// Creates AutomationPeer (<see cref="UIElement.OnCreateAutomationPeer"/>)
         /// </summary>
-        protected override AutomationPeer OnCreateAutomationPeer() 
+        protected override AutomationPeer OnCreateAutomationPeer()
         {
             return new ExpanderAutomationPeer(this);
         }
@@ -308,12 +310,12 @@ namespace System.Windows.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            
+
             _expanderToggleButton = GetTemplateChild(ExpanderToggleButtonTemplateName) as ToggleButton;
         }
-        
+
         #endregion
-        
+
         //-------------------------------------------------------------------
         //
         //  Internal Properties
@@ -321,7 +323,7 @@ namespace System.Windows.Controls
         //-------------------------------------------------------------------
 
         #region Internal Properties
-        
+
         internal bool IsExpanderToggleButtonFocused
         {
             get
@@ -329,7 +331,7 @@ namespace System.Windows.Controls
                 return _expanderToggleButton?.IsKeyboardFocused ?? false;
             }
         }
-        
+
         internal ToggleButton ExpanderToggleButton
         {
             get
@@ -337,9 +339,9 @@ namespace System.Windows.Controls
                 return _expanderToggleButton;
             }
         }
-        
+
         #endregion
-        
+
         //-------------------------------------------------------------------
         //
         //  Private Fields
@@ -350,7 +352,7 @@ namespace System.Windows.Controls
 
         private const string ExpanderToggleButtonTemplateName = "HeaderSite";
         private ToggleButton _expanderToggleButton;
-        
+
         #endregion
 
         #region DTypeThemeStyleKey

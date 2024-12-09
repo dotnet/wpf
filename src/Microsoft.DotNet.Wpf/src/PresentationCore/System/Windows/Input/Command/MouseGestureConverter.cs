@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -20,8 +20,8 @@ namespace System.Windows.Input
     /// </summary>
     public class MouseGestureConverter : TypeConverter
     {
-        private const char MODIFIERS_DELIMITER = '+' ;
-        
+        private const char MODIFIERS_DELIMITER = '+';
+
         ///<summary>
         /// CanConvertFrom()
         ///</summary>
@@ -63,17 +63,17 @@ namespace System.Windows.Input
                 int Offset = fullName.LastIndexOf(MODIFIERS_DELIMITER);
                 if (Offset >= 0)
                 {   // modifiers exists
-                    modifiersToken      = fullName.Substring(0,Offset);
+                    modifiersToken = fullName.Substring(0, Offset);
                     mouseActionToken = fullName.Substring(Offset + 1);
                 }
                 else
                 {
-                    modifiersToken       = String.Empty;
-                    mouseActionToken  = fullName;
-                }             
-                
+                    modifiersToken = String.Empty;
+                    mouseActionToken = fullName;
+                }
+
                 TypeConverter mouseActionConverter = TypeDescriptor.GetConverter(typeof(System.Windows.Input.MouseAction));
-                if (null != mouseActionConverter )
+                if (null != mouseActionConverter)
                 {
                     object mouseAction = mouseActionConverter.ConvertFrom(context, culture, mouseActionToken);
                     // mouseAction Converter will throw Exception, if it fails, 
@@ -121,10 +121,10 @@ namespace System.Windows.Input
                     MouseGesture mouseGesture = context.Instance as MouseGesture;
                     if (mouseGesture != null)
                     {
-                        return (ModifierKeysConverter.IsDefinedModifierKeys(mouseGesture.Modifiers) 
+                        return (ModifierKeysConverter.IsDefinedModifierKeys(mouseGesture.Modifiers)
                                && MouseActionConverter.IsDefinedMouseAction(mouseGesture.MouseAction));
                     }
-                 }
+                }
             }
             return false;
         }
@@ -157,18 +157,18 @@ namespace System.Windows.Input
                         strGesture += modifierKeysConverter.ConvertTo(context, culture, mouseGesture.Modifiers, destinationType) as string;
                         if (strGesture != String.Empty)
                         {
-                            strGesture += MODIFIERS_DELIMITER ;
+                            strGesture += MODIFIERS_DELIMITER;
                         }
                     }
                     TypeConverter mouseActionConverter = TypeDescriptor.GetConverter(typeof(System.Windows.Input.MouseAction));
                     if (null != mouseActionConverter)
                     {
                         strGesture += mouseActionConverter.ConvertTo(context, culture, mouseGesture.MouseAction, destinationType) as string;
-                    }                             
+                    }
                     return strGesture;
                 }
             }
-            throw GetConvertToException(value,destinationType);
+            throw GetConvertToException(value, destinationType);
         }
     }
 }

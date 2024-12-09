@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,12 +22,12 @@ namespace System.Windows
     /// value.)
     /// </summary>
 
-    [TypeConverter(typeof(TemplateBindingExpressionConverter))]    
+    [TypeConverter(typeof(TemplateBindingExpressionConverter))]
     public class TemplateBindingExpression : Expression
     {
         private TemplateBindingExtension _templateBindingExtension;
 
-        internal TemplateBindingExpression( TemplateBindingExtension templateBindingExtension )
+        internal TemplateBindingExpression(TemplateBindingExtension templateBindingExtension)
         {
             _templateBindingExtension = templateBindingExtension;
         }

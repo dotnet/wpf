@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,13 +9,13 @@
 //
 
 
-using MS.Internal.Controls;
 using System.Collections;
-using System.Windows.Input;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Ink;
+using System.Windows.Input;
 using System.Windows.Media;
+using MS.Internal.Controls;
 
 namespace MS.Internal.Ink
 {
@@ -67,7 +67,7 @@ namespace MS.Internal.Ink
         {
             Debug.Assert(EditingCoordinator.IsInMidStroke, "SwitchToMode should only be called in a mid-stroke");
 
-            switch ( mode )
+            switch (mode)
             {
                 case InkCanvasEditingMode.Ink:
                 case InkCanvasEditingMode.InkAndGesture:
@@ -125,24 +125,24 @@ namespace MS.Internal.Ink
             bool startLasso = false;
 
             List<Point> points = new List<Point>();
-            for ( int x = 0; x < stylusPoints.Count; x++ )
+            for (int x = 0; x < stylusPoints.Count; x++)
             {
-                Point point = (Point)( stylusPoints[x] );
-                if ( x == 0 )
+                Point point = (Point)(stylusPoints[x]);
+                if (x == 0)
                 {
                     _startPoint = point;
                     points.Add(point);
                     continue;
                 }
 
-                if ( !startLasso )
+                if (!startLasso)
                 {
                     // If startLasso hasn't be flagged, we should check if the distance between two points is greater than 
                     // our tolerance. If so, we should flag startLasso.
                     Vector vector = point - _startPoint;
                     double distanceSquared = vector.LengthSquared;
 
-                    if ( DoubleUtil.GreaterThan(distanceSquared, LassoHelper.MinDistanceSquared) )
+                    if (DoubleUtil.GreaterThan(distanceSquared, LassoHelper.MinDistanceSquared))
                     {
                         points.Add(point);
                         startLasso = true;
@@ -156,7 +156,7 @@ namespace MS.Internal.Ink
             }
 
             // Start Lasso if it isn't a tap selection.
-            if ( startLasso )
+            if (startLasso)
             {
                 StartLasso(points);
             }
@@ -170,41 +170,41 @@ namespace MS.Internal.Ink
         protected override void StylusInputContinue(StylusPointCollection stylusPoints, bool userInitiated)
         {
             // Check whether Lasso has started.
-            if ( _lassoHelper != null )
+            if (_lassoHelper != null)
             {
                 //
                 // pump packets to the LassoHelper, it will convert them into an array of equidistant
                 // lasso points, render those lasso point and return them to hit test against.
                 //
                 List<Point> points = new List<Point>();
-                for ( int x = 0; x < stylusPoints.Count; x++ )
+                for (int x = 0; x < stylusPoints.Count; x++)
                 {
                     points.Add((Point)stylusPoints[x]);
                 }
                 Point[] lassoPoints = _lassoHelper.AddPoints(points);
-                if ( 0 != lassoPoints.Length )
+                if (0 != lassoPoints.Length)
                 {
                     _incrementalLassoHitTester.AddPoints(lassoPoints);
                 }
             }
-            else if ( !_disableLasso )
+            else if (!_disableLasso)
             {
                 // If Lasso hasn't start and been disabled, we should try to start it when it is needed.
                 bool startLasso = false;
 
                 List<Point> points = new List<Point>();
-                for ( int x = 0; x < stylusPoints.Count; x++ )
+                for (int x = 0; x < stylusPoints.Count; x++)
                 {
-                    Point point = (Point)( stylusPoints[x] );
+                    Point point = (Point)(stylusPoints[x]);
 
-                    if ( !startLasso )
+                    if (!startLasso)
                     {
                         // If startLasso hasn't be flagged, we should check if the distance between two points is greater than 
                         // our tolerance. If so, we should flag startLasso.
                         Vector vector = point - _startPoint;
                         double distanceSquared = vector.LengthSquared;
 
-                        if ( DoubleUtil.GreaterThan(distanceSquared, LassoHelper.MinDistanceSquared) )
+                        if (DoubleUtil.GreaterThan(distanceSquared, LassoHelper.MinDistanceSquared))
                         {
                             points.Add(point);
                             startLasso = true;
@@ -218,7 +218,7 @@ namespace MS.Internal.Ink
                 }
 
                 // Start Lasso if it isn't a tap selection.
-                if ( startLasso )
+                if (startLasso)
                 {
                     StartLasso(points);
                 }
@@ -236,7 +236,7 @@ namespace MS.Internal.Ink
             StrokeCollection selectedStrokes = new StrokeCollection();
             List<UIElement> elementsToSelect = new List<UIElement>();
 
-            if ( _lassoHelper != null )
+            if (_lassoHelper != null)
             {
                 // This is a lasso selection.
 
@@ -267,13 +267,13 @@ namespace MS.Internal.Ink
                 TapSelectObject(_startPoint, out tappedStroke, out tappedElement);
 
                 // If we have a pre-selected object, we should select it now.
-                if ( tappedStroke != null )
+                if (tappedStroke != null)
                 {
                     Debug.Assert(tappedElement == null);
                     selectedStrokes = new StrokeCollection();
                     selectedStrokes.Add(tappedStroke);
                 }
-                else if ( tappedElement != null )
+                else if (tappedElement != null)
                 {
                     Debug.Assert(tappedStroke == null);
                     elementsToSelect.Add(tappedElement);
@@ -282,7 +282,7 @@ namespace MS.Internal.Ink
 
             SelfDeactivate();
 
-            if ( commit )
+            if (commit)
             {
                 InkCanvas.ChangeInkCanvasSelection(selectedStrokes, elementsToSelect.ToArray());
             }
@@ -336,7 +336,7 @@ namespace MS.Internal.Ink
         {
             List<UIElement> elementsToSelect = new List<UIElement>();
 
-            if ( this.InkCanvas.Children.Count == 0 )
+            if (this.InkCanvas.Children.Count == 0)
             {
                 return elementsToSelect;
             }
@@ -386,8 +386,10 @@ namespace MS.Internal.Ink
 
             Debug.Assert(canvas.CheckAccess());
 
-            ElementCornerPoints elementPoints = new ElementCornerPoints();
-            elementPoints.Set = false;
+            ElementCornerPoints elementPoints = new ElementCornerPoints
+            {
+                Set = false
+            };
 
             if (childElement.Visibility != Visibility.Visible)
             {
@@ -400,8 +402,8 @@ namespace MS.Internal.Ink
             //
             // get the transform from us to our parent InkCavas
             //
-            GeneralTransform parentTransform = childElement.TransformToAncestor(canvas);            
-            
+            GeneralTransform parentTransform = childElement.TransformToAncestor(canvas);
+
             // REVIEW: any of the methods below may not actually perform the transformation
             // Do we need to do anything special in that scenario?
             parentTransform.TryTransform(new Point(0, 0), out elementPoints.UpperLeft);
@@ -421,7 +423,7 @@ namespace MS.Internal.Ink
         {
             if (!elementPoints.Set)
             {
-                return new Point[]{};
+                return new Point[] { };
             }
             ArrayList pointArray = new ArrayList();
 
@@ -438,7 +440,7 @@ namespace MS.Internal.Ink
             pointArray.Add(elementPoints.LowerRight);
             FillInPoints(pointArray, elementPoints.LowerLeft, elementPoints.LowerRight);
 
-            FillInGrid( pointArray,
+            FillInGrid(pointArray,
                         elementPoints.UpperLeft,
                         elementPoints.UpperRight,
                         elementPoints.LowerRight,
@@ -456,18 +458,18 @@ namespace MS.Internal.Ink
         private void FillInPoints(ArrayList pointArray, Point point1, Point point2)
         {
             // this algorithm improves perf by 20%
-            if(!PointsAreCloseEnough(point1, point2))
+            if (!PointsAreCloseEnough(point1, point2))
             {
                 Point midPoint = LassoSelectionBehavior.GeneratePointBetweenPoints(point1, point2);
                 pointArray.Add(midPoint);
 
-                if(!PointsAreCloseEnough(point1, midPoint))
+                if (!PointsAreCloseEnough(point1, midPoint))
                 {
                     FillInPoints(pointArray, point1, midPoint);
                 }
 
                 //sort the right
-                if(!PointsAreCloseEnough(midPoint, point2))
+                if (!PointsAreCloseEnough(midPoint, point2))
                 {
                     FillInPoints(pointArray, midPoint, point2);
                 }
@@ -485,7 +487,7 @@ namespace MS.Internal.Ink
                                 Point lowerLeft)
         {
             // this algorithm improves perf by 20%
-            if(!PointsAreCloseEnough(upperLeft, lowerLeft))
+            if (!PointsAreCloseEnough(upperLeft, lowerLeft))
             {
                 Point midPointLeft = LassoSelectionBehavior.GeneratePointBetweenPoints(upperLeft, lowerLeft);
                 Point midPointRight = LassoSelectionBehavior.GeneratePointBetweenPoints(upperRight, lowerRight);
@@ -493,13 +495,13 @@ namespace MS.Internal.Ink
                 pointArray.Add(midPointRight);
                 FillInPoints(pointArray, midPointLeft, midPointRight);
 
-                if(!PointsAreCloseEnough(upperLeft, midPointLeft))
+                if (!PointsAreCloseEnough(upperLeft, midPointLeft))
                 {
                     FillInGrid(pointArray, upperLeft, upperRight, midPointRight, midPointLeft);
                 }
 
                 //sort the right
-                if(!PointsAreCloseEnough(midPointLeft, lowerLeft))
+                if (!PointsAreCloseEnough(midPointLeft, lowerLeft))
                 {
                     FillInGrid(pointArray, midPointLeft, midPointRight, lowerRight, lowerLeft);
                 }
@@ -519,7 +521,7 @@ namespace MS.Internal.Ink
             double maxY = point1.Y > point2.Y ? point1.Y : point2.Y;
             double minY = point1.Y < point2.Y ? point1.Y : point2.Y;
 
-            return new Point( (minX + ((maxX - minX) * 0.5f)),
+            return new Point((minX + ((maxX - minX) * 0.5f)),
                                 (minY + ((maxY - minY) * 0.5f)));
         }
 
@@ -586,12 +588,12 @@ namespace MS.Internal.Ink
         {
             Debug.Assert(!_disableLasso && _lassoHelper == null, "StartLasso is called unexpectedly.");
 
-            if ( InkCanvas.ClearSelectionRaiseSelectionChanging() // If user cancels clearing the selection, we shouldn't initiate Lasso.
-                // 
-                // If the active editng mode is no longer as Select, we shouldn't activate LassoSelectionBehavior.
-                // Note the order really matters here. This checking has to be done 
-                // after ClearSelectionRaiseSelectionChanging is invoked.
-                && EditingCoordinator.ActiveEditingMode == InkCanvasEditingMode.Select )
+            if (InkCanvas.ClearSelectionRaiseSelectionChanging() // If user cancels clearing the selection, we shouldn't initiate Lasso.
+                                                                 // 
+                                                                 // If the active editng mode is no longer as Select, we shouldn't activate LassoSelectionBehavior.
+                                                                 // Note the order really matters here. This checking has to be done 
+                                                                 // after ClearSelectionRaiseSelectionChanging is invoked.
+                && EditingCoordinator.ActiveEditingMode == InkCanvasEditingMode.Select)
             {
                 //
                 // obtain a dynamic hit-tester for selecting with lasso
@@ -611,7 +613,7 @@ namespace MS.Internal.Ink
                 InkCanvas.BeginDynamicSelection(_lassoHelper.Visual);
 
                 Point[] lassoPoints = _lassoHelper.AddPoints(points);
-                if ( 0 != lassoPoints.Length )
+                if (0 != lassoPoints.Length)
                 {
                     _incrementalLassoHitTester.AddPoints(lassoPoints);
                 }
@@ -635,7 +637,7 @@ namespace MS.Internal.Ink
             tappedElement = null;
 
             StrokeCollection hitTestStrokes = InkCanvas.Strokes.HitTest(point, 5.0d);
-            if ( hitTestStrokes.Count > 0 )
+            if (hitTestStrokes.Count > 0)
             {
                 tappedStroke = hitTestStrokes[hitTestStrokes.Count - 1];
             }
@@ -647,7 +649,7 @@ namespace MS.Internal.Ink
                 // Try to find out whether we have a pre-select object.
                 tappedElement = InkCanvas.InnerCanvas.HitTestOnElements(pointOnInnerCanvas);
             }
-}
+        }
 
         #endregion Private Methods
 
@@ -659,17 +661,17 @@ namespace MS.Internal.Ink
 
         #region Private Fields
 
-        private Point                       _startPoint;
-        private bool                        _disableLasso;
+        private Point _startPoint;
+        private bool _disableLasso;
 
-        private LassoHelper                 _lassoHelper = null;
-        private IncrementalLassoHitTester   _incrementalLassoHitTester;
-        private double                  _xDiff;
-        private double                  _yDiff;
-        private const double            _maxThreshold = 50f;
-        private const double            _minThreshold = 15f;
-        private const int               _percentIntersectForInk = 80;
-        private const int               _percentIntersectForElements = 60;
+        private LassoHelper _lassoHelper = null;
+        private IncrementalLassoHitTester _incrementalLassoHitTester;
+        private double _xDiff;
+        private double _yDiff;
+        private const double _maxThreshold = 50f;
+        private const double _minThreshold = 15f;
+        private const int _percentIntersectForInk = 80;
+        private const int _percentIntersectForElements = 60;
 
 
 #if DEBUG_LASSO_FEEDBACK

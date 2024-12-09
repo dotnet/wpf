@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,8 +11,8 @@ namespace System.Windows.Media.TextFormatting
     /// </summary>
     public class TextSimpleMarkerProperties : TextMarkerProperties
     {
-        private double          _offset;
-        private TextSource      _textSource;
+        private double _offset;
+        private TextSource _textSource;
 
         /// <summary>
         /// Construct a text marker object
@@ -22,11 +22,11 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="autoNumberingIndex">autonumbering counter of counter-style marker</param>
         /// <param name="textParagraphProperties">text paragraph properties</param>
         public TextSimpleMarkerProperties(
-            TextMarkerStyle             style,
-            double                      offset,
-            int                         autoNumberingIndex,
-            TextParagraphProperties     textParagraphProperties
-            ) 
+            TextMarkerStyle style,
+            double offset,
+            int autoNumberingIndex,
+            TextParagraphProperties textParagraphProperties
+            )
         {
             ArgumentNullException.ThrowIfNull(textParagraphProperties);
 
@@ -50,8 +50,8 @@ namespace System.Windows.Media.TextFormatting
                 }
 
                 _textSource = new TextMarkerSource(
-                    textParagraphProperties, 
-                    style, 
+                    textParagraphProperties,
+                    style,
                     autoNumberingIndex
                     );
             }

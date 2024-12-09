@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,9 +6,8 @@ using System.Printing;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
-using MS.Win32;
 using MS.Internal.PrintWin32Thunk;
-
+using MS.Win32;
 using DllImport = MS.Internal.ReachFramework.DllImport;
 
 /*++
@@ -45,7 +44,8 @@ namespace MS.Internal.Printing.Configuration
             out SafePTProviderHandle handle,
             out int usedVersion)
         {
-            try {
+            try
+            {
                 uint result = PTOpenProviderExImpl(deviceName, maxVersion, prefVersion, out handle, out usedVersion);
                 if (result != 0)
                 {
@@ -55,7 +55,7 @@ namespace MS.Internal.Printing.Configuration
                         handle = null;
                     }
                 }
-                
+
                 return result;
             }
             catch (DllNotFoundException e)
@@ -70,7 +70,7 @@ namespace MS.Internal.Printing.Configuration
         /// <param name="handle">device handle proxy has been bound to</param>
         /// <returns>HRESULT code</returns>
         [DllImport(DllImport.PrntvPt, EntryPoint = "PTCloseProvider", CharSet = CharSet.Unicode, ExactSpelling = true)]
-  
+
         public static extern uint PTCloseProviderImpl(IntPtr handle);
 
         /// <summary>
@@ -234,7 +234,7 @@ namespace MS.Internal.Printing.Configuration
                 throw new PrintingNotSupportedException(String.Empty, e);
             }
         }
-    
+
         /// <remarks>
         /// It is very important that callers know whether they are dealing with the Ansi or Unicode version
         /// This affects the type of struct returned in the pDefault memeber (e.g it's DEVMODE may be DEVMODEA or DEVMODEW)
@@ -266,7 +266,7 @@ namespace MS.Internal.Printing.Configuration
         /// </remarks>
         [DllImport(ExternDll.Winspool, CharSet = CharSet.Unicode, ExactSpelling = true, SetLastError = true)]
         public static extern int DocumentPropertiesW(
-            HandleRef hWnd, 
+            HandleRef hWnd,
             SafeWinSpoolPrinterHandle printer,
             string deviceName,
             SafeMemoryHandle devModeOutput,

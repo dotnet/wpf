@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -37,7 +37,7 @@ namespace MS.Win32.Penimc
         void GetCursorCount(out int cCursors);
         void GetCursorInfo(int iCursor, [MarshalAs(UnmanagedType.LPWStr)] out string sName, out int id, [MarshalAs(UnmanagedType.Bool)] out bool fInverted);
         void GetCursorButtonCount(int iCursor, out int cButtons);
-        void GetCursorButtonInfo (int iCursor, int iButton, [MarshalAs(UnmanagedType.LPWStr)] out string sName, out Guid guid);
+        void GetCursorButtonInfo(int iCursor, int iButton, [MarshalAs(UnmanagedType.LPWStr)] out string sName, out Guid guid);
         void IsPropertySupported(Guid guid, [MarshalAs(UnmanagedType.Bool)] out bool fSupported);
         void GetPropertyInfo(Guid guid, out int min, out int max, out int units, out float resolution);
         void CreateContext(IntPtr handle, [MarshalAs(UnmanagedType.Bool)] bool fEnable, uint timeout,

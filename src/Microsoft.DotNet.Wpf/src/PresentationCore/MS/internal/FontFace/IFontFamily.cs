@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -32,8 +32,8 @@ namespace MS.Internal.FontFace
         double Baseline(double emSize, double toReal, double pixelsPerDip, TextFormattingMode textFormattingMode);
 
         double BaselineDesign
-        {get;}
-    
+        { get; }
+
 
         /// <summary>
         /// Recommended baseline-to-baseline distance for text in this font
@@ -42,8 +42,8 @@ namespace MS.Internal.FontFace
 
         double LineSpacingDesign
         { get; }
-        
-        
+
+
 
         /// <summary>
         /// Get typeface metrics of the specified style
@@ -53,9 +53,9 @@ namespace MS.Internal.FontFace
         /// <param name="stretch">font stretch</param>
         /// <returns>typeface metrics</returns>
         ITypefaceMetrics GetTypefaceMetrics(
-            FontStyle       style,
-            FontWeight      weight,
-            FontStretch     stretch
+            FontStyle style,
+            FontWeight weight,
+            FontStretch stretch
             );
 
 
@@ -64,7 +64,7 @@ namespace MS.Internal.FontFace
         /// </summary>
         IDeviceFont GetDeviceFont(FontStyle style, FontWeight weight, FontStretch stretch);
 
-        
+
         /// <summary>
         /// Get family name correspondent to the first n-characters of the specified character string
         /// </summary>
@@ -87,12 +87,12 @@ namespace MS.Internal.FontFace
         /// </remarks>
         bool GetMapTargetFamilyNameAndScale(
             CharacterBufferRange unicodeString,
-            CultureInfo          culture,
-            CultureInfo          digitCulture,
-            double               defaultSizeInEm,
-            out int              cchAdvance,
-            out string           targetFamilyName,
-            out double           scaleInEm
+            CultureInfo culture,
+            CultureInfo digitCulture,
+            double defaultSizeInEm,
+            out int cchAdvance,
+            out string targetFamilyName,
+            out double scaleInEm
             );
 
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -28,10 +28,10 @@ namespace MS.Internal.FontFace
         /// Return advance widths corresponding to characters in a given string.
         /// </summary>
         unsafe void GetAdvanceWidths(
-            char*   characterString,
-            int     characterLength,
-            double  emSize,
-            int*    pAdvances
+            char* characterString,
+            int characterLength,
+            double emSize,
+            int* pAdvances
         );
     }
 }

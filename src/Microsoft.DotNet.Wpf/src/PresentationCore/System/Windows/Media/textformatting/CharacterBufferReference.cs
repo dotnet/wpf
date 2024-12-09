@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,8 +21,8 @@ namespace System.Windows.Media.TextFormatting
     /// </summary>
     public struct CharacterBufferReference : IEquatable<CharacterBufferReference>
     {
-        private CharacterBuffer     _charBuffer;
-        private int                 _offsetToFirstChar;
+        private CharacterBuffer _charBuffer;
+        private int _offsetToFirstChar;
 
         #region Constructor
 
@@ -32,14 +32,14 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="characterArray">character array</param>
         /// <param name="offsetToFirstChar">character buffer offset to the first character</param>
         public CharacterBufferReference(
-            char[]      characterArray,
-            int         offsetToFirstChar
+            char[] characterArray,
+            int offsetToFirstChar
             )
             : this(
                 new CharArrayCharacterBuffer(characterArray),
                 offsetToFirstChar
                 )
-        {}
+        { }
 
 
         /// <summary>
@@ -48,14 +48,14 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="characterString">character string</param>
         /// <param name="offsetToFirstChar">character buffer offset to the first character</param>
         public CharacterBufferReference(
-            string      characterString,
-            int         offsetToFirstChar
+            string characterString,
+            int offsetToFirstChar
             )
             : this(
                 new StringCharacterBuffer(characterString),
                 offsetToFirstChar
                 )
-        {}
+        { }
 
 
         /// <summary>
@@ -65,19 +65,19 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="characterLength">character length of unsafe string</param>
         [CLSCompliant(false)]
         public unsafe CharacterBufferReference(
-            char*       unsafeCharacterString,
-            int         characterLength
+            char* unsafeCharacterString,
+            int characterLength
             )
             : this(new UnsafeStringCharacterBuffer(unsafeCharacterString, characterLength), 0)
-        {}
+        { }
 
 
         /// <summary>
         /// Construct character buffer reference from memory buffer
         /// </summary>
         internal CharacterBufferReference(
-            CharacterBuffer     charBuffer,
-            int                 offsetToFirstChar
+            CharacterBuffer charBuffer,
+            int offsetToFirstChar
             )
         {
             ArgumentOutOfRangeException.ThrowIfNegative(offsetToFirstChar);
@@ -123,8 +123,8 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="value"> The characterBufferReference value to test </param>
         public bool Equals(CharacterBufferReference value)
         {
-            return  _charBuffer == value._charBuffer
-                &&  _offsetToFirstChar == value._offsetToFirstChar;
+            return _charBuffer == value._charBuffer
+                && _offsetToFirstChar == value._offsetToFirstChar;
         }
 
         /// <summary>
@@ -133,24 +133,24 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="left">left operand</param>
         /// <param name="right">right operand</param>
         /// <returns>whether or not two operands are equal</returns>
-        public static bool operator == (
-            CharacterBufferReference  left,
-            CharacterBufferReference  right
+        public static bool operator ==(
+            CharacterBufferReference left,
+            CharacterBufferReference right
             )
         {
             return left.Equals(right);
         }
 
-        
+
         /// <summary>
         /// Compare two CharacterBufferReference for inequality
         /// </summary>
         /// <param name="left">left operand</param>
         /// <param name="right">right operand</param>
         /// <returns>whether or not two operands are equal</returns>
-        public static bool operator != (
-            CharacterBufferReference  left,
-            CharacterBufferReference  right
+        public static bool operator !=(
+            CharacterBufferReference left,
+            CharacterBufferReference right
             )
         {
             return !(left == right);

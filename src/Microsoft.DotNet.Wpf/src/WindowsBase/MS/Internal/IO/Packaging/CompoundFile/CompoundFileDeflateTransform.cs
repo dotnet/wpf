@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -111,7 +111,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
                             checked
                             {
-                                int decompressedSize = sinkBuf.Length - (int) zStream.AvailOut;
+                                int decompressedSize = sinkBuf.Length - (int)zStream.AvailOut;
 
                                 // verify that data matches header
                                 if (decompressedSize != uncompressedSize)
@@ -244,7 +244,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
                         checked
                         {
-                            int compressedSize = sinkBuf.Length - (int) zStream.AvailOut;
+                            int compressedSize = sinkBuf.Length - (int)zStream.AvailOut;
                             Invariant.Assert(compressedSize > 0, "compressing non-zero bytes creates a non-empty block");
 
                             // This should never happen because our destination buffer
@@ -336,7 +336,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <param name="compressedSize">compressedSize from header</param>
         /// <param name="uncompressedSize">uncompressedSize from header</param>
         /// <returns>true if header found</returns>
-        private bool ReadBlockHeader(Stream source, 
+        private bool ReadBlockHeader(Stream source,
             out int uncompressedSize, out int compressedSize)
         {
             int bytesRead = PackagingUtilities.ReliableRead(source, _headerBuf, 0, _headerBuf.Length);
@@ -383,26 +383,31 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             switch (retVal)
             {
-                case ZLibNative.ErrorCode.Ok: 
+                case ZLibNative.ErrorCode.Ok:
                     return;
 
                 case ZLibNative.ErrorCode.StreamEnd:
-                    invalidOperation = true; break;
+                    invalidOperation = true;
+                    break;
 
                 case ZLibNative.ErrorCode.NeedDictionary:
-                    corruption = true; break;
+                    corruption = true;
+                    break;
 
                 case ZLibNative.ErrorCode.StreamError:
-                    corruption = true; break;
+                    corruption = true;
+                    break;
 
                 case ZLibNative.ErrorCode.DataError:
-                    corruption = true; break;
+                    corruption = true;
+                    break;
 
                 case ZLibNative.ErrorCode.MemError:
                     throw new OutOfMemoryException();
 
-               case ZLibNative.ErrorCode.BufError:
-                    invalidOperation = true; break;
+                case ZLibNative.ErrorCode.BufError:
+                    invalidOperation = true;
+                    break;
 
                 case ZLibNative.ErrorCode.VersionError:
                     throw new InvalidOperationException(SR.Format(SR.ZLibVersionError,
@@ -420,7 +425,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             if (corruption)
                 throw new FileFormatException(SR.CorruptStream);
-}
+        }
 
         //------------------------------------------------------
         //

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -211,7 +211,7 @@ namespace System.Windows.Documents
             // In a scenario where you remove the owner itself from the collection, 
             // the owner belongs to another tree after the reposition.
 
-            TextContainer textContainer = this.TextContainer;          
+            TextContainer textContainer = this.TextContainer;
             textContainer.BeginChange();
             try
             {
@@ -504,7 +504,7 @@ namespace System.Windows.Documents
 
         bool IList.IsFixedSize
         {
-            get 
+            get
             {
                 return false;
             }
@@ -623,7 +623,7 @@ namespace System.Windows.Documents
 
         int ICollection.Count
         {
-            get 
+            get
             {
                 return this.Count;
             }
@@ -631,7 +631,7 @@ namespace System.Windows.Documents
 
         bool ICollection.IsSynchronized
         {
-            get 
+            get
             {
                 //  Provide correct implementation for this member
                 return true;
@@ -640,7 +640,7 @@ namespace System.Windows.Documents
 
         object ICollection.SyncRoot
         {
-            get 
+            get
             {
                 //  Provide correct implementation for this member
                 return this.TextContainer;
@@ -696,7 +696,7 @@ namespace System.Windows.Documents
                 {
                     textContainer = ((FlowDocument)_owner).TextContainer;
                 }
-                else 
+                else
                 {
                     textContainer = ((TextElement)_owner).TextContainer;
                 }
@@ -740,7 +740,7 @@ namespace System.Windows.Documents
                 {
                     lastChild = (TextElementType)((TextElement)this.Parent).LastChildElement;
                 }
-                else 
+                else
                 {
                     TextTreeTextElementNode node = this.TextContainer.LastContainedNode as TextTreeTextElementNode;
                     lastChild = (TextElementType)(node == null ? null : node.TextElement);

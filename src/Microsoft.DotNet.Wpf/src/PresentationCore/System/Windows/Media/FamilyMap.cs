@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,16 +16,16 @@ namespace System.Windows.Media
     /// </summary>
     public class FontFamilyMap
     {
-        private Range[]     _ranges;
+        private Range[] _ranges;
         private XmlLanguage _language;
-        private double      _scaleInEm;
-        private string      _targetFamilyName;
+        private double _scaleInEm;
+        private string _targetFamilyName;
 
         internal const int LastUnicodeScalar = 0x10ffff;
         private static readonly Range[] _defaultRanges = new Range[] { new Range(0, LastUnicodeScalar) };
 
         internal static readonly FontFamilyMap Default = new FontFamilyMap(
-            0, 
+            0,
             LastUnicodeScalar,
             null,   // any language
             null,   // Target
@@ -35,7 +35,7 @@ namespace System.Windows.Media
         /// <summary>
         /// Construct a default family map object
         /// </summary>
-        public FontFamilyMap() 
+        public FontFamilyMap()
             : this(
                 0,
                 LastUnicodeScalar,
@@ -43,8 +43,8 @@ namespace System.Windows.Media
                 null,   // Target
                 1.0     // Scale
                 )
-        {}
-        
+        { }
+
 
         /// <summary>
         /// Construct a Family map object
@@ -55,17 +55,17 @@ namespace System.Windows.Media
         /// <param name="targetFamilyName">target family name</param>
         /// <param name="scaleInEm">font scale in EM</param>
         internal FontFamilyMap(
-            int             firstChar,
-            int             lastChar,
-            XmlLanguage     language,
-            string          targetFamilyName,
-            double          scaleInEm
+            int firstChar,
+            int lastChar,
+            XmlLanguage language,
+            string targetFamilyName,
+            double scaleInEm
             )
         {
             if (firstChar == 0 && lastChar == LastUnicodeScalar)
                 _ranges = _defaultRanges;
             else
-                _ranges = new Range[]{ new Range(firstChar, lastChar) };
+                _ranges = new Range[] { new Range(firstChar, lastChar) };
 
             _language = language;
             _scaleInEm = scaleInEm;
@@ -80,20 +80,21 @@ namespace System.Windows.Media
         [DesignerSerializationOptions(DesignerSerializationOptions.SerializeAsAttribute)]
         public string Unicode
         {
-            set 
+            set
             {
                 ArgumentNullException.ThrowIfNull(value);
 
-                _ranges = ParseUnicodeRanges(value); 
+                _ranges = ParseUnicodeRanges(value);
             }
 
-            get 
+            get
             {
                 System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
                 for (int i = 0; i < _ranges.Length; ++i)
                 {
-                    if (i != 0) sb.Append(',');
+                    if (i != 0)
+                        sb.Append(',');
                     sb.AppendFormat(NumberFormatInfo.InvariantInfo, "{0:x4}-{1:x4}", _ranges[i].First, _ranges[i].Last);
                 }
 
@@ -107,12 +108,12 @@ namespace System.Windows.Media
         [DesignerSerializationOptions(DesignerSerializationOptions.SerializeAsAttribute)]
         public string Target
         {
-            get 
-            { 
-                return _targetFamilyName; 
+            get
+            {
+                return _targetFamilyName;
             }
 
-            set 
+            set
             {
                 _targetFamilyName = value;
             }
@@ -124,9 +125,9 @@ namespace System.Windows.Media
         /// </summary>
         public double Scale
         {
-            get 
-            { 
-                return _scaleInEm; 
+            get
+            {
+                return _scaleInEm;
             }
 
             set
@@ -147,12 +148,12 @@ namespace System.Windows.Media
         /// </remarks>
         public XmlLanguage Language
         {
-            get 
-            { 
-                return _language; 
+            get
+            {
+                return _language;
             }
 
-            set 
+            set
             {
                 _language = (value == XmlLanguage.Empty) ? null : value;
                 _language = value;
@@ -191,11 +192,11 @@ namespace System.Windows.Media
             if (language != null)
             {
                 return familyMapLanguage.RangeIncludes(language);
-            }   
+            }
 
             return false;
         }
-        
+
         internal static bool MatchCulture(XmlLanguage familyMapLanguage, CultureInfo culture)
         {
             // If there is no family map langue, the family map applies to any language.
@@ -207,7 +208,7 @@ namespace System.Windows.Media
             if (culture != null)
             {
                 return familyMapLanguage.RangeIncludes(culture);
-            }   
+            }
 
             return false;
         }
@@ -246,7 +247,7 @@ namespace System.Windows.Media
                             lastNum = lastNum * 16 + 0x0F;
                             index++;
                         } while (
-                            index < unicodeRanges.Length && 
+                            index < unicodeRanges.Length &&
                             unicodeRanges[index] == '?' &&
                             lastNum <= LastUnicodeScalar);
                     }
@@ -262,7 +263,7 @@ namespace System.Windows.Media
 
                 if (firstNum > lastNum ||
                     lastNum > LastUnicodeScalar ||
-                    (index<unicodeRanges.Length && unicodeRanges[index] !=','))
+                    (index < unicodeRanges.Length && unicodeRanges[index] != ','))
                 {
                     ThrowInvalidUnicodeRange();
                 }
@@ -280,18 +281,18 @@ namespace System.Windows.Media
         /// </summary>
         internal static bool ParseHexNumber(string numString, ref int index, out int number)
         {
-            while (index<numString.Length && numString[index] == ' ') 
+            while (index < numString.Length && numString[index] == ' ')
             {
                 index++;
             }
-            
+
             int startIndex = index;
 
             number = 0;
 
-            while (index < numString.Length) 
+            while (index < numString.Length)
             {
-                int n = (int) numString[index];
+                int n = (int)numString[index];
                 if (n >= (int)'0' && n <= (int)'9')
                 {
                     number = (number * 0x10) + (n - ((int)'0'));
@@ -310,25 +311,25 @@ namespace System.Windows.Media
                         break;
                     }
                 }
-            } 
+            }
 
             bool retValue = index > startIndex;
-            
-            while (index < numString.Length && numString[index] == ' ') 
+
+            while (index < numString.Length && numString[index] == ' ')
             {
                 index++;
             }
-            
+
             return retValue;
         }
 
 
         internal bool InRange(int ch)
         {
-            for(int i = 0; i < _ranges.Length; i++)
+            for (int i = 0; i < _ranges.Length; i++)
             {
                 Range r = _ranges[i];
-                if(r.InRange(ch))
+                if (r.InRange(ch))
                     return true;
             }
             return false;
@@ -340,12 +341,12 @@ namespace System.Windows.Media
         /// </summary>
         internal class Range
         {
-            private int     _first;
-            private uint    _delta;
+            private int _first;
+            private uint _delta;
 
             internal Range(
-                int     first,
-                int     last
+                int first,
+                int last
                 )
             {
                 Debug.Assert(first <= last);
@@ -364,12 +365,12 @@ namespace System.Windows.Media
             {
                 get { return _first; }
             }
-            
+
             internal int Last
             {
-                get { return _first + (int) _delta; }
+                get { return _first + (int)_delta; }
             }
-            
+
             internal uint Delta
             {
                 get { return _delta; }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -34,7 +34,7 @@ namespace System.Windows.Input
         /// TextInput event will be generated automatically by TextCompositionManager after
         /// TextInputStart event is processed.
         /// </summary>
-        On  = 1,
+        On = 1,
     }
 
     internal enum TextCompositionStage
@@ -47,12 +47,12 @@ namespace System.Windows.Input
         /// <summary>
         /// The composition has started.
         /// </summary>
-        Started  = 1,
+        Started = 1,
 
         /// <summary>
         /// The composition has completed or canceled.
         /// </summary>
-        Done  = 2,
+        Done = 2,
     }
 
     /// <summary>
@@ -71,7 +71,7 @@ namespace System.Windows.Input
         /// <summary>
         ///     The constrcutor of TextComposition class.
         /// </summary>
-        public TextComposition(InputManager inputManager, IInputElement source, string resultText) : this(inputManager, source,  resultText, TextCompositionAutoComplete.On)
+        public TextComposition(InputManager inputManager, IInputElement source, string resultText) : this(inputManager, source, resultText, TextCompositionAutoComplete.On)
         {
         }
 
@@ -84,8 +84,8 @@ namespace System.Windows.Input
             if ((autoComplete != TextCompositionAutoComplete.Off) &&
                 (autoComplete != TextCompositionAutoComplete.On))
             {
-                throw new InvalidEnumArgumentException("autoComplete", 
-                                                       (int)autoComplete, 
+                throw new InvalidEnumArgumentException("autoComplete",
+                                                       (int)autoComplete,
                                                        typeof(TextCompositionAutoComplete));
             }
         }
@@ -131,7 +131,7 @@ namespace System.Windows.Input
         /// </summary>
         public virtual void Complete()
         {
-//             VerifyAccess();
+            //             VerifyAccess();
 
             TextCompositionManager.CompleteComposition(this);
         }
@@ -148,14 +148,14 @@ namespace System.Windows.Input
         [CLSCompliant(false)]
         public string Text
         {
-            get 
+            get
             {
-//                 VerifyAccess();
+                //                 VerifyAccess();
                 return _resultText;
             }
-            protected set 
+            protected set
             {
-//                 VerifyAccess();
+                //                 VerifyAccess();
                 _resultText = value;
             }
         }
@@ -166,15 +166,15 @@ namespace System.Windows.Input
         [CLSCompliant(false)]
         public string CompositionText
         {
-            get 
+            get
             {
-//                 VerifyAccess();
+                //                 VerifyAccess();
                 return _compositionText;
             }
 
-            protected set 
+            protected set
             {
-//                 VerifyAccess();
+                //                 VerifyAccess();
                 _compositionText = value;
             }
         }
@@ -185,15 +185,15 @@ namespace System.Windows.Input
         [CLSCompliant(false)]
         public string SystemText
         {
-            get 
+            get
             {
-//                 VerifyAccess();
+                //                 VerifyAccess();
                 return _systemText;
             }
 
-            protected set 
+            protected set
             {
-//                 VerifyAccess();
+                //                 VerifyAccess();
                 _systemText = value;
             }
         }
@@ -204,15 +204,15 @@ namespace System.Windows.Input
         [CLSCompliant(false)]
         public string ControlText
         {
-            get 
+            get
             {
-//                 VerifyAccess();
+                //                 VerifyAccess();
                 return _controlText;
             }
 
-            protected set 
+            protected set
             {
-//                 VerifyAccess();
+                //                 VerifyAccess();
                 _controlText = value;
             }
         }
@@ -223,15 +223,15 @@ namespace System.Windows.Input
         [CLSCompliant(false)]
         public string SystemCompositionText
         {
-            get 
+            get
             {
-//                 VerifyAccess();
+                //                 VerifyAccess();
                 return _systemCompositionText;
             }
 
-            protected set 
+            protected set
             {
-//                 VerifyAccess();
+                //                 VerifyAccess();
                 _systemCompositionText = value;
             }
         }
@@ -241,9 +241,9 @@ namespace System.Windows.Input
         /// </summary>
         public TextCompositionAutoComplete AutoComplete
         {
-            get 
+            get
             {
-//                 VerifyAccess();
+                //                 VerifyAccess();
                 return _autoComplete;
             }
         }
@@ -260,7 +260,7 @@ namespace System.Windows.Input
         //  Protected Methods
         //
         //------------------------------------------------------
- 
+
         //------------------------------------------------------
         //
         //  Internal Methods
@@ -336,7 +336,7 @@ namespace System.Windows.Input
         /// </summary>
         internal IInputElement Source
         {
-            get 
+            get
             {
                 return _source;
             }
@@ -345,14 +345,14 @@ namespace System.Windows.Input
         // return the input device for this text composition.
         internal InputDevice _InputDevice
         {
-            get {return _inputDevice;}
+            get { return _inputDevice; }
         }
 
         // return the input manager for this text composition.
 
         internal InputManager _InputManager
         {
-            get 
+            get
             {
                 return _inputManager;
             }
@@ -361,8 +361,8 @@ namespace System.Windows.Input
         // the stage of this text composition
         internal TextCompositionStage Stage
         {
-            get {return _stage;}
-            set {_stage = value;}
+            get { return _stage; }
+            set { _stage = value; }
         }
 
         //------------------------------------------------------

@@ -1,12 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Runtime.InteropServices;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Interop;
-
+using System.Windows.Media;
 using MS.Win32;
 
 #if PRESENTATION_CORE
@@ -52,7 +51,7 @@ namespace MS.Internal
             else
             {
                 success = false;
-                return new Point(0,0);
+                return new Point(0, 0);
             }
 
             return point;
@@ -107,20 +106,20 @@ namespace MS.Internal
             // The following code was copied from the MIL's TransformToAncestor
             // method on 12/16/2005.
             //
-            if(v != null)
+            if (v != null)
             {
                 Matrix m = GetVisualTransform(v);
 
                 if (inverse)
                 {
-                    if(throwOnError || m.HasInverse)
+                    if (throwOnError || m.HasInverse)
                     {
                         m.Invert();
                     }
                     else
                     {
                         success = false;
-                        return new Point(0,0);
+                        return new Point(0, 0);
                     }
                 }
 
@@ -165,13 +164,13 @@ namespace MS.Internal
         {
             // For now we only know how to use HwndSource.
             HwndSource inputSource = presentationSource as HwndSource;
-            if(inputSource == null)
+            if (inputSource == null)
             {
                 return pointClient;
             }
             HandleRef handleRef = new HandleRef(inputSource, inputSource.CriticalHandle);
 
-            NativeMethods.POINT ptClient            = FromPoint(pointClient);
+            NativeMethods.POINT ptClient = FromPoint(pointClient);
             NativeMethods.POINT ptClientRTLAdjusted = AdjustForRightToLeft(ptClient, handleRef);
 
             UnsafeNativeMethods.ClientToScreen(handleRef, ref ptClientRTLAdjusted);
@@ -187,7 +186,7 @@ namespace MS.Internal
         {
             // For now we only know how to use HwndSource.
             HwndSource inputSource = presentationSource as HwndSource;
-            if(inputSource == null)
+            if (inputSource == null)
             {
                 return pointScreen;
             }
@@ -220,8 +219,8 @@ namespace MS.Internal
         /// </returns>
         internal static Rect ElementToRoot(Rect rectElement, Visual element, PresentationSource presentationSource)
         {
-            GeneralTransform    transformElementToRoot  = element.TransformToAncestor(presentationSource.RootVisual);
-            Rect                rectRoot                = transformElementToRoot.TransformBounds(rectElement);
+            GeneralTransform transformElementToRoot = element.TransformToAncestor(presentationSource.RootVisual);
+            Rect rectRoot = transformElementToRoot.TransformBounds(rectElement);
 
             return rectRoot;
         }
@@ -244,11 +243,11 @@ namespace MS.Internal
         /// </returns>
         internal static Rect RootToClient(Rect rectRoot, PresentationSource presentationSource)
         {
-            CompositionTarget   target                  = presentationSource.CompositionTarget;
-            Matrix              matrixRootTransform     = PointUtil.GetVisualTransform(target.RootVisual);
-            Rect                rectRootUntransformed   = Rect.Transform(rectRoot, matrixRootTransform);
-            Matrix              matrixDPI               = target.TransformToDevice;
-            Rect                rectClient              = Rect.Transform(rectRootUntransformed, matrixDPI);
+            CompositionTarget target = presentationSource.CompositionTarget;
+            Matrix matrixRootTransform = PointUtil.GetVisualTransform(target.RootVisual);
+            Rect rectRootUntransformed = Rect.Transform(rectRoot, matrixRootTransform);
+            Matrix matrixDPI = target.TransformToDevice;
+            Rect rectClient = Rect.Transform(rectRootUntransformed, matrixDPI);
 
             return rectClient;
         }
@@ -304,7 +303,7 @@ namespace MS.Internal
         {
             int windowStyle = SafeNativeMethods.GetWindowStyle(handleRef, true);
 
-            if(( windowStyle & NativeMethods.WS_EX_LAYOUTRTL ) == NativeMethods.WS_EX_LAYOUTRTL)
+            if ((windowStyle & NativeMethods.WS_EX_LAYOUTRTL) == NativeMethods.WS_EX_LAYOUTRTL)
             {
                 NativeMethods.RECT rcClient = new NativeMethods.RECT();
                 SafeNativeMethods.GetClientRect(handleRef, ref rcClient);
@@ -343,14 +342,14 @@ namespace MS.Internal
         {
             int windowStyle = SafeNativeMethods.GetWindowStyle(handleRef, true);
 
-            if(( windowStyle & NativeMethods.WS_EX_LAYOUTRTL ) == NativeMethods.WS_EX_LAYOUTRTL)
+            if ((windowStyle & NativeMethods.WS_EX_LAYOUTRTL) == NativeMethods.WS_EX_LAYOUTRTL)
             {
                 NativeMethods.RECT rcClient = new NativeMethods.RECT();
                 SafeNativeMethods.GetClientRect(handleRef, ref rcClient);
 
-                int width   = rc.right - rc.left;       // preserve width
-                rc.right    = rcClient.right - rc.left; // set right of rect to be as far from right of window as left of rect was from left of window
-                rc.left     = rc.right - width;         // restore width by adjusting left and preserving right
+                int width = rc.right - rc.left;       // preserve width
+                rc.right = rcClient.right - rc.left; // set right of rect to be as far from right of window as left of rect was from left of window
+                rc.left = rc.right - width;         // restore width by adjusting left and preserving right
             }
             return rc;
         }
@@ -400,12 +399,13 @@ namespace MS.Internal
         /// </returns>
         internal static NativeMethods.RECT FromRect(Rect rect)
         {
-            NativeMethods.RECT rc = new NativeMethods.RECT();
-
-            rc.top      = DoubleUtil.DoubleToInt(rect.Y);
-            rc.left     = DoubleUtil.DoubleToInt(rect.X);
-            rc.bottom   = DoubleUtil.DoubleToInt(rect.Bottom);
-            rc.right    = DoubleUtil.DoubleToInt(rect.Right);
+            NativeMethods.RECT rc = new NativeMethods.RECT
+            {
+                top = DoubleUtil.DoubleToInt(rect.Y),
+                left = DoubleUtil.DoubleToInt(rect.X),
+                bottom = DoubleUtil.DoubleToInt(rect.Bottom),
+                right = DoubleUtil.DoubleToInt(rect.Right)
+            };
 
             return rc;
         }
@@ -421,12 +421,13 @@ namespace MS.Internal
         /// </returns>
         internal static Rect ToRect(NativeMethods.RECT rc)
         {
-            Rect rect = new Rect();
-
-            rect.X      = rc.left;
-            rect.Y      = rc.top;
-            rect.Width  = rc.right  - rc.left;
-            rect.Height = rc.bottom - rc.top;
+            Rect rect = new Rect
+            {
+                X = rc.left,
+                Y = rc.top,
+                Width = rc.right - rc.left,
+                Height = rc.bottom - rc.top
+            };
 
             return rect;
         }

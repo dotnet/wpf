@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,8 +14,8 @@ namespace System.Windows.Input
         /// <summary>
         /// Instance data
         /// </summary>
-        private Guid                    _id;
-        private bool                    _isButton;
+        private Guid _id;
+        private bool _isButton;
 
         /// <summary>
         /// StylusPointProperty
@@ -72,7 +72,7 @@ namespace System.Windows.Input
         /// <summary>
         /// Id
         /// </summary>
-        public Guid Id 
+        public Guid Id
         {
             get { return _id; }
         }

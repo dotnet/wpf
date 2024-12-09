@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -25,7 +25,7 @@ namespace System.Windows
         /// </summary>
         public TextDecoration()
         {
-        }      
+        }
 
         /// <summary>
         /// Constructor
@@ -37,18 +37,18 @@ namespace System.Windows
         /// <param name="penThicknessUnit">The unit of the thickness of the pen</param>
         public TextDecoration(
             TextDecorationLocation location,
-            Pen                    pen,
-            double                 penOffset,
-            TextDecorationUnit     penOffsetUnit,
-            TextDecorationUnit     penThicknessUnit
+            Pen pen,
+            double penOffset,
+            TextDecorationUnit penOffsetUnit,
+            TextDecorationUnit penThicknessUnit
             )
         {
-            Location         = location;
-            Pen              = pen;
-            PenOffset        = penOffset;
-            PenOffsetUnit    = penOffsetUnit;
-            PenThicknessUnit = penThicknessUnit;        
-        }      
+            Location = location;
+            Pen = pen;
+            PenOffset = penOffset;
+            PenOffsetUnit = penOffsetUnit;
+            PenThicknessUnit = penThicknessUnit;
+        }
 
 
         /// <summary>
@@ -67,15 +67,15 @@ namespace System.Windows
             if (textDecoration == null)
                 return false; // o is either null or not a TextDecoration object.
 
-            if (this == textDecoration) 
+            if (this == textDecoration)
                 return true; // reference equality.
-               
-            return (    
-               Location         == textDecoration.Location 
-            && PenOffset        == textDecoration.PenOffset 
-            && PenOffsetUnit    == textDecoration.PenOffsetUnit 
+
+            return (
+               Location == textDecoration.Location
+            && PenOffset == textDecoration.PenOffset
+            && PenOffsetUnit == textDecoration.PenOffsetUnit
             && PenThicknessUnit == textDecoration.PenThicknessUnit
-            && (Pen == null ? textDecoration.Pen == null : Pen.Equals( textDecoration.Pen)) 
+            && (Pen == null ? textDecoration.Pen == null : Pen.Equals(textDecoration.Pen))
             );
         }
     }

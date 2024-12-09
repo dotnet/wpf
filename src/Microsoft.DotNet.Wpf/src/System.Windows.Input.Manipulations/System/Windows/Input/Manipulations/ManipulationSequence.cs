@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Collections.Generic;
-using System.Text;
 using System.Diagnostics;
 using System.Globalization;
+using System.Text;
 
 namespace System.Windows.Input.Manipulations
 {
@@ -231,7 +231,8 @@ namespace System.Windows.Input.Manipulations
             if (this.smoothing.Count > 1)
             {
                 // no need to adjust orientation here because smoothing queue contains cumulative orientation
-                return CalculateMovingAverage(this.smoothing, delegate(ManipulationState item) { return item.Orientation; }, 0.0f);
+                return CalculateMovingAverage(this.smoothing, delegate (ManipulationState item)
+                { return item.Orientation; }, 0.0f);
             }
 
             // not enough samples to smooth, return cumulativeRotation
@@ -246,7 +247,8 @@ namespace System.Windows.Input.Manipulations
         {
             if (this.smoothing.Count > 1)
             {
-                return CalculateMovingAverage(this.smoothing, delegate(ManipulationState item) { return item.Expansion; }, 0.0f);
+                return CalculateMovingAverage(this.smoothing, delegate (ManipulationState item)
+                { return item.Expansion; }, 0.0f);
             }
 
             // not enough samples to smooth, return cumulativeExpansion
@@ -264,7 +266,8 @@ namespace System.Windows.Input.Manipulations
             {
                 // CalculateMovingAverage can generate float.Infinity if we're near the
                 // limits, since it adds multiple items together
-                result = CalculateMovingAverage(this.smoothing, delegate(ManipulationState item) { return item.Scale; }, 1.0f);
+                result = CalculateMovingAverage(this.smoothing, delegate (ManipulationState item)
+                { return item.Scale; }, 1.0f);
                 if (float.IsInfinity(result))
                 {
                     result = this.cumulativeScale;
@@ -517,7 +520,7 @@ namespace System.Windows.Input.Manipulations
             }
             else
             {
-                 // raise delta event with smoothed values
+                // raise delta event with smoothed values
                 Debug.Assert(Delta != null, "Processor hasn't registered for Delta event");
                 float scaleDelta = this.smoothedCumulativeScale / previousSmoothedScale;
                 float expansionDelta = this.smoothedCumulativeExpansion - previousSmoothedExpansion;
@@ -743,7 +746,7 @@ namespace System.Windows.Input.Manipulations
 
             // enqueue smoothed values
             this.history.Enqueue(new ManipulationState((PointF)translation, smoothedScale, smoothedExpansion, smoothedRotation, timestamp));
-                
+
             // update the current manipulation state
             OverwriteManipulationState(
                 averagePoint,
@@ -811,7 +814,7 @@ namespace System.Windows.Input.Manipulations
             {
                 // no smoothing if number of manipulators is less than 2 or 
                 // manipulation radius is outside of Min and Max limits
-                smoothingLevel = 0; 
+                smoothingLevel = 0;
             }
             else
             {
@@ -1188,8 +1191,10 @@ namespace System.Windows.Input.Manipulations
         /// <returns>the new ManipulatorState object</returns>
         private static ManipulatorState CreateManipulatorState(Manipulator2D manipulator)
         {
-            ManipulatorState state = new ManipulatorState(manipulator.Id);
-            state.InitialManipulatorSnapshot = manipulator;
+            ManipulatorState state = new ManipulatorState(manipulator.Id)
+            {
+                InitialManipulatorSnapshot = manipulator
+            };
             state.CurrentManipulatorSnapshot = state.InitialManipulatorSnapshot;
             return state;
         }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,7 +11,7 @@ namespace System.Windows.Media.Imaging
     {
         public UnmanagedBitmapWrapper(BitmapSourceSafeMILHandle bitmapSource) :
             base(true)
-        {            
+        {
             _bitmapInit.BeginInit();
 
             //
@@ -27,8 +27,8 @@ namespace System.Windows.Media.Imaging
         #region Protected Methods
 
         internal UnmanagedBitmapWrapper(bool initialize) :
-            base(true)        
-        {       
+            base(true)
+        {
             // Call BeginInit and EndInit if initialize is true.
             if (initialize)
             {

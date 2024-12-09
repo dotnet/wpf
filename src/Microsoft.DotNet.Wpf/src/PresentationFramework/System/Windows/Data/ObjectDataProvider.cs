@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,8 +11,8 @@
 using System.Collections;
 using System.ComponentModel;
 using System.Reflection;
-using System.Windows.Threading;
 using System.Threading;
+using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.Data; // ParameterCollection
 
@@ -105,7 +105,7 @@ namespace System.Windows.Data
                 {
                     // Note: ObjectInstance and Data are not updated until Refresh() happens!
 
-                    if (! IsRefreshDeferred)
+                    if (!IsRefreshDeferred)
                         Refresh();
                 }
             }
@@ -142,7 +142,7 @@ namespace System.Windows.Data
         {
             get
             {
-                 return (_instanceProvider != null) ? _instanceProvider : _objectInstance;
+                return (_instanceProvider != null) ? _instanceProvider : _objectInstance;
             }
             set
             {
@@ -177,7 +177,7 @@ namespace System.Windows.Data
                 {
                     // Note: Data is not updated until Refresh() happens!
 
-                    if (! IsRefreshDeferred)
+                    if (!IsRefreshDeferred)
                         Refresh();
                 }
             }
@@ -374,8 +374,8 @@ namespace System.Windows.Data
 
         void QueryWorker(object obj)
         {
-            object      data    = null;
-            Exception   e       = null; // exception to pass back to main thread
+            object data = null;
+            Exception e = null; // exception to pass back to main thread
 
             if (_mode == SourceMode.NoSource || _objectType == null)
             {
@@ -432,17 +432,17 @@ namespace System.Windows.Data
 
         object CreateObjectInstance(out Exception e)
         {
-            object  instance = null;
-            string  error   = null; // string that describes known error
+            object instance = null;
+            string error = null; // string that describes known error
             e = null;
 
             // PreSharp uses message numbers that the C# compiler doesn't know about.
             // Disable the C# complaints, per the PreSharp documentation.
-            #pragma warning disable 1634, 1691
+#pragma warning disable 1634, 1691
 
             // PreSharp complains about catching NullReference (and other) exceptions.
             // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-            #pragma warning disable 56500
+#pragma warning disable 56500
 
             Debug.Assert(_objectType != null);
 
@@ -489,8 +489,8 @@ namespace System.Windows.Data
                 e = new InvalidOperationException(SR.Format(SR.ObjectDataProviderNonCLSException, _objectType.Name));
             }
 
-            #pragma warning restore 56500
-            #pragma warning restore 1634, 1691
+#pragma warning restore 56500
+#pragma warning restore 1634, 1691
 
             if (e != null || error != null)
             {
@@ -513,8 +513,8 @@ namespace System.Windows.Data
 
         object InvokeMethodOnInstance(out Exception e)
         {
-            object  data = null;
-            string  error   = null; // string that describes known error
+            object data = null;
+            string error = null; // string that describes known error
             e = null;
 
             Debug.Assert(_objectType != null);
@@ -524,11 +524,11 @@ namespace System.Windows.Data
 
             // PreSharp uses message numbers that the C# compiler doesn't know about.
             // Disable the C# complaints, per the PreSharp documentation.
-            #pragma warning disable 1634, 1691
+#pragma warning disable 1634, 1691
 
             // PreSharp complains about catching NullReference (and other) exceptions.
             // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-            #pragma warning disable 56500
+#pragma warning disable 56500
 
             try
             {
@@ -579,8 +579,8 @@ namespace System.Windows.Data
                 e = new InvalidOperationException(SR.Format(SR.ObjectDataProviderNonCLSExceptionInvoke, MethodName, _objectType.Name));
             }
 
-            #pragma warning restore 56500
-            #pragma warning restore 1634, 1691
+#pragma warning restore 56500
+#pragma warning restore 1634, 1691
 
             if (e != null || error != null)
             {
@@ -608,7 +608,7 @@ namespace System.Windows.Data
             if (sender == _constructorParameters)
             {
                 // sanity check: we shouldn't have ctor param changes in FromInstance mode
-                Invariant.Assert (_mode != SourceMode.FromInstance);
+                Invariant.Assert(_mode != SourceMode.FromInstance);
 
                 _needNewInstance = true;
             }
@@ -628,7 +628,7 @@ namespace System.Windows.Data
             {
                 // Note: Data is not updated until Refresh() happens!
 
-                if (! IsRefreshDeferred)
+                if (!IsRefreshDeferred)
                     Refresh();
             }
         }

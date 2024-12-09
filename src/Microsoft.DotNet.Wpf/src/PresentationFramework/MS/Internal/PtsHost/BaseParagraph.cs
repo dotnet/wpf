@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,9 +10,8 @@
 using System.Windows;
 using System.Windows.Documents;
 using MS.Internal.Documents;
-using MS.Internal.Text;
-
 using MS.Internal.PtsHost.UnsafeNativeMethods;
+using MS.Internal.Text;
 
 namespace MS.Internal.PtsHost
 {
@@ -70,8 +69,8 @@ namespace MS.Internal.PtsHost
         /// OUT: no changes after?
         /// </param>
         internal virtual void UpdGetParaChange(
-            out PTS.FSKCHANGE fskch,             
-            out int fNoFurtherChanges)           
+            out PTS.FSKCHANGE fskch,
+            out int fNoFurtherChanges)
         {
             fskch = _changeType;
             fNoFurtherChanges = PTS.FromBoolean(_stopAsking);
@@ -103,11 +102,11 @@ namespace MS.Internal.PtsHost
         /// OUT: dvr, calculated based on margin collapsing state
         /// </param>
         internal virtual void CollapseMargin(
-            BaseParaClient paraClient,          
-            MarginCollapsingState mcs,           
-            uint fswdir,                         
-            bool suppressTopSpace,               
-            out int dvr)                        
+            BaseParaClient paraClient,
+            MarginCollapsingState mcs,
+            uint fswdir,
+            bool suppressTopSpace,
+            out int dvr)
         {
             // Suppress top space only in paginated scenarios.
             dvr = (mcs == null || (suppressTopSpace)) ? 0 : mcs.Margin;
@@ -120,7 +119,7 @@ namespace MS.Internal.PtsHost
         /// OUT: paragraph properties 
         /// </param>
         internal abstract void GetParaProperties(
-            ref PTS.FSPAP fspap);               
+            ref PTS.FSPAP fspap);
 
         /// <summary>
         /// CreateParaclient
@@ -129,7 +128,7 @@ namespace MS.Internal.PtsHost
         /// OUT: opaque to PTS paragraph client
         /// </param>
         internal abstract void CreateParaclient(
-            out IntPtr pfsparaclient);           
+            out IntPtr pfsparaclient);
 
         #endregion PTS callbacks
 
@@ -184,8 +183,8 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// Invalidate accumulated format caches.
         /// </summary>
-        internal virtual void InvalidateFormatCache() 
-        { 
+        internal virtual void InvalidateFormatCache()
+        {
         }
 
         /// <summary>
@@ -219,9 +218,9 @@ namespace MS.Internal.PtsHost
         {
             if (!ignoreElementProps)
             {
-                fspap.fKeepWithNext      = PTS.FromBoolean(DynamicPropertyReader.GetKeepWithNext(_element));
+                fspap.fKeepWithNext = PTS.FromBoolean(DynamicPropertyReader.GetKeepWithNext(_element));
                 // Can be broken only if Block.BreakPageBefore is set
-                fspap.fBreakPageBefore   = _element is Block ? PTS.FromBoolean(StructuralCache.CurrentFormatContext.FinitePage && ((Block)_element).BreakPageBefore) : PTS.FromBoolean(false);
+                fspap.fBreakPageBefore = _element is Block ? PTS.FromBoolean(StructuralCache.CurrentFormatContext.FinitePage && ((Block)_element).BreakPageBefore) : PTS.FromBoolean(false);
                 // Can be broken only if Block.BreakColumnBefore is set
                 fspap.fBreakColumnBefore = _element is Block ? PTS.FromBoolean(((Block)_element).BreakColumnBefore) : PTS.FromBoolean(false);
             }
@@ -246,7 +245,7 @@ namespace MS.Internal.PtsHost
             {
                 // This is done here, rather than deriving for two reasons - This is special cased for text paragraph - no other 
                 // paras should use their cps in this way, and this is also not a virtual method, so can be used from C'Tor.
-                if(this is TextParagraph)
+                if (this is TextParagraph)
                 {
                     return TextContainerHelper.GetCPFromElement(StructuralCache.TextContainer, Element, ElementEdge.AfterStart);
                 }
@@ -267,7 +266,7 @@ namespace MS.Internal.PtsHost
             {
                 // This is done here, rather than deriving for two reasons - This is special cased for text paragraph - no other 
                 // paras should use their cps in this way, and this is also not a virtual method, so can be used from C'Tor.
-                if(this is TextParagraph)
+                if (this is TextParagraph)
                 {
                     return TextContainerHelper.GetCPFromElement(StructuralCache.TextContainer, Element, ElementEdge.BeforeEnd);
                 }
@@ -288,9 +287,9 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// Number of characters consumed by the paragraph.
         /// </summary>
-        internal int Cch 
-        { 
-            get 
+        internal int Cch
+        {
+            get
             {
                 int cch = TextContainerHelper.GetCchFromElement(StructuralCache.TextContainer, Element);
 
@@ -301,9 +300,9 @@ namespace MS.Internal.PtsHost
                     Invariant.Assert(cch >= 2);
                     cch -= 2;
                 }
-                
+
                 return cch;
-            } 
+            }
         }
 
         /// <summary>
@@ -330,24 +329,24 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// Content's structural cache.
         /// </summary>
-        internal StructuralCache StructuralCache 
-        { 
-            get 
-            { 
-                return _structuralCache; 
-            } 
+        internal StructuralCache StructuralCache
+        {
+            get
+            {
+                return _structuralCache;
+            }
         }
         protected readonly StructuralCache _structuralCache;
 
         /// <summary>
         /// Object associated with the paragraph. 
         /// </summary>
-        internal DependencyObject Element 
-        { 
-            get 
-            { 
-                return _element; 
-            } 
+        internal DependencyObject Element
+        {
+            get
+            {
+                return _element;
+            }
         }
         protected readonly DependencyObject _element;
 

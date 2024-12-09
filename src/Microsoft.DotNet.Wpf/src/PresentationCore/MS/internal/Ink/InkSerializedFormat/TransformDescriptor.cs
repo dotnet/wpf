@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,8 +9,8 @@ namespace MS.Internal.Ink.InkSerializedFormat
 {
     internal class TransformDescriptor
     {
-        private double[]   _transform = new double[6];
-        private uint      _size = 0;
+        private double[] _transform = new double[6];
+        private uint _size = 0;
         private KnownTagCache.KnownTagIndex _tag = KnownTagCache.KnownTagIndex.Unknown;
 
         public KnownTagCache.KnownTagIndex Tag
@@ -45,13 +45,13 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
         public bool Compare(TransformDescriptor that)
         {
-            if( that.Tag == Tag )
+            if (that.Tag == Tag)
             {
-                if( that.Size == _size )
+                if (that.Size == _size)
                 {
-                    for( int i = 0; i < _size; i++ )
+                    for (int i = 0; i < _size; i++)
                     {
-                        if( !DoubleUtil.AreClose(that.Transform[i], _transform[i] ))
+                        if (!DoubleUtil.AreClose(that.Transform[i], _transform[i]))
                             return false;
                     }
                     return true;

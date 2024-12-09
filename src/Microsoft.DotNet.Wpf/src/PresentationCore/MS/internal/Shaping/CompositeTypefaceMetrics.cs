@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,8 +11,8 @@
 
 
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Markup;    // for XmlLanguage
+using System.Windows.Media;
 using MS.Internal.FontFace;
 
 
@@ -23,50 +23,50 @@ namespace MS.Internal.Shaping
     /// </summary>
     internal class CompositeTypefaceMetrics : ITypefaceMetrics
     {
-        private double          _underlinePosition;
-        private double          _underlineThickness;
-        private double          _strikethroughPosition;
-        private double          _strikethroughThickenss;
-        private double          _capsHeight;
-        private double          _xHeight;
-        private FontStyle       _style;
-        private FontWeight      _weight;
-        private FontStretch     _stretch;
+        private double _underlinePosition;
+        private double _underlineThickness;
+        private double _strikethroughPosition;
+        private double _strikethroughThickenss;
+        private double _capsHeight;
+        private double _xHeight;
+        private FontStyle _style;
+        private FontWeight _weight;
+        private FontStretch _stretch;
 
 
         // the following figures are collected from observation of 'Times New Roman'
         // at 72 pt in MS-Word. [wchao, 5/26/2003]
 
         // The following Offsets are offsets from baseline. Negative means below the baseline. 
-        private const double UnderlineOffsetDefaultInEm        = -0.15625;
-        private const double UnderlineSizeDefaultInEm          = (-UnderlineOffsetDefaultInEm) / 2;
-        private const double StrikethroughOffsetDefaultInEm    = 0.3125;
-        private const double StrikethroughSizeDefaultInEm      = UnderlineSizeDefaultInEm;
-        private const double CapsHeightDefaultInEm             = 1;
-        private const double XHeightDefaultInEm                = 0.671875;
+        private const double UnderlineOffsetDefaultInEm = -0.15625;
+        private const double UnderlineSizeDefaultInEm = (-UnderlineOffsetDefaultInEm) / 2;
+        private const double StrikethroughOffsetDefaultInEm = 0.3125;
+        private const double StrikethroughSizeDefaultInEm = UnderlineSizeDefaultInEm;
+        private const double CapsHeightDefaultInEm = 1;
+        private const double XHeightDefaultInEm = 0.671875;
 
 
         internal CompositeTypefaceMetrics(
-            double      underlinePosition,
-            double      underlineThickness,
-            double      strikethroughPosition,
-            double      strikethroughThickness,
-            double      capsHeight,
-            double      xHeight,
-            FontStyle   style,
-            FontWeight  weight,
+            double underlinePosition,
+            double underlineThickness,
+            double strikethroughPosition,
+            double strikethroughThickness,
+            double capsHeight,
+            double xHeight,
+            FontStyle style,
+            FontWeight weight,
             FontStretch stretch
-            )           
+            )
         {
-            _underlinePosition      = underlinePosition     != 0 ? underlinePosition      : UnderlineOffsetDefaultInEm;
-            _underlineThickness     = underlineThickness     > 0 ? underlineThickness     : UnderlineSizeDefaultInEm;
-            _strikethroughPosition  = strikethroughPosition != 0 ? strikethroughPosition  : StrikethroughOffsetDefaultInEm;
+            _underlinePosition = underlinePosition != 0 ? underlinePosition : UnderlineOffsetDefaultInEm;
+            _underlineThickness = underlineThickness > 0 ? underlineThickness : UnderlineSizeDefaultInEm;
+            _strikethroughPosition = strikethroughPosition != 0 ? strikethroughPosition : StrikethroughOffsetDefaultInEm;
             _strikethroughThickenss = strikethroughThickness > 0 ? strikethroughThickness : StrikethroughSizeDefaultInEm;
-            _capsHeight             = capsHeight             > 0 ? capsHeight             : CapsHeightDefaultInEm;
-            _xHeight                = xHeight                > 0 ? xHeight                : XHeightDefaultInEm;
-            _style                  = style;
-            _weight                 = weight;
-            _stretch                = stretch;
+            _capsHeight = capsHeight > 0 ? capsHeight : CapsHeightDefaultInEm;
+            _xHeight = xHeight > 0 ? xHeight : XHeightDefaultInEm;
+            _style = style;
+            _weight = weight;
+            _stretch = stretch;
         }
 
 
@@ -90,7 +90,7 @@ namespace MS.Internal.Shaping
         /// </summary>
         public double XHeight
         {
-            get 
+            get
             {
                 return _xHeight;
             }
@@ -102,7 +102,7 @@ namespace MS.Internal.Shaping
         /// </summary>
         public double CapsHeight
         {
-            get 
+            get
             {
                 return _capsHeight;
             }
@@ -114,7 +114,7 @@ namespace MS.Internal.Shaping
         /// </summary>
         public double UnderlinePosition
         {
-            get 
+            get
             {
                 return _underlinePosition;
             }
@@ -138,7 +138,7 @@ namespace MS.Internal.Shaping
         /// </summary>
         public double StrikethroughPosition
         {
-            get 
+            get
             {
                 return _strikethroughPosition;
             }

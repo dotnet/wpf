@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal.Documents;
+using System.Windows.Controls;              // Image
 using System.Windows.Media;                 // Brush
 using System.Windows.Media.TextFormatting;  // CharacterHit
 using System.Windows.Shapes;                // Glyphs
-using System.Windows.Controls;              // Image
+using MS.Internal.Documents;
 
 //
 // Description:

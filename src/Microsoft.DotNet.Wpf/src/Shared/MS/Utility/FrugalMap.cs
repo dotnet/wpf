@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -170,7 +170,7 @@ namespace MS.Utility
                 throw new ArgumentOutOfRangeException("index");
             }
         }
-        
+
         public override void Iterate(ArrayList list, FrugalMapIterationCallback callback)
         {
             if (Count == 1)
@@ -603,7 +603,7 @@ namespace MS.Utility
             {
                 // We are adding an entry to the array, so we may not be sorted any longer
                 _sorted = false;
-                
+
                 // Space still available to store the value. Insert
                 // into the entry at _count (the next available slot).
                 switch (_count)
@@ -1055,7 +1055,7 @@ namespace MS.Utility
                 }
             }
         }
-        
+
         public override void Promote(FrugalMapBase newMap)
         {
             if (FrugalMapStoreState.Success != newMap.InsertEntry(_entry0.Key, _entry0.Value))
@@ -1242,7 +1242,7 @@ namespace MS.Utility
         {
             if (_count > 0)
             {
-                for (int i=0; i< _count; i++)
+                for (int i = 0; i < _count; i++)
                 {
                     callback(list, _entries[i].Key, _entries[i].Value);
                 }
@@ -1285,9 +1285,10 @@ namespace MS.Utility
             int j = right;
             Entry temp;
 
-            for (;;)
+            for (; ; )
             {
-                while (Compare(++i, pivot) < 0);
+                while (Compare(++i, pivot) < 0)
+                    ;
                 while (Compare(pivot, --j) < 0)
                 {
                     if (j == left)
@@ -1416,12 +1417,12 @@ namespace MS.Utility
                 {
                     Array.Copy(_entries, index + 1, _entries, index, numToCopy);
                 }
-                else 
+                else
                 {
                     // If we're not copying anything, then it means we are 
                     //  going to remove the last entry.  Update _lastKey so
                     //  that it reflects the key of the new "last entry"
-                    if( _count > 1 )
+                    if (_count > 1)
                     {
                         // Next-to-last entry will be the new last entry
                         _lastKey = _entries[_count - 2].Key;
@@ -1478,7 +1479,7 @@ namespace MS.Utility
         {
             if (_count > 0)
             {
-                for (int i=0; i< _count; i++)
+                for (int i = 0; i < _count; i++)
                 {
                     callback(list, _entries[i].Key, _entries[i].Value);
                 }
@@ -1508,7 +1509,7 @@ namespace MS.Utility
             {
                 // The array index used for insertion is somewhere between 0 
                 //  and _count-1 inclusive
-                int iHi = _count-1;
+                int iHi = _count - 1;
 
                 // Do a binary search to find the insertion point
                 do
@@ -1630,7 +1631,7 @@ namespace MS.Utility
                 object value = (entry.Value != NullValue) ?
                     entry.Value :
                     DependencyProperty.UnsetValue;
-            
+
                 callback(list, entry.Key, value);
             }
         }
@@ -1770,7 +1771,7 @@ namespace MS.Utility
                 throw new ArgumentOutOfRangeException("index");
             }
         }
-        
+
         public void Iterate(ArrayList list, FrugalMapIterationCallback callback)
         {
             if (null != callback)
@@ -1884,12 +1885,12 @@ namespace MS.Utility
                 {
                     Array.Copy(_entries, index + 1, _entries, index, numToCopy);
                 }
-                else 
+                else
                 {
                     // If we're not copying anything, then it means we are 
                     //  going to remove the last entry.  Update _lastKey so
                     //  that it reflects the key of the new "last entry"
-                    if( _count > 1 )
+                    if (_count > 1)
                     {
                         // Next-to-last entry will be the new last entry
                         _lastKey = _entries[_count - 2].Key;
@@ -1946,7 +1947,7 @@ namespace MS.Utility
         {
             if (_count > 0)
             {
-                for (int i=0; i< _count; i++)
+                for (int i = 0; i < _count; i++)
                 {
                     callback(list, _entries[i].Key, _entries[i].Value);
                 }
@@ -1976,7 +1977,7 @@ namespace MS.Utility
             {
                 // The array index used for insertion is somewhere between 0 
                 //  and _count-1 inclusive
-                int iHi = _count-1;
+                int iHi = _count - 1;
 
                 // Do a binary search to find the insertion point
                 do

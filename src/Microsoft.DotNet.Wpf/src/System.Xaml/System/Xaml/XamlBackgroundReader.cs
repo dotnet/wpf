@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -62,7 +62,7 @@ namespace System.Xaml
             _writer = new WriterDelegate(xamlNodeAddDelegate, lineInfoAddDelegate, _wrappedReader.SchemaContext);
 
             XamlNodeNextDelegate xamlNodeNextDelegate;
-            if(_wrappedReaderHasLineInfo)
+            if (_wrappedReaderHasLineInfo)
             {
                 xamlNodeNextDelegate = new XamlNodeNextDelegate(Next_ProcessLineInfo);
             }
@@ -88,8 +88,10 @@ namespace System.Xaml
                 throw new InvalidOperationException(SR.ThreadAlreadyStarted);
             }
             ParameterizedThreadStart start = new ParameterizedThreadStart(XamlReaderThreadStart);
-            _thread = new Thread(start);
-            _thread.Name = threadName;
+            _thread = new Thread(start)
+            {
+                Name = threadName
+            };
             _thread.Start();
         }
 

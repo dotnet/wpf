@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -20,12 +20,12 @@ namespace System.Windows.Markup.Localizer
         //-----------------------------------
         // constructor 
         //-----------------------------------
-        
+
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="source">source baml stream to be localized</param>
-        public BamlLocalizer(Stream source) : this (source, null)
+        public BamlLocalizer(Stream source) : this(source, null)
         {
         }
 
@@ -37,9 +37,9 @@ namespace System.Windows.Markup.Localizer
         public BamlLocalizer(
             Stream source,
             BamlLocalizabilityResolver resolver
-            ) : this (source, resolver, null)
+            ) : this(source, resolver, null)
         {
-        }        
+        }
 
         /// <summary>
         /// constructor
@@ -48,9 +48,9 @@ namespace System.Windows.Markup.Localizer
         /// <param name="resolver">Localizability resolver implemented by client</param>
         /// <param name="comments">TextReader to read localization comments XML </param>
         public BamlLocalizer(
-            Stream                      source,
-            BamlLocalizabilityResolver  resolver,
-            TextReader                  comments
+            Stream source,
+            BamlLocalizabilityResolver resolver,
+            TextReader comments
             )
         {
             ArgumentNullException.ThrowIfNull(source);
@@ -60,7 +60,7 @@ namespace System.Windows.Markup.Localizer
             // create a Baml Localization Enumerator
             _bamlTreeMap = new BamlTreeMap(this, _tree, resolver, comments);
         }
-        
+
         /// <summary>
         /// Extract localizable resources from the source baml.
         /// </summary>
@@ -76,8 +76,8 @@ namespace System.Windows.Markup.Localizer
         /// <param name="target">target stream</param>
         /// <param name="updates">resource updates to be applied when generating the localized baml</param>
         public void UpdateBaml(
-            Stream                      target, 
-            BamlLocalizationDictionary  updates
+            Stream target,
+            BamlLocalizationDictionary updates
             )
         {
             ArgumentNullException.ThrowIfNull(target);
@@ -86,22 +86,22 @@ namespace System.Windows.Markup.Localizer
             // we duplicate the internal baml tree here because 
             // we will need to modify the tree to do generation
             // UpdateBaml can be called multiple times
-            BamlTree _duplicateTree = _tree.Copy();     
+            BamlTree _duplicateTree = _tree.Copy();
             _bamlTreeMap.EnsureMap();
-            
+
             // Udpate the tree
             BamlTreeUpdater.UpdateTree(
-                _duplicateTree, 
-                _bamlTreeMap, 
-                updates            
-                );     
-           
+                _duplicateTree,
+                _bamlTreeMap,
+                updates
+                );
+
             // Serialize the tree into Baml
             BamlResourceSerializer.Serialize(
                 this,
-                _duplicateTree, 
+                _duplicateTree,
                 target
-                );                
+                );
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace System.Windows.Markup.Localizer
         /// can choose to stop the BamlLocalizer on error by throw exceptions in their 
         /// event handlers.  
         /// </remarks>
-        public event BamlLocalizerErrorNotifyEventHandler ErrorNotify; 
+        public event BamlLocalizerErrorNotifyEventHandler ErrorNotify;
 
         /// <summary>
         /// Raise ErrorNotify event 
@@ -121,11 +121,11 @@ namespace System.Windows.Markup.Localizer
         protected virtual void OnErrorNotify(BamlLocalizerErrorNotifyEventArgs e)
         {
             BamlLocalizerErrorNotifyEventHandler handler = ErrorNotify;
-            if (handler != null) 
+            if (handler != null)
             {
                 handler(this, e);
             }
-        }        
+        }
 
         //----------------------------------
         // Internal method
@@ -139,7 +139,7 @@ namespace System.Windows.Markup.Localizer
         // Private member
         //----------------------------------                
         private BamlTreeMap _bamlTreeMap;
-        private BamlTree    _tree;           
+        private BamlTree _tree;
     }
 
     /// <summary>

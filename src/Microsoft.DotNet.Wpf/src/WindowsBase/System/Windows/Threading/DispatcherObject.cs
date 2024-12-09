@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -58,7 +58,7 @@ namespace System.Windows.Threading
             {
                 // lazy creation - the first thread reaching here creates the sentinel
                 // dispatcher, all other threads use it.
-                Dispatcher sentinelDispatcher = new Dispatcher(isSentinel:true);
+                Dispatcher sentinelDispatcher = new Dispatcher(isSentinel: true);
                 Interlocked.CompareExchange<Dispatcher>(ref _sentinelDispatcher, sentinelDispatcher, null);
             }
 
@@ -87,7 +87,7 @@ namespace System.Windows.Threading
 
             // Note: a DispatcherObject that is not associated with a
             // dispatcher is considered to be free-threaded.
-            if(dispatcher != null)
+            if (dispatcher != null)
             {
                 accessAllowed = dispatcher.CheckAccess();
             }
@@ -113,7 +113,7 @@ namespace System.Windows.Threading
 
             // Note: a DispatcherObject that is not associated with a
             // dispatcher is considered to be free-threaded.
-            if(dispatcher != null)
+            if (dispatcher != null)
             {
                 dispatcher.VerifyAccess();
             }

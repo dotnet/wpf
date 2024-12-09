@@ -36,7 +36,7 @@ namespace MS.Internal.Ink
         internal Rect Bounds
         {
             get { return _bounds; }
-            set { _bounds = value;}
+            set { _bounds = value; }
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace MS.Internal.Ink
             int last = _points.Count;
             while (--last >= 0)
             {
-                if (!DoubleUtil.AreClose(_points[last].Y,point.Y))
+                if (!DoubleUtil.AreClose(_points[last].Y, point.Y))
                 {
                     isHigher = (point.Y < _points[last].Y);
                     break;
@@ -277,7 +277,7 @@ namespace MS.Internal.Ink
                             currentCrossing = potentialNewCrossing;
                         }
                     }
-}
+                }
 
                 // Continue with the next node
                 currentStrokeSegmentBounds = nodeBounds;
@@ -530,9 +530,9 @@ namespace MS.Internal.Ink
 
         #region Fields
 
-        private List<Point>             _points;
-        private Rect                    _bounds                 = Rect.Empty;
-        private bool                    _incrementalLassoDirty  = false;
+        private List<Point> _points;
+        private Rect _bounds = Rect.Empty;
+        private bool _incrementalLassoDirty = false;
         private const double MinDistance = 1.0;
 
         #endregion
@@ -575,8 +575,10 @@ namespace MS.Internal.Ink
             {
                 get
                 {
-                    LassoCrossing crossing = new LassoCrossing();
-                    crossing.FIndices = StrokeFIndices.Empty;
+                    LassoCrossing crossing = new LassoCrossing
+                    {
+                        FIndices = StrokeFIndices.Empty
+                    };
                     return crossing;
                 }
             }
@@ -586,7 +588,7 @@ namespace MS.Internal.Ink
             /// </summary>
             public bool IsEmpty
             {
-                get { return FIndices.IsEmpty;}
+                get { return FIndices.IsEmpty; }
             }
 
             /// <summary>
@@ -636,7 +638,7 @@ namespace MS.Internal.Ink
                     return true;
                 }
 
-                if(DoubleUtil.GreaterThanOrClose(crossing.FIndices.EndFIndex, FIndices.BeginFIndex) &&
+                if (DoubleUtil.GreaterThanOrClose(crossing.FIndices.EndFIndex, FIndices.BeginFIndex) &&
                     DoubleUtil.GreaterThanOrClose(FIndices.EndFIndex, crossing.FIndices.BeginFIndex))
                 {
                     if (DoubleUtil.LessThan(crossing.FIndices.BeginFIndex, FIndices.BeginFIndex))
@@ -647,7 +649,7 @@ namespace MS.Internal.Ink
 
                     if (DoubleUtil.GreaterThan(crossing.FIndices.EndFIndex, FIndices.EndFIndex))
                     {
-                        FIndices.EndFIndex =  crossing.FIndices.EndFIndex;
+                        FIndices.EndFIndex = crossing.FIndices.EndFIndex;
                         EndNode = crossing.EndNode;
                     }
                     return true;
@@ -670,7 +672,7 @@ namespace MS.Internal.Ink
         /// <summary>
         /// Default constructor
         /// </summary>
-        internal SingleLoopLasso() : base(){}
+        internal SingleLoopLasso() : base() { }
 
         /// <summary>
         /// Return true if the point will be filtered out and should NOT be added to the list
@@ -709,14 +711,16 @@ namespace MS.Internal.Ink
                 }
 
                 // Adding the new point will form a loop
-                int i = (int) intersection;
+                int i = (int)intersection;
 
                 if (!DoubleUtil.AreClose(i, intersection))
                 {
                     // Move points[i] to the intersection position
-                    Point intersectionPoint = new Point(0, 0);
-                    intersectionPoint.X = points[i].X + (intersection - i) * (points[i + 1].X - points[i].X);
-                    intersectionPoint.Y = points[i].Y + (intersection - i) * (points[i + 1].Y - points[i].Y);
+                    Point intersectionPoint = new Point(0, 0)
+                    {
+                        X = points[i].X + (intersection - i) * (points[i + 1].X - points[i].X),
+                        Y = points[i].Y + (intersection - i) * (points[i + 1].Y - points[i].Y)
+                    };
                     points[i] = intersectionPoint;
                     IsIncrementalLassoDirty = true;
                 }
@@ -774,19 +778,19 @@ namespace MS.Internal.Ink
                 return false;
             }
 
-            for (int i = 0; i < count -2; i++)
+            for (int i = 0; i < count - 2; i++)
             {
-                Rect currRect = new Rect(points[i], points[i+1]);
+                Rect currRect = new Rect(points[i], points[i + 1]);
                 if (!currRect.IntersectsWith(newRect))
                 {
                     continue;
                 }
 
-                double s = FindIntersection(points[count-1] - points[i],            /*hitBegin*/
+                double s = FindIntersection(points[count - 1] - points[i],            /*hitBegin*/
                                                     point - points[i],              /*hitEnd*/
                                                     new Vector(0, 0),               /*orgBegin*/
-                                                    points[i+1] - points[i]         /*orgEnd*/);
-                if (s >=0 && s <= 1)
+                                                    points[i + 1] - points[i]         /*orgEnd*/);
+                if (s >= 0 && s <= 1)
                 {
                     // Intersection found, adjust the fIndex
                     bIndex = i + s;
@@ -896,9 +900,9 @@ namespace MS.Internal.Ink
             return DoubleUtil.IsZero(findex) ? 0 : (DoubleUtil.IsOne(findex) ? 1 : findex);
         }
 
-        private bool _hasLoop                           = false;
-        private Rect _prevBounds                        = Rect.Empty;
-        private static readonly double NoIntersection   = StrokeFIndices.BeforeFirst;
+        private bool _hasLoop = false;
+        private Rect _prevBounds = Rect.Empty;
+        private static readonly double NoIntersection = StrokeFIndices.BeforeFirst;
     }
     #endregion
 }

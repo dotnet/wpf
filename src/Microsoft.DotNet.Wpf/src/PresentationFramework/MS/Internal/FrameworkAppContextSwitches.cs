@@ -1,9 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Runtime.CompilerServices;
 using System;
+using System.Runtime.CompilerServices;
 
 // When building PresentationFramework, 'LocalAppContext' from WindowsBase.dll conflicts
 // with 'LocalAppContext' from PresentationCore.dll since there is InternalsVisibleTo set
@@ -57,7 +57,7 @@ namespace MS.Internal
             }
         }
 
-        
+
         // Switch to enable non-adorner based rendering of TextSelection in TextBox and PasswordBox.
         internal const string UseAdornerForTextboxSelectionRenderingSwitchName = "Switch.System.Windows.Controls.Text.UseAdornerForTextboxSelectionRendering";
         private static int _useAdornerForTextboxSelectionRendering;
@@ -70,7 +70,7 @@ namespace MS.Internal
             }
         }
 
-        
+
         // Switch to enable appending the local assembly version to the Uri being set for ResourceDictionary.Source via Baml2006ReaderInternal.
         internal const string AppendLocalAssemblyVersionForSourceUriSwitchName = "Switch.System.Windows.Baml2006.AppendLocalAssemblyVersionForSourceUri";
         private static int _AppendLocalAssemblyVersionForSourceUriSwitchName;
@@ -83,7 +83,7 @@ namespace MS.Internal
             }
         }
 
-        
+
         // Switch to enable IList indexer hiding a custom indexer in a binding path
         internal const string IListIndexerHidesCustomIndexerSwitchName = "Switch.System.Windows.Data.Binding.IListIndexerHidesCustomIndexer";
         private static int _IListIndexerHidesCustomIndexer;
@@ -96,7 +96,7 @@ namespace MS.Internal
             }
         }
 
-        
+
         // Switch to enable keyboard navigation from a hyperlink to go to the wrong place
         internal const string KeyboardNavigationFromHyperlinkInItemsControlIsNotRelativeToFocusedElementSwitchName = "Switch.System.Windows.Controls.KeyboardNavigationFromHyperlinkInItemsControlIsNotRelativeToFocusedElement";
         private static int _KeyboardNavigationFromHyperlinkInItemsControlIsNotRelativeToFocusedElement;
@@ -109,7 +109,7 @@ namespace MS.Internal
             }
         }
 
-        
+
         // Switch to opt-out of the ItemAutomationPeer weak-reference.
         // Setting this to true can avoid NRE crashes, but re-introduces memory leaks
         internal const string ItemAutomationPeerKeepsItsItemAliveSwitchName = "Switch.System.Windows.Automation.Peers.ItemAutomationPeerKeepsItsItemAlive";
@@ -122,8 +122,8 @@ namespace MS.Internal
                 return LocalAppContext.GetCachedSwitchValue(ItemAutomationPeerKeepsItsItemAliveSwitchName, ref _ItemAutomationPeerKeepsItsItemAlive);
             }
         }
-    
-    
+
+
         // Switch to opt-out Fluent theme Window Backdrop feature
         internal const string DisableFluentThemeWindowBackdropSwitchName = "Switch.System.Windows.Appearance.DisableFluentThemeWindowBackdrop";
         private static int _DisableFluentThemeWindowBackdrop;

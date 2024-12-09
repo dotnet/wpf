@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,8 +12,8 @@
 using System.Globalization;
 using System.Windows;
 using System.Windows.Documents;
-using System.Windows.Media;
 using System.Windows.Markup;
+using System.Windows.Media;
 
 namespace MS.Internal.Text
 {
@@ -37,10 +37,10 @@ namespace MS.Internal.Text
         {
             Debug.Assert(element != null);
 
-            FontFamily  fontFamily  = (FontFamily)  element.GetValue(TextElement.FontFamilyProperty);
-            FontStyle   fontStyle   = (FontStyle)   element.GetValue(TextElement.FontStyleProperty);
-            FontWeight  fontWeight  = (FontWeight)  element.GetValue(TextElement.FontWeightProperty);
-            FontStretch fontStretch = (FontStretch) element.GetValue(TextElement.FontStretchProperty);
+            FontFamily fontFamily = (FontFamily)element.GetValue(TextElement.FontFamilyProperty);
+            FontStyle fontStyle = (FontStyle)element.GetValue(TextElement.FontStyleProperty);
+            FontWeight fontWeight = (FontWeight)element.GetValue(TextElement.FontWeightProperty);
+            FontStretch fontStretch = (FontStretch)element.GetValue(TextElement.FontStretchProperty);
 
             return new Typeface(fontFamily, fontStyle, fontWeight, fontStretch);
         }
@@ -49,9 +49,9 @@ namespace MS.Internal.Text
         {
             Debug.Assert(element != null);
 
-            FontStyle   fontStyle   = (FontStyle)   element.GetValue(TextElement.FontStyleProperty);
-            FontWeight  fontWeight  = (FontWeight)  element.GetValue(TextElement.FontWeightProperty);
-            FontStretch fontStretch = (FontStretch) element.GetValue(TextElement.FontStretchProperty);
+            FontStyle fontStyle = (FontStyle)element.GetValue(TextElement.FontStyleProperty);
+            FontWeight fontWeight = (FontWeight)element.GetValue(TextElement.FontWeightProperty);
+            FontStretch fontStretch = (FontStretch)element.GetValue(TextElement.FontStretchProperty);
 
             return new Typeface(fontFamily, fontStyle, fontWeight, fontStretch);
         }
@@ -128,15 +128,15 @@ namespace MS.Internal.Text
         /// </remarks>
         private static object GetCollectionValue(DependencyObject element, DependencyProperty property)
         {
-            bool hasModifiers; 
+            bool hasModifiers;
             if (element.GetValueSource(property, null, out hasModifiers)
                 != BaseValueSourceInternal.Default || hasModifiers)
             {
                 return element.GetValue(property);
             }
 
-            return null;              
-        }        
+            return null;
+        }
 
         #endregion Property Groups
 
@@ -299,7 +299,7 @@ namespace MS.Internal.Text
         // ------------------------------------------------------------------
         internal static CultureInfo GetCultureInfo(DependencyObject element)
         {
-            XmlLanguage language = (XmlLanguage) element.GetValue(FrameworkElement.LanguageProperty);
+            XmlLanguage language = (XmlLanguage)element.GetValue(FrameworkElement.LanguageProperty);
             try
             {
                 return language.GetSpecificCulture();
@@ -316,11 +316,12 @@ namespace MS.Internal.Text
         // ------------------------------------------------------------------
         internal static NumberSubstitution GetNumberSubstitution(DependencyObject element)
         {
-            NumberSubstitution numberSubstitution = new NumberSubstitution();
-
-            numberSubstitution.CultureSource = (NumberCultureSource)element.GetValue(NumberSubstitution.CultureSourceProperty);
-            numberSubstitution.CultureOverride = (CultureInfo)element.GetValue(NumberSubstitution.CultureOverrideProperty);
-            numberSubstitution.Substitution = (NumberSubstitutionMethod)element.GetValue(NumberSubstitution.SubstitutionProperty);
+            NumberSubstitution numberSubstitution = new NumberSubstitution
+            {
+                CultureSource = (NumberCultureSource)element.GetValue(NumberSubstitution.CultureSourceProperty),
+                CultureOverride = (CultureInfo)element.GetValue(NumberSubstitution.CultureOverrideProperty),
+                Substitution = (NumberSubstitutionMethod)element.GetValue(NumberSubstitution.SubstitutionProperty)
+            };
 
             return numberSubstitution;
         }
@@ -355,4 +356,4 @@ namespace MS.Internal.Text
 
         #endregion Misc Properties
     }
- }
+}

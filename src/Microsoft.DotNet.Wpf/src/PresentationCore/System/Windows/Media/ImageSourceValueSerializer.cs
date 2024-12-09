@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -34,9 +34,9 @@ namespace System.Windows.Media
         public override bool CanConvertToString(object value, IValueSerializerContext context)
         {
             ImageSource imageSource = value as ImageSource;
-            #pragma warning disable 6506
+#pragma warning disable 6506
             return imageSource != null && imageSource.CanSerializeToString();
-            #pragma warning restore 6506
+#pragma warning restore 6506
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace System.Windows.Media
         {
             ImageSource imageSource = value as ImageSource;
             if (imageSource != null)
-                return imageSource.ConvertToString(null,  System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS);
+                return imageSource.ConvertToString(null, System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS);
             else
                 return base.ConvertToString(value, context);
         }

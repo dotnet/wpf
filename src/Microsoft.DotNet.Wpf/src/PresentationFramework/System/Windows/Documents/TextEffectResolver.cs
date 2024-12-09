@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,11 +16,11 @@ namespace System.Windows.Documents
     /// Helper class to help set text effects into the Text container
     /// </summary>
     public static class TextEffectResolver
-    {   
+    {
         //---------------------------
         // public static methods
         //---------------------------
-        
+
         /// <summary>
         /// resolves text effect on a text range to a list of text effect targets.
         /// The method will walk the text and perform the following task:
@@ -34,15 +34,15 @@ namespace System.Windows.Documents
         /// <param name="endPosition">end text pointer</param>
         /// <param name="effect">effect that is apply on the text</param>
         public static TextEffectTarget[] Resolve(
-            TextPointer             startPosition, 
-            TextPointer             endPosition,
-            TextEffect              effect
+            TextPointer startPosition,
+            TextPointer endPosition,
+            TextEffect effect
             )
         {
             ArgumentNullException.ThrowIfNull(effect);
 
-            ValidationHelper.VerifyPositionPair(startPosition, endPosition);            
-            TextPointer   effectStart   = new TextPointer(startPosition);            
+            ValidationHelper.VerifyPositionPair(startPosition, endPosition);
+            TextPointer effectStart = new TextPointer(startPosition);
 
             // move to the first character symbol at or after Start position
             MoveToFirstCharacterSymbol(effectStart);
@@ -54,14 +54,14 @@ namespace System.Windows.Documents
             // of the characters. We are effectively applying the text effect onto 
             // block of continous text.
             while (effectStart.CompareTo(endPosition) < 0)
-            {   
+            {
                 // create a copy of the text effect 
                 // so that we can set the CharacterIndex and Count
-                effectCopy                 = effect.Clone();
+                effectCopy = effect.Clone();
 
                 // create a position
                 TextPointer continuousTextEnd = new TextPointer(effectStart);
-                
+
                 // move the position to the end of the continuous text block
                 MoveToFirstNonCharacterSymbol(continuousTextEnd, endPosition);
 
@@ -77,11 +77,11 @@ namespace System.Windows.Documents
 
                 list.Add(
                     new TextEffectTarget(
-                        effectStart.Parent, 
+                        effectStart.Parent,
                         effectCopy
                         )
                  );
-                
+
                 // move the effectStart to the beginning of the next text block.
                 effectStart = continuousTextEnd;
                 MoveToFirstCharacterSymbol(effectStart);
@@ -94,23 +94,25 @@ namespace System.Windows.Documents
         //---------------------------
         // Private static methods
         //---------------------------
-        
+
         // move to the first character symbol
         private static void MoveToFirstCharacterSymbol(TextPointer navigator)
         {
             while (navigator.GetPointerContext(LogicalDirection.Forward) != TextPointerContext.Text
-                && navigator.MoveToNextContextPosition(LogicalDirection.Forward)) ;
+                && navigator.MoveToNextContextPosition(LogicalDirection.Forward))
+                ;
         }
 
         // move to the first non-character symbol, but not pass beyond the limit
         private static void MoveToFirstNonCharacterSymbol(
             TextPointer navigator,   // navigator to move
-            TextPointer  stopHint     // don't move further if we already pass beyond this point
-            )         
+            TextPointer stopHint     // don't move further if we already pass beyond this point
+            )
         {
-            while (navigator.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text 
+            while (navigator.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text
                 && navigator.CompareTo(stopHint) < 0
-                && navigator.MoveToNextContextPosition(LogicalDirection.Forward)) ;
+                && navigator.MoveToNextContextPosition(LogicalDirection.Forward))
+                ;
         }
     }
 
@@ -120,19 +122,19 @@ namespace System.Windows.Documents
     /// </summary>
     public class TextEffectTarget
     {
-        private DependencyObject   _element;
-        private TextEffect         _effect;
+        private DependencyObject _element;
+        private TextEffect _effect;
 
         internal TextEffectTarget(
-            DependencyObject element,          
-            TextEffect       effect
+            DependencyObject element,
+            TextEffect effect
             )
         {
             ArgumentNullException.ThrowIfNull(element);
             ArgumentNullException.ThrowIfNull(effect);
 
             _element = element;
-            _effect  = effect;
+            _effect = effect;
         }
 
         /// <summary>
@@ -142,7 +144,7 @@ namespace System.Windows.Documents
         {
             get { return _element; }
         }
-            
+
         /// <summary>
         /// The TextEffect
         /// </summary>
@@ -161,12 +163,12 @@ namespace System.Windows.Documents
             if (textEffects == null)
             {
                 textEffects = new TextEffectCollection();
-                        
+
                 // use it as reference to avoid creating a copy (Freezable pattern)
                 _element.SetValue(TextElement.TextEffectsProperty, textEffects);
             }
 
- 
+
             // check whether this instance is already enabled
             for (int i = 0; i < textEffects.Count; i++)
             {
@@ -175,7 +177,7 @@ namespace System.Windows.Documents
             }
 
             // use this as reference. 
-            textEffects.Add(_effect);                    
+            textEffects.Add(_effect);
         }
 
         /// <summary>
@@ -203,9 +205,9 @@ namespace System.Windows.Documents
         /// <summary>
         /// Return whether the text effect is enabled on the target element
         /// </summary>        
-        public bool IsEnabled 
+        public bool IsEnabled
         {
-            get 
+            get
             {
                 TextEffectCollection textEffects = DynamicPropertyReader.GetTextEffects(_element);
                 if (textEffects != null)
@@ -214,7 +216,7 @@ namespace System.Windows.Documents
                     {
                         if (textEffects[i] == _effect)
                         {
-                           return true;
+                            return true;
                         }
                     }
                 }

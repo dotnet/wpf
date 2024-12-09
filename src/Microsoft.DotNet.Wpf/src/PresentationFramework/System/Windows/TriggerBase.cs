@@ -1,12 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Collections.Specialized;
-
-using MS.Utility;
-using MS.Internal;
 using System.ComponentModel;            // DesignerSerializationVisibilityAttribute & DefaultValue
+using MS.Internal;
+using MS.Utility;
 
 namespace System.Windows
 {
@@ -30,7 +29,7 @@ namespace System.Windows
     ///     The various Set methods in this class handles the (Background = Red) portion
     /// of this logic.
     /// </remarks>
-    [Localizability(LocalizationCategory.None, Readability=Readability.Unreadable)]
+    [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
     public abstract class TriggerBase : DependencyObject
     {
         internal TriggerBase()
@@ -49,10 +48,10 @@ namespace System.Windows
                 // Verify Context Access
                 VerifyAccess();
 
-                if( _enterActions == null )
+                if (_enterActions == null)
                 {
                     _enterActions = new TriggerActionCollection();
-                    if( IsSealed )
+                    if (IsSealed)
                     {
                         // This collection might receive its first query after
                         //  the containing trigger had already been sealed
@@ -78,10 +77,10 @@ namespace System.Windows
                 // Verify Context Access
                 VerifyAccess();
 
-                if( _exitActions == null )
+                if (_exitActions == null)
                 {
                     _exitActions = new TriggerActionCollection();
-                    if( IsSealed )
+                    if (IsSealed)
                     {
                         // This collection might receive its first query after
                         //  the containing trigger had already been sealed
@@ -95,7 +94,7 @@ namespace System.Windows
         // Internal way to check without triggering a pointless allocation
         internal bool HasExitActions { get { return _exitActions != null && _exitActions.Count > 0; } }
 
-//  Here's the internal version that does what Robby thinks it should do.
+        //  Here's the internal version that does what Robby thinks it should do.
         internal bool ExecuteEnterActionsOnApply
         {
             get
@@ -112,60 +111,60 @@ namespace System.Windows
             }
         }
 
-/*  Here's the version that looks like a public API.  (Needs Style/Template parser changes before these will actually parse.)
+        /*  Here's the version that looks like a public API.  (Needs Style/Template parser changes before these will actually parse.)
 
-        // These fields determine what we do about any existing Enter/ExitActions
-        //  when the Trigger is first applied.
+                // These fields determine what we do about any existing Enter/ExitActions
+                //  when the Trigger is first applied.
 
-        /// <summary>
-        /// If set to 'true', EnterActions will be executed immediately if the
-        ///  conditions are met, before any "enter" change has occurred.
-        /// </summary>
+                /// <summary>
+                /// If set to 'true', EnterActions will be executed immediately if the
+                ///  conditions are met, before any "enter" change has occurred.
+                /// </summary>
 
-        // This is on the assumption that the "enter" change has occurred already.
-        //  For example: <CheckBox IsChecked="true" /> the IsChecked property
-        //  change occurred before the CheckBox Style/Template is applied.
-        [DefaultValue(false)]
-        public bool ExecuteEnterActionsOnApply
-        {
-            get
-            {
-                return _executeEnterActionsOnApply;
-            }
-            set
-            {
-                if (IsSealed)
+                // This is on the assumption that the "enter" change has occurred already.
+                //  For example: <CheckBox IsChecked="true" /> the IsChecked property
+                //  change occurred before the CheckBox Style/Template is applied.
+                [DefaultValue(false)]
+                public bool ExecuteEnterActionsOnApply
                 {
-                    throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "trigger"));
+                    get
+                    {
+                        return _executeEnterActionsOnApply;
+                    }
+                    set
+                    {
+                        if (IsSealed)
+                        {
+                            throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "trigger"));
+                        }
+
+                        _executeEnterActionsOnApply = value;
+                    }
                 }
 
-                _executeEnterActionsOnApply = value;
-            }
-        }
-
-        /// <summary>
-        /// If set to 'true', ExitActions will be executed immediately if the
-        ///  conditions are not met, before any "exit" change has occurred.
-        /// </summary>
-        [DefaultValue(false)]
-        public bool ExecuteExitActionsOnApply
-        {
-            get
-            {
-                return _executeExitActionsOnApply;
-            }
-            set
-            {
-                if (IsSealed)
+                /// <summary>
+                /// If set to 'true', ExitActions will be executed immediately if the
+                ///  conditions are not met, before any "exit" change has occurred.
+                /// </summary>
+                [DefaultValue(false)]
+                public bool ExecuteExitActionsOnApply
                 {
-                    throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "trigger"));
+                    get
+                    {
+                        return _executeExitActionsOnApply;
+                    }
+                    set
+                    {
+                        if (IsSealed)
+                        {
+                            throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "trigger"));
+                        }
+
+                        _executeExitActionsOnApply = value;
+                    }
                 }
 
-                _executeExitActionsOnApply = value;
-            }
-        }
-
-*/
+        */
         /// <summary>
         ///     Parameter validation work common to the SetXXXX methods that deal
         /// with the container node of the Style/Template.
@@ -207,12 +206,14 @@ namespace System.Windows
         internal void AddToPropertyValues(string childName, DependencyProperty dp, object value, PropertyValueType valueType)
         {
             // Store original data
-            PropertyValue propertyValue = new PropertyValue();
-            propertyValue.ValueType = valueType;
-            propertyValue.Conditions = null;  // Delayed - derived class is responsible for this item.
-            propertyValue.ChildName = childName;
-            propertyValue.Property = dp;
-            propertyValue.ValueInternal = value;
+            PropertyValue propertyValue = new PropertyValue
+            {
+                ValueType = valueType,
+                Conditions = null,  // Delayed - derived class is responsible for this item.
+                ChildName = childName,
+                Property = dp,
+                ValueInternal = value
+            };
 
             PropertyValues.Add(propertyValue);
         }
@@ -248,11 +249,11 @@ namespace System.Windows
                 }
             }
 
-            if( _enterActions != null )
+            if (_enterActions != null)
             {
                 _enterActions.Seal(this);
             }
-            if( _exitActions != null )
+            if (_exitActions != null)
             {
                 _exitActions.Seal(this);
             }
@@ -265,21 +266,21 @@ namespace System.Windows
         internal void ProcessSettersCollection(SetterBaseCollection setters)
         {
             // Add information in Setters collection to PropertyValues array.
-            if( setters != null )
+            if (setters != null)
             {
                 // Seal Setters
                 setters.Seal();
 
-                for (int i = 0; i < setters.Count; i++ )
+                for (int i = 0; i < setters.Count; i++)
                 {
                     Setter setter = setters[i] as Setter;
-                    if( setter != null )
+                    if (setter != null)
                     {
                         DependencyProperty dp = setter.Property;
-                        object value          = setter.ValueInternal;
-                        string target         = setter.TargetName;
+                        object value = setter.ValueInternal;
+                        string target = setter.TargetName;
 
-                        if( target == null )
+                        if (target == null)
                         {
                             ProcessParametersContainer(dp);
 
@@ -351,14 +352,14 @@ namespace System.Windows
         // Set self rank to current number, increment global static.
         internal void EstablishLayer()
         {
-            if( _globalLayerRank == 0 )
+            if (_globalLayerRank == 0)
             {
-                lock(Synchronized)
+                lock (Synchronized)
                 {
                     _globalLayerRank = _nextGlobalLayerRank++;
                 }
 
-                if( _nextGlobalLayerRank == Int64.MaxValue )
+                if (_nextGlobalLayerRank == Int64.MaxValue)
                 {
                     throw new InvalidOperationException(SR.PropertyTriggerLayerLimitExceeded);
                 }
@@ -368,7 +369,7 @@ namespace System.Windows
         // evaluate the current state of the trigger
         internal virtual bool GetCurrentState(DependencyObject container, UncommonField<HybridDictionary[]> dataField)
         {
-            Debug.Assert( false,
+            Debug.Assert(false,
                 "This method was written to handle Trigger, MultiTrigger, DataTrigger, and MultiDataTrigger.  It looks like a new trigger type was added - please add support as appropriate.");
 
             return false;
@@ -382,7 +383,8 @@ namespace System.Windows
         }
 
         // Synchronized (write locks, lock-free reads): Covered by the TriggerBase instance
-        /* property */ internal FrugalStructList<System.Windows.PropertyValue> PropertyValues = new FrugalStructList<System.Windows.PropertyValue>();
+        /* property */
+        internal FrugalStructList<System.Windows.PropertyValue> PropertyValues = new FrugalStructList<System.Windows.PropertyValue>();
 
         // Global, cross-object synchronization
         private static readonly object Synchronized = new object();
@@ -398,9 +400,9 @@ namespace System.Windows
         private TriggerActionCollection _enterActions = null;
         private TriggerActionCollection _exitActions = null;
 
-//      On hold - is this a new public API we want to do?
-//        private bool _executeEnterActionsOnApply = false;
-//        private bool _executeExitActionsOnApply = false;
+        //      On hold - is this a new public API we want to do?
+        //        private bool _executeEnterActionsOnApply = false;
+        //        private bool _executeExitActionsOnApply = false;
 
         private Int64 _globalLayerRank = 0;
         private static Int64 _nextGlobalLayerRank = System.Windows.Media.Animation.Storyboard.Layers.PropertyTriggerStartLayer;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -587,7 +587,7 @@ namespace System.Windows.Annotations
             Invariant.Assert(selection != null, "TextSelection is null");
             int selStartPage = 0, selEndPage = 0;
 
-            if(viewer != null)
+            if (viewer != null)
             {
                 //if this is a DocumentViewerBase check the selection pages
                 TextSelectionHelper.GetPointerPage(selection.Start, out selStartPage);
@@ -937,7 +937,7 @@ namespace System.Windows.Annotations
                 else if (brush.Opacity >= 1)
                     alpha = brush.Color.A;
                 else
-                    alpha = (byte) (brush.Opacity * brush.Color.A);
+                    alpha = (byte)(brush.Opacity * brush.Color.A);
 
                 color = Color.FromArgb(alpha, brush.Color.R, brush.Color.G, brush.Color.B);
             }

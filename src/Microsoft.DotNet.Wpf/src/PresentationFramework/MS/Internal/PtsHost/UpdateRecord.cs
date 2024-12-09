@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -24,7 +24,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         internal UpdateRecord()
         {
-            Dtr = new DirtyTextRange(0,0,0);
+            Dtr = new DirtyTextRange(0, 0, 0);
             FirstPara = SyncPara = null;
             ChangeType = PTS.FSKCHANGE.fskchNone;
             Next = null;
@@ -42,12 +42,12 @@ namespace MS.Internal.PtsHost
             int delta = Next.Dtr.StartIndex - Dtr.StartIndex;
 
             // Dtr.StartIndex is not changing
-            Dtr.PositionsAdded   += delta + Next.Dtr.PositionsAdded;
+            Dtr.PositionsAdded += delta + Next.Dtr.PositionsAdded;
             Dtr.PositionsRemoved += delta + Next.Dtr.PositionsRemoved;
 
             // Reasign sync point and next UpdateRecord
             SyncPara = Next.SyncPara;
-            Next     = Next.Next;
+            Next = Next.Next;
         }
 
         // ------------------------------------------------------------------

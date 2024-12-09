@@ -1,13 +1,13 @@
-namespace System.Windows.Markup
+﻿namespace System.Windows.Markup
 {
-    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple=true, Inherited=true)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
     [System.ObsoleteAttribute("This is not used by the XAML parser. Please look at XamlSetMarkupExtensionAttribute.")]
     public partial class AcceptedMarkupExtensionExpressionTypeAttribute : System.Attribute
     {
         public AcceptedMarkupExtensionExpressionTypeAttribute(System.Type type) { }
         public System.Type Type { get { throw null; } set { } }
     }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Class | System.AttributeTargets.Method | System.AttributeTargets.Property, Inherited=true)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Class | System.AttributeTargets.Method | System.AttributeTargets.Property, Inherited = true)]
     public sealed partial class AmbientAttribute : System.Attribute
     {
         public AmbientAttribute() { }
@@ -27,20 +27,20 @@ namespace System.Windows.Markup
         public void AddText(string text) { }
         public override object ProvideValue(System.IServiceProvider serviceProvider) { throw null; }
     }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Property, AllowMultiple=false, Inherited=false)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
     public sealed partial class ConstructorArgumentAttribute : System.Attribute
     {
         public ConstructorArgumentAttribute(string argumentName) { }
         public string ArgumentName { get { throw null; } }
     }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple=false, Inherited=true)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
     public sealed partial class ContentPropertyAttribute : System.Attribute
     {
         public ContentPropertyAttribute() { }
         public ContentPropertyAttribute(string name) { }
         public string Name { get { throw null; } }
     }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple=true, Inherited=true)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
     public sealed partial class ContentWrapperAttribute : System.Attribute
     {
         public ContentWrapperAttribute(System.Type contentWrapper) { }
@@ -57,14 +57,14 @@ namespace System.Windows.Markup
         public override object ConvertFromString(string value, System.Windows.Markup.IValueSerializerContext context) { throw null; }
         public override string ConvertToString(object value, System.Windows.Markup.IValueSerializerContext context) { throw null; }
     }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Method | System.AttributeTargets.Property, AllowMultiple=true)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Method | System.AttributeTargets.Property, AllowMultiple = true)]
     public sealed partial class DependsOnAttribute : System.Attribute
     {
         public DependsOnAttribute(string name) { }
         public string Name { get { throw null; } }
         public override object TypeId { get { throw null; } }
     }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple=false, Inherited=true)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
     public sealed partial class DictionaryKeyPropertyAttribute : System.Attribute
     {
         public DictionaryKeyPropertyAttribute(string name) { }
@@ -111,14 +111,14 @@ namespace System.Windows.Markup
         protected MarkupExtension() { }
         public abstract object ProvideValue(System.IServiceProvider serviceProvider);
     }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Property, AllowMultiple=true, Inherited=false)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Property, AllowMultiple = true, Inherited = false)]
     public sealed partial class MarkupExtensionBracketCharactersAttribute : System.Attribute
     {
         public MarkupExtensionBracketCharactersAttribute(char openingBracket, char closingBracket) { }
         public char ClosingBracket { get { throw null; } }
         public char OpeningBracket { get { throw null; } }
     }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple=false, Inherited=true)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
     public sealed partial class MarkupExtensionReturnTypeAttribute : System.Attribute
     {
         public MarkupExtensionReturnTypeAttribute() { }
@@ -142,7 +142,7 @@ namespace System.Windows.Markup
         public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value) { throw null; }
         public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, System.Type destinationType) { throw null; }
     }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple=false, Inherited=true)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
     public sealed partial class NameScopePropertyAttribute : System.Attribute
     {
         public NameScopePropertyAttribute(string name) { }
@@ -198,7 +198,7 @@ namespace System.Windows.Markup
         public System.Type MemberType { get { throw null; } set { } }
         public override object ProvideValue(System.IServiceProvider serviceProvider) { throw null; }
     }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple=false, Inherited=true)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
     public sealed partial class TrimSurroundingWhitespaceAttribute : System.Attribute
     {
         public TrimSurroundingWhitespaceAttribute() { }
@@ -216,13 +216,13 @@ namespace System.Windows.Markup
         public string TypeName { get { throw null; } set { } }
         public override object ProvideValue(System.IServiceProvider serviceProvider) { throw null; }
     }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple=false)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple = false)]
     public sealed partial class UidPropertyAttribute : System.Attribute
     {
         public UidPropertyAttribute(string name) { }
         public string Name { get { throw null; } }
     }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple=false, Inherited=true)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
     public sealed partial class UsableDuringInitializationAttribute : System.Attribute
     {
         public UsableDuringInitializationAttribute(bool usable) { }
@@ -243,12 +243,12 @@ namespace System.Windows.Markup
         public static System.Windows.Markup.ValueSerializer GetSerializerFor(System.Type type, System.Windows.Markup.IValueSerializerContext context) { throw null; }
         public virtual System.Collections.Generic.IEnumerable<System.Type> TypeReferences(object value, System.Windows.Markup.IValueSerializerContext context) { throw null; }
     }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple=false, Inherited=true)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
     public sealed partial class WhitespaceSignificantCollectionAttribute : System.Attribute
     {
         public WhitespaceSignificantCollectionAttribute() { }
     }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Class | System.AttributeTargets.Property, AllowMultiple=false, Inherited=true)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Class | System.AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public sealed partial class XamlDeferLoadAttribute : System.Attribute
     {
         public XamlDeferLoadAttribute(string loaderType, string contentType) { }
@@ -258,7 +258,7 @@ namespace System.Windows.Markup
         public System.Type LoaderType { get { throw null; } }
         public string LoaderTypeName { get { throw null; } }
     }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Class, Inherited=true, AllowMultiple=false)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
     public sealed partial class XamlSetMarkupExtensionAttribute : System.Attribute
     {
         public XamlSetMarkupExtensionAttribute(string xamlSetMarkupExtensionHandler) { }
@@ -266,12 +266,12 @@ namespace System.Windows.Markup
     }
     public partial class XamlSetMarkupExtensionEventArgs : System.Windows.Markup.XamlSetValueEventArgs
     {
-        public XamlSetMarkupExtensionEventArgs(System.Xaml.XamlMember member, System.Windows.Markup.MarkupExtension value, System.IServiceProvider serviceProvider) : base (default(System.Xaml.XamlMember), default(object)) { }
+        public XamlSetMarkupExtensionEventArgs(System.Xaml.XamlMember member, System.Windows.Markup.MarkupExtension value, System.IServiceProvider serviceProvider) : base(default(System.Xaml.XamlMember), default(object)) { }
         public System.Windows.Markup.MarkupExtension MarkupExtension { get { throw null; } }
         public System.IServiceProvider ServiceProvider { get { throw null; } }
         public override void CallBase() { }
     }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Class, Inherited=true, AllowMultiple=false)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
     public sealed partial class XamlSetTypeConverterAttribute : System.Attribute
     {
         public XamlSetTypeConverterAttribute(string xamlSetTypeConverterHandler) { }
@@ -279,7 +279,7 @@ namespace System.Windows.Markup
     }
     public partial class XamlSetTypeConverterEventArgs : System.Windows.Markup.XamlSetValueEventArgs
     {
-        public XamlSetTypeConverterEventArgs(System.Xaml.XamlMember member, System.ComponentModel.TypeConverter typeConverter, object value, System.ComponentModel.ITypeDescriptorContext serviceProvider, System.Globalization.CultureInfo cultureInfo) : base (default(System.Xaml.XamlMember), default(object)) { }
+        public XamlSetTypeConverterEventArgs(System.Xaml.XamlMember member, System.ComponentModel.TypeConverter typeConverter, object value, System.ComponentModel.ITypeDescriptorContext serviceProvider, System.Globalization.CultureInfo cultureInfo) : base(default(System.Xaml.XamlMember), default(object)) { }
         public System.Globalization.CultureInfo CultureInfo { get { throw null; } }
         public System.ComponentModel.ITypeDescriptorContext ServiceProvider { get { throw null; } }
         public System.ComponentModel.TypeConverter TypeConverter { get { throw null; } }
@@ -300,20 +300,20 @@ namespace System.Windows.Markup
         public string Text { get { throw null; } set { } }
         public object XmlReader { get { throw null; } set { } }
     }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple=false)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple = false)]
     public sealed partial class XmlLangPropertyAttribute : System.Attribute
     {
         public XmlLangPropertyAttribute(string name) { }
         public string Name { get { throw null; } }
     }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Assembly, AllowMultiple=true)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Assembly, AllowMultiple = true)]
     public sealed partial class XmlnsCompatibleWithAttribute : System.Attribute
     {
         public XmlnsCompatibleWithAttribute(string oldNamespace, string newNamespace) { }
         public string NewNamespace { get { throw null; } }
         public string OldNamespace { get { throw null; } }
     }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Assembly, AllowMultiple=true)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Assembly, AllowMultiple = true)]
     public sealed partial class XmlnsDefinitionAttribute : System.Attribute
     {
         public XmlnsDefinitionAttribute(string xmlNamespace, string clrNamespace) { }
@@ -321,7 +321,7 @@ namespace System.Windows.Markup
         public string ClrNamespace { get { throw null; } }
         public string XmlNamespace { get { throw null; } }
     }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Assembly, AllowMultiple=true)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Assembly, AllowMultiple = true)]
     public sealed partial class XmlnsPrefixAttribute : System.Attribute
     {
         public XmlnsPrefixAttribute(string xmlNamespace, string prefix) { }
@@ -462,8 +462,8 @@ namespace System.Xaml
     }
     public partial class XamlDirective : System.Xaml.XamlMember
     {
-        public XamlDirective(System.Collections.Generic.IEnumerable<string> xamlNamespaces, string name, System.Xaml.XamlType xamlType, System.Xaml.Schema.XamlValueConverter<System.ComponentModel.TypeConverter> typeConverter, System.Xaml.Schema.AllowedMemberLocations allowedLocation) : base (default(string), default(System.Xaml.XamlType), default(bool)) { }
-        public XamlDirective(string xamlNamespace, string name) : base (default(string), default(System.Xaml.XamlType), default(bool)) { }
+        public XamlDirective(System.Collections.Generic.IEnumerable<string> xamlNamespaces, string name, System.Xaml.XamlType xamlType, System.Xaml.Schema.XamlValueConverter<System.ComponentModel.TypeConverter> typeConverter, System.Xaml.Schema.AllowedMemberLocations allowedLocation) : base(default(string), default(System.Xaml.XamlType), default(bool)) { }
+        public XamlDirective(string xamlNamespace, string name) : base(default(string), default(System.Xaml.XamlType), default(bool)) { }
         public System.Xaml.Schema.AllowedMemberLocations AllowedLocation { get { throw null; } }
         public override int GetHashCode() { throw null; }
         public override System.Collections.Generic.IList<string> GetXamlNamespaces() { throw null; }
@@ -495,9 +495,9 @@ namespace System.Xaml
         public XamlDuplicateMemberException(System.Xaml.XamlMember member, System.Xaml.XamlType type) { }
         public System.Xaml.XamlMember DuplicateMember { get { throw null; } set { } }
         public System.Xaml.XamlType ParentType { get { throw null; } set { } }
-        #pragma warning disable CS0672 // Member overrides obsolete member
+#pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-        #pragma warning restore CS0672 // Member overrides obsolete member
+#pragma warning restore CS0672 // Member overrides obsolete member
     }
     public partial class XamlException : System.Exception
     {

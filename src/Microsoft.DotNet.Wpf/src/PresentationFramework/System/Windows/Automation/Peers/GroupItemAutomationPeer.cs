@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,7 +14,7 @@ namespace System.Windows.Automation.Peers
     public class GroupItemAutomationPeer : FrameworkElementAutomationPeer
     {
         ///
-        public GroupItemAutomationPeer(GroupItem owner): base(owner)
+        public GroupItemAutomationPeer(GroupItem owner) : base(owner)
         {
         }
 
@@ -45,7 +45,7 @@ namespace System.Windows.Automation.Peers
                     CollectionViewGroup parent = group.Parent;
                     if (parent != null)
                     {
-                        positionInSet =  parent.Items.IndexOf(group) + 1;
+                        positionInSet = parent.Items.IndexOf(group) + 1;
                     }
                 }
             }
@@ -91,13 +91,13 @@ namespace System.Windows.Automation.Peers
         ///
         override public object GetPattern(PatternInterface patternInterface)
         {
-            if(patternInterface == PatternInterface.ExpandCollapse)
+            if (patternInterface == PatternInterface.ExpandCollapse)
             {
                 GroupItem groupItem = (GroupItem)Owner;
-                if(groupItem.Expander != null)
+                if (groupItem.Expander != null)
                 {
                     AutomationPeer expanderPeer = UIElementAutomationPeer.CreatePeerForElement(groupItem.Expander);
-                    if(expanderPeer != null && expanderPeer is IExpandCollapseProvider)
+                    if (expanderPeer != null && expanderPeer is IExpandCollapseProvider)
                     {
                         expanderPeer.EventsSource = this;
                         return (IExpandCollapseProvider)expanderPeer;
@@ -147,10 +147,10 @@ namespace System.Windows.Automation.Peers
                             return children;
                         }
                     }
-                        
+
                     IList childItems = itemsHost.Children;
                     ItemPeersStorage<ItemAutomationPeer> addedChildren = new ItemPeersStorage<ItemAutomationPeer>();
-                    
+
 
                     foreach (UIElement child in childItems)
                     {
@@ -292,7 +292,7 @@ namespace System.Windows.Automation.Peers
                 CollectionViewGroupInternal cvg = itemsControl.ItemContainerGenerator.ItemFromContainer(Owner) as CollectionViewGroupInternal;
                 if (cvg != null)
                 {
-                    for (int i=0; i<recentlyRealizedPeers.Count; i++)
+                    for (int i = 0; i < recentlyRealizedPeers.Count; i++)
                     {
                         ItemAutomationPeer peer = recentlyRealizedPeers[i];
                         object item = peer.Item;

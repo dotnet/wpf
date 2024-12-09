@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,13 +8,12 @@
 // Spec: Glyphs element and GlyphRun object.htm
 //
 
+using System.ComponentModel;
 using System.Globalization;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Navigation;
-using System.Windows.Markup;
-using System.ComponentModel;
 using MS.Internal.Utility;
-
 using BuildInfo = MS.Internal.PresentationFramework.BuildInfo;
 
 namespace System.Windows.Documents
@@ -177,7 +176,7 @@ namespace System.Windows.Documents
             Rect alignmentRect = new Rect();
             if (haveOriginX && haveOriginY && leftToRight)
             {
-                _measurementGlyphRun = _glyphRunProperties.CreateGlyphRun(new Point(OriginX,OriginY), Language);
+                _measurementGlyphRun = _glyphRunProperties.CreateGlyphRun(new Point(OriginX, OriginY), Language);
                 measurementGlyphRunOriginValid = true;
             }
             else
@@ -385,10 +384,10 @@ namespace System.Windows.Documents
         /// <returns>true if glyph index is present, false if glyph index is not present.</returns>
         private bool ReadGlyphIndex(
             ReadOnlySpan<char> valueSpec,
-            ref bool           inCluster,
-            ref int            glyphClusterSize,
-            ref int            characterClusterSize,
-            ref ushort         glyphIndex)
+            ref bool inCluster,
+            ref int glyphClusterSize,
+            ref int characterClusterSize,
+            ref ushort glyphIndex)
         {
             // the format is ... [(CharacterClusterSize[:GlyphClusterSize])] GlyphIndex ...
             ReadOnlySpan<char> glyphIndexString = valueSpec;
@@ -397,7 +396,7 @@ namespace System.Windows.Documents
             if (firstBracket != -1)
             {
                 // Only spaces are allowed before the bracket
-                for (int i=0; i<firstBracket; i++)
+                for (int i = 0; i < firstBracket; i++)
                 {
                     if (!Char.IsWhiteSpace(valueSpec[i]))
                         throw new ArgumentException(SR.GlyphsClusterBadCharactersBeforeBracket);
@@ -465,10 +464,10 @@ namespace System.Windows.Documents
 
         private class ParsedGlyphData
         {
-            public ushort   glyphIndex;
-            public double   advanceWidth;
-            public double   offsetX;
-            public double   offsetY;
+            public ushort glyphIndex;
+            public double advanceWidth;
+            public double offsetX;
+            public double offsetY;
         };
 
         // -----------------------------------------------------------------------------
@@ -486,11 +485,11 @@ namespace System.Windows.Documents
         // to mean one glyph of all default values; ";" to mean two glyphs of all defaults;
         // "77,231;" to mean two glyphs, the second one all defaults. Right?
         private int ParseGlyphsProperty(
-            GlyphTypeface               fontFace,
-            string                      unicodeString,
-            bool                        sideways,
-            out List<ParsedGlyphData>   parsedGlyphs,
-            out ushort[]                clusterMap)
+            GlyphTypeface fontFace,
+            string unicodeString,
+            bool sideways,
+            out List<ParsedGlyphData> parsedGlyphs,
+            out ushort[] clusterMap)
         {
             string glyphsProp = Indices;
 
@@ -689,7 +688,7 @@ namespace System.Windows.Documents
             // has changed and we don't need to invalidate layout.  Otherwise
             // we have to invalidate
 
-           ((UIElement)d).InvalidateVisual();
+            ((UIElement)d).InvalidateVisual();
         }
 
         private static void GlyphRunPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -740,7 +739,7 @@ namespace System.Windows.Documents
         /// Indices property
         /// </summary>
         public static readonly DependencyProperty IndicesProperty =
-            DependencyProperty.Register( "Indices", typeof(string), typeof(Glyphs),
+            DependencyProperty.Register("Indices", typeof(string), typeof(Glyphs),
                 new FrameworkPropertyMetadata(string.Empty,
                                               FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender,
                                               new PropertyChangedCallback(GlyphRunPropertyChanged)));
@@ -764,7 +763,7 @@ namespace System.Windows.Documents
         /// UnicodeString property
         /// </summary>
         public static readonly DependencyProperty UnicodeStringProperty =
-            DependencyProperty.Register( "UnicodeString", typeof(string), typeof(Glyphs),
+            DependencyProperty.Register("UnicodeString", typeof(string), typeof(Glyphs),
                 new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender, new PropertyChangedCallback(GlyphRunPropertyChanged)));
 
         /// <summary>
@@ -774,7 +773,8 @@ namespace System.Windows.Documents
         {
             get
             {
-                return (string)GetValue(UnicodeStringProperty);;
+                return (string)GetValue(UnicodeStringProperty);
+                ;
             }
             set
             {
@@ -787,7 +787,7 @@ namespace System.Windows.Documents
         /// correspond to every code point in UnicodeString property.
         /// </summary>
         public static readonly DependencyProperty CaretStopsProperty =
-            DependencyProperty.Register( "CaretStops", typeof(string), typeof(Glyphs),
+            DependencyProperty.Register("CaretStops", typeof(string), typeof(Glyphs),
                 new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.AffectsRender, new PropertyChangedCallback(GlyphRunPropertyChanged)));
 
         /// <summary>
@@ -797,7 +797,8 @@ namespace System.Windows.Documents
         {
             get
             {
-                return (string)GetValue(CaretStopsProperty);;
+                return (string)GetValue(CaretStopsProperty);
+                ;
             }
             set
             {
@@ -809,7 +810,7 @@ namespace System.Windows.Documents
         /// FontRenderingEmSize property
         /// </summary>
         public static readonly DependencyProperty FontRenderingEmSizeProperty =
-            DependencyProperty.Register( "FontRenderingEmSize", typeof(double), typeof(Glyphs),
+            DependencyProperty.Register("FontRenderingEmSize", typeof(double), typeof(Glyphs),
                 new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender, new PropertyChangedCallback(GlyphRunPropertyChanged)));
 
         /// <summary>
@@ -832,7 +833,7 @@ namespace System.Windows.Documents
         /// OriginX property
         /// </summary>
         public static readonly DependencyProperty OriginXProperty =
-            DependencyProperty.Register( "OriginX", typeof(double), typeof(Glyphs),
+            DependencyProperty.Register("OriginX", typeof(double), typeof(Glyphs),
                 new FrameworkPropertyMetadata(Double.NaN, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender, new PropertyChangedCallback(OriginPropertyChanged)));
 
         /// <summary>
@@ -855,7 +856,7 @@ namespace System.Windows.Documents
         /// OriginY property
         /// </summary>
         public static readonly DependencyProperty OriginYProperty =
-            DependencyProperty.Register( "OriginY", typeof(double), typeof(Glyphs),
+            DependencyProperty.Register("OriginY", typeof(double), typeof(Glyphs),
                 new FrameworkPropertyMetadata(Double.NaN, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender, new PropertyChangedCallback(OriginPropertyChanged)));
 
         /// <summary>
@@ -878,7 +879,7 @@ namespace System.Windows.Documents
         /// FontUri property
         /// </summary>
         public static readonly DependencyProperty FontUriProperty =
-            DependencyProperty.Register( "FontUri", typeof(Uri), typeof(Glyphs),
+            DependencyProperty.Register("FontUri", typeof(Uri), typeof(Glyphs),
                 new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender, new PropertyChangedCallback(GlyphRunPropertyChanged)));
 
         /// <summary>
@@ -900,7 +901,7 @@ namespace System.Windows.Documents
         /// StyleSimulations property
         /// </summary>
         public static readonly DependencyProperty StyleSimulationsProperty =
-            DependencyProperty.Register( "StyleSimulations", typeof(StyleSimulations), typeof(Glyphs),
+            DependencyProperty.Register("StyleSimulations", typeof(StyleSimulations), typeof(Glyphs),
                 new FrameworkPropertyMetadata(StyleSimulations.None, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender, new PropertyChangedCallback(GlyphRunPropertyChanged)));
 
         /// <summary>
@@ -922,7 +923,7 @@ namespace System.Windows.Documents
         /// Sideways property
         /// </summary>
         public static readonly DependencyProperty IsSidewaysProperty =
-            DependencyProperty.Register( "IsSideways", typeof(bool), typeof(Glyphs),
+            DependencyProperty.Register("IsSideways", typeof(bool), typeof(Glyphs),
                 new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender, new PropertyChangedCallback(GlyphRunPropertyChanged)));
 
         /// <summary>
@@ -930,7 +931,7 @@ namespace System.Windows.Documents
         /// and use vertical baseline positioning metrics.
         /// </summary>
         /// <value>true if the rotation should be applied, false otherwise.</value>
-        public bool  IsSideways
+        public bool IsSideways
         {
             get
             {
@@ -946,7 +947,7 @@ namespace System.Windows.Documents
         /// BidiLevel property
         /// </summary>
         public static readonly DependencyProperty BidiLevelProperty =
-            DependencyProperty.Register( "BidiLevel", typeof(int), typeof(Glyphs),
+            DependencyProperty.Register("BidiLevel", typeof(int), typeof(Glyphs),
                 new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender, new PropertyChangedCallback(GlyphRunPropertyChanged)));
 
         /// <summary>
@@ -983,7 +984,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return (string) GetValue(DeviceFontNameProperty);
+                return (string)GetValue(DeviceFontNameProperty);
             }
             set
             {
@@ -1033,17 +1034,17 @@ namespace System.Windows.Documents
         /// </summary>
         private class LayoutDependentGlyphRunProperties
         {
-            public double           fontRenderingSize;
-            public ushort []        glyphIndices;
-            public double []        advanceWidths;
-            public Point []         glyphOffsets;
-            public ushort []        clusterMap;
-            public bool             sideways;
-            public int              bidiLevel;
-            public GlyphTypeface    glyphTypeface;
-            public string           unicodeString;
-            public IList<bool>      caretStops;
-            public string           deviceFontName;
+            public double fontRenderingSize;
+            public ushort[] glyphIndices;
+            public double[] advanceWidths;
+            public Point[] glyphOffsets;
+            public ushort[] clusterMap;
+            public bool sideways;
+            public int bidiLevel;
+            public GlyphTypeface glyphTypeface;
+            public string unicodeString;
+            public IList<bool> caretStops;
+            public string deviceFontName;
             private float _pixelsPerDip;
 
             public LayoutDependentGlyphRunProperties(double pixelsPerDip)
@@ -1085,15 +1086,15 @@ namespace System.Windows.Documents
         /// <summary>
         /// Caches the result of parsing GlyphRun properties.
         /// </summary>
-        private LayoutDependentGlyphRunProperties   _glyphRunProperties;
+        private LayoutDependentGlyphRunProperties _glyphRunProperties;
 
         /// <summary>
         /// This GlyphRun instance is needed for measurement purposes only.
         /// </summary>
-        private GlyphRun                            _measurementGlyphRun;
+        private GlyphRun _measurementGlyphRun;
 
-        private Point                               _glyphRunOrigin = new Point();
-        private const double                        EmMultiplier = 100.0;
+        private Point _glyphRunOrigin = new Point();
+        private const double EmMultiplier = 100.0;
 
         #endregion Private Fields
     };

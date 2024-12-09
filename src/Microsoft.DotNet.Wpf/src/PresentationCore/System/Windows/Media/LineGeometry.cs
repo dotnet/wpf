@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,7 +11,7 @@ namespace System.Windows.Media
     /// <summary>
     /// This is the Geometry class for Lines. 
     /// </summary>
-    public sealed partial class LineGeometry : Geometry 
+    public sealed partial class LineGeometry : Geometry
     {
         #region Constructors
 
@@ -21,7 +21,7 @@ namespace System.Windows.Media
         public LineGeometry()
         {
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -30,7 +30,7 @@ namespace System.Windows.Media
             StartPoint = startPoint;
             EndPoint = endPoint;
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -41,9 +41,9 @@ namespace System.Windows.Media
         {
             Transform = transform;
         }
-                              
+
         #endregion
-        
+
         /// <summary>
         /// Gets the bounds of this Geometry as an axis-aligned bounding box
         /// </summary>
@@ -56,8 +56,8 @@ namespace System.Windows.Media
                 Rect rect = new Rect(StartPoint, EndPoint);
 
                 Transform transform = Transform;
-                
-                if (transform != null && !transform.IsIdentity) 
+
+                if (transform != null && !transform.IsIdentity)
                 {
                     transform.TransformRect(ref rect);
                 }
@@ -73,7 +73,7 @@ namespace System.Windows.Media
         internal override Rect GetBoundsInternal(Pen pen, Matrix worldMatrix, double tolerance, ToleranceType type)
         {
             Matrix geometryMatrix;
-            
+
             Transform.GetTransformValue(Transform, out geometryMatrix);
 
             return LineGeometry.GetBoundsHelper(
@@ -89,7 +89,7 @@ namespace System.Windows.Media
         internal static Rect GetBoundsHelper(Pen pen, Matrix worldMatrix, Point pt1, Point pt2,
                                              Matrix geometryMatrix, double tolerance, ToleranceType type)
         {
-            if (pen == null  &&  worldMatrix.IsIdentity && geometryMatrix.IsIdentity)
+            if (pen == null && worldMatrix.IsIdentity && geometryMatrix.IsIdentity)
             {
                 return new Rect(pt1, pt2);
             }
@@ -104,10 +104,10 @@ namespace System.Windows.Media
                     fixed (byte* pTypes = LineTypes) //Merely retrieves the pointer to static PE data, no actual pinning occurs
                     {
                         return Geometry.GetBoundsHelper(
-                            pen, 
-                            &worldMatrix, 
-                            pPoints, 
-                            pTypes, 
+                            pen,
+                            &worldMatrix,
+                            pPoints,
+                            pTypes,
                             c_pointCount,
                             c_segmentCount,
                             &geometryMatrix,
@@ -126,13 +126,13 @@ namespace System.Windows.Media
                 Point* pPoints = stackalloc Point[2];
                 pPoints[0] = StartPoint;
                 pPoints[1] = EndPoint;
-                
+
                 fixed (byte* pTypes = LineTypes) //Merely retrieves the pointer to static PE data, no actual pinning occurs
                 {
                     return ContainsInternal(
                         pen,
                         hitPoint,
-                        tolerance, 
+                        tolerance,
                         type,
                         pPoints,
                         GetPointCount(),
@@ -217,7 +217,7 @@ namespace System.Windows.Media
             collection.Add(
                 new PathFigure(
                 startPoint,
-                new PathSegment[]{new LineSegment(endPoint, true)},
+                new PathSegment[] { new LineSegment(endPoint, true) },
                 false // ==> not closed
                 )
             );
@@ -236,15 +236,17 @@ namespace System.Windows.Media
                 return Geometry.GetEmptyPathGeometryData();
             }
 
-            PathGeometryData data = new PathGeometryData();
-            data.FillRule = FillRule.EvenOdd;
-            data.Matrix = CompositionResourceManager.TransformToMilMatrix3x2D(Transform);
+            PathGeometryData data = new PathGeometryData
+            {
+                FillRule = FillRule.EvenOdd,
+                Matrix = CompositionResourceManager.TransformToMilMatrix3x2D(Transform)
+            };
 
             ByteStreamGeometryContext ctx = new ByteStreamGeometryContext();
 
             ctx.BeginFigure(StartPoint, true /* is filled */, false /* is closed */);
             ctx.LineTo(EndPoint, true /* is stroked */, false /* is smooth join */);
-            
+
             ctx.Close();
             data.SerializedData = ctx.GetData();
 
@@ -252,7 +254,7 @@ namespace System.Windows.Media
         }
 
         #region Static Data
-        
+
         private const UInt32 c_segmentCount = 1;
         private const UInt32 c_pointCount = 2;
 

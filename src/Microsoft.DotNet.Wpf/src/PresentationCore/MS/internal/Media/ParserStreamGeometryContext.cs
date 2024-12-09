@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -37,7 +37,7 @@ namespace MS.Internal.Media
     ///     ParserStreamGeometryContext
     /// </summary>
     internal class ParserStreamGeometryContext : StreamGeometryContext
-     {
+    {
         enum ParserGeometryContextOpCodes : byte
         {
             BeginFigure = 0,
@@ -299,7 +299,7 @@ namespace MS.Internal.Media
             // there was one).
             //
             FinishFigure();
-            _bw.Write((byte) ParserGeometryContextOpCodes.Closed);
+            _bw.Write((byte)ParserGeometryContextOpCodes.Closed);
         }
 
 #if PRESENTATION_CORE
@@ -314,45 +314,45 @@ namespace MS.Internal.Media
 
                 ParserGeometryContextOpCodes opCode = UnPackOpCode(currentByte);
 
-                switch(opCode)
+                switch (opCode)
                 {
-                    case ParserGeometryContextOpCodes.FillRule :
+                    case ParserGeometryContextOpCodes.FillRule:
                         DeserializeFillRule(br, currentByte, geometry);
                         break;
 
-                    case ParserGeometryContextOpCodes.BeginFigure :
+                    case ParserGeometryContextOpCodes.BeginFigure:
                         DeserializeBeginFigure(br, currentByte, sc);
                         break;
 
-                    case ParserGeometryContextOpCodes.LineTo :
+                    case ParserGeometryContextOpCodes.LineTo:
                         DeserializeLineTo(br, currentByte, sc);
                         break;
 
-                    case ParserGeometryContextOpCodes.QuadraticBezierTo :
+                    case ParserGeometryContextOpCodes.QuadraticBezierTo:
                         DeserializeQuadraticBezierTo(br, currentByte, sc);
                         break;
 
-                    case ParserGeometryContextOpCodes.BezierTo :
+                    case ParserGeometryContextOpCodes.BezierTo:
                         DeserializeBezierTo(br, currentByte, sc);
                         break;
 
-                    case ParserGeometryContextOpCodes.PolyLineTo :
+                    case ParserGeometryContextOpCodes.PolyLineTo:
                         DeserializePolyLineTo(br, currentByte, sc);
                         break;
 
-                    case ParserGeometryContextOpCodes.PolyQuadraticBezierTo :
+                    case ParserGeometryContextOpCodes.PolyQuadraticBezierTo:
                         DeserializePolyQuadraticBezierTo(br, currentByte, sc);
                         break;
 
-                    case ParserGeometryContextOpCodes.PolyBezierTo :
+                    case ParserGeometryContextOpCodes.PolyBezierTo:
                         DeserializePolyBezierTo(br, currentByte, sc);
                         break;
 
-                    case ParserGeometryContextOpCodes.ArcTo :
+                    case ParserGeometryContextOpCodes.ArcTo:
                         DeserializeArcTo(br, currentByte, sc);
                         break;
 
-                    case ParserGeometryContextOpCodes.Closed :
+                    case ParserGeometryContextOpCodes.Closed:
                         closed = true;
                         break;
                 }
@@ -382,7 +382,7 @@ namespace MS.Internal.Media
             fillRule = BoolToFillRule(boolFillRule);
 
             geometry.FillRule = fillRule;
-}
+        }
 
         private static void DeserializeBeginFigure(BinaryReader br, Byte firstByte, StreamGeometryContext sc)
         {
@@ -526,7 +526,7 @@ namespace MS.Internal.Media
 
         private static ParserGeometryContextOpCodes UnPackOpCode(byte packedByte)
         {
-            return ((ParserGeometryContextOpCodes) (packedByte & 0x0F));
+            return ((ParserGeometryContextOpCodes)(packedByte & 0x0F));
         }
 
         private static IList<Point> DeserializeListOfPointsAndTwoBools(BinaryReader br, Byte firstByte, out bool bool1, out bool bool2)
@@ -542,7 +542,7 @@ namespace MS.Internal.Media
 
             points = new List<Point>(count);
 
-            for(int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
                 point = new Point(XamlSerializationHelper.ReadDouble(br),
                                   XamlSerializationHelper.ReadDouble(br));
@@ -583,7 +583,7 @@ namespace MS.Internal.Media
 
         private static SweepDirection BoolToSweep(bool value)
         {
-            if(!value)
+            if (!value)
                 return SweepDirection.Counterclockwise;
             else
                 return SweepDirection.Clockwise;
@@ -599,7 +599,7 @@ namespace MS.Internal.Media
 
         private static FillRule BoolToFillRule(bool value)
         {
-            if(!value)
+            if (!value)
                 return FillRule.EvenOdd;
             else
                 return FillRule.Nonzero;
@@ -670,7 +670,7 @@ namespace MS.Internal.Media
             _bw.Write(points.Count);
 
             // Write out all the Points
-            for(int i = 0; i < points.Count; i++)
+            for (int i = 0; i < points.Count; i++)
             {
                 XamlSerializationHelper.WriteDouble(_bw, points[i].X);
                 XamlSerializationHelper.WriteDouble(_bw, points[i].Y);
@@ -709,7 +709,7 @@ namespace MS.Internal.Media
         //
         private static byte PackByte(ParserGeometryContextOpCodes opCode, bool bool1, bool bool2, bool bool3, bool bool4)
         {
-            byte packedByte = (byte) opCode;
+            byte packedByte = (byte)opCode;
 
             if (packedByte >= 16)
             {

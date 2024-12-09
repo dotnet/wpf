@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -27,19 +27,19 @@ namespace System.Windows.Input
         /// <summary>
         /// None
         /// </summary>
-        None, 
+        None,
         /// <summary>
         /// LeftClick
         /// </summary>
-        LeftClick, 
+        LeftClick,
         /// <summary>
         /// RightClick
         /// </summary>
-        RightClick, 
+        RightClick,
         /// <summary>
         /// MiddleClick
         /// </summary>
-        MiddleClick, 
+        MiddleClick,
         /// <summary>
         /// WheelClick
         /// </summary>
@@ -47,11 +47,11 @@ namespace System.Windows.Input
         /// <summary>
         /// LeftDoubleClick
         /// </summary>
-        LeftDoubleClick, 
+        LeftDoubleClick,
         /// <summary>
         /// RightDoubleClick
         /// </summary>
-        RightDoubleClick, 
+        RightDoubleClick,
         /// <summary>
         /// MiddleDoubleClick
         /// </summary>

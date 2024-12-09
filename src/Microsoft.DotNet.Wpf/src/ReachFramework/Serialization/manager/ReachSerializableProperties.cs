@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -26,21 +26,21 @@ namespace System.Windows.Xps.Serialization
         /// <summary>
         /// Intantiate a SerializablePropertyCollection
         /// </summary>
-        internal 
+        internal
         SerializablePropertyCollection(
-            PackageSerializationManager manager, 
-            object                      targetObject
+            PackageSerializationManager manager,
+            object targetObject
             )
         {
-            this._simplePropertyCollection  = null;
+            this._simplePropertyCollection = null;
             this._complexPropertyCollection = null;
-            this._simplePropertiesIndex     = -1;
-            this._complexPropertiesIndex    = -1;
-            this._queueEnumerator           = null;
-            this._serializationManager      = manager;
-            this._target                    = targetObject;
-            this._isSimpleMode              = true;
-            
+            this._simplePropertiesIndex = -1;
+            this._complexPropertiesIndex = -1;
+            this._queueEnumerator = null;
+            this._serializationManager = manager;
+            this._target = targetObject;
+            this._isSimpleMode = true;
+
             Initialize(manager, _target);
         }
 
@@ -52,7 +52,7 @@ namespace System.Windows.Xps.Serialization
         /// return the Enumerator for the collection
         /// </summary>
         public
-        IEnumerator 
+        IEnumerator
         GetEnumerator(
             )
         {
@@ -66,11 +66,11 @@ namespace System.Windows.Xps.Serialization
         /// <summary>
         /// Current object in the collection
         /// </summary>
-        public 
+        public
         object
         Current
         {
-            get 
+            get
             {
                 return _queueEnumerator.Current;
             }
@@ -79,19 +79,19 @@ namespace System.Windows.Xps.Serialization
         /// <summary>
         /// Move to the next PropertyContext
         /// </summary>
-        public 
-        bool 
+        public
+        bool
         MoveNext()
         {
             bool canMoveToNext = false;
 
-            if(_isSimpleMode)
+            if (_isSimpleMode)
             {
-                if(_simplePropertiesIndex == -1)
+                if (_simplePropertiesIndex == -1)
                 {
                     _queueEnumerator = _simplePropertyCollection.GetEnumerator();
                 }
-                if(_simplePropertiesIndex < _simplePropertyCollection.Count-1)
+                if (_simplePropertiesIndex < _simplePropertyCollection.Count - 1)
                 {
                     _simplePropertiesIndex++;
                     _queueEnumerator.MoveNext();
@@ -103,13 +103,13 @@ namespace System.Windows.Xps.Serialization
                 }
             }
 
-            if(!_isSimpleMode)
+            if (!_isSimpleMode)
             {
-                if(_complexPropertiesIndex == -1)
+                if (_complexPropertiesIndex == -1)
                 {
                     _queueEnumerator = _complexPropertyCollection.GetEnumerator();
                 }
-                if(_complexPropertiesIndex < _complexPropertyCollection.Count-1)
+                if (_complexPropertiesIndex < _complexPropertyCollection.Count - 1)
                 {
                     _complexPropertiesIndex++;
                     _queueEnumerator.MoveNext();
@@ -125,16 +125,16 @@ namespace System.Windows.Xps.Serialization
         /// the beginning of the collection
         /// </summary>
         public
-        void 
+        void
         Reset(
             )
         {
-            this._simplePropertiesIndex     = -1;
-            this._complexPropertiesIndex    = -1;
-            this._queueEnumerator           = null;
-            this._isSimpleMode              = true;
+            this._simplePropertiesIndex = -1;
+            this._complexPropertiesIndex = -1;
+            this._queueEnumerator = null;
+            this._isSimpleMode = true;
         }
-        
+
         #endregion IEnumerator implementation
 
         #region Internal Methods
@@ -142,15 +142,15 @@ namespace System.Windows.Xps.Serialization
         /// <summary>
         /// Initialize this instance
         /// </summary>
-        internal 
-        void 
+        internal
+        void
         Initialize(
-            PackageSerializationManager serializationManager, 
-            object                      targetObject
+            PackageSerializationManager serializationManager,
+            object targetObject
             )
         {
             this._serializationManager = serializationManager;
-            this._target               = targetObject;
+            this._target = targetObject;
 
             //
             // Collect all serializable properties on the
@@ -172,7 +172,7 @@ namespace System.Windows.Xps.Serialization
             // Collecting information about the CLR properties
             //
             InitializeSerializableClrProperties();
-            
+
             //
             // Now that we are done with the clr serializable properties we need to 
             // iterate through locally set dependency properties on this instance
@@ -200,16 +200,16 @@ namespace System.Windows.Xps.Serialization
         {
             this._simplePropertyCollection.Clear();
             this._complexPropertyCollection.Clear();
-            this._simplePropertiesIndex     = -1;
-            this._complexPropertiesIndex    = -1;
-            this._queueEnumerator           = null;
-            this._serializationManager      = null;
-            this._target                    = null;
-            this._isSimpleMode              = true;
+            this._simplePropertiesIndex = -1;
+            this._complexPropertiesIndex = -1;
+            this._queueEnumerator = null;
+            this._serializationManager = null;
+            this._target = null;
+            this._isSimpleMode = true;
         }
 
         #endregion Internal Methods
-        
+
         #region Private Methods
 
         /// <summary>
@@ -223,10 +223,10 @@ namespace System.Windows.Xps.Serialization
         {
             TypePropertyCache[] clrProperties = _serializationManager.CacheManager.GetClrSerializableProperties(_target);
 
-            if(clrProperties!=null)
+            if (clrProperties != null)
             {
-                for (int indexInClrSerializableProperties=0;
-                     indexInClrSerializableProperties < clrProperties.Length; 
+                for (int indexInClrSerializableProperties = 0;
+                     indexInClrSerializableProperties < clrProperties.Length;
                      indexInClrSerializableProperties++)
                 {
                     TypePropertyCache propertyCache = clrProperties[indexInClrSerializableProperties];
@@ -234,7 +234,7 @@ namespace System.Windows.Xps.Serialization
                     //
                     // Create SerializablePropertyContext out of the cache retrieved
                     //
-                    SerializablePropertyContext propertyContext = new SerializablePropertyContext(_target, 
+                    SerializablePropertyContext propertyContext = new SerializablePropertyContext(_target,
                                                                                                   propertyCache);
 
                     propertyContext.Name = propertyContext.TypePropertyCache.PropertyInfo.Name;
@@ -246,7 +246,7 @@ namespace System.Windows.Xps.Serialization
                     // o Complex properties would be considered elements within the markup and might
                     //   require a new writer
                     //
-                    if(propertyContext.IsComplexProperty(_serializationManager))
+                    if (propertyContext.IsComplexProperty(_serializationManager))
                     {
                         propertyContext.IsComplex = true;
                         _complexPropertyCollection.Enqueue(propertyContext);
@@ -255,7 +255,7 @@ namespace System.Windows.Xps.Serialization
                     {
                         propertyContext.IsComplex = false;
                         _simplePropertyCollection.Enqueue(propertyContext);
-                    }                    
+                    }
                 }
             }
         }
@@ -273,23 +273,23 @@ namespace System.Windows.Xps.Serialization
                                                                  CacheManager.
                                                                  GetSerializableDependencyProperties(_target);
 
-            if(dependencyProperties!=null)
+            if (dependencyProperties != null)
             {
-                for (int indexInSerializableDependencyProperties=0;
-                     indexInSerializableDependencyProperties < dependencyProperties.Length; 
+                for (int indexInSerializableDependencyProperties = 0;
+                     indexInSerializableDependencyProperties < dependencyProperties.Length;
                      indexInSerializableDependencyProperties++)
                 {
-                    TypeDependencyPropertyCache dependencyPropertyCache = 
+                    TypeDependencyPropertyCache dependencyPropertyCache =
                     dependencyProperties[indexInSerializableDependencyProperties];
 
                     //
                     // Create SerializableDependencyPropertyContext out of the cache retrieved
                     //
-                    SerializableDependencyPropertyContext dependencyPropertyContext = 
-                    new SerializableDependencyPropertyContext(_target, 
+                    SerializableDependencyPropertyContext dependencyPropertyContext =
+                    new SerializableDependencyPropertyContext(_target,
                                                               dependencyPropertyCache);
 
-                    dependencyPropertyContext.Name = 
+                    dependencyPropertyContext.Name =
                     ((DependencyProperty)((TypeDependencyPropertyCache)dependencyPropertyContext.TypePropertyCache).
                     DependencyProperty).Name;
 
@@ -300,7 +300,7 @@ namespace System.Windows.Xps.Serialization
                     // o Complex properties would be considered elements within the markup and might
                     //   require a new writer
                     //
-                    if(dependencyPropertyContext.IsComplexProperty(_serializationManager))
+                    if (dependencyPropertyContext.IsComplexProperty(_serializationManager))
                     {
                         dependencyPropertyContext.IsComplex = true;
                         _complexPropertyCollection.Enqueue(dependencyPropertyContext);
@@ -309,32 +309,32 @@ namespace System.Windows.Xps.Serialization
                     {
                         dependencyPropertyContext.IsComplex = false;
                         _simplePropertyCollection.Enqueue(dependencyPropertyContext);
-                    }                    
+                    }
                 }
             }
         }
 
-        
+
         #endregion Private Methods
-        
+
         #region Private Data
 
-        private 
+        private
         PackageSerializationManager _serializationManager;
-        private 
-        object                      _target;
-        private 
-        bool                        _isSimpleMode;
-        private                 
-        int                         _simplePropertiesIndex;
-        private 
-        Queue                       _simplePropertyCollection;
-        private 
-        int                         _complexPropertiesIndex;
-        private 
-        Queue                       _complexPropertyCollection;
-        private 
-        IEnumerator                 _queueEnumerator;
+        private
+        object _target;
+        private
+        bool _isSimpleMode;
+        private
+        int _simplePropertiesIndex;
+        private
+        Queue _simplePropertyCollection;
+        private
+        int _complexPropertiesIndex;
+        private
+        Queue _complexPropertyCollection;
+        private
+        IEnumerator _queueEnumerator;
 
         #endregion Private Data
     };
@@ -343,7 +343,7 @@ namespace System.Windows.Xps.Serialization
     /// <summary>
     /// A class defining a context for the serializable CLR property
     /// </summary>
-    internal class SerializablePropertyContext : 
+    internal class SerializablePropertyContext :
                    BasicContext
     {
         #region Constructor
@@ -351,12 +351,12 @@ namespace System.Windows.Xps.Serialization
         /// <summary>
         /// Constructor for SerializablePropertyContext
         /// </summary>
-        public 
+        public
         SerializablePropertyContext(
-            string            name, 
-            string            prefix, 
-            object            target, 
-            TypePropertyCache propertyCache) : 
+            string name,
+            string prefix,
+            object target,
+            TypePropertyCache propertyCache) :
         base(name, prefix)
         {
             //
@@ -368,16 +368,16 @@ namespace System.Windows.Xps.Serialization
 
             this._targetObject = target;
             this._propertyInfo = propertyCache;
-            this._isComplex    = false;
+            this._isComplex = false;
         }
 
         /// <summary>
         /// Constructor for SerializablePropertyContext
         /// </summary>
-        internal 
+        internal
         SerializablePropertyContext(
-            object            target, 
-            TypePropertyCache propertyCache) : 
+            object target,
+            TypePropertyCache propertyCache) :
         base()
         {
             //
@@ -386,13 +386,13 @@ namespace System.Windows.Xps.Serialization
             ArgumentNullException.ThrowIfNull(target);
             ArgumentNullException.ThrowIfNull(propertyCache);
 
-            _targetObject   = target;
-            _propertyInfo   = propertyCache;
+            _targetObject = target;
+            _propertyInfo = propertyCache;
             this._isComplex = false;
         }
 
         #endregion Constructor
-        
+
         #region Public Methods
 
         /// <summary>
@@ -417,8 +417,8 @@ namespace System.Windows.Xps.Serialization
                 // If the property has a DesignerSerializationOptions.SerializeAsAttribute 
                 // then obviously we do not use complex notation
                 //
-                if(!(DesignerSerializationOptionsAttribute != null && 
-                     (DesignerSerializationOptionsAttribute.DesignerSerializationOptions == 
+                if (!(DesignerSerializationOptionsAttribute != null &&
+                     (DesignerSerializationOptionsAttribute.DesignerSerializationOptions ==
                       DesignerSerializationOptions.SerializeAsAttribute)))
 
                 {
@@ -428,7 +428,7 @@ namespace System.Windows.Xps.Serialization
                     //
                     Type valueType = Value.GetType();
 
-                    if (valueType == typeof(string) && 
+                    if (valueType == typeof(string) &&
                         ((string)Value) != string.Empty)
                     {
                         isComplex = true;
@@ -447,28 +447,28 @@ namespace System.Windows.Xps.Serialization
 
         virtual
         public
-        bool 
+        bool
         IsComplexValue(
-                PackageSerializationManager manager, 
-            out bool                        canConvert
+                PackageSerializationManager manager,
+            out bool canConvert
             )
         {
             bool isComplex = true;
 
             canConvert = true;
-            
-            if(SerializerType!=null)
+
+            if (SerializerType != null)
             {
                 isComplex = true;
             }
             else
             {
                 TypeConverter converter = this.TypeConverter;
-                
-                canConvert = converter.CanConvertTo(null,typeof(string)) &&
-                             converter.CanConvertFrom(null,typeof(string));
 
-                if(canConvert)
+                canConvert = converter.CanConvertTo(null, typeof(string)) &&
+                             converter.CanConvertFrom(null, typeof(string));
+
+                if (canConvert)
                 {
                     isComplex = false;
                 }
@@ -478,39 +478,39 @@ namespace System.Windows.Xps.Serialization
         }
 
         #endregion Public Methods
-        
+
         #region Public Properties
 
         /// <summary>
         /// Qyery the Target Object
         /// </summary>
         public
-        object 
+        object
         TargetObject
         {
-            get 
-            { 
-                return _targetObject; 
+            get
+            {
+                return _targetObject;
             }
         }
-        
+
         /// <summary>
         /// Qyery the CLR propertyInfo structure of this property
         /// </summary>
-        public 
-        PropertyInfo 
+        public
+        PropertyInfo
         PropertyInfo
         {
-            get 
-            { 
+            get
+            {
                 PropertyInfo info = null;
 
                 if (_propertyInfo != null)
                 {
                     info = (PropertyInfo)_propertyInfo.PropertyInfo;
                 }
-                
-                return info; 
+
+                return info;
             }
         }
 
@@ -537,19 +537,19 @@ namespace System.Windows.Xps.Serialization
         /// Query the visibility of the property
         /// </summary>
         public
-        DesignerSerializationVisibility 
+        DesignerSerializationVisibility
         Visibility
         {
-            get 
-            { 
+            get
+            {
                 DesignerSerializationVisibility visibility = DesignerSerializationVisibility.Visible;
 
                 if (_propertyInfo != null)
                 {
                     visibility = _propertyInfo.Visibility;
                 }
-                
-                return visibility; 
+
+                return visibility;
             }
         }
 
@@ -558,19 +558,19 @@ namespace System.Windows.Xps.Serialization
         /// property if it happens to be a complex property
         /// </summary>
         public
-        Type 
+        Type
         SerializerType
         {
-            get 
-            { 
+            get
+            {
                 Type type = null;
 
                 if (_propertyInfo != null)
                 {
-                    type =  _propertyInfo.SerializerTypeForProperty;
+                    type = _propertyInfo.SerializerTypeForProperty;
                 }
-                
-                return type; 
+
+                return type;
             }
         }
 
@@ -579,19 +579,19 @@ namespace System.Windows.Xps.Serialization
         /// to some equivalent string
         /// </summary>
         public
-        TypeConverter 
+        TypeConverter
         TypeConverter
         {
-            get 
-            { 
+            get
+            {
                 TypeConverter converter = null;
 
                 if (_propertyInfo != null)
                 {
                     converter = _propertyInfo.TypeConverterForProperty;
                 }
-                
-                return converter; 
+
+                return converter;
             }
         }
 
@@ -602,16 +602,16 @@ namespace System.Windows.Xps.Serialization
         DefaultValueAttribute
         DefaultValueAttribute
         {
-            get 
-            { 
+            get
+            {
                 DefaultValueAttribute defValAttr = null;
 
                 if (_propertyInfo != null)
                 {
                     defValAttr = _propertyInfo.DefaultValueAttr;
                 }
-                
-                return defValAttr; 
+
+                return defValAttr;
             }
         }
 
@@ -622,16 +622,16 @@ namespace System.Windows.Xps.Serialization
         DesignerSerializationOptionsAttribute
         DesignerSerializationOptionsAttribute
         {
-            get 
-            { 
+            get
+            {
                 DesignerSerializationOptionsAttribute designerSerFlagAttr = null;
 
                 if (_propertyInfo != null)
                 {
                     designerSerFlagAttr = _propertyInfo.DesignerSerializationOptionsAttr;
                 }
-                
-                return designerSerFlagAttr; 
+
+                return designerSerFlagAttr;
             }
         }
 
@@ -640,38 +640,38 @@ namespace System.Windows.Xps.Serialization
         /// Query whether this is a read only or a read/write property    
         /// </summary>
         public
-        bool 
+        bool
         IsReadOnly
         {
-            get 
-            { 
+            get
+            {
                 bool isReadOnly = false;
 
-                if ( (_propertyInfo != null) &&
-                     (((PropertyInfo)_propertyInfo.PropertyInfo) != null) )
+                if ((_propertyInfo != null) &&
+                     (((PropertyInfo)_propertyInfo.PropertyInfo) != null))
                 {
                     isReadOnly = !((PropertyInfo)_propertyInfo.PropertyInfo).CanWrite;
                 }
-                
-                return isReadOnly; 
+
+                return isReadOnly;
             }
         }
 
         /// <summary>
         /// Query / set the value of this property
         /// </summary>
-        public 
-        object 
+        public
+        object
         Value
         {
-            get 
-            { 
-                return _propertyInfo.PropertyValue; 
+            get
+            {
+                return _propertyInfo.PropertyValue;
             }
 
-            set 
+            set
             {
-                 _propertyInfo.PropertyValue = value; 
+                _propertyInfo.PropertyValue = value;
             }
         }
 
@@ -679,26 +679,26 @@ namespace System.Windows.Xps.Serialization
         /// This is the cache information about the property. Each
         /// property discovered is saved for performance optimization
         /// </summary>
-        public 
-        TypePropertyCache 
+        public
+        TypePropertyCache
         TypePropertyCache
         {
-            get 
-            { 
-                return _propertyInfo; 
+            get
+            {
+                return _propertyInfo;
             }
         }
 
         #endregion Public Properties
-        
+
         #region Private Data
 
-        private 
-        object              _targetObject;
-        private 
-        TypePropertyCache   _propertyInfo;
         private
-        bool                _isComplex;
+        object _targetObject;
+        private
+        TypePropertyCache _propertyInfo;
+        private
+        bool _isComplex;
 
         #endregion Private Data
     };
@@ -706,7 +706,7 @@ namespace System.Windows.Xps.Serialization
     /// <summary>
     /// A class defining context for serializable Dependency Properties
     /// </summary>
-    internal class SerializableDependencyPropertyContext : 
+    internal class SerializableDependencyPropertyContext :
                    SerializablePropertyContext
     {
         #region Constructor
@@ -714,24 +714,24 @@ namespace System.Windows.Xps.Serialization
         /// <summary>
         /// Constructor for SerializableDependencyPropertyContext
         /// </summary>
-        public 
+        public
         SerializableDependencyPropertyContext(
-            string                      name, 
-            string                      prefix, 
-            object                      target, 
-            TypeDependencyPropertyCache propertyCache) : 
-        base(name, prefix,target,propertyCache)
+            string name,
+            string prefix,
+            object target,
+            TypeDependencyPropertyCache propertyCache) :
+        base(name, prefix, target, propertyCache)
         {
         }
 
         /// <summary>
         /// Constructor for SerializableDependencyPropertyContext
         /// </summary>
-        public 
+        public
         SerializableDependencyPropertyContext(
-            object                      target, 
-            TypeDependencyPropertyCache propertyCache) : 
-        base(target,propertyCache)
+            object target,
+            TypeDependencyPropertyCache propertyCache) :
+        base(target, propertyCache)
         {
         }
 
@@ -739,7 +739,7 @@ namespace System.Windows.Xps.Serialization
 
 
         #region Public Methods
-        
+
         /// <summary>
         /// Detects whether this property is complex or simple
         /// </summary>
@@ -762,8 +762,8 @@ namespace System.Windows.Xps.Serialization
                 // If the property has a DesignerSerializationOptions.SerializeAsAttribute 
                 // then obviously we do not use complex notation
                 //
-                if(!(DesignerSerializationOptionsAttribute != null && 
-                     (DesignerSerializationOptionsAttribute.DesignerSerializationOptions == 
+                if (!(DesignerSerializationOptionsAttribute != null &&
+                     (DesignerSerializationOptionsAttribute.DesignerSerializationOptions ==
                       DesignerSerializationOptions.SerializeAsAttribute)))
 
                 {
@@ -773,7 +773,7 @@ namespace System.Windows.Xps.Serialization
                     //
                     Type valueType = Value.GetType();
 
-                    if (valueType == typeof(string) && 
+                    if (valueType == typeof(string) &&
                         ((string)Value) != string.Empty)
                     {
                         isComplex = true;
@@ -803,28 +803,28 @@ namespace System.Windows.Xps.Serialization
 
         public
         override
-        bool 
+        bool
         IsComplexValue(
-                PackageSerializationManager manager, 
-            out bool                        canConvert
+                PackageSerializationManager manager,
+            out bool canConvert
             )
         {
             bool isComplex = true;
 
             canConvert = true;
-            
-            if(SerializerType!=null)
+
+            if (SerializerType != null)
             {
                 isComplex = true;
             }
             else
             {
                 TypeConverter converter = this.TypeConverter;
-                
-                canConvert = converter.CanConvertTo(null,typeof(string)) &&
-                             converter.CanConvertFrom(null,typeof(string));
 
-                if(canConvert)
+                canConvert = converter.CanConvertTo(null, typeof(string)) &&
+                             converter.CanConvertFrom(null, typeof(string));
+
+                if (canConvert)
                 {
                     isComplex = false;
                 }
@@ -834,46 +834,46 @@ namespace System.Windows.Xps.Serialization
         }
 
         #endregion Public Methods
-        
+
         #region Public Properties
 
         /// <summary>
         /// return info about the dependency property
         /// </summary>
-        public 
-        MemberInfo 
+        public
+        MemberInfo
         MemberInfo
         {
-            get 
-            { 
+            get
+            {
                 MemberInfo memberInfo = null;
 
                 if (this.PropertyInfo != null)
                 {
                     memberInfo = ((TypeDependencyPropertyCache)TypePropertyCache).MemberInfo;
                 }
-                
-                return memberInfo; 
+
+                return memberInfo;
             }
         }
 
         /// <summary>
         /// return the dependency property
         /// </summary>
-        public 
-        Object 
+        public
+        Object
         DependencyProperty
         {
-            get 
-            { 
+            get
+            {
                 Object dependencyProperty = null;
 
                 if (this.PropertyInfo != null)
                 {
                     dependencyProperty = ((TypeDependencyPropertyCache)TypePropertyCache).DependencyProperty;
                 }
-                
-                return dependencyProperty; 
+
+                return dependencyProperty;
             }
         }
 

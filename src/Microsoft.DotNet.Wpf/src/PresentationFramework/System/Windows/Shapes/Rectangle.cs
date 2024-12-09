@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,8 +8,8 @@
 //
 
 
-using System.Windows.Media;
 using System.ComponentModel;
+using System.Windows.Media;
 
 namespace System.Windows.Shapes
 {
@@ -19,7 +19,7 @@ namespace System.Windows.Shapes
     /// and will be presented by the parent canvas.
     /// </summary>
     /// <ExternalAPI/>
-    public sealed class Rectangle : Shape 
+    public sealed class Rectangle : Shape
     {
         #region Constructors
         /// <summary>
@@ -45,7 +45,7 @@ namespace System.Windows.Shapes
         /// </summary>
         /// <ExternalAPI/>
         public static readonly DependencyProperty RadiusXProperty =
-            DependencyProperty.Register( "RadiusX", typeof(double), typeof(Rectangle),
+            DependencyProperty.Register("RadiusX", typeof(double), typeof(Rectangle),
                 new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.AffectsRender));
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace System.Windows.Shapes
         /// </summary>
         /// <ExternalAPI/>
         public static readonly DependencyProperty RadiusYProperty =
-            DependencyProperty.Register( "RadiusY", typeof(double), typeof(Rectangle),
+            DependencyProperty.Register("RadiusY", typeof(double), typeof(Rectangle),
                 new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.AffectsRender));
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace System.Windows.Shapes
 
             return finalSize;
         }
-        
+
         /// <summary>
         /// Get the rectangle that defines this shape
         /// </summary>
@@ -262,7 +262,7 @@ namespace System.Windows.Shapes
         {
             return _rect;
         }
-        
+
         //
         //  This property
         //  1. Finds the correct initial size for the _effectiveValues store on the current DependencyObject
@@ -274,9 +274,9 @@ namespace System.Windows.Shapes
         }
 
         #endregion Internal Methods
-        
+
         #region Private Fields
-        
+
         private Rect _rect = Rect.Empty;
 
         #endregion Private Fields

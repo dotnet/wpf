@@ -1,14 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 //
 //
 
-using System.Windows.Media.Media3D;
-using System.Windows.Media.Composition;
-using MS.Internal;
 using System.Runtime.InteropServices;
+using System.Windows.Media.Composition;
+using System.Windows.Media.Media3D;
+using MS.Internal;
 
 namespace System.Windows.Media
 {
@@ -71,8 +71,8 @@ namespace System.Windows.Media
             // Convert first D3DMatrix Vector
             //
 
-            pMatrix[0] = (double) pD3DMatrix[0]; // m11 = m11
-            pMatrix[1] = (double) pD3DMatrix[1]; // m12 = m12
+            pMatrix[0] = (double)pD3DMatrix[0]; // m11 = m11
+            pMatrix[1] = (double)pD3DMatrix[1]; // m12 = m12
 
             // Assert that non-affine fields are identity or NaN
             //
@@ -88,8 +88,8 @@ namespace System.Windows.Media
             // Convert second D3DMatrix Vector
             //
 
-            pMatrix[2] = (double) pD3DMatrix[4]; // m21 = m21
-            pMatrix[3] = (double) pD3DMatrix[5]; // m22 = m22
+            pMatrix[2] = (double)pD3DMatrix[4]; // m21 = m21
+            pMatrix[3] = (double)pD3DMatrix[5]; // m22 = m22
             Debug.Assert(pD3DMatrix[6] == 0.0f || Single.IsNaN(pD3DMatrix[6]));
             Debug.Assert(pD3DMatrix[7] == 0.0f || Single.IsNaN(pD3DMatrix[7]));
 
@@ -106,12 +106,12 @@ namespace System.Windows.Media
             // Convert fourth D3DMatrix Vector
             //
 
-            pMatrix[4] = (double) pD3DMatrix[12]; // m41 = offsetX
-            pMatrix[5] = (double) pD3DMatrix[13]; // m42 = offsetY
+            pMatrix[4] = (double)pD3DMatrix[12]; // m41 = offsetX
+            pMatrix[5] = (double)pD3DMatrix[13]; // m42 = offsetY
             Debug.Assert(pD3DMatrix[14] == 0.0f || Single.IsNaN(pD3DMatrix[14]));
             Debug.Assert(pD3DMatrix[15] == 1.0f || Single.IsNaN(pD3DMatrix[15]));
 
-            *((MatrixTypes*)(pMatrix+6)) = MatrixTypes.TRANSFORM_IS_UNKNOWN;
+            *((MatrixTypes*)(pMatrix + 6)) = MatrixTypes.TRANSFORM_IS_UNKNOWN;
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -126,12 +126,12 @@ namespace System.Windows.Media
                 LengthY = (float)rect.SizeY;
                 LengthZ = (float)rect.SizeZ;
             }
-            
-            public float X; 
-            public float Y; 
+
+            public float X;
+            public float Y;
             public float Z;
-            public float LengthX; 
-            public float LengthY; 
+            public float LengthX;
+            public float LengthY;
             public float LengthZ;
         }
 
@@ -148,24 +148,24 @@ namespace System.Windows.Media
         private extern static /*HRESULT*/ int MIL3DCalcProjected2DBounds(
             ref D3DMATRIX pFullTransform3D,
             ref MILRect3D pboxBounds,
-            out MilRectF prcDestRect); 
+            out MilRectF prcDestRect);
 
         [DllImport(DllImport.MilCore, EntryPoint = "MilUtility_CopyPixelBuffer", PreserveSig = false)]
         internal extern static unsafe void MILCopyPixelBuffer(
-            byte *  pOutputBuffer,
-            uint    outputBufferSize,
-            uint    outputBufferStride,
-            uint    outputBufferOffsetInBits,
-            byte *  pInputBuffer,
-            uint    inputBufferSize,
-            uint    inputBufferStride,
-            uint    inputBufferOffsetInBits,
-            uint    height,
-            uint    copyWidthInBits
+            byte* pOutputBuffer,
+            uint outputBufferSize,
+            uint outputBufferStride,
+            uint outputBufferOffsetInBits,
+            byte* pInputBuffer,
+            uint inputBufferSize,
+            uint inputBufferStride,
+            uint inputBufferOffsetInBits,
+            uint height,
+            uint copyWidthInBits
             );
 
         internal static Rect ProjectBounds(
-            ref Matrix3D viewProjMatrix, 
+            ref Matrix3D viewProjMatrix,
             ref Rect3D originalBox)
         {
             D3DMATRIX viewProjFloatMatrix = CompositionResourceManager.Matrix3DToD3DMATRIX(viewProjMatrix);
@@ -174,11 +174,11 @@ namespace System.Windows.Media
 
             HRESULT.Check(
                 MIL3DCalcProjected2DBounds(
-                    ref viewProjFloatMatrix, 
-                    ref originalBoxFloat, 
+                    ref viewProjFloatMatrix,
+                    ref originalBoxFloat,
                     out outRect));
 
-            if (outRect.Left == outRect.Right || 
+            if (outRect.Left == outRect.Right ||
                 outRect.Top == outRect.Bottom)
             {
                 return Rect.Empty;
@@ -186,9 +186,9 @@ namespace System.Windows.Media
             else
             {
                 return new Rect(
-                    outRect.Left, 
-                    outRect.Top, 
-                    outRect.Right - outRect.Left, 
+                    outRect.Left,
+                    outRect.Top,
+                    outRect.Right - outRect.Left,
                     outRect.Bottom - outRect.Top
                     );
             }

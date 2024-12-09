@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,17 +17,17 @@ namespace MS.Internal.IO.Packaging
     internal sealed class TrackingMemoryStream : MemoryStream
     {
         // other constructors can be added later, as we need them, for now we only use the following 2  
-        internal TrackingMemoryStream(ITrackingMemoryStreamFactory memoryStreamFactory): base()
+        internal TrackingMemoryStream(ITrackingMemoryStreamFactory memoryStreamFactory) : base()
         {
             // although we could have implemented this constructor in terms of the other constructor; we shouldn't. 
             // It seems safer to always call the equivalent base class constructor, as we might be ignorant about 
             // some minor differences between various MemoryStream constructors
-            Debug.Assert(memoryStreamFactory != null);            
+            Debug.Assert(memoryStreamFactory != null);
             _memoryStreamFactory = memoryStreamFactory;
             ReportIfNeccessary();
         }
-            
-        internal TrackingMemoryStream (ITrackingMemoryStreamFactory memoryStreamFactory, Int32 capacity) : base(capacity)
+
+        internal TrackingMemoryStream(ITrackingMemoryStreamFactory memoryStreamFactory, Int32 capacity) : base(capacity)
         {
             Debug.Assert(memoryStreamFactory != null);
             _memoryStreamFactory = memoryStreamFactory;
@@ -80,16 +80,16 @@ namespace MS.Internal.IO.Packaging
             }
         }
 
-        private void ReportIfNeccessary ()        
+        private void ReportIfNeccessary()
         {
-            if (this.Capacity !=_lastReportedHighWaterMark)
+            if (this.Capacity != _lastReportedHighWaterMark)
             {
                 // we need to report the new memory being allocated as a part of the constructor  
                 _memoryStreamFactory.ReportMemoryUsageDelta(checked(this.Capacity - _lastReportedHighWaterMark));
                 _lastReportedHighWaterMark = this.Capacity;
             }
         }
-        
+
         private ITrackingMemoryStreamFactory _memoryStreamFactory;
         private int _lastReportedHighWaterMark;
     }

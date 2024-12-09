@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,8 +6,8 @@
 // Description: TextChanged event argument.
 //
 
-using System.ComponentModel;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace System.Windows.Controls
 {
@@ -75,7 +75,7 @@ namespace System.Windows.Controls
                 throw new InvalidEnumArgumentException("action", (int)action, typeof(UndoAction));
             }
 
-            RoutedEvent=id;
+            RoutedEvent = id;
             _undoAction = action;
             _changes = changes;
         }

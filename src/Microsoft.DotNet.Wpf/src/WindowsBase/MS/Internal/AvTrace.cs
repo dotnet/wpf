@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,14 +10,13 @@
 
 #define TRACE
 
+using System.Collections;
 using System.Globalization;
 using System.Text;
-using System.Collections;
 using System.Windows;
-
 using Microsoft.Win32;
-using MS.Win32;
 using MS.Internal.WindowsBase;
+using MS.Win32;
 
 namespace MS.Internal
 {
@@ -31,7 +30,7 @@ namespace MS.Internal
         //      TraceSource (that corresponds to this AvTrace) from PresentationTraceSources.
         //
 
-        public AvTrace( GetTraceSourceDelegate getTraceSourceDelegate, ClearTraceSourceDelegate clearTraceSourceDelegate )
+        public AvTrace(GetTraceSourceDelegate getTraceSourceDelegate, ClearTraceSourceDelegate clearTraceSourceDelegate)
         {
             _getTraceSourceDelegate = getTraceSourceDelegate;
             _clearTraceSourceDelegate = clearTraceSourceDelegate;
@@ -111,16 +110,16 @@ namespace MS.Internal
             set
             {
                 _enabledByDebugger = value;
-                if( _enabledByDebugger )
+                if (_enabledByDebugger)
                 {
-                    if( !IsEnabled && IsDebuggerAttached() )
+                    if (!IsEnabled && IsDebuggerAttached())
                     {
                         _isEnabled = true;
                     }
                 }
                 else
                 {
-                    if( IsEnabled && !IsWpfTracingEnabledInRegistry() && !_hasBeenRefreshed )
+                    if (IsEnabled && !IsWpfTracingEnabledInRegistry() && !_hasBeenRefreshed)
                     {
                         _isEnabled = false;
                     }
@@ -150,12 +149,12 @@ namespace MS.Internal
         //
         // Internal initialization
         //
-        void Initialize( )
+        void Initialize()
         {
             // Decide if we should actually create a TraceSource instance (doing so isn't free,
             // so we don't want to do it if we can avoid it).
 
-            if( ShouldCreateTraceSources() )
+            if (ShouldCreateTraceSources())
             {
                 // Get TraceSource from the PresentationTraceSources
                 // (this call will indirectly create the TraceSource if one doesn't already exist)
@@ -164,7 +163,7 @@ namespace MS.Internal
                 // We go enabled if tracing is enabled in the registry, if
                 // PresentationTraceSources.Refresh has been called, or if we're in the debugger
                 // and the debugger is supposed to enable tracing.
-                _isEnabled = IsWpfTracingEnabledInRegistry() || _hasBeenRefreshed || _enabledByDebugger ;
+                _isEnabled = IsWpfTracingEnabledInRegistry() || _hasBeenRefreshed || _enabledByDebugger;
             }
             else
             {
@@ -185,7 +184,7 @@ namespace MS.Internal
 
         static private bool ShouldCreateTraceSources()
         {
-            if( IsWpfTracingEnabledInRegistry()
+            if (IsWpfTracingEnabledInRegistry()
                 || IsDebuggerAttached()
                 || _hasBeenRefreshed
               )
@@ -206,7 +205,7 @@ namespace MS.Internal
         {
             // First time this is called, initialize from the registry
 
-            if( _enabledInRegistry == null )
+            if (_enabledInRegistry == null)
             {
                 bool enabled = false;
 
@@ -215,7 +214,7 @@ namespace MS.Internal
                                                             @"Software\Microsoft\Tracing\WPF",
                                                             "ManagedTracing");
 
-                if( keyValue is int && ((int) keyValue) == 1 )
+                if (keyValue is int && ((int)keyValue) == 1)
                 {
                     enabled = true;
                 }
@@ -225,7 +224,7 @@ namespace MS.Internal
                 _enabledInRegistry = enabled;
             }
 
-            return (bool) _enabledInRegistry;
+            return (bool)_enabledInRegistry;
         }
 
 
@@ -246,12 +245,12 @@ namespace MS.Internal
         //  note: labels start at index 1, parameters start at index 0
         //
 
-        public string Trace( TraceEventType type, int eventId, string message, string[] labels, object[] parameters )
+        public string Trace(TraceEventType type, int eventId, string message, string[] labels, object[] parameters)
         {
             // Don't bother building the string if this trace is going to be ignored.
 
-            if( _traceSource == null
-                || !_traceSource.Switch.ShouldTrace( type ))
+            if (_traceSource == null
+                || !_traceSource.Switch.ShouldTrace(type))
             {
                 return null;
             }
@@ -267,17 +266,17 @@ namespace MS.Internal
             if (parameters != null && labels != null && labels.Length > 0)
             {
                 int i = 1, j = 0;
-                for( ; i < labels.Length && j < parameters.Length; i++, j++ )
+                for (; i < labels.Length && j < parameters.Length; i++, j++)
                 {
                     // Append to the format string a "; {0} = '{1}'", where the index increments (e.g. the second iteration will
                     // produce {2} & {3}).
 
-                    traceBuilder.Append("; {" + (formatIndex++).ToString() + "}='{" + (formatIndex++).ToString() + "}'" );
+                    traceBuilder.Append("; {" + (formatIndex++).ToString() + "}='{" + (formatIndex++).ToString() + "}'");
 
                     // If this parameter is null, convert to "<null>"; otherwise, when a string.format is ultimately called
                     // it produces bad results.
 
-                    if( parameters[j] == null )
+                    if (parameters[j] == null)
                     {
                         parameters[j] = "<null>";
                     }
@@ -285,17 +284,17 @@ namespace MS.Internal
                     // Otherwise, if this is an interesting object, add the hash code and type to
                     // the format string explicitely.
 
-                    else if( !SuppressGeneratedParameters
+                    else if (!SuppressGeneratedParameters
                              && parameters[j].GetType() != typeof(string)
                              && !(parameters[j] is ValueType)
                              && !(parameters[j] is Type)
-                             && !(parameters[j] is DependencyProperty) )
+                             && !(parameters[j] is DependencyProperty))
                     {
                         traceBuilder.Append("; " + labels[i].ToString() + ".HashCode='"
-                                                    + GetHashCodeHelper(parameters[j]).ToString() + "'" );
+                                                    + GetHashCodeHelper(parameters[j]).ToString() + "'");
 
                         traceBuilder.Append("; " + labels[i].ToString() + ".Type='"
-                                                    + GetTypeHelper(parameters[j]).ToString() + "'" );
+                                                    + GetTypeHelper(parameters[j]).ToString() + "'");
                     }
 
 
@@ -303,16 +302,16 @@ namespace MS.Internal
                     // (As an optimization, the generated classes could pre-allocate a thread-safe static array, to avoid
                     // this allocation and the ToArray allocation below.)
 
-                    arrayList.Add( labels[i] );
-                    arrayList.Add( parameters[j] );
+                    arrayList.Add(labels[i]);
+                    arrayList.Add(parameters[j]);
                 }
 
                 // It's OK if we terminate because we have more lables than parameters;
                 // this is used by traces to have out-values in the Stop message.
 
-                if( TraceExtraMessages != null && j < parameters.Length)
+                if (TraceExtraMessages != null && j < parameters.Length)
                 {
-                    TraceExtraMessages( traceBuilder, parameters, j );
+                    TraceExtraMessages(traceBuilder, parameters, j);
                 }
             }
 
@@ -324,12 +323,12 @@ namespace MS.Internal
                 type,
                 eventId,
                 traceMessage,
-                arrayList.ToArray() );
+                arrayList.ToArray());
 
             // When in the debugger, always flush the output, to guarantee that the
             // traces and other info (e.g. exceptions) get interleaved correctly.
 
-            if( IsDebuggerAttached() )
+            if (IsDebuggerAttached())
             {
                 _traceSource.Flush();
             }
@@ -343,10 +342,10 @@ namespace MS.Internal
         //  (information is contained in the Start event)
         //
 
-        public void TraceStartStop( int eventID, string message, string[] labels, Object[] parameters )
+        public void TraceStartStop(int eventID, string message, string[] labels, Object[] parameters)
         {
-            Trace( TraceEventType.Start, eventID, message, labels, parameters );
-            _traceSource.TraceEvent( TraceEventType.Stop, eventID);
+            Trace(TraceEventType.Start, eventID, message, labels, parameters);
+            _traceSource.TraceEvent(TraceEventType.Stop, eventID);
         }
 
 
@@ -362,13 +361,13 @@ namespace MS.Internal
 
             // PreSharp uses message numbers that the C# compiler doesn't know about.
             // Disable the C# complaints, per the PreSharp documentation.
-            #pragma warning disable 1634, 1691
+#pragma warning disable 1634, 1691
 
             // PreSharp complains about catching NullReference (and other) exceptions.
             // In this case, these are precisely the ones we want to catch the most,
             // so that we can still print some kind of diagnostic information even
             // about objects that implement ToString poorly.
-            #pragma warning disable 56500
+#pragma warning disable 56500
 
             string result;
             try
@@ -380,8 +379,8 @@ namespace MS.Internal
                 result = "<unprintable>";
             }
 
-            #pragma warning restore 56500
-            #pragma warning restore 1634, 1691
+#pragma warning restore 56500
+#pragma warning restore 1634, 1691
 
             return AntiFormat(result);
         }
@@ -400,10 +399,10 @@ namespace MS.Internal
 
             while (formatIndex >= 0)
             {
-                if (formatIndex < lengthMinus1 && s[formatIndex] == s[formatIndex+1])
+                if (formatIndex < lengthMinus1 && s[formatIndex] == s[formatIndex + 1])
                 {
                     // formatting character is already duplicated - leave them alone
-                    formatIndex = s.IndexOfAny(FormatChars, formatIndex+2);
+                    formatIndex = s.IndexOfAny(FormatChars, formatIndex + 2);
                 }
                 else
                 {
@@ -442,15 +441,15 @@ namespace MS.Internal
         // individual GetHashCode implementations can be unreliable.
         //
 
-        static public int GetHashCodeHelper(object value )
+        static public int GetHashCodeHelper(object value)
         {
             try
             {
                 return (value != null) ? value.GetHashCode() : 0;
             }
-            catch( Exception e )
+            catch (Exception e)
             {
-                if( CriticalExceptions.IsCriticalApplicationException(e))
+                if (CriticalExceptions.IsCriticalApplicationException(e))
                 {
                     throw;
                 }
@@ -504,31 +503,31 @@ namespace MS.Internal
         // Cache used by IsWpfTracingEnabledInRegistry
         static Nullable<bool> _enabledInRegistry = null;
 
-        static char[] FormatChars = new char[]{ '{', '}' };
+        static char[] FormatChars = new char[] { '{', '}' };
     }
 
-    internal delegate void AvTraceEventHandler( AvTraceBuilder traceBuilder, object[] parameters, int start );
+    internal delegate void AvTraceEventHandler(AvTraceBuilder traceBuilder, object[] parameters, int start);
 
     internal class AvTraceBuilder
     {
-        StringBuilder  _sb;
+        StringBuilder _sb;
 
         public AvTraceBuilder()
         {
             _sb = new StringBuilder();
         }
 
-        public AvTraceBuilder( string message )
+        public AvTraceBuilder(string message)
         {
-            _sb = new StringBuilder( message );
+            _sb = new StringBuilder(message);
         }
 
-        public void Append( string message )
+        public void Append(string message)
         {
-            _sb.Append( message );
+            _sb.Append(message);
         }
 
-        public void AppendFormat( string message, params object[] args )
+        public void AppendFormat(string message, params object[] args)
         {
             object[] argstrs = new object[args.Length];
             for (int i = 0; i < args.Length; ++i)
@@ -536,30 +535,30 @@ namespace MS.Internal
                 string s = args[i] as string;
                 argstrs[i] = (s != null) ? s : AvTrace.ToStringHelper(args[i]);
             }
-            _sb.AppendFormat( CultureInfo.InvariantCulture, message, argstrs );
+            _sb.AppendFormat(CultureInfo.InvariantCulture, message, argstrs);
         }
 
-        public void AppendFormat( string message, object arg1 )
+        public void AppendFormat(string message, object arg1)
         {
-            _sb.AppendFormat( CultureInfo.InvariantCulture, message, new object[] { AvTrace.ToStringHelper(arg1) } );
+            _sb.AppendFormat(CultureInfo.InvariantCulture, message, new object[] { AvTrace.ToStringHelper(arg1) });
         }
 
-        public void AppendFormat( string message, object arg1, object arg2 )
+        public void AppendFormat(string message, object arg1, object arg2)
         {
-            _sb.AppendFormat( CultureInfo.InvariantCulture, message, new object[] { AvTrace.ToStringHelper(arg1), AvTrace.ToStringHelper(arg2) } );
+            _sb.AppendFormat(CultureInfo.InvariantCulture, message, new object[] { AvTrace.ToStringHelper(arg1), AvTrace.ToStringHelper(arg2) });
         }
 
-        public void AppendFormat( string message, string arg1 )
+        public void AppendFormat(string message, string arg1)
         {
-            _sb.AppendFormat( CultureInfo.InvariantCulture, message, new object[] { AvTrace.AntiFormat(arg1) } );
+            _sb.AppendFormat(CultureInfo.InvariantCulture, message, new object[] { AvTrace.AntiFormat(arg1) });
         }
 
-        public void AppendFormat( string message, string arg1, string arg2 )
+        public void AppendFormat(string message, string arg1, string arg2)
         {
-            _sb.AppendFormat( CultureInfo.InvariantCulture, message, new object[] { AvTrace.AntiFormat(arg1), AvTrace.AntiFormat(arg2) } );
+            _sb.AppendFormat(CultureInfo.InvariantCulture, message, new object[] { AvTrace.AntiFormat(arg1), AvTrace.AntiFormat(arg2) });
         }
 
-        public override string ToString( )
+        public override string ToString()
         {
             return _sb.ToString();
         }

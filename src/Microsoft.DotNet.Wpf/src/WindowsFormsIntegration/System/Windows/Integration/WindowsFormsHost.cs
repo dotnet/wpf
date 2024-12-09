@@ -1,27 +1,26 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Win32;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Windows.Automation.Peers;
+using System.Windows.Automation.Provider;
+using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Markup;
 using System.Windows.Media;
-using System.Windows.Automation.Provider;
-using System.Windows.Automation.Peers;
-
+using MS.Win32;
 using SD = System.Drawing;
 using SW = System.Windows;
 using SWC = System.Windows.Controls;
 using SWF = System.Windows.Forms;
-using SWM = System.Windows.Media;
 using SWI = System.Windows.Input;
-using System.Windows.Input;
+using SWM = System.Windows.Media;
 
 namespace System.Windows.Forms.Integration
 {
@@ -142,7 +141,7 @@ namespace System.Windows.Forms.Integration
             IntPtr result = IntPtr.Zero;
 
             WindowsFormsHostAutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(this) as WindowsFormsHostAutomationPeer;
-            if(peer != null)
+            if (peer != null)
             {
                 // get the element proxy
                 IRawElementProviderSimple el = peer.GetProvider();
@@ -768,7 +767,8 @@ namespace System.Windows.Forms.Integration
             IntPtr focusHwnd = UnsafeNativeMethods.GetFocus();
             try
             {
-                if (IntPtr.Zero == _prevFocusHwnd ) { return; }
+                if (IntPtr.Zero == _prevFocusHwnd)
+                { return; }
 
                 //If focus is changing from a child of the WinFormsAdapter to something outside
                 //we will activate the a temporary control to cause leave and validation events
@@ -794,7 +794,8 @@ namespace System.Windows.Forms.Integration
         {
             get
             {
-                if (_host == null) { return base.Cursor; }
+                if (_host == null)
+                { return base.Cursor; }
 
                 if (!_host.PropertyMap.PropertyMappedToEmptyTranslator("Cursor"))
                 { return base.Cursor; }
@@ -802,7 +803,8 @@ namespace System.Windows.Forms.Integration
                 bool forceCursorMapped = _host.PropertyMap.PropertyMappedToEmptyTranslator("ForceCursor");
 
                 FrameworkElement cursorSource = HostUtils.GetCursorSource(_host, forceCursorMapped);
-                if (cursorSource == null) { return base.Cursor; }
+                if (cursorSource == null)
+                { return base.Cursor; }
 
                 return Convert.ToSystemWindowsFormsCursor(cursorSource.Cursor);
             }

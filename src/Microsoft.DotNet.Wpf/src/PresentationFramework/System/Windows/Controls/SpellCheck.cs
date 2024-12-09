@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Threading;
-using System.Windows.Documents;
-using System.Windows.Controls.Primitives;
 using System.Collections;
+using System.Threading;
+using System.Windows.Controls.Primitives;
+using System.Windows.Documents;
 
 //
 // Description: Speller properties for TextBoxBase.
@@ -60,7 +60,7 @@ namespace System.Windows.Controls
                 _owner.SetValue(IsEnabledProperty, value);
             }
         }
-        
+
         /// <summary>
         /// Enables and disables spell checking within a TextBoxBase.
         /// </summary>
@@ -115,7 +115,7 @@ namespace System.Windows.Controls
             }
         }
 
-       
+
         /// <summary>
         /// Sets the spelling reform mode for a TextBoxBase.
         /// </summary>
@@ -152,7 +152,7 @@ namespace System.Windows.Controls
                 return (IList)_owner.GetValue(CustomDictionariesProperty);
             }
         }
-        
+
         /// <summary>
         /// Gets the collection of custom dictionaries used for spell checking of custom words.
         /// </summary>
@@ -170,11 +170,11 @@ namespace System.Windows.Controls
                         typeof(IList),
                         typeof(SpellCheck),
                         new FrameworkPropertyMetadata(new DictionaryCollectionFactory()));
-        
+
         /// <summary>
         /// Attached property representing location of custom dicitonaries for given <see cref="TextBoxBase"/>
         /// </summary>
-        public static readonly DependencyProperty CustomDictionariesProperty = CustomDictionariesPropertyKey.DependencyProperty;        
+        public static readonly DependencyProperty CustomDictionariesProperty = CustomDictionariesPropertyKey.DependencyProperty;
 
         #endregion Public Properties
 
@@ -245,7 +245,7 @@ namespace System.Windows.Controls
                 return new CustomDictionarySources(owner as TextBoxBase);
             }
         }
-        
+
         //------------------------------------------------------
         //
         //  Private Fields

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,8 +7,8 @@ using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows.Controls.Primitives;   // IItemContainerGenerator
-using System.Windows.Media;
 using System.Windows.Markup; // IAddChild, ContentPropertyAttribute
+using System.Windows.Media;
 using MS.Internal.Controls;
 using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationFramework;
@@ -77,7 +77,7 @@ namespace System.Windows.Controls
         /// The object to add as a child; it must be a UIElement.
         ///</param>
         /// <ExternalAPI/>
-        void IAddChild.AddChild (Object value)
+        void IAddChild.AddChild(Object value)
         {
             ArgumentNullException.ThrowIfNull(value);
             if (IsItemsHost)
@@ -102,7 +102,7 @@ namespace System.Windows.Controls
         ///<param name="text">
         /// Text to add as a child.
         ///</param>
-        void IAddChild.AddText (string text)
+        void IAddChild.AddText(string text)
         {
             XamlSerializerUtil.ThrowIfNonWhiteSpaceInAddText(text, this);
         }
@@ -122,7 +122,7 @@ namespace System.Windows.Controls
         /// </summary>
         public Brush Background
         {
-            get { return (Brush) GetValue(BackgroundProperty); }
+            get { return (Brush)GetValue(BackgroundProperty); }
             set { SetValue(BackgroundProperty, value); }
         }
 
@@ -222,15 +222,15 @@ namespace System.Windows.Controls
         [Bindable(false), Category("Behavior")]
         public bool IsItemsHost
         {
-            get { return (bool) GetValue(IsItemsHostProperty); }
+            get { return (bool)GetValue(IsItemsHostProperty); }
             set { SetValue(IsItemsHostProperty, BooleanBoxes.Box(value)); }
         }
 
         private static void OnIsItemsHostChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Panel panel = (Panel) d;
+            Panel panel = (Panel)d;
 
-            panel.OnIsItemsHostChanged((bool) e.OldValue, (bool) e.NewValue);
+            panel.OnIsItemsHostChanged((bool)e.OldValue, (bool)e.NewValue);
         }
 
         /// <summary>
@@ -376,7 +376,8 @@ namespace System.Windows.Controls
                 throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
 
-            if (IsZStateDirty) { RecomputeZState(); }
+            if (IsZStateDirty)
+            { RecomputeZState(); }
             int visualIndex = _zLut != null ? _zLut[index] : index;
             return _uiElementCollection[visualIndex];
         }
@@ -717,7 +718,7 @@ namespace System.Windows.Controls
                 for (int i = 0; i < itemCount; i++)
                 {
                     UIElement e = generator.GenerateNext() as UIElement;
-                    if(e != null)
+                    if (e != null)
                     {
                         _uiElementCollection.InsertInternal(pos.Index + 1 + i, e);
                         generator.PrepareItemContainer(e);
@@ -750,7 +751,7 @@ namespace System.Windows.Controls
                     UIElement e = generator.GenerateNext(out isNewlyRealized) as UIElement;
 
                     Debug.Assert(e != null && !isNewlyRealized, "Panel expects Replace to affect only realized containers");
-                    if(e != null && !isNewlyRealized)
+                    if (e != null && !isNewlyRealized)
                     {
                         _uiElementCollection.SetInternal(pos.Index + i, e);
                         generator.PrepareItemContainer(e);
@@ -801,11 +802,11 @@ namespace System.Windows.Controls
         {
             if (value)
             {
-                 _boolFieldStore |= field;
+                _boolFieldStore |= field;
             }
             else
             {
-                 _boolFieldStore &= (~field);
+                _boolFieldStore &= (~field);
             }
         }
 
@@ -832,14 +833,14 @@ namespace System.Windows.Controls
         [System.Flags]
         private enum BoolField : byte
         {
-            IsZStateDirty                               = 0x01,   //  "1" when Z state needs to be recomputed
-            IsZStateDiverse                             = 0x02,   //  "1" when children have different ZIndexProperty values
-            IsVirtualizing                              = 0x04,   //  Used by VirtualizingStackPanel
-            HasMeasured                                 = 0x08,   //  Used by VirtualizingStackPanel
-            IsPixelBased                                = 0x10,   //  Used by VirtualizingStackPanel
-            InRecyclingMode                             = 0x20,   //  Used by VirtualizingStackPanel
-            MustDisableVirtualization                   = 0x40,   //  Used by VirtualizingStackPanel
-            MeasureCaches                               = 0x80,   //  Used by VirtualizingStackPanel
+            IsZStateDirty = 0x01,   //  "1" when Z state needs to be recomputed
+            IsZStateDiverse = 0x02,   //  "1" when children have different ZIndexProperty values
+            IsVirtualizing = 0x04,   //  Used by VirtualizingStackPanel
+            HasMeasured = 0x08,   //  Used by VirtualizingStackPanel
+            IsPixelBased = 0x10,   //  Used by VirtualizingStackPanel
+            InRecyclingMode = 0x20,   //  Used by VirtualizingStackPanel
+            MustDisableVirtualization = 0x40,   //  Used by VirtualizingStackPanel
+            MeasureCaches = 0x80,   //  Used by VirtualizingStackPanel
         }
 
         private UIElementCollection _uiElementCollection;

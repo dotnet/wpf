@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -30,7 +30,7 @@ namespace System.Windows
             DispatcherOperation operation = d.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, loadedCallback, d);
 
             // Set the LoadedPending property
-            d.SetValue(FrameworkElement.LoadedPendingPropertyKey, new object[]{loadedOp, operation, logicalParent});
+            d.SetValue(FrameworkElement.LoadedPendingPropertyKey, new object[] { loadedOp, operation, logicalParent });
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace System.Windows
             DispatcherOperation operation = d.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, unloadedCallback, d);
 
             // Set the UnloadedPending property
-            d.SetValue(FrameworkElement.UnloadedPendingPropertyKey, new object[]{unloadedOp, operation, logicalParent});
+            d.SetValue(FrameworkElement.UnloadedPendingPropertyKey, new object[] { unloadedOp, operation, logicalParent });
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace System.Windows
             // Added to a tree
             if (oldParent == null && newParent != null)
             {
-                if(IsLoadedHelper(newParent) == true)
+                if (IsLoadedHelper(newParent) == true)
                 {
                     // Broadcast Loaded event if your new parent is loaded
                     // Note that this broadcast will take place when you are
@@ -235,8 +235,8 @@ namespace System.Windows
                 EventRoute = eventRoute;
             }
 
-            internal DependencyObject       Root;
-            internal RoutedEvent            RoutedEvent;
+            internal DependencyObject Root;
+            internal RoutedEvent RoutedEvent;
             internal List<DependencyObject> EventRoute;
         }
 
@@ -263,7 +263,7 @@ namespace System.Windows
             walker.StartWalk(root);
 
             // Iterate and raise the event on each of the nodes in the tree
-            for (int i=0; i< eventRoute.Count; i++)
+            for (int i = 0; i < eventRoute.Count; i++)
             {
                 DependencyObject d = eventRoute[i];
                 RoutedEventArgs args = new RoutedEventArgs(routedEvent, d);
@@ -312,14 +312,14 @@ namespace System.Windows
                         {
                             // If there is a pending Loaded event abort it because we are now 
                             // being Loaded.
-                        
+
                             RemoveLoadedCallback(fe, fe.LoadedPending);
                         }
                         else if (routedEvent == FrameworkElement.UnloadedEvent && fe.UnloadedPending != null)
                         {
                             // If there is a pending Unloaded event abort it because we are now 
                             // being Unloaded.
-                        
+
                             RemoveUnloadedCallback(fe, fe.UnloadedPending);
                         }
                     }
@@ -340,7 +340,7 @@ namespace System.Windows
                         fe.IsLoadedCache = (routedEvent == FrameworkElement.LoadedEvent);
 
                         eventRoute.Add(fe);
-                    
+
                         // Continue walk down subtree
                         return true;
                     }
@@ -373,14 +373,14 @@ namespace System.Windows
                         {
                             // If there is a pending Loaded event abort it because we are now 
                             // being Loaded.
-                        
+
                             RemoveLoadedCallback(fce, fce.LoadedPending);
                         }
                         else if (routedEvent == FrameworkElement.UnloadedEvent && fce.UnloadedPending != null)
                         {
                             // If there is a pending Unloaded event abort it because we are now 
                             // being Unloaded.
-                        
+
                             RemoveUnloadedCallback(fce, fce.UnloadedPending);
                         }
                     }
@@ -459,10 +459,10 @@ namespace System.Windows
         // This method is invoked only when the loaded cache on the given node isn't valid.
         internal static bool IsParentLoaded(DependencyObject d)
         {
-            FrameworkObject     fo      = new FrameworkObject(d);
-            DependencyObject    parent  = fo.EffectiveParent;
-            Visual              visual;
-            Visual3D            visual3D;
+            FrameworkObject fo = new FrameworkObject(d);
+            DependencyObject parent = fo.EffectiveParent;
+            Visual visual;
+            Visual3D visual3D;
 
             if (parent != null)
             {
@@ -504,7 +504,7 @@ namespace System.Windows
         {
             FrameworkObject fo = new FrameworkObject(templatedParent, true);
 
-            Debug.Assert( fo.IsFE );
+            Debug.Assert(fo.IsFE);
 
             FrameworkTemplate templatedParentTemplate = fo.FE.TemplateInternal;
             FrameworkElementFactory fefTree = templatedParentTemplate.VisualTree;
@@ -532,7 +532,7 @@ namespace System.Windows
         {
             bool hasLoadChangedHandler = SubtreeHasLoadedChangeHandlerHelper(d);
 
-            if(hasLoadChangedHandler)
+            if (hasLoadChangedHandler)
             {
                 // Attaching to a Parent
                 if (oldParent == null && newParent != null)
@@ -582,7 +582,7 @@ namespace System.Windows
                 Visual v = (Visual)fo.FE;
                 int count = VisualTreeHelper.GetChildrenCount(v);
 
-                for(int i = 0; i < count; i++)
+                for (int i = 0; i < count; i++)
                 {
                     FrameworkElement child = VisualTreeHelper.GetChild(v, i) as FrameworkElement;
                     if (child != null && child.SubtreeHasLoadedChangeHandler)
@@ -593,10 +593,10 @@ namespace System.Windows
             }
 
             // Check if any of your logical children have the flag set
-            foreach(object o in LogicalTreeHelper.GetChildren(fo.DO))
+            foreach (object o in LogicalTreeHelper.GetChildren(fo.DO))
             {
                 DependencyObject child = o as DependencyObject;
-                if(null != child && SubtreeHasLoadedChangeHandlerHelper(child))
+                if (null != child && SubtreeHasLoadedChangeHandlerHelper(child))
                 {
                     return true;
                 }
@@ -621,7 +621,7 @@ namespace System.Windows
 
             if (!addHandler)
             {
-                if ( AreThereLoadedChangeHandlersInSubtree(ref fo) )
+                if (AreThereLoadedChangeHandlersInSubtree(ref fo))
                     return;  // done
             }
 
@@ -660,7 +660,7 @@ namespace System.Windows
                         }
                     }
 
-                    if(addHandler)
+                    if (addHandler)
                     {
                         // The HasLoadedChangeHandler flag is used for two purposes.
                         // 1. To indicate that the sub-tree starting at the current node has
@@ -727,7 +727,7 @@ namespace System.Windows
                 }
 
                 // This is the root visual.
-                else if ( SafeSecurityHelper.IsConnectedToPresentationSource( fe ))
+                else if (SafeSecurityHelper.IsConnectedToPresentationSource(fe))
                 {
                     fe.IsLoadedCache = true;
                 }
@@ -748,7 +748,7 @@ namespace System.Windows
         /// </summary>
         private static void UpdateIsLoadedCache(
             FrameworkContentElement fce,
-            DependencyObject        parent)
+            DependencyObject parent)
         {
             if (fce.GetValue(FrameworkElement.LoadedPendingProperty) == null)
             {

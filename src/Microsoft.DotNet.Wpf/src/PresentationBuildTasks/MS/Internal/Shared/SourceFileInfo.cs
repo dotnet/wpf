@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,9 +23,9 @@ namespace MS.Internal
     // <summary>
     // SourceFileInfo class
     // </summary>
-    internal class SourceFileInfo 
+    internal class SourceFileInfo
     {
-    #region Constructor
+        #region Constructor
         // <summary>
         // Constructor
         // </summary>
@@ -47,9 +47,9 @@ namespace MS.Internal
             }
         }
 
-    #endregion Constructor
+        #endregion Constructor
 
-    #region Properties
+        #region Properties
 
         // 
         // The original file Path
@@ -83,7 +83,7 @@ namespace MS.Internal
         // 
         internal string SourcePath
         {
-            get { return _sourcePath;  }
+            get { return _sourcePath; }
             set { _sourcePath = value; }
         }
 
@@ -111,12 +111,12 @@ namespace MS.Internal
         //
         internal Stream Stream
         {
-            get 
+            get
             {
                 //
                 // If the stream is not set for the file, get it from file system in Disk.
                 //
-                if ( _stream == null)
+                if (_stream == null)
                 {
                     _stream = File.OpenRead(_filePath);
                 }
@@ -125,14 +125,14 @@ namespace MS.Internal
             }
 
             set
-            { 
-                _stream = value; 
+            {
+                _stream = value;
             }
         }
 
-    #endregion Properties
+        #endregion Properties
 
-    #region internal methods
+        #region internal methods
 
         //
         // Close the stream.
@@ -146,9 +146,9 @@ namespace MS.Internal
             }
         }
 
-    #endregion
+        #endregion
 
-    #region Private Data
+        #region Private Data
 
         private string _filePath;
         private string _fileLinkAlias;
@@ -156,11 +156,11 @@ namespace MS.Internal
         private string _sourcePath;
         private string _relativeSourceFilePath;
         private Stream _stream;
-        private bool   _isXamlFile;
+        private bool _isXamlFile;
 
         private const string XAML = ".XAML";
 
-    #endregion Private Data
+        #endregion Private Data
 
     }
     #endregion SourceFileInfo

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,7 +11,6 @@
 
 //#define CURSOR_DEBUG
 
-using MS.Win32;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Ink;
@@ -20,6 +19,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using MS.Internal.AppModel;
+using MS.Win32;
 
 namespace MS.Internal.Ink
 {
@@ -74,13 +74,13 @@ namespace MS.Internal.Ink
             da.Width = stylusShape.Width;
             da.Color = Colors.Black;
 
-            if ( !tranform.IsIdentity )
+            if (!tranform.IsIdentity)
             {
                 // Apply the LayoutTransform and/or RenderTransform
                 da.StylusTipTransform *= tranform;
             }
 
-            if ( !DoubleUtil.IsZero(stylusShape.Rotation) )
+            if (!DoubleUtil.IsZero(stylusShape.Rotation))
             {
                 // Apply the tip rotation
                 Matrix rotationMatrix = Matrix.Identity;
@@ -98,7 +98,7 @@ namespace MS.Internal.Ink
         /// <returns></returns>
         internal static Cursor GetStrokeEraserCursor()
         {
-            if ( s_StrokeEraserCursor == null )
+            if (s_StrokeEraserCursor == null)
             {
                 // Get Drawing
                 Drawing drawing = CreateStrokeEraserDrawing();
@@ -119,7 +119,7 @@ namespace MS.Internal.Ink
         {
             Cursor cursor;
 
-            switch ( hitResult )
+            switch (hitResult)
             {
                 case InkCanvasSelectionHitResult.TopLeft:
                 case InkCanvasSelectionHitResult.BottomRight:
@@ -226,7 +226,7 @@ namespace MS.Internal.Ink
 
             NativeMethods.IconHandle finalCursor = IconHelper.CreateIconCursor(pixels, width, height, xHotspot, yHotspot, false);
 
-            if ( finalCursor.IsInvalid )
+            if (finalCursor.IsInvalid)
             {
                 // Return the default cursor if above is failed.
                 return Cursors.Arrow;
@@ -246,10 +246,12 @@ namespace MS.Internal.Ink
         private static DrawingVisual CreateCursorDrawingVisual(Drawing drawing, int width, int height)
         {
             // Create a drawing brush with the drawing as its content.
-            DrawingBrush db = new DrawingBrush(drawing);
-            db.Stretch = Stretch.None;
-            db.AlignmentX = AlignmentX.Center;
-            db.AlignmentY = AlignmentY.Center;
+            DrawingBrush db = new DrawingBrush(drawing)
+            {
+                Stretch = Stretch.None,
+                AlignmentX = AlignmentX.Center,
+                AlignmentY = AlignmentY.Center
+            };
 
             // Create a drawing visual with our drawing brush.
             DrawingVisual drawingVisual = new DrawingVisual();
@@ -261,7 +263,7 @@ namespace MS.Internal.Ink
             }
             finally
             {
-                if ( dc != null )
+                if (dc != null)
                 {
                     dc.Close();
                 }
@@ -282,7 +284,7 @@ namespace MS.Internal.Ink
             // Use RenderTargetBitmap and BitmapVisualManager to render drawing visual into
             // a bitmap
             RenderTargetBitmap rtb =
-                    new RenderTargetBitmap  (width, height,
+                    new RenderTargetBitmap(width, height,
                                             96, 96,
                                             PixelFormats.Pbgra32);
             rtb.Render(visual);
@@ -325,13 +327,15 @@ namespace MS.Internal.Ink
             StylusPointCollection stylusPoints = new StylusPointCollection();
             stylusPoints.Add(new StylusPoint(0f, 0f));
 
-            DrawingAttributes da = new DrawingAttributes();
-            da.Color = drawingAttributes.Color;
-            da.Width = drawingAttributes.Width;
-            da.Height = drawingAttributes.Height;
-            da.StylusTipTransform = drawingAttributes.StylusTipTransform;
-            da.IsHighlighter = drawingAttributes.IsHighlighter;
-            da.StylusTip = drawingAttributes.StylusTip;
+            DrawingAttributes da = new DrawingAttributes
+            {
+                Color = drawingAttributes.Color,
+                Width = drawingAttributes.Width,
+                Height = drawingAttributes.Height,
+                StylusTipTransform = drawingAttributes.StylusTipTransform,
+                IsHighlighter = drawingAttributes.IsHighlighter,
+                StylusTip = drawingAttributes.StylusTip
+            };
 
             Stroke singleStroke = new Stroke(stylusPoints, da);
             // 
@@ -353,23 +357,23 @@ namespace MS.Internal.Ink
             bool outOfBounds = false;
 
             // Make sure that the cursor won't exceed the minimum or the maximum boundary.
-            if ( DoubleUtil.LessThan(strokeBounds.Width, 1.0) )
+            if (DoubleUtil.LessThan(strokeBounds.Width, 1.0))
             {
                 singleStroke.DrawingAttributes.Width = 1.0;
                 outOfBounds = true;
             }
-            else if ( DoubleUtil.GreaterThan(strokeBounds.Width, maxLength) )
+            else if (DoubleUtil.GreaterThan(strokeBounds.Width, maxLength))
             {
                 singleStroke.DrawingAttributes.Width = maxLength;
                 outOfBounds = true;
             }
 
-            if ( DoubleUtil.LessThan(strokeBounds.Height, 1.0) )
+            if (DoubleUtil.LessThan(strokeBounds.Height, 1.0))
             {
                 singleStroke.DrawingAttributes.Height = 1.0;
                 outOfBounds = true;
             }
-            else if ( DoubleUtil.GreaterThan(strokeBounds.Height, maxLength) )
+            else if (DoubleUtil.GreaterThan(strokeBounds.Height, maxLength))
             {
                 singleStroke.DrawingAttributes.Height = maxLength;
                 outOfBounds = true;
@@ -404,7 +408,7 @@ namespace MS.Internal.Ink
                 dc = penDrawing.Open();
 
                 // Call the internal drawing method on Stroke to draw as hollow if isHollow == true
-                if ( isHollow )
+                if (isHollow)
                 {
                     singleStroke.DrawInternal(dc, singleStroke.DrawingAttributes, isHollow);
                 }
@@ -416,7 +420,7 @@ namespace MS.Internal.Ink
             }
             finally
             {
-                if ( dc != null )
+                if (dc != null)
                 {
                     dc.Close();
                 }
@@ -452,8 +456,10 @@ namespace MS.Internal.Ink
 
                 PathGeometry pathGeometry = new PathGeometry();
 
-                PathFigure path = new PathFigure();
-                path.StartPoint = new Point(5, 5);
+                PathFigure path = new PathFigure
+                {
+                    StartPoint = new Point(5, 5)
+                };
 
                 LineSegment segment = new LineSegment(new Point(16, 5), true);
                 segment.Freeze();
@@ -476,8 +482,10 @@ namespace MS.Internal.Ink
 
                 pathGeometry.Figures.Add(path);
 
-                path = new PathFigure();
-                path.StartPoint = new Point(5, 5);
+                path = new PathFigure
+                {
+                    StartPoint = new Point(5, 5)
+                };
 
                 segment = new LineSegment(new Point(5, 10), true);
                 segment.Freeze();
@@ -501,8 +509,10 @@ namespace MS.Internal.Ink
                 pathGeometry.Freeze();
 
                 PathGeometry pathGeometry1 = new PathGeometry();
-                path = new PathFigure();
-                path.StartPoint = new Point(15, 15);
+                path = new PathFigure
+                {
+                    StartPoint = new Point(15, 15)
+                };
 
                 segment = new LineSegment(new Point(15, 19), true);
                 segment.Freeze();
@@ -535,7 +545,7 @@ namespace MS.Internal.Ink
             }
             finally
             {
-                if ( dc != null )
+                if (dc != null)
                 {
                     dc.Close();
                 }
@@ -551,7 +561,7 @@ namespace MS.Internal.Ink
         /// <returns></returns>
         private static double ConvertToPixel(double value, double dpiScale)
         {
-            if ( dpiScale != 0 )
+            if (dpiScale != 0)
             {
                 return value * dpiScale;
             }

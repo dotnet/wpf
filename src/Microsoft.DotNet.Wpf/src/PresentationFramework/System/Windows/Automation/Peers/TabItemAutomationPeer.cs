@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,8 +14,8 @@ namespace System.Windows.Automation.Peers
         ///
         public TabItemAutomationPeer(object owner, TabControlAutomationPeer tabControlAutomationPeer)
             : base(owner, tabControlAutomationPeer)
-        {}
-    
+        { }
+
         ///
         override protected string GetClassNameCore()
         {
@@ -89,7 +89,7 @@ namespace System.Windows.Automation.Peers
                 throw new InvalidOperationException(SR.UIA_OperationCannotBePerformed);
             }
         }
-        
+
         /// Realization for TabItem is tied to selection, bringing item into view for realizing the element
         /// as done for controls like ListBox doesn't make sense for TabControl.
         internal override void RealizeCore()

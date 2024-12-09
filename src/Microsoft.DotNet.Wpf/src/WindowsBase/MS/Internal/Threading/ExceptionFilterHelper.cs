@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,7 +17,7 @@ namespace MS.Internal.Threading
     /// </summary>
     internal sealed class ExceptionFilterHelper
     {
-        internal ExceptionFilterHelper( InternalRealCallDelegate internalRealCall,
+        internal ExceptionFilterHelper(InternalRealCallDelegate internalRealCall,
                                         FilterExceptionDelegate filterException,
                                         CatchExceptionDelegate catchException)
         {
@@ -26,7 +26,7 @@ namespace MS.Internal.Threading
             _catchException = catchException;
         }
 
-        internal object TryCatchWhen(   object source,
+        internal object TryCatchWhen(object source,
                                         Delegate method,
                                         object args,
                                         int numArgs,

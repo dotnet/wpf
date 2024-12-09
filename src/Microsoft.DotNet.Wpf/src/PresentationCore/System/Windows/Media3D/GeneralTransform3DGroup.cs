@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -36,7 +36,7 @@ namespace System.Windows.Media.Media3D
 
             // cache the children to avoid a repeated DP access
             GeneralTransform3DCollection children = Children;
-            
+
             if ((children == null) || (children.Count == 0))
             {
                 return false;
@@ -57,7 +57,7 @@ namespace System.Windows.Media.Media3D
 
             return pointTransformed;
         }
-        
+
         /// <summary>
         /// Transforms the bounding box to the smallest axis aligned bounding box
         /// that contains all the points in the original bounding box
@@ -68,7 +68,7 @@ namespace System.Windows.Media.Media3D
         {
             // cache the children to avoid a repeated DP access
             GeneralTransform3DCollection children = Children;
-                        
+
             if ((children == null) || (children.Count == 0))
             {
                 return rect;
@@ -92,7 +92,7 @@ namespace System.Windows.Media.Media3D
             {
                 // cache the children to avoid a repeated DP access
                 GeneralTransform3DCollection children = Children;
-                            
+
                 if ((children == null) || (children.Count == 0))
                 {
                     return null;
@@ -124,7 +124,7 @@ namespace System.Windows.Media.Media3D
             {
                 // cache the children to avoid a repeated DP access
                 GeneralTransform3DCollection children = Children;
-                
+
                 if ((children == null) || (children.Count == 0))
                 {
                     return null;
@@ -134,12 +134,12 @@ namespace System.Windows.Media.Media3D
                 for (int i = 0, count = children.Count; i < count; i++)
                 {
                     Transform3D t = children._collection[i].AffineTransform;
-                    
-                    t.Append(ref matrix);                    
-                }                
+
+                    t.Append(ref matrix);
+                }
 
                 return new MatrixTransform3D(matrix);
             }
-        }                     
+        }
     }
 }

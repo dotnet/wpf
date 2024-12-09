@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,8 +23,8 @@ namespace System.Windows.Documents
     /// </summary>
     internal class NaturalLanguageHyphenator : TextLexicalService, IDisposable
     {
-        private IntPtr  _hyphenatorResource;
-        private bool    _disposed;
+        private IntPtr _hyphenatorResource;
+        private bool _disposed;
 
 
         /// <summary>
@@ -99,16 +99,16 @@ namespace System.Windows.Documents
         /// <param name="textCulture">culture of the specified character source</param>
         /// <returns>lexical breaks of the text</returns>
         public override TextLexicalBreaks AnalyzeText(
-            char[]          characterSource,
-            int             length,
-            CultureInfo     textCulture
+            char[] characterSource,
+            int length,
+            CultureInfo textCulture
             )
         {
             Invariant.Assert(
                     characterSource != null
-                &&  characterSource.Length > 0
-                &&  length > 0
-                &&  length <= characterSource.Length
+                && characterSource.Length > 0
+                && length > 0
+                && length <= characterSource.Length
                 );
 
             if (_hyphenatorResource == IntPtr.Zero)
@@ -142,8 +142,8 @@ namespace System.Windows.Documents
         /// </summary>
         private class HyphenBreaks : TextLexicalBreaks
         {
-            private byte[]  _isHyphenPositions;
-            private int     _numPositions;
+            private byte[] _isHyphenPositions;
+            private int _numPositions;
 
 
             internal HyphenBreaks(byte[] isHyphenPositions, int numPositions)
@@ -214,14 +214,14 @@ namespace System.Windows.Documents
 
             [DllImport(DllImport.PresentationNative, PreserveSig = false)]
             internal static extern void NlHyphenate(
-                IntPtr          hyphenator,
+                IntPtr hyphenator,
                 [In, MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U2, SizeParamIndex = 2)]
                 char[]          inputText,
-                int             textLength,
-                int             localeID,
+                int textLength,
+                int localeID,
                 [In, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 5)]
                 byte[]          hyphenBreaks,
-                int             numPositions
+                int numPositions
                 );
         }
     }

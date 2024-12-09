@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -35,7 +35,7 @@ namespace System.Windows.Input
         }
 
         #endregion Constructors
- 
+
         //------------------------------------------------------
         //
         //  Public Methods
@@ -59,7 +59,7 @@ namespace System.Windows.Input
         //  Protected Methods
         //
         //------------------------------------------------------
- 
+
         //------------------------------------------------------
         //
         //  Internal Methods
@@ -109,7 +109,7 @@ namespace System.Windows.Input
         //------------------------------------------------------
 
         #region Private Methods
- 
+
         // Marks interesting KeyDown events as ImeInput.
         private void PreProcessInput(object sender, PreProcessInputEventArgs e)
         {
@@ -119,7 +119,7 @@ namespace System.Windows.Input
             if (!TextServicesLoader.ServicesInstalled)
                 return;
 
-            if(e.StagingItem.Input.RoutedEvent != Keyboard.PreviewKeyDownEvent &&
+            if (e.StagingItem.Input.RoutedEvent != Keyboard.PreviewKeyDownEvent &&
                 e.StagingItem.Input.RoutedEvent != Keyboard.PreviewKeyUpEvent)
             {
                 return;
@@ -142,8 +142,8 @@ namespace System.Windows.Input
             }
 
             keyArgs = (KeyEventArgs)e.StagingItem.Input;
-            
-            if(!keyArgs.Handled)
+
+            if (!keyArgs.Handled)
             {
                 context = TextServicesContext.DispatcherCurrent;
 
@@ -177,7 +177,7 @@ namespace System.Windows.Input
                 return;
             }
 
-            if(e.StagingItem.Input.RoutedEvent == Keyboard.PreviewKeyDownEvent ||
+            if (e.StagingItem.Input.RoutedEvent == Keyboard.PreviewKeyDownEvent ||
                e.StagingItem.Input.RoutedEvent == Keyboard.PreviewKeyUpEvent)
             {
                 // filter SysKey
@@ -185,8 +185,8 @@ namespace System.Windows.Input
                     return;
 
                 keyArgs = (KeyEventArgs)e.StagingItem.Input;
-            
-                if(!keyArgs.Handled && keyArgs.Key == Key.ImeProcessed)
+
+                if (!keyArgs.Handled && keyArgs.Key == Key.ImeProcessed)
                 {
                     context = TextServicesContext.DispatcherCurrent;
 
@@ -199,11 +199,11 @@ namespace System.Windows.Input
                     }
                 }
             }
-            else if(e.StagingItem.Input.RoutedEvent == Keyboard.KeyDownEvent ||
+            else if (e.StagingItem.Input.RoutedEvent == Keyboard.KeyDownEvent ||
                     e.StagingItem.Input.RoutedEvent == Keyboard.KeyUpEvent)
             {
                 keyArgs = (KeyEventArgs)e.StagingItem.Input;
-                if(!keyArgs.Handled && keyArgs.Key == Key.ImeProcessed)
+                if (!keyArgs.Handled && keyArgs.Key == Key.ImeProcessed)
                 {
                     keyArgs.Handled = true;
                 }
@@ -232,7 +232,7 @@ namespace System.Windows.Input
                     break;
                 default:
                     wParam = KeyInterop.VirtualKeyFromKey(keyArgs.RealKey);
-                    scancode = 0; 
+                    scancode = 0;
                     break;
             }
 
@@ -255,7 +255,7 @@ namespace System.Windows.Input
 
         private bool IsSysKeyDown()
         {
-            if (Keyboard.IsKeyDown(Key.LeftAlt) || 
+            if (Keyboard.IsKeyDown(Key.LeftAlt) ||
                 Keyboard.IsKeyDown(Key.RightAlt) ||
                 Keyboard.IsKeyDown(Key.F10))
                 return true;

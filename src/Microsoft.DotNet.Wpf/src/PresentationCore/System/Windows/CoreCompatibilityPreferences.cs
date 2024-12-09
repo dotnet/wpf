@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -142,14 +142,14 @@ namespace System.Windows
             get { return GetEnableMultiMonitorDisplayClipping(); }
             set
             {
-                lock(_lockObject)
+                lock (_lockObject)
                 {
-                    if(_isSealed)
+                    if (_isSealed)
                     {
                         throw new InvalidOperationException(SR.Format(SR.CompatibilityPreferencesSealed, "DisableMultimonDisplayClipping", "CoreCompatibilityPreferences"));
                     }
 
-                    _enableMultiMonitorDisplayClipping = value; 
+                    _enableMultiMonitorDisplayClipping = value;
                 }
             }
         }
@@ -164,10 +164,10 @@ namespace System.Windows
         static void SetEnableMultiMonitorDisplayClippingFromAppSettings(NameValueCollection appSettings)
         {
             string s = appSettings["EnableMultiMonitorDisplayClipping"];
-            bool value; 
+            bool value;
             if (Boolean.TryParse(s, out value))
             {
-                EnableMultiMonitorDisplayClipping = value; 
+                EnableMultiMonitorDisplayClipping = value;
             }
         }
 

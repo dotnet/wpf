@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -28,11 +28,11 @@ namespace System.Windows.Xps.Serialization.RCW
         IStream GetStream();
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        void SetContent([MarshalAs(UnmanagedType.Interface)] [In] IStream sourceStream, [ComAliasName("System.Windows.Xps.Serialization.RCW.XPS_IMAGE_TYPE")] [In] XPS_IMAGE_TYPE imageType, [MarshalAs(UnmanagedType.Interface)] [In] IOpcPartUri partName);
+        void SetContent([MarshalAs(UnmanagedType.Interface)][In] IStream sourceStream, [ComAliasName("System.Windows.Xps.Serialization.RCW.XPS_IMAGE_TYPE")][In] XPS_IMAGE_TYPE imageType, [MarshalAs(UnmanagedType.Interface)][In] IOpcPartUri partName);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         [return: ComAliasName("System.Windows.Xps.Serialization.RCW.XPS_IMAGE_TYPE")]
         XPS_IMAGE_TYPE GetImageType();
 
-}
+    }
 }

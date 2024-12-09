@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -75,7 +75,7 @@ namespace System.Windows.Input.StylusPointer
                             foreach (StylusPlugIn spi in Wrapper)
                             {
                                 spi.InvalidateIsActiveForInput();
-}
+                            }
                             // 
                             // Normally the Rect will be updated when we receive the LayoutUpdate. 
                             // However there could be a race condition which the LayoutUpdate gets received 
@@ -84,7 +84,7 @@ namespace System.Windows.Input.StylusPointer
                             Wrapper.OnLayoutUpdated(this.Wrapper, EventArgs.Empty);
                         }
                     }
-                }                
+                }
             }
 
             if (unhook)

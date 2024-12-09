@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -377,8 +377,8 @@ namespace System.Windows.Markup
         // This method is used so the caller can first read the type of record, and expects
         // to get back the entire record, or nothing (for async support).
         internal BamlRecord ReadNextRecord(
-            BinaryReader   bamlBinaryReader,
-            long           bytesAvailable,
+            BinaryReader bamlBinaryReader,
+            long bytesAvailable,
             BamlRecordType recordType)
         {
             BamlRecord bamlRecord; // = null
@@ -387,7 +387,7 @@ namespace System.Windows.Markup
             // type and attribute records are created every time, since they are
             // used by the BamlMapTable.  The other records are re-used, so they
             // are created once and cached.
-            switch(recordType)
+            switch (recordType)
             {
                 case BamlRecordType.AssemblyInfo:
                     bamlRecord = new BamlAssemblyInfoRecord();
@@ -422,7 +422,7 @@ namespace System.Windows.Markup
                     // recycled (i.e., there's a ReleaseWriteRecord, but no ReleaseReadRecord).
 
                     bamlRecord = _readCache[(int)recordType];
-                    if (null == bamlRecord || bamlRecord.IsPinned )
+                    if (null == bamlRecord || bamlRecord.IsPinned)
                     {
                         bamlRecord = _readCache[(int)recordType] = AllocateRecord(recordType);
                     }
@@ -466,7 +466,7 @@ namespace System.Windows.Markup
         /// </summary>
         static internal bool TreatAsIAddChild(Type parentObjectType)
         {
-            return (KnownTypes.Types[(int)KnownElements.IAddChildInternal].IsAssignableFrom( parentObjectType ));
+            return (KnownTypes.Types[(int)KnownElements.IAddChildInternal].IsAssignableFrom(parentObjectType));
         }
 
         static internal BamlRecordType GetPropertyStartRecordType(Type propertyType, bool propertyCanWrite)
@@ -519,7 +519,7 @@ namespace System.Windows.Markup
                 case BamlRecordType.ElementStart:
                     if (record is BamlNamedElementStartRecord)
                     {
-                        newRecord= new BamlNamedElementStartRecord();
+                        newRecord = new BamlNamedElementStartRecord();
                     }
                     else
                     {
@@ -573,7 +573,7 @@ namespace System.Windows.Markup
         {
             BamlRecord record;
 
-            switch(recordType)
+            switch (recordType)
             {
                 case BamlRecordType.DocumentStart:
                     record = new BamlDocumentStartRecord();
@@ -691,7 +691,7 @@ namespace System.Windows.Markup
                 case BamlRecordType.TypeSerializerInfo:
                 case BamlRecordType.AttributeInfo:
                 case BamlRecordType.StringInfo:
-                    Debug.Assert(false,"Assembly, Type and Attribute records are not cached, so don't ask for one.");
+                    Debug.Assert(false, "Assembly, Type and Attribute records are not cached, so don't ask for one.");
                     record = null;
                     break;
                 case BamlRecordType.StaticResourceStart:
@@ -716,7 +716,7 @@ namespace System.Windows.Markup
                     record = new BamlPropertyWithStaticResourceIdRecord();
                     break;
                 default:
-                    Debug.Assert(false,"Unknown RecordType");
+                    Debug.Assert(false, "Unknown RecordType");
                     record = null;
                     break;
             }
@@ -730,7 +730,7 @@ namespace System.Windows.Markup
         {
             // Create the cache of records used in writing, on demand
 
-            if( _writeCache == null )
+            if (_writeCache == null)
             {
                 _writeCache = new BamlRecord[(int)BamlRecordType.LastRecordType];
             }
@@ -767,7 +767,7 @@ namespace System.Windows.Markup
         {
             // Put the write record back into the cache, if we're allowed to recycle it.
 
-            if( !record.IsPinned )
+            if (!record.IsPinned)
             {
                 Debug.Assert(null == _writeCache[(int)record.RecordType]);
                 if (null != _writeCache[(int)record.RecordType])
@@ -783,9 +783,9 @@ namespace System.Windows.Markup
         // Cache of BamlRecords, used during read, to avoid lots of records from being
         // created.  If a record gets pinned (BamlRecord.IsPinned gets set), it is not re-used.
 
-        #if !PBTCOMPILER
+#if !PBTCOMPILER
         BamlRecord[] _readCache = new BamlRecord[(int)BamlRecordType.LastRecordType];
-        #endif
+#endif
 
         // Cache of BamlRecords, used during write, also to avoid lots of records
         // from being created.
@@ -798,7 +798,7 @@ namespace System.Windows.Markup
     // line number information is not currently written out to the baml stream.
     internal abstract class BamlRecord
     {
- #region Methods
+        #region Methods
 
 #if !PBTCOMPILER
         // If there are enough bytes available, load the record size from the
@@ -806,7 +806,7 @@ namespace System.Windows.Markup
         // there is no size field in the baml file, so this always succeeds.
         internal virtual bool LoadRecordSize(
             BinaryReader bamlBinaryReader,
-            long         bytesAvailable)
+            long bytesAvailable)
         {
             return true;
         }
@@ -814,7 +814,7 @@ namespace System.Windows.Markup
         // Load record data.  This does not include the record type, or the
         // size field, which are loaded separately.  If the subclass has no
         // specific data to load, then don't override this.
-        internal virtual void  LoadRecordData(BinaryReader bamlBinaryReader)
+        internal virtual void LoadRecordData(BinaryReader bamlBinaryReader)
         {
         }
 #endif
@@ -831,7 +831,7 @@ namespace System.Windows.Markup
             }
 
             // Baml records always start with record type
-            bamlBinaryWriter.Write((byte) RecordType);
+            bamlBinaryWriter.Write((byte)RecordType);
 
             // IMPORTANT:  The RecordType is the last thing written before calling
             //             WriteRecordData.  Some records assume the record type is located
@@ -849,9 +849,9 @@ namespace System.Windows.Markup
         }
 
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         // Actual size of the complete BamlRecord (excluding RecordType) in bytes.
         // Currently limited to 2 gigabytes.  Default size is 0 bytes of data.
@@ -859,7 +859,7 @@ namespace System.Windows.Markup
         internal virtual Int32 RecordSize
         {
             get { return 0; }
-            set { Debug.Assert (value == -1, "Setting fixed record to an invalid size"); }
+            set { Debug.Assert(value == -1, "Setting fixed record to an invalid size"); }
         }
 
         // Identifies the type off BAML record.  This is used when casting to
@@ -879,7 +879,7 @@ namespace System.Windows.Markup
         internal BamlRecord Next
         {
             get { return _nextRecord; }
-            set { _nextRecord = value ; }
+            set { _nextRecord = value; }
         }
 #endif
 
@@ -906,7 +906,7 @@ namespace System.Windows.Markup
 
             set
             {
-                Debug.Assert( value <= 3 && value >= 0 );
+                Debug.Assert(value <= 3 && value >= 0);
                 _flags[_pinnedFlagSection] = value;
             }
         }
@@ -914,7 +914,7 @@ namespace System.Windows.Markup
         // (See comment on IsPinned.)
         internal void Pin()
         {
-            if( PinnedCount < 3 )
+            if (PinnedCount < 3)
             {
                 ++PinnedCount;
             }
@@ -924,7 +924,7 @@ namespace System.Windows.Markup
         // (See comment on IsPinned.)
         internal void Unpin()
         {
-            if( PinnedCount < 3 )
+            if (PinnedCount < 3)
             {
                 --PinnedCount;
             }
@@ -940,9 +940,9 @@ namespace System.Windows.Markup
 
 
 
-#endregion Properties
+        #endregion Properties
 
-#region Data
+        #region Data
 
         // Internal flags for efficient storage
         // NOTE: bits here are used by sub-classes also.
@@ -955,7 +955,7 @@ namespace System.Windows.Markup
 
         // Allocate space in _flags.
 
-        private static BitVector32.Section _pinnedFlagSection = BitVector32.CreateSection( 3 /* Allocates two bits to store values up to 3 */ );
+        private static BitVector32.Section _pinnedFlagSection = BitVector32.CreateSection(3 /* Allocates two bits to store values up to 3 */ );
 
         // This provides subclasses with a referece section to create their own section.
         internal static BitVector32.Section LastFlagsSection
@@ -981,7 +981,7 @@ namespace System.Windows.Markup
         protected static string GetTypeName(int typeId)
         {
             string typeName = typeId.ToString(CultureInfo.InvariantCulture);
-            if(typeId < 0)
+            if (typeId < 0)
             {
                 KnownElements elm = (KnownElements)(-typeId);
                 typeName = elm.ToString();
@@ -995,7 +995,7 @@ namespace System.Windows.Markup
         // We have to infer this, because unlike Xml, Baml doesn't provide
         // an end-attributes record.
 
-        internal static bool IsContentRecord( BamlRecordType bamlRecordType )
+        internal static bool IsContentRecord(BamlRecordType bamlRecordType)
         {
             return bamlRecordType == BamlRecordType.PropertyComplexStart
                    ||
@@ -1010,14 +1010,14 @@ namespace System.Windows.Markup
 
 #endif
 
-#endregion Data
+        #endregion Data
     }
 
     // An abstract base class for records that record their size as part of the
     // baml stream.
     internal abstract class BamlVariableSizedRecord : BamlRecord
     {
- #region Methods
+        #region Methods
 
 #if !PBTCOMPILER
         // If there are enough bytes available, load the record size from the
@@ -1025,15 +1025,15 @@ namespace System.Windows.Markup
         // the reader, if there are at least 4 bytes available.
         internal override bool LoadRecordSize(
             BinaryReader bamlBinaryReader,
-            long         bytesAvailable)
+            long bytesAvailable)
         {
-           int recordSize;
-           bool loadedSize = LoadVariableRecordSize(bamlBinaryReader, bytesAvailable, out recordSize);
-           if (loadedSize)
-           {
-               RecordSize = recordSize;
-           }
-           return loadedSize;
+            int recordSize;
+            bool loadedSize = LoadVariableRecordSize(bamlBinaryReader, bytesAvailable, out recordSize);
+            if (loadedSize)
+            {
+                RecordSize = recordSize;
+            }
+            return loadedSize;
         }
 
         // If there are enough bytes available, load the record size from the
@@ -1041,8 +1041,8 @@ namespace System.Windows.Markup
         // the reader, if there are at least 4 bytes available.
         internal static bool LoadVariableRecordSize(
                 BinaryReader bamlBinaryReader,
-                long         bytesAvailable,
-            out int          recordSize)
+                long bytesAvailable,
+            out int recordSize)
         {
             if (bytesAvailable >= MaxRecordSizeFieldLength)
             {
@@ -1061,8 +1061,8 @@ namespace System.Windows.Markup
         {
             int size = (Int32)(end - start);
             int sizeOfSize = BamlBinaryWriter.SizeOf7bitEncodedSize(size);
-            sizeOfSize = BamlBinaryWriter.SizeOf7bitEncodedSize(sizeOfSize+size);
-            return (sizeOfSize+size);
+            sizeOfSize = BamlBinaryWriter.SizeOf7bitEncodedSize(sizeOfSize + size);
+            return (sizeOfSize + size);
         }
 
         // Writes data at the current position seek pointer points
@@ -1078,7 +1078,7 @@ namespace System.Windows.Markup
 
 
             // Baml records always start with record type
-            bamlBinaryWriter.Write((byte) RecordType);
+            bamlBinaryWriter.Write((byte)RecordType);
 
             // Remember the file location of this baml record.  This
             // is needed if we have to come back later to update the sync mode.
@@ -1090,9 +1090,9 @@ namespace System.Windows.Markup
             //             the record type if it is unable to serialize itself.
 
             //  Write just the data, this is just to measure the size.
-            long startSeekPosition = bamlBinaryWriter.Seek(0,SeekOrigin.Current);
+            long startSeekPosition = bamlBinaryWriter.Seek(0, SeekOrigin.Current);
             WriteRecordData(bamlBinaryWriter);
-            long endSeekPosition = bamlBinaryWriter.Seek(0,SeekOrigin.Current);
+            long endSeekPosition = bamlBinaryWriter.Seek(0, SeekOrigin.Current);
 
             Debug.Assert(RecordSize < 0);
             RecordSize = ComputeSizeOfVariableLengthRecord(startSeekPosition, endSeekPosition);
@@ -1120,9 +1120,9 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         // Actual size of the complete BamlRecord in bytes.  Currently
         // limited to 2 gigabytes.
@@ -1139,29 +1139,29 @@ namespace System.Windows.Markup
         }
 
 
-#endregion Properties
+        #endregion Properties
 
-#region Data
+        #region Data
 
         // Size of the RecordSize field in the baml file.  This must be in
         // sync the type type of _recordSize below.
         internal const int MaxRecordSizeFieldLength = 4;
 
-        Int32          _recordSize = -1;   // we use a 7 bit encoded variable size
+        Int32 _recordSize = -1;   // we use a 7 bit encoded variable size
 
-#endregion Data
+        #endregion Data
     }
 
     internal class BamlXmlnsPropertyRecord : BamlVariableSizedRecord
     {
-#region Methods
+        #region Methods
 
 #if !PBTCOMPILER
         // LoadRecord specific data
-        internal override void  LoadRecordData(BinaryReader bamlBinaryReader)
+        internal override void LoadRecordData(BinaryReader bamlBinaryReader)
         {
-            Prefix  =  bamlBinaryReader.ReadString();
-            XmlNamespace  =   bamlBinaryReader.ReadString();
+            Prefix = bamlBinaryReader.ReadString();
+            XmlNamespace = bamlBinaryReader.ReadString();
 
             short count = bamlBinaryReader.ReadInt16();
 
@@ -1195,7 +1195,7 @@ namespace System.Windows.Markup
 
             if (AssemblyIds != null && AssemblyIds.Length > 0)
             {
-                count = (short) AssemblyIds.Length;
+                count = (short)AssemblyIds.Length;
             }
 
             bamlBinaryWriter.Write(count);
@@ -1221,9 +1221,9 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
@@ -1233,7 +1233,7 @@ namespace System.Windows.Markup
         internal string Prefix
         {
             get { return _prefix; }
-            set {_prefix = value; }
+            set { _prefix = value; }
         }
 
         internal string XmlNamespace
@@ -1248,28 +1248,28 @@ namespace System.Windows.Markup
             set { _assemblyIds = value; }
         }
 
-#endregion Properties
+        #endregion Properties
 
-#region Data
+        #region Data
 
         string _prefix;
         string _xmlNamespace;
         short[] _assemblyIds;
 
-#endregion Data
+        #endregion Data
     }
 
     internal class BamlPIMappingRecord : BamlVariableSizedRecord
     {
-#region Methods
+        #region Methods
 
 #if !PBTCOMPILER
         // LoadRecord specific data
-        internal override void  LoadRecordData(BinaryReader bamlBinaryReader)
+        internal override void LoadRecordData(BinaryReader bamlBinaryReader)
         {
-            XmlNamespace  =  bamlBinaryReader.ReadString();
-            ClrNamespace  =  bamlBinaryReader.ReadString();
-            AssemblyId    =  bamlBinaryReader.ReadInt16();
+            XmlNamespace = bamlBinaryReader.ReadString();
+            ClrNamespace = bamlBinaryReader.ReadString();
+            AssemblyId = bamlBinaryReader.ReadInt16();
         }
 #endif
         // write record specific Data.
@@ -1292,9 +1292,9 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
@@ -1304,7 +1304,7 @@ namespace System.Windows.Markup
         internal string XmlNamespace
         {
             get { return _xmlns; }
-            set {_xmlns = value; }
+            set { _xmlns = value; }
         }
 
         internal string ClrNamespace
@@ -1317,16 +1317,16 @@ namespace System.Windows.Markup
         {
             get
             {
-                short value = (short) _flags[_assemblyIdLowSection];
-                value |= (short) (_flags[_assemblyIdHighSection] << 8);
+                short value = (short)_flags[_assemblyIdLowSection];
+                value |= (short)(_flags[_assemblyIdHighSection] << 8);
 
                 return value;
             }
 
             set
             {
-                _flags[_assemblyIdLowSection] = (short)  (value & 0xff);
-                _flags[_assemblyIdHighSection] = (short) ((value & 0xff00) >> 8);
+                _flags[_assemblyIdLowSection] = (short)(value & 0xff);
+                _flags[_assemblyIdHighSection] = (short)((value & 0xff00) >> 8);
             }
         }
 
@@ -1335,10 +1335,10 @@ namespace System.Windows.Markup
         // it up into 2 sections.
 
         private static BitVector32.Section _assemblyIdLowSection
-            = BitVector32.CreateSection( (short)0xff, BamlVariableSizedRecord.LastFlagsSection );
+            = BitVector32.CreateSection((short)0xff, BamlVariableSizedRecord.LastFlagsSection);
 
         private static BitVector32.Section _assemblyIdHighSection
-            = BitVector32.CreateSection( (short)0xff, _assemblyIdLowSection );
+            = BitVector32.CreateSection((short)0xff, _assemblyIdLowSection);
 
 #if !PBTCOMPILER
         // This provides subclasses with a referece section to create their own section.
@@ -1350,25 +1350,25 @@ namespace System.Windows.Markup
 
 
 
-#endregion Properties
+        #endregion Properties
 
-#region Data
+        #region Data
         string _xmlns;
         string _clrns;
-#endregion Data
+        #endregion Data
 
     }
 
     // Common base class for variables sized records that contain a string value
     internal abstract class BamlStringValueRecord : BamlVariableSizedRecord
     {
-#region Methods
+        #region Methods
 
 #if !PBTCOMPILER
         // LoadRecord specific data
-        internal override void  LoadRecordData(BinaryReader bamlBinaryReader)
+        internal override void LoadRecordData(BinaryReader bamlBinaryReader)
         {
-            Value  =  bamlBinaryReader.ReadString();
+            Value = bamlBinaryReader.ReadString();
         }
 #endif
 
@@ -1388,9 +1388,9 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         internal string Value
         {
@@ -1398,11 +1398,11 @@ namespace System.Windows.Markup
             set { _value = value; }
         }
 
-#endregion Properties
+        #endregion Properties
 
-#region Data
+        #region Data
         string _value;
-#endregion Data
+        #endregion Data
 
     }
 
@@ -1412,7 +1412,7 @@ namespace System.Windows.Markup
         // Update the pointer to the Value that was written out when WriteRecordData
         // was first called.
         void UpdateValuePosition(
-            Int32        newPosition,
+            Int32 newPosition,
             BinaryWriter bamlBinaryWriter);
 
         // Relative stream position in the baml stream where the value associated
@@ -1435,7 +1435,7 @@ namespace System.Windows.Markup
         bool SharedSet { get; set; }
 
 #if !PBTCOMPILER
-        object[] StaticResourceValues {get; set;}
+        object[] StaticResourceValues { get; set; }
 #endif
     }
 
@@ -1473,14 +1473,14 @@ namespace System.Windows.Markup
             Pin(); // Don't allow this record to be recycled in the read cache.
         }
 
-#region Methods
+        #region Methods
 
 #if !PBTCOMPILER
         // LoadRecord specific data
         internal override void LoadRecordData(BinaryReader bamlBinaryReader)
         {
             base.LoadRecordData(bamlBinaryReader);
-            _valuePosition =  bamlBinaryReader.ReadInt32();
+            _valuePosition = bamlBinaryReader.ReadInt32();
             ((IBamlDictionaryKey)this).Shared = bamlBinaryReader.ReadBoolean();
             ((IBamlDictionaryKey)this).SharedSet = bamlBinaryReader.ReadBoolean();
         }
@@ -1501,7 +1501,7 @@ namespace System.Windows.Markup
         // so it is written out later.  Be certain to leave the passed writer pointing
         // to the same location it was at when this call was made.
         void IBamlDictionaryKey.UpdateValuePosition(
-            Int32        newPosition,
+            Int32 newPosition,
             BinaryWriter bamlBinaryWriter)
         {
             Debug.Assert(_valuePositionPosition != -1,
@@ -1510,11 +1510,11 @@ namespace System.Windows.Markup
             // Use relative positions to reduce the possibility of truncation,
             // since Seek takes a 32 bit int, but position is a 64 bit int.
             Int64 existingPosition = bamlBinaryWriter.Seek(0, SeekOrigin.Current);
-            Int32 deltaPosition = (Int32)(_valuePositionPosition-existingPosition);
+            Int32 deltaPosition = (Int32)(_valuePositionPosition - existingPosition);
 
             bamlBinaryWriter.Seek(deltaPosition, SeekOrigin.Current);
             bamlBinaryWriter.Write(newPosition);
-            bamlBinaryWriter.Seek(-ValuePositionSize-deltaPosition, SeekOrigin.Current);
+            bamlBinaryWriter.Seek(-ValuePositionSize - deltaPosition, SeekOrigin.Current);
         }
 
 #if !PBTCOMPILER
@@ -1530,9 +1530,9 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
@@ -1605,10 +1605,10 @@ namespace System.Windows.Markup
         // Allocate space in _flags.
 
         private static BitVector32.Section _sharedSection
-            = BitVector32.CreateSection( 1, BamlElementStartRecord.LastFlagsSection );
+            = BitVector32.CreateSection(1, BamlElementStartRecord.LastFlagsSection);
 
         private static BitVector32.Section _sharedSetSection
-            = BitVector32.CreateSection( 1, _sharedSection );
+            = BitVector32.CreateSection(1, _sharedSection);
 
 #if !PBTCOMPILER
         // This provides subclasses with a referece section to create their own section.
@@ -1620,9 +1620,9 @@ namespace System.Windows.Markup
 
 
 
-#endregion Properties
+        #endregion Properties
 
-#region Data
+        #region Data
 
         // Size in bytes of the ValuePosition field written out to baml.  This
         // must be in sync with the size of _valuePosition below.
@@ -1642,7 +1642,7 @@ namespace System.Windows.Markup
         object[] _staticResourceValues;
 #endif
 
-#endregion Data
+        #endregion Data
     }
 
 
@@ -1655,14 +1655,14 @@ namespace System.Windows.Markup
             Pin(); // Don't allow this record to be recycled in the read cache.
         }
 
-#region Methods
+        #region Methods
 
 #if !PBTCOMPILER
         // LoadRecord specific data
         internal override void LoadRecordData(BinaryReader bamlBinaryReader)
         {
             ValueId = bamlBinaryReader.ReadInt16();
-            _valuePosition =  bamlBinaryReader.ReadInt32();
+            _valuePosition = bamlBinaryReader.ReadInt32();
             ((IBamlDictionaryKey)this).Shared = bamlBinaryReader.ReadBoolean();
             ((IBamlDictionaryKey)this).SharedSet = bamlBinaryReader.ReadBoolean();
             _keyObject = null;
@@ -1684,7 +1684,7 @@ namespace System.Windows.Markup
         // so it is written out later.  Be certain to leave the passed writer pointing
         // to the same location it was at when this call was made.
         void IBamlDictionaryKey.UpdateValuePosition(
-            Int32        newPosition,
+            Int32 newPosition,
             BinaryWriter bamlBinaryWriter)
         {
             Debug.Assert(_valuePositionPosition != -1,
@@ -1693,11 +1693,11 @@ namespace System.Windows.Markup
             // Use relative positions to reduce the possibility of truncation,
             // since Seek takes a 32 bit int, but position is a 64 bit int.
             Int64 existingPosition = bamlBinaryWriter.Seek(0, SeekOrigin.Current);
-            Int32 deltaPosition = (Int32)(_valuePositionPosition-existingPosition);
+            Int32 deltaPosition = (Int32)(_valuePositionPosition - existingPosition);
 
             bamlBinaryWriter.Seek(deltaPosition, SeekOrigin.Current);
             bamlBinaryWriter.Write(newPosition);
-            bamlBinaryWriter.Seek(-ValuePositionSize-deltaPosition, SeekOrigin.Current);
+            bamlBinaryWriter.Seek(-ValuePositionSize - deltaPosition, SeekOrigin.Current);
         }
 
 #if !PBTCOMPILER
@@ -1714,9 +1714,9 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
@@ -1763,10 +1763,10 @@ namespace System.Windows.Markup
         // Allocate space in _flags.
 
         private static BitVector32.Section _sharedSection
-            = BitVector32.CreateSection( 1, BamlStringValueRecord.LastFlagsSection );
+            = BitVector32.CreateSection(1, BamlStringValueRecord.LastFlagsSection);
 
         private static BitVector32.Section _sharedSetSection
-            = BitVector32.CreateSection( 1,  _sharedSection );
+            = BitVector32.CreateSection(1, _sharedSection);
 
 #if !PBTCOMPILER
         // This provides subclasses with a referece section to create their own section.
@@ -1811,9 +1811,9 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Properties
+        #endregion Properties
 
-#region Data
+        #region Data
 
         // Size in bytes of the ValuePosition field written out to baml.  This
         // must be in sync with the size of _valuePosition below.
@@ -1836,21 +1836,21 @@ namespace System.Windows.Markup
         object[] _staticResourceValues;
 #endif
 
-#endregion Data
+        #endregion Data
     }
 
     // BamlRecord for x:Whatever attribute
     internal class BamlDefAttributeRecord : BamlStringValueRecord
     {
-#region Methods
+        #region Methods
 
 #if !PBTCOMPILER
         // LoadRecord specific data
-        internal override void  LoadRecordData(BinaryReader bamlBinaryReader)
+        internal override void LoadRecordData(BinaryReader bamlBinaryReader)
         {
-            Value      =  bamlBinaryReader.ReadString();
-            NameId     =  bamlBinaryReader.ReadInt16();
-            Name       =  null;
+            Value = bamlBinaryReader.ReadString();
+            NameId = bamlBinaryReader.ReadInt16();
+            Name = null;
         }
 #endif
 
@@ -1873,9 +1873,9 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
@@ -1910,7 +1910,7 @@ namespace System.Windows.Markup
             set { _attributeUsage = value; }
         }
 
-#endregion Properties
+        #endregion Properties
 
 #if !PBTCOMPILER
         public override string ToString()
@@ -1920,26 +1920,26 @@ namespace System.Windows.Markup
         }
 #endif
 
-#region Data
+        #region Data
         string _name;
-        Int16  _nameId;
+        Int16 _nameId;
         BamlAttributeUsage _attributeUsage;
-#endregion Data
+        #endregion Data
 
     }
 
     // BamlRecord for PresentationOptions:Whatever attribute
     internal class BamlPresentationOptionsAttributeRecord : BamlStringValueRecord
     {
-#region Methods
+        #region Methods
 
 #if !PBTCOMPILER
         // LoadRecord specific data
-        internal override void  LoadRecordData(BinaryReader bamlBinaryReader)
+        internal override void LoadRecordData(BinaryReader bamlBinaryReader)
         {
-            Value      =  bamlBinaryReader.ReadString();
-            NameId     =  bamlBinaryReader.ReadInt16();
-            Name       =  null;
+            Value = bamlBinaryReader.ReadString();
+            NameId = bamlBinaryReader.ReadInt16();
+            Name = null;
         }
 #endif
 
@@ -1961,9 +1961,9 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
@@ -1988,7 +1988,7 @@ namespace System.Windows.Markup
             set { _name = value; }
         }
 
-#endregion Properties
+        #endregion Properties
 
 #if !PBTCOMPILER
         public override string ToString()
@@ -1997,10 +1997,10 @@ namespace System.Windows.Markup
         }
 #endif
 
-#region Data
+        #region Data
         string _name;
-        Int16  _nameId;
-#endregion Data
+        Int16 _nameId;
+        #endregion Data
 
     }
 
@@ -2010,12 +2010,12 @@ namespace System.Windows.Markup
     //
     internal class BamlPropertyComplexStartRecord : BamlRecord
     {
-#region Methods
+        #region Methods
 
 #if !PBTCOMPILER
-        internal override void  LoadRecordData(BinaryReader bamlBinaryReader)
+        internal override void LoadRecordData(BinaryReader bamlBinaryReader)
         {
-            AttributeId   = bamlBinaryReader.ReadInt16();
+            AttributeId = bamlBinaryReader.ReadInt16();
         }
 #endif
 
@@ -2034,9 +2034,9 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
@@ -2052,10 +2052,10 @@ namespace System.Windows.Markup
         internal override Int32 RecordSize
         {
             get { return 2; }
-            set { Debug.Assert (value == -1, "Wrong size set for complex prop record"); }
+            set { Debug.Assert(value == -1, "Wrong size set for complex prop record"); }
         }
 
-#endregion Properties
+        #endregion Properties
 
 #if !PBTCOMPILER
         public override string ToString()
@@ -2064,9 +2064,9 @@ namespace System.Windows.Markup
         }
 #endif
 
-#region Data
+        #region Data
         short _attributeId = -1;
-#endregion Data
+        #endregion Data
 
     }
 
@@ -2082,7 +2082,7 @@ namespace System.Windows.Markup
         internal override void LoadRecordData(BinaryReader bamlBinaryReader)
         {
             AttributeId = bamlBinaryReader.ReadInt16();
-            StringId  = bamlBinaryReader.ReadInt16();
+            StringId = bamlBinaryReader.ReadInt16();
         }
 #endif
 
@@ -2122,7 +2122,7 @@ namespace System.Windows.Markup
         internal override Int32 RecordSize
         {
             get { return 4; }
-            set { Debug.Assert (value == -1, "Wrong size set for complex prop record"); }
+            set { Debug.Assert(value == -1, "Wrong size set for complex prop record"); }
         }
 
         #endregion Properties
@@ -2145,7 +2145,7 @@ namespace System.Windows.Markup
         internal override void LoadRecordData(BinaryReader bamlBinaryReader)
         {
             AttributeId = bamlBinaryReader.ReadInt16();
-            TypeId  = bamlBinaryReader.ReadInt16();
+            TypeId = bamlBinaryReader.ReadInt16();
         }
 #endif
 
@@ -2183,7 +2183,7 @@ namespace System.Windows.Markup
         internal override Int32 RecordSize
         {
             get { return 4; }
-            set { Debug.Assert (value == -1, "Wrong size set for complex prop record"); }
+            set { Debug.Assert(value == -1, "Wrong size set for complex prop record"); }
         }
 
         #endregion Properties
@@ -2204,7 +2204,7 @@ namespace System.Windows.Markup
         internal override void LoadRecordData(BinaryReader bamlBinaryReader)
         {
             base.LoadRecordData(bamlBinaryReader);
-            ConverterTypeId  = bamlBinaryReader.ReadInt16();
+            ConverterTypeId = bamlBinaryReader.ReadInt16();
         }
 #endif
 
@@ -2260,13 +2260,13 @@ namespace System.Windows.Markup
     //
     internal class BamlPropertyRecord : BamlStringValueRecord
     {
-#region Methods
+        #region Methods
 
 #if !PBTCOMPILER
-        internal override void  LoadRecordData(BinaryReader bamlBinaryReader)
+        internal override void LoadRecordData(BinaryReader bamlBinaryReader)
         {
-            AttributeId   = bamlBinaryReader.ReadInt16();
-            Value         = bamlBinaryReader.ReadString();
+            AttributeId = bamlBinaryReader.ReadInt16();
+            Value = bamlBinaryReader.ReadString();
         }
 #endif
 
@@ -2286,9 +2286,9 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
@@ -2301,7 +2301,7 @@ namespace System.Windows.Markup
             set { _attributeId = value; }
         }
 
-#endregion Properties
+        #endregion Properties
 
 #if !PBTCOMPILER
         public override string ToString()
@@ -2310,9 +2310,9 @@ namespace System.Windows.Markup
         }
 #endif
 
-#region Data
-        short  _attributeId = -1;
-#endregion Data
+        #region Data
+        short _attributeId = -1;
+        #endregion Data
 
 
     }
@@ -2514,7 +2514,7 @@ namespace System.Windows.Markup
             if (ValueType != null && ValueType.IsEnum)
             {
                 uint uintValue = 0;
-                string [] enumValues = Value.Split(',');
+                string[] enumValues = Value.Split(',');
 
                 // if the Enum is a flag, then resolve each flag value in the enum value string.
                 foreach (string enumValue in enumValues)
@@ -2674,11 +2674,11 @@ namespace System.Windows.Markup
             set { _typeContext = value; }
         }
 
-        short                  _valueId;
-        Type                   _valueType;
-        string                 _value;
-        string                 _valueMemberName;
-        Type                   _serializerType;
+        short _valueId;
+        Type _valueType;
+        string _value;
+        string _valueMemberName;
+        Type _serializerType;
         ITypeDescriptorContext _typeContext;
     }
 
@@ -2690,12 +2690,12 @@ namespace System.Windows.Markup
     //
     internal class BamlPropertyCustomRecord : BamlVariableSizedRecord
     {
-#region Methods
+        #region Methods
 
 #if !PBTCOMPILER
-        internal override void  LoadRecordData(BinaryReader bamlBinaryReader)
+        internal override void LoadRecordData(BinaryReader bamlBinaryReader)
         {
-            AttributeId      = bamlBinaryReader.ReadInt16();
+            AttributeId = bamlBinaryReader.ReadInt16();
             short serializerTypeId = bamlBinaryReader.ReadInt16();
 
             IsValueTypeId = (serializerTypeId & TypeIdValueMask) == TypeIdValueMask;
@@ -2706,7 +2706,7 @@ namespace System.Windows.Markup
 
             SerializerTypeId = serializerTypeId;
 
-            ValueObjectSet  = false;
+            ValueObjectSet = false;
             IsRawEnumValueSet = false;
             _valueObject = null;
 
@@ -2799,7 +2799,7 @@ namespace System.Windows.Markup
                     break;
 
                 default:
-                    Debug.Assert (false, "Unknown custom serializer");
+                    Debug.Assert(false, "Unknown custom serializer");
                     return null;
             }
 
@@ -2819,9 +2819,9 @@ namespace System.Windows.Markup
 
 #endif
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
@@ -2895,52 +2895,52 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Properties
+        #endregion Properties
 
-#region Data
+        #region Data
 
         internal static readonly short TypeIdValueMask = 0x4000;
 
-        short                  _attributeId = 0;
-        short                  _serializerTypeId = 0;
+        short _attributeId = 0;
+        short _serializerTypeId = 0;
 
-#endregion Data
+        #endregion Data
     }
 
     internal class BamlPropertyArrayEndRecord : BamlRecord
     {
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
             get { return BamlRecordType.PropertyArrayEnd; }
         }
 
-#endregion Properties
+        #endregion Properties
     }
 
     internal class BamlConstructorParametersStartRecord : BamlRecord
     {
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
             get { return BamlRecordType.ConstructorParametersStart; }
         }
 
-#endregion Properties
+        #endregion Properties
     }
 
     internal class BamlConstructorParametersEndRecord : BamlRecord
     {
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
             get { return BamlRecordType.ConstructorParametersEnd; }
         }
 
-#endregion Properties
+        #endregion Properties
     }
 
     internal class BamlConstructorParameterTypeRecord : BamlRecord
@@ -2950,7 +2950,7 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
         internal override void LoadRecordData(BinaryReader bamlBinaryReader)
         {
-            TypeId  = bamlBinaryReader.ReadInt16();
+            TypeId = bamlBinaryReader.ReadInt16();
         }
 #endif
 
@@ -2987,7 +2987,7 @@ namespace System.Windows.Markup
         internal override Int32 RecordSize
         {
             get { return 2; }
-            set { Debug.Assert (value == -1, "Wrong size set for complex prop record"); }
+            set { Debug.Assert(value == -1, "Wrong size set for complex prop record"); }
         }
 
         #endregion Properties
@@ -2999,86 +2999,86 @@ namespace System.Windows.Markup
 
     internal class BamlPropertyIListEndRecord : BamlRecord
     {
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
             get { return BamlRecordType.PropertyIListEnd; }
         }
 
-#endregion Properties
+        #endregion Properties
     }
 
     internal class BamlPropertyIDictionaryEndRecord : BamlRecord
     {
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
             get { return BamlRecordType.PropertyIDictionaryEnd; }
         }
 
-#endregion Properties
+        #endregion Properties
     }
 
     internal class BamlPropertyComplexEndRecord : BamlRecord
     {
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
             get { return BamlRecordType.PropertyComplexEnd; }
         }
 
-#endregion Properties
+        #endregion Properties
     }
 
 
     internal class BamlPropertyArrayStartRecord : BamlPropertyComplexStartRecord
     {
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
             get { return BamlRecordType.PropertyArrayStart; }
         }
 
-#endregion Properties
+        #endregion Properties
     }
 
     internal class BamlPropertyIListStartRecord : BamlPropertyComplexStartRecord
     {
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
             get { return BamlRecordType.PropertyIListStart; }
         }
 
-#endregion Properties
+        #endregion Properties
     }
 
     internal class BamlPropertyIDictionaryStartRecord : BamlPropertyComplexStartRecord
     {
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
             get { return BamlRecordType.PropertyIDictionaryStart; }
         }
 
-#endregion Properties
+        #endregion Properties
     }
 
     internal class BamlRoutedEventRecord : BamlStringValueRecord
     {
-#region Methods
+        #region Methods
 
 #if !PBTCOMPILER
-        internal override void  LoadRecordData(BinaryReader bamlBinaryReader)
+        internal override void LoadRecordData(BinaryReader bamlBinaryReader)
         {
-            AttributeId   = bamlBinaryReader.ReadInt16();
-            Value         = bamlBinaryReader.ReadString();
+            AttributeId = bamlBinaryReader.ReadInt16();
+            Value = bamlBinaryReader.ReadString();
         }
 #endif
 
@@ -3098,9 +3098,9 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
@@ -3115,25 +3115,25 @@ namespace System.Windows.Markup
 #endif
         }
 
-#endregion Properties
+        #endregion Properties
 
-#region Data
+        #region Data
 
         short _attributeId = -1;
 
-#endregion Data
+        #endregion Data
     }
 
 
     // A section of literal content.
     internal class BamlLiteralContentRecord : BamlStringValueRecord
     {
-#region Methods
+        #region Methods
 
 #if !PBTCOMPILER
-        internal override void  LoadRecordData(BinaryReader bamlBinaryReader)
+        internal override void LoadRecordData(BinaryReader bamlBinaryReader)
         {
-            Value  =  bamlBinaryReader.ReadString();
+            Value = bamlBinaryReader.ReadString();
 
             Int32 _lineNumber = bamlBinaryReader.ReadInt32();
             Int32 _linePosition = bamlBinaryReader.ReadInt32();
@@ -3148,17 +3148,17 @@ namespace System.Windows.Markup
             bamlBinaryWriter.Write((Int32)0);
         }
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
             get { return BamlRecordType.LiteralContent; }
         }
 
-#endregion Properties
-     }
+        #endregion Properties
+    }
 
     // An record for the connection id that the (Style)BamlRecordReader uses to
     // hookup an ID or event on any element in the object tree or Style visual tree.
@@ -3211,10 +3211,10 @@ namespace System.Windows.Markup
     // object or a DependencyObject.
     internal class BamlElementStartRecord : BamlRecord
     {
-#region Methods
+        #region Methods
 
 #if !PBTCOMPILER
-        internal override void  LoadRecordData(BinaryReader bamlBinaryReader)
+        internal override void LoadRecordData(BinaryReader bamlBinaryReader)
         {
             TypeId = bamlBinaryReader.ReadInt16();
             byte flags = bamlBinaryReader.ReadByte();
@@ -3230,9 +3230,9 @@ namespace System.Windows.Markup
             bamlBinaryWriter.Write(flags);
         }
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
@@ -3244,16 +3244,16 @@ namespace System.Windows.Markup
         {
             get
             {
-                short value = (short) _flags[_typeIdLowSection];
-                value |= (short) (_flags[_typeIdHighSection] << 8);
+                short value = (short)_flags[_typeIdLowSection];
+                value |= (short)(_flags[_typeIdHighSection] << 8);
 
                 return value;
             }
 
             set
             {
-                _flags[_typeIdLowSection] = (short)  (value & 0xff);
-                _flags[_typeIdHighSection] = (short) ((value & 0xff00) >> 8);
+                _flags[_typeIdLowSection] = (short)(value & 0xff);
+                _flags[_typeIdHighSection] = (short)((value & 0xff00) >> 8);
             }
         }
 
@@ -3291,7 +3291,7 @@ namespace System.Windows.Markup
             set { Debug.Assert(value == -1, "Wrong size set for element record"); }
         }
 
-#endregion Properties
+        #endregion Properties
 
 #if !PBTCOMPILER
         public override string ToString()
@@ -3306,16 +3306,16 @@ namespace System.Windows.Markup
         // it up into 2 sections.
 
         private static BitVector32.Section _typeIdLowSection
-            = BitVector32.CreateSection( (short)0xff, BamlRecord.LastFlagsSection );
+            = BitVector32.CreateSection((short)0xff, BamlRecord.LastFlagsSection);
 
         private static BitVector32.Section _typeIdHighSection
-            = BitVector32.CreateSection( (short)0xff, _typeIdLowSection );
+            = BitVector32.CreateSection((short)0xff, _typeIdLowSection);
 
         private static BitVector32.Section _useTypeConverter
-            = BitVector32.CreateSection( 1, _typeIdHighSection );
+            = BitVector32.CreateSection(1, _typeIdHighSection);
 
         private static BitVector32.Section _isInjected
-            = BitVector32.CreateSection( 1, _useTypeConverter );
+            = BitVector32.CreateSection(1, _useTypeConverter);
 
 
         // This provides subclasses with a referece section to create their own section.
@@ -3344,21 +3344,21 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
     internal class BamlNamedElementStartRecord : BamlElementStartRecord
     {
-#region Methods
+        #region Methods
 
-        #if !PBTCOMPILER
-        internal override void  LoadRecordData(BinaryReader bamlBinaryReader)
+#if !PBTCOMPILER
+        internal override void LoadRecordData(BinaryReader bamlBinaryReader)
         {
             TypeId = bamlBinaryReader.ReadInt16();
             RuntimeName = bamlBinaryReader.ReadString();
         }
-        #endif
+#endif
 
         internal override void WriteRecordData(BinaryWriter bamlBinaryWriter)
         {
             bamlBinaryWriter.Write(TypeId);
 
-            if( RuntimeName != null )
+            if (RuntimeName != null)
             {
                 bamlBinaryWriter.Write(RuntimeName);
             }
@@ -3375,9 +3375,9 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         internal string RuntimeName
         {
@@ -3399,15 +3399,15 @@ namespace System.Windows.Markup
             set { _isTemplateChild = value; }
         }
 
-#endregion Properties
+        #endregion Properties
 
 
-#region Data
+        #region Data
 
         // Id of the type of this object
         string _runtimeName = null;
 
-#endregion Data
+        #endregion Data
     }
 #endif
 
@@ -3415,10 +3415,10 @@ namespace System.Windows.Markup
     // of the deferable section, excluding the start and end records themselves.
     internal class BamlDeferableContentStartRecord : BamlRecord
     {
-#region Methods
+        #region Methods
 
 #if !PBTCOMPILER
-        internal override void  LoadRecordData(BinaryReader bamlBinaryReader)
+        internal override void LoadRecordData(BinaryReader bamlBinaryReader)
         {
             ContentSize = bamlBinaryReader.ReadInt32();
         }
@@ -3434,8 +3434,8 @@ namespace System.Windows.Markup
         // record and the beginning of the end record.  The size of the content is
         // usually not known when the start record is written out.
         internal void UpdateContentSize(
-            Int32         contentSize,
-            BinaryWriter  bamlBinaryWriter)
+            Int32 contentSize,
+            BinaryWriter bamlBinaryWriter)
         {
             Debug.Assert(_contentSizePosition != -1,
                     "Must call WriteRecordData before updating content size");
@@ -3443,11 +3443,11 @@ namespace System.Windows.Markup
             // Use relative positions to reduce the possibility of truncation,
             // since Seek takes a 32 bit int, but position is a 64 bit int.
             Int64 existingPosition = bamlBinaryWriter.Seek(0, SeekOrigin.Current);
-            Int32 deltaPosition = (Int32)(_contentSizePosition-existingPosition);
+            Int32 deltaPosition = (Int32)(_contentSizePosition - existingPosition);
 
             bamlBinaryWriter.Seek(deltaPosition, SeekOrigin.Current);
             bamlBinaryWriter.Write(contentSize);
-            bamlBinaryWriter.Seek((int)(-ContentSizeSize-deltaPosition), SeekOrigin.Current);
+            bamlBinaryWriter.Seek((int)(-ContentSizeSize - deltaPosition), SeekOrigin.Current);
         }
 
 #if !PBTCOMPILER
@@ -3462,9 +3462,9 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
@@ -3503,10 +3503,10 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Properties
+        #endregion Properties
 
 
-#region Data
+        #region Data
 
         // Size of the ContentSize field written out to the baml stream.  This
         // must be kept in sync with the size of the _contentSize field.
@@ -3514,7 +3514,7 @@ namespace System.Windows.Markup
 
         // Size of the content between the end of the start record and the
         // beginning of the end record for this element.
-        Int32 _contentSize = - 1;
+        Int32 _contentSize = -1;
 
         // Absolute position in the stream where ContentSize is written.
         Int64 _contentSizePosition = -1;
@@ -3525,7 +3525,7 @@ namespace System.Windows.Markup
 
 #endif
 
-#endregion Data
+        #endregion Data
     }
 
     //+----------------------------------------------------------------------------------------------------------------
@@ -3538,14 +3538,14 @@ namespace System.Windows.Markup
 
     internal class BamlStaticResourceStartRecord : BamlElementStartRecord
     {
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
             get { return BamlRecordType.StaticResourceStart; }
         }
 
-#endregion Properties
+        #endregion Properties
     }
 
     //+----------------------------------------------------------------------------------------------------------------
@@ -3558,14 +3558,14 @@ namespace System.Windows.Markup
 
     internal class BamlStaticResourceEndRecord : BamlElementEndRecord
     {
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
             get { return BamlRecordType.StaticResourceEnd; }
         }
 
-#endregion Properties
+        #endregion Properties
     }
 
     //+----------------------------------------------------------------------------------------------------------------
@@ -3578,7 +3578,7 @@ namespace System.Windows.Markup
 
     internal class BamlOptimizedStaticResourceRecord : BamlRecord, IOptimizedMarkupExtension
     {
-#region Methods
+        #region Methods
 
 #if !PBTCOMPILER
         internal override void LoadRecordData(BinaryReader bamlBinaryReader)
@@ -3616,9 +3616,9 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
@@ -3659,9 +3659,9 @@ namespace System.Windows.Markup
             set { _flags[_isValueStaticExtensionSection] = value ? 1 : 0; }
         }
 
-#endregion Properties
+        #endregion Properties
 
-#region Data
+        #region Data
 
         short _valueId = 0;
 
@@ -3689,7 +3689,7 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Data
+        #endregion Data
 
 
     }
@@ -3704,10 +3704,10 @@ namespace System.Windows.Markup
 
     internal class BamlStaticResourceIdRecord : BamlRecord
     {
-#region Methods
+        #region Methods
 
 #if !PBTCOMPILER
-        internal override void  LoadRecordData(BinaryReader bamlBinaryReader)
+        internal override void LoadRecordData(BinaryReader bamlBinaryReader)
         {
             StaticResourceId = bamlBinaryReader.ReadInt16();
         }
@@ -3728,9 +3728,9 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
@@ -3749,10 +3749,10 @@ namespace System.Windows.Markup
             set { _staticResourceId = value; }
         }
 
-#endregion Properties
+        #endregion Properties
 
 
-#region Data
+        #region Data
 
         short _staticResourceId = -1;
 
@@ -3765,7 +3765,7 @@ namespace System.Windows.Markup
 #endif
 
 
-#endregion Data
+        #endregion Data
 
     }
 
@@ -3780,10 +3780,10 @@ namespace System.Windows.Markup
 
     internal class BamlPropertyWithStaticResourceIdRecord : BamlStaticResourceIdRecord
     {
-#region Methods
+        #region Methods
 
 #if !PBTCOMPILER
-        internal override void  LoadRecordData(BinaryReader bamlBinaryReader)
+        internal override void LoadRecordData(BinaryReader bamlBinaryReader)
         {
             AttributeId = bamlBinaryReader.ReadInt16();
             StaticResourceId = bamlBinaryReader.ReadInt16();
@@ -3806,9 +3806,9 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
@@ -3828,9 +3828,9 @@ namespace System.Windows.Markup
             set { _attributeId = value; }
         }
 
-#endregion Properties
+        #endregion Properties
 
-#region Data
+        #region Data
 
         short _attributeId = -1;
 
@@ -3842,7 +3842,7 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Data
+        #endregion Data
 
     }
 
@@ -3850,25 +3850,25 @@ namespace System.Windows.Markup
     // Text content between the begin and end tag of an element.
     internal class BamlTextRecord : BamlStringValueRecord
     {
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
             get { return BamlRecordType.Text; }
         }
 
-#endregion Properties
+        #endregion Properties
     }
 
     // This is a text record within a [Static/Dynamic]ResourceExtension.
     internal class BamlTextWithIdRecord : BamlTextRecord
     {
-#region Methods
+        #region Methods
 
 #if !PBTCOMPILER
-        internal override void  LoadRecordData(BinaryReader bamlBinaryReader)
+        internal override void LoadRecordData(BinaryReader bamlBinaryReader)
         {
-            ValueId  =  bamlBinaryReader.ReadInt16();
+            ValueId = bamlBinaryReader.ReadInt16();
         }
 #endif
 
@@ -3887,9 +3887,9 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
@@ -3902,23 +3902,23 @@ namespace System.Windows.Markup
             set { _valueId = value; }
         }
 
-#endregion Properties
+        #endregion Properties
 
-#region Data
+        #region Data
         Int16 _valueId;
-#endregion Data
+        #endregion Data
     }
 
     // Text content between the begin and end tag of an element that will be parsed using a type converter.
     internal class BamlTextWithConverterRecord : BamlTextRecord
     {
-#region Methods
+        #region Methods
 
 #if !PBTCOMPILER
         internal override void LoadRecordData(BinaryReader bamlBinaryReader)
         {
             base.LoadRecordData(bamlBinaryReader);
-            ConverterTypeId  = bamlBinaryReader.ReadInt16();
+            ConverterTypeId = bamlBinaryReader.ReadInt16();
         }
 #endif
 
@@ -3938,9 +3938,9 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         // The following are stored in the baml stream
 
@@ -3959,13 +3959,13 @@ namespace System.Windows.Markup
             get { return BamlRecordType.TextWithConverter; }
         }
 
-#endregion Properties
+        #endregion Properties
 
-#region Data
+        #region Data
 
         short _converterTypeId = 0;
 
-#endregion Data
+        #endregion Data
     }
 
     // Marks the start of a Baml document.  This must always be the first
@@ -3973,7 +3973,7 @@ namespace System.Windows.Markup
     // document wide directives.
     internal class BamlDocumentStartRecord : BamlRecord
     {
-#region Methods
+        #region Methods
 
         // Writes data at the current position.  The seek pointer points
         // to byte after the end of record when done.
@@ -3983,7 +3983,7 @@ namespace System.Windows.Markup
             // is needed if we have to come back later to update the sync mode.
             if (FilePos == -1 && bamlBinaryWriter != null)
             {
-                FilePos = bamlBinaryWriter.Seek(0,SeekOrigin.Current);
+                FilePos = bamlBinaryWriter.Seek(0, SeekOrigin.Current);
             }
 
             base.Write(bamlBinaryWriter);
@@ -3999,25 +3999,25 @@ namespace System.Windows.Markup
         {
             // default implementation, class should override if
             // wants to optimize to only update dirty data.
-            long currentPosiition = bamlBinaryWriter.Seek(0,SeekOrigin.Current);
+            long currentPosiition = bamlBinaryWriter.Seek(0, SeekOrigin.Current);
 
             // seek to original record position.
 
-            Debug.Assert(FilePos != -1,"UpdateWrite called but Write Never was");
+            Debug.Assert(FilePos != -1, "UpdateWrite called but Write Never was");
 
             // Note: This only works for files up to 2 gig in length.
             //       This is not a new restriction, but it should be
             //       fixed to work with larger files...
-            bamlBinaryWriter.Seek((int)FilePos,SeekOrigin.Begin);
+            bamlBinaryWriter.Seek((int)FilePos, SeekOrigin.Begin);
             Write(bamlBinaryWriter);
-            bamlBinaryWriter.Seek( (int) currentPosiition,SeekOrigin.Begin);
+            bamlBinaryWriter.Seek((int)currentPosiition, SeekOrigin.Begin);
         }
 
 #if !PBTCOMPILER
-        internal override void  LoadRecordData(BinaryReader bamlBinaryReader)
+        internal override void LoadRecordData(BinaryReader bamlBinaryReader)
         {
-            LoadAsync =  bamlBinaryReader.ReadBoolean();
-            MaxAsyncRecords =  bamlBinaryReader.ReadInt32();
+            LoadAsync = bamlBinaryReader.ReadBoolean();
+            MaxAsyncRecords = bamlBinaryReader.ReadInt32();
             DebugBaml = bamlBinaryReader.ReadBoolean();
         }
 #endif
@@ -4042,9 +4042,9 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
@@ -4069,37 +4069,37 @@ namespace System.Windows.Markup
         internal long FilePos
         {
             get { return _filePos; }
-            set { _filePos  = value; }
+            set { _filePos = value; }
         }
 
         // Are there Debug Baml Records in this Baml Stream
         internal bool DebugBaml
         {
             get { return _debugBaml; }
-            set { _debugBaml  = value; }
+            set { _debugBaml = value; }
         }
 
-#endregion Properties
+        #endregion Properties
 
-#region Data
-        int         _maxAsyncRecords  = -1;
-        bool        _loadAsync = false;
-        long        _filePos = -1;
-        bool        _debugBaml = false;
-#endregion Data
+        #region Data
+        int _maxAsyncRecords = -1;
+        bool _loadAsync = false;
+        long _filePos = -1;
+        bool _debugBaml = false;
+        #endregion Data
     }
 
     // This marks the end tag of an element
     internal class BamlElementEndRecord : BamlRecord
     {
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
             get { return BamlRecordType.ElementEnd; }
         }
 
-#endregion Properties
+        #endregion Properties
     }
 
     // This marks the start tag of an element being used as the key for an IDictionary
@@ -4110,40 +4110,40 @@ namespace System.Windows.Markup
             Pin(); // Don't allow this record to be recycled in the read cache.
         }
 
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
             get { return BamlRecordType.KeyElementStart; }
         }
 
-#endregion Properties
+        #endregion Properties
     }
 
     // This marks the end tag of an element being used as the key for an IDictionary
     internal class BamlKeyElementEndRecord : BamlElementEndRecord
     {
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
             get { return BamlRecordType.KeyElementEnd; }
         }
 
-#endregion Properties
+        #endregion Properties
     }
 
     // This marks the end of the baml stream, or document.
     internal class BamlDocumentEndRecord : BamlRecord
     {
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
             get { return BamlRecordType.DocumentEnd; }
         }
 
-#endregion Properties
+        #endregion Properties
     }
 
     // The following records are used internally in the baml stream to
@@ -4160,14 +4160,14 @@ namespace System.Windows.Markup
             AssemblyId = -1;
         }
 
-#region Methods
+        #region Methods
 
 #if !PBTCOMPILER
         // LoadRecord specific data
-        internal override void  LoadRecordData(BinaryReader bamlBinaryReader)
+        internal override void LoadRecordData(BinaryReader bamlBinaryReader)
         {
-            AssemblyId       =  bamlBinaryReader.ReadInt16();
-            AssemblyFullName =  bamlBinaryReader.ReadString();
+            AssemblyId = bamlBinaryReader.ReadInt16();
+            AssemblyFullName = bamlBinaryReader.ReadString();
         }
 #endif
 
@@ -4190,9 +4190,9 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         // The following are stored in the baml stream
 
@@ -4201,16 +4201,16 @@ namespace System.Windows.Markup
         {
             get
             {
-                short value = (short) _flags[_assemblyIdLowSection];
-                value |= (short) (_flags[_assemblyIdHighSection] << 8);
+                short value = (short)_flags[_assemblyIdLowSection];
+                value |= (short)(_flags[_assemblyIdHighSection] << 8);
 
                 return value;
             }
 
             set
             {
-                _flags[_assemblyIdLowSection] = (short)  (value & 0xff);
-                _flags[_assemblyIdHighSection] = (short) ((value & 0xff00) >> 8);
+                _flags[_assemblyIdLowSection] = (short)(value & 0xff);
+                _flags[_assemblyIdHighSection] = (short)((value & 0xff00) >> 8);
             }
         }
 
@@ -4219,10 +4219,10 @@ namespace System.Windows.Markup
         // it up into 2 sections.
 
         private static BitVector32.Section _assemblyIdLowSection
-            = BitVector32.CreateSection( (short)0xff, BamlVariableSizedRecord.LastFlagsSection );
+            = BitVector32.CreateSection((short)0xff, BamlVariableSizedRecord.LastFlagsSection);
 
         private static BitVector32.Section _assemblyIdHighSection
-            = BitVector32.CreateSection( (short)0xff, _assemblyIdLowSection );
+            = BitVector32.CreateSection((short)0xff, _assemblyIdLowSection);
 
 #if !PBTCOMPILER
         // This provides subclasses with a referece section to create their own section.
@@ -4258,15 +4258,15 @@ namespace System.Windows.Markup
         }
 
 
-#endregion Properties
+        #endregion Properties
 
 
-#region Data
+        #region Data
 
-        string   _assemblyFullName;
+        string _assemblyFullName;
         Assembly _assembly;
 
-#endregion Data
+        #endregion Data
     }
 
     // Information about a type for an element, object or property
@@ -4278,15 +4278,15 @@ namespace System.Windows.Markup
             TypeId = -1;
         }
 
-#region Methods
+        #region Methods
 
 #if !PBTCOMPILER
         // LoadRecord specific data
-        internal override void  LoadRecordData(BinaryReader bamlBinaryReader)
+        internal override void LoadRecordData(BinaryReader bamlBinaryReader)
         {
-            TypeId       =   bamlBinaryReader.ReadInt16();
-            AssemblyId   =   bamlBinaryReader.ReadInt16();
-            TypeFullName =   bamlBinaryReader.ReadString();
+            TypeId = bamlBinaryReader.ReadInt16();
+            AssemblyId = bamlBinaryReader.ReadInt16();
+            TypeFullName = bamlBinaryReader.ReadString();
 
             // Note that the upper 4 bits of the AssemblyId are used for flags
             _typeInfoFlags = (TypeInfoFlags)(AssemblyId >> 12);
@@ -4317,9 +4317,9 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         // The following are stored in the baml stream
 
@@ -4329,16 +4329,16 @@ namespace System.Windows.Markup
         {
             get
             {
-                short value = (short) _flags[_typeIdLowSection];
-                value |= (short) (_flags[_typeIdHighSection] << 8);
+                short value = (short)_flags[_typeIdLowSection];
+                value |= (short)(_flags[_typeIdHighSection] << 8);
 
                 return value;
             }
 
             set
             {
-                _flags[_typeIdLowSection] = (short)  (value & 0xff);
-                _flags[_typeIdHighSection] = (short) ((value & 0xff00) >> 8);
+                _flags[_typeIdLowSection] = (short)(value & 0xff);
+                _flags[_typeIdHighSection] = (short)((value & 0xff00) >> 8);
             }
         }
 
@@ -4423,19 +4423,19 @@ namespace System.Windows.Markup
             }
         }
 
-#endregion Properties
+        #endregion Properties
 
-#region Data
+        #region Data
 
         // Allocate space in _flags.
         // BitVector32 doesn't support 16 bit sections, so we have to break
         // it up into 2 sections.
 
         private static BitVector32.Section _typeIdLowSection
-            = BitVector32.CreateSection( (short)0xff, BamlVariableSizedRecord.LastFlagsSection );
+            = BitVector32.CreateSection((short)0xff, BamlVariableSizedRecord.LastFlagsSection);
 
         private static BitVector32.Section _typeIdHighSection
-            = BitVector32.CreateSection( (short)0xff, _typeIdLowSection );
+            = BitVector32.CreateSection((short)0xff, _typeIdLowSection);
 
 #if !PBTCOMPILER
         // This provides subclasses with a referece section to create their own section.
@@ -4451,19 +4451,19 @@ namespace System.Windows.Markup
         [Flags]
         private enum TypeInfoFlags : byte
         {
-            Internal             = 0x1,
-            UnusedTwo            = 0x2,
-            UnusedThree          = 0x4,
+            Internal = 0x1,
+            UnusedTwo = 0x2,
+            UnusedThree = 0x4,
         }
 
         TypeInfoFlags _typeInfoFlags = 0;
-        short         _assemblyId = -1;
-        string        _typeFullName;
+        short _assemblyId = -1;
+        string _typeFullName;
 #if !PBTCOMPILER
-        Type          _type;
+        Type _type;
 #endif
 
-#endregion Data
+        #endregion Data
 
 
     }
@@ -4477,14 +4477,14 @@ namespace System.Windows.Markup
             Pin(); // Don't allow this record to be recycled in the read cache.
         }
 
-#region Methods
+        #region Methods
 
 #if !PBTCOMPILER
         // LoadRecord specific data
-        internal override void  LoadRecordData(BinaryReader bamlBinaryReader)
+        internal override void LoadRecordData(BinaryReader bamlBinaryReader)
         {
             base.LoadRecordData(bamlBinaryReader);
-            SerializerTypeId  =   bamlBinaryReader.ReadInt16();
+            SerializerTypeId = bamlBinaryReader.ReadInt16();
         }
 #endif
 
@@ -4506,9 +4506,9 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         // The following are stored in the baml stream
 
@@ -4546,21 +4546,21 @@ namespace System.Windows.Markup
         {
             get
             {
-                Debug.Assert( SerializerTypeId != 0 );
+                Debug.Assert(SerializerTypeId != 0);
                 return true;
             }
         }
 
-#endregion Properties
+        #endregion Properties
 
-#region Data
+        #region Data
 
         short _serializerTypeId = 0;
 #if !PBTCOMPILER
         Type _serializerType;
 #endif
 
-#endregion Data
+        #endregion Data
 
     }
 
@@ -4576,16 +4576,16 @@ namespace System.Windows.Markup
             AttributeUsage = BamlAttributeUsage.Default;
         }
 
-#region Methods
+        #region Methods
 
 #if !PBTCOMPILER
         // LoadRecord specific data
-        internal override void  LoadRecordData(BinaryReader bamlBinaryReader)
+        internal override void LoadRecordData(BinaryReader bamlBinaryReader)
         {
-            AttributeId  =   bamlBinaryReader.ReadInt16();
-            OwnerTypeId  =   bamlBinaryReader.ReadInt16();
+            AttributeId = bamlBinaryReader.ReadInt16();
+            OwnerTypeId = bamlBinaryReader.ReadInt16();
             AttributeUsage = (BamlAttributeUsage)bamlBinaryReader.ReadByte();
-            Name  =          bamlBinaryReader.ReadString();
+            Name = bamlBinaryReader.ReadString();
         }
 #endif
 
@@ -4619,9 +4619,9 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         // The following 3 properties are stored in the Baml file and are read and
         // written by the BamlRecordReader and BamlXamlNodeWriter
@@ -4697,7 +4697,7 @@ namespace System.Windows.Markup
         /// scenario that requires caching more than one property info is when a dependency
         /// property has both a static settor and a clr wrapper.
         /// </remarks>
-        internal void SetPropertyMember (object propertyMember)
+        internal void SetPropertyMember(object propertyMember)
         {
             Debug.Assert((propertyMember is MethodInfo) || (propertyMember is PropertyInfo)
                         || (KnownTypes.Types[(int)KnownElements.DependencyProperty].IsAssignableFrom(propertyMember.GetType())),
@@ -4743,7 +4743,7 @@ namespace System.Windows.Markup
         {
             if (PropertyMember == null ||
                 PropertyMember is MemberInfo ||
-                KnownTypes.Types[(int)KnownElements.DependencyProperty].IsAssignableFrom(PropertyMember.GetType( )) )
+                KnownTypes.Types[(int)KnownElements.DependencyProperty].IsAssignableFrom(PropertyMember.GetType()))
             {
                 if (onlyPropInfo)
                 {
@@ -4811,7 +4811,7 @@ namespace System.Windows.Markup
         // routed event.  If not a routed event, this is null.
         internal RoutedEvent Event
         {
-            get {  return _Event; }
+            get { return _Event; }
             set { _Event = value; }
         }
 
@@ -4901,12 +4901,12 @@ namespace System.Windows.Markup
         {
             get
             {
-                return (BamlAttributeUsage) _flags[_attributeUsageSection];
+                return (BamlAttributeUsage)_flags[_attributeUsageSection];
             }
 
             set
             {
-                _flags[_attributeUsageSection] = (int) value;
+                _flags[_attributeUsageSection] = (int)value;
             }
         }
 
@@ -4914,10 +4914,10 @@ namespace System.Windows.Markup
         // Allocate space in _flags.
 
         private static BitVector32.Section _isInternalSection
-            = BitVector32.CreateSection( 1, BamlVariableSizedRecord.LastFlagsSection );
+            = BitVector32.CreateSection(1, BamlVariableSizedRecord.LastFlagsSection);
 
         private static BitVector32.Section _attributeUsageSection
-            = BitVector32.CreateSection( 3, _isInternalSection );
+            = BitVector32.CreateSection(3, _isInternalSection);
 
 #if !PBTCOMPILER
         // This provides subclasses with a referece section to create their own section.
@@ -4927,7 +4927,7 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Properties
+        #endregion Properties
 
 #if !PBTCOMPILER
         public override string ToString()
@@ -4937,25 +4937,25 @@ namespace System.Windows.Markup
         }
 #endif
 
-#region Data
+        #region Data
 
         short _ownerId;
         short _attributeId;
         string _name;
 
 #if !PBTCOMPILER
-        Type               _ownerType = null;
-        RoutedEvent        _Event = null;
+        Type _ownerType = null;
+        RoutedEvent _Event = null;
         DependencyProperty _dp = null;
-        EventInfo          _ei = null;
-        PropertyInfo       _pi = null;
-        MethodInfo         _smi = null;
-        MethodInfo         _gmi = null;
+        EventInfo _ei = null;
+        PropertyInfo _pi = null;
+        MethodInfo _smi = null;
+        MethodInfo _gmi = null;
 #endif
 
-        object             _dpOrMiOrPi = null;   // MethodInfo, PropertyInfo or DependencyProperty
+        object _dpOrMiOrPi = null;   // MethodInfo, PropertyInfo or DependencyProperty
 
-#endregion Data
+        #endregion Data
     }
 
     // Information about a String that is an entry in the String table.
@@ -4967,14 +4967,14 @@ namespace System.Windows.Markup
             StringId = -1;
         }
 
-#region Methods
+        #region Methods
 
 #if !PBTCOMPILER
         // LoadRecord specific data
         internal override void LoadRecordData(BinaryReader bamlBinaryReader)
         {
             StringId = bamlBinaryReader.ReadInt16();
-            Value    = bamlBinaryReader.ReadString();
+            Value = bamlBinaryReader.ReadString();
         }
 #endif
 
@@ -4996,24 +4996,24 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
         // Resource Identifier pointing to the StringTable Entry
         internal short StringId
         {
             get
             {
-                short value = (short) _flags[_stringIdLowSection];
-                value |= (short) (_flags[_stringIdHighSection] << 8);
+                short value = (short)_flags[_stringIdLowSection];
+                value |= (short)(_flags[_stringIdHighSection] << 8);
 
                 return value;
             }
 
             set
             {
-                _flags[_stringIdLowSection] = (short)  (value & 0xff);
-                _flags[_stringIdHighSection] = (short) ((value & 0xff00) >> 8);
+                _flags[_stringIdLowSection] = (short)(value & 0xff);
+                _flags[_stringIdHighSection] = (short)((value & 0xff00) >> 8);
             }
         }
 
@@ -5035,7 +5035,7 @@ namespace System.Windows.Markup
         {
             get { return false; }
         }
-#endregion Properties
+        #endregion Properties
 
 #if !PBTCOMPILER
         public override string ToString()
@@ -5045,7 +5045,7 @@ namespace System.Windows.Markup
         }
 #endif
 
-#region Data
+        #region Data
 
 
         // Allocate space in _flags.
@@ -5053,10 +5053,10 @@ namespace System.Windows.Markup
         // it up into 2 sections.
 
         private static BitVector32.Section _stringIdLowSection
-            = BitVector32.CreateSection( (short)0xff, BamlVariableSizedRecord.LastFlagsSection );
+            = BitVector32.CreateSection((short)0xff, BamlVariableSizedRecord.LastFlagsSection);
 
         private static BitVector32.Section _stringIdHighSection
-            = BitVector32.CreateSection( (short)0xff, _stringIdLowSection );
+            = BitVector32.CreateSection((short)0xff, _stringIdLowSection);
 
 #if !PBTCOMPILER
         // This provides subclasses with a referece section to create their own section.
@@ -5066,8 +5066,8 @@ namespace System.Windows.Markup
         }
 #endif
 
-        string _value ;
-#endregion Data
+        string _value;
+        #endregion Data
     }
 
     // Sets the content property context for an element
@@ -5132,13 +5132,13 @@ namespace System.Windows.Markup
     // Debugging Linenumber record.  Linenumber from the XAML
     internal class BamlLineAndPositionRecord : BamlRecord
     {
-#region Methods
+        #region Methods
 
 #if !PBTCOMPILER
-        internal override void  LoadRecordData(BinaryReader bamlBinaryReader)
+        internal override void LoadRecordData(BinaryReader bamlBinaryReader)
         {
-            LineNumber = (uint) bamlBinaryReader.ReadInt32();
-            LinePosition = (uint) bamlBinaryReader.ReadInt32();
+            LineNumber = (uint)bamlBinaryReader.ReadInt32();
+            LinePosition = (uint)bamlBinaryReader.ReadInt32();
         }
 #endif
 
@@ -5159,9 +5159,9 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
@@ -5189,7 +5189,7 @@ namespace System.Windows.Markup
         uint _lineNumber;
         uint _linePosition;
 
-#endregion Properties
+        #endregion Properties
 
 #if !PBTCOMPILER
         public override string ToString()
@@ -5204,12 +5204,12 @@ namespace System.Windows.Markup
     // Debugging Line Position record.  Line Position from the XAML
     internal class BamlLinePositionRecord : BamlRecord
     {
-#region Methods
+        #region Methods
 
 #if !PBTCOMPILER
-        internal override void  LoadRecordData(BinaryReader bamlBinaryReader)
+        internal override void LoadRecordData(BinaryReader bamlBinaryReader)
         {
-            LinePosition = (uint) bamlBinaryReader.ReadInt32();
+            LinePosition = (uint)bamlBinaryReader.ReadInt32();
         }
 #endif
 
@@ -5228,9 +5228,9 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         internal override BamlRecordType RecordType
         {
@@ -5250,7 +5250,7 @@ namespace System.Windows.Markup
 
         uint _linePosition;
 
-#endregion Properties
+        #endregion Properties
 
 #if !PBTCOMPILER
         public override string ToString()

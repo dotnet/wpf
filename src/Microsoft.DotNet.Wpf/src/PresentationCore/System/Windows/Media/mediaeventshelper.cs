@@ -1,14 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 //
 //
 
-using System.Text;
-using MS.Internal;
-using System.Windows.Threading;
 using System.IO;
+using System.Text;
+using System.Windows.Threading;
+using MS.Internal;
 
 namespace System.Windows.Media
 {
@@ -261,77 +261,77 @@ namespace System.Windows.Media
                 // Unpack the event and the errorHResult
                 //
                 avEventType = (AVEvent)reader.ReadUInt32();
-                failureHr   = (int)reader.ReadUInt32();
+                failureHr = (int)reader.ReadUInt32();
 
-                switch(avEventType)
+                switch (avEventType)
                 {
-                case AVEvent.AVMediaOpened:
+                    case AVEvent.AVMediaOpened:
 
-                    if (DispatcherMediaOpened != null)
-                    {
-                        _dispatcher.BeginInvoke(DispatcherPriority.Normal, DispatcherMediaOpened, null);
-                    }
-                    break;
+                        if (DispatcherMediaOpened != null)
+                        {
+                            _dispatcher.BeginInvoke(DispatcherPriority.Normal, DispatcherMediaOpened, null);
+                        }
+                        break;
 
-                case AVEvent.AVMediaFailed:
+                    case AVEvent.AVMediaFailed:
 
-                    RaiseMediaFailed(HRESULT.ConvertHRToException(failureHr));
-                    break;
+                        RaiseMediaFailed(HRESULT.ConvertHRToException(failureHr));
+                        break;
 
-                case AVEvent.AVMediaBufferingStarted:
+                    case AVEvent.AVMediaBufferingStarted:
 
-                    if (DispatcherBufferingStarted != null)
-                    {
-                        _dispatcher.BeginInvoke(DispatcherPriority.Normal, DispatcherBufferingStarted, null);
-                    }
-                    break;
+                        if (DispatcherBufferingStarted != null)
+                        {
+                            _dispatcher.BeginInvoke(DispatcherPriority.Normal, DispatcherBufferingStarted, null);
+                        }
+                        break;
 
-                case AVEvent.AVMediaBufferingEnded:
+                    case AVEvent.AVMediaBufferingEnded:
 
-                    if (DispatcherBufferingEnded != null)
-                    {
-                        _dispatcher.BeginInvoke(DispatcherPriority.Normal, DispatcherBufferingEnded, null);
-                    }
-                    break;
+                        if (DispatcherBufferingEnded != null)
+                        {
+                            _dispatcher.BeginInvoke(DispatcherPriority.Normal, DispatcherBufferingEnded, null);
+                        }
+                        break;
 
-                case AVEvent.AVMediaEnded:
+                    case AVEvent.AVMediaEnded:
 
-                    if (DispatcherMediaEnded != null)
-                    {
-                        _dispatcher.BeginInvoke(DispatcherPriority.Normal, DispatcherMediaEnded, null);
-                    }
-                    break;
+                        if (DispatcherMediaEnded != null)
+                        {
+                            _dispatcher.BeginInvoke(DispatcherPriority.Normal, DispatcherMediaEnded, null);
+                        }
+                        break;
 
-                case AVEvent.AVMediaPrerolled:
+                    case AVEvent.AVMediaPrerolled:
 
-                    if (DispatcherMediaPrerolled != null)
-                    {
-                        _dispatcher.BeginInvoke(DispatcherPriority.Normal, DispatcherMediaPrerolled, null);
-                    }
-                    break;
+                        if (DispatcherMediaPrerolled != null)
+                        {
+                            _dispatcher.BeginInvoke(DispatcherPriority.Normal, DispatcherMediaPrerolled, null);
+                        }
+                        break;
 
-                case AVEvent.AVMediaScriptCommand:
+                    case AVEvent.AVMediaScriptCommand:
 
-                    HandleScriptCommand(reader);
-                    break;
+                        HandleScriptCommand(reader);
+                        break;
 
-                case AVEvent.AVMediaNewFrame:
+                    case AVEvent.AVMediaNewFrame:
 
-                    if (DispatcherMediaNewFrame != null)
-                    {
+                        if (DispatcherMediaNewFrame != null)
+                        {
+                            //
+                            // We set frame updates to background because media is high frequency and bandwidth enough
+                            // to interfere dramatically with input.
+                            //
+                            _dispatcher.BeginInvoke(DispatcherPriority.Background, DispatcherMediaNewFrame, null);
+                        }
+                        break;
+
+                    default:
                         //
-                        // We set frame updates to background because media is high frequency and bandwidth enough
-                        // to interfere dramatically with input.
+                        // Default case intentionally not handled.
                         //
-                        _dispatcher.BeginInvoke(DispatcherPriority.Background, DispatcherMediaNewFrame, null);
-                    }
-                    break;
-
-                default:
-                    //
-                    // Default case intentionally not handled.
-                    //
-                    break;
+                        break;
                 }
             }
         }
@@ -348,7 +348,7 @@ namespace System.Windows.Media
         private
         void
         HandleScriptCommand(
-            BinaryReader        reader
+            BinaryReader reader
             )
         {
             int parameterTypeLength = (int)reader.ReadUInt32();
@@ -376,22 +376,23 @@ namespace System.Windows.Media
         private
         string
         GetStringFromReader(
-            BinaryReader    reader,
-            int             stringLength
+            BinaryReader reader,
+            int stringLength
             )
         {
             //
             // Set the initial capacity of the string builder to stringLength
             //
-            StringBuilder stringBuilder = new StringBuilder(stringLength);
+            StringBuilder stringBuilder = new StringBuilder(stringLength)
+            {
+                //
+                // Also set the actual length, this allows the string to be indexed
+                // to that point.
+                //
+                Length = stringLength
+            };
 
-            //
-            // Also set the actual length, this allows the string to be indexed
-            // to that point.
-            //
-            stringBuilder.Length = stringLength;
-
-            for(int i = 0; i < stringLength; i++)
+            for (int i = 0; i < stringLength; i++)
             {
                 stringBuilder[i] = (char)reader.ReadUInt16();
             }

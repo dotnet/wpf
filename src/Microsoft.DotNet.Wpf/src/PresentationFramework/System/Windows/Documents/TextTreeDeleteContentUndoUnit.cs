@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,11 +6,11 @@
 // Description: Undo unit for TextContainer.DeleteContent calls.
 //
 
-using MS.Internal;
 using System.IO;
 using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Xml;
+using MS.Internal;
 
 namespace System.Windows.Documents
 {
@@ -45,7 +45,7 @@ namespace System.Windows.Documents
         }
 
         #endregion Constructors
- 
+
         //------------------------------------------------------
         //
         //  Public Methods
@@ -265,7 +265,7 @@ namespace System.Windows.Documents
         // Returns the next node to examine.
         private TextTreeNode CopyElementNode(TextTreeTextElementNode elementNode, out ContentContainer container)
         {
-            if(elementNode.TextElement is Table)
+            if (elementNode.TextElement is Table)
             {
                 container = new TableElementContentContainer(elementNode.TextElement as Table,
                                                         GetPropertyRecordArray(elementNode.TextElement),
@@ -446,7 +446,7 @@ namespace System.Windows.Documents
             private readonly Type _elementType;
 
             // Local property values set on the TextElement.
-            private readonly PropertyRecord []_localValues;
+            private readonly PropertyRecord[] _localValues;
 
             // Resources defined locally on the TextElement
             private readonly ResourceDictionary _resources;
@@ -458,7 +458,7 @@ namespace System.Windows.Documents
         // A serialized Table Element
         private class TableElementContentContainer : ElementContentContainer
         {
-            internal TableElementContentContainer(Table table, PropertyRecord []localValues, ContentContainer childContainer) :
+            internal TableElementContentContainer(Table table, PropertyRecord[] localValues, ContentContainer childContainer) :
                 base(table.GetType(), localValues, table.Resources, childContainer)
             {
                 _cpTable = table.TextContainer.Start.GetOffsetToPosition(table.ContentStart);
@@ -469,10 +469,10 @@ namespace System.Windows.Documents
             {
                 base.Do(navigator);
 
-                if(_columns != null)
+                if (_columns != null)
                 {
-                    TextPointer textPointerTable = new TextPointer(navigator.TextContainer.Start, _cpTable, LogicalDirection.Forward); 
-                    Table table = (Table) textPointerTable.Parent;
+                    TextPointer textPointerTable = new TextPointer(navigator.TextContainer.Start, _cpTable, LogicalDirection.Forward);
+                    Table table = (Table)textPointerTable.Parent;
                     RestoreColumns(table, _columns);
                 }
             }

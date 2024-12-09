@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -274,8 +274,8 @@ namespace MS.Internal.IO.Packaging
         //  Private Fields
         //
         //------------------------------------------------------
-        private Stream      _baseStream;    // stream we are wrapping
-        private Object      _syncRoot;      // object to lock on
+        private Stream _baseStream;    // stream we are wrapping
+        private Object _syncRoot;      // object to lock on
     }
 }
 

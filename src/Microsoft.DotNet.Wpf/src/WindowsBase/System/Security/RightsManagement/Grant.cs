@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -28,21 +28,21 @@ namespace System.Security.RightsManagement
 
             ArgumentNullException.ThrowIfNull(user);
 
-            if ((right != ContentRight.View) && 
-                (right != ContentRight.Edit) && 
-                (right != ContentRight.Print) && 
-                (right != ContentRight.Extract) && 
-                (right != ContentRight.ObjectModel) && 
-                (right != ContentRight.Owner) && 
-                (right != ContentRight.ViewRightsData) && 
-                (right != ContentRight.Forward) && 
+            if ((right != ContentRight.View) &&
+                (right != ContentRight.Edit) &&
+                (right != ContentRight.Print) &&
+                (right != ContentRight.Extract) &&
+                (right != ContentRight.ObjectModel) &&
+                (right != ContentRight.Owner) &&
+                (right != ContentRight.ViewRightsData) &&
+                (right != ContentRight.Forward) &&
                 (right != ContentRight.Reply) &&
                 (right != ContentRight.ReplyAll) &&
                 (right != ContentRight.Sign) &&
-                (right != ContentRight.DocumentEdit)  &&
+                (right != ContentRight.DocumentEdit) &&
                 (right != ContentRight.Export))
             {
-                throw new ArgumentOutOfRangeException("right");                
+                throw new ArgumentOutOfRangeException("right");
             }
 
             ArgumentOutOfRangeException.ThrowIfGreaterThan(validFrom, validUntil);
@@ -81,27 +81,27 @@ namespace System.Security.RightsManagement
         /// <summary>
         /// The starting validity time, in UTC time, for the grant.
         /// </summary>
-        public DateTime  ValidFrom
+        public DateTime ValidFrom
         {
-            get 
+            get
             {
-            
-                return _validFrom; 
+
+                return _validFrom;
             }
         }
 
         /// <summary>
         /// The ending validity time, in UTC time, for the grant.
         /// </summary>
-        public DateTime  ValidUntil 
+        public DateTime ValidUntil
         {
-            get 
+            get
             {
-            
-                return _validUntil; 
+
+                return _validUntil;
             }
         }
-        
+
         private ContentUser _user;
         private ContentRight _right;
         private DateTime _validFrom;

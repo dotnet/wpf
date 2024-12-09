@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -89,7 +89,7 @@ namespace System.Windows
             TriggerAction oldValue = _rawList[index];
             InheritanceContextHelper.RemoveContextFromObject(_owner, oldValue);
             _rawList.RemoveAt(index);
-            
+
         }
 
         ///////////////////////////////////////////////////////////////////////
@@ -102,7 +102,7 @@ namespace System.Windows
         public void Add(TriggerAction value)
         {
             CheckSealed();
-            InheritanceContextHelper.ProvideContextForObject( _owner, value );
+            InheritanceContextHelper.ProvideContextForObject(_owner, value);
             _rawList.Add(value);
         }
 
@@ -118,11 +118,11 @@ namespace System.Windows
         /// <summary>
         ///     ICollection.CopyTo
         /// </summary>
-        public void CopyTo( TriggerAction[] array, int index )
+        public void CopyTo(TriggerAction[] array, int index)
         {
             _rawList.CopyTo(array, index);
         }
-        
+
         /// <summary>
         ///     IList.IndexOf
         /// </summary>
@@ -137,7 +137,7 @@ namespace System.Windows
         public void Insert(int index, TriggerAction value)
         {
             CheckSealed();
-            InheritanceContextHelper.ProvideContextForObject(_owner, value );
+            InheritanceContextHelper.ProvideContextForObject(_owner, value);
             _rawList.Insert(index, value);
 
         }
@@ -189,7 +189,7 @@ namespace System.Windows
         {
             CheckSealed();
             InheritanceContextHelper.ProvideContextForObject(_owner, value as DependencyObject);
-            int index = ((IList) _rawList).Add(VerifyIsTriggerAction(value));
+            int index = ((IList)_rawList).Add(VerifyIsTriggerAction(value));
             return index;
         }
 
@@ -197,7 +197,7 @@ namespace System.Windows
         {
             return _rawList.Contains(VerifyIsTriggerAction(value));
         }
-        
+
         int IList.IndexOf(object value)
         {
             return _rawList.IndexOf(VerifyIsTriggerAction(value));
@@ -262,9 +262,9 @@ namespace System.Windows
         ///////////////////////////////////////////////////////////////////////
         //  Internal members
 
-        internal void Seal(TriggerBase containingTrigger )
+        internal void Seal(TriggerBase containingTrigger)
         {
-            for( int i = 0; i < _rawList.Count; i++ )
+            for (int i = 0; i < _rawList.Count; i++)
             {
                 _rawList[i].Seal(containingTrigger);
             }
@@ -276,9 +276,9 @@ namespace System.Windows
         {
             get { return _owner; }
             set
-            { 
-                Debug.Assert (Owner == null);
-                _owner = value; 
+            {
+                Debug.Assert(Owner == null);
+                _owner = value;
             }
         }
 
@@ -288,10 +288,10 @@ namespace System.Windows
         // Throw if a change is attempted at a time we're not allowing them
         private void CheckSealed()
         {
-            if ( _sealed )
+            if (_sealed)
             {
                 throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "TriggerActionCollection"));
-            }            
+            }
         }
 
         // Throw if the given object isn't a TriggerAction
@@ -299,7 +299,7 @@ namespace System.Windows
         {
             TriggerAction action = value as TriggerAction;
 
-            if ( action == null )
+            if (action == null)
             {
                 ArgumentNullException.ThrowIfNull(value);
 
@@ -319,6 +319,6 @@ namespace System.Windows
 
         // The event trigger that we're in
         private DependencyObject _owner = null;
-        
+
     }
 }

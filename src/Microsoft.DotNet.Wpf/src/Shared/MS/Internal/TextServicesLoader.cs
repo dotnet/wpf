@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -42,10 +42,10 @@ namespace MS.Internal
         #region Constructors
 
         // Private ctor to prevent anyone from instantiating this static class.
-        private TextServicesLoader() {}
+        private TextServicesLoader() { }
 
         #endregion Constructors
- 
+
         //------------------------------------------------------
         //
         //  Public Methods
@@ -69,7 +69,7 @@ namespace MS.Internal
         //  Protected Methods
         //
         //------------------------------------------------------
- 
+
         //------------------------------------------------------
         //
         //  Internal Methods
@@ -83,7 +83,7 @@ namespace MS.Internal
         //------------------------------------------------------
 
         #region Internal Properties
-        
+
         /// <summary>
         /// Loads an instance of the Text Services Framework.
         /// </summary>
@@ -93,7 +93,7 @@ namespace MS.Internal
         internal static UnsafeNativeMethods.ITfThreadMgr Load()
         {
             UnsafeNativeMethods.ITfThreadMgr threadManager;
-            
+
             Invariant.Assert(Thread.CurrentThread.GetApartmentState() == ApartmentState.STA, "Load called on MTA thread!");
 
             if (ServicesInstalled)
@@ -202,7 +202,7 @@ namespace MS.Internal
             }
 
             // Loop through all the TIP entries for machine and current user.
-            tipsWantToRun = IterateSubKeys(Registry.LocalMachine, "SOFTWARE\\Microsoft\\CTF\\TIP",new IterateHandler(SingleTIPWantsToRun), true) == EnableState.Enabled;
+            tipsWantToRun = IterateSubKeys(Registry.LocalMachine, "SOFTWARE\\Microsoft\\CTF\\TIP", new IterateHandler(SingleTIPWantsToRun), true) == EnableState.Enabled;
 
             return tipsWantToRun;
         }
@@ -338,7 +338,7 @@ namespace MS.Internal
 
         // Status of a TIP assembly.
         private enum EnableState
-        { 
+        {
             Error,      // Invalid entry.
             None,       // No explicit Enable entry on the assembly.
             Enabled,    // Assembly is enabled.
@@ -350,7 +350,7 @@ namespace MS.Internal
 
         // Install state.
         private enum InstallState
-        { 
+        {
             Unknown,        // Haven't checked to see if any TIPs are installed yet.
             Installed,      // Checked and installed.
             NotInstalled    // Checked and not installed.

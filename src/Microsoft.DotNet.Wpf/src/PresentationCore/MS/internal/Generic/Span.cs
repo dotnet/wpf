@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -20,13 +20,13 @@ namespace MS.Internal.Generic
     /// </summary>
     internal struct Span<T>
     {
-        internal T      Value;
-        internal int    Length;
-        
+        internal T Value;
+        internal int Length;
+
         /// <summary>
         /// Construct a span of value of type 
         /// </summary>
-        internal Span(T value, int  length)
+        internal Span(T value, int length)
         {
             Value = value;
             Length = length;
@@ -39,21 +39,21 @@ namespace MS.Internal.Generic
     /// </summary>
     internal struct SpanVector<T> : IEnumerable<Span<T>>
     {
-        private FrugalStructList<Span<T>>   _spanList;
-        private T                           _defaultValue;
-        
+        private FrugalStructList<Span<T>> _spanList;
+        private T _defaultValue;
+
 
         /// <summary>
         /// Construct a collection of spans
         /// </summary>
         internal SpanVector(T defaultValue)
             : this(defaultValue, new FrugalStructList<Span<T>>())
-        {}
+        { }
 
 
         private SpanVector(
-            T                           defaultValue,
-            FrugalStructList<Span<T>>   spanList
+            T defaultValue,
+            FrugalStructList<Span<T>> spanList
             )
         {
             _defaultValue = defaultValue;
@@ -120,10 +120,10 @@ namespace MS.Internal.Generic
             // Identify first span affected by update
 
             int fs = 0;     // First affected span index
-            int  fc = 0;     // Character position at start of first affected span
+            int fc = 0;     // Character position at start of first affected span
 
-            while ( fs < Count
-                &&  fc + _spanList[fs].Length <= first)
+            while (fs < Count
+                && fc + _spanList[fs].Length <= first)
             {
                 fc += _spanList[fs].Length;
                 fs++;
@@ -140,11 +140,11 @@ namespace MS.Internal.Generic
                 if (fc < first)
                 {
                     // Create default run up to first
-                    Add(new Span<T>(_defaultValue, first-fc));
+                    Add(new Span<T>(_defaultValue, first - fc));
                 }
 
-                if (    Count > 0
-                    &&  _spanList[Count - 1].Value.Equals(value))
+                if (Count > 0
+                    && _spanList[Count - 1].Value.Equals(value))
                 {
                     // New Element matches end Element, just extend end Element
                     Span<T> lastSpan = _spanList[Count - 1];
@@ -164,9 +164,9 @@ namespace MS.Internal.Generic
             // Now find the last span affected by the update
 
             int ls = fs;
-            int  lc = fc;
+            int lc = fc;
 
-            while (    ls < Count
+            while (ls < Count
                     && lc + _spanList[ls].Length <= first + length)
             {
                 lc += _spanList[ls].Length;
@@ -183,8 +183,8 @@ namespace MS.Internal.Generic
             {
                 // Item at [fs] is completely replaced. Check prior item
 
-                if (    fs > 0
-                    &&  _spanList[fs - 1].Value.Equals(value))
+                if (fs > 0
+                    && _spanList[fs - 1].Value.Equals(value))
                 {
                     // Expand update area over previous run of equal classification
                     fs--;
@@ -207,8 +207,8 @@ namespace MS.Internal.Generic
             // Expand update region forwards to include existing Spans of identical
             // Element type
 
-            if (    ls < Count
-                &&  _spanList[ls].Value.Equals( value))
+            if (ls < Count
+                && _spanList[ls].Value.Equals(value))
             {
                 // Extend update region to end of existing split run
 
@@ -260,14 +260,14 @@ namespace MS.Internal.Generic
             if (first + length > lc)
             {
                 trailingValue = _spanList[ls].Value;
-                trailingLength  = lc + _spanList[ls].Length - (first + length);
+                trailingLength = lc + _spanList[ls].Length - (first + length);
             }
 
-                // Calculate change in number of Spans
+            // Calculate change in number of Spans
 
-            int spanDelta =    1                          // The new span
-                            +  (first  > fc ? 1 : 0)      // part span at start
-                            -  (ls - fs);                 // existing affected span count
+            int spanDelta = 1                          // The new span
+                            + (first > fc ? 1 : 0)      // part span at start
+                            - (ls - fs);                 // existing affected span count
 
             // Note part span at end doesn't affect the calculation - the run may need
             // updating, but it doesn't need creating.
@@ -367,8 +367,8 @@ namespace MS.Internal.Generic
         /// </summary>
         private struct SpanEnumerator<U> : IEnumerator<Span<U>>
         {
-            private SpanVector<U>   _vector;
-            private int             _current;
+            private SpanVector<U> _vector;
+            private int _current;
 
 
             internal SpanEnumerator(SpanVector<U> vector)
@@ -427,12 +427,12 @@ namespace MS.Internal.Generic
     {
         private const int MaxCch = int.MaxValue;
 
-        private SpanVector<T>   _vector;
-        private Span<T>         _defaultSpan;
-        private int             _current;    // current span
-        private int             _cp;         // current cp
-        private int             _dcp;        // dcp from start to the start of current span
-        private int             _cch;        // length of the current span
+        private SpanVector<T> _vector;
+        private Span<T> _defaultSpan;
+        private int _current;    // current span
+        private int _cp;         // current cp
+        private int _dcp;        // dcp from start to the start of current span
+        private int _cch;        // length of the current span
 
 
         internal SpanRider(SpanVector<T> vector)
@@ -468,10 +468,10 @@ namespace MS.Internal.Generic
 
                 Debug.Assert(
                         i <= _vector.Count      // current value is within valid range
-                    &&  i == _current           // current value is valid
-                    &&  dcp == _dcp             // current value start is valid
-                    &&  (   i == _vector.Count
-                        ||  _cp <= dcp + _vector[i].Length),    // current cp is within range of current value
+                    && i == _current           // current value is valid
+                    && dcp == _dcp             // current value start is valid
+                    && (i == _vector.Count
+                        || _cp <= dcp + _vector[i].Length),    // current cp is within range of current value
                     "Span vector is corrupted!"
                     );
             }
@@ -487,8 +487,8 @@ namespace MS.Internal.Generic
 
             Span<T> span = new Span<T>();
 
-            while(  _current < _vector.Count
-                &&  _dcp + (span = _vector[_current]).Length <= cp)
+            while (_current < _vector.Count
+                && _dcp + (span = _vector[_current]).Length <= cp)
             {
                 _dcp += span.Length;
                 _current++;

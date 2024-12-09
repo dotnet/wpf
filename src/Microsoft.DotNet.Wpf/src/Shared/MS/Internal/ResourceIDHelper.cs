@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,7 +7,8 @@ using System.Globalization;
 
 namespace MS.Internal
 {
-    internal static class ResourceIDHelper {
+    internal static class ResourceIDHelper
+    {
         //
         // Convert relative path to the right format which is used 
         // as ResourceID.
@@ -47,10 +48,10 @@ namespace MS.Internal
             //
             if (baseUri.IsAbsoluteUri == false || sourceUri.IsAbsoluteUri == false)
             {
-                 // 
-                 // if any passed Uri is not absolute uri, return empty string here.
-                 //
-                 return resourceID;
+                // 
+                // if any passed Uri is not absolute uri, return empty string here.
+                //
+                return resourceID;
             }
 
 
@@ -67,14 +68,14 @@ namespace MS.Internal
                 //
                 basePath = basePath.ToLower(CultureInfo.InvariantCulture);
                 sourcePath = sourcePath.ToLower(CultureInfo.InvariantCulture);
- 
+
                 if (sourcePath.StartsWith(basePath, StringComparison.OrdinalIgnoreCase))
                 {
-                   resourceID = sourcePath.Substring(basePath.Length);
-                } 
+                    resourceID = sourcePath.Substring(basePath.Length);
+                }
             }
 
             return resourceID;
-}
-}
+        }
+    }
 }

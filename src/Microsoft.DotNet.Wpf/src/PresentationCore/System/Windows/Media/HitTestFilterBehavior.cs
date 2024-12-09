@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -39,7 +39,7 @@ namespace System.Windows.Media
         /// </summary>
         Stop = HTFBInterpreter.c_Stop
     }
-    
+
     /// <summary>
     /// Delegate for hit tester to control whether to test against the
     /// current scene graph node.
@@ -49,9 +49,9 @@ namespace System.Windows.Media
     // Static helper class with methods for interpreting the HitTestFilterBehavior enum.
     internal static class HTFBInterpreter
     {
-        internal const int c_DoHitTest        = (1 << 1);
-        internal const int c_IncludeChidren   = (1 << 2);
-        internal const int c_Stop             = (1 << 3);
+        internal const int c_DoHitTest = (1 << 1);
+        internal const int c_IncludeChidren = (1 << 2);
+        internal const int c_Stop = (1 << 3);
 
         internal static bool DoHitTest(HitTestFilterBehavior behavior)
         {

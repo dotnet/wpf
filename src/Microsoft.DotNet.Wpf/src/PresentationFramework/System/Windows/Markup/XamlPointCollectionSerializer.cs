@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -30,7 +30,7 @@ namespace System.Windows.Markup
 
     internal class XamlPointCollectionSerializer : XamlSerializer
     {
-#region Construction
+        #region Construction
 
         /// <summary>
         ///     Constructor for XamlPointCollectionSerializer
@@ -45,26 +45,26 @@ namespace System.Windows.Markup
         {
         }
 
-        
-#endregion Construction
 
-#region Conversions
+        #endregion Construction
+
+        #region Conversions
 
         /// <summary>
         ///   Convert a string into a compact binary representation and write it out
         ///   to the passed BinaryWriter.
         /// </summary>
-        public override bool ConvertStringToCustomBinary (
-            BinaryWriter   writer,           // Writer into the baml stream
-            string         stringValue)      // String to convert
+        public override bool ConvertStringToCustomBinary(
+            BinaryWriter writer,           // Writer into the baml stream
+            string stringValue)      // String to convert
         {
-            return XamlSerializationHelper.SerializePoint( writer, stringValue ) ; 
+            return XamlSerializationHelper.SerializePoint(writer, stringValue);
         }
 
-     
+
 
 #if !PBTCOMPILER
-        
+
         /// <summary>
         ///   Convert a compact binary representation of a collection 
         ///     into a Point3DCollection into and instance
@@ -75,8 +75,8 @@ namespace System.Windows.Markup
         public override object ConvertCustomBinaryToObject(
             BinaryReader reader)
         {
-            return PointCollection.DeserializeFrom( reader ) ; 
-        }  
+            return PointCollection.DeserializeFrom(reader);
+        }
 
         /// <summary>
         ///   Convert a compact binary representation of a collection 
@@ -88,11 +88,11 @@ namespace System.Windows.Markup
         public static object StaticConvertCustomBinaryToObject(
             BinaryReader reader)
         {
-            return PointCollection.DeserializeFrom( reader ) ; 
-        }          
+            return PointCollection.DeserializeFrom(reader);
+        }
 #endif
 
-#endregion Conversions
+        #endregion Conversions
 
     }
 }

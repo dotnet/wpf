@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -20,7 +20,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <summary>
         /// Full path from the container root to this storage
         /// </summary>
-        public override string FullName 
+        public override string FullName
         {
             get
             {
@@ -124,7 +124,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 // ensure that the string is a legal whack-path
                 string[] strings = ContainerUtilities.ConvertBackSlashPathToStringArrayPath(_fullName);
                 if (strings.Length == 0)
-                    throw new ArgumentException (
+                    throw new ArgumentException(
                         SR.CompoundFilePathNullEmpty, "fullName");
             }
         }
@@ -135,6 +135,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         //
         //------------------------------------------------------
         // this can never be null - use String.Empty
-        private String  _fullName;  // whack-path
+        private String _fullName;  // whack-path
     }
 }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,10 +16,10 @@
 //---------------------------------------------------------------------------------------
 
 using System;
-using System.IO;
 using System.Collections;
-using Microsoft.Build.Utilities;
+using System.IO;
 using Microsoft.Build.Framework;
+using Microsoft.Build.Utilities;
 using MS.Internal.Tasks;
 using MS.Utility;
 
@@ -205,7 +205,7 @@ namespace MS.Internal
             get { return _nErrors; }
         }
 
-        internal bool SupportCustomOutputPaths 
+        internal bool SupportCustomOutputPaths
         {
             set { _mc.SupportCustomOutputPaths = value; }
         }
@@ -223,12 +223,14 @@ namespace MS.Internal
         {
             bool ret = true;
 
-            CompilationUnit compUnit = new CompilationUnit(assemblyName, language, rootNamespace, fileList);
-            compUnit.Pass2 = isSecondPass;
+            CompilationUnit compUnit = new CompilationUnit(assemblyName, language, rootNamespace, fileList)
+            {
+                Pass2 = isSecondPass,
 
-            // Set some properties required by the CompilationUnit
-            compUnit.ApplicationFile = _applicationMarkup;
-            compUnit.SourcePath = _sourceDir;
+                // Set some properties required by the CompilationUnit
+                ApplicationFile = _applicationMarkup,
+                SourcePath = _sourceDir
+            };
 
             //Set the properties required by MarkupCompiler
 
@@ -400,7 +402,7 @@ namespace MS.Internal
             string relPath = String.Empty;
             string newRelativeFilePath;
 
-            if (fullFilePath.StartsWith(_sourceDir,StringComparison.OrdinalIgnoreCase))
+            if (fullFilePath.StartsWith(_sourceDir, StringComparison.OrdinalIgnoreCase))
             {
                 relPath = fullFilePath.Substring(_sourceDir.Length);
 
@@ -431,14 +433,14 @@ namespace MS.Internal
         #region private data
 
         private MarkupCompiler _mc;
-        private string         _sourceDir;
+        private string _sourceDir;
         private TaskLoggingHelper _taskLogger;
-        private int    _nErrors;
+        private int _nErrors;
         private string _unknownErrorID;
 
         private FileUnit _applicationMarkup;
 
-        private int      _localizationDirectivesToLocFile;
+        private int _localizationDirectivesToLocFile;
 
         #endregion
 

@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal;
-using MS.Utility;
 using System.Collections;
 using System.Windows.Threading;  // for DispatcherObject
+using MS.Internal;
+using MS.Utility;
 
 namespace System.Windows
 {
@@ -405,7 +405,7 @@ namespace System.Windows
         {
             get
             {
-                if(_freezeValueCallback != null)
+                if (_freezeValueCallback != null)
                 {
                     return _freezeValueCallback;
                 }
@@ -510,7 +510,7 @@ namespace System.Windows
                                         d,
                                         dp,
                                         dp.OwnerType,
-                                        valueAsDispatcherObject );
+                                        valueAsDispatcherObject);
                                 }
 
                                 return false;
@@ -536,7 +536,8 @@ namespace System.Windows
         ///     Deriving classes must override this and return a new instance of
         ///     themselves.
         /// </summary>
-        internal virtual PropertyMetadata CreateInstance() {
+        internal virtual PropertyMetadata CreateInstance()
+        {
             return new PropertyMetadata();
         }
 
@@ -544,7 +545,8 @@ namespace System.Windows
         // Returns a copy of this property metadata by calling CreateInstance
         // and then Merge
         //
-        internal PropertyMetadata Copy(DependencyProperty dp) {
+        internal PropertyMetadata Copy(DependencyProperty dp)
+        {
             PropertyMetadata newMetadata = CreateInstance();
             newMetadata.InvokeMerge(this, dp);
             return newMetadata;
@@ -660,7 +662,7 @@ namespace System.Windows
 
         internal bool IsInherited
         {
-            get { return (MetadataFlags.Inherited & _flags) != 0;; }
+            get { return (MetadataFlags.Inherited & _flags) != 0; ; }
             set
             {
                 if (value)
@@ -686,40 +688,40 @@ namespace System.Windows
 
         internal enum MetadataFlags : uint
         {
-            DefaultValueModifiedID                       = 0x00000001,
-            SealedID                                     = 0x00000002,
+            DefaultValueModifiedID = 0x00000001,
+            SealedID = 0x00000002,
             // Unused                                    = 0x00000004,
             // Unused                                    = 0x00000008,
-            Inherited                                    = 0x00000010,
+            Inherited = 0x00000010,
 
-            UI_IsAnimationProhibitedID                   = 0x00000020, // True if peer refers to an owner's animation peer property; False if Peer refers to the animation peer's owner property
+            UI_IsAnimationProhibitedID = 0x00000020, // True if peer refers to an owner's animation peer property; False if Peer refers to the animation peer's owner property
 
-            FW_AffectsMeasureID                          = 0x00000040,
-            FW_AffectsArrangeID                          = 0x00000080,
-            FW_AffectsParentMeasureID                    = 0x00000100,
-            FW_AffectsParentArrangeID                    = 0x00000200,
-            FW_AffectsRenderID                           = 0x00000400,
-            FW_OverridesInheritanceBehaviorID            = 0x00000800,
-            FW_IsNotDataBindableID                       = 0x00001000,
-            FW_BindsTwoWayByDefaultID                    = 0x00002000,
-            FW_ShouldBeJournaledID                       = 0x00004000,
-            FW_SubPropertiesDoNotAffectRenderID          = 0x00008000,
-            FW_SubPropertiesDoNotAffectRenderModifiedID  = 0x00010000,
+            FW_AffectsMeasureID = 0x00000040,
+            FW_AffectsArrangeID = 0x00000080,
+            FW_AffectsParentMeasureID = 0x00000100,
+            FW_AffectsParentArrangeID = 0x00000200,
+            FW_AffectsRenderID = 0x00000400,
+            FW_OverridesInheritanceBehaviorID = 0x00000800,
+            FW_IsNotDataBindableID = 0x00001000,
+            FW_BindsTwoWayByDefaultID = 0x00002000,
+            FW_ShouldBeJournaledID = 0x00004000,
+            FW_SubPropertiesDoNotAffectRenderID = 0x00008000,
+            FW_SubPropertiesDoNotAffectRenderModifiedID = 0x00010000,
             // Unused                                    = 0x00020000,
             // Unused                                    = 0x00040000,
             // Unused                                    = 0x00080000,
-            FW_InheritsModifiedID                        = 0x00100000,
-            FW_OverridesInheritanceBehaviorModifiedID    = 0x00200000,
+            FW_InheritsModifiedID = 0x00100000,
+            FW_OverridesInheritanceBehaviorModifiedID = 0x00200000,
             // Unused                                    = 0x00400000,
             // Unused                                    = 0x00800000,
-            FW_ShouldBeJournaledModifiedID               = 0x01000000,
-            FW_UpdatesSourceOnLostFocusByDefaultID       = 0x02000000,
-            FW_DefaultUpdateSourceTriggerModifiedID      = 0x04000000,
-            FW_ReadOnlyID                                = 0x08000000,
+            FW_ShouldBeJournaledModifiedID = 0x01000000,
+            FW_UpdatesSourceOnLostFocusByDefaultID = 0x02000000,
+            FW_DefaultUpdateSourceTriggerModifiedID = 0x04000000,
+            FW_ReadOnlyID = 0x08000000,
             // Unused                                    = 0x10000000,
             // Unused                                    = 0x20000000,
-            FW_DefaultUpdateSourceTriggerEnumBit1        = 0x40000000, // Must match constants used in FrameworkPropertyMetadata
-            FW_DefaultUpdateSourceTriggerEnumBit2        = 0x80000000, // Must match constants used in FrameworkPropertyMetadata
+            FW_DefaultUpdateSourceTriggerEnumBit1 = 0x40000000, // Must match constants used in FrameworkPropertyMetadata
+            FW_DefaultUpdateSourceTriggerEnumBit2 = 0x80000000, // Must match constants used in FrameworkPropertyMetadata
         }
 
 

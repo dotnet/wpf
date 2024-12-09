@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -34,17 +34,17 @@ namespace System.Windows.Media.Animation
         // We have this to have the validation code alongside the enum
         //  definition.  (Rather than spread throughtout the codebase causing
         //  maintenance headaches in the future.)
-        internal static bool IsDefined( HandoffBehavior handoffBehavior )
+        internal static bool IsDefined(HandoffBehavior handoffBehavior)
         {
-            if( handoffBehavior < HandoffBehavior.SnapshotAndReplace ||
-                handoffBehavior > HandoffBehavior.Compose )
+            if (handoffBehavior < HandoffBehavior.SnapshotAndReplace ||
+                handoffBehavior > HandoffBehavior.Compose)
             {
                 return false;
             }
             else
             {
                 return true;
-            }               
+            }
         }
     }
 }

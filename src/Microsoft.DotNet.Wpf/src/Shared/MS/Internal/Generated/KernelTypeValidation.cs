@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -32,10 +32,10 @@ namespace System.Windows.Media.Effects
         /// <returns> 'true' if the enumeration contains a valid value, 'false' otherwise. </returns>
         public static bool IsKernelTypeValid(object valueObject)
         {
-            KernelType value = (KernelType) valueObject;
+            KernelType value = (KernelType)valueObject;
 
-            return (value == KernelType.Gaussian) || 
+            return (value == KernelType.Gaussian) ||
                    (value == KernelType.Box);
-        }                                
+        }
     }
 }

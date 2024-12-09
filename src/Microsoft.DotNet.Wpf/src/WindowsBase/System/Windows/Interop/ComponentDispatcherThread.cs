@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -43,9 +43,9 @@ namespace System.Windows.Interop
         public void PushModal()
         {
             _modalCount += 1;
-            if(1 == _modalCount)
+            if (1 == _modalCount)
             {
-                if(null != _enterThreadModal)
+                if (null != _enterThreadModal)
                     _enterThreadModal(null, EventArgs.Empty);
             }
         }
@@ -56,12 +56,12 @@ namespace System.Windows.Interop
         public void PopModal()
         {
             _modalCount -= 1;
-            if(0 == _modalCount)
+            if (0 == _modalCount)
             {
-                if(null != _leaveThreadModal)
+                if (null != _leaveThreadModal)
                     _leaveThreadModal(null, EventArgs.Empty);
             }
-            if(_modalCount < 0)
+            if (_modalCount < 0)
                 _modalCount = 0;    // Throwing is also good
         }
 
@@ -70,7 +70,7 @@ namespace System.Windows.Interop
         ///</summary>
         public void RaiseIdle()
         {
-            if(null != _threadIdle)
+            if (null != _threadIdle)
                 _threadIdle(null, EventArgs.Empty);
         }
 
@@ -218,7 +218,7 @@ namespace System.Windows.Interop
         private event EventHandler _leaveThreadModal;
 
         private int _modalCount;
-                
+
         private MSG _currentKeyboardMSG;
     }
 }

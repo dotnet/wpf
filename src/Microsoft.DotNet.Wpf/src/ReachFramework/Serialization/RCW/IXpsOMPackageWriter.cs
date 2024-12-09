@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -24,13 +24,13 @@ namespace System.Windows.Xps.Serialization.RCW
     internal interface IXpsOMPackageWriter
     {
         [MethodImpl(MethodImplOptions.InternalCall)]
-        void StartNewDocument([MarshalAs(UnmanagedType.Interface)] [In] IOpcPartUri documentPartName, [MarshalAs(UnmanagedType.Interface)] [In] IXpsOMPrintTicketResource documentPrintTicket, [MarshalAs(UnmanagedType.Interface)] [In] IXpsOMDocumentStructureResource documentStructure, [MarshalAs(UnmanagedType.Interface)] [In] IXpsOMSignatureBlockResourceCollection signatureBlockResources, [MarshalAs(UnmanagedType.Interface)] [In] IXpsOMPartUriCollection restrictedFonts);
+        void StartNewDocument([MarshalAs(UnmanagedType.Interface)][In] IOpcPartUri documentPartName, [MarshalAs(UnmanagedType.Interface)][In] IXpsOMPrintTicketResource documentPrintTicket, [MarshalAs(UnmanagedType.Interface)][In] IXpsOMDocumentStructureResource documentStructure, [MarshalAs(UnmanagedType.Interface)][In] IXpsOMSignatureBlockResourceCollection signatureBlockResources, [MarshalAs(UnmanagedType.Interface)][In] IXpsOMPartUriCollection restrictedFonts);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        void AddPage([MarshalAs(UnmanagedType.Interface)] [In] IXpsOMPage page, [ComAliasName("MSXPS.XPS_SIZE")] [In] ref XPS_SIZE advisoryPageDimensions, [MarshalAs(UnmanagedType.Interface)] [In] IXpsOMPartUriCollection discardableResourceParts, [MarshalAs(UnmanagedType.Interface)] [In] IXpsOMStoryFragmentsResource storyFragments, [MarshalAs(UnmanagedType.Interface)] [In] IXpsOMPrintTicketResource pagePrintTicket, [MarshalAs(UnmanagedType.Interface)] [In] IXpsOMImageResource pageThumbnail);
+        void AddPage([MarshalAs(UnmanagedType.Interface)][In] IXpsOMPage page, [ComAliasName("MSXPS.XPS_SIZE")][In] ref XPS_SIZE advisoryPageDimensions, [MarshalAs(UnmanagedType.Interface)][In] IXpsOMPartUriCollection discardableResourceParts, [MarshalAs(UnmanagedType.Interface)][In] IXpsOMStoryFragmentsResource storyFragments, [MarshalAs(UnmanagedType.Interface)][In] IXpsOMPrintTicketResource pagePrintTicket, [MarshalAs(UnmanagedType.Interface)][In] IXpsOMImageResource pageThumbnail);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        void AddResource([MarshalAs(UnmanagedType.Interface)] [In] IXpsOMResource resource);
+        void AddResource([MarshalAs(UnmanagedType.Interface)][In] IXpsOMResource resource);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         void Close();

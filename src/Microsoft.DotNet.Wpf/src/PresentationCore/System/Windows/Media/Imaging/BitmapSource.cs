@@ -1,13 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.IO;
-using MS.Internal;
 using System.Runtime.InteropServices;
 using System.Windows.Media.Composition;
+using MS.Internal;
 using MS.Win32;
-
 using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 namespace System.Windows.Media.Imaging
@@ -699,7 +698,7 @@ namespace System.Windows.Media.Imaging
                 fixed (void* pixelArray = &((double[])pixels)[offset])
                     CriticalCopyPixels(sourceRect, (IntPtr)pixelArray, destBufferSize, stride);
             }
-}
+        }
 
         /// <summary>
         /// CriticalCopyPixels
@@ -1730,7 +1729,7 @@ namespace System.Windows.Media.Imaging
             int IWICBitmapSource.GetSize(out int puiWidth, out int puiHeight)
             {
                 BitmapSource bitmapSource;
-                if(_bitmapSource.TryGetTarget(out bitmapSource))
+                if (_bitmapSource.TryGetTarget(out bitmapSource))
                 {
                     puiWidth = bitmapSource.PixelWidth;
                     puiHeight = bitmapSource.PixelHeight;
@@ -1747,7 +1746,7 @@ namespace System.Windows.Media.Imaging
             int IWICBitmapSource.GetPixelFormat(out Guid guidFormat)
             {
                 BitmapSource bitmapSource;
-                if(_bitmapSource.TryGetTarget(out bitmapSource))
+                if (_bitmapSource.TryGetTarget(out bitmapSource))
                 {
                     guidFormat = bitmapSource.Format.Guid;
                     return NativeMethods.S_OK;
@@ -1762,7 +1761,7 @@ namespace System.Windows.Media.Imaging
             int IWICBitmapSource.GetResolution(out double pDpiX, out double pDpiY)
             {
                 BitmapSource bitmapSource;
-                if(_bitmapSource.TryGetTarget(out bitmapSource))
+                if (_bitmapSource.TryGetTarget(out bitmapSource))
                 {
                     pDpiX = bitmapSource.DpiX;
                     pDpiY = bitmapSource.DpiY;
@@ -1779,14 +1778,14 @@ namespace System.Windows.Media.Imaging
             int IWICBitmapSource.GetPalette(IntPtr /* IWICPalette */ pIPalette)
             {
                 BitmapSource bitmapSource;
-                if(_bitmapSource.TryGetTarget(out bitmapSource))
+                if (_bitmapSource.TryGetTarget(out bitmapSource))
                 {
                     BitmapPalette palette = bitmapSource.Palette;
                     if ((palette == null) || (palette.InternalPalette == null) || palette.InternalPalette.IsInvalid)
                     {
                         return (int)WinCodecErrors.WINCODEC_ERR_PALETTEUNAVAILABLE;
                     }
-                    
+
                     HRESULT.Check(UnsafeNativeMethods.WICPalette.InitializeFromPalette(pIPalette, palette.InternalPalette));
                     return NativeMethods.S_OK;
                 }
@@ -1809,10 +1808,10 @@ namespace System.Windows.Media.Imaging
                 }
 
                 BitmapSource bitmapSource;
-                if(_bitmapSource.TryGetTarget(out bitmapSource))
+                if (_bitmapSource.TryGetTarget(out bitmapSource))
                 {
                     Int32Rect rc;
-                    
+
                     if (prc == IntPtr.Zero)
                     {
                         rc = new Int32Rect(0, 0, bitmapSource.PixelWidth, bitmapSource.PixelHeight);
@@ -1821,41 +1820,41 @@ namespace System.Windows.Media.Imaging
                     {
                         rc = Marshal.PtrToStructure<Int32Rect>(prc);
                     }
-                    
+
                     int rectHeight, rectWidth;
-                    
+
                     rectHeight = rc.Height;
                     rectWidth = rc.Width;
-                    
+
                     if (rc.Width < 1 || rc.Height < 1)
                     {
                         return NativeMethods.E_INVALIDARG;
                     }
-                    
+
                     // assuming cbStride can't be negative, but that prc.Height can
                     PixelFormat pfStruct = bitmapSource.Format;
-                    
+
                     if (pfStruct.Format == PixelFormatEnum.Default ||
                         pfStruct.Format == PixelFormatEnum.Extended)
                     {
                         return (int)(WinCodecErrors.WINCODEC_ERR_UNSUPPORTEDPIXELFORMAT);
                     }
-                    
-                    
+
+
                     int rectRowSize = checked((rectWidth * pfStruct.InternalBitsPerPixel + 7) / 8);
-                    
+
                     if (cbPixels < checked((rectHeight - 1) * cbStride + rectRowSize))
                     {
                         return (int)(WinCodecErrors.WINCODEC_ERR_INSUFFICIENTBUFFER);
                     }
-                    
+
                     // Need to marshal
                     int arraySize = checked(rectHeight * rectRowSize);
                     byte[] managedArray = new byte[arraySize];
-                    
+
                     // perform the copy
                     bitmapSource.CopyPixels(rc, managedArray, rectRowSize, 0);
-                    
+
                     {
                         // transfer the contents of the relevant rect from the managed array to pvPixels
                         long rowPtr = pvPixels.ToInt64();
@@ -1865,7 +1864,7 @@ namespace System.Windows.Media.Imaging
                             rowPtr += cbStride;
                         }
                     }
-                    
+
                     return NativeMethods.S_OK;
                 }
                 else

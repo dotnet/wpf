@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,7 +11,7 @@ using System.Windows.Markup; // ContentProperty
 using MS.Internal;
 using MS.Internal.PtsHost.UnsafeNativeMethods; // PTS restrictions
 
-namespace System.Windows.Documents 
+namespace System.Windows.Documents
 {
     /// <summary>
     /// Paragraph element 
@@ -38,7 +38,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// Public constructor.
         /// </summary>
-        public Paragraph() 
+        public Paragraph()
             : base()
         {
         }
@@ -79,7 +79,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="TextDecorations" /> property.
         /// </summary>
-        public static readonly DependencyProperty TextDecorationsProperty = 
+        public static readonly DependencyProperty TextDecorationsProperty =
                 Inline.TextDecorationsProperty.AddOwner(
                         typeof(Paragraph),
                         new FrameworkPropertyMetadata(
@@ -92,20 +92,20 @@ namespace System.Windows.Documents
         /// </summary>
         public TextDecorationCollection TextDecorations
         {
-            get { return (TextDecorationCollection) GetValue(TextDecorationsProperty); }
+            get { return (TextDecorationCollection)GetValue(TextDecorationsProperty); }
             set { SetValue(TextDecorationsProperty, value); }
         }
 
         /// <summary>
         /// DependencyProperty for <see cref="TextIndent" /> property.
         /// </summary>
-        public static readonly DependencyProperty TextIndentProperty = 
+        public static readonly DependencyProperty TextIndentProperty =
                 DependencyProperty.Register(
-                        "TextIndent", 
-                        typeof(double), 
-                        typeof(Paragraph), 
+                        "TextIndent",
+                        typeof(double),
+                        typeof(Paragraph),
                         new FrameworkPropertyMetadata(
-                                0.0, 
+                                0.0,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender),
                         new ValidateValueCallback(IsValidTextIndent));
 
@@ -122,14 +122,14 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="MinOrphanLines" /> property.
         /// </summary>
-        public static readonly DependencyProperty MinOrphanLinesProperty = 
+        public static readonly DependencyProperty MinOrphanLinesProperty =
                 DependencyProperty.Register(
-                        "MinOrphanLines", 
-                        typeof(int), 
-                        typeof(Paragraph), 
+                        "MinOrphanLines",
+                        typeof(int),
+                        typeof(Paragraph),
                         new FrameworkPropertyMetadata(
-                                0, 
-                                FrameworkPropertyMetadataOptions.AffectsParentMeasure), 
+                                0,
+                                FrameworkPropertyMetadataOptions.AffectsParentMeasure),
                         new ValidateValueCallback(IsValidMinOrphanLines));
 
         /// <summary>
@@ -146,14 +146,14 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="MinWidowLines" /> property.
         /// </summary>
-        public static readonly DependencyProperty MinWidowLinesProperty = 
+        public static readonly DependencyProperty MinWidowLinesProperty =
                 DependencyProperty.Register(
-                        "MinWidowLines", 
-                        typeof(int), 
-                        typeof(Paragraph), 
+                        "MinWidowLines",
+                        typeof(int),
+                        typeof(Paragraph),
                         new FrameworkPropertyMetadata(
-                                0, 
-                                FrameworkPropertyMetadataOptions.AffectsParentMeasure), 
+                                0,
+                                FrameworkPropertyMetadataOptions.AffectsParentMeasure),
                         new ValidateValueCallback(IsValidMinWidowLines));
 
         /// <summary>
@@ -169,13 +169,13 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="KeepWithNext" /> property.
         /// </summary>
-        public static readonly DependencyProperty KeepWithNextProperty = 
+        public static readonly DependencyProperty KeepWithNextProperty =
                 DependencyProperty.Register(
-                        "KeepWithNext", 
-                        typeof(bool), 
-                        typeof(Paragraph), 
+                        "KeepWithNext",
+                        typeof(bool),
+                        typeof(Paragraph),
                         new FrameworkPropertyMetadata(
-                                false, 
+                                false,
                                 FrameworkPropertyMetadataOptions.AffectsParentMeasure));
 
         /// <summary>
@@ -192,13 +192,13 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="KeepTogether" /> property.
         /// </summary>
-        public static readonly DependencyProperty KeepTogetherProperty = 
+        public static readonly DependencyProperty KeepTogetherProperty =
                 DependencyProperty.Register(
-                        "KeepTogether", 
-                        typeof(bool), 
-                        typeof(Paragraph), 
+                        "KeepTogether",
+                        typeof(bool),
+                        typeof(Paragraph),
                         new FrameworkPropertyMetadata(
-                                false, 
+                                false,
                                 FrameworkPropertyMetadataOptions.AffectsParentMeasure));
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace System.Windows.Documents
             while (navigator.CompareTo(end) < 0)
             {
                 TextPointerContext symbolType = navigator.GetPointerContext(LogicalDirection.Forward);
-                if (symbolType ==  TextPointerContext.Text ||
+                if (symbolType == TextPointerContext.Text ||
                     symbolType == TextPointerContext.EmbeddedElement ||
                     typeof(LineBreak).IsAssignableFrom(navigator.ParentType) ||
                     typeof(AnchoredBlock).IsAssignableFrom(navigator.ParentType))

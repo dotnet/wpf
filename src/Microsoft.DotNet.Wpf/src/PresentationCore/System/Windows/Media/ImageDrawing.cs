@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -35,9 +35,9 @@ namespace System.Windows.Media
         {
             ImageSource = imageSource;
             Rect = rect;
-        }               
+        }
 
-        #endregion        
+        #endregion
 
         #region Internal methods
 
@@ -46,15 +46,15 @@ namespace System.Windows.Media
         /// Drawing with the Drawing's current value.
         /// </summary>        
         internal override void WalkCurrentValue(DrawingContextWalker ctx)
-        {     
+        {
             // We avoid unneccessary ShouldStopWalking checks based on assumptions
             // about when ShouldStopWalking is set.  Guard that assumption with an
             // assertion.  See DrawingGroup.WalkCurrentValue comment for more details.
-           
+
             ctx.DrawImage(
                 ImageSource,
                 Rect
-                );                      
+                );
         }
 
         #endregion Internal methods 

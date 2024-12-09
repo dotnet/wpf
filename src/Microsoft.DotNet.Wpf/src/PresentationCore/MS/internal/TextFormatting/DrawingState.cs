@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,27 +21,27 @@ namespace MS.Internal.TextFormatting
     /// </summary>
     internal sealed class DrawingState : IDisposable
     {
-        private TextMetrics.FullTextLine    _currentLine;               // full text line currently formatted
-        private DrawingContext              _drawingContext;            // current drawing context
-        private Point                       _lineOrigin;                // line origin XY relative to drawing context reference location
-        private Point                       _vectorToLineOrigin;        // vector to line origin in UV relative to paragraph start
-        private MatrixTransform             _antiInversion;             // anti-inversion transform applied on drawing surface
-        private bool                        _overrideBaseGuidelineY;    // a flag indicating whether a new guideline overrides the line's Y guideline
-        private double                      _baseGuidelineY;            // the Y guideline of the text line.
+        private TextMetrics.FullTextLine _currentLine;               // full text line currently formatted
+        private DrawingContext _drawingContext;            // current drawing context
+        private Point _lineOrigin;                // line origin XY relative to drawing context reference location
+        private Point _vectorToLineOrigin;        // vector to line origin in UV relative to paragraph start
+        private MatrixTransform _antiInversion;             // anti-inversion transform applied on drawing surface
+        private bool _overrideBaseGuidelineY;    // a flag indicating whether a new guideline overrides the line's Y guideline
+        private double _baseGuidelineY;            // the Y guideline of the text line.
 
         /// <summary>
         /// Construct drawing state for full text
         /// </summary>
         internal DrawingState(
-            DrawingContext                  drawingContext,
-            Point                           lineOrigin,
-            MatrixTransform                 antiInversion,
-            TextMetrics.FullTextLine        currentLine
+            DrawingContext drawingContext,
+            Point lineOrigin,
+            MatrixTransform antiInversion,
+            TextMetrics.FullTextLine currentLine
             )
         {
             _drawingContext = drawingContext;
             _antiInversion = antiInversion;
-            _currentLine = currentLine;            
+            _currentLine = currentLine;
 
             if (antiInversion == null)
             {
@@ -80,10 +80,10 @@ namespace MS.Internal.TextFormatting
             {
                 // Push a new guideline to override the line's guideline
                 _drawingContext.PushGuidelineY1(runGuidelineY);
-                    
+
                 _overrideBaseGuidelineY = true; // the new Guideline Y overrides the line's guideline until next unset.
             }
-        }  
+        }
 
         /// <summary>
         /// Unset guideline Y for a drawing operation if necessary. It is a no-op if the Y value is the same
@@ -95,7 +95,7 @@ namespace MS.Internal.TextFormatting
             if (_overrideBaseGuidelineY)
             {
                 _drawingContext.Pop();
-                _overrideBaseGuidelineY = false;                    
+                _overrideBaseGuidelineY = false;
             }
         }
 
@@ -109,7 +109,7 @@ namespace MS.Internal.TextFormatting
             {
                 _drawingContext.Pop();
             }
-        }             
+        }
 
 
         /// <summary>

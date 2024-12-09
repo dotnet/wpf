@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -59,9 +59,9 @@ namespace System.Windows.Input
         /// True if conversion is possible, false otherwise.
         ///</returns>
 
-         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
+        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
-            if (typeof (string) == destinationType && null != context && null != context.Instance && context.Instance is InputScopeName)
+            if (typeof(string) == destinationType && null != context && null != context.Instance && context.Instance is InputScopeName)
             {
                 return true;
             }
@@ -95,17 +95,19 @@ namespace System.Windows.Input
                 stringSource = stringSource.Trim();
 
                 if (-1 != stringSource.LastIndexOf('.'))
-                    stringSource = stringSource.Substring(stringSource.LastIndexOf('.')+1);
-                    
+                    stringSource = stringSource.Substring(stringSource.LastIndexOf('.') + 1);
+
                 if (!stringSource.Equals(String.Empty))
                 {
                     nameValue = Enum.Parse<InputScopeNameValue>(stringSource);
                 }
             }
-            
-            inputScopeName = new InputScopeName();
-            inputScopeName.NameValue = nameValue;
-            return inputScopeName;    
+
+            inputScopeName = new InputScopeName
+            {
+                NameValue = nameValue
+            };
+            return inputScopeName;
         }
 
         ///<summary>

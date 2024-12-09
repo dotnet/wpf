@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,7 +19,7 @@ namespace MS.Internal.FontFace
     /// </summary>
     internal struct MatchingStyle
     {
-        private Vector              _vector;
+        private Vector _vector;
 
         // These should be prime numbers.
         private const double FontWeightScale = 5;
@@ -28,9 +28,9 @@ namespace MS.Internal.FontFace
 
 
         internal MatchingStyle(
-            FontStyle       style,
-            FontWeight      weight,
-            FontStretch     stretch
+            FontStyle style,
+            FontWeight weight,
+            FontStretch stretch
             )
         {
             _vector = new Vector(
@@ -62,11 +62,11 @@ namespace MS.Internal.FontFace
         /// </summary>
         public override bool Equals(Object o)
         {
-            if(o == null)
+            if (o == null)
                 return false;
 
             return o is MatchingStyle && this == (MatchingStyle)o;
-}
+        }
 
         /// <summary>
         /// Get hash code for this style
@@ -84,9 +84,9 @@ namespace MS.Internal.FontFace
         /// <param name="best">current best match</param>
         /// <param name="matching">matching style</param>
         internal static bool IsBetterMatch(
-            MatchingStyle           target,
-            MatchingStyle           best,
-            ref MatchingStyle       matching
+            MatchingStyle target,
+            MatchingStyle best,
+            ref MatchingStyle matching
             )
         {
             return matching.IsBetterMatch(target, best);
@@ -97,8 +97,8 @@ namespace MS.Internal.FontFace
         /// See whether this is a better match to the specified matching target
         /// </summary>
         internal bool IsBetterMatch(
-            MatchingStyle   target,
-            MatchingStyle   best
+            MatchingStyle target,
+            MatchingStyle best
             )
         {
             double currentDiffSize = (_vector - target._vector).LengthSquared;
@@ -106,29 +106,29 @@ namespace MS.Internal.FontFace
 
             // better match found when...
 
-            if(currentDiffSize < bestDiffSize)
+            if (currentDiffSize < bestDiffSize)
             {
                 // the distance from the current vector to target is shorter
                 return true;
             }
-            else if(currentDiffSize == bestDiffSize)
+            else if (currentDiffSize == bestDiffSize)
             {
                 double dotCurrent = Vector.DotProduct(_vector, target._vector);
                 double dotBest = Vector.DotProduct(best._vector, target._vector);
 
-                if(dotCurrent > dotBest)
+                if (dotCurrent > dotBest)
                 {
                     // when distances are equal, the current vector has a stronger
                     // projection onto target.
                     return true;
                 }
-                else if(dotCurrent == dotBest)
+                else if (dotCurrent == dotBest)
                 {
-                    if(     _vector.X > best._vector.X
-                        || (    _vector.X == best._vector.X
-                            && (    _vector.Y > best._vector.Y
-                                || (    _vector.Y == best._vector.Y
-                                    &&  _vector.Z > best._vector.Z))))
+                    if (_vector.X > best._vector.X
+                        || (_vector.X == best._vector.X
+                            && (_vector.Y > best._vector.Y
+                                || (_vector.Y == best._vector.Y
+                                    && _vector.Z > best._vector.Z))))
                     {
                         // when projections onto target are still equally strong, the current
                         // vector has a stronger component.
@@ -197,7 +197,7 @@ namespace MS.Internal.FontFace
             /// </summary>
             internal double LengthSquared
             {
-                get{ return _x * _x + _y * _y + _z * _z; }
+                get { return _x * _x + _y * _y + _z * _z; }
             }
 
 
@@ -242,12 +242,12 @@ namespace MS.Internal.FontFace
             /// </summary>
             public override bool Equals(Object o)
             {
-                if(null == o)
+                if (null == o)
                 {
                     return false;
                 }
 
-                if(o is Vector)
+                if (o is Vector)
                 {
                     Vector vector = (Vector)o;
 

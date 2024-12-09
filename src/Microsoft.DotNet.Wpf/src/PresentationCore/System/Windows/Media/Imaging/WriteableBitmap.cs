@@ -1,13 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
+using System.Runtime.InteropServices;
+using System.Threading;
+using System.Windows.Media.Composition;
 using MS.Internal;
 using MS.Win32.PresentationCore;
-using System.Runtime.InteropServices;
-using System.Windows.Media.Composition;
-using System.Threading;
 
 namespace System.Windows.Media.Imaging
 {
@@ -25,7 +25,7 @@ namespace System.Windows.Media.Imaging
         internal WriteableBitmap()
         {
         }
-        
+
         /// <summary>
         ///     Creates a new WriteableBitmap instance initialized with the
         ///     contents of the specified BitmapSource.
@@ -40,7 +40,7 @@ namespace System.Windows.Media.Imaging
         {
             InitFromBitmapSource(source);
         }
-        
+
         /// <summary>
         ///   Initializes a new instance of the WriteableBitmap class with
         ///   the specified parameters.
@@ -115,8 +115,8 @@ namespace System.Windows.Media.Imaging
             }
 
             HRESULT.Check(MILSwDoubleBufferedBitmap.Create(
-                (uint) pixelWidth, // safe cast
-                (uint) pixelHeight, // safe cast
+                (uint)pixelWidth, // safe cast
+                (uint)pixelHeight, // safe cast
                 dpiX,
                 dpiY,
                 ref formatGuid,
@@ -342,11 +342,11 @@ namespace System.Windows.Media.Imaging
         /// <param name="destinationY">The destination y-coordinate of the top-most pixel to copy.</param>
         public void WritePixels(
             Int32Rect sourceRect,
-            IntPtr    sourceBuffer,
-            int       sourceBufferSize,
-            int       sourceBufferStride,
-            int       destinationX,
-            int       destinationY
+            IntPtr sourceBuffer,
+            int sourceBufferSize,
+            int sourceBufferStride,
+            int destinationX,
+            int destinationY
             )
         {
             WritePreamble();
@@ -354,12 +354,12 @@ namespace System.Windows.Media.Imaging
             WritePixelsImpl(sourceRect,
                             sourceBuffer,
                             sourceBufferSize,
-                            sourceBufferStride, 
+                            sourceBufferStride,
                             destinationX,
                             destinationY,
                             /*backwardsCompat*/ false);
         }
-        
+
         /// <summary>
         ///   Updates the pixels in the specified region of the bitmap.
         /// </summary>
@@ -373,10 +373,10 @@ namespace System.Windows.Media.Imaging
         /// <param name="destinationY">The destination y-coordinate of the top-most pixel to copy.</param>
         public void WritePixels(
             Int32Rect sourceRect,
-            Array     sourceBuffer,
-            int       sourceBufferStride,
-            int       destinationX,
-            int       destinationY
+            Array sourceBuffer,
+            int sourceBufferStride,
+            int destinationX,
+            int destinationY
             )
         {
             WritePreamble();
@@ -455,7 +455,7 @@ namespace System.Windows.Media.Imaging
             sourceRect.X = 0;
             sourceRect.Y = 0;
 
-            WritePixelsImpl(sourceRect, 
+            WritePixelsImpl(sourceRect,
                             buffer,
                             bufferSize,
                             stride,
@@ -491,7 +491,7 @@ namespace System.Windows.Media.Imaging
             ValidateArrayAndGetInfo(pixels,
                                     /*backwardsCompat*/ true,
                                     out elementSize,
-                                    out sourceBufferSize, 
+                                    out sourceBufferSize,
                                     out elementType);
 
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(stride);
@@ -502,7 +502,7 @@ namespace System.Windows.Media.Imaging
             {
                 throw new ArgumentException(SR.Image_InvalidArrayForPixel);
             }
-            
+
             checked
             {
                 int offsetInBytes = checked(offset * elementSize);
@@ -539,7 +539,7 @@ namespace System.Windows.Media.Imaging
 
                     checked
                     {
-                        buffer = new IntPtr(((long) buffer) + (long) offsetInBytes);
+                        buffer = new IntPtr(((long)buffer) + (long)offsetInBytes);
                         sourceBufferSize -= offsetInBytes;
                     }
 
@@ -576,7 +576,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void CloneCore(Freezable sourceFreezable)
         {
-            WriteableBitmap sourceBitmap = (WriteableBitmap) sourceFreezable;
+            WriteableBitmap sourceBitmap = (WriteableBitmap)sourceFreezable;
 
             base.CloneCore(sourceFreezable);
 
@@ -638,7 +638,7 @@ namespace System.Windows.Media.Imaging
                         resource.AddRefOnChannel(channel);
                     }
                 }
-                
+
                 Debug.Assert(!_isWaitingForCommit);
 
                 // We no longer need the SwDoubleBufferedBitmap
@@ -662,7 +662,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable sourceFreezable)
         {
-            WriteableBitmap sourceBitmap = (WriteableBitmap) sourceFreezable;
+            WriteableBitmap sourceBitmap = (WriteableBitmap)sourceFreezable;
 
             base.CloneCurrentValueCore(sourceFreezable);
 
@@ -744,7 +744,7 @@ namespace System.Windows.Media.Imaging
                 {
                     internalPalette = source.Palette.InternalPalette;
                 }
-                
+
                 HRESULT.Check(MILSwDoubleBufferedBitmap.Create(
                     (uint)source.PixelWidth, // safe cast
                     (uint)source.PixelHeight, // safe cast
@@ -803,12 +803,12 @@ namespace System.Windows.Media.Imaging
         /// </param>
         private void WritePixelsImpl(
             Int32Rect sourceRect,
-            IntPtr    sourceBuffer,
-            int       sourceBufferSize,
-            int       sourceBufferStride,
-            int       destinationX,
-            int       destinationY,
-            bool      backwardsCompat
+            IntPtr sourceBuffer,
+            int sourceBufferSize,
+            int sourceBufferStride,
+            int destinationX,
+            int destinationY,
+            bool backwardsCompat
             )
         {
             //
@@ -829,7 +829,7 @@ namespace System.Windows.Media.Imaging
                 ArgumentOutOfRangeException.ThrowIfGreaterThan(destinationX, _pixelWidth - sourceRect.Width);
                 ArgumentOutOfRangeException.ThrowIfGreaterThan(destinationY, _pixelHeight - sourceRect.Height);
             }
-            else if(sourceRect.Width > _pixelWidth || sourceRect.Height > _pixelHeight || destinationX > _pixelWidth - sourceRect.Width || destinationY > _pixelHeight - sourceRect.Height)
+            else if (sourceRect.Width > _pixelWidth || sourceRect.Height > _pixelHeight || destinationX > _pixelWidth - sourceRect.Width || destinationY > _pixelHeight - sourceRect.Height)
             {
                 HRESULT.Check(MS.Win32.NativeMethods.E_INVALIDARG);
             }
@@ -913,13 +913,13 @@ namespace System.Windows.Media.Imaging
                         MILUtilities.MILCopyPixelBuffer(
                             pDest,
                             outputBufferSize,
-                            (uint) _backBufferStride,
+                            (uint)_backBufferStride,
                             destBufferBitOffset,
                             pSource,
                             inputBufferSize,
-                            (uint) sourceBufferStride,
+                            (uint)sourceBufferStride,
                             sourceBufferBitOffset,
-                            (uint) sourceRect.Height,
+                            (uint)sourceRect.Height,
                             copyWidthInBits);
                         AddDirtyRect(destinationRect);
                     }
@@ -961,7 +961,7 @@ namespace System.Windows.Media.Imaging
             if (_pBackBuffer == null)
             {
                 bool shouldGetBackBuffer = true;
-                
+
                 if (waitForCopy)
                 {
                     // If we have committed a copy-forward command, we need to wait
@@ -969,7 +969,7 @@ namespace System.Windows.Media.Imaging
                     // the back buffer.
                     shouldGetBackBuffer = _copyCompletedEvent.WaitOne(timeout, false);
                 }
-                
+
                 if (shouldGetBackBuffer)
                 {
                     MILSwDoubleBufferedBitmap.GetBackBuffer(
@@ -1092,7 +1092,7 @@ namespace System.Windows.Media.Imaging
                         elementType = exemplar.GetType();
                     }
                 }
-}
+            }
             else if (sourceBuffer.Rank == 2)
             {
                 int firstDimLength = sourceBuffer.GetLength(0);
@@ -1213,7 +1213,7 @@ namespace System.Windows.Media.Imaging
                 base.UpdateBitmapSourceResource(channel, skipOnChannelCheck);
                 return;
             }
-            
+
             // We override this method because we use a different resource type
             // than our base class does.  This probably suggests that the base
             // class should not presume the resource type, but it currently
@@ -1230,7 +1230,7 @@ namespace System.Windows.Media.Imaging
                 command.Handle = _duceResource.GetHandle(channel);
                 unsafe
                 {
-                    command.SwDoubleBufferedBitmap = (UInt64) _pDoubleBufferedBitmap.DangerousGetHandle().ToPointer();
+                    command.SwDoubleBufferedBitmap = (UInt64)_pDoubleBufferedBitmap.DangerousGetHandle().ToPointer();
                 }
                 command.UseBackBuffer = channel.IsSynchronous ? 1u : 0u;
 
@@ -1239,7 +1239,7 @@ namespace System.Windows.Media.Imaging
                 // so we'll AddRef it here, and simply take over the reference on the other side.
                 //
                 UnsafeNativeMethods.MILUnknown.AddRef(_pDoubleBufferedBitmap);
-                
+
                 unsafe
                 {
                     channel.SendCommand(
@@ -1325,7 +1325,7 @@ namespace System.Windows.Media.Imaging
             DUCE.MILCMD_DOUBLEBUFFEREDBITMAP_COPYFORWARD command;
             command.Type = MILCMD.MilCmdDoubleBufferedBitmapCopyForward;
             command.Handle = _duceResource.GetHandle(channel);
-            command.CopyCompletedEvent = (UInt64) hDuplicate.ToInt64();
+            command.CopyCompletedEvent = (UInt64)hDuplicate.ToInt64();
 
             // Note that the batch is closed after the sendcommand because this method is called under the 
             // context of the MediaContext.CommitChannel and the command needs to make it into the current set of changes which are 
@@ -1411,7 +1411,7 @@ namespace System.Windows.Media.Imaging
         private bool _hasDirtyRects = true;
 
         // Flags whether a MediaContext.CommittingBatch handler has already been added.
-        private bool _isWaitingForCommit = false;   
+        private bool _isWaitingForCommit = false;
 
         private ManualResetEvent _copyCompletedEvent = new ManualResetEvent(true);
 

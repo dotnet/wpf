@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,14 +21,14 @@ namespace System.Windows.Media.TextFormatting
         /// Internal constructor. 
         /// </summary>
         internal IndexedGlyphRun(
-            int      textSourceCharacterIndex,
-            int      textSourceCharacterLength,
+            int textSourceCharacterIndex,
+            int textSourceCharacterLength,
             GlyphRun glyphRun
             )
         {
-            _textSourceCharacterIndex  = textSourceCharacterIndex;
-            _length                    = textSourceCharacterLength;
-            _glyphRun                  = glyphRun;            
+            _textSourceCharacterIndex = textSourceCharacterIndex;
+            _length = textSourceCharacterLength;
+            _glyphRun = glyphRun;
         }
 
 
@@ -42,7 +42,7 @@ namespace System.Windows.Media.TextFormatting
         public int TextSourceCharacterIndex
         {
             get
-            { 
+            {
                 return _textSourceCharacterIndex;
             }
         }
@@ -53,8 +53,8 @@ namespace System.Windows.Media.TextFormatting
         /// </summary>
         public int TextSourceLength
         {
-            get 
-            { 
+            get
+            {
                 return _length;
             }
         }
@@ -62,19 +62,19 @@ namespace System.Windows.Media.TextFormatting
         /// <summary>
         /// gets the GlyphRun object
         /// </summary>
-        public GlyphRun GlyphRun 
+        public GlyphRun GlyphRun
         {
-            get 
+            get
             {
                 return _glyphRun;
-            }                
+            }
         }
 
         //-------------------------
         // private members 
         //-------------------------
         private GlyphRun _glyphRun;
-        private int      _textSourceCharacterIndex;
-        private int      _length;
-    }    
+        private int _textSourceCharacterIndex;
+        private int _length;
+    }
 }

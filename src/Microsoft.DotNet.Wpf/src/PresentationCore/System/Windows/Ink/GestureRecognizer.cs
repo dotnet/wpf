@@ -1,9 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal.Ink.GestureRecognition;
 using System.Collections.ObjectModel;
+using MS.Internal.Ink.GestureRecognition;
 
 namespace System.Windows.Ink
 {
@@ -17,7 +17,7 @@ namespace System.Windows.Ink
     ///         ApplicationGesture[] and StrokeCollection.  
     ///         This class verifies the ApplicationGesture[] and StrokeCollection / Stroke are validated.
     /// </remarks>
-    public sealed class GestureRecognizer : DependencyObject, IDisposable 
+    public sealed class GestureRecognizer : DependencyObject, IDisposable
     {
         //-------------------------------------------------------------------------------
         //
@@ -30,7 +30,7 @@ namespace System.Windows.Ink
         /// <summary>
         /// The default constructor which enables all the application gestures.
         /// </summary>
-        public GestureRecognizer() : this ( new ApplicationGesture[] { ApplicationGesture.AllGestures } )
+        public GestureRecognizer() : this(new ApplicationGesture[] { ApplicationGesture.AllGestures })
         {
         }
 
@@ -97,12 +97,12 @@ namespace System.Windows.Ink
             // we don't wrap the COM exceptions generated from the Recognizer
             // with our own exception
             //
-            ApplicationGesture[] enabledGestures = 
+            ApplicationGesture[] enabledGestures =
                 _nativeRecognizer.SetEnabledGestures(applicationGestures);
 
             //only update the state when SetEnabledGestures succeeds (since it verifies the array)
             _enabledGestures = enabledGestures;
-}
+        }
 
         /// <summary>
         /// Get the enabled gestures
@@ -171,7 +171,7 @@ namespace System.Windows.Ink
             return new ReadOnlyCollection<GestureRecognitionResult>(_nativeRecognizer.Recognize(strokes));
         }
 
-        
+
 
         #endregion Public Methods
 
@@ -219,7 +219,7 @@ namespace System.Windows.Ink
 
             // A simple pattern of the dispose implementation.
             // There is no finalizer since the SafeHandle in the NativeRecognizer will release the context properly.
-            if ( _disposed )
+            if (_disposed)
             {
                 return;
             }
@@ -228,12 +228,12 @@ namespace System.Windows.Ink
             // Since the constructor might create a null _nativeRecognizer, 
             // here we have to make sure we do have some thing to dispose. 
             // Otherwise just no-op.
-            if ( _nativeRecognizer != null )
+            if (_nativeRecognizer != null)
             {
                 _nativeRecognizer.Dispose();
                 _nativeRecognizer = null;
             }
-            
+
             _disposed = true;
         }
 
@@ -254,7 +254,7 @@ namespace System.Windows.Ink
                 throw new InvalidOperationException(SR.GestureRecognizerNotAvailable);
             }
         }
-        
+
         // Verify whether this object has been disposed.
         private void VerifyDisposed()
         {
@@ -271,9 +271,9 @@ namespace System.Windows.Ink
 
         #region Private Fields
 
-        private ApplicationGesture[]        _enabledGestures;
-        private NativeRecognizer            _nativeRecognizer;
-        private bool                        _disposed;
+        private ApplicationGesture[] _enabledGestures;
+        private NativeRecognizer _nativeRecognizer;
+        private bool _disposed;
 
         #endregion Private Fields
     }

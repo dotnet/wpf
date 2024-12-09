@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -30,23 +30,23 @@ namespace MS.Internal.Shaping
     /// </summary>
     internal class GlyphingCache
     {
-        private SizeLimitedCache<Typeface, TypefaceMap>  _sizeLimitedCache;
-    
+        private SizeLimitedCache<Typeface, TypefaceMap> _sizeLimitedCache;
+
         internal GlyphingCache(int capacity)
         {
-            _sizeLimitedCache  = new SizeLimitedCache<Typeface, TypefaceMap>(capacity);
+            _sizeLimitedCache = new SizeLimitedCache<Typeface, TypefaceMap>(capacity);
         }
 
         internal void GetShapeableText(
-            Typeface                    typeface,
-            CharacterBufferReference    characterBufferReference,
-            int                         stringLength,
-            TextRunProperties           textRunProperties,
-            CultureInfo                 digitCulture,
-            bool                        isRightToLeftParagraph,
+            Typeface typeface,
+            CharacterBufferReference characterBufferReference,
+            int stringLength,
+            TextRunProperties textRunProperties,
+            CultureInfo digitCulture,
+            bool isRightToLeftParagraph,
             IList<TextShapeableSymbols> shapeableList,
-            IShapeableTextCollector     collector,
-            TextFormattingMode              textFormattingMode
+            IShapeableTextCollector collector,
+            TextFormattingMode textFormattingMode
             )
         {
             if (!typeface.Symbol)
@@ -93,24 +93,24 @@ namespace MS.Internal.Shaping
         {
             TypefaceMap typefaceMap = _sizeLimitedCache.Get(key);
             if (typefaceMap == null)
-            {                
+            {
                 typefaceMap = new TypefaceMap(
-                    key.FontFamily, 
+                    key.FontFamily,
                     key.FallbackFontFamily,
                     key.CanonicalStyle,
                     key.CanonicalWeight,
                     key.CanonicalStretch,
                     key.NullFont
                     );
-                
+
                 _sizeLimitedCache.Add(
-                    key, 
-                    typefaceMap, 
+                    key,
+                    typefaceMap,
                     false   // is not permanent in the cache.
                     );
-            }   
-            
+            }
+
             return typefaceMap;
-        }  
+        }
     }
 }

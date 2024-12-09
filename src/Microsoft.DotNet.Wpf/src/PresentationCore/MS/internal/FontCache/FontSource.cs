@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,7 +22,7 @@ namespace MS.Internal.FontCache
     internal class FontSourceFactory : IFontSourceFactory
     {
         public FontSourceFactory() { }
-        
+
         public IFontSource Create(string uriString)
         {
             return new FontSource(new Uri(uriString), false);
@@ -282,7 +282,7 @@ namespace MS.Internal.FontCache
             return new PinnedByteArrayStream(bits);
         }
 
-        private static byte [] StreamToByteArray(Stream fontStream)
+        private static byte[] StreamToByteArray(Stream fontStream)
         {
             byte[] memoryFont;
 
@@ -369,17 +369,17 @@ namespace MS.Internal.FontCache
 
         private class PinnedByteArrayStream : UnmanagedMemoryStream
         {
-            internal PinnedByteArrayStream(byte [] bits)
+            internal PinnedByteArrayStream(byte[] bits)
             {
                 _memoryHandle = GCHandle.Alloc(bits, GCHandleType.Pinned);
-                
+
                 unsafe
                 {
                     Initialize(
-	                    (byte *)_memoryHandle.AddrOfPinnedObject(),
-	                    bits.Length, 
-	                    bits.Length, 
-	                    FileAccess.Read
+                        (byte*)_memoryHandle.AddrOfPinnedObject(),
+                        bits.Length,
+                        bits.Length,
+                        FileAccess.Read
                     );
                 }
             }
@@ -397,7 +397,7 @@ namespace MS.Internal.FontCache
                 _memoryHandle.Free();
             }
 
-            private GCHandle    _memoryHandle;
+            private GCHandle _memoryHandle;
         }
 
         #endregion Private Classes
@@ -417,9 +417,9 @@ namespace MS.Internal.FontCache
         /// </summary>
         private bool _isInternalCompositeFont;
 
-        private Uri     _fontUri;
+        private Uri _fontUri;
 
-        private bool    _skipDemand;
+        private bool _skipDemand;
 
         private static SizeLimitedCache<Uri, byte[]> _resourceCache = new SizeLimitedCache<Uri, byte[]>(MaximumCacheItems);
 

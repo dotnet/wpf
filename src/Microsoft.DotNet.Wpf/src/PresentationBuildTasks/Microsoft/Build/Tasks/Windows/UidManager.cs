@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,21 +13,18 @@
 
 
 using System;
-using System.Xml;
-using System.IO;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices;
-
-using MS.Internal.Markup;
-
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Xml;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
-
-using MS.Utility;                   // For SR
+using MS.Internal.Markup;
 using MS.Internal.Tasks;
+using MS.Utility;                   // For SR
 
 // Since we disable PreSharp warnings in this file, we first need to disable warnings about unknown message numbers and unknown pragmas.
 #pragma warning disable 1634, 1691
@@ -216,123 +213,124 @@ namespace Microsoft.Build.Tasks.Windows
                 switch (_task)
                 {
                     case UidTask.Check:
-                    {
-                        UidCollector collector = ParseFile(inputFile.ItemSpec);
+                        {
+                            UidCollector collector = ParseFile(inputFile.ItemSpec);
 
-                        bool success = VerifyUid(
-                            collector,          // uid collector
-                            true                // log error
-                            );
+                            bool success = VerifyUid(
+                                collector,          // uid collector
+                                true                // log error
+                                );
 
-                        if (success) countGoodFiles++;
-                        break;
-                    }
+                            if (success)
+                                countGoodFiles++;
+                            break;
+                        }
                     case UidTask.Update:
-                    {
-                        UidCollector collector = ParseFile(inputFile.ItemSpec);
-
-                        bool success = VerifyUid(
-                            collector,          // uid collector
-                            false               // log error
-                            );
-
-                        if (!success)
                         {
-                            if (SetupBackupDirectory())
+                            UidCollector collector = ParseFile(inputFile.ItemSpec);
+
+                            bool success = VerifyUid(
+                                collector,          // uid collector
+                                false               // log error
+                                );
+
+                            if (!success)
                             {
-                                // resolve errors
-                                collector.ResolveUidErrors();
-
-                                // temp file to write to
-                                string tempFile   = GetTempFileName(inputFile.ItemSpec);
-
-                                // backup file of the source file before it is overwritten.
-                                string backupFile = GetBackupFileName(inputFile.ItemSpec);
-
-                                using (Stream uidStream = new FileStream(tempFile, FileMode.Create))
+                                if (SetupBackupDirectory())
                                 {
-                                    using (Stream source = File.OpenRead(inputFile.ItemSpec))
+                                    // resolve errors
+                                    collector.ResolveUidErrors();
+
+                                    // temp file to write to
+                                    string tempFile = GetTempFileName(inputFile.ItemSpec);
+
+                                    // backup file of the source file before it is overwritten.
+                                    string backupFile = GetBackupFileName(inputFile.ItemSpec);
+
+                                    using (Stream uidStream = new FileStream(tempFile, FileMode.Create))
                                     {
-                                        UidWriter writer = new UidWriter(collector, source, uidStream);
-                                        writer.UpdateUidWrite();
+                                        using (Stream source = File.OpenRead(inputFile.ItemSpec))
+                                        {
+                                            UidWriter writer = new UidWriter(collector, source, uidStream);
+                                            writer.UpdateUidWrite();
+                                        }
                                     }
+
+                                    // backup source file by renaming it. Expect to be (close to) atomic op.
+                                    RenameFile(inputFile.ItemSpec, backupFile);
+
+                                    // rename the uid output onto the source file. Expect to be (close to) atomic op.
+                                    RenameFile(tempFile, inputFile.ItemSpec);
+
+                                    // remove the temp files
+                                    RemoveFile(tempFile);
+                                    RemoveFile(backupFile);
+
+                                    countGoodFiles++;
                                 }
-
-                                // backup source file by renaming it. Expect to be (close to) atomic op.
-                                RenameFile(inputFile.ItemSpec, backupFile);
-
-                                // rename the uid output onto the source file. Expect to be (close to) atomic op.
-                                RenameFile(tempFile, inputFile.ItemSpec);
-
-                                // remove the temp files
-                                RemoveFile(tempFile);
-                                RemoveFile(backupFile);
-
+                            }
+                            else
+                            {
+                                // all uids are good. No-op
                                 countGoodFiles++;
                             }
-                        }
-                        else
-                        {
-                            // all uids are good. No-op
-                            countGoodFiles++;
-                        }
 
-                        break;
-                    }
+                            break;
+                        }
                     case UidTask.Remove:
-                    {
-                        UidCollector collector = ParseFile(inputFile.ItemSpec);
-
-                        bool hasUid = false;
-                        for (int i = 0; i < collector.Count; i++)
                         {
-                            if (collector[i].Status != UidStatus.Absent)
+                            UidCollector collector = ParseFile(inputFile.ItemSpec);
+
+                            bool hasUid = false;
+                            for (int i = 0; i < collector.Count; i++)
                             {
-                                hasUid = true;
-                                break;
-                            }
-                        }
-
-                        if (hasUid)
-                        {
-                            if (SetupBackupDirectory())
-                            {
-                                // temp file to write to
-                                string tempFile   = GetTempFileName(inputFile.ItemSpec);
-
-                                // backup file of the source file before it is overwritten.
-                                string backupFile = GetBackupFileName(inputFile.ItemSpec);
-
-                                using (Stream uidStream = new FileStream(tempFile, FileMode.Create))
+                                if (collector[i].Status != UidStatus.Absent)
                                 {
-                                    using (Stream source = File.OpenRead(inputFile.ItemSpec))
-                                    {
-                                        UidWriter writer = new UidWriter(collector, source, uidStream);
-                                        writer.RemoveUidWrite();
-                                    }
+                                    hasUid = true;
+                                    break;
                                 }
+                            }
 
-                                // rename the source file to the backup file name. Expect to be (close to) atomic op.
-                                RenameFile(inputFile.ItemSpec, backupFile);
+                            if (hasUid)
+                            {
+                                if (SetupBackupDirectory())
+                                {
+                                    // temp file to write to
+                                    string tempFile = GetTempFileName(inputFile.ItemSpec);
 
-                                // rename the output file over to the source file. Expect to be (close to) atomic op.
-                                RenameFile(tempFile, inputFile.ItemSpec);
+                                    // backup file of the source file before it is overwritten.
+                                    string backupFile = GetBackupFileName(inputFile.ItemSpec);
 
-                                // remove the temp files
-                                RemoveFile(tempFile);
-                                RemoveFile(backupFile);
+                                    using (Stream uidStream = new FileStream(tempFile, FileMode.Create))
+                                    {
+                                        using (Stream source = File.OpenRead(inputFile.ItemSpec))
+                                        {
+                                            UidWriter writer = new UidWriter(collector, source, uidStream);
+                                            writer.RemoveUidWrite();
+                                        }
+                                    }
 
+                                    // rename the source file to the backup file name. Expect to be (close to) atomic op.
+                                    RenameFile(inputFile.ItemSpec, backupFile);
+
+                                    // rename the output file over to the source file. Expect to be (close to) atomic op.
+                                    RenameFile(tempFile, inputFile.ItemSpec);
+
+                                    // remove the temp files
+                                    RemoveFile(tempFile);
+                                    RemoveFile(backupFile);
+
+                                    countGoodFiles++;
+                                }
+                            }
+                            else
+                            {
+                                // There is no Uid in the file. No need to do remove.
                                 countGoodFiles++;
                             }
-                        }
-                        else
-                        {
-                            // There is no Uid in the file. No need to do remove.
-                            countGoodFiles++;
-                        }
 
-                        break;
-                    }
+                            break;
+                        }
                 }
             }
 
@@ -361,12 +359,12 @@ namespace Microsoft.Build.Tasks.Windows
         }
 
 
-       private string GetTempFileName(string fileName)
+        private string GetTempFileName(string fileName)
         {
             return Path.Combine(_backupPath, Path.ChangeExtension(Path.GetFileName(fileName), "uidtemp"));
         }
 
-        private string GetBackupFileName (string fileName)
+        private string GetBackupFileName(string fileName)
         {
             return Path.Combine(_backupPath, Path.ChangeExtension(Path.GetFileName(fileName), "uidbackup"));
         }
@@ -429,7 +427,7 @@ namespace Microsoft.Build.Tasks.Windows
         /// <returns>true indicates no errors</returns>
         private bool VerifyUid(
             UidCollector collector,
-            bool         logError
+            bool logError
             )
         {
             bool errorFound = false;
@@ -485,12 +483,12 @@ namespace Microsoft.Build.Tasks.Windows
         /// <returns>UidCollector containing all the information for the Uids in the file</returns>
         private UidCollector ParseFile(string fileName)
         {
-            UidCollector collector = new UidCollector(fileName  );
+            UidCollector collector = new UidCollector(fileName);
 
             using (Stream xamlStream = File.OpenRead(fileName))
             {
                 XmlNamespaceManager nsmgr = new XmlNamespaceManager(new NameTable());
-                XmlParserContext context  = new XmlParserContext(
+                XmlParserContext context = new XmlParserContext(
                     null,                 // nametable
                     nsmgr,                // namespace manager
                     null,                 // xml:Lang scope
@@ -507,86 +505,87 @@ namespace Microsoft.Build.Tasks.Windows
                 {
                     switch (reader.NodeType)
                     {
-                        case XmlNodeType.Element :
-                        {
-                            if (collector.RootElementLineNumber < 0)
+                        case XmlNodeType.Element:
                             {
-                                collector.RootElementLineNumber   = reader.LineNumber;
-                                collector.RootElementLinePosition = reader.LinePosition;
-                            }
-
-                            if (reader.Name.IndexOf('.') >= 0)
-                            {
-                                // the name has a dot, which suggests it is a property tag.
-                                // we will ignore adding uid
-                                continue;
-                            }
-
-                            Uid currentUid = new Uid(
-                                    reader.LineNumber,
-                                    reader.LinePosition + reader.Name.Length,
-                                    reader.Name,
-                                    SpaceInsertion.BeforeUid  // insert space before the Uid
-                                    );                                   ;
-
-                            if (reader.HasAttributes)
-                            {
-                                reader.MoveToNextAttribute();
-
-                                // As a heuristic to better preserve the source file, add uid to the place of the
-                                // first attribute
-                                currentUid.LineNumber   = reader.LineNumber;
-                                currentUid.LinePosition = reader.LinePosition;
-                                currentUid.Space        = SpaceInsertion.AfterUid;
-
-                                do
+                                if (collector.RootElementLineNumber < 0)
                                 {
-                                    string namespaceUri = nsmgr.LookupNamespace(reader.Prefix);
-
-                                    if (reader.LocalName == XamlReaderHelper.DefinitionUid
-                                     && namespaceUri == XamlReaderHelper.DefinitionNamespaceURI)
-                                    {
-                                        // found x:Uid attribute, store the actual value and position
-                                        currentUid.Value        = reader.Value;
-                                        currentUid.LineNumber   = reader.LineNumber;
-                                        currentUid.LinePosition = reader.LinePosition;
-                                    }
-                                    else if (reader.LocalName == "Name"
-                                          && namespaceUri == XamlReaderHelper.DefaultNamespaceURI)
-                                    {
-                                        // found Name attribute, store the Name value
-                                        currentUid.FrameworkElementName = reader.Value;
-                                    }
-                                    else if (reader.LocalName == "Name"
-                                          && namespaceUri == XamlReaderHelper.DefinitionNamespaceURI)
-                                    {
-                                        // found x:Name attribute, store the Name value
-                                        currentUid.FrameworkElementName = reader.Value;
-                                    }
-                                    else if (reader.Prefix == "xmlns")
-                                    {
-                                        // found a namespace declaration, store the namespace prefix
-                                        // so that when we need to add a new namespace declaration later
-                                        // we won't reuse the namespace prefix.
-                                        collector.AddNamespacePrefix(reader.LocalName);
-                                    }
+                                    collector.RootElementLineNumber = reader.LineNumber;
+                                    collector.RootElementLinePosition = reader.LinePosition;
                                 }
-                                while (reader.MoveToNextAttribute());
 
+                                if (reader.Name.IndexOf('.') >= 0)
+                                {
+                                    // the name has a dot, which suggests it is a property tag.
+                                    // we will ignore adding uid
+                                    continue;
+                                }
+
+                                Uid currentUid = new Uid(
+                                        reader.LineNumber,
+                                        reader.LinePosition + reader.Name.Length,
+                                        reader.Name,
+                                        SpaceInsertion.BeforeUid  // insert space before the Uid
+                                        );
+                                ;
+
+                                if (reader.HasAttributes)
+                                {
+                                    reader.MoveToNextAttribute();
+
+                                    // As a heuristic to better preserve the source file, add uid to the place of the
+                                    // first attribute
+                                    currentUid.LineNumber = reader.LineNumber;
+                                    currentUid.LinePosition = reader.LinePosition;
+                                    currentUid.Space = SpaceInsertion.AfterUid;
+
+                                    do
+                                    {
+                                        string namespaceUri = nsmgr.LookupNamespace(reader.Prefix);
+
+                                        if (reader.LocalName == XamlReaderHelper.DefinitionUid
+                                         && namespaceUri == XamlReaderHelper.DefinitionNamespaceURI)
+                                        {
+                                            // found x:Uid attribute, store the actual value and position
+                                            currentUid.Value = reader.Value;
+                                            currentUid.LineNumber = reader.LineNumber;
+                                            currentUid.LinePosition = reader.LinePosition;
+                                        }
+                                        else if (reader.LocalName == "Name"
+                                              && namespaceUri == XamlReaderHelper.DefaultNamespaceURI)
+                                        {
+                                            // found Name attribute, store the Name value
+                                            currentUid.FrameworkElementName = reader.Value;
+                                        }
+                                        else if (reader.LocalName == "Name"
+                                              && namespaceUri == XamlReaderHelper.DefinitionNamespaceURI)
+                                        {
+                                            // found x:Name attribute, store the Name value
+                                            currentUid.FrameworkElementName = reader.Value;
+                                        }
+                                        else if (reader.Prefix == "xmlns")
+                                        {
+                                            // found a namespace declaration, store the namespace prefix
+                                            // so that when we need to add a new namespace declaration later
+                                            // we won't reuse the namespace prefix.
+                                            collector.AddNamespacePrefix(reader.LocalName);
+                                        }
+                                    }
+                                    while (reader.MoveToNextAttribute());
+
+                                }
+
+                                if (currentUid.Value == null)
+                                {
+                                    // there is no x:Uid found on this element, we need to resolve the
+                                    // namespace prefix in order to add the Uid
+                                    string prefix = nsmgr.LookupPrefix(XamlReaderHelper.DefinitionNamespaceURI);
+                                    if (prefix != string.Empty)
+                                        currentUid.NamespacePrefix = prefix;
+                                }
+
+                                collector.AddUid(currentUid);
+                                break;
                             }
-
-                            if (currentUid.Value == null)
-                            {
-                                // there is no x:Uid found on this element, we need to resolve the
-                                // namespace prefix in order to add the Uid
-                                string prefix = nsmgr.LookupPrefix(XamlReaderHelper.DefinitionNamespaceURI);
-                                if (prefix != string.Empty)
-                                    currentUid.NamespacePrefix = prefix;
-                            }
-
-                            collector.AddUid(currentUid);
-                            break;
-                        }
                     }
                 }
             }
@@ -597,10 +596,10 @@ namespace Microsoft.Build.Tasks.Windows
         //-----------------------------------
         // Private members
         //-----------------------------------
-        private UidTask       _task;            // task
-        private ITaskItem[]   _markupFiles;     // input Xaml files
-        private string        _taskAsString;    // task string
-        private string        _backupPath;      // path to store to backup source Xaml files
+        private UidTask _task;            // task
+        private ITaskItem[] _markupFiles;     // input Xaml files
+        private string _taskAsString;    // task string
+        private string _backupPath;      // path to store to backup source Xaml files
         private const string UnknownErrorID = "UM1000";
     }
 
@@ -609,40 +608,40 @@ namespace Microsoft.Build.Tasks.Windows
     internal sealed class Uid
     {
         internal Uid(
-            int     lineNumber,
-            int     linePosition,
-            string  elementName,
-            SpaceInsertion    spaceInsertion
+            int lineNumber,
+            int linePosition,
+            string elementName,
+            SpaceInsertion spaceInsertion
             )
         {
-            LineNumber          = lineNumber;
-            LinePosition        = linePosition;
-            ElementName         = elementName;
-            Value               = null;
-            NamespacePrefix     = null;
-            FrameworkElementName  = null;
-            Status              = UidStatus.Valid;
-            Space               = spaceInsertion;
+            LineNumber = lineNumber;
+            LinePosition = linePosition;
+            ElementName = elementName;
+            Value = null;
+            NamespacePrefix = null;
+            FrameworkElementName = null;
+            Status = UidStatus.Valid;
+            Space = spaceInsertion;
 
         }
 
-        internal int        LineNumber;         // Referenced line number of the original document
-        internal int        LinePosition;       // Reference line position of the original document
-        internal string     ElementName;        // name of the element that needs this uid
-        internal SpaceInsertion    Space;       // Insert a space before/after the Uid
+        internal int LineNumber;         // Referenced line number of the original document
+        internal int LinePosition;       // Reference line position of the original document
+        internal string ElementName;        // name of the element that needs this uid
+        internal SpaceInsertion Space;       // Insert a space before/after the Uid
 
-        internal string     Value;              // value of the uid
-        internal string     NamespacePrefix;    // namespace prefix for the uid
-        internal string     FrameworkElementName; // the FrameworkElement.Name of element
-        internal UidStatus  Status;             // the status of the this uid
+        internal string Value;              // value of the uid
+        internal string NamespacePrefix;    // namespace prefix for the uid
+        internal string FrameworkElementName; // the FrameworkElement.Name of element
+        internal UidStatus Status;             // the status of the this uid
 
     }
 
     internal enum UidStatus : byte
     {
-        Valid       = 0,    // uid is valid
-        Absent      = 1,    // uid is absent
-        Duplicate   = 2,    // uid is duplicated
+        Valid = 0,    // uid is valid
+        Absent = 1,    // uid is absent
+        Duplicate = 2,    // uid is duplicated
     }
 
     internal enum SpaceInsertion : byte
@@ -656,11 +655,11 @@ namespace Microsoft.Build.Tasks.Windows
     {
         public UidCollector(string fileName)
         {
-            _uids               = new List<Uid>(32);
-            _namespacePrefixes  = new List<string>(2);
-            _uidTable           = new Hashtable();
-            _fileName           = fileName;
-            _sequenceMaxIds     = new Hashtable();
+            _uids = new List<Uid>(32);
+            _namespacePrefixes = new List<string>(2);
+            _uidTable = new Hashtable();
+            _fileName = fileName;
+            _sequenceMaxIds = new Hashtable();
         }
 
         // remembering all the namespace prefixes in the file
@@ -680,7 +679,7 @@ namespace Microsoft.Build.Tasks.Windows
             {
                 uid.Status = UidStatus.Absent;
             }
-            else  if (_uidTable.Contains(uid.Value))
+            else if (_uidTable.Contains(uid.Value))
             {
                 uid.Status = UidStatus.Duplicate;
             }
@@ -697,7 +696,7 @@ namespace Microsoft.Build.Tasks.Windows
             {
                 Uid currentUid = _uids[i];
 
-                if ( currentUid.Status == UidStatus.Absent
+                if (currentUid.Status == UidStatus.Absent
                   && currentUid.NamespacePrefix == null
                   && _namespacePrefixForMissingUid == null)
                 {
@@ -798,7 +797,7 @@ namespace Microsoft.Build.Tasks.Windows
 
                 if (_sequenceMaxIds.Contains(sequence))
                 {
-                    index = (Int64) _sequenceMaxIds[sequence];
+                    index = (Int64)_sequenceMaxIds[sequence];
 
                     if (index == Int64.MaxValue)
                     {
@@ -813,11 +812,11 @@ namespace Microsoft.Build.Tasks.Windows
 
                             if (_sequenceMaxIds.Contains(sequence))
                             {
-                                index = (Int64) _sequenceMaxIds[sequence];
+                                index = (Int64)_sequenceMaxIds[sequence];
                                 if (index < Int64.MaxValue)
                                 {
                                     // found the fallback sequence with valid index
-                                    index ++;
+                                    index++;
                                     break;
                                 }
                             }
@@ -828,12 +827,12 @@ namespace Microsoft.Build.Tasks.Windows
                                 break;
                             }
 
-                            _uidSequenceFallbackCount ++;
+                            _uidSequenceFallbackCount++;
                         }
                     }
                     else
                     {
-                        index ++;
+                        index++;
                     }
                 }
                 else
@@ -854,9 +853,10 @@ namespace Microsoft.Build.Tasks.Windows
         {
             // set prefix and index to invalid values
             prefix = null;
-            index  = -1;
+            index = -1;
 
-            if (uid == null) return;
+            if (uid == null)
+                return;
 
             int separatorIndex = uid.LastIndexOf(UidSeparator);
             if (separatorIndex > 0)
@@ -864,9 +864,10 @@ namespace Microsoft.Build.Tasks.Windows
                 string suffix = uid.Substring(separatorIndex + 1);
 
                 // Disable Presharp warning 6502 : catch block shouldn't have empty body
-                #pragma warning disable 6502
-                try {
-                    index  = Int64.Parse(suffix, TypeConverterHelper.InvariantEnglishUS);
+#pragma warning disable 6502
+                try
+                {
+                    index = Int64.Parse(suffix, TypeConverterHelper.InvariantEnglishUS);
                     prefix = uid.Substring(0, separatorIndex);
                 }
                 catch (FormatException)
@@ -877,7 +878,7 @@ namespace Microsoft.Build.Tasks.Windows
                 {
                     // not acceptable uid
                 }
-                #pragma warning restore 6502
+#pragma warning restore 6502
             }
         }
 
@@ -900,7 +901,7 @@ namespace Microsoft.Build.Tasks.Windows
             string prefix = UidNamespaceAbbreviation.ToString(TypeConverterHelper.InvariantEnglishUS);
 
             // Disable Presharp warning 6502 : catch block shouldn't have empty body
-            #pragma warning disable 6502
+#pragma warning disable 6502
             try
             {
                 // find a prefix that is not used in the Xaml
@@ -915,25 +916,25 @@ namespace Microsoft.Build.Tasks.Windows
             catch (OverflowException)
             {
             }
-            #pragma warning restore 6502
+#pragma warning restore 6502
 
             // if overflows, (extreamly imposible), we will return a guid as the prefix
             return Guid.NewGuid().ToString();
         }
 
-        private List<Uid>             _uids;
-        private Hashtable             _uidTable;
-        private string                _fileName;
-        private Hashtable             _sequenceMaxIds;
-        private List<string>          _namespacePrefixes;
-        private int                   _rootElementLineNumber        = -1;
-        private int                   _rootElementLinePosition      = -1;
-        private string                _namespacePrefixForMissingUid = null;
-        private int                   _uidSequenceFallbackCount     = 0;
+        private List<Uid> _uids;
+        private Hashtable _uidTable;
+        private string _fileName;
+        private Hashtable _sequenceMaxIds;
+        private List<string> _namespacePrefixes;
+        private int _rootElementLineNumber = -1;
+        private int _rootElementLinePosition = -1;
+        private string _namespacePrefixForMissingUid = null;
+        private int _uidSequenceFallbackCount = 0;
 
-        private const char UidNamespaceAbbreviation   = 'x';
-        private const char UidSeparator               = '_';
-        private const string UidFallbackSequence      = "_Uid";
+        private const char UidNamespaceAbbreviation = 'x';
+        private const char UidSeparator = '_';
+        private const string UidFallbackSequence = "_Uid";
     }
 
 
@@ -942,18 +943,19 @@ namespace Microsoft.Build.Tasks.Windows
     {
         internal UidWriter(UidCollector collector, Stream source, Stream target)
         {
-            _collector     = collector;
-            _sourceReader  = new StreamReader(source);
+            _collector = collector;
+            _sourceReader = new StreamReader(source);
 
-             UTF8Encoding encoding = new UTF8Encoding(true);
-            _targetWriter  = new StreamWriter(target, encoding);
-            _lineBuffer    = new LineBuffer(_sourceReader.ReadLine());
+            UTF8Encoding encoding = new UTF8Encoding(true);
+            _targetWriter = new StreamWriter(target, encoding);
+            _lineBuffer = new LineBuffer(_sourceReader.ReadLine());
         }
 
         // write to target stream and update uids
         internal bool UpdateUidWrite()
         {
-            try {
+            try
+            {
                 // we need to add a new namespace
                 if (_collector.NamespaceAddedForMissingUid != null)
                 {
@@ -1019,13 +1021,14 @@ namespace Microsoft.Build.Tasks.Windows
         // writing to the target stream removing uids
         internal bool RemoveUidWrite()
         {
-            try {
+            try
+            {
                 for (int i = 0; i < _collector.Count; i++)
                 {
                     Uid currentUid = _collector[i];
 
                     // skipping valid and duplicate uids.
-                    if ( currentUid.Status == UidStatus.Duplicate
+                    if (currentUid.Status == UidStatus.Duplicate
                       || currentUid.Status == UidStatus.Valid)
                     {
                         // write till the space in front of the Uid
@@ -1163,7 +1166,7 @@ namespace Microsoft.Build.Tasks.Windows
 
         private void WriteSpace()
         {
-             // insert a space
+            // insert a space
             _targetWriter.Write(" ");
         }
 
@@ -1176,7 +1179,7 @@ namespace Microsoft.Build.Tasks.Windows
 
         private void SkipSourceAttributeValue()
         {
-            char ch = (char) 0;
+            char ch = (char)0;
 
             // read to the start quote of the attribute value
             while (ch != '\"' && ch != '\'')
@@ -1187,12 +1190,12 @@ namespace Microsoft.Build.Tasks.Windows
                 }
 
                 ch = _lineBuffer.Read();
-                _currentLinePosition ++;
+                _currentLinePosition++;
             }
 
             char attributeValueStart = ch;
             // read to the end quote of the attribute value
-            ch = (char) 0;
+            ch = (char)0;
             while (ch != attributeValueStart)
             {
                 if (_lineBuffer.EOL)
@@ -1201,7 +1204,7 @@ namespace Microsoft.Build.Tasks.Windows
                 }
 
                 ch = _lineBuffer.Read();
-                _currentLinePosition ++;
+                _currentLinePosition++;
             }
         }
 
@@ -1253,13 +1256,13 @@ namespace Microsoft.Build.Tasks.Windows
         // source position in a file starts from (1,1)
         //
 
-        private int             _currentLineNumber   = 1;   // current line number in the source stream
-        private int             _currentLinePosition = 1;   // current line position in the source stream
-        private LineBuffer      _lineBuffer;                // buffer for one line's content
+        private int _currentLineNumber = 1;   // current line number in the source stream
+        private int _currentLinePosition = 1;   // current line position in the source stream
+        private LineBuffer _lineBuffer;                // buffer for one line's content
 
-        private UidCollector    _collector;
-        private StreamReader    _sourceReader;
-        private StreamWriter    _targetWriter;
+        private UidCollector _collector;
+        private StreamReader _sourceReader;
+        private StreamWriter _targetWriter;
 
         //
         // buffer for the content of a line
@@ -1268,7 +1271,7 @@ namespace Microsoft.Build.Tasks.Windows
         //
         private sealed class LineBuffer
         {
-            private int    Index;
+            private int Index;
             private string Content;
 
             public LineBuffer(string line)
@@ -1279,7 +1282,7 @@ namespace Microsoft.Build.Tasks.Windows
             public void SetLine(string line)
             {
                 Content = (line == null) ? string.Empty : line;
-                Index   = 0;
+                Index = 0;
             }
 
             public bool EOL
@@ -1312,7 +1315,7 @@ namespace Microsoft.Build.Tasks.Windows
                 if (!EOL)
                 {
                     int temp = Index;
-                    Index    = Content.Length;
+                    Index = Content.Length;
 
                     return Content.Substring(temp);
                 }
@@ -1324,10 +1327,10 @@ namespace Microsoft.Build.Tasks.Windows
         private enum WriterAction
         {
             Write = 0,  // write the content
-            Skip  = 1,  // skip the content
+            Skip = 1,  // skip the content
         }
 
-        private static Regex          EscapedXmlEntities   = new Regex("(<|>|\"|'|&)", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+        private static Regex EscapedXmlEntities = new Regex("(<|>|\"|'|&)", RegexOptions.CultureInvariant | RegexOptions.Compiled);
         private static MatchEvaluator EscapeMatchEvaluator = new MatchEvaluator(EscapeMatch);
 
         /// <summary>
@@ -1348,7 +1351,7 @@ namespace Microsoft.Build.Tasks.Windows
                 case "'":
                     return "&apos;";
                 default:
-                   return match.Value;
+                    return match.Value;
             }
         }
     }

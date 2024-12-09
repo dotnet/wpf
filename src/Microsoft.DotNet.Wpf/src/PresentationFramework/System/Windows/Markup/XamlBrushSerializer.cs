@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -32,7 +32,7 @@ namespace System.Windows.Markup
     /// </remarks>
     internal class XamlBrushSerializer : XamlSerializer
     {
-#region Construction
+        #region Construction
 
         /// <summary>
         ///     Constructor for XamlBrushSerializer
@@ -46,10 +46,10 @@ namespace System.Windows.Markup
         public XamlBrushSerializer()
         {
         }
-        
-#endregion Construction
 
-#region Conversions
+        #endregion Construction
+
+        #region Conversions
 
         /// <summary>
         ///   Convert a string into a compact binary representation and write it out
@@ -60,9 +60,9 @@ namespace System.Windows.Markup
         /// This currently only works for SolidColorBrushes that are identified
         /// by a known color name (eg - "Green" )
         /// </remarks>
-        public override bool ConvertStringToCustomBinary (
-            BinaryWriter   writer,           // Writer into the baml stream
-            string         stringValue)      // String to convert
+        public override bool ConvertStringToCustomBinary(
+            BinaryWriter writer,           // Writer into the baml stream
+            string stringValue)      // String to convert
         {
 #if !PBTCOMPILER
             return SolidColorBrush.SerializeOn(writer, stringValue.Trim());
@@ -72,7 +72,7 @@ namespace System.Windows.Markup
         }
 
 #if !PBTCOMPILER
-        
+
         /// <summary>
         ///   Convert a compact binary representation of a Brush into and instance
         ///   of Brush.  The reader must be left pointing immediately after the object 
@@ -116,7 +116,7 @@ namespace System.Windows.Markup
                     knownColor = KnownColors.ArgbStringToKnownColor(stringValue);
                 }
             }
-#endif 
+#endif
             if (knownColor != KnownColor.UnknownColor)
             {
                 // Serialize values of the type "Red", "Blue" and other names
@@ -152,7 +152,7 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Conversions
+        #endregion Conversions
 
     }
 }

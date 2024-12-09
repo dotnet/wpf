@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,15 +7,14 @@
 //
 // See spec at http://avalon/uis/Data%20Transfer%20clipboard%20dragdrop/Avalon%20Clipboard.htm
 
-using MS.Win32;
-using MS.Internal;
 using System.Collections.Specialized;
-using System.IO;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Media.Imaging;
-
+using MS.Internal;
+using MS.Win32;
 using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
 namespace System.Windows
@@ -26,7 +25,7 @@ namespace System.Windows
     /// Provides methods to place data on and retrieve data from the system clipboard. 
     /// This class cannot be inherited.
     /// </summary>
-    public static class Clipboard 
+    public static class Clipboard
     {
         //------------------------------------------------------
         //
@@ -344,7 +343,7 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UIPermission(UIPermissionClipboard.AllClipboard) to call this API.
         /// </remarks>
-        public static IDataObject GetDataObject() 
+        public static IDataObject GetDataObject()
         {
 
             return GetDataObjectInternal();
@@ -358,7 +357,7 @@ namespace System.Windows
         /// Data object from the current containing clipboard which the caller
         /// previously placed on the clipboard.
         /// </param>
-        public static bool IsCurrent(IDataObject data) 
+        public static bool IsCurrent(IDataObject data)
         {
             bool bReturn;
 
@@ -408,7 +407,7 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UIPermission(UIPermissionClipboard.AllClipboard) to call this API.
         /// </remarks>
-        public static void SetDataObject(object data) 
+        public static void SetDataObject(object data)
         {
 
             ArgumentNullException.ThrowIfNull(data);
@@ -431,7 +430,7 @@ namespace System.Windows
         /// </remarks>
         public static void SetDataObject(object data, bool copy)
         {
-            CriticalSetDataObject(data,copy);
+            CriticalSetDataObject(data, copy);
         }
 
         #endregion Public Methods
@@ -529,8 +528,10 @@ namespace System.Windows
         {
             get
             {
-                if (_isDeviceGuardEnabled < 0) return false;
-                if (_isDeviceGuardEnabled > 0) return true;
+                if (_isDeviceGuardEnabled < 0)
+                    return false;
+                if (_isDeviceGuardEnabled > 0)
+                    return true;
 
                 bool isDynamicCodePolicyEnabled = IsDynamicCodePolicyEnabled();
                 _isDeviceGuardEnabled = isDynamicCodePolicyEnabled ? 1 : -1;

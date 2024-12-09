@@ -1,9 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal;
 using System.Globalization;
+using MS.Internal;
 
 //
 // Description: Set of static methods implementing text range serialization
@@ -153,9 +153,9 @@ namespace System.Windows.Documents
         // Returns a value of a property - to be detected for convertability to string in a type converter
         object System.ComponentModel.ITypeDescriptorContext.Instance
         {
-            get 
-            { 
-                return _propertyValue; 
+            get
+            {
+                return _propertyValue;
             }
         }
 

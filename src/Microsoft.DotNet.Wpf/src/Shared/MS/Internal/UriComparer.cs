@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -53,11 +53,11 @@ namespace MS.Internal
         /// </returns>
         public bool Equals(Uri a, Uri b)
         {
-            if(object.ReferenceEquals(a, b))
+            if (object.ReferenceEquals(a, b))
             {
                 return true;
             }
-            
+
             if (a == null || b == null)
             {
                 return false;
@@ -83,7 +83,7 @@ namespace MS.Internal
             }
 
             string uriAsString = uri.ToString();
-            if(uriAsString == null)
+            if (uriAsString == null)
             {
                 return _nullHashcode;
             }

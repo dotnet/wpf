@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,9 +15,8 @@
 
 using System.Windows;
 using System.Windows.Documents;
-using MS.Internal.Text;
-
 using MS.Internal.PtsHost.UnsafeNativeMethods;
+using MS.Internal.Text;
 
 namespace MS.Internal.PtsHost
 {
@@ -91,7 +90,7 @@ namespace MS.Internal.PtsHost
             // to HandleMapper that holds a reference to it. PTS manages lifetime of this object, and 
             // calls DestroyParaclient to get rid of it. DestroyParaclient will call Dispose() on the object
             // and remove it from HandleMapper.
-            FigureParaClient paraClient =  new FigureParaClient(this);
+            FigureParaClient paraClient = new FigureParaClient(this);
             paraClientHandle = paraClient.Handle;
 #pragma warning restore 6518
 
@@ -138,16 +137,16 @@ namespace MS.Internal.PtsHost
             // If width on figure is specified, use the specified value.
             // Border and padding of the figure is extracted from available subpage width.
             // We use StructuralCache.CurrentFormatContext's page dimensions as limiting values for figure MBP
-            mbp = MbpInfo.FromElement(Element, StructuralCache.TextFormatterHost.PixelsPerDip);            
+            mbp = MbpInfo.FromElement(Element, StructuralCache.TextFormatterHost.PixelsPerDip);
             // We do not mirror margin as it's used to dist text left and right, and is unnecessary.
 
             durDistTextLeft = durDistTextRight = dvrDistTextTop = dvrDistTextBottom = 0;
-            
+
             // Calculate specified width. IsAuto flag is needed because Auto is formatted the same way as column and will
             // not return Double.NaN.
             bool isWidthAuto;
-            double specifiedWidth = FigureHelper.CalculateFigureWidth(StructuralCache, element, 
-                                                                      element.Width, 
+            double specifiedWidth = FigureHelper.CalculateFigureWidth(StructuralCache, element,
+                                                                      element.Width,
                                                                       out isWidthAuto);
 
 
@@ -156,7 +155,7 @@ namespace MS.Internal.PtsHost
 
             // Calculate figure height, IsAuto flag is used as specifiedHeight will never be NaN.
             bool isHeightAuto;
-            double specifiedHeight = FigureHelper.CalculateFigureHeight(StructuralCache, element, 
+            double specifiedHeight = FigureHelper.CalculateFigureHeight(StructuralCache, element,
                                                                         element.Height,
                                                                         out isHeightAuto);
 
@@ -175,13 +174,13 @@ namespace MS.Internal.PtsHost
                 IntPtr brParaOut;
                 PTS.FSRECT marginRect = new PTS.FSRECT(0, 0, subpageWidth, subpageHeight);
 
-                CreateSubpageFiniteHelper(PtsContext, IntPtr.Zero, PTS.False, _mainTextSegment.Handle, IntPtr.Zero, PTS.False, PTS.True, 
+                CreateSubpageFiniteHelper(PtsContext, IntPtr.Zero, PTS.False, _mainTextSegment.Handle, IntPtr.Zero, PTS.False, PTS.True,
                     fswdir, subpageWidth, subpageHeight, ref marginRect,
-                    cColumns, columnInfoCollection, PTS.False, 
-                    out fsfmtr, out pfsFigureContent, out brParaOut, out dvr, out fsbbox, out pmcsclientOut, 
+                    cColumns, columnInfoCollection, PTS.False,
+                    out fsfmtr, out pfsFigureContent, out brParaOut, out dvr, out fsbbox, out pmcsclientOut,
                     out dvrTopSpace);
 
-                if(brParaOut != IntPtr.Zero)
+                if (brParaOut != IntPtr.Zero)
                 {
                     PTS.Validate(PTS.FsDestroySubpageBreakRecord(PtsContext.Context, brParaOut));
                 }
@@ -192,7 +191,7 @@ namespace MS.Internal.PtsHost
             // necessary. It means that if the width of bounding box is smaller than subpage's
             // width, second formatting is performed.
 
-            if(PTS.ToBoolean(fsbbox.fDefined))
+            if (PTS.ToBoolean(fsbbox.fDefined))
             {
                 if (fsbbox.fsrc.du < subpageWidth && isWidthAuto)
                 {
@@ -218,13 +217,13 @@ namespace MS.Internal.PtsHost
                     IntPtr brParaOut;
                     PTS.FSRECT marginRect = new PTS.FSRECT(0, 0, subpageWidth, subpageHeight);
 
-                    CreateSubpageFiniteHelper(PtsContext, IntPtr.Zero, PTS.False, _mainTextSegment.Handle, IntPtr.Zero, PTS.False, PTS.True, 
+                    CreateSubpageFiniteHelper(PtsContext, IntPtr.Zero, PTS.False, _mainTextSegment.Handle, IntPtr.Zero, PTS.False, PTS.True,
                         fswdir, subpageWidth, subpageHeight, ref marginRect,
-                        cColumns, columnInfoCollection, PTS.False, 
-                        out fsfmtr, out pfsFigureContent, out brParaOut, out dvr, out fsbbox, out pmcsclientOut, 
+                        cColumns, columnInfoCollection, PTS.False,
+                        out fsfmtr, out pfsFigureContent, out brParaOut, out dvr, out fsbbox, out pmcsclientOut,
                         out dvrTopSpace);
 
-                    if(brParaOut != IntPtr.Zero)
+                    if (brParaOut != IntPtr.Zero)
                     {
                         PTS.Validate(PTS.FsDestroySubpageBreakRecord(PtsContext.Context, brParaOut));
                     }
@@ -251,8 +250,8 @@ namespace MS.Internal.PtsHost
             }
 
             dvr += mbp.MBPTop + mbp.MBPBottom;
-            if(!isHeightAuto)
-            { 
+            if (!isHeightAuto)
+            {
                 // Replace height with explicit height if specified, adding margins in addition to height 
                 // Border and padding are included in specified height but margins are external
                 dvr = TextDpi.ToTextDpi(anchorLimitedHeight) + mbp.MarginTop + mbp.MarginBottom;
@@ -282,7 +281,7 @@ namespace MS.Internal.PtsHost
             }
 
             // Always wrap text on both sides of the floater.
-            fsfigprops.fskwrap       = PTS.WrapDirectionToFskwrap(element.WrapDirection);
+            fsfigprops.fskwrap = PTS.WrapDirectionToFskwrap(element.WrapDirection);
             fsfigprops.fNonTextPlane = PTS.False;
             fsfigprops.fAllowOverlap = PTS.False;
             fsfigprops.fDelayable = PTS.FromBoolean(element.CanDelayPlacement);
@@ -340,9 +339,9 @@ namespace MS.Internal.PtsHost
 
             fsrcSearch = CalculateSearchArea(horizAnchor, vertAnchor, ref fsrcPage, ref fsrcMargin, ref fsrcTrack, ref fsrcFigurePreliminary);
 
-            if(vertAnchor == FigureVerticalAnchor.ParagraphTop && 
+            if (vertAnchor == FigureVerticalAnchor.ParagraphTop &&
                fsrcFigurePreliminary.v != fsrcMargin.v && // If we're not at the top of the column
-               ( (fsrcFigurePreliminary.v + fsrcFigurePreliminary.dv) > (fsrcTrack.v + fsrcTrack.dv) ) && // And we exceed column height
+               ((fsrcFigurePreliminary.v + fsrcFigurePreliminary.dv) > (fsrcTrack.v + fsrcTrack.dv)) && // And we exceed column height
                !PTS.ToBoolean(fMustPosition)) // Can delay placement is handled by figure properties.
             {
                 fPushToNextTrack = PTS.True;
@@ -357,11 +356,11 @@ namespace MS.Internal.PtsHost
 
             fsrcFlow = fsrcFigurePreliminary;
 
-            if(FigureHelper.IsHorizontalColumnAnchor(horizAnchor))
+            if (FigureHelper.IsHorizontalColumnAnchor(horizAnchor))
             {
                 fsrcFlow.u += CalculateParagraphToColumnOffset(horizAnchor, fsrcFigurePreliminary);
             }
-            
+
             // Apply horizontal and vertical offsets. Offsets are limited by page height and width
             fsrcFlow.u += TextDpi.ToTextDpi(element.HorizontalOffset);
             fsrcFlow.v += TextDpi.ToTextDpi(element.VerticalOffset);
@@ -372,7 +371,7 @@ namespace MS.Internal.PtsHost
 
             /* If we're anchored to column/content left or right, inflate our overlap width to prevent from aligning two figures right next to one another
             by incorporating column gap information */
-            if(!FigureHelper.IsHorizontalPageAnchor(horizAnchor) && 
+            if (!FigureHelper.IsHorizontalPageAnchor(horizAnchor) &&
                horizAnchor != FigureHorizontalAnchor.ColumnCenter &&
                horizAnchor != FigureHorizontalAnchor.ContentCenter)
             {
@@ -389,7 +388,7 @@ namespace MS.Internal.PtsHost
 
                 fsrcOverlap.du = duRoundedToNearestColumn; // Round overlap rect to nearest column
 
-                if(horizAnchor == FigureHorizontalAnchor.ContentRight || 
+                if (horizAnchor == FigureHorizontalAnchor.ContentRight ||
                    horizAnchor == FigureHorizontalAnchor.ColumnRight)
                 {
                     fsrcOverlap.u = (fsrcFlow.u + fsrcFlow.du + duGapWidth) - fsrcOverlap.du;
@@ -401,11 +400,13 @@ namespace MS.Internal.PtsHost
             }
 
             // Bounding box is equal to actual size of the figure.
-            fsbbox = new PTS.FSBBOX();
-            fsbbox.fDefined = PTS.True;
-            fsbbox.fsrc = fsrcFlow;
+            fsbbox = new PTS.FSBBOX
+            {
+                fDefined = PTS.True,
+                fsrc = fsrcFlow
+            };
         }
-        
+
         #endregion PTS callbacks
 
 
@@ -443,7 +444,7 @@ namespace MS.Internal.PtsHost
             }
             return (_mainTextSegment == null);
         }
-        
+
         // ------------------------------------------------------------------
         // Invalidate accumulated format caches.
         // ------------------------------------------------------------------
@@ -505,8 +506,8 @@ namespace MS.Internal.PtsHost
         {
             // Exceptions don't need to pop, as the top level measure context will be nulled out if thrown.
             StructuralCache.CurrentFormatContext.PushNewPageData(new Size(TextDpi.FromTextDpi(lWidth), TextDpi.FromTextDpi(lHeight)),
-                                                                 new Thickness(), 
-                                                                 false, 
+                                                                 new Thickness(),
+                                                                 false,
                                                                  true);
 
             fixed (PTS.FSCOLUMNINFO* rgColumnInfo = columnInfoCollection)
@@ -514,8 +515,8 @@ namespace MS.Internal.PtsHost
                 PTS.Validate(PTS.FsCreateSubpageFinite(ptsContext.Context, brParaIn, fFromPreviousPage, nSeg,
                     pFtnRej, fEmptyOk, fSuppressTopSpace, fswdir, lWidth, lHeight,
                     ref rcMargin, cColumns, rgColumnInfo, PTS.False,
-                    0, null, null, 0, null, null, PTS.False, 
-                    PTS.FSKSUPPRESSHARDBREAKBEFOREFIRSTPARA.fsksuppresshardbreakbeforefirstparaNone, 
+                    0, null, null, 0, null, null, PTS.False,
+                    PTS.FSKSUPPRESSHARDBREAKBEFOREFIRSTPARA.fsksuppresshardbreakbeforefirstparaNone,
                     out fsfmtr, out pSubPage, out brParaOut, out dvrUsed, out fsBBox, out pfsMcsClient, out topSpace), ptsContext);
             }
 
@@ -533,11 +534,11 @@ namespace MS.Internal.PtsHost
 
             // Depending on anchoring, only the anchored edge (center) is guaranteed to be inside of the column, so finding affected column 
             // requires us to compare against the anchored edge U position.
-            if(horizontalAnchor == FigureHorizontalAnchor.ColumnLeft)
+            if (horizontalAnchor == FigureHorizontalAnchor.ColumnLeft)
             {
                 uComparisonPoint = fsrcInColumn.u;
-            } 
-            else if(horizontalAnchor == FigureHorizontalAnchor.ColumnRight)
+            }
+            else if (horizontalAnchor == FigureHorizontalAnchor.ColumnRight)
             {
                 uComparisonPoint = fsrcInColumn.u + fsrcInColumn.du - 1; // du is non-inclusive
             }
@@ -562,11 +563,11 @@ namespace MS.Internal.PtsHost
             int totalMarginLeft = columnLeft - fsrcInColumn.u;
             int totalMarginRight = (columnLeft + columnDU) - (fsrcInColumn.u + fsrcInColumn.du);
 
-            if(horizontalAnchor == FigureHorizontalAnchor.ColumnLeft)
+            if (horizontalAnchor == FigureHorizontalAnchor.ColumnLeft)
             {
                 return totalMarginLeft;
             }
-            else if(horizontalAnchor == FigureHorizontalAnchor.ColumnRight)
+            else if (horizontalAnchor == FigureHorizontalAnchor.ColumnRight)
             {
                 return totalMarginRight;
             }
@@ -587,11 +588,11 @@ namespace MS.Internal.PtsHost
 
             double maxTotalWidth = 0.0;
             // Value is in pixels. Now we limit value to max out depending on anchoring.
-            if(FigureHelper.IsHorizontalPageAnchor(horizAnchor))
+            if (FigureHelper.IsHorizontalPageAnchor(horizAnchor))
             {
                 maxTotalWidth = StructuralCache.CurrentFormatContext.PageWidth;
             }
-            else if(FigureHelper.IsHorizontalContentAnchor(horizAnchor))
+            else if (FigureHelper.IsHorizontalContentAnchor(horizAnchor))
             {
                 Thickness pageMargin = StructuralCache.CurrentFormatContext.PageMargin;
                 maxTotalWidth = StructuralCache.CurrentFormatContext.PageWidth - pageMargin.Left - pageMargin.Right;
@@ -605,8 +606,8 @@ namespace MS.Internal.PtsHost
 
                 maxTotalWidth = columnWidth;
             }
-           
-            if((width + elementMarginWidth) > maxTotalWidth)
+
+            if ((width + elementMarginWidth) > maxTotalWidth)
             {
                 width = Math.Max(TextDpi.MinWidth, maxTotalWidth - elementMarginWidth);
             }
@@ -625,7 +626,7 @@ namespace MS.Internal.PtsHost
 
             double maxTotalHeight = 0.0;
             // Value is in pixels. Now we limit value to max out depending on anchoring.
-            if(FigureHelper.IsVerticalPageAnchor(vertAnchor))
+            if (FigureHelper.IsVerticalPageAnchor(vertAnchor))
             {
                 maxTotalHeight = StructuralCache.CurrentFormatContext.PageHeight;
             }
@@ -635,7 +636,7 @@ namespace MS.Internal.PtsHost
                 maxTotalHeight = StructuralCache.CurrentFormatContext.PageHeight - pageMargin.Top - pageMargin.Bottom;
             }
 
-            if((height + elementMarginHeight) > maxTotalHeight)
+            if ((height + elementMarginHeight) > maxTotalHeight)
             {
                 height = Math.Max(TextDpi.MinWidth, maxTotalHeight - elementMarginHeight);
             }
@@ -651,12 +652,12 @@ namespace MS.Internal.PtsHost
         {
             PTS.FSRECT fsrcSearch;
 
-            if(FigureHelper.IsHorizontalPageAnchor(horizAnchor))
+            if (FigureHelper.IsHorizontalPageAnchor(horizAnchor))
             {
                 fsrcSearch.u = fsrcPage.u;
                 fsrcSearch.du = fsrcPage.du;
             }
-            else if(FigureHelper.IsHorizontalContentAnchor(horizAnchor))
+            else if (FigureHelper.IsHorizontalContentAnchor(horizAnchor))
             {
                 fsrcSearch.u = fsrcMargin.u;
                 fsrcSearch.du = fsrcMargin.du;
@@ -667,12 +668,12 @@ namespace MS.Internal.PtsHost
                 fsrcSearch.du = fsrcTrack.du;
             }
 
-            if(FigureHelper.IsVerticalPageAnchor(vertAnchor))
+            if (FigureHelper.IsVerticalPageAnchor(vertAnchor))
             {
                 fsrcSearch.v = fsrcPage.v;
                 fsrcSearch.dv = fsrcPage.dv;
             }
-            else if(FigureHelper.IsVerticalContentAnchor(vertAnchor))
+            else if (FigureHelper.IsVerticalContentAnchor(vertAnchor))
             {
                 fsrcSearch.v = fsrcMargin.v;
                 fsrcSearch.dv = fsrcMargin.dv;

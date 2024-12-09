@@ -1,9 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal;
-using MS.Internal.PrintWin32Thunk;
 using System.Collections;
 using System.IO;
 using System.IO.Packaging;
@@ -15,6 +13,8 @@ using System.Text;
 using System.Windows.Xps.Serialization;
 using System.Windows.Xps.Serialization.RCW;
 using System.Xml;
+using MS.Internal;
+using MS.Internal.PrintWin32Thunk;
 
 namespace System.Windows.Xps.Packaging
 {
@@ -72,7 +72,7 @@ namespace System.Windows.Xps.Packaging
                         ((PrintQueue)_printQueue).XpsOMPackageWriter = _currentFixedDocumentSequenceWriter;
                     }
                 }
-                catch(COMException)
+                catch (COMException)
                 {
                     Invalidate();
                     throw new PrintingCanceledException();
@@ -374,7 +374,7 @@ namespace System.Windows.Xps.Packaging
         {
             _currentResourceXmlWriter.Flush();
             _currentPageContentXmlWriter.Flush();
-            
+
             if (_currentResourceStream.ToString().Length > 0)
             {
                 _currentFixedPageXmlWriter.WriteStartElement(XpsS0Markup.PageResources);
@@ -439,7 +439,7 @@ namespace System.Windows.Xps.Packaging
             )
         {
             XpsResourceStream resourceStream = null;
-            
+
             ResourceStreamCacheItem resourceStreamCacheItem = (ResourceStreamCacheItem)_fontsCache[resourceId];
 
             if (resourceStreamCacheItem == null)
@@ -501,7 +501,7 @@ namespace System.Windows.Xps.Packaging
         void
         ReleaseResourceStreamForXpsFont()
         {
-            throw new NotImplementedException(); 
+            throw new NotImplementedException();
         }
 
         public
@@ -609,7 +609,7 @@ namespace System.Windows.Xps.Packaging
                 _currentXpsImageRef > 0)
             {
                 _currentXpsImageRef--;
-                if(_currentXpsImageRef == 0)
+                if (_currentXpsImageRef == 0)
                 {
                     _imageResourceStream.Stream.Dispose();
                     _imageResourceStream = null;
@@ -626,7 +626,7 @@ namespace System.Windows.Xps.Packaging
         {
             XpsResourceStream resourceStream = null;
 
-            if(_currentXpsColorContextRef == 0)
+            if (_currentXpsColorContextRef == 0)
             {
                 try
                 {
@@ -710,7 +710,7 @@ namespace System.Windows.Xps.Packaging
         Uri
         CurrentFixedPageUri
         {
-            get { return _currentFixedPageUri;  }
+            get { return _currentFixedPageUri; }
         }
 
         #endregion
@@ -836,7 +836,7 @@ namespace System.Windows.Xps.Packaging
             return printTicketResource;
         }
 
-        private 
+        private
         XPS_IMAGE_TYPE
         GetXpsImageTypeFromContentType(
             ContentType contentType
@@ -893,7 +893,7 @@ namespace System.Windows.Xps.Packaging
                 while (_discardableResourceParts.GetCount() > 0)
                 {
                     _discardableResourceParts.RemoveAt(0);
-                }               
+                }
             }
             catch (COMException)
             {
@@ -926,7 +926,7 @@ namespace System.Windows.Xps.Packaging
                 Invalidate();
                 throw new PrintingCanceledException();
             }
-            
+
         }
 
         #endregion
@@ -984,7 +984,7 @@ namespace System.Windows.Xps.Packaging
         private bool _isValid;
 
         private object _printQueue;
-        
+
         #endregion
 
 

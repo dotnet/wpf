@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,7 +21,7 @@ namespace System.Windows.Xps.Serialization
                             IDisposable
     {
         #region Constructor
-    
+
         /// <summary>
         /// Constructor for class ReachSerializer
         /// </summary>
@@ -31,12 +31,12 @@ namespace System.Windows.Xps.Serialization
         /// </param>
         public
         ReachSerializer(
-            PackageSerializationManager   manager
+            PackageSerializationManager manager
             )
         {
             ArgumentNullException.ThrowIfNull(manager);
             _serializationManager = manager;
-            _xmlWriter            = null;
+            _xmlWriter = null;
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace System.Windows.Xps.Serialization
             )
         {
             _serializationManager = null;
-            _xmlWriter            = null;
+            _xmlWriter = null;
         }
 
         #endregion Constructor
@@ -80,7 +80,7 @@ namespace System.Windows.Xps.Serialization
             SerializableObjectContext serializableObjectContext = DiscoverObjectData(serializedObject,
                                                                                      null);
 
-            if(serializableObjectContext!=null)
+            if (serializableObjectContext != null)
             {
                 //
                 // Push the object at hand on the context stack
@@ -106,8 +106,8 @@ namespace System.Windows.Xps.Serialization
         }
 
         #endregion Public Methods
-        
-        
+
+
         #region Internal Methods
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace System.Windows.Xps.Serialization
             SerializableObjectContext serializableObjectContext = DiscoverObjectData(serializedProperty.Value,
                                                                                      serializedProperty);
 
-            if(serializableObjectContext!=null)
+            if (serializableObjectContext != null)
             {
                 //
                 // Push the object at hand on the context stack
@@ -178,7 +178,7 @@ namespace System.Windows.Xps.Serialization
         abstract
         void
         PersistObjectData(
-            SerializableObjectContext   serializableObjectContext
+            SerializableObjectContext serializableObjectContext
             );
 
 
@@ -203,12 +203,12 @@ namespace System.Windows.Xps.Serialization
         virtual
         void
         SerializeObjectCore(
-            SerializableObjectContext   serializableObjectContext
+            SerializableObjectContext serializableObjectContext
             )
         {
             ArgumentNullException.ThrowIfNull(serializableObjectContext);
 
-            if (!serializableObjectContext.IsReadOnlyValue && 
+            if (!serializableObjectContext.IsReadOnlyValue &&
                 serializableObjectContext.IsComplexValue)
             {
                 SerializeProperties(serializableObjectContext);
@@ -233,7 +233,7 @@ namespace System.Windows.Xps.Serialization
         }
 
         #endregion Internal Methods
-        
+
         #region Private Methods
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace System.Windows.Xps.Serialization
         private
         SerializableObjectContext
         DiscoverObjectData(
-            Object                      serializedObject,
+            Object serializedObject,
             SerializablePropertyContext serializedProperty
             )
         {
@@ -262,22 +262,22 @@ namespace System.Windows.Xps.Serialization
             // the same node previously pushed on the stack or in other words it is
             // the node that is currently on the top of the stack
             //
-            SerializableObjectContext 
+            SerializableObjectContext
             serializableObjectParentContext = (SerializableObjectContext)SerializationManager.
                                               GraphContextStack[typeof(SerializableObjectContext)];
             //
             // Create the context for the current object
             //
-            SerializableObjectContext serializableObjectContext = 
-            SerializableObjectContext.CreateContext(SerializationManager, 
-                                                    serializedObject, 
+            SerializableObjectContext serializableObjectContext =
+            SerializableObjectContext.CreateContext(SerializationManager,
+                                                    serializedObject,
                                                     serializableObjectParentContext,
                                                     serializedProperty);
 
             //
             // Set the root object to be serialized at the level of the SerializationManager
             //
-            if(SerializationManager.RootSerializableObjectContext == null)
+            if (SerializationManager.RootSerializableObjectContext == null)
             {
                 SerializationManager.RootSerializableObjectContext = serializableObjectContext;
             }
@@ -291,22 +291,22 @@ namespace System.Windows.Xps.Serialization
         private
         void
         SerializeProperties(
-            SerializableObjectContext   serializableObjectContext
+            SerializableObjectContext serializableObjectContext
             )
         {
             ArgumentNullException.ThrowIfNull(serializableObjectContext);
 
             SerializablePropertyCollection propertyCollection = serializableObjectContext.PropertiesCollection;
 
-            if(propertyCollection!=null)
+            if (propertyCollection != null)
             {
-                for(propertyCollection.Reset();
+                for (propertyCollection.Reset();
                     propertyCollection.MoveNext();)
                 {
-                    SerializablePropertyContext serializablePropertyContext = 
+                    SerializablePropertyContext serializablePropertyContext =
                     (SerializablePropertyContext)propertyCollection.Current;
 
-                    if(serializablePropertyContext!=null)
+                    if (serializablePropertyContext != null)
                     {
                         SerializeProperty(serializablePropertyContext);
                     }
@@ -343,7 +343,7 @@ namespace System.Windows.Xps.Serialization
                 ReachSerializer serializer = SerializationManager.GetSerializer(serializablePropertyContext.Value);
 
                 // If there is no serializer for this type, we won't serialize this property
-                if(serializer!=null)
+                if (serializer != null)
                 {
                     serializer.SerializeObject(serializablePropertyContext);
                 }
@@ -351,7 +351,7 @@ namespace System.Windows.Xps.Serialization
         }
 
         #endregion Private Methods
-        
+
         #region Public Properties
 
         /// <summary>
@@ -388,11 +388,11 @@ namespace System.Windows.Xps.Serialization
         }
 
         #endregion Public Properties
-        
+
 
         #region IDisposable implementation
-        
-        void 
+
+        void
         IDisposable.Dispose()
         {
             GC.SuppressFinalize(this);
@@ -403,11 +403,11 @@ namespace System.Windows.Xps.Serialization
         #region Private Data members
 
         private
-        PackageSerializationManager   _serializationManager;
+        PackageSerializationManager _serializationManager;
 
-        private 
-        XmlWriter                   _xmlWriter;
-        
+        private
+        XmlWriter _xmlWriter;
+
         #endregion Private Data members
     };
 }

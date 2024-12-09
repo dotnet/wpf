@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,8 +7,8 @@
 //
 
 
-using MS.Internal;
 using System.Windows.Media;
+using MS.Internal;
 
 namespace System.Windows.Controls
 {
@@ -20,13 +20,13 @@ namespace System.Windows.Controls
     /// </summary>
     internal struct SettableState<T>
     {
-        internal    T       _value;
-        internal    bool    _isSet;
-        internal    bool    _wasSet;
+        internal T _value;
+        internal bool _isSet;
+        internal bool _wasSet;
 
         internal
         SettableState(
-            T   value
+            T value
             )
         {
             _value = value;
@@ -144,7 +144,7 @@ namespace System.Windows.Controls
         internal
         void
         SetUnloadedBehavior(
-            MediaState      unloadedBehavior
+            MediaState unloadedBehavior
             )
         {
             _unloadedBehavior = unloadedBehavior;
@@ -160,7 +160,7 @@ namespace System.Windows.Controls
         internal
         void
         SetLoadedBehavior(
-            MediaState      loadedBehavior
+            MediaState loadedBehavior
             )
         {
             _loadedBehavior = loadedBehavior;
@@ -197,7 +197,7 @@ namespace System.Windows.Controls
         internal
         void
         SetPosition(
-            TimeSpan        position
+            TimeSpan position
             )
         {
             _position._isSet = true;
@@ -223,7 +223,7 @@ namespace System.Windows.Controls
         internal
         void
         SetClock(
-            MediaClock      clock
+            MediaClock clock
             )
         {
             _clock._value = clock;
@@ -248,7 +248,7 @@ namespace System.Windows.Controls
         internal
         void
         SetSpeedRatio(
-            double          speedRatio
+            double speedRatio
             )
         {
             _speedRatio._wasSet = _speedRatio._isSet = true;
@@ -260,7 +260,7 @@ namespace System.Windows.Controls
         internal
         void
         SetState(
-            MediaState      mediaState
+            MediaState mediaState
             )
         {
             //
@@ -281,7 +281,7 @@ namespace System.Windows.Controls
         internal
         void
         SetVolume(
-            double          volume
+            double volume
             )
         {
             _volume._wasSet = _volume._isSet = true;
@@ -293,7 +293,7 @@ namespace System.Windows.Controls
         internal
         void
         SetBalance(
-            double          balance
+            double balance
             )
         {
             _balance._wasSet = _balance._isSet = true;
@@ -305,7 +305,7 @@ namespace System.Windows.Controls
         internal
         void
         SetIsMuted(
-            bool            isMuted
+            bool isMuted
             )
         {
             _isMuted._wasSet = _isMuted._isSet = true;
@@ -317,7 +317,7 @@ namespace System.Windows.Controls
         internal
         void
         SetScrubbingEnabled(
-            bool            isScrubbingEnabled
+            bool isScrubbingEnabled
             )
         {
             _isScrubbingEnabled._wasSet = _isScrubbingEnabled._isSet = true;
@@ -364,9 +364,9 @@ namespace System.Windows.Controls
             // First, just assume that our requested actions are going to be
             // the same as the media requested actions.
             //
-            MediaState  thisStateRequest = _mediaState._value;
-            bool        openClock = false;
-            bool        actionRequested = false;
+            MediaState thisStateRequest = _mediaState._value;
+            bool openClock = false;
+            bool actionRequested = false;
 
             //
             // If the element is loaded
@@ -442,13 +442,13 @@ namespace System.Windows.Controls
                 }
             }
 
-            bool    openedMedia = false;
+            bool openedMedia = false;
 
             //
             // If the media state is anything other than close
             // and the current state is closed, the media needs to be opened.
             //
-            if (      thisStateRequest != MediaState.Close
+            if (thisStateRequest != MediaState.Close
                    && thisStateRequest != MediaState.Manual)
             {
                 //
@@ -623,29 +623,29 @@ namespace System.Windows.Controls
                 // requested action. Also, we want to mirror each call
                 // to Play, Pause and Stop down to the underlying player.
                 //
-                else if (   _currentState != thisStateRequest
+                else if (_currentState != thisStateRequest
                          || (actionRequested && _mediaState._isSet))
                 {
-                    switch(thisStateRequest)
+                    switch (thisStateRequest)
                     {
-                    case MediaState.Play:
-                        _mediaPlayer.Play();
-                        break;
+                        case MediaState.Play:
+                            _mediaPlayer.Play();
+                            break;
 
-                    case MediaState.Pause:
-                        _mediaPlayer.Pause();
-                        break;
+                        case MediaState.Pause:
+                            _mediaPlayer.Pause();
+                            break;
 
-                    case MediaState.Stop:
-                        _mediaPlayer.Stop();
-                        break;
+                        case MediaState.Stop:
+                            _mediaPlayer.Stop();
+                            break;
 
-                    case MediaState.Manual:
-                        break;
+                        case MediaState.Manual:
+                            break;
 
-                    default:
-                        Invariant.Assert(false, "Unexpected state request.");
-                        break;
+                        default:
+                            Invariant.Assert(false, "Unexpected state request.");
+                            break;
                     }
 
                     //
@@ -679,7 +679,7 @@ namespace System.Windows.Controls
         private
         Uri
         UriFromSourceUri(
-            Uri     sourceUri
+            Uri sourceUri
             )
         {
             if (sourceUri != null)
@@ -763,7 +763,7 @@ namespace System.Windows.Controls
         private
         void
         OnBufferingStarted(
-            object  sender,
+            object sender,
             EventArgs args
             )
         {
@@ -773,8 +773,8 @@ namespace System.Windows.Controls
         private
         void
         OnBufferingEnded(
-            object      sender,
-            EventArgs   args
+            object sender,
+            EventArgs args
             )
         {
             _element.OnBufferingEnded(sender, args);
@@ -783,8 +783,8 @@ namespace System.Windows.Controls
         private
         void
         OnMediaEnded(
-            object      sender,
-            EventArgs   args
+            object sender,
+            EventArgs args
             )
         {
             _element.OnMediaEnded(sender, args);
@@ -793,8 +793,8 @@ namespace System.Windows.Controls
         private
         void
         OnScriptCommand(
-            object                          sender,
-            MediaScriptCommandEventArgs     args
+            object sender,
+            MediaScriptCommandEventArgs args
             )
         {
             _element.OnScriptCommand(sender, args);
@@ -803,8 +803,8 @@ namespace System.Windows.Controls
         private
         void
         OnLoaded(
-            object                          sender,
-            RoutedEventArgs                 args
+            object sender,
+            RoutedEventArgs args
             )
         {
             _isLoaded = true;
@@ -815,11 +815,11 @@ namespace System.Windows.Controls
         private
         void
         OnUnloaded(
-            object                          sender,
-            RoutedEventArgs                 args
+            object sender,
+            RoutedEventArgs args
             )
         {
-           _isLoaded = false;
+            _isLoaded = false;
 
             HandleStateChange();
         }
@@ -840,26 +840,26 @@ namespace System.Windows.Controls
 
         private Uri _baseUri;
 
-        private MediaState  _unloadedBehavior = MediaState.Close;
-        private MediaState  _loadedBehavior = MediaState.Play;
+        private MediaState _unloadedBehavior = MediaState.Close;
+        private MediaState _loadedBehavior = MediaState.Play;
 
-        private MediaState    _currentState = MediaState.Close;
+        private MediaState _currentState = MediaState.Close;
 
-        private bool          _isLoaded = false;
+        private bool _isLoaded = false;
 
         //
         // The requested state, we need to know for each one whether it
         // was ever set and for
         //
-        SettableState<TimeSpan>     _position;
-        SettableState<MediaState>   _mediaState;
-        SettableState<Uri>          _source;
-        SettableState<MediaClock>   _clock;
-        SettableState<double>       _speedRatio;
-        SettableState<double>       _volume;
-        SettableState<bool>         _isMuted;
-        SettableState<double>       _balance;
-        SettableState<bool>         _isScrubbingEnabled;
+        SettableState<TimeSpan> _position;
+        SettableState<MediaState> _mediaState;
+        SettableState<Uri> _source;
+        SettableState<MediaClock> _clock;
+        SettableState<double> _speedRatio;
+        SettableState<double> _volume;
+        SettableState<bool> _isMuted;
+        SettableState<double> _balance;
+        SettableState<bool> _isScrubbingEnabled;
 
         #endregion
     }

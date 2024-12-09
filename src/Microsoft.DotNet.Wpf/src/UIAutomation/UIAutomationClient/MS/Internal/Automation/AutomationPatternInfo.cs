@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -18,13 +18,13 @@ namespace MS.Internal.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
-        public AutomationPatternInfo( 
+        public AutomationPatternInfo(
             AutomationPattern id,
-            AutomationProperty [ ] properties,
-            WrapObjectClientSide clientSideWrapper )
+            AutomationProperty[] properties,
+            WrapObjectClientSide clientSideWrapper)
         {
             _id = id;
             _properties = properties;
@@ -38,13 +38,13 @@ namespace MS.Internal.Automation
         //  Internal Properties
         //
         //------------------------------------------------------
- 
+
         #region Internal Properties
 
-        internal AutomationPattern         ID                    { get { return _id; } }
-        internal AutomationProperty [ ]    Properties            { get { return _properties; } }
-        internal WrapObjectClientSide      ClientSideWrapper     { get { return _clientSideWrapper; } }
-        
+        internal AutomationPattern ID { get { return _id; } }
+        internal AutomationProperty[] Properties { get { return _properties; } }
+        internal WrapObjectClientSide ClientSideWrapper { get { return _clientSideWrapper; } }
+
         #endregion Internal Properties
 
 
@@ -53,11 +53,11 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private AutomationPattern _id;
-        private AutomationProperty [ ] _properties;
+        private AutomationProperty[] _properties;
         private WrapObjectClientSide _clientSideWrapper;
 
         #endregion Private Fields

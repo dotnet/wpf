@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal;
-using System.Xml;
-using System.Windows.Markup; // TypeConvertContext, ParserContext
-using System.Windows.Controls;
 using System.Globalization;
+using System.Windows.Controls;
+using System.Windows.Markup; // TypeConvertContext, ParserContext
+using System.Xml;
+using MS.Internal;
 
 //
 // Description: Set of static methods implementing text range serialization
@@ -368,7 +368,8 @@ namespace System.Windows.Documents
                 WriteXamlTextSegment(xmlWriter, textSegment.Start, textSegment.End, xamlTypeMapper, ref elementLevel, wpfPayload, ignoreWriteHyperlinkEnd, ignoreList, preserveTextElements);
 
                 Invariant.Assert(elementLevel >= 4, "At the minimun we expected to stay within four elements: Section(wrapper),Table,TableRowGroup,TableRow");
-                if (checkElementLevel < 0) checkElementLevel = elementLevel; // initialize level checking variable
+                if (checkElementLevel < 0)
+                    checkElementLevel = elementLevel; // initialize level checking variable
                 Invariant.Assert(checkElementLevel == elementLevel, "elementLevel is supposed to be unchanged between segments of table cell range");
 
                 // Assuming that the element is TableRow - close it.
@@ -611,7 +612,7 @@ namespace System.Windows.Documents
 
             Invariant.Assert(startColumn >= 0, "startColumn index is supposed to be non-negative");
 
-            if(columns.Count > 0)
+            if (columns.Count > 0)
             {
                 // Build an appropriate name for the complex property
                 string complexPropertyName = $"{table.GetType().Name}.Columns";
@@ -680,7 +681,7 @@ namespace System.Windows.Documents
             // So alternative solution for whitespace preservation could be setting xml:space="preserve"
             // attribute to only empty runs - this would make our whitespace preservation more
             // narrowed...
-            
+
             // Investigate if this is really worth doing.
             // Currently we wildly preserve all whitespaces in TextRange, which can produce
             // a problem if somebody manually provides this "innocent" xaml (notice newline between paragraphs):
@@ -987,9 +988,9 @@ namespace System.Windows.Documents
                 }
             }
 
-// *** WE NEED TO BETTER UNDERSTAND THE IMPLICATIONS OF SERIALIZING NON-DP CLR PROPERTIES, SO THE REST OF
-// *** THIS METHOD IS DISABLED UNTIL WE DECIDE THE BEST WAY TO HANDLE THEM.
-// *** CLRTypeDescriptorContext is essentially the same as DPTypeDescriptorContext.
+            // *** WE NEED TO BETTER UNDERSTAND THE IMPLICATIONS OF SERIALIZING NON-DP CLR PROPERTIES, SO THE REST OF
+            // *** THIS METHOD IS DISABLED UNTIL WE DECIDE THE BEST WAY TO HANDLE THEM.
+            // *** CLRTypeDescriptorContext is essentially the same as DPTypeDescriptorContext.
 #if false
             // Check all CLR properties
             // Note that this is partially redundant.  TypeDescriptor.GetProperties, when called on a

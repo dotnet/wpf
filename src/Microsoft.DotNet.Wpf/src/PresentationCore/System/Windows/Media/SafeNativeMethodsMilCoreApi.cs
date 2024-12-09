@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,23 +17,23 @@ namespace MS.Win32.PresentationCore
 {
     internal static partial class SafeNativeMethods
     {
-       internal static int MilCompositionEngine_InitializePartitionManager(int nPriority)
-       {
+        internal static int MilCompositionEngine_InitializePartitionManager(int nPriority)
+        {
             return SafeNativeMethodsPrivate.MilCompositionEngine_InitializePartitionManager(nPriority);
-       }
+        }
 
-       internal static int MilCompositionEngine_DeinitializePartitionManager()
-       {
+        internal static int MilCompositionEngine_DeinitializePartitionManager()
+        {
             return SafeNativeMethodsPrivate.MilCompositionEngine_DeinitializePartitionManager();
-       }
+        }
 
-       internal static long GetNextPerfElementId()
-       {
-           return SafeNativeMethodsPrivate.GetNextPerfElementId();
-       }
+        internal static long GetNextPerfElementId()
+        {
+            return SafeNativeMethodsPrivate.GetNextPerfElementId();
+        }
 
-       private static partial class SafeNativeMethodsPrivate
-       {
+        private static partial class SafeNativeMethodsPrivate
+        {
             [DllImport(DllImport.MilCore)]
             internal static extern int MilCompositionEngine_InitializePartitionManager(int nPriority);
 
@@ -42,7 +42,7 @@ namespace MS.Win32.PresentationCore
 
             [DllImport(DllImport.MilCore)]
             internal static extern long GetNextPerfElementId();
-       }
+        }
     }
 }
 

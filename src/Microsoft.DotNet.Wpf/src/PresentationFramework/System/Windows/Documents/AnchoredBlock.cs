@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,8 +11,8 @@
 //
 
 using System.ComponentModel;        // TypeConverter
-using System.Windows.Media;         // Brush
 using System.Windows.Markup; // ContentProperty
+using System.Windows.Media;         // Brush
 
 namespace System.Windows.Documents
 {
@@ -101,7 +101,7 @@ namespace System.Windows.Documents
                         typeof(AnchoredBlock),
                         new FrameworkPropertyMetadata(
                                 new Thickness(Double.NaN),
-                                FrameworkPropertyMetadataOptions.AffectsMeasure)); 
+                                FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         /// <summary>
         /// The Margin property specifies the margin of the element.
@@ -115,9 +115,9 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="Padding" /> property.
         /// </summary>
-        public static readonly DependencyProperty PaddingProperty = 
+        public static readonly DependencyProperty PaddingProperty =
                 Block.PaddingProperty.AddOwner(
-                        typeof(AnchoredBlock), 
+                        typeof(AnchoredBlock),
                         new FrameworkPropertyMetadata(
                                 new Thickness(Double.NaN),
                                 FrameworkPropertyMetadataOptions.AffectsMeasure));
@@ -134,11 +134,11 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="BorderThickness" /> property.
         /// </summary>
-        public static readonly DependencyProperty BorderThicknessProperty = 
+        public static readonly DependencyProperty BorderThicknessProperty =
                 Block.BorderThicknessProperty.AddOwner(
                         typeof(AnchoredBlock),
                         new FrameworkPropertyMetadata(
-                            new Thickness(), 
+                            new Thickness(),
                             FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="BorderBrush" /> property.
         /// </summary>
-        public static readonly DependencyProperty BorderBrushProperty = 
+        public static readonly DependencyProperty BorderBrushProperty =
                 Block.BorderBrushProperty.AddOwner(
                         typeof(AnchoredBlock),
                         new FrameworkPropertyMetadata(
@@ -172,7 +172,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="TextAlignment" /> property.
         /// </summary>
-        public static readonly DependencyProperty TextAlignmentProperty = 
+        public static readonly DependencyProperty TextAlignmentProperty =
                 Block.TextAlignmentProperty.AddOwner(typeof(AnchoredBlock));
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="LineHeight" /> property.
         /// </summary>
-        public static readonly DependencyProperty LineHeightProperty = 
+        public static readonly DependencyProperty LineHeightProperty =
                 Block.LineHeightProperty.AddOwner(typeof(AnchoredBlock));
 
         /// <summary>
@@ -228,7 +228,7 @@ namespace System.Windows.Documents
         {
             return manager != null && manager.XmlWriter == null;
         }
-        
+
         #endregion
 
         //------------------------------------------------------

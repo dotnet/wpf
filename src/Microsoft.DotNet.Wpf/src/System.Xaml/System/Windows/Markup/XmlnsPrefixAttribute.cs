@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -38,7 +38,7 @@ namespace System.Windows.Markup
         public XmlnsPrefixAttribute(string xmlNamespace, string prefix)
         {
             XmlNamespace = xmlNamespace ?? throw new ArgumentNullException(nameof(xmlNamespace));
-            Prefix= prefix ?? throw new ArgumentNullException(nameof(prefix));
+            Prefix = prefix ?? throw new ArgumentNullException(nameof(prefix));
         }
 
         /// <summary>
@@ -50,5 +50,5 @@ namespace System.Windows.Markup
         /// New Xml Namespace
         /// </summary>
         public string Prefix { get; }
-   }
+    }
 }

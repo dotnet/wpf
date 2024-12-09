@@ -1,16 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Windows.Threading;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls.Primitives;
-
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;
 
@@ -112,7 +111,7 @@ namespace System.Windows.Controls
 
         private static object CoerceOrientation(DependencyObject d, object value)
         {
-            ToolBarTray toolBarTray = ((ToolBar) d).ToolBarTray;
+            ToolBarTray toolBarTray = ((ToolBar)d).ToolBarTray;
             return (toolBarTray != null) ? toolBarTray.Orientation : value;
         }
 
@@ -123,7 +122,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (Orientation) GetValue(OrientationProperty);
+                return (Orientation)GetValue(OrientationProperty);
             }
         }
         #endregion Orientation
@@ -147,7 +146,7 @@ namespace System.Windows.Controls
         /// <value></value>
         public int Band
         {
-            get { return (int) GetValue(BandProperty); }
+            get { return (int)GetValue(BandProperty); }
             set { SetValue(BandProperty, value); }
         }
         #endregion Band
@@ -171,7 +170,7 @@ namespace System.Windows.Controls
         /// <value></value>
         public int BandIndex
         {
-            get { return (int) GetValue(BandIndexProperty); }
+            get { return (int)GetValue(BandIndexProperty); }
             set { SetValue(BandIndexProperty, value); }
         }
         #endregion BandIndex
@@ -198,7 +197,7 @@ namespace System.Windows.Controls
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public bool IsOverflowOpen
         {
-            get { return (bool) GetValue(IsOverflowOpenProperty); }
+            get { return (bool)GetValue(IsOverflowOpenProperty); }
             set { SetValue(IsOverflowOpenProperty, BooleanBoxes.Box(value)); }
         }
 
@@ -219,7 +218,7 @@ namespace System.Windows.Controls
 
         private static object CoerceToolTipIsEnabled(DependencyObject d, object value)
         {
-            ToolBar tb = (ToolBar) d;
+            ToolBar tb = (ToolBar)d;
             return tb.IsOverflowOpen ? BooleanBoxes.FalseBox : value;
         }
 
@@ -231,7 +230,7 @@ namespace System.Windows.Controls
         private void OpenOnLoad(object sender, RoutedEventArgs e)
         {
             // Open overflow after toolbar has rendered (Loaded is fired before 1st render)
-            Dispatcher.BeginInvoke(DispatcherPriority.Input, new DispatcherOperationCallback(delegate(object param)
+            Dispatcher.BeginInvoke(DispatcherPriority.Input, new DispatcherOperationCallback(delegate (object param)
             {
                 CoerceValue(IsOverflowOpenProperty);
 
@@ -241,9 +240,9 @@ namespace System.Windows.Controls
 
         private static void OnOverflowOpenChanged(DependencyObject element, DependencyPropertyChangedEventArgs e)
         {
-            ToolBar toolBar = (ToolBar) element;
+            ToolBar toolBar = (ToolBar)element;
 
-            if ((bool) e.NewValue)
+            if ((bool)e.NewValue)
             {
                 // When the drop down opens, take capture
                 Mouse.Capture(toolBar, CaptureMode.SubTree);
@@ -269,7 +268,7 @@ namespace System.Windows.Controls
 
         private void SetFocusOnToolBarOverflowPanel()
         {
-            Dispatcher.BeginInvoke(DispatcherPriority.Input, new DispatcherOperationCallback(delegate(object param)
+            Dispatcher.BeginInvoke(DispatcherPriority.Input, new DispatcherOperationCallback(delegate (object param)
             {
                 if (ToolBarOverflowPanel != null)
                 {
@@ -315,7 +314,7 @@ namespace System.Windows.Controls
         /// </summary>
         public bool HasOverflowItems
         {
-            get { return (bool) GetValue(HasOverflowItemsProperty); }
+            get { return (bool)GetValue(HasOverflowItemsProperty); }
         }
         #endregion HasOverflowItems
 
@@ -648,7 +647,7 @@ namespace System.Windows.Controls
                             newFocusElement = VisualTreeHelper.GetChild(itemsHost, 0) as UIElement;
                             break;
                         case Key.End:
-                            newFocusElement = VisualTreeHelper.GetChild(itemsHost, VisualTreeHelper.GetChildrenCount(itemsHost)-1) as UIElement;
+                            newFocusElement = VisualTreeHelper.GetChild(itemsHost, VisualTreeHelper.GetChildrenCount(itemsHost) - 1) as UIElement;
                             break;
                         case Key.Escape:
                             {

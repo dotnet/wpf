@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -412,7 +412,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                #pragma warning suppress 56503
+#pragma warning suppress 56503
                 throw new NotImplementedException();
             }
         }
@@ -454,7 +454,8 @@ namespace System.Windows.Documents
         /// </summary>
         int ITextPointer.MoveByOffset(int offset)
         {
-            if (_isFrozen) throw new InvalidOperationException(SR.TextPositionIsFrozen);
+            if (_isFrozen)
+                throw new InvalidOperationException(SR.TextPositionIsFrozen);
 
             if (DocumentSequenceTextPointer.iScan(this, offset))
             {
@@ -590,7 +591,7 @@ namespace System.Windows.Documents
         //------------------------------------------------------
         //
         //  Public Methods
-         //
+        //
         //------------------------------------------------------
         #region TextPointer Methods
         /// <summary>
@@ -1004,8 +1005,8 @@ namespace System.Windows.Documents
 
                 // Move on to next block
                 ChildDocumentBlock nextBlock = tpScan.ChildBlock.NextBlock;
-                tpScan.ChildBlock       = nextBlock;
-                tpScan.ChildPointer    = nextBlock.ChildContainer.Start;
+                tpScan.ChildBlock = nextBlock;
+                tpScan.ChildPointer = nextBlock.ChildContainer.Start;
             }
             count += tpScan.ChildPointer.GetOffsetToPosition(tp2.ChildPointer);
             return count;
@@ -1052,7 +1053,7 @@ namespace System.Windows.Documents
                         break;
 
                     case TextPointerContext.Text:
-                        int runLength  = childTn.GetTextRunLength(scanDir);
+                        int runLength = childTn.GetTextRunLength(scanDir);
                         int moveLength = runLength < distance ? runLength : distance;
                         distance -= moveLength;
                         //agurcan: Fix for 1098225

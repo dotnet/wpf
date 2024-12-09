@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,9 +11,9 @@
 
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
-using System.Runtime.CompilerServices;
 using System.Globalization;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using MS.Internal;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
@@ -98,7 +98,7 @@ namespace System.Windows
             else if (source is double sourceValue)
                 return new Thickness(sourceValue);
             else
-                return new Thickness(Convert.ToDouble(source, cultureInfo));         
+                return new Thickness(Convert.ToDouble(source, cultureInfo));
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace System.Windows
             };
         }
 
-    #endregion
+        #endregion
 
     }
 }

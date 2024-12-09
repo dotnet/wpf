@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -76,7 +76,7 @@ namespace System.Windows
                 {
                     throw new System.InvalidOperationException(SR.Size_CannotModifyEmptySize);
                 }
-                    
+
                 if (value < 0)
                 {
                     throw new System.ArgumentException(SR.Size_WidthCannotBeNegative);
@@ -101,7 +101,7 @@ namespace System.Windows
                 {
                     throw new System.InvalidOperationException(SR.Size_CannotModifyEmptySize);
                 }
-                    
+
                 if (value < 0)
                 {
                     throw new System.ArgumentException(SR.Size_HeightCannotBeNegative);
@@ -142,19 +142,21 @@ namespace System.Windows
         #endregion Public Operators
 
         #region Private Methods
-            
+
         static private Size CreateEmptySize()
         {
-            Size size = new Size();
-            // We can't set these via the property setters because negatives widths
-            // are rejected in those APIs.
-            size._width = Double.NegativeInfinity;
-            size._height = Double.NegativeInfinity;
+            Size size = new Size
+            {
+                // We can't set these via the property setters because negatives widths
+                // are rejected in those APIs.
+                _width = Double.NegativeInfinity,
+                _height = Double.NegativeInfinity
+            };
             return size;
         }
 
         #endregion Private Methods
-            
+
         #region Private Fields
 
         private readonly static Size s_empty = CreateEmptySize();

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -33,8 +33,8 @@ namespace MS.Internal.ComponentModel
         //  Private Properties
         //
         //------------------------------------------------------
-        
-    
+
+
         // 
         // Returns the static Get method associated with this attached
         // property.  This can return null if the attached property 
@@ -44,7 +44,7 @@ namespace MS.Internal.ComponentModel
         {
             get
             {
-                if (!_getMethodChecked) 
+                if (!_getMethodChecked)
                 {
                     _getMethod = DependencyObjectPropertyDescriptor.GetAttachedPropertyMethod(_dp);
                     _getMethodChecked = true;
@@ -61,12 +61,12 @@ namespace MS.Internal.ComponentModel
         {
             get
             {
-                if (!_attributesChecked) 
+                if (!_attributesChecked)
                 {
                     MethodInfo m = AttachMethod;
                     object[] attributes = null;
 
-                    if (m != null) 
+                    if (m != null)
                     {
                         AttachedPropertyBrowsableAttribute[] browsableAttributes = null;
 
@@ -78,19 +78,19 @@ namespace MS.Internal.ComponentModel
                         // at least one AttachedPropertyBrowsableAttribute.  We require at
                         // least one attribute to consider an attached property.
                         bool seenTypeAttribute = false;
-                        for (int idx = 0; idx < attributes.Length; idx++) 
+                        for (int idx = 0; idx < attributes.Length; idx++)
                         {
-                            if (attributes[idx] is AttachedPropertyBrowsableForTypeAttribute) 
+                            if (attributes[idx] is AttachedPropertyBrowsableForTypeAttribute)
                             {
                                 seenTypeAttribute = true;
                                 break;
                             }
                         }
 
-                        if (!seenTypeAttribute && attributes.Length > 0) 
+                        if (!seenTypeAttribute && attributes.Length > 0)
                         {
                             browsableAttributes = new AttachedPropertyBrowsableAttribute[attributes.Length + 1];
-                            for(int idx = 0; idx < attributes.Length; idx++) 
+                            for (int idx = 0; idx < attributes.Length; idx++)
                             {
                                 browsableAttributes[idx] = (AttachedPropertyBrowsableAttribute)attributes[idx];
                             }
@@ -99,7 +99,7 @@ namespace MS.Internal.ComponentModel
                         else
                         {
                             browsableAttributes = new AttachedPropertyBrowsableAttribute[attributes.Length];
-                            for(int idx = 0; idx < attributes.Length; idx++) 
+                            for (int idx = 0; idx < attributes.Length; idx++)
                             {
                                 browsableAttributes[idx] = (AttachedPropertyBrowsableAttribute)attributes[idx];
                             }
@@ -108,7 +108,7 @@ namespace MS.Internal.ComponentModel
                         // Update the _attributes last, this is how we maintain thread-safety.  There's a slight chance
                         // that this routine will run simultaneously on two threads, but they will produce the same result
                         // anyway.
-                        
+
                         _attributes = browsableAttributes;
                     }
 
@@ -129,11 +129,11 @@ namespace MS.Internal.ComponentModel
         {
             get
             {
-                if (!_paramTypeAttributeChecked) 
+                if (!_paramTypeAttributeChecked)
                 {
                     MethodInfo m = AttachMethod;
 
-                    if (m != null) 
+                    if (m != null)
                     {
                         ParameterInfo[] parameters = m.GetParameters();
                         // The AttachMethod property should have already done the correct
@@ -168,19 +168,19 @@ namespace MS.Internal.ComponentModel
         {
             Debug.Assert(instance != null, "Caller should validate non-null instance before calling CanAttach.");
 
-            if (AttachMethod != null) 
+            if (AttachMethod != null)
             {
                 int numAttrs = 0;
 
                 AttachedPropertyBrowsableAttribute[] attrs = Attributes;
-                if (attrs != null) 
+                if (attrs != null)
                 {
                     numAttrs = attrs.Length;
-                    for(int idx = 0; idx < numAttrs; idx++)
+                    for (int idx = 0; idx < numAttrs; idx++)
                     {
                         AttachedPropertyBrowsableAttribute attr = attrs[idx];
-                    
-                        if (!attr.IsBrowsable(instance, _dp)) 
+
+                        if (!attr.IsBrowsable(instance, _dp))
                         {
                             // The attribute isn't browsable.  If UnionResults is turned on, we must
                             // look for another matching attribute of the same type.  I don't expect
@@ -189,15 +189,15 @@ namespace MS.Internal.ComponentModel
 
                             bool isBrowsable = false;
 
-                            if (attr.UnionResults) 
+                            if (attr.UnionResults)
                             {
                                 Type attrType = attr.GetType();
 
-                                for(int idx2 = 0; idx2 < numAttrs; idx2++)
+                                for (int idx2 = 0; idx2 < numAttrs; idx2++)
                                 {
                                     AttachedPropertyBrowsableAttribute subAttr = attrs[idx2];
-                                
-                                    if (attrType == subAttr.GetType() && subAttr.IsBrowsable(instance, _dp)) 
+
+                                    if (attrType == subAttr.GetType() && subAttr.IsBrowsable(instance, _dp))
                                     {
                                         isBrowsable = true;
                                         break;
@@ -205,7 +205,7 @@ namespace MS.Internal.ComponentModel
                                 }
                             }
 
-                            if (!isBrowsable) 
+                            if (!isBrowsable)
                             {
                                 return false;
                             }

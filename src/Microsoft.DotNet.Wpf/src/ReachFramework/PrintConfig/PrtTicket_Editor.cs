@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,8 +13,8 @@ Abstract:
 
 --*/
 
-using System.Xml;
 using System.Globalization;
+using System.Xml;
 
 namespace MS.Internal.Printing.Configuration
 {
@@ -22,7 +22,7 @@ namespace MS.Internal.Printing.Configuration
     {
         #region Constructors
 
-        private PrintTicketEditor() {}
+        private PrintTicketEditor() { }
 
         #endregion Constructors
 
@@ -410,7 +410,7 @@ namespace MS.Internal.Printing.Configuration
     {
         #region Constructors
 
-        private XmlDocQName() {}
+        private XmlDocQName() { }
 
         #endregion Constructors
 
@@ -433,7 +433,7 @@ namespace MS.Internal.Printing.Configuration
         {
             int colonIndex = QName.IndexOf(":", StringComparison.Ordinal);
 
-            string localName =QName.Substring(colonIndex + 1);
+            string localName = QName.Substring(colonIndex + 1);
 
             return localName;
         }

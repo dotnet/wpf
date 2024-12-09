@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -75,7 +75,7 @@ namespace System.Windows.Documents
             // Instead we reposition elements around the two paragraphs.
             while (secondParagraphOrBlockUIContainer.ElementStart.GetPointerContext(LogicalDirection.Backward) == TextPointerContext.ElementStart)
             {
-                TextElement parentBlock = (TextElement)secondParagraphOrBlockUIContainer.Parent; 
+                TextElement parentBlock = (TextElement)secondParagraphOrBlockUIContainer.Parent;
                 Invariant.Assert(parentBlock != null);
                 Invariant.Assert(TextSchema.AllowsParagraphMerging(parentBlock.GetType()));
 
@@ -141,7 +141,7 @@ namespace System.Windows.Documents
             }
 
             // Merge ListItems wrapping first and second paragraphs.
-            ListItem followingListItem = positionAfterSecondParagraph.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.ElementStart 
+            ListItem followingListItem = positionAfterSecondParagraph.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.ElementStart
                 ? positionAfterSecondParagraph.GetAdjacentElement(LogicalDirection.Forward) as ListItem : null;
             if (followingListItem != null && followingListItem == secondListItem)
             {
@@ -316,8 +316,10 @@ namespace System.Windows.Documents
             else
             {
                 // Create a list around all paragraphs
-                List list = new List();
-                list.MarkerStyle = markerStyle;
+                List list = new List
+                {
+                    MarkerStyle = markerStyle
+                };
                 list.Apply(firstBlock, lastBlock);
 
                 // Merge with neighboring lists
@@ -362,7 +364,7 @@ namespace System.Windows.Documents
                 }
 
                 // Set list to remove
-                listToRemove = firstListItem.List;              
+                listToRemove = firstListItem.List;
             }
 
             // Remove ListItems from all selected blocks
@@ -384,7 +386,7 @@ namespace System.Windows.Documents
             // If we have a list to remove, remove it and set its FlowDirection to its children
             if (listToRemove != null)
             {
-                FlowDirection flowDirection = (FlowDirection)listToRemove.GetValue(Paragraph.FlowDirectionProperty);                
+                FlowDirection flowDirection = (FlowDirection)listToRemove.GetValue(Paragraph.FlowDirectionProperty);
                 listToRemove.Reposition(null, null);
                 TextRangeEdit.SetParagraphProperty(range.Start, range.End, Paragraph.FlowDirectionProperty, flowDirection);
             }
@@ -396,8 +398,8 @@ namespace System.Windows.Documents
             ListItem lastListItem = TextPointerBase.GetImmediateListItem((TextPointer)TextRangeEdit.GetAdjustedRangeEnd(range.Start, range.End));
 
             // The range must be in a sequence of ListItems belonging to one List wrapper
-            if (firstListItem == null || lastListItem == null || 
-                firstListItem.Parent != lastListItem.Parent || 
+            if (firstListItem == null || lastListItem == null ||
+                firstListItem.Parent != lastListItem.Parent ||
                 !(firstListItem.Parent is List))
             {
                 return;
@@ -529,7 +531,7 @@ namespace System.Windows.Documents
 
                     // Remember a position to merge any trailing list after lastListItem
                     TextPointer mergePosition = lastListItem.ContentEnd;
-                    
+
                     // Reposition last selectd ListItem so that it includes trailing list (or other block) as its children
                     lastListItem.Reposition(lastListItem.ContentStart, outerListItemEnd);
 
@@ -568,7 +570,7 @@ namespace System.Windows.Documents
                 }
 
                 // Apply FlowDirection of the list just deleted to all its children.
-                TextRangeEdit.SetParagraphProperty(start, end, Paragraph.FlowDirectionProperty, listFlowDirectionValue);                
+                TextRangeEdit.SetParagraphProperty(start, end, Paragraph.FlowDirectionProperty, listFlowDirectionValue);
 
                 // Merge lists on boundaries
                 MergeLists(start);
@@ -621,7 +623,7 @@ namespace System.Windows.Documents
         // And all tags must be Sections/Lists/ListItems only.
         internal static bool ParagraphsAreMergeable(Block firstParagraphOrBlockUIContainer, Block secondParagraphOrBlockUIContainer)
         {
-            if (firstParagraphOrBlockUIContainer == null || secondParagraphOrBlockUIContainer == null || 
+            if (firstParagraphOrBlockUIContainer == null || secondParagraphOrBlockUIContainer == null ||
                 firstParagraphOrBlockUIContainer == secondParagraphOrBlockUIContainer)
             {
                 return false; // nothing to merge
@@ -673,7 +675,7 @@ namespace System.Windows.Documents
             ListItem startListItem = start.GetListAncestor();
 
             // Unindent startListItem's list to prepare for a split, if the List's FlowDirection value is different.
-            if (startListItem != null && 
+            if (startListItem != null &&
                 startListItem.List != null && // Check for unparented list items
                 !TextSchema.ValuesAreEqual(/*newValue*/newFlowDirectionValue, /*currentValue*/startListItem.List.GetValue(Paragraph.FlowDirectionProperty)))
             {
@@ -689,12 +691,12 @@ namespace System.Windows.Documents
                     startListItem = start.GetListAncestor();
                 }
             }
-            
+
             ListItem endListItem = end.GetListAncestor();
 
             // Unindent endListItem's list to prepare for a split, if the List's FlowDirection value is different.
             if (endListItem != null &&
-                endListItem.List != null && 
+                endListItem.List != null &&
                 !TextSchema.ValuesAreEqual(/*newValue*/newFlowDirectionValue, /*currentValue*/endListItem.List.GetValue(Paragraph.FlowDirectionProperty)))
             {
                 if (startListItem != null && startListItem.List != null &&
@@ -706,7 +708,7 @@ namespace System.Windows.Documents
                 else
                 {
                     while (endListItem != null &&
-                        endListItem.List !=  null && 
+                        endListItem.List != null &&
                         endListItem.List.Parent is ListItem)
                     {
                         // endListItem is within a nested List.

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -56,7 +56,7 @@ namespace System.Windows.Media.Effects
             {
                 return _imageEffectEmulation;
             }
-            
+
             if (_imageEffectEmulation == null)
             {
                 _imageEffectEmulation = new BlurEffect();
@@ -80,9 +80,9 @@ namespace System.Windows.Media.Effects
             {
                 _imageEffectEmulation.Freeze();
             }
-            
+
             return _imageEffectEmulation;
-        }        
+        }
 
         BlurEffect _imageEffectEmulation;
     }

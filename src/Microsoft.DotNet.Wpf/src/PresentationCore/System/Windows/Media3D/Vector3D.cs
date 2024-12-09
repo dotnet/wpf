@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -54,25 +54,25 @@ namespace System.Windows.Media.Media3D
         /// <summary>
         /// Length of the vector.
         /// </summary>
-        public double Length 
-        { 
+        public double Length
+        {
             get
             {
                 return Math.Sqrt(_x * _x + _y * _y + _z * _z);
-            } 
-        }  
+            }
+        }
 
         /// <summary>
         /// Length of the vector squared.
         /// </summary>
-        public double LengthSquared 
-        { 
+        public double LengthSquared
+        {
             get
             {
                 return _x * _x + _y * _y + _z * _z;
             }
         }
-  
+
         /// <summary>
         /// Updates the vector to maintain its direction, but to have a length
         /// of 1. Equivalent to dividing the vector by its Length.
@@ -98,11 +98,11 @@ namespace System.Windows.Media.Media3D
             _x /= m;
             _y /= m;
             _z /= m;
-            
+
             double length = Math.Sqrt(_x * _x + _y * _y + _z * _z);
             this /= length;
         }
-        
+
         /// <summary>
         /// Computes the angle between two vectors.
         /// </summary>
@@ -160,9 +160,9 @@ namespace System.Windows.Media.Media3D
             // vectors and is sqrt(2)/2 which is well away from extreme slope
             // at +/-1.
             //
-            
+
             double theta;
-            
+
             if (ratio < 0)
             {
                 theta = Math.PI - 2.0 * Math.Asin((-vector1 - vector2).Length / 2.0);
@@ -203,8 +203,8 @@ namespace System.Windows.Media.Media3D
         /// <returns>Result of addition.</returns>
         public static Vector3D operator +(Vector3D vector1, Vector3D vector2)
         {
-            return new Vector3D(vector1._x + vector2._x, 
-                                vector1._y + vector2._y, 
+            return new Vector3D(vector1._x + vector2._x,
+                                vector1._y + vector2._y,
                                 vector1._z + vector2._z);
         }
 
@@ -216,8 +216,8 @@ namespace System.Windows.Media.Media3D
         /// <returns>Result of addition.</returns>
         public static Vector3D Add(Vector3D vector1, Vector3D vector2)
         {
-            return new Vector3D(vector1._x + vector2._x, 
-                                vector1._y + vector2._y, 
+            return new Vector3D(vector1._x + vector2._x,
+                                vector1._y + vector2._y,
                                 vector1._z + vector2._z);
         }
 
@@ -229,8 +229,8 @@ namespace System.Windows.Media.Media3D
         /// <returns>Result of subtraction.</returns>
         public static Vector3D operator -(Vector3D vector1, Vector3D vector2)
         {
-            return new Vector3D(vector1._x - vector2._x, 
-                                vector1._y - vector2._y, 
+            return new Vector3D(vector1._x - vector2._x,
+                                vector1._y - vector2._y,
                                 vector1._z - vector2._z);
         }
 
@@ -242,8 +242,8 @@ namespace System.Windows.Media.Media3D
         /// <returns>Result of subtraction.</returns>
         public static Vector3D Subtract(Vector3D vector1, Vector3D vector2)
         {
-            return new Vector3D(vector1._x - vector2._x, 
-                                vector1._y - vector2._y, 
+            return new Vector3D(vector1._x - vector2._x,
+                                vector1._y - vector2._y,
                                 vector1._z - vector2._z);
         }
 
@@ -254,9 +254,9 @@ namespace System.Windows.Media.Media3D
         /// <param name="point">Point being offset by the given vector.</param>
         /// <returns>Result of addition.</returns>
         public static Point3D operator +(Vector3D vector, Point3D point)
-        {   
-            return new Point3D(vector._x + point._x, 
-                               vector._y + point._y, 
+        {
+            return new Point3D(vector._x + point._x,
+                               vector._y + point._y,
                                vector._z + point._z);
         }
 
@@ -267,9 +267,9 @@ namespace System.Windows.Media.Media3D
         /// <param name="point">Point being offset by the given vector.</param>
         /// <returns>Result of addition.</returns>
         public static Point3D Add(Vector3D vector, Point3D point)
-        {   
-            return new Point3D(vector._x + point._x, 
-                               vector._y + point._y, 
+        {
+            return new Point3D(vector._x + point._x,
+                               vector._y + point._y,
                                vector._z + point._z);
         }
 
@@ -281,8 +281,8 @@ namespace System.Windows.Media.Media3D
         /// <returns>Result of subtraction.</returns>
         public static Point3D operator -(Vector3D vector, Point3D point)
         {
-            return new Point3D(vector._x - point._x, 
-                               vector._y - point._y, 
+            return new Point3D(vector._x - point._x,
+                               vector._y - point._y,
                                vector._z - point._z);
         }
 
@@ -294,8 +294,8 @@ namespace System.Windows.Media.Media3D
         /// <returns>Result of subtraction.</returns>
         public static Point3D Subtract(Vector3D vector, Point3D point)
         {
-            return new Point3D(vector._x - point._x, 
-                               vector._y - point._y, 
+            return new Point3D(vector._x - point._x,
+                               vector._y - point._y,
                                vector._z - point._z);
         }
 
@@ -307,8 +307,8 @@ namespace System.Windows.Media.Media3D
         /// <returns>Result of multiplication.</returns>
         public static Vector3D operator *(Vector3D vector, double scalar)
         {
-            return new Vector3D(vector._x * scalar, 
-                                vector._y * scalar, 
+            return new Vector3D(vector._x * scalar,
+                                vector._y * scalar,
                                 vector._z * scalar);
         }
 
@@ -320,8 +320,8 @@ namespace System.Windows.Media.Media3D
         /// <returns>Result of multiplication.</returns>
         public static Vector3D Multiply(Vector3D vector, double scalar)
         {
-            return new Vector3D(vector._x * scalar, 
-                                vector._y * scalar, 
+            return new Vector3D(vector._x * scalar,
+                                vector._y * scalar,
                                 vector._z * scalar);
         }
 
@@ -333,8 +333,8 @@ namespace System.Windows.Media.Media3D
         /// <returns>Result of multiplication.</returns>
         public static Vector3D operator *(double scalar, Vector3D vector)
         {
-            return new Vector3D(vector._x * scalar, 
-                                vector._y * scalar, 
+            return new Vector3D(vector._x * scalar,
+                                vector._y * scalar,
                                 vector._z * scalar);
         }
 
@@ -346,8 +346,8 @@ namespace System.Windows.Media.Media3D
         /// <returns>Result of multiplication.</returns>
         public static Vector3D Multiply(double scalar, Vector3D vector)
         {
-            return new Vector3D(vector._x * scalar, 
-                                vector._y * scalar, 
+            return new Vector3D(vector._x * scalar,
+                                vector._y * scalar,
                                 vector._z * scalar);
         }
 
@@ -413,7 +413,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         internal static double DotProduct(ref Vector3D vector1, ref Vector3D vector2)
         {
-            return vector1._x * vector2._x + 
+            return vector1._x * vector2._x +
                    vector1._y * vector2._y +
                    vector1._z * vector2._z;
         }

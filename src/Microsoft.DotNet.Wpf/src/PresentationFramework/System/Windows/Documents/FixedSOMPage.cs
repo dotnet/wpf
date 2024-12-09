@@ -1,10 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Globalization;
 using System.Windows.Markup;    // for XmlLanguage
 using System.Windows.Media;
-using System.Globalization;
 
 /*++                                                         
     Description:
@@ -13,14 +13,14 @@ using System.Globalization;
 
 namespace System.Windows.Documents
 {
-    internal sealed class FixedSOMPage: FixedSOMContainer
+    internal sealed class FixedSOMPage : FixedSOMContainer
     {
         //--------------------------------------------------------------------
         //
         // Constructors
         //
         //---------------------------------------------------------------------
-        
+
         #region Constructors
         public FixedSOMPage()
         {
@@ -47,29 +47,29 @@ namespace System.Windows.Documents
                 default:
                     int groupIndex = 0;
                     int boxIndex = 0;
-                    for (int i=0; i<_semanticBoxes.Count; i++)
+                    for (int i = 0; i < _semanticBoxes.Count; i++)
                     {
                         FixedSOMGroup group = _semanticBoxes[i] as FixedSOMGroup;
                         if (group != null)
                         {
                             if (debugVisuals == DrawDebugVisual.Groups)
                             {
-                                group.Render(dc, groupIndex.ToString(),  debugVisuals);
+                                group.Render(dc, groupIndex.ToString(), debugVisuals);
                                 groupIndex++;
                             }
                             List<FixedSOMSemanticBox> groupBoxes = group.SemanticBoxes;
-                            for (int j=0; j<groupBoxes.Count; j++)
+                            for (int j = 0; j < groupBoxes.Count; j++)
                             {
                                 groupBoxes[j].Render(dc, boxIndex.ToString(), debugVisuals);
                                 boxIndex++;
                             }
                         }
-                        else 
+                        else
                         {
                             _semanticBoxes[i].Render(dc, boxIndex.ToString(), debugVisuals);
                             boxIndex++;
                         }
-                    }                    
+                    }
                     break;
             }
         }
@@ -140,7 +140,7 @@ namespace System.Windows.Documents
         //---------------------------------------------------------------------
 
         #region Private Fields
-        
+
         private List<FixedNode> _markupOrder;
         private CultureInfo _cultureInfo;
 

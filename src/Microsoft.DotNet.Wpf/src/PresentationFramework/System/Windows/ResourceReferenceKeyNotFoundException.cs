@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,7 +15,7 @@ namespace System.Windows
 {
     ///<summary>Exception class for resource reference</summary>
     [Serializable]
-    public class ResourceReferenceKeyNotFoundException: InvalidOperationException
+    public class ResourceReferenceKeyNotFoundException : InvalidOperationException
     {
         ///<summary>
         /// Constructor
@@ -24,11 +24,11 @@ namespace System.Windows
         {
             _resourceKey = null;
         }
-        
+
         ///<summary>
         /// Constructor
         ///</summary>
-        public ResourceReferenceKeyNotFoundException(string message, object resourceKey) 
+        public ResourceReferenceKeyNotFoundException(string message, object resourceKey)
                         : base(message)
         {
             _resourceKey = resourceKey;
@@ -37,7 +37,7 @@ namespace System.Windows
         ///<summary>
         /// Constructor (required for Xml web service)
         ///</summary>
-        protected  ResourceReferenceKeyNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected ResourceReferenceKeyNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
             _resourceKey = info.GetValue("Key", typeof(object));
         }
@@ -72,7 +72,7 @@ namespace System.Windows
         private object _resourceKey;
     }
 
-    
+
 }
 
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -113,7 +113,7 @@ namespace System.Windows.Documents
                 SplayTreeNode startNode = start.GetScopingNode();
                 // Suppress presharp 6506: Parameter 'end' to this public method must be validated.
                 // We already validated it indirectly above, when calling ValidationHelper.VerifyPositionPair.
-                #pragma warning suppress 6506
+#pragma warning suppress 6506
                 SplayTreeNode endNode = end.GetScopingNode();
 
                 if (startNode == _textElementNode)
@@ -154,7 +154,7 @@ namespace System.Windows.Documents
                 else
                 {
                     // Presharp doesn't understand that by design TextPointer.TextContainer can never be null.
-                    #pragma warning suppress 6506
+#pragma warning suppress 6506
                     if (tree == start.TextContainer)
                     {
                         //
@@ -189,7 +189,7 @@ namespace System.Windows.Documents
                         }
 
                         // Presharp doesn't understand that by design TextPointer.TextContainer can never be null.
-                        #pragma warning suppress 56506
+#pragma warning suppress 56506
                         start.TextContainer.BeginChange();
                         try
                         {
@@ -246,7 +246,7 @@ namespace System.Windows.Documents
                     tree = EnsureTextContainer();
 
                     // Presharp doesn't understand that by design EnsureTextContainer can never return null.
-                    #pragma warning suppress 6506
+#pragma warning suppress 6506
                     tree.BeginChange();
                     try
                     {
@@ -263,7 +263,7 @@ namespace System.Windows.Documents
                 tree = textPosition.TextContainer;
 
                 // Presharp doesn't understand that by design TextPointer.TextContainer can never be null.
-                #pragma warning suppress 56506
+#pragma warning suppress 56506
                 tree.BeginChange();
                 try
                 {
@@ -474,7 +474,7 @@ namespace System.Windows.Documents
         )]
         public FontFamily FontFamily
         {
-            get { return (FontFamily) GetValue(FontFamilyProperty); }
+            get { return (FontFamily)GetValue(FontFamilyProperty); }
             set { SetValue(FontFamilyProperty, value); }
         }
 
@@ -519,7 +519,7 @@ namespace System.Windows.Documents
         /// </summary>
         public FontStyle FontStyle
         {
-            get { return (FontStyle) GetValue(FontStyleProperty); }
+            get { return (FontStyle)GetValue(FontStyleProperty); }
             set { SetValue(FontStyleProperty, value); }
         }
 
@@ -564,7 +564,7 @@ namespace System.Windows.Documents
         /// </summary>
         public FontWeight FontWeight
         {
-            get { return (FontWeight) GetValue(FontWeightProperty); }
+            get { return (FontWeight)GetValue(FontWeightProperty); }
             set { SetValue(FontWeightProperty, value); }
         }
 
@@ -609,7 +609,7 @@ namespace System.Windows.Documents
         /// </summary>
         public FontStretch FontStretch
         {
-            get { return (FontStretch) GetValue(FontStretchProperty); }
+            get { return (FontStretch)GetValue(FontStretchProperty); }
             set { SetValue(FontStretchProperty, value); }
         }
 
@@ -657,7 +657,7 @@ namespace System.Windows.Documents
         [Localizability(LocalizationCategory.None)]
         public double FontSize
         {
-            get { return (double) GetValue(FontSizeProperty); }
+            get { return (double)GetValue(FontSizeProperty); }
             set { SetValue(FontSizeProperty, value); }
         }
 
@@ -705,7 +705,7 @@ namespace System.Windows.Documents
         /// </summary>
         public Brush Foreground
         {
-            get { return (Brush) GetValue(ForegroundProperty); }
+            get { return (Brush)GetValue(ForegroundProperty); }
             set { SetValue(ForegroundProperty, value); }
         }
 
@@ -748,7 +748,7 @@ namespace System.Windows.Documents
         /// </summary>
         public Brush Background
         {
-            get { return (Brush) GetValue(BackgroundProperty); }
+            get { return (Brush)GetValue(BackgroundProperty); }
             set { SetValue(BackgroundProperty, value); }
         }
 
@@ -770,7 +770,7 @@ namespace System.Windows.Documents
         /// </summary>
         public TextEffectCollection TextEffects
         {
-            get { return (TextEffectCollection) GetValue(TextEffectsProperty); }
+            get { return (TextEffectCollection)GetValue(TextEffectsProperty); }
             set { SetValue(TextEffectsProperty, value); }
         }
 
@@ -1041,49 +1041,49 @@ namespace System.Windows.Documents
         {
             TypographyProperties group = new TypographyProperties();
 
-            group.SetStandardLigatures((bool) element.GetValue(Typography.StandardLigaturesProperty));
-            group.SetContextualLigatures((bool) element.GetValue(Typography.ContextualLigaturesProperty));
-            group.SetDiscretionaryLigatures((bool) element.GetValue(Typography.DiscretionaryLigaturesProperty));
-            group.SetHistoricalLigatures((bool) element.GetValue(Typography.HistoricalLigaturesProperty));
-            group.SetAnnotationAlternates((int) element.GetValue(Typography.AnnotationAlternatesProperty));
-            group.SetContextualAlternates((bool) element.GetValue(Typography.ContextualAlternatesProperty));
-            group.SetHistoricalForms((bool) element.GetValue(Typography.HistoricalFormsProperty));
-            group.SetKerning((bool) element.GetValue(Typography.KerningProperty));
-            group.SetCapitalSpacing((bool) element.GetValue(Typography.CapitalSpacingProperty));
-            group.SetCaseSensitiveForms((bool) element.GetValue(Typography.CaseSensitiveFormsProperty));
-            group.SetStylisticSet1((bool) element.GetValue(Typography.StylisticSet1Property));
-            group.SetStylisticSet2((bool) element.GetValue(Typography.StylisticSet2Property));
-            group.SetStylisticSet3((bool) element.GetValue(Typography.StylisticSet3Property));
-            group.SetStylisticSet4((bool) element.GetValue(Typography.StylisticSet4Property));
-            group.SetStylisticSet5((bool) element.GetValue(Typography.StylisticSet5Property));
-            group.SetStylisticSet6((bool) element.GetValue(Typography.StylisticSet6Property));
-            group.SetStylisticSet7((bool) element.GetValue(Typography.StylisticSet7Property));
-            group.SetStylisticSet8((bool) element.GetValue(Typography.StylisticSet8Property));
-            group.SetStylisticSet9((bool) element.GetValue(Typography.StylisticSet9Property));
-            group.SetStylisticSet10((bool) element.GetValue(Typography.StylisticSet10Property));
-            group.SetStylisticSet11((bool) element.GetValue(Typography.StylisticSet11Property));
-            group.SetStylisticSet12((bool) element.GetValue(Typography.StylisticSet12Property));
-            group.SetStylisticSet13((bool) element.GetValue(Typography.StylisticSet13Property));
-            group.SetStylisticSet14((bool) element.GetValue(Typography.StylisticSet14Property));
-            group.SetStylisticSet15((bool) element.GetValue(Typography.StylisticSet15Property));
-            group.SetStylisticSet16((bool) element.GetValue(Typography.StylisticSet16Property));
-            group.SetStylisticSet17((bool) element.GetValue(Typography.StylisticSet17Property));
-            group.SetStylisticSet18((bool) element.GetValue(Typography.StylisticSet18Property));
-            group.SetStylisticSet19((bool) element.GetValue(Typography.StylisticSet19Property));
-            group.SetStylisticSet20((bool) element.GetValue(Typography.StylisticSet20Property));
-            group.SetFraction((FontFraction) element.GetValue(Typography.FractionProperty));
-            group.SetSlashedZero((bool) element.GetValue(Typography.SlashedZeroProperty));
-            group.SetMathematicalGreek((bool) element.GetValue(Typography.MathematicalGreekProperty));
-            group.SetEastAsianExpertForms((bool) element.GetValue(Typography.EastAsianExpertFormsProperty));
-            group.SetVariants((FontVariants) element.GetValue(Typography.VariantsProperty));
-            group.SetCapitals((FontCapitals) element.GetValue(Typography.CapitalsProperty));
-            group.SetNumeralStyle((FontNumeralStyle) element.GetValue(Typography.NumeralStyleProperty));
-            group.SetNumeralAlignment((FontNumeralAlignment) element.GetValue(Typography.NumeralAlignmentProperty));
-            group.SetEastAsianWidths((FontEastAsianWidths) element.GetValue(Typography.EastAsianWidthsProperty));
-            group.SetEastAsianLanguage((FontEastAsianLanguage) element.GetValue(Typography.EastAsianLanguageProperty));
-            group.SetStandardSwashes((int) element.GetValue(Typography.StandardSwashesProperty));
-            group.SetContextualSwashes((int) element.GetValue(Typography.ContextualSwashesProperty));
-            group.SetStylisticAlternates((int) element.GetValue(Typography.StylisticAlternatesProperty));
+            group.SetStandardLigatures((bool)element.GetValue(Typography.StandardLigaturesProperty));
+            group.SetContextualLigatures((bool)element.GetValue(Typography.ContextualLigaturesProperty));
+            group.SetDiscretionaryLigatures((bool)element.GetValue(Typography.DiscretionaryLigaturesProperty));
+            group.SetHistoricalLigatures((bool)element.GetValue(Typography.HistoricalLigaturesProperty));
+            group.SetAnnotationAlternates((int)element.GetValue(Typography.AnnotationAlternatesProperty));
+            group.SetContextualAlternates((bool)element.GetValue(Typography.ContextualAlternatesProperty));
+            group.SetHistoricalForms((bool)element.GetValue(Typography.HistoricalFormsProperty));
+            group.SetKerning((bool)element.GetValue(Typography.KerningProperty));
+            group.SetCapitalSpacing((bool)element.GetValue(Typography.CapitalSpacingProperty));
+            group.SetCaseSensitiveForms((bool)element.GetValue(Typography.CaseSensitiveFormsProperty));
+            group.SetStylisticSet1((bool)element.GetValue(Typography.StylisticSet1Property));
+            group.SetStylisticSet2((bool)element.GetValue(Typography.StylisticSet2Property));
+            group.SetStylisticSet3((bool)element.GetValue(Typography.StylisticSet3Property));
+            group.SetStylisticSet4((bool)element.GetValue(Typography.StylisticSet4Property));
+            group.SetStylisticSet5((bool)element.GetValue(Typography.StylisticSet5Property));
+            group.SetStylisticSet6((bool)element.GetValue(Typography.StylisticSet6Property));
+            group.SetStylisticSet7((bool)element.GetValue(Typography.StylisticSet7Property));
+            group.SetStylisticSet8((bool)element.GetValue(Typography.StylisticSet8Property));
+            group.SetStylisticSet9((bool)element.GetValue(Typography.StylisticSet9Property));
+            group.SetStylisticSet10((bool)element.GetValue(Typography.StylisticSet10Property));
+            group.SetStylisticSet11((bool)element.GetValue(Typography.StylisticSet11Property));
+            group.SetStylisticSet12((bool)element.GetValue(Typography.StylisticSet12Property));
+            group.SetStylisticSet13((bool)element.GetValue(Typography.StylisticSet13Property));
+            group.SetStylisticSet14((bool)element.GetValue(Typography.StylisticSet14Property));
+            group.SetStylisticSet15((bool)element.GetValue(Typography.StylisticSet15Property));
+            group.SetStylisticSet16((bool)element.GetValue(Typography.StylisticSet16Property));
+            group.SetStylisticSet17((bool)element.GetValue(Typography.StylisticSet17Property));
+            group.SetStylisticSet18((bool)element.GetValue(Typography.StylisticSet18Property));
+            group.SetStylisticSet19((bool)element.GetValue(Typography.StylisticSet19Property));
+            group.SetStylisticSet20((bool)element.GetValue(Typography.StylisticSet20Property));
+            group.SetFraction((FontFraction)element.GetValue(Typography.FractionProperty));
+            group.SetSlashedZero((bool)element.GetValue(Typography.SlashedZeroProperty));
+            group.SetMathematicalGreek((bool)element.GetValue(Typography.MathematicalGreekProperty));
+            group.SetEastAsianExpertForms((bool)element.GetValue(Typography.EastAsianExpertFormsProperty));
+            group.SetVariants((FontVariants)element.GetValue(Typography.VariantsProperty));
+            group.SetCapitals((FontCapitals)element.GetValue(Typography.CapitalsProperty));
+            group.SetNumeralStyle((FontNumeralStyle)element.GetValue(Typography.NumeralStyleProperty));
+            group.SetNumeralAlignment((FontNumeralAlignment)element.GetValue(Typography.NumeralAlignmentProperty));
+            group.SetEastAsianWidths((FontEastAsianWidths)element.GetValue(Typography.EastAsianWidthsProperty));
+            group.SetEastAsianLanguage((FontEastAsianLanguage)element.GetValue(Typography.EastAsianLanguageProperty));
+            group.SetStandardSwashes((int)element.GetValue(Typography.StandardSwashesProperty));
+            group.SetContextualSwashes((int)element.GetValue(Typography.ContextualSwashesProperty));
+            group.SetStylisticAlternates((int)element.GetValue(Typography.StylisticAlternatesProperty));
 
             return group;
         }
@@ -1335,7 +1335,7 @@ namespace System.Windows.Documents
 
         private static void OnTypographyChanged(DependencyObject element, DependencyPropertyChangedEventArgs e)
         {
-            ((TextElement) element)._typographyPropertiesGroup = null;
+            ((TextElement)element)._typographyPropertiesGroup = null;
         }
 
         //------------------------------------------------------
@@ -1600,7 +1600,7 @@ namespace System.Windows.Documents
         /// </summary>
         private static bool IsValidFontSize(object value)
         {
-            double fontSize = (double) value;
+            double fontSize = (double)value;
             double minFontSize = TextDpi.MinWidth;
             double maxFontSize = Math.Min(1000000, PTS.MaxFontSize);
 

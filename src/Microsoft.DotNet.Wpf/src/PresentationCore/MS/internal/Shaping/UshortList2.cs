@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -38,12 +38,12 @@ namespace MS.Internal.Shaping
         {
             get
             {
-                Invariant.Assert(index >= 0  &&  index < _length, "Index out of range");
+                Invariant.Assert(index >= 0 && index < _length, "Index out of range");
                 return _storage[_index + index];
             }
             set
             {
-                Invariant.Assert(index >= 0  &&  index < _length, "Index out of range");
+                Invariant.Assert(index >= 0 && index < _length, "Index out of range");
                 _storage[_index + index] = value;
             }
         }
@@ -71,7 +71,7 @@ namespace MS.Internal.Shaping
         public void SetRange(int index, int length)
         {
             Invariant.Assert(length >= 0 && (index + length) <= _storage.Length, "List out of storage");
-            _index  = index;
+            _index = index;
             _length = length;
         }
 
@@ -111,12 +111,12 @@ namespace MS.Internal.Shaping
 
         public ushort[] GetCopy()
         {
-            return _storage.GetSubsetCopy(_index,_length);
+            return _storage.GetSubsetCopy(_index, _length);
         }
 
-        private UshortBuffer    _storage;
-        private int             _index;
-        private int             _length;
+        private UshortBuffer _storage;
+        private int _index;
+        private int _length;
     }
 
 
@@ -159,7 +159,7 @@ namespace MS.Internal.Shaping
     /// </summary>
     internal class UshortArray : UshortBuffer
     {
-        private ushort[]    _array;
+        private ushort[] _array;
 
         internal UshortArray(ushort[] array)
         {
@@ -174,7 +174,7 @@ namespace MS.Internal.Shaping
 
         public override ushort this[int index]
         {
-            get { return _array[index];  }
+            get { return _array[index]; }
             set { _array[index] = value; }
         }
 
@@ -191,19 +191,19 @@ namespace MS.Internal.Shaping
         public override ushort[] GetSubsetCopy(int index, int count)
         {
             ushort[] subsetArray = new ushort[count];
-            
+
             //Move elements
             Buffer.BlockCopy(
                 _array,
                 index * sizeof(ushort),
                 subsetArray,
                 0,
-                ((index + count) <= _array.Length ? count : _array.Length) * sizeof(ushort) 
+                ((index + count) <= _array.Length ? count : _array.Length) * sizeof(ushort)
                 );
 
             return subsetArray;
         }
-        
+
         public override void Insert(int index, int count, int length)
         {
             int newLength = length + count;
@@ -268,13 +268,13 @@ namespace MS.Internal.Shaping
     /// </summary>
     internal unsafe class UnsafeUshortArray : UshortBuffer
     {
-        private ushort*     _array;
+        private ushort* _array;
 
-        private int         _arrayLength;
+        private int _arrayLength;
 
 
         internal UnsafeUshortArray(CheckedUShortPointer array, int arrayLength)
-        {            
+        {
             _array = array.Probe(0, arrayLength);
             _arrayLength = arrayLength;
         }

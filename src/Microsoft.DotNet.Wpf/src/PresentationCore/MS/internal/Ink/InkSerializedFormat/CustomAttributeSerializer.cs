@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,10 +16,10 @@ namespace MS.Internal.Ink.InkSerializedFormat
     /// </summary>
     internal static class ExtendedPropertySerializer
     {
-            // If the ExtendedProperty identifier matches one of the original ISF/Tablet-internal
-            //      Guids that did not include embedded type information (e.g. used the OS-internal
-            //      property storage API), then it is always stored as byte array and does not
-            //      include type information
+        // If the ExtendedProperty identifier matches one of the original ISF/Tablet-internal
+        //      Guids that did not include embedded type information (e.g. used the OS-internal
+        //      property storage API), then it is always stored as byte array and does not
+        //      include type information
         private static bool UsesEmbeddedTypeInformation(Guid propGuid)
         {
             for (int i = 0; i < KnownIdCache.OriginalISFIdTable.Length; i++)
@@ -91,89 +91,180 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 bw.Write(datatype);
             }
             // We know the type of the object. We must serialize it accordingly.
-            switch(type)
+            switch (type)
             {
                 case (VarEnum.VT_ARRAY | VarEnum.VT_I1)://8208
-                {
-                    char[] data = (char[])value;
-                    bw.Write(data);
-                    break;
-                }
-                case (VarEnum.VT_ARRAY | VarEnum.VT_UI1)://8209
-                {
-                    byte[] data = (byte[])value;
-                    bw.Write(data);
-                    break;
-                }
-                case (VarEnum.VT_ARRAY | VarEnum.VT_I2)://8194
-                {
-                    short [] data = (short[])value;
-                    for( int i = 0; i < data.Length; i++ )
-                        bw.Write(data[i]);
-                    break;
-                }
-                case (VarEnum.VT_ARRAY | VarEnum.VT_UI2)://8210
-                {
-                    ushort [] data = (ushort[])value;
-                    for( int i = 0; i < data.Length; i++ )
-                        bw.Write(data[i]);
-                    break;
-                }
-                case (VarEnum.VT_ARRAY | VarEnum.VT_I4)://8195
-                {
-                    int [] data = (int[])value;
-                    for( int i = 0; i < data.Length; i++ )
-                        bw.Write(data[i]);
-                    break;
-                }
-                case (VarEnum.VT_ARRAY | VarEnum.VT_UI4)://8211
-                {
-                    uint [] data = (uint[])value;
-                    for( int i = 0; i < data.Length; i++ )
-                        bw.Write(data[i]);
-                    break;
-                }
-                case (VarEnum.VT_ARRAY | VarEnum.VT_I8)://8212
-                {
-                    long [] data = (long[])value;
-                    for( int i = 0; i < data.Length; i++ )
-                        bw.Write(data[i]);
-                    break;
-                }
-                case (VarEnum.VT_ARRAY | VarEnum.VT_UI8)://8213
-                {
-                    ulong [] data = (ulong[])value;
-                    for( int i = 0; i < data.Length; i++ )
-                        bw.Write(data[i]);
-                    break;
-                }
-                case (VarEnum.VT_ARRAY | VarEnum.VT_R4 )://8196
-                {
-                    float [] data = (float[])value;
-                    for( int i = 0; i < data.Length; i++ )
-                        bw.Write(data[i]);
-                    break;
-                }
-                case (VarEnum.VT_ARRAY | VarEnum.VT_R8)://8197
-                {
-                    double [] data = (double[])value;
-                    for( int i = 0; i < data.Length; i++ )
-                        bw.Write(data[i]);
-                    break;
-                }
-                case (VarEnum.VT_ARRAY | VarEnum.VT_DATE)://8199
-                {
-                    DateTime [] data = (DateTime[])value;
-                    for( int i = 0; i < data.Length; i++ )
-                        bw.Write(data[i].ToOADate());
-                    break;
-                }
-                case (VarEnum.VT_ARRAY | VarEnum.VT_BOOL )://8203
-                {
-                    bool [] data = (bool[])value;
-                    for (int i = 0; i < data.Length; i++)
                     {
-                        if (data[i])
+                        char[] data = (char[])value;
+                        bw.Write(data);
+                        break;
+                    }
+                case (VarEnum.VT_ARRAY | VarEnum.VT_UI1)://8209
+                    {
+                        byte[] data = (byte[])value;
+                        bw.Write(data);
+                        break;
+                    }
+                case (VarEnum.VT_ARRAY | VarEnum.VT_I2)://8194
+                    {
+                        short[] data = (short[])value;
+                        for (int i = 0; i < data.Length; i++)
+                            bw.Write(data[i]);
+                        break;
+                    }
+                case (VarEnum.VT_ARRAY | VarEnum.VT_UI2)://8210
+                    {
+                        ushort[] data = (ushort[])value;
+                        for (int i = 0; i < data.Length; i++)
+                            bw.Write(data[i]);
+                        break;
+                    }
+                case (VarEnum.VT_ARRAY | VarEnum.VT_I4)://8195
+                    {
+                        int[] data = (int[])value;
+                        for (int i = 0; i < data.Length; i++)
+                            bw.Write(data[i]);
+                        break;
+                    }
+                case (VarEnum.VT_ARRAY | VarEnum.VT_UI4)://8211
+                    {
+                        uint[] data = (uint[])value;
+                        for (int i = 0; i < data.Length; i++)
+                            bw.Write(data[i]);
+                        break;
+                    }
+                case (VarEnum.VT_ARRAY | VarEnum.VT_I8)://8212
+                    {
+                        long[] data = (long[])value;
+                        for (int i = 0; i < data.Length; i++)
+                            bw.Write(data[i]);
+                        break;
+                    }
+                case (VarEnum.VT_ARRAY | VarEnum.VT_UI8)://8213
+                    {
+                        ulong[] data = (ulong[])value;
+                        for (int i = 0; i < data.Length; i++)
+                            bw.Write(data[i]);
+                        break;
+                    }
+                case (VarEnum.VT_ARRAY | VarEnum.VT_R4)://8196
+                    {
+                        float[] data = (float[])value;
+                        for (int i = 0; i < data.Length; i++)
+                            bw.Write(data[i]);
+                        break;
+                    }
+                case (VarEnum.VT_ARRAY | VarEnum.VT_R8)://8197
+                    {
+                        double[] data = (double[])value;
+                        for (int i = 0; i < data.Length; i++)
+                            bw.Write(data[i]);
+                        break;
+                    }
+                case (VarEnum.VT_ARRAY | VarEnum.VT_DATE)://8199
+                    {
+                        DateTime[] data = (DateTime[])value;
+                        for (int i = 0; i < data.Length; i++)
+                            bw.Write(data[i].ToOADate());
+                        break;
+                    }
+                case (VarEnum.VT_ARRAY | VarEnum.VT_BOOL)://8203
+                    {
+                        bool[] data = (bool[])value;
+                        for (int i = 0; i < data.Length; i++)
+                        {
+                            if (data[i])
+                            {
+                                //true is two consecutive all bits on bytes
+                                bw.Write((byte)0xFF);
+                                bw.Write((byte)0xFF);
+                            }
+                            else
+                            {
+                                //false is two consecutive all bits off
+                                bw.Write((byte)0);
+                                bw.Write((byte)0);
+                            }
+                        }
+                        break;
+                    }
+                case (VarEnum.VT_ARRAY | VarEnum.VT_DECIMAL)://8206
+                    {
+                        decimal[] data = (decimal[])value;
+                        for (int i = 0; i < data.Length; i++)
+                            bw.Write(data[i]);
+                        break;
+                    }
+                case (VarEnum.VT_I1)://16
+                    {
+                        char data = (char)value;
+                        bw.Write(data);
+                        break;
+                    }
+                case (VarEnum.VT_UI1)://17
+                    {
+                        byte data = (byte)value;
+                        bw.Write(data);
+                        break;
+                    }
+                case (VarEnum.VT_I2)://2
+                    {
+                        short data = (short)value;
+                        bw.Write(data);
+                        break;
+                    }
+                case (VarEnum.VT_UI2)://18
+                    {
+                        ushort data = (ushort)value;
+                        bw.Write(data);
+                        break;
+                    }
+                case (VarEnum.VT_I4)://3
+                    {
+                        int data = (int)value;
+                        bw.Write(data);
+                        break;
+                    }
+                case (VarEnum.VT_UI4)://19
+                    {
+                        uint data = (uint)value;
+                        bw.Write(data);
+                        break;
+                    }
+                case (VarEnum.VT_I8)://20
+                    {
+                        long data = (long)value;
+                        bw.Write(data);
+                        break;
+                    }
+                case (VarEnum.VT_UI8)://21
+                    {
+                        ulong data = (ulong)value;
+                        bw.Write(data);
+                        break;
+                    }
+                case (VarEnum.VT_R4)://4
+                    {
+                        float data = (float)value;
+                        bw.Write(data);
+                        break;
+                    }
+                case (VarEnum.VT_R8)://5
+                    {
+                        double data = (double)value;
+                        bw.Write(data);
+                        break;
+                    }
+                case (VarEnum.VT_DATE)://7
+                    {
+                        DateTime data = (DateTime)value;
+                        bw.Write(data.ToOADate());
+                        break;
+                    }
+                case (VarEnum.VT_BOOL)://11
+                    {
+                        bool data = (bool)value;
+                        if (data)
                         {
                             //true is two consecutive all bits on bytes
                             bw.Write((byte)0xFF);
@@ -181,119 +272,28 @@ namespace MS.Internal.Ink.InkSerializedFormat
                         }
                         else
                         {
-                            //false is two consecutive all bits off
+                            //false is two consecutive all bits off bytes
                             bw.Write((byte)0);
                             bw.Write((byte)0);
                         }
+                        break;
                     }
-                    break;
-                }
-                case (VarEnum.VT_ARRAY | VarEnum.VT_DECIMAL)://8206
-                {
-                    decimal [] data = (decimal[])value;
-                    for( int i = 0; i < data.Length; i++ )
-                        bw.Write(data[i]);
-                    break;
-                }
-                case (VarEnum.VT_I1)://16
-                {
-                    char data = (char)value;
-                    bw.Write(data);
-                    break;
-                }
-                case (VarEnum.VT_UI1)://17
-                {
-                    byte data = (byte)value;
-                    bw.Write(data);
-                    break;
-                }
-                case (VarEnum.VT_I2)://2
-                {
-                    short data = (short)value;
-                    bw.Write(data);
-                    break;
-                }
-                case (VarEnum.VT_UI2)://18
-                {
-                    ushort data = (ushort)value;
-                    bw.Write(data);
-                    break;
-                }
-                case (VarEnum.VT_I4)://3
-                {
-                    int data = (int)value;
-                    bw.Write(data);
-                    break;
-                }
-                case (VarEnum.VT_UI4)://19
-                {
-                    uint data = (uint)value;
-                    bw.Write(data);
-                    break;
-                }
-                case (VarEnum.VT_I8)://20
-                {
-                    long data = (long)value;
-                    bw.Write(data);
-                    break;
-                }
-                case (VarEnum.VT_UI8)://21
-                {
-                    ulong data = (ulong)value;
-                    bw.Write(data);
-                    break;
-                }
-                case (VarEnum.VT_R4 )://4
-                {
-                    float data = (float)value;
-                    bw.Write(data);
-                    break;
-                }
-                case (VarEnum.VT_R8)://5
-                {
-                    double data = (double)value;
-                    bw.Write(data);
-                    break;
-                }
-                case (VarEnum.VT_DATE)://7
-                {
-                    DateTime data = (DateTime)value;
-                    bw.Write(data.ToOADate());
-                    break;
-                }
-                case (VarEnum.VT_BOOL )://11
-                {
-                    bool data = (bool)value;
-                    if (data)
-                    {
-                        //true is two consecutive all bits on bytes
-                        bw.Write((byte)0xFF);
-                        bw.Write((byte)0xFF);
-                    }
-                    else
-                    {
-                        //false is two consecutive all bits off bytes
-                        bw.Write((byte)0);
-                        bw.Write((byte)0);
-                    }
-                    break;
-                }
                 case (VarEnum.VT_DECIMAL)://14
-                {
-                    decimal data = (decimal)value;
-                    bw.Write(data);
-                    break;
-                }
+                    {
+                        decimal data = (decimal)value;
+                        bw.Write(data);
+                        break;
+                    }
                 case (VarEnum.VT_BSTR)://8
-                {
-                    string data = (string)value;
-                    bw.Write( System.Text.Encoding.Unicode.GetBytes( data ) );
-                    break;
-                }
+                    {
+                        string data = (string)value;
+                        bw.Write(System.Text.Encoding.Unicode.GetBytes(data));
+                        break;
+                    }
                 default:
-                {
-                    throw new InvalidOperationException(SR.InvalidEpInIsf);
-                }
+                    {
+                        throw new InvalidOperationException(SR.InvalidEpInIsf);
+                    }
             }
 #pragma warning restore 6518
 #pragma warning restore 1634, 1691
@@ -371,7 +371,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 // write the algo byte
                 //strm.WriteByte(Compressor.NoCompression);
                 //cbWrite++;
-        
+
                 // write the raw data without compression
                 strm.Write(data, 0, (int)data.Length);
                 cbWrite += (uint)data.Length;
@@ -456,7 +456,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                 byte[] bytes = new byte[cbInsize];
 
-                uint bytesRead = (uint) stream.Read(bytes, 0, (int)cbInsize);
+                uint bytesRead = (uint)stream.Read(bytes, 0, (int)cbInsize);
                 if (cbInsize != bytesRead)
                 {
                     throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("Read different size from stream then expected"), "cbSize");
@@ -465,7 +465,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 cbRead += cbInsize;
                 cbTotal -= cbInsize;
 
-		        //Find out the Decompressed buffer size
+                //Find out the Decompressed buffer size
                 using (MemoryStream decompressedStream = new MemoryStream(Compressor.DecompressPropertyData(bytes)))
                 {
                     // Add the property
@@ -477,7 +477,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 // For known size data, we just read the data directly from the stream
                 byte[] bytes = new byte[size];
 
-                uint bytesRead = (uint) stream.Read(bytes, 0, (int)size);
+                uint bytesRead = (uint)stream.Read(bytes, 0, (int)size);
                 if (size != bytesRead)
                 {
                     throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("Read different size from stream then expected"), "cbSize");
@@ -489,7 +489,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 }
 
                 cbTotal -= size;
-                cbRead +=  size;
+                cbRead += size;
             }
 
             return cbRead;
@@ -733,7 +733,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 {
                     ExtendedPropertySerializer.EncodeToStream(prop, localStream);
 
-                    byte[] data = localStream.ToArray(); 
+                    byte[] data = localStream.ToArray();
 
                     cbWrite += ExtendedPropertySerializer.EncodeAsISF(prop.Id, data, stream, guidList, compressionAlgorithm, fTag);
                 }
@@ -785,7 +785,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     throw new ArgumentException(SR.Format(SR.InvalidValueType, typeof(System.Windows.Media.Color)), "value");
                 }
             }
-                // int attributes
+            // int attributes
             else if (id == KnownIds.CurveFittingError)
             {
                 if (!(value.GetType() == typeof(int)))
@@ -804,14 +804,14 @@ namespace MS.Internal.Ink.InkSerializedFormat
             else if (id == KnownIds.StylusTip)
             {
                 Type valueType = value.GetType();
-                bool fStylusTipType = ( valueType == typeof(StylusTip) );
-                bool fIntType = ( valueType == typeof(int) );
+                bool fStylusTipType = (valueType == typeof(StylusTip));
+                bool fIntType = (valueType == typeof(int));
 
-                if ( !fStylusTipType && !fIntType )
+                if (!fStylusTipType && !fIntType)
                 {
                     throw new ArgumentException(SR.Format(SR.InvalidValueType1, typeof(StylusTip), typeof(int)), "value");
                 }
-                else if ( !StylusTipHelper.IsDefined((StylusTip)value) )
+                else if (!StylusTipHelper.IsDefined((StylusTip)value))
                 {
                     throw new ArgumentException(SR.Format(SR.InvalidValueOfType, value, typeof(StylusTip)), "value");
                 }
@@ -822,37 +822,37 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 // StylusTipTransform gets serialized as a String, but at runtime is a Matrix
                 //
                 Type t = value.GetType();
-                if ( t != typeof(String) && t != typeof(Matrix) )
+                if (t != typeof(String) && t != typeof(Matrix))
                 {
                     throw new ArgumentException(SR.Format(SR.InvalidValueType1, typeof(String), typeof(Matrix)), "value");
                 }
-                else if ( t == typeof(Matrix) )
+                else if (t == typeof(Matrix))
                 {
                     Matrix matrix = (Matrix)value;
-                    if ( !matrix.HasInverse )
+                    if (!matrix.HasInverse)
                     {
                         throw new ArgumentException(SR.MatrixNotInvertible, "value");
                     }
-                    if ( MatrixHelper.ContainsNaN(matrix))
+                    if (MatrixHelper.ContainsNaN(matrix))
                     {
                         throw new ArgumentException(SR.InvalidMatrixContainsNaN, "value");
                     }
-                    if ( MatrixHelper.ContainsInfinity(matrix))
+                    if (MatrixHelper.ContainsInfinity(matrix))
                     {
                         throw new ArgumentException(SR.InvalidMatrixContainsInfinity, "value");
                     }
-}
+                }
             }
             else if (id == KnownIds.IsHighlighter)
             {
-                if ( value.GetType() != typeof(bool))
+                if (value.GetType() != typeof(bool))
                 {
                     throw new ArgumentException(SR.Format(SR.InvalidValueType, typeof(bool)), "value");
                 }
             }
-            else if ( id == KnownIds.StylusHeight || id == KnownIds.StylusWidth )
+            else if (id == KnownIds.StylusHeight || id == KnownIds.StylusWidth)
             {
-                if ( value.GetType() != typeof(double) )
+                if (value.GetType() != typeof(double))
                 {
                     throw new ArgumentException(SR.Format(SR.InvalidValueType, typeof(double)), "value");
                 }
@@ -861,22 +861,22 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                 if (id == KnownIds.StylusHeight)
                 {
-                    if ( Double.IsNaN(dVal) || dVal < DrawingAttributes.MinHeight || dVal > DrawingAttributes.MaxHeight)
+                    if (Double.IsNaN(dVal) || dVal < DrawingAttributes.MinHeight || dVal > DrawingAttributes.MaxHeight)
                     {
                         throw new ArgumentOutOfRangeException("value", SR.InvalidDrawingAttributesHeight);
                     }
                 }
                 else
                 {
-                    if (Double.IsNaN(dVal) ||  dVal < DrawingAttributes.MinWidth || dVal > DrawingAttributes.MaxWidth)
+                    if (Double.IsNaN(dVal) || dVal < DrawingAttributes.MinWidth || dVal > DrawingAttributes.MaxWidth)
                     {
                         throw new ArgumentOutOfRangeException("value", SR.InvalidDrawingAttributesWidth);
                     }
                 }
             }
-            else if ( id == KnownIds.Transparency )
+            else if (id == KnownIds.Transparency)
             {
-                if ( value.GetType() != typeof(byte) )
+                if (value.GetType() != typeof(byte))
                 {
                     throw new ArgumentException(SR.Format(SR.InvalidValueType, typeof(byte)), "value");
                 }
@@ -885,11 +885,11 @@ namespace MS.Internal.Ink.InkSerializedFormat
             }
             else
             {
-                if ( !UsesEmbeddedTypeInformation(id) )
+                if (!UsesEmbeddedTypeInformation(id))
                 {
                     // if this guid used the legacy internal attribute persistence APIs,
                     //      then it doesn't include embedded type information (it's always a byte array)
-                    if ( value.GetType() != typeof(byte[]) )
+                    if (value.GetType() != typeof(byte[]))
                     {
                         throw new ArgumentException(SR.Format(SR.InvalidValueType, typeof(byte[])), "value");
                     }
@@ -905,64 +905,64 @@ namespace MS.Internal.Ink.InkSerializedFormat
                         case (VarEnum.VT_I1)://16
                         case (VarEnum.VT_ARRAY | VarEnum.VT_DATE)://8199
                         case (VarEnum.VT_DATE)://7
-                        {
-                            //we have a char or char[], datetime or datetime[], 
-                            //we need to write them to a Stream using a BinaryWriter
-                            //to see if an exception is thrown so that the exception 
-                            //happens now, and not at serialization time...
-                            using (MemoryStream stream = new MemoryStream(32))//reasonable default
                             {
-                                using (BinaryWriter writer = new BinaryWriter(stream))
+                                //we have a char or char[], datetime or datetime[], 
+                                //we need to write them to a Stream using a BinaryWriter
+                                //to see if an exception is thrown so that the exception 
+                                //happens now, and not at serialization time...
+                                using (MemoryStream stream = new MemoryStream(32))//reasonable default
                                 {
-                                    try
+                                    using (BinaryWriter writer = new BinaryWriter(stream))
                                     {
-                                        switch (varEnum)
+                                        try
                                         {
-                                            case (VarEnum.VT_ARRAY | VarEnum.VT_I1)://8208
+                                            switch (varEnum)
                                             {
-                                                writer.Write((char[])value);
-                                                break;
-                                            }
-                                            case (VarEnum.VT_I1)://16
-                                            {
-                                                writer.Write((char)value);
-                                                break;
-                                            }
-                                            case (VarEnum.VT_ARRAY | VarEnum.VT_DATE)://8199
-                                            {
-                                                DateTime[] data = (DateTime[])value;
-                                                for (int i = 0; i < data.Length; i++)
-                                                    writer.Write(data[i].ToOADate());
-                                                break;
-                                            }
-                                            case (VarEnum.VT_DATE)://7
-                                            {
-                                                DateTime data = (DateTime)value;
-                                                writer.Write(data.ToOADate());
-                                                break;
-                                            }
-                                            default:
-                                            {
-                                                Debug.Assert(false, "Missing case statement!");
-                                                break;
+                                                case (VarEnum.VT_ARRAY | VarEnum.VT_I1)://8208
+                                                    {
+                                                        writer.Write((char[])value);
+                                                        break;
+                                                    }
+                                                case (VarEnum.VT_I1)://16
+                                                    {
+                                                        writer.Write((char)value);
+                                                        break;
+                                                    }
+                                                case (VarEnum.VT_ARRAY | VarEnum.VT_DATE)://8199
+                                                    {
+                                                        DateTime[] data = (DateTime[])value;
+                                                        for (int i = 0; i < data.Length; i++)
+                                                            writer.Write(data[i].ToOADate());
+                                                        break;
+                                                    }
+                                                case (VarEnum.VT_DATE)://7
+                                                    {
+                                                        DateTime data = (DateTime)value;
+                                                        writer.Write(data.ToOADate());
+                                                        break;
+                                                    }
+                                                default:
+                                                    {
+                                                        Debug.Assert(false, "Missing case statement!");
+                                                        break;
+                                                    }
                                             }
                                         }
-                                    }
-                                    catch (ArgumentException ex)
-                                    {
-                                        //catches bad char & char[]
-                                        throw new ArgumentException(SR.InvalidDataInISF, ex);
-                                    }
-                                    catch (OverflowException ex)
-                                    {
-                                        //catches bad DateTime
-                                        throw new ArgumentException(SR.InvalidDataInISF, ex);
+                                        catch (ArgumentException ex)
+                                        {
+                                            //catches bad char & char[]
+                                            throw new ArgumentException(SR.InvalidDataInISF, ex);
+                                        }
+                                        catch (OverflowException ex)
+                                        {
+                                            //catches bad DateTime
+                                            throw new ArgumentException(SR.InvalidDataInISF, ex);
+                                        }
                                     }
                                 }
+                                break;
                             }
-                            break;
-                        }
-                        //do nothing in the default case...
+                            //do nothing in the default case...
                     }
                 }
                 return;

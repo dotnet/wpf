@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -40,11 +40,13 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         }
         internal static void Validate(int fserr)
         {
-            if (fserr != fserrNone) { Error(fserr, null); }
+            if (fserr != fserrNone)
+            { Error(fserr, null); }
         }
         internal static void Validate(int fserr, PtsContext ptsContext)
         {
-            if (fserr != fserrNone) { Error(fserr, ptsContext); }
+            if (fserr != fserrNone)
+            { Error(fserr, ptsContext); }
         }
         private static void Error(int fserr, PtsContext ptsContext)
         {
@@ -76,9 +78,9 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         }
         internal static void ValidateAndTrace(int fserr, PtsContext ptsContext)
         {
-            if (fserr != fserrNone) 
-            { 
-                ErrorTrace(fserr, ptsContext); 
+            if (fserr != fserrNone)
+            {
+                ErrorTrace(fserr, ptsContext);
             }
         }
         private static void ErrorTrace(int fserr, PtsContext ptsContext)
@@ -89,7 +91,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
                     throw new OutOfMemoryException();
 
                 default:
-                    Debug.Assert(ptsContext != null, "Null argument 'ptsContext' - required for return value validation."); 
+                    Debug.Assert(ptsContext != null, "Null argument 'ptsContext' - required for return value validation.");
                     if (ptsContext != null)
                     {
                         Exception innerException = GetInnermostException(ptsContext);
@@ -152,7 +154,8 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         // ------------------------------------------------------------------
         internal static void ValidateHandle(object handle)
         {
-            if (handle == null) { InvalidHandle(); }
+            if (handle == null)
+            { InvalidHandle(); }
         }
         private static void InvalidHandle()
         {
@@ -267,9 +270,9 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             internal SecondaryException(Exception e) : base(null, e) { }
 
             protected SecondaryException(
-            System.Runtime.Serialization.SerializationInfo  info,
-            System.Runtime.Serialization.StreamingContext   context
-            ) : base(info, context){}
+            System.Runtime.Serialization.SerializationInfo info,
+            System.Runtime.Serialization.StreamingContext context
+            ) : base(info, context) { }
 
             public override string HelpLink
             {
@@ -389,32 +392,32 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         // ------------------------------------------------------------------
         internal struct Restrictions
         {
-            internal const int tsduRestriction	                = 0x3FFFFFFF;
-            internal const int tsdvRestriction	                = 0x3FFFFFFF;
-            internal const int tscColumnRestriction             = 1000;
-            internal const int tscSegmentAreaRestriction        = 1000;
-            internal const int tscHeightAreaRestriction         = 1000;
-            internal const int tscTableColumnsRestriction       = 1000;
-            internal const int tscFootnotesRestriction          = 1000;
-            internal const int tscAttachedObjectsRestriction    = 100000;
-            internal const int tscLineInParaRestriction         = 1000000;
-            internal const int tscVerticesRestriction           = 10000;
-            internal const int tscPolygonsRestriction           = 200;
-            internal const int tscSeparatorsRestriction         = 1000;
-            internal const int tscMatrixColumnsRestriction      = 1000;
-            internal const int tscMatrixRowsRestriction         = 10000;
-            internal const int tscEquationsRestriction          = 10000;
-            internal const int tsduFontParameterRestriction     = 50000000;
-            internal const int tsdvFontParameterRestriction     = 50000000;
-            internal const int tscBreakingClassesRestriction    = 200;
-            internal const int tscBreakingUnitsRestriction      = 200;
-            internal const int tscModWidthClassesRestriction    = 200;
-            internal const int tscPairActionsRestriction        = 200;
-            internal const int tscPriorityActionsRestriction    = 200;
-            internal const int tscExpansionUnitsRestriction     = 200;
-            internal const int tscCharacterRestriction          = 0x0FFFFFFF;
-            internal const int tscInstalledHandlersRestriction  = 200;
-            internal const int tscJustPriorityLimRestriction    = 20;
+            internal const int tsduRestriction = 0x3FFFFFFF;
+            internal const int tsdvRestriction = 0x3FFFFFFF;
+            internal const int tscColumnRestriction = 1000;
+            internal const int tscSegmentAreaRestriction = 1000;
+            internal const int tscHeightAreaRestriction = 1000;
+            internal const int tscTableColumnsRestriction = 1000;
+            internal const int tscFootnotesRestriction = 1000;
+            internal const int tscAttachedObjectsRestriction = 100000;
+            internal const int tscLineInParaRestriction = 1000000;
+            internal const int tscVerticesRestriction = 10000;
+            internal const int tscPolygonsRestriction = 200;
+            internal const int tscSeparatorsRestriction = 1000;
+            internal const int tscMatrixColumnsRestriction = 1000;
+            internal const int tscMatrixRowsRestriction = 10000;
+            internal const int tscEquationsRestriction = 10000;
+            internal const int tsduFontParameterRestriction = 50000000;
+            internal const int tsdvFontParameterRestriction = 50000000;
+            internal const int tscBreakingClassesRestriction = 200;
+            internal const int tscBreakingUnitsRestriction = 200;
+            internal const int tscModWidthClassesRestriction = 200;
+            internal const int tscPairActionsRestriction = 200;
+            internal const int tscPriorityActionsRestriction = 200;
+            internal const int tscExpansionUnitsRestriction = 200;
+            internal const int tscCharacterRestriction = 0x0FFFFFFF;
+            internal const int tscInstalledHandlersRestriction = 200;
+            internal const int tscJustPriorityLimRestriction = 20;
         }
 
         // ------------------------------------------------------------------
@@ -426,90 +429,90 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         internal const int fserrCallbackException = tserrCallbackException;
 
 
-        internal const int tserrNone =                              0;
-        internal const int tserrInvalidParameter =                 -1;
-        internal const int tserrOutOfMemory =                      -2;
-        internal const int tserrNullOutputParameter =              -3;
-        internal const int tserrInvalidLsContext =                 -4;
-        internal const int tserrInvalidLine =                      -5;
-        internal const int tserrInvalidDnode =                     -6;
-        internal const int tserrInvalidDeviceResolution =          -7;
-        internal const int tserrInvalidRun =                       -8;
-        internal const int tserrMismatchLineContext =              -9;
-        internal const int tserrContextInUse =                     -10;
-        internal const int tserrDuplicateSpecialCharacter =        -11;
-        internal const int tserrInvalidAutonumRun =                -12;
-        internal const int tserrFormattingFunctionDisabled =       -13;
-        internal const int tserrUnfinishedDnode =                  -14;
-        internal const int tserrInvalidDnodeType =                 -15;
-        internal const int tserrInvalidPenDnode =                  -16;
-        internal const int tserrInvalidNonPenDnode =               -17;
-        internal const int tserrInvalidBaselinePenDnode =          -18;
-        internal const int tserrInvalidFormatterResult =           -19;
-        internal const int tserrInvalidObjectIdFetched =           -20;
-        internal const int tserrInvalidDcpFetched =                -21;
-        internal const int tserrInvalidCpContentFetched =          -22;
-        internal const int tserrInvalidBookmarkType =              -23;
-        internal const int tserrSetDocDisabled =                   -24;
-        internal const int tserrFiniFunctionDisabled =             -25;
-        internal const int tserrCurrentDnodeIsNotTab =             -26;
-        internal const int tserrPendingTabIsNotResolved =          -27;
-        internal const int tserrWrongFiniFunction =                -28;
-        internal const int tserrInvalidBreakingClass =             -29;
-        internal const int tserrBreakingTableNotSet =              -30;
-        internal const int tserrInvalidModWidthClass =             -31;
-        internal const int tserrModWidthPairsNotSet =              -32;
-        internal const int tserrWrongTruncationPoint =             -33;
-        internal const int tserrWrongBreak =                       -34;
-        internal const int tserrDupInvalid =                       -35;
-        internal const int tserrRubyInvalidVersion =               -36;
-        internal const int tserrTatenakayokoInvalidVersion =       -37;
-        internal const int tserrWarichuInvalidVersion =            -38;
-        internal const int tserrWarichuInvalidData =               -39;
-        internal const int tserrCreateSublineDisabled =            -40;
-        internal const int tserrCurrentSublineDoesNotExist=        -41;
-        internal const int tserrCpOutsideSubline =                 -42;
-        internal const int tserrHihInvalidVersion =                -43;
-        internal const int tserrInsufficientQueryDepth =           -44;
-        internal const int tserrInvalidBreakRecord =               -45;
-        internal const int tserrInvalidPap =                       -46;
-        internal const int tserrContradictoryQueryInput =          -47;
-        internal const int tserrLineIsNotActive =                  -48;
-        internal const int tserrTooLongParagraph =                 -49;
-        internal const int tserrTooManyCharsToGlyph =              -50;
-        internal const int tserrWrongHyphenationPosition =         -51;
-        internal const int tserrTooManyPriorities =                -52;
-        internal const int tserrWrongGivenCp =                     -53;
-        internal const int tserrWrongCpFirstForGetBreaks =         -54;
-        internal const int tserrWrongJustTypeForGetBreaks =        -55;
-        internal const int tserrWrongJustTypeForCreateLineGivenCp =-56;
-        internal const int tserrTooLongGlyphContext =              -57;
-        internal const int tserrInvalidCharToGlyphMapping =        -58;
-        internal const int tserrInvalidMathUsage =                 -59;
-        internal const int tserrInconsistentChp =                  -60;
-        internal const int tserrStoppedInSubline =                 -61;
-        internal const int tserrPenPositionCouldNotBeUsed =        -62;
-        internal const int tserrDebugFlagsInShip =                 -63;
-        internal const int tserrInvalidOrderTabs =                 -64;
-        internal const int tserrSystemRestrictionsExceeded =       -100;
-        internal const int tserrInvalidPtsContext =                -103;
-        internal const int tserrInvalidClientOutput =              -104;
-        internal const int tserrInvalidObjectOutput =              -105;
-        internal const int tserrInvalidGeometry =                  -106;
-        internal const int tserrInvalidFootnoteRejector =          -107;
-        internal const int tserrInvalidFootnoteInfo =              -108;
-        internal const int tserrOutputArrayTooSmall =              -110;
-        internal const int tserrWordNotSupportedInBottomless =     -111;
-        internal const int tserrPageTooLong =                      -112;
-        internal const int tserrInvalidQuery =                     -113;
-        internal const int tserrWrongWritingDirection =            -114;
-        internal const int tserrPageNotClearedForUpdate =          -115;
-        internal const int tserrInternalError =                    -1000;
-        internal const int tserrNotImplemented =                   -10000;
-        internal const int tserrClientAbort =                      -100000;
+        internal const int tserrNone = 0;
+        internal const int tserrInvalidParameter = -1;
+        internal const int tserrOutOfMemory = -2;
+        internal const int tserrNullOutputParameter = -3;
+        internal const int tserrInvalidLsContext = -4;
+        internal const int tserrInvalidLine = -5;
+        internal const int tserrInvalidDnode = -6;
+        internal const int tserrInvalidDeviceResolution = -7;
+        internal const int tserrInvalidRun = -8;
+        internal const int tserrMismatchLineContext = -9;
+        internal const int tserrContextInUse = -10;
+        internal const int tserrDuplicateSpecialCharacter = -11;
+        internal const int tserrInvalidAutonumRun = -12;
+        internal const int tserrFormattingFunctionDisabled = -13;
+        internal const int tserrUnfinishedDnode = -14;
+        internal const int tserrInvalidDnodeType = -15;
+        internal const int tserrInvalidPenDnode = -16;
+        internal const int tserrInvalidNonPenDnode = -17;
+        internal const int tserrInvalidBaselinePenDnode = -18;
+        internal const int tserrInvalidFormatterResult = -19;
+        internal const int tserrInvalidObjectIdFetched = -20;
+        internal const int tserrInvalidDcpFetched = -21;
+        internal const int tserrInvalidCpContentFetched = -22;
+        internal const int tserrInvalidBookmarkType = -23;
+        internal const int tserrSetDocDisabled = -24;
+        internal const int tserrFiniFunctionDisabled = -25;
+        internal const int tserrCurrentDnodeIsNotTab = -26;
+        internal const int tserrPendingTabIsNotResolved = -27;
+        internal const int tserrWrongFiniFunction = -28;
+        internal const int tserrInvalidBreakingClass = -29;
+        internal const int tserrBreakingTableNotSet = -30;
+        internal const int tserrInvalidModWidthClass = -31;
+        internal const int tserrModWidthPairsNotSet = -32;
+        internal const int tserrWrongTruncationPoint = -33;
+        internal const int tserrWrongBreak = -34;
+        internal const int tserrDupInvalid = -35;
+        internal const int tserrRubyInvalidVersion = -36;
+        internal const int tserrTatenakayokoInvalidVersion = -37;
+        internal const int tserrWarichuInvalidVersion = -38;
+        internal const int tserrWarichuInvalidData = -39;
+        internal const int tserrCreateSublineDisabled = -40;
+        internal const int tserrCurrentSublineDoesNotExist = -41;
+        internal const int tserrCpOutsideSubline = -42;
+        internal const int tserrHihInvalidVersion = -43;
+        internal const int tserrInsufficientQueryDepth = -44;
+        internal const int tserrInvalidBreakRecord = -45;
+        internal const int tserrInvalidPap = -46;
+        internal const int tserrContradictoryQueryInput = -47;
+        internal const int tserrLineIsNotActive = -48;
+        internal const int tserrTooLongParagraph = -49;
+        internal const int tserrTooManyCharsToGlyph = -50;
+        internal const int tserrWrongHyphenationPosition = -51;
+        internal const int tserrTooManyPriorities = -52;
+        internal const int tserrWrongGivenCp = -53;
+        internal const int tserrWrongCpFirstForGetBreaks = -54;
+        internal const int tserrWrongJustTypeForGetBreaks = -55;
+        internal const int tserrWrongJustTypeForCreateLineGivenCp = -56;
+        internal const int tserrTooLongGlyphContext = -57;
+        internal const int tserrInvalidCharToGlyphMapping = -58;
+        internal const int tserrInvalidMathUsage = -59;
+        internal const int tserrInconsistentChp = -60;
+        internal const int tserrStoppedInSubline = -61;
+        internal const int tserrPenPositionCouldNotBeUsed = -62;
+        internal const int tserrDebugFlagsInShip = -63;
+        internal const int tserrInvalidOrderTabs = -64;
+        internal const int tserrSystemRestrictionsExceeded = -100;
+        internal const int tserrInvalidPtsContext = -103;
+        internal const int tserrInvalidClientOutput = -104;
+        internal const int tserrInvalidObjectOutput = -105;
+        internal const int tserrInvalidGeometry = -106;
+        internal const int tserrInvalidFootnoteRejector = -107;
+        internal const int tserrInvalidFootnoteInfo = -108;
+        internal const int tserrOutputArrayTooSmall = -110;
+        internal const int tserrWordNotSupportedInBottomless = -111;
+        internal const int tserrPageTooLong = -112;
+        internal const int tserrInvalidQuery = -113;
+        internal const int tserrWrongWritingDirection = -114;
+        internal const int tserrPageNotClearedForUpdate = -115;
+        internal const int tserrInternalError = -1000;
+        internal const int tserrNotImplemented = -10000;
+        internal const int tserrClientAbort = -100000;
 
-        internal const int tserrPageSizeMismatch =                 -100001;
-        internal const int tserrCallbackException =                -100002;
+        internal const int tserrPageSizeMismatch = -100001;
+        internal const int tserrCallbackException = -100002;
 
         // ------------------------------------------------------------------
         // Debug flags.
@@ -560,9 +563,9 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         [StructLayout(LayoutKind.Sequential)]
         internal struct FSCBKFIG
         {
-             internal GetFigureProperties pfnGetFigureProperties;
-             internal GetFigurePolygons pfnGetFigurePolygons;
-             internal CalcFigurePosition pfnCalcFigurePosition;
+            internal GetFigureProperties pfnGetFigureProperties;
+            internal GetFigurePolygons pfnGetFigurePolygons;
+            internal CalcFigurePosition pfnCalcFigurePosition;
         }
         // ------------------------------------------------------------------
         // fscbkfigds.h
@@ -600,38 +603,38 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         [StructLayout(LayoutKind.Sequential)]
         internal struct FSCBKGEN
         {
-             internal FSkipPage pfnFSkipPage;
-             internal GetPageDimensions pfnGetPageDimensions;
-             internal GetNextSection pfnGetNextSection;
-             internal GetSectionProperties pfnGetSectionProperties;
-             internal GetJustificationProperties pfnGetJustificationProperties;
-             internal GetMainTextSegment pfnGetMainTextSegment;
-             internal GetHeaderSegment pfnGetHeaderSegment;
-             internal GetFooterSegment pfnGetFooterSegment;
-             internal UpdGetSegmentChange pfnUpdGetSegmentChange;
-             internal GetSectionColumnInfo pfnGetSectionColumnInfo;
-             internal GetSegmentDefinedColumnSpanAreaInfo pfnGetSegmentDefinedColumnSpanAreaInfo;
-             internal GetHeightDefinedColumnSpanAreaInfo pfnGetHeightDefinedColumnSpanAreaInfo;
-             internal GetFirstPara pfnGetFirstPara;
-             internal GetNextPara pfnGetNextPara;
-             internal UpdGetFirstChangeInSegment pfnUpdGetFirstChangeInSegment;
-             internal UpdGetParaChange pfnUpdGetParaChange;
-             internal GetParaProperties pfnGetParaProperties;
-             internal CreateParaclient pfnCreateParaclient;
-             internal TransferDisplayInfo pfnTransferDisplayInfo;
-             internal DestroyParaclient pfnDestroyParaclient;
-             internal FInterruptFormattingAfterPara pfnFInterruptFormattingAfterPara;
-             internal GetEndnoteSeparators pfnGetEndnoteSeparators;
-             internal GetEndnoteSegment pfnGetEndnoteSegment;
-             internal GetNumberEndnoteColumns pfnGetNumberEndnoteColumns;
-             internal GetEndnoteColumnInfo pfnGetEndnoteColumnInfo;
-             internal GetFootnoteSeparators pfnGetFootnoteSeparators;
-             internal FFootnoteBeneathText pfnFFootnoteBeneathText;
-             internal GetNumberFootnoteColumns pfnGetNumberFootnoteColumns;
-             internal GetFootnoteColumnInfo pfnGetFootnoteColumnInfo;
-             internal GetFootnoteSegment pfnGetFootnoteSegment;
-             internal GetFootnotePresentationAndRejectionOrder pfnGetFootnotePresentationAndRejectionOrder;
-             internal FAllowFootnoteSeparation pfnFAllowFootnoteSeparation;
+            internal FSkipPage pfnFSkipPage;
+            internal GetPageDimensions pfnGetPageDimensions;
+            internal GetNextSection pfnGetNextSection;
+            internal GetSectionProperties pfnGetSectionProperties;
+            internal GetJustificationProperties pfnGetJustificationProperties;
+            internal GetMainTextSegment pfnGetMainTextSegment;
+            internal GetHeaderSegment pfnGetHeaderSegment;
+            internal GetFooterSegment pfnGetFooterSegment;
+            internal UpdGetSegmentChange pfnUpdGetSegmentChange;
+            internal GetSectionColumnInfo pfnGetSectionColumnInfo;
+            internal GetSegmentDefinedColumnSpanAreaInfo pfnGetSegmentDefinedColumnSpanAreaInfo;
+            internal GetHeightDefinedColumnSpanAreaInfo pfnGetHeightDefinedColumnSpanAreaInfo;
+            internal GetFirstPara pfnGetFirstPara;
+            internal GetNextPara pfnGetNextPara;
+            internal UpdGetFirstChangeInSegment pfnUpdGetFirstChangeInSegment;
+            internal UpdGetParaChange pfnUpdGetParaChange;
+            internal GetParaProperties pfnGetParaProperties;
+            internal CreateParaclient pfnCreateParaclient;
+            internal TransferDisplayInfo pfnTransferDisplayInfo;
+            internal DestroyParaclient pfnDestroyParaclient;
+            internal FInterruptFormattingAfterPara pfnFInterruptFormattingAfterPara;
+            internal GetEndnoteSeparators pfnGetEndnoteSeparators;
+            internal GetEndnoteSegment pfnGetEndnoteSegment;
+            internal GetNumberEndnoteColumns pfnGetNumberEndnoteColumns;
+            internal GetEndnoteColumnInfo pfnGetEndnoteColumnInfo;
+            internal GetFootnoteSeparators pfnGetFootnoteSeparators;
+            internal FFootnoteBeneathText pfnFFootnoteBeneathText;
+            internal GetNumberFootnoteColumns pfnGetNumberFootnoteColumns;
+            internal GetFootnoteColumnInfo pfnGetFootnoteColumnInfo;
+            internal GetFootnoteSegment pfnGetFootnoteSegment;
+            internal GetFootnotePresentationAndRejectionOrder pfnGetFootnotePresentationAndRejectionOrder;
+            internal FAllowFootnoteSeparation pfnFAllowFootnoteSeparation;
         }
         // ------------------------------------------------------------------
         // fscbkgends.h
@@ -650,14 +653,14 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         [StructLayout(LayoutKind.Sequential)]
         internal struct FSCBKOBJ
         {
-             internal IntPtr pfnNewPtr;
-             internal IntPtr pfnDisposePtr;
-             internal IntPtr pfnReallocPtr;
-             internal DuplicateMcsclient pfnDuplicateMcsclient;
-             internal DestroyMcsclient pfnDestroyMcsclient;
-             internal FEqualMcsclient pfnFEqualMcsclient;
-             internal ConvertMcsclient pfnConvertMcsclient;
-             internal GetObjectHandlerInfo pfnGetObjectHandlerInfo;
+            internal IntPtr pfnNewPtr;
+            internal IntPtr pfnDisposePtr;
+            internal IntPtr pfnReallocPtr;
+            internal DuplicateMcsclient pfnDuplicateMcsclient;
+            internal DestroyMcsclient pfnDestroyMcsclient;
+            internal FEqualMcsclient pfnFEqualMcsclient;
+            internal ConvertMcsclient pfnConvertMcsclient;
+            internal GetObjectHandlerInfo pfnGetObjectHandlerInfo;
         }
         // ------------------------------------------------------------------
         // fscbktxt.h
@@ -665,37 +668,37 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         [StructLayout(LayoutKind.Sequential)]
         internal struct FSCBKTXT
         {
-             internal CreateParaBreakingSession pfnCreateParaBreakingSession;
-             internal DestroyParaBreakingSession pfnDestroyParaBreakingSession;
-             internal GetTextProperties pfnGetTextProperties;
-             internal GetNumberFootnotes pfnGetNumberFootnotes;
-             internal GetFootnotes pfnGetFootnotes;
-             internal FormatDropCap pfnFormatDropCap;
-             internal GetDropCapPolygons pfnGetDropCapPolygons;
-             internal DestroyDropCap pfnDestroyDropCap;
-             internal FormatBottomText pfnFormatBottomText;
-             internal FormatLine pfnFormatLine;
-             internal FormatLineForced pfnFormatLineForced;
-             internal FormatLineVariants pfnFormatLineVariants;
-             internal ReconstructLineVariant pfnReconstructLineVariant;
-             internal DestroyLine pfnDestroyLine;
-             internal DuplicateLineBreakRecord pfnDuplicateLineBreakRecord;
-             internal DestroyLineBreakRecord pfnDestroyLineBreakRecord;
-             internal SnapGridVertical pfnSnapGridVertical;
-             internal GetDvrSuppressibleBottomSpace pfnGetDvrSuppressibleBottomSpace;
-             internal GetDvrAdvance pfnGetDvrAdvance;
-             internal UpdGetChangeInText pfnUpdGetChangeInText;
-             internal UpdGetDropCapChange pfnUpdGetDropCapChange;
-             internal FInterruptFormattingText pfnFInterruptFormattingText;
-             internal GetTextParaCache pfnGetTextParaCache;
-             internal SetTextParaCache pfnSetTextParaCache;
-             internal GetOptimalLineDcpCache pfnGetOptimalLineDcpCache;
-             internal GetNumberAttachedObjectsBeforeTextLine pfnGetNumberAttachedObjectsBeforeTextLine;
-             internal GetAttachedObjectsBeforeTextLine pfnGetAttachedObjectsBeforeTextLine;
-             internal GetNumberAttachedObjectsInTextLine pfnGetNumberAttachedObjectsInTextLine;
-             internal GetAttachedObjectsInTextLine pfnGetAttachedObjectsInTextLine;
-             internal UpdGetAttachedObjectChange pfnUpdGetAttachedObjectChange;
-             internal GetDurFigureAnchor pfnGetDurFigureAnchor;
+            internal CreateParaBreakingSession pfnCreateParaBreakingSession;
+            internal DestroyParaBreakingSession pfnDestroyParaBreakingSession;
+            internal GetTextProperties pfnGetTextProperties;
+            internal GetNumberFootnotes pfnGetNumberFootnotes;
+            internal GetFootnotes pfnGetFootnotes;
+            internal FormatDropCap pfnFormatDropCap;
+            internal GetDropCapPolygons pfnGetDropCapPolygons;
+            internal DestroyDropCap pfnDestroyDropCap;
+            internal FormatBottomText pfnFormatBottomText;
+            internal FormatLine pfnFormatLine;
+            internal FormatLineForced pfnFormatLineForced;
+            internal FormatLineVariants pfnFormatLineVariants;
+            internal ReconstructLineVariant pfnReconstructLineVariant;
+            internal DestroyLine pfnDestroyLine;
+            internal DuplicateLineBreakRecord pfnDuplicateLineBreakRecord;
+            internal DestroyLineBreakRecord pfnDestroyLineBreakRecord;
+            internal SnapGridVertical pfnSnapGridVertical;
+            internal GetDvrSuppressibleBottomSpace pfnGetDvrSuppressibleBottomSpace;
+            internal GetDvrAdvance pfnGetDvrAdvance;
+            internal UpdGetChangeInText pfnUpdGetChangeInText;
+            internal UpdGetDropCapChange pfnUpdGetDropCapChange;
+            internal FInterruptFormattingText pfnFInterruptFormattingText;
+            internal GetTextParaCache pfnGetTextParaCache;
+            internal SetTextParaCache pfnSetTextParaCache;
+            internal GetOptimalLineDcpCache pfnGetOptimalLineDcpCache;
+            internal GetNumberAttachedObjectsBeforeTextLine pfnGetNumberAttachedObjectsBeforeTextLine;
+            internal GetAttachedObjectsBeforeTextLine pfnGetAttachedObjectsBeforeTextLine;
+            internal GetNumberAttachedObjectsInTextLine pfnGetNumberAttachedObjectsInTextLine;
+            internal GetAttachedObjectsInTextLine pfnGetAttachedObjectsInTextLine;
+            internal UpdGetAttachedObjectChange pfnUpdGetAttachedObjectChange;
+            internal GetDurFigureAnchor pfnGetDurFigureAnchor;
         }
         // ------------------------------------------------------------------
         // fscbktxtds.h
@@ -731,10 +734,10 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
 
         internal enum FSKFMTLINE : int    // result of comparison method/API
         {
-            fskfmtlineNormal  = 0,
+            fskfmtlineNormal = 0,
             fskfmtlineOptimal = 1,
-            fskfmtlineForced  = 2,
-            fskfmtlineWord    = 3,
+            fskfmtlineForced = 2,
+            fskfmtlineWord = 3,
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -773,35 +776,35 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         [StructLayout(LayoutKind.Sequential)]
         internal struct FSCBKWRD
         {
-             internal IntPtr pfnGetSectionHorizMargins;
-             internal IntPtr pfnFPerformColumnBalancing;
-             internal IntPtr pfnCalculateColumnBalancingApproximateHeight;
-             internal IntPtr pfnCalculateColumnBalancingStep;
-             internal IntPtr pfnGetColumnSectionBreak;
-             internal IntPtr pfnFSuppressKeepWithNextAtTopOfPage;
-             internal IntPtr pfnFSuppressKeepTogetherAtTopOfPage;
-             internal IntPtr pfnFAllowSpaceAfterOverhang;
-             internal IntPtr pfnFormatLineWord;
-             internal IntPtr pfnGetSuppressedTopSpace;
-             internal IntPtr pfnChangeSplatLineHeight;
-             internal IntPtr pfnGetDvrAdvanceWord;
-             internal IntPtr pfnGetMinDvrAdvance;
-             internal IntPtr pfnGetDurTooNarrowForFigure;
-             internal IntPtr pfnResolveOverlap;
-             internal IntPtr pfnGetOffsetForFlowAroundAndBBox;
-             internal IntPtr pfnGetClientGeometryHandle;
-             internal IntPtr pfnDuplicateClientGeometryHandle;
-             internal IntPtr pfnDestroyClientGeometryHandle;
-             internal IntPtr pfnObstacleAddNotification;
-             internal IntPtr pfnGetFigureObstaclesForRestart;
-             internal IntPtr pfnRepositionFigure;
-             internal IntPtr pfnFStopBeforeLr;
-             internal IntPtr pfnFStopBeforeLine;
-             internal IntPtr pfnFIgnoreCollision;
-             internal IntPtr pfnGetNumberOfLinesForColumnBalancing;
-             internal IntPtr pfnFCancelPageBreakBefore;
-             internal IntPtr pfnChangeVrTopLineForFigure;
-             internal IntPtr pfnFApplyWidowOrphanControlInFootnoteResolution;
+            internal IntPtr pfnGetSectionHorizMargins;
+            internal IntPtr pfnFPerformColumnBalancing;
+            internal IntPtr pfnCalculateColumnBalancingApproximateHeight;
+            internal IntPtr pfnCalculateColumnBalancingStep;
+            internal IntPtr pfnGetColumnSectionBreak;
+            internal IntPtr pfnFSuppressKeepWithNextAtTopOfPage;
+            internal IntPtr pfnFSuppressKeepTogetherAtTopOfPage;
+            internal IntPtr pfnFAllowSpaceAfterOverhang;
+            internal IntPtr pfnFormatLineWord;
+            internal IntPtr pfnGetSuppressedTopSpace;
+            internal IntPtr pfnChangeSplatLineHeight;
+            internal IntPtr pfnGetDvrAdvanceWord;
+            internal IntPtr pfnGetMinDvrAdvance;
+            internal IntPtr pfnGetDurTooNarrowForFigure;
+            internal IntPtr pfnResolveOverlap;
+            internal IntPtr pfnGetOffsetForFlowAroundAndBBox;
+            internal IntPtr pfnGetClientGeometryHandle;
+            internal IntPtr pfnDuplicateClientGeometryHandle;
+            internal IntPtr pfnDestroyClientGeometryHandle;
+            internal IntPtr pfnObstacleAddNotification;
+            internal IntPtr pfnGetFigureObstaclesForRestart;
+            internal IntPtr pfnRepositionFigure;
+            internal IntPtr pfnFStopBeforeLr;
+            internal IntPtr pfnFStopBeforeLine;
+            internal IntPtr pfnFIgnoreCollision;
+            internal IntPtr pfnGetNumberOfLinesForColumnBalancing;
+            internal IntPtr pfnFCancelPageBreakBefore;
+            internal IntPtr pfnChangeVrTopLineForFigure;
+            internal IntPtr pfnFApplyWidowOrphanControlInFootnoteResolution;
         }
         // ------------------------------------------------------------------
         // fscbkwrdds.h
@@ -833,15 +836,15 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         [StructLayout(LayoutKind.Sequential)]
         internal struct FSCONTEXTINFO
         {
-             internal uint version;                  // version number
-             internal uint fsffi;                    // compatibility flags
-             internal int drMinColumnBalancingStep;  // min step for col balancing algorithm
-             internal int cInstalledObjects;         // number of installed objects
-             internal IntPtr pInstalledObjects;      // array of installed objects
-             internal IntPtr pfsclient;              // client data for this context
-             internal IntPtr ptsPenaltyModule;       // Penalty module
-             internal FSCBK fscbk;                   // FS client callbacks
-             internal AssertFailed pfnAssertFailed;  // debugging callback
+            internal uint version;                  // version number
+            internal uint fsffi;                    // compatibility flags
+            internal int drMinColumnBalancingStep;  // min step for col balancing algorithm
+            internal int cInstalledObjects;         // number of installed objects
+            internal IntPtr pInstalledObjects;      // array of installed objects
+            internal IntPtr pfsclient;              // client data for this context
+            internal IntPtr ptsPenaltyModule;       // Penalty module
+            internal FSCBK fscbk;                   // FS client callbacks
+            internal AssertFailed pfnAssertFailed;  // debugging callback
         }
         // ------------------------------------------------------------------
         // fsdefs.h
@@ -858,13 +861,13 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             // Helper constructors for FSRECT
             // ------------------------------------------------------------------
 
-            internal FSRECT(int inU, int inV, int inDU, int inDV) {  u = inU; v=inV; du = inDU; dv = inDV; }
-            internal FSRECT(FSRECT rect) {  u = rect.u; v=rect.v; du = rect.du; dv = rect.dv; }
-            internal FSRECT(Rect rect) 
-            { 
-                if(!rect.IsEmpty)
+            internal FSRECT(int inU, int inV, int inDU, int inDV) { u = inU; v = inV; du = inDU; dv = inDV; }
+            internal FSRECT(FSRECT rect) { u = rect.u; v = rect.v; du = rect.du; dv = rect.dv; }
+            internal FSRECT(Rect rect)
+            {
+                if (!rect.IsEmpty)
                 {
-                    u = TextDpi.ToTextDpi(rect.Left); 
+                    u = TextDpi.ToTextDpi(rect.Left);
                     v = TextDpi.ToTextDpi(rect.Top);
                     du = TextDpi.ToTextDpi(rect.Width);
                     dv = TextDpi.ToTextDpi(rect.Height);
@@ -878,16 +881,16 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             // ------------------------------------------------------------------
             // Equality operators for FSRECT
             // ------------------------------------------------------------------
-            public static bool operator == (FSRECT rect1, FSRECT rect2)
+            public static bool operator ==(FSRECT rect1, FSRECT rect2)
             {
                 return rect1.u == rect2.u && rect1.v == rect2.v && rect1.du == rect2.du && rect1.dv == rect2.dv;
             }
-            public static bool operator != (FSRECT rect1, FSRECT rect2) { return !(rect1 == rect2); }
+            public static bool operator !=(FSRECT rect1, FSRECT rect2) { return !(rect1 == rect2); }
             public override bool Equals(object o)
-            { 
-                if(o is FSRECT) 
-                { 
-                    return (FSRECT)o == this; 
+            {
+                if (o is FSRECT)
+                {
+                    return (FSRECT)o == this;
                 }
                 return false;
             }
@@ -925,19 +928,19 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             // ------------------------------------------------------------------
             // Helper constructors for FSPOINT
             // ------------------------------------------------------------------
-            internal FSPOINT(int inU, int inV) {  u = inU; v = inV; }
+            internal FSPOINT(int inU, int inV) { u = inU; v = inV; }
 
             // ------------------------------------------------------------------
             // Equality operators for FSPOINT
             // ------------------------------------------------------------------
-            public static bool operator == (FSPOINT point1, FSPOINT point2) { return point1.u == point2.u && point1.v == point2.v; }
-            public static bool operator != (FSPOINT point1, FSPOINT point2) { return !(point1 == point2); }
+            public static bool operator ==(FSPOINT point1, FSPOINT point2) { return point1.u == point2.u && point1.v == point2.v; }
+            public static bool operator !=(FSPOINT point1, FSPOINT point2) { return !(point1 == point2); }
 
             public override bool Equals(object o)
-            { 
-                if(o is FSPOINT) 
-                { 
-                    return (FSPOINT)o == this; 
+            {
+                if (o is FSPOINT)
+                {
+                    return (FSPOINT)o == this;
                 }
                 return false;
             }
@@ -961,14 +964,14 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             // ------------------------------------------------------------------
             // Equality operators for FSVECTOR
             // ------------------------------------------------------------------
-            public static bool operator == (FSVECTOR vector1, FSVECTOR vector2) { return vector1.du == vector2.du && vector1.dv == vector2.dv; }
-            public static bool operator != (FSVECTOR vector1, FSVECTOR vector2) { return !(vector1 == vector2); }
+            public static bool operator ==(FSVECTOR vector1, FSVECTOR vector2) { return vector1.du == vector2.du && vector1.dv == vector2.dv; }
+            public static bool operator !=(FSVECTOR vector1, FSVECTOR vector2) { return !(vector1 == vector2); }
 
             public override bool Equals(object o)
-            { 
-                if(o is FSVECTOR) 
-                { 
-                    return (FSVECTOR)o == this; 
+            {
+                if (o is FSVECTOR)
+                {
+                    return (FSVECTOR)o == this;
                 }
                 return false;
             }
@@ -1028,22 +1031,22 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         [StructLayout(LayoutKind.Sequential)]
         internal struct FSFLOATERCBK
         {
-             internal GetFloaterProperties pfnGetFloaterProperties;
-             internal FormatFloaterContentFinite pfnFormatFloaterContentFinite;
-             internal FormatFloaterContentBottomless pfnFormatFloaterContentBottomless;
-             internal UpdateBottomlessFloaterContent pfnUpdateBottomlessFloaterContent;
-             internal GetFloaterPolygons pfnGetFloaterPolygons;
-             internal ClearUpdateInfoInFloaterContent pfnClearUpdateInfoInFloaterContent;
-             internal CompareFloaterContents pfnCompareFloaterContents;
-             internal DestroyFloaterContent pfnDestroyFloaterContent;
-             internal DuplicateFloaterContentBreakRecord pfnDuplicateFloaterContentBreakRecord;
-             internal DestroyFloaterContentBreakRecord pfnDestroyFloaterContentBreakRecord;
-             internal GetFloaterContentColumnBalancingInfo pfnGetFloaterContentColumnBalancingInfo;
-             internal GetFloaterContentNumberFootnotes pfnGetFloaterContentNumberFootnotes;
-             internal GetFloaterContentFootnoteInfo pfnGetFloaterContentFootnoteInfo;
-             internal TransferDisplayInfoInFloaterContent pfnTransferDisplayInfoInFloaterContent;
-             internal GetMCSClientAfterFloater pfnGetMCSClientAfterFloater;
-             internal GetDvrUsedForFloater pfnGetDvrUsedForFloater;
+            internal GetFloaterProperties pfnGetFloaterProperties;
+            internal FormatFloaterContentFinite pfnFormatFloaterContentFinite;
+            internal FormatFloaterContentBottomless pfnFormatFloaterContentBottomless;
+            internal UpdateBottomlessFloaterContent pfnUpdateBottomlessFloaterContent;
+            internal GetFloaterPolygons pfnGetFloaterPolygons;
+            internal ClearUpdateInfoInFloaterContent pfnClearUpdateInfoInFloaterContent;
+            internal CompareFloaterContents pfnCompareFloaterContents;
+            internal DestroyFloaterContent pfnDestroyFloaterContent;
+            internal DuplicateFloaterContentBreakRecord pfnDuplicateFloaterContentBreakRecord;
+            internal DestroyFloaterContentBreakRecord pfnDestroyFloaterContentBreakRecord;
+            internal GetFloaterContentColumnBalancingInfo pfnGetFloaterContentColumnBalancingInfo;
+            internal GetFloaterContentNumberFootnotes pfnGetFloaterContentNumberFootnotes;
+            internal GetFloaterContentFootnoteInfo pfnGetFloaterContentFootnoteInfo;
+            internal TransferDisplayInfoInFloaterContent pfnTransferDisplayInfoInFloaterContent;
+            internal GetMCSClientAfterFloater pfnGetMCSClientAfterFloater;
+            internal GetDvrUsedForFloater pfnGetDvrUsedForFloater;
         }
         // ------------------------------------------------------------------
         // fsfloatercbkds.h
@@ -1063,11 +1066,11 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
             internal FSKWRAP fskwr;
             internal int fDelayNoProgress;
 
-        	internal int durDistTextLeft;   // distance to text from MinU side	
-        	internal int durDistTextRight;  // distance to text from MaxU side	
-        	internal int dvrDistTextTop;    // distance to text from MinV side	
-        	internal int dvrDistTextBottom; // distance to text from MaxV side
-}
+            internal int durDistTextLeft;   // distance to text from MinU side	
+            internal int durDistTextRight;  // distance to text from MaxU side	
+            internal int dvrDistTextTop;    // distance to text from MinV side	
+            internal int dvrDistTextBottom; // distance to text from MaxV side
+        }
         // ------------------------------------------------------------------
         // fsfloaterhandlerds.h
         // ------------------------------------------------------------------
@@ -1204,23 +1207,23 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         [StructLayout(LayoutKind.Sequential)]
         internal struct FSIMETHODS
         {
-             internal ObjCreateContext pfnCreateContext;
-             internal ObjDestroyContext pfnDestroyContext;
-             internal ObjFormatParaFinite pfnFormatParaFinite;
-             internal ObjFormatParaBottomless pfnFormatParaBottomless;
-             internal ObjUpdateBottomlessPara pfnUpdateBottomlessPara;
-             internal ObjSynchronizeBottomlessPara pfnSynchronizeBottomlessPara;
-             internal ObjComparePara pfnComparePara;
-             internal ObjClearUpdateInfoInPara pfnClearUpdateInfoInPara;
-             internal ObjDestroyPara pfnDestroyPara;
-             internal ObjDuplicateBreakRecord pfnDuplicateBreakRecord;
-             internal ObjDestroyBreakRecord pfnDestroyBreakRecord;
-             internal ObjGetColumnBalancingInfo pfnGetColumnBalancingInfo;
-             internal ObjGetNumberFootnotes pfnGetNumberFootnotes;
-             internal ObjGetFootnoteInfo pfnGetFootnoteInfo;
-             internal IntPtr pfnGetFootnoteInfoWord;
-             internal ObjShiftVertical pfnShiftVertical;
-             internal ObjTransferDisplayInfoPara pfnTransferDisplayInfoPara;
+            internal ObjCreateContext pfnCreateContext;
+            internal ObjDestroyContext pfnDestroyContext;
+            internal ObjFormatParaFinite pfnFormatParaFinite;
+            internal ObjFormatParaBottomless pfnFormatParaBottomless;
+            internal ObjUpdateBottomlessPara pfnUpdateBottomlessPara;
+            internal ObjSynchronizeBottomlessPara pfnSynchronizeBottomlessPara;
+            internal ObjComparePara pfnComparePara;
+            internal ObjClearUpdateInfoInPara pfnClearUpdateInfoInPara;
+            internal ObjDestroyPara pfnDestroyPara;
+            internal ObjDuplicateBreakRecord pfnDuplicateBreakRecord;
+            internal ObjDestroyBreakRecord pfnDestroyBreakRecord;
+            internal ObjGetColumnBalancingInfo pfnGetColumnBalancingInfo;
+            internal ObjGetNumberFootnotes pfnGetNumberFootnotes;
+            internal ObjGetFootnoteInfo pfnGetFootnoteInfo;
+            internal IntPtr pfnGetFootnoteInfoWord;
+            internal ObjShiftVertical pfnShiftVertical;
+            internal ObjTransferDisplayInfoPara pfnTransferDisplayInfoPara;
         }
         // ------------------------------------------------------------------
         // fskalignpage.h
@@ -1272,9 +1275,9 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         // ------------------------------------------------------------------
         internal enum FSKSUPPRESSHARDBREAKBEFOREFIRSTPARA
         {
-        	fsksuppresshardbreakbeforefirstparaNone,
-        	fsksuppresshardbreakbeforefirstparaColumn,
-        	fsksuppresshardbreakbeforefirstparaPageAndColumn
+            fsksuppresshardbreakbeforefirstparaNone,
+            fsksuppresshardbreakbeforefirstparaColumn,
+            fsksuppresshardbreakbeforefirstparaPageAndColumn
         };
 
         // ------------------------------------------------------------------
@@ -1717,39 +1720,39 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         [StructLayout(LayoutKind.Sequential)]
         internal struct FSTABLECBKFETCH
         {
-             internal GetFirstHeaderRow pfnGetFirstHeaderRow;
-             internal GetNextHeaderRow pfnGetNextHeaderRow;
-             internal GetFirstFooterRow pfnGetFirstFooterRow;
-             internal GetNextFooterRow pfnGetNextFooterRow;
-             internal GetFirstRow pfnGetFirstRow;
-             internal GetNextRow pfnGetNextRow;
-             internal UpdFChangeInHeaderFooter pfnUpdFChangeInHeaderFooter;
-             internal UpdGetFirstChangeInTable pfnUpdGetFirstChangeInTable;
-             internal UpdGetRowChange pfnUpdGetRowChange;
-             internal UpdGetCellChange pfnUpdGetCellChange;
-             internal GetDistributionKind pfnGetDistributionKind;
-             internal GetRowProperties pfnGetRowProperties;
-             internal GetCells pfnGetCells;
-             internal FInterruptFormattingTable pfnFInterruptFormattingTable;
-             internal CalcHorizontalBBoxOfRow pfnCalcHorizontalBBoxOfRow;
+            internal GetFirstHeaderRow pfnGetFirstHeaderRow;
+            internal GetNextHeaderRow pfnGetNextHeaderRow;
+            internal GetFirstFooterRow pfnGetFirstFooterRow;
+            internal GetNextFooterRow pfnGetNextFooterRow;
+            internal GetFirstRow pfnGetFirstRow;
+            internal GetNextRow pfnGetNextRow;
+            internal UpdFChangeInHeaderFooter pfnUpdFChangeInHeaderFooter;
+            internal UpdGetFirstChangeInTable pfnUpdGetFirstChangeInTable;
+            internal UpdGetRowChange pfnUpdGetRowChange;
+            internal UpdGetCellChange pfnUpdGetCellChange;
+            internal GetDistributionKind pfnGetDistributionKind;
+            internal GetRowProperties pfnGetRowProperties;
+            internal GetCells pfnGetCells;
+            internal FInterruptFormattingTable pfnFInterruptFormattingTable;
+            internal CalcHorizontalBBoxOfRow pfnCalcHorizontalBBoxOfRow;
         }
         [StructLayout(LayoutKind.Sequential)]
         internal struct FSTABLECBKCELL
         {
-             internal FormatCellFinite pfnFormatCellFinite;
-             internal FormatCellBottomless pfnFormatCellBottomless;
-             internal UpdateBottomlessCell pfnUpdateBottomlessCell;
-             internal CompareCells pfnCompareCells;
-             internal ClearUpdateInfoInCell pfnClearUpdateInfoInCell;
-             internal SetCellHeight pfnSetCellHeight;
-             internal DestroyCell pfnDestroyCell;
-             internal DuplicateCellBreakRecord pfnDuplicateCellBreakRecord;
-             internal DestroyCellBreakRecord pfnDestroyCellBreakRecord;
-             internal GetCellNumberFootnotes pfnGetCellNumberFootnotes;
-             internal IntPtr pfnGetCellFootnoteInfo;
-             internal IntPtr pfnGetCellFootnoteInfoWord;
-             internal GetCellMinColumnBalancingStep pfnGetCellMinColumnBalancingStep;
-             internal TransferDisplayInfoCell pfnTransferDisplayInfoCell;
+            internal FormatCellFinite pfnFormatCellFinite;
+            internal FormatCellBottomless pfnFormatCellBottomless;
+            internal UpdateBottomlessCell pfnUpdateBottomlessCell;
+            internal CompareCells pfnCompareCells;
+            internal ClearUpdateInfoInCell pfnClearUpdateInfoInCell;
+            internal SetCellHeight pfnSetCellHeight;
+            internal DestroyCell pfnDestroyCell;
+            internal DuplicateCellBreakRecord pfnDuplicateCellBreakRecord;
+            internal DestroyCellBreakRecord pfnDestroyCellBreakRecord;
+            internal GetCellNumberFootnotes pfnGetCellNumberFootnotes;
+            internal IntPtr pfnGetCellFootnoteInfo;
+            internal IntPtr pfnGetCellFootnoteInfoWord;
+            internal GetCellMinColumnBalancingStep pfnGetCellMinColumnBalancingStep;
+            internal TransferDisplayInfoCell pfnTransferDisplayInfoCell;
         }
         // ------------------------------------------------------------------
         // fstablecbkds.h
@@ -1828,26 +1831,26 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         [StructLayout(LayoutKind.Sequential)]
         internal struct FSTABLEOBJCBK
         {
-             internal GetTableProperties pfnGetTableProperties;
-             internal AutofitTable pfnAutofitTable;
-             internal UpdAutofitTable pfnUpdAutofitTable;
-             internal GetMCSClientAfterTable pfnGetMCSClientAfterTable;
-             internal IntPtr pfnGetDvrUsedForFloatTable;
+            internal GetTableProperties pfnGetTableProperties;
+            internal AutofitTable pfnAutofitTable;
+            internal UpdAutofitTable pfnUpdAutofitTable;
+            internal GetMCSClientAfterTable pfnGetMCSClientAfterTable;
+            internal IntPtr pfnGetDvrUsedForFloatTable;
         }
         [StructLayout(LayoutKind.Sequential)]
         internal struct FSTABLECBKFETCHWORD
         {
-             internal IntPtr pfnGetTablePropertiesWord;
-             internal IntPtr pfnGetRowPropertiesWord;
-             internal IntPtr pfnGetRowWidthWord;
-             internal IntPtr pfnGetNumberFiguresForTableRow;
-             internal IntPtr pfnGetFiguresForTableRow;
-             internal IntPtr pfnFStopBeforeTableRowLr;
-             internal IntPtr pfnFIgnoreCollisionForTableRow;
-             internal IntPtr pfnChangeRowHeightRestriction;
-             internal IntPtr pfnNotifyRowPosition;
-             internal IntPtr pfnNotifyRowBorderAbove;
-             internal IntPtr pfnNotifyTableBreakRec;
+            internal IntPtr pfnGetTablePropertiesWord;
+            internal IntPtr pfnGetRowPropertiesWord;
+            internal IntPtr pfnGetRowWidthWord;
+            internal IntPtr pfnGetNumberFiguresForTableRow;
+            internal IntPtr pfnGetFiguresForTableRow;
+            internal IntPtr pfnFStopBeforeTableRowLr;
+            internal IntPtr pfnFIgnoreCollisionForTableRow;
+            internal IntPtr pfnChangeRowHeightRestriction;
+            internal IntPtr pfnNotifyRowPosition;
+            internal IntPtr pfnNotifyRowBorderAbove;
+            internal IntPtr pfnNotifyTableBreakRec;
         }
         [StructLayout(LayoutKind.Sequential)]
         internal struct FSTABLEOBJINIT
@@ -1960,912 +1963,912 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         // ------------------------------------------------------------------
         // assert
         // ------------------------------------------------------------------
-         internal delegate void AssertFailed(
-            string arg1,                        // IN:
-            string arg2,                        // IN:
-            int arg3,                           // IN:
-            uint arg4);                         // IN:
-        // ------------------------------------------------------------------
-        // fscbkfig.h
-        // ------------------------------------------------------------------
-         internal delegate int GetFigureProperties(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pfsparaclientFigure,         // IN:
-            IntPtr nmpFigure,                   // IN:  figure's name
-            int fInTextLine,                    // IN:  it is attached to text line
-            uint fswdir,                        // IN:  current direction
-            int fBottomUndefined,               // IN:  bottom of page is not defined
-            out int dur,                        // OUT: width of figure
-            out int dvr,                        // OUT: height of figure
-            out FSFIGUREPROPS fsfigprops,       // OUT: figure attributes
-            out int cPolygons,                  // OUT: number of polygons
-            out int cVertices,                  // OUT: total number of vertices in all polygons
-            out int durDistTextLeft,            // OUT: distance to text from MinU side
-            out int durDistTextRight,           // OUT: distance to text from MaxU side
-            out int dvrDistTextTop,             // OUT: distance to text from MinV side
-            out int dvrDistTextBottom);         // OUT: distance to text from MaxV side
-         internal unsafe delegate int GetFigurePolygons(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pfsparaclientFigure,         // IN:
-            IntPtr nmpFigure,                   // IN:  figure's name
-            uint fswdir,                        // IN:  current direction
-            int ncVertices,                     // IN:  size of array of vertex counts (= number of polygons)
-            int nfspt,                          // IN:  size of the array of all vertices
-            int* rgcVertices,                   // OUT: array of vertex counts (array containing number of vertices for each polygon)
-            out int ccVertices,                 // OUT: actual number of vertex counts
-            FSPOINT* rgfspt,                    // OUT: array of all vertices
-            out int cfspt,                      // OUT: actual total number of vertices in all polygons
-            out int fWrapThrough);              // OUT: fill text in empty areas within obstacles?
-         internal delegate int CalcFigurePosition(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pfsparaclientFigure,         // IN:
-            IntPtr nmpFigure,                   // IN:  figure's name
-            uint fswdir,                        // IN:  current direction
-            ref FSRECT fsrcPage,                // IN:  page rectangle
-            ref FSRECT fsrcMargin,              // IN:  rectangle within page margins
-            ref FSRECT fsrcTrack,               // IN:  track rectangle
-            ref FSRECT fsrcFigurePreliminary,   // IN:  prelim figure rect calculated from figure props
-            int fMustPosition,                  // IN:  must find position in this track?
-            int fInTextLine,                    // IN:  it is attached to text line
-            out int fPushToNextTrack,           // OUT: push to next track?
-            out FSRECT fsrcFlow,                // OUT: FlowAround rectangle
-            out FSRECT fsrcOverlap,             // OUT: Overlap rectangle
-            out FSBBOX fsbbox,                  // OUT: bbox
-            out FSRECT fsrcSearch);             // OUT: search area for overlap
-        // ------------------------------------------------------------------
-        // fscbkgen.h
-        // ------------------------------------------------------------------
-         internal delegate int FSkipPage(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nms,                         // IN:  name of first section on the page
-            out int fSkip);                     // OUT: skip it due to odd/even page issue
-         internal delegate int GetPageDimensions(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nms,                         // IN:  name of section on page
-            out uint fswdir,                    // OUT: direction of main text
-            out int fHeaderFooterAtTopBottom,   // OUT: header/footer position on the page
-            out int durPage,                    // OUT: page width
-            out int dvrPage,                    // OUT: page height
-            ref FSRECT fsrcMargin);             // OUT: rectangle within page margins
-         internal delegate int GetNextSection(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nmsCur,                      // IN:  name of current section
-            out int fSuccess,                   // OUT: next section exists
-            out IntPtr nmsNext);                // OUT: name of the next section
-         internal delegate int GetSectionProperties(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nms,                         // IN:  name of section
-            out int fNewPage,                   // OUT: stop page before this section?
-            out uint fswdir,                    // OUT: direction of this section
-            out int fApplyColumnBalancing,      // OUT: apply column balancing to this section?
-            out int ccol,                       // OUT: number of columns in the main text segment
-            out int cSegmentDefinedColumnSpanAreas, // OUT:
-            out int cHeightDefinedColumnSpanAreas); // OUT:
-         internal unsafe delegate int GetJustificationProperties(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr* rgnms,                      // IN:  array of the section names on the page
-            int cnms,                           // IN:  number of sections on the page
-            int fLastSectionNotBroken,          // IN:  is last section on the page broken?
-            out int fJustify,                   // OUT: apply justification/alignment to the page?
-            out FSKALIGNPAGE fskal,             // OUT: kind of vertical alignment for the page
-            out int fCancelAtLastColumn);       // OUT: cancel justification for the last column of the page?
-         internal delegate int GetMainTextSegment(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nmsSection,                  // IN:  name of section
-            out IntPtr nmSegment);              // OUT: name of the main text segment for this section
-         internal delegate int GetHeaderSegment(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nms,                         // IN:  name of section
-            IntPtr pfsbrpagePrelim,             // IN:  ptr to page break record of main page
-            uint fswdir,                        // IN:  direction for dvrMaxHeight/dvrFromEdge
-            out int fHeaderPresent,             // OUT: is there header on this page?
-            out int fHardMargin,                // OUT: does margin increase with header?
-            out int dvrMaxHeight,               // OUT: maximum size of header
-            out int dvrFromEdge,                // OUT: distance from top edge of the paper
-            out uint fswdirHeader,              // OUT: direction for header
-            out IntPtr nmsHeader);              // OUT: name of header segment
-         internal delegate int GetFooterSegment(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nms,                         // IN:  name of section
-            IntPtr pfsbrpagePrelim,             // IN:  ptr to page break record of main page
-            uint fswdir,                        // IN:  direction for dvrMaxHeight/dvrFromEdge
-            out int fFooterPresent,             // OUT: is there footer on this page?
-            out int fHardMargin,                // OUT: does margin increase with footer?
-            out int dvrMaxHeight,               // OUT: maximum size of footer
-            out int dvrFromEdge,                // OUT: distance from bottom edge of the paper
-            out uint fswdirFooter,              // OUT: direction for footer
-            out IntPtr nmsFooter);              // OUT: name of footer segment
-         internal delegate int UpdGetSegmentChange(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nms,                         // IN:  name of the segment
-            out FSKCHANGE fskch);               // OUT: kind of change
-         internal unsafe delegate int GetSectionColumnInfo(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nms,                         // IN:  name of section
-            uint fswdir,                        // IN:  direction of section
-            int ncol,                           // IN:  size of the preallocated fscolinfo array
-            FSCOLUMNINFO* fscolinfo,            // OUT: array of the colinfo structures
-            out int ccol);                      // OUT: actual number of the columns in the segment
-         internal unsafe delegate int GetSegmentDefinedColumnSpanAreaInfo(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nms,                         // IN:  name of section
-            int cAreas,                         // IN:  number of areas - size of pre-allocated arrays
-            IntPtr* rgnmSeg,                    // OUT: array of segment names for segment-defined areas
-            int* rgcColumns,                    // OUT: arrays of number of columns spanned
-            out int cAreasActual);              // OUT: actual number of segment-defined areas
-         internal unsafe delegate int GetHeightDefinedColumnSpanAreaInfo(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nms,                         // IN:  name of section
-            int cAreas,                         // IN:  number of areas - size of pre-allocated arrays
-            int* rgdvrAreaHeight,               // OUT: array of segment names for height-defined areas
-            int* rgcColumns,                    // OUT: arrays of number of columns spanned
-            out int cAreasActual);              // OUT: actual number of height-defined areas
-         internal delegate int GetFirstPara(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nms,                         // IN:  name of segment
-            out int fSuccessful,                // OUT: does segment contain any paragraph?
-            out IntPtr nmp);                    // OUT: name of the first paragraph in segment
-         internal delegate int GetNextPara(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nms,                         // IN:  name of segment
-            IntPtr nmpCur,                      // IN:  name of current para
-            out int fFound,                     // OUT: is there next paragraph?
-            out IntPtr nmpNext);                // OUT: name of the next paragraph in section
-         internal delegate int UpdGetFirstChangeInSegment(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nms,                         // IN:  name of segment
-            out int fFound,                     // OUT: anything changed?
-            out int fChangeFirst,               // OUT: first paragraph changed?
-            out IntPtr nmpBeforeChange);        // OUT: name of paragraph before the change if !fChangeFirst
-         internal delegate int UpdGetParaChange(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nmp,                         // IN:  name of the paragraph
-            out FSKCHANGE fskch,                // OUT: kind of change
-            out int fNoFurtherChanges);         // OUT: no changes after?
-         internal delegate int GetParaProperties(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nmp,                         // IN:  name of paragraph
-            ref FSPAP fspap);                   // OUT: paragraph properties
-         internal delegate int CreateParaclient(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nmp,                         // IN:  name of paragraph
-            out IntPtr pfsparaclient);          // OUT: opaque to PTS paragraph client
-         internal delegate int TransferDisplayInfo(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pfsparaclientOld,            // IN:  opaque to PTS old paragraph client
-            IntPtr pfsparaclientNew);           // IN:  opaque to PTS new paragraph client
-         internal delegate int DestroyParaclient(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pfsparaclient);              // IN:  opaque to PTS paragraph client
-         internal delegate int FInterruptFormattingAfterPara(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pfsparaclient,               // IN:  opaque to PTS paragraph client
-            IntPtr nmp,                         // IN:  name of paragraph
-            int vr,                             // IN:  current v position
-            out int fInterruptFormatting);      // OUT: is it time to stop formatting?
-         internal delegate int GetEndnoteSeparators(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nmsSection,                  // IN:  name of section
-            out IntPtr nmsEndnoteSeparator,     // OUT: name of the endnote separator segment
-            out IntPtr nmEndnoteContSeparator,  // OUT: name of endnote cont separator segment
-            out IntPtr nmsEndnoteContNotice);   // OUT: name of the endnote cont notice segment
-         internal delegate int GetEndnoteSegment(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nmsSection,                  // IN:  name of section
-            out int fEndnotesPresent,           // OUT: are there endnotes for this segment?
-            out IntPtr nmsEndnotes);            // OUT: name of endnote segment
-         internal delegate int GetNumberEndnoteColumns(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nms,                         // IN:  name of section
-            out int ccolEndnote);               // OUT: number of columns in endnote area
-         internal unsafe delegate int GetEndnoteColumnInfo(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nms,                         // IN:  name of section
-            uint fswdir,                        // IN:  direction of section
-            int ncolEndnote,                    // IN:  size of preallocated fscolinfo array
-            FSCOLUMNINFO* fscolinfoEndnote,     // OUT: array of the colinfo structures
-            out int ccolEndnote);               // OUT: actual number of the columns in footnote area
-         internal delegate int GetFootnoteSeparators(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nmsSection,                  // IN:  name of section
-            out IntPtr nmsFtnSeparator,         // OUT: name of the footnote separator segment
-            out IntPtr nmsFtnContSeparator,     // OUT: name of the ftn cont separator segment
-            out IntPtr nmsFtnContNotice);       // OUT: name of the footnote cont notice segment
-         internal delegate int FFootnoteBeneathText(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nms,                         // IN:  name of section
-            out int fFootnoteBeneathText);      // OUT: position footnote right after text?
-         internal delegate int GetNumberFootnoteColumns(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nms,                         // IN:  name of section
-            out int ccolFootnote);              // OUT: number of columns in footnote area
-         internal unsafe delegate int GetFootnoteColumnInfo(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nms,                         // IN:  name of section
-            uint fswdir,                        // IN:  direction of main text
-            int ncolFootnote,                   // IN:  size of preallocated fscolinfo array
-            FSCOLUMNINFO* fscolinfoFootnote,    // OUT: array of the colinfo structures
-            out int ccolFootnote);              // OUT: actual number of the columns in footnote area
-         internal delegate int GetFootnoteSegment(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nmftn,                       // IN:  name of footnote
-            out IntPtr nmsFootnote);            // OUT: name of footnote segment
-         internal unsafe delegate int GetFootnotePresentationAndRejectionOrder(
-            IntPtr pfsclient,                           // IN:  client opaque data
-            int cFootnotes,                             // IN:  size of all arrays
-            IntPtr* rgProposedPresentationOrder,        // IN:  footnotes in proposed pres order
-            IntPtr* rgProposedRejectionOrder,           // IN:  footnotes in proposed reject order
-            out int fProposedPresentationOrderAccepted, // OUT: agree with proposed order?
-            IntPtr* rgFinalPresentationOrder,           // OUT: footnotes in final pres order
-            out int fProposedRejectionOrderAccepted,    // OUT: agree with proposed order?
-            IntPtr* rgFinalRejectionOrder);             // OUT: footnotes in final reject order
-         internal delegate int FAllowFootnoteSeparation(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nmftn,                       // IN:  name of footnote
-            out int fAllow);                    // OUT: allow separating footnote from its reference
-        // ------------------------------------------------------------------
-        // fscbkobj.h
-        // ------------------------------------------------------------------
-        // NewPtr
-        // DisposePtr
-        // ReallocPtr
-         internal delegate int DuplicateMcsclient(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pmcsclientIn,                // IN:  margin collapsing state
-            out IntPtr pmcsclientNew);          // OUT: duplicated margin collapsing state
-         internal delegate int DestroyMcsclient(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pmcsclient);                 // IN:  margin collapsing state to destroy
-         internal delegate int FEqualMcsclient(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pmcsclient1,                 // IN:  first margin collapsing state to compare
-            IntPtr pmcsclient2,                 // IN:  second margin collapsing state to compare
-            out int fEqual);                    // OUT: are MStructs equal?
-         internal delegate int ConvertMcsclient(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pfsparaclient,               // IN:
-            IntPtr nmp,                         // IN:  name of paragraph
-            uint fswdir,                        // IN:  current direction
-            IntPtr pmcsclient,                  // IN:  pointer to the input margin collapsing state
-            int fSuppressTopSpace,              // IN:  suppress empty space at the top of page
-            out int dvr);                       // OUT: dvr, calculated based on margin collapsing state
-         internal delegate int GetObjectHandlerInfo(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            int idobj,                          // IN:  id of the object handler
-            IntPtr pobjectinfo);                // OUT: initialization information for the specified object
-        // ------------------------------------------------------------------
-        // fscbktxt.h
-        // ------------------------------------------------------------------
-         internal delegate int CreateParaBreakingSession(
-            IntPtr pfsclient,                   // IN:  client opaque data 
-            IntPtr pfsparaclient,               // IN:  opaque to PTS paragraph client
-            IntPtr nmp,                         // IN:  name of paragraph
-            int iArea,                          // IN:  column-span area index
-            int fsdcpStart,                     // IN:  dcp where formatting will start
-            IntPtr pfsbreakreclineclient,       // IN:  break record for the first line
-            uint fswdir,                        // IN:  current direction
-            int urStartTrack,                   // IN:  position at the beginning of the track
-            int durTrack,                       // IN:  width of track
-            int urPageLeftMargin,               // IN:  left margin of the page
-            out IntPtr ppfsparabreakingsession, // OUT: paragraph breaking session
-            out int fParagraphJustified);       // OUT: if paragraph is justified
-         internal delegate int DestroyParaBreakingSession(
-            IntPtr pfsclient,                   // IN:  client opaque data 
-            IntPtr pfsparabreakingsession);     // IN:  session to destroy
-         internal delegate int GetTextProperties(
-            IntPtr pfsclient,                   // IN:  client opaque data 
-            IntPtr nmp,                         // IN:  name of paragraph
-            int iArea,                          // IN:  column-span area index
-            ref FSTXTPROPS fstxtprops);         // OUT: text paragraph properties
-         internal delegate int GetNumberFootnotes(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nmp,                         // IN:  name of paragraph
-            int fsdcpStart,                     // IN:  dcp at the beginning of the range
-            int fsdcpLim,                       // IN:  dcp at the end of the range
-            out int nFootnote);                 // OUT: number of footnote references in the range
-         internal unsafe delegate int GetFootnotes(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nmp,                         // IN:  name of paragraph
-            int fsdcpStart,                     // IN:  dcp at the beginning of the range
-            int fsdcpLim,                       // IN:  dcp at the end of the range
-            int nFootnotes,                     // IN:  size of the output array
-            IntPtr* rgnmftn,                    // OUT: array of footnote names in the range
-            int* rgdcp,                         // OUT: array of footnote refs in the range
-            out int cFootnotes);                // OUT: actual number of footnotes
-         internal delegate int FormatDropCap(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pfsparaclient,               // IN:
-            IntPtr nmp,                         // IN:  name of paragraph
-            int iArea,                          // IN:  column-span area index
-            uint fswdir,                        // IN:  current direction
-            int fSuppressTopSpace,              // IN:  suppress empty space at the top of page
-            out IntPtr pfsdropc,                // OUT: pointer to drop cap created by client
-            out int fInMargin,                  // OUT: should it be positioned in margin or in track?
-            out int dur,                        // OUT: width of drop cap
-            out int dvr,                        // OUT: height of drop cap
-            out int cPolygons,                  // OUT: number of polygons
-            out int cVertices,                  // OUT: number of vertices
-            out int durText);                   // OUT: distance from text
-         internal unsafe delegate int GetDropCapPolygons(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pfsdropc,                    // IN:  pointer to drop cap
-            IntPtr nmp,                         // IN:  para name
-            uint fswdir,                        // IN:  current direction
-            int ncVertices,                    // IN:  size of array of vertex counts (= number of polygons)
-            int nfspt,                         // IN:  size of the array of all vertices
-            int* rgcVertices,                   // OUT: array of vertex counts (array containing number of vertices for each polygon)
-            out int ccVertices,                 // OUT: actual number of vertex counts
-            FSPOINT* rgfspt,                    // OUT: array of all vertices
-            out int cfspt,                      // OUT: actual total number of vertices in all polygons
-            out int fWrapThrough);              // OUT: fill text in empty areas within obstacles?
-         internal delegate int DestroyDropCap(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pfsdropc);                   // IN:  pointer to drop cap created by client
-         internal delegate int FormatBottomText(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pfsparaclient,               // IN:
-            IntPtr nmp,                         // IN:  name of paragraph
-            int iArea,                          // IN:  column-span area index
-            uint fswdir,                        // IN:  current direction
-            IntPtr pfslineLast,                 // IN:  last formatted line
-            int dvrLine,                        // IN:  height of last line
-            out IntPtr pmcsclientOut);          // OUT: margin collapsing state at bottom of text
-         internal delegate int FormatLine(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pfsparaclient,               // IN:
-            IntPtr nmp,                         // IN:  name of paragraph
-            int iArea,                          // IN:  column-span area index
-            int dcp,                            // IN:  dcp at the beginning of the line
-            IntPtr pbrlineIn,                   // IN:  client's line break record
-            uint fswdir,                        // IN:  current direction
-            int urStartLine,                    // IN:  position at the beginning of the line
-            int durLine,                        // IN:  maximum width of line
-            int urStartTrack,                   // IN:  position at the beginning of the track
-            int durTrack,                       // IN:  width of track
-            int urPageLeftMargin,               // IN:  left margin of the page
-            int fAllowHyphenation,              // IN:  allow hyphenation of the line?
-            int fClearOnLeft,                   // IN:  is clear on left side
-            int fClearOnRight,                  // IN:  is clear on right side
-            int fTreatAsFirstInPara,            // IN:  treat line as first line in paragraph
-            int fTreatAsLastInPara,             // IN:  treat line as last line in paragraph
-            int fSuppressTopSpace,              // IN:  suppress empty space at the top of page
-            out IntPtr pfsline,                 // OUT: pointer to line created by client
-            out int dcpLine,                    // OUT: dcp consumed by the line
-            out IntPtr ppbrlineOut,             // OUT: client's line break record
-            out int fForcedBroken,              // OUT: was line force-broken?
-            out FSFLRES fsflres,                // OUT: result of formatting
-            out int dvrAscent,                  // OUT: ascent of the line
-            out int dvrDescent,                 // OUT: descent of the line
-            out int urBBox,                     // OUT: ur of the line's ink
-            out int durBBox,                    // OUT: dur of of the line's ink
-            out int dcpDepend,                  // OUT: number of chars after line break that were considered
-            out int fReformatNeighborsAsLastLine); // OUT: should line segments be reformatted?
-         internal delegate int FormatLineForced(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pfsparaclient,               // IN:
-            IntPtr nmp,                         // IN:  name of paragraph
-            int iArea,                          // IN:  column-span area index
-            int dcp,                            // IN:  dcp at the beginning of the line
-            IntPtr pbrlineIn,                   // IN:  client's line break record
-            uint fswdir,                        // IN:  current direction
-            int urStartLine,                    // IN:  position at the beginning of the line
-            int durLine,                        // IN:  maximum width of line
-            int urStartTrack,                   // IN:  position at the beginning of the track
-            int durTrack,                       // IN:  width of track
-            int urPageLeftMargin,               // IN:  left margin of the page
-            int fClearOnLeft,                   // IN:  is clear on left side
-            int fClearOnRight,                  // IN:  is clear on right side
-            int fTreatAsFirstInPara,            // IN:  treat line as first line in paragraph
-            int fTreatAsLastInPara,             // IN:  treat line as last line in paragraph
-            int fSuppressTopSpace,              // IN:  suppress empty space at the top of page
-            int dvrAvailable,                   // IN:  available vertical space
-            out IntPtr pfsline,                 // OUT: pointer to line created by client
-            out int dcpLine,                    // OUT: dcp consumed by the line
-            out IntPtr ppbrlineOut,             // OUT: client's line break record
-            out FSFLRES fsflres,                // OUT: result of formatting
-            out int dvrAscent,                  // OUT: ascent of the line
-            out int dvrDescent,                 // OUT: descent of the line
-            out int urBBox,                     // OUT: ur of the line's ink
-            out int durBBox,                    // OUT: dur of of the line's ink
-            out int dcpDepend);                 // OUT: number of chars after line break that were considered
-         internal unsafe delegate int FormatLineVariants(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pfsparabreakingsession,      // IN:  current session
-            int dcp,                            // IN:  dcp at the beginning line variants
-            IntPtr pbrlineIn,                   // IN:  client's line break record
-            uint fswdir,                        // IN:  current direction
-            int urStartLine,                    // IN:  position at the beginning of the line
-            int durLine,                        // IN:  maximum width of line
-            int fAllowHyphenation,              // IN:  allow hyphenation of the line?
-            int fClearOnLeft,                   // IN:  is clear on left side
-            int fClearOnRight,                  // IN:  is clear on right side
-            int fTreatAsFirstInPara,            // IN:  treat line as first line in paragraph
-            int fTreatAsLastInPara,             // IN:  treat line as last line in paragraph
-            int fSuppressTopSpace,              // IN:  suppress empty space at the top of page
-            IntPtr lineVariantRestriction,      // IN:  line variant restriction
-            int nLineVariantsAlloc,             // IN:  size of the pre-allocated variant array
-            FSLINEVARIANT* rgfslinevariant,     // OUT: pre-allocatedarray for line variants
-            out int nLineVariantsActual,        // OUT: actual number of variants
-            out int iLineVariantBest);          // OUT: best line variant index
+        internal delegate void AssertFailed(
+           string arg1,                        // IN:
+           string arg2,                        // IN:
+           int arg3,                           // IN:
+           uint arg4);                         // IN:
+                                               // ------------------------------------------------------------------
+                                               // fscbkfig.h
+                                               // ------------------------------------------------------------------
+        internal delegate int GetFigureProperties(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pfsparaclientFigure,         // IN:
+           IntPtr nmpFigure,                   // IN:  figure's name
+           int fInTextLine,                    // IN:  it is attached to text line
+           uint fswdir,                        // IN:  current direction
+           int fBottomUndefined,               // IN:  bottom of page is not defined
+           out int dur,                        // OUT: width of figure
+           out int dvr,                        // OUT: height of figure
+           out FSFIGUREPROPS fsfigprops,       // OUT: figure attributes
+           out int cPolygons,                  // OUT: number of polygons
+           out int cVertices,                  // OUT: total number of vertices in all polygons
+           out int durDistTextLeft,            // OUT: distance to text from MinU side
+           out int durDistTextRight,           // OUT: distance to text from MaxU side
+           out int dvrDistTextTop,             // OUT: distance to text from MinV side
+           out int dvrDistTextBottom);         // OUT: distance to text from MaxV side
+        internal unsafe delegate int GetFigurePolygons(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pfsparaclientFigure,         // IN:
+           IntPtr nmpFigure,                   // IN:  figure's name
+           uint fswdir,                        // IN:  current direction
+           int ncVertices,                     // IN:  size of array of vertex counts (= number of polygons)
+           int nfspt,                          // IN:  size of the array of all vertices
+           int* rgcVertices,                   // OUT: array of vertex counts (array containing number of vertices for each polygon)
+           out int ccVertices,                 // OUT: actual number of vertex counts
+           FSPOINT* rgfspt,                    // OUT: array of all vertices
+           out int cfspt,                      // OUT: actual total number of vertices in all polygons
+           out int fWrapThrough);              // OUT: fill text in empty areas within obstacles?
+        internal delegate int CalcFigurePosition(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pfsparaclientFigure,         // IN:
+           IntPtr nmpFigure,                   // IN:  figure's name
+           uint fswdir,                        // IN:  current direction
+           ref FSRECT fsrcPage,                // IN:  page rectangle
+           ref FSRECT fsrcMargin,              // IN:  rectangle within page margins
+           ref FSRECT fsrcTrack,               // IN:  track rectangle
+           ref FSRECT fsrcFigurePreliminary,   // IN:  prelim figure rect calculated from figure props
+           int fMustPosition,                  // IN:  must find position in this track?
+           int fInTextLine,                    // IN:  it is attached to text line
+           out int fPushToNextTrack,           // OUT: push to next track?
+           out FSRECT fsrcFlow,                // OUT: FlowAround rectangle
+           out FSRECT fsrcOverlap,             // OUT: Overlap rectangle
+           out FSBBOX fsbbox,                  // OUT: bbox
+           out FSRECT fsrcSearch);             // OUT: search area for overlap
+                                               // ------------------------------------------------------------------
+                                               // fscbkgen.h
+                                               // ------------------------------------------------------------------
+        internal delegate int FSkipPage(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nms,                         // IN:  name of first section on the page
+           out int fSkip);                     // OUT: skip it due to odd/even page issue
+        internal delegate int GetPageDimensions(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nms,                         // IN:  name of section on page
+           out uint fswdir,                    // OUT: direction of main text
+           out int fHeaderFooterAtTopBottom,   // OUT: header/footer position on the page
+           out int durPage,                    // OUT: page width
+           out int dvrPage,                    // OUT: page height
+           ref FSRECT fsrcMargin);             // OUT: rectangle within page margins
+        internal delegate int GetNextSection(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nmsCur,                      // IN:  name of current section
+           out int fSuccess,                   // OUT: next section exists
+           out IntPtr nmsNext);                // OUT: name of the next section
+        internal delegate int GetSectionProperties(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nms,                         // IN:  name of section
+           out int fNewPage,                   // OUT: stop page before this section?
+           out uint fswdir,                    // OUT: direction of this section
+           out int fApplyColumnBalancing,      // OUT: apply column balancing to this section?
+           out int ccol,                       // OUT: number of columns in the main text segment
+           out int cSegmentDefinedColumnSpanAreas, // OUT:
+           out int cHeightDefinedColumnSpanAreas); // OUT:
+        internal unsafe delegate int GetJustificationProperties(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr* rgnms,                      // IN:  array of the section names on the page
+           int cnms,                           // IN:  number of sections on the page
+           int fLastSectionNotBroken,          // IN:  is last section on the page broken?
+           out int fJustify,                   // OUT: apply justification/alignment to the page?
+           out FSKALIGNPAGE fskal,             // OUT: kind of vertical alignment for the page
+           out int fCancelAtLastColumn);       // OUT: cancel justification for the last column of the page?
+        internal delegate int GetMainTextSegment(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nmsSection,                  // IN:  name of section
+           out IntPtr nmSegment);              // OUT: name of the main text segment for this section
+        internal delegate int GetHeaderSegment(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nms,                         // IN:  name of section
+           IntPtr pfsbrpagePrelim,             // IN:  ptr to page break record of main page
+           uint fswdir,                        // IN:  direction for dvrMaxHeight/dvrFromEdge
+           out int fHeaderPresent,             // OUT: is there header on this page?
+           out int fHardMargin,                // OUT: does margin increase with header?
+           out int dvrMaxHeight,               // OUT: maximum size of header
+           out int dvrFromEdge,                // OUT: distance from top edge of the paper
+           out uint fswdirHeader,              // OUT: direction for header
+           out IntPtr nmsHeader);              // OUT: name of header segment
+        internal delegate int GetFooterSegment(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nms,                         // IN:  name of section
+           IntPtr pfsbrpagePrelim,             // IN:  ptr to page break record of main page
+           uint fswdir,                        // IN:  direction for dvrMaxHeight/dvrFromEdge
+           out int fFooterPresent,             // OUT: is there footer on this page?
+           out int fHardMargin,                // OUT: does margin increase with footer?
+           out int dvrMaxHeight,               // OUT: maximum size of footer
+           out int dvrFromEdge,                // OUT: distance from bottom edge of the paper
+           out uint fswdirFooter,              // OUT: direction for footer
+           out IntPtr nmsFooter);              // OUT: name of footer segment
+        internal delegate int UpdGetSegmentChange(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nms,                         // IN:  name of the segment
+           out FSKCHANGE fskch);               // OUT: kind of change
+        internal unsafe delegate int GetSectionColumnInfo(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nms,                         // IN:  name of section
+           uint fswdir,                        // IN:  direction of section
+           int ncol,                           // IN:  size of the preallocated fscolinfo array
+           FSCOLUMNINFO* fscolinfo,            // OUT: array of the colinfo structures
+           out int ccol);                      // OUT: actual number of the columns in the segment
+        internal unsafe delegate int GetSegmentDefinedColumnSpanAreaInfo(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nms,                         // IN:  name of section
+           int cAreas,                         // IN:  number of areas - size of pre-allocated arrays
+           IntPtr* rgnmSeg,                    // OUT: array of segment names for segment-defined areas
+           int* rgcColumns,                    // OUT: arrays of number of columns spanned
+           out int cAreasActual);              // OUT: actual number of segment-defined areas
+        internal unsafe delegate int GetHeightDefinedColumnSpanAreaInfo(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nms,                         // IN:  name of section
+           int cAreas,                         // IN:  number of areas - size of pre-allocated arrays
+           int* rgdvrAreaHeight,               // OUT: array of segment names for height-defined areas
+           int* rgcColumns,                    // OUT: arrays of number of columns spanned
+           out int cAreasActual);              // OUT: actual number of height-defined areas
+        internal delegate int GetFirstPara(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nms,                         // IN:  name of segment
+           out int fSuccessful,                // OUT: does segment contain any paragraph?
+           out IntPtr nmp);                    // OUT: name of the first paragraph in segment
+        internal delegate int GetNextPara(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nms,                         // IN:  name of segment
+           IntPtr nmpCur,                      // IN:  name of current para
+           out int fFound,                     // OUT: is there next paragraph?
+           out IntPtr nmpNext);                // OUT: name of the next paragraph in section
+        internal delegate int UpdGetFirstChangeInSegment(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nms,                         // IN:  name of segment
+           out int fFound,                     // OUT: anything changed?
+           out int fChangeFirst,               // OUT: first paragraph changed?
+           out IntPtr nmpBeforeChange);        // OUT: name of paragraph before the change if !fChangeFirst
+        internal delegate int UpdGetParaChange(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nmp,                         // IN:  name of the paragraph
+           out FSKCHANGE fskch,                // OUT: kind of change
+           out int fNoFurtherChanges);         // OUT: no changes after?
+        internal delegate int GetParaProperties(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nmp,                         // IN:  name of paragraph
+           ref FSPAP fspap);                   // OUT: paragraph properties
+        internal delegate int CreateParaclient(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nmp,                         // IN:  name of paragraph
+           out IntPtr pfsparaclient);          // OUT: opaque to PTS paragraph client
+        internal delegate int TransferDisplayInfo(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pfsparaclientOld,            // IN:  opaque to PTS old paragraph client
+           IntPtr pfsparaclientNew);           // IN:  opaque to PTS new paragraph client
+        internal delegate int DestroyParaclient(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pfsparaclient);              // IN:  opaque to PTS paragraph client
+        internal delegate int FInterruptFormattingAfterPara(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pfsparaclient,               // IN:  opaque to PTS paragraph client
+           IntPtr nmp,                         // IN:  name of paragraph
+           int vr,                             // IN:  current v position
+           out int fInterruptFormatting);      // OUT: is it time to stop formatting?
+        internal delegate int GetEndnoteSeparators(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nmsSection,                  // IN:  name of section
+           out IntPtr nmsEndnoteSeparator,     // OUT: name of the endnote separator segment
+           out IntPtr nmEndnoteContSeparator,  // OUT: name of endnote cont separator segment
+           out IntPtr nmsEndnoteContNotice);   // OUT: name of the endnote cont notice segment
+        internal delegate int GetEndnoteSegment(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nmsSection,                  // IN:  name of section
+           out int fEndnotesPresent,           // OUT: are there endnotes for this segment?
+           out IntPtr nmsEndnotes);            // OUT: name of endnote segment
+        internal delegate int GetNumberEndnoteColumns(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nms,                         // IN:  name of section
+           out int ccolEndnote);               // OUT: number of columns in endnote area
+        internal unsafe delegate int GetEndnoteColumnInfo(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nms,                         // IN:  name of section
+           uint fswdir,                        // IN:  direction of section
+           int ncolEndnote,                    // IN:  size of preallocated fscolinfo array
+           FSCOLUMNINFO* fscolinfoEndnote,     // OUT: array of the colinfo structures
+           out int ccolEndnote);               // OUT: actual number of the columns in footnote area
+        internal delegate int GetFootnoteSeparators(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nmsSection,                  // IN:  name of section
+           out IntPtr nmsFtnSeparator,         // OUT: name of the footnote separator segment
+           out IntPtr nmsFtnContSeparator,     // OUT: name of the ftn cont separator segment
+           out IntPtr nmsFtnContNotice);       // OUT: name of the footnote cont notice segment
+        internal delegate int FFootnoteBeneathText(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nms,                         // IN:  name of section
+           out int fFootnoteBeneathText);      // OUT: position footnote right after text?
+        internal delegate int GetNumberFootnoteColumns(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nms,                         // IN:  name of section
+           out int ccolFootnote);              // OUT: number of columns in footnote area
+        internal unsafe delegate int GetFootnoteColumnInfo(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nms,                         // IN:  name of section
+           uint fswdir,                        // IN:  direction of main text
+           int ncolFootnote,                   // IN:  size of preallocated fscolinfo array
+           FSCOLUMNINFO* fscolinfoFootnote,    // OUT: array of the colinfo structures
+           out int ccolFootnote);              // OUT: actual number of the columns in footnote area
+        internal delegate int GetFootnoteSegment(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nmftn,                       // IN:  name of footnote
+           out IntPtr nmsFootnote);            // OUT: name of footnote segment
+        internal unsafe delegate int GetFootnotePresentationAndRejectionOrder(
+           IntPtr pfsclient,                           // IN:  client opaque data
+           int cFootnotes,                             // IN:  size of all arrays
+           IntPtr* rgProposedPresentationOrder,        // IN:  footnotes in proposed pres order
+           IntPtr* rgProposedRejectionOrder,           // IN:  footnotes in proposed reject order
+           out int fProposedPresentationOrderAccepted, // OUT: agree with proposed order?
+           IntPtr* rgFinalPresentationOrder,           // OUT: footnotes in final pres order
+           out int fProposedRejectionOrderAccepted,    // OUT: agree with proposed order?
+           IntPtr* rgFinalRejectionOrder);             // OUT: footnotes in final reject order
+        internal delegate int FAllowFootnoteSeparation(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nmftn,                       // IN:  name of footnote
+           out int fAllow);                    // OUT: allow separating footnote from its reference
+                                               // ------------------------------------------------------------------
+                                               // fscbkobj.h
+                                               // ------------------------------------------------------------------
+                                               // NewPtr
+                                               // DisposePtr
+                                               // ReallocPtr
+        internal delegate int DuplicateMcsclient(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pmcsclientIn,                // IN:  margin collapsing state
+           out IntPtr pmcsclientNew);          // OUT: duplicated margin collapsing state
+        internal delegate int DestroyMcsclient(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pmcsclient);                 // IN:  margin collapsing state to destroy
+        internal delegate int FEqualMcsclient(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pmcsclient1,                 // IN:  first margin collapsing state to compare
+           IntPtr pmcsclient2,                 // IN:  second margin collapsing state to compare
+           out int fEqual);                    // OUT: are MStructs equal?
+        internal delegate int ConvertMcsclient(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pfsparaclient,               // IN:
+           IntPtr nmp,                         // IN:  name of paragraph
+           uint fswdir,                        // IN:  current direction
+           IntPtr pmcsclient,                  // IN:  pointer to the input margin collapsing state
+           int fSuppressTopSpace,              // IN:  suppress empty space at the top of page
+           out int dvr);                       // OUT: dvr, calculated based on margin collapsing state
+        internal delegate int GetObjectHandlerInfo(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           int idobj,                          // IN:  id of the object handler
+           IntPtr pobjectinfo);                // OUT: initialization information for the specified object
+                                               // ------------------------------------------------------------------
+                                               // fscbktxt.h
+                                               // ------------------------------------------------------------------
+        internal delegate int CreateParaBreakingSession(
+           IntPtr pfsclient,                   // IN:  client opaque data 
+           IntPtr pfsparaclient,               // IN:  opaque to PTS paragraph client
+           IntPtr nmp,                         // IN:  name of paragraph
+           int iArea,                          // IN:  column-span area index
+           int fsdcpStart,                     // IN:  dcp where formatting will start
+           IntPtr pfsbreakreclineclient,       // IN:  break record for the first line
+           uint fswdir,                        // IN:  current direction
+           int urStartTrack,                   // IN:  position at the beginning of the track
+           int durTrack,                       // IN:  width of track
+           int urPageLeftMargin,               // IN:  left margin of the page
+           out IntPtr ppfsparabreakingsession, // OUT: paragraph breaking session
+           out int fParagraphJustified);       // OUT: if paragraph is justified
+        internal delegate int DestroyParaBreakingSession(
+           IntPtr pfsclient,                   // IN:  client opaque data 
+           IntPtr pfsparabreakingsession);     // IN:  session to destroy
+        internal delegate int GetTextProperties(
+           IntPtr pfsclient,                   // IN:  client opaque data 
+           IntPtr nmp,                         // IN:  name of paragraph
+           int iArea,                          // IN:  column-span area index
+           ref FSTXTPROPS fstxtprops);         // OUT: text paragraph properties
+        internal delegate int GetNumberFootnotes(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nmp,                         // IN:  name of paragraph
+           int fsdcpStart,                     // IN:  dcp at the beginning of the range
+           int fsdcpLim,                       // IN:  dcp at the end of the range
+           out int nFootnote);                 // OUT: number of footnote references in the range
+        internal unsafe delegate int GetFootnotes(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nmp,                         // IN:  name of paragraph
+           int fsdcpStart,                     // IN:  dcp at the beginning of the range
+           int fsdcpLim,                       // IN:  dcp at the end of the range
+           int nFootnotes,                     // IN:  size of the output array
+           IntPtr* rgnmftn,                    // OUT: array of footnote names in the range
+           int* rgdcp,                         // OUT: array of footnote refs in the range
+           out int cFootnotes);                // OUT: actual number of footnotes
+        internal delegate int FormatDropCap(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pfsparaclient,               // IN:
+           IntPtr nmp,                         // IN:  name of paragraph
+           int iArea,                          // IN:  column-span area index
+           uint fswdir,                        // IN:  current direction
+           int fSuppressTopSpace,              // IN:  suppress empty space at the top of page
+           out IntPtr pfsdropc,                // OUT: pointer to drop cap created by client
+           out int fInMargin,                  // OUT: should it be positioned in margin or in track?
+           out int dur,                        // OUT: width of drop cap
+           out int dvr,                        // OUT: height of drop cap
+           out int cPolygons,                  // OUT: number of polygons
+           out int cVertices,                  // OUT: number of vertices
+           out int durText);                   // OUT: distance from text
+        internal unsafe delegate int GetDropCapPolygons(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pfsdropc,                    // IN:  pointer to drop cap
+           IntPtr nmp,                         // IN:  para name
+           uint fswdir,                        // IN:  current direction
+           int ncVertices,                    // IN:  size of array of vertex counts (= number of polygons)
+           int nfspt,                         // IN:  size of the array of all vertices
+           int* rgcVertices,                   // OUT: array of vertex counts (array containing number of vertices for each polygon)
+           out int ccVertices,                 // OUT: actual number of vertex counts
+           FSPOINT* rgfspt,                    // OUT: array of all vertices
+           out int cfspt,                      // OUT: actual total number of vertices in all polygons
+           out int fWrapThrough);              // OUT: fill text in empty areas within obstacles?
+        internal delegate int DestroyDropCap(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pfsdropc);                   // IN:  pointer to drop cap created by client
+        internal delegate int FormatBottomText(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pfsparaclient,               // IN:
+           IntPtr nmp,                         // IN:  name of paragraph
+           int iArea,                          // IN:  column-span area index
+           uint fswdir,                        // IN:  current direction
+           IntPtr pfslineLast,                 // IN:  last formatted line
+           int dvrLine,                        // IN:  height of last line
+           out IntPtr pmcsclientOut);          // OUT: margin collapsing state at bottom of text
+        internal delegate int FormatLine(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pfsparaclient,               // IN:
+           IntPtr nmp,                         // IN:  name of paragraph
+           int iArea,                          // IN:  column-span area index
+           int dcp,                            // IN:  dcp at the beginning of the line
+           IntPtr pbrlineIn,                   // IN:  client's line break record
+           uint fswdir,                        // IN:  current direction
+           int urStartLine,                    // IN:  position at the beginning of the line
+           int durLine,                        // IN:  maximum width of line
+           int urStartTrack,                   // IN:  position at the beginning of the track
+           int durTrack,                       // IN:  width of track
+           int urPageLeftMargin,               // IN:  left margin of the page
+           int fAllowHyphenation,              // IN:  allow hyphenation of the line?
+           int fClearOnLeft,                   // IN:  is clear on left side
+           int fClearOnRight,                  // IN:  is clear on right side
+           int fTreatAsFirstInPara,            // IN:  treat line as first line in paragraph
+           int fTreatAsLastInPara,             // IN:  treat line as last line in paragraph
+           int fSuppressTopSpace,              // IN:  suppress empty space at the top of page
+           out IntPtr pfsline,                 // OUT: pointer to line created by client
+           out int dcpLine,                    // OUT: dcp consumed by the line
+           out IntPtr ppbrlineOut,             // OUT: client's line break record
+           out int fForcedBroken,              // OUT: was line force-broken?
+           out FSFLRES fsflres,                // OUT: result of formatting
+           out int dvrAscent,                  // OUT: ascent of the line
+           out int dvrDescent,                 // OUT: descent of the line
+           out int urBBox,                     // OUT: ur of the line's ink
+           out int durBBox,                    // OUT: dur of of the line's ink
+           out int dcpDepend,                  // OUT: number of chars after line break that were considered
+           out int fReformatNeighborsAsLastLine); // OUT: should line segments be reformatted?
+        internal delegate int FormatLineForced(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pfsparaclient,               // IN:
+           IntPtr nmp,                         // IN:  name of paragraph
+           int iArea,                          // IN:  column-span area index
+           int dcp,                            // IN:  dcp at the beginning of the line
+           IntPtr pbrlineIn,                   // IN:  client's line break record
+           uint fswdir,                        // IN:  current direction
+           int urStartLine,                    // IN:  position at the beginning of the line
+           int durLine,                        // IN:  maximum width of line
+           int urStartTrack,                   // IN:  position at the beginning of the track
+           int durTrack,                       // IN:  width of track
+           int urPageLeftMargin,               // IN:  left margin of the page
+           int fClearOnLeft,                   // IN:  is clear on left side
+           int fClearOnRight,                  // IN:  is clear on right side
+           int fTreatAsFirstInPara,            // IN:  treat line as first line in paragraph
+           int fTreatAsLastInPara,             // IN:  treat line as last line in paragraph
+           int fSuppressTopSpace,              // IN:  suppress empty space at the top of page
+           int dvrAvailable,                   // IN:  available vertical space
+           out IntPtr pfsline,                 // OUT: pointer to line created by client
+           out int dcpLine,                    // OUT: dcp consumed by the line
+           out IntPtr ppbrlineOut,             // OUT: client's line break record
+           out FSFLRES fsflres,                // OUT: result of formatting
+           out int dvrAscent,                  // OUT: ascent of the line
+           out int dvrDescent,                 // OUT: descent of the line
+           out int urBBox,                     // OUT: ur of the line's ink
+           out int durBBox,                    // OUT: dur of of the line's ink
+           out int dcpDepend);                 // OUT: number of chars after line break that were considered
+        internal unsafe delegate int FormatLineVariants(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pfsparabreakingsession,      // IN:  current session
+           int dcp,                            // IN:  dcp at the beginning line variants
+           IntPtr pbrlineIn,                   // IN:  client's line break record
+           uint fswdir,                        // IN:  current direction
+           int urStartLine,                    // IN:  position at the beginning of the line
+           int durLine,                        // IN:  maximum width of line
+           int fAllowHyphenation,              // IN:  allow hyphenation of the line?
+           int fClearOnLeft,                   // IN:  is clear on left side
+           int fClearOnRight,                  // IN:  is clear on right side
+           int fTreatAsFirstInPara,            // IN:  treat line as first line in paragraph
+           int fTreatAsLastInPara,             // IN:  treat line as last line in paragraph
+           int fSuppressTopSpace,              // IN:  suppress empty space at the top of page
+           IntPtr lineVariantRestriction,      // IN:  line variant restriction
+           int nLineVariantsAlloc,             // IN:  size of the pre-allocated variant array
+           FSLINEVARIANT* rgfslinevariant,     // OUT: pre-allocatedarray for line variants
+           out int nLineVariantsActual,        // OUT: actual number of variants
+           out int iLineVariantBest);          // OUT: best line variant index
 
-         internal delegate int ReconstructLineVariant(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pfsparaclient,               // IN:
-            IntPtr nmp,                         // IN:  name of paragraph
-            int iArea,                          // IN:  column-span area index
-            int dcpStart,                       // IN:  dcp at the beginning of the line
-            IntPtr pbrlineIn,                   // IN:  client's line break record to start formatting
-            int dcpLine,                        // IN:  dcp this line should end with
-            uint fswdir,                        // IN:  current direction
-            int urStartLine,                    // IN:  position at the beginning of the line
-            int durLine,                        // IN:  maximum width of line
-            int urStartTrack,                   // IN:  position at the beginning of the track
-            int durTrack,                       // IN:  width of track
-            int urPageLeftMargin,               // IN:  left margin of the page
-            int fAllowHyphenation,              // IN:  allow hyphenation of the line?
-            int fClearOnLeft,                   // IN:  is clear on left side
-            int fClearOnRight,                  // IN:  is clear on right side
-            int fTreatAsFirstInPara,            // IN:  treat line as first line in paragraph
-            int fTreatAsLastInPara,             // IN:  treat line as last line in paragraph
-            int fSuppressTopSpace,              // IN:  suppress empty space at the top of page
-            out IntPtr pfsline,                 // OUT: pointer to line created by client
-            out IntPtr ppbrlineOut,             // OUT: client's line break record
-            out int fForcedBroken,              // OUT: was line force-broken?
-            out FSFLRES fsflres,                // OUT: result of formatting
-            out int dvrAscent,                  // OUT: ascent of the line
-            out int dvrDescent,                 // OUT: descent of the line
-            out int urBBox,                     // OUT: ur of the line's ink
-            out int durBBox,                    // OUT: dur of of the line's ink
-            out int dcpDepend,                  // OUT: number of chars after line break that were considered
-            out int fReformatNeighborsAsLastLine);  // OUT: should line segments be reformatted?
-         internal delegate int DestroyLine(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pfsline);                    // IN:  pointer to line created by client
-         internal delegate int DuplicateLineBreakRecord(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pbrlineIn,                   // IN:  client's forced break record to duplicate
-            out IntPtr pbrlineDup);             // OUT: duplicated client's forced break record
-         internal delegate int DestroyLineBreakRecord(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pbrlineIn);                  // IN:  client's forced break record to duplicate
-         internal delegate int SnapGridVertical(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            uint fswdir,                        // IN:  current direction
-            int vrMargin,                       // IN:  top margin
-            int vrCurrent,                      // IN:  current vertical position
-            out int vrNew);                     // OUT: snapped vertical position
-         internal delegate int GetDvrSuppressibleBottomSpace(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pfsparaclient,               // IN:
-            IntPtr pfsline,                     // IN:  pointer to line created by client
-            uint fswdir,                        // IN:  current direction
-            out int dvrSuppressible);           // OUT: empty space suppressible at the bottom
-         internal delegate int GetDvrAdvance(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pfsparaclient,               // IN:
-            IntPtr nmp,                         // IN:  name of paragraph
-            int dcp,                            // IN:  dcp at the beginning of the line
-            uint fswdir,                        // IN:  current direction
-            out int dvr);                       // OUT: advance amount in tight wrap
-         internal delegate int UpdGetChangeInText(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nmp,                         // IN:  name of paragraph
-            out int dcpStart,                   // OUT: start of change
-            out int ddcpOld,                    // OUT: number of chars in old range
-            out int ddcpNew);                   // OUT: number of chars in new range
-         internal delegate int UpdGetDropCapChange(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nmp,                         // IN:  name of paragraph
-            out int fChanged);                  // OUT: dropcap changed?
-         internal delegate int FInterruptFormattingText(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pfsparaclient,               // IN:
-            IntPtr nmp,                         // IN:  name of paragraph
-            int dcp,                            // IN:  current dcp
-            int vr,                             // IN:  current v position
-            out int fInterruptFormatting);      // OUT: is it time to stop formatting?
-         internal delegate int GetTextParaCache(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pfsparaclient,               // IN:
-            IntPtr nmp,                         // IN:  name of paragraph
-            int iArea,                          // IN:  column-span area index
-            uint fswdir,                        // IN:  current direction
-            int urStartLine,                    // IN:  position at the beginning of the line
-            int durLine,                        // IN:  maximum width of line
-            int urStartTrack,                   // IN:  position at the beginning of the track
-            int durTrack,                       // IN:  width of track
-            int urPageLeftMargin,               // IN:  left margin of the page
-            int fClearOnLeft,                   // IN:  is clear on left side
-            int fClearOnRight,                  // IN:  is clear on right side
-            int fSuppressTopSpace,              // IN:  suppress empty space at the top of page
-            out int fFound,                     // OUT: is there cache for this paragrpaph?
-            out int dcpPara,                    // OUT: dcp consumed by the paragraph
-            out int urBBox,                     // OUT: ur of the para ink
-            out int durBBox,                    // OUT: dur of of the para ink
-            out int dvrPara,                    // OUT: height of the para
-            out FSKCLEAR fskclear,              // OUT: kclear after paragraph
-            out IntPtr pmcsclientAfterPara,     // OUT: margin collapsing state after parag.
-            out int cLines,                     // OUT: number of lines in the paragraph
-            out int fOptimalLines,              // OUT: para had its lines optimized
-            out int fOptimalLineDcpsCached,     // OUT: cached dcp's for lines available
-            out int dvrMinLineHeight);          // OUT: minimal line height
-         internal unsafe delegate int SetTextParaCache(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pfsparaclient,               // IN:
-            IntPtr nmp,                         // IN:  name of paragraph
-            int iArea,                          // IN:  column-span area index
-            uint fswdir,                        // IN:  current direction
-            int urStartLine,                    // IN:  position at the beginning of the line
-            int durLine,                        // IN:  maximum width of line
-            int urStartTrack,                   // IN:  position at the beginning of the track
-            int durTrack,                       // IN:  width of track
-            int urPageLeftMargin,               // IN:  left margin of the page
-            int fClearOnLeft,                   // IN:  is clear on left side
-            int fClearOnRight,                  // IN:  is clear on right side
-            int fSuppressTopSpace,              // IN:  suppress empty space at the top of page
-            int dcpPara,                        // IN:  dcp consumed by the paragraph
-            int urBBox,                         // IN:  ur of the para ink
-            int durBBox,                        // IN:  dur of of the para ink
-            int dvrPara,                        // IN:  height of the para
-            FSKCLEAR fskclear,                  // IN:  kclear after paragraph
-            IntPtr pmcsclientAfterPara,         // IN:  margin collapsing state after paragraph
-            int cLines,                         // IN:  number of lines in the paragraph
-            int fOptimalLines,                  // IN:  paragraph has its lines optinmized
-            int* rgdcpOptimalLines,             // IN:  array of dcp's of optimal lines
-            int dvrMinLineHeight);              // IN:  minimal line height
-         internal unsafe delegate int GetOptimalLineDcpCache(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            int cLines,                         // IN:  number of lines - size of pre-allocated array
-            int* rgdcp);                        // OUT: array of dcp's to fill
-         internal delegate int GetNumberAttachedObjectsBeforeTextLine(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nmp,                         // IN:  name of paragraph
-            int dcpFirst,                       // IN:  dcp at the beginning of the range
-            out int cAttachedObjects);          // OUT: number of attached objects
-         internal unsafe delegate int GetAttachedObjectsBeforeTextLine(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nmp,                         // IN:  name of paragraph
-            int dcpFirst,                       // IN:  dcp at the beginning of the range
-            int nAttachedObjects,               // IN:  size of the object arrays
-            IntPtr* rgnmpObjects,               // OUT: array of object names
-            int* rgidobj,                       // OUT: array of idobj's of corresponding objects
-            int* rgdcpAnchor,                   // OUT: array of dcp of the objects anchors
-            out int cObjects,                   // OUT: actual number of objects
-            out int fEndOfParagraph);           // OUT: paragraph ended after last object
+        internal delegate int ReconstructLineVariant(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pfsparaclient,               // IN:
+           IntPtr nmp,                         // IN:  name of paragraph
+           int iArea,                          // IN:  column-span area index
+           int dcpStart,                       // IN:  dcp at the beginning of the line
+           IntPtr pbrlineIn,                   // IN:  client's line break record to start formatting
+           int dcpLine,                        // IN:  dcp this line should end with
+           uint fswdir,                        // IN:  current direction
+           int urStartLine,                    // IN:  position at the beginning of the line
+           int durLine,                        // IN:  maximum width of line
+           int urStartTrack,                   // IN:  position at the beginning of the track
+           int durTrack,                       // IN:  width of track
+           int urPageLeftMargin,               // IN:  left margin of the page
+           int fAllowHyphenation,              // IN:  allow hyphenation of the line?
+           int fClearOnLeft,                   // IN:  is clear on left side
+           int fClearOnRight,                  // IN:  is clear on right side
+           int fTreatAsFirstInPara,            // IN:  treat line as first line in paragraph
+           int fTreatAsLastInPara,             // IN:  treat line as last line in paragraph
+           int fSuppressTopSpace,              // IN:  suppress empty space at the top of page
+           out IntPtr pfsline,                 // OUT: pointer to line created by client
+           out IntPtr ppbrlineOut,             // OUT: client's line break record
+           out int fForcedBroken,              // OUT: was line force-broken?
+           out FSFLRES fsflres,                // OUT: result of formatting
+           out int dvrAscent,                  // OUT: ascent of the line
+           out int dvrDescent,                 // OUT: descent of the line
+           out int urBBox,                     // OUT: ur of the line's ink
+           out int durBBox,                    // OUT: dur of of the line's ink
+           out int dcpDepend,                  // OUT: number of chars after line break that were considered
+           out int fReformatNeighborsAsLastLine);  // OUT: should line segments be reformatted?
+        internal delegate int DestroyLine(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pfsline);                    // IN:  pointer to line created by client
+        internal delegate int DuplicateLineBreakRecord(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pbrlineIn,                   // IN:  client's forced break record to duplicate
+           out IntPtr pbrlineDup);             // OUT: duplicated client's forced break record
+        internal delegate int DestroyLineBreakRecord(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pbrlineIn);                  // IN:  client's forced break record to duplicate
+        internal delegate int SnapGridVertical(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           uint fswdir,                        // IN:  current direction
+           int vrMargin,                       // IN:  top margin
+           int vrCurrent,                      // IN:  current vertical position
+           out int vrNew);                     // OUT: snapped vertical position
+        internal delegate int GetDvrSuppressibleBottomSpace(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pfsparaclient,               // IN:
+           IntPtr pfsline,                     // IN:  pointer to line created by client
+           uint fswdir,                        // IN:  current direction
+           out int dvrSuppressible);           // OUT: empty space suppressible at the bottom
+        internal delegate int GetDvrAdvance(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pfsparaclient,               // IN:
+           IntPtr nmp,                         // IN:  name of paragraph
+           int dcp,                            // IN:  dcp at the beginning of the line
+           uint fswdir,                        // IN:  current direction
+           out int dvr);                       // OUT: advance amount in tight wrap
+        internal delegate int UpdGetChangeInText(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nmp,                         // IN:  name of paragraph
+           out int dcpStart,                   // OUT: start of change
+           out int ddcpOld,                    // OUT: number of chars in old range
+           out int ddcpNew);                   // OUT: number of chars in new range
+        internal delegate int UpdGetDropCapChange(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nmp,                         // IN:  name of paragraph
+           out int fChanged);                  // OUT: dropcap changed?
+        internal delegate int FInterruptFormattingText(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pfsparaclient,               // IN:
+           IntPtr nmp,                         // IN:  name of paragraph
+           int dcp,                            // IN:  current dcp
+           int vr,                             // IN:  current v position
+           out int fInterruptFormatting);      // OUT: is it time to stop formatting?
+        internal delegate int GetTextParaCache(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pfsparaclient,               // IN:
+           IntPtr nmp,                         // IN:  name of paragraph
+           int iArea,                          // IN:  column-span area index
+           uint fswdir,                        // IN:  current direction
+           int urStartLine,                    // IN:  position at the beginning of the line
+           int durLine,                        // IN:  maximum width of line
+           int urStartTrack,                   // IN:  position at the beginning of the track
+           int durTrack,                       // IN:  width of track
+           int urPageLeftMargin,               // IN:  left margin of the page
+           int fClearOnLeft,                   // IN:  is clear on left side
+           int fClearOnRight,                  // IN:  is clear on right side
+           int fSuppressTopSpace,              // IN:  suppress empty space at the top of page
+           out int fFound,                     // OUT: is there cache for this paragrpaph?
+           out int dcpPara,                    // OUT: dcp consumed by the paragraph
+           out int urBBox,                     // OUT: ur of the para ink
+           out int durBBox,                    // OUT: dur of of the para ink
+           out int dvrPara,                    // OUT: height of the para
+           out FSKCLEAR fskclear,              // OUT: kclear after paragraph
+           out IntPtr pmcsclientAfterPara,     // OUT: margin collapsing state after parag.
+           out int cLines,                     // OUT: number of lines in the paragraph
+           out int fOptimalLines,              // OUT: para had its lines optimized
+           out int fOptimalLineDcpsCached,     // OUT: cached dcp's for lines available
+           out int dvrMinLineHeight);          // OUT: minimal line height
+        internal unsafe delegate int SetTextParaCache(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pfsparaclient,               // IN:
+           IntPtr nmp,                         // IN:  name of paragraph
+           int iArea,                          // IN:  column-span area index
+           uint fswdir,                        // IN:  current direction
+           int urStartLine,                    // IN:  position at the beginning of the line
+           int durLine,                        // IN:  maximum width of line
+           int urStartTrack,                   // IN:  position at the beginning of the track
+           int durTrack,                       // IN:  width of track
+           int urPageLeftMargin,               // IN:  left margin of the page
+           int fClearOnLeft,                   // IN:  is clear on left side
+           int fClearOnRight,                  // IN:  is clear on right side
+           int fSuppressTopSpace,              // IN:  suppress empty space at the top of page
+           int dcpPara,                        // IN:  dcp consumed by the paragraph
+           int urBBox,                         // IN:  ur of the para ink
+           int durBBox,                        // IN:  dur of of the para ink
+           int dvrPara,                        // IN:  height of the para
+           FSKCLEAR fskclear,                  // IN:  kclear after paragraph
+           IntPtr pmcsclientAfterPara,         // IN:  margin collapsing state after paragraph
+           int cLines,                         // IN:  number of lines in the paragraph
+           int fOptimalLines,                  // IN:  paragraph has its lines optinmized
+           int* rgdcpOptimalLines,             // IN:  array of dcp's of optimal lines
+           int dvrMinLineHeight);              // IN:  minimal line height
+        internal unsafe delegate int GetOptimalLineDcpCache(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           int cLines,                         // IN:  number of lines - size of pre-allocated array
+           int* rgdcp);                        // OUT: array of dcp's to fill
+        internal delegate int GetNumberAttachedObjectsBeforeTextLine(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nmp,                         // IN:  name of paragraph
+           int dcpFirst,                       // IN:  dcp at the beginning of the range
+           out int cAttachedObjects);          // OUT: number of attached objects
+        internal unsafe delegate int GetAttachedObjectsBeforeTextLine(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nmp,                         // IN:  name of paragraph
+           int dcpFirst,                       // IN:  dcp at the beginning of the range
+           int nAttachedObjects,               // IN:  size of the object arrays
+           IntPtr* rgnmpObjects,               // OUT: array of object names
+           int* rgidobj,                       // OUT: array of idobj's of corresponding objects
+           int* rgdcpAnchor,                   // OUT: array of dcp of the objects anchors
+           out int cObjects,                   // OUT: actual number of objects
+           out int fEndOfParagraph);           // OUT: paragraph ended after last object
 
-         internal delegate int GetNumberAttachedObjectsInTextLine(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pfsline,                     // IN:  pointer to line created by client
-            IntPtr nmp,                         // IN:  name of paragraph
-            int dcpFirst,                       // IN:  dcp at the beginning of the range
-            int dcpLim,                         // IN:  dcp at the end of the range
-            int fFoundAttachedObjectsBeforeLine,// IN:  Attached objects before line found
-            int dcpMaxAnchorAttachedObjectBeforeLine, // IN: Max dcp of anchor in objects before line
-            out int cAttachedObjects);          // OUT: number of attached objects
-         internal unsafe delegate int GetAttachedObjectsInTextLine(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pfsline,                     // IN:  pointer to line created by client
-            IntPtr nmp,                         // IN:  name of paragraph
-            int dcpFirst,                       // IN:  dcp at the beginning of the range
-            int dcpLim,                         // IN:  dcp at the end of the range
-            int fFoundAttachedObjectsBeforeLine,// IN:  Attached objects before line found
-            int dcpMaxAnchorAttachedObjectBeforeLine, // IN: Max dcp of anchor in objects before line
-            int nAttachedObjects,               // IN:  size of the floater arrays
-            IntPtr* rgnmpObjects,               // OUT: array of floater names
-            int* rgidobj,                       // OUT: array of idobj's of corresponding objects
-            int* rgdcpAnchor,                   // OUT: array of dcp of the objects anchors
-            out int cObjects);                  // OUT: actual number of objects
+        internal delegate int GetNumberAttachedObjectsInTextLine(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pfsline,                     // IN:  pointer to line created by client
+           IntPtr nmp,                         // IN:  name of paragraph
+           int dcpFirst,                       // IN:  dcp at the beginning of the range
+           int dcpLim,                         // IN:  dcp at the end of the range
+           int fFoundAttachedObjectsBeforeLine,// IN:  Attached objects before line found
+           int dcpMaxAnchorAttachedObjectBeforeLine, // IN: Max dcp of anchor in objects before line
+           out int cAttachedObjects);          // OUT: number of attached objects
+        internal unsafe delegate int GetAttachedObjectsInTextLine(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pfsline,                     // IN:  pointer to line created by client
+           IntPtr nmp,                         // IN:  name of paragraph
+           int dcpFirst,                       // IN:  dcp at the beginning of the range
+           int dcpLim,                         // IN:  dcp at the end of the range
+           int fFoundAttachedObjectsBeforeLine,// IN:  Attached objects before line found
+           int dcpMaxAnchorAttachedObjectBeforeLine, // IN: Max dcp of anchor in objects before line
+           int nAttachedObjects,               // IN:  size of the floater arrays
+           IntPtr* rgnmpObjects,               // OUT: array of floater names
+           int* rgidobj,                       // OUT: array of idobj's of corresponding objects
+           int* rgdcpAnchor,                   // OUT: array of dcp of the objects anchors
+           out int cObjects);                  // OUT: actual number of objects
 
-         internal delegate int UpdGetAttachedObjectChange(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nmp,                         // IN:  name of text paragraph
-            IntPtr nmpAttachedObject,           // IN:  name of object
-            out FSKCHANGE fskchObject);         // OUT: kind of change for object
+        internal delegate int UpdGetAttachedObjectChange(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nmp,                         // IN:  name of text paragraph
+           IntPtr nmpAttachedObject,           // IN:  name of object
+           out FSKCHANGE fskchObject);         // OUT: kind of change for object
 
-         internal delegate int GetDurFigureAnchor(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pfsparaclient,               // IN:
-            IntPtr pfsparaclientFigure,         // IN:
-            IntPtr pfsline,                     // IN:  pointer to line created by client
-            IntPtr nmpFigure,                   // IN:  figure's name
-            uint fswdir,                        // IN:  current direction
-            IntPtr pfsFmtLineIn,                // IN:  data needed to reformat the line
-            out int dur);                       // OUT: distance from the beginning of the line to the anchor
-        // ------------------------------------------------------------------
-        // fsfloatercbk.h
-        // ------------------------------------------------------------------
-         internal delegate int GetFloaterProperties(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr nmFloater,                   // IN:  name of the floater
-            uint fswdirTrack,                   // IN:  direction of Track
-            out FSFLOATERPROPS fsfloaterprops); // OUT: properties of the floater
-         internal delegate int FormatFloaterContentFinite(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pfsparaclient,               // IN:
-            IntPtr pfsbrkFloaterContentIn,      // IN:  break record---use if !NULL
-            int fBreakRecordFromPreviousPage,   // IN:  break record was created on previous page
-            IntPtr nmFloater,                   // IN:  name of floater
-            IntPtr pftnrej,                     // IN: 
-            int fEmptyOk,                       // IN:  is it OK not to add anything?
-            int fSuppressTopSpace,              // IN:  suppress empty space at the top of the page
-            uint fswdirTrack,                   // IN:  direction of Track
-            int fAtMaxWidth,                    // IN:  formating is at full width of column
-            int durAvailable,                   // IN:  width of available space
-            int dvrAvailable,                   // IN:  height of available space
-            FSKSUPPRESSHARDBREAKBEFOREFIRSTPARA fsksuppresshardbreakbeforefirstparaIn,
-										        // IN: suppress breaks at track start?
-            out FSFMTR fsfmtr,                  // OUT: result of formatting
-            out IntPtr pfsbrkFloatContentOut,   // OUT: opaque for PTS pointer pointer to formatted content
-            out IntPtr pbrkrecpara,             // OUT: pointer to the floater content break record
-            out int durFloaterWidth,            // OUT: floater width
-            out int dvrFloaterHeight,           // OUT: floater height
-            out FSBBOX fsbbox,                  // OUT: floater bbox
-            out int cPolygons,                  // OUT: number of polygons
-            out int cVertices);                  // OUT: total number of vertices in all polygons
-         internal delegate int FormatFloaterContentBottomless(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pfsparaclient,               // IN:
-            IntPtr nmFloater,                   // IN:  name of floater
-            int fSuppressTopSpace,              // IN:  suppress empty space at the top of the page
-            uint fswdirTrack,                   // IN:  direction of track
-            int fAtMaxWidth,                    // IN:  formating is at full width of column
-            int durAvailable,                   // IN:  width of available space
-            int dvrAvailable,                   // IN:  height of available space
-            out FSFMTRBL fsfmtrbl,              // OUT: result of formatting
-            out IntPtr pfsbrkFloatContentOut,   // OUT: opaque for PTS pointer pointer to formatted content
-            out int durFloaterWidth,            // OUT: floater width
-            out int dvrFloaterHeight,           // OUT: floater height
-            out FSBBOX fsbbox,                  // OUT: floater bbox
-            out int cPolygons,                  // OUT: number of polygons
-            out int cVertices);                 // OUT: total number of vertices in all polygons
-         internal delegate int UpdateBottomlessFloaterContent(
-            IntPtr pfsFloaterContent,           // IN:  opaque for PTS pointer to floater content
-            IntPtr pfsparaclient,               // IN:
-            IntPtr nmFloater,                   // IN:  name of floater
-            int fSuppressTopSpace,              // IN:  suppress empty space at the top of the page
-            uint fswdirTrack,                   // IN:  direction of Track
-            int fAtMaxWidth,                    // IN:  formating is at full width of column
-            int durAvailable,                   // IN:  width of available space
-            int dvrAvailable,                   // IN:  height of available space
-            out FSFMTRBL fsfmtrbl,              // OUT: result of formatting
-            out int durFloaterWidth,            // OUT: floater width
-            out int dvrFloaterHeight,           // OUT: floater height
-            out FSBBOX fsbbox,                  // OUT: floater bbox
-            out int cPolygons,                  // OUT: number of polygons
-            out int cVertices);                 // OUT: total number of vertices in all polygons
-         internal unsafe delegate int GetFloaterPolygons(
-            IntPtr pfsparaclient,               // IN:
-            IntPtr pfsFloaterContent,           // IN:  opaque for PTS pointer to floater content
-            IntPtr nmFloater,                   // IN:  name of floater
-            uint fswdirTrack,                   // IN:  direction of Track
-            int ncVertices,                     // IN:  size of array of vertex counts (= number of polygons)
-            int nfspt,                          // IN:  size of the array of all vertices
-            int* rgcVertices,                   // OUT: array of vertex counts (array containing number of vertices for each polygon)
-            out int cVertices,                  // OUT: actual number of vertex counts
-            FSPOINT* rgfspt,                    // OUT: array of all vertices
-            out int cfspt,                      // OUT: actual total number of vertices in all polygons
-            out int fWrapThrough);              // OUT: fill text in empty areas within obstacles?
-         internal delegate int ClearUpdateInfoInFloaterContent(
-            IntPtr pfsFloaterContent);          // IN:  opaque for PTS pointer to floater content
-         internal delegate int CompareFloaterContents(
-            IntPtr pfsFloaterContentOld,        // IN:
-            IntPtr pfsFloaterContentNew,        // IN:
-            out FSCOMPRESULT fscmpr);           // OUT: result of comparison
-         internal delegate int DestroyFloaterContent(
-            IntPtr pfsFloaterContent);          // IN:  opaque for PTS pointer to floater content
-         internal delegate int DuplicateFloaterContentBreakRecord(
-            IntPtr pfsclient,                   // IN:  client context
-            IntPtr pfsbrkFloaterContent,        // IN:  pointer to break record
-            out IntPtr pfsbrkFloaterContentDup);// OUT pointer to duplicate break record
-         internal delegate int DestroyFloaterContentBreakRecord(
-            IntPtr pfsclient,                   // IN:  client context
-            IntPtr pfsbrkFloaterContent);       // IN:  pointer to break record
-         internal delegate int GetFloaterContentColumnBalancingInfo(
-            IntPtr pfsFloaterContent,           // IN:  opaque for PTS pointer to floater content
-            uint fswdir,                        // IN:  current direction
-            out int nlines,                     // OUT: number of text lines
-            out int dvrSumHeight,               // OUT: sum of all line heights
-            out int dvrMinHeight);              // OUT: minimum line height
-         internal delegate int GetFloaterContentNumberFootnotes(
-            IntPtr pfsFloaterContent,           // IN:  opaque for PTS pointer to floater content
-            out int cftn);                      // OUT: number of footnotes
-         internal delegate int GetFloaterContentFootnoteInfo(
-            IntPtr pfsFloaterContent,           // IN:  opaque for PTS pointer to floater content
-            uint fswdir,                        // IN:  current direction
-            int nftn,                           // IN:  size of FSFTNINFO array
-            int iftnFirst,                      // IN:  first index in FSFTNINFO array to be used by this para
-            ref FSFTNINFO fsftninf,             // IN/OUT: array of footnote info
-            out int iftnLim);                   // OUT: lim index used by this paragraph
-         internal delegate int TransferDisplayInfoInFloaterContent(
-            IntPtr pfsFloaterContentOld,        // IN:
-            IntPtr pfsFloaterContentNew);       // IN:
-         internal delegate int GetMCSClientAfterFloater(
-            IntPtr pfsclient,                   // IN:  client context
-            IntPtr pfsparaclient,               // IN:
-            IntPtr nmFloater,                   // IN:  name of floater
-            uint fswdirTrack,                   // IN:  direction of Track
-            IntPtr pmcsclientIn,                // IN:  input opaque to PTS MCSCLIENT
-            out IntPtr pmcsclientOut);          // OUT: MCSCLIENT that floater will return to track
-         internal delegate int GetDvrUsedForFloater(
-            IntPtr pfsclient,                   // IN:  client context
-            IntPtr pfsparaclient,               // IN:
-            IntPtr nmFloater,                   // IN:  name of floater
-            uint fswdirTrack,                   // IN:  direction of Track
-            IntPtr pmcsclientIn,                // IN:  input opaque to PTS MCSCLIENT
-            int dvrDisplaced,                   // IN: 
-            out int dvrUsed);                   // OUT:
-        // ------------------------------------------------------------------
-        // fsimeth.h
-        // ------------------------------------------------------------------
-         internal delegate int ObjCreateContext(
-            IntPtr pfsclient,                   // IN:  client opaque data
-            IntPtr pfsc,                        // IN:  FS context
-            IntPtr pfscbkobj,                   // IN:  callbacks (FSCBKOBJ)
-            uint ffi,                           // IN:  formatting flags
-            int idobj,                          // IN:  id of the object
-            out IntPtr pfssobjc);               // OUT: object context
-         internal delegate int ObjDestroyContext(
-            IntPtr pfssobjc);                   // IN:  object context
-         internal delegate int ObjFormatParaFinite(
-            IntPtr pfssobjc,                    // IN:  object context
-            IntPtr pfsparaclient,               // IN:
-            IntPtr pfsobjbrk,                   // IN:  break record---use if !NULL
-            int fBreakRecordFromPreviousPage,   // IN:  break record was created on previous page
-            IntPtr nmp,                         // IN:  name of paragraph---use if break record is NULL
-            int iArea,                          // IN:  column-span area index
-            IntPtr pftnrej,                     // IN:
-            IntPtr pfsgeom,                     // IN:  pointer to geometry
-            int fEmptyOk,                       // IN:  is it OK not to add anything?
-            int fSuppressTopSpace,              // IN:  suppress empty space at the top of the page
-            uint fswdir,                        // IN:  current direction
-            ref FSRECT fsrcToFill,              // IN:  rectangle to fill
-            IntPtr pmcsclientIn,                // IN:  input margin collapsing state
-            FSKCLEAR fskclearIn,                // IN:  clear property that must be satisfied
-            FSKSUPPRESSHARDBREAKBEFOREFIRSTPARA fsksuppresshardbreakbeforefirstparaIn,
-												// IN:  flags to suppress breaks
-            int fBreakInside,                   // IN:  produce vertical break inside para; needed for recursive KWN logic;
-                                                //      can be set to true if during previous formatting fBreakInsidePossible output was returned as TRUE
-            out FSFMTR fsfmtr,                  // OUT: result of formatting the paragraph
-            out IntPtr pfspara,                 // OUT: pointer to the para data
-            out IntPtr pbrkrecpara,             // OUT: pointer to the para break record
-            out int dvrUsed,                    // OUT: vertical space used by the para
-            out FSBBOX fsbbox,                  // OUT: para BBox
-            out IntPtr pmcsclientOut,           // OUT: margin collapsing state at the bottom
-            out FSKCLEAR fskclearOut,           // OUT: ClearIn for the next paragraph
-            out int dvrTopSpace,                // OUT: top space due to collapsed margin
-            out int fBreakInsidePossible);      // OUT: internal vertical break possible, needed for recursive KWN logic
-         internal delegate int ObjFormatParaBottomless(
-            IntPtr pfssobjc,                    // IN:  object context
-            IntPtr pfsparaclient,               // IN:
-            IntPtr nmp,                         // IN:  name of paragraph
-            int iArea,                          // IN:  column-span area index
-            IntPtr pfsgeom,                     // IN:  pointer to geometry
-            int fSuppressTopSpace,              // IN:  suppress empty space at the top of the page
-            uint fswdir,                        // IN:  current direction
-            int urTrack,                        // IN:  ur of bottomless rectangle to fill
-            int durTrack,                       // IN:  dur of bottomless rectangle to fill
-            int vrTrack,                        // IN:  vr of bottomless rectangle to fill
-            IntPtr pmcsclientIn,                // IN:  input margin collapsing state
-            FSKCLEAR fskclearIn,                // IN:  clear property that must be satisfied
-            int fInterruptable,                 // IN:  formatting can be interrupted
-            out FSFMTRBL fsfmtrbl,              // OUT: result of formatting the paragraph
-            out IntPtr pfspara,                 // OUT: pointer to the para data
-            out int dvrUsed,                    // OUT: vertical space used by the para
-            out FSBBOX fsbbox,                  // OUT: para BBox
-            out IntPtr pmcsclientOut,           // OUT: margin collapsing state at the bottom
-            out FSKCLEAR fskclearOut,           // OUT: ClearIn for the next paragraph
-            out int dvrTopSpace,                // OUT: top space due to collapsed margin
-            out int fPageBecomesUninterruptable);// OUT: interruption is prohibited from now on
-         internal delegate int ObjUpdateBottomlessPara(
-            IntPtr pfspara,                     // IN:  pointer to the para data
-            IntPtr pfsparaclient,               // IN:
-            IntPtr nmp,                         // IN:  name of paragraph
-            int iArea,                          // IN:  column-span area index
-            IntPtr pfsgeom,                     // IN:  pointer to geometry
-            int fSuppressTopSpace,              // IN:  suppress empty space at the top of the page
-            uint fswdir,                        // IN:  current direction
-            int urTrack,                        // IN:  u of bootomless rectangle to fill
-            int durTrack,                       // IN:  du of bootomless rectangle to fill
-            int vrTrack,                        // IN:  v of bootomless rectangle to fill
-            IntPtr pmcsclientIn,                // IN:  input margin collapsing state
-            FSKCLEAR fskclearIn,                // IN:  clear property that must be satisfied
-            int fInterruptable,                 // IN:  formatting can be interrupted
-            out FSFMTRBL fsfmtrbl,              // OUT: result of formatting the paragraph
-            out int dvrUsed,                    // OUT: vertical space used by the para
-            out FSBBOX fsbbox,                  // OUT: para BBox
-            out IntPtr pmcsclientOut,           // OUT: margin collapsing state at the bottom
-            out FSKCLEAR fskclearOut,           // OUT: ClearIn for the next paragraph
-            out int dvrTopSpace,                // OUT: top space due to collapsed margin
-            out int fPageBecomesUninterruptable);// OUT: interruption is prohibited from now on
-         internal delegate int ObjSynchronizeBottomlessPara(
-            IntPtr pfspara,                     // IN:  pointer to the para data
-            IntPtr pfsparaclient,               // IN:
-            IntPtr pfsgeom,                     // IN: pointer to geometry
-            uint fswdir,                        // IN: direction
-            int dvrShift);                      // IN: shift by this value
-         internal delegate int ObjComparePara(
-            IntPtr pfsparaclientOld,            // IN:
-            IntPtr pfsparaOld,                  // IN:  pointer to the old para data
-            IntPtr pfsparaclientNew,            // IN:
-            IntPtr pfsparaNew,                  // IN:  pointer to the new para data
-            uint fswdir,                        // IN:  track's direction
-            out FSCOMPRESULT fscmpr,            // OUT: comparison result
-            out int dvrShifted);                // OUT: amount of shift if result is fscomprShifted
-         internal delegate int ObjClearUpdateInfoInPara(
-            IntPtr pfspara);                    // IN:  pointer to the para data
-         internal delegate int ObjDestroyPara(
-            IntPtr pfspara);                    // IN:  pointer to the para data
-         internal delegate int ObjDuplicateBreakRecord(
-            IntPtr pfssobjc,                    // IN:  object context
-            IntPtr pfsbrkrecparaOrig,           // IN:  pointer to the para break record
-            out IntPtr pfsbrkrecparaDup);       // OUT: pointer to the duplicate break record
-         internal delegate int ObjDestroyBreakRecord(
-            IntPtr pfssobjc,                    // IN:  object context
-            IntPtr pfsobjbrk);                  // OUT: pointer to the para break record
-         internal delegate int ObjGetColumnBalancingInfo(
-            IntPtr pfspara,                     // IN:  pointer to the para data
-            uint fswdir,                        // IN:  current direction
-            out int nlines,                     // OUT: number of text lines
-            out int dvrSumHeight,               // OUT: sum of all line heights
-            out int dvrMinHeight);              // OUT: minimum line height
-         internal delegate int ObjGetNumberFootnotes(
-            IntPtr pfspara,                     // IN:  pointer to the para data
-            out int nftn);                      // OUT: number of footnotes
-         internal unsafe delegate int ObjGetFootnoteInfo(
-            IntPtr pfspara,                     // IN:  pointer to the para data
-            uint fswdir,                        // IN:  current direction
-            int nftn,                           // IN:  size of FSFTNINFO array
-            int iftnFirst,                      // IN:  first index in FSFTNINFO array to be used by this para
-            FSFTNINFO* pfsftninf,               // IN/OUT: array of footnote info
-            out int iftnLim);                   // OUT: lim index used by this paragraph
-        //internal unsafe delegate int ObjGetFootnoteInfoWord(
-        //    IntPtr pfspara,                     // IN:  pointer to the para data
-        //    uint fswdir,                        // IN:  current direction
-        //    int nftn,                           // IN:  size of FSFTNINFO array
-        //    int iftnFirst,                      // IN:  first index in FSFTNINFO array to be used by this para
-        //    FSFTNINFOWORD* pfsftninf,           // IN/OUT: array of footnote info for word
-        //    out int iftnLim);                   // OUT: lim index used by this paragraph
-         internal delegate int ObjShiftVertical(
-            IntPtr pfspara,                     // IN:  pointer to the para data
-            IntPtr pfsparaclient,               // IN:
-            IntPtr pfsshift,                    // IN:  pointer to the shift data
-            uint fswdir,                        // IN:  wdir for bbox - the same as the one passed to formatting method
-            out FSBBOX fsbbox);                 // OUT: output BBox
-         internal delegate int ObjTransferDisplayInfoPara(
-            IntPtr pfsparaOld,                  // IN:  pointer to the old para data
-            IntPtr pfsparaNew);                 // IN:  pointer to the new para data
-        // ------------------------------------------------------------------
-        // fstableobjhandlerds.h
-        // ------------------------------------------------------------------
-         internal delegate int GetTableProperties(
-            IntPtr pfsclient,                       // IN:  
-            IntPtr nmTable,                         // IN:  
-            uint fswdirTrack,                       // IN:  
-            out FSTABLEOBJPROPS fstableobjprops);   // OUT: 
-         internal delegate int AutofitTable(
-            IntPtr pfsclient,                       // IN:  
-            IntPtr pfsparaclientTable,              // IN:  
-            IntPtr nmTable,                         // IN:  
-            uint fswdirTrack,                       // IN:  
-            int durAvailableSpace,                  // IN:  
-            out int durTableWidth);                 // OUT: Table width after autofit. It is the same for all rows :)
-         internal delegate int UpdAutofitTable(      // calculate widths of table
-            IntPtr pfsclient,                       // IN:  
-            IntPtr pfsparaclientTable,              // IN:  
-            IntPtr nmTable,                         // IN:  
-            uint fswdirTrack,                       // IN:  
-            int durAvailableSpace,                  // IN:  
-            out int durTableWidth,                  // OUT: Table width after autofit.
-            // Should we store the old one? It is possible for the
-            // table width to change with pfNoChangeInCellWidths = .T. ?
-            out int fNoChangeInCellWidths);         // OUT: 
-         internal delegate int GetMCSClientAfterTable(
-            IntPtr pfsclient,                       // IN:  
-            IntPtr pfsparaclientTable,              // IN:  
-            IntPtr nmTable,                         // IN:  
-            uint fswdirTrack,                       // IN:  
-            IntPtr pmcsclientIn,                    // IN:  
-            out IntPtr ppmcsclientOut);             // OUT:
+        internal delegate int GetDurFigureAnchor(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pfsparaclient,               // IN:
+           IntPtr pfsparaclientFigure,         // IN:
+           IntPtr pfsline,                     // IN:  pointer to line created by client
+           IntPtr nmpFigure,                   // IN:  figure's name
+           uint fswdir,                        // IN:  current direction
+           IntPtr pfsFmtLineIn,                // IN:  data needed to reformat the line
+           out int dur);                       // OUT: distance from the beginning of the line to the anchor
+                                               // ------------------------------------------------------------------
+                                               // fsfloatercbk.h
+                                               // ------------------------------------------------------------------
+        internal delegate int GetFloaterProperties(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr nmFloater,                   // IN:  name of the floater
+           uint fswdirTrack,                   // IN:  direction of Track
+           out FSFLOATERPROPS fsfloaterprops); // OUT: properties of the floater
+        internal delegate int FormatFloaterContentFinite(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pfsparaclient,               // IN:
+           IntPtr pfsbrkFloaterContentIn,      // IN:  break record---use if !NULL
+           int fBreakRecordFromPreviousPage,   // IN:  break record was created on previous page
+           IntPtr nmFloater,                   // IN:  name of floater
+           IntPtr pftnrej,                     // IN: 
+           int fEmptyOk,                       // IN:  is it OK not to add anything?
+           int fSuppressTopSpace,              // IN:  suppress empty space at the top of the page
+           uint fswdirTrack,                   // IN:  direction of Track
+           int fAtMaxWidth,                    // IN:  formating is at full width of column
+           int durAvailable,                   // IN:  width of available space
+           int dvrAvailable,                   // IN:  height of available space
+           FSKSUPPRESSHARDBREAKBEFOREFIRSTPARA fsksuppresshardbreakbeforefirstparaIn,
+           // IN: suppress breaks at track start?
+           out FSFMTR fsfmtr,                  // OUT: result of formatting
+           out IntPtr pfsbrkFloatContentOut,   // OUT: opaque for PTS pointer pointer to formatted content
+           out IntPtr pbrkrecpara,             // OUT: pointer to the floater content break record
+           out int durFloaterWidth,            // OUT: floater width
+           out int dvrFloaterHeight,           // OUT: floater height
+           out FSBBOX fsbbox,                  // OUT: floater bbox
+           out int cPolygons,                  // OUT: number of polygons
+           out int cVertices);                  // OUT: total number of vertices in all polygons
+        internal delegate int FormatFloaterContentBottomless(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pfsparaclient,               // IN:
+           IntPtr nmFloater,                   // IN:  name of floater
+           int fSuppressTopSpace,              // IN:  suppress empty space at the top of the page
+           uint fswdirTrack,                   // IN:  direction of track
+           int fAtMaxWidth,                    // IN:  formating is at full width of column
+           int durAvailable,                   // IN:  width of available space
+           int dvrAvailable,                   // IN:  height of available space
+           out FSFMTRBL fsfmtrbl,              // OUT: result of formatting
+           out IntPtr pfsbrkFloatContentOut,   // OUT: opaque for PTS pointer pointer to formatted content
+           out int durFloaterWidth,            // OUT: floater width
+           out int dvrFloaterHeight,           // OUT: floater height
+           out FSBBOX fsbbox,                  // OUT: floater bbox
+           out int cPolygons,                  // OUT: number of polygons
+           out int cVertices);                 // OUT: total number of vertices in all polygons
+        internal delegate int UpdateBottomlessFloaterContent(
+           IntPtr pfsFloaterContent,           // IN:  opaque for PTS pointer to floater content
+           IntPtr pfsparaclient,               // IN:
+           IntPtr nmFloater,                   // IN:  name of floater
+           int fSuppressTopSpace,              // IN:  suppress empty space at the top of the page
+           uint fswdirTrack,                   // IN:  direction of Track
+           int fAtMaxWidth,                    // IN:  formating is at full width of column
+           int durAvailable,                   // IN:  width of available space
+           int dvrAvailable,                   // IN:  height of available space
+           out FSFMTRBL fsfmtrbl,              // OUT: result of formatting
+           out int durFloaterWidth,            // OUT: floater width
+           out int dvrFloaterHeight,           // OUT: floater height
+           out FSBBOX fsbbox,                  // OUT: floater bbox
+           out int cPolygons,                  // OUT: number of polygons
+           out int cVertices);                 // OUT: total number of vertices in all polygons
+        internal unsafe delegate int GetFloaterPolygons(
+           IntPtr pfsparaclient,               // IN:
+           IntPtr pfsFloaterContent,           // IN:  opaque for PTS pointer to floater content
+           IntPtr nmFloater,                   // IN:  name of floater
+           uint fswdirTrack,                   // IN:  direction of Track
+           int ncVertices,                     // IN:  size of array of vertex counts (= number of polygons)
+           int nfspt,                          // IN:  size of the array of all vertices
+           int* rgcVertices,                   // OUT: array of vertex counts (array containing number of vertices for each polygon)
+           out int cVertices,                  // OUT: actual number of vertex counts
+           FSPOINT* rgfspt,                    // OUT: array of all vertices
+           out int cfspt,                      // OUT: actual total number of vertices in all polygons
+           out int fWrapThrough);              // OUT: fill text in empty areas within obstacles?
+        internal delegate int ClearUpdateInfoInFloaterContent(
+           IntPtr pfsFloaterContent);          // IN:  opaque for PTS pointer to floater content
+        internal delegate int CompareFloaterContents(
+           IntPtr pfsFloaterContentOld,        // IN:
+           IntPtr pfsFloaterContentNew,        // IN:
+           out FSCOMPRESULT fscmpr);           // OUT: result of comparison
+        internal delegate int DestroyFloaterContent(
+           IntPtr pfsFloaterContent);          // IN:  opaque for PTS pointer to floater content
+        internal delegate int DuplicateFloaterContentBreakRecord(
+           IntPtr pfsclient,                   // IN:  client context
+           IntPtr pfsbrkFloaterContent,        // IN:  pointer to break record
+           out IntPtr pfsbrkFloaterContentDup);// OUT pointer to duplicate break record
+        internal delegate int DestroyFloaterContentBreakRecord(
+           IntPtr pfsclient,                   // IN:  client context
+           IntPtr pfsbrkFloaterContent);       // IN:  pointer to break record
+        internal delegate int GetFloaterContentColumnBalancingInfo(
+           IntPtr pfsFloaterContent,           // IN:  opaque for PTS pointer to floater content
+           uint fswdir,                        // IN:  current direction
+           out int nlines,                     // OUT: number of text lines
+           out int dvrSumHeight,               // OUT: sum of all line heights
+           out int dvrMinHeight);              // OUT: minimum line height
+        internal delegate int GetFloaterContentNumberFootnotes(
+           IntPtr pfsFloaterContent,           // IN:  opaque for PTS pointer to floater content
+           out int cftn);                      // OUT: number of footnotes
+        internal delegate int GetFloaterContentFootnoteInfo(
+           IntPtr pfsFloaterContent,           // IN:  opaque for PTS pointer to floater content
+           uint fswdir,                        // IN:  current direction
+           int nftn,                           // IN:  size of FSFTNINFO array
+           int iftnFirst,                      // IN:  first index in FSFTNINFO array to be used by this para
+           ref FSFTNINFO fsftninf,             // IN/OUT: array of footnote info
+           out int iftnLim);                   // OUT: lim index used by this paragraph
+        internal delegate int TransferDisplayInfoInFloaterContent(
+           IntPtr pfsFloaterContentOld,        // IN:
+           IntPtr pfsFloaterContentNew);       // IN:
+        internal delegate int GetMCSClientAfterFloater(
+           IntPtr pfsclient,                   // IN:  client context
+           IntPtr pfsparaclient,               // IN:
+           IntPtr nmFloater,                   // IN:  name of floater
+           uint fswdirTrack,                   // IN:  direction of Track
+           IntPtr pmcsclientIn,                // IN:  input opaque to PTS MCSCLIENT
+           out IntPtr pmcsclientOut);          // OUT: MCSCLIENT that floater will return to track
+        internal delegate int GetDvrUsedForFloater(
+           IntPtr pfsclient,                   // IN:  client context
+           IntPtr pfsparaclient,               // IN:
+           IntPtr nmFloater,                   // IN:  name of floater
+           uint fswdirTrack,                   // IN:  direction of Track
+           IntPtr pmcsclientIn,                // IN:  input opaque to PTS MCSCLIENT
+           int dvrDisplaced,                   // IN: 
+           out int dvrUsed);                   // OUT:
+                                               // ------------------------------------------------------------------
+                                               // fsimeth.h
+                                               // ------------------------------------------------------------------
+        internal delegate int ObjCreateContext(
+           IntPtr pfsclient,                   // IN:  client opaque data
+           IntPtr pfsc,                        // IN:  FS context
+           IntPtr pfscbkobj,                   // IN:  callbacks (FSCBKOBJ)
+           uint ffi,                           // IN:  formatting flags
+           int idobj,                          // IN:  id of the object
+           out IntPtr pfssobjc);               // OUT: object context
+        internal delegate int ObjDestroyContext(
+           IntPtr pfssobjc);                   // IN:  object context
+        internal delegate int ObjFormatParaFinite(
+           IntPtr pfssobjc,                    // IN:  object context
+           IntPtr pfsparaclient,               // IN:
+           IntPtr pfsobjbrk,                   // IN:  break record---use if !NULL
+           int fBreakRecordFromPreviousPage,   // IN:  break record was created on previous page
+           IntPtr nmp,                         // IN:  name of paragraph---use if break record is NULL
+           int iArea,                          // IN:  column-span area index
+           IntPtr pftnrej,                     // IN:
+           IntPtr pfsgeom,                     // IN:  pointer to geometry
+           int fEmptyOk,                       // IN:  is it OK not to add anything?
+           int fSuppressTopSpace,              // IN:  suppress empty space at the top of the page
+           uint fswdir,                        // IN:  current direction
+           ref FSRECT fsrcToFill,              // IN:  rectangle to fill
+           IntPtr pmcsclientIn,                // IN:  input margin collapsing state
+           FSKCLEAR fskclearIn,                // IN:  clear property that must be satisfied
+           FSKSUPPRESSHARDBREAKBEFOREFIRSTPARA fsksuppresshardbreakbeforefirstparaIn,
+           // IN:  flags to suppress breaks
+           int fBreakInside,                   // IN:  produce vertical break inside para; needed for recursive KWN logic;
+                                               //      can be set to true if during previous formatting fBreakInsidePossible output was returned as TRUE
+           out FSFMTR fsfmtr,                  // OUT: result of formatting the paragraph
+           out IntPtr pfspara,                 // OUT: pointer to the para data
+           out IntPtr pbrkrecpara,             // OUT: pointer to the para break record
+           out int dvrUsed,                    // OUT: vertical space used by the para
+           out FSBBOX fsbbox,                  // OUT: para BBox
+           out IntPtr pmcsclientOut,           // OUT: margin collapsing state at the bottom
+           out FSKCLEAR fskclearOut,           // OUT: ClearIn for the next paragraph
+           out int dvrTopSpace,                // OUT: top space due to collapsed margin
+           out int fBreakInsidePossible);      // OUT: internal vertical break possible, needed for recursive KWN logic
+        internal delegate int ObjFormatParaBottomless(
+           IntPtr pfssobjc,                    // IN:  object context
+           IntPtr pfsparaclient,               // IN:
+           IntPtr nmp,                         // IN:  name of paragraph
+           int iArea,                          // IN:  column-span area index
+           IntPtr pfsgeom,                     // IN:  pointer to geometry
+           int fSuppressTopSpace,              // IN:  suppress empty space at the top of the page
+           uint fswdir,                        // IN:  current direction
+           int urTrack,                        // IN:  ur of bottomless rectangle to fill
+           int durTrack,                       // IN:  dur of bottomless rectangle to fill
+           int vrTrack,                        // IN:  vr of bottomless rectangle to fill
+           IntPtr pmcsclientIn,                // IN:  input margin collapsing state
+           FSKCLEAR fskclearIn,                // IN:  clear property that must be satisfied
+           int fInterruptable,                 // IN:  formatting can be interrupted
+           out FSFMTRBL fsfmtrbl,              // OUT: result of formatting the paragraph
+           out IntPtr pfspara,                 // OUT: pointer to the para data
+           out int dvrUsed,                    // OUT: vertical space used by the para
+           out FSBBOX fsbbox,                  // OUT: para BBox
+           out IntPtr pmcsclientOut,           // OUT: margin collapsing state at the bottom
+           out FSKCLEAR fskclearOut,           // OUT: ClearIn for the next paragraph
+           out int dvrTopSpace,                // OUT: top space due to collapsed margin
+           out int fPageBecomesUninterruptable);// OUT: interruption is prohibited from now on
+        internal delegate int ObjUpdateBottomlessPara(
+           IntPtr pfspara,                     // IN:  pointer to the para data
+           IntPtr pfsparaclient,               // IN:
+           IntPtr nmp,                         // IN:  name of paragraph
+           int iArea,                          // IN:  column-span area index
+           IntPtr pfsgeom,                     // IN:  pointer to geometry
+           int fSuppressTopSpace,              // IN:  suppress empty space at the top of the page
+           uint fswdir,                        // IN:  current direction
+           int urTrack,                        // IN:  u of bootomless rectangle to fill
+           int durTrack,                       // IN:  du of bootomless rectangle to fill
+           int vrTrack,                        // IN:  v of bootomless rectangle to fill
+           IntPtr pmcsclientIn,                // IN:  input margin collapsing state
+           FSKCLEAR fskclearIn,                // IN:  clear property that must be satisfied
+           int fInterruptable,                 // IN:  formatting can be interrupted
+           out FSFMTRBL fsfmtrbl,              // OUT: result of formatting the paragraph
+           out int dvrUsed,                    // OUT: vertical space used by the para
+           out FSBBOX fsbbox,                  // OUT: para BBox
+           out IntPtr pmcsclientOut,           // OUT: margin collapsing state at the bottom
+           out FSKCLEAR fskclearOut,           // OUT: ClearIn for the next paragraph
+           out int dvrTopSpace,                // OUT: top space due to collapsed margin
+           out int fPageBecomesUninterruptable);// OUT: interruption is prohibited from now on
+        internal delegate int ObjSynchronizeBottomlessPara(
+           IntPtr pfspara,                     // IN:  pointer to the para data
+           IntPtr pfsparaclient,               // IN:
+           IntPtr pfsgeom,                     // IN: pointer to geometry
+           uint fswdir,                        // IN: direction
+           int dvrShift);                      // IN: shift by this value
+        internal delegate int ObjComparePara(
+           IntPtr pfsparaclientOld,            // IN:
+           IntPtr pfsparaOld,                  // IN:  pointer to the old para data
+           IntPtr pfsparaclientNew,            // IN:
+           IntPtr pfsparaNew,                  // IN:  pointer to the new para data
+           uint fswdir,                        // IN:  track's direction
+           out FSCOMPRESULT fscmpr,            // OUT: comparison result
+           out int dvrShifted);                // OUT: amount of shift if result is fscomprShifted
+        internal delegate int ObjClearUpdateInfoInPara(
+           IntPtr pfspara);                    // IN:  pointer to the para data
+        internal delegate int ObjDestroyPara(
+           IntPtr pfspara);                    // IN:  pointer to the para data
+        internal delegate int ObjDuplicateBreakRecord(
+           IntPtr pfssobjc,                    // IN:  object context
+           IntPtr pfsbrkrecparaOrig,           // IN:  pointer to the para break record
+           out IntPtr pfsbrkrecparaDup);       // OUT: pointer to the duplicate break record
+        internal delegate int ObjDestroyBreakRecord(
+           IntPtr pfssobjc,                    // IN:  object context
+           IntPtr pfsobjbrk);                  // OUT: pointer to the para break record
+        internal delegate int ObjGetColumnBalancingInfo(
+           IntPtr pfspara,                     // IN:  pointer to the para data
+           uint fswdir,                        // IN:  current direction
+           out int nlines,                     // OUT: number of text lines
+           out int dvrSumHeight,               // OUT: sum of all line heights
+           out int dvrMinHeight);              // OUT: minimum line height
+        internal delegate int ObjGetNumberFootnotes(
+           IntPtr pfspara,                     // IN:  pointer to the para data
+           out int nftn);                      // OUT: number of footnotes
+        internal unsafe delegate int ObjGetFootnoteInfo(
+           IntPtr pfspara,                     // IN:  pointer to the para data
+           uint fswdir,                        // IN:  current direction
+           int nftn,                           // IN:  size of FSFTNINFO array
+           int iftnFirst,                      // IN:  first index in FSFTNINFO array to be used by this para
+           FSFTNINFO* pfsftninf,               // IN/OUT: array of footnote info
+           out int iftnLim);                   // OUT: lim index used by this paragraph
+                                               //internal unsafe delegate int ObjGetFootnoteInfoWord(
+                                               //    IntPtr pfspara,                     // IN:  pointer to the para data
+                                               //    uint fswdir,                        // IN:  current direction
+                                               //    int nftn,                           // IN:  size of FSFTNINFO array
+                                               //    int iftnFirst,                      // IN:  first index in FSFTNINFO array to be used by this para
+                                               //    FSFTNINFOWORD* pfsftninf,           // IN/OUT: array of footnote info for word
+                                               //    out int iftnLim);                   // OUT: lim index used by this paragraph
+        internal delegate int ObjShiftVertical(
+           IntPtr pfspara,                     // IN:  pointer to the para data
+           IntPtr pfsparaclient,               // IN:
+           IntPtr pfsshift,                    // IN:  pointer to the shift data
+           uint fswdir,                        // IN:  wdir for bbox - the same as the one passed to formatting method
+           out FSBBOX fsbbox);                 // OUT: output BBox
+        internal delegate int ObjTransferDisplayInfoPara(
+           IntPtr pfsparaOld,                  // IN:  pointer to the old para data
+           IntPtr pfsparaNew);                 // IN:  pointer to the new para data
+                                               // ------------------------------------------------------------------
+                                               // fstableobjhandlerds.h
+                                               // ------------------------------------------------------------------
+        internal delegate int GetTableProperties(
+           IntPtr pfsclient,                       // IN:  
+           IntPtr nmTable,                         // IN:  
+           uint fswdirTrack,                       // IN:  
+           out FSTABLEOBJPROPS fstableobjprops);   // OUT: 
+        internal delegate int AutofitTable(
+           IntPtr pfsclient,                       // IN:  
+           IntPtr pfsparaclientTable,              // IN:  
+           IntPtr nmTable,                         // IN:  
+           uint fswdirTrack,                       // IN:  
+           int durAvailableSpace,                  // IN:  
+           out int durTableWidth);                 // OUT: Table width after autofit. It is the same for all rows :)
+        internal delegate int UpdAutofitTable(      // calculate widths of table
+           IntPtr pfsclient,                       // IN:  
+           IntPtr pfsparaclientTable,              // IN:  
+           IntPtr nmTable,                         // IN:  
+           uint fswdirTrack,                       // IN:  
+           int durAvailableSpace,                  // IN:  
+           out int durTableWidth,                  // OUT: Table width after autofit.
+                                                   // Should we store the old one? It is possible for the
+                                                   // table width to change with pfNoChangeInCellWidths = .T. ?
+           out int fNoChangeInCellWidths);         // OUT: 
+        internal delegate int GetMCSClientAfterTable(
+           IntPtr pfsclient,                       // IN:  
+           IntPtr pfsparaclientTable,              // IN:  
+           IntPtr nmTable,                         // IN:  
+           uint fswdirTrack,                       // IN:  
+           IntPtr pmcsclientIn,                    // IN:  
+           out IntPtr ppmcsclientOut);             // OUT:
         /*        
         internal delegate int GetDvrUsedForFloatTable(
             IntPtr pfsclient,
@@ -2879,157 +2882,157 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         // ------------------------------------------------------------------
         // fstablecbk.h
         // ------------------------------------------------------------------
-         internal delegate int GetFirstHeaderRow(
-            IntPtr pfsclient,                       // IN:  
-            IntPtr nmTable,                         // IN:  
-            int fRepeatedHeader,                    // IN:  
-                            out int fFound,                         // OUT: 
-                            out IntPtr pnmFirstHeaderRow);          // OUT: 
-                    internal delegate int GetNextHeaderRow(
-                            IntPtr pfsclient,                       // IN:  
-                            IntPtr nmTable,                         // IN:  
-                            IntPtr nmHeaderRow,                     // IN:  
-                            int fRepeatedHeader,                    // IN:  
-                            out int fFound,                         // OUT: 
-                            out IntPtr pnmNextHeaderRow);           // OUT: 
-         internal delegate int GetFirstFooterRow(
-            IntPtr pfsclient,                       // IN:  
-            IntPtr nmTable,                         // IN:  
-            int fRepeatedFooter,                    // IN:  
-            out int fFound,                         // OUT: 
-            out IntPtr pnmFirstFooterRow);          // OUT: 
-         internal delegate int GetNextFooterRow(
-            IntPtr pfsclient,                       // IN:  
-            IntPtr nmTable,                         // IN:  
-            IntPtr nmFooterRow,                     // IN:  
-            int fRepeatedFooter,                    // IN:  
-            out int fFound,                         // OUT: 
-            out IntPtr pnmNextFooterRow);           // OUT: 
-         internal delegate int GetFirstRow(
-            IntPtr pfsclient,                       // IN:  
-            IntPtr nmTable,                         // IN:  
-            out int fFound,                         // OUT: 
-            out IntPtr pnmFirstRow);                // OUT: 
-         internal delegate int GetNextRow(
-            IntPtr pfsclient,                       // IN:  
-            IntPtr nmTable,                         // IN:  
-            IntPtr nmRow,                           // IN:  
-            out int fFound,                         // OUT: 
-            out IntPtr pnmNextRow);                 // OUT: 
-         internal delegate int UpdFChangeInHeaderFooter( // we don't do update in header/footer
-            IntPtr pfsclient,                       // IN:  
-            IntPtr nmTable,                         // IN:  
-            out int fHeaderChanged,                 // OUT: 
-            out int fFooterChanged,                 // OUT: 
-            out int fRepeatedHeaderChanged,         // OUT: unneeded for bottomless page, but...
-            out int fRepeatedFooterChanged);        // OUT: unneeded for bottomless page, but...
-         internal delegate int UpdGetFirstChangeInTable(
-            IntPtr pfsclient,                       // IN:  
-            IntPtr nmTable,                         // IN:  
-            out int fFound,                         // OUT: 
-            out int fChangeFirst,                   // OUT: 
-            out IntPtr pnmRowBeforeChange);         // OUT: 
-         internal delegate int UpdGetRowChange(
-            IntPtr pfsclient,                       // IN:  
-            IntPtr nmTable,                         // IN:  
-            IntPtr nmRow,                           // IN:  
-            out FSKCHANGE fskch,                    // OUT: 
-            out int fNoFurtherChanges);             // OUT: 
-         internal delegate int UpdGetCellChange(
-            IntPtr pfsclient,                       // IN:  
-            IntPtr nmRow,                           // IN:  
-            IntPtr nmCell,                          // IN:  
-            out int fWidthChanged,                  // OUT: 
-            out FSKCHANGE fskchCell);               // OUT: 
-         internal delegate int GetDistributionKind(
-            IntPtr pfsclient,                       // IN:  
-            IntPtr nmTable,                         // IN:  
-            uint fswdirTable,                       // IN:  
-            out FSKTABLEHEIGHTDISTRIBUTION tabledistr); // OUT: 
-         internal delegate int GetRowProperties(
-            IntPtr pfsclient,                       // IN:  
-            IntPtr nmRow,                           // IN:  
-            uint fswdirTable,                       // IN:  
-            out FSTABLEROWPROPS rowprops);          // OUT: 
-         internal unsafe delegate int GetCells(
-            IntPtr pfsclient,                       // IN:  
-            IntPtr nmRow,                           // IN:  
-            int cCells,                             // IN:  
-            IntPtr* rgnmCell,                       // IN/OUT: 
-            FSTABLEKCELLMERGE* rgkcellmerge);       // IN/OUT: 
-         internal delegate int FInterruptFormattingTable(
-            IntPtr pfsclient,                       // IN:  
-            IntPtr pfsparaclient,                   // IN:  
-            IntPtr nmRow,                           // IN:  
-            int dvr,                                // IN:  
-            out int fInterrupt);                    // OUT: 
-         internal unsafe delegate int CalcHorizontalBBoxOfRow(
-            IntPtr pfsclient,                       // IN:
-            IntPtr nmRow,                           // IN:
-            int cCells,                             // IN:
-            IntPtr* rgnmCell,                       // IN:
-            IntPtr* rgpfscell,                      // IN:
-            out int urBBox,                         // OUT:
-            out int durBBox);                       // OUT:
-         internal delegate int FormatCellFinite(     // unless cell has vertical text or is special in some other ways,
-            // this calls maps directly to a create subpage call :-)
-            IntPtr pfsclient,                       // IN:  
-            IntPtr pfsparaclientTable,              // IN:  table's para client
-            IntPtr pfsbrkcell,                      // IN:  not NULL if cell broken from previous page/column
-            IntPtr nmCell,                          // IN:  for vMerged cells, the first cell (master)
-            IntPtr pfsFtnRejector,                  // IN:  
-            int fEmptyOK,                           // IN:  
-            uint fswdirTable,                       // IN:  
-            int dvrExtraHeight,                     // IN: height above current row (non-zero for vMerged cells)
-            int dvrAvailable,                       // IN:  
-            out FSFMTR pfmtr,                       // OUT: 
-            out IntPtr ppfscell,                    // OUT: cell object
-            out IntPtr pfsbrkcellOut,               // OUT: break if cell does not fit in dvrAvailable
-            out int dvrUsed);                       // OUT: height -- min height required 
-         internal delegate int FormatCellBottomless(
-            IntPtr pfsclient,                       // IN:  
-            IntPtr pfsparaclientTable,              // IN:  table's para client
-            IntPtr nmCell,                          // IN:  for vMerged cells, the first cell (master)
-            uint fswdirTable,                       // IN:  
-            out FSFMTRBL fmtrbl,                    // OUT: 
-            out IntPtr ppfscell,                    // OUT: cell object
-            out int dvrUsed);                       // OUT: height -- min height required 
-         internal delegate int UpdateBottomlessCell( // unless cell has vertical text or is special in some other ways,
-            // this calls maps directly to a update subpage call :-)
-            IntPtr pfscell,                         // IN/OUT: cell object
-            IntPtr pfsparaclientTable,              // IN:  table's para client
-            IntPtr nmCell,                          // IN:  for vMerged cells, the first cell (master)
-            uint fswdirTable,                       // IN:  
-            out FSFMTRBL fmtrbl,                    // IN:  
-            out int dvrUsed);                       // OUT: height -- min height required 
+        internal delegate int GetFirstHeaderRow(
+           IntPtr pfsclient,                       // IN:  
+           IntPtr nmTable,                         // IN:  
+           int fRepeatedHeader,                    // IN:  
+                           out int fFound,                         // OUT: 
+                           out IntPtr pnmFirstHeaderRow);          // OUT: 
+        internal delegate int GetNextHeaderRow(
+                IntPtr pfsclient,                       // IN:  
+                IntPtr nmTable,                         // IN:  
+                IntPtr nmHeaderRow,                     // IN:  
+                int fRepeatedHeader,                    // IN:  
+                out int fFound,                         // OUT: 
+                out IntPtr pnmNextHeaderRow);           // OUT: 
+        internal delegate int GetFirstFooterRow(
+           IntPtr pfsclient,                       // IN:  
+           IntPtr nmTable,                         // IN:  
+           int fRepeatedFooter,                    // IN:  
+           out int fFound,                         // OUT: 
+           out IntPtr pnmFirstFooterRow);          // OUT: 
+        internal delegate int GetNextFooterRow(
+           IntPtr pfsclient,                       // IN:  
+           IntPtr nmTable,                         // IN:  
+           IntPtr nmFooterRow,                     // IN:  
+           int fRepeatedFooter,                    // IN:  
+           out int fFound,                         // OUT: 
+           out IntPtr pnmNextFooterRow);           // OUT: 
+        internal delegate int GetFirstRow(
+           IntPtr pfsclient,                       // IN:  
+           IntPtr nmTable,                         // IN:  
+           out int fFound,                         // OUT: 
+           out IntPtr pnmFirstRow);                // OUT: 
+        internal delegate int GetNextRow(
+           IntPtr pfsclient,                       // IN:  
+           IntPtr nmTable,                         // IN:  
+           IntPtr nmRow,                           // IN:  
+           out int fFound,                         // OUT: 
+           out IntPtr pnmNextRow);                 // OUT: 
+        internal delegate int UpdFChangeInHeaderFooter( // we don't do update in header/footer
+           IntPtr pfsclient,                       // IN:  
+           IntPtr nmTable,                         // IN:  
+           out int fHeaderChanged,                 // OUT: 
+           out int fFooterChanged,                 // OUT: 
+           out int fRepeatedHeaderChanged,         // OUT: unneeded for bottomless page, but...
+           out int fRepeatedFooterChanged);        // OUT: unneeded for bottomless page, but...
+        internal delegate int UpdGetFirstChangeInTable(
+           IntPtr pfsclient,                       // IN:  
+           IntPtr nmTable,                         // IN:  
+           out int fFound,                         // OUT: 
+           out int fChangeFirst,                   // OUT: 
+           out IntPtr pnmRowBeforeChange);         // OUT: 
+        internal delegate int UpdGetRowChange(
+           IntPtr pfsclient,                       // IN:  
+           IntPtr nmTable,                         // IN:  
+           IntPtr nmRow,                           // IN:  
+           out FSKCHANGE fskch,                    // OUT: 
+           out int fNoFurtherChanges);             // OUT: 
+        internal delegate int UpdGetCellChange(
+           IntPtr pfsclient,                       // IN:  
+           IntPtr nmRow,                           // IN:  
+           IntPtr nmCell,                          // IN:  
+           out int fWidthChanged,                  // OUT: 
+           out FSKCHANGE fskchCell);               // OUT: 
+        internal delegate int GetDistributionKind(
+           IntPtr pfsclient,                       // IN:  
+           IntPtr nmTable,                         // IN:  
+           uint fswdirTable,                       // IN:  
+           out FSKTABLEHEIGHTDISTRIBUTION tabledistr); // OUT: 
+        internal delegate int GetRowProperties(
+           IntPtr pfsclient,                       // IN:  
+           IntPtr nmRow,                           // IN:  
+           uint fswdirTable,                       // IN:  
+           out FSTABLEROWPROPS rowprops);          // OUT: 
+        internal unsafe delegate int GetCells(
+           IntPtr pfsclient,                       // IN:  
+           IntPtr nmRow,                           // IN:  
+           int cCells,                             // IN:  
+           IntPtr* rgnmCell,                       // IN/OUT: 
+           FSTABLEKCELLMERGE* rgkcellmerge);       // IN/OUT: 
+        internal delegate int FInterruptFormattingTable(
+           IntPtr pfsclient,                       // IN:  
+           IntPtr pfsparaclient,                   // IN:  
+           IntPtr nmRow,                           // IN:  
+           int dvr,                                // IN:  
+           out int fInterrupt);                    // OUT: 
+        internal unsafe delegate int CalcHorizontalBBoxOfRow(
+           IntPtr pfsclient,                       // IN:
+           IntPtr nmRow,                           // IN:
+           int cCells,                             // IN:
+           IntPtr* rgnmCell,                       // IN:
+           IntPtr* rgpfscell,                      // IN:
+           out int urBBox,                         // OUT:
+           out int durBBox);                       // OUT:
+        internal delegate int FormatCellFinite(     // unless cell has vertical text or is special in some other ways,
+                                                    // this calls maps directly to a create subpage call :-)
+           IntPtr pfsclient,                       // IN:  
+           IntPtr pfsparaclientTable,              // IN:  table's para client
+           IntPtr pfsbrkcell,                      // IN:  not NULL if cell broken from previous page/column
+           IntPtr nmCell,                          // IN:  for vMerged cells, the first cell (master)
+           IntPtr pfsFtnRejector,                  // IN:  
+           int fEmptyOK,                           // IN:  
+           uint fswdirTable,                       // IN:  
+           int dvrExtraHeight,                     // IN: height above current row (non-zero for vMerged cells)
+           int dvrAvailable,                       // IN:  
+           out FSFMTR pfmtr,                       // OUT: 
+           out IntPtr ppfscell,                    // OUT: cell object
+           out IntPtr pfsbrkcellOut,               // OUT: break if cell does not fit in dvrAvailable
+           out int dvrUsed);                       // OUT: height -- min height required 
+        internal delegate int FormatCellBottomless(
+           IntPtr pfsclient,                       // IN:  
+           IntPtr pfsparaclientTable,              // IN:  table's para client
+           IntPtr nmCell,                          // IN:  for vMerged cells, the first cell (master)
+           uint fswdirTable,                       // IN:  
+           out FSFMTRBL fmtrbl,                    // OUT: 
+           out IntPtr ppfscell,                    // OUT: cell object
+           out int dvrUsed);                       // OUT: height -- min height required 
+        internal delegate int UpdateBottomlessCell( // unless cell has vertical text or is special in some other ways,
+                                                    // this calls maps directly to a update subpage call :-)
+           IntPtr pfscell,                         // IN/OUT: cell object
+           IntPtr pfsparaclientTable,              // IN:  table's para client
+           IntPtr nmCell,                          // IN:  for vMerged cells, the first cell (master)
+           uint fswdirTable,                       // IN:  
+           out FSFMTRBL fmtrbl,                    // IN:  
+           out int dvrUsed);                       // OUT: height -- min height required 
 
-         internal delegate int CompareCells(
-            IntPtr pfscellOld,
-            IntPtr pfscellNew,
-            out FSCOMPRESULT pfscmpr);
+        internal delegate int CompareCells(
+           IntPtr pfscellOld,
+           IntPtr pfscellNew,
+           out FSCOMPRESULT pfscmpr);
 
-         internal delegate int ClearUpdateInfoInCell(
-            IntPtr pfscell);                        // IN/OUT: cell object
-         internal delegate int SetCellHeight(
-            IntPtr pfscell,                         // IN/OUT: cell object
-            IntPtr pfsparaclientTable,              // IN:  table's para client
-            IntPtr pfsbrkcell,                      // IN:  not NULL if cell broken from previous page/column
-            IntPtr nmCell,                          // IN:  for vMerged cells, the first cell (master)
-            int fBrokenHere,                        // IN:  true if cell broken on this page/column: no reformatting
-            uint fswdirTable,                       // IN:  
-            int dvrActual);                         // IN:  
-         internal delegate int DestroyCell(
-            IntPtr pfsCell);                        // IN:  
-         internal delegate int DuplicateCellBreakRecord(
-            IntPtr pfsclient,                       // IN:  
-            IntPtr pfsbrkcell,                      // IN:  
-            out IntPtr ppfsbrkcellDup);             // OUT: 
-         internal delegate int DestroyCellBreakRecord(
-            IntPtr pfsclient,                       // IN:  
-            IntPtr pfsbrkcell);                     // IN:  
-         internal delegate int GetCellNumberFootnotes(
-            IntPtr pfscell,                         // IN:  
-            out int cFtn);                          // OUT: 
+        internal delegate int ClearUpdateInfoInCell(
+           IntPtr pfscell);                        // IN/OUT: cell object
+        internal delegate int SetCellHeight(
+           IntPtr pfscell,                         // IN/OUT: cell object
+           IntPtr pfsparaclientTable,              // IN:  table's para client
+           IntPtr pfsbrkcell,                      // IN:  not NULL if cell broken from previous page/column
+           IntPtr nmCell,                          // IN:  for vMerged cells, the first cell (master)
+           int fBrokenHere,                        // IN:  true if cell broken on this page/column: no reformatting
+           uint fswdirTable,                       // IN:  
+           int dvrActual);                         // IN:  
+        internal delegate int DestroyCell(
+           IntPtr pfsCell);                        // IN:  
+        internal delegate int DuplicateCellBreakRecord(
+           IntPtr pfsclient,                       // IN:  
+           IntPtr pfsbrkcell,                      // IN:  
+           out IntPtr ppfsbrkcellDup);             // OUT: 
+        internal delegate int DestroyCellBreakRecord(
+           IntPtr pfsclient,                       // IN:  
+           IntPtr pfsbrkcell);                     // IN:  
+        internal delegate int GetCellNumberFootnotes(
+           IntPtr pfscell,                         // IN:  
+           out int cFtn);                          // OUT: 
         /*
     internal delegate int GetCellFootnoteInfo(
         PFSTABLECELL pfscell,
@@ -3038,14 +3041,14 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         PFSFTNINFO pfsftninf,
         LONG* piFtnLim);
     */
-         internal delegate int GetCellMinColumnBalancingStep(
-            IntPtr pfscell,                         // IN:
-            uint fswdir,                            // IN:
-            out int pdvrMinStep);                   // OUT:
+        internal delegate int GetCellMinColumnBalancingStep(
+           IntPtr pfscell,                         // IN:
+           uint fswdir,                            // IN:
+           out int pdvrMinStep);                   // OUT:
 
-         internal delegate int TransferDisplayInfoCell(
-            IntPtr pfscellOld,
-            IntPtr pfscellNew);
+        internal delegate int TransferDisplayInfoCell(
+           IntPtr pfscellOld,
+           IntPtr pfscellNew);
 
         #endregion Callbacks
 
@@ -3064,19 +3067,19 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
 
         [DllImport(DllImport.PresentationNative)]
         internal static extern int GetFloaterHandlerInfo(
-            [In] 
+            [In]
             ref FSFLOATERINIT pfsfloaterinit,   // IN:  pointer to floater init data (callbacks)
             IntPtr pFloaterObjectInfo);         // IN:  pointer to floater object info
 
         [DllImport(DllImport.PresentationNative)]
         internal static extern int GetTableObjHandlerInfo(
-            [In] 
+            [In]
             ref FSTABLEOBJINIT pfstableobjinit, // IN:  pointer to floater init data (callbacks)
             IntPtr pTableObjectInfo);           // IN:  pointer to floater object info
 
         [DllImport(DllImport.PresentationNative)]
         internal static extern int CreateInstalledObjectsInfo(
-            [In] 
+            [In]
             ref FSIMETHODS fssubtrackparamethods,//IN:  pointer to subtrack paragraph callbacks
             ref FSIMETHODS fssubpageparamethods,// IN:  pointer to subpage paragraph callbacks
             out IntPtr pInstalledObjects,       // OUT: pointer to installed objects array
@@ -3090,7 +3093,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         // ------------------------------------------------------------------
         [DllImport(DllImport.PresentationNative)]
         internal static extern int CreateDocContext(
-            [In] 
+            [In]
             ref FSCONTEXTINFO fscontextinfo,    // IN:  pointer to context information
             out IntPtr pfscontext);             // OUT: pointer to the FS context
 
@@ -3190,7 +3193,7 @@ internal static extern int FsDuplicatePageBreakRecord(
             int* rgSpanForHeightArea,           // IN:  array of columns spanned for height-defined areas
             int fAllowOverhangBottom,           // IN:  allow overhang over bottom margin?
             FSKSUPPRESSHARDBREAKBEFOREFIRSTPARA fsksuppresshardbreakbeforefirstparaIn,
-																/* IN: suppress breaks at track start?			*/
+            /* IN: suppress breaks at track start?			*/
             out FSFMTR fsfmtr,                  // OUT: why formatting was stopped
             out IntPtr pSubPage,                // OUT: ptr to the subpage
             out IntPtr pBRSubPageOut,           // OUT: break record of the subpage
@@ -3331,7 +3334,7 @@ internal static extern int FsDuplicatePageBreakRecord(
             IntPtr pfsMcsClientIn,              // IN:  input margin collapsing state
             FSKCLEAR fsKClearIn,                // IN:  clear property that must be satisfied
             FSKSUPPRESSHARDBREAKBEFOREFIRSTPARA fsksuppresshardbreakbeforefirstpara,
-                                                // IN: suppress breaks at track start?	
+            // IN: suppress breaks at track start?	
             out FSFMTR pfsfmtr,                 // OUT: why formatting was stopped
             out IntPtr ppfsSubtrack,            // OUT: ptr to the subtrack
             out IntPtr pfsBRSubtrackOut,        // OUT: break record of the subtrack
@@ -3796,9 +3799,9 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
 
         [DllImport(DllImport.PresentationNative)]
         internal static unsafe extern int FsQueryFigureObjectDetails(
-        			IntPtr pfsContext, /* IN: ptr to FS context						*/
-        			IntPtr pPara,      /* IN: ptr to figure para						*/
-        			out FSFIGUREDETAILS fsFigureDetails);			/* OUT: figure details							*/
+                    IntPtr pfsContext, /* IN: ptr to FS context						*/
+                    IntPtr pPara,      /* IN: ptr to figure para						*/
+                    out FSFIGUREDETAILS fsFigureDetails);			/* OUT: figure details							*/
 
 
         // ------------------------------------------------------------------
@@ -3898,7 +3901,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
             ref FSRECT rectPage,                    // IN:  
             ref FSBBOX bboxTransform,
             uint fswdirOut,
-            out FSBBOX bboxOut); 
+            out FSBBOX bboxOut);
 
         // ------------------------------------------------------------------
         // fswordframe.h

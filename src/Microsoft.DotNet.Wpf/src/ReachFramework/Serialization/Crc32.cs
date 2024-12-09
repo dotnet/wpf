@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -62,7 +62,7 @@ namespace System.Windows.Xps.Serialization
         public
         void
         AddData(
-            byte[]  data
+            byte[] data
             )
         {
             _crc32Value = UpdateCRC32(data, _crc32Value);
@@ -92,8 +92,8 @@ namespace System.Windows.Xps.Serialization
         static
         UInt32
         UpdateCRC32(
-            byte[]  data,
-            UInt32  oldCrc
+            byte[] data,
+            UInt32 oldCrc
             )
         {
             int bytes = data.Length;

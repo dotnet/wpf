@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -131,12 +131,12 @@ namespace System.Windows.Controls
                 {
                     // Moving Forwards.
                     // The DateRanges require start <= end
-                    currentDate = DateTimeHelper.AddDays(range.End, dayInterval );
+                    currentDate = DateTimeHelper.AddDays(range.End, dayInterval);
                 }
                 else
                 {
                     //Moving backwards.
-                    currentDate = DateTimeHelper.AddDays(range.Start, dayInterval );
+                    currentDate = DateTimeHelper.AddDays(range.Start, dayInterval);
                 }
             } while (currentDate != null && ((range = GetContainingDateRange((DateTime)currentDate)) != null));
 
@@ -357,7 +357,7 @@ namespace System.Windows.Controls
             return null;
         }
         #endregion Private Methods
-		
+
     }
 }
 

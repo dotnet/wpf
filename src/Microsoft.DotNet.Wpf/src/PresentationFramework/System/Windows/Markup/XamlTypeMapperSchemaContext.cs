@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -28,7 +28,7 @@ namespace System.Windows.Markup
             HashSet<string> _clrNamespaces;
 
             internal XamlTypeMapperSchemaContext(XamlTypeMapper typeMapper)
-                : base() 
+                : base()
             {
                 _typeMapper = typeMapper;
                 _sharedSchemaContext = (WpfSharedXamlSchemaContext)XamlReader.GetWpfSchemaContext();
@@ -376,10 +376,10 @@ namespace System.Windows.Markup
                 // Finally, use the reflected xmlnsdefs (get them from the shared SchemaContext, to avoid redundant reflection)
                 result = _sharedSchemaContext.GetXamlTypeInternal(xamlNamespace, name, typeArguments);
                 // Apply visibility filtering, because the shared SchemaContext can't do that.
-                return result == null ||  result.IsPublic ? result : GetInternalType(result.UnderlyingType, result);
+                return result == null || result.IsPublic ? result : GetInternalType(result.UnderlyingType, result);
             }
 
-            private bool SyncContainsKey<K,V>(IDictionary<K, V> dict, K key)
+            private bool SyncContainsKey<K, V>(IDictionary<K, V> dict, K key)
             {
                 lock (syncObject)
                 {

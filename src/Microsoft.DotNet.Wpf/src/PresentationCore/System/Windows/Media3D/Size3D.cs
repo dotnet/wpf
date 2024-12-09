@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -49,7 +49,7 @@ namespace System.Windows.Media.Media3D
         }
 
         #endregion Statics
-            
+
         #region Public Methods and Properties
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace System.Windows.Media.Media3D
                 {
                     throw new System.InvalidOperationException(SR.Size3D_CannotModifyEmptySize);
                 }
-                
+
                 if (value < 0)
                 {
                     throw new System.ArgumentException(SR.Size3D_DimensionCannotBeNegative);
@@ -105,7 +105,7 @@ namespace System.Windows.Media.Media3D
                 {
                     throw new System.InvalidOperationException(SR.Size3D_CannotModifyEmptySize);
                 }
-                
+
                 if (value < 0)
                 {
                     throw new System.ArgumentException(SR.Size3D_DimensionCannotBeNegative);
@@ -115,7 +115,7 @@ namespace System.Windows.Media.Media3D
             }
         }
 
-        
+
         /// <summary>
         /// Size in Z dimension. Default is 0, must be non-negative.
         /// </summary>
@@ -131,7 +131,7 @@ namespace System.Windows.Media.Media3D
                 {
                     throw new System.InvalidOperationException(SR.Size3D_CannotModifyEmptySize);
                 }
-                
+
                 if (value < 0)
                 {
                     throw new System.ArgumentException(SR.Size3D_DimensionCannotBeNegative);
@@ -171,16 +171,18 @@ namespace System.Windows.Media.Media3D
 
         private static Size3D CreateEmptySize3D()
         {
-            Size3D empty = new Size3D();
-            // Can't use setters because they throw on negative values
-            empty._x = Double.NegativeInfinity;
-            empty._y = Double.NegativeInfinity;
-            empty._z = Double.NegativeInfinity;
+            Size3D empty = new Size3D
+            {
+                // Can't use setters because they throw on negative values
+                _x = Double.NegativeInfinity,
+                _y = Double.NegativeInfinity,
+                _z = Double.NegativeInfinity
+            };
             return empty;
         }
 
         #endregion Private Methods
-            
+
         #region Private Fields
 
         private readonly static Size3D s_empty = CreateEmptySize3D();

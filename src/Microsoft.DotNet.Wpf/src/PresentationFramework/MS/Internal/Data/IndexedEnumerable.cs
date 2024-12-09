@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -91,7 +91,7 @@ namespace MS.Internal.Data
                     return _cachedIndex;
             }
 
-            // If item != cached item, that doesn�t mean that the enumerator
+            // If item != cached item, that doesn’t mean that the enumerator
             // is `blown, it just means we have to go find the item represented by item.
             index = -1;
             // only ask for fresh enumerator if current enumerator already was moved before
@@ -434,7 +434,8 @@ namespace MS.Internal.Data
         {
             // if _enumeratorVersion exceeds MaxValue, then it
             // will roll back to MinValue, and continue on from there.
-            unchecked { ++_enumeratorVersion; }
+            unchecked
+            { ++_enumeratorVersion; }
 
             DisposeEnumerator(ref _changeTracker);
             _changeTracker = _enumerable.GetEnumerator();
@@ -448,7 +449,8 @@ namespace MS.Internal.Data
         {
             // if _enumeratorVersion exceeds MaxValue, then it
             // will roll back to MinValue, and continue on from there.
-            unchecked { ++_enumeratorVersion; }
+            unchecked
+            { ++_enumeratorVersion; }
 
             DisposeEnumerator(ref _enumerator);
             ClearAllCaches();
@@ -748,7 +750,8 @@ namespace MS.Internal.Data
                 }
                 else
                 {
-                    while ((returnValue = _enumerator.MoveNext()) && !_filterCallback(_enumerator.Current));
+                    while ((returnValue = _enumerator.MoveNext()) && !_filterCallback(_enumerator.Current))
+                        ;
                 }
 
                 return returnValue;

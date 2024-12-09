@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,10 +6,10 @@ namespace System.Windows.Media
 {
     public abstract partial class CacheMode
     {
-        internal CacheMode ()
+        internal CacheMode()
         {
         }
-        
+
         /// <summary>
         /// Parse - this method is called by the type converter to parse a CacheMode's string 
         /// (provided in "value").
@@ -29,7 +29,7 @@ namespace System.Windows.Media
             {
                 throw new FormatException(SR.Parsers_IllegalToken);
             }
-    
+
             return cacheMode;
         }
 

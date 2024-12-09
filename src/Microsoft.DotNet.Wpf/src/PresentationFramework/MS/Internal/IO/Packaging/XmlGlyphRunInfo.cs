@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,11 +8,11 @@
 //              The class functions as an array of XmlGlyphRunInfo's in markup order.
 //
 
-using System.Xml;                       // For DOM objects
 using System.Globalization;             // For CultureInfo
 using System.Windows;                   // For ExceptionStringTable
-using Windows = System.Windows;         // For Windows.Point (as distinct from System.Drawing.Point)
 using System.Windows.Markup;            // For XmlLanguage
+using System.Xml;                       // For DOM objects
+using Windows = System.Windows;         // For Windows.Point (as distinct from System.Drawing.Point)
 
 namespace MS.Internal.IO.Packaging
 {
@@ -36,7 +36,7 @@ namespace MS.Internal.IO.Packaging
             _glyphsNode = glyphsNode as XmlElement;
             // Assert that XmlFixedPageInfo (only caller) has correctly identified glyph runs
             // prior to invoking this constructor.
-            Debug.Assert(_glyphsNode != null 
+            Debug.Assert(_glyphsNode != null
                 && string.Equals(_glyphsNode.LocalName, _glyphRunName, StringComparison.Ordinal)
                 && string.Equals(_glyphsNode.NamespaceURI, ElementTableKey.FixedMarkupNamespace, StringComparison.Ordinal));
         }
@@ -57,8 +57,8 @@ namespace MS.Internal.IO.Packaging
         /// The point is given in page coordinates.
         /// double.NaN can be returned in either coordinate when the input glyph run is invalid.
         /// </remarks>
-        internal override Windows.Point StartPosition 
-        { 
+        internal override Windows.Point StartPosition
+        {
             get
             {
                 throw new NotSupportedException(SR.XmlGlyphRunInfoIsNonGraphic);
@@ -73,8 +73,8 @@ namespace MS.Internal.IO.Packaging
         /// The point is given in page coordinates.
         /// double.NaN can be returned in either coordinate when the input glyph run is invalid.
         /// </remarks>
-        internal override Windows.Point EndPosition 
-        { 
+        internal override Windows.Point EndPosition
+        {
             get
             {
                 throw new NotSupportedException(SR.XmlGlyphRunInfoIsNonGraphic);
@@ -94,8 +94,8 @@ namespace MS.Internal.IO.Packaging
         ///
         /// NaN can be returned if the markup is invalid.
         /// </remarks>
-        internal override double WidthEmFontSize 
-        { 
+        internal override double WidthEmFontSize
+        {
             get
             {
                 throw new NotSupportedException(SR.XmlGlyphRunInfoIsNonGraphic);
@@ -114,8 +114,8 @@ namespace MS.Internal.IO.Packaging
         ///
         /// NaN can be returned if the markup is invalid.
         /// </remarks>
-        internal override double HeightEmFontSize 
-        { 
+        internal override double HeightEmFontSize
+        {
             get
             {
                 throw new NotSupportedException(SR.XmlGlyphRunInfoIsNonGraphic);
@@ -128,8 +128,8 @@ namespace MS.Internal.IO.Packaging
         /// <remarks>
         /// This feature is designed for ideograms and should not make sense for latin characters.
         /// </remarks>
-        internal override bool GlyphsHaveSidewaysOrientation 
-        { 
+        internal override bool GlyphsHaveSidewaysOrientation
+        {
             get
             {
                 throw new NotSupportedException(SR.XmlGlyphRunInfoIsNonGraphic);
@@ -142,8 +142,8 @@ namespace MS.Internal.IO.Packaging
         /// <remarks>
         /// 0 is assumed if the attribute value is absent or unexpected.
         /// </remarks>
-        internal override int BidiLevel 
-        { 
+        internal override int BidiLevel
+        {
             get
             {
                 throw new NotSupportedException(SR.XmlGlyphRunInfoIsNonGraphic);
@@ -162,8 +162,8 @@ namespace MS.Internal.IO.Packaging
             {
                 if (_languageID == null)
                 {
-                    for (XmlElement currentNode = _glyphsNode; 
-                         currentNode != null && _languageID == null; 
+                    for (XmlElement currentNode = _glyphsNode;
+                         currentNode != null && _languageID == null;
                          currentNode = (currentNode.ParentNode as XmlElement))
                     {
                         string languageString = currentNode.GetAttribute(_xmlLangAttribute);
@@ -203,20 +203,20 @@ namespace MS.Internal.IO.Packaging
                     // Note: XamlFilter.GetCurrentLcid is a private method that also has
                     // similar logic and will default to CultureInfo.InvariantCulture.LCID
                     // CultureInfo.InvariantCulture will never be null
-                    if(_languageID == null)
-                        _languageID = checked((uint)CultureInfo.InvariantCulture.LCID); 
+                    if (_languageID == null)
+                        _languageID = checked((uint)CultureInfo.InvariantCulture.LCID);
                 }
                 // Cast Nullable<> into value type.
-                return (uint) _languageID;
+                return (uint)_languageID;
             }
         }
-        
+
         /// <summary>
         /// The glyph run's contents as a string of unicode symbols.
         /// If the unicode attribute is missing in the markup then an empty string is returned.
         /// </summary>        
-        internal override string UnicodeString 
-        { 
+        internal override string UnicodeString
+        {
             get
             {
                 if (_unicodeString == null)
@@ -234,12 +234,12 @@ namespace MS.Internal.IO.Packaging
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         #region Constants
-        private const string _glyphRunName           = "Glyphs";
-        private const string _xmlLangAttribute       = "xml:lang";
+        private const string _glyphRunName = "Glyphs";
+        private const string _xmlLangAttribute = "xml:lang";
         private const string _unicodeStringAttribute = "UnicodeString";
 
         // The undetermined language string can be "und" or "UND". We always convert strings

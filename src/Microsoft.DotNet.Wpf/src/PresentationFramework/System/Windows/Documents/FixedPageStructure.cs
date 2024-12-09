@@ -1,10 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using System.Windows.Controls;
 using MS.Internal.Documents;
 using CultureInfo = System.Globalization.CultureInfo;
 
@@ -37,11 +37,11 @@ namespace System.Windows.Documents
 
             // Initialize to virtual
             _flowStart = new FlowNode(FixedFlowMap.FlowOrderVirtualScopeId, FlowNodeType.Virtual, pageIndex);
-            _flowEnd   = _flowStart;
+            _flowEnd = _flowStart;
 
             //
             _fixedStart = FixedNode.Create(pageIndex, 1, FixedFlowMap.FixedOrderStartVisual, -1, null);
-            _fixedEnd   = FixedNode.Create(pageIndex, 1, FixedFlowMap.FixedOrderEndVisual, -1, null);
+            _fixedEnd = FixedNode.Create(pageIndex, 1, FixedFlowMap.FixedOrderEndVisual, -1, null);
         }
         #endregion Constructors
 
@@ -94,7 +94,7 @@ namespace System.Windows.Documents
             _lineResults = lineResults;
 #if DEBUG
             DocumentsTrace.FixedTextOM.Builder.Trace("----LineResults Begin Dump-----\r\n");
-            foreach(FixedLineResult lineResult in _lineResults)
+            foreach (FixedLineResult lineResult in _lineResults)
             {
                 Debug.Assert(lineResult != null);
                 DocumentsTrace.FixedTextOM.Builder.Trace($"{lineResult.ToString()}\r\n");
@@ -169,7 +169,7 @@ namespace System.Windows.Documents
                     closestLine = lineResult;
                 }
                 //Update closest manhattan.  We decide which metric to choose later.
-                double manhattan = 5*absVerDistance + absHorDistance;
+                double manhattan = 5 * absVerDistance + absHorDistance;
                 //Consider removing second condition, or perhaps come up with an exponential weighting for vertical.
                 if (manhattan < minManhattan && absVerDistance < lineResult.LayoutBox.Height)
                 {
@@ -201,7 +201,7 @@ namespace System.Windows.Documents
         internal void SetFlowBoundary(FlowNode flowStart, FlowNode flowEnd)
         {
             Debug.Assert(flowStart != null && flowStart.Type != FlowNodeType.Virtual);
-            Debug.Assert(flowEnd   != null && flowEnd.Type != FlowNodeType.Virtual);
+            Debug.Assert(flowEnd != null && flowEnd.Type != FlowNodeType.Virtual);
             _flowStart = flowStart;
             _flowEnd = flowEnd;
         }
@@ -211,10 +211,10 @@ namespace System.Windows.Documents
         private void DrawRectOutline(DrawingContext dc, Pen pen, Rect rect)
         {
             Debug.Assert(!rect.IsEmpty);
-            dc.DrawLine(pen, rect.TopLeft,      rect.TopRight);
-            dc.DrawLine(pen, rect.TopRight,     rect.BottomRight);
-            dc.DrawLine(pen, rect.BottomRight,  rect.BottomLeft);
-            dc.DrawLine(pen, rect.BottomLeft,   rect.TopLeft);
+            dc.DrawLine(pen, rect.TopLeft, rect.TopRight);
+            dc.DrawLine(pen, rect.TopRight, rect.BottomRight);
+            dc.DrawLine(pen, rect.BottomRight, rect.BottomLeft);
+            dc.DrawLine(pen, rect.BottomLeft, rect.TopLeft);
         }
 
         internal void RenderLayoutBox(DrawingContext dc)
@@ -250,8 +250,8 @@ namespace System.Windows.Documents
             if (lineCount == 0)
                 return;
 
-            FixedNode   fixedStartPage = _lineResults[0].Start;
-            FixedNode   fixedEndPage = _lineResults[lineCount-1].End;
+            FixedNode fixedStartPage = _lineResults[0].Start;
+            FixedNode fixedEndPage = _lineResults[lineCount - 1].End;
 
             FixedNode[] fixedNodes = _fixedTextBuilder.FixedFlowMap.FixedOrderGetRangeNodes(fixedStartPage, fixedEndPage);
             FixedPage fp = _fixedTextBuilder.FixedTextContainer.FixedDocument.GetFixedPage(PageIndex);
@@ -454,40 +454,40 @@ namespace System.Windows.Documents
             //
             //Iterate through flow node to draw Transparent Rect and draw its index
             //
-            Point prevTextPoint=new Point(0, 0);
+            Point prevTextPoint = new Point(0, 0);
             DpiScale dpi = fp.GetDpi();
             for (int i = FlowStart.Fp; i <= FlowEnd.Fp; i++)
             {
                 FlowNode fn = _fixedTextBuilder.FixedFlowMap[i];
                 switch (fn.Type)
                 {
-                    case FlowNodeType.Boundary :
-                    case FlowNodeType.Virtual  :
+                    case FlowNodeType.Boundary:
+                    case FlowNodeType.Virtual:
                         // this two cases won't happen.
                         Debug.Assert(false);
                         break;
 
-                    case FlowNodeType.Start   :
-                    case FlowNodeType.End     :
+                    case FlowNodeType.Start:
+                    case FlowNodeType.End:
                         {
-                        fixedElement = fn.Cookie as FixedElement;
-                        String typeString = fixedElement.Type.ToString();
-                        int indexofDot = typeString.LastIndexOf('.');
-                        ouptputString = $"{fn}-{typeString.AsSpan(indexofDot + 1)}";
+                            fixedElement = fn.Cookie as FixedElement;
+                            String typeString = fixedElement.Type.ToString();
+                            int indexofDot = typeString.LastIndexOf('.');
+                            ouptputString = $"{fn}-{typeString.AsSpan(indexofDot + 1)}";
 
-                        ft = new FormattedText(ouptputString,
-                                                EnglishCulture,
-                                                FlowDirection.LeftToRight,
-                                                new Typeface("Courier New"),
-                                                8,
-                                                Brushes.DarkGreen,
-                                                dpi.PixelsPerDip);
-                        // Ideally, for FlowNodeType.Start, this should find next FlowNode with physical location,
-                        // and draw it around the physical location.
-                        prevTextPoint = CreateFromLastTextPoint(prevTextPoint);
+                            ft = new FormattedText(ouptputString,
+                                                    EnglishCulture,
+                                                    FlowDirection.LeftToRight,
+                                                    new Typeface("Courier New"),
+                                                    8,
+                                                    Brushes.DarkGreen,
+                                                    dpi.PixelsPerDip);
+                            // Ideally, for FlowNodeType.Start, this should find next FlowNode with physical location,
+                            // and draw it around the physical location.
+                            prevTextPoint = CreateFromLastTextPoint(prevTextPoint);
 
-                        dc.DrawText(ft, prevTextPoint);
-                        break;
+                            dc.DrawText(ft, prevTextPoint);
+                            break;
                         }
 
                     case FlowNodeType.Noop:
@@ -502,13 +502,13 @@ namespace System.Windows.Documents
                         dc.DrawText(ft, prevTextPoint);
                         break;
 
-                    case FlowNodeType.Run     :
+                    case FlowNodeType.Run:
                         //
                         // Paint the region. The rect is the union of child glyphs.
                         //
 
-                        Glyphs  glyphs;
-                        Rect    flowRunBox = Rect.Empty;
+                        Glyphs glyphs;
+                        Rect flowRunBox = Rect.Empty;
                         Rect glyphBox;
                         somElements = _fixedTextBuilder.FixedFlowMap.FlowNodes[fn.Fp].FixedSOMElements;
 
@@ -519,16 +519,16 @@ namespace System.Windows.Documents
                             int endIndex = currentSomeElement.EndIndex;
 
                             // same as (_IsBoundaryFixedNode(currentFixedNode))
-                            if (currentFixedNode.Page == FixedFlowMap.FixedOrderStartPage   ||
-                                currentFixedNode.Page == FixedFlowMap.FixedOrderEndPage     ||
-                                currentFixedNode[1] == FixedFlowMap.FixedOrderStartVisual   ||
+                            if (currentFixedNode.Page == FixedFlowMap.FixedOrderStartPage ||
+                                currentFixedNode.Page == FixedFlowMap.FixedOrderEndPage ||
+                                currentFixedNode[1] == FixedFlowMap.FixedOrderStartVisual ||
                                 currentFixedNode[1] == FixedFlowMap.FixedOrderEndVisual)
                             {
                                 continue;
                             }
 
                             glyphs = fp.GetGlyphsElement(currentFixedNode);
-                            Debug.Assert(glyphs!= null);
+                            Debug.Assert(glyphs != null);
 
                             glyphBox = FixedTextView._GetGlyphRunDesignRect(glyphs, startIndex, endIndex);
                             if (!glyphBox.IsEmpty)
@@ -581,7 +581,7 @@ namespace System.Windows.Documents
 
                             if (image != null || path != null)
                             {
-                                Rect  imageRect, boundingRect = Rect.Empty;
+                                Rect imageRect, boundingRect = Rect.Empty;
                                 //
                                 // Get Image bounding box.
                                 //
@@ -640,13 +640,13 @@ namespace System.Windows.Documents
 
         internal void RenderLines(DrawingContext dc)
         {
-            for (int i=0; i<_lineResults.Length; i++)
+            for (int i = 0; i < _lineResults.Length; i++)
             {
                 FixedLineResult lineResult = _lineResults[i];
 
                 Pen pen = new Pen(Brushes.Red, 1);
                 Rect layoutBox = lineResult.LayoutBox;
-                dc.DrawRectangle(null, pen , layoutBox);
+                dc.DrawRectangle(null, pen, layoutBox);
 
                 CultureInfo EnglishCulture = System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS;
                 FixedPage fp = _fixedTextBuilder.FixedTextContainer.FixedDocument.GetFixedPage(PageIndex);
@@ -657,9 +657,9 @@ namespace System.Windows.Documents
                                             10,
                                             Brushes.White,
                                             fp.GetDpi().PixelsPerDip);
-                Point labelLocation = new Point(layoutBox.Left-25, (layoutBox.Bottom + layoutBox.Top)/2 - 10);
+                Point labelLocation = new Point(layoutBox.Left - 25, (layoutBox.Bottom + layoutBox.Top) / 2 - 10);
                 Geometry geom = ft.BuildHighlightGeometry(labelLocation);
-                Pen backgroundPen = new Pen(Brushes.Black,1);
+                Pen backgroundPen = new Pen(Brushes.Black, 1);
                 dc.DrawGeometry(Brushes.Black, backgroundPen, geom);
                 dc.DrawText(ft, labelLocation);
             }
@@ -833,7 +833,7 @@ namespace System.Windows.Documents
                         {
                             flowNode = this.FixedTextBuilder.FixedFlowMap.FlowNodes[startIdx++];
                             nodes.Add(flowNode);
-                        }while (startIdx < flowCount && this.FlowEnd != flowNode);
+                        } while (startIdx < flowCount && this.FlowEnd != flowNode);
                     }
                     _flowNodes = nodes.ToArray();
 
@@ -867,12 +867,12 @@ namespace System.Windows.Documents
         private readonly int _pageIndex;
 
         // Flow Order Boundary
-        private FlowNode    _flowStart;
-        private FlowNode    _flowEnd;
+        private FlowNode _flowStart;
+        private FlowNode _flowEnd;
 
         // Fixed Order Boundary
-        private FixedNode   _fixedStart;
-        private FixedNode   _fixedEnd;
+        private FixedNode _fixedStart;
+        private FixedNode _fixedEnd;
 
         private FixedSOMPageConstructor _fixedSOMPageConstructor;
         private FixedSOMPage _fixedSOMPage;

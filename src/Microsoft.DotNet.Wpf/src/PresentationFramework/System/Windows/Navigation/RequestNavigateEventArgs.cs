@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,7 +22,7 @@ namespace System.Windows.Navigation
         /// <ExternalAPI/> 
         protected RequestNavigateEventArgs() : base()
         {
-            base.RoutedEvent=System.Windows.Documents.Hyperlink.RequestNavigateEvent;
+            base.RoutedEvent = System.Windows.Documents.Hyperlink.RequestNavigateEvent;
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace System.Windows.Navigation
             _uri = uri;
             _target = target;
 
-            base.RoutedEvent=System.Windows.Documents.Hyperlink.RequestNavigateEvent;
+            base.RoutedEvent = System.Windows.Documents.Hyperlink.RequestNavigateEvent;
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace System.Windows.Navigation
         /// <ExternalAPI Inherit="true"/>
         public Uri Uri
         {
-            get{return _uri;}
+            get { return _uri; }
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace System.Windows.Navigation
         /// <ExternalAPI Inherit="true"/>
         public string Target
         {
-            get{return _target;}
+            get { return _target; }
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace System.Windows.Navigation
             RequestNavigateEventHandler handler = (RequestNavigateEventHandler)genericHandler;
 
             handler(genericTarget, this);
-        }            
+        }
     }
 
     /// <summary>

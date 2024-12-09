@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -445,7 +445,7 @@ namespace System.Windows.Controls
         {
             Dictionary<DependencyProperty, bool> propertyTransferEnabledForObject;
 
-            if ( _propertyTransferEnabledMap.TryGetValue(d, out propertyTransferEnabledForObject))
+            if (_propertyTransferEnabledMap.TryGetValue(d, out propertyTransferEnabledForObject))
             {
                 bool isPropertyTransferEnabled;
                 if (propertyTransferEnabledForObject.TryGetValue(p, out isPropertyTransferEnabled))

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -142,11 +142,11 @@ namespace System.Windows
                 {
                     DependencyObject coreParent = DeferredElementTreeState.GetInputElementParent(element, treeState);
                     DependencyObject logicalParent = DeferredElementTreeState.GetLogicalParent(element, treeState);
-                    
+
                     if (coreParent != null)
                     {
                         SetCacheFlagInAncestry(coreParent, newValue, treeState, shortCircuit, setOriginCacheFlag);
-                    }                
+                    }
                     if (logicalParent != null && logicalParent != coreParent)
                     {
                         SetCacheFlagInAncestry(logicalParent, newValue, treeState, shortCircuit, setOriginCacheFlag);
@@ -304,5 +304,5 @@ namespace System.Windows
         protected CoreFlags FlagOldOriginCache; // Flag to keep track of elements in the path of old origin
         protected CoreFlags FlagNewOriginCache; // Flag to keep track of elements in the path of new origin
     }
-} 
+}
 

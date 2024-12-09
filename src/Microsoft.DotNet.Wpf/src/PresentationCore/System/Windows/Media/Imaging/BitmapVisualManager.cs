@@ -1,10 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Windows.Media.Composition;
 using System.Windows.Threading;
 using MS.Internal;
-using System.Windows.Media.Composition;
 using MS.Win32.PresentationCore;
 
 namespace System.Windows.Media.Imaging
@@ -75,8 +75,8 @@ namespace System.Windows.Media.Imaging
             double dpiX = _bitmapTarget.DpiX;
             double dpiY = _bitmapTarget.DpiY;
 
-            Debug.Assert ((sizeX > 0) && (sizeY > 0));
-            Debug.Assert ((dpiX > 0) && (dpiY > 0));
+            Debug.Assert((sizeX > 0) && (sizeY > 0));
+            Debug.Assert((dpiX > 0) && (dpiY > 0));
 
             // validate the data
             if ((sizeX <= 0) || (sizeY <= 0))
@@ -91,7 +91,7 @@ namespace System.Windows.Media.Imaging
             }
 
             SafeMILHandle renderTargetBitmap = _bitmapTarget.MILRenderTarget;
-            Debug.Assert (renderTargetBitmap != null, "Render Target is null");
+            Debug.Assert(renderTargetBitmap != null, "Render Target is null");
 
             IntPtr pIRenderTargetBitmap = IntPtr.Zero;
 
@@ -129,7 +129,7 @@ namespace System.Windows.Media.Imaging
                     sizeY,
                     dpiX,
                     dpiY,
-                    worldTransform,                    
+                    worldTransform,
                     windowClip);
 
                 //

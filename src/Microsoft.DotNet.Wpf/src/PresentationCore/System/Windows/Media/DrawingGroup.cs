@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,7 +23,7 @@ namespace System.Windows.Media
         /// </summary>        
         public DrawingGroup()
         {
-        } 
+        }
 
         #endregion Constructors
 
@@ -39,10 +39,10 @@ namespace System.Windows.Media
         public DrawingContext Open()
         {
             VerifyOpen();
-            
+
             _openedForAppend = false;
-            
-            return new DrawingGroupDrawingContext(this);            
+
+            return new DrawingGroupDrawingContext(this);
         }
 
         /// <summary>
@@ -75,9 +75,9 @@ namespace System.Windows.Media
         ///     returned from Open or Append.
         /// </param>
         internal void Close(DrawingCollection rootDrawingGroupChildren)
-        {         
-            WritePreamble();            
-            
+        {
+            WritePreamble();
+
             Debug.Assert(_open);
             Debug.Assert(rootDrawingGroupChildren != null);
 
@@ -100,7 +100,7 @@ namespace System.Windows.Media
                 // of the reference here to avoid any more unneccesary copies.
                 Children = rootDrawingGroupChildren;
             }
-            else                
+            else
             {
                 //
                 //
@@ -112,15 +112,15 @@ namespace System.Windows.Media
                 // 
                 // Ensure that we can Append to the Children collection
                 //
-                
+
                 if (children == null)
                 {
-                    throw new InvalidOperationException(SR.DrawingGroup_CannotAppendToNullCollection);                                
+                    throw new InvalidOperationException(SR.DrawingGroup_CannotAppendToNullCollection);
                 }
-               
+
                 if (children.IsFrozen)
                 {
-                    throw new InvalidOperationException(SR.DrawingGroup_CannotAppendToFrozenCollection);                                                  
+                    throw new InvalidOperationException(SR.DrawingGroup_CannotAppendToFrozenCollection);
                 }
 
                 // Append the new collection to our current Children.
@@ -128,7 +128,7 @@ namespace System.Windows.Media
                 // TransactionalAppend rolls-back the Append operation in the event
                 // an exception is thrown from the Changed event.                
                 children.TransactionalAppend(rootDrawingGroupChildren);
-            }            
+            }
 
             // This DrawingGroup is no longer open
             _open = false;
@@ -139,7 +139,7 @@ namespace System.Windows.Media
         /// Drawing with the Drawing's current value.
         /// </summary>        
         internal override void WalkCurrentValue(DrawingContextWalker ctx)
-        {            
+        {
             int popCount = 0;
 
             // We avoid unneccessary ShouldStopWalking checks based on assumptions
@@ -158,12 +158,12 @@ namespace System.Windows.Media
             // If this assumption is ever broken then the ShouldStopWalking
             // check should be done on the first child -- including in the
             // WalkCurrentValue method of other Drawing subclasses.
-            Debug.Assert(!ctx.ShouldStopWalking);            
+            Debug.Assert(!ctx.ShouldStopWalking);
 
             //
             // Draw the transform property
             //
-            
+
             // Avoid calling PushTransform if the base value is set to the default and
             // no animations have been set on the property.
             if (!IsBaseValueDefault(DrawingGroup.TransformProperty) ||
@@ -172,7 +172,7 @@ namespace System.Windows.Media
                 ctx.PushTransform(Transform);
 
                 popCount++;
-            }              
+            }
 
             //
             // Draw the clip property
@@ -182,21 +182,21 @@ namespace System.Windows.Media
             // no animations have been set on the property.
             if (!IsBaseValueDefault(DrawingGroup.ClipGeometryProperty) ||
                 (null != AnimationStorage.GetStorage(this, DrawingGroup.ClipGeometryProperty)))
-            {    
+            {
                 ctx.PushClip(ClipGeometry);
 
                 popCount++;
-            }                
+            }
 
             //
             // Draw the opacity property
             //
-            
+
             // Avoid calling PushOpacity if the base value is set to the default and
             // no animations have been set on the property.
             if (!IsBaseValueDefault(DrawingGroup.OpacityProperty) ||
                 (null != AnimationStorage.GetStorage(this, DrawingGroup.OpacityProperty)))
-            {                    
+            {
                 // Push the current value of the opacity property, which
                 // is what Opacity returns.
                 ctx.PushOpacity(Opacity);
@@ -215,17 +215,17 @@ namespace System.Windows.Media
             //
             // Draw the effect property
             //
-            
+
             // Push the current value of the effect property, which
             // is what BitmapEffect returns.
             if (BitmapEffect != null)
             {
                 // Disable warning about obsolete method.  This code must remain active 
                 // until we can remove the public BitmapEffect APIs.
-                #pragma warning disable 0618
+#pragma warning disable 0618
                 ctx.PushEffect(BitmapEffect, BitmapEffectInput);
-                #pragma warning restore 0618
-                popCount++;                
+#pragma warning restore 0618
+                popCount++;
             }
 
             //
@@ -262,14 +262,14 @@ namespace System.Windows.Media
             // thrown, the Walk is simply aborted.  There is no requirement to Walk
             // through Pop instructions when an exception is thrown.
             //
-            
+
             for (int i = 0; i < popCount; i++)
             {
-                ctx.Pop();                    
-            }            
+                ctx.Pop();
+            }
         }
 
-         
+
         #endregion Internal methods     
 
         #region Private Methods
@@ -281,20 +281,20 @@ namespace System.Windows.Media
         private void VerifyOpen()
         {
             WritePreamble();
-            
+
             // Throw an exception if we are already opened
             if (_open)
             {
-                throw new InvalidOperationException(SR.DrawingGroup_AlreadyOpen);                                
+                throw new InvalidOperationException(SR.DrawingGroup_AlreadyOpen);
             }
-            
+
             _open = true;
         }
 
         #endregion Private Methods        
 
         #region Private fields
-        
+
         private bool _openedForAppend;
         private bool _open;
         #endregion Private fields        

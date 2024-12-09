@@ -1,9 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Windows.Threading;
 using System.Windows.Media.Composition;
+using System.Windows.Threading;
 using MS.Internal;
 using MS.Utility;
 
@@ -18,9 +18,9 @@ namespace System.Windows.Media
 
         internal enum HostStateFlags : uint
         {
-            None            = 0,
-            WorldTransform  = 1,
-            ClipBounds      = 2
+            None = 0,
+            WorldTransform = 1,
+            ClipBounds = 2
         };
 
         //----------------------------------------------------------------------
@@ -65,7 +65,7 @@ namespace System.Windows.Media
             _contentRoot.DuplicateHandle(outOfBandChannel, channel);
             outOfBandChannel.CloseBatch();
             outOfBandChannel.Commit();
-}
+        }
 
         /// <summary>
         /// This method is used to release all uce resources either on Shutdown or session disconnect
@@ -394,7 +394,7 @@ namespace System.Windows.Media
         {
             MediaContext mctx = MediaContext.From(Dispatcher);
 
-            Invariant.Assert(_rootVisual!=null);
+            Invariant.Assert(_rootVisual != null);
 
             // 1) Check if we have a cached render context.
             // 2) Initialize the render context.
@@ -432,7 +432,7 @@ namespace System.Windows.Media
 
             if (mctx.IsConnected)
             {
-               _rootVisual.Render(rc, 0);
+                _rootVisual.Render(rc, 0);
             }
 
             // ------------------------------------------------------------------------------------

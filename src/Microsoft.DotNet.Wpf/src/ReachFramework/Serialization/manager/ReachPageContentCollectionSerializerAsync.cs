@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -32,16 +32,16 @@ namespace System.Windows.Xps.Serialization
         public
         ReachPageContentCollectionSerializerAsync(
             PackageSerializationManager manager
-            ):
+            ) :
         base(manager)
         {
 
         }
 
         #endregion Constructor
-        
+
         #region Public Mehods
-        
+
         public
         override
         void
@@ -49,38 +49,38 @@ namespace System.Windows.Xps.Serialization
             ReachSerializerContext context
             )
         {
-            if(context == null)
+            if (context == null)
             {
 
             }
-           
-            switch (context.Action) 
+
+            switch (context.Action)
             {
                 case SerializerAction.endPersistObjectData:
-                {
-                    EndPersistObjectData();
-                    break;
-                }
-
-                case SerializerAction.serializeNextPageContent:
-                {
-                    PageContentCollectionSerializerContext thisContext = 
-                    context as PageContentCollectionSerializerContext;
-
-                    if(thisContext != null)
                     {
-                        SerializeNextPageContent(thisContext.Enumerator,
-                                                 thisContext.ObjectContext);
+                        EndPersistObjectData();
+                        break;
                     }
 
-                    break;
-                }
-                
+                case SerializerAction.serializeNextPageContent:
+                    {
+                        PageContentCollectionSerializerContext thisContext =
+                        context as PageContentCollectionSerializerContext;
+
+                        if (thisContext != null)
+                        {
+                            SerializeNextPageContent(thisContext.Enumerator,
+                                                     thisContext.ObjectContext);
+                        }
+
+                        break;
+                    }
+
                 default:
-                {
-                    base.AsyncOperation(context);
-                    break;
-                }
+                    {
+                        base.AsyncOperation(context);
+                        break;
+                    }
             }
         }
 
@@ -100,7 +100,7 @@ namespace System.Windows.Xps.Serialization
         override
         void
         PersistObjectData(
-            SerializableObjectContext   serializableObjectContext
+            SerializableObjectContext serializableObjectContext
             )
         {
             ArgumentNullException.ThrowIfNull(serializableObjectContext);
@@ -132,7 +132,7 @@ namespace System.Windows.Xps.Serialization
         #endregion Internal Methods
 
         #region Private Methods
-        
+
         /// <summary>
         /// This is being called to serialize the Page Content items
         /// contained within the collection
@@ -141,9 +141,9 @@ namespace System.Windows.Xps.Serialization
         /// The context of the object to be serialized at this time.
         /// </param>
         private
-        void 
+        void
         SerializePageContents(
-            SerializableObjectContext   serializableObjectContext
+            SerializableObjectContext serializableObjectContext
             )
         {
             //
@@ -161,30 +161,30 @@ namespace System.Windows.Xps.Serialization
             ((IXpsSerializationManagerAsync)SerializationManager).OperationStack.Push(context);
         }
 
-       private
-       void
-       SerializeNextPageContent(
-           IEnumerator                 enumerator,
-           SerializableObjectContext   serializableObjectContext
-           )
-       {
-           if(enumerator.MoveNext())
-           {
+        private
+        void
+        SerializeNextPageContent(
+            IEnumerator enumerator,
+            SerializableObjectContext serializableObjectContext
+            )
+        {
+            if (enumerator.MoveNext())
+            {
 
-               PageContentCollectionSerializerContext
-               context = new PageContentCollectionSerializerContext(this,
-                                                                   serializableObjectContext,
-                                                                   enumerator,
-                                                                   SerializerAction.serializeNextPageContent);
+                PageContentCollectionSerializerContext
+                context = new PageContentCollectionSerializerContext(this,
+                                                                    serializableObjectContext,
+                                                                    enumerator,
+                                                                    SerializerAction.serializeNextPageContent);
 
 
-               ((IXpsSerializationManagerAsync)SerializationManager).OperationStack.Push(context);
+                ((IXpsSerializationManagerAsync)SerializationManager).OperationStack.Push(context);
 
-               object pageContent = enumerator.Current;
+                object pageContent = enumerator.Current;
 
-               SerializePageContent(pageContent);
-           }
-       }
+                SerializePageContent(pageContent);
+            }
+        }
 
         /// <summary>
         /// Called to serialize a single PageContent
@@ -192,15 +192,15 @@ namespace System.Windows.Xps.Serialization
         /// <param name="pageContent">
         /// The PageContent to be serialized.
         /// </param>
-        private 
-        void 
+        private
+        void
         SerializePageContent(
             object pageContent
             )
         {
             ReachSerializer serializer = SerializationManager.GetSerializer(pageContent);
 
-            if(serializer!=null)
+            if (serializer != null)
             {
                 serializer.SerializeObject(pageContent);
             }
@@ -218,12 +218,12 @@ namespace System.Windows.Xps.Serialization
     {
         public
         PageContentCollectionSerializerContext(
-            ReachSerializerAsync        serializer,
-            SerializableObjectContext   objectContext,
-            IEnumerator                 enumerator,
-            SerializerAction            action
-            ):
-            base(serializer,objectContext,action)
+            ReachSerializerAsync serializer,
+            SerializableObjectContext objectContext,
+            IEnumerator enumerator,
+            SerializerAction action
+            ) :
+            base(serializer, objectContext, action)
         {
             this._enumerator = enumerator;
         }
@@ -240,6 +240,6 @@ namespace System.Windows.Xps.Serialization
         }
 
         private
-        IEnumerator     _enumerator;
+        IEnumerator _enumerator;
     };
 }

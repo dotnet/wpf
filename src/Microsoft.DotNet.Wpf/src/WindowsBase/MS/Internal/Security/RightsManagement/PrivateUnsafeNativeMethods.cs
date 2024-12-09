@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -28,7 +28,7 @@ namespace MS.Internal.Security.RightsManagement
         {
             [DllImport(ExternDll.MsDrm, SetLastError = false, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
             internal static extern int DRMCreateClientSession(
-                                    [In, MarshalAs(UnmanagedType.FunctionPtr)]CallbackDelegate pfnCallback,
+                                    [In, MarshalAs(UnmanagedType.FunctionPtr)] CallbackDelegate pfnCallback,
                                     [In, MarshalAs(UnmanagedType.U4)] uint uCallbackVersion,
                                     [In, MarshalAs(UnmanagedType.LPWStr)] string GroupIDProviderType,
                                     [In, MarshalAs(UnmanagedType.LPWStr)] string GroupID,
@@ -48,7 +48,7 @@ namespace MS.Internal.Security.RightsManagement
             // ReleaseHandle is called. After that marshalling code doesn't let the current instance 
             // of the Safe*Handle sub-class to cross managed/unmanaged boundary.
 #if PRESENTATION_HOST_DLL
-            [DllImport(ExternDll.PresentationHostDll,SetLastError=false,CharSet=CharSet.Unicode,CallingConvention=CallingConvention.StdCall)]
+            [DllImport(ExternDll.PresentationHostDll, SetLastError = false, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
 #else
             [DllImport(ExternDll.MsDrm, SetLastError = false, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
 #endif
@@ -102,7 +102,7 @@ namespace MS.Internal.Security.RightsManagement
             internal static extern int DRMActivate(
                                     [In] SafeRightsManagementSessionHandle hSession,
                                     [In, MarshalAs(UnmanagedType.U4)] uint uFlags,
-                                    [In, MarshalAs(UnmanagedType.U4)]uint uLangID,
+                                    [In, MarshalAs(UnmanagedType.U4)] uint uLangID,
                                     [In, MarshalAs(UnmanagedType.LPStruct)] ActivationServerInfo activationServerInfo,
                                     IntPtr context,  // this is a void* in the unmanaged SDK so IntPtr is the right (platform dependent declaration)
                                     IntPtr parentWindowHandle); // this a HWND in the unmanaged SDK so IntPtr is the right (platform dependent declaration)
@@ -359,7 +359,7 @@ namespace MS.Internal.Security.RightsManagement
                             [In, MarshalAs(UnmanagedType.U4)] uint symmetricKeyByteCount,
                             [In, MarshalAs(UnmanagedType.LPWStr)] string symmetricKeyType,
                             [In, MarshalAs(UnmanagedType.LPWStr)] string clientLicensorCertificate,
-                            [In, MarshalAs(UnmanagedType.FunctionPtr)]CallbackDelegate pfnCallback,
+                            [In, MarshalAs(UnmanagedType.FunctionPtr)] CallbackDelegate pfnCallback,
                             [In, MarshalAs(UnmanagedType.LPWStr)] string url,
                             [In, MarshalAs(UnmanagedType.U4)] uint context);
 

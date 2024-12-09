@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,7 +17,7 @@ namespace System.Windows.Input
         ///    The left mouse button.
         /// </summary>
         Left,
-        
+
         /// <summary>
         ///    The middle mouse button.
         /// </summary>
@@ -27,7 +27,7 @@ namespace System.Windows.Input
         ///    The right mouse button.
         /// </summary>
         Right,
-        
+
         /// <summary>
         ///    The fourth mouse button.
         /// </summary>
@@ -54,7 +54,7 @@ namespace System.Windows.Input
         private MouseButtonUtilities()
         {
         }
-        
+
         /// <summary>
         ///     Ensures MouseButton is set to a valid value.
         /// </summary>
@@ -64,7 +64,7 @@ namespace System.Windows.Input
         /// </remarks>
         internal static void Validate(MouseButton button)
         {
-            switch(button)
+            switch (button)
             {
                 case MouseButton.Left:
                 case MouseButton.Middle:
@@ -73,9 +73,9 @@ namespace System.Windows.Input
                 case MouseButton.XButton2:
                     break;
                 default:
-                    throw new  System.ComponentModel.InvalidEnumArgumentException("button", (int)button, typeof(MouseButton));
+                    throw new System.ComponentModel.InvalidEnumArgumentException("button", (int)button, typeof(MouseButton));
             }
         }
-}
+    }
 }
 

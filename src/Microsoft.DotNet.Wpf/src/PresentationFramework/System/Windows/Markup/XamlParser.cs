@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,12 +10,12 @@
 
 
 using System;
-using System.Xml;
-using System.IO;
 using System.Collections;
 using System.Diagnostics;
-using System.Reflection;
 using System.Globalization;
+using System.IO;
+using System.Reflection;
+using System.Xml;
 using MS.Utility;
 
 // Disabling 1634 and 1691:
@@ -77,7 +77,7 @@ namespace System.Windows.Markup
             bool multipleRoots) : this(parserContext, bamlWriter,
                                         new XmlTextReader(xamlStream,
                                         multipleRoots ? XmlNodeType.Element : XmlNodeType.Document,
-                                        (XmlParserContext)parserContext)                             )
+                                        (XmlParserContext)parserContext))
         {
         }
 
@@ -100,9 +100,9 @@ namespace System.Windows.Markup
 
             XmlCompatibilityReader xcr = new XmlCompatibilityReader(textReader,
                                                                     new IsXmlNamespaceSupportedCallback(IsXmlNamespaceSupported),
-                                                                    _predefinedNamespaces );
+                                                                    _predefinedNamespaces);
 
-            TokenReader = new XamlReaderHelper(this,parserContext,xcr);
+            TokenReader = new XamlReaderHelper(this, parserContext, xcr);
         }
 
         protected XamlParser(
@@ -156,8 +156,8 @@ namespace System.Windows.Markup
         public bool ReadXaml(bool singleRecordMode)
         {
             XamlNode xamlNode = null;
-            bool     cleanup = !singleRecordMode;
-            bool     done = false;
+            bool cleanup = !singleRecordMode;
+            bool done = false;
 
             try // What do we do with Exceptions we catch on this thread?.
             {
@@ -195,13 +195,13 @@ namespace System.Windows.Markup
             {
                 if (CriticalExceptions.IsCriticalException(e))
                 {
-                   throw;
+                    throw;
                 }
                 else
                 {
                     // Don't treat an AssemblyVersion parsing error as a XamlParseException.
                     // Throw it back to the task execution.
-                    if(e is AssemblyVersionParseException)
+                    if (e is AssemblyVersionParseException)
                     {
                         throw;
                     }
@@ -212,7 +212,7 @@ namespace System.Windows.Markup
                     }
                     // If the exception was a XamlParse exception on the other
                     // side of a Reflection Invoke, then just pull up the Parse exception.
-                    if (e is TargetInvocationException &&  e.InnerException is XamlParseException)
+                    if (e is TargetInvocationException && e.InnerException is XamlParseException)
                     {
                         throw e.InnerException;
                     }
@@ -264,31 +264,31 @@ namespace System.Windows.Markup
             return false;
         }
 
-       /// <summary>
-       /// Big switch to handle all the records.
-       /// </summary>
-       /// <param name="xamlNode"> Node received from TokenReader to process</param>
-       /// <param name="cleanup"> True if end of stream reached and document is
-       ///                        totally finished and should be closed </param>
-       /// <param name="done"> True if done processing and want to exit.  Doesn't
-       ///                     necessarily mean document is finished (see cleanup) </param>
-       internal virtual void ProcessXamlNode(
-               XamlNode xamlNode,
-           ref bool     cleanup,
-           ref bool     done)
-       {
-            switch(xamlNode.TokenType)
+        /// <summary>
+        /// Big switch to handle all the records.
+        /// </summary>
+        /// <param name="xamlNode"> Node received from TokenReader to process</param>
+        /// <param name="cleanup"> True if end of stream reached and document is
+        ///                        totally finished and should be closed </param>
+        /// <param name="done"> True if done processing and want to exit.  Doesn't
+        ///                     necessarily mean document is finished (see cleanup) </param>
+        internal virtual void ProcessXamlNode(
+                XamlNode xamlNode,
+            ref bool cleanup,
+            ref bool done)
+        {
+            switch (xamlNode.TokenType)
             {
                 case XamlNodeType.DocumentStart:
                     XamlDocumentStartNode xamlDocumentStartNode =
-                        (XamlDocumentStartNode) xamlNode;
+                        (XamlDocumentStartNode)xamlNode;
 
                     WriteDocumentStart(xamlDocumentStartNode);
 
                     break;
                 case XamlNodeType.DocumentEnd:
                     XamlDocumentEndNode xamlEndDocumentNode =
-                        (XamlDocumentEndNode) xamlNode;
+                        (XamlDocumentEndNode)xamlNode;
                     cleanup = true;
                     done = true;
                     WriteDocumentEnd(xamlEndDocumentNode);
@@ -297,28 +297,28 @@ namespace System.Windows.Markup
 
                 case XamlNodeType.ElementStart:
                     XamlElementStartNode xamlElementNode =
-                        (XamlElementStartNode) xamlNode;
+                        (XamlElementStartNode)xamlNode;
                     WriteElementStart(xamlElementNode);
 
                     break;
 
                 case XamlNodeType.ElementEnd:
                     XamlElementEndNode xamlEndElementNode =
-                        (XamlElementEndNode) xamlNode;
+                        (XamlElementEndNode)xamlNode;
 
                     WriteElementEnd(xamlEndElementNode);
 
                     break;
                 case XamlNodeType.UnknownTagStart:
                     XamlUnknownTagStartNode xamlUnknownTagStartNode =
-                        (XamlUnknownTagStartNode) xamlNode;
+                        (XamlUnknownTagStartNode)xamlNode;
 
                     WriteUnknownTagStart(xamlUnknownTagStartNode);
 
                     break;
                 case XamlNodeType.UnknownTagEnd:
                     XamlUnknownTagEndNode xamlUnknownTagEndNode =
-                        (XamlUnknownTagEndNode) xamlNode;
+                        (XamlUnknownTagEndNode)xamlNode;
 
                     WriteUnknownTagEnd(xamlUnknownTagEndNode);
 
@@ -326,7 +326,7 @@ namespace System.Windows.Markup
                 case XamlNodeType.XmlnsProperty:
 
                     XamlXmlnsPropertyNode xamlXmlnsPropertyNode =
-                        (XamlXmlnsPropertyNode) xamlNode;
+                        (XamlXmlnsPropertyNode)xamlNode;
 
                     WriteNamespacePrefix(xamlXmlnsPropertyNode);
 
@@ -335,7 +335,7 @@ namespace System.Windows.Markup
                 case XamlNodeType.Property:
 
                     XamlPropertyNode xamlPropertyNode =
-                        (XamlPropertyNode) xamlNode;
+                        (XamlPropertyNode)xamlNode;
                     if (xamlPropertyNode.AttributeUsage == BamlAttributeUsage.RuntimeName)
                     {
                         _parserContext.XamlTypeMapper.ValidateNames(
@@ -357,13 +357,13 @@ namespace System.Windows.Markup
                 case XamlNodeType.PropertyWithType:
 
                     XamlPropertyWithTypeNode xamlPropertyWithTypeNode =
-                        (XamlPropertyWithTypeNode) xamlNode;
+                        (XamlPropertyWithTypeNode)xamlNode;
                     WritePropertyWithType(xamlPropertyWithTypeNode);
                     break;
 
                 case XamlNodeType.UnknownAttribute:
                     XamlUnknownAttributeNode xamlUnknownAttributeNode =
-                        (XamlUnknownAttributeNode) xamlNode;
+                        (XamlUnknownAttributeNode)xamlNode;
 
                     WriteUnknownAttribute(xamlUnknownAttributeNode);
 
@@ -371,87 +371,87 @@ namespace System.Windows.Markup
 
                 case XamlNodeType.PropertyComplexStart:
                     XamlPropertyComplexStartNode xamlPropertyComplexStartNode =
-                        (XamlPropertyComplexStartNode) xamlNode;
+                        (XamlPropertyComplexStartNode)xamlNode;
                     WritePropertyComplexStart(xamlPropertyComplexStartNode);
                     break;
 
                 case XamlNodeType.PropertyComplexEnd:
                     XamlPropertyComplexEndNode xamlPropertyComplexEndNode =
-                        (XamlPropertyComplexEndNode) xamlNode;
+                        (XamlPropertyComplexEndNode)xamlNode;
                     WritePropertyComplexEnd(xamlPropertyComplexEndNode);
                     break;
 
                 case XamlNodeType.LiteralContent:
                     XamlLiteralContentNode xamlLiteralContentNode =
-                        (XamlLiteralContentNode) xamlNode;
+                        (XamlLiteralContentNode)xamlNode;
                     WriteLiteralContent(xamlLiteralContentNode);
                     break;
 
                 case XamlNodeType.Text:
                     XamlTextNode xamlTextNode =
-                        (XamlTextNode) xamlNode;
+                        (XamlTextNode)xamlNode;
                     WriteText(xamlTextNode);
                     break;
 
                 case XamlNodeType.ClrEvent:
                     XamlClrEventNode xamlClrEventNode =
-                        (XamlClrEventNode) xamlNode;
+                        (XamlClrEventNode)xamlNode;
                     WriteClrEvent(xamlClrEventNode);
                     break;
 
 
                 case XamlNodeType.PropertyArrayStart:
                     XamlPropertyArrayStartNode xamlPropertyArrayStartNode =
-                        (XamlPropertyArrayStartNode) xamlNode;
+                        (XamlPropertyArrayStartNode)xamlNode;
                     WritePropertyArrayStart(xamlPropertyArrayStartNode);
                     break;
 
                 case XamlNodeType.PropertyArrayEnd:
                     XamlPropertyArrayEndNode xamlPropertyArrayEndNode =
-                        (XamlPropertyArrayEndNode) xamlNode;
+                        (XamlPropertyArrayEndNode)xamlNode;
                     WritePropertyArrayEnd(xamlPropertyArrayEndNode);
                     break;
 
                 case XamlNodeType.PropertyIListStart:
                     XamlPropertyIListStartNode xamlPropertyIListStartNode =
-                        (XamlPropertyIListStartNode) xamlNode;
+                        (XamlPropertyIListStartNode)xamlNode;
                     WritePropertyIListStart(xamlPropertyIListStartNode);
                     break;
 
                 case XamlNodeType.PropertyIListEnd:
                     XamlPropertyIListEndNode xamlPropertyIListEndNode =
-                        (XamlPropertyIListEndNode) xamlNode;
+                        (XamlPropertyIListEndNode)xamlNode;
                     WritePropertyIListEnd(xamlPropertyIListEndNode);
                     break;
 
                 case XamlNodeType.PropertyIDictionaryStart:
                     XamlPropertyIDictionaryStartNode xamlPropertyIDictionaryStartNode =
-                        (XamlPropertyIDictionaryStartNode) xamlNode;
+                        (XamlPropertyIDictionaryStartNode)xamlNode;
                     WritePropertyIDictionaryStart(xamlPropertyIDictionaryStartNode);
                     break;
 
                 case XamlNodeType.PropertyIDictionaryEnd:
                     XamlPropertyIDictionaryEndNode xamlPropertyIDictionaryEndNode =
-                        (XamlPropertyIDictionaryEndNode) xamlNode;
+                        (XamlPropertyIDictionaryEndNode)xamlNode;
                     WritePropertyIDictionaryEnd(xamlPropertyIDictionaryEndNode);
                     break;
 
                 case XamlNodeType.DefTag:
                     XamlDefTagNode xamlDefTagNode =
-                        (XamlDefTagNode) xamlNode;
+                        (XamlDefTagNode)xamlNode;
                     WriteDefTag(xamlDefTagNode);
 
                     break;
 
                 case XamlNodeType.DefKeyTypeAttribute:
                     XamlDefAttributeKeyTypeNode xamlDefAttributeKeyTypeNode =
-                        (XamlDefAttributeKeyTypeNode) xamlNode;
+                        (XamlDefAttributeKeyTypeNode)xamlNode;
                     WriteDefAttributeKeyType(xamlDefAttributeKeyTypeNode);
                     break;
 
                 case XamlNodeType.DefAttribute:
                     XamlDefAttributeNode xamlDefAttributeNode =
-                        (XamlDefAttributeNode) xamlNode;
+                        (XamlDefAttributeNode)xamlNode;
 
                     if (xamlDefAttributeNode.AttributeUsage == BamlAttributeUsage.RuntimeName)
                     {
@@ -466,20 +466,20 @@ namespace System.Windows.Markup
 
                 case XamlNodeType.PresentationOptionsAttribute:
                     XamlPresentationOptionsAttributeNode xamlPresentationOptionsAttributeNode =
-                        (XamlPresentationOptionsAttributeNode) xamlNode;
+                        (XamlPresentationOptionsAttributeNode)xamlNode;
                     WritePresentationOptionsAttribute(xamlPresentationOptionsAttributeNode);
                     break;
 
                 case XamlNodeType.PIMapping:
                     XamlPIMappingNode xamlPIMappingNode =
-                        (XamlPIMappingNode) xamlNode;
+                        (XamlPIMappingNode)xamlNode;
                     WritePIMapping(xamlPIMappingNode);
                     break;
 
                 // The following tokens that are used primarily by the markup compiler
                 case XamlNodeType.EndAttributes:
                     XamlEndAttributesNode xamlEndAttributesNode =
-                        (XamlEndAttributesNode) xamlNode;
+                        (XamlEndAttributesNode)xamlNode;
                     // if first tag and haven't alredy set the ParseMode
                     // set it to synchronous.
                     if (0 == xamlEndAttributesNode.Depth)
@@ -494,25 +494,25 @@ namespace System.Windows.Markup
 
                 case XamlNodeType.KeyElementStart:
                     XamlKeyElementStartNode xamlKeyElementStartNode =
-                        (XamlKeyElementStartNode) xamlNode;
+                        (XamlKeyElementStartNode)xamlNode;
                     WriteKeyElementStart(xamlKeyElementStartNode);
                     break;
 
                 case XamlNodeType.KeyElementEnd:
                     XamlKeyElementEndNode xamlKeyElementEndNode =
-                        (XamlKeyElementEndNode) xamlNode;
+                        (XamlKeyElementEndNode)xamlNode;
                     WriteKeyElementEnd(xamlKeyElementEndNode);
                     break;
 
                 case XamlNodeType.ConstructorParametersEnd:
                     XamlConstructorParametersEndNode xamlConstructorParametersEndNode =
-                        (XamlConstructorParametersEndNode) xamlNode;
+                        (XamlConstructorParametersEndNode)xamlNode;
                     WriteConstructorParametersEnd(xamlConstructorParametersEndNode);
                     break;
 
                 case XamlNodeType.ConstructorParametersStart:
                     XamlConstructorParametersStartNode xamlConstructorParametersStartNode =
-                        (XamlConstructorParametersStartNode) xamlNode;
+                        (XamlConstructorParametersStartNode)xamlNode;
                     WriteConstructorParametersStart(xamlConstructorParametersStartNode);
                     break;
 
@@ -528,11 +528,11 @@ namespace System.Windows.Markup
                     WriteConstructorParameterType(xamlConstructorParameterTypeNode);
                     break;
                 default:
-                    Debug.Assert(false,"Unknown Xaml Token.");
+                    Debug.Assert(false, "Unknown Xaml Token.");
                     break;
             }
 
-       }
+        }
 
         #endregion // PublicMethods
 
@@ -930,26 +930,26 @@ namespace System.Windows.Markup
 
             // There are several known def attributes, and these are checked for
             // correctness by running the known type converters.
-            switch(xamlDefAttributeNode.Name)
+            switch (xamlDefAttributeNode.Name)
             {
-               case XamlReaderHelper.DefinitionSynchronousMode:
-                   if (BamlRecordWriter != null)
-                   {
-                       if (xamlDefAttributeNode.Value == "Async")
-                       {
-                           ThrowException(nameof(SR.ParserNoBamlAsync), "Async",
-                                      xamlDefAttributeNode.LineNumber,
-                                      xamlDefAttributeNode.LinePosition);
-                       }
-                   }
-                   break;
+                case XamlReaderHelper.DefinitionSynchronousMode:
+                    if (BamlRecordWriter != null)
+                    {
+                        if (xamlDefAttributeNode.Value == "Async")
+                        {
+                            ThrowException(nameof(SR.ParserNoBamlAsync), "Async",
+                                       xamlDefAttributeNode.LineNumber,
+                                       xamlDefAttributeNode.LinePosition);
+                        }
+                    }
+                    break;
 
-               case XamlReaderHelper.DefinitionAsyncRecords:
+                case XamlReaderHelper.DefinitionAsyncRecords:
                     // Update the AsyncRecords and don't store this as a def attribute
-                       ThrowException(nameof(SR.ParserNoBamlAsync), xamlDefAttributeNode.Name,
-                                      xamlDefAttributeNode.LineNumber,
-                                      xamlDefAttributeNode.LinePosition);
-                   break;
+                    ThrowException(nameof(SR.ParserNoBamlAsync), xamlDefAttributeNode.Name,
+                                   xamlDefAttributeNode.LineNumber,
+                                   xamlDefAttributeNode.LinePosition);
+                    break;
 
                 case XamlReaderHelper.DefinitionShared:
                     Boolean.Parse(attributeValue);   // For validation only.
@@ -991,11 +991,11 @@ namespace System.Windows.Markup
 
                 default:
                     string errorID;
-                        errorID = nameof(SR.ParserUnknownDefAttribute);
-                        ThrowException(errorID,
-                                   xamlDefAttributeNode.Name,
-                                   xamlDefAttributeNode.LineNumber,
-                                   xamlDefAttributeNode.LinePosition);
+                    errorID = nameof(SR.ParserUnknownDefAttribute);
+                    ThrowException(errorID,
+                               xamlDefAttributeNode.Name,
+                               xamlDefAttributeNode.LineNumber,
+                               xamlDefAttributeNode.LinePosition);
                     break;
             }
         }
@@ -1061,20 +1061,20 @@ namespace System.Windows.Markup
         /// to determine type need to call XmlReader.MoveToElement()
         /// </summary>
         public virtual bool GetElementType(
-                XmlReader  reader,
-                string     localName,
-                string     namespaceUri,
-            ref string     assemblyName,
-            ref string     typeFullName,
-            ref Type       baseType,
-            ref Type       serializerType)
+                XmlReader reader,
+                string localName,
+                string namespaceUri,
+            ref string assemblyName,
+            ref string typeFullName,
+            ref Type baseType,
+            ref Type serializerType)
         {
             bool result = false;
 
-            assemblyName   = string.Empty;
-            typeFullName   = string.Empty;
+            assemblyName = string.Empty;
+            typeFullName = string.Empty;
             serializerType = null;
-            baseType       = null;
+            baseType = null;
 
             // if no namespaceURI or local name don't bother
             if (null == namespaceUri || null == localName)
@@ -1125,9 +1125,9 @@ namespace System.Windows.Markup
 
             string attributeValue = xamlDefAttributeNode.Value;
 
-            switch(xamlDefAttributeNode.Name)
+            switch (xamlDefAttributeNode.Name)
             {
-                case  XamlReaderHelper.DefinitionSynchronousMode:
+                case XamlReaderHelper.DefinitionSynchronousMode:
                     XamlParseMode documentParseMode = XamlParseMode.Synchronous;
 
                     if (attributeValue.Equals("Async"))
@@ -1142,7 +1142,7 @@ namespace System.Windows.Markup
                     {
                         ThrowException(nameof(SR.ParserBadSyncMode),
                                xamlDefAttributeNode.LineNumber,
-                               xamlDefAttributeNode.LinePosition );
+                               xamlDefAttributeNode.LinePosition);
                     }
 
                     // if we haven't initialized the the parseMode yet set it
@@ -1173,7 +1173,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// Called when the parse was cancelled by the user.
         /// </summary>
-        internal virtual void  ParseCancelled()
+        internal virtual void ParseCancelled()
         {
         }
 
@@ -1292,7 +1292,7 @@ namespace System.Windows.Markup
         ///  ParserHooks implementation that any parse time callbacks
         ///  should be called on.
         /// </summary>
-        internal  ParserHooks ParserHooks
+        internal ParserHooks ParserHooks
         {
             get { return _parserHooks; }
             set { _parserHooks = value; }
@@ -1303,7 +1303,7 @@ namespace System.Windows.Markup
         int SkipActionDepthCount
         {
             get { return _skipActionDepthCount; }
-            set {  _skipActionDepthCount = value; }
+            set { _skipActionDepthCount = value; }
         }
 
         // Set and get the token to watch for when skipping a
@@ -1311,7 +1311,7 @@ namespace System.Windows.Markup
         XamlNodeType SkipActionToken
         {
             get { return _skipActionToken; }
-            set {  _skipActionToken = value; }
+            set { _skipActionToken = value; }
         }
 
         // set the operation mode of the parser as determined
@@ -1319,7 +1319,7 @@ namespace System.Windows.Markup
         ParserAction ParserAction
         {
             get { return _parserAction; }
-            set {  _parserAction = value; }
+            set { _parserAction = value; }
         }
 
         /// <summary>
@@ -1392,20 +1392,20 @@ namespace System.Windows.Markup
 
         // private Data
 
-        XamlReaderHelper             _xamlTokenReader;
+        XamlReaderHelper _xamlTokenReader;
 
-        ParserContext                _parserContext; 
+        ParserContext _parserContext;
 
-        XamlParseMode                _xamlParseMode;
-        BamlRecordWriter             _bamlWriter;
+        XamlParseMode _xamlParseMode;
+        BamlRecordWriter _bamlWriter;
 
         // ParserHooks related
-        ParserHooks                  _parserHooks;
-        ParserAction                 _parserAction = ParserAction.Normal;
-        int                          _skipActionDepthCount = -1; // skip mode depth count.
-        XamlNodeType                 _skipActionToken = XamlNodeType.Unknown;
+        ParserHooks _parserHooks;
+        ParserAction _parserAction = ParserAction.Normal;
+        int _skipActionDepthCount = -1; // skip mode depth count.
+        XamlNodeType _skipActionToken = XamlNodeType.Unknown;
 
-        static private string []     _predefinedNamespaces = new string [3] {
+        static private string[] _predefinedNamespaces = new string[3] {
             XamlReaderHelper.DefinitionNamespaceURI,
             XamlReaderHelper.DefaultNamespaceURI,
             XamlReaderHelper.DefinitionMetroNamespaceURI

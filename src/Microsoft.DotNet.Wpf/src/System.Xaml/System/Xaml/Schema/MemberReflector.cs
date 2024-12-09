@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -42,7 +42,7 @@ namespace System.Xaml.Schema
         }
 
         internal MemberReflector(bool isEvent)
-            :this()
+            : this()
         {
             if (isEvent)
             {
@@ -79,10 +79,12 @@ namespace System.Xaml.Schema
             {
                 if (s_UnknownReflector == null)
                 {
-                    s_UnknownReflector = new MemberReflector();
-                    s_UnknownReflector._designerSerializationVisibility = DesignerSerializationVisibility.Visible;
-                    s_UnknownReflector._memberBits = (int)BoolMemberBits.Default |
-                        (int)BoolMemberBits.Unknown | (int)BoolMemberBits.AllValid;
+                    s_UnknownReflector = new MemberReflector
+                    {
+                        _designerSerializationVisibility = DesignerSerializationVisibility.Visible,
+                        _memberBits = (int)BoolMemberBits.Default |
+                        (int)BoolMemberBits.Unknown | (int)BoolMemberBits.AllValid
+                    };
 
                     // Explicitly set all the nullable references so that IsSet is true
                     s_UnknownReflector._deferringLoader.Value = null;
@@ -113,7 +115,7 @@ namespace System.Xaml.Schema
             get { return _constructorArgument.IsSet; }
         }
 
-        internal IReadOnlyDictionary<char,char> MarkupExtensionBracketCharactersArgument { get; set; }
+        internal IReadOnlyDictionary<char, char> MarkupExtensionBracketCharactersArgument { get; set; }
 
         internal bool MarkupExtensionBracketCharactersArgumentIsSet { get; set; }
 

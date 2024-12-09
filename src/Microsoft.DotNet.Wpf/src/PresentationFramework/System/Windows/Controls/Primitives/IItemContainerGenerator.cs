@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -121,7 +121,7 @@ namespace System.Windows.Controls.Primitives
         /// refers to a fictitious element at the beginning or end of the
         /// the list.
         /// </summary>
-        public int Index  { get { return _index; }  set { _index = value; } }
+        public int Index { get { return _index; } set { _index = value; } }
 
         /// <summary>
         /// Offset, with respect to unrealized items near the indexed element.
@@ -161,7 +161,7 @@ namespace System.Windows.Controls.Primitives
             if (o is GeneratorPosition)
             {
                 GeneratorPosition that = (GeneratorPosition)o;
-                return  this._index == that._index &&
+                return this._index == that._index &&
                         this._offset == that._offset;
             }
             return false;
@@ -169,17 +169,17 @@ namespace System.Windows.Controls.Primitives
 
         /// <summary> Equality test </summary>
         // This is required by FxCop.
-        public static bool operator==(GeneratorPosition gp1, GeneratorPosition gp2)
+        public static bool operator ==(GeneratorPosition gp1, GeneratorPosition gp2)
         {
-            return  gp1._index == gp2._index &&
+            return gp1._index == gp2._index &&
                     gp1._offset == gp2._offset;
         }
 
         /// <summary> Inequality test </summary>
         // This is required by FxCop.
-        public static bool operator!=(GeneratorPosition gp1, GeneratorPosition gp2)
+        public static bool operator !=(GeneratorPosition gp1, GeneratorPosition gp2)
         {
-            return  !(gp1 == gp2);
+            return !(gp1 == gp2);
         }
 
         private int _index;

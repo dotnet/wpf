@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -141,7 +141,7 @@ namespace System.Windows.Automation.Peers
             List<AutomationPeer> children = null;
 
             iterate(parent, includeInvisibleItems,
-                    (IteratorCallback)delegate(AutomationPeer peer)
+                    (IteratorCallback)delegate (AutomationPeer peer)
                     {
                         if (children == null)
                             children = new List<AutomationPeer>();

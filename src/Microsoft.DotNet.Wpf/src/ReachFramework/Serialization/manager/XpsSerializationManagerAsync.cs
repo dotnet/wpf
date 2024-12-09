@@ -1,14 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 using System.Collections;
 using System.ComponentModel;
-using System.Xml;
-using System.Windows.Threading;
-using MS.Internal;
 using System.Printing;
+using System.Windows.Threading;
+using System.Xml;
+using MS.Internal;
 
 namespace System.Windows.Xps.Serialization
 {
@@ -28,20 +28,20 @@ namespace System.Windows.Xps.Serialization
         /// </summary>
         public
         XpsSerializationManagerAsync(
-            BasePackagingPolicy  packagingPolicy,
-            bool                 batchMode
-            ):
-        base(packagingPolicy,  batchMode)
+            BasePackagingPolicy packagingPolicy,
+            bool batchMode
+            ) :
+        base(packagingPolicy, batchMode)
         {
-            _dispatcher                           = Dispatcher.CurrentDispatcher;
-            _serializationOperationCanceled       = false;
-            this._currentPageXmlWriter            = null;
-            this._isBatchWorkItemInProgress       = false;
+            _dispatcher = Dispatcher.CurrentDispatcher;
+            _serializationOperationCanceled = false;
+            this._currentPageXmlWriter = null;
+            this._isBatchWorkItemInProgress = false;
 
-            _operationStack                       = new Stack();
-            _batchOperationQueue                  = new Queue();
+            _operationStack = new Stack();
+            _batchOperationQueue = new Queue();
 
-            XpsDriverDocEventManager    xpsDocEventManager = base.GetXpsDriverDocEventManager();
+            XpsDriverDocEventManager xpsDocEventManager = base.GetXpsDriverDocEventManager();
 
             if (xpsDocEventManager != null)
             {
@@ -60,7 +60,7 @@ namespace System.Windows.Xps.Serialization
         override
         void
         SaveAsXaml(
-            Object  serializedObject
+            Object serializedObject
             )
         {
             ArgumentNullException.ThrowIfNull(serializedObject);
@@ -70,24 +70,24 @@ namespace System.Windows.Xps.Serialization
                 throw new XpsSerializationException(SR.ReachSerialization_NotSupported);
             }
 
-            if(Simulator == null)
+            if (Simulator == null)
             {
                 Simulator = new ReachHierarchySimulator(this,
                                                          serializedObject);
             }
 
-            if(!IsSimulating)
+            if (!IsSimulating)
             {
                 Simulator.BeginConfirmToXPSStructure(IsBatchMode);
                 IsSimulating = true;
             }
 
-            if(IsBatchMode)
+            if (IsBatchMode)
             {
                 //
                 // Add the Visual received in to the queue
                 //
-                BatchOperationWorkItem  batchOperationWorkItem = new BatchOperationWorkItem(BatchOperationType.batchWrite,
+                BatchOperationWorkItem batchOperationWorkItem = new BatchOperationWorkItem(BatchOperationType.batchWrite,
                                                                                             serializedObject);
                 _batchOperationQueue.Enqueue(batchOperationWorkItem);
                 PostSerializationTask(new DispatcherOperationCallback(InvokeSaveAsXamlBatchWorkItem));
@@ -96,7 +96,7 @@ namespace System.Windows.Xps.Serialization
             {
                 ReachSerializer reachSerializer = GetSerializer(serializedObject);
 
-                if(reachSerializer != null)
+                if (reachSerializer != null)
                 {
                     //
                     // Prepare the context that is going to be pushed on the stack
@@ -127,29 +127,29 @@ namespace System.Windows.Xps.Serialization
             //
             // PreSharp uses message numbers that the C# compiler doesn't know about.
             // Disable the C# complaints, per the PreSharp documentation.
-            #pragma warning disable 1634, 1691
+#pragma warning disable 1634, 1691
             //
             // PreSharp complains about catching NullReference (and other) exceptions.
             // This is an async model and we need to catch all exception ourselves and then
             // send them to the completion delegate
-            #pragma warning disable 56500
+#pragma warning disable 56500
             try
             {
-                if(!_serializationOperationCanceled)
+                if (!_serializationOperationCanceled)
                 {
-                    if(_operationStack.Count > 0)
+                    if (_operationStack.Count > 0)
                     {
                         Object objectOnStack = _operationStack.Pop();
 
-                        if(objectOnStack.GetType() ==
+                        if (objectOnStack.GetType() ==
                            typeof(System.Windows.Xps.Serialization.SerializationManagerOperationContextStack))
                         {
-                           SerializationManagerOperationContextStack context =
-                                                                     (SerializationManagerOperationContextStack)objectOnStack;
+                            SerializationManagerOperationContextStack context =
+                                                                      (SerializationManagerOperationContextStack)objectOnStack;
 
                             context.ReachSerializer.SerializeObject(context.SerializedObject);
                         }
-                        else if(typeof(System.Windows.Xps.Serialization.ReachSerializerContext).IsAssignableFrom(objectOnStack.GetType()))
+                        else if (typeof(System.Windows.Xps.Serialization.ReachSerializerContext).IsAssignableFrom(objectOnStack.GetType()))
                         {
                             ReachSerializerContext context = (ReachSerializerContext)objectOnStack;
                             context.Serializer.AsyncOperation(context);
@@ -163,9 +163,9 @@ namespace System.Windows.Xps.Serialization
                     }
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                if(CriticalExceptions.IsCriticalException(e))
+                if (CriticalExceptions.IsCriticalException(e))
                 {
                     throw;
                 }
@@ -185,8 +185,8 @@ namespace System.Windows.Xps.Serialization
 
                 return null;
             }
-            #pragma warning restore 56500
-            #pragma warning restore 1634, 1691
+#pragma warning restore 56500
+#pragma warning restore 1634, 1691
 
             return null;
         }
@@ -205,29 +205,29 @@ namespace System.Windows.Xps.Serialization
             //
             // PreSharp uses message numbers that the C# compiler doesn't know about.
             // Disable the C# complaints, per the PreSharp documentation.
-            #pragma warning disable 1634, 1691
+#pragma warning disable 1634, 1691
             //
             // PreSharp complains about catching NullReference (and other) exceptions.
             // This is an async model and we need to catch all exception ourselves and then
             // send them to the completion delegate
-            #pragma warning disable 56500
+#pragma warning disable 56500
             try
             {
                 // This logic must be mirrored in IsAsyncWorkPending see remarks.
 
-                if(!_serializationOperationCanceled)
+                if (!_serializationOperationCanceled)
                 {
-                    if(!_isBatchWorkItemInProgress && _batchOperationQueue.Count > 0)
+                    if (!_isBatchWorkItemInProgress && _batchOperationQueue.Count > 0)
                     {
                         BatchOperationWorkItem batchOperationWorkItem = (BatchOperationWorkItem)_batchOperationQueue.Dequeue();
 
-                        if(batchOperationWorkItem.OperationType == BatchOperationType.batchWrite)
+                        if (batchOperationWorkItem.OperationType == BatchOperationType.batchWrite)
                         {
                             _currentPageXmlWriter = Simulator.SimulateBeginFixedPage();
 
                             ReachSerializer reachSerializer = GetSerializer(batchOperationWorkItem.SerializedObject);
 
-                            if(reachSerializer != null)
+                            if (reachSerializer != null)
                             {
                                 //
                                 // Prepare the context that is going to be pushed on the stack
@@ -248,7 +248,7 @@ namespace System.Windows.Xps.Serialization
                             }
                             _isBatchWorkItemInProgress = true;
                         }
-                        else if(batchOperationWorkItem.OperationType == BatchOperationType.batchCommit)
+                        else if (batchOperationWorkItem.OperationType == BatchOperationType.batchCommit)
                         {
                             Simulator.EndConfirmToXPSStructure(IsBatchMode);
                             XPSSerializationCompletionMethod();
@@ -256,19 +256,19 @@ namespace System.Windows.Xps.Serialization
                     }
                     else
                     {
-                        if(_operationStack.Count > 0)
+                        if (_operationStack.Count > 0)
                         {
                             Object objectOnStack = _operationStack.Pop();
 
-                            if(objectOnStack.GetType() ==
+                            if (objectOnStack.GetType() ==
                                typeof(System.Windows.Xps.Serialization.SerializationManagerOperationContextStack))
                             {
-                               SerializationManagerOperationContextStack context =
-                                                                         (SerializationManagerOperationContextStack)objectOnStack;
+                                SerializationManagerOperationContextStack context =
+                                                                          (SerializationManagerOperationContextStack)objectOnStack;
 
                                 context.ReachSerializer.SerializeObject(context.SerializedObject);
                             }
-                            else if(typeof(System.Windows.Xps.Serialization.ReachSerializerContext).IsAssignableFrom(objectOnStack.GetType()))
+                            else if (typeof(System.Windows.Xps.Serialization.ReachSerializerContext).IsAssignableFrom(objectOnStack.GetType()))
                             {
                                 ReachSerializerContext context = (ReachSerializerContext)objectOnStack;
                                 context.Serializer.AsyncOperation(context);
@@ -279,14 +279,14 @@ namespace System.Windows.Xps.Serialization
                         {
                             Simulator.SimulateEndFixedPage(_currentPageXmlWriter);
                             _isBatchWorkItemInProgress = false;
-                            _currentPageXmlWriter      = null;
+                            _currentPageXmlWriter = null;
                         }
                     }
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                if(CriticalExceptions.IsCriticalException(e))
+                if (CriticalExceptions.IsCriticalException(e))
                 {
                     throw;
                 }
@@ -306,8 +306,8 @@ namespace System.Windows.Xps.Serialization
 
                 return null;
             }
-            #pragma warning restore 56500
-            #pragma warning restore 1634, 1691
+#pragma warning restore 56500
+#pragma warning restore 1634, 1691
 
 
             return null;
@@ -341,7 +341,7 @@ namespace System.Windows.Xps.Serialization
         Commit(
             )
         {
-            if(IsBatchMode && IsSimulating)
+            if (IsBatchMode && IsSimulating)
             {
                 // Wait for pending items to complete synchronously 
                 // otherwise the caller may dispose the underlying resource 
@@ -373,7 +373,7 @@ namespace System.Windows.Xps.Serialization
         /// </summary>
         public
         event
-        XpsSerializationCompletedEventHandler               XpsSerializationCompleted;
+        XpsSerializationCompletedEventHandler XpsSerializationCompleted;
 
         /// <summary>
         /// XpsDriverDocEventManager subscribes for this event. We want to avoid chaining internal
@@ -404,15 +404,15 @@ namespace System.Windows.Xps.Serialization
             {
                 serializerType = typeof(ReachPageContentCollectionSerializerAsync);
             }
-            else if(typeof(System.Windows.Documents.PageContent).IsAssignableFrom(objectType))
+            else if (typeof(System.Windows.Documents.PageContent).IsAssignableFrom(objectType))
             {
                 serializerType = typeof(ReachPageContentSerializerAsync);
             }
-            else if(typeof(System.Windows.Controls.UIElementCollection).IsAssignableFrom(objectType))
+            else if (typeof(System.Windows.Controls.UIElementCollection).IsAssignableFrom(objectType))
             {
                 serializerType = typeof(ReachUIElementCollectionSerializerAsync);
             }
-            else if(typeof(System.Windows.Documents.FixedPage).IsAssignableFrom(objectType))
+            else if (typeof(System.Windows.Documents.FixedPage).IsAssignableFrom(objectType))
             {
                 serializerType = typeof(FixedPageSerializerAsync);
             }
@@ -445,7 +445,7 @@ namespace System.Windows.Xps.Serialization
                 serializerType = typeof(PrintTicketSerializer);
             }
 
-            if(serializerType == null)
+            if (serializerType == null)
             {
                 base.GetSerializerType(objectType);
             }
@@ -537,21 +537,22 @@ namespace System.Windows.Xps.Serialization
         /// IsAsyncWorkPending must return true when the manager is in a state that 
         /// causes InvokeSaveAsXamlBatchWorkItem to process pending items.
         /// <remarks>
-        private 
-        bool 
+        private
+        bool
         IsAsyncWorkPending(
             )
         {
             // This logic must mirror InvokeSaveAsXamlBatchWorkItem see remarks.
 
-            if(!_serializationOperationCanceled)
+            if (!_serializationOperationCanceled)
             {
-                if(!_isBatchWorkItemInProgress && _batchOperationQueue.Count > 0)
+                if (!_isBatchWorkItemInProgress && _batchOperationQueue.Count > 0)
                 {
                     // InvokeSaveAsXamlBatchWorkItem is expected to process an item from _batchOperationQueue
                     return true;
                 }
-                else {
+                else
+                {
                     if (_operationStack.Count > 0)
                     {
                         // InvokeSaveAsXamlBatchWorkItem is expected to process an item from _operationStack
@@ -564,22 +565,22 @@ namespace System.Windows.Xps.Serialization
         }
 
         private
-        Dispatcher                  _dispatcher;
+        Dispatcher _dispatcher;
 
         private
-        Stack                       _operationStack;
+        Stack _operationStack;
 
         private
-        Queue                       _batchOperationQueue;
+        Queue _batchOperationQueue;
 
         private
-        bool                        _serializationOperationCanceled;
+        bool _serializationOperationCanceled;
 
         private
-        XmlWriter                   _currentPageXmlWriter;
+        XmlWriter _currentPageXmlWriter;
 
         private
-        bool                        _isBatchWorkItemInProgress;
+        bool _isBatchWorkItemInProgress;
     };
 
     internal class SerializationManagerOperationContextStack
@@ -587,10 +588,10 @@ namespace System.Windows.Xps.Serialization
         public
         SerializationManagerOperationContextStack(
             ReachSerializer serializer,
-            Object          serializedObject
+            Object serializedObject
             )
         {
-            this._serializer       = serializer;
+            this._serializer = serializer;
             this._serializedObject = serializedObject;
         }
 
@@ -615,10 +616,10 @@ namespace System.Windows.Xps.Serialization
         }
 
         private
-        ReachSerializer     _serializer;
+        ReachSerializer _serializer;
 
         private
-        Object              _serializedObject;
+        Object _serializedObject;
 
     }
 
@@ -629,7 +630,7 @@ namespace System.Windows.Xps.Serialization
     delegate
     void
     XpsSerializationProgressChangedEventHandler(
-        object                                   sender,
+        object sender,
         XpsSerializationProgressChangedEventArgs e
         );
 
@@ -640,8 +641,8 @@ namespace System.Windows.Xps.Serialization
     delegate
     void
     XpsSerializationCompletedEventHandler(
-        object                              sender,
-        XpsSerializationCompletedEventArgs  e
+        object sender,
+        XpsSerializationCompletedEventArgs e
         );
 
     /// <summary>
@@ -655,9 +656,9 @@ namespace System.Windows.Xps.Serialization
         /// </summary>
         public
         XpsSerializationCompletedEventArgs(
-            bool        canceled,
-            object      state,
-            Exception   exception
+            bool canceled,
+            object state,
+            Exception exception
             ) :
             base(exception, canceled, state)
         {
@@ -675,20 +676,20 @@ namespace System.Windows.Xps.Serialization
         /// </summary>
         public
         XpsSerializationProgressChangedEventArgs(
-            XpsWritingProgressChangeLevel   writingLevel,
-            int                             pageNumber,
-            int                             progressPercentage,
-            object                          userToken) : 
-            base( progressPercentage, userToken )
+            XpsWritingProgressChangeLevel writingLevel,
+            int pageNumber,
+            int progressPercentage,
+            object userToken) :
+            base(progressPercentage, userToken)
         {
-            this._pageNumber   = pageNumber;
+            this._pageNumber = pageNumber;
             this._writingLevel = writingLevel;
         }
 
         /// <summary>
         ///
         /// </summary>
-        public 
+        public
         XpsWritingProgressChangeLevel
         WritingLevel
         {
@@ -709,7 +710,7 @@ namespace System.Windows.Xps.Serialization
             }
         }
 
-        private int                           _pageNumber   = 0;
+        private int _pageNumber = 0;
         private XpsWritingProgressChangeLevel _writingLevel = XpsWritingProgressChangeLevel.None;
     }
 
@@ -725,13 +726,13 @@ namespace System.Windows.Xps.Serialization
         public
         XpsSerializationPrintTicketRequiredEventArgs(
             PrintTicketLevel printTicketLevel,
-            int              sequence
+            int sequence
             )
         {
-            _level          = printTicketLevel;
-            _sequence       = sequence;
-            _printTicket    = null;
-            _modified       = false;
+            _level = printTicketLevel;
+            _sequence = sequence;
+            _printTicket = null;
+            _modified = false;
         }
 
         /// <summary>
@@ -795,16 +796,16 @@ namespace System.Windows.Xps.Serialization
         }
 
         private
-        int                 _sequence;
+        int _sequence;
 
         private
-        bool                _modified;
+        bool _modified;
 
         private
-        PrintTicket         _printTicket;
+        PrintTicket _printTicket;
 
         private
-        PrintTicketLevel    _level;
+        PrintTicketLevel _level;
     };
 
     /// <summary>
@@ -815,7 +816,7 @@ namespace System.Windows.Xps.Serialization
         /// <summary>
         ///
         /// </summary>
-        None                             = 0,
+        None = 0,
         /// <summary>
         ///
         /// </summary>
@@ -823,11 +824,11 @@ namespace System.Windows.Xps.Serialization
         /// <summary>
         ///
         /// </summary>
-        FixedDocumentPrintTicket         = 2,
+        FixedDocumentPrintTicket = 2,
         /// <summary>
         ///
         /// </summary>
-        FixedPagePrintTicket             = 3
+        FixedPagePrintTicket = 3
     };
 
 
@@ -839,7 +840,7 @@ namespace System.Windows.Xps.Serialization
         /// <summary>
         ///
         /// </summary>
-        None                                 = 0,
+        None = 0,
         /// <summary>
         ///
         /// </summary>
@@ -847,17 +848,17 @@ namespace System.Windows.Xps.Serialization
         /// <summary>
         ///
         /// </summary>
-        FixedDocumentWritingProgress         = 2,
+        FixedDocumentWritingProgress = 2,
         /// <summary>
         ///
         /// </summary>
-        FixedPageWritingProgress             = 3
+        FixedPageWritingProgress = 3
     };
 
 
     internal enum BatchOperationType
     {
-        batchWrite  = 1,
+        batchWrite = 1,
         batchCommit = 2
     };
 
@@ -865,11 +866,11 @@ namespace System.Windows.Xps.Serialization
     {
         public
         BatchOperationWorkItem(
-            BatchOperationType  type,
-            Object              serializedObject
+            BatchOperationType type,
+            Object serializedObject
             )
         {
-            this._type             = type;
+            this._type = type;
             this._serializedObject = serializedObject;
         }
 
@@ -894,7 +895,7 @@ namespace System.Windows.Xps.Serialization
         }
 
         private
-        BatchOperationType  _type;
-        Object              _serializedObject;
+        BatchOperationType _type;
+        Object _serializedObject;
     };
 }

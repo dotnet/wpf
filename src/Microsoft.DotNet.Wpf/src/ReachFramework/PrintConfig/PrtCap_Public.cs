@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,11 +13,10 @@ Abstract:
 
 --*/
 
-using System.IO;
-using System.Xml;
 using System.Globalization;
-
+using System.IO;
 using System.Printing;
+using System.Xml;
 
 namespace MS.Internal.Printing.Configuration
 {
@@ -66,7 +65,7 @@ namespace MS.Internal.Printing.Configuration
                 _pcRootFeatures = new object[_countRootFeatures];
                 _pcLocalParamDefs = new ParameterDefinition[_countLocalParamDefs];
                 _baLocalParamRequired = new bool[_countLocalParamDefs];
-                for (int i=0; i<_countLocalParamDefs; i++)
+                for (int i = 0; i < _countLocalParamDefs; i++)
                 {
                     _baLocalParamRequired[i] = false;
                 }
@@ -473,7 +472,7 @@ namespace MS.Internal.Printing.Configuration
         #region Internal Fields
 
         // array of Print Capabilities features (feature or global-parameter-def or root-level property)
-        internal object[]              _pcRootFeatures;
+        internal object[] _pcRootFeatures;
 
         // array of Print Capabilities local parameter definitions
         internal ParameterDefinition[] _pcLocalParamDefs;
@@ -488,7 +487,7 @@ namespace MS.Internal.Printing.Configuration
         /// <exception cref="FormatException">thrown if XML PrintCapabilities is not well-formed</exception>
         private void PostBuildProcessing()
         {
-            for (int i=0; i<_countLocalParamDefs; i++)
+            for (int i = 0; i < _countLocalParamDefs; i++)
             {
                 if (_baLocalParamRequired[i])
                 {

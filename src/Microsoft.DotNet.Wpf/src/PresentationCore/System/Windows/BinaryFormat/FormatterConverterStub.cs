@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 #nullable enable
@@ -15,13 +15,13 @@ namespace System.Windows
     ///   isn't necessary.
     ///  </para>
     /// </remarks>
-    #pragma warning disable SYSLIB0050 // Type or member is obsolete (IFormatterConverter)
+#pragma warning disable SYSLIB0050 // Type or member is obsolete (IFormatterConverter)
     internal sealed class FormatterConverterStub : IFormatterConverter
     {
         private FormatterConverterStub() { }
 
         public static IFormatterConverter Instance { get; } = new FormatterConverterStub();
-    #pragma warning restore SYSLIB0050 // Type or member is obsolete
+#pragma warning restore SYSLIB0050 // Type or member is obsolete
 
         public object Convert(object value, Type type) => default!;
         public object Convert(object value, TypeCode typeCode) => default!;

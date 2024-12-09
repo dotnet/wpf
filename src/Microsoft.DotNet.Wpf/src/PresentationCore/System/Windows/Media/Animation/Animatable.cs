@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,9 +7,9 @@
 // Allow suppression of certain presharp messages
 #pragma warning disable 1634, 1691
 
+using System.Windows.Media.Composition;
 using MS.Internal;
 using MS.Utility;
-using System.Windows.Media.Composition;
 
 namespace System.Windows.Media.Animation
 {
@@ -69,8 +69,8 @@ namespace System.Windows.Media.Animation
 
                 for (int i = 0; i < animatedPropertiesMap.Count; i++)
                 {
-                    Int32   dpGlobalIndex;
-                    Object  storageObject;
+                    Int32 dpGlobalIndex;
+                    Object storageObject;
 
                     animatedPropertiesMap.GetKeyValuePair(i, out dpGlobalIndex, out storageObject);
 

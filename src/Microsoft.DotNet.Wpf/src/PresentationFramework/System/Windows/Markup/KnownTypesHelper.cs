@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -33,7 +33,7 @@ namespace System.Windows.Markup
 
         internal static void Clear()
         {
-             _typeIndexer.Clear();
+            _typeIndexer.Clear();
         }
 #endif
     }
@@ -44,7 +44,7 @@ namespace System.Windows.Markup
     {
         public TypeIndexer(int size)
         {
-            _typeTable =new Type[size];
+            _typeTable = new Type[size];
         }
 
         public System.Type this[int index]

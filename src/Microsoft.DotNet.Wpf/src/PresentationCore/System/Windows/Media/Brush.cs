@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,9 +11,9 @@
 //
 //
 
-using MS.Internal;
 using System.ComponentModel;
 using System.Windows.Media.Animation;
+using MS.Internal;
 
 namespace System.Windows.Media
 {
@@ -24,11 +24,11 @@ namespace System.Windows.Media
     /// Brushes are also able to adapt how they fill the plane to the
     /// size of the object that they are used to fill.
     /// </summary>
-    [Localizability(LocalizationCategory.None, Readability=Readability.Unreadable)]
+    [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
     public abstract partial class Brush : Animatable, IFormattable
-    {       
+    {
         #region Constructors
-        
+
         /// <summary>
         /// Protected constructor for Brush.  
         /// Sets all values to their defaults.  
@@ -67,9 +67,9 @@ namespace System.Windows.Media
                     }
                 }
             }
-            
+
             brush = Parsers.ParseBrush(value, System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS, context);
-            
+
             if ((brush != null) && (freezer != null) && (freezer.FreezeFreezables))
             {
                 freezer.TryFreeze(value, brush);

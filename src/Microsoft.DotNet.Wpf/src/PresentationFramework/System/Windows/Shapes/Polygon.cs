@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,7 +22,7 @@ namespace System.Windows.Shapes
     public sealed class Polygon : Shape
     {
         #region Constructors
-        
+
         /// <summary>
         /// Instantiates a new instance of a polygon.
         /// </summary>
@@ -38,7 +38,7 @@ namespace System.Windows.Shapes
         /// Points property
         /// </summary>
         public static readonly DependencyProperty PointsProperty = DependencyProperty.Register(
-                "Points", typeof(PointCollection), typeof(Polygon), 
+                "Points", typeof(PointCollection), typeof(Polygon),
                 new FrameworkPropertyMetadata(new FreezableDefaultValueFactory(PointCollection.Empty), FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
 
         /// <summary>
@@ -60,11 +60,11 @@ namespace System.Windows.Shapes
         /// FillRule property
         /// </summary>
         public static readonly DependencyProperty FillRuleProperty = DependencyProperty.Register(
-            "FillRule", 
-            typeof(FillRule), 
+            "FillRule",
+            typeof(FillRule),
             typeof(Polygon),
             new FrameworkPropertyMetadata(
-                FillRule.EvenOdd, 
+                FillRule.EvenOdd,
                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender),
             new ValidateValueCallback(System.Windows.Media.ValidateEnums.IsFillRuleValid)
             );
@@ -86,7 +86,7 @@ namespace System.Windows.Shapes
         #endregion Dynamic Properties
 
         #region Protected Methods and properties
-        
+
         /// <summary>
         /// Get the polygon that defines this shape
         /// </summary>
@@ -154,5 +154,5 @@ namespace System.Windows.Shapes
         private Geometry _polygonGeometry;
 
         #endregion
-   }
+    }
 }

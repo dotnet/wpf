@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -41,7 +41,7 @@ namespace System.Windows
         /// <ExternalAPI/>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
-            if (   destinationType == typeof(InstanceDescriptor)
+            if (destinationType == typeof(InstanceDescriptor)
                 || destinationType == typeof(string))
             {
                 return true;
@@ -57,8 +57,8 @@ namespace System.Windows
         /// </summary>
         /// <ExternalAPI/>
         public override object ConvertFrom(
-            ITypeDescriptorContext td, 
-            CultureInfo cultureInfo, 
+            ITypeDescriptorContext td,
+            CultureInfo cultureInfo,
             object value)
         {
             string stringValue = value as string;
@@ -78,9 +78,9 @@ namespace System.Windows
             }
 
             TimeSpan duration = TimeSpan.Zero;
-            if(_timeSpanConverter == null)
+            if (_timeSpanConverter == null)
             {
-                 _timeSpanConverter = new TimeSpanConverter();
+                _timeSpanConverter = new TimeSpanConverter();
             }
             duration = (TimeSpan)_timeSpanConverter.ConvertFrom(td, cultureInfo, value);
             return new Duration(duration);
@@ -96,9 +96,9 @@ namespace System.Windows
         /// <returns>converted value</returns>
         /// <ExternalAPI/>
         public override object ConvertTo(
-            ITypeDescriptorContext context, 
-            CultureInfo cultureInfo, 
-            object value, 
+            ITypeDescriptorContext context,
+            CultureInfo cultureInfo,
+            object value,
             Type destinationType)
         {
             if (destinationType != null && value is Duration)

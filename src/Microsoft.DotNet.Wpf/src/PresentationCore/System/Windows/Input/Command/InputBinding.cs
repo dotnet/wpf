@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,7 +19,7 @@ namespace System.Windows.Input
     /// </summary>
     public class InputBinding : Freezable, ICommandSource
     {
-#region Constructor
+        #region Constructor
 
         /// <summary>
         ///     Default Constructor - needed to allow markup creation
@@ -33,7 +33,7 @@ namespace System.Windows.Input
         /// </summary>
         /// <param name="command">Command</param>
         /// <param name="gesture">Input Gesture</param>
-        public InputBinding(ICommand command, InputGesture gesture) 
+        public InputBinding(ICommand command, InputGesture gesture)
         {
             ArgumentNullException.ThrowIfNull(command);
 
@@ -43,14 +43,14 @@ namespace System.Windows.Input
             _gesture = gesture;
         }
 
-#endregion Constructor
+        #endregion Constructor
         //------------------------------------------------------
         //
         //  Public Methods
         //
         //------------------------------------------------------
-#region Public Methods       
- 
+        #region Public Methods       
+
         /// <summary>
         ///     Dependency Property for Command property
         /// </summary>
@@ -64,7 +64,7 @@ namespace System.Windows.Input
         [Localizability(LocalizationCategory.NeverLocalize)] // cannot be localized
         public ICommand Command
         {
-            get     
+            get
             {
                 return (ICommand)GetValue(CommandProperty);
             }
@@ -135,7 +135,7 @@ namespace System.Windows.Input
                 ReadPreamble();
                 return _gesture;
             }
-            
+
             set
             {
                 WritePreamble();
@@ -148,7 +148,7 @@ namespace System.Windows.Input
                 WritePostscript();
             }
         }
-#endregion Public Methods
+        #endregion Public Methods
         //------------------------------------------------------
         //
         //  Internal Methods
@@ -251,14 +251,14 @@ namespace System.Windows.Input
         //
         //------------------------------------------------------
 
-#region Private Fields
-        private     InputGesture  _gesture = null ;
+        #region Private Fields
+        private InputGesture _gesture = null;
 
         internal static object _dataLock = new object();
 
         // Fields to implement DO's inheritance context
         private DependencyObject _inheritanceContext = null;
         private bool _hasMultipleInheritanceContexts = false;
-#endregion Private Fields
+        #endregion Private Fields
     }
 }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -40,7 +40,7 @@ namespace MS.Internal.IO.Packaging
                     bytesRead = deflateStream.Read(Buffer, 0, Buffer.Length);
                     if (bytesRead > 0)
                         sink.Write(Buffer, 0, bytesRead);
-} while (bytesRead > 0);
+                } while (bytesRead > 0);
             }
         }
 

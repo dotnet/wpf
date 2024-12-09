@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -32,11 +32,11 @@ namespace System.Windows
         /// <returns> 'true' if the enumeration contains a valid value, 'false' otherwise. </returns>
         public static bool IsTextDecorationUnitValid(object valueObject)
         {
-            TextDecorationUnit value = (TextDecorationUnit) valueObject;
+            TextDecorationUnit value = (TextDecorationUnit)valueObject;
 
-            return (value == TextDecorationUnit.FontRecommended) || 
-                   (value == TextDecorationUnit.FontRenderingEmSize) || 
+            return (value == TextDecorationUnit.FontRecommended) ||
+                   (value == TextDecorationUnit.FontRenderingEmSize) ||
                    (value == TextDecorationUnit.Pixel);
-        }                                
+        }
     }
 }

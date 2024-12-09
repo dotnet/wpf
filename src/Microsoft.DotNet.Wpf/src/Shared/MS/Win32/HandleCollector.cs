@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,8 +9,8 @@ namespace MS.Win32
 {
     internal static class HandleCollector
     {
-        private static HandleType[]             handleTypes;
-        private static int                      handleTypeCount = 0;
+        private static HandleType[] handleTypes;
+        private static int handleTypeCount = 0;
 
         private static Object handleMutex = new Object();
 
@@ -19,30 +19,35 @@ namespace MS.Win32
         ///     handle on a "hot list" of objects that may need to be garbage
         ///     collected.
         /// </devdoc>
-        internal static IntPtr Add(IntPtr handle, int type) {
+        internal static IntPtr Add(IntPtr handle, int type)
+        {
             handleTypes[type - 1].Add();
             return handle;
         }
 
-        internal static SafeHandle Add(SafeHandle handle, int type) {
+        internal static SafeHandle Add(SafeHandle handle, int type)
+        {
             handleTypes[type - 1].Add();
             return handle;
         }
 
-        internal static void Add(int type) {
+        internal static void Add(int type)
+        {
             handleTypes[type - 1].Add();
         }
 
         /// <devdoc>
         ///     Registers a new type of handle with the handle collector.
         /// </devdoc>
-        internal static int RegisterType(string typeName, int expense, int initialThreshold) {
+        internal static int RegisterType(string typeName, int expense, int initialThreshold)
+        {
             lock (handleMutex)
             {
                 if (handleTypeCount == 0 || handleTypeCount == handleTypes.Length)
                 {
                     HandleType[] newTypes = new HandleType[handleTypeCount + 10];
-                    if (handleTypes != null) {
+                    if (handleTypes != null)
+                    {
                         Array.Copy(handleTypes, 0, newTypes, 0, handleTypeCount);
                     }
                     handleTypes = newTypes;
@@ -58,17 +63,20 @@ namespace MS.Win32
         ///     handle removes it from our "hot list" of objects that should be
         ///     frequently garbage collected.
         /// </devdoc>
-        internal static IntPtr Remove(IntPtr handle, int type) {
+        internal static IntPtr Remove(IntPtr handle, int type)
+        {
             handleTypes[type - 1].Remove();
-            return handle ; 
+            return handle;
         }
 
-        internal static SafeHandle Remove(SafeHandle handle, int type) {
+        internal static SafeHandle Remove(SafeHandle handle, int type)
+        {
             handleTypes[type - 1].Remove();
-            return handle ; 
+            return handle;
         }
 
-        internal static void Remove(int type) {
+        internal static void Remove(int type)
+        {
             handleTypes[type - 1].Remove();
         }
 
@@ -87,7 +95,8 @@ namespace MS.Win32
             /// <devdoc>
             ///     Creates a new handle type.
             /// </devdoc>
-            internal HandleType(string name, int expense, int initialThreshHold) {
+            internal HandleType(string name, int expense, int initialThreshHold)
+            {
                 this.name = name;
                 this.initialThreshHold = initialThreshHold;
                 this.threshHold = initialThreshHold;
@@ -97,19 +106,23 @@ namespace MS.Win32
             /// <devdoc>
             ///     Adds a handle to this handle type for monitoring.
             /// </devdoc>
-            internal void Add() {
+            internal void Add()
+            {
                 bool performCollect = false;
 
-                lock(this) {
+                lock (this)
+                {
                     handleCount++;
                     performCollect = NeedCollection();
 
-                    if (!performCollect) {
+                    if (!performCollect)
+                    {
                         return;
                     }
                 }
 
-                if (performCollect) {
+                if (performCollect)
+                {
 #if DEBUG_HANDLECOLLECTOR
                     Debug.WriteLine("HC> Forcing garbage collect");
                     Debug.WriteLine("HC>     name        :" + name);
@@ -135,8 +148,10 @@ namespace MS.Win32
             /// <devdoc>
             ///     Determines if this handle type needs a garbage collection pass.
             /// </devdoc>
-            internal bool NeedCollection() {
-                if (handleCount > threshHold) {
+            internal bool NeedCollection()
+            {
+                if (handleCount > threshHold)
+                {
                     threshHold = handleCount + ((handleCount * deltaPercent) / 100);
 #if DEBUG_HANDLECOLLECTOR
                     Debug.WriteLine("HC> NeedCollection: increase threshHold to " + threshHold);
@@ -150,7 +165,8 @@ namespace MS.Win32
                 // we will oscillate.
                 //
                 int oldThreshHold = (100 * threshHold) / (100 + deltaPercent);
-                if (oldThreshHold >= initialThreshHold && handleCount <  (int)(oldThreshHold * .9F)) {
+                if (oldThreshHold >= initialThreshHold && handleCount < (int)(oldThreshHold * .9F))
+                {
 #if DEBUG_HANDLECOLLECTOR
                     Debug.WriteLine("HC> NeedCollection: throttle threshhold " + threshHold + " down to " + oldThreshHold);
 #endif                  
@@ -163,8 +179,10 @@ namespace MS.Win32
             /// <devdoc>
             ///     Removes the given handle from our monitor list.
             /// </devdoc>
-            internal void Remove() {
-                lock(this) {
+            internal void Remove()
+            {
+                lock (this)
+                {
                     handleCount--;
 
                     handleCount = Math.Max(0, handleCount);

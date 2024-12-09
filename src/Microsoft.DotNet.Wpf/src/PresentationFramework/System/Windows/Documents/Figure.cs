@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -69,14 +69,14 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="HorizontalAnchor" /> property.
         /// </summary>
-        public static readonly DependencyProperty HorizontalAnchorProperty = 
+        public static readonly DependencyProperty HorizontalAnchorProperty =
                 DependencyProperty.Register(
-                        "HorizontalAnchor", 
-                        typeof(FigureHorizontalAnchor), 
-                        typeof(Figure), 
+                        "HorizontalAnchor",
+                        typeof(FigureHorizontalAnchor),
+                        typeof(Figure),
                         new FrameworkPropertyMetadata(
-                                FigureHorizontalAnchor.ColumnRight, 
-                                FrameworkPropertyMetadataOptions.AffectsParentMeasure), 
+                                FigureHorizontalAnchor.ColumnRight,
+                                FrameworkPropertyMetadataOptions.AffectsParentMeasure),
                         new ValidateValueCallback(IsValidHorizontalAnchor));
 
         /// <summary>
@@ -91,14 +91,14 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="VerticalAnchor" /> property.
         /// </summary>
-        public static readonly DependencyProperty VerticalAnchorProperty = 
+        public static readonly DependencyProperty VerticalAnchorProperty =
                 DependencyProperty.Register(
-                        "VerticalAnchor", 
-                        typeof(FigureVerticalAnchor), 
-                        typeof(Figure), 
+                        "VerticalAnchor",
+                        typeof(FigureVerticalAnchor),
+                        typeof(Figure),
                         new FrameworkPropertyMetadata(
-                                FigureVerticalAnchor.ParagraphTop, 
-                                FrameworkPropertyMetadataOptions.AffectsParentMeasure), 
+                                FigureVerticalAnchor.ParagraphTop,
+                                FrameworkPropertyMetadataOptions.AffectsParentMeasure),
                         new ValidateValueCallback(IsValidVerticalAnchor));
 
         /// <summary>
@@ -113,13 +113,13 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="HorizontalOffset" /> property.
         /// </summary>
-        public static readonly DependencyProperty HorizontalOffsetProperty = 
+        public static readonly DependencyProperty HorizontalOffsetProperty =
                 DependencyProperty.Register(
-                        "HorizontalOffset", 
-                        typeof(double), 
-                        typeof(Figure), 
+                        "HorizontalOffset",
+                        typeof(double),
+                        typeof(Figure),
                         new FrameworkPropertyMetadata(
-                                0.0, 
+                                0.0,
                                 FrameworkPropertyMetadataOptions.AffectsParentMeasure),
                         new ValidateValueCallback(IsValidOffset));
 
@@ -136,13 +136,13 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="VerticalOffset" /> property.
         /// </summary>
-        public static readonly DependencyProperty VerticalOffsetProperty = 
+        public static readonly DependencyProperty VerticalOffsetProperty =
                 DependencyProperty.Register(
-                        "VerticalOffset", 
-                        typeof(double), 
-                        typeof(Figure), 
+                        "VerticalOffset",
+                        typeof(double),
+                        typeof(Figure),
                         new FrameworkPropertyMetadata(
-                                0.0, 
+                                0.0,
                                 FrameworkPropertyMetadataOptions.AffectsParentMeasure),
                         new ValidateValueCallback(IsValidOffset));
 
@@ -159,13 +159,13 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="CanDelayPlacement" /> property.
         /// </summary>
-        public static readonly DependencyProperty CanDelayPlacementProperty = 
+        public static readonly DependencyProperty CanDelayPlacementProperty =
                 DependencyProperty.Register(
-                        "CanDelayPlacement", 
-                        typeof(bool), 
-                        typeof(Figure), 
+                        "CanDelayPlacement",
+                        typeof(bool),
+                        typeof(Figure),
                         new FrameworkPropertyMetadata(
-                                true, 
+                                true,
                                 FrameworkPropertyMetadataOptions.AffectsParentMeasure));
 
         /// <summary>
@@ -180,14 +180,14 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="WrapDirection" /> property.
         /// </summary>
-        public static readonly DependencyProperty WrapDirectionProperty = 
+        public static readonly DependencyProperty WrapDirectionProperty =
                 DependencyProperty.Register(
-                        "WrapDirection", 
-                        typeof(WrapDirection), 
-                        typeof(Figure), 
+                        "WrapDirection",
+                        typeof(WrapDirection),
+                        typeof(Figure),
                         new FrameworkPropertyMetadata(
-                                WrapDirection.Both, 
-                                FrameworkPropertyMetadataOptions.AffectsParentMeasure), 
+                                WrapDirection.Both,
+                                FrameworkPropertyMetadataOptions.AffectsParentMeasure),
                         new ValidateValueCallback(IsValidWrapDirection));
 
         /// <summary>
@@ -202,10 +202,10 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="Width" /> property.
         /// </summary>
-        public static readonly DependencyProperty WidthProperty = 
+        public static readonly DependencyProperty WidthProperty =
                 DependencyProperty.Register(
-                        "Width", 
-                        typeof(FigureLength), 
+                        "Width",
+                        typeof(FigureLength),
                         typeof(Figure),
                         new FrameworkPropertyMetadata(
                                 new FigureLength(1.0, FigureUnitType.Auto),
@@ -223,10 +223,10 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="Height" /> property.
         /// </summary>
-        public static readonly DependencyProperty HeightProperty = 
+        public static readonly DependencyProperty HeightProperty =
                 DependencyProperty.Register(
-                        "Height", 
-                        typeof(FigureLength), 
+                        "Height",
+                        typeof(FigureLength),
                         typeof(Figure),
                         new FrameworkPropertyMetadata(
                                 new FigureLength(1.0, FigureUnitType.Auto),
@@ -263,9 +263,9 @@ namespace System.Windows.Documents
                 || value == FigureHorizontalAnchor.ColumnCenter
                 || value == FigureHorizontalAnchor.ColumnLeft
                 || value == FigureHorizontalAnchor.ColumnRight;
-                // || value == FigureHorizontalAnchor.CharacterCenter
-                // || value == FigureHorizontalAnchor.CharacterLeft
-                // || value == FigureHorizontalAnchor.CharacterRight;
+            // || value == FigureHorizontalAnchor.CharacterCenter
+            // || value == FigureHorizontalAnchor.CharacterLeft
+            // || value == FigureHorizontalAnchor.CharacterRight;
         }
 
         private static bool IsValidVerticalAnchor(object o)
@@ -278,9 +278,9 @@ namespace System.Windows.Documents
                 || value == FigureVerticalAnchor.PageCenter
                 || value == FigureVerticalAnchor.PageTop
                 || value == FigureVerticalAnchor.ParagraphTop;
-                // || value == FigureVerticalAnchor.CharacterBottom
-                // || value == FigureVerticalAnchor.CharacterCenter
-                // || value == FigureVerticalAnchor.CharacterTop;
+            // || value == FigureVerticalAnchor.CharacterBottom
+            // || value == FigureVerticalAnchor.CharacterCenter
+            // || value == FigureVerticalAnchor.CharacterTop;
         }
 
         private static bool IsValidWrapDirection(object o)

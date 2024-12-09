@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -150,7 +150,7 @@ namespace System.Printing.Interop
         /// <exception cref="PrintQueueException">
         /// The PrintTicketConverter instance failed to convert the DEVMODE to a PrintTicket.
         /// </exception>
-        public PrintTicket ConvertDevModeToPrintTicket(byte[]           devMode,
+        public PrintTicket ConvertDevModeToPrintTicket(byte[] devMode,
                                                        PrintTicketScope scope)
         {
             ObjectDisposedException.ThrowIf(_disposed, typeof(PrintTicketConverter));
@@ -213,8 +213,8 @@ namespace System.Printing.Interop
         /// <exception cref="PrintQueueException">
         /// The PrintTicketConverter instance failed to convert the PrintTicket to a DEVMODE.
         /// </exception>
-        public byte[] ConvertPrintTicketToDevMode(PrintTicket      printTicket,
-                                                  BaseDevModeType  baseType,
+        public byte[] ConvertPrintTicketToDevMode(PrintTicket printTicket,
+                                                  BaseDevModeType baseType,
                                                   PrintTicketScope scope)
         {
             ObjectDisposedException.ThrowIf(_disposed, typeof(PrintTicketConverter));
@@ -285,7 +285,7 @@ namespace System.Printing.Interop
         {
             _accessVerifier.VerifyThreadLocality();
         }
-        
+
 
         #endregion Private Methods
 

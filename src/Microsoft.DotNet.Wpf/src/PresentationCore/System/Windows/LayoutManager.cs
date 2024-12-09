@@ -1,10 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Windows.Threading;
-using System.Windows.Media;
 using System.Windows.Automation.Peers;
+using System.Windows.Media;
+using System.Windows.Threading;
 using MS.Utility;
 
 namespace System.Windows
@@ -22,7 +22,7 @@ namespace System.Windows
 
         void OnDispatcherShutdown(object sender, EventArgs e)
         {
-            if(_shutdownHandler != null)
+            if (_shutdownHandler != null)
                 Dispatcher.ShutdownFinished -= _shutdownHandler;
 
             _shutdownHandler = null;
@@ -43,9 +43,9 @@ namespace System.Windows
         internal static ContextLayoutManager From(Dispatcher dispatcher)
         {
             ContextLayoutManager lm = dispatcher.Reserved3 as ContextLayoutManager;
-            if(lm == null)
+            if (lm == null)
             {
-                if(Dispatcher.CurrentDispatcher != dispatcher)
+                if (Dispatcher.CurrentDispatcher != dispatcher)
                 {
                     throw new InvalidOperationException();
                 }
@@ -64,10 +64,11 @@ namespace System.Windows
         private void markTreeDirty(UIElement e)
         {
             //walk up until we are the topmost UIElement in the tree.
-            while(true)
+            while (true)
             {
                 UIElement p = e.GetUIParentNo3DTraversal() as UIElement;
-                if(p == null) break;
+                if (p == null)
+                    break;
                 e = p;
             }
 
@@ -79,9 +80,9 @@ namespace System.Windows
         private void markTreeDirtyHelper(Visual v)
         {
             //now walk down and mark all UIElements dirty
-            if(v != null)
+            if (v != null)
             {
-                if(v.CheckFlagsAnd(VisualFlags.IsUIElement))
+                if (v.CheckFlagsAnd(VisualFlags.IsUIElement))
                 {
                     UIElement uie = ((UIElement)v);
                     uie.InvalidateMeasureInternal();
@@ -92,10 +93,11 @@ namespace System.Windows
                 //be insulated dirty islands below
                 int cnt = v.InternalVisualChildrenCount;
 
-                for(int i=0; i<cnt; i++)
+                for (int i = 0; i < cnt; i++)
                 {
                     Visual child = v.InternalGetVisualChild(i);
-                    if (child != null) markTreeDirtyHelper(child);
+                    if (child != null)
+                        markTreeDirtyHelper(child);
                 }
             }
         }
@@ -103,7 +105,7 @@ namespace System.Windows
         // posts a layout update
         private void NeedsRecalc()
         {
-            if(!_layoutRequestPosted && !_isUpdating)
+            if (!_layoutRequestPosted && !_isUpdating)
             {
                 MediaContext.From(Dispatcher).BeginInvokeOnRender(_updateCallback, this);
                 _layoutRequestPosted = true;
@@ -129,7 +131,7 @@ namespace System.Windows
             Dispatcher._disableProcessingCount++;
             _lastExceptionElement = null;
             _measuresOnStack++;
-            if(_measuresOnStack > s_LayoutRecursionLimit)
+            if (_measuresOnStack > s_LayoutRecursionLimit)
                 throw new InvalidOperationException(SR.Format(SR.LayoutManager_DeepRecursion, s_LayoutRecursionLimit));
 
             _firePostLayoutEvents = true;
@@ -146,7 +148,7 @@ namespace System.Windows
             Dispatcher._disableProcessingCount++;
             _lastExceptionElement = null;
             _arrangesOnStack++;
-            if(_arrangesOnStack > s_LayoutRecursionLimit)
+            if (_arrangesOnStack > s_LayoutRecursionLimit)
                 throw new InvalidOperationException(SR.Format(SR.LayoutManager_DeepRecursion, s_LayoutRecursionLimit));
 
             _firePostLayoutEvents = true;
@@ -167,10 +169,11 @@ namespace System.Windows
             VerifyAccess();
 
             //make UpdateLayout to be a NOP if called during UpdateLayout.
-            if (   _isInUpdateLayout
+            if (_isInUpdateLayout
                 || _measuresOnStack > 0
                 || _arrangesOnStack > 0
-                || _isDead) return;
+                || _isDead)
+                return;
 
 #if DEBUG_CLR_MEM
             bool clrTracingEnabled = false;
@@ -210,9 +213,9 @@ namespace System.Windows
                 invalidateTreeIfRecovering();
 
 
-                while(hasDirtiness || _firePostLayoutEvents)
+                while (hasDirtiness || _firePostLayoutEvents)
                 {
-                    if(++cnt > 153)
+                    if (++cnt > 153)
                     {
                         //loop detected. Lets go over to background to let input/user to correct the situation.
                         //most frequently, we get such a loop as a result of input detecting a mouse in the "bad spot"
@@ -252,7 +255,7 @@ namespace System.Windows
                     }
 
                     // Disable processing of the queue during blocking operations to prevent unrelated reentrancy.
-                    using(Dispatcher.DisableProcessing())
+                    using (Dispatcher.DisableProcessing())
                     {
                         //loop for Measure
                         //We limit the number of loops here by time - normally, all layout
@@ -263,21 +266,21 @@ namespace System.Windows
                         //and it will be impossible to save results or even close the window.
                         int loopCounter = 0;
                         DateTime loopStartTime = new DateTime(0);
-                        while(true)
+                        while (true)
                         {
-                            if(++loopCounter > 153)
+                            if (++loopCounter > 153)
                             {
                                 loopCounter = 0;
                                 //first bunch of iterations is free, then we start count time
                                 //this way, we don't call DateTime.Now in most layout updates
-                                if(loopStartTime.Ticks == 0)
+                                if (loopStartTime.Ticks == 0)
                                 {
                                     loopStartTime = DateTime.UtcNow;
                                 }
                                 else
                                 {
                                     TimeSpan loopDuration = (DateTime.UtcNow - loopStartTime);
-                                    if(loopDuration.Milliseconds > 153*2) // 153*2 = magic*science
+                                    if (loopDuration.Milliseconds > 153 * 2) // 153*2 = magic*science
                                     {
                                         //loop detected. Lets go over to background to let input work.
                                         Dispatcher.BeginInvoke(DispatcherPriority.Background, _updateLayoutBackground, this);
@@ -295,13 +298,14 @@ namespace System.Windows
 
                             currentElement = MeasureQueue.GetTopMost();
 
-                            if(currentElement == null) break; //exit if no more Measure candidates
-                            
+                            if (currentElement == null)
+                                break; //exit if no more Measure candidates
+
                             currentElement.Measure(currentElement.PreviousConstraint);
-							//not clear why this is needed, remove for now
-							//if the parent was just computed, the chidlren should be clean. If they are not clean and in the queue
-							//that means that there is cross-tree dependency and they most likely shodul be updated by themselves.
-							//                            MeasureQueue.RemoveOrphans(currentElement);
+                            //not clear why this is needed, remove for now
+                            //if the parent was just computed, the chidlren should be clean. If they are not clean and in the queue
+                            //that means that there is cross-tree dependency and they most likely shodul be updated by themselves.
+                            //                            MeasureQueue.RemoveOrphans(currentElement);
                         }
 
                         if (etwTracingEnabled)
@@ -331,21 +335,21 @@ namespace System.Windows
                         //and it will be impossible to save results or even close the window.
                         loopCounter = 0;
                         loopStartTime = new DateTime(0);
-                        while(MeasureQueue.IsEmpty)
+                        while (MeasureQueue.IsEmpty)
                         {
-                            if(++loopCounter > 153)
+                            if (++loopCounter > 153)
                             {
                                 loopCounter = 0;
                                 //first bunch of iterations is free, then we start count time
                                 //this way, we don't call DateTime.Now in most layout updates
-                                if(loopStartTime.Ticks == 0)
+                                if (loopStartTime.Ticks == 0)
                                 {
                                     loopStartTime = DateTime.UtcNow;
                                 }
                                 else
                                 {
                                     TimeSpan loopDuration = (DateTime.UtcNow - loopStartTime);
-                                    if(loopDuration.Milliseconds > 153*2) // 153*2 = magic*science
+                                    if (loopDuration.Milliseconds > 153 * 2) // 153*2 = magic*science
                                     {
                                         //loop detected. Lets go over to background to let input work.
                                         Dispatcher.BeginInvoke(DispatcherPriority.Background, _updateLayoutBackground, this);
@@ -363,15 +367,16 @@ namespace System.Windows
 
                             currentElement = ArrangeQueue.GetTopMost();
 
-                            if(currentElement == null) break; //exit if no more Measure candidates
+                            if (currentElement == null)
+                                break; //exit if no more Measure candidates
 
                             Rect finalRect = getProperArrangeRect(currentElement);
 
                             currentElement.Arrange(finalRect);
-							//not clear why this is needed, remove for now
-							//if the parent was just computed, the chidlren should be clean. If they are not clean and in the queue
-							//that means that there is cross-tree dependency and they most likely shodul be updated by themselves.
-							//                            ArrangeQueue.RemoveOrphans(currentElement);
+                            //not clear why this is needed, remove for now
+                            //if the parent was just computed, the chidlren should be clean. If they are not clean and in the queue
+                            //that means that there is cross-tree dependency and they most likely shodul be updated by themselves.
+                            //                            ArrangeQueue.RemoveOrphans(currentElement);
                         }
 
                         if (etwTracingEnabled)
@@ -388,21 +393,25 @@ namespace System.Windows
 
                         //if Arrange dirtied the tree go clean it again
                         //it is not neccesary to check ArrangeQueue sicnce we just exited from Arrange loop
-                        if(!MeasureQueue.IsEmpty) continue;
+                        if (!MeasureQueue.IsEmpty)
+                            continue;
 
                         //let LayoutUpdated handlers to call UpdateLayout
                         //note that it means we can get reentrancy into UpdateLayout past this point,
                         //if any of event handlers call UpdateLayout sync. Need to protect from reentrancy
                         //in the firing methods below.
                         _isInUpdateLayout = false;
-}
+                    }
 
                     fireSizeChangedEvents();
-                    if(hasDirtiness) continue;
+                    if (hasDirtiness)
+                        continue;
                     fireLayoutUpdateEvent();
-                    if(hasDirtiness) continue;
+                    if (hasDirtiness)
+                        continue;
                     fireAutomationEvents();
-                    if(hasDirtiness) continue;
+                    if (hasDirtiness)
+                        continue;
                     fireSizeChangedEvents(); // if nothing is dirty, one last chance for any size changes to announce.
                 }
 
@@ -415,7 +424,7 @@ namespace System.Windows
                 _layoutRequestPosted = false;
                 _isInUpdateLayout = false;
 
-                if(gotException)
+                if (gotException)
                 {
                     if (etwTracingEnabled)
                     {
@@ -475,9 +484,9 @@ namespace System.Windows
 
         private void invalidateTreeIfRecovering()
         {
-            if((_forceLayoutElement != null) || _gotException)
+            if ((_forceLayoutElement != null) || _gotException)
             {
-                if(_forceLayoutElement != null)
+                if (_forceLayoutElement != null)
                 {
                     markTreeDirty(_forceLayoutElement);
                 }
@@ -491,7 +500,7 @@ namespace System.Windows
         {
             get
             {
-                if(_measureQueue == null)
+                if (_measureQueue == null)
                     _measureQueue = new InternalMeasureQueue();
                 return _measureQueue;
             }
@@ -501,13 +510,13 @@ namespace System.Windows
         {
             get
             {
-                if(_arrangeQueue == null)
+                if (_arrangeQueue == null)
                     _arrangeQueue = new InternalArrangeQueue();
                 return _arrangeQueue;
             }
         }
 
-        internal class InternalMeasureQueue: LayoutQueue
+        internal class InternalMeasureQueue : LayoutQueue
         {
             internal override void setRequest(UIElement e, Request r)
             {
@@ -529,10 +538,10 @@ namespace System.Windows
             {
                 e.InvalidateMeasureInternal();
             }
-}
+        }
 
 
-        internal class InternalArrangeQueue: LayoutQueue
+        internal class InternalArrangeQueue : LayoutQueue
         {
             internal override void setRequest(UIElement e, Request r)
             {
@@ -554,14 +563,14 @@ namespace System.Windows
             {
                 e.InvalidateArrangeInternal();
             }
-}
+        }
 
         // delegate for dispatcher - keep it static so we don't allocate new ones.
         private static DispatcherOperationCallback _updateCallback = new DispatcherOperationCallback(UpdateLayoutCallback);
         private static object UpdateLayoutCallback(object arg)
         {
             ContextLayoutManager ContextLayoutManager = arg as ContextLayoutManager;
-            if(ContextLayoutManager != null)
+            if (ContextLayoutManager != null)
                 ContextLayoutManager.UpdateLayout();
             return null;
         }
@@ -570,16 +579,17 @@ namespace System.Windows
         private void fireLayoutUpdateEvent()
         {
             //no reentrancy. It may happen if one of handlers calls UpdateLayout synchronously
-            if(_inFireLayoutUpdated) return;
+            if (_inFireLayoutUpdated)
+                return;
 
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose, EventTrace.Event.WClientLayoutFireLayoutUpdatedBegin);
             try
             {
                 _inFireLayoutUpdated = true;
 
-                LayoutEventList.ListItem [] copy = LayoutEvents.CopyToArray();
+                LayoutEventList.ListItem[] copy = LayoutEvents.CopyToArray();
 
-                for(int i=0; i<copy.Length; i++)
+                for (int i = 0; i < copy.Length; i++)
                 {
                     LayoutEventList.ListItem item = copy[i];
                     //store handler here in case if thread gets pre-empted between check for IsAlive and invocation
@@ -590,23 +600,24 @@ namespace System.Windows
                         // this will return null if element is already GC'ed
                         e = (EventHandler)(item.Target);
                     }
-                    catch(InvalidOperationException) //this will happen if element is being resurrected after finalization
+                    catch (InvalidOperationException) //this will happen if element is being resurrected after finalization
                     {
                         e = null;
                     }
 
-                    if(e != null)
+                    if (e != null)
                     {
                         e(null, EventArgs.Empty);
                         // if handler dirtied the tree, go clean it again before calling other handlers
-                        if(hasDirtiness) break;
+                        if (hasDirtiness)
+                            break;
                     }
                     else
                     {
                         LayoutEvents.Remove(item);
                     }
                 }
-             }
+            }
             finally
             {
                 _inFireLayoutUpdated = false;
@@ -621,7 +632,7 @@ namespace System.Windows
         {
             get
             {
-                if(_layoutEvents == null)
+                if (_layoutEvents == null)
                     _layoutEvents = new LayoutEventList();
                 return _layoutEvents;
             }
@@ -641,7 +652,8 @@ namespace System.Windows
         private void fireSizeChangedEvents()
         {
             //no reentrancy. It may happen if one of handlers calls UpdateLayout synchronously
-            if(_inFireSizeChanged) return;
+            if (_inFireSizeChanged)
+                return;
 
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose, EventTrace.Event.WClientLayoutFireSizeChangedBegin);
             try
@@ -649,7 +661,7 @@ namespace System.Windows
                 _inFireSizeChanged = true;
 
                 //loop for SizeChanged
-                while(_sizeChangedChain != null)
+                while (_sizeChangedChain != null)
                 {
                     SizeChangedInfo info = _sizeChangedChain;
                     _sizeChangedChain = info.Next;
@@ -659,7 +671,8 @@ namespace System.Windows
                     info.Element.OnRenderSizeChanged(info);
 
                     //if callout dirtified the tree, return to cleaning
-                    if(hasDirtiness) break;
+                    if (hasDirtiness)
+                        break;
                 }
             }
             finally
@@ -672,7 +685,8 @@ namespace System.Windows
         private void fireAutomationEvents()
         {
             //no reentrancy. It may happen if one of handlers calls UpdateLayout synchronously
-            if(_inFireAutomationEvents) return;
+            if (_inFireAutomationEvents)
+                return;
 
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose, EventTrace.Event.WClientLayoutFireAutomationEventsBegin);
             try
@@ -680,9 +694,9 @@ namespace System.Windows
                 _inFireAutomationEvents = true;
                 _firePostLayoutEvents = false;
 
-                LayoutEventList.ListItem [] copy = AutomationEvents.CopyToArray();
+                LayoutEventList.ListItem[] copy = AutomationEvents.CopyToArray();
 
-                for(int i=0; i<copy.Length; i++)
+                for (int i = 0; i < copy.Length; i++)
                 {
                     LayoutEventList.ListItem item = copy[i];
                     //store peer here in case if thread gets pre-empted between check for IsAlive and invocation
@@ -693,16 +707,17 @@ namespace System.Windows
                         // this will return null if element is already GC'ed
                         peer = (AutomationPeer)(item.Target);
                     }
-                    catch(InvalidOperationException) //this will happen if element is being resurrected after finalization
+                    catch (InvalidOperationException) //this will happen if element is being resurrected after finalization
                     {
                         peer = null;
                     }
 
-                    if(peer != null)
+                    if (peer != null)
                     {
                         peer.FireAutomationEvents();
                         // if handler dirtied the tree, go clean it again before calling other handlers
-                        if(hasDirtiness) break;
+                        if (hasDirtiness)
+                            break;
                     }
                     else
                     {
@@ -723,7 +738,7 @@ namespace System.Windows
         {
             get
             {
-                if(_automationEvents == null)
+                if (_automationEvents == null)
                     _automationEvents = new LayoutEventList();
                 return _automationEvents;
             }
@@ -731,12 +746,12 @@ namespace System.Windows
 
         internal AutomationPeer[] GetAutomationRoots()
         {
-            LayoutEventList.ListItem [] copy = AutomationEvents.CopyToArray();
+            LayoutEventList.ListItem[] copy = AutomationEvents.CopyToArray();
 
             AutomationPeer[] peers = new AutomationPeer[copy.Length];
             int freeSlot = 0;
 
-            for(int i=0; i<copy.Length; i++)
+            for (int i = 0; i < copy.Length; i++)
             {
                 LayoutEventList.ListItem item = copy[i];
                 //store peer here in case if thread gets pre-empted between check for IsAlive and invocation
@@ -747,12 +762,12 @@ namespace System.Windows
                     // this will return null if element is already GC'ed
                     peer = (AutomationPeer)(item.Target);
                 }
-                catch(InvalidOperationException) //this will happen if element is being resurrected after finalization
+                catch (InvalidOperationException) //this will happen if element is being resurrected after finalization
                 {
                     peer = null;
                 }
 
-                if(peer != null)
+                if (peer != null)
                 {
                     peers[freeSlot++] = peer;
                 }
@@ -788,14 +803,14 @@ namespace System.Windows
             _lastExceptionElement = e;
         }
 
-       ///// DATA //////
+        ///// DATA //////
 
         private UIElement _forceLayoutElement; //set in extreme situations, forces the update of the whole tree containing the element
         private UIElement _lastExceptionElement; //set on exception in Measure or Arrange.
 
         private InternalMeasureQueue _measureQueue;
         private InternalArrangeQueue _arrangeQueue;
-        private SizeChangedInfo      _sizeChangedChain;
+        private SizeChangedInfo _sizeChangedChain;
 
         private static DispatcherOperationCallback _updateLayoutBackground = new DispatcherOperationCallback(UpdateLayoutBackground);
         private EventHandler _shutdownHandler;
@@ -805,15 +820,15 @@ namespace System.Windows
         private int _measuresOnStack;
         private int _automationSyncUpdateCounter;
 
-        private bool      _isDead;
-        private bool      _isUpdating;
-        private bool      _isInUpdateLayout;
-        private bool      _gotException; //true if UpdateLayout exited with exception
-        private bool      _layoutRequestPosted;
-        private bool      _inFireLayoutUpdated;
-        private bool      _inFireSizeChanged;
-        private bool      _firePostLayoutEvents;
-        private bool      _inFireAutomationEvents;
+        private bool _isDead;
+        private bool _isUpdating;
+        private bool _isInUpdateLayout;
+        private bool _gotException; //true if UpdateLayout exited with exception
+        private bool _layoutRequestPosted;
+        private bool _inFireLayoutUpdated;
+        private bool _inFireSizeChanged;
+        private bool _firePostLayoutEvents;
+        private bool _inFireAutomationEvents;
 
 
 #if DEBUG_CLR_MEM
@@ -844,10 +859,12 @@ namespace System.Windows
             internal LayoutQueue()
             {
                 Request r;
-                for(int i=0; i<PocketCapacity; i++)
+                for (int i = 0; i < PocketCapacity; i++)
                 {
-                    r = new Request();
-                    r.Next = _pocket;
+                    r = new Request
+                    {
+                        Next = _pocket
+                    };
                     _pocket = r;
                 }
                 _pocketSize = PocketCapacity;
@@ -857,10 +874,11 @@ namespace System.Windows
             {
                 Request r = _getNewRequest(e);
 
-                if(r != null)
+                if (r != null)
                 {
                     r.Next = _head;
-                    if(_head != null) _head.Prev = r;
+                    if (_head != null)
+                        _head.Prev = r;
                     _head = r;
 
                     setRequest(e, r);
@@ -869,24 +887,28 @@ namespace System.Windows
 
             internal void Add(UIElement e)
             {
-                if(getRequest(e) != null) return;
-                if(e.CheckFlagsAnd(VisualFlags.IsLayoutSuspended)) return;
+                if (getRequest(e) != null)
+                    return;
+                if (e.CheckFlagsAnd(VisualFlags.IsLayoutSuspended))
+                    return;
 
                 RemoveOrphans(e);
 
                 UIElement parent = e.GetUIParentWithinLayoutIsland();
-                if(parent != null && canRelyOnParentRecalc(parent)) return;
+                if (parent != null && canRelyOnParentRecalc(parent))
+                    return;
 
                 ContextLayoutManager layoutManager = ContextLayoutManager.From(e.Dispatcher);
 
-                if(layoutManager._isDead) return;
+                if (layoutManager._isDead)
+                    return;
 
                 //10 is arbitrary number here, simply indicates the queue is
                 //about to be filled. If not queue is not almost full, simply add
                 //the element to it. If it is almost full, start conserve entries
                 //by escalating invalidation to all the ancestors until the top of
                 //the visual tree, and only add root of visula tree to the queue.
-                if(_pocketSize > PocketReserve)
+                if (_pocketSize > PocketReserve)
                 {
                     _addRequest(e);
                 }
@@ -895,7 +917,7 @@ namespace System.Windows
                     //walk up until we are the topmost UIElement in the tree.
                     //on each step, mark the parent dirty and remove it from the queues
                     //only leave a single node in the queue - the root of visual tree
-                    while(e != null)
+                    while (e != null)
                     {
                         UIElement p = e.GetUIParentWithinLayoutIsland();
 
@@ -923,7 +945,8 @@ namespace System.Windows
             internal void Remove(UIElement e)
             {
                 Request r = getRequest(e);
-                if(r == null) return;
+                if (r == null)
+                    return;
                 _removeRequest(r);
                 setRequest(e, null);
             }
@@ -931,13 +954,13 @@ namespace System.Windows
             internal void RemoveOrphans(UIElement parent)
             {
                 Request r = _head;
-                while(r != null)
+                while (r != null)
                 {
                     UIElement child = r.Target;
                     Request next = r.Next;
                     ulong parentTreeLevel = parent.TreeLevel;
 
-                    if(   (child.TreeLevel == parentTreeLevel + 1)
+                    if ((child.TreeLevel == parentTreeLevel + 1)
                        && (child.GetUIParentWithinLayoutIsland() == parent))
                     {
                         _removeRequest(getRequest(child));
@@ -948,19 +971,19 @@ namespace System.Windows
                 }
             }
 
-            internal bool IsEmpty { get { return (_head == null); }}
+            internal bool IsEmpty { get { return (_head == null); } }
 
             internal UIElement GetTopMost()
             {
                 UIElement found = null;
                 ulong treeLevel = ulong.MaxValue;
 
-                for(Request r = _head; r != null; r = r.Next)
+                for (Request r = _head; r != null; r = r.Next)
                 {
                     UIElement t = r.Target;
                     ulong l = t.TreeLevel;
 
-                    if(l < treeLevel)
+                    if (l < treeLevel)
                     {
                         treeLevel = l;
                         found = r.Target;
@@ -972,10 +995,13 @@ namespace System.Windows
 
             private void _removeRequest(Request entry)
             {
-                if(entry.Prev == null) _head = entry.Next;
-                else entry.Prev.Next = entry.Next;
+                if (entry.Prev == null)
+                    _head = entry.Next;
+                else
+                    entry.Prev.Next = entry.Next;
 
-                if(entry.Next != null) entry.Next.Prev = entry.Prev;
+                if (entry.Next != null)
+                    entry.Next.Prev = entry.Prev;
 
                 ReuseRequest(entry);
             }
@@ -983,7 +1009,7 @@ namespace System.Windows
             private Request _getNewRequest(UIElement e)
             {
                 Request r;
-                if(_pocket != null)
+                if (_pocket != null)
                 {
                     r = _pocket;
                     _pocket = r.Next;
@@ -997,9 +1023,9 @@ namespace System.Windows
                     {
                         r = new Request();
                     }
-                    catch(System.OutOfMemoryException)
+                    catch (System.OutOfMemoryException)
                     {
-                        if(lm != null)
+                        if (lm != null)
                             lm.setForceLayout(e);
                         throw;
                     }
@@ -1023,7 +1049,7 @@ namespace System.Windows
 
             private Request _head;
             private Request _pocket;
-            private int     _pocketSize;
+            private int _pocketSize;
         }
     }
 
@@ -1032,21 +1058,23 @@ namespace System.Windows
         //size of the pre-allocated free list
         private const int PocketCapacity = 153;
 
-        internal class ListItem: WeakReference
+        internal class ListItem : WeakReference
         {
-            internal ListItem() : base(null) {}
+            internal ListItem() : base(null) { }
             internal ListItem Next;
             internal ListItem Prev;
-            internal bool     InUse;
+            internal bool InUse;
         }
 
         internal LayoutEventList()
         {
             ListItem t;
-            for(int i=0; i<PocketCapacity; i++)
+            for (int i = 0; i < PocketCapacity; i++)
             {
-                t = new ListItem();
-                t.Next = _pocket;
+                t = new ListItem
+                {
+                    Next = _pocket
+                };
                 _pocket = t;
             }
             _pocketSize = PocketCapacity;
@@ -1057,10 +1085,11 @@ namespace System.Windows
             ListItem t = getNewListItem(target);
 
             t.Next = _head;
-            if(_head != null) _head.Prev = t;
+            if (_head != null)
+                _head.Prev = t;
             _head = t;
 
-           _count++;
+            _count++;
             return t;
         }
 
@@ -1068,12 +1097,16 @@ namespace System.Windows
         {
             //already removed item can be passed again
             //(once removed by handler and then by firing code)
-            if(!t.InUse) return;
+            if (!t.InUse)
+                return;
 
-            if(t.Prev == null) _head = t.Next;
-            else t.Prev.Next = t.Next;
+            if (t.Prev == null)
+                _head = t.Next;
+            else
+                t.Prev.Next = t.Next;
 
-            if(t.Next != null) t.Next.Prev = t.Prev;
+            if (t.Next != null)
+                t.Next.Prev = t.Prev;
 
             reuseListItem(t);
             _count--;
@@ -1082,7 +1115,7 @@ namespace System.Windows
         private ListItem getNewListItem(object target)
         {
             ListItem t;
-            if(_pocket != null)
+            if (_pocket != null)
             {
                 t = _pocket;
                 _pocket = t.Next;
@@ -1115,10 +1148,10 @@ namespace System.Windows
 
         internal ListItem[] CopyToArray()
         {
-            ListItem [] copy = new ListItem[_count];
+            ListItem[] copy = new ListItem[_count];
             ListItem t = _head;
             int cnt = 0;
-            while(t != null)
+            while (t != null)
             {
                 copy[cnt++] = t;
                 t = t.Next;
@@ -1136,8 +1169,8 @@ namespace System.Windows
 
         private ListItem _head;
         private ListItem _pocket;
-        private int      _pocketSize;
-        private int      _count;
+        private int _pocketSize;
+        private int _count;
     }
 }
 

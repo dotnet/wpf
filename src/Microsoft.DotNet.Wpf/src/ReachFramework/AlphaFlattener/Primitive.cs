@@ -1,16 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 using System.Collections;              // for ArrayList
-
+using System.Globalization;
 using System.Windows;                  // for Rect                        WindowsBase.dll
 using System.Windows.Media;            // for Geometry, Brush, BitmapSource. PresentationCore.dll
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
-
-using System.Globalization;
 using System.Windows.Xps.Serialization;
 
 namespace Microsoft.Internal.AlphaFlattener
@@ -22,16 +20,16 @@ namespace Microsoft.Internal.AlphaFlattener
     {
         #region Private Fields
 
-        private Geometry   _clip;      // changes coordinate spaces throughout printing
+        private Geometry _clip;      // changes coordinate spaces throughout printing
 
         /// <summary>
         /// Primitive opacity, possibly pushed from parent primitives.
         /// For example, parent Canvas opacity is pushed to children primitives when possible.
         /// </summary>
-        private double     _opacity;
+        private double _opacity;
 
         private BrushProxy _opacityMask;
-        private Matrix     _transform;
+        private Matrix _transform;
 
         //
         // Fix bug 1308518: OpacityMask with DrawingBrush results in gaps
@@ -40,7 +38,7 @@ namespace Microsoft.Internal.AlphaFlattener
         // on pixel boundary, they are anti-aliased by Avalon, which results in "gaps". We
         // fix by setting pixel-snapping guidelines on geometry bounds when requested.
         //
-        private bool       _pixelSnapBounds;
+        private bool _pixelSnapBounds;
 
         #endregion
 
@@ -48,8 +46,8 @@ namespace Microsoft.Internal.AlphaFlattener
 
         public Primitive()
         {
-            Opacity     = 1.0;
-            Transform   = Matrix.Identity;
+            Opacity = 1.0;
+            Transform = Matrix.Identity;
         }
 
         #endregion
@@ -335,7 +333,7 @@ namespace Microsoft.Internal.AlphaFlattener
                         {
                             // gd.Brush comes directly from user-provided objects, so we need to perform
                             // brush reduction
-                            gp.Brush = BrushProxy.CreateUserBrush(gd.Brush, bounds, drawingToWorldTransformHint,  new TreeWalkProgress());
+                            gp.Brush = BrushProxy.CreateUserBrush(gd.Brush, bounds, drawingToWorldTransformHint, new TreeWalkProgress());
                         }
 
                         if ((gd.Pen != null) && (gd.Pen.Brush != null))
@@ -358,18 +356,19 @@ namespace Microsoft.Internal.AlphaFlattener
                             CanvasPrimitive cp = new CanvasPrimitive();
 
                             PenProxy pen = gp.Pen;
-                            
+
                             gp.Pen = null;
-                            
+
                             cp.Children.Add(gp);
-                            
-                            gp = new GeometryPrimitive();
-                            
-                            gp.Pen = pen;
-                            gp.Geometry = gd.Geometry;
-                            
+
+                            gp = new GeometryPrimitive
+                            {
+                                Pen = pen,
+                                Geometry = gd.Geometry
+                            };
+
                             cp.Children.Add(gp);
-                            
+
                             return cp;
                         }
                     }
@@ -387,15 +386,16 @@ namespace Microsoft.Internal.AlphaFlattener
 
                     if ((gd.GlyphRun != null) && (gd.ForegroundBrush != null))
                     {
-                        gp = new GlyphPrimitive();
-
-                        gp.GlyphRun = gd.GlyphRun;
-                        gp.Brush = BrushProxy.CreateUserBrush(
+                        gp = new GlyphPrimitive
+                        {
+                            GlyphRun = gd.GlyphRun,
+                            Brush = BrushProxy.CreateUserBrush(
                             gd.ForegroundBrush,
                             gd.GlyphRun.BuildGeometry().Bounds,
                             drawingToWorldTransformHint,
                             new TreeWalkProgress()
-                            );
+                            )
+                        };
                     }
 
                     return gp;
@@ -424,10 +424,11 @@ namespace Microsoft.Internal.AlphaFlattener
                             }
                             else
                             {
-                                GeometryPrimitive gp = new GeometryPrimitive();
-
-                                gp.Brush = BrushProxy.CreateBrush(db, id.Rect);
-                                gp.Geometry = new RectangleGeometry(id.Rect);
+                                GeometryPrimitive gp = new GeometryPrimitive
+                                {
+                                    Brush = BrushProxy.CreateBrush(db, id.Rect),
+                                    Geometry = new RectangleGeometry(id.Rect)
+                                };
 
                                 return gp;
                             }
@@ -435,7 +436,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                         ImagePrimitive ip = new ImagePrimitive();
                         BitmapSource bs = (BitmapSource)id.ImageSource;
-                                                
+
                         ip.Image = new ImageProxy(bs);
                         ip.DstRect = id.Rect;
 
@@ -499,11 +500,12 @@ namespace Microsoft.Internal.AlphaFlattener
                         if (bitmap != null)
                         {
                             // bitmap may be null if bounds too small/invalid
-                            ImagePrimitive ip = new ImagePrimitive();
-
-                            ip.Image = new ImageProxy(bitmap);
-                            ip.DstRect = new Rect(0, 0, bitmap.Width, bitmap.Height);
-                            ip.Transform = bitmapToDrawingTransform;
+                            ImagePrimitive ip = new ImagePrimitive
+                            {
+                                Image = new ImageProxy(bitmap),
+                                DstRect = new Rect(0, 0, bitmap.Width, bitmap.Height),
+                                Transform = bitmapToDrawingTransform
+                            };
 
                             primitive = ip;
                         }
@@ -783,7 +785,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 // Treat DrawingBrush stroke as fill so that we can unfold it.
                 Widen();
             }
-            
+
             if (_brush == null)
             {
                 return this;
@@ -794,8 +796,8 @@ namespace Microsoft.Internal.AlphaFlattener
             DrawingBrush drawingBrush = _brush.GetRealBrush() as DrawingBrush;
 
             // Bug: 1691872 We can't handle transformation well in unfolding yet
-            
-            if ((drawingBrush == null) || ! Utility.IsIdentity(drawingBrush.Transform))
+
+            if ((drawingBrush == null) || !Utility.IsIdentity(drawingBrush.Transform))
             {
                 // No DrawingBrush to unfold; keep current primitive.
                 return this;
@@ -820,7 +822,7 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 return null;
             }
-                
+
             //
             // Get primitive geometry in brush space.
             //
@@ -893,12 +895,13 @@ namespace Microsoft.Internal.AlphaFlattener
             //
             // Create canvas primitive that'll serve as parent to tile primitives.
             //
-            CanvasPrimitive canvas = new CanvasPrimitive();
+            CanvasPrimitive canvas = new CanvasPrimitive
+            {
+                Opacity = Opacity * _brush.Opacity,
+                OpacityMask = BrushProxy.BlendBrush(OpacityMask, _brush.OpacityMask),
 
-            canvas.Opacity = Opacity * _brush.Opacity;
-            canvas.OpacityMask = BrushProxy.BlendBrush(OpacityMask, _brush.OpacityMask);
-
-            canvas.Clip = worldGeometry;
+                Clip = worldGeometry
+            };
 
             //
             // Compute per-tile clipping if drawing content exceeds viewbox bounds.
@@ -1358,7 +1361,7 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 return true;
             }
-                            
+
             // Remove gaps whened filled by a TileBrush with no tiling and None/Uniform stretch
             if (Brush != null)
             {
@@ -1405,8 +1408,10 @@ namespace Microsoft.Internal.AlphaFlattener
                                 // New viewport larger than original viewport, clip to original viewport.
                                 // This can occur if content is larger than viewport and stretch is none.
                                 // Fix bug 1395406: Clip is in world space, also need to apply Primitive.Transform.
-                                RectangleGeometry viewportGeometry = new RectangleGeometry(tb.Viewport);
-                                viewportGeometry.Transform = Utility.MultiplyTransform(tb.Transform, new MatrixTransform(Transform));
+                                RectangleGeometry viewportGeometry = new RectangleGeometry(tb.Viewport)
+                                {
+                                    Transform = Utility.MultiplyTransform(tb.Transform, new MatrixTransform(Transform))
+                                };
 
                                 Clip = Utility.Intersect(Clip, viewportGeometry, Matrix.Identity, out empty);
                             }
@@ -1445,8 +1450,10 @@ namespace Microsoft.Internal.AlphaFlattener
                             // Fix bug 1395406: Clip is in world space, also need to apply Primitive.Transform.
                             content.Transform(viewboxTransform);
 
-                            RectangleGeometry contentGeometry = new RectangleGeometry(content);
-                            contentGeometry.Transform = Utility.MultiplyTransform(tb.Transform, new MatrixTransform(Transform));
+                            RectangleGeometry contentGeometry = new RectangleGeometry(content)
+                            {
+                                Transform = Utility.MultiplyTransform(tb.Transform, new MatrixTransform(Transform))
+                            };
 
                             Clip = Utility.Intersect(Clip, contentGeometry, Matrix.Identity, out empty);
                         }
@@ -1457,8 +1464,10 @@ namespace Microsoft.Internal.AlphaFlattener
                         }
                         else
                         {
-                            Geometry = new RectangleGeometry(tb.Viewport);
-                            Geometry.Transform = tb.Transform;
+                            Geometry = new RectangleGeometry(tb.Viewport)
+                            {
+                                Transform = tb.Transform
+                            };
                         }
                     }
                 }
@@ -1506,7 +1515,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 Brush realBrush = Brush.GetRealBrush();
 
                 opacity *= Brush.Opacity;
-                
+
                 if (realBrush != null)
                 {
                     double realOpacity = Utility.NormalizeOpacity(realBrush.Opacity);
@@ -1700,7 +1709,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     // bounds are in world space
                     _bounds = new RectangleGeometry(GetRectBounds(true));
                 }
-                
+
                 if (Utility.Covers(g, _bounds))
                 {
                     GlyphRun = null;
@@ -1850,7 +1859,7 @@ namespace Microsoft.Internal.AlphaFlattener
         public override BrushProxy BlendBrush(BrushProxy brush)
         {
             Debug.Assert(false, "Image over Brush?");
-            
+
             return brush;
         }
 
@@ -1861,13 +1870,14 @@ namespace Microsoft.Internal.AlphaFlattener
                 return;
             }
 
-            ImageBrush brush = new ImageBrush();
-
-            brush.CanBeInheritanceContext = false;              // Opt-out of inheritance
-            brush.ImageSource             = Image.GetImage();
-            brush.ViewportUnits           = BrushMappingMode.Absolute;
-            brush.Viewport                = DstRect;
-            brush.Transform               = new MatrixTransform(Transform);
+            ImageBrush brush = new ImageBrush
+            {
+                CanBeInheritanceContext = false,              // Opt-out of inheritance
+                ImageSource = Image.GetImage(),
+                ViewportUnits = BrushMappingMode.Absolute,
+                Viewport = DstRect,
+                Transform = new MatrixTransform(Transform)
+            };
 
             BrushProxy b = BrushProxy.CreateBrush(brush, DstRect);
 
@@ -2136,12 +2146,12 @@ namespace Microsoft.Internal.AlphaFlattener
 #endif
 
         public Primitive primitive;                 //  4 bytes
-        public Rect      bounds;                    // 32 bytes
+        public Rect bounds;                    // 32 bytes
         public List<int> overlap;                   //  4 + N bytes, object on top of current object
         public List<int> underlay;                  //  4 + N bytes, object under current object
-        public int       overlapHasTransparency;    //  4 bytes
-        public Cluster   m_cluster;
-    
+        public int overlapHasTransparency;    //  4 bytes
+        public Cluster m_cluster;
+
 #if UNIT_TEST
         public PrimitiveInfo(Rect b)
         {
@@ -2151,14 +2161,14 @@ namespace Microsoft.Internal.AlphaFlattener
 
         public PrimitiveInfo(Primitive p)
         {
-            primitive   = p;
-            bounds      = p.GetRectBounds(true);
+            primitive = p;
+            bounds = p.GetRectBounds(true);
         }
 
 #if DEBUG
         internal void SetID(int i)
-        {    
-            id  = i.ToString(CultureInfo.InvariantCulture);
+        {
+            id = i.ToString(CultureInfo.InvariantCulture);
         }
 #endif
 

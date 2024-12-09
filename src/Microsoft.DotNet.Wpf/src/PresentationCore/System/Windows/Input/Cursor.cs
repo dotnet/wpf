@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
-using MS.Win32;
-using System.Runtime.InteropServices;
 using System.IO;
+using System.Runtime.InteropServices;
+using MS.Win32;
 
 namespace System.Windows.Input
 {
@@ -38,7 +38,7 @@ namespace System.Windows.Input
         /// Cursor from .ani or .cur file
         /// </summary>
         /// <param name="cursorFile"></param>
-        public Cursor(string cursorFile):this(cursorFile, false)
+        public Cursor(string cursorFile) : this(cursorFile, false)
         {
         }
 
@@ -61,7 +61,7 @@ namespace System.Windows.Input
             }
             else
             {
-                throw new ArgumentException(SR.Format(SR.Cursor_UnsupportedFormat , cursorFile));
+                throw new ArgumentException(SR.Format(SR.Cursor_UnsupportedFormat, cursorFile));
             }
         }
 
@@ -69,7 +69,7 @@ namespace System.Windows.Input
         /// Cursor from Stream
         /// </summary>
         /// <param name="cursorStream"></param>
-        public Cursor(Stream cursorStream):this(cursorStream, false)
+        public Cursor(Stream cursorStream) : this(cursorStream, false)
         {
         }
 
@@ -89,15 +89,15 @@ namespace System.Windows.Input
         ///     Cursor from a SafeHandle to an HCURSOR
         /// </summary>
         /// <param name="cursorHandle"></param>
-        internal Cursor(SafeHandle cursorHandle )
+        internal Cursor(SafeHandle cursorHandle)
         {
-            if (! cursorHandle.IsInvalid )
+            if (!cursorHandle.IsInvalid)
             {
-                this._cursorHandle = cursorHandle ;
+                this._cursorHandle = cursorHandle;
             }
         }
 
-         /// <summary>
+        /// <summary>
         /// Destructor (IDispose pattern)
         /// </summary>
         ~Cursor()
@@ -117,7 +117,7 @@ namespace System.Windows.Input
 
         void Dispose(bool disposing)
         {
-            if ( _cursorHandle != null )
+            if (_cursorHandle != null)
             {
                 _cursorHandle.Dispose();
                 _cursorHandle = null;
@@ -172,7 +172,7 @@ namespace System.Windows.Input
                                                                 0, 0,
                                                                 NativeMethods.LR_DEFAULTCOLOR |
                                                                 NativeMethods.LR_LOADFROMFILE |
-                                                                (_scaleWithDpi? NativeMethods.LR_DEFAULTSIZE : 0x0000));
+                                                                (_scaleWithDpi ? NativeMethods.LR_DEFAULTSIZE : 0x0000));
 
             int errorCode = Marshal.GetLastWin32Error();
             if (_cursorHandle == null || _cursorHandle.IsInvalid)
@@ -249,10 +249,10 @@ namespace System.Windows.Input
                                                                     0, 0,
                                                                     NativeMethods.LR_DEFAULTCOLOR |
                                                                     NativeMethods.LR_LOADFROMFILE |
-                                                                    (_scaleWithDpi? NativeMethods.LR_DEFAULTSIZE : 0x0000));
+                                                                    (_scaleWithDpi ? NativeMethods.LR_DEFAULTSIZE : 0x0000));
                 if (_cursorHandle == null || _cursorHandle.IsInvalid)
                 {
-                     throw new ArgumentException(SR.Cursor_InvalidStream);
+                    throw new ArgumentException(SR.Cursor_InvalidStream);
                 }
             }
             finally
@@ -261,7 +261,7 @@ namespace System.Windows.Input
                 {
                     File.Delete(filePath);
                 }
-                catch(System.IO.IOException)
+                catch (System.IO.IOException)
                 {
                     //  We may not be able to delete the file if it's being used by some other process (e.g. Anti-virus check).
                     // There's nothing we can do in that case, so just eat the exception and leave the file behind
@@ -295,10 +295,10 @@ namespace System.Windows.Input
                                                                     0, 0,
                                                                     NativeMethods.LR_DEFAULTCOLOR |
                                                                     NativeMethods.LR_LOADFROMFILE |
-                                                                    (_scaleWithDpi? NativeMethods.LR_DEFAULTSIZE : 0x0000));
+                                                                    (_scaleWithDpi ? NativeMethods.LR_DEFAULTSIZE : 0x0000));
                 if (_cursorHandle == null || _cursorHandle.IsInvalid)
                 {
-                     throw new ArgumentException(SR.Cursor_InvalidStream);
+                    throw new ArgumentException(SR.Cursor_InvalidStream);
                 }
             }
             finally
@@ -312,7 +312,7 @@ namespace System.Windows.Input
             if (cursorType != CursorType.None)
             {
                 // Load a Standard Cursor
-                _cursorHandle = SafeNativeMethods.LoadCursor(new HandleRef(this,IntPtr.Zero), (IntPtr)(CursorTypes[(int)cursorType]));
+                _cursorHandle = SafeNativeMethods.LoadCursor(new HandleRef(this, IntPtr.Zero), (IntPtr)(CursorTypes[(int)cursorType]));
             }
             this._cursorType = cursorType;
         }
@@ -339,11 +339,11 @@ namespace System.Windows.Input
             return ((int)cursorType >= (int)CursorType.None && (int)cursorType <= (int)CursorType.ArrowCD);
         }
 
-        private string      _fileName     = String.Empty;
-        private CursorType  _cursorType   = CursorType.None;
-        private bool        _scaleWithDpi = false;
+        private string _fileName = String.Empty;
+        private CursorType _cursorType = CursorType.None;
+        private bool _scaleWithDpi = false;
 
-        private SafeHandle  _cursorHandle;
+        private SafeHandle _cursorHandle;
 
         private static ReadOnlySpan<int> CursorTypes => [
             0, // None

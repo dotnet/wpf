@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,8 +9,8 @@
 \***************************************************************************/
 using System.ComponentModel;        // for TypeConverter
 using System.Globalization;               // for CultureInfo
-using System.Xaml;
 using System.IO;
+using System.Xaml;
 
 namespace System.Windows.Markup
 {
@@ -102,16 +102,16 @@ namespace System.Windows.Markup
             if (property != null)
             {
                 //Get XamlMember from dp
-                System.Xaml.XamlMember xamlProperty = 
+                System.Xaml.XamlMember xamlProperty =
                     schemaContext.GetXamlType(property.OwnerType).GetMember(property.Name);
                 if (xamlProperty == null)
-                    xamlProperty = 
+                    xamlProperty =
                         schemaContext.GetXamlType(property.OwnerType).GetAttachableMember(property.Name);
 
                 System.Xaml.Schema.XamlValueConverter<TypeConverter> typeConverter = null;
-                
+
                 if (xamlProperty != null)
-                { 
+                {
                     // If we have a Baml2006SchemaContext and the property is of type Enum, we already know that the 
                     // type converter must be the EnumConverter.
                     if (xamlProperty.Type.UnderlyingType.IsEnum && schemaContext is Baml2006.Baml2006SchemaContext)

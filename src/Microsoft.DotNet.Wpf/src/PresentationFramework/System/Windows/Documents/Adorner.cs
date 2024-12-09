@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -35,7 +35,7 @@ namespace System.Windows.Documents
         //------------------------------------------------------
 
         #region Constructors
- 
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -96,7 +96,7 @@ namespace System.Windows.Documents
         {
             return null;
         }
-  
+
         #endregion Protected Methods
 
         //------------------------------------------------------
@@ -167,7 +167,7 @@ namespace System.Windows.Documents
                 RenderTransform = value;
             }
         }
-        
+
         /// <summary>
         /// UIElement this Adorner adorns.
         /// </summary>
@@ -210,9 +210,11 @@ namespace System.Windows.Documents
         private static object CreateFlowDirectionBinding(object o)
         {
             Adorner adorner = (Adorner)o;
-            Binding binding = new Binding("FlowDirection");
-            binding.Mode = BindingMode.OneWay;
-            binding.Source = adorner.AdornedElement;
+            Binding binding = new Binding("FlowDirection")
+            {
+                Mode = BindingMode.OneWay,
+                Source = adorner.AdornedElement
+            };
             adorner.SetBinding(FlowDirectionProperty, binding);
 
             return null;

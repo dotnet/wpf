@@ -83,7 +83,7 @@ namespace MS.Internal.Xaml.Parser
                 start = colonIdx + 1;
             }
 
-            name = (start==0) ? longName : longName.Substring(start);
+            name = (start == 0) ? longName : longName.Substring(start);
 
             // we allow Internal type name (ie. Foo+Bar) on "trival" ie. "non-generic" type names.
             // This is back compat with 3.0.

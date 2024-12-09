@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,9 +11,8 @@
 
 using System.Windows;
 using System.Windows.Documents;
-using MS.Internal.Text;
-
 using MS.Internal.PtsHost.UnsafeNativeMethods;
+using MS.Internal.Text;
 
 namespace MS.Internal.PtsHost
 {
@@ -90,7 +89,7 @@ namespace MS.Internal.PtsHost
             // to HandleMapper that holds a reference to it. PTS manages lifetime of this object, and 
             // calls DestroyParaclient to get rid of it. DestroyParaclient will call Dispose() on the object
             // and remove it from HandleMapper.
-            FloaterParaClient paraClient =  new FloaterParaClient(this);
+            FloaterParaClient paraClient = new FloaterParaClient(this);
             paraClientHandle = paraClient.Handle;
 #pragma warning restore 6518
 
@@ -110,7 +109,7 @@ namespace MS.Internal.PtsHost
         {
             // Floaters are not participating in margin collapsing.
             // Top space is always suppressed
-            dvr = 0;            
+            dvr = 0;
         }
 
         //-------------------------------------------------------------------
@@ -120,9 +119,11 @@ namespace MS.Internal.PtsHost
             uint fswdirTrack,                       // IN:  direction of track
             out PTS.FSFLOATERPROPS fsfloaterprops)  // OUT: properties of the floater
         {
-            fsfloaterprops = new PTS.FSFLOATERPROPS();
-            fsfloaterprops.fFloat   = PTS.True;                     // Floater
-            fsfloaterprops.fskclear = PTS.WrapDirectionToFskclear((WrapDirection)Element.GetValue(Block.ClearFloatersProperty));
+            fsfloaterprops = new PTS.FSFLOATERPROPS
+            {
+                fFloat = PTS.True,                     // Floater
+                fskclear = PTS.WrapDirectionToFskclear((WrapDirection)Element.GetValue(Block.ClearFloatersProperty))
+            };
 
             // Get floater alignment from HorizontalAlignment of the floater element.
             switch (HorizontalAlignment)
@@ -161,7 +162,7 @@ namespace MS.Internal.PtsHost
             int durAvailable,                   // IN:  width of available space
             int dvrAvailable,                   // IN:  height of available space
             PTS.FSKSUPPRESSHARDBREAKBEFOREFIRSTPARA fsksuppresshardbreakbeforefirstparaIn,
-                                                // IN: suppress breaks at track start?
+            // IN: suppress breaks at track start?
             out PTS.FSFMTR fsfmtr,              // OUT: result of formatting
             out IntPtr pfsFloatContent,         // OUT: opaque for PTS pointer pointer to formatted content
             out IntPtr pbrkrecOut,              // OUT: pointer to the floater content break record
@@ -190,12 +191,16 @@ namespace MS.Internal.PtsHost
             {
                 durFloaterWidth = dvrFloaterHeight = 0;
                 cPolygons = cVertices = 0;
-                fsfmtr = new PTS.FSFMTR();
-                fsfmtr.kstop = PTS.FSFMTRKSTOP.fmtrNoProgressOutOfSpace;
-                fsfmtr.fContainsItemThatStoppedBeforeFootnote = PTS.False;
-                fsfmtr.fForcedProgress = PTS.False;
-                fsbbox = new PTS.FSBBOX();
-                fsbbox.fDefined = PTS.False;
+                fsfmtr = new PTS.FSFMTR
+                {
+                    kstop = PTS.FSFMTRKSTOP.fmtrNoProgressOutOfSpace,
+                    fContainsItemThatStoppedBeforeFootnote = PTS.False,
+                    fForcedProgress = PTS.False
+                };
+                fsbbox = new PTS.FSBBOX
+                {
+                    fDefined = PTS.False
+                };
                 pbrkrecOut = IntPtr.Zero;
                 pfsFloatContent = IntPtr.Zero;
             }
@@ -223,15 +228,17 @@ namespace MS.Internal.PtsHost
                 // If width on floater is specified, use the specified value.
                 // Margin, border and padding of the floater is extracted from available subpage height
                 mbp = MbpInfo.FromElement(Element, StructuralCache.TextFormatterHost.PixelsPerDip);
-                
+
                 // We do not mirror margin as it's used to dist text left and right, and is unnecessary.
                 // Clip Floater.Width to available width
                 specifiedWidth = CalculateWidth(TextDpi.FromTextDpi(durAvailable));
                 AdjustDurAvailable(specifiedWidth, ref durAvailable, out subpageWidth);
                 subpageHeight = Math.Max(1, dvrAvailable - (mbp.MBPTop + mbp.MBPBottom));
-                fsrcSubpageMargin = new PTS.FSRECT();
-                fsrcSubpageMargin.du = subpageWidth;
-                fsrcSubpageMargin.dv = subpageHeight;
+                fsrcSubpageMargin = new PTS.FSRECT
+                {
+                    du = subpageWidth,
+                    dv = subpageHeight
+                };
 
                 // Initialize column info. Floater always has just 1 column.
                 cColumns = 1;
@@ -243,7 +250,7 @@ namespace MS.Internal.PtsHost
                 CreateSubpageFiniteHelper(PtsContext, pbrkrecIn, fBRFromPreviousPage, _mainTextSegment.Handle,
                     footnoteRejector, fEmptyOk, PTS.True, fswdir, subpageWidth, subpageHeight,
                     ref fsrcSubpageMargin, cColumns, columnInfoCollection, PTS.False, fsksuppresshardbreakbeforefirstparaIn,
-                    out fsfmtr, out pfsFloatContent, 
+                    out fsfmtr, out pfsFloatContent,
                     out pbrkrecOut, out dvrFloaterHeight, out fsbbox, out pmcsclientOut, out dvrTopSpace);
 
                 // Initialize subpage metrics
@@ -264,7 +271,7 @@ namespace MS.Internal.PtsHost
                     // should be at max width
                     if (PTS.ToBoolean(fsbbox.fDefined))
                     {
-                        if(fsbbox.fsrc.du < subpageWidth && Double.IsNaN(specifiedWidth) && HorizontalAlignment != HorizontalAlignment.Stretch)
+                        if (fsbbox.fsrc.du < subpageWidth && Double.IsNaN(specifiedWidth) && HorizontalAlignment != HorizontalAlignment.Stretch)
                         {
                             // There is a need to reformat PTS subpage, so destroy any resourcces allocated by PTS
                             // during previous formatting.
@@ -331,9 +338,9 @@ namespace MS.Internal.PtsHost
                     // Tight wrap is disabled for now.
                     cPolygons = cVertices = 0;
 
-                    if(durFloaterWidth > durAvailable || dvrFloaterHeight > dvrAvailable)
+                    if (durFloaterWidth > durAvailable || dvrFloaterHeight > dvrAvailable)
                     {
-                        if(PTS.ToBoolean(fEmptyOk))
+                        if (PTS.ToBoolean(fEmptyOk))
                         {
                             // Get rid of any previous formatting 
                             if (pfsFloatContent != IntPtr.Zero)
@@ -390,7 +397,7 @@ namespace MS.Internal.PtsHost
             IntPtr pmcsclientOut;
             MbpInfo mbp;
             double specifiedWidth;
-            
+
             // If horizontal alignment is Stretch and we are not formatting at max width,
             // we cannot proceed.
             if (IsFloaterRejected(PTS.ToBoolean(fAtMaxWidth), TextDpi.FromTextDpi(durAvailable)))
@@ -400,8 +407,10 @@ namespace MS.Internal.PtsHost
                 dvrFloaterHeight = dvrAvailable + 1;
                 cPolygons = cVertices = 0;
                 fsfmtrbl = PTS.FSFMTRBL.fmtrblInterrupted;
-                fsbbox = new PTS.FSBBOX();
-                fsbbox.fDefined = PTS.False;
+                fsbbox = new PTS.FSBBOX
+                {
+                    fDefined = PTS.False
+                };
                 pfsFloatContent = IntPtr.Zero;
             }
             else
@@ -427,7 +436,7 @@ namespace MS.Internal.PtsHost
                 CreateSubpageBottomlessHelper(PtsContext, _mainTextSegment.Handle, PTS.True,
                     fswdir, subpageWidth, urSubpageMargin, durSubpageMargin, vrSubpageMargin,
                     cColumns, columnInfoCollection,
-                    out fsfmtrbl, out pfsFloatContent, out dvrFloaterHeight, out fsbbox, out pmcsclientOut, 
+                    out fsfmtrbl, out pfsFloatContent, out dvrFloaterHeight, out fsbbox, out pmcsclientOut,
                     out dvrTopSpace, out fPageBecomesUninterruptable);
 
                 if (fsfmtrbl != PTS.FSFMTRBL.fmtrblCollision)
@@ -440,7 +449,7 @@ namespace MS.Internal.PtsHost
                     // floater should be at full column width
                     if (PTS.ToBoolean(fsbbox.fDefined))
                     {
-                        if(fsbbox.fsrc.du < subpageWidth && Double.IsNaN(specifiedWidth) && HorizontalAlignment != HorizontalAlignment.Stretch)
+                        if (fsbbox.fsrc.du < subpageWidth && Double.IsNaN(specifiedWidth) && HorizontalAlignment != HorizontalAlignment.Stretch)
                         {
                             // There is a need to reformat PTS subpage, so destroy any resourcces allocated by PTS
                             // during previous formatting.
@@ -487,7 +496,7 @@ namespace MS.Internal.PtsHost
 
                     // Check if floater width fits in available width. It may exceed available width because borders
                     // and padding are added.
-                    if ( dvrFloaterHeight > dvrAvailable ||
+                    if (dvrFloaterHeight > dvrAvailable ||
                          (durFloaterWidth > durAvailable && !PTS.ToBoolean(fAtMaxWidth))
                        )
                     {
@@ -545,8 +554,9 @@ namespace MS.Internal.PtsHost
             out int cPolygons,                  // OUT: number of polygons
             out int cVertices)                  // OUT: total number of vertices in all polygons
         {
-            fsfmtrbl = default(PTS.FSFMTRBL); 
-            durFloaterWidth = dvrFloaterHeight = cPolygons = cVertices = 0; fsbbox = new PTS.FSBBOX();
+            fsfmtrbl = default(PTS.FSFMTRBL);
+            durFloaterWidth = dvrFloaterHeight = cPolygons = cVertices = 0;
+            fsbbox = new PTS.FSBBOX();
 
             Invariant.Assert(false, "No appropriate handling for update in attached object floater.");
         }
@@ -560,7 +570,7 @@ namespace MS.Internal.PtsHost
             MarginCollapsingState mcs,          // IN:  input margin collapsing state
             out IntPtr pmcsclientOut)           // OUT: MCSCLIENT that floater will return to track
         {
-                        // Floaters margins are added during formatting.
+            // Floaters margins are added during formatting.
             if (mcs != null)
             {
                 pmcsclientOut = mcs.Handle;
@@ -662,13 +672,13 @@ namespace MS.Internal.PtsHost
                     // Set subpage width to specified width less border and padding
                     durAvailable = durSpecified + mbp.MarginLeft + mbp.MarginRight;
                     subpageWidth = Math.Max(1, durSpecified - (mbp.BPLeft + mbp.BPRight));
-                 }
-                 else
-                 {
-                     // Use durAvailable, less MBP to set subpage width. We cannot set figure to specified width
-                     subpageWidth = Math.Max(1, durAvailable - (mbp.MBPLeft + mbp.MBPRight));
-                 }
-            }            
+                }
+                else
+                {
+                    // Use durAvailable, less MBP to set subpage width. We cannot set figure to specified width
+                    subpageWidth = Math.Max(1, durAvailable - (mbp.MBPLeft + mbp.MBPRight));
+                }
+            }
             else
             {
                 // No width specified. Use durAvailable, less MBP to set subpage width. 
@@ -697,7 +707,7 @@ namespace MS.Internal.PtsHost
             PTS.FSCOLUMNINFO[] columnInfoCollection, // IN:  array of column info
             int fApplyColumnBalancing,          // IN:  apply column balancing?
             PTS.FSKSUPPRESSHARDBREAKBEFOREFIRSTPARA fsksuppresshardbreakbeforefirstparaIn,
-                                                // IN: suppress breaks at track start?
+            // IN: suppress breaks at track start?
             out PTS.FSFMTR fsfmtr,              // OUT: why formatting was stopped
             out IntPtr pSubPage,                // OUT: ptr to the subpage
             out IntPtr brParaOut,               // OUT: break record of the subpage
@@ -708,8 +718,8 @@ namespace MS.Internal.PtsHost
         {
             // Exceptions don't need to pop, as the top level measure context will be nulled out if thrown.
             StructuralCache.CurrentFormatContext.PushNewPageData(new Size(TextDpi.FromTextDpi(lWidth), TextDpi.FromTextDpi(lHeight)),
-                                                                 new Thickness(), 
-                                                                 false, 
+                                                                 new Thickness(),
+                                                                 false,
                                                                  true);
 
             fixed (PTS.FSCOLUMNINFO* rgColumnInfo = columnInfoCollection)
@@ -717,8 +727,8 @@ namespace MS.Internal.PtsHost
                 PTS.Validate(PTS.FsCreateSubpageFinite(ptsContext.Context, brParaIn, fFromPreviousPage, nSeg,
                     pFtnRej, fEmptyOk, fSuppressTopSpace, fswdir, lWidth, lHeight,
                     ref rcMargin, cColumns, rgColumnInfo, PTS.False,
-                    0, null, null, 0, null, null, PTS.False, 
-                    fsksuppresshardbreakbeforefirstparaIn, 
+                    0, null, null, 0, null, null, PTS.False,
+                    fsksuppresshardbreakbeforefirstparaIn,
                     out fsfmtr, out pSubPage, out brParaOut, out dvrUsed, out fsBBox, out pfsMcsClient, out topSpace), ptsContext);
             }
 
@@ -751,8 +761,8 @@ namespace MS.Internal.PtsHost
         {
             // Exceptions don't need to pop, as the top level measure context will be nulled out if thrown.
             StructuralCache.CurrentFormatContext.PushNewPageData(new Size(TextDpi.FromTextDpi(lWidth), TextDpi.MaxWidth),
-                                                                 new Thickness(), 
-                                                                 false, 
+                                                                 new Thickness(),
+                                                                 false,
                                                                  false);
 
             fixed (PTS.FSCOLUMNINFO* rgColumnInfo = columnInfoCollection)
@@ -787,28 +797,28 @@ namespace MS.Internal.PtsHost
         {
             get
             {
-                if(Element is Floater)
+                if (Element is Floater)
                 {
                     return ((Floater)Element).HorizontalAlignment;
                 }
 
-                Figure figure = (Figure) Element;
+                Figure figure = (Figure)Element;
                 FigureHorizontalAnchor horizontalAnchor = figure.HorizontalAnchor;
 
-                if(horizontalAnchor == FigureHorizontalAnchor.PageLeft || 
-                   horizontalAnchor == FigureHorizontalAnchor.ContentLeft || 
+                if (horizontalAnchor == FigureHorizontalAnchor.PageLeft ||
+                   horizontalAnchor == FigureHorizontalAnchor.ContentLeft ||
                    horizontalAnchor == FigureHorizontalAnchor.ColumnLeft)
                 {
                     return HorizontalAlignment.Left;
                 }
-                else if(horizontalAnchor == FigureHorizontalAnchor.PageRight || 
-                   horizontalAnchor == FigureHorizontalAnchor.ContentRight || 
+                else if (horizontalAnchor == FigureHorizontalAnchor.PageRight ||
+                   horizontalAnchor == FigureHorizontalAnchor.ContentRight ||
                    horizontalAnchor == FigureHorizontalAnchor.ColumnRight)
                 {
                     return HorizontalAlignment.Right;
                 }
-                else if(horizontalAnchor == FigureHorizontalAnchor.PageCenter || 
-                   horizontalAnchor == FigureHorizontalAnchor.ContentCenter || 
+                else if (horizontalAnchor == FigureHorizontalAnchor.PageCenter ||
+                   horizontalAnchor == FigureHorizontalAnchor.ContentCenter ||
                    horizontalAnchor == FigureHorizontalAnchor.ColumnCenter)
                 {
                     return HorizontalAlignment.Center;
@@ -829,7 +839,7 @@ namespace MS.Internal.PtsHost
         {
             get
             {
-                if(Element is Floater)
+                if (Element is Floater)
                 {
                     // Wrap text on both sides of the floater in all cases except where alignment is stretch, in which
                     // case text must not be wrapped on either side
@@ -844,7 +854,7 @@ namespace MS.Internal.PtsHost
                 }
                 else
                 {
-                    Figure figure = (Figure) Element;
+                    Figure figure = (Figure)Element;
 
                     return figure.WrapDirection;
                 }
@@ -858,7 +868,7 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         private double CalculateWidth(double spaceAvailable)
         {
-            if(Element is Floater)
+            if (Element is Floater)
             {
                 return (double)((Floater)Element).Width;
             }
@@ -866,47 +876,47 @@ namespace MS.Internal.PtsHost
             {
                 bool isWidthAuto;
 
-                double desiredSize = FigureHelper.CalculateFigureWidth(StructuralCache, (Figure)Element, 
-                                                                       ((Figure)Element).Width, 
+                double desiredSize = FigureHelper.CalculateFigureWidth(StructuralCache, (Figure)Element,
+                                                                       ((Figure)Element).Width,
                                                                        out isWidthAuto);
 
-                if(isWidthAuto)
+                if (isWidthAuto)
                 {
                     return Double.NaN;
                 }
 
                 return Math.Min(desiredSize, spaceAvailable);
             }
-        }       
+        }
 
         //-------------------------------------------------------------------
         //  Determines whether a floater should be rejected or not
         //-------------------------------------------------------------------
         private bool IsFloaterRejected(bool fAtMaxWidth, double availableSpace)
         {
-            if(fAtMaxWidth)
+            if (fAtMaxWidth)
             {
                 return false;
             }
 
-            if(Element is Floater && HorizontalAlignment != HorizontalAlignment.Stretch)
+            if (Element is Floater && HorizontalAlignment != HorizontalAlignment.Stretch)
             {
                 return false;
             }
-            else if(Element is Figure)
+            else if (Element is Figure)
             {
                 FigureLength figureLength = ((Figure)Element).Width;
-                if(figureLength.IsAuto)
+                if (figureLength.IsAuto)
                 {
                     return false;
                 }
-                if(figureLength.IsAbsolute && figureLength.Value < availableSpace)
+                if (figureLength.IsAbsolute && figureLength.Value < availableSpace)
                 {
                     return false;
                 }
             }
             return true;
-        }        
+        }
 
         #endregion Private Methods
 

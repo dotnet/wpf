@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,7 +11,7 @@ namespace MS.Internal.Automation
 {
     // This is used to cast the VARIANT-based objects that we get back from the unmanaged
     // API to our own types - eg enums need to be cast from int VT_I4s to real enums.
-    internal delegate object AutomationPropertyConverter( object valueAsObject );
+    internal delegate object AutomationPropertyConverter(object valueAsObject);
 
     // class containing information about an automation property
     internal class AutomationPropertyInfo
@@ -21,10 +21,10 @@ namespace MS.Internal.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
-        internal AutomationPropertyInfo( 
+        internal AutomationPropertyInfo(
             AutomationPropertyConverter converter,
             AutomationProperty id,
             Type type,
@@ -36,7 +36,7 @@ namespace MS.Internal.Automation
             _defaultValue = defaultValue;
             _converter = converter;
         }
-        
+
         #endregion Constructors
 
         //------------------------------------------------------
@@ -44,13 +44,13 @@ namespace MS.Internal.Automation
         //  Internal Properties
         //
         //------------------------------------------------------
- 
+
         #region Internal Properties
 
-        internal AutomationProperty          ID                { get { return _id; } }
-        internal object                      DefaultValue      { get { return _defaultValue; } }
-        internal AutomationPropertyConverter ObjectConverter   { get { return _converter; } }
-        internal Type                        Type              { get { return _type; } }
+        internal AutomationProperty ID { get { return _id; } }
+        internal object DefaultValue { get { return _defaultValue; } }
+        internal AutomationPropertyConverter ObjectConverter { get { return _converter; } }
+        internal Type Type { get { return _type; } }
 
         #endregion Internal Properties
 
@@ -60,7 +60,7 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private AutomationProperty _id;

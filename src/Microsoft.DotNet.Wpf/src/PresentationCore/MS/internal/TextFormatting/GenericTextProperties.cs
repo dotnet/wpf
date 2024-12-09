@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,10 +10,10 @@
 //
 //
 
+using System.Globalization;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
-using System.Globalization;
 
 
 namespace MS.Internal.TextFormatting
@@ -37,19 +37,19 @@ namespace MS.Internal.TextFormatting
         /// <param name="substitution">number substitution behavior to apply to the text; can be null,
         /// in which case the default number substitution method for the text culture is used</param>
         public GenericTextRunProperties(
-            Typeface                 typeface,
-            double                   size,
-            double                   hintingSize,
-            double                   pixelsPerDip,
+            Typeface typeface,
+            double size,
+            double hintingSize,
+            double pixelsPerDip,
             TextDecorationCollection textDecorations,
-            Brush                    foregroundBrush,
-            Brush                    backgroundBrush,
-            BaselineAlignment        baselineAlignment,
-            CultureInfo              culture,
-            NumberSubstitution       substitution
+            Brush foregroundBrush,
+            Brush backgroundBrush,
+            BaselineAlignment baselineAlignment,
+            CultureInfo culture,
+            NumberSubstitution substitution
         )
         {
-             _typeface = typeface;
+            _typeface = typeface;
             _emSize = size;
             _emHintingSize = hintingSize;
             _textDecorations = textDecorations;
@@ -183,7 +183,7 @@ namespace MS.Internal.TextFormatting
         /// </summary>
         public override TextRunTypographyProperties TypographyProperties
         {
-            get{return null;}
+            get { return null; }
         }
 
         /// <summary>
@@ -203,15 +203,15 @@ namespace MS.Internal.TextFormatting
             get { return _numberSubstitution; }
         }
 
-        private Typeface                 _typeface;
-        private double                   _emSize;
-        private double                   _emHintingSize;
+        private Typeface _typeface;
+        private double _emSize;
+        private double _emHintingSize;
         private TextDecorationCollection _textDecorations;
-        private Brush                    _foregroundBrush;
-        private Brush                    _backgroundBrush;
-        private BaselineAlignment        _baselineAlignment;
-        private CultureInfo              _culture;
-        private NumberSubstitution       _numberSubstitution;
+        private Brush _foregroundBrush;
+        private Brush _backgroundBrush;
+        private BaselineAlignment _baselineAlignment;
+        private CultureInfo _culture;
+        private NumberSubstitution _numberSubstitution;
     }
 
 
@@ -233,14 +233,14 @@ namespace MS.Internal.TextFormatting
         /// <param name="lineHeight">Paragraph line height</param>
         /// <param name="indent">line indentation</param>
         public GenericTextParagraphProperties(
-            FlowDirection           flowDirection,
-            TextAlignment           textAlignment,
-            bool                    firstLineInParagraph,
-            bool                    alwaysCollapsible,
-            TextRunProperties       defaultTextRunProperties,
-            TextWrapping            textWrap,
-            double                  lineHeight,
-            double                  indent
+            FlowDirection flowDirection,
+            TextAlignment textAlignment,
+            bool firstLineInParagraph,
+            bool alwaysCollapsible,
+            TextRunProperties defaultTextRunProperties,
+            TextWrapping textWrap,
+            double lineHeight,
+            double indent
             )
         {
             _flowDirection = flowDirection;
@@ -388,13 +388,13 @@ namespace MS.Internal.TextFormatting
             _textWrap = textWrap;
         }
 
-        private FlowDirection           _flowDirection;
-        private TextAlignment           _textAlignment;
-        private bool                    _firstLineInParagraph;
-        private bool                    _alwaysCollapsible;
-        private TextRunProperties       _defaultTextRunProperties;
-        private TextWrapping            _textWrap;
-        private double                  _indent;
-        private double                  _lineHeight;
+        private FlowDirection _flowDirection;
+        private TextAlignment _textAlignment;
+        private bool _firstLineInParagraph;
+        private bool _alwaysCollapsible;
+        private TextRunProperties _defaultTextRunProperties;
+        private TextWrapping _textWrap;
+        private double _indent;
+        private double _lineHeight;
     }
 }

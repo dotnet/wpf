@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -79,7 +79,7 @@ namespace System.Windows.Documents
     /// to eachother, and FixedSOMElements contain their FixedNodes, but the FixedNode->FixedSOMElement(s) mapping
     /// is handled by a Hashtable in FixedFlowMap.  FixedFlowMap also keeps track of the flow order.
     /// </summary>
-    internal sealed class FixedFlowMap 
+    internal sealed class FixedFlowMap
     {
         //--------------------------------------------------------------------
         //
@@ -88,15 +88,15 @@ namespace System.Windows.Documents
         //---------------------------------------------------------------------
         #region Consts
         // special values for fixed order
-        internal const int FixedOrderStartPage      = int.MinValue;
-        internal const int FixedOrderEndPage        = int.MaxValue;
-        internal const int FixedOrderStartVisual    = int.MinValue;
-        internal const int FixedOrderEndVisual      = int.MaxValue;
+        internal const int FixedOrderStartPage = int.MinValue;
+        internal const int FixedOrderEndPage = int.MaxValue;
+        internal const int FixedOrderStartVisual = int.MinValue;
+        internal const int FixedOrderEndVisual = int.MaxValue;
 
         // special vaules for flow order
         internal const int FlowOrderBoundaryScopeId = int.MinValue;
-        internal const int FlowOrderVirtualScopeId  = -1;
-        internal const int FlowOrderScopeIdStart    = 0;
+        internal const int FlowOrderVirtualScopeId = -1;
+        internal const int FlowOrderScopeIdStart = 0;
         #endregion Consts
 
 
@@ -115,7 +115,7 @@ namespace System.Windows.Documents
             _Init();
         }
         #endregion Constructors
-        
+
         //--------------------------------------------------------------------
         //
         // Public Methods
@@ -154,7 +154,7 @@ namespace System.Windows.Documents
         //-------------------------------------------------------
         // Mapping
         //-------------------------------------------------------
-        
+
         // Replace an existing FlowNode with a new set of FlowNode
         // Each has a mapped FixedNode set. 
         internal void MappingReplace(FlowNode flowOld, List<FlowNode> flowNew)
@@ -207,41 +207,41 @@ namespace System.Windows.Documents
             ArrayList range = new ArrayList();
 
             // will this function be passed boundary nodes??
-            FlowNode flowNode = ((List<FixedSOMElement>) _GetEntry(start))[0].FlowNode;
+            FlowNode flowNode = ((List<FixedSOMElement>)_GetEntry(start))[0].FlowNode;
 
             bool foundEnd = false;
 
             while (!foundEnd)
             {
-				if (flowNode.FixedSOMElements != null)
-				{
-					foreach (FixedSOMElement element in flowNode.FixedSOMElements)
-					{
-						if (range.Count == 0)
-						{
-							if (element.FixedNode == start)
-							{
-								range.Add(start);
-							}
-						}
-						else
-						{
-							if (!element.FixedNode.Equals(range[range.Count - 1]))
-							{
-								range.Add(element.FixedNode);
-							}
-						}
+                if (flowNode.FixedSOMElements != null)
+                {
+                    foreach (FixedSOMElement element in flowNode.FixedSOMElements)
+                    {
+                        if (range.Count == 0)
+                        {
+                            if (element.FixedNode == start)
+                            {
+                                range.Add(start);
+                            }
+                        }
+                        else
+                        {
+                            if (!element.FixedNode.Equals(range[range.Count - 1]))
+                            {
+                                range.Add(element.FixedNode);
+                            }
+                        }
 
-						if (element.FixedNode == end)
-						{
-							foundEnd = true;
-							break;
-						}
-					}
-				}
+                        if (element.FixedNode == end)
+                        {
+                            foundEnd = true;
+                            break;
+                        }
+                    }
+                }
                 flowNode = _flowOrder[flowNode.Fp + 1];
             }
-            
+
             return (FixedNode[])range.ToArray(typeof(FixedNode));
         }
 #endif
@@ -334,11 +334,11 @@ namespace System.Windows.Documents
         private void _Init()
         {
             // mutable boundary flow nodes
-            _flowStart  = new FlowNode(FlowOrderBoundaryScopeId, FlowNodeType.Boundary, null);
-            _flowEnd    = new FlowNode(FlowOrderBoundaryScopeId, FlowNodeType.Boundary, null);
+            _flowStart = new FlowNode(FlowOrderBoundaryScopeId, FlowNodeType.Boundary, null);
+            _flowEnd = new FlowNode(FlowOrderBoundaryScopeId, FlowNodeType.Boundary, null);
 
             //_fixedOrder   = new List<FixedOrderEntry>();
-            _flowOrder    = new List<FlowNode>();
+            _flowOrder = new List<FlowNode>();
 
             _flowOrder.Add(_flowStart);
             _flowStart.SetFp(0);
@@ -348,7 +348,7 @@ namespace System.Windows.Documents
             _mapping = new Hashtable();
         }
 
-         //-------------------------------------------------------
+        //-------------------------------------------------------
         // Flow Order Helper Functions
         //-------------------------------------------------------
 
@@ -370,7 +370,7 @@ namespace System.Windows.Documents
         {
             if (_cachedEntry == null || node != _cachedFixedNode)
             {
-                _cachedEntry = (List<FixedSOMElement>)_mapping[node]; 
+                _cachedEntry = (List<FixedSOMElement>)_mapping[node];
                 _cachedFixedNode = node;
             }
             return _cachedEntry;
@@ -402,12 +402,12 @@ namespace System.Windows.Documents
 
         #region Private Fields
         private List<FlowNode> _flowOrder;    // Flow Order represents a linear stream of symbols view on the fixed document
-        private FlowNode  _flowStart;           // Start FlowNode for the flow document. It is mutable type even though it never flows. 
-        private FlowNode  _flowEnd;             // End FlowNode for the flow document.  It flows as new FlowNode gets inserted
+        private FlowNode _flowStart;           // Start FlowNode for the flow document. It is mutable type even though it never flows. 
+        private FlowNode _flowEnd;             // End FlowNode for the flow document.  It flows as new FlowNode gets inserted
 
         // immutable fixed nodes
         private readonly static FixedNode s_FixedStart = FixedNode.Create(FixedOrderStartPage, 1, FixedOrderStartVisual, -1, null);
-        private readonly static FixedNode s_FixedEnd   = FixedNode.Create(FixedOrderEndPage, 1, FixedOrderEndVisual, -1,  null);
+        private readonly static FixedNode s_FixedEnd = FixedNode.Create(FixedOrderEndPage, 1, FixedOrderEndVisual, -1, null);
         private Hashtable _mapping;
         private FixedNode _cachedFixedNode;
         private List<FixedSOMElement> _cachedEntry;

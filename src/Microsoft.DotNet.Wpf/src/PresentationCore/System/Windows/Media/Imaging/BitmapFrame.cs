@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.IO;
 using System.Collections.ObjectModel;
-using System.Windows.Markup;
+using System.IO;
 using System.Net.Cache;
+using System.Windows.Markup;
 
 namespace System.Windows.Media.Imaging
 {
@@ -96,7 +96,7 @@ namespace System.Windows.Media.Imaging
         {
             return Create(bitmapUri, null);
         }
-        
+
         /// <summary>
         /// Create a BitmapFrame from a Uri using BitmapCreateOptions.None and
         /// BitmapCacheOption.Default

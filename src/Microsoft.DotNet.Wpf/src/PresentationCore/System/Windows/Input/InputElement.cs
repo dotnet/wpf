@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Windows.Media;
-using MS.Internal;
 using System.Windows.Interop;
+using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using MS.Internal;
 
 namespace System.Windows.Input
 {
@@ -21,8 +21,8 @@ namespace System.Windows.Input
 
         internal static bool IsValid(DependencyObject o)
         {
-            return o is UIElement or ContentElement or UIElement3D; 
-}
+            return o is UIElement or ContentElement or UIElement3D;
+        }
 
         // Returns the containing input element of the given DynamicObject.
         // If onlyTraverse2D is set to true, then we stop once we see a 3D object and return null
@@ -30,27 +30,27 @@ namespace System.Windows.Input
         {
             DependencyObject container = null;
 
-            if(o != null)
+            if (o != null)
             {
-                if(o is UIElement)
+                if (o is UIElement)
                 {
                     container = o;
                 }
                 else if (o is UIElement3D && !onlyTraverse2D)
                 {
                     container = o;
-                } 
-                else if(o is ContentElement contentElement)
+                }
+                else if (o is ContentElement contentElement)
                 {
                     DependencyObject parent = ContentOperations.GetParent(contentElement);
-                    if(parent != null)
+                    if (parent != null)
                     {
                         container = GetContainingUIElement(parent, onlyTraverse2D);
                     }
                     else
                     {
                         parent = contentElement.GetUIParentCore();
-                        if(parent != null)
+                        if (parent != null)
                         {
                             container = GetContainingUIElement(parent, onlyTraverse2D);
                         }
@@ -59,7 +59,7 @@ namespace System.Windows.Input
                 else if (o is Visual v)
                 {
                     DependencyObject parent = VisualTreeHelper.GetParent(v);
-                    if(parent != null)
+                    if (parent != null)
                     {
                         container = GetContainingUIElement(parent, onlyTraverse2D);
                     }
@@ -76,13 +76,13 @@ namespace System.Windows.Input
 
             return container;
         }
-        
+
         // Returns the containing input element of the given DynamicObject.
         internal static DependencyObject GetContainingUIElement(DependencyObject o)
         {
             return GetContainingUIElement(o, false);
         }
-               
+
 
         // Returns the containing input element of the given DynamicObject.
         // If onlyTraverse2D is set to true, then we stop once we see a 3D object and return null
@@ -90,13 +90,13 @@ namespace System.Windows.Input
         {
             IInputElement container = null;
 
-            if(o != null)
+            if (o != null)
             {
-                if(o is UIElement uiElement)
+                if (o is UIElement uiElement)
                 {
                     container = uiElement;
                 }
-                else if(o is ContentElement contentElement)
+                else if (o is ContentElement contentElement)
                 {
                     container = contentElement;
                 }
@@ -104,10 +104,10 @@ namespace System.Windows.Input
                 {
                     container = uIElement3D;
                 }
-                else if(o is Visual v)
+                else if (o is Visual v)
                 {
                     DependencyObject parent = VisualTreeHelper.GetParent(v);
-                    if(parent != null)
+                    if (parent != null)
                     {
                         container = GetContainingInputElement(parent, onlyTraverse2D);
                     }
@@ -131,15 +131,15 @@ namespace System.Windows.Input
         {
             return GetContainingInputElement(o, false);
         }
-        
+
         // Returns the containing visual of the given DynamicObject.
         internal static DependencyObject GetContainingVisual(DependencyObject o)
         {
             DependencyObject v = null;
 
-            if(o != null)
+            if (o != null)
             {
-                if(o is UIElement uiElement)
+                if (o is UIElement uiElement)
                 {
                     v = uiElement;
                 }
@@ -147,17 +147,17 @@ namespace System.Windows.Input
                 {
                     v = visual3D;
                 }
-                else if(o is ContentElement contentElement)
+                else if (o is ContentElement contentElement)
                 {
                     DependencyObject parent = ContentOperations.GetParent(contentElement);
-                    if(parent != null)
+                    if (parent != null)
                     {
                         v = GetContainingVisual(parent);
                     }
                     else
                     {
                         parent = contentElement.GetUIParentCore();
-                        if(parent != null)
+                        if (parent != null)
                         {
                             v = GetContainingVisual(parent);
                         }
@@ -182,26 +182,26 @@ namespace System.Windows.Input
         {
             return GetRootVisual(o, true /* enable2DTo3DTransition */);
         }
-        
+
         internal static DependencyObject GetRootVisual(DependencyObject o, bool enable2DTo3DTransition)
         {
             DependencyObject rootVisual = GetContainingVisual(o);
             DependencyObject parentVisual;
-                       
-            while(rootVisual != null && ((parentVisual = VisualTreeHelper.GetParent(rootVisual)) != null))
+
+            while (rootVisual != null && ((parentVisual = VisualTreeHelper.GetParent(rootVisual)) != null))
             {
                 // if we are not supposed to transition from 2D to 3D and the root 
                 // is a Visual and the parent is a Visual3D break
-                if (!enable2DTo3DTransition && 
+                if (!enable2DTo3DTransition &&
                      rootVisual is Visual && parentVisual is Visual3D)
 
                 {
                     break;
                 }
-                
+
                 rootVisual = parentVisual;
             }
-            
+
 
             return rootVisual;
         }
@@ -221,7 +221,7 @@ namespace System.Windows.Input
             // Get the containing and root visuals we are coming from.
             DependencyObject vFromAsDO = InputElement.GetContainingVisual(from);
             Visual rootFrom = InputElement.GetRootVisual(from) as Visual;
-            
+
             Visual vFrom = vFromAsDO as Visual;
 
             if (vFromAsDO != null && vFrom == null)
@@ -230,7 +230,7 @@ namespace System.Windows.Input
                 vFrom = VisualTreeHelper.GetContainingVisual2D(vFromAsDO);
             }
 
-            if(vFrom != null && rootFrom != null)
+            if (vFrom != null && rootFrom != null)
             {
                 GeneralTransform gUp;
                 Matrix mUp;
@@ -239,7 +239,7 @@ namespace System.Windows.Input
                 isUpSimple = vFrom.TrySimpleTransformToAncestor(rootFrom,
                                                                 false, /* do not apply inverse */
                                                                 out gUp,
-                                                                out mUp);               
+                                                                out mUp);
                 if (isUpSimple)
                 {
                     ptTranslated = mUp.Transform(ptTranslated);
@@ -252,13 +252,13 @@ namespace System.Windows.Input
 
                 // If no element was specified to translate to, we leave the coordinates
                 // translated to the root.
-                if(to != null)
+                if (to != null)
                 {
                     // Get the containing and root visuals we are going to.
                     DependencyObject vTo = InputElement.GetContainingVisual(to);
                     Visual rootTo = InputElement.GetRootVisual(to) as Visual;
 
-                    if(vTo != null && rootTo != null)
+                    if (vTo != null && rootTo != null)
                     {
                         // If both are under the same root visual, we can easily translate the point
                         // between them by translating up to the root, and then back down.
@@ -266,13 +266,13 @@ namespace System.Windows.Input
                         // However, if both are under different roots, we can only translate
                         // between them if we know how to relate the two root visuals.  Currently
                         // we only know how to do that if both roots are sourced in HwndSources.
-                        if(rootFrom != rootTo)
+                        if (rootFrom != rootTo)
                         {
                             HwndSource sourceFrom = PresentationSource.CriticalFromVisual(rootFrom) as HwndSource;
                             HwndSource sourceTo = PresentationSource.CriticalFromVisual(rootTo) as HwndSource;
 
 
-                            if(sourceFrom != null && sourceFrom.CriticalHandle != IntPtr.Zero && sourceFrom.CompositionTarget != null &&
+                            if (sourceFrom != null && sourceFrom.CriticalHandle != IntPtr.Zero && sourceFrom.CompositionTarget != null &&
                                sourceTo != null && sourceTo.CriticalHandle != IntPtr.Zero && sourceTo.CompositionTarget != null)
                             {
                                 // Translate the point into client coordinates.
@@ -286,7 +286,7 @@ namespace System.Windows.Input
 
                                 // Translate the point back to the root element.
                                 ptTranslated = PointUtil.ClientToRoot(ptTranslated, sourceTo);
-}
+                            }
                             else
                             {
                                 // Error.  Out parameter has been set false.
@@ -326,7 +326,7 @@ namespace System.Windows.Input
                         {
                             // Error.  Out parameter has been set false.
                             return new Point();
-                        }                                           
+                        }
                     }
                     else
                     {
@@ -352,7 +352,7 @@ namespace System.Windows.Input
         private static DependencyObjectType UIElementType = DependencyObjectType.FromSystemTypeInternal(typeof(UIElement));
 
         // Caches the UIElement3D's DependencyObjectType
-        private static DependencyObjectType UIElement3DType = DependencyObjectType.FromSystemTypeInternal(typeof(UIElement3D));    
+        private static DependencyObjectType UIElement3DType = DependencyObjectType.FromSystemTypeInternal(typeof(UIElement3D));
     }
 }
 

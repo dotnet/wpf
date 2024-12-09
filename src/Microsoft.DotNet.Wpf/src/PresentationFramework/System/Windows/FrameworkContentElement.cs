@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -110,7 +110,7 @@ namespace System.Windows
 
         private static void NumberSubstitutionChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            ((FrameworkContentElement) o).HasNumberSubstitutionChanged = true;
+            ((FrameworkContentElement)o).HasNumberSubstitutionChanged = true;
         }
 
 
@@ -120,7 +120,7 @@ namespace System.Windows
                 FrameworkElement.StyleProperty.AddOwner(
                         typeof(FrameworkContentElement),
                         new FrameworkPropertyMetadata(
-                                (Style) null,  // default value
+                                (Style)null,  // default value
                                 FrameworkPropertyMetadataOptions.AffectsMeasure,
                                 new PropertyChangedCallback(OnStyleChanged)));
 
@@ -148,9 +148,9 @@ namespace System.Windows
         // Invoked when the Style property is changed
         private static void OnStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            FrameworkContentElement fce = (FrameworkContentElement) d;
+            FrameworkContentElement fce = (FrameworkContentElement)d;
             fce.HasLocalStyle = (e.NewEntry.BaseValueSourceInternal == BaseValueSourceInternal.Local);
-            StyleHelper.UpdateStyleCache(null, fce, (Style) e.OldValue, (Style) e.NewValue, ref fce._styleCache);
+            StyleHelper.UpdateStyleCache(null, fce, (Style)e.OldValue, (Style)e.NewValue, ref fce._styleCache);
         }
 
         ///
@@ -223,8 +223,8 @@ namespace System.Windows
         // Invoked when the ThemeStyle/DefaultStyleKey property is changed
         internal static void OnThemeStyleChanged(DependencyObject d, object oldValue, object newValue)
         {
-            FrameworkContentElement fce = (FrameworkContentElement) d;
-            StyleHelper.UpdateThemeStyleCache(null, fce, (Style) oldValue, (Style) newValue, ref fce._themeStyleCache);
+            FrameworkContentElement fce = (FrameworkContentElement)d;
+            StyleHelper.UpdateThemeStyleCache(null, fce, (Style)oldValue, (Style)newValue, ref fce._themeStyleCache);
         }
 
 
@@ -374,7 +374,7 @@ namespace System.Windows
         public object TryFindResource(object resourceKey)
         {
             // Verify Context Access
-//             VerifyAccess();
+            //             VerifyAccess();
 
             ArgumentNullException.ThrowIfNull(resourceKey);
 
@@ -398,7 +398,7 @@ namespace System.Windows
         /// <param name="name">Name of the resource</param>
         public void SetResourceReference(
             DependencyProperty dp,
-            object             name)
+            object name)
         {
             // Set the value of the property to a ResourceReferenceExpression
             SetValue(dp, new ResourceReferenceExpression(name));
@@ -437,7 +437,7 @@ namespace System.Windows
 
             // Storyboard.Begin is a public API and needs to be validating handoffBehavior anyway.
 
-            storyboard.Begin( this, handoffBehavior, isControllable );
+            storyboard.Begin(this, handoffBehavior, isControllable);
         }
 
         /// <summary>
@@ -447,8 +447,8 @@ namespace System.Windows
         /// <param name="metadata">Type metadata of the property for the type</param>
         /// <param name="newEntry">entry computed by base</param>
         internal sealed override void EvaluateBaseValueCore(
-            DependencyProperty  dp,
-            PropertyMetadata    metadata,
+            DependencyProperty dp,
+            PropertyMetadata metadata,
             ref EffectiveValueEntry newEntry)
         {
             if (dp == StyleProperty)
@@ -670,8 +670,10 @@ namespace System.Windows
         internal Expression GetExpressionCore(DependencyProperty dp, PropertyMetadata metadata)
         {
             this.IsRequestingExpression = true;
-            EffectiveValueEntry entry = new EffectiveValueEntry(dp);
-            entry.Value = DependencyProperty.UnsetValue;
+            EffectiveValueEntry entry = new EffectiveValueEntry(dp)
+            {
+                Value = DependencyProperty.UnsetValue
+            };
             this.EvaluateBaseValueCore(dp, metadata, ref entry);
             this.IsRequestingExpression = false;
 
@@ -831,7 +833,7 @@ namespace System.Windows
         [Localizability(LocalizationCategory.NeverLocalize)] // cannot be localized
         public string Name
         {
-            get { return (string) GetValue(NameProperty); }
+            get { return (string)GetValue(NameProperty); }
             set { SetValue(NameProperty, value); }
         }
 
@@ -841,7 +843,7 @@ namespace System.Windows
         public static readonly DependencyProperty TagProperty =
                     FrameworkElement.TagProperty.AddOwner(
                                 typeof(FrameworkContentElement),
-                                new FrameworkPropertyMetadata((object) null));
+                                new FrameworkPropertyMetadata((object)null));
 
         /// <summary>
         ///     Tag property.
@@ -873,7 +875,7 @@ namespace System.Windows
         /// </summary>
         public XmlLanguage Language
         {
-            get { return (XmlLanguage) GetValue(LanguageProperty); }
+            get { return (XmlLanguage)GetValue(LanguageProperty); }
             set { SetValue(LanguageProperty, value); }
         }
         #endregion Language
@@ -892,7 +894,7 @@ namespace System.Windows
         /// </summary>
         public Style FocusVisualStyle
         {
-            get { return (Style) GetValue(FocusVisualStyleProperty); }
+            get { return (Style)GetValue(FocusVisualStyleProperty); }
             set { SetValue(FocusVisualStyleProperty, value); }
         }
 
@@ -903,7 +905,7 @@ namespace System.Windows
                     FrameworkElement.CursorProperty.AddOwner(
                                 typeof(FrameworkContentElement),
                                 new FrameworkPropertyMetadata(
-                                            (object) null, // default value
+                                            (object)null, // default value
                                             0,
                                             new PropertyChangedCallback(OnCursorChanged)));
 
@@ -922,7 +924,7 @@ namespace System.Windows
         {
             FrameworkContentElement fce = ((FrameworkContentElement)d);
 
-            if(fce.IsMouseOver)
+            if (fce.IsMouseOver)
             {
                 Mouse.UpdateCursor();
             }
@@ -945,7 +947,7 @@ namespace System.Windows
         /// </summary>
         public bool ForceCursor
         {
-            get { return (bool) GetValue(ForceCursorProperty); }
+            get { return (bool)GetValue(ForceCursorProperty); }
             set { SetValue(ForceCursorProperty, BooleanBoxes.Box(value)); }
         }
 
@@ -962,20 +964,20 @@ namespace System.Windows
 
         private static void OnQueryCursor(object sender, QueryCursorEventArgs e)
         {
-            FrameworkContentElement fce = (FrameworkContentElement) sender;
+            FrameworkContentElement fce = (FrameworkContentElement)sender;
 
             // We respond to querying the cursor by specifying the cursor set
             // as a property on this element.
             Cursor cursor = fce.Cursor;
 
-            if(cursor != null)
+            if (cursor != null)
             {
                 // We specify the cursor if the QueryCursor event is not
                 // handled by the time it gets to us, or if we are configured
                 // to force our cursor anyways.  Since the QueryCursor event
                 // bubbles, this has the effect of overriding whatever cursor
                 // a child of ours specified.
-                if(!e.Handled || fce.ForceCursor)
+                if (!e.Handled || fce.ForceCursor)
                 {
                     e.Cursor = cursor;
                     e.Handled = true;
@@ -1059,8 +1061,10 @@ namespace System.Windows
         /// </summary>
         public void BringIntoView()
         {
-            RequestBringIntoViewEventArgs args = new RequestBringIntoViewEventArgs(this, Rect.Empty);
-            args.RoutedEvent=FrameworkElement.RequestBringIntoViewEvent;
+            RequestBringIntoViewEventArgs args = new RequestBringIntoViewEventArgs(this, Rect.Empty)
+            {
+                RoutedEvent = FrameworkElement.RequestBringIntoViewEvent
+            };
             RaiseEvent(args);
         }
 
@@ -1082,7 +1086,7 @@ namespace System.Windows
         /// </summary>
         public InputScope InputScope
         {
-            get { return (InputScope) GetValue(InputScopeProperty); }
+            get { return (InputScope)GetValue(InputScopeProperty); }
             set { SetValue(InputScopeProperty, value); }
         }
 
@@ -1095,8 +1099,8 @@ namespace System.Windows
         /// </summary>
         public event EventHandler<DataTransferEventArgs> TargetUpdated
         {
-            add     { AddHandler(Binding.TargetUpdatedEvent, value); }
-            remove  { RemoveHandler(Binding.TargetUpdatedEvent, value); }
+            add { AddHandler(Binding.TargetUpdatedEvent, value); }
+            remove { RemoveHandler(Binding.TargetUpdatedEvent, value); }
         }
 
 
@@ -1105,8 +1109,8 @@ namespace System.Windows
         /// </summary>
         public event EventHandler<DataTransferEventArgs> SourceUpdated
         {
-            add     { AddHandler(Binding.SourceUpdatedEvent, value); }
-            remove  { RemoveHandler(Binding.SourceUpdatedEvent, value); }
+            add { AddHandler(Binding.SourceUpdatedEvent, value); }
+            remove { RemoveHandler(Binding.SourceUpdatedEvent, value); }
         }
 
 
@@ -1153,7 +1157,7 @@ namespace System.Windows
             if (e.NewValue == BindingExpressionBase.DisconnectedItem)
                 return;
 
-            ((FrameworkContentElement) d).RaiseDependencyPropertyChanged(FrameworkElement.DataContextChangedKey, e);
+            ((FrameworkContentElement)d).RaiseDependencyPropertyChanged(FrameworkElement.DataContextChangedKey, e);
         }
 
         /// <summary>
@@ -1252,12 +1256,12 @@ namespace System.Windows
             //
             // BUGBUG: this misses "trees" that have only one logical node.  No parents, no children.
 
-            if(_parent != null || HasLogicalChildren)
+            if (_parent != null || HasLogicalChildren)
             {
                 DependencyObject logicalSource = args.Source as DependencyObject;
-                if(logicalSource == null || !IsLogicalDescendent(logicalSource))
+                if (logicalSource == null || !IsLogicalDescendent(logicalSource))
                 {
-                    args.Source=this;
+                    args.Source = this;
                     source = this;
                 }
             }
@@ -1305,9 +1309,9 @@ namespace System.Windows
             bool continuePastCoreTree = false;
 
             // Verify Context Access
-//             VerifyAccess();
+            //             VerifyAccess();
 
-            DependencyObject visualParent = (DependencyObject) ContentOperations.GetParent(this);
+            DependencyObject visualParent = (DependencyObject)ContentOperations.GetParent(this);
             DependencyObject modelParent = this._parent;
 
             // FrameworkElement extends the basic event routing strategy by
@@ -1325,7 +1329,7 @@ namespace System.Windows
                 // We keep the most recent source in the event args.  Note that
                 // this is only for our consumption.  Once the event is raised,
                 // it will use the source information in the route.
-                args.Source  = (route.PeekBranchSource());
+                args.Source = (route.PeekBranchSource());
 
                 AdjustBranchSource(args);
 
@@ -1350,14 +1354,14 @@ namespace System.Windows
                 {
                     continuePastCoreTree = modelParent != null;
                 }
-                else if(modelParent != null)
+                else if (modelParent != null)
                 {
                     // If there is a model parent, record the branch node.
                     route.PushBranchNode(this, args.Source);
 
                     // The source is going to be the visual parent, which
                     // could live in a different logical tree.
-                    args.Source  = (visualParent);
+                    args.Source = (visualParent);
                 }
 
             }
@@ -1394,7 +1398,7 @@ namespace System.Windows
             bool continueInvalidation = true;
             continuePastCoreTree = false;
 
-            DependencyObject visualParent = (DependencyObject) ContentOperations.GetParent(this);
+            DependencyObject visualParent = (DependencyObject)ContentOperations.GetParent(this);
             DependencyObject modelParent = this._parent;
 
             DependencyObject branchNode = branchNodeStack.Count > 0 ? branchNodeStack.Peek() : null;
@@ -1409,7 +1413,7 @@ namespace System.Windows
             {
                 continuePastCoreTree = modelParent != null;
             }
-            else if(modelParent != null)
+            else if (modelParent != null)
             {
                 // If there is a model parent, record the branch node.
                 branchNodeStack.Push(this);
@@ -1701,7 +1705,7 @@ namespace System.Windows
         ///     Loaded RoutedEvent
         /// </summary>
 
-        public static readonly RoutedEvent LoadedEvent = FrameworkElement.LoadedEvent.AddOwner( typeof(FrameworkContentElement));
+        public static readonly RoutedEvent LoadedEvent = FrameworkElement.LoadedEvent.AddOwner(typeof(FrameworkContentElement));
 
         /// <summary>
         ///     This event is fired when the element is laid out, rendered and ready for interaction
@@ -1732,7 +1736,7 @@ namespace System.Windows
         ///     Unloaded RoutedEvent
         /// </summary>
 
-        public static readonly RoutedEvent UnloadedEvent = FrameworkElement.UnloadedEvent.AddOwner( typeof(FrameworkContentElement));
+        public static readonly RoutedEvent UnloadedEvent = FrameworkElement.UnloadedEvent.AddOwner(typeof(FrameworkContentElement));
 
         /// <summary>
         ///     This clr event is fired when this element is detached form a loaded tree
@@ -1843,7 +1847,7 @@ namespace System.Windows
         /// </summary>
         public static readonly DependencyProperty ContextMenuProperty =
             ContextMenuService.ContextMenuProperty.AddOwner(typeof(FrameworkContentElement),
-            new FrameworkPropertyMetadata((ContextMenu) null));
+            new FrameworkPropertyMetadata((ContextMenu)null));
 
         /// <summary>
         /// The ContextMenu data set on this element. Can be any type that can be converted to a UIElement.
@@ -1998,12 +2002,12 @@ namespace System.Windows
         {
             IEnumerator enumerator = LogicalChildren;
 
-            if(enumerator != null)
+            if (enumerator != null)
             {
-                while(enumerator.MoveNext())
+                while (enumerator.MoveNext())
                 {
-                    DependencyObject child =enumerator.Current as DependencyObject;
-                    if(child != null)
+                    DependencyObject child = enumerator.Current as DependencyObject;
+                    if (child != null)
                     {
                         // CODE REVIEW (dwaynen)
                         //
@@ -2176,7 +2180,7 @@ namespace System.Windows
         // Resources dictionary
         private static readonly UncommonField<ResourceDictionary> ResourcesField = FrameworkElement.ResourcesField;
 
-        private InternalFlags  _flags  = 0; // field used to store various flags such as HasResourceReferences, etc.
+        private InternalFlags _flags = 0; // field used to store various flags such as HasResourceReferences, etc.
         private InternalFlags2 _flags2 = InternalFlags2.Default; // field used to store various flags such as HasResourceReferences, etc.
     }
 }

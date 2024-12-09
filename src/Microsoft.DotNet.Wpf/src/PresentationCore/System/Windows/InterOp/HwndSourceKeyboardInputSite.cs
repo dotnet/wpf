@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,7 +16,7 @@ namespace System.Windows.Interop
             {
                 throw new ArgumentException(SR.KeyboardSinkMustBeAnElement, "sink");
             }
-            
+
             _source = source;
 
             _sink = sink;
@@ -24,8 +24,8 @@ namespace System.Windows.Interop
 
             _sinkElement = sink as UIElement;
         }
-        
-#region IKeyboardInputSite
+
+        #region IKeyboardInputSite
         /// <summary>
         ///     Unregisters a child KeyboardInputSink from this sink.
         /// </summary>
@@ -34,7 +34,7 @@ namespace System.Windows.Interop
         /// </remarks> 
         void IKeyboardInputSite.Unregister()
         {
-            CriticalUnregister(); 
+            CriticalUnregister();
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace System.Windows.Interop
         /// </summary>
         internal void CriticalUnregister()
         {
-            if(_source != null && _sink != null)
+            if (_source != null && _sink != null)
             {
                 _source.CriticalUnregisterKeyboardInputSink(this);
                 _sink.KeyboardInputSite = null;
@@ -50,7 +50,7 @@ namespace System.Windows.Interop
 
             _source = null;
             _sink = null;
-        }           
+        }
         /// <summary>
         ///     Returns the sink associated with this site (the "child", not
         ///     the "parent" sink that owns the site).  There's no way of
@@ -74,7 +74,7 @@ namespace System.Windows.Interop
         {
             bool traversed = false;
 
-            if(_sinkElement != null)
+            if (_sinkElement != null)
             {
                 traversed = _sinkElement.MoveFocus(request);
             }
@@ -82,8 +82,8 @@ namespace System.Windows.Interop
             return traversed;
         }
 
-#endregion IKeyboardInputSite
-        
+        #endregion IKeyboardInputSite
+
         private HwndSource _source;
         private IKeyboardInputSink _sink;
         private UIElement _sinkElement;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -85,7 +85,7 @@ namespace MS.Internal.Ink
 
             StrokeCollection newStrokes = null;
             bool fSucceeded = false;
-            if ( stream != null && stream != Stream.Null )
+            if (stream != null && stream != Stream.Null)
             {
                 try
                 {
@@ -93,7 +93,7 @@ namespace MS.Internal.Ink
                     newStrokes = new StrokeCollection(stream);
                     fSucceeded = true;
                 }
-                catch ( ArgumentException )
+                catch (ArgumentException)
                 {
                     // If an invalid stream was passed in, we should get ArgumentException here.
                     // We catch this specific exception and eat it.
@@ -134,7 +134,7 @@ namespace MS.Internal.Ink
 
         #region Private Fields
 
-        StrokeCollection    _strokes;
+        StrokeCollection _strokes;
 
         #endregion Private Fields
     }

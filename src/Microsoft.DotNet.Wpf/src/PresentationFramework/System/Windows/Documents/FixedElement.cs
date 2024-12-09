@@ -1,14 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal.Documents;
+using System.Globalization;
+using System.Text;
 using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Markup;    // for XmlLanguage
 using System.Windows.Navigation;
-using System.Globalization;
-using System.Text;
+using MS.Internal.Documents;
 
 //
 // Description:
@@ -215,8 +215,10 @@ namespace System.Windows.Documents
             object o = im;
             if (_type == ElementType.InlineUIContainer)
             {
-                InlineUIContainer c = new InlineUIContainer();
-                c.Child = im;
+                InlineUIContainer c = new InlineUIContainer
+                {
+                    Child = im
+                };
                 o = c;
             }
             return o;
@@ -243,8 +245,10 @@ namespace System.Windows.Documents
                     root = new Paragraph();
                     break;
                 case ElementType.Hyperlink:
-                    Hyperlink link = new Hyperlink();
-                    link.NavigateUri = GetValue(NavigateUriProperty) as Uri;
+                    Hyperlink link = new Hyperlink
+                    {
+                        NavigateUri = GetValue(NavigateUriProperty) as Uri
+                    };
                     link.RequestNavigate += new RequestNavigateEventHandler(ClickHyperlink);
                     AutomationProperties.SetHelpText(link, (String)this.GetValue(HelpTextProperty));
                     AutomationProperties.SetName(link, (String)this.GetValue(NameProperty));
@@ -291,8 +295,10 @@ namespace System.Windows.Documents
             Uri source = _object as Uri;
             if (source != null)
             {
-                image = new Image();
-                image.Source = new System.Windows.Media.Imaging.BitmapImage(source);
+                image = new Image
+                {
+                    Source = new System.Windows.Media.Imaging.BitmapImage(source)
+                };
                 image.Width = image.Source.Width;
                 image.Height = image.Source.Height;
 
@@ -332,9 +338,9 @@ namespace System.Windows.Documents
                     dp.Append("    ");
                 }
                 dp.Append(this.ToString());
-                for(int i = 0, n = _children.Count; i < n; i++)
+                for (int i = 0, n = _children.Count; i < n; i++)
                 {
-                    ((FixedElement)_children[i]).DumpTree(indent+1);
+                    ((FixedElement)_children[i]).DumpTree(indent + 1);
                 }
 
                 DocumentsTrace.FixedTextOM.Map.Trace(dp.ToString());
@@ -352,7 +358,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return ! (_type == ElementType.Object
+                return !(_type == ElementType.Object
                     || _type == ElementType.Container);
             }
         }
@@ -451,11 +457,11 @@ namespace System.Windows.Documents
         //------------------------------------------------------
         #region Private Fields
 #if DEBUG
-        private List<FixedElement>      _children;
+        private List<FixedElement> _children;
 #endif
-        private ElementType  _type;             // logical type that this element represents
-        private FixedTextPointer  _start;      // start position for this element
-        private FixedTextPointer  _end;        // end position for this element
+        private ElementType _type;             // logical type that this element represents
+        private FixedTextPointer _start;      // start position for this element
+        private FixedTextPointer _end;        // end position for this element
         private object _object;                 // embedded object
         private int _pageIndex;
         #endregion Private Fields

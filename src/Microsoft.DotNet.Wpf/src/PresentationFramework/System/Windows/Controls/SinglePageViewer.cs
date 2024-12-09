@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,17 +11,17 @@
 
 using System.Collections.ObjectModel;       // ReadOnlyCollection<T>
 using System.Windows.Automation.Peers;      // AutomationPeer
+using System.Windows.Controls.Primitives;   // DocumentViewerBase, DocumentPageView
 using System.Windows.Documents;             // IDocumentPaginatorSouce, ...
 using System.Windows.Documents.Serialization;  // WritingCompletedEventArgs
 using System.Windows.Input;                 // UICommand
 using System.Windows.Media;                 // VisualTreeHelper
-using System.Windows.Controls.Primitives;   // DocumentViewerBase, DocumentPageView
 using System.Windows.Threading;
 using MS.Internal;                          // Invariant, DoubleUtil
+using MS.Internal.AppModel;                 // IJournalState
 using MS.Internal.Commands;                 // CommandHelpers
 using MS.Internal.Documents;                // FindToolBar
 using MS.Internal.KnownBoxes;               // BooleanBoxes
-using MS.Internal.AppModel;                 // IJournalState
 
 namespace System.Windows.Controls
 {
@@ -155,7 +155,7 @@ namespace System.Windows.Controls
         /// </summary>
         public double Zoom
         {
-            get { return (double) GetValue(ZoomProperty); }
+            get { return (double)GetValue(ZoomProperty); }
             set { SetValue(ZoomProperty, value); }
         }
 
@@ -164,7 +164,7 @@ namespace System.Windows.Controls
         /// </summary>
         public double MaxZoom
         {
-            get { return (double) GetValue(MaxZoomProperty); }
+            get { return (double)GetValue(MaxZoomProperty); }
             set { SetValue(MaxZoomProperty, value); }
         }
 
@@ -173,7 +173,7 @@ namespace System.Windows.Controls
         /// </summary>
         public double MinZoom
         {
-            get { return (double) GetValue(MinZoomProperty); }
+            get { return (double)GetValue(MinZoomProperty); }
             set { SetValue(MinZoomProperty, value); }
         }
 
@@ -183,7 +183,7 @@ namespace System.Windows.Controls
         /// </summary>
         public double ZoomIncrement
         {
-            get { return (double) GetValue(ZoomIncrementProperty); }
+            get { return (double)GetValue(ZoomIncrementProperty); }
             set { SetValue(ZoomIncrementProperty, value); }
         }
 
@@ -192,7 +192,7 @@ namespace System.Windows.Controls
         /// </summary>
         public virtual bool CanIncreaseZoom
         {
-            get { return (bool) GetValue(CanIncreaseZoomProperty); }
+            get { return (bool)GetValue(CanIncreaseZoomProperty); }
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace System.Windows.Controls
         /// </summary>
         public virtual bool CanDecreaseZoom
         {
-            get { return (bool) GetValue(CanDecreaseZoomProperty); }
+            get { return (bool)GetValue(CanDecreaseZoomProperty); }
         }
 
         /// <summary>
@@ -514,7 +514,7 @@ namespace System.Windows.Controls
                 throw new NotSupportedException(SR.FlowDocumentPageViewerOnlySupportsFlowDocument);
             }
 
-            if(Document != null)
+            if (Document != null)
             {
                 DynamicDocumentPaginator dynamicDocumentPaginator = Document.DocumentPaginator as DynamicDocumentPaginator;
                 if (dynamicDocumentPaginator != null)
@@ -665,11 +665,13 @@ namespace System.Windows.Controls
                 {
                     // Store the current state of the document in the PrintingState
                     paginator = ((IDocumentPaginatorSource)document).DocumentPaginator as FlowDocumentPaginator;
-                    _printingState = new FlowDocumentPrintingState();
-                    _printingState.XpsDocumentWriter = docWriter;
-                    _printingState.PageSize = paginator.PageSize;
-                    _printingState.PagePadding = document.PagePadding;
-                    _printingState.IsSelectionEnabled = IsSelectionEnabled;
+                    _printingState = new FlowDocumentPrintingState
+                    {
+                        XpsDocumentWriter = docWriter,
+                        PageSize = paginator.PageSize,
+                        PagePadding = document.PagePadding,
+                        IsSelectionEnabled = IsSelectionEnabled
+                    };
 
                     // Since _printingState value is used to determine CanExecute state, we must invalidate that state.
                     CommandManager.InvalidateRequerySuggested();
@@ -1021,7 +1023,7 @@ namespace System.Windows.Controls
             FlowDocument flowDocument = document as FlowDocument;
             TextPointer textPointer = contentPosition as TextPointer;
 
-            if(flowDocument != null && textPointer != null)
+            if (flowDocument != null && textPointer != null)
             {
                 return flowDocument.ContentStart.TextContainer == textPointer.TextContainer;
             }
@@ -1042,7 +1044,7 @@ namespace System.Windows.Controls
                 {
                     documentPaginator.CancelAsync(_bringContentPositionIntoViewToken);
 
-                    if(isAsyncRequest)
+                    if (isAsyncRequest)
                     {
                         documentPaginator.GetPageNumberAsync(contentPosition, _bringContentPositionIntoViewToken);
                     }
@@ -1375,7 +1377,7 @@ namespace System.Windows.Controls
             Invariant.Assert(d != null && d is FlowDocumentPageViewer);
 
             double maxZoom, minZoom;
-            FlowDocumentPageViewer v = (FlowDocumentPageViewer) d;
+            FlowDocumentPageViewer v = (FlowDocumentPageViewer)d;
             double zoom = (double)value;
 
             maxZoom = v.MaxZoom;
@@ -1400,7 +1402,7 @@ namespace System.Windows.Controls
         {
             Invariant.Assert(d != null && d is FlowDocumentPageViewer);
 
-            FlowDocumentPageViewer v = (FlowDocumentPageViewer) d;
+            FlowDocumentPageViewer v = (FlowDocumentPageViewer)d;
             double minZoom = v.MinZoom;
             if (DoubleUtil.LessThan((double)value, minZoom))
             {
@@ -1415,7 +1417,7 @@ namespace System.Windows.Controls
         private static void ZoomChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Invariant.Assert(d != null && d is FlowDocumentPageViewer);
-            ((FlowDocumentPageViewer)d).ZoomChanged((double) e.OldValue, (double) e.NewValue);
+            ((FlowDocumentPageViewer)d).ZoomChanged((double)e.OldValue, (double)e.NewValue);
         }
 
         /// <summary>
@@ -1424,7 +1426,7 @@ namespace System.Windows.Controls
         private static void MaxZoomChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Invariant.Assert(d != null && d is FlowDocumentPageViewer);
-            ((FlowDocumentPageViewer)d).MaxZoomChanged((double) e.OldValue, (double) e.NewValue);
+            ((FlowDocumentPageViewer)d).MaxZoomChanged((double)e.OldValue, (double)e.NewValue);
         }
 
         /// <summary>
@@ -1433,7 +1435,7 @@ namespace System.Windows.Controls
         private static void MinZoomChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Invariant.Assert(d != null && d is FlowDocumentPageViewer);
-            ((FlowDocumentPageViewer)d).MinZoomChanged((double) e.OldValue, (double) e.NewValue);
+            ((FlowDocumentPageViewer)d).MinZoomChanged((double)e.OldValue, (double)e.NewValue);
         }
 
         /// <summary>
@@ -1498,7 +1500,7 @@ namespace System.Windows.Controls
         private ContentPosition _contentPosition;   // Current position to be maintained during zooming and resizing.
         private FlowDocumentPrintingState _printingState;   // Printing state
         private IDocumentPaginatorSource _oldDocument; // IDocumentPaginatorSource representing Document. Cached separately from DocumentViewerBase
-                                                    // due to lifetime issues.
+                                                       // due to lifetime issues.
         private object _bringContentPositionIntoViewToken = new object(); // Bring content position into view user state
 
         private const string _findToolBarHostTemplateName = "PART_FindToolBarHost"; //Name for the Find Toolbar host.

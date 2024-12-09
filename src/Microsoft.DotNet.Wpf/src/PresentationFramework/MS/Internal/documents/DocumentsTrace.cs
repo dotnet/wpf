@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -18,7 +18,7 @@ namespace MS.Internal.Documents
         {
 #if DEBUG
             public static DocumentsTrace FixedDocument = new DocumentsTrace("FixedFormat-FixedDocument");
-            public static DocumentsTrace PageContent= new DocumentsTrace("FixedFormat-PageContent");
+            public static DocumentsTrace PageContent = new DocumentsTrace("FixedFormat-PageContent");
             public static DocumentsTrace IDF = new DocumentsTrace("FixedFormat-IDFAsync");
 #else
             public static DocumentsTrace FixedDocument = null;
@@ -40,12 +40,12 @@ namespace MS.Internal.Documents
         internal static class FixedTextOM
         {
 #if DEBUG
-            public static DocumentsTrace TextView       = new DocumentsTrace("FixedTextOM-TextView");
-            public static DocumentsTrace TextContainer  = new DocumentsTrace("FixedTextOM-TextContainer"); 
-            public static DocumentsTrace Map            = new DocumentsTrace("FixedTextOM-FixedFlowMap");
-            public static DocumentsTrace Highlight      = new DocumentsTrace("FixedTextOM-Highlight");
-            public static DocumentsTrace Builder        = new DocumentsTrace("FixedTextOM-FixedTextBuilder");
-            public static DocumentsTrace FlowPosition   = new DocumentsTrace("FixedTextOM-FlowPosition");
+            public static DocumentsTrace TextView = new DocumentsTrace("FixedTextOM-TextView");
+            public static DocumentsTrace TextContainer = new DocumentsTrace("FixedTextOM-TextContainer");
+            public static DocumentsTrace Map = new DocumentsTrace("FixedTextOM-FixedFlowMap");
+            public static DocumentsTrace Highlight = new DocumentsTrace("FixedTextOM-Highlight");
+            public static DocumentsTrace Builder = new DocumentsTrace("FixedTextOM-FixedTextBuilder");
+            public static DocumentsTrace FlowPosition = new DocumentsTrace("FixedTextOM-FlowPosition");
 #else
             public static DocumentsTrace TextView = null;
             public static DocumentsTrace TextContainer = null;
@@ -103,21 +103,21 @@ namespace MS.Internal.Documents
         {
 #if DEBUG
             // we are adding console as a listener
-            TextWriterTraceListener consoleListener = new TextWriterTraceListener( Console.Out );
+            TextWriterTraceListener consoleListener = new TextWriterTraceListener(Console.Out);
 
             // get the listeners collection
             TraceListenerCollection listeners = null;
             listeners = System.Diagnostics.Trace.Listeners;
 
             // add the console listener
-            listeners.Add( consoleListener );
+            listeners.Add(consoleListener);
 #endif
         }
 
         public DocumentsTrace(string switchName)
         {
 #if DEBUG
-            string name = SafeSecurityHelper.GetAssemblyPartialName( Assembly.GetCallingAssembly() );
+            string name = SafeSecurityHelper.GetAssemblyPartialName(Assembly.GetCallingAssembly());
             _switch = new BooleanSwitch(switchName, $"[{name}]");
 #endif
         }
@@ -152,7 +152,7 @@ namespace MS.Internal.Documents
 
                 Indent();
 
-                for (int i=0; i < st.FrameCount && i < Depth; i++)
+                for (int i = 0; i < st.FrameCount && i < Depth; i++)
                 {
                     System.Diagnostics.StackFrame sf = st.GetFrame(i);
                     Trace($"{sf.GetMethod()}+{sf.GetILOffset()}");
@@ -202,7 +202,7 @@ namespace MS.Internal.Documents
             get
             {
 #if DEBUG
-                return _switch.Enabled; 
+                return _switch.Enabled;
 #else
                 return false;
 #endif

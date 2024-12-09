@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System.Xml;
-using System.Windows.Xps.Packaging;
 using System.Windows.Documents;
 using System.Windows.Markup;
+using System.Windows.Xps.Packaging;
+using System.Xml;
 
 namespace System.Windows.Xps.Serialization
 {
@@ -16,7 +16,7 @@ namespace System.Windows.Xps.Serialization
     internal class DocumentPaginatorSerializerAsync :
                    ReachSerializerAsync
     {
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -31,7 +31,7 @@ namespace System.Windows.Xps.Serialization
         }
 
         #region Public Methods
-        
+
         public
         override
         void
@@ -39,30 +39,30 @@ namespace System.Windows.Xps.Serialization
             ReachSerializerContext context
             )
         {
-            if(context == null)
+            if (context == null)
             {
 
             }
-           
-            switch (context.Action) 
+
+            switch (context.Action)
             {
                 case SerializerAction.endPersistObjectData:
-                {
-                    EndPersistObjectData();
-                    break;
-                }
+                    {
+                        EndPersistObjectData();
+                        break;
+                    }
 
                 case SerializerAction.serializeNextDocumentPage:
-                {
-                    SerializeNextDocumentPage(context);
-                    break;
-                }
-                
+                    {
+                        SerializeNextDocumentPage(context);
+                        break;
+                    }
+
                 default:
-                {
-                    base.AsyncOperation(context);
-                    break;
-                }
+                    {
+                        base.AsyncOperation(context);
+                        break;
+                    }
             }
         }
 
@@ -79,10 +79,10 @@ namespace System.Windows.Xps.Serialization
             //
             ((XpsSerializationManager)SerializationManager).ResourcePolicy.ImageCrcTable = new Dictionary<UInt32, Uri>();
 
-            ((XpsSerializationManager)SerializationManager).ResourcePolicy.ImageUriHashTable = new Dictionary<int,Uri>();
+            ((XpsSerializationManager)SerializationManager).ResourcePolicy.ImageUriHashTable = new Dictionary<int, Uri>();
             SerializableObjectContext serializableObjectContext = new SerializableObjectContext(serializedObject, null);
             PersistObjectData(serializableObjectContext);
- 
+
         }
 
         #endregion Public Methods
@@ -99,9 +99,9 @@ namespace System.Windows.Xps.Serialization
             SerializableObjectContext serializableObjectContext
             )
         {
-            if( SerializationManager is XpsSerializationManager)
+            if (SerializationManager is XpsSerializationManager)
             {
-               (SerializationManager as XpsSerializationManager).RegisterDocumentStart();
+                (SerializationManager as XpsSerializationManager).RegisterDocumentStart();
             }
             String xmlnsForType = SerializationManager.GetXmlNSForType(typeof(FixedDocument));
             String nameForType = XpsS0Markup.FixedDocument;
@@ -122,7 +122,7 @@ namespace System.Windows.Xps.Serialization
 
                 ((IXpsSerializationManagerAsync)SerializationManager).OperationStack.Push(context);
 
-                XpsSerializationPrintTicketRequiredEventArgs e = 
+                XpsSerializationPrintTicketRequiredEventArgs e =
                 new XpsSerializationPrintTicketRequiredEventArgs(PrintTicketLevel.FixedDocumentPrintTicket,
                                                                  0);
 
@@ -131,9 +131,9 @@ namespace System.Windows.Xps.Serialization
                 //
                 // Serialize the data for the PrintTicket
                 //
-                if(e.Modified)
+                if (e.Modified)
                 {
-                    if(e.PrintTicket != null)
+                    if (e.PrintTicket != null)
                     {
                         PrintTicketSerializerAsync serializer = new PrintTicketSerializerAsync(SerializationManager);
                         serializer.SerializeObject(e.PrintTicket);
@@ -160,7 +160,7 @@ namespace System.Windows.Xps.Serialization
 
                 int index = 0;
 
-                DocumentPaginatorSerializerContext 
+                DocumentPaginatorSerializerContext
                 collectionContext = new DocumentPaginatorSerializerContext(this,
                                                                            serializableObjectContext,
                                                                            paginator,
@@ -190,19 +190,19 @@ namespace System.Windows.Xps.Serialization
             //
             // Signal to any registered callers that the Document has been serialized
             //
-            XpsSerializationProgressChangedEventArgs progressEvent = 
+            XpsSerializationProgressChangedEventArgs progressEvent =
             new XpsSerializationProgressChangedEventArgs(XpsWritingProgressChangeLevel.FixedDocumentWritingProgress,
                                                          0,
                                                          0,
                                                          null);
 
-            if( SerializationManager is XpsSerializationManager)
+            if (SerializationManager is XpsSerializationManager)
             {
-               (SerializationManager as XpsSerializationManager).RegisterDocumentEnd();
+                (SerializationManager as XpsSerializationManager).RegisterDocumentEnd();
             }
             ((IXpsSerializationManager)SerializationManager).OnXPSSerializationProgressChanged(progressEvent);
         }
-    
+
         /// <summary>
         /// 
         /// </summary>
@@ -231,24 +231,24 @@ namespace System.Windows.Xps.Serialization
         private
         void
         SerializeNextDocumentPage(
-            ReachSerializerContext  context
+            ReachSerializerContext context
             )
         {
 
             DocumentPaginatorSerializerContext paginatorContext = context as DocumentPaginatorSerializerContext;
 
-            if(paginatorContext != null)
+            if (paginatorContext != null)
             {
-                DocumentPaginator  paginator = paginatorContext.Paginator;
-                int                index     = paginatorContext.Index;
+                DocumentPaginator paginator = paginatorContext.Paginator;
+                int index = paginatorContext.Index;
 
-                if(!paginator.IsPageCountValid ||
+                if (!paginator.IsPageCountValid ||
                    (index < paginator.PageCount))
                 {
                     index++;
 
 
-                    DocumentPaginatorSerializerContext 
+                    DocumentPaginatorSerializerContext
                     collectionContext = new DocumentPaginatorSerializerContext(this,
                                                                                paginatorContext.ObjectContext,
                                                                                paginator,
@@ -256,8 +256,8 @@ namespace System.Windows.Xps.Serialization
                                                                                SerializerAction.serializeNextDocumentPage);
                     ((IXpsSerializationManagerAsync)SerializationManager).OperationStack.Push(collectionContext);
 
-                    DocumentPage page = Toolbox.GetPage(paginator, index-1);
-                    
+                    DocumentPage page = Toolbox.GetPage(paginator, index - 1);
+
                     ReachSerializer serializer = SerializationManager.GetSerializer(page);
                     if (serializer != null)
                     {
@@ -277,16 +277,16 @@ namespace System.Windows.Xps.Serialization
     {
         public
         DocumentPaginatorSerializerContext(
-            ReachSerializerAsync        serializer,
-            SerializableObjectContext   objectContext,
-            DocumentPaginator           paginator,
-            int                         index,
-            SerializerAction            action
-            ):
-            base(serializer,objectContext,action)
+            ReachSerializerAsync serializer,
+            SerializableObjectContext objectContext,
+            DocumentPaginator paginator,
+            int index,
+            SerializerAction action
+            ) :
+            base(serializer, objectContext, action)
         {
             this._paginator = paginator;
-            this._index     = index;
+            this._index = index;
         }
 
 
@@ -313,10 +313,10 @@ namespace System.Windows.Xps.Serialization
 
 
         private
-        DocumentPaginator   _paginator;
+        DocumentPaginator _paginator;
 
         private
-        int                 _index;
+        int _index;
     };
 
 }

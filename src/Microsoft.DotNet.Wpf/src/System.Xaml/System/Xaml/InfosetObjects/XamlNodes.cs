@@ -6,7 +6,7 @@
 
 namespace System.Xaml
 {
-    public enum XamlNodeType:byte
+    public enum XamlNodeType : byte
     {
         None,       // need something to return when un-inited. (and past Eof)
         StartObject,
@@ -26,7 +26,7 @@ namespace System.Xaml
     [DebuggerDisplay("{ToString()}")]
     internal struct XamlNode
     {
-        internal enum InternalNodeType:byte { None, StartOfStream, EndOfStream, EndOfAttributes, LineInfo }
+        internal enum InternalNodeType : byte { None, StartOfStream, EndOfStream, EndOfAttributes, LineInfo }
 
         XamlNodeType _nodeType;
         InternalNodeType _internalNodeType;
@@ -42,14 +42,14 @@ namespace System.Xaml
 #if DEBUG
             switch (nodeType)
             {
-            case XamlNodeType.EndObject:
-            case XamlNodeType.EndMember:
-            case XamlNodeType.GetObject:
-                break;
+                case XamlNodeType.EndObject:
+                case XamlNodeType.EndMember:
+                case XamlNodeType.GetObject:
+                    break;
 
-            default:
-                Debug.Assert(false, "XamlNode Ctor missing data argument");
-                break;
+                default:
+                    Debug.Assert(false, "XamlNode Ctor missing data argument");
+                    break;
             }
 #endif
             _nodeType = nodeType;
@@ -60,33 +60,33 @@ namespace System.Xaml
         public XamlNode(XamlNodeType nodeType, object data)
         {
 #if DEBUG
-            switch(nodeType)
+            switch (nodeType)
             {
-            case XamlNodeType.StartObject:
-                Debug.Assert(data is XamlType, "XamlNode ctor, StartObject data is not a XamlType");
-                break;
+                case XamlNodeType.StartObject:
+                    Debug.Assert(data is XamlType, "XamlNode ctor, StartObject data is not a XamlType");
+                    break;
 
-            case XamlNodeType.StartMember:
-                Debug.Assert(data is XamlMember, "XamlNode ctor, StartMember data is not a XamlMember");
-                break;
+                case XamlNodeType.StartMember:
+                    Debug.Assert(data is XamlMember, "XamlNode ctor, StartMember data is not a XamlMember");
+                    break;
 
-            case XamlNodeType.NamespaceDeclaration:
-                Debug.Assert(data is NamespaceDeclaration, "XamlNode ctor, NamespaceDeclaration data is not a NamespaceDeclaration");
-                break;
+                case XamlNodeType.NamespaceDeclaration:
+                    Debug.Assert(data is NamespaceDeclaration, "XamlNode ctor, NamespaceDeclaration data is not a NamespaceDeclaration");
+                    break;
 
-            case XamlNodeType.Value:
-                // can be anything;
-                break;
+                case XamlNodeType.Value:
+                    // can be anything;
+                    break;
 
-            case XamlNodeType.EndObject:
-            case XamlNodeType.EndMember:
-            case XamlNodeType.GetObject:
-                Debug.Assert(data == null, "XamlNode ctor, Internal XamlNode data must be null for this Node type");
-                break;
+                case XamlNodeType.EndObject:
+                case XamlNodeType.EndMember:
+                case XamlNodeType.GetObject:
+                    Debug.Assert(data == null, "XamlNode ctor, Internal XamlNode data must be null for this Node type");
+                    break;
 
-            default:
-                Debug.Assert(false, "XamlNode ctor, incorrect ctor called.");
-                break;
+                default:
+                    Debug.Assert(false, "XamlNode ctor, incorrect ctor called.");
+                    break;
             }
 #endif
             _nodeType = nodeType;
@@ -114,44 +114,44 @@ namespace System.Xaml
         public override string ToString()
         {
             string str = string.Create(TypeConverterHelper.InvariantEnglishUS, $"{NodeType}: ");
-            switch(NodeType)
+            switch (NodeType)
             {
-            case XamlNodeType.StartObject:
-                str += XamlType.Name;
-                break;
-
-            case XamlNodeType.StartMember:
-                str += Member.Name;
-                break;
-
-            case XamlNodeType.Value:
-                str += Value.ToString();
-                break;
-
-            case XamlNodeType.NamespaceDeclaration:
-                str += NamespaceDeclaration.ToString();
-                break;
-
-            case XamlNodeType.None:
-                switch(_internalNodeType)
-                {
-                case InternalNodeType.EndOfAttributes:
-                    str += "End Of Attributes";
+                case XamlNodeType.StartObject:
+                    str += XamlType.Name;
                     break;
 
-                    case InternalNodeType.StartOfStream:
-                    str += "Start Of Stream";
+                case XamlNodeType.StartMember:
+                    str += Member.Name;
                     break;
 
-                case InternalNodeType.EndOfStream:
-                    str += "End Of Stream";
+                case XamlNodeType.Value:
+                    str += Value.ToString();
                     break;
 
-                case InternalNodeType.LineInfo:
-                    str += $"LineInfo: {LineInfo}";
+                case XamlNodeType.NamespaceDeclaration:
+                    str += NamespaceDeclaration.ToString();
                     break;
-                }
-                break;
+
+                case XamlNodeType.None:
+                    switch (_internalNodeType)
+                    {
+                        case InternalNodeType.EndOfAttributes:
+                            str += "End Of Attributes";
+                            break;
+
+                        case InternalNodeType.StartOfStream:
+                            str += "Start Of Stream";
+                            break;
+
+                        case InternalNodeType.EndOfStream:
+                            str += "End Of Stream";
+                            break;
+
+                        case InternalNodeType.LineInfo:
+                            str += $"LineInfo: {LineInfo}";
+                            break;
+                    }
+                    break;
             }
             return str;
         }

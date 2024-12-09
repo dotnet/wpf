@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -33,7 +33,7 @@ namespace System.Windows.Media.Media3D
         /// <summary>
         ///     Default constructor.
         /// </summary>
-        public Transform3DGroup() {}
+        public Transform3DGroup() { }
 
         #endregion Constructors
 
@@ -104,7 +104,7 @@ namespace System.Windows.Media.Media3D
                 {
                     children.Internal_GetItem(i).Append(ref matrix);
                 }
-            }           
+            }
         }
 
         //------------------------------------------------------

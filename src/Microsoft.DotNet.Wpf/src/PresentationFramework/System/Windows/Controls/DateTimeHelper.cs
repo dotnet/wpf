@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -51,7 +51,7 @@ namespace System.Windows.Controls
 
         public static DateTime? SetYear(DateTime date, int year)
         {
-            return DateTimeHelper.AddYears(date, year - date.Year);                        
+            return DateTimeHelper.AddYears(date, year - date.Year);
         }
 
         public static DateTime? SetYearMonth(DateTime date, DateTime yearMonth)
@@ -119,7 +119,7 @@ namespace System.Windows.Controls
             }
             return culture;
         }
-                
+
         internal static DateTimeFormatInfo GetDateFormat(CultureInfo culture)
         {
             if (culture.Calendar is GregorianCalendar)
@@ -128,12 +128,12 @@ namespace System.Windows.Controls
             }
             else
             {
-                GregorianCalendar foundCal  =null;
+                GregorianCalendar foundCal = null;
                 DateTimeFormatInfo dtfi = null;
-                
+
                 foreach (System.Globalization.Calendar cal in culture.OptionalCalendars)
                 {
-                    if (cal is GregorianCalendar) 
+                    if (cal is GregorianCalendar)
                     {
                         // Return the first Gregorian calendar with CalendarType == Localized
                         // Otherwise return the first Gregorian calendar
@@ -141,7 +141,7 @@ namespace System.Windows.Controls
                         {
                             foundCal = cal as GregorianCalendar;
                         }
-                        
+
                         if (((GregorianCalendar)cal).CalendarType == GregorianCalendarTypes.Localized)
                         {
                             foundCal = cal as GregorianCalendar;
@@ -149,15 +149,15 @@ namespace System.Windows.Controls
                         }
                     }
                 }
-                
-                
+
+
                 if (foundCal == null)
                 {
                     // if there are no GregorianCalendars in the OptionalCalendars list, use the invariant dtfi
                     dtfi = ((CultureInfo)CultureInfo.InvariantCulture.Clone()).DateTimeFormat;
                     dtfi.Calendar = new GregorianCalendar();
-                } 
-                else 
+                }
+                else
                 {
                     dtfi = ((CultureInfo)culture.Clone()).DateTimeFormat;
                     dtfi.Calendar = foundCal;
@@ -209,15 +209,15 @@ namespace System.Windows.Controls
 
             if (format != null)
             {
-                bool isRightToLeft = fe.FlowDirection==FlowDirection.RightToLeft;
-                int decadeRight = isRightToLeft?decade:(decade+9);
-                int decadeLeft =  isRightToLeft?(decade+9):decade;
+                bool isRightToLeft = fe.FlowDirection == FlowDirection.RightToLeft;
+                int decadeRight = isRightToLeft ? decade : (decade + 9);
+                int decadeLeft = isRightToLeft ? (decade + 9) : decade;
                 result = $"{decadeLeft.ToString(format)}-{decadeRight.ToString(format)}";
             }
 
             return result;
         }
-     
+
         public static string ToYearMonthPatternString(DateTime? date, CultureInfo culture)
         {
             string result = string.Empty;
@@ -230,7 +230,7 @@ namespace System.Windows.Controls
 
             return result;
         }
-        
+
         public static string ToYearString(DateTime? date, CultureInfo culture)
         {
             string result = string.Empty;
@@ -243,8 +243,8 @@ namespace System.Windows.Controls
 
             return result;
         }
-        
-        public static string ToAbbreviatedMonthString( DateTime? date, CultureInfo culture)
+
+        public static string ToAbbreviatedMonthString(DateTime? date, CultureInfo culture)
         {
             string result = string.Empty;
             DateTimeFormatInfo format = GetDateFormat(culture);

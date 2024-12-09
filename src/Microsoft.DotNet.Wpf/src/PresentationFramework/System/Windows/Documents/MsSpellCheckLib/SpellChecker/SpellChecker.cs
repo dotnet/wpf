@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,11 +10,11 @@
 
 using System.ComponentModel;
 using System.Runtime.InteropServices;
-using ISpellChecker = System.Windows.Documents.MsSpellCheckLib.RCW.ISpellChecker;
-using IEnumString = System.Windows.Documents.MsSpellCheckLib.RCW.IEnumString;
-using ISpellCheckerChangedEventHandler = System.Windows.Documents.MsSpellCheckLib.RCW.ISpellCheckerChangedEventHandler;
-using IOptionDescription = System.Windows.Documents.MsSpellCheckLib.RCW.IOptionDescription;
 using IEnumSpellingError = System.Windows.Documents.MsSpellCheckLib.RCW.IEnumSpellingError;
+using IEnumString = System.Windows.Documents.MsSpellCheckLib.RCW.IEnumString;
+using IOptionDescription = System.Windows.Documents.MsSpellCheckLib.RCW.IOptionDescription;
+using ISpellChecker = System.Windows.Documents.MsSpellCheckLib.RCW.ISpellChecker;
+using ISpellCheckerChangedEventHandler = System.Windows.Documents.MsSpellCheckLib.RCW.ISpellCheckerChangedEventHandler;
 
 namespace System.Windows.Documents
 {
@@ -87,7 +87,7 @@ namespace System.Windows.Documents
 
                 return
                     suggestions != null ?
-                        suggestions.ToList(shouldSuppressCOMExceptions:false, shouldReleaseCOMObject:true) :
+                        suggestions.ToList(shouldSuppressCOMExceptions: false, shouldReleaseCOMObject: true) :
                         null;
             }
 
@@ -98,7 +98,7 @@ namespace System.Windows.Documents
                     RetryHelper.TryExecuteFunction(
                         func: () => { return SuggestImpl(word); },
                         result: out result,
-                        preamble:  () => Init(shouldSuppressCOMExceptions),
+                        preamble: () => Init(shouldSuppressCOMExceptions),
                         ignoredExceptions: SuppressedExceptions[shouldSuppressCOMExceptions]);
 
                 return callSucceeded ? result : null;
@@ -131,7 +131,8 @@ namespace System.Windows.Documents
 
             public void Add(string word, bool shouldSuppressCOMExceptions = true)
             {
-                if (_disposed) return;
+                if (_disposed)
+                    return;
 
                 AddImplWithRetries(word, shouldSuppressCOMExceptions);
             }
@@ -157,7 +158,8 @@ namespace System.Windows.Documents
             }
             public void Ignore(string word, bool shouldSuppressCOMExceptions = true)
             {
-                if (_disposed) return;
+                if (_disposed)
+                    return;
 
                 IgnoreImplWithRetries(word, shouldSuppressCOMExceptions);
             }
@@ -472,7 +474,7 @@ namespace System.Windows.Documents
                 // and return the result
                 for (; index > 0; --index)
                 {
-                    hasErrorsCache[index] = hasErrorsCache[index-1];
+                    hasErrorsCache[index] = hasErrorsCache[index - 1];
                 }
                 hasErrorsCache[0] = result;
 
@@ -521,7 +523,8 @@ namespace System.Windows.Documents
 
             private void remove_SpellCheckerChanged(uint eventCookie, bool suppressCOMExceptions = true)
             {
-                if (_disposed) return;
+                if (_disposed)
+                    return;
                 remove_SpellCheckerChangedImplWithRetries(eventCookie, suppressCOMExceptions);
             }
 
@@ -608,7 +611,8 @@ namespace System.Windows.Documents
             [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
             protected virtual void Dispose(bool disposing)
             {
-                if (_disposed) return;
+                if (_disposed)
+                    return;
 
                 _disposed = true;
                 if (_speller?.Value != null)
@@ -657,7 +661,7 @@ namespace System.Windows.Documents
             // caching HasErrors results
             private class HasErrorsResult : Tuple<string, bool>
             {
-                public HasErrorsResult(string text, bool hasErrors) : base(text, hasErrors) {}
+                public HasErrorsResult(string text, bool hasErrors) : base(text, hasErrors) { }
                 public string Text { get { return Item1; } }
                 public bool HasErrors { get { return Item2; } }
             }

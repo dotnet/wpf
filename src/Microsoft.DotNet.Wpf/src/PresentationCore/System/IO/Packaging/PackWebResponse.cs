@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,10 +15,10 @@
 
 using System.Net;
 using System.Threading;                 // for ManualResetEvent
-using MS.Internal.PresentationCore;     // for ExceptionStringTable
-using MS.Internal.IO.Packaging;              // for ResponseStream
-using MS.Utility;
 using MS.Internal;
+using MS.Internal.IO.Packaging;              // for ResponseStream
+using MS.Internal.PresentationCore;     // for ExceptionStringTable
+using MS.Utility;
 
 #pragma warning disable 1634, 1691      // disable warning about unknown Presharp warnings
 
@@ -30,7 +30,7 @@ namespace System.IO.Packaging
     /// <remarks>
     /// This WebRequest overload exists to handle Pack-specific URI's based on our custom schema
     /// </remarks>
-    public sealed class PackWebResponse: WebResponse
+    public sealed class PackWebResponse : WebResponse
     {
         //------------------------------------------------------
         //
@@ -443,8 +443,8 @@ namespace System.IO.Packaging
         /// <remarks>assumes caller has locked the syncObject and that we are not disposed</remarks>
         private void AbortResponse()
         {
-// Disable the PreSharp warning about empty catch blocks - we need this one because sub-classes of WebResponse may or may
-// not implement Abort() and we want to silently ignore this if they don't.
+            // Disable the PreSharp warning about empty catch blocks - we need this one because sub-classes of WebResponse may or may
+            // not implement Abort() and we want to silently ignore this if they don't.
 #pragma warning disable 56502
             // Close was called - abort the response if necessary
             try
@@ -505,11 +505,11 @@ namespace System.IO.Packaging
                             if (_responseStream != null)
                             {
 #if DEBUG
-                        if (PackWebRequestFactory._traceSwitch.Enabled)
-                           System.Diagnostics.Trace.TraceInformation(
-                                   DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                   Environment.CurrentManagedThreadId + ": " +
-                                   "PackWebResponse.Close() - close stream");
+                                if (PackWebRequestFactory._traceSwitch.Enabled)
+                                    System.Diagnostics.Trace.TraceInformation(
+                                            DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
+                                            Environment.CurrentManagedThreadId + ": " +
+                                            "PackWebResponse.Close() - close stream");
 #endif
                                 _responseStream.Close();
                             }
@@ -518,11 +518,11 @@ namespace System.IO.Packaging
                             if (_fullResponse != null)
                             {
 #if DEBUG
-                        if (PackWebRequestFactory._traceSwitch.Enabled)
-                            System.Diagnostics.Trace.TraceInformation(
-                                    DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                    Environment.CurrentManagedThreadId + ": " +
-                                    "PackWebResponse.Close() - close response");
+                                if (PackWebRequestFactory._traceSwitch.Enabled)
+                                    System.Diagnostics.Trace.TraceInformation(
+                                            DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
+                                            Environment.CurrentManagedThreadId + ": " +
+                                            "PackWebResponse.Close() - close response");
 #endif
                                 // always call Dispose to satisfy FxCop
                                 ((IDisposable)_fullResponse).Dispose();
@@ -536,7 +536,7 @@ namespace System.IO.Packaging
                             {
                                 _timeoutTimer.Dispose();
                             }
-}
+                        }
                         finally
                         {
                             _timeoutTimer = null;
@@ -603,11 +603,11 @@ namespace System.IO.Packaging
                 lock (_cacheEntry)
                 {
 #if DEBUG
-            if (PackWebRequestFactory._traceSwitch.Enabled)
-                System.Diagnostics.Trace.TraceInformation(
-                        DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        Environment.CurrentManagedThreadId + ": " +
-                        "CachedResponse - Getting response stream");
+                    if (PackWebRequestFactory._traceSwitch.Enabled)
+                        System.Diagnostics.Trace.TraceInformation(
+                                DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
+                                Environment.CurrentManagedThreadId + ": " +
+                                "CachedResponse - Getting response stream");
 #endif
                     // only one copy
                     if (_parent._responseStream == null)
@@ -741,8 +741,8 @@ namespace System.IO.Packaging
 
             // fields
             private PackWebResponse _parent;
-            private Package        _cacheEntry;
-            private bool            _cachedPackageIsThreadSafe;
+            private Package _cacheEntry;
+            private bool _cachedPackageIsThreadSafe;
         }
 
         /// <summary>
@@ -809,17 +809,17 @@ namespace System.IO.Packaging
                 finally
                 {
                     _timeoutTimer = null;       // harmless if already null, and removes need for extra try/finally block above
-    #if DEBUG
+#if DEBUG
                     if (PackWebRequestFactory._traceSwitch.Enabled)
                         System.Diagnostics.Trace.TraceInformation(
                                 DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
                                 Environment.CurrentManagedThreadId + ": " +
                                 "PackWebResponse.ResponseCallBack() - signal response available");
-    #endif
+#endif
 
-// We need the original webRequest to get HttpStack information so that they can be used to make
-//  additional byte range request; So we cannot null it out anymore
-//                    _webRequest = null;     // don't need this anymore so release
+                    // We need the original webRequest to get HttpStack information so that they can be used to make
+                    //  additional byte range request; So we cannot null it out anymore
+                    //                    _webRequest = null;     // don't need this anymore so release
 
                     // this must be set even when there is an exception so that our client
                     // can be unblocked
@@ -926,37 +926,37 @@ namespace System.IO.Packaging
         //  Private Fields
         //
         //------------------------------------------------------
-        private MS.Internal.ContentType     _mimeType;              // type of the returned stream - cached because it never changes
-        private const int       _bufferSize = 0x1000;   // 4k
-        private Uri             _uri;                   // full uri
-        private Uri             _innerUri;              // inner uri
-        private Uri             _partName;              // path to stream
-        private bool            _disposed;              // closed?
+        private MS.Internal.ContentType _mimeType;              // type of the returned stream - cached because it never changes
+        private const int _bufferSize = 0x1000;   // 4k
+        private Uri _uri;                   // full uri
+        private Uri _innerUri;              // inner uri
+        private Uri _partName;              // path to stream
+        private bool _disposed;              // closed?
 
-        private WebRequest      _webRequest;            // the real web request
+        private WebRequest _webRequest;            // the real web request
 
-        private WebResponse     _fullResponse;          // the real web response
-        private long            _fullStreamLength;      // need to return this in call to get_Length
-        private Stream          _responseStream;            // mimic existing Response behavior by creating and returning
-                                                            // one and only one stream
-        private bool            _responseError;         // will be true if exception occurs calling EndGetResponse()
-        private Exception       _responseException;     // actual exception to throw (if any)
-        private Timer           _timeoutTimer;          // used if Timeout specified
+        private WebResponse _fullResponse;          // the real web response
+        private long _fullStreamLength;      // need to return this in call to get_Length
+        private Stream _responseStream;            // mimic existing Response behavior by creating and returning
+                                                   // one and only one stream
+        private bool _responseError;         // will be true if exception occurs calling EndGetResponse()
+        private Exception _responseException;     // actual exception to throw (if any)
+        private Timer _timeoutTimer;          // used if Timeout specified
 
         // OS event used to signal that the response is available
         private ManualResetEvent _responseAvailable;    // protects access to _fullResponse object
 
         // flag to signal that _fullStreamLength is valid - needed because some servers don't return
         // the length (usually FTP servers) so calls to Stream.Length must block until we know the actual length.
-        private bool            _lengthAvailable;
+        private bool _lengthAvailable;
 
         // PackageCache response?
-        private CachedResponse  _cachedResponse;        // null if cache not used
+        private CachedResponse _cachedResponse;        // null if cache not used
 
         // private object to prevent deadlock (should not lock(_lockObject) based on PreSharp rule 6517)
-        private Object            _lockObject;          // Serialize access to _disposed, _timoutTimer and _responseAvailable because even though the main client
-                                                        // thread blocks on WaitForResponse (_responseAvailable event) the optional Timer thread and the
-                                                        // Response callback thread may arrive independently at any time.
+        private Object _lockObject;          // Serialize access to _disposed, _timoutTimer and _responseAvailable because even though the main client
+                                             // thread blocks on WaitForResponse (_responseAvailable event) the optional Timer thread and the
+                                             // Response callback thread may arrive independently at any time.
 
 #if DEBUG
         // toggle this switch to force execution of code that handles servers that return bogus content length

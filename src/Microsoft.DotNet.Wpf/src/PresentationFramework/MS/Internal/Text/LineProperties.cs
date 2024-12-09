@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -48,16 +48,16 @@ namespace MS.Internal.Text
         /// report always 0 as line height. 
         /// Line height is handled by TextFormatter host.
         /// </remarks>
-        public override double LineHeight 
-        { 
-            get 
+        public override double LineHeight
+        {
+            get
             {
                 if (LineStackingStrategy == LineStackingStrategy.BlockLineHeight && !Double.IsNaN(_lineHeight))
                 {
                     return _lineHeight;
                 }
                 return 0.0;
-            } 
+            }
         }
 
         /// <summary>
@@ -183,14 +183,14 @@ namespace MS.Internal.Text
                             lineAdvance = Math.Max(lineAdvance, _lineHeight);
                         }
                         break;
-                    //    case LineStackingStrategy.InlineLineHeight:
-                    //        // Inline uses the height of the line just processed.
-                    //        break;
+                        //    case LineStackingStrategy.InlineLineHeight:
+                        //        // Inline uses the height of the line just processed.
+                        //        break;
 
-                    //    case LineStackingStrategy.GridHeight:
-                    //        lineAdvance = (((TextDpi.ToTextDpi(lineAdvance) - 1) / TextDpi.ToTextDpi(_lineHeight)) + 1) * _lineHeight;
-                    //        break;
-                    //}
+                        //    case LineStackingStrategy.GridHeight:
+                        //        lineAdvance = (((TextDpi.ToTextDpi(lineAdvance) - 1) / TextDpi.ToTextDpi(_lineHeight)) + 1) * _lineHeight;
+                        //        break;
+                        //}
                 }
             }
             return lineAdvance;
@@ -215,14 +215,14 @@ namespace MS.Internal.Text
                         lineAdvance = Math.Max(lineAdvance, _lineHeight);
                         break;
 
-                    //    case LineStackingStrategy.InlineLineHeight:
-                    //        // Inline uses the height of the line just processed.
-                    //        break;
+                        //    case LineStackingStrategy.InlineLineHeight:
+                        //        // Inline uses the height of the line just processed.
+                        //        break;
 
-                    //    case LineStackingStrategy.GridHeight:
-                    //        lineAdvance = (((TextDpi.ToTextDpi(lineAdvance) - 1) / TextDpi.ToTextDpi(_lineHeight)) + 1) * _lineHeight;
-                    //        break;
-                    //}
+                        //    case LineStackingStrategy.GridHeight:
+                        //        lineAdvance = (((TextDpi.ToTextDpi(lineAdvance) - 1) / TextDpi.ToTextDpi(_lineHeight)) + 1) * _lineHeight;
+                        //        break;
+                        //}
                 }
             }
 

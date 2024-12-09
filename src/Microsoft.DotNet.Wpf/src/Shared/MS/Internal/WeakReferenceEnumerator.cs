@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,7 +22,7 @@ namespace MS.Internal
     /// </remarks>
     internal struct WeakReferenceListEnumerator : IEnumerator
     {
-        public WeakReferenceListEnumerator( ArrayList List)
+        public WeakReferenceListEnumerator(ArrayList List)
         {
             _i = 0;
             _List = List;
@@ -30,13 +30,13 @@ namespace MS.Internal
         }
 
         object IEnumerator.Current
-        {  get{ return Current; } }
-        
+        { get { return Current; } }
+
         public object Current
         {
             get
             {
-                if( null == _StrongReference )
+                if (null == _StrongReference)
                 {
 #pragma warning suppress 6503
                     throw new System.InvalidOperationException(SR.Enumerator_VerifyContext);
@@ -47,12 +47,12 @@ namespace MS.Internal
 
         public bool MoveNext()
         {
-            object obj=null;
-            while( _i < _List.Count )
+            object obj = null;
+            while (_i < _List.Count)
             {
-                WeakReference weakRef = (WeakReference) _List[ _i++ ];
+                WeakReference weakRef = (WeakReference)_List[_i++];
                 obj = weakRef.Target;
-                if(null != obj)
+                if (null != obj)
                     break;
             }
             _StrongReference = obj;

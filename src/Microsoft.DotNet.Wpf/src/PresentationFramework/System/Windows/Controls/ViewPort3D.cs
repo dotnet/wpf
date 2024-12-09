@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,13 +8,13 @@
 // rectangle of the control.
 //
 
-using MS.Internal;
-using MS.Internal.KnownBoxes;
 using System.ComponentModel;
 using System.Windows.Automation.Peers;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using System.Windows.Markup;
+using MS.Internal;
+using MS.Internal.KnownBoxes;
 
 namespace System.Windows.Controls
 {
@@ -52,16 +52,17 @@ namespace System.Windows.Controls
         /// </summary>
         public Viewport3D()
         {
-            _viewport3DVisual = new Viewport3DVisual();
-
-            // The value for the Camera property and the Children property on Viewport3D
-            // will also be the value for these properties on the Viewport3DVisual we
-            // create as an internal Visual child.  This then will cause these values to
-            // be shared, which will break property inheritance, dynamic resource references
-            // and databinding.  To prevent this, we mark the internal
-            // Viewport3DVisual.CanBeInheritanceContext to be false, allowing Camera and
-            // Children to only pick up value context from the Viewport3D (this).
-            _viewport3DVisual.CanBeInheritanceContext = false;
+            _viewport3DVisual = new Viewport3DVisual
+            {
+                // The value for the Camera property and the Children property on Viewport3D
+                // will also be the value for these properties on the Viewport3DVisual we
+                // create as an internal Visual child.  This then will cause these values to
+                // be shared, which will break property inheritance, dynamic resource references
+                // and databinding.  To prevent this, we mark the internal
+                // Viewport3DVisual.CanBeInheritanceContext to be false, allowing Camera and
+                // Children to only pick up value context from the Viewport3D (this).
+                CanBeInheritanceContext = false
+            };
 
             this.AddVisualChild(_viewport3DVisual);
 
@@ -97,11 +98,11 @@ namespace System.Windows.Controls
 
         private static void OnCameraChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Viewport3D owner = (Viewport3D) d;
+            Viewport3D owner = (Viewport3D)d;
 
             if (!e.IsASubPropertyChange)
             {
-                owner._viewport3DVisual.Camera = (Camera) e.NewValue;
+                owner._viewport3DVisual.Camera = (Camera)e.NewValue;
             }
         }
 
@@ -110,7 +111,7 @@ namespace System.Windows.Controls
         /// </summary>
         public Camera Camera
         {
-            get { return (Camera) GetValue(CameraProperty); }
+            get { return (Camera)GetValue(CameraProperty); }
             set { SetValue(CameraProperty, value); }
         }
 
@@ -119,7 +120,7 @@ namespace System.Windows.Controls
                 "Children",
                 typeof(Visual3DCollection),
                 typeof(Viewport3D),
-                new FrameworkPropertyMetadata((object) null));
+                new FrameworkPropertyMetadata((object)null));
 
         /// <summary>
         /// The 3D children of the Viewport3D
@@ -132,7 +133,7 @@ namespace System.Windows.Controls
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public Visual3DCollection Children
         {
-            get { return (Visual3DCollection) GetValue(ChildrenProperty); }
+            get { return (Visual3DCollection)GetValue(ChildrenProperty); }
         }
 
         #endregion
@@ -177,7 +178,7 @@ namespace System.Windows.Controls
         protected override Visual GetVisualChild(int index)
         {
             //added in the constructor so 1 children always exist
-            switch(index)
+            switch (index)
             {
                 case 0:
                     return _viewport3DVisual;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -35,7 +35,7 @@ namespace System.Windows
         {
             return false;
         }
-    
+
         /// <summary>
         ///     TypeConverter method override.
         /// </summary>
@@ -48,11 +48,11 @@ namespace System.Windows
         /// <returns>
         ///     true if conversion is possible
         /// </returns>
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) 
+        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
             return false;
         }
-        
+
         /// <summary>
         ///     TypeConverter method implementation.
         /// </summary>

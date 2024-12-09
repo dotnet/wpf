@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -125,7 +125,7 @@ namespace System.Windows.Data
         public void Clear()
         {
             // unhook contained collections
-            for (int k=0, n=InternalList.Count;  k < n;  ++k)
+            for (int k = 0, n = InternalList.Count; k < n; ++k)
             {
                 CollectionContainer cc = this[k] as CollectionContainer;
                 if (cc != null)
@@ -534,7 +534,7 @@ namespace System.Windows.Data
 
         #region Private Fields
 
-        private ArrayList               _internalList;
+        private ArrayList _internalList;
 
         #endregion Private Fields
 
@@ -593,7 +593,7 @@ namespace System.Windows.Data
                 CollectionContainer cc = o as CollectionContainer;
                 if (cc != null)
                 {
-                    cc.GetCollectionChangedSources(level+1, format, sources);
+                    cc.GetCollectionChangedSources(level + 1, format, sources);
                 }
             }
         }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -29,11 +29,11 @@ namespace MS.Internal
                 defaultObject,
                 new FrugalStructList<Span>()
                 )
-        {}
+        { }
 
         internal SpanVector(
-            object      defaultObject,
-            FrugalStructList<Span>   spans
+            object defaultObject,
+            FrugalStructList<Span> spans
             )
         {
             _defaultObject = defaultObject;
@@ -165,7 +165,7 @@ namespace MS.Internal
             // Return true if the span is in range.
             return spanIndex != spanCount;
         }
-        
+
 
         /// <summary>
         /// Set an element as a value to a character range
@@ -227,8 +227,8 @@ namespace MS.Internal
                     Add(new Span(_defaultObject, first - fc));
                 }
 
-                if (   Count > 0 
-                    && equals(_spans[Count-1].element, element))
+                if (Count > 0
+                    && equals(_spans[Count - 1].element, element))
                 {
                     // New Element matches end Element, just extend end Element
                     _spans[Count - 1].length += length;
@@ -250,7 +250,7 @@ namespace MS.Internal
 
                 int ls = fs;
                 int lc = fc;
-                while (   ls < Count 
+                while (ls < Count
                        && lc + _spans[ls].length <= first + length)
                 {
                     lc += _spans[ls].length;
@@ -290,7 +290,7 @@ namespace MS.Internal
                 // Expand update region forwards to include existing Spans of identical
                 // Element type
 
-                if (   ls < Count
+                if (ls < Count
                     && equals(_spans[ls].element, element))
                 {
                     // Extend update region to end of existing split run
@@ -441,8 +441,8 @@ namespace MS.Internal
         static private Equals _referenceEquals = new Equals(Object.ReferenceEquals);
         static private Equals _equals = new Equals(Object.Equals);
 
-        FrugalStructList<Span>  _spans;
-        object                  _defaultObject;
+        FrugalStructList<Span> _spans;
+        object _defaultObject;
         #endregion
     }
 
@@ -489,8 +489,8 @@ namespace MS.Internal
             _current = -1;
         }
 
-        SpanVector  _spans;
-        int         _current;    // current span
+        SpanVector _spans;
+        int _current;    // current span
     }
 
 
@@ -578,7 +578,7 @@ namespace MS.Internal
         /// <summary>
         /// The first cp of the current span
         /// </summary>
-        public int  CurrentSpanStart
+        public int CurrentSpanStart
         {
             get { return _spanPosition.CP; }
         }
@@ -586,7 +586,7 @@ namespace MS.Internal
         /// <summary>
         /// The length of current span start from the current cp
         /// </summary>
-        public int  Length
+        public int Length
         {
             get { return _cch; }
         }
@@ -594,7 +594,7 @@ namespace MS.Internal
         /// <summary>
         /// The current position
         /// </summary>
-        public int  CurrentPosition
+        public int CurrentPosition
         {
             get { return _cp; }
         }
@@ -626,10 +626,10 @@ namespace MS.Internal
         #endregion
 
         #region Private members
-        SpanVector      _spans;         // vector of spans
-        SpanPosition    _spanPosition;  // index and cp of current span
-        int             _cp;            // current cp (may be greater than start of span)
-        int             _cch;           // distance from current cp to end of current span
+        SpanVector _spans;         // vector of spans
+        SpanPosition _spanPosition;  // index and cp of current span
+        int _cp;            // current cp (may be greater than start of span)
+        int _cch;           // distance from current cp to end of current span
         #endregion
     }
 }

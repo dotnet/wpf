@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -29,44 +29,44 @@ namespace MS.Internal.TextFormatting
         /// </summary>
         internal class FullTextLine : TextLine
         {
-            private TextMetrics                         _metrics;                       // Text metrics
-            private int                                 _cpFirst;                       // character index to the first charcter of the line
-            private int                                 _depthQueryMax;                 // maximum depth of reversals used in querying
-            private int                                 _paragraphWidth;                // paragraph width
-            private int                                 _textMinWidthAtTrailing;        // smallest text width excluding trailing whitespaces
-            private IntPtr                              _ploline;                       // actual LS line
-            private IntPtr                              _ploc;                          // actual LS context
-            private Overhang                            _overhang;                      // overhang metrics
-            private StatusFlags                         _statusFlags;                   // status flags of the line
+            private TextMetrics _metrics;                       // Text metrics
+            private int _cpFirst;                       // character index to the first charcter of the line
+            private int _depthQueryMax;                 // maximum depth of reversals used in querying
+            private int _paragraphWidth;                // paragraph width
+            private int _textMinWidthAtTrailing;        // smallest text width excluding trailing whitespaces
+            private IntPtr _ploline;                       // actual LS line
+            private IntPtr _ploc;                          // actual LS context
+            private Overhang _overhang;                      // overhang metrics
+            private StatusFlags _statusFlags;                   // status flags of the line
 
-            private SpanVector                          _plsrunVector;                  // plsrun span vector indexed by lscp
-            private ArrayList                           _lsrunsMainText;                // list of lsrun of main text
-            private ArrayList                           _lsrunsMarkerText;              // list of lsrun of marker text
+            private SpanVector _plsrunVector;                  // plsrun span vector indexed by lscp
+            private ArrayList _lsrunsMainText;                // list of lsrun of main text
+            private ArrayList _lsrunsMarkerText;              // list of lsrun of marker text
 
-            private FullTextState                       _fullText;                      // full text state kept for collapsing purpose (only have it when StatusFlags.HasOverflowed is set)
-            private FormattedTextSymbols                _collapsingSymbol;              // line-end collapsing symbol
-            private TextCollapsedRange                  _collapsedRange;                // line-end collapsed range
+            private FullTextState _fullText;                      // full text state kept for collapsing purpose (only have it when StatusFlags.HasOverflowed is set)
+            private FormattedTextSymbols _collapsingSymbol;              // line-end collapsing symbol
+            private TextCollapsedRange _collapsedRange;                // line-end collapsed range
 
-            private TextSource                          _textSource;                    // Text Source of the main text for the line
-            private TextDecorationCollection            _paragraphTextDecorations;      // Paragraph-level text decorations (or null if none)
-            private Brush                               _defaultTextDecorationsBrush;   // Default brush for paragraph text decorations
-            private TextFormattingMode                  _textFormattingMode;            // The TextFormattingMode of the line (Ideal or Display).
+            private TextSource _textSource;                    // Text Source of the main text for the line
+            private TextDecorationCollection _paragraphTextDecorations;      // Paragraph-level text decorations (or null if none)
+            private Brush _defaultTextDecorationsBrush;   // Default brush for paragraph text decorations
+            private TextFormattingMode _textFormattingMode;            // The TextFormattingMode of the line (Ideal or Display).
 
             [Flags]
             private enum StatusFlags
             {
-                None                = 0,
-                IsDisposed          = 0x00000001,
-                HasOverflowed       = 0x00000002,
+                None = 0,
+                IsDisposed = 0x00000001,
+                HasOverflowed = 0x00000002,
                 BoundingBoxComputed = 0x00000004,
-                RightToLeft         = 0x00000008,
-                HasCollapsed        = 0x00000010,
-                KeepState           = 0x00000020,
-                IsTruncated         = 0x00000040,
-                IsJustified         = 0x00000080, // Indicates whether the text alignment is set to justified
-                                                  // This flag is needed later to decide how the metrics
-                                                  // will be rounded in display mode when converted
-                                                  // from ideal to real values.
+                RightToLeft = 0x00000008,
+                HasCollapsed = 0x00000010,
+                KeepState = 0x00000020,
+                IsTruncated = 0x00000040,
+                IsJustified = 0x00000080, // Indicates whether the text alignment is set to justified
+                                          // This flag is needed later to decide how the metrics
+                                          // will be rounded in display mode when converted
+                                          // from ideal to real values.
             }
 
             private enum CaretDirection
@@ -85,16 +85,16 @@ namespace MS.Internal.TextFormatting
             /// <param name="paragraphWidth">paragraph width</param>
             /// <param name="lineFlags">line formatting control flags</param>
             internal FullTextLine(
-                FormatSettings          settings,
-                int                     cpFirst,
-                int                     lineLength,
-                int                     paragraphWidth,
-                LineFlags               lineFlags
+                FormatSettings settings,
+                int cpFirst,
+                int lineLength,
+                int paragraphWidth,
+                LineFlags lineFlags
                 )
                 : this(settings.TextFormattingMode, settings.Pap.Justify, settings.TextSource.PixelsPerDip)
             {
-                if (    (lineFlags & LineFlags.KeepState) != 0
-                    ||  settings.Pap.AlwaysCollapsible)
+                if ((lineFlags & LineFlags.KeepState) != 0
+                    || settings.Pap.AlwaysCollapsible)
                 {
                     _statusFlags |= StatusFlags.KeepState;
                 }
@@ -161,8 +161,10 @@ namespace MS.Internal.TextFormatting
                 {
                     _statusFlags |= StatusFlags.IsJustified;
                 }
-                _metrics = new TextMetrics();
-                _metrics._pixelsPerDip = pixelsPerDip;
+                _metrics = new TextMetrics
+                {
+                    _pixelsPerDip = pixelsPerDip
+                };
                 _ploline = IntPtr.Zero;
             }
 
@@ -179,14 +181,14 @@ namespace MS.Internal.TextFormatting
             /// <param name="lineFlags">line formatting control flags</param>
             /// <param name="collapsingSymbol">line end collapsing symbol</param>
             private void FormatLine(
-                FullTextState           fullText,
-                int                     cpFirst,
-                int                     lineLength,
-                int                     formatWidth,
-                int                     finiteFormatWidth,
-                int                     paragraphWidth,
-                LineFlags               lineFlags,
-                FormattedTextSymbols    collapsingSymbol
+                FullTextState fullText,
+                int cpFirst,
+                int lineLength,
+                int formatWidth,
+                int finiteFormatWidth,
+                int paragraphWidth,
+                LineFlags lineFlags,
+                FormattedTextSymbols collapsingSymbol
                 )
             {
                 _metrics._formatter = fullText.Formatter;
@@ -248,7 +250,7 @@ namespace MS.Internal.TextFormatting
                     int cpLimit = fullText.CpMeasured;
                     int subtract = 1;
 
-                    for (;;)
+                    for (; ; )
                     {
                         // The line must contain at least one character position.
                         if (cpLimit < 1)
@@ -293,10 +295,10 @@ namespace MS.Internal.TextFormatting
                 // release the context
                 context.Release();
 
-                if(lserr != LsErr.None)
+                if (lserr != LsErr.None)
                 {
                     GC.SuppressFinalize(this);
-                    if(callbackException != null)
+                    if (callbackException != null)
                     {
                         // rethrow exception thrown in callbacks
                         throw WrapException(callbackException);
@@ -357,9 +359,9 @@ namespace MS.Internal.TextFormatting
                     }
                 }
 
-                if (    fullText != null
-                    &&  (   fullText.KeepState
-                        ||  (_statusFlags & StatusFlags.KeepState) != 0
+                if (fullText != null
+                    && (fullText.KeepState
+                        || (_statusFlags & StatusFlags.KeepState) != 0
                         )
                     )
                 {
@@ -445,7 +447,7 @@ namespace MS.Internal.TextFormatting
             /// Append line end collapsing symbol
             /// </summary>
             private void AppendCollapsingSymbol(
-                FormattedTextSymbols    symbol
+                FormattedTextSymbols symbol
                 )
             {
                 Debug.Assert(_collapsingSymbol == null && symbol != null);
@@ -465,9 +467,9 @@ namespace MS.Internal.TextFormatting
             /// See comment in the remark section of FullTextState.GetBreakpointInternalCp.
             /// </remarks>
             private int PrefetchLSRuns(
-                TextStore   store,
-                int         cpFirst,
-                int         lineLength
+                TextStore store,
+                int cpFirst,
+                int lineLength
                 )
             {
                 Debug.Assert(lineLength > 0);
@@ -504,8 +506,8 @@ namespace MS.Internal.TextFormatting
 
                     lscpLineLength += lastSpanLength;
                     prefetchLength += lastRunLength;
-} while (   !TextStore.IsNewline(lsrun.Type)
-                        &&  lineLength >= prefetchLength
+                } while (!TextStore.IsNewline(lsrun.Type)
+                        && lineLength >= prefetchLength
                     );
 
                 // calibrate the LSCP length to the LSCP equivalence of the last CP of the line
@@ -526,9 +528,9 @@ namespace MS.Internal.TextFormatting
             /// <param name="origin">drawing origin</param>
             /// <param name="inversion">indicate the inversion of the drawing surface</param>
             public override void Draw(
-                DrawingContext      drawingContext,
-                Point               origin,
-                InvertAxes          inversion
+                DrawingContext drawingContext,
+                Point origin,
+                InvertAxes inversion
                 )
             {
                 ArgumentNullException.ThrowIfNull(drawingContext);
@@ -570,9 +572,9 @@ namespace MS.Internal.TextFormatting
             /// <param name="origin">offset to the line origin</param>
             /// <param name="antiInversion">anti-inversion transform applied on the surface</param>
             private void DrawTextLine(
-                DrawingContext      drawingContext,
-                Point               origin,
-                MatrixTransform     antiInversion
+                DrawingContext drawingContext,
+                Point origin,
+                MatrixTransform antiInversion
                 )
             {
                 Rect boundingBox = Rect.Empty;
@@ -613,9 +615,9 @@ namespace MS.Internal.TextFormatting
 
                     context.Release();
 
-                    if(lserr != LsErr.None)
+                    if (lserr != LsErr.None)
                     {
-                        if(callbackException != null)
+                        if (callbackException != null)
                         {
                             // rethrow exception thrown in callbacks
                             throw callbackException;
@@ -654,8 +656,8 @@ namespace MS.Internal.TextFormatting
             /// </summary>
             private Rect DrawCollapsingSymbol(
                 DrawingContext drawingContext,
-                Point          lineOrigin,
-                Point          vectorToLineOrigin
+                Point lineOrigin,
+                Point vectorToLineOrigin
                 )
             {
                 int symbolIdealWidth = TextFormatterImp.RealToIdeal(_collapsingSymbol.Width);
@@ -691,7 +693,7 @@ namespace MS.Internal.TextFormatting
             /// </summary>
             /// <param name="collapsingPropertiesList">a list of collapsing properties</param>
             public override TextLine Collapse(
-                params TextCollapsingProperties[]   collapsingPropertiesList
+                params TextCollapsingProperties[] collapsingPropertiesList
                 )
             {
                 if ((_statusFlags & StatusFlags.IsDisposed) != 0)
@@ -699,8 +701,8 @@ namespace MS.Internal.TextFormatting
                     throw new ObjectDisposedException(SR.TextLineHasBeenDisposed);
                 }
 
-                if (    !HasOverflowed
-                    &&  (_statusFlags & StatusFlags.KeepState) == 0)
+                if (!HasOverflowed
+                    && (_statusFlags & StatusFlags.KeepState) == 0)
                 {
                     // Attempt to collapse a non-overflowed line results in the original line returned
                     return this;
@@ -829,7 +831,7 @@ namespace MS.Internal.TextFormatting
             /// <param name="distance">distance in text flow direction from the beginning of the line</param>
             /// <returns>character hit</returns>
             public override CharacterHit GetCharacterHitFromDistance(
-                double      distance
+                double distance
                 )
             {
                 if ((_statusFlags & StatusFlags.IsDisposed) != 0)
@@ -849,15 +851,15 @@ namespace MS.Internal.TextFormatting
                 // assuming the first cp of the line
                 CharacterHit characterHit = new CharacterHit(_cpFirst, 0);
 
-                if(_ploline == IntPtr.Zero)
+                if (_ploline == IntPtr.Zero)
                 {
                     // Returning the first cp for the empty line
                     return characterHit;
                 }
 
-                if (    HasCollapsed
-                    &&  _collapsedRange != null
-                    &&  _collapsingSymbol != null
+                if (HasCollapsed
+                    && _collapsedRange != null
+                    && _collapsingSymbol != null
                     )
                 {
                     int lineEndDistance = _metrics._textStart + _metrics._textWidthAtTrailing;
@@ -902,9 +904,9 @@ namespace MS.Internal.TextFormatting
 
                     int codepointsToNextCaretStop = lsrun.IsHitTestable ? 1 : lsrun.Length;
 
-                    if (    lsrun.IsHitTestable
-                        &&  (   lsrun.HasExtendedCharacter
-                            ||  lsrun.NeedsCaretInfo)
+                    if (lsrun.IsHitTestable
+                        && (lsrun.HasExtendedCharacter
+                            || lsrun.NeedsCaretInfo)
                         )
                     {
                         // A hit-testable run with caret stops at every cluster boundaries,
@@ -962,7 +964,7 @@ namespace MS.Internal.TextFormatting
             /// <param name="characterHit">index to text source's character store</param>
             /// <returns>distance in text flow direction from the beginning of the line.</returns>
             public override double GetDistanceFromCharacterHit(
-                CharacterHit    characterHit
+                CharacterHit characterHit
                 )
             {
                 if ((_statusFlags & StatusFlags.IsDisposed) != 0)
@@ -996,16 +998,16 @@ namespace MS.Internal.TextFormatting
                     return _metrics._textStart + _metrics._textWidthAtTrailing;
                 }
 
-                if (    HasCollapsed
-                    &&  _collapsedRange != null
-                    &&  characterHit.FirstCharacterIndex >= _collapsedRange.TextSourceCharacterIndex
+                if (HasCollapsed
+                    && _collapsedRange != null
+                    && characterHit.FirstCharacterIndex >= _collapsedRange.TextSourceCharacterIndex
                     )
                 {
                     // The current character hit is beyond the beginning of the collapsed range
                     int lineEndDistance = _metrics._textStart + _metrics._textWidthAtTrailing;
 
-                    if (    characterHit.FirstCharacterIndex >= _collapsedRange.TextSourceCharacterIndex + _collapsedRange.Length
-                        ||  characterHit.TrailingLength != 0
+                    if (characterHit.FirstCharacterIndex >= _collapsedRange.TextSourceCharacterIndex + _collapsedRange.Length
+                        || characterHit.TrailingLength != 0
                         || _collapsingSymbol == null
                         )
                     {
@@ -1049,11 +1051,11 @@ namespace MS.Internal.TextFormatting
             /// Get distance from the start of text cell to the specified lscp
             /// </summary>
             private int GetDistanceInsideTextCell(
-                int                 lscpCurrent,
-                bool                isTrailing,
-                LsQSubInfo[]        sublineInfo,
-                int                 actualSublineCount,
-                ref LsTextCell      lsTextCell
+                int lscpCurrent,
+                bool isTrailing,
+                LsQSubInfo[] sublineInfo,
+                int actualSublineCount,
+                ref LsTextCell lsTextCell
                 )
             {
                 int distanceInCell = 0;
@@ -1073,9 +1075,9 @@ namespace MS.Internal.TextFormatting
                 // the last subline contains the run that owns the querying lscp
                 LSRun lsrun = GetRun((Plsrun)sublineInfo[actualSublineCount - 1].plsrun);
 
-                if (    lsrun.IsHitTestable
-                    &&  (   lsrun.HasExtendedCharacter
-                        ||  lsrun.NeedsCaretInfo)
+                if (lsrun.IsHitTestable
+                    && (lsrun.HasExtendedCharacter
+                        || lsrun.NeedsCaretInfo)
                     )
                 {
                     // A hit-testable run with caret stops at every cluster boundaries,
@@ -1122,7 +1124,7 @@ namespace MS.Internal.TextFormatting
             /// <param name="characterHit">the current character hit</param>
             /// <returns>the next character hit</returns>
             public override CharacterHit GetNextCaretCharacterHit(
-                CharacterHit    characterHit
+                CharacterHit characterHit
                 )
             {
                 if ((_statusFlags & StatusFlags.IsDisposed) != 0)
@@ -1212,8 +1214,8 @@ namespace MS.Internal.TextFormatting
             /// Calculate previous caret character hit based on the caret action
             /// </summary>
             private CharacterHit GetPreviousCaretCharacterHitByBehavior(
-                CharacterHit    characterHit,
-                CaretDirection  direction
+                CharacterHit characterHit,
+                CaretDirection direction
                 )
             {
                 Debug.Assert(direction == CaretDirection.Backward || direction == CaretDirection.Backspace);
@@ -1230,8 +1232,8 @@ namespace MS.Internal.TextFormatting
                     return characterHit;
                 }
 
-                if (    characterHit.FirstCharacterIndex == _cpFirst
-                    &&  characterHit.TrailingLength == 0)
+                if (characterHit.FirstCharacterIndex == _cpFirst
+                    && characterHit.TrailingLength == 0)
                 {
                     // We are already at the beginning of the line
                     return characterHit;
@@ -1253,10 +1255,10 @@ namespace MS.Internal.TextFormatting
                     return characterHit;
                 }
 
-                if (    offsetToNextCaretStopIndex != 0
-                    &&  characterHit.TrailingLength == 0
-                    &&  caretStopIndex != _cpFirst
-                    &&  caretStopIndex >= characterHit.FirstCharacterIndex
+                if (offsetToNextCaretStopIndex != 0
+                    && characterHit.TrailingLength == 0
+                    && caretStopIndex != _cpFirst
+                    && caretStopIndex >= characterHit.FirstCharacterIndex
                     )
                 {
                     // If the current character hit is at the leading edge and it is not at the first caret stop,
@@ -1291,18 +1293,18 @@ namespace MS.Internal.TextFormatting
             /// of codepoints from the closest caret stop to the next caret stop.
             /// </summary>
             private bool GetNextOrPreviousCaretStop(
-                int                      currentIndex,
-                CaretDirection           direction,
-                out int                  caretStopIndex,
-                out int                  offsetToNextCaretStopIndex
+                int currentIndex,
+                CaretDirection direction,
+                out int caretStopIndex,
+                out int offsetToNextCaretStopIndex
                 )
             {
                 caretStopIndex = currentIndex;
                 offsetToNextCaretStopIndex = 0;
 
-                if (    HasCollapsed
-                    &&  _collapsedRange != null
-                    &&  currentIndex >= _collapsedRange.TextSourceCharacterIndex
+                if (HasCollapsed
+                    && _collapsedRange != null
+                    && currentIndex >= _collapsedRange.TextSourceCharacterIndex
                     )
                 {
                     // current index is within collapsed range,
@@ -1337,9 +1339,9 @@ namespace MS.Internal.TextFormatting
                 // Locate the current caret stop
                 caretStopIndex = GetExternalCp(lsTextCell.lscpStartCell);
 
-                if (    actualSublineCount > 0
-                    &&  lscpVisisble >= lsTextCell.lscpStartCell
-                    &&  lscpVisisble <= lsTextCell.lscpEndCell
+                if (actualSublineCount > 0
+                    && lscpVisisble >= lsTextCell.lscpStartCell
+                    && lscpVisisble <= lsTextCell.lscpEndCell
                     )
                 {
                     // the last subline contains the run that owns the querying lscp
@@ -1347,8 +1349,8 @@ namespace MS.Internal.TextFormatting
 
                     if (lsrun.IsHitTestable)
                     {
-                        if (    lsrun.HasExtendedCharacter
-                            ||  (direction != CaretDirection.Backspace && lsrun.NeedsCaretInfo)
+                        if (lsrun.HasExtendedCharacter
+                            || (direction != CaretDirection.Backspace && lsrun.NeedsCaretInfo)
                             )
                         {
                             // LsTextCell.lscpEndCell is the index to the last lscp still in the cell.
@@ -1378,9 +1380,9 @@ namespace MS.Internal.TextFormatting
             /// closest navigable cp. Return true is one such cp is found, false otherwise.
             /// </summary>
             private bool FindNextOrPreviousVisibleCp(
-                int             lscp,
-                CaretDirection  direction,
-                out int         lscpVisisble
+                int lscp,
+                CaretDirection direction,
+                out int lscpVisisble
                 )
             {
                 lscpVisisble = lscp;
@@ -1392,7 +1394,7 @@ namespace MS.Internal.TextFormatting
                     while (lscpVisisble < _metrics._lscpLim)
                     {
                         plsrunSpanRider.At(lscpVisisble - _cpFirst);
-                        LSRun run = GetRun((Plsrun) plsrunSpanRider.CurrentElement);
+                        LSRun run = GetRun((Plsrun)plsrunSpanRider.CurrentElement);
 
                         // When scanning forward, only trailine edges of visiable content are navigable.
                         if (run.IsVisible)
@@ -1412,7 +1414,7 @@ namespace MS.Internal.TextFormatting
                     while (lscpVisisble >= _cpFirst)
                     {
                         plsrunSpanRider.At(lscpVisisble - _cpFirst);
-                        LSRun run = GetRun((Plsrun) plsrunSpanRider.CurrentElement);
+                        LSRun run = GetRun((Plsrun)plsrunSpanRider.CurrentElement);
 
                         // When scanning backward, visiable content has caret stop at its leading edge.
                         if (run.IsVisible)
@@ -1474,8 +1476,8 @@ namespace MS.Internal.TextFormatting
             /// <param name="textLength">number of characters of the specified range</param>
             /// <returns>an array of bounding rectangles.</returns>
             public override IList<TextBounds> GetTextBounds(
-                int     firstTextSourceCharacterIndex,
-                int     textLength
+                int firstTextSourceCharacterIndex,
+                int textLength
                 )
             {
                 if ((_statusFlags & StatusFlags.IsDisposed) != 0)
@@ -1491,13 +1493,13 @@ namespace MS.Internal.TextFormatting
                     textLength = -textLength;
                 }
 
-                if(firstTextSourceCharacterIndex < _cpFirst)
+                if (firstTextSourceCharacterIndex < _cpFirst)
                 {
                     textLength += (firstTextSourceCharacterIndex - _cpFirst);
                     firstTextSourceCharacterIndex = _cpFirst;
                 }
 
-                if(firstTextSourceCharacterIndex > _cpFirst + _metrics._cchLength - textLength)
+                if (firstTextSourceCharacterIndex > _cpFirst + _metrics._cchLength - textLength)
                 {
                     textLength = (_cpFirst + _metrics._cchLength - firstTextSourceCharacterIndex);
                 }
@@ -1507,7 +1509,7 @@ namespace MS.Internal.TextFormatting
                     return CreateDegenerateBounds();
                 }
 
-                Point position = new Point(0,0);
+                Point position = new Point(0, 0);
 
 
                 // get first cp sublines & text cell
@@ -1525,7 +1527,7 @@ namespace MS.Internal.TextFormatting
                     out firstTextCell
                     );
 
-                if(firstDepth <= 0)
+                if (firstDepth <= 0)
                 {
                     // this happens for empty line (line containing only EOP)
                     return CreateDegenerateBounds();
@@ -1547,7 +1549,7 @@ namespace MS.Internal.TextFormatting
                     out lastTextCell
                     );
 
-                if(lastDepth <= 0)
+                if (lastDepth <= 0)
                 {
                     // This should never happen but if it does, we still cant throw here.
                     // We must return something even though it's a degenerate bounds or
@@ -1558,10 +1560,10 @@ namespace MS.Internal.TextFormatting
 
                 // check if collapsing symbol is wholely selected
                 bool collapsingSymbolSelected =
-                    (   _collapsingSymbol != null
-                    &&  _collapsedRange != null
-                    &&  firstTextSourceCharacterIndex < _collapsedRange.TextSourceCharacterIndex
-                    &&  firstTextSourceCharacterIndex + textLength - _collapsedRange.TextSourceCharacterIndex > _collapsedRange.Length / 2
+                    (_collapsingSymbol != null
+                    && _collapsedRange != null
+                    && firstTextSourceCharacterIndex < _collapsedRange.TextSourceCharacterIndex
+                    && firstTextSourceCharacterIndex + textLength - _collapsedRange.TextSourceCharacterIndex > _collapsedRange.Length / 2
                     );
 
                 TextBounds[] bounds = null;
@@ -1575,14 +1577,14 @@ namespace MS.Internal.TextFormatting
 
                 if (lscpFirst > firstTextCell.lscpEndCell)
                 {
-                   // when cpFirst is after the last visible cp, then it hits the trailing edge of that cp
-                   isCpFirstTrailing = true;
+                    // when cpFirst is after the last visible cp, then it hits the trailing edge of that cp
+                    isCpFirstTrailing = true;
                 }
 
                 if (lscpEnd < lastTextCell.lscpStartCell)
                 {
-                   // when cpEnd is before the first visible cp, then it hits the leading edge of that cp
-                   isCpEndTrailing = false;
+                    // when cpEnd is before the first visible cp, then it hits the leading edge of that cp
+                    isCpEndTrailing = false;
                 }
 
                 if (firstDepth == lastDepth && firstSublines[firstDepth - 1].lscpFirstSubLine == lastSublines[lastDepth - 1].lscpFirstSubLine)
@@ -1730,7 +1732,7 @@ namespace MS.Internal.TextFormatting
                         // No non-zerowidth bounds detected, fallback to the position of first cp
                         // This can happen if hidden run is hittest'd.
 
-                        int u =  LSLineUToParagraphU(
+                        int u = LSLineUToParagraphU(
                             GetDistanceInsideTextCell(
                                 lscpFirst,
                                 isCpFirstTrailing,
@@ -1767,13 +1769,13 @@ namespace MS.Internal.TextFormatting
             /// it reaches the base level.
             /// </summary>
             private void CollectTextBoundsToBaseLevel(
-                ArrayList    boundsList,
-                ref int      lscpCurrent,
-                ref int      currentDistance,
+                ArrayList boundsList,
+                ref int lscpCurrent,
+                ref int currentDistance,
                 LsQSubInfo[] sublines,
-                int          sublineDepth,
-                int          lscpEnd,
-                out int      baseLevelDepth
+                int sublineDepth,
+                int lscpEnd,
+                out int baseLevelDepth
                 )
             {
                 baseLevelDepth = sublineDepth;
@@ -1805,7 +1807,7 @@ namespace MS.Internal.TextFormatting
 
                 // Collect text bounds from end of run to the end of subline at lower levels until we reach the
                 // common level. We reach common level when the subline at that level contains the lscpEnd.
-                for (   baseLevelDepth = sublineDepth - 1;
+                for (baseLevelDepth = sublineDepth - 1;
                         baseLevelDepth > 0 && (lscpEnd >= sublines[baseLevelDepth - 1].lscpFirstSubLine + sublines[baseLevelDepth - 1].lsdcpSubLine);
                         baseLevelDepth--
                     )
@@ -1851,12 +1853,12 @@ namespace MS.Internal.TextFormatting
             /// it reaches the immediate enclosing subline of the last LSCP.
             /// </summary>
             private void CollectTextBoundsFromBaseLevel(
-                ArrayList    boundsList,
-                ref int      lscpCurrent,
-                ref int      currentDistance,
+                ArrayList boundsList,
+                ref int lscpCurrent,
+                ref int currentDistance,
                 LsQSubInfo[] sublines,
-                int          sublineDepth,
-                int          baseLevelDepth
+                int sublineDepth,
+                int baseLevelDepth
                 )
             {
                 // lscpCurrent is after the run end of the 1st cp. It must not be in the run of the last cp
@@ -1916,11 +1918,11 @@ namespace MS.Internal.TextFormatting
             /// </summary>
             private int GetEndOfSublineDistance(
                 LsQSubInfo[] sublines,
-                int          index
+                int index
                 )
             {
                 return sublines[index].pointUvStartSubLine.x +
-                    ( sublines[index].lstflowSubLine == sublines[0].lstflowSubLine ?
+                    (sublines[index].lstflowSubLine == sublines[0].lstflowSubLine ?
                           sublines[index].dupSubLine
                         : -sublines[index].dupSubLine
                     );
@@ -1931,11 +1933,11 @@ namespace MS.Internal.TextFormatting
             /// </summary>
             private int GetEndOfRunDistance(
                 LsQSubInfo[] sublines,
-                int          index
+                int index
                 )
             {
                 return sublines[index].pointUvStartRun.x +
-                    ( sublines[index].lstflowSubLine == sublines[0].lstflowSubLine ?
+                    (sublines[index].lstflowSubLine == sublines[0].lstflowSubLine ?
                           sublines[index].dupRun
                         : -sublines[index].dupRun
                     );
@@ -1945,8 +1947,8 @@ namespace MS.Internal.TextFormatting
             /// Add non-zero geometry bounds to the bounds list
             /// </summary>
             private void AddValidTextBounds(
-                ArrayList      boundsList,
-                TextBounds     bounds
+                ArrayList boundsList,
+                TextBounds bounds
                 )
             {
                 if (bounds.Rectangle.Width != 0 && bounds.Rectangle.Height != 0)
@@ -1979,27 +1981,27 @@ namespace MS.Internal.TextFormatting
                 Point position = new Point(0, 0);
                 IList<TextRunBounds> boundsList = new List<TextRunBounds>(2);
 
-                while(cchLeft > 0)
+                while (cchLeft > 0)
                 {
                     plsrunSpanRider.At(lscp - _cpFirst);
                     Plsrun plsrun = (Plsrun)plsrunSpanRider.CurrentElement;
                     int cch = Math.Min(plsrunSpanRider.Length, cchLeft);
 
-                    if(TextStore.IsContent(plsrun))
+                    if (TextStore.IsContent(plsrun))
                     {
                         LSRun lsrun = GetRun(plsrun);
 
-                        if(     lsrun.Type == Plsrun.Text
-                            ||  lsrun.Type == Plsrun.InlineObject)
+                        if (lsrun.Type == Plsrun.Text
+                            || lsrun.Type == Plsrun.InlineObject)
                         {
                             int cp = GetExternalCp(lscp);
                             int cchBounds = cch;
 
-                            if (    HasCollapsed
-                                &&  _collapsedRange != null
-                                &&  cp <= _collapsedRange.TextSourceCharacterIndex
-                                &&  cp + cchBounds >= _collapsedRange.TextSourceCharacterIndex
-                                &&  cp + cchBounds < _collapsedRange.TextSourceCharacterIndex + _collapsedRange.Length)
+                            if (HasCollapsed
+                                && _collapsedRange != null
+                                && cp <= _collapsedRange.TextSourceCharacterIndex
+                                && cp + cchBounds >= _collapsedRange.TextSourceCharacterIndex
+                                && cp + cchBounds < _collapsedRange.TextSourceCharacterIndex + _collapsedRange.Length)
                             {
                                 // Limit the run bounds to only non-collapsed text,
                                 // we deal with collapsed text separately as it might have different flow direction.
@@ -2195,7 +2197,7 @@ namespace MS.Internal.TextFormatting
                 {
                     // figure out number of trailing whitespaces
 
-                    if(_metrics._textWidth == _metrics._textWidthAtTrailing)
+                    if (_metrics._textWidth == _metrics._textWidthAtTrailing)
                     {
                         // LS doesnt see any trailing space (last character in a line or character before
                         // EOP is not space). We count only the length of EOP run that we count as our
@@ -2431,10 +2433,10 @@ namespace MS.Internal.TextFormatting
             /// Wrapper to LoQueryLinePointPcp
             /// </summary>
             private void QueryLinePointPcp(
-                Point               ptQuery,
-                LsQSubInfo[]        subLineInfo,
-                out int             actualDepthQuery,
-                out LsTextCell      lsTextCell
+                Point ptQuery,
+                LsQSubInfo[] subLineInfo,
+                out int actualDepthQuery,
+                out LsTextCell lsTextCell
                 )
             {
                 Debug.Assert(_ploline != IntPtr.Zero);
@@ -2443,7 +2445,7 @@ namespace MS.Internal.TextFormatting
                 lsTextCell = new LsTextCell();
                 unsafe
                 {
-                    fixed(LsQSubInfo* plsqsubl = subLineInfo)
+                    fixed (LsQSubInfo* plsqsubl = subLineInfo)
                     {
                         LSPOINT pt = new LSPOINT((int)ptQuery.X, (int)ptQuery.Y);
                         lserr = UnsafeNativeMethods.LoQueryLinePointPcp(
@@ -2457,7 +2459,7 @@ namespace MS.Internal.TextFormatting
                     }
                 }
 
-                if(lserr != LsErr.None)
+                if (lserr != LsErr.None)
                 {
                     TextFormatterContext.ThrowExceptionFromLsError(SR.Format(SR.QueryLineFailure, lserr), lserr);
                 }
@@ -2484,10 +2486,10 @@ namespace MS.Internal.TextFormatting
             /// Wrapper to LoQueryLineCpPpoint
             /// </summary>
             private void QueryLineCpPpoint(
-                int                 lscpQuery,
-                LsQSubInfo[]        subLineInfo,
-                out int             actualDepthQuery,
-                out LsTextCell      lsTextCell
+                int lscpQuery,
+                LsQSubInfo[] subLineInfo,
+                out int actualDepthQuery,
+                out LsTextCell lsTextCell
                 )
             {
                 Debug.Assert(_ploline != IntPtr.Zero);
@@ -2501,7 +2503,7 @@ namespace MS.Internal.TextFormatting
 
                 unsafe
                 {
-                    fixed(LsQSubInfo* plsqsubl = subLineInfo)
+                    fixed (LsQSubInfo* plsqsubl = subLineInfo)
                     {
                         lserr = UnsafeNativeMethods.LoQueryLineCpPpoint(
                             _ploline,
@@ -2514,7 +2516,7 @@ namespace MS.Internal.TextFormatting
                     }
                 }
 
-                if(lserr != LsErr.None)
+                if (lserr != LsErr.None)
                 {
                     TextFormatterContext.ThrowExceptionFromLsError(SR.Format(SR.QueryLineFailure, lserr), lserr);
                 }
@@ -2604,12 +2606,12 @@ namespace MS.Internal.TextFormatting
             {
                 get { return _fullText; }
             }
-            #endif
+#endif
 
 
             private void BuildOverhang(Point origin, Rect boundingBox)
             {
-                if(boundingBox.IsEmpty)
+                if (boundingBox.IsEmpty)
                 {
                     _overhang.Leading = _overhang.Trailing = 0;
                     _overhang.Before = 0;
@@ -2647,10 +2649,10 @@ namespace MS.Internal.TextFormatting
             /// </summary>
             private struct Overhang
             {
-                internal double  Leading;
-                internal double  Trailing;
-                internal double  Extent;
-                internal double  Before;
+                internal double Leading;
+                internal double Trailing;
+                internal double Extent;
+                internal double Before;
             }
 
 
@@ -2665,13 +2667,13 @@ namespace MS.Internal.TextFormatting
                 int cpTarget = cp;
                 cp = lscp;
 
-                foreach(Span span in _plsrunVector)
+                foreach (Span span in _plsrunVector)
                 {
                     int ccp = CpCount(span);
 
-                    if(ccp > 0)
+                    if (ccp > 0)
                     {
-                        if(cp + ccp > cpTarget)
+                        if (cp + ccp > cpTarget)
                         {
                             lscp += (ccp == span.length ? cpTarget - cp : 0);
                             break;
@@ -2708,7 +2710,7 @@ namespace MS.Internal.TextFormatting
                 {
                     plsrunSpanRider.At(lscp - _cpFirst);
                     offsetToFirstCp = GetRun(((Plsrun)plsrunSpanRider.CurrentElement)).OffsetToFirstCp;
-} while(offsetToFirstCp < 0 && ++lscp < _metrics._lscpLim);
+                } while (offsetToFirstCp < 0 && ++lscp < _metrics._lscpLim);
 
                 return offsetToFirstCp + lscp - plsrunSpanRider.CurrentSpanStart;
             }
@@ -2727,7 +2729,7 @@ namespace MS.Internal.TextFormatting
 
                 // Inline object, text or linebreak yields as many cp as what client specifies.
                 // lsrun known only to LS e.g. reverse, yields no actual cp,
-                if(plsrun >= Plsrun.FormatAnchor)
+                if (plsrun >= Plsrun.FormatAnchor)
                 {
                     LSRun lsrun = GetRun(plsrun);
                     return lsrun.Length;

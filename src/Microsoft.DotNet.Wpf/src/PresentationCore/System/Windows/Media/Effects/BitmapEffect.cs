@@ -1,9 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Threading;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Media.Imaging;
 
 namespace System.Windows.Media.Effects
@@ -18,7 +18,7 @@ namespace System.Windows.Media.Effects
         /// Constructor
         /// </summary>
         protected BitmapEffect()
-        {     
+        {
             // STA Requirement
             //
             // Avalon doesn't necessarily require STA, but many components do.  Examples

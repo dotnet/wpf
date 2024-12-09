@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -37,7 +37,7 @@ namespace System.Windows.Documents
         //
         //---------------------------------------------------------------------
         #region Public Methods
-        
+
         #region IEnumerable
         /// <summary>
         /// <!-- see cref="System.Collections.Generic.IEnumerable&lt;&gt;.GetEnumerator" / -->
@@ -48,11 +48,11 @@ namespace System.Windows.Documents
         }
 
 
-	 System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return ((IEnumerable<DocumentReference>)this).GetEnumerator();
         }
-       
+
 
         #endregion IEnumerable
 
@@ -103,7 +103,7 @@ namespace System.Windows.Documents
         }
 
 
-        
+
 
         #endregion Public Properties
 
@@ -175,7 +175,7 @@ namespace System.Windows.Documents
         //---------------------------------------------------------------------
 
         #region Private Fields
-        private List<DocumentReference>  _internalList;
+        private List<DocumentReference> _internalList;
         #endregion Private Fields
     }
 }

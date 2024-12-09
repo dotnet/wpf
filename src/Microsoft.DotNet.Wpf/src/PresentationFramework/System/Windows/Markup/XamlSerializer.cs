@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -39,22 +39,22 @@ namespace System.Windows.Markup
         public XamlSerializer()
         {
         }
-        
+
         #endregion Construction
 
         #region OtherConversions
-        
+
         /// <summary>
         ///   Convert from Xaml read by a token reader into baml being written
         ///   out by a record writer.  The context gives mapping information.
         /// </summary>
 #if !PBTCOMPILER
-#endif        
-        internal virtual void ConvertXamlToBaml (
-            XamlReaderHelper          tokenReader,
-            ParserContext       context,
-            XamlNode            xamlNode,
-            BamlRecordWriter    bamlWriter)
+#endif
+        internal virtual void ConvertXamlToBaml(
+            XamlReaderHelper tokenReader,
+            ParserContext context,
+            XamlNode xamlNode,
+            BamlRecordWriter bamlWriter)
         {
             throw new InvalidOperationException(SR.InvalidDeSerialize);
         }
@@ -65,12 +65,12 @@ namespace System.Windows.Markup
         ///   Convert from Xaml read by a token reader into a live
         ///   object tree.  The context gives mapping information.
         /// </summary>
-        internal virtual void ConvertXamlToObject (
-            XamlReaderHelper             tokenReader,
+        internal virtual void ConvertXamlToObject(
+            XamlReaderHelper tokenReader,
             ReadWriteStreamManager streamManager,
-            ParserContext          context,
-            XamlNode               xamlNode,
-            BamlRecordReader       reader)
+            ParserContext context,
+            XamlNode xamlNode,
+            BamlRecordReader reader)
         {
             throw new InvalidOperationException(SR.InvalidDeSerialize);
         }
@@ -80,10 +80,10 @@ namespace System.Windows.Markup
         ///   The context gives mapping information.  Return the number of
         ///   baml records processed.
         /// </summary>
-        internal virtual void ConvertBamlToObject (
-            BamlRecordReader    reader,       // Current reader that is processing records
-            BamlRecord          bamlRecord,   // Record read in that triggered serializer
-            ParserContext       context)      // Context
+        internal virtual void ConvertBamlToObject(
+            BamlRecordReader reader,       // Current reader that is processing records
+            BamlRecord bamlRecord,   // Record read in that triggered serializer
+            ParserContext context)      // Context
         {
             throw new InvalidOperationException(SR.InvalidDeSerialize);
         }
@@ -94,13 +94,13 @@ namespace System.Windows.Markup
         ///   Convert a string into a compact binary representation and write it out
         ///   to the passed BinaryWriter.
         /// </summary>
-        public virtual bool ConvertStringToCustomBinary (
-            BinaryWriter   writer,           // Writer into the baml stream
-            string         stringValue)      // String to convert
+        public virtual bool ConvertStringToCustomBinary(
+            BinaryWriter writer,           // Writer into the baml stream
+            string stringValue)      // String to convert
         {
             throw new InvalidOperationException(SR.InvalidCustomSerialize);
         }
-        
+
         /// <summary>
         ///   Convert a compact binary representation of a certain object into and instance
         ///   of that object.  The reader must be left pointing immediately after the object 
@@ -110,7 +110,7 @@ namespace System.Windows.Markup
             BinaryReader reader)
         {
             throw new InvalidOperationException(SR.InvalidCustomSerialize);
-        }            
+        }
 
         /// <summary>
         ///   If the object created by this serializer is stored in a dictionary, this
@@ -119,9 +119,9 @@ namespace System.Windows.Markup
         ///   individual serializer.  By default, there is no key retrieved.
         /// </summary>
 #if !PBTCOMPILER
-#endif        
+#endif
         internal virtual object GetDictionaryKey(
-            BamlRecord    bamlRecord, 
+            BamlRecord bamlRecord,
             ParserContext parserContext)
         {
             return null;

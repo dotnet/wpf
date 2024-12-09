@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -50,10 +50,10 @@ namespace System.Windows.Media
 
             // string length * _glyphStringBuider.Capacity is an estimate for the whole string
             _indicesStringBuider = new StringBuilder(
-                Math.Max( 
-                    (_characters == null ? 0 : _characters.Count), 
+                Math.Max(
+                    (_characters == null ? 0 : _characters.Count),
                     _indices.Count
-                ) 
+                )
                 * _glyphStringBuider.Capacity
             );
         }
@@ -120,7 +120,7 @@ namespace System.Windows.Media
             else
             {
                 StringBuilder builder = new StringBuilder(_characters.Count);
-                foreach(char ch in _characters)
+                foreach (char ch in _characters)
                 {
                     builder.Append(ch);
                 }
@@ -262,7 +262,7 @@ namespace System.Windows.Media
 
             // Since the trailing 0xF (i.e. all true) entries in the caret stop specifications can be omitted,
             // we can limit the caret stop list walk until the last nibble that contains 'false'.
-            
+
             int caretStopStringLength = 0;
             int lastCaretStop = 0;
             for (int i = _caretStops.Count - 1; i >= 0; --i)
@@ -333,7 +333,7 @@ namespace System.Windows.Media
 
         private IList<Point> _offsets;
 
-        private IList<bool>     _caretStops;
+        private IList<bool> _caretStops;
 
         private StringBuilder _indicesStringBuider;
 
@@ -345,5 +345,5 @@ namespace System.Windows.Media
 
         private const double EmScaleFactor = 100.0;
         #endregion region private data
-   }
+    }
 }

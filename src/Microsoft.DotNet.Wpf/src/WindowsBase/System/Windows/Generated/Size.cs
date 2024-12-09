@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,10 +9,10 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
 using System.ComponentModel;
-using System.Windows.Markup;
 using System.Windows.Converters;
+using System.Windows.Markup;
+using MS.Internal;
 // These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows
@@ -44,7 +44,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='size1'>The first Size to compare</param>
         /// <param name='size2'>The second Size to compare</param>
-        public static bool operator == (Size size1, Size size2)
+        public static bool operator ==(Size size1, Size size2)
         {
             return size1.Width == size2.Width &&
                    size1.Height == size2.Height;
@@ -61,7 +61,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='size1'>The first Size to compare</param>
         /// <param name='size2'>The second Size to compare</param>
-        public static bool operator != (Size size1, Size size2)
+        public static bool operator !=(Size size1, Size size2)
         {
             return !(size1 == size2);
         }
@@ -77,7 +77,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='size1'>The first Size to compare</param>
         /// <param name='size2'>The second Size to compare</param>
-        public static bool Equals (Size size1, Size size2)
+        public static bool Equals(Size size1, Size size2)
         {
             if (size1.IsEmpty)
             {
@@ -109,7 +109,7 @@ namespace System.Windows
             }
 
             Size value = (Size)o;
-            return Size.Equals(this,value);
+            return Size.Equals(this, value);
         }
 
         /// <summary>

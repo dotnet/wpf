@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -34,7 +34,7 @@ namespace System.Windows
 
             _flags = 0;
             _operationType = OperationType.Unknown;
-            IsAValueChange        = true;
+            IsAValueChange = true;
         }
 
         internal DependencyPropertyChangedEventArgs(DependencyProperty property, PropertyMetadata metadata, object oldValue, object newValue)
@@ -48,15 +48,17 @@ namespace System.Windows
 
             _flags = 0;
             _operationType = OperationType.Unknown;
-            IsAValueChange        = true;
+            IsAValueChange = true;
         }
 
         internal DependencyPropertyChangedEventArgs(DependencyProperty property, PropertyMetadata metadata, object value)
         {
             _property = property;
             _metadata = metadata;
-            _oldEntry = new EffectiveValueEntry(property);
-            _oldEntry.Value = value;
+            _oldEntry = new EffectiveValueEntry(property)
+            {
+                Value = value
+            };
             _newEntry = _oldEntry;
 
             _flags = 0;
@@ -65,21 +67,21 @@ namespace System.Windows
         }
 
         internal DependencyPropertyChangedEventArgs(
-            DependencyProperty  property,
-            PropertyMetadata    metadata,
-            bool                isAValueChange,
+            DependencyProperty property,
+            PropertyMetadata metadata,
+            bool isAValueChange,
             EffectiveValueEntry oldEntry,
             EffectiveValueEntry newEntry,
-            OperationType       operationType)
+            OperationType operationType)
         {
-            _property             = property;
-            _metadata             = metadata;
-            _oldEntry             = oldEntry;
-            _newEntry             = newEntry;
+            _property = property;
+            _metadata = metadata;
+            _oldEntry = oldEntry;
+            _newEntry = newEntry;
 
             _flags = 0;
-            _operationType        = operationType;
-            IsAValueChange        = isAValueChange;
+            _operationType = operationType;
+            IsAValueChange = isAValueChange;
 
             // This is when a mutable default is promoted to a local value. On this operation mutable default 
             // value acquires a freezable context. However this value promotion operation is triggered 
@@ -111,7 +113,7 @@ namespace System.Windows
             get { return ReadPrivateFlag(PrivateFlags.IsAValueChange); }
             set { WritePrivateFlag(PrivateFlags.IsAValueChange, value); }
         }
-               
+
         /// <summary>
         ///     Whether or not this change indicates a change to the subproperty
         /// </summary>
@@ -143,7 +145,7 @@ namespace System.Windows
         /// </summary>
         public object OldValue
         {
-            get 
+            get
             {
                 EffectiveValueEntry oldEntry = OldEntry.GetFlattenedEntry(RequestFlags.FullyResolved);
                 if (oldEntry.IsDeferredReference)
@@ -154,10 +156,10 @@ namespace System.Windows
                     // this value by querying it from the dictionary. Once we have the
                     // value we can actually replace the deferred reference marker
                     // with the actual value.
-                    oldEntry.Value = ((DeferredReference) oldEntry.Value).GetValue(oldEntry.BaseValueSourceInternal);
+                    oldEntry.Value = ((DeferredReference)oldEntry.Value).GetValue(oldEntry.BaseValueSourceInternal);
                 }
 
-                return oldEntry.Value; 
+                return oldEntry.Value;
             }
         }
 
@@ -176,7 +178,7 @@ namespace System.Windows
         {
             get { return _oldEntry.BaseValueSourceInternal; }
         }
-               
+
         /// <summary>
         ///     Says if the old value was a modified value (coerced, animated, expression)
         /// </summary>
@@ -184,7 +186,7 @@ namespace System.Windows
         {
             get { return _oldEntry.HasModifiers; }
         }
-               
+
         /// <summary>
         ///     Says if the old value was a deferred value
         /// </summary>
@@ -192,13 +194,13 @@ namespace System.Windows
         {
             get { return _oldEntry.IsDeferredReference; }
         }
-                
+
         /// <summary>
         ///     The new value of the property.
         /// </summary>
         public object NewValue
         {
-            get 
+            get
             {
                 EffectiveValueEntry newEntry = NewEntry.GetFlattenedEntry(RequestFlags.FullyResolved);
                 if (newEntry.IsDeferredReference)
@@ -209,10 +211,10 @@ namespace System.Windows
                     // this value by querying it from the dictionary. Once we have the 
                     // value we can actually replace the deferred reference marker 
                     // with the actual value.
-                    newEntry.Value = ((DeferredReference) newEntry.Value).GetValue(newEntry.BaseValueSourceInternal);
+                    newEntry.Value = ((DeferredReference)newEntry.Value).GetValue(newEntry.BaseValueSourceInternal);
                 }
 
-                return newEntry.Value; 
+                return newEntry.Value;
             }
         }
 
@@ -223,7 +225,7 @@ namespace System.Windows
         {
             get { return _newEntry; }
         }
-        
+
         /// <summary>
         ///     The source of the new value
         /// </summary>
@@ -231,7 +233,7 @@ namespace System.Windows
         {
             get { return _newEntry.BaseValueSourceInternal; }
         }
-               
+
         /// <summary>
         ///     Says if the new value was a modified value (coerced, animated, expression)
         /// </summary>
@@ -247,7 +249,7 @@ namespace System.Windows
         {
             get { return _newEntry.IsDeferredReference; }
         }
-                
+
         #endregion Properties
 
         /// <summary>
@@ -321,33 +323,33 @@ namespace System.Windows
 
         private enum PrivateFlags : byte
         {
-            IsAValueChange        = 0x01,
-            IsASubPropertyChange  = 0x02,
+            IsAValueChange = 0x01,
+            IsASubPropertyChange = 0x02,
         }
 
         #endregion PrivateDataStructures
 
         #region Data
 
-        private DependencyProperty  _property;
-        private PropertyMetadata    _metadata;
+        private DependencyProperty _property;
+        private PropertyMetadata _metadata;
 
-        private PrivateFlags        _flags;
+        private PrivateFlags _flags;
 
         private EffectiveValueEntry _oldEntry;
         private EffectiveValueEntry _newEntry;
-        
-        private OperationType       _operationType;
+
+        private OperationType _operationType;
 
         #endregion Data
     }
 
     internal enum OperationType : byte
     {
-        Unknown                     = 0,
-        AddChild                    = 1,
-        RemoveChild                 = 2,
-        Inherit                     = 3,
-        ChangeMutableDefaultValue   = 4,
+        Unknown = 0,
+        AddChild = 1,
+        RemoveChild = 2,
+        Inherit = 3,
+        ChangeMutableDefaultValue = 4,
     }
 }

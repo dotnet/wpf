@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -141,10 +141,12 @@ namespace MS.Internal.Annotations.Component
             get
             {
                 Visual parent = VisualTreeHelper.GetParent(_adornerLayer) as Visual;
-                if (parent == null) return null;
+                if (parent == null)
+                    return null;
 
                 AdornerLayer parentLayer = AdornerLayer.GetAdornerLayer((UIElement)parent);
-                if (parentLayer == null) return null;
+                if (parentLayer == null)
+                    return null;
 
                 PresentationContext p = new AdornerPresentationContext(parentLayer, null);
 
@@ -192,7 +194,8 @@ namespace MS.Internal.Annotations.Component
             {// need to find annotation adorner in layer, remove it and do house-keeping
                 AnnotationAdorner foundAdorner = this.FindAnnotationAdorner(component);
 
-                if (foundAdorner == null) throw new InvalidOperationException(SR.Format(SR.ComponentNotInPresentationContext, component));
+                if (foundAdorner == null)
+                    throw new InvalidOperationException(SR.Format(SR.ComponentNotInPresentationContext, component));
 
                 _adornerLayer.Remove(foundAdorner);
                 foundAdorner.RemoveChildren();
@@ -200,7 +203,8 @@ namespace MS.Internal.Annotations.Component
                 // now get rid of reference from presentation context of annotation component to annotation adorner
                 AdornerPresentationContext p = component.PresentationContext as AdornerPresentationContext;
 
-                if (p != null) p.ResetInternalAnnotationAdorner();
+                if (p != null)
+                    p.ResetInternalAnnotationAdorner();
 
                 // finally get rid of reference from annotation component to presentation context
                 component.PresentationContext = null;
@@ -369,13 +373,15 @@ namespace MS.Internal.Annotations.Component
         /// <returns>The annotation adorner that wraps the component in the adorner layer associated with this presentation context</returns>
         private AnnotationAdorner FindAnnotationAdorner(IAnnotationComponent component)
         {
-            if (_adornerLayer == null) return null;
+            if (_adornerLayer == null)
+                return null;
 
             foreach (Adorner adorner in _adornerLayer.GetAdorners(component.AnnotatedElement))
             {
                 AnnotationAdorner annotationAdorner = adorner as AnnotationAdorner;
 
-                if (annotationAdorner != null && annotationAdorner.AnnotationComponent == component) return annotationAdorner;
+                if (annotationAdorner != null && annotationAdorner.AnnotationComponent == component)
+                    return annotationAdorner;
             }
 
             return null;
@@ -486,7 +492,8 @@ namespace MS.Internal.Annotations.Component
             {
                 adorner = this.FindAnnotationAdorner(component);
 
-                if (adorner == null) throw new InvalidOperationException(SR.Format(SR.ComponentNotInPresentationContext, component));
+                if (adorner == null)
+                    throw new InvalidOperationException(SR.Format(SR.ComponentNotInPresentationContext, component));
             }
 
             return adorner;

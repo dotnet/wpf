@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,8 +12,8 @@
 using System.Collections;           // IEnumerable
 using System.Collections.ObjectModel;   // ObservableCollection<T>
 using System.Collections.Specialized;   // NotifyCollectionChanged*
-using System.Globalization;         // CultureInfo
 using System.ComponentModel;        // ICollectionView
+using System.Globalization;         // CultureInfo
 using System.Windows.Markup;        // XmlLanguage
 using MS.Internal;                  // Invariant.Assert
 using MS.Internal.Data;             // DataBindEngine
@@ -104,7 +104,7 @@ namespace System.Windows.Data
         /// </summary>
         public object Source
         {
-            get { return (object) GetValue(SourceProperty); }
+            get { return (object)GetValue(SourceProperty); }
             set { SetValue(SourceProperty, value); }
         }
 
@@ -115,7 +115,7 @@ namespace System.Windows.Data
         /// <param name="e">Argument.</param>
         private static void OnSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CollectionViewSource ctrl = (CollectionViewSource) d;
+            CollectionViewSource ctrl = (CollectionViewSource)d;
 
             ctrl.OnSourceChanged(e.OldValue, e.NewValue);
             ctrl.EnsureView();
@@ -141,7 +141,7 @@ namespace System.Windows.Data
 
         private static bool IsValidSourceForView(object o)
         {
-            return (    o is IEnumerable ||
+            return (o is IEnumerable ||
                         o is IListSource);
         }
 
@@ -170,16 +170,16 @@ namespace System.Windows.Data
         /// </remarks>
         public Type CollectionViewType
         {
-            get { return (Type) GetValue(CollectionViewTypeProperty); }
+            get { return (Type)GetValue(CollectionViewTypeProperty); }
             set { SetValue(CollectionViewTypeProperty, value); }
         }
 
         private static void OnCollectionViewTypeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CollectionViewSource ctrl = (CollectionViewSource) d;
+            CollectionViewSource ctrl = (CollectionViewSource)d;
 
-            Type oldCollectionViewType = (Type) e.OldValue;
-            Type newCollectionViewType = (Type) e.NewValue;
+            Type oldCollectionViewType = (Type)e.OldValue;
+            Type newCollectionViewType = (Type)e.NewValue;
 
             if (!ctrl._isInitializing)
                 throw new InvalidOperationException(SR.CollectionViewTypeIsInitOnly);
@@ -802,7 +802,7 @@ namespace System.Windows.Data
         // Return the default view for the given source.  This view is never
         // affiliated with any CollectionViewSource.  It may be a
         // CollectionViewProxy over the original view
-        static internal CollectionView GetDefaultCollectionView(object source, bool createView, Func<object, object> GetSourceItem=null)
+        static internal CollectionView GetDefaultCollectionView(object source, bool createView, Func<object, object> GetSourceItem = null)
         {
             if (!IsValidSourceForView(source))
                 return null;
@@ -818,7 +818,7 @@ namespace System.Windows.Data
         /// affiliated with any CollectionViewSource.  The internal version sets
         /// the culture on the view from the xml:Lang of the host object.
         /// </summary>
-        internal static CollectionView GetDefaultCollectionView(object source, DependencyObject d, Func<object, object> GetSourceItem=null)
+        internal static CollectionView GetDefaultCollectionView(object source, DependencyObject d, Func<object, object> GetSourceItem = null)
         {
             CollectionView view = GetDefaultCollectionView(source, true, GetSourceItem);
 
@@ -866,7 +866,7 @@ namespace System.Windows.Data
             InheritanceContextHelper.AddInheritanceContext(context,
                                                               this,
                                                               ref _hasMultipleInheritanceContexts,
-                                                              ref _inheritanceContext );
+                                                              ref _inheritanceContext);
         }
 
         // Remove an inheritance context (this will be a FE/FCE)
@@ -992,7 +992,7 @@ namespace System.Windows.Data
                 if (view.CanSort)
                 {
                     view.SortDescriptions.Clear();
-                    for (i=0, n=SortDescriptions.Count;  i < n;  ++i)
+                    for (i = 0, n = SortDescriptions.Count; i < n; ++i)
                     {
                         view.SortDescriptions.Add(SortDescriptions[i]);
                     }
@@ -1022,7 +1022,7 @@ namespace System.Windows.Data
                 if (view.CanGroup)
                 {
                     view.GroupDescriptions.Clear();
-                    for (i=0, n=GroupDescriptions.Count;  i < n;  ++i)
+                    for (i = 0, n = GroupDescriptions.Count; i < n; ++i)
                     {
                         view.GroupDescriptions.Add(GroupDescriptions[i]);
                     }
@@ -1107,7 +1107,7 @@ namespace System.Windows.Data
         // return the original (un-proxied) view for the given view
         static ICollectionView GetOriginalView(ICollectionView view)
         {
-            for (   CollectionViewProxy proxy = view as CollectionViewProxy;
+            for (CollectionViewProxy proxy = view as CollectionViewProxy;
                     proxy != null;
                     proxy = view as CollectionViewProxy)
             {
@@ -1159,7 +1159,8 @@ namespace System.Windows.Data
         {
             // increment the version number.  This causes the change to get applied
             // to dormant views when they become active.
-            unchecked {++ _version;}
+            unchecked
+            { ++_version; }
 
             // apply the change to the current view
             ApplyPropertiesToView(View);
@@ -1168,7 +1169,7 @@ namespace System.Windows.Data
         // defer changes
         void BeginDefer()
         {
-            ++ _deferLevel;
+            ++_deferLevel;
         }
 
         void EndDefer()
@@ -1263,31 +1264,31 @@ namespace System.Windows.Data
         //
 
         // properties that get forwarded to the view
-        CultureInfo                             _culture;
-        SortDescriptionCollection               _sort;
-        ObservableCollection<GroupDescription>  _groupBy;
-        ObservableCollection<string>            _liveSortingProperties;
-        ObservableCollection<string>            _liveFilteringProperties;
-        ObservableCollection<string>            _liveGroupingProperties;
+        CultureInfo _culture;
+        SortDescriptionCollection _sort;
+        ObservableCollection<GroupDescription> _groupBy;
+        ObservableCollection<string> _liveSortingProperties;
+        ObservableCollection<string> _liveFilteringProperties;
+        ObservableCollection<string> _liveGroupingProperties;
 
         // other state
-        bool                _isInitializing;
-        bool                _isViewInitialized; // view is initialized when it is first retrieved externally
-        int                 _version;       // timestamp of last change to a forwarded property
-        int                 _deferLevel;    // counts nested calls to BeginDefer
-        DataSourceProvider  _dataProvider;  // DataSourceProvider whose DataChanged event we want
-        FilterStub          _filterStub;    // used to support the Filter event
+        bool _isInitializing;
+        bool _isViewInitialized; // view is initialized when it is first retrieved externally
+        int _version;       // timestamp of last change to a forwarded property
+        int _deferLevel;    // counts nested calls to BeginDefer
+        DataSourceProvider _dataProvider;  // DataSourceProvider whose DataChanged event we want
+        FilterStub _filterStub;    // used to support the Filter event
 
         // Fields to implement DO's inheritance context
-        DependencyObject    _inheritanceContext;
-        bool                _hasMultipleInheritanceContexts;
-        DependencyProperty  _propertyForInheritanceContext;
+        DependencyObject _inheritanceContext;
+        bool _hasMultipleInheritanceContexts;
+        DependencyProperty _propertyForInheritanceContext;
 
         // the placeholder source for all default views
         internal static readonly CollectionViewSource DefaultSource = new CollectionViewSource();
 
         // This uncommon field is used to store the handlers for the Filter event
-        private  static readonly UncommonField<FilterEventHandler> FilterHandlersField = new UncommonField<FilterEventHandler>();
+        private static readonly UncommonField<FilterEventHandler> FilterHandlersField = new UncommonField<FilterEventHandler>();
 
         #endregion Private Data
     }

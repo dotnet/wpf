@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -347,7 +347,7 @@ namespace System.Windows.Controls
                     // have been set even before the template for the DatePicker is
                     // applied. And this would mean that the visuals wouldn't be available yet.
 
-                    dp.Dispatcher.BeginInvoke(DispatcherPriority.Input, (Action)delegate()
+                    dp.Dispatcher.BeginInvoke(DispatcherPriority.Input, (Action)delegate ()
                         {
                             // setting the focus to the calendar will focus the correct date.
                             dp._calendar.Focus();
@@ -394,7 +394,7 @@ namespace System.Windows.Controls
         private static void OnLanguageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DatePicker datePicker = (DatePicker)d;
-            if (DependencyPropertyHelper.GetValueSource(datePicker, DatePicker.FirstDayOfWeekProperty).BaseValueSource ==  BaseValueSource.Default)
+            if (DependencyPropertyHelper.GetValueSource(datePicker, DatePicker.FirstDayOfWeekProperty).BaseValueSource == BaseValueSource.Default)
             {
                 datePicker.SetCurrentValueInternal(FirstDayOfWeekProperty, DateTimeHelper.GetDateFormat(DateTimeHelper.GetCulture(datePicker)).FirstDayOfWeek);
             }
@@ -1091,8 +1091,10 @@ namespace System.Windows.Controls
 
         private BindingBase GetDatePickerBinding(DependencyProperty property)
         {
-            Binding binding = new Binding(property.Name);
-            binding.Source = this;
+            Binding binding = new Binding(property.Name)
+            {
+                Source = this
+            };
             return binding;
         }
 
@@ -1153,29 +1155,29 @@ namespace System.Windows.Controls
             switch (e.Key)
             {
                 case Key.System:
-                {
-                    switch (e.SystemKey)
                     {
-                        case Key.Down:
+                        switch (e.SystemKey)
                         {
-                            if ((Keyboard.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt)
-                            {
-                                TogglePopUp();
-                                return true;
-                            }
+                            case Key.Down:
+                                {
+                                    if ((Keyboard.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt)
+                                    {
+                                        TogglePopUp();
+                                        return true;
+                                    }
 
-                            break;
+                                    break;
+                                }
                         }
+
+                        break;
                     }
 
-                    break;
-                }
-
                 case Key.Enter:
-                {
-                    SetSelectedDate();
-                    return true;
-                }
+                    {
+                        SetSelectedDate();
+                        return true;
+                    }
             }
 
             return false;

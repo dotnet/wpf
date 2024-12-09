@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,7 +17,7 @@ namespace MS.Internal.Text
     /// <summary>
     /// Inline object representation as TextRun.
     /// </summary>
-    internal sealed class InlineObject: TextEmbeddedObject
+    internal sealed class InlineObject : TextEmbeddedObject
     {
         /// <summary>
         /// Constructor.
@@ -49,9 +49,9 @@ namespace MS.Internal.Text
             TextDpi.EnsureValidObjSize(ref desiredSize);
 
             double baseline = desiredSize.Height;
-            double baselineOffsetValue = (double) Element.GetValue(TextBlock.BaselineOffsetProperty);
+            double baselineOffsetValue = (double)Element.GetValue(TextBlock.BaselineOffsetProperty);
 
-            if(!double.IsNaN(baselineOffsetValue))
+            if (!double.IsNaN(baselineOffsetValue))
             {
                 baseline = baselineOffsetValue;
             }
@@ -112,7 +112,7 @@ namespace MS.Internal.Text
         /// <summary>
         /// A set of properties shared by every characters in the run
         /// </summary>
-        public override TextRunProperties Properties { get { return _textProps;  } }
+        public override TextRunProperties Properties { get { return _textProps; } }
 
         /// <summary>
         /// Line break condition before the inline object.

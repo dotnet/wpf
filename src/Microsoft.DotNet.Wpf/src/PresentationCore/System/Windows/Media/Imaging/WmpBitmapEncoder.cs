@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -106,22 +106,22 @@ namespace System.Windows.Media.Imaging
                 Rotate180 = false;
                 Rotate270 = false;
 
-                switch(value)
+                switch (value)
                 {
-                    case(Rotation.Rotate0):
+                    case (Rotation.Rotate0):
                         // do nothing, we reset everything above
                         // case statement is here for clearness
                         break;
 
-                    case(Rotation.Rotate90):
+                    case (Rotation.Rotate90):
                         Rotate90 = true;
                         break;
 
-                    case(Rotation.Rotate180):
+                    case (Rotation.Rotate180):
                         Rotate180 = true;
                         break;
 
-                    case(Rotation.Rotate270):
+                    case (Rotation.Rotate270):
                         Rotate270 = true;
                         break;
                 }
@@ -439,7 +439,7 @@ namespace System.Windows.Media.Imaging
                 try
                 {
                     propBag.Init("BitmapTransform");
-                    propValue.Init((byte) _transformation);
+                    propValue.Init((byte)_transformation);
 
                     HRESULT.Check(UnsafeNativeMethods.IPropertyBag2.Write(
                         encoderOptions,
@@ -559,7 +559,7 @@ namespace System.Windows.Media.Imaging
                 try
                 {
                     propBag.Init("HorizontalTileSlices");
-                    propValue.Init((ushort)_horizontaltileslices );
+                    propValue.Init((ushort)_horizontaltileslices);
 
                     HRESULT.Check(UnsafeNativeMethods.IPropertyBag2.Write(
                         encoderOptions,
@@ -579,7 +579,7 @@ namespace System.Windows.Media.Imaging
                 try
                 {
                     propBag.Init("VerticalTileSlices");
-                    propValue.Init((ushort)_verticaltileslices );
+                    propValue.Init((ushort)_verticaltileslices);
 
                     HRESULT.Check(UnsafeNativeMethods.IPropertyBag2.Write(
                         encoderOptions,
@@ -654,7 +654,7 @@ namespace System.Windows.Media.Imaging
                 }
             }
 
-            if (_compresseddomaintranscode  != c_defaultCompressedDomainTranscode)
+            if (_compresseddomaintranscode != c_defaultCompressedDomainTranscode)
             {
                 try
                 {
@@ -867,8 +867,8 @@ namespace System.Windows.Media.Imaging
         private const bool c_defaultLossless = false;
         private bool _lossless = c_defaultLossless;
 
-        private const float c_defaultImageQualityLevel= 0.9f;
-        private float _imagequalitylevel= c_defaultImageQualityLevel;
+        private const float c_defaultImageQualityLevel = 0.9f;
+        private float _imagequalitylevel = c_defaultImageQualityLevel;
 
         private const WICBitmapTransformOptions c_defaultTransformation = WICBitmapTransformOptions.WICBitmapTransformRotate0;
         private WICBitmapTransformOptions _transformation = c_defaultTransformation;
@@ -904,10 +904,10 @@ namespace System.Windows.Media.Imaging
         private bool _compresseddomaintranscode = c_defaultCompressedDomainTranscode;
 
         private const byte c_defaultImageDataDiscardLevel = 0;
-        private byte _imagedatadiscardlevel  = c_defaultImageDataDiscardLevel;
+        private byte _imagedatadiscardlevel = c_defaultImageDataDiscardLevel;
 
         private const byte c_defaultAlphaDataDiscardLevel = 0;
-        private byte _alphadatadiscardlevel  = c_defaultAlphaDataDiscardLevel;
+        private byte _alphadatadiscardlevel = c_defaultAlphaDataDiscardLevel;
 
         private const bool c_defaultIgnoreOverlap = false;
         private bool _ignoreoverlap = c_defaultIgnoreOverlap;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -18,10 +18,10 @@ namespace System.Windows.Media
         ///<summary>
         ///
         ///</summary>
-        public MatrixTransform() 
+        public MatrixTransform()
         {
         }
-        
+
         ///<summary>
         /// Create an arbitrary matrix transformation.
         ///</summary>
@@ -32,11 +32,11 @@ namespace System.Windows.Media
         ///<param name="offsetX">Matrix value at position 3,1</param>
         ///<param name="offsetY">Matrix value at position 3,2</param>
         public MatrixTransform(
-            double m11, 
+            double m11,
             double m12,
-            double m21, 
+            double m21,
             double m22,
-            double offsetX, 
+            double offsetX,
             double offsetY
             )
         {
@@ -59,14 +59,14 @@ namespace System.Windows.Media
         ///</summary>
         public override Matrix Value
         {
-            get 
+            get
             {
                 ReadPreamble();
-                
+
                 return Matrix;
             }
         }
-        
+
         #region Internal Methods
 
         ///<summary>
@@ -74,7 +74,7 @@ namespace System.Windows.Media
         ///</summary>
         internal override bool IsIdentity
         {
-            get 
+            get
             {
                 return Matrix.IsIdentity && CanFreeze;
             }
@@ -100,7 +100,7 @@ namespace System.Windows.Media
 
             return ((IFormattable)Matrix).ToString(format, provider);
         }
-        
+
         internal override void TransformRect(ref Rect rect)
         {
             Matrix matrix = Matrix;

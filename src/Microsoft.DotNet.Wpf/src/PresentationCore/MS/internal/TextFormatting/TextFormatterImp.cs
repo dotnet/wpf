@@ -1,13 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
-using MS.Utility;
+using MS.Internal.FontCache;
 using MS.Internal.Shaping;
 using MS.Internal.Text.TextInterface;
-using MS.Internal.FontCache;
+using MS.Utility;
 
 namespace MS.Internal.TextFormatting
 {
@@ -16,11 +16,11 @@ namespace MS.Internal.TextFormatting
     /// </summary>
     internal sealed class TextFormatterImp : TextFormatter
     {
-        private FrugalStructList<TextFormatterContext>  _contextList;               // LS context free list
-        private bool                                    _multipleContextProhibited; // prohibit multiple contexts within the same formatter
-        private GlyphingCache                           _glyphingCache;             // Glyphing cache for font linking process
-        private TextFormattingMode                      _textFormattingMode;
-        private TextAnalyzer                            _textAnalyzer;              // TextAnalyzer used for shaping process
+        private FrugalStructList<TextFormatterContext> _contextList;               // LS context free list
+        private bool _multipleContextProhibited; // prohibit multiple contexts within the same formatter
+        private GlyphingCache _glyphingCache;             // Glyphing cache for font linking process
+        private TextFormattingMode _textFormattingMode;
+        private TextAnalyzer _textAnalyzer;              // TextAnalyzer used for shaping process
 
         private const int MaxGlyphingCacheCapacity = 16;
 
@@ -35,7 +35,7 @@ namespace MS.Internal.TextFormatting
         /// Construct an instance of TextFormatter implementation
         /// </summary>
         internal TextFormatterImp() : this(null, TextFormattingMode.Ideal)
-        {}
+        { }
 
         /// <summary>
         /// Construct an instance of TextFormatter implementation with the specified context
@@ -101,11 +101,11 @@ namespace MS.Internal.TextFormatting
         /// <param name="previousLineBreak">LineBreak property of the previous text line, or null if this is the first line in the paragraph</param>
         /// <returns>object representing a line of text that client interacts with. </returns>
         public override TextLine FormatLine(
-            TextSource                  textSource,
-            int                         firstCharIndex,
-            double                      paragraphWidth,
-            TextParagraphProperties     paragraphProperties,
-            TextLineBreak               previousLineBreak
+            TextSource textSource,
+            int firstCharIndex,
+            double paragraphWidth,
+            TextParagraphProperties paragraphProperties,
+            TextLineBreak previousLineBreak
             )
         {
             return FormatLineInternal(
@@ -132,12 +132,12 @@ namespace MS.Internal.TextFormatting
         /// <param name="textRunCache">an object representing content cache of the client.</param>
         /// <returns>object representing a line of text that client interacts with. </returns>
         public override TextLine FormatLine(
-            TextSource                  textSource,
-            int                         firstCharIndex,
-            double                      paragraphWidth,
-            TextParagraphProperties     paragraphProperties,
-            TextLineBreak               previousLineBreak,
-            TextRunCache                textRunCache
+            TextSource textSource,
+            int firstCharIndex,
+            double paragraphWidth,
+            TextParagraphProperties paragraphProperties,
+            TextLineBreak previousLineBreak,
+            TextRunCache textRunCache
             )
         {
             return FormatLineInternal(
@@ -169,13 +169,13 @@ namespace MS.Internal.TextFormatting
 #else
         internal override TextLine RecreateLine(
 #endif
-            TextSource                  textSource,
-            int                         firstCharIndex,
-            int                         lineLength,
-            double                      paragraphWidth,
-            TextParagraphProperties     paragraphProperties,
-            TextLineBreak               previousLineBreak,
-            TextRunCache                textRunCache
+            TextSource textSource,
+            int firstCharIndex,
+            int lineLength,
+            double paragraphWidth,
+            TextParagraphProperties paragraphProperties,
+            TextLineBreak previousLineBreak,
+            TextRunCache textRunCache
             )
         {
             return FormatLineInternal(
@@ -196,13 +196,13 @@ namespace MS.Internal.TextFormatting
         /// line break point.
         /// </summary>
         private TextLine FormatLineInternal(
-            TextSource                  textSource,
-            int                         firstCharIndex,
-            int                         lineLength,
-            double                      paragraphWidth,
-            TextParagraphProperties     paragraphProperties,
-            TextLineBreak               previousLineBreak,
-            TextRunCache                textRunCache
+            TextSource textSource,
+            int firstCharIndex,
+            int lineLength,
+            double paragraphWidth,
+            TextParagraphProperties paragraphProperties,
+            TextLineBreak previousLineBreak,
+            TextRunCache textRunCache
             )
         {
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordText, EventTrace.Level.Verbose, EventTrace.Event.WClientStringBegin, "TextFormatterImp.FormatLineInternal Start");
@@ -222,9 +222,9 @@ namespace MS.Internal.TextFormatting
 
             TextLine textLine = null;
 
-            if (    !settings.Pap.AlwaysCollapsible
-                &&  previousLineBreak == null
-                &&  lineLength <= 0
+            if (!settings.Pap.AlwaysCollapsible
+                && previousLineBreak == null
+                && lineLength <= 0
                 )
             {
                 // simple text line.
@@ -263,9 +263,9 @@ namespace MS.Internal.TextFormatting
         /// <param name="paragraphProperties">properties that can change from one paragraph to the next, such as text flow direction, text alignment, or indentation.</param>
         /// <returns>min max paragraph width</returns>
         public override MinMaxParagraphWidth FormatMinMaxParagraphWidth(
-            TextSource                  textSource,
-            int                         firstCharIndex,
-            TextParagraphProperties     paragraphProperties
+            TextSource textSource,
+            int firstCharIndex,
+            TextParagraphProperties paragraphProperties
             )
         {
             return FormatMinMaxParagraphWidth(
@@ -287,10 +287,10 @@ namespace MS.Internal.TextFormatting
         /// <param name="textRunCache">an object representing content cache of the client.</param>
         /// <returns>min max paragraph width</returns>
         public override MinMaxParagraphWidth FormatMinMaxParagraphWidth(
-            TextSource                  textSource,
-            int                         firstCharIndex,
-            TextParagraphProperties     paragraphProperties,
-            TextRunCache                textRunCache
+            TextSource textSource,
+            int firstCharIndex,
+            TextParagraphProperties paragraphProperties,
+            TextRunCache textRunCache
             )
         {
             // prepare formatting settings
@@ -347,12 +347,12 @@ namespace MS.Internal.TextFormatting
 #else
         internal override TextParagraphCache CreateParagraphCache(
 #endif
-            TextSource                  textSource,
-            int                         firstCharIndex,
-            double                      paragraphWidth,
-            TextParagraphProperties     paragraphProperties,
-            TextLineBreak               previousLineBreak,
-            TextRunCache                textRunCache
+            TextSource textSource,
+            int firstCharIndex,
+            double paragraphWidth,
+            TextParagraphProperties paragraphProperties,
+            TextLineBreak previousLineBreak,
+            TextRunCache textRunCache
             )
         {
             // prepare formatting settings
@@ -391,15 +391,15 @@ namespace MS.Internal.TextFormatting
         /// Validate all the relevant text formatting initial settings and package them
         /// </summary>
         private FormatSettings PrepareFormatSettings(
-            TextSource                  textSource,
-            int                         firstCharIndex,
-            double                      paragraphWidth,
-            TextParagraphProperties     paragraphProperties,
-            TextLineBreak               previousLineBreak,
-            TextRunCache                textRunCache,
-            bool                        useOptimalBreak,
-            bool                        isSingleLineFormatting,
-            TextFormattingMode              textFormattingMode
+            TextSource textSource,
+            int firstCharIndex,
+            double paragraphWidth,
+            TextParagraphProperties paragraphProperties,
+            TextLineBreak previousLineBreak,
+            TextRunCache textRunCache,
+            bool useOptimalBreak,
+            bool isSingleLineFormatting,
+            TextFormattingMode textFormattingMode
             )
         {
             VerifyTextFormattingArguments(
@@ -435,11 +435,11 @@ namespace MS.Internal.TextFormatting
         /// Verify all text formatting arguments
         /// </summary>
         private void VerifyTextFormattingArguments(
-            TextSource                  textSource,
-            int                         firstCharIndex,
-            double                      paragraphWidth,
-            TextParagraphProperties     paragraphProperties,
-            TextRunCache                textRunCache
+            TextSource textSource,
+            int firstCharIndex,
+            double paragraphWidth,
+            TextParagraphProperties paragraphProperties,
+            TextRunCache textRunCache
             )
         {
             ArgumentNullException.ThrowIfNull(textSource);
@@ -474,9 +474,9 @@ namespace MS.Internal.TextFormatting
         /// Validate the input character hit
         /// </summary>
         internal static void VerifyCaretCharacterHit(
-            CharacterHit    characterHit,
-            int             cpFirst,
-            int             cchLength
+            CharacterHit characterHit,
+            int cpFirst,
+            int cchLength
             )
         {
             ArgumentOutOfRangeException.ThrowIfGreaterThan(cpFirst, characterHit.FirstCharacterIndex);
@@ -498,8 +498,8 @@ namespace MS.Internal.TextFormatting
         /// Safe     - this doesn't expose critical info
         /// </SecurityNotes>
         internal TextFormatterContext AcquireContext(
-            object      owner,
-            IntPtr      ploc
+            object owner,
+            IntPtr ploc
             )
         {
             Invariant.Assert(owner != null);
@@ -515,7 +515,7 @@ namespace MS.Internal.TextFormatting
 
                 if (ploc == IntPtr.Zero)
                 {
-                    if(context.Owner == null)
+                    if (context.Owner == null)
                         break;
                 }
                 else if (ploc == context.Ploc)
@@ -564,9 +564,9 @@ namespace MS.Internal.TextFormatting
         /// a drawing surface with the specified inversions applied on.
         /// </summary>
         internal static MatrixTransform CreateAntiInversionTransform(
-            InvertAxes  inversion,
-            double      paragraphWidth,
-            double      lineHeight
+            InvertAxes inversion,
+            double paragraphWidth,
+            double lineHeight
             )
         {
             if (inversion == InvertAxes.None)

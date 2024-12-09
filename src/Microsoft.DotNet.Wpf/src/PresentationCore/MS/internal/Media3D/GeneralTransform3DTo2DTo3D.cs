@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,16 +21,16 @@ namespace MS.Internal.Media3D
         internal GeneralTransform3DTo2DTo3D()
         {
         }
-        
+
         internal GeneralTransform3DTo2DTo3D(GeneralTransform3DTo2D transform3DTo2D,
                                             GeneralTransform2DTo3D transform2DTo3D)
-        {   
+        {
             Debug.Assert(transform3DTo2D != null && transform2DTo3D != null);
-            
+
             _transform3DTo2D = (GeneralTransform3DTo2D)transform3DTo2D.GetAsFrozen();
             _transform2DTo3D = (GeneralTransform2DTo3D)transform2DTo3D.GetAsFrozen();
         }
-        
+
         /// <summary>
         /// Transform a point
         /// </summary>
@@ -41,19 +41,19 @@ namespace MS.Internal.Media3D
         {
             Point intermediate2DPoint = new Point();
             result = new Point3D();
-            
+
             if (_transform3DTo2D == null ||
                 !_transform3DTo2D.TryTransform(inPoint, out intermediate2DPoint))
             {
                 return false;
             }
 
-            if (_transform2DTo3D == null || 
+            if (_transform2DTo3D == null ||
                 !_transform2DTo3D.TryTransform(intermediate2DPoint, out result))
             {
                 return false;
             }
-            
+
             return true;
         }
 
@@ -88,7 +88,7 @@ namespace MS.Internal.Media3D
         /// <param name="rect">Bounding box</param>
         /// <returns>The transformed bounding box</returns>
         public override Rect3D TransformBounds(Rect3D rect)
-        {            
+        {
             throw new NotImplementedException();
         }
 
@@ -100,7 +100,7 @@ namespace MS.Internal.Media3D
         {
             return new GeneralTransform3DTo2DTo3D();
         }
-        
+
 
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.CloneCore(Freezable)">Freezable.CloneCore</see>.
@@ -161,7 +161,7 @@ namespace MS.Internal.Media3D
 
         GeneralTransform3DTo2D _transform3DTo2D;
         GeneralTransform2DTo3D _transform2DTo3D;
-    } 
+    }
 }
 
 

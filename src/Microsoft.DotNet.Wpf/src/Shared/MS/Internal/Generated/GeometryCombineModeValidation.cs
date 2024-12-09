@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -32,12 +32,12 @@ namespace System.Windows.Media
         /// <returns> 'true' if the enumeration contains a valid value, 'false' otherwise. </returns>
         public static bool IsGeometryCombineModeValid(object valueObject)
         {
-            GeometryCombineMode value = (GeometryCombineMode) valueObject;
+            GeometryCombineMode value = (GeometryCombineMode)valueObject;
 
-            return (value == GeometryCombineMode.Union) || 
-                   (value == GeometryCombineMode.Intersect) || 
-                   (value == GeometryCombineMode.Xor) || 
+            return (value == GeometryCombineMode.Union) ||
+                   (value == GeometryCombineMode.Intersect) ||
+                   (value == GeometryCombineMode.Xor) ||
                    (value == GeometryCombineMode.Exclude);
-        }                                
+        }
     }
 }

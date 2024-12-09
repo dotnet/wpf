@@ -1,13 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Runtime.InteropServices;
-using MS.Internal;
-using MS.Win32;
 using System.Globalization;
+using System.Runtime.InteropServices;
 using System.Windows.Controls;
+using MS.Internal;
 using MS.Internal.PresentationFramework;
+using MS.Win32;
 
 //
 // Description: Custom COM marshalling code and interfaces for interaction
@@ -232,7 +232,7 @@ namespace System.Windows.Documents
                             if (segmentCallback != null)
                             {
                                 // Iterate over segments.
-                                for (int i = 0; continueIteration && (i < sentence.Segments.Count); i++ )
+                                for (int i = 0; continueIteration && (i < sentence.Segments.Count); i++)
                                 {
                                     continueIteration = segmentCallback(sentence.Segments[i], data);
                                 }
@@ -406,8 +406,8 @@ namespace System.Windows.Documents
         {
             const int
                 BothPreAndPost = 0,
-                Prereform      = 1,
-                Postreform     = 2;
+                Prereform = 1,
+                Postreform = 2;
 
             string option;
 
@@ -702,7 +702,7 @@ namespace System.Windows.Documents
             /// <summary>
             /// Checks whether this segment is free of spelling errors
             /// </summary>
-            public bool IsClean 
+            public bool IsClean
             {
                 get
                 {
@@ -866,7 +866,7 @@ namespace System.Windows.Documents
             /// <summary>
             /// Final symbol offset of a sentence.
             /// </summary>
-            public int EndOffset 
+            public int EndOffset
             {
                 get
                 {
@@ -909,7 +909,7 @@ namespace System.Windows.Documents
                     _segments = null;
                 }
 
-                _disposed = true;                
+                _disposed = true;
             }
 
             ~SpellerSentence()
@@ -984,7 +984,7 @@ namespace System.Windows.Documents
             }
             finally
             {
-                if ((exception) &&(lexicon != null))
+                if ((exception) && (lexicon != null))
                 {
                     Marshal.ReleaseComObject(lexicon);
                 }
@@ -1074,17 +1074,17 @@ namespace System.Windows.Documents
             //[
             //]
             //HRESULT ReadFrom ([in] BSTR filename);
-            void ReadFrom ([MarshalAs( UnmanagedType.BStr )]string fileName);
+            void ReadFrom([MarshalAs(UnmanagedType.BStr)] string fileName);
 
             //[
             //]
             //HRESULT WriteTo ([in] BSTR filename);
-            void stub_WriteTo ();
+            void stub_WriteTo();
 
             //[
             //]
             //HRESULT GetEnumerator ([retval,out] ILexiconEntryEnumerator **enumerator);
-            void stub_GetEnumerator ();
+            void stub_GetEnumerator();
 
             //[
             //]
@@ -1099,7 +1099,7 @@ namespace System.Windows.Documents
             //             [in] BSTR word,
             //             [in] long tagIndex,
             //             [out,retval] long *index);
-            void stub_TagFor ();
+            void stub_TagFor();
 
             //[
             //]
@@ -1116,7 +1116,7 @@ namespace System.Windows.Documents
             //[
             //]
             //HRESULT Remove ([in] BSTR entry);
-        	void stub_Remove();
+            void stub_Remove();
             //[
             //    propget
             //]

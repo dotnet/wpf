@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,16 +8,15 @@
 //              typically wraps a type converter.
 //
 
-using System.Globalization;
 using System.Collections;
 using System.ComponentModel;
-
+using System.Globalization;
 using System.Reflection;
 using System.Windows;
-using System.Windows.Data;
-using System.Windows.Navigation;    // BaseUriHelper
 using System.Windows.Baml2006; // WpfKnownType
+using System.Windows.Data;
 using System.Windows.Markup; // IUriContext
+using System.Windows.Navigation;    // BaseUriHelper
 
 namespace MS.Internal.Data
 {

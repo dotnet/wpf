@@ -1,20 +1,20 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal;
-using System.Globalization;
-using System.Threading;
 using System.Collections; // ArrayList
+using System.Globalization;
 using System.Runtime.InteropServices;
-using System.Windows.Threading;
-using System.Windows.Input;
+using System.Threading;
 using System.Windows.Controls; // ScrollChangedEventArgs
 using System.Windows.Controls.Primitives;  // CharacterCasing, TextBoxBase
+using System.Windows.Input;
 using System.Windows.Markup;
-using MS.Win32;
-using MS.Internal.Documents;
+using System.Windows.Threading;
+using MS.Internal;
 using MS.Internal.Commands; // CommandHelpers
+using MS.Internal.Documents;
+using MS.Win32;
 
 #pragma warning disable 1634, 1691 // To enable presharp warning disables (#pragma suppress) below.
 //
@@ -154,7 +154,7 @@ namespace System.Windows.Documents
 
             // Delete UndoManager
             UndoManager undoManager = UndoManager.GetUndoManager(_uiScope);
-            if(undoManager != null)
+            if (undoManager != null)
             {
                 if (_textContainer is TextContainer)
                 {
@@ -510,8 +510,10 @@ namespace System.Windows.Documents
         {
             if (_mouseSelectionState == null)
             {
-                _mouseSelectionState = new MouseSelectionState();
-                _mouseSelectionState.Timer = new DispatcherTimer(DispatcherPriority.Normal);
+                _mouseSelectionState = new MouseSelectionState
+                {
+                    Timer = new DispatcherTimer(DispatcherPriority.Normal)
+                };
                 _mouseSelectionState.Timer.Tick += new EventHandler(HandleMouseSelectionTick);
                 // 400ms is the default value for MenuShowDelay. Creating timer with smaller value may
                 // cause Dispatcher queue starvation.
@@ -1204,7 +1206,7 @@ namespace System.Windows.Documents
                     // Is there room for low surrogate?
                     if (textData.Length == extraCharsAllowed && Char.IsHighSurrogate(textData, extraCharsAllowed - 1))
                     {
-                        textData = textData.Substring(0, extraCharsAllowed-1);
+                        textData = textData.Substring(0, extraCharsAllowed - 1);
                     }
                     // Does the starting low surrogate have a matching high surrogate in the previously inserted content?
                     if (!string.IsNullOrEmpty(textData) && Char.IsLowSurrogate(textData, 0))
@@ -2042,7 +2044,7 @@ namespace System.Windows.Documents
         private bool _acceptsRichContent;
 
         // If the system is IMM enabled, this is true.
-        private static bool _immEnabled = SafeSystemMetrics.IsImmEnabled ;
+        private static bool _immEnabled = SafeSystemMetrics.IsImmEnabled;
 
         // ImmComposition implementation, used when _immEnabled.
         private ImmComposition _immComposition;

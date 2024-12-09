@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,15 +8,14 @@
 //
 
 
-using MS.Internal.PtsTable;
-using MS.Internal.Text;
-using MS.Internal.Documents;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
-
+using MS.Internal.Documents;
 using MS.Internal.PtsHost.UnsafeNativeMethods;
+using MS.Internal.PtsTable;
+using MS.Internal.Text;
 
 namespace MS.Internal.PtsHost
 {
@@ -56,8 +55,8 @@ namespace MS.Internal.PtsHost
         /// </summary>
         protected override void OnArrange()
         {
-            Debug.Assert(   Table != null
-                        &&  CalculatedColumns != null  );
+            Debug.Assert(Table != null
+                        && CalculatedColumns != null);
 
             base.OnArrange();
 
@@ -70,9 +69,9 @@ namespace MS.Internal.PtsHost
 
             if (    //  table has no rows thus no cells to arrange
                     !QueryTableDetails(out arrayTableRowDesc, out fskupdTable, out rect)
-                    //  no changes requiring arrange in the table
-                ||  fskupdTable == PTS.FSKUPDATE.fskupdNoChange
-                ||  fskupdTable == PTS.FSKUPDATE.fskupdShifted  )
+                //  no changes requiring arrange in the table
+                || fskupdTable == PTS.FSKUPDATE.fskupdNoChange
+                || fskupdTable == PTS.FSKUPDATE.fskupdShifted)
             {
                 return;
             }
@@ -85,7 +84,7 @@ namespace MS.Internal.PtsHost
 
             MbpInfo mbp = MbpInfo.FromElement(TableParagraph.Element, TableParagraph.StructuralCache.TextFormatterHost.PixelsPerDip);
 
-            if(ParentFlowDirection != PageFlowDirection)
+            if (ParentFlowDirection != PageFlowDirection)
             {
                 PTS.FSRECT pageRect = _pageContext.PageRect;
 
@@ -130,9 +129,9 @@ namespace MS.Internal.PtsHost
                         continue;
                     }
 
-                    if (    iR != 0 //  paginated case - row spanned cells appearing in first row on the page must be accounted
-                        &&  (   arrayTableCellMerge[iC] == PTS.FSTABLEKCELLMERGE.fskcellmergeMiddle
-                            ||  arrayTableCellMerge[iC] == PTS.FSTABLEKCELLMERGE.fskcellmergeLast  )   )
+                    if (iR != 0 //  paginated case - row spanned cells appearing in first row on the page must be accounted
+                        && (arrayTableCellMerge[iC] == PTS.FSTABLEKCELLMERGE.fskcellmergeMiddle
+                            || arrayTableCellMerge[iC] == PTS.FSTABLEKCELLMERGE.fskcellmergeLast))
                     {
                         // this cell has been accounted
                         continue;
@@ -143,7 +142,7 @@ namespace MS.Internal.PtsHost
                     double urCellOffset = calculatedColumns[cellParaClient.ColumnIndex].UrOffset;
 
                     cellParaClient.Arrange(TextDpi.ToTextDpi(urCellOffset), vrRowTop, _rect, ThisFlowDirection, _pageContext);
-}
+                }
 
                 vrRowTop += arrayTableRowDesc[iR].u.dvrRow;
 
@@ -172,8 +171,8 @@ namespace MS.Internal.PtsHost
         /// <param name="fskupdInherited">PTS update info</param>
         internal override void ValidateVisual(PTS.FSKUPDATE fskupdInherited)
         {
-            Invariant.Assert( fskupdInherited != PTS.FSKUPDATE.fskupdInherited );
-            Invariant.Assert( TableParagraph.Table != null && CalculatedColumns != null );
+            Invariant.Assert(fskupdInherited != PTS.FSKUPDATE.fskupdInherited);
+            Invariant.Assert(TableParagraph.Table != null && CalculatedColumns != null);
 
             PTS.FSTABLEROWDESCRIPTION[] arrayTableRowDesc;
             PTS.FSKUPDATE fskupdTable;
@@ -271,12 +270,12 @@ namespace MS.Internal.PtsHost
                 //  ---------------------------------------------------------
                 //  for new or changed rows go inside and validate cells
                 //
-                if (    fskupdRow == PTS.FSKUPDATE.fskupdNew
-                    ||  fskupdRow == PTS.FSKUPDATE.fskupdChangeInside   )
+                if (fskupdRow == PTS.FSKUPDATE.fskupdNew
+                    || fskupdRow == PTS.FSKUPDATE.fskupdChangeInside)
                 {
                     // paginated case - if first row of a given rowgroup for this para client has foreign cells, they need to
                     // be rendered regardless of merge state
-                    if(rowParagraph.Row.HasForeignCells && (rowPrevious == null || rowPrevious.RowGroup != row.RowGroup))
+                    if (rowParagraph.Row.HasForeignCells && (rowPrevious == null || rowPrevious.RowGroup != row.RowGroup))
                     {
                         ValidateRowVisualComplex(
                             (RowVisual)(rowVisualsCollection[iR]),
@@ -315,8 +314,8 @@ namespace MS.Internal.PtsHost
         /// --------------------
         internal override void UpdateViewport(ref PTS.FSRECT viewport)
         {
-            Debug.Assert(   TableParagraph.Table != null
-                        &&  CalculatedColumns != null  );
+            Debug.Assert(TableParagraph.Table != null
+                        && CalculatedColumns != null);
 
             PTS.FSTABLEROWDESCRIPTION[] arrayTableRowDesc;
             PTS.FSKUPDATE fskupdTable;
@@ -358,8 +357,8 @@ namespace MS.Internal.PtsHost
         /// <returns>Element if any.</returns>
         internal override IInputElement InputHitTest(PTS.FSPOINT pt)
         {
-            Debug.Assert(   TableParagraph.Table != null
-                        &&  CalculatedColumns != null  );
+            Debug.Assert(TableParagraph.Table != null
+                        && CalculatedColumns != null);
 
             IInputElement element = null;
             PTS.FSTABLEROWDESCRIPTION[] arrayTableRowDesc;
@@ -398,7 +397,7 @@ namespace MS.Internal.PtsHost
                             if (cellParaClient.Rect.Contains(pt))
                             {
                                 element = cellParaClient.InputHitTest(pt);
-								break;
+                                break;
                             }
                         }
                         break;
@@ -407,7 +406,7 @@ namespace MS.Internal.PtsHost
                 }
             }
 
-            if(element == null && _rect.Contains(pt))
+            if (element == null && _rect.Contains(pt))
             {
                 element = TableParagraph.Table;
             }
@@ -598,8 +597,8 @@ namespace MS.Internal.PtsHost
         /// </returns>
         internal CellParaClient GetCellParaClientFromPoint(Point point, bool snapToText)
         {
-            Debug.Assert(   TableParagraph.Table != null
-                        &&  CalculatedColumns != null  );
+            Debug.Assert(TableParagraph.Table != null
+                        && CalculatedColumns != null);
 
             PTS.FSTABLEROWDESCRIPTION[] arrayTableRowDesc;
             PTS.FSKUPDATE fskupdTable;
@@ -641,12 +640,12 @@ namespace MS.Internal.PtsHost
                         {
                             cpcFound = cpc;
                         }
-                        else if(snapToText)
+                        else if (snapToText)
                         {
                             int du = Math.Min(Math.Abs(rect.u - u), Math.Abs(rect.u + rect.du - u));
                             int dv = Math.Min(Math.Abs(rect.v - v), Math.Abs(rect.v + rect.dv - v));
 
-                            if( (du + dv) < iClosestDistance)
+                            if ((du + dv) < iClosestDistance)
                             {
                                 iClosestDistance = du + dv;
                                 cpcClosest = cpc;
@@ -656,7 +655,7 @@ namespace MS.Internal.PtsHost
                 }
             }
 
-            if(snapToText && cpcFound == null)
+            if (snapToText && cpcFound == null)
             {
                 cpcFound = cpcClosest;
             }
@@ -748,7 +747,7 @@ namespace MS.Internal.PtsHost
 
                 for (int iC = 0; iC < arrayFsCell.Length; ++iC)
                 {
-                    if(arrayFsCell[iC] != IntPtr.Zero &&
+                    if (arrayFsCell[iC] != IntPtr.Zero &&
                         (rowIndex == 0 ||
                           (arrayTableCellMerge[iC] != PTS.FSTABLEKCELLMERGE.fskcellmergeMiddle &&
                            arrayTableCellMerge[iC] != PTS.FSTABLEKCELLMERGE.fskcellmergeLast)
@@ -783,7 +782,7 @@ namespace MS.Internal.PtsHost
 
             List<ParagraphResult> listResults = new List<ParagraphResult>(0);
 
-            if(cpc != null)
+            if (cpc != null)
             {
                 listResults.Add(cpc.CreateParagraphResult());
             }
@@ -804,7 +803,7 @@ namespace MS.Internal.PtsHost
 
             List<ParagraphResult> listResults = new List<ParagraphResult>(0);
 
-            if(cpc != null)
+            if (cpc != null)
             {
                 listResults.Add(cpc.CreateParagraphResult());
             }
@@ -817,8 +816,8 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal Geometry GetTightBoundingGeometryFromTextPositions(ITextPointer startPosition, ITextPointer endPosition, Rect visibleRect)
         {
-            Debug.Assert(   TableParagraph.Table != null
-                        &&  CalculatedColumns != null  );
+            Debug.Assert(TableParagraph.Table != null
+                        && CalculatedColumns != null);
 
             Geometry geometry = null;
 
@@ -888,8 +887,8 @@ namespace MS.Internal.PtsHost
         /// </returns>
         internal CellParaClient GetCellParaClientFromPosition(ITextPointer position)
         {
-            Debug.Assert(   TableParagraph.Table != null
-                        &&  CalculatedColumns != null  );
+            Debug.Assert(TableParagraph.Table != null
+                        && CalculatedColumns != null);
 
             PTS.FSTABLEROWDESCRIPTION[] arrayTableRowDesc;
             PTS.FSKUPDATE fskupdTable;
@@ -919,7 +918,7 @@ namespace MS.Internal.PtsHost
 
                         CellParaClient cpc = (CellParaClient)(PtsContext.HandleToObject(arrayFsCell[iC]));
 
-                        if(position.CompareTo(cpc.Cell.ContentStart) >= 0 && position.CompareTo(cpc.Cell.ContentEnd) <= 0)
+                        if (position.CompareTo(cpc.Cell.ContentStart) >= 0 && position.CompareTo(cpc.Cell.ContentEnd) <= 0)
                         {
                             return cpc;
                         }
@@ -942,8 +941,8 @@ namespace MS.Internal.PtsHost
         /// </returns>
         internal CellParaClient GetCellAbove(double suggestedX, int rowGroupIndex, int rowIndex)
         {
-            Debug.Assert(   TableParagraph.Table != null
-                        &&  CalculatedColumns != null  );
+            Debug.Assert(TableParagraph.Table != null
+                        && CalculatedColumns != null);
 
             PTS.FSTABLEROWDESCRIPTION[] arrayTableRowDesc;
             PTS.FSKUPDATE fskupdTable;
@@ -982,11 +981,11 @@ namespace MS.Internal.PtsHost
                         // Check if bottom row of cell is less than row index for moving up.
 
                         int cellBottomIndex = cpc.Cell.RowIndex + cpc.Cell.RowSpan - 1;
-                        if( (cellBottomIndex < rowIndex && cpc.Cell.RowGroupIndex == rowGroupIndex) ||
+                        if ((cellBottomIndex < rowIndex && cpc.Cell.RowGroupIndex == rowGroupIndex) ||
                             (cpc.Cell.RowGroupIndex < rowGroupIndex)
                           )
                         {
-                            if(suggestedU >= cpc.Rect.u && suggestedU <= (cpc.Rect.u + cpc.Rect.du))
+                            if (suggestedU >= cpc.Rect.u && suggestedU <= (cpc.Rect.u + cpc.Rect.du))
                             {
                                 return cpc;
                             }
@@ -994,7 +993,7 @@ namespace MS.Internal.PtsHost
 
                             int iDistance = Math.Abs((cpc.Rect.u + cpc.Rect.du / 2) - suggestedU);
 
-                            if(iDistance < iClosestDistance)
+                            if (iDistance < iClosestDistance)
                             {
                                 iClosestDistance = iDistance;
                                 cpcClosest = cpc;
@@ -1002,7 +1001,7 @@ namespace MS.Internal.PtsHost
                         }
                     }
 
-                    if(cpcClosest != null)
+                    if (cpcClosest != null)
                     {
                         return cpcClosest;
                     }
@@ -1023,8 +1022,8 @@ namespace MS.Internal.PtsHost
         /// </returns>
         internal CellParaClient GetCellBelow(double suggestedX, int rowGroupIndex, int rowIndex)
         {
-            Debug.Assert(   TableParagraph.Table != null
-                        &&  CalculatedColumns != null  );
+            Debug.Assert(TableParagraph.Table != null
+                        && CalculatedColumns != null);
 
             PTS.FSTABLEROWDESCRIPTION[] arrayTableRowDesc;
             PTS.FSKUPDATE fskupdTable;
@@ -1058,11 +1057,11 @@ namespace MS.Internal.PtsHost
 
                         CellParaClient cpc = (CellParaClient)(PtsContext.HandleToObject(arrayFsCell[iC]));
 
-                        if( (cpc.Cell.RowIndex > rowIndex && cpc.Cell.RowGroupIndex == rowGroupIndex) ||
+                        if ((cpc.Cell.RowIndex > rowIndex && cpc.Cell.RowGroupIndex == rowGroupIndex) ||
                             (cpc.Cell.RowGroupIndex > rowGroupIndex)
                             )
                         {
-                            if(suggestedU >= cpc.Rect.u && suggestedU <= (cpc.Rect.u + cpc.Rect.du))
+                            if (suggestedU >= cpc.Rect.u && suggestedU <= (cpc.Rect.u + cpc.Rect.du))
                             {
                                 return cpc;
                             }
@@ -1070,15 +1069,15 @@ namespace MS.Internal.PtsHost
                             // Else record it and report it if we find nothing better in this row.
                             int iDistance = Math.Abs((cpc.Rect.u + cpc.Rect.du / 2) - suggestedU);
 
-                            if(iDistance < iClosestDistance)
+                            if (iDistance < iClosestDistance)
                             {
                                 iClosestDistance = iDistance;
                                 cpcClosest = cpc;
                             }
                         }
-}
+                    }
 
-                    if(cpcClosest != null)
+                    if (cpcClosest != null)
                     {
                         return cpcClosest;
                     }
@@ -1100,7 +1099,7 @@ namespace MS.Internal.PtsHost
         {
             CellParaClient cpc = GetCellParaClientFromPoint(point, true);
 
-            if(cpc != null)
+            if (cpc != null)
             {
                 return new CellInfo(this, cpc);
             }
@@ -1117,8 +1116,8 @@ namespace MS.Internal.PtsHost
         /// </returns>
         internal Rect GetRectangleFromRowEndPosition(ITextPointer position)
         {
-            Debug.Assert(   TableParagraph.Table != null
-                        &&  CalculatedColumns != null  );
+            Debug.Assert(TableParagraph.Table != null
+                        && CalculatedColumns != null);
 
             PTS.FSTABLEROWDESCRIPTION[] arrayTableRowDesc;
             PTS.FSKUPDATE fskupdTable;
@@ -1132,9 +1131,9 @@ namespace MS.Internal.PtsHost
                 {
                     TableRow row = ((RowParagraph)(PtsContext.HandleToObject(arrayTableRowDesc[iR].fsnmRow))).Row;
 
-                    if(((TextPointer)position).CompareTo(row.ContentEnd) == 0)
+                    if (((TextPointer)position).CompareTo(row.ContentEnd) == 0)
                     {
-                        return new Rect( TextDpi.FromTextDpi(rectTable.u + rectTable.du),
+                        return new Rect(TextDpi.FromTextDpi(rectTable.u + rectTable.du),
                                          TextDpi.FromTextDpi(vrCur),
                                          1.0,
                                          TextDpi.FromTextDpi(arrayTableRowDesc[iR].u.dvrRow));
@@ -1394,7 +1393,7 @@ namespace MS.Internal.PtsHost
 
             arrayTableRowDesc = new PTS.FSTABLEROWDESCRIPTION[tableDetails.cRows];
 
-            fixed (PTS.FSTABLEROWDESCRIPTION * rgTableRowDesc = arrayTableRowDesc)
+            fixed (PTS.FSTABLEROWDESCRIPTION* rgTableRowDesc = arrayTableRowDesc)
             {
                 int cRowsActual;
 
@@ -1437,11 +1436,11 @@ namespace MS.Internal.PtsHost
 
             if (tableRowDetails.cCells > 0)
             {
-                fixed (PTS.FSKUPDATE * rgUpdate = arrayUpdate)
+                fixed (PTS.FSKUPDATE* rgUpdate = arrayUpdate)
                 {
-                    fixed (IntPtr * rgFsCell = arrayFsCell)
+                    fixed (IntPtr* rgFsCell = arrayFsCell)
                     {
-                        fixed (PTS.FSTABLEKCELLMERGE * rgTableCellMerge = arrayTableCellMerge)
+                        fixed (PTS.FSTABLEKCELLMERGE* rgTableCellMerge = arrayTableCellMerge)
                         {
                             int cCellsActual;
 
@@ -1481,7 +1480,8 @@ namespace MS.Internal.PtsHost
                 while (++lastIndex < count)
                 {
                     RowVisual rowVisual = (RowVisual)(rowVisualsCollection[lastIndex]);
-                    if (rowVisual.Row == row)   break;
+                    if (rowVisual.Row == row)
+                        break;
                 }
 
                 rowVisualsCollection.RemoveRange(firstIndex, lastIndex - firstIndex);
@@ -1507,7 +1507,8 @@ namespace MS.Internal.PtsHost
 
                 while (++lastIndex < count)
                 {
-                    if (cellVisualsCollection[lastIndex] == visual) break;
+                    if (cellVisualsCollection[lastIndex] == visual)
+                        break;
                 }
 
                 cellVisualsCollection.RemoveRange(firstIndex, lastIndex - firstIndex);
@@ -1550,9 +1551,9 @@ namespace MS.Internal.PtsHost
 
                 if (    //  paginated case - cell may be null
                         arrayFsCell[iC] == IntPtr.Zero
-                        //  exclude hanging cells
-                    ||  arrayTableCellMerge[iC] == PTS.FSTABLEKCELLMERGE.fskcellmergeMiddle
-                    ||  arrayTableCellMerge[iC] == PTS.FSTABLEKCELLMERGE.fskcellmergeLast   )
+                    //  exclude hanging cells
+                    || arrayTableCellMerge[iC] == PTS.FSTABLEKCELLMERGE.fskcellmergeMiddle
+                    || arrayTableCellMerge[iC] == PTS.FSTABLEKCELLMERGE.fskcellmergeLast)
                 {
                     continue;
                 }
@@ -1568,12 +1569,12 @@ namespace MS.Internal.PtsHost
 
                     cellParaClient.ValidateVisual();
 
-                    if (    fskupdCell == PTS.FSKUPDATE.fskupdNew
+                    if (fskupdCell == PTS.FSKUPDATE.fskupdNew
                         //  PTS bug is a suspect here - this is a temp workaround:
-                        ||  VisualTreeHelper.GetParent(cellParaClient.Visual) == null   )
+                        || VisualTreeHelper.GetParent(cellParaClient.Visual) == null)
                     {
                         Visual currentParent = VisualTreeHelper.GetParent(cellParaClient.Visual) as Visual;
-                        if(currentParent != null)
+                        if (currentParent != null)
                         {
                             ContainerVisual parent = currentParent as ContainerVisual;
                             Invariant.Assert(parent != null, "parent should always derives from ContainerVisual");
@@ -1583,10 +1584,10 @@ namespace MS.Internal.PtsHost
                     }
                     else
                     {
-                        Debug.Assert(   cellParaClient.Visual != null
+                        Debug.Assert(cellParaClient.Visual != null
                                     //  If the check below fails, then PTS cheats by reporting "ChangInside" for
                                     //  a cell that in fact was re-Formatted.
-                                    &&  VisualTreeHelper.GetParent(cellParaClient.Visual) != null   );
+                                    && VisualTreeHelper.GetParent(cellParaClient.Visual) != null);
 
                         SynchronizeCellVisualsCollection(cellVisualsCollection, sourceIndex, cellParaClient.Visual);
                     }
@@ -1601,7 +1602,7 @@ namespace MS.Internal.PtsHost
                     cellVisualsCollection.Count - sourceIndex);
             }
 
-            #if DEBUGDEBUG
+#if DEBUGDEBUG
             for (int iC = 0, sourceIndex = 0; iC < arrayFsCell.Length; ++iC)
             {
                 if (    arrayFsCell[iC] != IntPtr.Zero
@@ -1613,7 +1614,7 @@ namespace MS.Internal.PtsHost
                     sourceIndex++;
                 }
             }
-            #endif // DEBUGDEBUG
+#endif // DEBUGDEBUG
         }
 
         /// <summary>
@@ -1712,10 +1713,10 @@ namespace MS.Internal.PtsHost
                     }
                     else
                     {
-                        Debug.Assert(   cellParaClient.Visual != null
+                        Debug.Assert(cellParaClient.Visual != null
                                     //  If the check below fails, then PTS cheats by reporting "ChangInside" for
                                     //  a cell that in fact was re-Formatted.
-                                    &&  VisualTreeHelper.GetParent(cellParaClient.Visual) != null   );
+                                    && VisualTreeHelper.GetParent(cellParaClient.Visual) != null);
 
                         SynchronizeCellVisualsCollection(cellVisualsCollection, sourceIndex, cellParaClient.Visual);
                     }
@@ -1730,7 +1731,7 @@ namespace MS.Internal.PtsHost
                     cellVisualsCollection.Count - sourceIndex);
             }
 
-            #if DEBUGDEBUG
+#if DEBUGDEBUG
             for (int columnIndex = 0, sourceIndex = 0; columnIndex < arrayCellParaClients.Length; ++columnIndex)
             {
                 CellParaClient cellParaClient = arrayCellParaClients[columnIndex].cellParaClient;
@@ -1740,7 +1741,7 @@ namespace MS.Internal.PtsHost
                     sourceIndex++;
                 }
             }
-            #endif // DEBUGDEBUG
+#endif // DEBUGDEBUG
         }
 
         /// <summary>
@@ -1756,7 +1757,7 @@ namespace MS.Internal.PtsHost
 
             if (ThisFlowDirection != PageFlowDirection)
             {
-                for (int iC = CalculatedColumns.Length-1; iC >= 0; iC--)
+                for (int iC = CalculatedColumns.Length - 1; iC >= 0; iC--)
                 {
                     columnBackgroundBrush = (iC < Table.Columns.Count)
                         ? Table.Columns[iC].Background
@@ -1801,12 +1802,12 @@ namespace MS.Internal.PtsHost
         {
             int dvAdjustment = 0;
 
-            if(IsFirstChunk && rowIndex == 0)
+            if (IsFirstChunk && rowIndex == 0)
             {
                 dvAdjustment = -mbpInfo.BPTop;
             }
 
-            if(IsLastChunk && rowIndex == arrayTableRowDesc.Length - 1)
+            if (IsLastChunk && rowIndex == arrayTableRowDesc.Length - 1)
             {
                 dvAdjustment = -mbpInfo.BPBottom;
             }
@@ -1831,7 +1832,7 @@ namespace MS.Internal.PtsHost
             Rect rowRect = tableContentRect;
             Brush rowGroupBackgroundBrush;
 
-            if(arrayTableRowDesc.Length > 0)
+            if (arrayTableRowDesc.Length > 0)
             {
                 TableRow row = ((RowParagraph)(PtsContext.HandleToObject(arrayTableRowDesc[0].fsnmRow))).Row;
                 TableRowGroup tableRowGroup = row.RowGroup;
@@ -1869,7 +1870,7 @@ namespace MS.Internal.PtsHost
                     dc.DrawRectangle(rowGroupBackgroundBrush, null, rowRect);
                 }
             }
-}
+        }
 
         /// <summary>
         /// Draws TableRow backgrounds
@@ -2336,7 +2337,7 @@ namespace MS.Internal.PtsHost
                         ? _calculatedColumns[i].DurMaxWidth
                         : fUseMin
                         ? _calculatedColumns[i].DurMinWidth
-                          // floating point (0 < durAutoMax)
+                        // floating point (0 < durAutoMax)
                         : (0 < durAutoMax && DoubleUtil.IsZero(durAutoMax) == false)
                         ? _calculatedColumns[i].DurMinWidth + (_calculatedColumns[i].DurMaxWidth * (durAutoWidths - durAutoMin) / durAutoMax)
                         : 0;
@@ -2375,7 +2376,7 @@ namespace MS.Internal.PtsHost
                         // from columns proportionally to (_calculatedColumns[i].DurMaxWidth - _calculatedColumns[i].DurMinWidth)
                         // But if all columns have DurMaxWidth==DurMinWidth (hence durAbsoluteMax == durAbsoluteMin),
                         // subtract proportionally to column.DurMaxWidth, to avoid divide-by-zero 
-                        ?  fAbsWidthsHaveFlex
+                        ? fAbsWidthsHaveFlex
                             ? _calculatedColumns[i].DurMaxWidth - ((_calculatedColumns[i].DurMaxWidth - _calculatedColumns[i].DurMinWidth) * (durAbsoluteMax - durAbsoluteWidths) / (durAbsoluteMax - durAbsoluteMin))
                             : _calculatedColumns[i].DurMaxWidth - (_calculatedColumns[i].DurMaxWidth * (durAbsoluteMax - durAbsoluteWidths) / durAbsoluteMax)
                         : fUseUserMaxMax

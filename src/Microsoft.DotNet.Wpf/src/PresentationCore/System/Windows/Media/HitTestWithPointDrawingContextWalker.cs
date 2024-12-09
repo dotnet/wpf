@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,7 +17,7 @@ namespace System.Windows.Media
     /// <summary>
     /// HitTestDrawingContextWalker - a DrawingContextWalker which performs a hit test with a point
     /// </summary>
-    internal class HitTestWithPointDrawingContextWalker: HitTestDrawingContextWalker
+    internal class HitTestWithPointDrawingContextWalker : HitTestDrawingContextWalker
     {
         /// <summary>
         /// Constructor
@@ -68,7 +68,7 @@ namespace System.Windows.Media
             Pen pen,
             Geometry geometry)
         {
-            if (IsCurrentLayerNoOp ||(geometry == null) || geometry.IsEmpty())
+            if (IsCurrentLayerNoOp || (geometry == null) || geometry.IsEmpty())
             {
                 return;
             }
@@ -288,7 +288,7 @@ namespace System.Windows.Media
             {
                 // This API has been deprecated, so any BitmapEffect is ignored.
                 PushPointStack(_point);
-            }               
+            }
         }
 
         /// <summary>
@@ -369,7 +369,7 @@ namespace System.Windows.Media
             if (IsCurrentLayerNoOp)
             {
                 Debug.Assert(_noOpLayerDepth >= 1);
-                
+
                 _noOpLayerDepth--;
 
                 // If this Pop cooresponds to the Push that created
@@ -378,13 +378,13 @@ namespace System.Windows.Media
                 {
                     IsCurrentLayerNoOp = false;
                 }
-                
+
                 return true;
             }
             else
             {
                 return false;
-            }            
+            }
         }
 
         /// <summary>
@@ -417,13 +417,13 @@ namespace System.Windows.Media
                     // Guard that we are in a no-op layer, and that the correct corresponding 
                     // Pop has been called.
                     Debug.Assert(_currentLayerIsNoOp);
-                    Debug.Assert(_noOpLayerDepth == 0);   
+                    Debug.Assert(_noOpLayerDepth == 0);
 
                     // Reset the no-op status
-                    _currentLayerIsNoOp = false;                    
+                    _currentLayerIsNoOp = false;
                 }
             }
-            
+
             get
             {
                 return _currentLayerIsNoOp;

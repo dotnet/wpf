@@ -1,8 +1,17 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows.Automation;
+using System.Windows.Automation.Peers;
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Shapes;
 using MS.Internal;
 using MS.Internal.Commands;
 using MS.Internal.Documents;
@@ -10,16 +19,6 @@ using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationFramework;
 using MS.Internal.Telemetry.PresentationFramework;
 using MS.Utility;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows.Automation;
-using System.Windows.Automation.Peers;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Shapes;
 
 namespace System.Windows.Controls
 {
@@ -217,7 +216,7 @@ namespace System.Windows.Controls
             IScrollInfo isi = this.ScrollInfo;
 
             //STRESS 1627654: anybody can call this method even if we don't have ISI...
-            if(isi == null)
+            if (isi == null)
                 return;
 
             // This is a public API, and is expected to be called by the
@@ -238,7 +237,7 @@ namespace System.Windows.Controls
             // We also don't invalidate measure if we are in the middle of the
             // measure pass, as the ScrollViewer will already be updating the
             // visibility of the autoscrollbars.
-            if(!MeasureInProgress &&
+            if (!MeasureInProgress &&
                (!ArrangeInProgress || !InvalidatedMeasureFromArrange))
             {
                 //
@@ -247,11 +246,11 @@ namespace System.Windows.Controls
                 double extent = ScrollInfo.ExtentWidth;
                 double viewport = ScrollInfo.ViewportWidth;
 
-                if (    HorizontalScrollBarVisibility == ScrollBarVisibility.Auto
-                    && (    (   _scrollVisibilityX == Visibility.Collapsed
-                            &&  DoubleUtil.GreaterThan(extent, viewport))
-                        || (    _scrollVisibilityX == Visibility.Visible
-                            &&  DoubleUtil.LessThanOrClose(extent, viewport))))
+                if (HorizontalScrollBarVisibility == ScrollBarVisibility.Auto
+                    && ((_scrollVisibilityX == Visibility.Collapsed
+                            && DoubleUtil.GreaterThan(extent, viewport))
+                        || (_scrollVisibilityX == Visibility.Visible
+                            && DoubleUtil.LessThanOrClose(extent, viewport))))
                 {
                     InvalidateMeasure();
                 }
@@ -273,12 +272,12 @@ namespace System.Windows.Controls
 
 
             // If any scrolling properties have actually changed, fire public events post-layout
-            if (        !DoubleUtil.AreClose(HorizontalOffset, ScrollInfo.HorizontalOffset)
-                    ||  !DoubleUtil.AreClose(VerticalOffset, ScrollInfo.VerticalOffset)
-                    ||  !DoubleUtil.AreClose(ViewportWidth, ScrollInfo.ViewportWidth)
-                    ||  !DoubleUtil.AreClose(ViewportHeight, ScrollInfo.ViewportHeight)
-                    ||  !DoubleUtil.AreClose(ExtentWidth, ScrollInfo.ExtentWidth)
-                    ||  !DoubleUtil.AreClose(ExtentHeight, ScrollInfo.ExtentHeight))
+            if (!DoubleUtil.AreClose(HorizontalOffset, ScrollInfo.HorizontalOffset)
+                    || !DoubleUtil.AreClose(VerticalOffset, ScrollInfo.VerticalOffset)
+                    || !DoubleUtil.AreClose(ViewportWidth, ScrollInfo.ViewportWidth)
+                    || !DoubleUtil.AreClose(ViewportHeight, ScrollInfo.ViewportHeight)
+                    || !DoubleUtil.AreClose(ExtentWidth, ScrollInfo.ExtentWidth)
+                    || !DoubleUtil.AreClose(ExtentHeight, ScrollInfo.ExtentHeight))
             {
                 EnsureLayoutUpdatedHandler();
             }
@@ -312,7 +311,7 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Appearance")]
         public ScrollBarVisibility HorizontalScrollBarVisibility
         {
-            get { return (ScrollBarVisibility) GetValue(HorizontalScrollBarVisibilityProperty); }
+            get { return (ScrollBarVisibility)GetValue(HorizontalScrollBarVisibilityProperty); }
             set { SetValue(HorizontalScrollBarVisibilityProperty, value); }
         }
 
@@ -323,7 +322,7 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Appearance")]
         public ScrollBarVisibility VerticalScrollBarVisibility
         {
-            get { return (ScrollBarVisibility) GetValue(VerticalScrollBarVisibilityProperty); }
+            get { return (ScrollBarVisibility)GetValue(VerticalScrollBarVisibilityProperty); }
             set { SetValue(VerticalScrollBarVisibilityProperty, value); }
         }
 
@@ -1060,11 +1059,17 @@ namespace System.Windows.Controls
                 switch (e.Key)
                 {
                     case Key.Left:
-                        if (fInvertForRTL) LineRight(); else LineLeft();
+                        if (fInvertForRTL)
+                            LineRight();
+                        else
+                            LineLeft();
                         e.Handled = true;
                         break;
                     case Key.Right:
-                        if (fInvertForRTL) LineLeft(); else LineRight();
+                        if (fInvertForRTL)
+                            LineLeft();
+                        else
+                            LineRight();
                         e.Handled = true;
                         break;
                     case Key.Up:
@@ -1084,11 +1089,17 @@ namespace System.Windows.Controls
                         e.Handled = true;
                         break;
                     case Key.Home:
-                        if (fControlDown) ScrollToTop(); else ScrollToLeftEnd();
+                        if (fControlDown)
+                            ScrollToTop();
+                        else
+                            ScrollToLeftEnd();
                         e.Handled = true;
                         break;
                     case Key.End:
-                        if (fControlDown) ScrollToBottom(); else ScrollToRightEnd();
+                        if (fControlDown)
+                            ScrollToBottom();
+                        else
+                            ScrollToRightEnd();
                         e.Handled = true;
                         break;
                 }
@@ -1101,7 +1112,8 @@ namespace System.Windows.Controls
         /// <param name="e">Event Arguments</param>
         protected override void OnMouseWheel(MouseWheelEventArgs e)
         {
-            if (e.Handled) { return; }
+            if (e.Handled)
+            { return; }
 
             if (!HandlesMouseWheelScrolling)
             {
@@ -1110,8 +1122,10 @@ namespace System.Windows.Controls
 
             if (ScrollInfo != null)
             {
-                if (e.Delta < 0) { ScrollInfo.MouseWheelDown(); }
-                else { ScrollInfo.MouseWheelUp(); }
+                if (e.Delta < 0)
+                { ScrollInfo.MouseWheelDown(); }
+                else
+                { ScrollInfo.MouseWheelUp(); }
             }
 
             e.Handled = true;
@@ -1237,12 +1251,12 @@ namespace System.Windows.Controls
                         //if both are Auto, then appearance of one scrollbar may causes appearance of another.
                         //If we don't re-check here, we get some part of content covered by auto scrollbar and can never reach to it since
                         //another scrollbar may not appear (in cases when viewport==extent) - bug 1199443
-                        if(hsbAuto && vsbAuto && (makeHorizontalBarVisible != makeVerticalBarVisible))
+                        if (hsbAuto && vsbAuto && (makeHorizontalBarVisible != makeVerticalBarVisible))
                         {
                             bool makeHorizontalBarVisible2 = !makeHorizontalBarVisible && DoubleUtil.GreaterThan(isi.ExtentWidth, isi.ViewportWidth);
                             bool makeVerticalBarVisible2 = !makeVerticalBarVisible && DoubleUtil.GreaterThan(isi.ExtentHeight, isi.ViewportHeight);
 
-                            if(makeHorizontalBarVisible2)
+                            if (makeHorizontalBarVisible2)
                             {
                                 if (_scrollVisibilityX != Visibility.Visible)
                                 {
@@ -1293,7 +1307,7 @@ namespace System.Windows.Controls
             }
 
 
-            if(!ArrangeDirty && InvalidatedMeasureFromArrange)
+            if (!ArrangeDirty && InvalidatedMeasureFromArrange)
             {
                 // If we invalidated measure from a previous arrange pass, but
                 // if after the following measure pass we are not dirty for
@@ -1311,7 +1325,7 @@ namespace System.Windows.Controls
 
             Size size = base.ArrangeOverride(arrangeSize);
 
-            if(previouslyInvalidatedMeasureFromArrange)
+            if (previouslyInvalidatedMeasureFromArrange)
             {
                 // If we invalidated measure from a previous arrange pass,
                 // then we are not supposed to invalidate measure this time.
@@ -1330,9 +1344,11 @@ namespace System.Windows.Controls
         {
             if (!HasNonDefaultValue(property))
             {
-                Binding binding = new Binding();
-                binding.RelativeSource = RelativeSource.TemplatedParent;
-                binding.Path = new PropertyPath(property);
+                Binding binding = new Binding
+                {
+                    RelativeSource = RelativeSource.TemplatedParent,
+                    Path = new PropertyPath(property)
+                };
                 SetBinding(property, binding);
             }
         }
@@ -2127,17 +2143,17 @@ namespace System.Windows.Controls
             //returns false if capacity is used up and entry ignored
             internal void Enqueue(Command command)
             {
-                if(_lastWritePosition == _lastReadPosition) //buffer is empty
+                if (_lastWritePosition == _lastReadPosition) //buffer is empty
                 {
                     _array = new Command[_capacity];
                     _lastWritePosition = _lastReadPosition = 0;
                 }
 
-                if(!OptimizeCommand(command)) //regular insertion, if optimization didn't happen
+                if (!OptimizeCommand(command)) //regular insertion, if optimization didn't happen
                 {
                     _lastWritePosition = (_lastWritePosition + 1) % _capacity;
 
-                    if(_lastWritePosition == _lastReadPosition) //buffer is full
+                    if (_lastWritePosition == _lastReadPosition) //buffer is full
                     {
                         // throw away the oldest entry and continue to accumulate fresh input
                         _lastReadPosition = (_lastReadPosition + 1) % _capacity;
@@ -2153,11 +2169,11 @@ namespace System.Windows.Controls
             // since horizontal position is going to end up at the specified offset anyways.
             private bool OptimizeCommand(Command command)
             {
-                if(_lastWritePosition != _lastReadPosition) //buffer has something
+                if (_lastWritePosition != _lastReadPosition) //buffer has something
                 {
-                    if(   (   command.Code == Commands.SetHorizontalOffset
+                    if ((command.Code == Commands.SetHorizontalOffset
                            && _array[_lastWritePosition].Code == Commands.SetHorizontalOffset)
-                       || (   command.Code == Commands.SetVerticalOffset
+                       || (command.Code == Commands.SetVerticalOffset
                            && _array[_lastWritePosition].Code == Commands.SetVerticalOffset)
                        || (command.Code == Commands.MakeVisible
                            && _array[_lastWritePosition].Code == Commands.MakeVisible))
@@ -2175,7 +2191,7 @@ namespace System.Windows.Controls
             // returns Invalid command if there is no more commands
             internal Command Fetch()
             {
-                if(_lastWritePosition == _lastReadPosition) //buffer is empty
+                if (_lastWritePosition == _lastReadPosition) //buffer is empty
                 {
                     return new Command(Commands.Invalid, 0, null);
                 }
@@ -2185,7 +2201,7 @@ namespace System.Windows.Controls
                 Command command = _array[_lastReadPosition];
                 _array[_lastReadPosition].MakeVisibleParam = null; //to release the allocated object
 
-                if(_lastWritePosition == _lastReadPosition) //it was the last command
+                if (_lastWritePosition == _lastReadPosition) //it was the last command
                 {
                     _array = null; // make GC work. Hopefully the whole queue is processed in Gen0
                 }
@@ -2206,81 +2222,103 @@ namespace System.Windows.Controls
         private bool ExecuteNextCommand()
         {
             IScrollInfo isi = ScrollInfo;
-            if(isi == null) return false;
+            if (isi == null)
+                return false;
 
             Command cmd = _queue.Fetch();
-            switch(cmd.Code)
+            switch (cmd.Code)
             {
-                case Commands.LineUp:    isi.LineUp();    break;
-                case Commands.LineDown:  isi.LineDown();  break;
-                case Commands.LineLeft:  isi.LineLeft();  break;
-                case Commands.LineRight: isi.LineRight(); break;
+                case Commands.LineUp:
+                    isi.LineUp();
+                    break;
+                case Commands.LineDown:
+                    isi.LineDown();
+                    break;
+                case Commands.LineLeft:
+                    isi.LineLeft();
+                    break;
+                case Commands.LineRight:
+                    isi.LineRight();
+                    break;
 
-                case Commands.PageUp:    isi.PageUp();    break;
-                case Commands.PageDown:  isi.PageDown();  break;
-                case Commands.PageLeft:  isi.PageLeft();  break;
-                case Commands.PageRight: isi.PageRight(); break;
+                case Commands.PageUp:
+                    isi.PageUp();
+                    break;
+                case Commands.PageDown:
+                    isi.PageDown();
+                    break;
+                case Commands.PageLeft:
+                    isi.PageLeft();
+                    break;
+                case Commands.PageRight:
+                    isi.PageRight();
+                    break;
 
-                case Commands.SetHorizontalOffset: isi.SetHorizontalOffset(cmd.Param); break;
-                case Commands.SetVerticalOffset:   isi.SetVerticalOffset(cmd.Param);   break;
+                case Commands.SetHorizontalOffset:
+                    isi.SetHorizontalOffset(cmd.Param);
+                    break;
+                case Commands.SetVerticalOffset:
+                    isi.SetVerticalOffset(cmd.Param);
+                    break;
 
                 case Commands.MakeVisible:
-                {
-                    Visual child = cmd.MakeVisibleParam.Child;
-                    Visual visi = isi as Visual;
-
-                    if (    child != null
-                        &&  visi != null
-                        &&  (visi == child || visi.IsAncestorOf(child))
-                        //  bug 1616807. ISI could be removed from visual tree,
-                        //  but ScrollViewer.ScrollInfo may not reflect this yet.
-                        &&  this.IsAncestorOf(visi) )
                     {
-                        Rect targetRect = cmd.MakeVisibleParam.TargetRect;
-                        if(targetRect.IsEmpty)
-                        {
-                            UIElement uie = child as UIElement;
-                            if(uie != null)
-                                targetRect = new Rect(uie.RenderSize);
-                            else
-                                targetRect = new Rect(); //not a good idea to invoke ISI with Empty rect
-                        }
+                        Visual child = cmd.MakeVisibleParam.Child;
+                        Visual visi = isi as Visual;
 
-                        // (ScrollContentPresenter.MakeVisible can cause an exception when encountering an empty rectangle)
-                        // Workaround:
-                        // The method throws InvalidOperationException in some scenarios where it should return Rect.Empty.
-                        // Do not workaround for derived classes.
-                        Rect rcNew;
-                        if(isi.GetType() == typeof(System.Windows.Controls.ScrollContentPresenter))
+                        if (child != null
+                            && visi != null
+                            && (visi == child || visi.IsAncestorOf(child))
+                            //  bug 1616807. ISI could be removed from visual tree,
+                            //  but ScrollViewer.ScrollInfo may not reflect this yet.
+                            && this.IsAncestorOf(visi))
                         {
-                            rcNew = ((System.Windows.Controls.ScrollContentPresenter)isi).MakeVisible(child, targetRect, false);
-                        }
-                        else
-                        {
-                            rcNew = isi.MakeVisible(child, targetRect);
-                        }
-
-                        if (!rcNew.IsEmpty)
-                        {
-                            // clip the new rect to isi's bounds, in case isi didn't.
-                            // The ancestor's scroll should only depend on the visible
-                            // portion of the new rect.
-                            UIElement uie = visi as UIElement;
-                            if (uie != null)
+                            Rect targetRect = cmd.MakeVisibleParam.TargetRect;
+                            if (targetRect.IsEmpty)
                             {
-                                rcNew.Intersect(new Rect(uie.RenderSize));
+                                UIElement uie = child as UIElement;
+                                if (uie != null)
+                                    targetRect = new Rect(uie.RenderSize);
+                                else
+                                    targetRect = new Rect(); //not a good idea to invoke ISI with Empty rect
                             }
 
-                            GeneralTransform t = visi.TransformToAncestor(this);
-                            rcNew = t.TransformBounds(rcNew);
+                            // (ScrollContentPresenter.MakeVisible can cause an exception when encountering an empty rectangle)
+                            // Workaround:
+                            // The method throws InvalidOperationException in some scenarios where it should return Rect.Empty.
+                            // Do not workaround for derived classes.
+                            Rect rcNew;
+                            if (isi.GetType() == typeof(System.Windows.Controls.ScrollContentPresenter))
+                            {
+                                rcNew = ((System.Windows.Controls.ScrollContentPresenter)isi).MakeVisible(child, targetRect, false);
+                            }
+                            else
+                            {
+                                rcNew = isi.MakeVisible(child, targetRect);
+                            }
+
+                            if (!rcNew.IsEmpty)
+                            {
+                                // clip the new rect to isi's bounds, in case isi didn't.
+                                // The ancestor's scroll should only depend on the visible
+                                // portion of the new rect.
+                                UIElement uie = visi as UIElement;
+                                if (uie != null)
+                                {
+                                    rcNew.Intersect(new Rect(uie.RenderSize));
+                                }
+
+                                GeneralTransform t = visi.TransformToAncestor(this);
+                                rcNew = t.TransformBounds(rcNew);
+                            }
+
+                            BringIntoView(rcNew);
                         }
-
-                        BringIntoView(rcNew);
                     }
-                }
-                break;
+                    break;
 
-                case Commands.Invalid: return false;
+                case Commands.Invalid:
+                    return false;
             }
             return true;
         }
@@ -2293,7 +2331,7 @@ namespace System.Windows.Controls
 
         private void EnsureQueueProcessing()
         {
-            if(!_queue.IsEmpty())
+            if (!_queue.IsEmpty())
             {
                 EnsureLayoutUpdatedHandler();
             }
@@ -2305,7 +2343,7 @@ namespace System.Windows.Controls
         private void OnLayoutUpdated(object sender, EventArgs e)
         {
             // if there was a command, execute it and leave the handler for the next pass
-            if(ExecuteNextCommand())
+            if (ExecuteNextCommand())
             {
                 InvalidateArrange();
                 return;
@@ -2393,7 +2431,7 @@ namespace System.Windows.Controls
             //
             // Fire scrolling events.
             //
-            if(changed)
+            if (changed)
             {
                 // Fire ScrollChange event
                 ScrollChangedEventArgs args = new ScrollChangedEventArgs(
@@ -2402,9 +2440,11 @@ namespace System.Windows.Controls
                     new Size(ExtentWidth, ExtentHeight),
                     new Vector(ExtentWidth - oldExtentWidth, ExtentHeight - oldExtentHeight),
                     new Size(ViewportWidth, ViewportHeight),
-                    new Vector(ViewportWidth - oldViewportWidth, ViewportHeight - oldViewportHeight));
-                args.RoutedEvent = ScrollChangedEvent;
-                args.Source = this;
+                    new Vector(ViewportWidth - oldViewportWidth, ViewportHeight - oldViewportHeight))
+                {
+                    RoutedEvent = ScrollChangedEvent,
+                    Source = this
+                };
 
                 try
                 {
@@ -2412,7 +2452,7 @@ namespace System.Windows.Controls
 
                     // Fire automation events if automation is active.
                     ScrollViewerAutomationPeer peer = UIElementAutomationPeer.FromElement(this) as ScrollViewerAutomationPeer;
-                    if(peer != null)
+                    if (peer != null)
                     {
                         peer.RaiseAutomationEvents(oldExtentWidth,
                                                    oldExtentHeight,
@@ -2492,11 +2532,13 @@ namespace System.Windows.Controls
         {
             if (args.Command == ScrollBar.DeferScrollToHorizontalOffsetCommand)
             {
-                if (args.Parameter is double) { ((ScrollViewer)target).DeferScrollToHorizontalOffset((double)args.Parameter); }
+                if (args.Parameter is double)
+                { ((ScrollViewer)target).DeferScrollToHorizontalOffset((double)args.Parameter); }
             }
             else if (args.Command == ScrollBar.DeferScrollToVerticalOffsetCommand)
             {
-                if (args.Parameter is double) { ((ScrollViewer)target).DeferScrollToVerticalOffset((double)args.Parameter); }
+                if (args.Parameter is double)
+                { ((ScrollViewer)target).DeferScrollToVerticalOffset((double)args.Parameter); }
             }
             else if (args.Command == ScrollBar.LineLeftCommand)
             {
@@ -2522,13 +2564,13 @@ namespace System.Windows.Controls
             {
                 ((ScrollViewer)target).LineDown();
             }
-            else if (   args.Command == ScrollBar.PageUpCommand
-                    ||  args.Command == ComponentCommands.ScrollPageUp  )
+            else if (args.Command == ScrollBar.PageUpCommand
+                    || args.Command == ComponentCommands.ScrollPageUp)
             {
                 ((ScrollViewer)target).PageUp();
             }
-            else if (   args.Command == ScrollBar.PageDownCommand
-                    ||  args.Command == ComponentCommands.ScrollPageDown    )
+            else if (args.Command == ScrollBar.PageDownCommand
+                    || args.Command == ComponentCommands.ScrollPageDown)
             {
                 ((ScrollViewer)target).PageDown();
             }
@@ -2558,11 +2600,13 @@ namespace System.Windows.Controls
             }
             else if (args.Command == ScrollBar.ScrollToHorizontalOffsetCommand)
             {
-                if (args.Parameter is double) { ((ScrollViewer)target).ScrollToHorizontalOffset((double)args.Parameter); }
+                if (args.Parameter is double)
+                { ((ScrollViewer)target).ScrollToHorizontalOffset((double)args.Parameter); }
             }
             else if (args.Command == ScrollBar.ScrollToVerticalOffsetCommand)
             {
-                if (args.Parameter is double) { ((ScrollViewer)target).ScrollToVerticalOffset((double)args.Parameter); }
+                if (args.Parameter is double)
+                { ((ScrollViewer)target).ScrollToVerticalOffset((double)args.Parameter); }
             }
 
             ScrollViewer sv = target as ScrollViewer;
@@ -2584,14 +2628,14 @@ namespace System.Windows.Controls
             //  When scroll viewer is a primitive / part of another control
             //  capable to handle scrolling - scroll viewer leaves it up
             //  to the control to deal with component commands...
-            if (    args.Command == ComponentCommands.ScrollPageUp
-                ||  args.Command == ComponentCommands.ScrollPageDown    )
+            if (args.Command == ComponentCommands.ScrollPageUp
+                || args.Command == ComponentCommands.ScrollPageDown)
             {
                 ScrollViewer scrollViewer = target as ScrollViewer;
                 Control templatedParentControl = scrollViewer != null ? scrollViewer.TemplatedParent as Control : null;
 
-                if (    templatedParentControl != null
-                    &&  templatedParentControl.HandlesScrolling )
+                if (templatedParentControl != null
+                    && templatedParentControl.HandlesScrolling)
                 {
                     args.CanExecute = false;
                     args.ContinueRouting = true;
@@ -2625,27 +2669,27 @@ namespace System.Windows.Controls
             ExecutedRoutedEventHandler executeScrollCommandEventHandler = new ExecutedRoutedEventHandler(OnScrollCommand);
             CanExecuteRoutedEventHandler canExecuteScrollCommandEventHandler = new CanExecuteRoutedEventHandler(OnQueryScrollCommand);
 
-            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.LineLeftCommand,          executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
-            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.LineRightCommand,         executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
-            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.PageLeftCommand,          executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
-            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.PageRightCommand,         executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
-            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.LineUpCommand,            executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
-            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.LineDownCommand,          executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
-            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.PageUpCommand,            executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
-            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.PageDownCommand,          executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
-            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.ScrollToLeftEndCommand,   executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
-            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.ScrollToRightEndCommand,  executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
-            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.ScrollToEndCommand,       executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
-            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.ScrollToHomeCommand,      executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
-            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.ScrollToTopCommand,       executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
-            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.ScrollToBottomCommand,    executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
-            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.ScrollToHorizontalOffsetCommand,  executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
-            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.ScrollToVerticalOffsetCommand,    executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
+            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.LineLeftCommand, executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
+            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.LineRightCommand, executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
+            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.PageLeftCommand, executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
+            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.PageRightCommand, executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
+            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.LineUpCommand, executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
+            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.LineDownCommand, executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
+            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.PageUpCommand, executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
+            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.PageDownCommand, executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
+            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.ScrollToLeftEndCommand, executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
+            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.ScrollToRightEndCommand, executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
+            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.ScrollToEndCommand, executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
+            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.ScrollToHomeCommand, executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
+            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.ScrollToTopCommand, executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
+            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.ScrollToBottomCommand, executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
+            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.ScrollToHorizontalOffsetCommand, executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
+            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.ScrollToVerticalOffsetCommand, executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
             CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.DeferScrollToHorizontalOffsetCommand, executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
-            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.DeferScrollToVerticalOffsetCommand,   executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
+            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ScrollBar.DeferScrollToVerticalOffsetCommand, executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
 
-            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ComponentCommands.ScrollPageUp,     executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
-            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ComponentCommands.ScrollPageDown,   executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
+            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ComponentCommands.ScrollPageUp, executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
+            CommandHelpers.RegisterCommandHandler(typeof(ScrollViewer), ComponentCommands.ScrollPageDown, executeScrollCommandEventHandler, canExecuteScrollCommandEventHandler);
         }
 
         // Creates the default control template for ScrollViewer.
@@ -2677,12 +2721,16 @@ namespace System.Windows.Controls
 
             // Bind Actual HorizontalOffset to HorizontalScrollBar.Value
             // Bind Actual VerticalOffset to VerticalScrollbar.Value
-            Binding bindingHorizontalOffset = new Binding("HorizontalOffset");
-            bindingHorizontalOffset.Mode = BindingMode.OneWay;
-            bindingHorizontalOffset.RelativeSource = RelativeSource.TemplatedParent;
-            Binding bindingVerticalOffset = new Binding("VerticalOffset");
-            bindingVerticalOffset.Mode = BindingMode.OneWay;
-            bindingVerticalOffset.RelativeSource = RelativeSource.TemplatedParent;
+            Binding bindingHorizontalOffset = new Binding("HorizontalOffset")
+            {
+                Mode = BindingMode.OneWay,
+                RelativeSource = RelativeSource.TemplatedParent
+            };
+            Binding bindingVerticalOffset = new Binding("VerticalOffset")
+            {
+                Mode = BindingMode.OneWay,
+                RelativeSource = RelativeSource.TemplatedParent
+            };
 
             grid.SetValue(Grid.BackgroundProperty, new TemplateBindingExtension(BackgroundProperty));
             grid.AppendChild(gridColumn1);
@@ -2731,8 +2779,10 @@ namespace System.Windows.Controls
             corner.SetValue(Grid.RowProperty, 1);
             corner.SetResourceReference(Rectangle.FillProperty, SystemColors.ControlBrushKey);
 
-            template = new ControlTemplate(typeof(ScrollViewer));
-            template.VisualTree = grid;
+            template = new ControlTemplate(typeof(ScrollViewer))
+            {
+                VisualTree = grid
+            };
             template.Seal();
 
             return (template);
@@ -2741,16 +2791,16 @@ namespace System.Windows.Controls
         [Flags]
         private enum Flags
         {
-            None                            = 0x0000,
-            InvalidatedMeasureFromArrange   = 0x0001,
-            InChildInvalidateMeasure        = 0x0002,
-            HandlesMouseWheelScrolling      = 0x0004,
-            ForceNextManipulationComplete   = 0x0008,
+            None = 0x0000,
+            InvalidatedMeasureFromArrange = 0x0001,
+            InChildInvalidateMeasure = 0x0002,
+            HandlesMouseWheelScrolling = 0x0004,
+            ForceNextManipulationComplete = 0x0008,
             ManipulationBindingsInitialized = 0x0010,
-            CompleteScrollManipulation      = 0x0020,
-            InChildMeasurePass1             = 0x0040,
-            InChildMeasurePass2             = 0x0080,
-            InChildMeasurePass3             = 0x00C0,
+            CompleteScrollManipulation = 0x0020,
+            InChildMeasurePass1 = 0x0040,
+            InChildMeasurePass2 = 0x0080,
+            InChildMeasurePass3 = 0x00C0,
         }
 
         private void SetFlagValue(Flags flag, bool value)

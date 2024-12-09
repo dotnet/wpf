@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,10 +8,10 @@
 //
 
 
-using MS.Internal.PtsHost.UnsafeNativeMethods;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Documents;
+using System.Windows.Media;
+using MS.Internal.PtsHost.UnsafeNativeMethods;
 
 namespace MS.Internal.PtsHost
 {
@@ -43,7 +43,7 @@ namespace MS.Internal.PtsHost
             _textContainer = textContainer;
             _backgroundFormatInfo = new BackgroundFormatInfo(this);
         }
-        
+
         /// <summary>
         /// Finalizer
         /// </summary>
@@ -148,9 +148,9 @@ namespace MS.Internal.PtsHost
         /// <param name="dtr">New DTR being added.</param>
         internal void AddDirtyTextRange(DirtyTextRange dtr)
         {
-            if (_dtrs == null) 
-            { 
-                _dtrs = new DtrList(); 
+            if (_dtrs == null)
+            {
+                _dtrs = new DtrList();
             }
             _dtrs.Merge(dtr);
         }
@@ -177,13 +177,13 @@ namespace MS.Internal.PtsHost
             _forceReformat = false;
             _destroyStructure = false;
 
-           /*
-            * Have to make sure the ptsContext is not disposed 
-            * as the resulting call to ReleaseHandle will throw an exception.
-            *
-            * This is possible when the dispatcher.Shutdown event fires before
-            * the Visibility changed event fires.
-            **/
+            /*
+             * Have to make sure the ptsContext is not disposed 
+             * as the resulting call to ReleaseHandle will throw an exception.
+             *
+             * This is possible when the dispatcher.Shutdown event fires before
+             * the Visibility changed event fires.
+             **/
             if (_section != null && !_ptsContext.Disposed)
             {
                 if (destroyStructureCache)
@@ -241,12 +241,12 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// The DependencyObject whose structure is represented by this cache.
         /// </summary>
-        internal FlowDocument FormattingOwner 
-        { 
-            get 
+        internal FlowDocument FormattingOwner
+        {
+            get
             {
-                return _owner; 
-            } 
+                return _owner;
+            }
         }
 
         /// <summary>
@@ -254,8 +254,8 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal Section Section
         {
-            get 
-            { 
+            get
+            {
                 EnsurePtsContext();
                 return _section;
             }
@@ -265,24 +265,24 @@ namespace MS.Internal.PtsHost
         /// Hyphenator
         /// </summary>
         internal NaturalLanguageHyphenator Hyphenator
-        { 
-            get 
-            { 
+        {
+            get
+            {
                 EnsureHyphenator();
-                return _hyphenator; 
-            } 
+                return _hyphenator;
+            }
         }
 
         /// <summary>
         /// Context used to communicate with PTS component.
         /// </summary>
-        internal PtsContext PtsContext 
-        { 
-            get 
-            { 
+        internal PtsContext PtsContext
+        {
+            get
+            {
                 EnsurePtsContext();
                 return _ptsContext;
-            } 
+            }
         }
 
         /// <summary>
@@ -298,13 +298,13 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// TextFormatter host.
         /// </summary>
-        internal TextFormatterHost TextFormatterHost 
-        { 
-            get 
-            { 
+        internal TextFormatterHost TextFormatterHost
+        {
+            get
+            {
                 EnsurePtsContext();
                 return _textFormatterHost;
-            } 
+            }
         }
 
         /// <summary>
@@ -338,13 +338,13 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal bool ForceReformat
         {
-            get 
-            { 
-                return _forceReformat; 
+            get
+            {
+                return _forceReformat;
             }
-            set 
-            { 
-                _forceReformat = value; 
+            set
+            {
+                _forceReformat = value;
             }
         }
 
@@ -353,21 +353,21 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal bool DestroyStructure
         {
-            get 
+            get
             {
-                return _destroyStructure; 
+                return _destroyStructure;
             }
         }
 
         /// <summary>
         /// DTRs list.
         /// </summary>
-        internal DtrList DtrList 
-        { 
-            get 
-            { 
-                return _dtrs; 
-            } 
+        internal DtrList DtrList
+        {
+            get
+            {
+                return _dtrs;
+            }
         }
 
         /// <summary>
@@ -381,12 +381,12 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// Background formatting information
         /// </summary>
-        internal BackgroundFormatInfo BackgroundFormatInfo 
-        { 
+        internal BackgroundFormatInfo BackgroundFormatInfo
+        {
             get
             {
                 return _backgroundFormatInfo;
-            } 
+            }
         }
 
         /// <summary>
@@ -761,9 +761,15 @@ namespace MS.Internal.PtsHost
             /// <summary>
             /// Rectangle of margin in TextDpi
             /// </summary>
-            internal PTS.FSRECT PageMarginRect { get { return new PTS.FSRECT(new Rect(PageMargin.Left, PageMargin.Top, 
-                                                                                      PageSize.Width - PageMargin.Left - PageMargin.Right, 
-                                                                                      PageSize.Height - PageMargin.Top - PageMargin.Bottom)); } }
+            internal PTS.FSRECT PageMarginRect
+            {
+                get
+                {
+                    return new PTS.FSRECT(new Rect(PageMargin.Left, PageMargin.Top,
+                                                                                      PageSize.Width - PageMargin.Left - PageMargin.Right,
+                                                                                      PageSize.Height - PageMargin.Top - PageMargin.Bottom));
+                }
+            }
             /// <summary>
             /// DependentMax used for invalidation calculations
             /// </summary>
@@ -840,12 +846,12 @@ namespace MS.Internal.PtsHost
             /// <summary>
             /// Rectangle of current column
             /// </summary>
-            internal PTS.FSRECT  ColumnRect  { get { return _currentArrangeInfo.ColumnRect; } }
+            internal PTS.FSRECT ColumnRect { get { return _currentArrangeInfo.ColumnRect; } }
 
             /// <summary>
             /// Is current page Finite
             /// </summary>
-            internal bool        FinitePage  { get { return _currentArrangeInfo.FinitePage; } }
+            internal bool FinitePage { get { return _currentArrangeInfo.FinitePage; } }
 
 
             private struct DocumentArrangeInfo
@@ -857,7 +863,7 @@ namespace MS.Internal.PtsHost
 
             private DocumentArrangeInfo _currentArrangeInfo;
             private Stack<DocumentArrangeInfo> _documentArrangeInfoStack = new Stack<DocumentArrangeInfo>();
-}
+        }
 
         /// <summary>
         /// Document visual validation context - holds any information needed during the visual validation of a document.
@@ -875,10 +881,10 @@ namespace MS.Internal.PtsHost
             /// <summary>
             /// <see cref="IDisposable.Dispose"/>
             /// </summary>
-            void IDisposable.Dispose() 
+            void IDisposable.Dispose()
             {
                 GC.SuppressFinalize(this);
-                base.Dispose(); 
+                base.Dispose();
             }
         }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -53,7 +53,7 @@ namespace System.Windows.Media
         /// <returns>
         /// IntersectionDetail describing the result of the hit-test
         /// </returns>             
-        IntersectionDetail HitTestGeometry(PathGeometry geometry);       
+        IntersectionDetail HitTestGeometry(PathGeometry geometry);
 
         /// <summary>
         /// Propagates an event handler to Freezables referenced by 
@@ -61,7 +61,7 @@ namespace System.Windows.Media
         /// </summary>        
         /// <param name="handler"> Event handler to propagate </param>                        
         /// <param name="adding"> 'true' to add the handler, 'false' to remove it </param>                                
-        void PropagateChangedHandler(EventHandler handler, bool adding);           
-}
+        void PropagateChangedHandler(EventHandler handler, bool adding);
+    }
 }
 

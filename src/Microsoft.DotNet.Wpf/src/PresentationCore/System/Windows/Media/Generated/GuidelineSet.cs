@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,10 +9,10 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
-using MS.Internal.KnownBoxes;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
+using MS.Internal;
+using MS.Internal.KnownBoxes;
 // These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows.Media
@@ -58,21 +58,21 @@ namespace System.Windows.Media
 
         private static void GuidelinesXPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            GuidelineSet target = ((GuidelineSet) d);
+            GuidelineSet target = ((GuidelineSet)d);
 
 
             target.PropertyChanged(GuidelinesXProperty);
         }
         private static void GuidelinesYPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            GuidelineSet target = ((GuidelineSet) d);
+            GuidelineSet target = ((GuidelineSet)d);
 
 
             target.PropertyChanged(GuidelinesYProperty);
         }
         private static void IsDynamicPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            GuidelineSet target = ((GuidelineSet) d);
+            GuidelineSet target = ((GuidelineSet)d);
 
 
             target.PropertyChanged(IsDynamicProperty);
@@ -88,7 +88,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (DoubleCollection) GetValue(GuidelinesXProperty);
+                return (DoubleCollection)GetValue(GuidelinesXProperty);
             }
             set
             {
@@ -103,7 +103,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (DoubleCollection) GetValue(GuidelinesYProperty);
+                return (DoubleCollection)GetValue(GuidelinesYProperty);
             }
             set
             {
@@ -118,7 +118,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (bool) GetValue(IsDynamicProperty);
+                return (bool)GetValue(IsDynamicProperty);
             }
             set
             {
@@ -187,13 +187,13 @@ namespace System.Windows.Media
                     channel.BeginCommand(
                         (byte*)&data,
                         sizeof(DUCE.MILCMD_GUIDELINESET),
-                        (int)(data.GuidelinesXSize + 
+                        (int)(data.GuidelinesXSize +
                               data.GuidelinesYSize)
                         );
 
 
                     // Copy this collection's elements (or their handles) to reserved data
-                    for(int i = 0; i < GuidelinesXCount; i++)
+                    for (int i = 0; i < GuidelinesXCount; i++)
                     {
                         Double resource = vGuidelinesX.Internal_GetItem(i);
                         channel.AppendCommandData(
@@ -203,7 +203,7 @@ namespace System.Windows.Media
                     }
 
                     // Copy this collection's elements (or their handles) to reserved data
-                    for(int i = 0; i < GuidelinesYCount; i++)
+                    for (int i = 0; i < GuidelinesYCount; i++)
                     {
                         Double resource = vGuidelinesY.Internal_GetItem(i);
                         channel.AppendCommandData(
@@ -218,7 +218,7 @@ namespace System.Windows.Media
         }
         DUCE.ResourceHandle DUCE.IResource.AddRefOnChannel(DUCE.Channel channel)
         {
-            using (CompositionEngineLock.Acquire()) 
+            using (CompositionEngineLock.Acquire())
             {
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_GUIDELINESET))
                 {
@@ -233,14 +233,14 @@ namespace System.Windows.Media
         }
         void DUCE.IResource.ReleaseOnChannel(DUCE.Channel channel)
         {
-            using (CompositionEngineLock.Acquire()) 
+            using (CompositionEngineLock.Acquire())
             {
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
                     ReleaseOnChannelAnimations(channel);
-}
+                }
             }
         }
         DUCE.ResourceHandle DUCE.IResource.GetHandle(DUCE.Channel channel)

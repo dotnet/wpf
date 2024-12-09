@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,12 +7,11 @@
 //              Spec at Viewbox.xml
 //
 
+using System.Collections;
+using System.Windows.Media;
 using MS.Internal;
 using MS.Internal.Controls;
 using MS.Internal.Telemetry.PresentationFramework;
-using System.Collections;
-
-using System.Windows.Media;
 
 namespace System.Windows.Controls
 {
@@ -41,13 +40,13 @@ namespace System.Windows.Controls
         /// Always stretches to fit the Viewbox according to the stretch mode.
         /// </summary>
         Both
-    } 
+    }
 
     #endregion
 
     /// <summary>
     /// </summary>
-    public class Viewbox : Decorator 
+    public class Viewbox : Decorator
     {
         //-------------------------------------------------------------------
         //
@@ -72,7 +71,7 @@ namespace System.Windows.Controls
         public Viewbox() : base()
         {
         }
-        
+
         #endregion
 
 
@@ -85,9 +84,9 @@ namespace System.Windows.Controls
         #region Public Fields
 
         /// <summary>
-            /// This is the DependencyProperty for the Viewbox's Stretch property.
-            ///
-            /// Default:  Stretch.Uniform
+        /// This is the DependencyProperty for the Viewbox's Stretch property.
+        ///
+        /// Default:  Stretch.Uniform
         /// <seealso cref="Viewbox.Stretch" />
         /// </summary>
         public static readonly DependencyProperty StretchProperty
@@ -96,15 +95,15 @@ namespace System.Windows.Controls
                 typeof(Stretch),    // Property type
                 typeof(Viewbox),    // Property owner
                 new FrameworkPropertyMetadata(Stretch.Uniform, FrameworkPropertyMetadataOptions.AffectsMeasure),
-                new ValidateValueCallback(ValidateStretchValue));                           
+                new ValidateValueCallback(ValidateStretchValue));
 
         private static bool ValidateStretchValue(object value)
         {
             Stretch s = (Stretch)value;
-            return (    s == Stretch.Uniform
-                    ||  s == Stretch.None
-                    ||  s == Stretch.Fill
-                    ||  s == Stretch.UniformToFill);
+            return (s == Stretch.Uniform
+                    || s == Stretch.None
+                    || s == Stretch.Fill
+                    || s == Stretch.UniformToFill);
         }
 
         /// <summary>
@@ -118,14 +117,14 @@ namespace System.Windows.Controls
                 typeof(StretchDirection),   // Property type
                 typeof(Viewbox),            // Property owner
                 new FrameworkPropertyMetadata(StretchDirection.Both, FrameworkPropertyMetadataOptions.AffectsMeasure),
-                new ValidateValueCallback(ValidateStretchDirectionValue));                           
+                new ValidateValueCallback(ValidateStretchDirectionValue));
 
         private static bool ValidateStretchDirectionValue(object value)
         {
             StretchDirection sd = (StretchDirection)value;
-            return (    sd == StretchDirection.Both
-                    ||  sd == StretchDirection.DownOnly
-                    ||  sd == StretchDirection.UpOnly);
+            return (sd == StretchDirection.Both
+                    || sd == StretchDirection.DownOnly
+                    || sd == StretchDirection.UpOnly);
         }
 
         #endregion
@@ -149,7 +148,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if(_internalVisual == null) 
+                if (_internalVisual == null)
                 {
                     _internalVisual = new ContainerVisual();
                     AddVisualChild(_internalVisual);
@@ -163,16 +162,19 @@ namespace System.Windows.Controls
             get
             {
                 VisualCollection vc = InternalVisual.Children;
-                if (vc.Count != 0) return vc[0] as UIElement;
-                else               return null;
+                if (vc.Count != 0)
+                    return vc[0] as UIElement;
+                else
+                    return null;
             }
             set
             {
                 VisualCollection vc = InternalVisual.Children;
-                if (vc.Count != 0) vc.Clear();
+                if (vc.Count != 0)
+                    vc.Clear();
                 vc.Add(value);
             }
-        }   
+        }
 
         private Transform InternalTransform
         {
@@ -184,7 +186,7 @@ namespace System.Windows.Controls
             {
                 InternalVisual.Transform = value;
             }
-        }                
+        }
 
         /// <summary>
         /// The single child of a <see cref="Viewbox" />
@@ -197,23 +199,23 @@ namespace System.Windows.Controls
             {
                 return InternalChild;
             }
-            
+
             set
             {
                 UIElement old = InternalChild;
 
-                if(old != value)
+                if (old != value)
                 {
                     //need to remove old element from logical tree
                     RemoveLogicalChild(old);
 
-                    if(value != null)
+                    if (value != null)
                     {
                         AddLogicalChild(value);
                     }
 
                     InternalChild = value;
-                    
+
                     InvalidateMeasure();
                 }
             }
@@ -238,7 +240,7 @@ namespace System.Windows.Controls
             }
             return InternalVisual;
         }
-        
+
         /// <summary> 
         /// Returns enumerator to logical children.
         /// </summary>
@@ -250,7 +252,7 @@ namespace System.Windows.Controls
                 {
                     return EmptyEnumerator.Instance;
                 }
-                
+
                 return new SingleChildEnumerator(InternalChild);
             }
         }
@@ -277,10 +279,10 @@ namespace System.Windows.Controls
         /// <seealso cref="Viewbox.StretchDirectionProperty" />
         public StretchDirection StretchDirection
         {
-            get  {  return (StretchDirection)GetValue(StretchDirectionProperty);  }
-            set  {  SetValue(StretchDirectionProperty, value);  }
+            get { return (StretchDirection)GetValue(StretchDirectionProperty); }
+            set { SetValue(StretchDirectionProperty, value); }
         }
-        
+
         #endregion Public Properties
 
         //-------------------------------------------------------------------
@@ -302,25 +304,25 @@ namespace System.Windows.Controls
         /// <returns>The Decorator's desired size.</returns>
         protected override Size MeasureOverride(Size constraint)
         {
-                UIElement child = InternalChild;
-                Size parentSize = new Size();
+            UIElement child = InternalChild;
+            Size parentSize = new Size();
 
-                if (child != null)
-                {
-                    // Initialize child constraint to infinity.  We need to get a "natural" size for the child in absence of constraint.
-                    // Note that an author *can* impose a constraint on a child by using Height/Width, &c... properties 
-                    Size infinteConstraint = new Size(Double.PositiveInfinity, Double.PositiveInfinity);
+            if (child != null)
+            {
+                // Initialize child constraint to infinity.  We need to get a "natural" size for the child in absence of constraint.
+                // Note that an author *can* impose a constraint on a child by using Height/Width, &c... properties 
+                Size infinteConstraint = new Size(Double.PositiveInfinity, Double.PositiveInfinity);
 
-                    child.Measure(infinteConstraint);
-                    Size childSize = child.DesiredSize;
+                child.Measure(infinteConstraint);
+                Size childSize = child.DesiredSize;
 
-                    Size scalefac = ComputeScaleFactor(constraint, childSize, this.Stretch, this.StretchDirection);
+                Size scalefac = ComputeScaleFactor(constraint, childSize, this.Stretch, this.StretchDirection);
 
-                    parentSize.Width = scalefac.Width * childSize.Width;
-                    parentSize.Height = scalefac.Height * childSize.Height;
-                }
+                parentSize.Width = scalefac.Width * childSize.Width;
+                parentSize.Height = scalefac.Height * childSize.Height;
+            }
 
-                return parentSize;
+            return parentSize;
         }
 
 
@@ -334,24 +336,24 @@ namespace System.Windows.Controls
         /// <param name="arrangeSize">Size in which Border will draw the borders/background and children.</param>
         protected override Size ArrangeOverride(Size arrangeSize)
         {
-                UIElement child = InternalChild;
-                if (child != null)
-                {
-                    Size childSize = child.DesiredSize;
+            UIElement child = InternalChild;
+            if (child != null)
+            {
+                Size childSize = child.DesiredSize;
 
-                    // Compute scaling factors from arrange size and the measured child content size
-                    Size scalefac = ComputeScaleFactor(arrangeSize, childSize, this.Stretch, this.StretchDirection);
+                // Compute scaling factors from arrange size and the measured child content size
+                Size scalefac = ComputeScaleFactor(arrangeSize, childSize, this.Stretch, this.StretchDirection);
 
-                    InternalTransform = new ScaleTransform(scalefac.Width, scalefac.Height);
+                InternalTransform = new ScaleTransform(scalefac.Width, scalefac.Height);
 
-                    // Arrange the child to the desired size 
-                    child.Arrange(new Rect(new Point(), child.DesiredSize));
+                // Arrange the child to the desired size 
+                child.Arrange(new Rect(new Point(), child.DesiredSize));
 
-                    //return the size oocupied by scaled child
-                    arrangeSize.Width = scalefac.Width * childSize.Width;
-                    arrangeSize.Height = scalefac.Height * childSize.Height;
-                }
-                return arrangeSize;
+                //return the size oocupied by scaled child
+                arrangeSize.Width = scalefac.Width * childSize.Width;
+                arrangeSize.Height = scalefac.Height * childSize.Height;
+            }
+            return arrangeSize;
         }
 
 
@@ -363,9 +365,9 @@ namespace System.Windows.Controls
         /// <param name="contentSize">Size of the content, measured natively (unconstrained).</param>
         /// <param name="stretch">Value of the Stretch property on the element.</param>
         /// <param name="stretchDirection">Value of the StretchDirection property on the element.</param>
-        internal static Size ComputeScaleFactor(Size availableSize, 
-                                                Size contentSize, 
-                                                Stretch stretch, 
+        internal static Size ComputeScaleFactor(Size availableSize,
+                                                Size contentSize,
+                                                Stretch stretch,
                                                 StretchDirection stretchDirection)
         {
             // Compute scaling factors to use for axes
@@ -375,19 +377,21 @@ namespace System.Windows.Controls
             bool isConstrainedWidth = !Double.IsPositiveInfinity(availableSize.Width);
             bool isConstrainedHeight = !Double.IsPositiveInfinity(availableSize.Height);
 
-           if (     (stretch == Stretch.Uniform || stretch == Stretch.UniformToFill || stretch == Stretch.Fill)
-                &&  (isConstrainedWidth || isConstrainedHeight) )
+            if ((stretch == Stretch.Uniform || stretch == Stretch.UniformToFill || stretch == Stretch.Fill)
+                 && (isConstrainedWidth || isConstrainedHeight))
             {
                 // Compute scaling factors for both axes
                 scaleX = (DoubleUtil.IsZero(contentSize.Width)) ? 0.0 : availableSize.Width / contentSize.Width;
                 scaleY = (DoubleUtil.IsZero(contentSize.Height)) ? 0.0 : availableSize.Height / contentSize.Height;
 
-                if (!isConstrainedWidth)        scaleX = scaleY;
-                else if (!isConstrainedHeight)  scaleY = scaleX;
-                else 
+                if (!isConstrainedWidth)
+                    scaleX = scaleY;
+                else if (!isConstrainedHeight)
+                    scaleY = scaleX;
+                else
                 {
                     // If not preserving aspect ratio, then just apply transform to fit
-                    switch (stretch) 
+                    switch (stretch)
                     {
                         case Stretch.Uniform:       //Find minimum scale that we use for both axes
                             double minscale = scaleX < scaleY ? scaleX : scaleY;
@@ -408,16 +412,20 @@ namespace System.Windows.Controls
                 //In the uniform case, scaleX=scaleY, so this sort of clamping will maintain aspect ratio
                 //In the uniform fill case, we have the same result too.
                 //In the fill case, note that we change aspect ratio, but that is okay
-                switch(stretchDirection)
+                switch (stretchDirection)
                 {
                     case StretchDirection.UpOnly:
-                        if (scaleX < 1.0) scaleX = 1.0;
-                        if (scaleY < 1.0) scaleY = 1.0;
+                        if (scaleX < 1.0)
+                            scaleX = 1.0;
+                        if (scaleY < 1.0)
+                            scaleY = 1.0;
                         break;
 
                     case StretchDirection.DownOnly:
-                        if (scaleX > 1.0) scaleX = 1.0;
-                        if (scaleY > 1.0) scaleY = 1.0;
+                        if (scaleX > 1.0)
+                            scaleX = 1.0;
+                        if (scaleY > 1.0)
+                            scaleY = 1.0;
                         break;
 
                     case StretchDirection.Both:
@@ -430,7 +438,7 @@ namespace System.Windows.Controls
             //Return this as a size now
             return new Size(scaleX, scaleY);
         }
-    
+
         #endregion Protected Methods
 
 

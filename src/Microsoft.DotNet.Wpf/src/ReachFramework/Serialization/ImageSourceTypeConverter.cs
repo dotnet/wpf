@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,9 +10,9 @@
         images to a Xps package.
 
 --*/
-using System.Net;
 using System.ComponentModel;
 using System.IO;
+using System.Net;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Xps.Packaging;
@@ -50,8 +50,8 @@ namespace System.Windows.Xps.Serialization
         override
         bool
         CanConvertFrom(
-            ITypeDescriptorContext      context,
-            Type                        sourceType
+            ITypeDescriptorContext context,
+            Type sourceType
             )
         {
             return IsSupportedType(sourceType);
@@ -75,8 +75,8 @@ namespace System.Windows.Xps.Serialization
         override
         bool
         CanConvertTo(
-            ITypeDescriptorContext      context,
-            Type                        destinationType
+            ITypeDescriptorContext context,
+            Type destinationType
             )
         {
             return IsSupportedType(destinationType);
@@ -101,9 +101,9 @@ namespace System.Windows.Xps.Serialization
         override
         object
         ConvertFrom(
-            ITypeDescriptorContext              context,
-            System.Globalization.CultureInfo    culture,
-            object                              value
+            ITypeDescriptorContext context,
+            System.Globalization.CultureInfo culture,
+            object value
             )
         {
             ArgumentNullException.ThrowIfNull(value);
@@ -140,10 +140,10 @@ namespace System.Windows.Xps.Serialization
         override
         object
         ConvertTo(
-            ITypeDescriptorContext              context,
-            System.Globalization.CultureInfo    culture,
-            object                              value,
-            Type                                destinationType
+            ITypeDescriptorContext context,
+            System.Globalization.CultureInfo culture,
+            object value,
+            Type destinationType
             )
         {
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXConvertImageBegin);
@@ -178,14 +178,14 @@ namespace System.Windows.Xps.Serialization
             if (imageUri != null)
             {
                 int uriHashCode = imageUri.GetHashCode();
-                if(!currentPageImageTable.ContainsKey(uriHashCode))
+                if (!currentPageImageTable.ContainsKey(uriHashCode))
                 {
-                   //
-                   // Also, add a relationship for the current page to this image
-                   // resource.  This is needed to conform with Xps specification.
-                   //
-                   manager.AddRelationshipToCurrentPage(imageUri, XpsS0Markup.ResourceRelationshipName);
-                   currentPageImageTable.Add(uriHashCode, imageUri);
+                    //
+                    // Also, add a relationship for the current page to this image
+                    // resource.  This is needed to conform with Xps specification.
+                    //
+                    manager.AddRelationshipToCurrentPage(imageUri, XpsS0Markup.ResourceRelationshipName);
+                    currentPageImageTable.Add(uriHashCode, imageUri);
                 }
             }
             else
@@ -288,9 +288,9 @@ namespace System.Windows.Xps.Serialization
         override
         PropertyDescriptorCollection
         GetProperties(
-            ITypeDescriptorContext      context,
-            object                      value,
-            Attribute[]                 attributes
+            ITypeDescriptorContext context,
+            object value,
+            Attribute[] attributes
             )
         {
             throw new NotImplementedException();
@@ -315,7 +315,7 @@ namespace System.Windows.Xps.Serialization
         static
         bool
         IsSupportedType(
-            Type            type
+            Type type
             )
         {
             return typeof(Uri).Equals(type);
@@ -324,21 +324,21 @@ namespace System.Windows.Xps.Serialization
         private
         static
         void
-        CopyImageStream( Stream sourceStream, Stream destinationStream )
+        CopyImageStream(Stream sourceStream, Stream destinationStream)
         {
-            byte[] buffer= new byte[_readBlockSize];
-            int bytesRead = PackagingUtilities.ReliableRead( sourceStream, buffer, 0, _readBlockSize);
-            while( bytesRead > 0 )
+            byte[] buffer = new byte[_readBlockSize];
+            int bytesRead = PackagingUtilities.ReliableRead(sourceStream, buffer, 0, _readBlockSize);
+            while (bytesRead > 0)
             {
                 destinationStream.Write(buffer, 0, bytesRead);
-                bytesRead = PackagingUtilities.ReliableRead( sourceStream, buffer, 0, _readBlockSize);
+                bytesRead = PackagingUtilities.ReliableRead(sourceStream, buffer, 0, _readBlockSize);
             }
         }
 
         private
         static
         void
-        ReEncodeImage(BitmapSource bitmapSource, BitmapEncoder encoder, Stream stream )
+        ReEncodeImage(BitmapSource bitmapSource, BitmapEncoder encoder, Stream stream)
         {
             BitmapFrame bitmapFrame = null;
             //
@@ -362,7 +362,7 @@ namespace System.Windows.Xps.Serialization
             encoder.Frames.Add(bitmapFrame);
 
             encoder.Save(stream);
-}
+        }
 
         /// <summary>
         /// Calculates a Crc32 value for a given BitmapSource.
@@ -378,7 +378,7 @@ namespace System.Windows.Xps.Serialization
         static
         UInt32
         CalculateImageCrc32(
-            BitmapSource    bitmapSource
+            BitmapSource bitmapSource
             )
         {
             Crc32 crc32 = new Crc32();
@@ -445,7 +445,7 @@ namespace System.Windows.Xps.Serialization
             if (bitmapFrame != null &&
                 bitmapFrame.Decoder != null)
             {
-                String sourceUri  = bitmapFrame.Decoder.ToString();
+                String sourceUri = bitmapFrame.Decoder.ToString();
                 if (sourceUri != null)
                 {
                     _uriHashValue = sourceUri.GetHashCode();
@@ -494,7 +494,7 @@ namespace System.Windows.Xps.Serialization
         {
             if (_uriHashValue != 0)
             {
-                manager.ResourcePolicy.ImageUriHashTable.Add(_uriHashValue,imageUri);
+                manager.ResourcePolicy.ImageUriHashTable.Add(_uriHashValue, imageUri);
                 _uriHashValue = 0;
             }
             else
@@ -509,7 +509,7 @@ namespace System.Windows.Xps.Serialization
         #endregion Private static helper methods
 
         #region Private static data
-        
+
         private static readonly int _readBlockSize = 1048576; //1MB
 
         /// <summary>

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -51,7 +51,7 @@ namespace System.Windows.Markup
 
         private const int MaxCultureDepth = 32;
         private static XmlLanguage _empty = null;
-        
+
         private readonly string _lowerCaseTag;
         private CultureInfo _equivalentCulture;
         private CultureInfo _specificCulture;
@@ -119,7 +119,7 @@ namespace System.Windows.Markup
 
             string lowercase = AsciiToLower(ietfLanguageTag);   // throws on non-ascii
 
-            language = (XmlLanguage) _cache[lowercase];
+            language = (XmlLanguage)_cache[lowercase];
             if (language == null)
             {
                 ValidateLowerCaseTag(lowercase);            // throws on RFC 3066 validation failure
@@ -130,7 +130,7 @@ namespace System.Windows.Markup
                     //  be some risk that clients on two different threads might
                     //  get two different XmlLanguage instances for the same language
                     //  tag.
-                    language = (XmlLanguage) _cache[lowercase];
+                    language = (XmlLanguage)_cache[lowercase];
                     if (language == null)
                     {
                         _cache[lowercase] = language = new XmlLanguage(lowercase);
@@ -139,11 +139,11 @@ namespace System.Windows.Markup
             }
 
             return language;
-         }
+        }
 
-        
-        
-       /// <summary>
+
+
+        /// <summary>
         ///     The RFC 3066 string.
         /// </summary>
         /// <remarks>
@@ -157,7 +157,7 @@ namespace System.Windows.Markup
                 return _lowerCaseTag;
             }
         }
-        
+
         /// <summary>
         ///     Returns IetfLanguageTag.
         /// </summary>
@@ -166,7 +166,7 @@ namespace System.Windows.Markup
             return IetfLanguageTag;
         }
 
-        
+
 
         /// <summary>
         ///     Returns a CultureInfo if and only if one is registered matching IetfLanguageTag
@@ -179,16 +179,16 @@ namespace System.Windows.Markup
             if (_equivalentCulture == null)
             {
                 string lowerCaseTag = _lowerCaseTag;
-                
+
                 // xml:lang="und"
                 // see http://www.w3.org/International/questions/qa-no-language
                 //
                 // Just treat it the same as xml:lang=""
-                if(string.Equals(lowerCaseTag, "und", StringComparison.Ordinal))
+                if (string.Equals(lowerCaseTag, "und", StringComparison.Ordinal))
                 {
                     lowerCaseTag = String.Empty;
-                }            
-                
+                }
+
                 try
                 {
                     // Even if we previously failed to find an EquivalentCulture, we retry, if only to
@@ -204,7 +204,7 @@ namespace System.Windows.Markup
 
             return _equivalentCulture;
         }
-        
+
         /// <summary>
         ///     Finds the most-closely-related non-neutral registered CultureInfo, if one is available.
         /// </summary>
@@ -273,7 +273,7 @@ namespace System.Windows.Markup
                 if (!TryGetEquivalentCulture(out culture))
                 {
                     string languageTag = IetfLanguageTag;
-                    
+
                     do
                     {
                         languageTag = Shorten(languageTag);
@@ -281,7 +281,7 @@ namespace System.Windows.Markup
                         {
                             // Should never happen, because GetCultureinfoByIetfLanguageTag("") should
                             //  return InvariantCulture!
-                            culture =  CultureInfo.InvariantCulture;
+                            culture = CultureInfo.InvariantCulture;
                         }
                         else
                         {
@@ -293,14 +293,14 @@ namespace System.Windows.Markup
                             {
                             }
                         }
-}
+                    }
                     while (culture == null);
                 }
                 _compatibleCulture = culture;
             }
             return _compatibleCulture;
         }
-        
+
         /// <summary>
         ///     Checks to see if a second XmlLanguage is included in range of languages specified
         ///       by this XmlLanguage.
@@ -325,7 +325,7 @@ namespace System.Windows.Markup
             //  the case that "zh-hant" includes "zh-hk".
             return RangeIncludes(language.GetCompatibleCulture());
         }
-        
+
         /// <summary>
         ///     Checks to see if a CultureInfo is included in range of languages specified
         ///       by this XmlLanguage.
@@ -399,7 +399,7 @@ namespace System.Windows.Markup
 
             return _specificity;
         }
-        
+
         /// <summary>
         ///     Helper function for instance-method GetSpecificity.
         /// </summary>
@@ -415,7 +415,7 @@ namespace System.Windows.Markup
         private static int GetSpecificity(CultureInfo culture, int maxDepth)
         {
             int specificity = 0;
-            
+
             if (maxDepth != 0 && culture != null)
             {
                 string languageTag = culture.IetfLanguageTag;
@@ -444,7 +444,7 @@ namespace System.Windows.Markup
                     {
                         subtagCount += 1;
                     }
-}
+                }
             }
 
             return subtagCount;
@@ -467,7 +467,7 @@ namespace System.Windows.Markup
             {
                 _start = start;
             }
-            
+
 
             // strongly typed, avoids boxing
             public MatchingLanguageEnumerator GetEnumerator()
@@ -487,7 +487,7 @@ namespace System.Windows.Markup
                 return GetEnumerator();
             }
         }
-        
+
         internal struct MatchingLanguageEnumerator : IEnumerator<XmlLanguage>, IEnumerator
         {
             private readonly XmlLanguage _start;
@@ -525,7 +525,7 @@ namespace System.Windows.Markup
                     {
                         throw new InvalidOperationException(SR.Enumerator_ReachedEnd);
                     }
- 
+
                     return _current;
                 }
             }
@@ -589,7 +589,7 @@ namespace System.Windows.Markup
 
 
 
-                         
+
                             // 
                             _maxCultureDepth -= 1;
                             _current = parentLanguage;
@@ -599,7 +599,7 @@ namespace System.Windows.Markup
                     }
                 }
             }
-            
+
             object IEnumerator.Current
             {
                 get
@@ -609,8 +609,8 @@ namespace System.Windows.Markup
             }
 
             void IDisposable.Dispose() { }
-}
-        
+        }
+
 
 
         /// <remarks>
@@ -624,7 +624,7 @@ namespace System.Windows.Markup
 
 
             // if we fail a simple string-prefix test, we know we don't have a subtag-prefix.
-            if(!longTag.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+            if (!longTag.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
             {
                 return false;
             }
@@ -636,12 +636,12 @@ namespace System.Windows.Markup
         private bool TryGetEquivalentCulture(out CultureInfo culture)
         {
             culture = null;
-            
+
             if (_equivalentCulture == null && !_equivalentCultureFailed)
             {
                 try
                 {
-                    GetEquivalentCulture(); 
+                    GetEquivalentCulture();
                 }
                 catch (InvalidOperationException)
                 {
@@ -658,7 +658,7 @@ namespace System.Windows.Markup
             get
             {
                 string prefix = Shorten(IetfLanguageTag);   // can return null
-                
+
                 // We MUST NOT call the private constructor, but instead call GetLanguage()!
                 return XmlLanguage.GetLanguage(prefix);     // throws on null
             }
@@ -676,16 +676,16 @@ namespace System.Windows.Markup
             {
                 return null;
             }
-            
+
             int i = languageTag.Length - 1;
-            
+
             while (languageTag[i] != '-' && i > 0)
             {
                 i -= 1;
             }
 
             // i now contains of index of first character to be omitted from smaller tag
-            return languageTag.Substring (0, i);
+            return languageTag.Substring(0, i);
         }
 
 
@@ -748,7 +748,7 @@ namespace System.Windows.Markup
             }
 
             int charsRead = 1;
-            for (;;)
+            for (; ; )
             {
                 c = reader.Read();
                 charsRead++;
@@ -792,7 +792,7 @@ namespace System.Windows.Markup
 
         static private void ThrowParseException(string ietfLanguageTag)
         {
-             throw new ArgumentException(SR.Format(SR.XmlLangMalformed, ietfLanguageTag), "ietfLanguageTag");
+            throw new ArgumentException(SR.Format(SR.XmlLangMalformed, ietfLanguageTag), "ietfLanguageTag");
         }
 
         // throws if there is a non-7-bit ascii character
@@ -810,5 +810,5 @@ namespace System.Windows.Markup
 
             return tag.ToLowerInvariant();
         }
-}
+    }
 }

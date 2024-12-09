@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,12 +11,12 @@
 //  #define TRACE
 #endif
 
-using System.IO;
-using System.Xml;
-using System.Globalization;             // For CultureInfo
 using System.Collections;               // For Stack and Hashtable
+using System.Globalization;             // For CultureInfo
+using System.IO;
 using System.Runtime.InteropServices;   // For COMException
 using System.Windows;                   // for ExceptionStringTable
+using System.Xml;
 using MS.Internal.Interop;  // for CHUNK_BREAKTYPE (and other IFilter-related definitions)
 
 namespace MS.Internal.IO.Packaging
@@ -32,7 +32,7 @@ namespace MS.Internal.IO.Packaging
     /// </summary>
     internal partial class XamlFilter : IManagedFilter
     {
-    #region Nested Types
+        #region Nested Types
         /// <summary>
         /// The following enumeration makes it easier to keep track of the filter's multi-modal behavior.
         ///
@@ -67,7 +67,7 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         internal enum FilterState
         {
-            Uninitialized =1,
+            Uninitialized = 1,
             FindNextUnit,
             FindNextFlowUnit,
             UseContentExtractor,
@@ -81,14 +81,14 @@ namespace MS.Internal.IO.Packaging
         [Flags]
         internal enum AttributesToIgnore
         {
-            None    =0,
-            Title   =1,
-            Content =2
+            None = 0,
+            Title = 1,
+            Content = 2
         };
 
-    #endregion Nested Types
+        #endregion Nested Types
 
-    #region Internal Constructors
+        #region Internal Constructors
 
 
         /// <summary>
@@ -142,9 +142,9 @@ namespace MS.Internal.IO.Packaging
             _fixedPageDomTree = null;
         }
 
-    #endregion Internal Constructors
+        #endregion Internal Constructors
 
-    #region Managed IFilter API
+        #region Managed IFilter API
 
         /// <summary>
         /// Managed counterpart of IFilter.Init.
@@ -212,7 +212,7 @@ namespace MS.Internal.IO.Packaging
                 return null;
             }
 
-            IndexingContentUnit     contentUnit;
+            IndexingContentUnit contentUnit;
 
             // If client code forgot to load the stream, throw appropriate exception.
             if (_xamlReader == null)
@@ -288,7 +288,7 @@ namespace MS.Internal.IO.Packaging
             {
                 numCharactersToReturn = bufferCharacterCount;
             }
-            String  result = _currentContent.Substring(_countOfCharactersReturned, numCharactersToReturn);
+            String result = _currentContent.Substring(_countOfCharactersReturned, numCharactersToReturn);
             _countOfCharactersReturned += numCharactersToReturn;
 
             return result;
@@ -303,11 +303,11 @@ namespace MS.Internal.IO.Packaging
             return null;
         }
 
-    #endregion Managed IFilter API
+        #endregion Managed IFilter API
 
-    #region Internal Methods
+        #region Internal Methods
 
-    #if DEBUG
+#if DEBUG
         internal string DumpElementTable()
         {
             ICollection keys = _xamlElementContentDescriptorDictionary.Keys;
@@ -316,7 +316,7 @@ namespace MS.Internal.IO.Packaging
             ElementTableKey[] keyList = new ElementTableKey[length];
             ContentDescriptor[] valueList = new ContentDescriptor[length];
             keys.CopyTo(keyList, 0);
-            values.CopyTo(valueList,0);
+            values.CopyTo(valueList, 0);
             string result = "";
             for (int i = 0; i < length; ++i)
             {
@@ -324,7 +324,7 @@ namespace MS.Internal.IO.Packaging
             }
             return result;
         }
-    #endif
+#endif
 
         ///<summary>Return the next text chunk, or null at end of stream.</summary>
         internal IndexingContentUnit NextContentUnit()
@@ -375,7 +375,7 @@ namespace MS.Internal.IO.Packaging
                             _filterState = FilterState.EndOfStream;
                             return null;
 
-                            // If processing a fixed page, revert to top-level XML reader.
+                        // If processing a fixed page, revert to top-level XML reader.
                         case FilterState.FindNextFlowUnit:
                             Debug.Assert(_topLevelReader != null);
                             _xamlReader.Close();
@@ -400,20 +400,20 @@ namespace MS.Internal.IO.Packaging
                         nextContentUnit = HandleTextData();
                         continue;
 
-                        // If current token is an element start, then,
-                        //   if appropriate, extract chunk text from an attribute
-                        //   else, record content information and recurse.
+                    // If current token is an element start, then,
+                    //   if appropriate, extract chunk text from an attribute
+                    //   else, record content information and recurse.
                     case XmlNodeType.Element:
                         nextContentUnit = HandleElementStart();
                         continue;
 
-                        // On end of element, restore context data (pop, etc.) and look further.
+                    // On end of element, restore context data (pop, etc.) and look further.
                     case XmlNodeType.EndElement:
                         nextContentUnit = HandleElementEnd();
                         continue;
 
-                        // Default action is to ignore current token and look further.
-                        // Note that non-significant whitespace is handled here.
+                    // Default action is to ignore current token and look further.
+                    // Note that non-significant whitespace is handled here.
                     default:
                         _xamlReader.Read(); // Consume current token.
                         continue;
@@ -430,9 +430,9 @@ namespace MS.Internal.IO.Packaging
             // Invoke init function that is generated at build time.
             InitElementDictionary();
         }
-    #endregion Internal Methods
+        #endregion Internal Methods
 
-    #region Private Methods
+        #region Private Methods
         /// <summary>Ancillary function of NextContentUnit(). Create new chunk, taking _contextStack into
         /// account, and updating it if needed.</summary>
         private IndexingContentUnit BuildIndexingContentUnit(string text, uint lcid)
@@ -454,7 +454,7 @@ namespace MS.Internal.IO.Packaging
             else
             {
                 // Optimization: reuse indexing content unit.
-               _indexingContentUnit.InitIndexingContentUnit(text, AllocateChunkID(), breakType, _propSpec, lcid);
+                _indexingContentUnit.InitIndexingContentUnit(text, AllocateChunkID(), breakType, _propSpec, lcid);
             }
 
             // Until proven separated (by the occurrence of a block tag), right neighbors are contiguous.
@@ -513,13 +513,13 @@ namespace MS.Internal.IO.Packaging
         ///</remarks>
         private IndexingContentUnit HandleElementStart()
         {
-            ElementTableKey         elementFullName = new ElementTableKey(_xamlReader.NamespaceURI, _xamlReader.LocalName);
-            string                  propertyName;
+            ElementTableKey elementFullName = new ElementTableKey(_xamlReader.NamespaceURI, _xamlReader.LocalName);
+            string propertyName;
 
             // Handle the case of a complex property (e.g. Button.Content).
             if (IsPrefixedPropertyName(elementFullName.BaseName, out propertyName))
             {
-                ContentDescriptor   topOfStack = TopOfStack();
+                ContentDescriptor topOfStack = TopOfStack();
 
                 // Handle the semantically incorrect case of a compound property occurring at the root
                 // by ignoring it totally.
@@ -530,10 +530,10 @@ namespace MS.Internal.IO.Packaging
                 }
 
                 // Index the text children of property elements only if they are content or title properties.
-                bool                    elementIsIndexable =
-                    (    elementFullName.XmlNamespace.Equals(ElementTableKey.XamlNamespace, StringComparison.Ordinal)
-                      && (    propertyName == topOfStack.ContentProp
-                           || propertyName == topOfStack.TitleProp   ));
+                bool elementIsIndexable =
+                    (elementFullName.XmlNamespace.Equals(ElementTableKey.XamlNamespace, StringComparison.Ordinal)
+                      && (propertyName == topOfStack.ContentProp
+                           || propertyName == topOfStack.TitleProp));
                 if (!elementIsIndexable)
                 {
                     // Skip element together with all its descendants.
@@ -569,8 +569,8 @@ namespace MS.Internal.IO.Packaging
             }
 
             // Obtain a content descriptor for the current element.
-            ContentDescriptor   elementDescriptor =
-                (ContentDescriptor) _xamlElementContentDescriptorDictionary[elementFullName];
+            ContentDescriptor elementDescriptor =
+                (ContentDescriptor)_xamlElementContentDescriptorDictionary[elementFullName];
             if (elementDescriptor == null)
             {
                 if (elementFullName.XmlNamespace.Equals(ElementTableKey.XamlNamespace, StringComparison.Ordinal))
@@ -596,9 +596,9 @@ namespace MS.Internal.IO.Packaging
             }
 
             // If appropriate, retrieve title from an attribute.
-            string  title = null;
-            if (   elementDescriptor.TitleProp != null
-                && (_attributesToIgnore & AttributesToIgnore.Title) == 0 )
+            string title = null;
+            if (elementDescriptor.TitleProp != null
+                && (_attributesToIgnore & AttributesToIgnore.Title) == 0)
             {
                 title = GetPropertyAsAttribute(elementDescriptor.TitleProp);
                 if (title != null && title.Length > 0)
@@ -614,9 +614,9 @@ namespace MS.Internal.IO.Packaging
             }
 
             // If appropriate, retrieve content from an attribute.
-            string  content = null;
-            if (   elementDescriptor.ContentProp != null
-                && (_attributesToIgnore & AttributesToIgnore.Content) == 0 )
+            string content = null;
+            if (elementDescriptor.ContentProp != null
+                && (_attributesToIgnore & AttributesToIgnore.Content) == 0)
             {
                 content = GetPropertyAsAttribute(elementDescriptor.ContentProp);
                 if (content != null && content.Length > 0)
@@ -729,7 +729,7 @@ namespace MS.Internal.IO.Packaging
                 else
                 {
                     // Have NextContentUnit() look for content in descendants.
-                    Push( _defaultContentDescriptor);
+                    Push(_defaultContentDescriptor);
                     _xamlReader.Read();
                     return null;
                 }
@@ -837,19 +837,19 @@ namespace MS.Internal.IO.Packaging
         ///</summary>
         private uint GetCurrentLcid()
         {
-            string  languageString = GetLanguageString();
+            string languageString = GetLanguageString();
 
             if (languageString.Length == 0)
                 return (uint)CultureInfo.InvariantCulture.LCID;
             else
                 if (_lcidDictionary.ContainsKey(languageString))
-                    return _lcidDictionary[languageString];
-                else
-                {
-                    CultureInfo cultureInfo = new CultureInfo(languageString);
-                    _lcidDictionary.Add(languageString, (uint)cultureInfo.LCID);
-                    return (uint)cultureInfo.LCID;
-                }
+                return _lcidDictionary[languageString];
+            else
+            {
+                CultureInfo cultureInfo = new CultureInfo(languageString);
+                _lcidDictionary.Add(languageString, (uint)cultureInfo.LCID);
+                return (uint)cultureInfo.LCID;
+            }
         }
 
         private string GetLanguageString()
@@ -866,7 +866,7 @@ namespace MS.Internal.IO.Packaging
             return languageString;
         }
 
-        private  void SkipCurrentElement()
+        private void SkipCurrentElement()
         {
             _xamlReader.Skip();
         }
@@ -909,12 +909,12 @@ namespace MS.Internal.IO.Packaging
                 return value;
             }
 
-            bool  attributeFound = _xamlReader.MoveToFirstAttribute();
+            bool attributeFound = _xamlReader.MoveToFirstAttribute();
             while (attributeFound)
             {
                 string attributePropertyName;
 
-                if (   IsPrefixedPropertyName(_xamlReader.LocalName, out attributePropertyName)
+                if (IsPrefixedPropertyName(_xamlReader.LocalName, out attributePropertyName)
                     && attributePropertyName.Equals(propertyName, StringComparison.Ordinal))
                 {
                     value = _xamlReader.Value;
@@ -931,11 +931,11 @@ namespace MS.Internal.IO.Packaging
 
 
 
-    #region Context Stack Accessors
+        #region Context Stack Accessors
 
         private ContentDescriptor TopOfStack()
         {
-            return (ContentDescriptor) _contextStack.Peek();
+            return (ContentDescriptor)_contextStack.Peek();
         }
 
         private void Push(ContentDescriptor contentDescriptor)
@@ -949,7 +949,7 @@ namespace MS.Internal.IO.Packaging
 
         private ContentDescriptor Pop()
         {
-            ContentDescriptor topOfStack = (ContentDescriptor) _contextStack.Pop();
+            ContentDescriptor topOfStack = (ContentDescriptor)_contextStack.Pop();
 
             // If we reach an end of block, we expect the next item to
             // start with a block separator.
@@ -965,28 +965,28 @@ namespace MS.Internal.IO.Packaging
             _contextStack.Clear();
         }
 
-    #endregion Context Stack Accessors
+        #endregion Context Stack Accessors
 
-    #endregion Private Methods
+        #endregion Private Methods
 
-    #region Private Constants
+        #region Private Constants
 
         ///<summary>XML namespace URI for in-document code.</summary>
         private const string _inDocumentCodeURI = "http://schemas.microsoft.com/winfx/2006/xaml";
 
         // Tag and attribute names.
-        private const string _pageContentName               = "PageContent";
-        private const string _glyphRunName                  = "Glyphs";
-        private const string _pageContentSourceAttribute    = "Source";
-        private const string _fixedPageName                 = "FixedPage";
-        private const string _xmlLangAttribute              = "xml:lang";
-        private const string _paragraphSeparator            = "\u2029";
-        private const string _unicodeStringAttribute        = "UnicodeString";
+        private const string _pageContentName = "PageContent";
+        private const string _glyphRunName = "Glyphs";
+        private const string _pageContentSourceAttribute = "Source";
+        private const string _fixedPageName = "FixedPage";
+        private const string _xmlLangAttribute = "xml:lang";
+        private const string _paragraphSeparator = "\u2029";
+        private const string _unicodeStringAttribute = "UnicodeString";
 
         /// <summary>
         /// The default content descriptor has content in child nodes, no title, and block-type content.
         /// </summary>
-        private readonly ContentDescriptor _defaultContentDescriptor  =
+        private readonly ContentDescriptor _defaultContentDescriptor =
             new ContentDescriptor(true /*hasIndexableContent*/, false /*isInline*/, null, null);
 
         private readonly ContentDescriptor _nonIndexableElementDescriptor =
@@ -996,40 +996,40 @@ namespace MS.Internal.IO.Packaging
         private static readonly ManagedFullPropSpec _propSpec
             = new ManagedFullPropSpec(IndexingFilterMarshaler.PSGUID_STORAGE, (uint)MS.Internal.Interop.PID_STG.CONTENTS);
 
-    #endregion Private Constants
+        #endregion Private Constants
 
-    #region Private Fields
+        #region Private Fields
 
         // Variables initialized in constructor and InitializeDeclaredFields.
-        private Stack                           _contextStack;
-        private FilterState                     _filterState;
-        private string                          _currentContent;
-        private uint                            _currentChunkID;
-        private int                             _countOfCharactersReturned;
-        private IndexingContentUnit             _indexingContentUnit;
-        private bool                            _expectingBlockStart;
-        private XmlReader                       _topLevelReader;
-        private FixedPageContentExtractor       _fixedPageContentExtractor;
-        private XmlDocument                     _fixedPageDomTree;
+        private Stack _contextStack;
+        private FilterState _filterState;
+        private string _currentContent;
+        private uint _currentChunkID;
+        private int _countOfCharactersReturned;
+        private IndexingContentUnit _indexingContentUnit;
+        private bool _expectingBlockStart;
+        private XmlReader _topLevelReader;
+        private FixedPageContentExtractor _fixedPageContentExtractor;
+        private XmlDocument _fixedPageDomTree;
 
         // Variables initialized in constructor and (potentially, if implemented some day) in IPersistFile.Load.
-        private Stream                          _xamlStream;
+        private Stream _xamlStream;
 
         // Variables initialized in Init.
-        private bool                            _filterContents;                 //defaults to false
-        private bool                            _returnCanonicalParagraphBreaks; //defaults to false
+        private bool _filterContents;                 //defaults to false
+        private bool _returnCanonicalParagraphBreaks; //defaults to false
 
         // Reader state variables (initialized in CreateXmlReader).
-        private XmlReader                       _xamlReader;
-        private AttributesToIgnore              _attributesToIgnore;
+        private XmlReader _xamlReader;
+        private AttributesToIgnore _attributesToIgnore;
 
         ///<summary>Map from fully qualified element name to content location information.</summary>
-        private Hashtable                       _xamlElementContentDescriptorDictionary;
+        private Hashtable _xamlElementContentDescriptorDictionary;
 
         //Dictionary of Language strings and the corresponding LCID.
-        private Dictionary<string, uint>        _lcidDictionary;
+        private Dictionary<string, uint> _lcidDictionary;
 
-    #endregion Private Fields
+        #endregion Private Fields
     }   // class XamlFilter
 
     #endregion XamlFilter

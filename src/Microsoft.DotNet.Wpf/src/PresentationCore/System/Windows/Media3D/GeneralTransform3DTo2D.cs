@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,14 +13,15 @@ namespace System.Windows.Media.Media3D
     {
         internal GeneralTransform3DTo2D()
         {
-            _transformBetween2D = null;        }
-        
+            _transformBetween2D = null;
+        }
+
         internal GeneralTransform3DTo2D(Matrix3D projectionTransform, GeneralTransform transformBetween2D)
         {
             _projectionTransform = projectionTransform;
             _transformBetween2D = (GeneralTransform)transformBetween2D.GetAsFrozen();
         }
-        
+
         /// <summary>
         /// Transform a point
         /// </summary>
@@ -31,7 +32,7 @@ namespace System.Windows.Media.Media3D
         {
             bool success = false;
             result = new Point();
-            
+
             // project the point
             Point3D projectedPoint = _projectionTransform.Transform(inPoint);
 
@@ -75,7 +76,7 @@ namespace System.Windows.Media.Media3D
         {
             if (_transformBetween2D != null)
             {
-                return _transformBetween2D.TransformBounds(MILUtilities.ProjectBounds(ref _projectionTransform, ref rect3D));            
+                return _transformBetween2D.TransformBounds(MILUtilities.ProjectBounds(ref _projectionTransform, ref rect3D));
             }
             else
             {
@@ -91,7 +92,7 @@ namespace System.Windows.Media.Media3D
         {
             return new GeneralTransform3DTo2D();
         }
-        
+
 
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.CloneCore(Freezable)">Freezable.CloneCore</see>.
@@ -149,9 +150,9 @@ namespace System.Windows.Media.Media3D
             _projectionTransform = transform._projectionTransform;
             _transformBetween2D = transform._transformBetween2D;
         }
-        
+
 
         private Matrix3D _projectionTransform;
         private GeneralTransform _transformBetween2D;
-} 
+    }
 }

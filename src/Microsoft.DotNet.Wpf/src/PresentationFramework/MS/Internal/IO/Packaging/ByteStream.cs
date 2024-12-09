@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -38,7 +38,7 @@ namespace MS.Internal.IO.Packaging
             Debug.Assert(stream != null);
 
             _securitySuppressedIStream = stream;
-            
+
             _access = openAccess;
             // we only work for reading.
             Debug.Assert(_access == FileAccess.Read);
@@ -60,7 +60,7 @@ namespace MS.Internal.IO.Packaging
         {
             get
             {
-                return (!StreamDisposed && 
+                return (!StreamDisposed &&
                         (FileAccess.Read == (_access & FileAccess.Read) ||
                          FileAccess.ReadWrite == (_access & FileAccess.ReadWrite)));
             }
@@ -124,7 +124,7 @@ namespace MS.Internal.IO.Packaging
             get
             {
                 CheckDisposedStatus();
-                
+
                 long seekPos = 0;
 
                 _securitySuppressedIStream.Seek(0,
@@ -142,7 +142,7 @@ namespace MS.Internal.IO.Packaging
                 {
                     throw new NotSupportedException(SR.SetPositionNotSupported);
                 }
-                
+
                 long seekPos = 0;
 
                 _securitySuppressedIStream.Seek(value,
@@ -250,7 +250,7 @@ namespace MS.Internal.IO.Packaging
             {
                 throw new NotSupportedException(SR.ReadNotSupported);
             }
-            
+
             int read = 0;
 
             // optimization: if we are being asked to read zero bytes, be done.
@@ -258,7 +258,7 @@ namespace MS.Internal.IO.Packaging
             {
                 return read;
             }
-            
+
             // count has to be positive number
             if (0 > count)
             {
@@ -279,7 +279,7 @@ namespace MS.Internal.IO.Packaging
             {
                 throw new ArgumentException(SR.BufferTooSmall, "buffer");
             }
-            
+
             // offset == 0 is the normal case
             if (0 == offset)
             {
@@ -369,7 +369,7 @@ namespace MS.Internal.IO.Packaging
         }
 
         #endregion Internal Properties
-        
+
 
         //------------------------------------------------------
         //
@@ -383,20 +383,20 @@ namespace MS.Internal.IO.Packaging
         //  the client code of this class should be the one that dispose _securitySupressedIStream
         SecuritySuppressedIStream _securitySuppressedIStream;
 
-        FileAccess                 _access;
-        long                       _length = 0;
-        bool                       _isLengthInitialized = false;
-        bool                       _disposed = false;
+        FileAccess _access;
+        long _length = 0;
+        bool _isLengthInitialized = false;
+        bool _disposed = false;
 
         #endregion Private Fields
-        
+
         //------------------------------------------------------
         //
         //  Private Unmanaged Interfaces
         //
         //------------------------------------------------------
         #region Private Unmanaged Interface imports
-        
+
         // ****CAUTION****: Be careful using this interface, because it suppresses
         //  the check for unmanaged code security permission.  It is recommended
         //  that all instances of this interface also have "SecuritySuppressed" in

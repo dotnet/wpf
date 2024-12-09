@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -44,7 +44,7 @@ namespace System.Windows.Data
     [MarkupExtensionReturnType(typeof(RelativeSource))]
     public class RelativeSource : MarkupExtension, ISupportInitialize
     {
-#region constructors
+        #region constructors
 
         /// <summary>Constructor
         /// </summary>
@@ -70,9 +70,9 @@ namespace System.Windows.Data
             AncestorLevel = ancestorLevel;
         }
 
-#endregion constructors
+        #endregion constructors
 
-#region ISupportInitialize
+        #region ISupportInitialize
 
         /// <summary>Begin Initialization</summary>
         void ISupportInitialize.BeginInit()
@@ -88,9 +88,9 @@ namespace System.Windows.Data
                 throw new InvalidOperationException(SR.RelativeSourceNeedsAncestorType);
         }
 
-#endregion ISupportInitialize
+        #endregion ISupportInitialize
 
-#region public properties
+        #region public properties
 
         /// <summary>static instance of RelativeSource for PreviousData mode.
         /// </summary>
@@ -235,9 +235,9 @@ namespace System.Windows.Data
             return (_mode == RelativeSourceMode.FindAncestor);
         }
 
-#endregion public properties
+        #endregion public properties
 
-#region public methods
+        #region public methods
 
         /// <summary>
         ///  Return an object that should be set on the targetObject's targetProperty
@@ -258,16 +258,16 @@ namespace System.Windows.Data
             return this;
         }
 
-#endregion public methods
+        #endregion public methods
 
-#region private properties
+        #region private properties
         private bool IsUninitialized
         {
             get { return (_ancestorLevel == -1); }
         }
-#endregion private properties
+        #endregion private properties
 
-#region private methods
+        #region private methods
         void InitializeMode(RelativeSourceMode mode)
         {
             Debug.Assert(IsUninitialized);
@@ -290,9 +290,9 @@ namespace System.Windows.Data
                 throw new ArgumentException(SR.RelativeSourceModeInvalid, "mode");
             }
         }
-#endregion private methods
+        #endregion private methods
 
-#region private fields
+        #region private fields
 
         private RelativeSourceMode _mode;
         private Type _ancestorType;
@@ -301,6 +301,6 @@ namespace System.Windows.Data
         private static RelativeSource s_previousData;
         private static RelativeSource s_templatedParent;
         private static RelativeSource s_self;
-#endregion private fields
+        #endregion private fields
     }
 }

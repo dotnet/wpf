@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,11 +14,11 @@ namespace MS.Internal.TextFormatting
     /// </summary>
     internal sealed class FullTextBreakpoint : TextBreakpoint
     {
-        private TextMetrics                         _metrics;           // full text metrics
-        private IntPtr                              _ploline;           // native object representing this break
-        private IntPtr                              _penaltyResource;   // unsafe handle to the internal factors used to determines penalty of the break. By default, the lifetime of this resource is managed by _ploline.
-        private bool                                _isDisposed;        // flag indicates whether this object is disposed
-        private bool                                _isLineTruncated;   // flag indicates whether the line produced at this breakpoint is truncated.
+        private TextMetrics _metrics;           // full text metrics
+        private IntPtr _ploline;           // native object representing this break
+        private IntPtr _penaltyResource;   // unsafe handle to the internal factors used to determines penalty of the break. By default, the lifetime of this resource is managed by _ploline.
+        private bool _isDisposed;        // flag indicates whether this object is disposed
+        private bool _isLineTruncated;   // flag indicates whether the line produced at this breakpoint is truncated.
 
 
         /// <summary>
@@ -32,12 +32,12 @@ namespace MS.Internal.TextFormatting
         /// <param name="bestFitIndex">index of the best fit breakpoint in the returned collection</param>        
         /// <returns>a list of potential breakpoints starting from firstCharIndex</returns>
         internal static IList<TextBreakpoint> CreateMultiple(
-            TextParagraphCache          paragraphCache,
-            int                         firstCharIndex,
-            int                         maxLineWidth,
-            TextLineBreak               previousLineBreak,
-            IntPtr                      penaltyRestriction,
-            out int                     bestFitIndex            
+            TextParagraphCache paragraphCache,
+            int firstCharIndex,
+            int maxLineWidth,
+            TextLineBreak previousLineBreak,
+            IntPtr penaltyRestriction,
+            out int bestFitIndex
             )
         {
             Invariant.Assert(paragraphCache != null);
@@ -52,7 +52,7 @@ namespace MS.Internal.TextFormatting
             // update formatting parameters at line start
             settings.UpdateSettingsForCurrentLine(
                 maxLineWidth,
-                previousLineBreak, 
+                previousLineBreak,
                 (firstCharIndex == fullText.TextStore.CpFirst)
                 );
 
@@ -75,20 +75,20 @@ namespace MS.Internal.TextFormatting
                 previousBreakRecord,
                 paragraphCache.Ploparabreak,  // para breaking session
                 penaltyRestriction,
-                ref lsbreaks, 
+                ref lsbreaks,
                 out bestFitIndex
                 );
 
             // get the exception in context before it is released
             Exception callbackException = context.CallbackException;
-            
+
             // release the context
             context.Release();
 
-            if(lserr != LsErr.None)
+            if (lserr != LsErr.None)
             {
-                if(callbackException != null)
-                {                        
+                if (callbackException != null)
+                {
                     // rethrow exception thrown in callbacks
                     throw callbackException;
                 }
@@ -123,11 +123,11 @@ namespace MS.Internal.TextFormatting
         /// Construct breakpoint from full text info
         /// </summary>
         private FullTextBreakpoint(
-            FullTextState           fullText,
-            int                     firstCharIndex,
-            int                     maxLineWidth,
-            ref LsBreaks            lsbreaks,
-            int                     breakIndex
+            FullTextState fullText,
+            int firstCharIndex,
+            int maxLineWidth,
+            ref LsBreaks lsbreaks,
+            int breakIndex
             ) : this()
         {
             // According to antons: PTS only uses the width of a feasible break to avoid
@@ -138,9 +138,11 @@ namespace MS.Internal.TextFormatting
             //
             // Client of text formatter would simply pass the value of TextBreakpoint.Width
             // back to PTS pfnFormatLineVariants call.
-            LsLineWidths lineWidths = new LsLineWidths();
-            lineWidths.upLimLine = maxLineWidth;
-            lineWidths.upStartMainText = fullText.TextStore.Settings.TextIndent;
+            LsLineWidths lineWidths = new LsLineWidths
+            {
+                upLimLine = maxLineWidth,
+                upStartMainText = fullText.TextStore.Settings.TextIndent
+            };
             lineWidths.upStartMarker = lineWidths.upStartMainText;
             lineWidths.upStartTrailing = lineWidths.upLimLine;
             lineWidths.upMinStartTrailing = lineWidths.upStartTrailing;
@@ -191,7 +193,7 @@ namespace MS.Internal.TextFormatting
         /// </summary>
         protected override void Dispose(bool disposing)
         {
-            if(_ploline != IntPtr.Zero)
+            if (_ploline != IntPtr.Zero)
             {
                 UnsafeNativeMethods.LoDisposeLine(_ploline, !disposing);
                 _ploline = IntPtr.Zero;
@@ -283,8 +285,8 @@ namespace MS.Internal.TextFormatting
         /// <summary>
         /// Client to get the number of newline characters at line end
         /// </summary>
-        public override int NewlineLength 
-        { 
+        public override int NewlineLength
+        {
             get { return _metrics.NewlineLength; }
         }
 
@@ -319,9 +321,9 @@ namespace MS.Internal.TextFormatting
         /// <summary>
         /// Client to get the height of the line
         /// </summary>
-        public override double Height 
-        { 
-            get { return _metrics.Height; } 
+        public override double Height
+        {
+            get { return _metrics.Height; }
         }
 
 
@@ -339,8 +341,8 @@ namespace MS.Internal.TextFormatting
         /// Client to get the distance from top to baseline of this text line
         /// </summary>
         public override double Baseline
-        { 
-            get { return _metrics.Baseline; } 
+        {
+            get { return _metrics.Baseline; }
         }
 
 
@@ -358,18 +360,18 @@ namespace MS.Internal.TextFormatting
         /// Client to get the distance from the before edge of line height 
         /// to the baseline of marker of the line if any.
         /// </summary>
-        public override double MarkerBaseline 
-        { 
-            get { return _metrics.MarkerBaseline; } 
+        public override double MarkerBaseline
+        {
+            get { return _metrics.MarkerBaseline; }
         }
 
 
         /// <summary>
         /// Client to get the overall height of the list items marker of the line if any.
         /// </summary>
-        public override double MarkerHeight 
-        { 
-            get { return _metrics.MarkerHeight; } 
+        public override double MarkerHeight
+        {
+            get { return _metrics.MarkerHeight; }
         }
 
         #endregion

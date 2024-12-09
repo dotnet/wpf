@@ -1,10 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Windows.Shapes;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Shapes;
 
 /*++
     Description:
@@ -31,18 +31,18 @@ namespace System.Windows.Documents
     {
         private FixedSOMPageConstructor _pageConstructor;
 
-        private Matrix    _transform;                   // Transformation from page root
-        private bool      _stroke;                      // Path has stroke brush
-        private bool      _fill;                        // Path has fill brush
+        private Matrix _transform;                   // Transformation from page root
+        private bool _stroke;                      // Path has stroke brush
+        private bool _fill;                        // Path has fill brush
 
-        private Point     _startPoint;                  // Start point for current figure
-        private Point     _lastPoint;                   // Current end point for current figure
-        private bool      _isClosed;                    // Is current figure closed?
-        private bool      _isFilled;                    // Is current figure filled?
+        private Point _startPoint;                  // Start point for current figure
+        private Point _lastPoint;                   // Current end point for current figure
+        private bool _isClosed;                    // Is current figure closed?
+        private bool _isFilled;                    // Is current figure filled?
 
-        private double    _xMin, _xMax, _yMin, _yMax;   // Bounding box for current figure, only needed when (_fill && _isFilled)
+        private double _xMin, _xMax, _yMin, _yMax;   // Bounding box for current figure, only needed when (_fill && _isFilled)
 
-        private bool      _needClose;                   // Need to check for closing current/last figure
+        private bool _needClose;                   // Need to check for closing current/last figure
 
         public GeometryWalker(FixedSOMPageConstructor pageConstructor)
         {
@@ -54,8 +54,8 @@ namespace System.Windows.Documents
             Debug.Assert(stroke || fill, "should not be a nop");
 
             _transform = trans;
-            _fill      = fill;
-            _stroke    = stroke;
+            _fill = fill;
+            _stroke = stroke;
 
             PathGeometry.ParsePathGeometryData(geometry.GetPathGeometryData(), this);
 
@@ -108,9 +108,9 @@ namespace System.Windows.Documents
             CheckCloseFigure();
 
             _startPoint = startPoint;
-            _lastPoint  = startPoint;
-            _isClosed   = isClosed;
-            _isFilled   = isFilled;
+            _lastPoint = startPoint;
+            _isClosed = isClosed;
+            _isFilled = isFilled;
 
             if (_isFilled && _fill)
             {
@@ -137,20 +137,20 @@ namespace System.Windows.Documents
         public override void QuadraticBezierTo(Point point1, Point point2, bool isStroked, bool isSmoothJoin)
         {
             _lastPoint = point2;
-            _fill      = false;
+            _fill = false;
         }
 
         public override void BezierTo(Point point1, Point point2, Point point3, bool isStroked, bool isSmoothJoin)
         {
             _lastPoint = point3;
-            _fill      = false;
+            _fill = false;
         }
 
         public override void PolyLineTo(IList<Point> points, bool isStroked, bool isSmoothJoin)
         {
             if (isStroked && _stroke)
             {
-                for (int i = 0; i <points.Count; i ++)
+                for (int i = 0; i < points.Count; i++)
                 {
                     _pageConstructor._AddLine(_lastPoint, points[i], _transform);
                     _lastPoint = points[i];
@@ -173,19 +173,19 @@ namespace System.Windows.Documents
         public override void PolyQuadraticBezierTo(IList<Point> points, bool isStroked, bool isSmoothJoin)
         {
             _lastPoint = points[points.Count - 1];
-            _fill      = false;
+            _fill = false;
         }
 
         public override void PolyBezierTo(IList<Point> points, bool isStroked, bool isSmoothJoin)
         {
             _lastPoint = points[points.Count - 1];
-            _fill      = false;
+            _fill = false;
         }
 
         public override void ArcTo(Point point, Size size, double rotationAngle, bool isLargeArc, SweepDirection sweepDirection, bool isStroked, bool isSmoothJoin)
         {
             _lastPoint = point;
-            _fill      = false;
+            _fill = false;
         }
 
         internal override void SetClosedState(bool closed)
@@ -222,8 +222,10 @@ namespace System.Windows.Documents
             Debug.Assert(fixedPage != null);
             _fixedPage = fixedPage;
             _pageIndex = pageIndex;
-            _fixedSOMPage  = new FixedSOMPage();
-            _fixedSOMPage.CultureInfo = _fixedPage.Language.GetCompatibleCulture();
+            _fixedSOMPage = new FixedSOMPage
+            {
+                CultureInfo = _fixedPage.Language.GetCompatibleCulture()
+            };
             _fixedNodes = new List<FixedNode>();
             _lines = new FixedSOMLineCollection();
         }
@@ -276,11 +278,11 @@ namespace System.Windows.Documents
         {
             ArgumentNullException.ThrowIfNull(path);
 
-            Geometry geom   = path.Data;
-            bool     fill   = path.Fill != null;
-            bool     stroke = path.Stroke != null;
+            Geometry geom = path.Data;
+            bool fill = path.Fill != null;
+            bool stroke = path.Stroke != null;
 
-            if ((geom == null) || (! fill && ! stroke))
+            if ((geom == null) || (!fill && !stroke))
             {
                 return;
             }
@@ -297,7 +299,7 @@ namespace System.Windows.Documents
             {
                 fill = false;
 
-                if (! stroke)
+                if (!stroke)
                 {
                     return;
                 }
@@ -403,7 +405,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-           //Multiple table cells separated by wide spaces should be identified
+            //Multiple table cells separated by wide spaces should be identified
             GlyphRun glyphRun = glyphs.ToGlyphRun();
 
             if (glyphRun == null)
@@ -418,7 +420,7 @@ namespace System.Windows.Documents
             GlyphTypeface typeFace = glyphRun.GlyphTypeface;
             GeneralTransform trans = glyphs.TransformToAncestor(_fixedPage);
 
-            int charIndex= -1;
+            int charIndex = -1;
             double advWidth = 0;
             double cumulativeAdvWidth = 0;
             int lastAdvWidthIndex = 0;
@@ -427,8 +429,8 @@ namespace System.Windows.Documents
             int glyphIndex = charIndex;
             do
             {
-                charIndex = s.IndexOf(" ", charIndex+1, s.Length - charIndex -1, StringComparison.Ordinal);
-                if (charIndex >=0 )
+                charIndex = s.IndexOf(" ", charIndex + 1, s.Length - charIndex - 1, StringComparison.Ordinal);
+                if (charIndex >= 0)
                 {
                     if (glyphRun.ClusterMap != null && glyphRun.ClusterMap.Count > 0)
                     {
@@ -446,7 +448,7 @@ namespace System.Windows.Documents
                     {
                         //Are these seperated by a vertical line?
                         advWidth = 0;
-                        for (int i=lastAdvWidthIndex; i<glyphIndex; i++)
+                        for (int i = lastAdvWidthIndex; i < glyphIndex; i++)
                         {
                             advWidth += glyphRun.AdvanceWidths[i];
                         }
@@ -464,7 +466,7 @@ namespace System.Windows.Documents
 
                             int endIndex = charIndex;
 
-                            if ((charIndex == 0 || s[charIndex-1] == ' ') && (charIndex != s.Length - 1))
+                            if ((charIndex == 0 || s[charIndex - 1] == ' ') && (charIndex != s.Length - 1))
                             {
                                 endIndex = charIndex + 1;
                             }
@@ -477,20 +479,20 @@ namespace System.Windows.Documents
                                            endIndex);
 
                             lastX = lastX + advWidth + advSpecified;
-                            textRunStartIndex = charIndex+1;
+                            textRunStartIndex = charIndex + 1;
                         }
                         cumulativeAdvWidth += advSpecified;
                     }
                 }
-            } while (charIndex >= 0 && charIndex < s.Length-1);
+            } while (charIndex >= 0 && charIndex < s.Length - 1);
 
             if (textRunStartIndex < s.Length)
             {
                 //Last text run
                 //For non-partitioned elements this will be the whole Glyphs element
-                Rect boundingRect = new Rect(lastX, alignmentBox.Top, alignmentBox.Right-lastX, alignmentBox.Height);
+                Rect boundingRect = new Rect(lastX, alignmentBox.Top, alignmentBox.Right - lastX, alignmentBox.Height);
 
-                _CreateTextRun( boundingRect,
+                _CreateTextRun(boundingRect,
                                 trans,
                                 glyphs,
                                 node,
@@ -518,10 +520,10 @@ namespace System.Windows.Documents
 
                 if (fixedBlock == null)
                 {
-                    fixedBlock= new FixedSOMFixedBlock(_fixedSOMPage);
+                    fixedBlock = new FixedSOMFixedBlock(_fixedSOMPage);
                     fixedBlock.AddTextRun(textRun);
                     _fixedSOMPage.AddFixedBlock(fixedBlock);
-                 }
+                }
                 else
                 {
                     fixedBlock.AddTextRun(textRun);
@@ -569,7 +571,7 @@ namespace System.Windows.Documents
 
         private bool _IsCombinable(FixedSOMFixedBlock fixedBlock, FixedSOMTextRun textRun)
         {
-            Debug.Assert (fixedBlock.SemanticBoxes.Count > 0);
+            Debug.Assert(fixedBlock.SemanticBoxes.Count > 0);
             if (fixedBlock.SemanticBoxes.Count == 0)
             {
                 return false;
@@ -605,10 +607,10 @@ namespace System.Windows.Documents
             else if (textRunRect.Top + verticalOverlap > fixedBlockRect.Bottom)
             {
                 textRunBelow = true;
-                compareLine = fixedBlock.SemanticBoxes[fixedBlock.SemanticBoxes.Count-1] as FixedSOMTextRun;
+                compareLine = fixedBlock.SemanticBoxes[fixedBlock.SemanticBoxes.Count - 1] as FixedSOMTextRun;
             }
 
-            if ( (fixedBlock.IsWhiteSpace || textRun.IsWhiteSpace) &&
+            if ((fixedBlock.IsWhiteSpace || textRun.IsWhiteSpace) &&
                  (fixedBlock != _currentFixedBlock || compareLine != null || !_IsSpatiallyCombinable(fixedBlockRect, textRunRect, textRun.DefaultCharWidth * 3, 0))
                  )
             {
@@ -631,7 +633,7 @@ namespace System.Windows.Documents
             if (compareLine != null) //Most probably different lines
             {
                 double ratio = fixedBlock.LineHeight / textRunRect.Height;
-                if (ratio<1.0)
+                if (ratio < 1.0)
                 {
                     ratio = 1.0 / ratio;
                 }
@@ -666,10 +668,10 @@ namespace System.Windows.Documents
             }
             else
             {
-                dHorInflate = width*1.5;
+                dHorInflate = width * 1.5;
             }
 
-            if (!_IsSpatiallyCombinable(fixedBlockRect, textRunRect, dHorInflate, textRunRect.Height*0.7))
+            if (!_IsSpatiallyCombinable(fixedBlockRect, textRunRect, dHorInflate, textRunRect.Height * 0.7))
             {
                 return false;
             }
@@ -678,7 +680,7 @@ namespace System.Windows.Documents
             //Don't combine in this case.
             FixedSOMElement element = fixedBlock.SemanticBoxes[fixedBlock.SemanticBoxes.Count - 1] as FixedSOMElement;
 
-            if (element!=null && element.FixedNode.CompareTo(textRun.FixedNode) == 0)
+            if (element != null && element.FixedNode.CompareTo(textRun.FixedNode) == 0)
             {
                 return false;
             }
@@ -697,18 +699,18 @@ namespace System.Windows.Documents
                 }
                 else
                 {
-                    top = textRunRect.Bottom - margin ;
+                    top = textRunRect.Bottom - margin;
                     bottom = fixedBlockRect.Top + margin;
                 }
                 double left = (fixedBlockRect.Left > textRunRect.Left) ? fixedBlockRect.Left : textRunRect.Left;
-                double right = (fixedBlockRect.Right < textRunRect.Right) ? fixedBlockRect.Right: textRunRect.Right;
+                double right = (fixedBlockRect.Right < textRunRect.Right) ? fixedBlockRect.Right : textRunRect.Right;
                 return (!_lines.IsHorizontallySeparated(left, top, right, bottom));
             }
             else
             {
                 //These two overlap vertically. Let's check whether there is a vertical separator in between
-                double left = (fixedBlockRect.Right < textRunRect.Right) ? fixedBlockRect.Right: textRunRect.Right;
-                double right =(fixedBlockRect.Left > textRunRect.Left) ? fixedBlockRect.Left: textRunRect.Left;
+                double left = (fixedBlockRect.Right < textRunRect.Right) ? fixedBlockRect.Right : textRunRect.Right;
+                double right = (fixedBlockRect.Left > textRunRect.Left) ? fixedBlockRect.Left : textRunRect.Left;
                 if (left < right)
                 {
                     return (!_lines.IsVerticallySeparated(left, textRunRect.Top, right, textRunRect.Bottom));
@@ -744,18 +746,18 @@ namespace System.Windows.Documents
         }
 
 
-       private void _DetectTables()
-       {
-           double minLineSeparation = FixedSOMLineRanges.MinLineSeparation;
+        private void _DetectTables()
+        {
+            double minLineSeparation = FixedSOMLineRanges.MinLineSeparation;
 
-           List<FixedSOMLineRanges> horizontal = _lines.HorizontalLines;
-           List<FixedSOMLineRanges> vertical = _lines.VerticalLines;
+            List<FixedSOMLineRanges> horizontal = _lines.HorizontalLines;
+            List<FixedSOMLineRanges> vertical = _lines.VerticalLines;
 
-           if (horizontal.Count < 2 || vertical.Count < 2)
-               return;
+            if (horizontal.Count < 2 || vertical.Count < 2)
+                return;
 
-           List<FixedSOMTableRow> tableRows = new List<FixedSOMTableRow>();
-           FixedSOMTableRow currentRow = null;
+            List<FixedSOMTableRow> tableRows = new List<FixedSOMTableRow>();
+            FixedSOMTableRow currentRow = null;
 
             //iterate through
             for (int h = 0; h < horizontal.Count; h++)
@@ -839,7 +841,7 @@ namespace System.Windows.Documents
         public void _AddLine(Point startP, Point endP, Matrix transform)
         {
             startP = transform.Transform(startP);
-            endP   = transform.Transform(endP);
+            endP = transform.Transform(endP);
 
             if (startP.X == endP.X)
             {
@@ -1008,7 +1010,7 @@ namespace System.Windows.Documents
 
                 if (pathFigure.IsClosed)
                 {
-                     _AddLine(lastPoint, startPoint, transform);
+                    _AddLine(lastPoint, startPoint, transform);
                 }
             }
         }
@@ -1041,9 +1043,9 @@ namespace System.Windows.Documents
             }
 
             //Check for nested tables first
-            for (int i=0; i<tables.Count-1; i++)
+            for (int i = 0; i < tables.Count - 1; i++)
             {
-                for (int j=i+1; j<tables.Count; j++)
+                for (int j = i + 1; j < tables.Count; j++)
                 {
                     if (tables[i].BoundingRect.Contains(tables[j].BoundingRect) &&
                         tables[i].AddContainer(tables[j]))
@@ -1096,7 +1098,7 @@ namespace System.Windows.Documents
                     {
                         foreach (FixedSOMTableCell cell in row.SemanticBoxes)
                         {
-                            for (int i=0; i<cell.SemanticBoxes.Count;)
+                            for (int i = 0; i < cell.SemanticBoxes.Count;)
                             {
                                 FixedSOMTable innerTable = cell.SemanticBoxes[i] as FixedSOMTable;
                                 if (innerTable != null && innerTable.IsEmpty)
@@ -1136,12 +1138,12 @@ namespace System.Windows.Documents
 
                 groups.Add(currentGroup);
 
-                for (int i=1; i<container.SemanticBoxes.Count; i++)
+                for (int i = 1; i < container.SemanticBoxes.Count; i++)
                 {
                     nextPageElement = container.SemanticBoxes[i] as FixedSOMPageElement;
                     Debug.Assert(nextPageElement != null);
 
-                    if (!( _IsSpatiallyCombinable(currentPageElement, nextPageElement, 0, 30) &&
+                    if (!(_IsSpatiallyCombinable(currentPageElement, nextPageElement, 0, 30) &&
                          nextPageElement.BoundingRect.Top >= currentPageElement.BoundingRect.Top))
                     {
                         currentGroup = new FixedSOMGroup(_fixedSOMPage);

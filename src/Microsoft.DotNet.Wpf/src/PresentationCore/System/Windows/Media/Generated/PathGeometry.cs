@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,9 +9,9 @@
 // Please see MilCodeGen.html for more information.
 //
 
+using System.Windows.Media.Composition;
 using MS.Internal;
 using MS.Internal.KnownBoxes;
-using System.Windows.Media.Composition;
 // These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows.Media
@@ -57,14 +57,14 @@ namespace System.Windows.Media
 
         private static void FillRulePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            PathGeometry target = ((PathGeometry) d);
+            PathGeometry target = ((PathGeometry)d);
 
 
             target.PropertyChanged(FillRuleProperty);
         }
         private static void FiguresPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            PathGeometry target = ((PathGeometry) d);
+            PathGeometry target = ((PathGeometry)d);
 
 
             target.FiguresPropertyChangedHook(e);
@@ -85,7 +85,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (FillRule) GetValue(FillRuleProperty);
+                return (FillRule)GetValue(FillRuleProperty);
             }
             set
             {
@@ -100,7 +100,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (PathFigureCollection) GetValue(FiguresProperty);
+                return (PathFigureCollection)GetValue(FiguresProperty);
             }
             set
             {
@@ -146,31 +146,33 @@ namespace System.Windows.Media
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-                if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_PATHGEOMETRY))
-                {
-                    Transform vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
+            if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_PATHGEOMETRY))
+            {
+                Transform vTransform = Transform;
+                if (vTransform != null)
+                    ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
 
-                    AddRefOnChannelAnimations(channel);
+                AddRefOnChannelAnimations(channel);
 
 
-                    UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
-                }
+                UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
+            }
 
-                return _duceResource.GetHandle(channel);
-}
+            return _duceResource.GetHandle(channel);
+        }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-                Debug.Assert(_duceResource.IsOnChannel(channel));
+            Debug.Assert(_duceResource.IsOnChannel(channel));
 
-                if (_duceResource.ReleaseOnChannel(channel))
-                {
-                    Transform vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
+            if (_duceResource.ReleaseOnChannel(channel))
+            {
+                Transform vTransform = Transform;
+                if (vTransform != null)
+                    ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
 
-                    ReleaseOnChannelAnimations(channel);
-}
-}
+                ReleaseOnChannelAnimations(channel);
+            }
+        }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
             // Note that we are in a lock here already.

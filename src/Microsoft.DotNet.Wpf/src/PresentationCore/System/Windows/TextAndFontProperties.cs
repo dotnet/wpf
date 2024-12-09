@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,22 +21,22 @@ namespace System.Windows
 
         /// <summary>Center vertically</summary>
         Center,
-        
+
         /// <summary>Align bottom toward bottom of container</summary>
         Bottom,
-        
+
         /// <summary>Align at baseline</summary>
         Baseline,
-        
+
         /// <summary>Align toward text's top of container</summary>
         TextTop,
-        
+
         /// <summary>Align toward text's bottom of container</summary>
         TextBottom,
-        
+
         /// <summary>Align baseline to subscript position of container</summary>
         Subscript,
-        
+
         /// <summary>Align baseline to superscript position of container</summary>
         Superscript,
     }
@@ -76,7 +76,7 @@ namespace System.Windows
     /// The 'flow-direction' property specifies whether the primary text advance
     /// direction shall be left-to-right or right-to-left.
     /// </summary>
-    [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]    
+    [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
     public enum FlowDirection
     {
         /// <internalonly>
@@ -144,7 +144,7 @@ namespace System.Windows
         /// <summary>
         /// No marker
         /// </summary>
-        None, 
+        None,
 
         /// <summary>
         /// Solid disc circle
@@ -169,22 +169,22 @@ namespace System.Windows
         /// <summary>
         /// Lower roman letter e.g. i, ii, iii, iv, etc.
         /// </summary>
-        LowerRoman, 
+        LowerRoman,
 
         /// <summary>
         /// Upper roman letter e.g. I, II, III, IV, etc.
         /// </summary>
-        UpperRoman, 
+        UpperRoman,
 
         /// <summary>
         /// Lowercase ascii e.g. a, b, c, etc.
         /// </summary>
-        LowerLatin, 
+        LowerLatin,
 
         /// <summary>
         /// Uppercase ascii e.g. A, B, C, etc.
         /// </summary>
-        UpperLatin, 
+        UpperLatin,
 
         /// <summary>
         /// Decimal numbers, beginning with 1
@@ -197,7 +197,7 @@ namespace System.Windows
     /// This property controls whether or not text wraps when it reaches the edge 
     /// of its containing box 
     /// </summary>
-    [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]        
+    [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
     public enum TextWrapping
     {
         /// <summary>
@@ -223,12 +223,12 @@ namespace System.Windows
         Wrap,
     }
 
-    
+
     /// <summary>
     /// This property determines how text is trimmed when it overflows the edge of its
     /// containing box.
     /// </summary>
-    [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]    
+    [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
     public enum TextTrimming
     {
         /// <summary>
@@ -256,31 +256,31 @@ namespace System.Windows
     /// Font typographic variants
     /// </summary>
     public enum FontVariants
-    { 
+    {
         /// <summary>
         /// Variant normal
         /// </summary>
-        Normal, 
+        Normal,
         /// <summary>
         /// Superscript
         /// </summary>
-        Superscript, 
+        Superscript,
         /// <summary>
         /// Subscript
         /// </summary>
-        Subscript, 
+        Subscript,
         /// <summary>
         /// Ordinal
         /// </summary>
-        Ordinal, 
+        Ordinal,
         /// <summary>
         /// Inferior
         /// </summary>
-        Inferior, 
+        Inferior,
         /// <summary>
         /// Ruby
         /// </summary>
-        Ruby 
+        Ruby
     }
 
 
@@ -288,35 +288,35 @@ namespace System.Windows
     /// Font typographic capital treatment
     /// </summary>
     public enum FontCapitals
-    { 
+    {
         /// <summary>
         /// Capitals normal
         /// </summary>
-        Normal, 
+        Normal,
         /// <summary>
         /// Capitals all small caps
         /// </summary>
-        AllSmallCaps, 
+        AllSmallCaps,
         /// <summary>
         /// Capitals small caps
         /// </summary>
-        SmallCaps, 
+        SmallCaps,
         /// <summary>
         /// Capitals all petite caps
         /// </summary>
-        AllPetiteCaps, 
+        AllPetiteCaps,
         /// <summary>
         /// Capitals petite caps
         /// </summary>
-        PetiteCaps, 
+        PetiteCaps,
         /// <summary>
         /// Capitals unicase
         /// </summary>
-        Unicase, 
+        Unicase,
         /// <summary>
         /// Capitals titling
         /// </summary>
-        Titling 
+        Titling
     }
 
     /// <summary>
@@ -342,19 +342,19 @@ namespace System.Windows
     /// Font typographic numeral style types
     /// </summary>
     public enum FontNumeralStyle
-    { 
+    {
         /// <summary>
         /// Numeral style normal
         /// </summary>
-        Normal, 
+        Normal,
         /// <summary>
         /// Numeral style lining
         /// </summary>
-        Lining, 
+        Lining,
         /// <summary>
         /// Numeral style old style
         /// </summary>
-        OldStyle 
+        OldStyle
     }
 
 
@@ -362,19 +362,19 @@ namespace System.Windows
     /// Font typographic numeral alignment types
     /// </summary>
     public enum FontNumeralAlignment
-    { 
+    {
         /// <summary>
         /// Numeral alignment normal
         /// </summary>
-        Normal, 
+        Normal,
         /// <summary>
         /// Numeral alignment proportional
         /// </summary>
-        Proportional, 
+        Proportional,
         /// <summary>
         /// Numeral alignment tabulr
         /// </summary>
-        Tabular 
+        Tabular
     }
 
 
@@ -382,31 +382,31 @@ namespace System.Windows
     /// Font East Asian width types
     /// </summary>
     public enum FontEastAsianWidths
-    { 
+    {
         /// <summary>
         /// East Asian width normal
         /// </summary>
-        Normal, 
+        Normal,
         /// <summary>
         /// East Asian width proportional
         /// </summary>
-        Proportional, 
+        Proportional,
         /// <summary>
         /// East Asian width full
         /// </summary>
-        Full, 
+        Full,
         /// <summary>
         /// East Asian width one half of full
         /// </summary>
-        Half, 
+        Half,
         /// <summary>
         /// East Asian width one third of full
         /// </summary>
-        Third, 
+        Third,
         /// <summary>
         /// East Asian width one quarter of full
         /// </summary>
-        Quarter 
+        Quarter
     }
 
 
@@ -414,19 +414,19 @@ namespace System.Windows
     /// Font East Asian language types
     /// </summary>
     public enum FontEastAsianLanguage
-    { 
+    {
         /// <summary>
         /// East Asian language normal
         /// </summary>
-        Normal, 
+        Normal,
         /// <summary>
         /// East Asian language follows JIS-78
         /// </summary>
-        Jis78, 
+        Jis78,
         /// <summary>
         /// East Asian language follows JIS-83
         /// </summary>
-        Jis83, 
+        Jis83,
         /// <summary>
         /// East Asian language follows JIS-90
         /// </summary>
@@ -442,19 +442,19 @@ namespace System.Windows
         /// <summary>
         /// East Asian language follows National Language Committee for Kanji
         /// </summary>
-        NlcKanji, 
+        NlcKanji,
         /// <summary>
         /// East Asian language is simplified forms
         /// </summary>
-        Simplified, 
+        Simplified,
         /// <summary>
         /// East Asian language is traditional forms
         /// </summary>
-        Traditional, 
+        Traditional,
         /// <summary>
         /// East Asian language is traditional name forms
         /// </summary>
-        TraditionalNames 
+        TraditionalNames
     }
 
     #endregion // Typography properties

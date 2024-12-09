@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,7 +19,7 @@ namespace System.Windows
             Type handlerType,
             Type ownerType)
         {
-            Debug.Assert(GetRoutedEventFromName(name, ownerType, false) == null, 
+            Debug.Assert(GetRoutedEventFromName(name, ownerType, false) == null,
                                 "RoutedEvent name must be unique within a given OwnerType");
 
             lock (Synchronized)
@@ -27,11 +27,11 @@ namespace System.Windows
                 // Create a new RoutedEvent
                 // Requires GlobalLock to access _countRoutedEvents
                 RoutedEvent routedEvent = new RoutedEvent(
-                    name, 
-                    routingStrategy, 
-                    handlerType, 
+                    name,
+                    routingStrategy,
+                    handlerType,
                     ownerType);
-                
+
                 // Increment the count for registered RoutedEvents
                 // Requires GlobalLock to access _countRoutedEvents
                 _countRoutedEvents++;
@@ -55,35 +55,35 @@ namespace System.Windows
             Debug.Assert(
                 typeof(UIElement).IsAssignableFrom(classType) ||
                 typeof(ContentElement).IsAssignableFrom(classType) ||
-                typeof(UIElement3D).IsAssignableFrom(classType), 
+                typeof(UIElement3D).IsAssignableFrom(classType),
                 "Class Handlers can be registered only for UIElement/ContentElement/UIElement3D and their sub types");
             Debug.Assert(routedEvent.IsLegalHandler(handler),
                                 "Handler Type mismatch");
 
             ClassHandlersStore classListenersLists;
             int index;
-            
+
             // We map the classType to a DType use DTypeMap for storage
             DependencyObjectType dType = DependencyObjectType.FromSystemTypeInternal(classType);
-            
+
             // Get the updated EventHandlersStore for the given DType
             GetDTypedClassListeners(dType, routedEvent, out classListenersLists, out index);
-            
+
             // Reuired to update storage
             lock (Synchronized)
             {
                 // Add new routed event handler and get the updated set of handlers
-                RoutedEventHandlerInfoList updatedClassListeners = 
+                RoutedEventHandlerInfoList updatedClassListeners =
                     classListenersLists.AddToExistingHandlers(index, handler, handledEventsToo);
-                
+
                 // Update Sub Classes
                 ItemStructList<DependencyObjectType> keys = _dTypedClassListeners.ActiveDTypes;
-                
-                for (int i=0; i<keys.Count; i++)
+
+                for (int i = 0; i < keys.Count; i++)
                 {
                     if (keys.List[i].IsSubclassOf(dType) == true)
                     {
-                        classListenersLists = (ClassHandlersStore)_dTypedClassListeners[keys.List[i]];                            
+                        classListenersLists = (ClassHandlersStore)_dTypedClassListeners[keys.List[i]];
                         classListenersLists.UpdateSubClassHandlers(routedEvent, updatedClassListeners);
                     }
                 }
@@ -104,17 +104,17 @@ namespace System.Windows
                 // Enumerate through all of the RoutedEvents in the DTypeMap
                 // Requires GlobalLock to access _dTypedRoutedEventList
                 ItemStructList<DependencyObjectType> keys = _dTypedRoutedEventList.ActiveDTypes;
-                
+
                 int destIndex = 0;
-                for (int i=0; i<keys.Count; i++)
+                for (int i = 0; i < keys.Count; i++)
                 {
                     FrugalObjectList<RoutedEvent> dTypedRoutedEventList = (FrugalObjectList<RoutedEvent>)_dTypedRoutedEventList[keys.List[i]];
 
-                    for(int j = 0; j < dTypedRoutedEventList.Count; j++)
+                    for (int j = 0; j < dTypedRoutedEventList.Count; j++)
                     {
                         RoutedEvent routedEvent = dTypedRoutedEventList[j];
 
-                        if(Array.IndexOf(routedEvents, routedEvent) < 0)
+                        if (Array.IndexOf(routedEvents, routedEvent) < 0)
                         {
                             routedEvents[destIndex++] = routedEvent;
                         }
@@ -124,16 +124,16 @@ namespace System.Windows
                 // Enumerate through all of the RoutedEvents in the Hashtable
                 // Requires GlobalLock to access _ownerTypedRoutedEventList
                 IDictionaryEnumerator htEnumerator = _ownerTypedRoutedEventList.GetEnumerator();
-                
-                while(htEnumerator.MoveNext() == true)
+
+                while (htEnumerator.MoveNext() == true)
                 {
                     FrugalObjectList<RoutedEvent> ownerRoutedEventList = (FrugalObjectList<RoutedEvent>)htEnumerator.Value;
-                
-                    for(int j = 0; j < ownerRoutedEventList.Count; j++)
+
+                    for (int j = 0; j < ownerRoutedEventList.Count; j++)
                     {
                         RoutedEvent routedEvent = ownerRoutedEventList[j];
-                        
-                        if(Array.IndexOf(routedEvents, routedEvent) < 0)
+
+                        if (Array.IndexOf(routedEvents, routedEvent) < 0)
                         {
                             routedEvents[destIndex++] = routedEvent;
                         }
@@ -152,7 +152,7 @@ namespace System.Windows
             if ((ownerType == typeof(DependencyObject)) || ownerType.IsSubclassOf(typeof(DependencyObject)))
             {
                 DependencyObjectType dType = DependencyObjectType.FromSystemTypeInternal(ownerType);
-                
+
                 // Get the ItemList of RoutedEvents for the given OwnerType
                 // Requires GlobalLock to access _dTypedRoutedEventList
                 object ownerRoutedEventListObj = _dTypedRoutedEventList[dType];
@@ -172,7 +172,7 @@ namespace System.Windows
                 // Add the newly created 
                 // RoutedEvent to the ItemList
                 // Requires GlobalLock to access ownerRoutedEventList
-                if(!ownerRoutedEventList.Contains(routedEvent))
+                if (!ownerRoutedEventList.Contains(routedEvent))
                 {
                     ownerRoutedEventList.Add(routedEvent);
                 }
@@ -194,17 +194,17 @@ namespace System.Windows
                 {
                     ownerRoutedEventList = (FrugalObjectList<RoutedEvent>)ownerRoutedEventListObj;
                 }
-                
+
                 // Add the newly created 
                 // RoutedEvent to the ItemList
                 // Requires GlobalLock to access ownerRoutedEventList
-                if(!ownerRoutedEventList.Contains(routedEvent))
+                if (!ownerRoutedEventList.Contains(routedEvent))
                 {
                     ownerRoutedEventList.Add(routedEvent);
                 }
             }
         }
-        
+
         // Returns a RoutedEvents that match 
         // the ownerType input param
         // If not found returns null
@@ -214,7 +214,7 @@ namespace System.Windows
             {
                 // Search DTypeMap
                 DependencyObjectType dType = DependencyObjectType.FromSystemTypeInternal(ownerType);
-                
+
                 // Get the ItemList of RoutedEvents for the given DType
                 FrugalObjectList<RoutedEvent> ownerRoutedEventList = (FrugalObjectList<RoutedEvent>)_dTypedRoutedEventList[dType];
                 if (ownerRoutedEventList != null)
@@ -231,7 +231,7 @@ namespace System.Windows
                     return ownerRoutedEventList.ToArray();
                 }
             }
-            
+
             // No match found
             return null;
         }
@@ -248,15 +248,15 @@ namespace System.Windows
             {
                 // Search DTypeMap
                 DependencyObjectType dType = DependencyObjectType.FromSystemTypeInternal(ownerType);
-                
+
                 while (dType != null)
                 {
                     // Get the ItemList of RoutedEvents for the given DType
-                    FrugalObjectList<RoutedEvent> ownerRoutedEventList = (FrugalObjectList<RoutedEvent>)_dTypedRoutedEventList[dType];                
+                    FrugalObjectList<RoutedEvent> ownerRoutedEventList = (FrugalObjectList<RoutedEvent>)_dTypedRoutedEventList[dType];
                     if (ownerRoutedEventList != null)
                     {
                         // Check for RoutedEvent with matching name in the ItemList
-                        for (int i=0; i<ownerRoutedEventList.Count; i++)
+                        for (int i = 0; i < ownerRoutedEventList.Count; i++)
                         {
                             RoutedEvent routedEvent = ownerRoutedEventList[i];
                             if (routedEvent.Name.Equals(name))
@@ -266,7 +266,7 @@ namespace System.Windows
                             }
                         }
                     }
-                
+
                     // If not found match yet check for BaseType if specified to do so
                     dType = includeSupers ? dType.BaseType : null;
                 }
@@ -277,11 +277,11 @@ namespace System.Windows
                 while (ownerType != null)
                 {
                     // Get the ItemList of RoutedEvents for the given OwnerType
-                    FrugalObjectList<RoutedEvent> ownerRoutedEventList = (FrugalObjectList<RoutedEvent>)_ownerTypedRoutedEventList[ownerType];                
+                    FrugalObjectList<RoutedEvent> ownerRoutedEventList = (FrugalObjectList<RoutedEvent>)_ownerTypedRoutedEventList[ownerType];
                     if (ownerRoutedEventList != null)
-                    {                        
+                    {
                         // Check for RoutedEvent with matching name in the ItemList
-                        for (int i=0; i<ownerRoutedEventList.Count; i++)
+                        for (int i = 0; i < ownerRoutedEventList.Count; i++)
                         {
                             RoutedEvent routedEvent = ownerRoutedEventList[i];
                             if (routedEvent.Name.Equals(name))
@@ -291,12 +291,12 @@ namespace System.Windows
                             }
                         }
                     }
-                
+
                     // If not found match yet check for BaseType if specified to do so
-                    ownerType = includeSupers?ownerType.BaseType : null;
-                }                
+                    ownerType = includeSupers ? ownerType.BaseType : null;
+                }
             }
-            
+
             // No match found
             return null;
         }
@@ -312,7 +312,7 @@ namespace System.Windows
         {
             ClassHandlersStore classListenersLists;
             int index;
-            
+
             // Class Forwarded
             return GetDTypedClassListeners(dType, routedEvent, out classListenersLists, out index);
         }
@@ -328,7 +328,7 @@ namespace System.Windows
             RoutedEvent routedEvent,
             out ClassHandlersStore classListenersLists,
             out int index)
-        {          
+        {
             // Get the ClassHandlersStore for the given DType
             classListenersLists = (ClassHandlersStore)_dTypedClassListeners[dType];
             RoutedEventHandlerInfoList handlers;
@@ -347,8 +347,8 @@ namespace System.Windows
             {
                 // Search the DTypeMap for the list of matching RoutedEventHandlerInfo
                 handlers = GetUpdatedDTypedClassListeners(dType, routedEvent, out classListenersLists, out index);
-            }        
-            
+            }
+
             return handlers;
         }
 
@@ -398,7 +398,7 @@ namespace System.Windows
                     }
                 }
             }
-        
+
             if (classListenersLists == null)
             {
                 if (dType.SystemType == typeof(UIElement) || dType.SystemType == typeof(ContentElement))
@@ -414,7 +414,7 @@ namespace System.Windows
             }
 
             index = classListenersLists.CreateHandlersLink(routedEvent, tempHandlers);
-            
+
             return tempHandlers;
         }
 
@@ -457,7 +457,7 @@ namespace System.Windows
         // This is an efficient  Hashtable of ItemLists keyed on DType
         // Each ItemList holds the registered RoutedEvents for that OwnerType
         private static DTypeMap _dTypedRoutedEventList = new DTypeMap(10); // Initialization sizes based on typical MSN scenario
-        
+
         // This is a Hashtable of ItemLists keyed on OwnerType
         // Each ItemList holds the registered RoutedEvents for that OwnerType
         private static Hashtable _ownerTypedRoutedEventList = new Hashtable(10); // Initialization sizes based on typical MSN scenario

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -55,7 +55,7 @@ namespace System.Xaml
         }
 
         public XamlType(Type underlyingType, XamlSchemaContext schemaContext)
-            :this(underlyingType, schemaContext, null)
+            : this(underlyingType, schemaContext, null)
         {
         }
 
@@ -1199,7 +1199,7 @@ namespace System.Xaml
                 }
             }
 
-           if (BaseType != null)
+            if (BaseType != null)
             {
                 XamlValueConverter<ValueSerializer> result = BaseType.ValueSerializer;
                 if (result != null)
@@ -1567,7 +1567,7 @@ namespace System.Xaml
             // Constructors.  If the type is TypeExtension then we hard code the right answer.
             if (UnderlyingType == XamlLanguage.Type.UnderlyingType)
             {
-                Dictionary<int, IList<XamlType>> result = new Dictionary<int,IList<XamlType>>();
+                Dictionary<int, IList<XamlType>> result = new Dictionary<int, IList<XamlType>>();
                 XamlType typeOfType = SchemaContext.GetXamlType(typeof(Type));
                 XamlType[] typeVector = new XamlType[] { typeOfType };
                 result.Add(1, GetReadOnly(typeVector));

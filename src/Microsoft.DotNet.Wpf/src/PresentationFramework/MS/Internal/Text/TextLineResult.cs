@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -82,7 +82,7 @@ namespace MS.Internal.Text
         /// <param name="start"></param>
         /// <param name="end"></param>
         /// <returns></returns>
-         internal override ReadOnlyCollection<GlyphRun> GetGlyphRuns(ITextPointer start, ITextPointer end)
+        internal override ReadOnlyCollection<GlyphRun> GetGlyphRuns(ITextPointer start, ITextPointer end)
         {
             Debug.Assert(false);
             return null;
@@ -286,7 +286,7 @@ namespace MS.Internal.Text
         /// Rectangle of the line within a text paragraph.
         /// </summary>
         private readonly Rect _layoutBox;
-        
+
         /// <summary>
         /// Index of the line within the TextBlock  
         /// </summary>

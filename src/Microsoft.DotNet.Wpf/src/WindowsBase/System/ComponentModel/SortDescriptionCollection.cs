@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -178,12 +178,12 @@ namespace System.ComponentModel
 
             bool IList.IsFixedSize
             {
-                  get { return true; }
+                get { return true; }
             }
 
             bool IList.IsReadOnly
             {
-                  get { return true; }
+                get { return true; }
             }
             #endregion IList Implementations
 
@@ -193,7 +193,7 @@ namespace System.ComponentModel
         /// returns an empty and non-modifiable SortDescriptionCollection
         /// </summary>
         public static readonly SortDescriptionCollection Empty = new EmptySortDescriptionCollection();
-}
+    }
 }
 
 

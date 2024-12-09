@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -36,7 +36,7 @@ namespace System.Windows.Xps.Serialization
         public
         ReachUIElementCollectionSerializerAsync(
             PackageSerializationManager manager
-            ):
+            ) :
         base(manager)
         {
 
@@ -52,37 +52,37 @@ namespace System.Windows.Xps.Serialization
             ReachSerializerContext context
             )
         {
-            if(context == null)
+            if (context == null)
             {
 
             }
-           
-            switch (context.Action) 
+
+            switch (context.Action)
             {
                 case SerializerAction.endPersistObjectData:
-                {
-                    EndPersistObjectData();
-                    break;
-                }
-
-                case SerializerAction.serializeNextUIElement:
-                {
-                    UIElementCollectionSerializerContext thisContext = context as UIElementCollectionSerializerContext;
-
-                    if(thisContext != null)
                     {
-                        SerializeNextUIElement(thisContext.Enumerator,
-                                               thisContext.ObjectContext);
+                        EndPersistObjectData();
+                        break;
                     }
 
-                    break;
-                }
-                
+                case SerializerAction.serializeNextUIElement:
+                    {
+                        UIElementCollectionSerializerContext thisContext = context as UIElementCollectionSerializerContext;
+
+                        if (thisContext != null)
+                        {
+                            SerializeNextUIElement(thisContext.Enumerator,
+                                                   thisContext.ObjectContext);
+                        }
+
+                        break;
+                    }
+
                 default:
-                {
-                    base.AsyncOperation(context);
-                    break;
-                }
+                    {
+                        base.AsyncOperation(context);
+                        break;
+                    }
             }
         }
 
@@ -105,7 +105,7 @@ namespace System.Windows.Xps.Serialization
         #endregion Public Methods
 
         #region Internal Methods
-        
+
         /// <summary>
         /// The method is called once the object data is discovered at that 
         /// point of the serialization process.
@@ -117,7 +117,7 @@ namespace System.Windows.Xps.Serialization
         override
         void
         PersistObjectData(
-            SerializableObjectContext   serializableObjectContext
+            SerializableObjectContext serializableObjectContext
             )
         {
             ArgumentNullException.ThrowIfNull(serializableObjectContext);
@@ -145,9 +145,9 @@ namespace System.Windows.Xps.Serialization
         /// contained within the collection
         /// </summary>
         private
-        void 
+        void
         SerializeUIElements(
-            SerializableObjectContext   serializableObjectContext
+            SerializableObjectContext serializableObjectContext
             )
         {
             //
@@ -169,11 +169,11 @@ namespace System.Windows.Xps.Serialization
         private
         void
         SerializeNextUIElement(
-            IEnumerator                 enumerator,
-            SerializableObjectContext   serializableObjectContext
+            IEnumerator enumerator,
+            SerializableObjectContext serializableObjectContext
             )
         {
-            if(enumerator.MoveNext())
+            if (enumerator.MoveNext())
             {
 
                 UIElementCollectionSerializerContext context = new UIElementCollectionSerializerContext(this,
@@ -193,19 +193,19 @@ namespace System.Windows.Xps.Serialization
         /// <summary>
         /// Called to serialize a single UIElement
         /// </summary>
-        private 
-        void 
+        private
+        void
         SerializeUIElement(
             object uiElement
             )
         {
             Visual visual = uiElement as Visual;
 
-            if(visual != null)
+            if (visual != null)
             {
                 ReachSerializer serializer = SerializationManager.GetSerializer(visual);
 
-                if(serializer!=null)
+                if (serializer != null)
                 {
                     serializer.SerializeObject(visual);
                 }
@@ -224,12 +224,12 @@ namespace System.Windows.Xps.Serialization
     {
         public
         UIElementCollectionSerializerContext(
-            ReachSerializerAsync        serializer,
-            SerializableObjectContext   objectContext,
-            IEnumerator                 enumerator,
-            SerializerAction            action
-            ):
-            base(serializer,objectContext,action)
+            ReachSerializerAsync serializer,
+            SerializableObjectContext objectContext,
+            IEnumerator enumerator,
+            SerializerAction action
+            ) :
+            base(serializer, objectContext, action)
         {
             this._enumerator = enumerator;
         }
@@ -246,6 +246,6 @@ namespace System.Windows.Xps.Serialization
         }
 
         private
-        IEnumerator     _enumerator;
+        IEnumerator _enumerator;
     };
 }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -32,7 +32,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         public KnownTagCache.KnownTagIndex Tag;
         public StylusPointPropertyInfo PropertyMetrics;
 
-        public MetricEntryList (KnownTagCache.KnownTagIndex tag, StylusPointPropertyInfo prop)
+        public MetricEntryList(KnownTagCache.KnownTagIndex tag, StylusPointPropertyInfo prop)
         {
             Tag = tag;
             PropertyMetrics = prop;
@@ -80,7 +80,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                         new MetricEntryList (KnownIdCache.KnownGuidBaseIndex + (uint)KnownIdCache.OriginalISFIdIndex.AzimuthOrientation,    StylusPointPropertyInfoDefaults.AzimuthOrientation),
                         new MetricEntryList (KnownIdCache.KnownGuidBaseIndex + (uint)KnownIdCache.OriginalISFIdIndex.AltitudeOrientation,   StylusPointPropertyInfoDefaults.AltitudeOrientation),
                         new MetricEntryList (KnownIdCache.KnownGuidBaseIndex + (uint)KnownIdCache.OriginalISFIdIndex.TwistOrientation,      StylusPointPropertyInfoDefaults.TwistOrientation)};
-}
+                }
                 return _metricEntryOptional;
             }
         }
@@ -147,12 +147,12 @@ namespace MS.Internal.Ink.InkSerializedFormat
             }
             set
             {
-                byte [] data = (byte[])value;
-                if( data.Length > MAX_METRIC_DATA_BUFF )
+                byte[] data = (byte[])value;
+                if (data.Length > MAX_METRIC_DATA_BUFF)
                     _size = (uint)MAX_METRIC_DATA_BUFF;
                 else
                     _size = (uint)data.Length;
-                for( int i = 0; i < (int)_size; i++ )
+                for (int i = 0; i < (int)_size; i++)
                     _data[i] = data[i];
             }
         }
@@ -164,13 +164,13 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <returns></returns>
         public bool Compare(MetricEntry metricEntry)
         {
-            if( Tag != metricEntry.Tag )
+            if (Tag != metricEntry.Tag)
                 return false;
-            if( Size != metricEntry.Size )
+            if (Size != metricEntry.Size)
                 return false;
-            for( int i = 0; i < Size; i++ )
+            for (int i = 0; i < Size; i++)
             {
-                if( Data[i] != metricEntry.Data[i] )
+                if (Data[i] != metricEntry.Data[i])
                     return false;
             }
             return true;
@@ -204,13 +204,13 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="next"></param>
         public void Add(MetricEntry next)
         {
-            if( null == _next )
+            if (null == _next)
             {
                 _next = next;
                 return;
             }
             MetricEntry prev = _next;
-            while( null != prev.Next )
+            while (null != prev.Next)
             {
                 prev = prev.Next;
             }
@@ -280,16 +280,16 @@ namespace MS.Internal.Ink.InkSerializedFormat
             Tag = tag;
 
             MetricEntryType type;
-            if( IsValidMetricEntry(propertyInfo, Tag, out type, out index) )
+            if (IsValidMetricEntry(propertyInfo, Tag, out type, out index))
             {
-                switch(type)
+                switch (type)
                 {
                     case MetricEntryType.Optional:
-                    {
-                        Initialize(propertyInfo, MetricEntry_Optional[index].PropertyMetrics);
-                        break;
-                    }
-                    case MetricEntryType.Must :
+                        {
+                            Initialize(propertyInfo, MetricEntry_Optional[index].PropertyMetrics);
+                            break;
+                        }
+                    case MetricEntryType.Must:
                     case MetricEntryType.Custom:
                         Initialize(propertyInfo, DefaultPropertyMetrics);
                         break;
@@ -310,7 +310,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="metricEntryType"></param>
         /// <param name="index"></param>
         /// <returns></returns>
-        
+
         static bool IsValidMetricEntry(StylusPointPropertyInfo propertyInfo, KnownTagCache.KnownTagIndex tag, out MetricEntryType metricEntryType, out uint index)
         {
             index = 0;
@@ -319,10 +319,10 @@ namespace MS.Internal.Ink.InkSerializedFormat
             if (tag >= (KnownTagCache.KnownTagIndex)KnownIdCache.CustomGuidBaseIndex)
             {
                 metricEntryType = MetricEntryType.Custom;
-                if( Int32.MinValue == propertyInfo.Minimum &&
+                if (Int32.MinValue == propertyInfo.Minimum &&
                     Int32.MaxValue == propertyInfo.Maximum &&
                     StylusPointPropertyUnit.None == propertyInfo.Unit &&
-                    DoubleUtil.AreClose(1.0, propertyInfo.Resolution) )
+                    DoubleUtil.AreClose(1.0, propertyInfo.Resolution))
                     return false;
                 else
                     return true;
@@ -332,9 +332,9 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 int ul;
                 // First find the property in the gaMetricEntry_Never. If it belongs to this list,
                 // we will never write the metric table for this prop. So return FALSE;
-                for( ul = 0; ul < MetricEntry_Never.Length ; ul++ )
+                for (ul = 0; ul < MetricEntry_Never.Length; ul++)
                 {
-                    if( MetricEntry_Never[ul] == tag )
+                    if (MetricEntry_Never[ul] == tag)
                     {
                         metricEntryType = MetricEntryType.Never;
                         return false;
@@ -343,15 +343,15 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                 // Then search the property in the gaMetricEntry_Must list. If it belongs to this list,
                 // we must always write the metric table for this prop. So return TRUE;
-                for( ul = 0; ul<MetricEntry_Must.Length; ul++ )
+                for (ul = 0; ul < MetricEntry_Must.Length; ul++)
                 {
-                    if( MetricEntry_Must[ul] == tag )
+                    if (MetricEntry_Must[ul] == tag)
                     {
                         metricEntryType = MetricEntryType.Must;
-                        if( propertyInfo.Minimum == DefaultPropertyMetrics.Minimum &&
+                        if (propertyInfo.Minimum == DefaultPropertyMetrics.Minimum &&
                             propertyInfo.Maximum == DefaultPropertyMetrics.Maximum &&
                             propertyInfo.Unit == DefaultPropertyMetrics.Unit &&
-                            DoubleUtil.AreClose(propertyInfo.Resolution, DefaultPropertyMetrics.Resolution ))
+                            DoubleUtil.AreClose(propertyInfo.Resolution, DefaultPropertyMetrics.Resolution))
                             return false;
                         else
                             return true;
@@ -360,15 +360,15 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                 // Now seach it in the gaMetricEntry_Optional list. If it is there, check the metric values
                 // agianst the default values and if there is any non default value, return TRUE;
-                for( ul = 0; ul<MetricEntry_Optional.Length; ul++ )
+                for (ul = 0; ul < MetricEntry_Optional.Length; ul++)
                 {
-                    if( ((MetricEntryList)MetricEntry_Optional[ul]).Tag == tag )
+                    if (((MetricEntryList)MetricEntry_Optional[ul]).Tag == tag)
                     {
                         metricEntryType = MetricEntryType.Optional;
-                        if( propertyInfo.Minimum == MetricEntry_Optional[ul].PropertyMetrics.Minimum &&
+                        if (propertyInfo.Minimum == MetricEntry_Optional[ul].PropertyMetrics.Minimum &&
                             propertyInfo.Maximum == MetricEntry_Optional[ul].PropertyMetrics.Maximum &&
                             propertyInfo.Unit == MetricEntry_Optional[ul].PropertyMetrics.Unit &&
-                            DoubleUtil.AreClose(propertyInfo.Resolution, MetricEntry_Optional[ul].PropertyMetrics.Resolution) )
+                            DoubleUtil.AreClose(propertyInfo.Resolution, MetricEntry_Optional[ul].PropertyMetrics.Resolution))
                             return false;
                         else
                         {
@@ -389,12 +389,12 @@ namespace MS.Internal.Ink.InkSerializedFormat
     /// stores the pointer of the next Block. This is not used in the context of a stroke but is used in the
     /// context of WispInk. Wispink forms a linked list based on the CMetricBlocks of all the strokes.
     /// </summary>
-    
-        internal class MetricBlock
+
+    internal class MetricBlock
     {
         private MetricEntry _Entry;
-        private uint        _Count;
-        private uint        _size;
+        private uint _Count;
+        private uint _size;
 
         /// <summary>
         /// Constructor
@@ -402,13 +402,13 @@ namespace MS.Internal.Ink.InkSerializedFormat
         public MetricBlock()
         {
         }
-        
+
         /// <summary>
         /// Gets the MetricEntry list associated with this instance
         /// </summary>
         /// <returns></returns>
-        public MetricEntry GetMetricEntryList() 
-        { 
+        public MetricEntry GetMetricEntryList()
+        {
             return _Entry;
         }
 
@@ -443,11 +443,11 @@ namespace MS.Internal.Ink.InkSerializedFormat
             {
                 throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("MetricEntry cannot be null"));
             }
-            if( null == _Entry )
+            if (null == _Entry)
                 _Entry = newEntry;
             else
                 _Entry.Add(newEntry);  // tack on at the end
-            _Count ++;
+            _Count++;
             _size += newEntry.Size + SerializationHelper.VarSize(newEntry.Size) + SerializationHelper.VarSize((uint)newEntry.Tag);
         }
 
@@ -464,19 +464,19 @@ namespace MS.Internal.Ink.InkSerializedFormat
             MetricEntryType type = entry.CreateMetricEntry(property, tag);
 
             // Don't add this entry to the global list if size is 0, means default metric values!
-            if( 0 == entry.Size )
+            if (0 == entry.Size)
             {
                 return type;
             }
 
             MetricEntry start = _Entry;
-            if( null == start )
+            if (null == start)
             {
                 _Entry = entry;
             }
             else    // tack on data at the end, want to keep x,y at the beginning
             {
-                while(start.Next != null)
+                while (start.Next != null)
                 {
                     start = start.Next;
                 }
@@ -486,7 +486,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             _size += entry.Size + SerializationHelper.VarSize(entry.Size) + SerializationHelper.VarSize((uint)_Entry.Tag);
             return type;
         }
-        
+
         /// <summary>
         /// This function Packs the data in the buffer provided. The
         /// function is being called during the save loop and caller
@@ -502,13 +502,13 @@ namespace MS.Internal.Ink.InkSerializedFormat
         {
             // Write the size of the Block at the begining of the buffer.
             // But first check the validity of the buffer & its size
-            uint cbWrite  = 0;
+            uint cbWrite = 0;
             // First write the size of the block
             cbWrite = SerializationHelper.Encode(strm, _size);
 
             // Now write each entry for the block
             MetricEntry entry = _Entry;
-            while( null != entry )
+            while (null != entry)
             {
                 cbWrite += SerializationHelper.Encode(strm, (uint)entry.Tag);
                 cbWrite += SerializationHelper.Encode(strm, entry.Size);
@@ -528,9 +528,9 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="metricColl"></param>
         /// <param name="setType"></param>
         /// <returns></returns>
-        public bool CompareMetricBlock( MetricBlock metricColl, ref SetType setType)
+        public bool CompareMetricBlock(MetricBlock metricColl, ref SetType setType)
         {
-            if( null == metricColl )
+            if (null == metricColl)
                 return false;
 
             // if both have null entry, implies default metric Block for both of them 
@@ -540,39 +540,39 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
             if (null == GetMetricEntryList())
                 return (metricColl.GetMetricEntryList() == null);
-            
-            if (null == metricColl.GetMetricEntryList()) 
+
+            if (null == metricColl.GetMetricEntryList())
                 return false;
 
             // Else compare the entries
 
-            bool  fTagFound = false;
+            bool fTagFound = false;
             uint cbLhs = this.MetricEntryCount;    // No of entries in this block
             uint cbRhs = metricColl.MetricEntryCount;   // No of entries in the block to be compared
 
             MetricEntry outside, inside;
-            if( metricColl.MetricEntryCount <= MetricEntryCount )
+            if (metricColl.MetricEntryCount <= MetricEntryCount)
             {
                 outside = metricColl.GetMetricEntryList();
-                inside  = GetMetricEntryList();
+                inside = GetMetricEntryList();
             }
             else
             {
-                inside   = metricColl.GetMetricEntryList();
-                outside  = GetMetricEntryList();
-                setType   = SetType.SuperSet;
+                inside = metricColl.GetMetricEntryList();
+                outside = GetMetricEntryList();
+                setType = SetType.SuperSet;
             }
 
             // For each entry in metricColl, search for the same in this Block. 
             // If it is found, continue with the next entry of smaller Block. 
-            while( null != outside )
+            while (null != outside)
             {
                 fTagFound = false;
                 // Always start at the begining of the larger block
                 MetricEntry temp = inside;
-                while( null != temp )
+                while (null != temp)
                 {
-                    if( outside.Compare(temp) )
+                    if (outside.Compare(temp))
                     {
                         fTagFound = true;
                         break;
@@ -580,7 +580,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     else
                         temp = temp.Next;
                 }
-                if( !fTagFound )
+                if (!fTagFound)
                     return false;
 
                 // Found the entry; Continue with the next entry in the outside block

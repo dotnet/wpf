@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,14 +11,14 @@ namespace System.Windows
     // the Invalidation callbacks call Add / Remove.   But multi-threaded
     // access is not expected and so locks are not used.
     //
-    internal class DependentList: MS.Utility.FrugalObjectList<Dependent>
+    internal class DependentList : MS.Utility.FrugalObjectList<Dependent>
     {
         public void Add(DependencyObject d, DependencyProperty dp, Expression expr)
         {
             // don't clean up every time.  This would make Add() cost O(N),
             // which would cause building a list to cost O(N^2).  yuck!
             // Clean the list less often the longer it gets.
-            if(Count == Capacity)
+            if (Count == Capacity)
                 CleanUpDeadWeakReferences();
 
             Dependent dep = new Dependent(d, dp, expr);
@@ -35,9 +35,9 @@ namespace System.Windows
         {
             get
             {
-                for(int i = Count-1; i >= 0; i--)
+                for (int i = Count - 1; i >= 0; i--)
                 {
-                    if(this[i].IsValid())
+                    if (this[i].IsValid())
                     {
                         return false;
                     }
@@ -55,10 +55,10 @@ namespace System.Windows
             // Take a snapshot of the list to protect against re-entrancy via Add / Remove.
             Dependent[] snapList = base.ToArray();
 
-            for(int i=0; i<snapList.Length; i++)
+            for (int i = 0; i < snapList.Length; i++)
             {
                 Expression expression = snapList[i].Expr;
-                if(null != expression)
+                if (null != expression)
                 {
                     expression.OnPropertyInvalidation(source, sourceArgs);
 
@@ -68,7 +68,7 @@ namespace System.Windows
                         DependencyObject dependencyObject = snapList[i].DO;
                         DependencyProperty dependencyProperty = snapList[i].DP;
 
-                        if(null != dependencyObject && null != dependencyProperty)
+                        if (null != dependencyObject && null != dependencyProperty)
                         {
                             // recompute expression
                             dependencyObject.InvalidateProperty(dependencyProperty);
@@ -83,11 +83,11 @@ namespace System.Windows
             int newCount = 0;
 
             // determine how many entries are valid
-            for (int i=Count-1; i>=0; --i)
+            for (int i = Count - 1; i >= 0; --i)
             {
                 if (this[i].IsValid())
                 {
-                    ++ newCount;
+                    ++newCount;
                 }
             }
 
@@ -100,7 +100,7 @@ namespace System.Windows
             int runStart = 0;           // starting index of current run
             bool runIsValid = false;    // whether run contains valid or invalid entries
 
-            for (int i=0, n=Count; i<n; ++i)
+            for (int i = 0, n = Count; i < n; ++i)
             {
                 if (runIsValid != this[i].IsValid())    // run has ended
                 {
@@ -136,11 +136,11 @@ namespace System.Windows
         public bool IsValid()
         {
             // Expression is never null (could Assert that but throw is fine)
-            if(!_wrEX.IsAlive)
+            if (!_wrEX.IsAlive)
                 return false;
 
             // It is OK to be null but if it isn't, then the target mustn't be dead.
-            if(null != _wrDO && !_wrDO.IsAlive)
+            if (null != _wrDO && !_wrDO.IsAlive)
                 return false;
 
             return true;
@@ -157,7 +157,7 @@ namespace System.Windows
         {
             get
             {
-                if(null == _wrDO)
+                if (null == _wrDO)
                     return null;
                 else
                     return (DependencyObject)_wrDO.Target;
@@ -173,7 +173,7 @@ namespace System.Windows
         {
             get
             {
-                if(null == _wrEX)
+                if (null == _wrEX)
                     return null;
                 else
                     return (Expression)_wrEX.Target;
@@ -182,7 +182,7 @@ namespace System.Windows
 
         override public bool Equals(object o)
         {
-            if(! (o is Dependent))
+            if (!(o is Dependent))
                 return false;
 
             Dependent d = (Dependent)o;
@@ -193,34 +193,34 @@ namespace System.Windows
             // and if you look at DependentList.Remove()'s arguments, it can only
             // be passed strong references.
             // Therefore: Items being removed (thus compared here) will not be dead.
-            if(!IsValid() || !d.IsValid())
+            if (!IsValid() || !d.IsValid())
                 return false;
 
-            if(_wrEX.Target != d._wrEX.Target)
+            if (_wrEX.Target != d._wrEX.Target)
                 return false;
 
-            if(_DP != d._DP)
+            if (_DP != d._DP)
                 return false;
 
             // if they are both non-null then the Targets must match.
-            if(null != _wrDO && null != d._wrDO)
+            if (null != _wrDO && null != d._wrDO)
             {
-                if(_wrDO.Target != d._wrDO.Target)
+                if (_wrDO.Target != d._wrDO.Target)
                     return false;
             }
             // but only one is non-null then they are not equal
-            else if(null != _wrDO || null != d._wrDO)
+            else if (null != _wrDO || null != d._wrDO)
                 return false;
 
             return true;
         }
 
-        public static bool operator== (Dependent first, Dependent second)
+        public static bool operator ==(Dependent first, Dependent second)
         {
             return first.Equals(second);
         }
 
-        public static bool operator!= (Dependent first, Dependent second)
+        public static bool operator !=(Dependent first, Dependent second)
         {
             return !(first.Equals(second));
         }
@@ -233,7 +233,7 @@ namespace System.Windows
             Expression ex = (Expression)_wrEX.Target;
             hashCode = (null == ex) ? 0 : ex.GetHashCode();
 
-            if(null != _wrDO)
+            if (null != _wrDO)
             {
                 DependencyObject DO = (DependencyObject)_wrDO.Target;
                 hashCode += (null == DO) ? 0 : DO.GetHashCode();

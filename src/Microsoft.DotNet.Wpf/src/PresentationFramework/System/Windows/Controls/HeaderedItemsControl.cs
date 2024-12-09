@@ -1,12 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Collections;
 using System.ComponentModel;
-using System.Windows.Threading;
-
 using System.Windows.Data;
+using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.Controls;
 using MS.Internal.KnownBoxes;
@@ -51,7 +50,7 @@ namespace System.Windows.Controls
                 HeaderedContentControl.HeaderProperty.AddOwner(
                         typeof(HeaderedItemsControl),
                         new FrameworkPropertyMetadata(
-                                (object) null,
+                                (object)null,
                                 new PropertyChangedCallback(OnHeaderChanged)));
 
 
@@ -70,7 +69,7 @@ namespace System.Windows.Controls
         /// </summary>
         private static void OnHeaderChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            HeaderedItemsControl ctrl = (HeaderedItemsControl) d;
+            HeaderedItemsControl ctrl = (HeaderedItemsControl)d;
 
             ctrl.SetValue(HasHeaderPropertyKey, (e.NewValue != null) ? BooleanBoxes.TrueBox : BooleanBoxes.FalseBox);
             ctrl.OnHeaderChanged(e.OldValue, e.NewValue);
@@ -113,7 +112,7 @@ namespace System.Windows.Controls
         [Bindable(false), Browsable(false)]
         public bool HasHeader
         {
-            get { return (bool) GetValue(HasHeaderProperty); }
+            get { return (bool)GetValue(HasHeaderProperty); }
         }
 
         /// <summary>
@@ -126,7 +125,7 @@ namespace System.Windows.Controls
                 HeaderedContentControl.HeaderTemplateProperty.AddOwner(
                         typeof(HeaderedItemsControl),
                         new FrameworkPropertyMetadata(
-                                (DataTemplate) null,
+                                (DataTemplate)null,
                                 new PropertyChangedCallback(OnHeaderTemplateChanged)));
 
         /// <summary>
@@ -135,7 +134,7 @@ namespace System.Windows.Controls
         [Bindable(true), CustomCategory("Content")]
         public DataTemplate HeaderTemplate
         {
-            get { return (DataTemplate) GetValue(HeaderTemplateProperty); }
+            get { return (DataTemplate)GetValue(HeaderTemplateProperty); }
             set { SetValue(HeaderTemplateProperty, value); }
         }
 
@@ -144,8 +143,8 @@ namespace System.Windows.Controls
         /// </summary>
         private static void OnHeaderTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            HeaderedItemsControl ctrl = (HeaderedItemsControl) d;
-            ctrl.OnHeaderTemplateChanged((DataTemplate) e.OldValue, (DataTemplate) e.NewValue);
+            HeaderedItemsControl ctrl = (HeaderedItemsControl)d;
+            ctrl.OnHeaderTemplateChanged((DataTemplate)e.OldValue, (DataTemplate)e.NewValue);
         }
 
         /// <summary>
@@ -169,7 +168,7 @@ namespace System.Windows.Controls
                 HeaderedContentControl.HeaderTemplateSelectorProperty.AddOwner(
                         typeof(HeaderedItemsControl),
                         new FrameworkPropertyMetadata(
-                                (DataTemplateSelector) null,
+                                (DataTemplateSelector)null,
                                 new PropertyChangedCallback(OnHeaderTemplateSelectorChanged)));
 
         /// <summary>
@@ -182,7 +181,7 @@ namespace System.Windows.Controls
         [Bindable(true), CustomCategory("Content")]
         public DataTemplateSelector HeaderTemplateSelector
         {
-            get { return (DataTemplateSelector) GetValue(HeaderTemplateSelectorProperty); }
+            get { return (DataTemplateSelector)GetValue(HeaderTemplateSelectorProperty); }
             set { SetValue(HeaderTemplateSelectorProperty, value); }
         }
 
@@ -191,8 +190,8 @@ namespace System.Windows.Controls
         /// </summary>
         private static void OnHeaderTemplateSelectorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            HeaderedItemsControl ctrl = (HeaderedItemsControl) d;
-            ctrl.OnHeaderTemplateSelectorChanged((DataTemplateSelector) e.OldValue, (DataTemplateSelector) e.NewValue);
+            HeaderedItemsControl ctrl = (HeaderedItemsControl)d;
+            ctrl.OnHeaderTemplateSelectorChanged((DataTemplateSelector)e.OldValue, (DataTemplateSelector)e.NewValue);
         }
 
         /// <summary>
@@ -217,7 +216,7 @@ namespace System.Windows.Controls
                         typeof(String),
                         typeof(HeaderedItemsControl),
                         new FrameworkPropertyMetadata(
-                                (String) null,
+                                (String)null,
                               new PropertyChangedCallback(OnHeaderStringFormatChanged)));
 
 
@@ -228,7 +227,7 @@ namespace System.Windows.Controls
         [Bindable(true), CustomCategory("Content")]
         public String HeaderStringFormat
         {
-            get { return (String) GetValue(HeaderStringFormatProperty); }
+            get { return (String)GetValue(HeaderStringFormatProperty); }
             set { SetValue(HeaderStringFormatProperty, value); }
         }
 
@@ -238,7 +237,7 @@ namespace System.Windows.Controls
         private static void OnHeaderStringFormatChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             HeaderedItemsControl ctrl = (HeaderedItemsControl)d;
-            ctrl.OnHeaderStringFormatChanged((String) e.OldValue, (String) e.NewValue);
+            ctrl.OnHeaderStringFormatChanged((String)e.OldValue, (String)e.NewValue);
         }
 
         /// <summary>
@@ -347,7 +346,7 @@ namespace System.Windows.Controls
             else
             {
                 //Not on dispatcher, try posting to the dispatcher with 20ms timeout
-                Dispatcher.Invoke(DispatcherPriority.Send, new TimeSpan(0, 0, 0, 0, 20), new DispatcherOperationCallback(delegate(object o)
+                Dispatcher.Invoke(DispatcherPriority.Send, new TimeSpan(0, 0, 0, 0, 20), new DispatcherOperationCallback(delegate (object o)
                 {
                     headerText = ContentControl.ContentObjectToString(Header);
                     // HasItems may be wrong when underlying collection does not notify,

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -432,11 +432,13 @@ namespace Microsoft.Windows.Themes
                     decorator._brushCache.DarkBrush = new SolidColorBrush(darkColor);
 
                     // DarkDark = Average of DarkColor and WindowFrameColor
-                    Color darkDarkColor = new Color();
-                    darkDarkColor.R = (byte)((darkColor.R + SystemColors.WindowFrameColor.R) / 2);
-                    darkDarkColor.G = (byte)((darkColor.G + SystemColors.WindowFrameColor.G) / 2);
-                    darkDarkColor.B = (byte)((darkColor.B + SystemColors.WindowFrameColor.B) / 2);
-                    darkDarkColor.A = (byte)((darkColor.A + SystemColors.WindowFrameColor.A) / 2);
+                    Color darkDarkColor = new Color
+                    {
+                        R = (byte)((darkColor.R + SystemColors.WindowFrameColor.R) / 2),
+                        G = (byte)((darkColor.G + SystemColors.WindowFrameColor.G) / 2),
+                        B = (byte)((darkColor.B + SystemColors.WindowFrameColor.B) / 2),
+                        A = (byte)((darkColor.A + SystemColors.WindowFrameColor.A) / 2)
+                    };
 
                     decorator._brushCache.DarkDarkBrush = new SolidColorBrush(darkDarkColor);
                 }
@@ -869,8 +871,10 @@ namespace Microsoft.Windows.Themes
         // Creates a rectangle figure
         private static PathFigure GenerateRectFigure(Rect rect)
         {
-            PathFigure figure = new PathFigure();
-            figure.StartPoint = rect.TopLeft;
+            PathFigure figure = new PathFigure
+            {
+                StartPoint = rect.TopLeft
+            };
             figure.Segments.Add(new LineSegment(rect.TopRight, true));
             figure.Segments.Add(new LineSegment(rect.BottomRight, true));
             figure.Segments.Add(new LineSegment(rect.BottomLeft, true));
@@ -1072,9 +1076,11 @@ namespace Microsoft.Windows.Themes
 
             double left = bounds.Left, right = bounds.Right, top = bounds.Top, bottom = bounds.Bottom - 1.0;
 
-            PathFigure figure = new PathFigure();
-            //Start at bottom left, tracing the outside clockwise
-            figure.StartPoint = new Point(left, bottom); 
+            PathFigure figure = new PathFigure
+            {
+                //Start at bottom left, tracing the outside clockwise
+                StartPoint = new Point(left, bottom)
+            };
             figure.Segments.Add(new LineSegment(new Point(left, top + outerRadius), true));  //left side
             figure.Segments.Add(new ArcSegment(new Point(left + outerRadius, top), outerCorner, 0.0, false, SweepDirection.Clockwise, true)); //top left rounded corner
             figure.Segments.Add(new LineSegment(new Point(right - outerRadius, top), true)); //top side
@@ -1102,11 +1108,13 @@ namespace Microsoft.Windows.Themes
             double innerRadius = outerRadius - 1.0;
             Size outerCorner = new Size(outerRadius, outerRadius), innerCorner = new Size(innerRadius, innerRadius);
 
-            double right = bounds.Right, top = bounds.Top, bottom = bounds.Bottom - 1.0; 
+            double right = bounds.Right, top = bounds.Top, bottom = bounds.Bottom - 1.0;
 
-            PathFigure figure = new PathFigure();
-            //Start at bottom left, tracing the outside clockwise
-            figure.StartPoint = new Point(right - 1.0, bottom);
+            PathFigure figure = new PathFigure
+            {
+                //Start at bottom left, tracing the outside clockwise
+                StartPoint = new Point(right - 1.0, bottom)
+            };
             figure.Segments.Add(new LineSegment(new Point(right - 1.0, top + outerRadius), true));  //left side
             figure.Segments.Add(new ArcSegment(new Point(right - 1.0 - innerRadius * 0.293, top + 1.0 + innerRadius * 0.293), innerCorner, 0.0, false, SweepDirection.Counterclockwise, true)); //inner left rounded corner
             figure.Segments.Add(new LineSegment(new Point(right - outerRadius * 0.293, top + outerRadius * 0.293), true)); //top right corner  

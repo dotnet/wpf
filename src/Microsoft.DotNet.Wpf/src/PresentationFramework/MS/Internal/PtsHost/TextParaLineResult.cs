@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,8 +9,8 @@
 
 
 using System.Collections.ObjectModel;
-using System.Windows.Documents;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Media;
 using MS.Internal.Documents;
 
@@ -194,46 +194,46 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// Character position representing the beginning of the Line's contents.
         /// </summary>
-        internal override int StartPositionCP 
-        { 
-            get 
-            { 
-                return _dcp + _owner.Paragraph.ParagraphStartCharacterPosition; 
-            } 
+        internal override int StartPositionCP
+        {
+            get
+            {
+                return _dcp + _owner.Paragraph.ParagraphStartCharacterPosition;
+            }
         }
 
         /// <summary>
         /// Character position representing the end of the Line's contents.
         /// </summary>
-        internal override int EndPositionCP 
-        { 
-            get 
-            { 
-                return _dcp + _cch + _owner.Paragraph.ParagraphStartCharacterPosition; 
-            } 
+        internal override int EndPositionCP
+        {
+            get
+            {
+                return _dcp + _cch + _owner.Paragraph.ParagraphStartCharacterPosition;
+            }
         }
 
         /// <summary>
         /// The bounding rectangle of the line.
         /// </summary>
-        internal override Rect LayoutBox 
-        { 
-            get 
-            { 
-                return _layoutBox; 
-            } 
+        internal override Rect LayoutBox
+        {
+            get
+            {
+                return _layoutBox;
+            }
         }
 
         /// <summary>
         /// The dominant baseline of the line. 
         /// Distance from the top of the line to the baseline.
         /// </summary>
-        internal override double Baseline 
-        { 
-            get 
-            { 
-                return _baseline; 
-            } 
+        internal override double Baseline
+        {
+            get
+            {
+                return _baseline;
+            }
         }
 
         #endregion LineResult Properties
@@ -279,13 +279,13 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal int DcpLast
         {
-            get 
-            { 
-                return _dcp + _cch; 
+            get
+            {
+                return _dcp + _cch;
             }
-            set 
-            { 
-                _cch = value - _dcp; 
+            set
+            {
+                _cch = value - _dcp;
             }
         }
 

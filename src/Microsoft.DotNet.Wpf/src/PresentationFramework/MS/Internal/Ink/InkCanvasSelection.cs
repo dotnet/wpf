@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,13 +8,13 @@
 //
 
 
-using MS.Internal.Controls;
 using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Media;
+using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Ink;
-using System.Windows.Controls;
+using System.Windows.Media;
+using MS.Internal.Controls;
 
 namespace MS.Internal.Ink
 {
@@ -61,7 +61,7 @@ namespace MS.Internal.Ink
         {
             get
             {
-                if ( _selectedStrokes == null )
+                if (_selectedStrokes == null)
                 {
                     _selectedStrokes = new StrokeCollection();
                     _areStrokesChanged = true;
@@ -78,7 +78,7 @@ namespace MS.Internal.Ink
         {
             get
             {
-                if ( _selectedElements == null )
+                if (_selectedElements == null)
                 {
                     _selectedElements = new List<UIElement>();
                 }
@@ -127,7 +127,7 @@ namespace MS.Internal.Ink
         /// <param name="activeSelectionHitResult"></param>
         internal void StartFeedbackAdorner(Rect feedbackRect, InkCanvasSelectionHitResult activeSelectionHitResult)
         {
-            Debug.Assert( _inkCanvas.EditingCoordinator.UserIsEditing == true );
+            Debug.Assert(_inkCanvas.EditingCoordinator.UserIsEditing == true);
             Debug.Assert(activeSelectionHitResult != InkCanvasSelectionHitResult.None, "activeSelectionHitResult cannot be InkCanvasSelectionHitResult.None.");
 
             _activeSelectionHitResult = activeSelectionHitResult;
@@ -182,7 +182,7 @@ namespace MS.Internal.Ink
             CommitChanges(finalRectangle, true);
 
             _activeSelectionHitResult = null;
-}
+        }
 
         /// <summary>
         /// Set the new selection to this helper class.
@@ -206,9 +206,9 @@ namespace MS.Internal.Ink
             // Besides the differences of both the stroks and the elements, there is a chance that the selected strokes and elements
             // have been removed from the InkCanvas. Meanwhile, we may still hold the reference of _inkCanvasSelection which is empty.
             // So, we should make sure to remove _inkCanvasSelection in this case.
-            if ( strokesAreDifferent || elementsAreDifferent )
+            if (strokesAreDifferent || elementsAreDifferent)
             {
-                if ( strokesAreDifferent && SelectedStrokes.Count != 0 )
+                if (strokesAreDifferent && SelectedStrokes.Count != 0)
                 {
                     // PERF-2006/05/02-WAYNEZEN,
                     // Unsubscribe the event fisrt so that reseting IsSelected won't call into our handler.
@@ -218,7 +218,7 @@ namespace MS.Internal.Ink
                     QuitListeningToStrokeChanges();
 
                     count = SelectedStrokes.Count;
-                    for ( int i = 0; i < count; i++ )
+                    for (int i = 0; i < count; i++)
                     {
                         SelectedStrokes[i].IsSelected = false;
                     }
@@ -233,12 +233,12 @@ namespace MS.Internal.Ink
                 // Update IsSelected property before adding the event handlers.
                 // 
                 // We don't have to render hollow strokes if the current mode isn't Select mode
-                if ( _inkCanvas.ActiveEditingMode == InkCanvasEditingMode.Select )
+                if (_inkCanvas.ActiveEditingMode == InkCanvasEditingMode.Select)
                 {
                     // 
                     // Updating the visuals of the hitted strokes.
                     count = strokes.Count;
-                    for ( int i = 0; i < count; i++ )
+                    for (int i = 0; i < count; i++)
                     {
                         strokes[i].IsSelected = true;
                     }
@@ -255,7 +255,7 @@ namespace MS.Internal.Ink
                 //
                 // And finally... raise the SelectionChanged event
                 //
-                if ( raiseSelectionChanged )
+                if (raiseSelectionChanged)
                 {
                     _inkCanvas.RaiseSelectionChanged(EventArgs.Empty);
                 }
@@ -275,30 +275,30 @@ namespace MS.Internal.Ink
             // 
             // If the selection is cleared programmatically somehow during user interaction, we will get an empty source rect.
             // We should check if the source still valid here. If not, no selection needs to be changed.
-            if ( selectionBounds.IsEmpty )
+            if (selectionBounds.IsEmpty)
             {
                 return;
             }
 
             try
             {
-                QuitListeningToStrokeChanges( );
+                QuitListeningToStrokeChanges();
 
-                if ( raiseEvent )
+                if (raiseEvent)
                 {
                     //
                     // see if we resized
                     //
-                    if ( !DoubleUtil.AreClose(finalRectangle.Height, selectionBounds.Height)
-                        || !DoubleUtil.AreClose(finalRectangle.Width, selectionBounds.Width) )
+                    if (!DoubleUtil.AreClose(finalRectangle.Height, selectionBounds.Height)
+                        || !DoubleUtil.AreClose(finalRectangle.Width, selectionBounds.Width))
                     {
                         //
                         // we resized
                         //
                         CommitResizeChange(finalRectangle);
                     }
-                    else if ( !DoubleUtil.AreClose(finalRectangle.Top, selectionBounds.Top)
-                        || !DoubleUtil.AreClose(finalRectangle.Left, selectionBounds.Left) )
+                    else if (!DoubleUtil.AreClose(finalRectangle.Top, selectionBounds.Top)
+                        || !DoubleUtil.AreClose(finalRectangle.Left, selectionBounds.Left))
                     {
                         //
                         // we moved
@@ -316,7 +316,7 @@ namespace MS.Internal.Ink
             }
             finally
             {
-                ListenToStrokeChanges( );
+                ListenToStrokeChanges();
             }
         }
 
@@ -329,16 +329,16 @@ namespace MS.Internal.Ink
         internal void RemoveElement(UIElement removedElement)
         {
             // No selected element. Bail out
-            if ( _selectedElements == null || _selectedElements.Count == 0 )
+            if (_selectedElements == null || _selectedElements.Count == 0)
             {
                 return;
             }
 
-            if ( _selectedElements.Remove(removedElement) )
+            if (_selectedElements.Remove(removedElement))
             {
                 // The element existed and was removed successfully.
                 // Now if there is no selected element, we should remove our LayoutUpdated handler.
-                if ( _selectedElements.Count == 0 )
+                if (_selectedElements.Count == 0)
                 {
                     UpdateCanvasLayoutUpdatedHandler();
                     UpdateSelectionAdorner();
@@ -367,7 +367,7 @@ namespace MS.Internal.Ink
         /// <param name="transform"></param>
         internal void UpdateElementBounds(UIElement originalElement, UIElement updatedElement, Matrix transform)
         {
-            if ( originalElement.DependencyObjectType.Id == updatedElement.DependencyObjectType.Id )
+            if (originalElement.DependencyObjectType.Id == updatedElement.DependencyObjectType.Id)
             {
                 // Get the transform from element to Canvas
                 GeneralTransform elementToCanvas = originalElement.TransformToAncestor(_inkCanvas.InnerCanvas);
@@ -376,7 +376,7 @@ namespace MS.Internal.Ink
                 FrameworkElement frameworkElement = originalElement as FrameworkElement;
                 Size size;
                 Thickness thickness = new Thickness();
-                if ( frameworkElement == null )
+                if (frameworkElement == null)
                 {
                     // Get the element's render size.
                     size = originalElement.RenderSize;
@@ -393,9 +393,9 @@ namespace MS.Internal.Ink
                 // Now apply the matrix to the element bounds
                 Rect newBounds = Rect.Transform(elementBounds, transform);
 
-                if ( !DoubleUtil.AreClose(elementBounds.Width, newBounds.Width) )
+                if (!DoubleUtil.AreClose(elementBounds.Width, newBounds.Width))
                 {
-                    if ( frameworkElement == null )
+                    if (frameworkElement == null)
                     {
                         Size newSize = originalElement.RenderSize;
                         newSize.Width = newBounds.Width;
@@ -407,9 +407,9 @@ namespace MS.Internal.Ink
                     }
                 }
 
-                if ( !DoubleUtil.AreClose(elementBounds.Height, newBounds.Height) )
+                if (!DoubleUtil.AreClose(elementBounds.Height, newBounds.Height))
                 {
-                    if ( frameworkElement == null )
+                    if (frameworkElement == null)
                     {
                         Size newSize = originalElement.RenderSize;
                         newSize.Height = newBounds.Height;
@@ -417,7 +417,7 @@ namespace MS.Internal.Ink
                     }
                     else
                     {
-                        ( (FrameworkElement)updatedElement ).Height = newBounds.Height;
+                        ((FrameworkElement)updatedElement).Height = newBounds.Height;
                     }
                 }
 
@@ -427,49 +427,49 @@ namespace MS.Internal.Ink
                 double bottom = InkCanvas.GetBottom(originalElement);
 
                 Point originalPosition = new Point(); // Default as (0, 0)
-                if ( !double.IsNaN(left) )
+                if (!double.IsNaN(left))
                 {
                     originalPosition.X = left;
                 }
-                else if ( !double.IsNaN(right) )
+                else if (!double.IsNaN(right))
                 {
                     originalPosition.X = right;
                 }
 
-                if ( !double.IsNaN(top) )
+                if (!double.IsNaN(top))
                 {
                     originalPosition.Y = top;
                 }
-                else if ( !double.IsNaN(bottom) )
+                else if (!double.IsNaN(bottom))
                 {
                     originalPosition.Y = bottom;
                 }
 
                 Point newPosition = originalPosition * transform;
 
-                if ( !double.IsNaN(left) )
+                if (!double.IsNaN(left))
                 {
                     InkCanvas.SetLeft(updatedElement, newPosition.X - thickness.Left);           // Left wasn't auto
                 }
-                else if ( !double.IsNaN(right) )
+                else if (!double.IsNaN(right))
                 {
                     // NOTICE-2005/05/05-WAYNEZEN
                     // Canvas.RightProperty means the distance between element right side and its parent Canvas
                     // right side. The same definition is applied to Canvas.BottomProperty
-                    InkCanvas.SetRight(updatedElement, ( right - ( newPosition.X - originalPosition.X ) )); // Right wasn't not auto
+                    InkCanvas.SetRight(updatedElement, (right - (newPosition.X - originalPosition.X))); // Right wasn't not auto
                 }
                 else
                 {
                     InkCanvas.SetLeft(updatedElement, newPosition.X - thickness.Left);           // Both Left and Right were aut. Modify Left by default.
                 }
 
-                if ( !double.IsNaN(top) )
+                if (!double.IsNaN(top))
                 {
                     InkCanvas.SetTop(updatedElement, newPosition.Y - thickness.Top);           // Top wasn't auto
                 }
-                else if ( !double.IsNaN(bottom) )
+                else if (!double.IsNaN(bottom))
                 {
-                    InkCanvas.SetBottom(updatedElement, ( bottom - ( newPosition.Y - originalPosition.Y ) ));      // Bottom wasn't not auto
+                    InkCanvas.SetBottom(updatedElement, (bottom - (newPosition.Y - originalPosition.Y)));      // Bottom wasn't not auto
                 }
                 else
                 {
@@ -490,13 +490,13 @@ namespace MS.Internal.Ink
         internal InkCanvasSelectionHitResult HitTestSelection(Point pointOnInkCanvas)
         {
             // If Selection is moving or resizing now, we should returns the active hit result.
-            if ( _activeSelectionHitResult.HasValue )
+            if (_activeSelectionHitResult.HasValue)
             {
                 return _activeSelectionHitResult.Value;
             }
 
             // No selection at all. Just return None.
-            if ( !HasSelection )
+            if (!HasSelection)
             {
                 return InkCanvasSelectionHitResult.None;
             }
@@ -509,15 +509,15 @@ namespace MS.Internal.Ink
 
             // If the hit test returns Selection and there is one and only one element is selected.
             // We have to check whether we hit on inside the element.
-            if ( hitResult == InkCanvasSelectionHitResult.Selection
+            if (hitResult == InkCanvasSelectionHitResult.Selection
                 && SelectedElements.Count == 1
-                && SelectedStrokes.Count == 0 )
+                && SelectedStrokes.Count == 0)
             {
                 GeneralTransform transformToInnerCanvas = _inkCanvas.TransformToDescendant(_inkCanvas.InnerCanvas);
                 Point pointOnInnerCanvas = transformToInnerCanvas.Transform(pointOnInkCanvas);
 
                 // Try to find out whether we hit the single selement. If so, just return None.
-                if ( HasHitSingleSelectedElement(pointOnInnerCanvas) )
+                if (HasHitSingleSelectedElement(pointOnInnerCanvas))
                 {
                     hitResult = InkCanvasSelectionHitResult.None;
                 }
@@ -542,26 +542,26 @@ namespace MS.Internal.Ink
             strokesAreDifferent = false;
             elementsAreDifferent = false;
 
-            if ( SelectedStrokes.Count == 0 )
+            if (SelectedStrokes.Count == 0)
             {
-                if ( strokes.Count > 0 )
+                if (strokes.Count > 0)
                 {
                     strokesAreDifferent = true;
                 }
             }
-            else if ( !InkCanvasSelection.StrokesAreEqual(SelectedStrokes, strokes) )
+            else if (!InkCanvasSelection.StrokesAreEqual(SelectedStrokes, strokes))
             {
                 strokesAreDifferent = true;
             }
 
-            if ( SelectedElements.Count == 0 )
+            if (SelectedElements.Count == 0)
             {
-                if ( elements.Count > 0 )
+                if (elements.Count > 0)
                 {
                     elementsAreDifferent = true;
                 }
             }
-            else if ( !InkCanvasSelection.FrameworkElementArraysAreEqual(elements, SelectedElements) )
+            else if (!InkCanvasSelection.FrameworkElementArraysAreEqual(elements, SelectedElements))
             {
                 elementsAreDifferent = true;
             }
@@ -588,10 +588,10 @@ namespace MS.Internal.Ink
         {
             bool hasHit = false;
 
-            if ( SelectedElements.Count == 1 )
+            if (SelectedElements.Count == 1)
             {
                 IEnumerator<Rect> enumerator = SelectedElementsBoundsEnumerator.GetEnumerator();
-                if ( enumerator.MoveNext() )
+                if (enumerator.MoveNext())
                 {
                     Rect elementRect = enumerator.Current;
                     hasHit = elementRect.Contains(pointOnInnerCanvas);
@@ -610,12 +610,12 @@ namespace MS.Internal.Ink
         /// </summary>
         private void QuitListeningToStrokeChanges()
         {
-            if ( _inkCanvas.Strokes != null )
+            if (_inkCanvas.Strokes != null)
             {
                 _inkCanvas.Strokes.StrokesChanged -= new StrokeCollectionChangedEventHandler(this.OnStrokeCollectionChanged);
             }
 
-            foreach ( Stroke s in SelectedStrokes )
+            foreach (Stroke s in SelectedStrokes)
             {
                 s.Invalidated -= new EventHandler(this.OnStrokeInvalidated);
             }
@@ -626,12 +626,12 @@ namespace MS.Internal.Ink
         /// </summary>
         private void ListenToStrokeChanges()
         {
-            if ( _inkCanvas.Strokes != null )
+            if (_inkCanvas.Strokes != null)
             {
                 _inkCanvas.Strokes.StrokesChanged += new StrokeCollectionChangedEventHandler(this.OnStrokeCollectionChanged);
             }
 
-            foreach ( Stroke s in SelectedStrokes )
+            foreach (Stroke s in SelectedStrokes)
             {
                 s.Invalidated += new EventHandler(this.OnStrokeInvalidated);
             }
@@ -652,9 +652,9 @@ namespace MS.Internal.Ink
 
             _inkCanvas.RaiseSelectionMoving(args);
 
-            if ( !args.Cancel )
+            if (!args.Cancel)
             {
-                if ( finalRectangle != args.NewRectangle )
+                if (finalRectangle != args.NewRectangle)
                 {
                     finalRectangle = args.NewRectangle;
                 }
@@ -686,9 +686,9 @@ namespace MS.Internal.Ink
 
             _inkCanvas.RaiseSelectionResizing(args);
 
-            if ( !args.Cancel )
+            if (!args.Cancel)
             {
-                if ( finalRectangle != args.NewRectangle )
+                if (finalRectangle != args.NewRectangle)
                 {
                     finalRectangle = args.NewRectangle;
                 }
@@ -723,7 +723,7 @@ namespace MS.Internal.Ink
             //
             int count = SelectedElements.Count;
             IList<UIElement> elements = SelectedElements;
-            for ( int i = 0; i < count ; i++ )
+            for (int i = 0; i < count; i++)
             {
                 UpdateElementBounds(elements[i], matrix);
             }
@@ -731,14 +731,14 @@ namespace MS.Internal.Ink
             //
             // transform the strokes
             //
-            if ( SelectedStrokes.Count > 0 )
+            if (SelectedStrokes.Count > 0)
             {
                 TransformStrokes(SelectedStrokes, matrix);
                 // Flag the change
                 _areStrokesChanged = true;
             }
 
-            if ( SelectedElements.Count == 0 )
+            if (SelectedElements.Count == 0)
             {
                 // If there is no element in the current selection, the inner canvas won't have layout changes.
                 // So there is no LayoutUpdated event. We have to manually update the selection bounds.
@@ -759,8 +759,8 @@ namespace MS.Internal.Ink
         /// <param name="e"></param>
         private void OnCanvasLayoutUpdated(object sender, EventArgs e)
         {
-            Debug.Assert( SelectedElements.Count != 0, 
-                "The handler only can be hooked up when there are elements being selected" );
+            Debug.Assert(SelectedElements.Count != 0,
+                "The handler only can be hooked up when there are elements being selected");
 
             // Update the selection adorner when receive the layout changed
             UpdateSelectionAdorner();
@@ -771,7 +771,7 @@ namespace MS.Internal.Ink
         /// </summary>
         private void OnStrokeInvalidated(object sender, EventArgs e)
         {
-            OnStrokeCollectionChanged(sender, 
+            OnStrokeCollectionChanged(sender,
                 new StrokeCollectionChangedEventArgs(new StrokeCollection(), new StrokeCollection()));
         }
 
@@ -783,14 +783,14 @@ namespace MS.Internal.Ink
         private void OnStrokeCollectionChanged(object target, StrokeCollectionChangedEventArgs e)
         {
             // If the strokes only get added to the InkCanvas, we don't have to update our internal selected strokes.
-            if ( e.Added.Count != 0 && e.Removed.Count == 0 )
+            if (e.Added.Count != 0 && e.Removed.Count == 0)
             {
                 return;
             }
 
             foreach (Stroke s in e.Removed)
             {
-                if ( SelectedStrokes.Contains(s) )
+                if (SelectedStrokes.Contains(s))
                 {
                     s.Invalidated -= new EventHandler(this.OnStrokeInvalidated);
                     s.IsSelected = false;
@@ -811,10 +811,10 @@ namespace MS.Internal.Ink
         private Rect GetStrokesBounds()
         {
             // Update the strokes bounds if they are changed.
-            if ( _areStrokesChanged )
+            if (_areStrokesChanged)
             {
-                _cachedStrokesBounds = SelectedStrokes.Count != 0 ? 
-                                        SelectedStrokes.GetBounds( ) : Rect.Empty;
+                _cachedStrokesBounds = SelectedStrokes.Count != 0 ?
+                                        SelectedStrokes.GetBounds() : Rect.Empty;
                 _areStrokesChanged = false;
             }
 
@@ -829,10 +829,10 @@ namespace MS.Internal.Ink
         {
             List<Rect> rects = new List<Rect>();
 
-            if ( SelectedElements.Count != 0 )
+            if (SelectedElements.Count != 0)
             {
                 // The private SelectedElementsBounds property will ensure the size is got after rendering's done.
-                foreach ( Rect elementRect in SelectedElementsBoundsEnumerator )
+                foreach (Rect elementRect in SelectedElementsBoundsEnumerator)
                 {
                     rects.Add(elementRect);
                 }
@@ -847,7 +847,7 @@ namespace MS.Internal.Ink
         /// <returns></returns>
         private Rect GetElementsUnionBounds()
         {
-            if ( SelectedElements.Count == 0 )
+            if (SelectedElements.Count == 0)
             {
                 return Rect.Empty;
             }
@@ -855,7 +855,7 @@ namespace MS.Internal.Ink
             Rect elementsBounds = Rect.Empty;
 
             // The private SelectedElementsBounds property will ensure the size is got after rendering's done.
-            foreach ( Rect elementRect in SelectedElementsBoundsEnumerator )
+            foreach (Rect elementRect in SelectedElementsBoundsEnumerator)
             {
                 elementsBounds.Union(elementRect);
             }
@@ -875,7 +875,7 @@ namespace MS.Internal.Ink
         private void UpdateSelectionAdorner()
         {
             // The Selection Adorner will be visible all the time unless the ActiveEditingMode is None.
-            if ( _inkCanvas.ActiveEditingMode != InkCanvasEditingMode.None )
+            if (_inkCanvas.ActiveEditingMode != InkCanvasEditingMode.None)
             {
                 Debug.Assert(_inkCanvas.SelectionAdorner.Visibility == Visibility.Visible,
                     "SelectionAdorner should be always visible except under the None ActiveEditingMode");
@@ -887,7 +887,7 @@ namespace MS.Internal.Ink
                 Debug.Assert(_inkCanvas.SelectionAdorner.Visibility == Visibility.Collapsed,
                     "SelectionAdorner should be collapsed except if the ActiveEditingMode is None");
             }
-}
+        }
 
         /// <summary>
         /// Ensure the rendering is valid.
@@ -899,7 +899,7 @@ namespace MS.Internal.Ink
             InkCanvasInnerCanvas innerCanvas = _inkCanvas.InnerCanvas;
 
             // Make sure the arrange is valid. If not, we invoke UpdateLayout now.
-            if ( !innerCanvas.IsMeasureValid || !innerCanvas.IsArrangeValid )
+            if (!innerCanvas.IsMeasureValid || !innerCanvas.IsArrangeValid)
             {
                 innerCanvas.UpdateLayout();
             }
@@ -913,7 +913,7 @@ namespace MS.Internal.Ink
         /// <returns>Transform that maps source rectangle to destination rectangle</returns>
         private static Matrix MapRectToRect(Rect target, Rect source)
         {
-            if(source.IsEmpty)
+            if (source.IsEmpty)
                 throw new ArgumentOutOfRangeException("source", SR.InvalidDiameter);
             /*
             In the horizontal direction:
@@ -951,10 +951,10 @@ namespace MS.Internal.Ink
         {
             // If there are selected elements, we should create a LayoutUpdated handler in order to monitor their arrange changes.
             // Otherwise, we don't have to listen the LayoutUpdated if there is no selected element at all.
-            if ( SelectedElements.Count != 0 )
+            if (SelectedElements.Count != 0)
             {
                 // Make sure we hook up the event handler.
-                if ( _layoutUpdatedHandler == null )
+                if (_layoutUpdatedHandler == null)
                 {
                     _layoutUpdatedHandler = new EventHandler(OnCanvasLayoutUpdated);
                     _inkCanvas.InnerCanvas.LayoutUpdated += _layoutUpdatedHandler;
@@ -963,7 +963,7 @@ namespace MS.Internal.Ink
             else
             {
                 // Remove the handler if there is one.
-                if ( _layoutUpdatedHandler != null )
+                if (_layoutUpdatedHandler != null)
                 {
                     _inkCanvas.InnerCanvas.LayoutUpdated -= _layoutUpdatedHandler;
                     _layoutUpdatedHandler = null;
@@ -979,7 +979,7 @@ namespace MS.Internal.Ink
         /// </summary>
         private static bool StrokesAreEqual(StrokeCollection strokes1, StrokeCollection strokes2)
         {
-            if ( strokes1 == null && strokes2 == null )
+            if (strokes1 == null && strokes2 == null)
             {
                 return true;
             }
@@ -988,17 +988,17 @@ namespace MS.Internal.Ink
             // not null.  If the other one is, they're not
             // equal
             //
-            if ( strokes1 == null || strokes2 == null )
+            if (strokes1 == null || strokes2 == null)
             {
                 return false;
             }
-            if ( strokes1.Count != strokes2.Count )
+            if (strokes1.Count != strokes2.Count)
             {
                 return false;
             }
-            foreach ( Stroke s in strokes1 )
+            foreach (Stroke s in strokes1)
             {
-                if ( !strokes2.Contains(s) )
+                if (!strokes2.Contains(s))
                 {
                     return false;
                 }
@@ -1014,7 +1014,7 @@ namespace MS.Internal.Ink
         /// </summary>
         private static bool FrameworkElementArraysAreEqual(IList<UIElement> elements1, IList<UIElement> elements2)
         {
-            if ( elements1 == null && elements2 == null )
+            if (elements1 == null && elements2 == null)
             {
                 return true;
             }
@@ -1023,17 +1023,17 @@ namespace MS.Internal.Ink
             // not null.  If the other one is, they're not
             // equal
             //
-            if ( elements1 == null || elements2 == null )
+            if (elements1 == null || elements2 == null)
             {
                 return false;
             }
-            if ( elements1.Count != elements2.Count )
+            if (elements1.Count != elements2.Count)
             {
                 return false;
             }
-            foreach ( UIElement e in elements1 )
+            foreach (UIElement e in elements1)
             {
-                if ( !elements2.Contains(e) )
+                if (!elements2.Contains(e))
                 {
                     return false;
                 }
@@ -1062,7 +1062,7 @@ namespace MS.Internal.Ink
                 EnusreElementsBounds();
 
                 InkCanvasInnerCanvas innerCanvas = _inkCanvas.InnerCanvas;
-                foreach ( UIElement element in SelectedElements )
+                foreach (UIElement element in SelectedElements)
                 {
                     // Get the transform from element to Canvas
                     GeneralTransform elementToCanvas = element.TransformToAncestor(innerCanvas);
@@ -1091,24 +1091,24 @@ namespace MS.Internal.Ink
         /// <summary>
         /// Our logical parent.
         /// </summary>
-        private InkCanvas                   _inkCanvas;
+        private InkCanvas _inkCanvas;
 
         /// <summary>
         /// The collection of strokes this selectedinkelement represents
         /// </summary>
-        private StrokeCollection            _selectedStrokes;
+        private StrokeCollection _selectedStrokes;
         /// <summary>
         /// The last known rectangle before the current edit.  used to revert
         /// when events are cancelled and expose the value to the InkCanvas.GetSelectionBounds
         /// </summary>
-        private Rect                        _cachedStrokesBounds;
-        private bool                        _areStrokesChanged;
+        private Rect _cachedStrokesBounds;
+        private bool _areStrokesChanged;
 
         /// <summary>
         /// The collection of elements this selectedinkelement represents
         /// </summary>
-        private List<UIElement>             _selectedElements;
-        private EventHandler                _layoutUpdatedHandler;
+        private List<UIElement> _selectedElements;
+        private EventHandler _layoutUpdatedHandler;
 
         private Nullable<InkCanvasSelectionHitResult> _activeSelectionHitResult;
 

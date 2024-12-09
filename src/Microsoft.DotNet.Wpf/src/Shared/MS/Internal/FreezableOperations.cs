@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -28,7 +28,7 @@ namespace MS.Internal
         //  Constructors
         //
         //------------------------------------------------------
-        
+
         //------------------------------------------------------
         //
         //  Internal Methods
@@ -36,7 +36,7 @@ namespace MS.Internal
         //------------------------------------------------------
 
         #region Internal Methods
-        
+
         /// <summary>
         ///     A null-safe wrapper around Freezable.Clone().  (If a null
         ///     is encountered it returns null.)
@@ -65,7 +65,7 @@ namespace MS.Internal
 
             return freezable.GetAsFrozen();
         }
-        
+
         /// <summary>
         /// If freezable is already frozen, it returns freezable
         /// If freezable is not frozen, it returns a copy that is frozen if possible

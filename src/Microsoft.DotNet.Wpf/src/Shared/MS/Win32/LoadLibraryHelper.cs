@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -31,7 +31,7 @@ namespace MS.Win32
             if (UnsafeNativeMethods.GetModuleHandleEx(
                 UnsafeNativeMethods.GetModuleHandleFlags.None,
                 ExternDll.Kernel32,
-                out hModule) && 
+                out hModule) &&
                 hModule != IntPtr.Zero)
             {
                 try
@@ -73,7 +73,7 @@ namespace MS.Win32
             if (!IsKnowledgeBase2533623OrGreater())
             {
                 // Edit out the unsupported flags
-                if ((dwFlags & 
+                if ((dwFlags &
                     UnsafeNativeMethods.LoadLibraryFlags.LOAD_LIBRARY_SEARCH_APPLICATION_DIR &
                     UnsafeNativeMethods.LoadLibraryFlags.LOAD_LIBRARY_SEARCH_DEFAULT_DIRS &
                     UnsafeNativeMethods.LoadLibraryFlags.LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR &

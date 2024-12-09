@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,11 +13,10 @@ Abstract:
 
 --*/
 
-using System.Xml;
 using System.Collections.ObjectModel;
 using System.Globalization;
-
 using System.Printing;
+using System.Xml;
 
 #pragma warning disable 1634, 1691 // Allows suppression of certain PreSharp messages
 
@@ -26,7 +25,7 @@ namespace MS.Internal.Printing.Configuration
     /// <summary>
     /// Represents a scaling option.
     /// </summary>
-    internal class ScalingOption: PrintCapabilityOption
+    internal class ScalingOption : PrintCapabilityOption
     {
         #region Constructors
 
@@ -68,9 +67,9 @@ namespace MS.Internal.Printing.Configuration
                 if (_scaleWIndex < 0)
                     return null;
 
-                #if _DEBUG
+#if _DEBUG
                 Trace.Assert(Value == PageScaling.Custom, "THIS SHOULD NOT HAPPEN: non-Custom scaling option has ScaleWidth");
-                #endif
+#endif
 
                 return (ScalingScaleWidthCapability)(this.OwnerFeature.OwnerPrintCap._pcLocalParamDefs[_scaleWIndex]);
             }
@@ -89,9 +88,9 @@ namespace MS.Internal.Printing.Configuration
                 if (_scaleHIndex < 0)
                     return null;
 
-                #if _DEBUG
+#if _DEBUG
                 Trace.Assert(Value == PageScaling.Custom, "THIS SHOULD NOT HAPPEN: non-Custom scaling option has ScaleHeight");
-                #endif
+#endif
 
                 return (ScalingScaleHeightCapability)(this.OwnerFeature.OwnerPrintCap._pcLocalParamDefs[_scaleHIndex]);
             }
@@ -167,8 +166,10 @@ namespace MS.Internal.Printing.Configuration
 
         internal static PrintCapabilityFeature NewFeatureCallback(InternalPrintCapabilities printCap)
         {
-            PageScalingCapability cap = new PageScalingCapability(printCap);
-            cap._scalingOptions = new Collection<ScalingOption>();
+            PageScalingCapability cap = new PageScalingCapability(printCap)
+            {
+                _scalingOptions = new Collection<ScalingOption>()
+            };
 
             return cap;
         }
@@ -287,33 +288,33 @@ namespace MS.Internal.Printing.Configuration
 
                 string sPropertyName = reader.CurrentElementNameAttrValue;
 
-                if ( (sPropertyName == PrintSchemaTags.Keywords.PageScalingKeys.CustomScaleWidth) ||
+                if ((sPropertyName == PrintSchemaTags.Keywords.PageScalingKeys.CustomScaleWidth) ||
                      (sPropertyName == PrintSchemaTags.Keywords.PageScalingKeys.CustomScaleHeight) ||
-                     (sPropertyName == PrintSchemaTags.Keywords.PageScalingKeys.CustomSquareScale) )
+                     (sPropertyName == PrintSchemaTags.Keywords.PageScalingKeys.CustomSquareScale))
                 {
                     // custom or custom square scaling properties
                     try
                     {
                         string paramRefName = reader.GetCurrentPropertyParamRefNameWithException();
 
-                        if ( (sPropertyName == PrintSchemaTags.Keywords.PageScalingKeys.CustomScaleWidth) &&
-                             (paramRefName == PrintSchemaTags.Keywords.ParameterDefs.PageScalingScaleWidth) )
+                        if ((sPropertyName == PrintSchemaTags.Keywords.PageScalingKeys.CustomScaleWidth) &&
+                             (paramRefName == PrintSchemaTags.Keywords.ParameterDefs.PageScalingScaleWidth))
                         {
                             option._scaleWIndex = (int)PrintSchemaLocalParameterDefs.PageScalingScaleWidth;
 
                             // Mark the local parameter-def as required
                             option.OwnerFeature.OwnerPrintCap.SetLocalParameterDefAsRequired(option._scaleWIndex, true);
                         }
-                        else if ( (sPropertyName == PrintSchemaTags.Keywords.PageScalingKeys.CustomScaleHeight) &&
-                                  (paramRefName == PrintSchemaTags.Keywords.ParameterDefs.PageScalingScaleHeight) )
+                        else if ((sPropertyName == PrintSchemaTags.Keywords.PageScalingKeys.CustomScaleHeight) &&
+                                  (paramRefName == PrintSchemaTags.Keywords.ParameterDefs.PageScalingScaleHeight))
                         {
                             option._scaleHIndex = (int)PrintSchemaLocalParameterDefs.PageScalingScaleHeight;
 
                             // Mark the local parameter-def as required
                             option.OwnerFeature.OwnerPrintCap.SetLocalParameterDefAsRequired(option._scaleHIndex, true);
                         }
-                        else if ( (sPropertyName == PrintSchemaTags.Keywords.PageScalingKeys.CustomSquareScale) &&
-                                  (paramRefName == PrintSchemaTags.Keywords.ParameterDefs.PageSquareScalingScale) )
+                        else if ((sPropertyName == PrintSchemaTags.Keywords.PageScalingKeys.CustomSquareScale) &&
+                                  (paramRefName == PrintSchemaTags.Keywords.ParameterDefs.PageSquareScalingScale))
                         {
                             option._squareScaleIndex = (int)PrintSchemaLocalParameterDefs.PageSquareScalingScale;
 
@@ -322,36 +323,36 @@ namespace MS.Internal.Printing.Configuration
                         }
                         else
                         {
-                            #if _DEBUG
+#if _DEBUG
                             Trace.WriteLine("-Warning- skip unknown ParameterRef " + paramRefName +
                                             "' at line number " + reader._xmlReader.LineNumber +
                                             ", line position " + reader._xmlReader.LinePosition);
-                            #endif
+#endif
                         }
                     }
                     // We want to catch internal FormatException to skip recoverable XML content syntax error
-                    #pragma warning suppress 56502
-                    #if _DEBUG
+#pragma warning suppress 56502
+#if _DEBUG
                     catch (FormatException e)
-                    #else
+#else
                     catch (FormatException)
-                    #endif
+#endif
                     {
-                        #if _DEBUG
+#if _DEBUG
                         Trace.WriteLine("-Error- " + e.Message);
-                        #endif
+#endif
                     }
                 }
                 else
                 {
                     handled = false;
 
-                    #if _DEBUG
+#if _DEBUG
                     Trace.WriteLine("-Warning- skip unknown ScoredProperty '" +
                                     reader.CurrentElementNameAttrValue + "' at line " +
                                     reader._xmlReader.LineNumber + ", position " +
                                     reader._xmlReader.LinePosition);
-                    #endif
+#endif
                 }
             }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -41,7 +41,7 @@ namespace MS.Internal.IO.Packaging
         /// </remarks>
         void IStream.Read(Byte[] buffer, Int32 bufferSize, IntPtr bytesReadPtr)
         {
-            Int32 bytesRead = _ioStream.Read(buffer, 0, (int) bufferSize);
+            Int32 bytesRead = _ioStream.Read(buffer, 0, (int)bufferSize);
             if (bytesReadPtr != IntPtr.Zero)
             {
                 Marshal.WriteInt32(bytesReadPtr, bytesRead);
@@ -59,12 +59,12 @@ namespace MS.Internal.IO.Packaging
         /// </remarks>
         void IStream.Seek(Int64 offset, Int32 origin, IntPtr newPositionPtr)
         {
-            SeekOrigin  seekOrigin;
+            SeekOrigin seekOrigin;
 
             // The operation will generally be I/O bound, so there is no point in
             // eliminating the following switch by playing on the fact that
             // System.IO uses the same integer values as IStream for SeekOrigin.
-            switch(origin)
+            switch (origin)
             {
                 case NativeMethods.STREAM_SEEK_SET:
                     seekOrigin = SeekOrigin.Begin;
@@ -109,12 +109,14 @@ namespace MS.Internal.IO.Packaging
         /// </remarks>
         void IStream.Stat(out System.Runtime.InteropServices.ComTypes.STATSTG streamStats, int grfStatFlag)
         {
-            streamStats = new System.Runtime.InteropServices.ComTypes.STATSTG();
-            streamStats.type = NativeMethods.STGTY_STREAM;
-            streamStats.cbSize = _ioStream.Length;
+            streamStats = new System.Runtime.InteropServices.ComTypes.STATSTG
+            {
+                type = NativeMethods.STGTY_STREAM,
+                cbSize = _ioStream.Length,
 
-            // Return access information in grfMode.
-            streamStats.grfMode = 0; // default value for each flag will be false
+                // Return access information in grfMode.
+                grfMode = 0 // default value for each flag will be false
+            };
             if (_ioStream.CanRead && _ioStream.CanWrite)
             {
                 streamStats.grfMode |= NativeMethods.STGM_READWRITE;
@@ -220,7 +222,7 @@ namespace MS.Internal.IO.Packaging
         #endregion Unimplemented methods
 
         #region Fields
-        private Stream      _ioStream;
+        private Stream _ioStream;
         #endregion Fields
     }
 }

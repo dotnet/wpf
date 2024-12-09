@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,7 +23,7 @@ namespace System.Windows.Media.Media3D
         #region Constructors
 
         ///<summary />
-        public PerspectiveCamera() {}
+        public PerspectiveCamera() { }
 
         ///<summary />
         public PerspectiveCamera(Point3D position, Vector3D lookDirection, Vector3D upDirection, double fieldOfView)
@@ -75,18 +75,18 @@ namespace System.Windows.Media.Media3D
             // D3DXMatrixPerspectiveFovRH because we have a horizontal rather
             // than vertical FoV.
 
-            double halfWidthDepthRatio = Math.Tan(fov/2);
-            double h = aspectRatio/halfWidthDepthRatio;
-            double w = 1/halfWidthDepthRatio;
+            double halfWidthDepthRatio = Math.Tan(fov / 2);
+            double h = aspectRatio / halfWidthDepthRatio;
+            double w = 1 / halfWidthDepthRatio;
 
-            double m22 = zf != Double.PositiveInfinity ? zf/(zn-zf) : -1;
-            double m32 = zn*m22;
+            double m22 = zf != Double.PositiveInfinity ? zf / (zn - zf) : -1;
+            double m32 = zn * m22;
 
             return new Matrix3D(
-                w,  0,  0,     0,
-                0,  h,  0,     0,
-                0,  0,  m22,  -1,
-                0,  0,  m32,   0);
+                w, 0, 0, 0,
+                0, h, 0, 0,
+                0, 0, m22, -1,
+                0, 0, m32, 0);
         }
 
         internal override Matrix3D GetProjectionMatrix(double aspectRatio)
@@ -109,7 +109,7 @@ namespace System.Windows.Media.Media3D
             //
             //  Compute rayParameters
             //
-            
+
             // Find the point on the projection plane in post-projective space where
             // the viewport maps to a 2x2 square from (-1,1)-(1,-1).
             Point np = M3DUtil.GetNormalizedPoint(p, viewSize);
@@ -123,16 +123,16 @@ namespace System.Windows.Media.Media3D
             // D3DXMatrixPerspectiveFovRH because we have a horizontal rather
             // than vertical FoV.
             double aspectRatio = M3DUtil.GetAspectRatio(viewSize);
-            double halfWidthDepthRatio = Math.Tan(fov/2);
-            double h = aspectRatio/halfWidthDepthRatio;
-            double w = 1/halfWidthDepthRatio;
+            double halfWidthDepthRatio = Math.Tan(fov / 2);
+            double h = aspectRatio / halfWidthDepthRatio;
+            double w = 1 / halfWidthDepthRatio;
 
             // To get from projective space to camera space we apply the
             // width/height ratios to find our normalized point at 1 unit
             // in front of the camera.  (1 is convenient, but has no other
             // special significance.) See note above about the construction
             // of w and h.
-            Vector3D rayDirection = new Vector3D(np.X/w, np.Y/h, -1);
+            Vector3D rayDirection = new Vector3D(np.X / w, np.Y / h, -1);
 
             // Apply the inverse of the view matrix to our rayDirection vector
             // to convert it from camera to world space.
@@ -172,9 +172,9 @@ namespace System.Windows.Media.Media3D
             //                 ld   
             //
             // So to find the desired rayOrigin on the projection plane we simply do:            
-            Point3D rayOrigin = position + zn*rayDirection;
+            Point3D rayOrigin = position + zn * rayDirection;
             rayDirection.Normalize();
-            
+
             // Account for the Camera.Transform we ignored during ray construction above.
             if (transform != null && transform != Transform3D.Identity)
             {
@@ -192,7 +192,7 @@ namespace System.Windows.Media.Media3D
             //
 
             Matrix3D projectionMatrix = GetProjectionMatrix(aspectRatio, zn, zf);
-            
+
             // The projectionMatrix takes camera-space 3D points into normalized clip
             // space.
 
@@ -201,11 +201,11 @@ namespace System.Windows.Media.Media3D
             // to put the ray at the rayOrigin.
             Matrix3D viewportMatrix = new Matrix3D();
             viewportMatrix.TranslatePrepend(new Vector3D(-p.X, viewSize.Height - p.Y, 0));
-            viewportMatrix.ScalePrepend(new Vector3D(viewSize.Width/2, -viewSize.Height/2, 1));
+            viewportMatrix.ScalePrepend(new Vector3D(viewSize.Width / 2, -viewSize.Height / 2, 1));
             viewportMatrix.TranslatePrepend(new Vector3D(1, 1, 0));
-            
+
             // First, world-to-camera, then camera's projection, then normalized clip space to viewport.
-            rayParameters.HitTestProjectionMatrix = 
+            rayParameters.HitTestProjectionMatrix =
                 viewMatrix *
                 projectionMatrix *
                 viewportMatrix;
@@ -221,7 +221,7 @@ namespace System.Windows.Media.Media3D
         }
 
         #endregion Internal Methods
-        
+
         //------------------------------------------------------
         //
         //  Private Fields

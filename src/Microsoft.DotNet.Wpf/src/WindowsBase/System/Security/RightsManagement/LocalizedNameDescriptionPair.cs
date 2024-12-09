@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -30,7 +30,7 @@ namespace System.Security.RightsManagement
         /// <summary>
         /// Read only Name property.
         /// </summary>
-        public string Name 
+        public string Name
         {
             get
             {
@@ -42,11 +42,11 @@ namespace System.Security.RightsManagement
         /// <summary>
         /// Read only Description property.
         /// </summary>
-        public string Description 
+        public string Description
         {
             get
             {
-            
+
                 return _description;
             }
         }
@@ -63,7 +63,7 @@ namespace System.Security.RightsManagement
             }
 
             LocalizedNameDescriptionPair localizedNameDescr = obj as LocalizedNameDescriptionPair;
-            
+
             //PRESHARP:Parameter to this public method must be validated:  A null-dereference can occur here. 
             //This is a false positive as the checks above can gurantee no null dereference will occur  
 #pragma warning disable 6506
@@ -71,18 +71,18 @@ namespace System.Security.RightsManagement
                         &&
                     (string.Equals(localizedNameDescr.Description, Description, StringComparison.Ordinal));
 #pragma warning restore 6506
-        }        
-            
+        }
+
         /// <summary>
         /// Compute hash code.
         /// </summary>
         public override int GetHashCode()
         {
-        
-            return Name.GetHashCode()  ^  Description.GetHashCode();
+
+            return Name.GetHashCode() ^ Description.GetHashCode();
         }
 
         private string _name;
-        private string _description; 
+        private string _description;
     }
 }

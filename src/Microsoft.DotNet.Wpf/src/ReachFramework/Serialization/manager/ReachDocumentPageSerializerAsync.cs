@@ -1,14 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 using System.ComponentModel;
-using System.Xml;
 using System.Printing;
-using System.Windows.Xps.Packaging;
 using System.Windows.Documents;
 using System.Windows.Media;
+using System.Windows.Xps.Packaging;
+using System.Xml;
 
 namespace System.Windows.Xps.Serialization
 {
@@ -61,35 +61,35 @@ namespace System.Windows.Xps.Serialization
             ReachSerializerContext context
             )
         {
-            if(context == null)
+            if (context == null)
             {
 
             }
-           
-            switch (context.Action) 
+
+            switch (context.Action)
             {
                 case SerializerAction.endPersistObjectData:
-                {
-                    EndPersistObjectData();
-                    break;
-                }
-                
-                case SerializerAction.endSerializeDocumentPage:
-                {
-                    ReachFixedPageSerializerContext thisContext = context as ReachFixedPageSerializerContext;
-                    if(thisContext == null)
                     {
-
+                        EndPersistObjectData();
+                        break;
                     }
-                    EndSerializeDocumentPage(thisContext);
-                    break;
-                }
-    
+
+                case SerializerAction.endSerializeDocumentPage:
+                    {
+                        ReachFixedPageSerializerContext thisContext = context as ReachFixedPageSerializerContext;
+                        if (thisContext == null)
+                        {
+
+                        }
+                        EndSerializeDocumentPage(thisContext);
+                        break;
+                    }
+
                 default:
-                {
-                    base.AsyncOperation(context);
-                    break;
-                }
+                    {
+                        base.AsyncOperation(context);
+                        break;
+                    }
             }
         }
 
@@ -153,7 +153,7 @@ namespace System.Windows.Xps.Serialization
         {
             if (SerializationManager is IXpsSerializationManager)
             {
-               (SerializationManager as IXpsSerializationManager).RegisterPageStart();
+                (SerializationManager as IXpsSerializationManager).RegisterPageStart();
             }
 
             //
@@ -182,18 +182,18 @@ namespace System.Windows.Xps.Serialization
                 }
             }
 
-            XpsSerializationPrintTicketRequiredEventArgs e = 
+            XpsSerializationPrintTicketRequiredEventArgs e =
             new XpsSerializationPrintTicketRequiredEventArgs(PrintTicketLevel.FixedPagePrintTicket,
                                                                                      0);
 
             ((IXpsSerializationManager)SerializationManager).OnXPSSerializationPrintTicketRequired(e);
 
             PrintTicket printTicket = null;
-            if(e.Modified)
+            if (e.Modified)
             {
                 printTicket = e.PrintTicket;
             }
-            
+
             Size size = Toolbox.ValidateDocumentSize(dp.Size, printTicket);
             ((IXpsSerializationManager)SerializationManager).FixedPageSize = size;
 
@@ -219,9 +219,9 @@ namespace System.Windows.Xps.Serialization
                 PrintTicketSerializerAsync serializer = new PrintTicketSerializerAsync(SerializationManager);
                 serializer.SerializeObject(printTicket);
             }
-   
+
             SerializeChild(dp.Visual, serializableObjectContext);
-            
+
         }
 
         private void SerializeChild(Visual child, SerializableObjectContext parentContext)
@@ -242,7 +242,7 @@ namespace System.Windows.Xps.Serialization
         {
             ReachFixedPageSerializerContext thisContext = context as ReachFixedPageSerializerContext;
 
-            if(thisContext != null)
+            if (thisContext != null)
             {
                 ((XpsSerializationManager)SerializationManager).PackagingPolicy.PreCommitCurrentPage();
 
@@ -262,14 +262,14 @@ namespace System.Windows.Xps.Serialization
 
                 ((IXpsSerializationManager)SerializationManager).VisualSerializationService.ReleaseVisualTreeFlattener();
 
-                if( SerializationManager is IXpsSerializationManager)
+                if (SerializationManager is IXpsSerializationManager)
                 {
                     (SerializationManager as IXpsSerializationManager).RegisterPageEnd();
                 }
                 //
                 // Signal to any registered callers that the Page has been serialized
                 //
-                XpsSerializationProgressChangedEventArgs progressEvent = 
+                XpsSerializationProgressChangedEventArgs progressEvent =
                 new XpsSerializationProgressChangedEventArgs(XpsWritingProgressChangeLevel.FixedPageWritingProgress,
                                                              0,
                                                              0,

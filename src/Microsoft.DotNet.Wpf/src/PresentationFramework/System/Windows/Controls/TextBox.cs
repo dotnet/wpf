@@ -1,20 +1,19 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal;
 using System.Collections; // IEnumerator
 using System.ComponentModel; // DefaultValue
-using System.Windows.Media;
+using System.Windows.Automation.Peers;
+using System.Windows.Controls.Primitives; // TextBoxBase
 using System.Windows.Data; // Binding
 using System.Windows.Documents;
-using System.Windows.Automation.Peers;
 using System.Windows.Input; // CanExecuteRoutedEventArgs, ExecuteRoutedEventArgs
-
-using System.Windows.Controls.Primitives; // TextBoxBase
 using System.Windows.Markup; // IAddChild, XamlDesignerSerializer, ContentPropertyAttribute
-using MS.Internal.Documents;    // Undo
+using System.Windows.Media;
+using MS.Internal;
 using MS.Internal.Commands;     // CommandHelpers
+using MS.Internal.Documents;    // Undo
 using MS.Internal.Telemetry.PresentationFramework;
 
 //
@@ -69,7 +68,7 @@ namespace System.Windows.Controls
              new CoerceValueCallback(CoerceHorizontalScrollBarVisibility)));
 
             ControlsTraceLogger.AddControl(TelemetryControls.TextBox);
-            
+
             CommandHelpers.RegisterCommandHandler(typeof(TextBox), EditingCommands.Clear, OnClearCommand, new CanExecuteRoutedEventHandler(OnCanExecuteClearCommand));
         }
 
@@ -86,8 +85,10 @@ namespace System.Windows.Controls
             TextEditor.RegisterCommandHandlers(typeof(TextBox), /*acceptsRichContent:*/false, /*readOnly*/false, /*registerEventListeners*/false);
 
             // Create TextContainer and TextEditor associated with it
-            TextContainer container = new TextContainer(this, true /* plainTextOnly */);
-            container.CollectTextChanges = true;
+            TextContainer container = new TextContainer(this, true /* plainTextOnly */)
+            {
+                CollectTextChanges = true
+            };
             InitializeTextContainer(container);
 
             // TextBox only accepts plain text, so change TextEditor's default to that.
@@ -616,7 +617,7 @@ namespace System.Windows.Controls
         [DefaultValue(1)]
         public int MinLines
         {
-            get { return (int) GetValue(MinLinesProperty); }
+            get { return (int)GetValue(MinLinesProperty); }
             set { SetValue(MinLinesProperty, value); }
         }
 
@@ -641,7 +642,7 @@ namespace System.Windows.Controls
         [DefaultValue(Int32.MaxValue)]
         public int MaxLines
         {
-            get { return (int) GetValue(MaxLinesProperty); }
+            get { return (int)GetValue(MaxLinesProperty); }
             set { SetValue(MaxLinesProperty, value); }
         }
 
@@ -671,7 +672,7 @@ namespace System.Windows.Controls
         [Localizability(LocalizationCategory.Text)]
         public string Text
         {
-            get { return (string) GetValue(TextProperty); }
+            get { return (string)GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
         }
 
@@ -694,7 +695,7 @@ namespace System.Windows.Controls
         /// </summary>
         public CharacterCasing CharacterCasing
         {
-            get { return (CharacterCasing) GetValue(CharacterCasingProperty); }
+            get { return (CharacterCasing)GetValue(CharacterCasingProperty); }
             set { SetValue(CharacterCasingProperty, value); }
         }
 
@@ -732,7 +733,7 @@ namespace System.Windows.Controls
         [Localizability(LocalizationCategory.None, Modifiability = Modifiability.Unmodifiable)] // cannot be modified by localizer
         public int MaxLength
         {
-            get { return (int) GetValue(MaxLengthProperty); }
+            get { return (int)GetValue(MaxLengthProperty); }
             set { SetValue(MaxLengthProperty, value); }
         }
 
@@ -975,7 +976,7 @@ namespace System.Windows.Controls
         {
             if (target is TextBox textBox)
             {
-                args.CanExecute =  !textBox.IsReadOnly
+                args.CanExecute = !textBox.IsReadOnly
                                     && textBox.IsEnabled
                                     && textBox.Text.Length > 0;
             }
@@ -1253,13 +1254,13 @@ namespace System.Windows.Controls
                 {
                     _newTextValue = newTextValue;
                     _isInsideTextContentChange = true;
-                    ++ _changeEventNestingCount;
+                    ++_changeEventNestingCount;
 
                     OnTextPropertyChanged(newTextValue, Text);
                 }
                 finally
                 {
-                    -- _changeEventNestingCount;
+                    --_changeEventNestingCount;
                     _isInsideTextContentChange = false;
                     _newTextValue = DependencyProperty.UnsetValue;
                 }
@@ -1703,23 +1704,23 @@ namespace System.Windows.Controls
             // etc.).
             // The two strings share a common prefix and suffix - find those
             int prefix, suffix;
-            for (   prefix = 0;
+            for (prefix = 0;
                     prefix < oldText.Length && prefix < newText.Length;
                     ++prefix)
             {
                 if (oldText[prefix] != newText[prefix])
                     break;
             }
-            for (   suffix = 0;
+            for (suffix = 0;
                     suffix < oldText.Length && suffix < newText.Length;
                     ++suffix)
             {
-                if (oldText[oldText.Length - 1 - suffix ] != newText[newText.Length - 1 - suffix])
+                if (oldText[oldText.Length - 1 - suffix] != newText[newText.Length - 1 - suffix])
                     break;
             }
             // if the prefix and suffix account for enough of the text, treat the
             // rest as a small replacement
-            if ( 2*(prefix + suffix) >= Math.Min(oldText.Length, newText.Length))
+            if (2 * (prefix + suffix) >= Math.Min(oldText.Length, newText.Length))
             {
                 // if the caret was in or next to the prefix or suffix, return the
                 // corresponding position in newText
@@ -1743,23 +1744,23 @@ namespace System.Windows.Controls
                 int matchLength = 1;
 
                 // match backward from the anchor position
-                for (   index = anchorIndex - 1;
-                        index >=0 && oldIndex - (anchorIndex - index) >= 0;
+                for (index = anchorIndex - 1;
+                        index >= 0 && oldIndex - (anchorIndex - index) >= 0;
                         --index)
                 {
                     if (newText[index] != oldText[oldIndex - (anchorIndex - index)])
                         break;
-                    ++ matchLength;
+                    ++matchLength;
                 }
 
                 // match forward from the anchor position
-                for (   index = anchorIndex + 1;
+                for (index = anchorIndex + 1;
                         index < newText.Length && oldIndex + (index - anchorIndex) < oldText.Length;
                         ++index)
                 {
                     if (newText[index] != oldText[oldIndex + (index - anchorIndex)])
                         break;
-                    ++ matchLength;
+                    ++matchLength;
                 }
 
                 // remember the best match

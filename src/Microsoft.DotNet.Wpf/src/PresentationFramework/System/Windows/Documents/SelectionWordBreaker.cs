@@ -1,9 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Win32;
 using MS.Internal; // Invariant
+using MS.Win32;
 
 //
 // Description: Word breaker used for TextSelection's auto-word selection and
@@ -82,7 +82,7 @@ namespace System.Windows.Documents
                    (
                     !IsSameClass(charType3[0], classes[position - 1], charType3[1], classes[position]) &&
                     !IsMidLetter(text, position - 1, classes) &&
-                    !IsMidLetter(text, position, classes) 
+                    !IsMidLetter(text, position, classes)
                    );
         }
 
@@ -141,7 +141,7 @@ namespace System.Windows.Documents
         //
         // MidLetters are exceptions to the rule that consequative characters
         // with different classes are word breaks.
-        private static bool IsMidLetter(char []text, int index, CharClass []classes)
+        private static bool IsMidLetter(char[] text, int index, CharClass[] classes)
         {
             Invariant.Assert(text.Length == classes.Length);
             return (text[index] == ApostropheChar || text[index] == RightSingleQuotationChar || text[index] == SoftHyphenChar) &&
@@ -260,7 +260,7 @@ namespace System.Windows.Documents
         // Returns true if a char is a non-spacing diacritic or kashida.
         private static bool IsDiacriticOrKashida(char ch)
         {
-            UInt16 []charType3 = new UInt16[1];
+            UInt16[] charType3 = new UInt16[1];
 
             SafeNativeMethods.GetStringTypeEx(0 /* ignored */, SafeNativeMethods.CT_CTYPE3, new char[] { ch }, 1, charType3);
 
@@ -332,7 +332,7 @@ namespace System.Windows.Documents
         }
 
         // Character classifications for u+0000 - u+00ff.
-        static readonly byte []_latinClasses = new byte[] {
+        static readonly byte[] _latinClasses = new byte[] {
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x14, //0x00
         0x00, 0x13, 0x14, 0x14, 0x14, 0x14, 0x00, 0x00, //0x08
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, //0x10

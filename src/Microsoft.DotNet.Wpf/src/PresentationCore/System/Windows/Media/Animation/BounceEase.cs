@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -91,7 +91,7 @@ namespace System.Windows.Media.Animation
 
             double pow = Math.Pow(bounciness, bounces);
             double oneMinusBounciness = 1.0 - bounciness;
-            
+
             // 'unit' space calculations.
             // Our bounces grow in the x axis exponentially.  we define the first bounce as having a 'unit' width of 1.0 and compute
             // the total number of 'units' using a geometric series.
@@ -102,7 +102,7 @@ namespace System.Windows.Media.Animation
             // 'bounce' space calculations.
             // Now that we know which 'unit' the current time is in, we can determine which bounce we're in by solving the geometric equation:
             // unitAtT = (1 - bounciness^bounce) / (1 - bounciness), for bounce.
-            double bounceAtT = Math.Log(-unitAtT * (1.0-bounciness) + 1.0, bounciness);
+            double bounceAtT = Math.Log(-unitAtT * (1.0 - bounciness) + 1.0, bounciness);
             double start = Math.Floor(bounceAtT);
             double end = start + 1.0;
 

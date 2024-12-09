@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -20,11 +20,11 @@ namespace System.Windows.Xps.Serialization
         /// <param name="manager">serialization manager</param>
         public
         ReachDocumentReferenceSerializer(
-            PackageSerializationManager   manager
-            ):
+            PackageSerializationManager manager
+            ) :
         base(manager)
         {
-            
+
         }
 
         private object Idle(object sender)
@@ -39,10 +39,10 @@ namespace System.Windows.Xps.Serialization
         override
         void
         PersistObjectData(
-            SerializableObjectContext   serializableObjectContext
+            SerializableObjectContext serializableObjectContext
             )
         {
-            if(serializableObjectContext.IsComplexValue)
+            if (serializableObjectContext.IsComplexValue)
             {
                 SerializeObjectCore(serializableObjectContext);
 
@@ -56,11 +56,11 @@ namespace System.Windows.Xps.Serialization
                         new DispatcherOperationCallback(Idle), null);
                 }
 
-                if(document != null)
+                if (document != null)
                 {
                     ReachSerializer serializer = SerializationManager.GetSerializer(document);
 
-                    if(serializer!=null)
+                    if (serializer != null)
                     {
                         serializer.SerializeObject(document);
                     }

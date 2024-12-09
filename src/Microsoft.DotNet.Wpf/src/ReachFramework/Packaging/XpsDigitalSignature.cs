@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,10 +11,10 @@
                                    
                                                                              
 --*/
+using System.Collections.ObjectModel;
 using System.IO.Packaging;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
-using System.Collections.ObjectModel;
 using System.Xml;
 namespace System.Windows.Xps.Packaging
 {
@@ -34,10 +34,10 @@ namespace System.Windows.Xps.Packaging
         /// <param name="package">
         /// The associated package
         /// </param>
-        public 
-        XpsDigitalSignature( 
-            PackageDigitalSignature packageSignature, 
-            XpsDocument            package 
+        public
+        XpsDigitalSignature(
+            PackageDigitalSignature packageSignature,
+            XpsDocument package
             )
         {
             _packageSignature = packageSignature;
@@ -45,7 +45,7 @@ namespace System.Windows.Xps.Packaging
         }
 
         #region Public properties
-            
+
         /// <summary>
         /// The  Document Sequence Reader for 
         /// the signed Document seqeuence part.
@@ -53,33 +53,33 @@ namespace System.Windows.Xps.Packaging
         /// only signed pages
         /// </summary>
         /// <value>Value is the IXpsFixedDocumentSequenceReader for the signed Docuement Sequence Part</value>
-        public 
+        public
         IXpsFixedDocumentSequenceReader
-        SignedDocumentSequence 
+        SignedDocumentSequence
         {
             get
             {
                 IXpsFixedDocumentSequenceReader seqReader = _package.FixedDocumentSequenceReader;
                 IXpsFixedDocumentSequenceReader returnReader = null;
-                if( seqReader != null )
+                if (seqReader != null)
                 {
-                    Dictionary<Uri, Uri> dependentList = new Dictionary<Uri,Uri>();
+                    Dictionary<Uri, Uri> dependentList = new Dictionary<Uri, Uri>();
 
-                    List<PackageRelationshipSelector> selectorList =  
+                    List<PackageRelationshipSelector> selectorList =
                         new List<PackageRelationshipSelector>();
 
 
-                    _package.CollectSelfAndDependents( 
+                    _package.CollectSelfAndDependents(
                                         dependentList,
                                         selectorList,
                                         XpsDigSigPartAlteringRestrictions.None
-                                     );                
-                    if( CollectionContainsCollection(_packageSignature.SignedParts,
+                                     );
+                    if (CollectionContainsCollection(_packageSignature.SignedParts,
                                                      dependentList.Keys) &&
                         CollectionContainsCollection(dependentList.Keys,
                                                      _packageSignature.SignedParts) &&
                         SelectorListContainsSelectorList(_packageSignature.SignedRelationshipSelectors,
-                                                         selectorList )
+                                                         selectorList)
                       )
                     {
                         returnReader = seqReader;
@@ -87,7 +87,7 @@ namespace System.Windows.Xps.Packaging
                 }
                 return returnReader;
             }
-        }		
+        }
 
 
 
@@ -99,11 +99,12 @@ namespace System.Windows.Xps.Packaging
         SignatureOriginRestricted
         {
             get
-            {   bool restrictedFlag = false;
-                foreach( PackageRelationshipSelector selector in _packageSignature.SignedRelationshipSelectors )
+            {
+                bool restrictedFlag = false;
+                foreach (PackageRelationshipSelector selector in _packageSignature.SignedRelationshipSelectors)
                 {
-                    if( selector.SourceUri == _package.CurrentXpsManager.GetSignatureOriginUri() &&
-                        selector.SelectionCriteria == XpsS0Markup.DitialSignatureRelationshipType )
+                    if (selector.SourceUri == _package.CurrentXpsManager.GetSignatureOriginUri() &&
+                        selector.SelectionCriteria == XpsS0Markup.DitialSignatureRelationshipType)
                     {
                         restrictedFlag = true;
                         break;
@@ -112,7 +113,7 @@ namespace System.Windows.Xps.Packaging
                 return restrictedFlag;
             }
         }
-            
+
         /// <summary>
         /// returns true if changing the Document Properties breaks the signature
         /// </summary>                 
@@ -121,11 +122,12 @@ namespace System.Windows.Xps.Packaging
         DocumentPropertiesRestricted
         {
             get
-            {   bool restrictedFlag = false;
-                foreach( PackageRelationshipSelector selector in _packageSignature.SignedRelationshipSelectors )
+            {
+                bool restrictedFlag = false;
+                foreach (PackageRelationshipSelector selector in _packageSignature.SignedRelationshipSelectors)
                 {
-                    if( selector.SourceUri == MS.Internal.IO.Packaging.PackUriHelper.PackageRootUri &&
-                        selector.SelectionCriteria == XpsS0Markup.CorePropertiesRelationshipType )
+                    if (selector.SourceUri == MS.Internal.IO.Packaging.PackUriHelper.PackageRootUri &&
+                        selector.SelectionCriteria == XpsS0Markup.CorePropertiesRelationshipType)
                     {
                         restrictedFlag = true;
                         break;
@@ -139,26 +141,26 @@ namespace System.Windows.Xps.Packaging
         /// <summary>
         /// Id of the signature
         /// </summary>
-        public 
-        Guid? 
-        Id 
+        public
+        Guid?
+        Id
         {
             get
             {
                 Guid? id = null;
-                Signature  sig = (Signature)_packageSignature.Signature;
-                if( sig != null )
+                Signature sig = (Signature)_packageSignature.Signature;
+                if (sig != null)
                 {
                     try
                     {
                         string convertedId = XmlConvert.DecodeName(sig.Id);
                         id = new Guid(convertedId);
                     }
-                    catch( ArgumentNullException  )
+                    catch (ArgumentNullException)
                     {
                         id = null;
                     }
-                    catch( FormatException  )
+                    catch (FormatException)
                     {
                         id = null;
                     }
@@ -171,7 +173,7 @@ namespace System.Windows.Xps.Packaging
         /// Certificate of signer embedded in container
         /// </summary>
         /// <value>null if certificate was not embedded</value>
-        public 
+        public
         X509Certificate
         SignerCertificate
         {
@@ -179,21 +181,21 @@ namespace System.Windows.Xps.Packaging
             {
                 return _packageSignature.Signer;
             }
-         }
+        }
 
 
         /// <summary>
         /// Time signature was created - not a trusted TimeStamp
         /// </summary>
         /// <value></value>
-        public 
-        DateTime 
+        public
+        DateTime
         SigningTime
         {
             get
             {
                 return _packageSignature.SigningTime;
-             }
+            }
         }
 
 
@@ -201,8 +203,8 @@ namespace System.Windows.Xps.Packaging
         /// encrypted hash value
         /// </summary>
         /// <value></value>
-        public 
-        byte[] 
+        public
+        byte[]
         SignatureValue
         {
             get
@@ -214,41 +216,41 @@ namespace System.Windows.Xps.Packaging
         /// <summary>
         /// Content Type of signature
         /// </summary>
-        public 
-        String 
+        public
+        String
         SignatureType
         {
             get
             {
-                 return _packageSignature.SignatureType;
+                return _packageSignature.SignatureType;
             }
         }
 
         /// <summary>
         /// True if the package contains the signatures certificate.
         /// </summary>
-       public
-        bool
-        IsCertificateAvailable
+        public
+         bool
+         IsCertificateAvailable
         {
             get
             {
-               
-               return ( _packageSignature.CertificateEmbeddingOption == 
-                    CertificateEmbeddingOption.InCertificatePart);
+
+                return (_packageSignature.CertificateEmbeddingOption ==
+                     CertificateEmbeddingOption.InCertificatePart);
             }
         }
         #endregion Public properties
 
         #region Public methods
-       
+
         /// <summary>
         /// Verify
         /// </summary>
         /// <remarks>cannot use this overload with signatures created without embedding their certs</remarks>
         /// <returns></returns>
-        public 
-        VerifyResult 
+        public
+        VerifyResult
         Verify()
         {
             return _packageSignature.Verify();
@@ -262,8 +264,8 @@ namespace System.Windows.Xps.Packaging
         /// <param name="certificate">
         /// Certificate to be used to verify
         /// </param>
-        public 
-        VerifyResult 
+        public
+        VerifyResult
         Verify(X509Certificate certificate)
         {
             return _packageSignature.Verify(certificate);
@@ -274,20 +276,20 @@ namespace System.Windows.Xps.Packaging
         /// Uses the certificate stored the signature
         /// </summary>
         /// <returns>the first error encountered when inspecting the certificate chain or NoError if the certificate is valid</returns>
-        public 
-        X509ChainStatusFlags 
+        public
+        X509ChainStatusFlags
         VerifyCertificate()
         {
             return VerifyCertificate(_packageSignature.Signer);
-        }        
+        }
         /// <summary>
         /// Verify Certificate
         /// </summary>
         /// <param name="certificate">certificate to inspect</param>
         /// <returns>the first error encountered when inspecting the certificate chain or NoError if the certificate is valid</returns>
-        public 
-        static 
-        X509ChainStatusFlags 
+        public
+        static
+        X509ChainStatusFlags
         VerifyCertificate(X509Certificate certificate)
         {
             return PackageDigitalSignatureManager.VerifyCertificate(certificate);
@@ -301,12 +303,13 @@ namespace System.Windows.Xps.Packaging
         {
             get
             {
-                return _packageSignature;            }
+                return _packageSignature;
+            }
         }
         #endregion Internal property
         #region Private methods
         bool CollectionContainsCollection(
-            ICollection<Uri> containingCollection, 
+            ICollection<Uri> containingCollection,
             ICollection<Uri> containedCollection
             )
         {
@@ -314,7 +317,7 @@ namespace System.Windows.Xps.Packaging
             //
             // Convert the containing collection to a hash table
             Dictionary<Uri, Uri> hashTable = new Dictionary<Uri, Uri>();
-            foreach( Uri uri in containingCollection )
+            foreach (Uri uri in containingCollection)
             {
                 hashTable[uri] = uri;
             }
@@ -323,10 +326,10 @@ namespace System.Windows.Xps.Packaging
             // Iteratate the contained collection
             // and cofirm existance in the contained collection
             //
-            foreach( Uri uri in containedCollection )
+            foreach (Uri uri in containedCollection)
             {
-                bool isOptional = IsOptional( uri );
-                if( !hashTable.ContainsKey( uri )&& !isOptional)
+                bool isOptional = IsOptional(uri);
+                if (!hashTable.ContainsKey(uri) && !isOptional)
                 {
                     contained = false;
                     break;
@@ -335,17 +338,17 @@ namespace System.Windows.Xps.Packaging
             }
             return contained;
         }
-        
+
         /// <summary>
         /// This returns true if the part can optionally be signed
         /// XML Paper Specification 10.2.1.1 Signing rules
         /// </summary>
-        private bool IsOptional( Uri uri )
+        private bool IsOptional(Uri uri)
         {
-           string contentType =  _package.CurrentXpsManager.MetroPackage.GetPart(uri).ContentType;
-           return( OptionalSignedParts.ContainsKey( contentType ) );
+            string contentType = _package.CurrentXpsManager.MetroPackage.GetPart(uri).ContentType;
+            return (OptionalSignedParts.ContainsKey(contentType));
         }
-         
+
         /// <summary>
         /// This determines if the contained collection is a subset of the containting collection
         /// For each Source Uri in the Containging collection there must be the coorisponding
@@ -369,7 +372,7 @@ namespace System.Windows.Xps.Packaging
                 // If the Source Uri is already in the  hash table
                 // pull out the existing  relationship dictionary
                 Dictionary<string, int> relHash = null;
-                if( uriHashTable.ContainsKey( selector.SourceUri ) )
+                if (uriHashTable.ContainsKey(selector.SourceUri))
                 {
                     relHash = uriHashTable[selector.SourceUri];
                 }
@@ -417,7 +420,7 @@ namespace System.Windows.Xps.Packaging
         {
             get
             {
-                if( _optionalSignedTypes == null )
+                if (_optionalSignedTypes == null)
                 {
                     _optionalSignedTypes = new Dictionary<string, string>();
                     _optionalSignedTypes[XpsS0Markup.CoreDocumentPropertiesType.OriginalString] = "";
@@ -439,12 +442,12 @@ namespace System.Windows.Xps.Packaging
         #endregion Private methods
 
         #region Private data
-        private PackageDigitalSignature _packageSignature; 
+        private PackageDigitalSignature _packageSignature;
         private XpsDocument _package;
         static private Dictionary<string, string> _optionalSignedTypes;
         #endregion Private data       
     }
-    
+
     /// <summary>
     /// Flags indicating which parts are to be exluded
     /// from a digital signature
@@ -456,19 +459,19 @@ namespace System.Windows.Xps.Packaging
         /// <summary>
         /// all depedent parts will be signed
         /// </summary>
-        None                    = 0x00000000,
+        None = 0x00000000,
         /// <summary>
         /// Meta data will be exluded
         /// </summary>
-        CoreMetadata            = 0x00000001,
+        CoreMetadata = 0x00000001,
         /// <summary>
         /// Annotations will be exluded
         /// </summary> 
-        Annotations             = 0x00000002,
+        Annotations = 0x00000002,
         /// <summary>
         /// The signature will be exluded
         /// </summary>
-        SignatureOrigin         = 0x00000004
+        SignatureOrigin = 0x00000004
     };
 }
 

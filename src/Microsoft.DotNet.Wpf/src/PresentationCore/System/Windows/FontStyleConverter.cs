@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
-using System.Reflection;
 using System.Globalization;
+using System.Reflection;
 
 namespace System.Windows
 {
@@ -35,16 +35,16 @@ namespace System.Windows
         /// <param name="context">ITypeDescriptorContext</param>
         /// <param name="destinationType">Type to convert to</param>
         /// <returns>true if conversion is possible</returns>
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) 
+        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
-            if (destinationType == typeof(InstanceDescriptor) || destinationType == typeof(string)) 
+            if (destinationType == typeof(InstanceDescriptor) || destinationType == typeof(string))
             {
                 return true;
             }
 
             return base.CanConvertTo(context, destinationType);
         }
-        
+
         /// <summary>
         /// ConvertFrom - attempt to convert to a FontStyle from the given object
         /// </summary>
@@ -65,7 +65,7 @@ namespace System.Windows
             {
                 throw new ArgumentException(SR.Format(SR.General_BadType, "ConvertFrom"), "value");
             }
-            
+
             FontStyle fontStyle = new FontStyle();
             if (!FontStyles.FontStyleStringToKnownStyle(s, ci, ref fontStyle))
                 throw new FormatException(SR.Parsers_IllegalToken);
@@ -91,9 +91,9 @@ namespace System.Windows
             {
                 if (destinationType == typeof(InstanceDescriptor))
                 {
-                    ConstructorInfo ci = typeof(FontStyle).GetConstructor(new Type[]{typeof(int)});
+                    ConstructorInfo ci = typeof(FontStyle).GetConstructor(new Type[] { typeof(int) });
                     int c = ((FontStyle)value).GetStyleForInternalConstruction();
-                    return new InstanceDescriptor(ci, new object[]{c});
+                    return new InstanceDescriptor(ci, new object[] { c });
                 }
                 else if (destinationType == typeof(string))
                 {

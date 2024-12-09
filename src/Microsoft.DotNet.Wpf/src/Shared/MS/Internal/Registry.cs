@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,7 +13,7 @@ namespace MS.Internal
         internal const string
             WPF = @"Software\Microsoft\.NETFramework\Windows Presentation Foundation",
 
-            WPF_Features = WPF+"\\Features",
+            WPF_Features = WPF + "\\Features",
                 value_AutomationWeakReferenceDisallow = "AutomationWeakReferenceDisallow",
 
             HKCU_XpsViewer = @"HKEY_CURRENT_USER\Software\Microsoft\XPSViewer",
@@ -24,8 +24,8 @@ namespace MS.Internal
             // These constants are cloned in 
             // wpf\src\Shared\Cpp\Utils.cxx
             // Should these reg keys change the above file should be also modified to reflect that.
-            FRAMEWORK_RegKey  = @"Software\Microsoft\Net Framework Setup\NDP\v4\Client\",
-            FRAMEWORK_RegKey_FullPath  = @"HKEY_LOCAL_MACHINE\" + FRAMEWORK_RegKey,
+            FRAMEWORK_RegKey = @"Software\Microsoft\Net Framework Setup\NDP\v4\Client\",
+            FRAMEWORK_RegKey_FullPath = @"HKEY_LOCAL_MACHINE\" + FRAMEWORK_RegKey,
             FRAMEWORK_InstallPath_RegValue = "InstallPath";
 
         internal static bool ReadLocalMachineBool(string key, string valueName)

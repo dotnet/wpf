@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -29,8 +29,8 @@ namespace System.Windows.Media.Media3D
         /// <summary>
         ///     Builds a GeometryModel3D with empty Geometry3D and Material.
         /// </summary>
-        public GeometryModel3D() {}
-        
+        public GeometryModel3D() { }
+
         /// <summary>
         ///     Constructor.
         /// </summary>
@@ -55,11 +55,11 @@ namespace System.Windows.Media.Media3D
         //------------------------------------------------------
 
         #region Internal Methods
-        
+
         internal override Rect3D CalculateSubgraphBoundsInnerSpace()
         {
             Geometry3D geometry = Geometry;
-            
+
             if (geometry == null)
             {
                 return Rect3D.Empty;
@@ -71,7 +71,7 @@ namespace System.Windows.Media.Media3D
         internal override void RayHitTestCore(RayHitTestParameters rayParams)
         {
             Geometry3D geometry = Geometry;
-            
+
             if (geometry != null)
             {
                 // If our Geometry3D hit test intersects anything we should return "this" Model3D
@@ -84,7 +84,7 @@ namespace System.Windows.Media.Media3D
                 {
                     facesToHit |= FaceType.Front;
                 }
-                
+
                 if (BackMaterial != null)
                 {
                     facesToHit |= FaceType.Back;

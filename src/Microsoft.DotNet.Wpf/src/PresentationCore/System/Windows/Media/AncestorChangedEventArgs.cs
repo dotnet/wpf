@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,7 +21,7 @@ namespace System.Windows.Media
         {
             get { return _oldParent; }
         }
-        
+
         private DependencyObject _subRoot;     // direct child of the changed link.
         private DependencyObject _oldParent;   // If link is cut; otherwise null.
     }

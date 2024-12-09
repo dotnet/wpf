@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -35,68 +35,68 @@ namespace MS.Win32
         public const int PROCESS_QUERY_INFORMATION = 0x0400;
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern IntPtr OpenProcess( int dwDesiredAccess, bool fInherit, int dwProcessId );
+        public static extern IntPtr OpenProcess(int dwDesiredAccess, bool fInherit, int dwProcessId);
 
         //
         // SendInput related
         //
 
-        public const int VK_SHIFT    = 0x10;
-        public const int VK_CONTROL  = 0x11;
-        public const int VK_MENU     = 0x12;
+        public const int VK_SHIFT = 0x10;
+        public const int VK_CONTROL = 0x11;
+        public const int VK_MENU = 0x12;
 
         public const int KEYEVENTF_EXTENDEDKEY = 0x0001;
-        public const int KEYEVENTF_KEYUP       = 0x0002;
-        public const int KEYEVENTF_UNICODE     = 0x0004;
-        public const int KEYEVENTF_SCANCODE    = 0x0008;
+        public const int KEYEVENTF_KEYUP = 0x0002;
+        public const int KEYEVENTF_UNICODE = 0x0004;
+        public const int KEYEVENTF_SCANCODE = 0x0008;
 
         public const int MOUSEEVENTF_VIRTUALDESK = 0x4000;
 
         [StructLayout(LayoutKind.Sequential)]
-            public struct INPUT
+        public struct INPUT
         {
-            public int    type;
-            public INPUTUNION    union;
+            public int type;
+            public INPUTUNION union;
         };
 
         [StructLayout(LayoutKind.Explicit)]
-            public struct INPUTUNION
+        public struct INPUTUNION
         {
             [FieldOffset(0)] public MOUSEINPUT mouseInput;
             [FieldOffset(0)] public KEYBDINPUT keyboardInput;
         };
 
         [StructLayout(LayoutKind.Sequential)]
-            public struct MOUSEINPUT
+        public struct MOUSEINPUT
         {
-            public int    dx;
-            public int    dy;
-            public int    mouseData;
-            public int    dwFlags;
-            public int    time;
+            public int dx;
+            public int dy;
+            public int mouseData;
+            public int dwFlags;
+            public int time;
             public IntPtr dwExtraInfo;
         };
 
         [StructLayout(LayoutKind.Sequential)]
-            public struct KEYBDINPUT
+        public struct KEYBDINPUT
         {
-            public short  wVk;
-            public short  wScan;
-            public int    dwFlags;
-            public int    time;
+            public short wVk;
+            public short wScan;
+            public int dwFlags;
+            public int time;
             public IntPtr dwExtraInfo;
         };
 
-        public const int INPUT_MOUSE             = 0;
-        public const int INPUT_KEYBOARD          = 1;
+        public const int INPUT_MOUSE = 0;
+        public const int INPUT_KEYBOARD = 1;
 
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern int SendInput( int nInputs, ref INPUT mi, int cbSize );
+        public static extern int SendInput(int nInputs, ref INPUT mi, int cbSize);
 
-        [DllImport("user32.dll", CharSet=CharSet.Auto)]
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern int MapVirtualKey(int nVirtKey, int nMapType);
 
-        [DllImport("user32.dll", CharSet=CharSet.Auto)]
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern short GetAsyncKeyState(int nVirtKey);
 
 
@@ -105,10 +105,10 @@ namespace MS.Win32
         //
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern bool RegisterHotKey( NativeMethods.HWND hWnd, int id, int fsModifiers, int vk );
+        public static extern bool RegisterHotKey(NativeMethods.HWND hWnd, int id, int fsModifiers, int vk);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern bool UnregisterHotKey( NativeMethods.HWND hWnd, int id );
+        public static extern bool UnregisterHotKey(NativeMethods.HWND hWnd, int id);
 
 
         //
@@ -122,26 +122,26 @@ namespace MS.Win32
         // IAccessible / OLEACC / WinEvents
         //
 
-        public const int CHILDID_SELF             = 0;
+        public const int CHILDID_SELF = 0;
         public const int STATE_SYSTEM_UNAVAILABLE = 0x00000001;
-        public const int STATE_SYSTEM_FOCUSED     = 0x00000004;
-        public const int OBJID_CARET              = -8;
-        public const int OBJID_CLIENT             = -4;
-        public const int OBJID_MENU               = -3;
-        public const int OBJID_SYSMENU            = -1;
-        public const int OBJID_WINDOW             =  0;
+        public const int STATE_SYSTEM_FOCUSED = 0x00000004;
+        public const int OBJID_CARET = -8;
+        public const int OBJID_CLIENT = -4;
+        public const int OBJID_MENU = -3;
+        public const int OBJID_SYSMENU = -1;
+        public const int OBJID_WINDOW = 0;
 
 
         [DllImport("oleacc.dll")]
-        public static extern int AccessibleObjectFromEvent (
+        public static extern int AccessibleObjectFromEvent(
             IntPtr hwnd,
             int idObject,
             int idChild,
             ref IAccessible ppvObject,
-            ref Object varChild );
+            ref Object varChild);
 
         [DllImport("oleacc.dll")]
-        public static extern int WindowFromAccessibleObject ( IAccessible acc, ref IntPtr hwnd );
+        public static extern int WindowFromAccessibleObject(IAccessible acc, ref IntPtr hwnd);
 
         [DllImport("oleacc.dll", SetLastError = true)]
         internal static extern IntPtr GetProcessHandleFromHwnd(IntPtr hwnd);
@@ -187,11 +187,11 @@ namespace MS.Win32
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern IntPtr SendMessageTimeout(
-            NativeMethods.HWND hwnd, int Msg, IntPtr wParam, IntPtr lParam, int flags, int uTimeout, out IntPtr pResult );
+            NativeMethods.HWND hwnd, int Msg, IntPtr wParam, IntPtr lParam, int flags, int uTimeout, out IntPtr pResult);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern IntPtr SendMessageTimeout(
-            NativeMethods.HWND hwnd, int Msg, IntPtr wParam, ref MINMAXINFO lParam, int flags, int uTimeout, out IntPtr pResult );
+            NativeMethods.HWND hwnd, int Msg, IntPtr wParam, ref MINMAXINFO lParam, int flags, int uTimeout, out IntPtr pResult);
 
         // Overload for use with WM_GETTEXT. StringBuilder is the type that P/Invoke maps to an output TCHAR*, see
         // see MSDN .Net docs on P/Invoke for more details.
@@ -200,18 +200,18 @@ namespace MS.Win32
             NativeMethods.HWND hwnd, int Msg, IntPtr wParam, StringBuilder lParam, int flags, int uTimeout, out IntPtr pResult);
 
 
-        public const int PM_REMOVE             = 0x0001;
+        public const int PM_REMOVE = 0x0001;
 
         [StructLayout(LayoutKind.Sequential)]
         public struct MSG
         {
-            public NativeMethods.HWND     hwnd;
-            public int      message;
-            public IntPtr   wParam;
-            public IntPtr   lParam;
-            public int      time;
-            public int      pt_x;
-            public int      pt_y;
+            public NativeMethods.HWND hwnd;
+            public int message;
+            public IntPtr wParam;
+            public IntPtr lParam;
+            public int time;
+            public int pt_x;
+            public int pt_y;
         }
 
 
@@ -219,15 +219,15 @@ namespace MS.Win32
         public static extern int GetMessage(
             ref MSG msg, NativeMethods.HWND hwnd, int nMsgFilterMin, int nMsgFilterMax);
 
-        [DllImport("user32.dll", CharSet=CharSet.Auto)]
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern bool PeekMessage(
             ref MSG msg, NativeMethods.HWND hwnd, int nMsgFilterMin, int nMsgFilterMax, int wRemoveMsg);
 
-        [DllImport("user32.dll", CharSet=CharSet.Auto)]
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern bool TranslateMessage(
             ref MSG msg);
 
-        [DllImport("user32.dll", CharSet=CharSet.Auto)]
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern IntPtr DispatchMessage(
             ref MSG msg);
 
@@ -240,40 +240,40 @@ namespace MS.Win32
         //  Messages and related structs / constants
         //
 
-        public const int WM_NULL                = 0x0000;
-        public const int WM_GETTEXT             = 0x000D;
-        public const int WM_GETTEXTLENGTH       = 0x000E;
-        public const int WM_QUIT                = 0x0012;
-        public const int WM_GETMINMAXINFO       = 0x0024;
+        public const int WM_NULL = 0x0000;
+        public const int WM_GETTEXT = 0x000D;
+        public const int WM_GETTEXTLENGTH = 0x000E;
+        public const int WM_QUIT = 0x0012;
+        public const int WM_GETMINMAXINFO = 0x0024;
 
-            [StructLayout(LayoutKind.Sequential)]
-            public struct MINMAXINFO
-            {
-                public NativeMethods.POINT ptReserved;
-                public NativeMethods.POINT ptMaxSize;
-                public NativeMethods.POINT ptMaxPosition;
-                public NativeMethods.POINT ptMinTrackSize;
-                public NativeMethods.POINT ptMaxTrackSize;
-            };
+        [StructLayout(LayoutKind.Sequential)]
+        public struct MINMAXINFO
+        {
+            public NativeMethods.POINT ptReserved;
+            public NativeMethods.POINT ptMaxSize;
+            public NativeMethods.POINT ptMaxPosition;
+            public NativeMethods.POINT ptMinTrackSize;
+            public NativeMethods.POINT ptMaxTrackSize;
+        };
 
-        public const int WM_GETOBJECT           = 0x003D;
+        public const int WM_GETOBJECT = 0x003D;
 
-        public const int WM_NCHITTEST           = 0x0084;
+        public const int WM_NCHITTEST = 0x0084;
 
         public static readonly IntPtr HTTRANSPARENT = new IntPtr(-1);
         public static readonly IntPtr HTCLIENT = new IntPtr(1);
 
-        public const int WM_SYSCOMMAND          = 0x0112;
-        public const int WM_MDIACTIVATE         = 0x0222;
+        public const int WM_SYSCOMMAND = 0x0112;
+        public const int WM_MDIACTIVATE = 0x0222;
 
-        public const int SC_SIZE                = 0xF000;
-        public const int SC_MOVE                = 0xF010;
-        public const int SC_MINIMIZE            = 0xF020;
-        public const int SC_MAXIMIZE            = 0xF030;
-        public const int SC_CLOSE               = 0xF060;
-        public const int SC_RESTORE             = 0xF120;
+        public const int SC_SIZE = 0xF000;
+        public const int SC_MOVE = 0xF010;
+        public const int SC_MINIMIZE = 0xF020;
+        public const int SC_MAXIMIZE = 0xF030;
+        public const int SC_CLOSE = 0xF060;
+        public const int SC_RESTORE = 0xF120;
 
-        public const int WM_HOTKEY              = 0x0312;
+        public const int WM_HOTKEY = 0x0312;
 
         public const int LB_GETCURSEL = 0x0188;
 
@@ -315,19 +315,19 @@ namespace MS.Win32
         [StructLayout(LayoutKind.Sequential)]
         public struct WINDOWPLACEMENT
         {
-            public int  length;
-            public int  flags;
-            public int  showCmd;
+            public int length;
+            public int flags;
+            public int showCmd;
             public NativeMethods.POINT ptMinPosition;
             public NativeMethods.POINT ptMaxPosition;
-            public NativeMethods.RECT  rcNormalPosition;
+            public NativeMethods.RECT rcNormalPosition;
         };
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern bool SetWindowPlacement( NativeMethods.HWND hwnd, ref WINDOWPLACEMENT wp );
+        public static extern bool SetWindowPlacement(NativeMethods.HWND hwnd, ref WINDOWPLACEMENT wp);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern bool GetWindowPlacement( NativeMethods.HWND hwnd, ref WINDOWPLACEMENT wp );
+        public static extern bool GetWindowPlacement(NativeMethods.HWND hwnd, ref WINDOWPLACEMENT wp);
 
 
         public const int SWP_NOSIZE = 0x0001;

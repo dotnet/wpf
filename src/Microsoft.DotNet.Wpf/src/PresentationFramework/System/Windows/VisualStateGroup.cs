@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,9 +13,9 @@ namespace System.Windows
     /// <summary>
     ///     A group of mutually exclusive visual states.
     /// </summary>
-    [ContentProperty("States")] 
+    [ContentProperty("States")]
     [RuntimeNameProperty("Name")]
-    public class VisualStateGroup : DependencyObject 
+    public class VisualStateGroup : DependencyObject
     {
         /// <summary>
         ///     The Name of the VisualStateGroup.
@@ -61,10 +61,10 @@ namespace System.Windows
         /// <summary>
         ///     VisualState that is currently applied.
         /// </summary>
-        public VisualState CurrentState 
-        { 
-            get; 
-            internal set; 
+        public VisualState CurrentState
+        {
+            get;
+            internal set;
         }
 
         internal VisualState GetState(string stateName)
@@ -118,7 +118,7 @@ namespace System.Windows
                 }
 
                 newStoryboards[index].Begin(element, HandoffBehavior.SnapshotAndReplace, true);
-                
+
                 // Hold on to the running Storyboards
                 CurrentStoryboards.Add(newStoryboards[index]);
 
@@ -161,5 +161,5 @@ namespace System.Windows
         private Collection<Storyboard> _currentStoryboards;
         private FreezableCollection<VisualState> _states;
         private FreezableCollection<VisualTransition> _transitions;
-    } 
+    }
 }

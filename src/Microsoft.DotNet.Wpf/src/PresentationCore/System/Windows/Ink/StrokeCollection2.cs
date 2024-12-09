@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.ComponentModel;
-using System.Collections.Specialized;
 using System.Collections.ObjectModel;
-using System.Windows.Media;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Windows.Input;
+using System.Windows.Media;
 using MS.Internal;
 using MS.Internal.Ink;
 
@@ -24,7 +24,7 @@ namespace System.Windows.Ink
         /// </summary>
         /// <returns></returns>
         public Rect GetBounds()
-        { 
+        {
             Rect bounds = Rect.Empty;
             foreach (Stroke stroke in this)
             {
@@ -407,7 +407,7 @@ namespace System.Windows.Ink
                 }
             }
 
-            foreach(Stroke stroke in solidStrokes)
+            foreach (Stroke stroke in solidStrokes)
             {
                 stroke.DrawInternal(context, stroke.DrawingAttributes, false/*Don't draw selected stroke as hollow*/);
             }

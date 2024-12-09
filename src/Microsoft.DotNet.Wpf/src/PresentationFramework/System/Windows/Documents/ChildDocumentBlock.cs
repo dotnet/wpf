@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -72,7 +72,7 @@ namespace System.Windows.Documents
             Debug.Assert(newBlock != null);
 
             // Setup the new block correctly
-            newBlock._nextBlock     = this._nextBlock;
+            newBlock._nextBlock = this._nextBlock;
             newBlock._previousBlock = this;
 
             // Link old next block to the new block
@@ -271,7 +271,7 @@ namespace System.Windows.Documents
         private readonly DocumentSequenceTextContainer _aggregatedContainer;
         private readonly DocumentReference _docRef;          // Reference to the sub-document
         private ITextContainer _container;           // Child TextContainer
-        private DocumentSequenceHighlightLayer  _highlightLayer;  // Highlight layer used to notify child TextContainer highlight changes.
+        private DocumentSequenceHighlightLayer _highlightLayer;  // Highlight layer used to notify child TextContainer highlight changes.
         private BlockStatus _status;                // Status of this block, such as Loaded, etc.
         private ChildDocumentBlock _previousBlock;  // Link to previous block
         private ChildDocumentBlock _nextBlock;      // Link to next block

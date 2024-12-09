@@ -1,13 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Windows.Input.StylusWisp;
-using System.Windows.Input.Tracing;
 using System.Globalization;
 using System.Runtime.InteropServices;
-using MS.Win32.Penimc;
+using System.Windows.Input.StylusWisp;
+using System.Windows.Input.Tracing;
 using MS.Win32;
+using MS.Win32.Penimc;
 
 
 namespace System.Windows.Input
@@ -27,7 +27,7 @@ namespace System.Windows.Input
         {
             _penThread = penThread;
 
-            
+
             // Constructing a WispTabletDevice means we will actually use this tablet for input purposes.
             // Lock the tablet and underlying WISP tablet at this point.
             // This is balanced in DisposeOrDeferDisposal.
@@ -114,7 +114,7 @@ namespace System.Windows.Input
                         return newStylusDevice;
                     }
                 }
-}
+            }
 
             return null;  // Nothing to add
         }
@@ -329,7 +329,7 @@ namespace System.Windows.Input
                 // A disconnect will be logged in the dispose as WPF will have gotten rid of the tablet.
                 StylusTraceLogger.LogDeviceDisconnect(_tabletInfo.Id);
 
-                
+
                 // Force tablets to clean up as soon as they are disposed.  This helps to reduce
                 // COM references that might be waiting for RCWs to finalize.
                 IPimcTablet3 tablet = _tabletInfo.PimcTablet;
@@ -339,7 +339,7 @@ namespace System.Windows.Input
                 {
                     // Balance calls in PenThreadWorker.GetTabletInfoHelper and CPimcTablet::Init.
                     PenThread.WorkerReleaseTabletLocks(tablet, _tabletInfo.WispTabletKey);
-                    
+
                     Marshal.ReleaseComObject(tablet);
                 }
 
@@ -354,7 +354,7 @@ namespace System.Windows.Input
                 _penThread = null;
                 _isDisposalPending = false;
 
-                
+
                 // Ensure that we are marked disposed and no longer attempt to finalize.
                 _disposed = true;
                 GC.SuppressFinalize(this);

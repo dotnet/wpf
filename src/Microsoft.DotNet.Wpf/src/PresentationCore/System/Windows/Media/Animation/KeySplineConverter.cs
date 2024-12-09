@@ -1,16 +1,16 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Allow suppression of certain presharp messages
 #pragma warning disable 1634, 1691
 
-using MS.Internal;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
 using System.Globalization;
 using System.Reflection;
 using System.Windows.Media.Animation;
+using MS.Internal;
 
 namespace System.Windows
 {
@@ -45,7 +45,7 @@ namespace System.Windows
         /// <ExternalAPI/>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
-            if (   destinationType == typeof(InstanceDescriptor)
+            if (destinationType == typeof(InstanceDescriptor)
                 || destinationType == typeof(string))
             {
                 return true;
@@ -60,8 +60,8 @@ namespace System.Windows
         /// ConvertFrom
         /// </summary>
         public override object ConvertFrom(
-            ITypeDescriptorContext context, 
-            CultureInfo cultureInfo, 
+            ITypeDescriptorContext context,
+            CultureInfo cultureInfo,
             object value)
         {
             string stringValue = value as string;
@@ -90,9 +90,9 @@ namespace System.Windows
         /// <returns>converted value</returns>
         /// <ExternalAPI/>
         public override object ConvertTo(
-            ITypeDescriptorContext context, 
+            ITypeDescriptorContext context,
             CultureInfo cultureInfo,
-            object value, 
+            object value,
             Type destinationType)
         {
             KeySpline keySpline = value as KeySpline;
@@ -101,10 +101,10 @@ namespace System.Windows
             {
                 if (destinationType == typeof(InstanceDescriptor))
                 {
-                    ConstructorInfo ci = typeof(KeySpline).GetConstructor(new Type[] 
+                    ConstructorInfo ci = typeof(KeySpline).GetConstructor(new Type[]
                         {
                             typeof(double), typeof(double),
-                            typeof(double), typeof(double) 
+                            typeof(double), typeof(double)
                         });
 
                     return new InstanceDescriptor(ci, new object[]

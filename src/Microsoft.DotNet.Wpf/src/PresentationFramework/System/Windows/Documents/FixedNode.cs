@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -132,7 +132,7 @@ namespace System.Windows.Documents
         {
             Debug.Assert(path != null && path.Length >= 2); // At least a page index and an element index
             _path = path;
-       }
+        }
         #endregion Constructors
 
         //--------------------------------------------------------------------
@@ -171,7 +171,7 @@ namespace System.Windows.Documents
                 int level = 1;
                 while (level <= this.ChildLevels && level <= fixedNode.ChildLevels)
                 {
-                    int thisIndex   = this[level];
+                    int thisIndex = this[level];
                     int fixedNodeIndex = fixedNode[level];
                     if (thisIndex == fixedNodeIndex)
                     {
@@ -268,12 +268,12 @@ namespace System.Windows.Documents
         public override int GetHashCode()
         {
             //return _path.GetHashCode();
-			int hash = 0;
-			foreach (int i in _path)
-			{
-				hash = 43 * hash + i;
-			}
-			return hash;
+            int hash = 0;
+            foreach (int i in _path)
+            {
+                hash = 43 * hash + i;
+            }
+            return hash;
         }
 
 #if DEBUG

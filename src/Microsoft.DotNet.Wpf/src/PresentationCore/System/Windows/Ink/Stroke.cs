@@ -1,13 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
+using System.Windows.Input;
 using System.Windows.Media;
-using MS.Internal.Ink.InkSerializedFormat;
 using MS.Internal;
 using MS.Internal.Ink;
-using System.Windows.Input;
+using MS.Internal.Ink.InkSerializedFormat;
 
 // Primary root namespace for TabletPC/Ink/Handwriting/Recognition in .NET
 
@@ -23,7 +23,7 @@ namespace System.Windows.Ink
         /// </remarks>
         /// <param name="stylusPoints">StylusPointCollection that makes up the stroke</param>
         public Stroke(StylusPointCollection stylusPoints)
-            : this (stylusPoints, new DrawingAttributes(), null)
+            : this(stylusPoints, new DrawingAttributes(), null)
         {
         }
 
@@ -104,10 +104,10 @@ namespace System.Windows.Ink
             if (_extendedProperties != null)
             {
                 clone._extendedProperties = _extendedProperties.Clone();
-            } 
+            }
             //set up listeners
             clone.Initialize();
-            
+
             //
             // copy state
             //
@@ -144,11 +144,11 @@ namespace System.Windows.Ink
             {
                 throw new ArgumentException(SR.MatrixNotInvertible, "transformMatrix");
             }
-            else if ( MatrixHelper.ContainsNaN(transformMatrix))
+            else if (MatrixHelper.ContainsNaN(transformMatrix))
             {
                 throw new ArgumentException(SR.InvalidMatrixContainsNaN, "transformMatrix");
             }
-            else if ( MatrixHelper.ContainsInfinity(transformMatrix))
+            else if (MatrixHelper.ContainsInfinity(transformMatrix))
             {
                 throw new ArgumentException(SR.InvalidMatrixContainsInfinity, "transformMatrix");
             }
@@ -216,7 +216,7 @@ namespace System.Windows.Ink
 
             // Construct the Bezier approximation
             Bezier bezier = new Bezier();
-            if (!bezier.ConstructBezierState(   _stylusPoints, 
+            if (!bezier.ConstructBezierState(_stylusPoints,
                                                 DrawingAttributes.FittingError))
             {
                 //construction failed, return a clone of the original points
@@ -257,9 +257,9 @@ namespace System.Windows.Ink
             //
             // add the first point
             //
-            AddInterpolatedBezierPoint( bezierStylusPoints, 
-                                        bezierPoints[0], 
-                                        _stylusPoints[0].GetAdditionalData(), 
+            AddInterpolatedBezierPoint(bezierStylusPoints,
+                                        bezierPoints[0],
+                                        _stylusPoints[0].GetAdditionalData(),
                                         _stylusPoints[0].PressureFactor);
 
             if (bezierPoints.Count == 1)
@@ -304,8 +304,8 @@ namespace System.Windows.Ink
                         Debug.Assert(stylusPointsCount > stylusPointsIndex);
 
                         StylusPoint prevStylusPoint = _stylusPoints[stylusPointsIndex - 1];
-                        float percentFromPrev = 
-                            ((float)bezierLength - (float)prevUnbezierLength) / 
+                        float percentFromPrev =
+                            ((float)bezierLength - (float)prevUnbezierLength) /
                             ((float)unbezierLength - (float)prevUnbezierLength);
                         float pressureAtPrev = prevStylusPoint.PressureFactor;
                         float pressureDelta = _stylusPoints[stylusPointsIndex].PressureFactor - pressureAtPrev;
@@ -316,7 +316,7 @@ namespace System.Windows.Ink
                                                     prevStylusPoint.GetAdditionalData(),
                                                     interopolatedPressure);
                         break;
-}
+                    }
                     else
                     {
                         Debug.Assert(bezierLength >= prevUnbezierLength);
@@ -338,11 +338,11 @@ namespace System.Windows.Ink
             //
             // add the last point
             //
-            AddInterpolatedBezierPoint( bezierStylusPoints,
+            AddInterpolatedBezierPoint(bezierStylusPoints,
                                         bezierPoints[bezierPoints.Count - 1],
                                         _stylusPoints[stylusPointsCount - 1].GetAdditionalData(),
                                         _stylusPoints[stylusPointsCount - 1].PressureFactor);
-            
+
             return bezierStylusPoints;
         }
 
@@ -358,9 +358,9 @@ namespace System.Windows.Ink
         /// <summary>
         /// Private helper for adding a StylusPoint to the BezierStylusPoints
         /// </summary>
-        private void AddInterpolatedBezierPoint(StylusPointCollection bezierStylusPoints, 
-                                                Point bezierPoint, 
-                                                int[] additionalData, 
+        private void AddInterpolatedBezierPoint(StylusPointCollection bezierStylusPoints,
+                                                Point bezierPoint,
+                                                int[] additionalData,
                                                 float pressure)
         {
             double xVal = bezierPoint.X > StylusPoint.MaxXY ?
@@ -750,7 +750,7 @@ namespace System.Windows.Ink
             for (int i = 0; i < cutAt.Length; i++)
             {
                 StrokeFIndices fragment = cutAt[i];
-                if(DoubleUtil.GreaterThanOrClose(fragment.BeginFIndex, fragment.EndFIndex))
+                if (DoubleUtil.GreaterThanOrClose(fragment.BeginFIndex, fragment.EndFIndex))
                 {
                     // ISSUE-2004/06/26-vsmirnov - temporary workaround for bugs
                     // in point erasing: drop invalid fragments
@@ -814,7 +814,7 @@ namespace System.Windows.Ink
             for (; i < cutAt.Length; i++)
             {
                 StrokeFIndices fragment = cutAt[i];
-                if(DoubleUtil.GreaterThanOrClose(beginFIndex, fragment.BeginFIndex))
+                if (DoubleUtil.GreaterThanOrClose(beginFIndex, fragment.BeginFIndex))
                 {
                     // ISSUE-2004/06/26-vsmirnov - temporary workaround for bugs
                     // in point erasing: drop invalid fragments
@@ -917,7 +917,7 @@ namespace System.Windows.Ink
                     endPoint = GetIntermediatePoint(stylusPoints[stylusPoints.Count - 1],
                                                     stylusPoints[stylusPoints.Count - 2],
                                                     fraction);
-}
+                }
 
                 // Adjust the first point to fragment.BeginFIndex.
                 if ((!DoubleUtil.AreClose(beginFIndex, StrokeFIndices.BeforeFirst)) && !DoubleUtil.AreClose(beginIndex, beginFIndex))
@@ -925,7 +925,7 @@ namespace System.Windows.Ink
                     begPoint = GetIntermediatePoint(stylusPoints[0],
                                                     stylusPoints[1],
                                                     beginFIndex);
-}
+                }
 
                 //
                 // now set the end points
@@ -1090,16 +1090,16 @@ namespace System.Windows.Ink
             OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
         }
 
-            // Custom attributes associated with this stroke
+        // Custom attributes associated with this stroke
         private ExtendedPropertyCollection _extendedProperties = null;
 
-            // Drawing attributes associated with this stroke
+        // Drawing attributes associated with this stroke
         private DrawingAttributes _drawingAttributes = null;
 
         private StylusPointCollection _stylusPoints = null;
-}
+    }
 
-        //internal helper to determine if a matix contains invalid values
+    //internal helper to determine if a matix contains invalid values
     internal static class MatrixHelper
     {
         //returns true if any member is NaN

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,12 +11,12 @@
 
 using System.Collections;
 using System.Collections.ObjectModel;
-using System.Windows.Threading;
 using System.Windows.Annotations.Storage;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.Annotations;
 using MS.Internal.Annotations.Anchoring;
@@ -845,7 +845,7 @@ namespace System.Windows.Annotations
                 if (newAnchor != null)
                 {
                     if (newAnchor.Equals(oldAttachedAnchor))
-                       return true;
+                        return true;
                 }
             }
 
@@ -1013,7 +1013,7 @@ namespace System.Windows.Annotations
 
             if ((attachedAnnotations != null) && (attachedAnnotations.Count > 0))
                 LoadAnnotationsFromListAsync(attachedAnnotations);
-		}
+        }
 
         /// <summary>
         /// Mark all AnnotationAdorners that Annotate this element as Dirty

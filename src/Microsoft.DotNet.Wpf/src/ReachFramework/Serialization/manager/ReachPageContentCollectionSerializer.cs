@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -33,7 +33,7 @@ namespace System.Windows.Xps.Serialization
         public
         ReachPageContentCollectionSerializer(
             PackageSerializationManager manager
-            ):
+            ) :
         base(manager)
         {
 
@@ -54,7 +54,7 @@ namespace System.Windows.Xps.Serialization
         override
         void
         PersistObjectData(
-            SerializableObjectContext   serializableObjectContext
+            SerializableObjectContext serializableObjectContext
             )
         {
             ArgumentNullException.ThrowIfNull(serializableObjectContext);
@@ -86,7 +86,7 @@ namespace System.Windows.Xps.Serialization
         private
         void
         SerializePageContents(
-            SerializableObjectContext   serializableObjectContext
+            SerializableObjectContext serializableObjectContext
             )
         {
             //
@@ -119,7 +119,7 @@ namespace System.Windows.Xps.Serialization
 
             ReachSerializer serializer = SerializationManager.GetSerializer(pageContent);
 
-            if(serializer!=null)
+            if (serializer != null)
             {
                 serializer.SerializeObject(pageContent);
             }

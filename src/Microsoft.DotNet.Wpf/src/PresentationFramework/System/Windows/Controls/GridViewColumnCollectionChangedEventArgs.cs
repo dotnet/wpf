@@ -1,10 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System.Collections.Specialized;   // NotifyCollectionChangedEventArgs
 using System.Collections.ObjectModel;   // Collection, ReadOnlyCollection
+using System.Collections.Specialized;   // NotifyCollectionChangedEventArgs
 
 namespace System.Windows.Controls
 {
@@ -40,7 +40,7 @@ namespace System.Windows.Controls
         /// Construct for one-column Add/Remove event.
         /// </summary>
         internal GridViewColumnCollectionChangedEventArgs(NotifyCollectionChangedAction action, GridViewColumn changedItem, int index, int actualIndex)
-            : base (action, changedItem, index)
+            : base(action, changedItem, index)
         {
             Debug.Assert(action == NotifyCollectionChangedAction.Add || action == NotifyCollectionChangedAction.Remove,
                 "This constructor only supports Add/Remove action.");
@@ -117,7 +117,7 @@ namespace System.Windows.Controls
         }
 
         private GridViewColumn _column;
-        
+
         /// <summary>
         /// Name of the changed property
         /// </summary>

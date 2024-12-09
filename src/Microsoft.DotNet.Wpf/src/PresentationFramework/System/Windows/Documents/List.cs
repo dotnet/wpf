@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,7 +13,7 @@ using System.Windows.Markup;
 using MS.Internal;
 using MS.Internal.PtsHost.UnsafeNativeMethods;      // PTS restrictions
 
-namespace System.Windows.Documents 
+namespace System.Windows.Documents
 {
     /// <summary>
     /// Implements a List element, a container for ListItems: block 
@@ -42,7 +42,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// Initializes a new instance of a List class.
         /// </summary>
-        public List() 
+        public List()
             : base()
         {
         }
@@ -85,14 +85,14 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="MarkerStyle" /> property.
         /// </summary>
-        public static readonly DependencyProperty MarkerStyleProperty = 
+        public static readonly DependencyProperty MarkerStyleProperty =
                 DependencyProperty.Register(
-                        "MarkerStyle", 
-                        typeof(TextMarkerStyle), 
-                        typeof(List), 
+                        "MarkerStyle",
+                        typeof(TextMarkerStyle),
+                        typeof(List),
                         new FrameworkPropertyMetadata(
-                                TextMarkerStyle.Disc, 
-                                FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender), 
+                                TextMarkerStyle.Disc,
+                                FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender),
                         new ValidateValueCallback(IsValidMarkerStyle));
 
         /// <summary>
@@ -108,13 +108,13 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="MarkerOffset" /> property.
         /// </summary>
-        public static readonly DependencyProperty MarkerOffsetProperty = 
+        public static readonly DependencyProperty MarkerOffsetProperty =
                 DependencyProperty.Register(
-                        "MarkerOffset", 
-                        typeof(double), 
+                        "MarkerOffset",
+                        typeof(double),
                         typeof(List),
                         new FrameworkPropertyMetadata(
-                                Double.NaN, 
+                                Double.NaN,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender),
                                 new ValidateValueCallback(IsValidMarkerOffset));
 
@@ -132,14 +132,14 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="StartIndex" /> property.
         /// </summary>
-        public static readonly DependencyProperty StartIndexProperty = 
+        public static readonly DependencyProperty StartIndexProperty =
                 DependencyProperty.Register(
-                        "StartIndex", 
-                        typeof(int), 
-                        typeof(List), 
+                        "StartIndex",
+                        typeof(int),
+                        typeof(List),
                         new FrameworkPropertyMetadata(
-                                1, 
-                                FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender), 
+                                1,
+                                FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender),
                         new ValidateValueCallback(IsValidStartIndex));
 
         /// <summary>

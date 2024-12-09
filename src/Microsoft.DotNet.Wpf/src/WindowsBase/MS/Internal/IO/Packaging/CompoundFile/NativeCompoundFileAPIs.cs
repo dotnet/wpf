@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,27 +23,27 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// </summary>
         /// <param name="access">FileAccess we're translating</param>
         /// <param name="grfMode">Mode flag parameter to modify</param>
-        internal static void UpdateModeFlagFromFileAccess( FileAccess access, ref int grfMode )
+        internal static void UpdateModeFlagFromFileAccess(FileAccess access, ref int grfMode)
         {
             // Supporting write-only scenarios container-wide gets tricky and it 
             //  is rarely used.  Don't support it for now because of poor 
             //  cost/benefit ratio.
-            if( FileAccess.Write == access )
+            if (FileAccess.Write == access)
                 throw new NotSupportedException(
                     SR.WriteOnlyUnsupported);
-            
+
             // Generate STGM from FileAccess
             // STGM_READ is 0x00, so it's "by default"
-            if( (  FileAccess.ReadWrite                == (access &  FileAccess.ReadWrite) )  ||
-                ( (FileAccess.Read | FileAccess.Write) == (access & (FileAccess.Read | FileAccess.Write))) )
+            if ((FileAccess.ReadWrite == (access & FileAccess.ReadWrite)) ||
+                ((FileAccess.Read | FileAccess.Write) == (access & (FileAccess.Read | FileAccess.Write))))
             {
                 grfMode |= SafeNativeCompoundFileConstants.STGM_READWRITE;
             }
-            else if( FileAccess.Write == (access & FileAccess.Write) )
+            else if (FileAccess.Write == (access & FileAccess.Write))
             {
                 grfMode |= SafeNativeCompoundFileConstants.STGM_WRITE;
             }
-            else if( FileAccess.Read != (access & FileAccess.Read))
+            else if (FileAccess.Read != (access & FileAccess.Read))
             {
                 throw new ArgumentException(
                     SR.FileAccessInvalid);
@@ -64,7 +64,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             int result;
 
             result = UnsafeNativeCompoundFileMethods.StgCreateDocfileOnILockBytes(
-                (UnsafeNativeCompoundFileMethods.UnsafeNativeILockBytes) lockByteStream,
+                (UnsafeNativeCompoundFileMethods.UnsafeNativeILockBytes)lockByteStream,
                 grfMode,
                 0, // Must be zero
                 out storage);
@@ -79,7 +79,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             return result;
         }
-        
+
         internal static int SafeStgOpenStorageOnStream(
             Stream s,
             int grfMode,
@@ -94,7 +94,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             int result;
 
             result = UnsafeNativeCompoundFileMethods.StgOpenStorageOnILockBytes(
-                (UnsafeNativeCompoundFileMethods.UnsafeNativeILockBytes) lockByteStream,
+                (UnsafeNativeCompoundFileMethods.UnsafeNativeILockBytes)lockByteStream,
                 null,
                 grfMode,
                 new IntPtr(0), // Pointer to SNB struct, not marshalled, must be null.
@@ -110,7 +110,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             }
 
             return result;
-}
+        }
 
         internal static int SafeStgCreateStorageEx(
             string pwcsName,     //Pointer to path of compound file to create
@@ -154,7 +154,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             IntPtr reserved2,  // Reserved; must be null
             ref Guid riid,     // Specifies the GUID of the interface pointer
             out IStorage ppObjectOpen       //Pointer to an interface pointer
-            )    
+            )
         {
 
             UnsafeNativeCompoundFileMethods.UnsafeNativeIStorage storage;
@@ -176,7 +176,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 ppObjectOpen = null;
 
             return result;
-}
+        }
 
         internal static int SafePropVariantClear(ref PROPVARIANT pvar)
         {
@@ -198,12 +198,12 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 ArgumentNullException.ThrowIfNull(storage);
 
                 _unsafeStorage = storage;
-                _unsafePropertySetStorage = (UnsafeNativeCompoundFileMethods.UnsafeNativeIPropertySetStorage) _unsafeStorage;
+                _unsafePropertySetStorage = (UnsafeNativeCompoundFileMethods.UnsafeNativeIPropertySetStorage)_unsafeStorage;
                 _unsafeLockByteStream = lockBytesStream;
             }
 
             public void Dispose()
-            {              
+            {
 
                 Dispose(true);
                 GC.SuppressFinalize(this);
@@ -222,7 +222,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     {
                         // We only need to release IStorage only not IPropertySetStorage
                         //  since it shares once instance of RCW
-                        MS.Win32.UnsafeNativeMethods.SafeReleaseComObject((object) _unsafeStorage);
+                        MS.Win32.UnsafeNativeMethods.SafeReleaseComObject((object)_unsafeStorage);
 
                         // If the storage was originally opened on lockbyte implementation
                         //  we need to dispose it as well
@@ -246,19 +246,19 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             int IStorage.CreateStream(
                 string pwcsName,
-                int grfMode, 
-                int reserved1, 
+                int grfMode,
+                int reserved1,
                 int reserved2,
-                out IStream ppstm )
+                out IStream ppstm)
             {
 
                 UnsafeNativeCompoundFileMethods.UnsafeNativeIStream stream;
                 int result;
 
-                result = _unsafeStorage.CreateStream( 
+                result = _unsafeStorage.CreateStream(
                     pwcsName,
-                    grfMode, 
-                    reserved1, 
+                    grfMode,
+                    reserved1,
                     reserved2,
                     out stream);
 
@@ -279,7 +279,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 int reserved1,
                 int grfMode,
                 int reserved2,
-                out IStream ppstm )
+                out IStream ppstm)
             {
 
                 UnsafeNativeCompoundFileMethods.UnsafeNativeIStream stream;
@@ -309,7 +309,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 int grfMode,
                 int reserved1,
                 int reserved2,
-                out IStorage ppstg )
+                out IStorage ppstg)
             {
 
                 UnsafeNativeCompoundFileMethods.UnsafeNativeIStorage storage;
@@ -340,7 +340,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 int grfMode,
                 IntPtr snbExclude,  // Not properly translated, but must be NULL anyway
                 int reserved,
-                out IStorage ppstg )
+                out IStorage ppstg)
             {
 
                 UnsafeNativeCompoundFileMethods.UnsafeNativeIStorage storage;
@@ -348,7 +348,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
                 result = _unsafeStorage.OpenStorage(
                     pwcsName,
-                    pstgPriority == null ? null : ((SafeIStorageImplementation) pstgPriority)._unsafeStorage,
+                    pstgPriority == null ? null : ((SafeIStorageImplementation)pstgPriority)._unsafeStorage,
                     grfMode,
                     snbExclude,
                     reserved,
@@ -370,7 +370,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 int ciidExclude,
                 Guid[] rgiidExclude,
                 IntPtr snbExclude,  // Not properly translated, use NULL to avoid `blow-up
-                IStorage ppstg )
+                IStorage ppstg)
             {
 
                 Invariant.Assert(ppstg != null, "ppstg cannot be null");
@@ -379,27 +379,27 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     ciidExclude,
                     rgiidExclude,
                     snbExclude,
-                    ((SafeIStorageImplementation) ppstg)._unsafeStorage);
+                    ((SafeIStorageImplementation)ppstg)._unsafeStorage);
             }
 
             void IStorage.MoveElementTo(
                 string pwcsName,
                 IStorage pstgDest,
                 string pwcsNewName,
-                int grfFlags )
+                int grfFlags)
             {
 
                 Invariant.Assert(pstgDest != null, "pstgDest cannot be null");
 
                 _unsafeStorage.MoveElementTo(
                     pwcsName,
-                    ((SafeIStorageImplementation) pstgDest)._unsafeStorage,
+                    ((SafeIStorageImplementation)pstgDest)._unsafeStorage,
                     pwcsNewName,
                     grfFlags);
             }
 
             void IStorage.Commit(
-                int grfCommitFlags )
+                int grfCommitFlags)
             {
 
                 _unsafeStorage.Commit(
@@ -416,7 +416,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 int reserved1,
                 IntPtr reserved2,
                 int reserved3,
-                out IEnumSTATSTG ppEnum )
+                out IEnumSTATSTG ppEnum)
             {
 
                 UnsafeNativeCompoundFileMethods.UnsafeNativeIEnumSTATSTG enumSTATSTG;
@@ -434,7 +434,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             }
 
             void IStorage.DestroyElement(
-                string pwcsName )
+                string pwcsName)
             {
 
                 _unsafeStorage.DestroyElement(
@@ -443,7 +443,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             void IStorage.RenameElement(
                 string pwcsOldName,
-                string pwcsNewName )
+                string pwcsNewName)
             {
 
                 _unsafeStorage.RenameElement(
@@ -455,7 +455,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 string pwcsName,
                 System.Runtime.InteropServices.ComTypes.FILETIME pctime,
                 System.Runtime.InteropServices.ComTypes.FILETIME patime,
-                System.Runtime.InteropServices.ComTypes.FILETIME pmtime )
+                System.Runtime.InteropServices.ComTypes.FILETIME pmtime)
             {
 
                 _unsafeStorage.SetElementTimes(
@@ -466,16 +466,16 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             }
 
             void IStorage.SetClass(
-                ref Guid clsid ) // Hopefully "ref" is how I tell it to use a pointer 
+                ref Guid clsid) // Hopefully "ref" is how I tell it to use a pointer 
             {
 
                 _unsafeStorage.SetClass(
-                    ref clsid );
+                    ref clsid);
             }
 
             void IStorage.SetStateBits(
                 int grfStateBits,
-                int grfMask )
+                int grfMask)
             {
 
                 _unsafeStorage.SetStateBits(
@@ -485,7 +485,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             void IStorage.Stat(
                 out System.Runtime.InteropServices.ComTypes.STATSTG pstatstg,
-                int grfStatFlag )
+                int grfStatFlag)
             {
 
                 _unsafeStorage.Stat(
@@ -524,7 +524,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     out IPropertyStorage ppprstg
                     )
             {
-                
+
                 UnsafeNativeCompoundFileMethods.UnsafeNativeIPropertyStorage propertyStorage;
 
                 int hr = _unsafePropertySetStorage.Open(
@@ -545,7 +545,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     ref Guid rfmtid
                     )
             {
-                
+
                 _unsafePropertySetStorage.Delete(
                     ref rfmtid
                     );
@@ -557,7 +557,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             {
 
                 UnsafeNativeCompoundFileMethods.UnsafeNativeIEnumSTATPROPSETSTG enumSTATPROPSETSTG;
-                
+
                 _unsafePropertySetStorage.Enum(
                     out enumSTATPROPSETSTG
                     );
@@ -581,7 +581,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             }
 
             public void Dispose()
-            {              
+            {
 
                 Dispose(true);
                 GC.SuppressFinalize(this);
@@ -594,7 +594,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 {
                     if (disposing && (_unsafeStream != null))
                     {
-                        MS.Win32.UnsafeNativeMethods.SafeReleaseComObject((object) _unsafeStream);
+                        MS.Win32.UnsafeNativeMethods.SafeReleaseComObject((object)_unsafeStream);
                     }
                 }
                 finally
@@ -667,7 +667,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     throw new ArgumentException(SR.Format(SR.InvalidArgumentValue, "cb", cb.ToString(CultureInfo.InvariantCulture)));
                 }
 
-                _unsafeStream.CopyTo(((SafeIStreamImplementation) pstm)._unsafeStream, cb, out pcbRead, out pcbWritten);
+                _unsafeStream.CopyTo(((SafeIStreamImplementation)pstm)._unsafeStream, cb, out pcbRead, out pcbWritten);
             }
 
             void IStream.Commit(int grfCommitFlags)
@@ -746,7 +746,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             }
 
             public void Dispose()
-            {              
+            {
 
                 Dispose(true);
                 GC.SuppressFinalize(this);
@@ -763,7 +763,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 {
                     if (disposing && (_unsafeEnumSTATPROPSETSTG != null))
                     {
-                        MS.Win32.UnsafeNativeMethods.SafeReleaseComObject((object) _unsafeEnumSTATPROPSETSTG);
+                        MS.Win32.UnsafeNativeMethods.SafeReleaseComObject((object)_unsafeEnumSTATPROPSETSTG);
                     }
                 }
                 finally
@@ -830,7 +830,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             }
 
             public void Dispose()
-            {              
+            {
 
                 Dispose(true);
                 GC.SuppressFinalize(this);
@@ -847,7 +847,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 {
                     if (disposing && (_unsafePropertyStorage != null))
                     {
-                        MS.Win32.UnsafeNativeMethods.SafeReleaseComObject((object) _unsafePropertyStorage);
+                        MS.Win32.UnsafeNativeMethods.SafeReleaseComObject((object)_unsafePropertyStorage);
                     }
                 }
                 finally
@@ -964,7 +964,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 )
             {
 
-#if Using_SafeIPropertyStorageImplementation_Enum                
+#if Using_SafeIPropertyStorageImplementation_Enum
 
                 UnsafeNativeCompoundFileMethods.UnsafeNativeIEnumSTATPROPSTG unsafeEnumSTATPROPSTG;
 
@@ -975,8 +975,8 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 if (unsafeEnumSTATPROPSTG != null)
                     ppenum = new SafeIEnumSTATPROPSTGImplementation(unsafeEnumSTATPROPSTG);
                 else
-#endif                    
-                    ppenum = null;
+#endif
+                ppenum = null;
             }
 
             void IPropertyStorage.SetTimes(
@@ -1110,7 +1110,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             }
 
             public void Dispose()
-            {              
+            {
 
                 Dispose(true);
                 GC.SuppressFinalize(this);
@@ -1127,7 +1127,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 {
                     if (disposing && (_unsafeEnumSTATSTG != null))
                     {
-                        MS.Win32.UnsafeNativeMethods.SafeReleaseComObject((object) _unsafeEnumSTATSTG);
+                        MS.Win32.UnsafeNativeMethods.SafeReleaseComObject((object)_unsafeEnumSTATSTG);
                     }
                 }
                 finally
@@ -1139,27 +1139,27 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             void IEnumSTATSTG.Next(
                 UInt32 celt,
                 out System.Runtime.InteropServices.ComTypes.STATSTG rgelt, // This should really be array, but we're OK if we stick with one item at a time.
-                    // Because marshalling an array of structs that have pointers to strings are troublesome.
-                out UInt32 pceltFetched )
+                                                                           // Because marshalling an array of structs that have pointers to strings are troublesome.
+                out UInt32 pceltFetched)
             {
 
                 if (celt != 1)
                 {
                     throw new ArgumentException(SR.Format(SR.InvalidArgumentValue, "celt", celt.ToString(CultureInfo.InvariantCulture)));
                 }
-                
+
                 _unsafeEnumSTATSTG.Next(
                     celt,
                     out rgelt,
-                    out pceltFetched );
+                    out pceltFetched);
             }
 
             void IEnumSTATSTG.Skip(
-                UInt32 celt )
+                UInt32 celt)
             {
 
                 _unsafeEnumSTATSTG.Skip(
-                    celt );
+                    celt);
             }
 
             void IEnumSTATSTG.Reset()
@@ -1169,13 +1169,13 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             }
 
             void IEnumSTATSTG.Clone(
-                out IEnumSTATSTG ppenum )
+                out IEnumSTATSTG ppenum)
             {
 
                 UnsafeNativeCompoundFileMethods.UnsafeNativeIEnumSTATSTG enumSTATSTG;
 
                 _unsafeEnumSTATSTG.Clone(
-                    out enumSTATSTG );
+                    out enumSTATSTG);
 
                 if (enumSTATSTG != null)
                     ppenum = new SafeIEnumSTATSTGImplementation(enumSTATSTG);
@@ -1185,6 +1185,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             private UnsafeNativeCompoundFileMethods.UnsafeNativeIEnumSTATSTG _unsafeEnumSTATSTG;
         }
-}
+    }
 }
 

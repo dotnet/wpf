@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -56,7 +56,7 @@ namespace System.Windows.Media.Effects
 
         private static void AreaToApplyEffectPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            BitmapEffectInput target = ((BitmapEffectInput) d);
+            BitmapEffectInput target = ((BitmapEffectInput)d);
 
 
             target.PropertyChanged(AreaToApplyEffectProperty);
@@ -72,7 +72,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (BitmapSource) GetValue(InputProperty);
+                return (BitmapSource)GetValue(InputProperty);
             }
             set
             {
@@ -87,7 +87,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (BrushMappingMode) GetValue(AreaToApplyEffectUnitsProperty);
+                return (BrushMappingMode)GetValue(AreaToApplyEffectUnitsProperty);
             }
             set
             {
@@ -102,7 +102,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (Rect) GetValue(AreaToApplyEffectProperty);
+                return (Rect)GetValue(AreaToApplyEffectProperty);
             }
             set
             {

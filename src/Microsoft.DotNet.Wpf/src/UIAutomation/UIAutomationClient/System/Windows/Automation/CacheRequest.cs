@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -75,7 +75,7 @@ namespace System.Windows.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace System.Windows.Automation
         }
 
         // Private ctor used by Clone()
-        private CacheRequest( Condition viewCondition,
+        private CacheRequest(Condition viewCondition,
                               TreeScope scope,
                               ArrayList properties,
                               ArrayList patterns,
@@ -132,7 +132,7 @@ namespace System.Windows.Automation
         //  Public Methods
         //
         //------------------------------------------------------
- 
+
         #region Public Methods
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace System.Windows.Automation
         //  Public Properties
         //
         //------------------------------------------------------
- 
+
         #region Public Properties
 
         /// <summary>
@@ -296,7 +296,7 @@ namespace System.Windows.Automation
             {
                 return _scope;
             }
-            
+
             set
             {
                 if (value == 0)
@@ -332,7 +332,7 @@ namespace System.Windows.Automation
             {
                 return _viewCondition;
             }
-            
+
             set
             {
                 ArgumentNullException.ThrowIfNull(value, nameof(TreeFilter));
@@ -382,7 +382,7 @@ namespace System.Windows.Automation
         {
             get
             {
-                if ( _threadStack == null || _threadStack.Count == 0 )
+                if (_threadStack == null || _threadStack.Count == 0)
                     return DefaultCacheRequest;
 
                 return (CacheRequest)_threadStack.Peek();
@@ -398,14 +398,14 @@ namespace System.Windows.Automation
         //  Internal Properties
         //
         //------------------------------------------------------
- 
+
         #region Internal Properties
 
         internal static UiaCoreApi.UiaCacheRequest DefaultUiaCacheRequest
         {
             get
             {
-                if(_defaultUiaCacheRequest == null)
+                if (_defaultUiaCacheRequest == null)
                 {
                     _defaultUiaCacheRequest = new UiaCoreApi.UiaCacheRequest(Automation.ControlViewCondition, TreeScope.Element, new AutomationProperty[] { AutomationElement.RuntimeIdProperty }, new AutomationPattern[] { }, AutomationElementMode.Full);
                 }
@@ -420,7 +420,7 @@ namespace System.Windows.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         internal UiaCoreApi.UiaCacheRequest GetUiaCacheRequest()
@@ -489,7 +489,7 @@ namespace System.Windows.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         //--- Instance state ---
@@ -547,9 +547,9 @@ namespace System.Windows.Automation
 
         public void Dispose()
         {
-            Debug.Assert( _request != null );
+            Debug.Assert(_request != null);
 
-            if( _request != null )
+            if (_request != null)
             {
                 _request.Pop();
                 _request = null;

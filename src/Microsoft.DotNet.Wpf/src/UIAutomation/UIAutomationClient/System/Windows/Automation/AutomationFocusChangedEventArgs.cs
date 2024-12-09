@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,7 +12,7 @@ namespace System.Windows.Automation
 #if (INTERNAL_COMPILE)
     internal delegate void AutomationFocusChangedEventHandler( object sender, AutomationFocusChangedEventArgs e );
 #else
-    public delegate void AutomationFocusChangedEventHandler( object sender, AutomationFocusChangedEventArgs e );
+    public delegate void AutomationFocusChangedEventHandler(object sender, AutomationFocusChangedEventArgs e);
 #endif
 
     // AutomationFocusChangedEventArgs has two distinct uses:
@@ -37,7 +37,7 @@ namespace System.Windows.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace System.Windows.Automation
         /// <param name="idObject">Indicates object id.</param>
         /// <param name="idChild">Indicates id of the child.</param>
         public AutomationFocusChangedEventArgs(int idObject, int idChild)
-            : base(AutomationElement.AutomationFocusChangedEvent) 
+            : base(AutomationElement.AutomationFocusChangedEvent)
         {
             _idObject = idObject;
             _idChild = idChild;
@@ -59,29 +59,29 @@ namespace System.Windows.Automation
         //  Public Properties
         //
         //------------------------------------------------------
- 
+
         #region Public Properties
 
         /// <summary>
         /// Returns the object id
         /// </summary>
         public int ObjectId
-        { 
+        {
             get
             {
                 return _idObject;
-            } 
+            }
         }
 
         /// <summary>
         /// Returns the child id
         /// </summary>
         public int ChildId
-        { 
-            get 
+        {
+            get
             {
-                return _idChild; 
-            } 
+                return _idChild;
+            }
         }
 
         #endregion Public Properties
@@ -91,7 +91,7 @@ namespace System.Windows.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private int _idObject;    // needed for now to be able to go back to IAccessible for menus/dropdowns

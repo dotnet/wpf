@@ -1,9 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Windows.Media.Media3D;
 using System.Runtime.InteropServices;
+using System.Windows.Media.Media3D;
 
 namespace System.Windows.Media.Composition
 {
@@ -24,50 +24,50 @@ namespace System.Windows.Media.Composition
         internal static D3DMATRIX Matrix3DToD3DMATRIX(Matrix3D m)
         {
             D3DMATRIX matrix;
-            matrix._11 = (float) m.M11;
-            matrix._12 = (float) m.M12;
-            matrix._13 = (float) m.M13;
-            matrix._14 = (float) m.M14;
-            matrix._21 = (float) m.M21;
-            matrix._22 = (float) m.M22;
-            matrix._23 = (float) m.M23;
-            matrix._24 = (float) m.M24;
-            matrix._31 = (float) m.M31;
-            matrix._32 = (float) m.M32;
-            matrix._33 = (float) m.M33;
-            matrix._34 = (float) m.M34;
-            matrix._41 = (float) m.OffsetX;
-            matrix._42 = (float) m.OffsetY;
-            matrix._43 = (float) m.OffsetZ;
-            matrix._44 = (float) m.M44;
+            matrix._11 = (float)m.M11;
+            matrix._12 = (float)m.M12;
+            matrix._13 = (float)m.M13;
+            matrix._14 = (float)m.M14;
+            matrix._21 = (float)m.M21;
+            matrix._22 = (float)m.M22;
+            matrix._23 = (float)m.M23;
+            matrix._24 = (float)m.M24;
+            matrix._31 = (float)m.M31;
+            matrix._32 = (float)m.M32;
+            matrix._33 = (float)m.M33;
+            matrix._34 = (float)m.M34;
+            matrix._41 = (float)m.OffsetX;
+            matrix._42 = (float)m.OffsetY;
+            matrix._43 = (float)m.OffsetZ;
+            matrix._44 = (float)m.M44;
             return matrix;
         }
 
         internal static MilPoint3F Point3DToMilPoint3F(Point3D p)
         {
             MilPoint3F point;
-            point.X = (float) p.X;
-            point.Y = (float) p.Y;
-            point.Z = (float) p.Z;
+            point.X = (float)p.X;
+            point.Y = (float)p.Y;
+            point.Z = (float)p.Z;
             return point;
         }
 
         internal static MilPoint3F Vector3DToMilPoint3F(Vector3D v)
         {
             MilPoint3F point;
-            point.X = (float) v.X;
-            point.Y = (float) v.Y;
-            point.Z = (float) v.Z;
+            point.X = (float)v.X;
+            point.Y = (float)v.Y;
+            point.Z = (float)v.Z;
             return point;
         }
 
         internal static MilQuaternionF QuaternionToMilQuaternionF(Quaternion q)
         {
             MilQuaternionF quat;
-            quat.X = (float) q.X;
-            quat.Y = (float) q.Y;
-            quat.Z = (float) q.Z;
-            quat.W = (float) q.W;
+            quat.X = (float)q.X;
+            quat.Y = (float)q.Y;
+            quat.Z = (float)q.Z;
+            quat.W = (float)q.W;
             return quat;
         }
 
@@ -198,9 +198,9 @@ namespace System.Windows.Media.Composition
 
         [DllImport(DllImport.MilCore)]
         internal unsafe static extern int MilUtility_GetPointAtLengthFraction(
-            MilMatrix3x2D *pMatrix,
+            MilMatrix3x2D* pMatrix,
             FillRule fillRule,
-            byte *pPathData,
+            byte* pPathData,
             UInt32 nSize,
             double rFraction,
             out Point pt,
@@ -208,26 +208,26 @@ namespace System.Windows.Media.Composition
 
         [DllImport(DllImport.MilCore)]
         internal unsafe static extern int MilUtility_PolygonBounds(
-            MilMatrix3x2D *pWorldMatrix,
-            MIL_PEN_DATA *pPenData,
-            double *pDashArray,
-            Point *pPoints,
-            byte *pTypes,
+            MilMatrix3x2D* pWorldMatrix,
+            MIL_PEN_DATA* pPenData,
+            double* pDashArray,
+            Point* pPoints,
+            byte* pTypes,
             UInt32 pointCount,
             UInt32 segmentCount,
-            MilMatrix3x2D *pGeometryMatrix,
+            MilMatrix3x2D* pGeometryMatrix,
             double rTolerance,
             bool fRelative,
             bool fSkipHollows,
-            Rect *pBounds);
+            Rect* pBounds);
 
         [DllImport(DllImport.MilCore)]
         internal unsafe static extern int MilUtility_PolygonHitTest(
-            MilMatrix3x2D *pGeometryMatrix,
-            MIL_PEN_DATA *pPenData,
-            double *pDashArray,
+            MilMatrix3x2D* pGeometryMatrix,
+            MIL_PEN_DATA* pPenData,
+            double* pDashArray,
             Point* pPoints,
-            byte *pTypes,
+            byte* pTypes,
             UInt32 cPoints,
             UInt32 cSegments,
             double rTolerance,
@@ -237,11 +237,11 @@ namespace System.Windows.Media.Composition
 
         [DllImport(DllImport.MilCore)]
         internal unsafe static extern int MilUtility_PathGeometryHitTest(
-            MilMatrix3x2D *pMatrix,
+            MilMatrix3x2D* pMatrix,
             MIL_PEN_DATA* pPenData,
             double* pDashArray,
             FillRule fillRule,
-            byte *pPathData,
+            byte* pPathData,
             UInt32 nSize,
             double rTolerance,
             bool fRelative,
@@ -250,13 +250,13 @@ namespace System.Windows.Media.Composition
 
         [DllImport(DllImport.MilCore)]
         internal unsafe static extern int MilUtility_PathGeometryHitTestPathGeometry(
-            MilMatrix3x2D *pMatrix1,
+            MilMatrix3x2D* pMatrix1,
             FillRule fillRule1,
-            byte *pPathData1,
+            byte* pPathData1,
             UInt32 nSize1,
-            MilMatrix3x2D *pMatrix2,
+            MilMatrix3x2D* pMatrix2,
             FillRule fillRule2,
-            byte *pPathData2,
+            byte* pPathData2,
             UInt32 nSize2,
             double rTolerance,
             bool fRelative,
@@ -265,9 +265,9 @@ namespace System.Windows.Media.Composition
         [DllImport(DllImport.MilCore)]
         internal unsafe static extern int MilUtility_GeometryGetArea(
             FillRule fillRule,
-            byte *pPathData,
+            byte* pPathData,
             UInt32 nSize,
-            MilMatrix3x2D *pMatrix,
+            MilMatrix3x2D* pMatrix,
             double rTolerance,
             bool fRelative,
             double* pArea);

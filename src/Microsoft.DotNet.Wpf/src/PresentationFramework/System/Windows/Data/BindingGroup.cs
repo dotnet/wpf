@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,8 +13,8 @@ using System.ComponentModel;            // IEditableObject
 using System.Globalization;             // CultureInfo
 using System.Threading;                 // Thread
 using System.Windows.Controls;          // ValidationRule
-using MS.Internal.Controls;             // ValidationRuleCollection
 using MS.Internal;                      // InheritanceContextHelper
+using MS.Internal.Controls;             // ValidationRuleCollection
 using MS.Internal.Data;                 // DataBindEngine
 
 namespace System.Windows.Data
@@ -173,7 +173,7 @@ namespace System.Windows.Data
             get
             {
                 IList items = Items;
-                for (int i=items.Count-1; i>=0; --i)
+                for (int i = items.Count - 1; i >= 0; --i)
                 {
                     if (!(items[i] is IEditableObject))
                     {
@@ -290,7 +290,7 @@ namespace System.Windows.Data
             if (superset == null || superset.Count == 0)
                 return false;
 
-            for (int i=superset.Count-1; i>=0; --i)
+            for (int i = superset.Count - 1; i >= 0; --i)
             {
                 ValidationError validationError = superset[i];
                 if (!Belongs(validationError))
@@ -308,7 +308,7 @@ namespace System.Windows.Data
             BindingExpressionBase bb;
             return (error.BindingInError == this ||
                     _proposedValueTable.HasValidationError(error) ||
-                    (  (bb = error.BindingInError as BindingExpressionBase) != null &&
+                    ((bb = error.BindingInError as BindingExpressionBase) != null &&
                         bb.BindingGroup == this)
                     );
         }
@@ -335,7 +335,7 @@ namespace System.Windows.Data
             if (!IsEditing)
             {
                 IList items = Items;
-                for (int i=items.Count-1; i>=0; --i)
+                for (int i = items.Count - 1; i >= 0; --i)
                 {
                     IEditableObject ieo = items[i] as IEditableObject;
                     if (ieo != null)
@@ -379,7 +379,7 @@ namespace System.Windows.Data
 
             // restore values
             IList items = Items;
-            for (int i=items.Count-1; i>=0; --i)
+            for (int i = items.Count - 1; i >= 0; --i)
             {
                 IEditableObject ieo = items[i] as IEditableObject;
                 if (ieo != null)
@@ -389,7 +389,7 @@ namespace System.Windows.Data
             }
 
             // update targets
-            for (int i=_bindingExpressions.Count - 1; i>=0; --i)
+            for (int i = _bindingExpressions.Count - 1; i >= 0; --i)
             {
                 _bindingExpressions[i].UpdateTarget();
             }
@@ -585,7 +585,7 @@ namespace System.Windows.Data
             InheritanceContextHelper.AddInheritanceContext(context,
                                                               this,
                                                               ref _hasMultipleInheritanceContexts,
-                                                              ref inheritanceContext );
+                                                              ref inheritanceContext);
             CheckDetach(inheritanceContext);
             _inheritanceContext = (inheritanceContext == null) ? NullInheritanceContext : new WeakReference<DependencyObject>(inheritanceContext);
 
@@ -775,7 +775,7 @@ namespace System.Windows.Data
             if (validationErrors == null)
                 return;
 
-            for (int i=validationErrors.Count-1; i>=0; --i)
+            for (int i = validationErrors.Count - 1; i >= 0; --i)
             {
                 ValidationError validationError = validationErrors[i];
                 if (allSteps || validationError.RuleInError.ValidationStep == validationStep)
@@ -840,7 +840,7 @@ namespace System.Windows.Data
             // modify the Items collection to match the new set
             // First, remove items that no longer appear
             INotifyDataErrorInfo indei;
-            for (int i=_itemsRW.Count-1;  i >= 0;  --i)
+            for (int i = _itemsRW.Count - 1; i >= 0; --i)
             {
                 int index = FindIndexOf(_itemsRW[i], newItems);
                 if (index >= 0)
@@ -861,7 +861,7 @@ namespace System.Windows.Data
             }
 
             // then add items that are really new
-            for (int i=newItems.Count-1;  i>=0;  --i)
+            for (int i = newItems.Count - 1; i >= 0; --i)
             {
                 _itemsRW.Add(newItems[i]);
 
@@ -897,7 +897,7 @@ namespace System.Windows.Data
             {
                 if (ValidationRules != null)
                 {
-                    for (int i=ValidationRules.Count-1; i>=0; --i)
+                    for (int i = ValidationRules.Count - 1; i >= 0; --i)
                     {
                         if (ValidationRules[i].ValidatesOnTargetUpdated)
                             return true;
@@ -968,7 +968,7 @@ namespace System.Windows.Data
                 // pick out the errors that come from data-transfer rules associated with this BindingGroup
                 oldErrors = new Collection<ValidationError>();
                 ReadOnlyCollection<ValidationError> errors = Validation.GetErrors(mentor);
-                for (int i=0, n=errors.Count; i<n; ++i)
+                for (int i = 0, n = errors.Count; i < n; ++i)
                 {
                     ValidationError error = errors[i];
                     if (error.RuleInError.ValidatesOnTargetUpdated && error.BindingInError == this)
@@ -980,7 +980,7 @@ namespace System.Windows.Data
 
             // run the data-transfer rules, accumulate new errors
             CultureInfo culture = GetCulture();
-            for (int i=0, n=ValidationRules.Count; i<n; ++i)
+            for (int i = 0, n = ValidationRules.Count; i < n; ++i)
             {
                 ValidationRule rule = ValidationRules[i];
                 if (rule.ValidatesOnTargetUpdated)
@@ -1004,7 +1004,7 @@ namespace System.Windows.Data
             // "no error" state)
             if (oldErrors != null)
             {
-                for (int i=0, n=oldErrors.Count; i<n; ++i)
+                for (int i = 0, n = oldErrors.Count; i < n; ++i)
                 {
                     RemoveValidationError(oldErrors[i]);
                 }
@@ -1030,7 +1030,7 @@ namespace System.Windows.Data
 
             for (_validationStep = ValidationStep.RawProposedValue;
                     _validationStep <= validationStep && result;
-                    ++ _validationStep)
+                    ++_validationStep)
             {
                 switch (_validationStep)
                 {
@@ -1150,7 +1150,7 @@ namespace System.Windows.Data
         bool ObtainConvertedProposedValues()
         {
             bool result = true;
-            for (int i=_bindingExpressions.Count-1; i>=0; --i)
+            for (int i = _bindingExpressions.Count - 1; i >= 0; --i)
             {
                 result = _bindingExpressions[i].ObtainConvertedProposedValue(this) && result;
             }
@@ -1163,14 +1163,14 @@ namespace System.Windows.Data
         {
             bool result = true;
 
-            for (int i=_bindingExpressions.Count-1; i>=0; --i)
+            for (int i = _bindingExpressions.Count - 1; i >= 0; --i)
             {
                 result = _bindingExpressions[i].UpdateSource(this) && result;
             }
 
             if (_proposedValueBindingExpressions != null)
             {
-                for (int i=_proposedValueBindingExpressions.Length-1; i>=0; --i)
+                for (int i = _proposedValueBindingExpressions.Length - 1; i >= 0; --i)
                 {
                     BindingExpression bindExpr = _proposedValueBindingExpressions[i];
                     ProposedValueEntry proposedValueEntry = _proposedValueTable[bindExpr];
@@ -1191,7 +1191,7 @@ namespace System.Windows.Data
             ClearValidationErrors(_validationStep);
 
             // check rules attached to the bindings
-            for (int i=_bindingExpressions.Count-1; i>=0; --i)
+            for (int i = _bindingExpressions.Count - 1; i >= 0; --i)
             {
                 if (!_bindingExpressions[i].CheckValidationRules(this, _validationStep))
                 {
@@ -1203,7 +1203,7 @@ namespace System.Windows.Data
             if (_validationStep >= ValidationStep.UpdatedValue &&
                 _proposedValueBindingExpressions != null)
             {
-                for (int i=_proposedValueBindingExpressions.Length-1; i>=0; --i)
+                for (int i = _proposedValueBindingExpressions.Length - 1; i >= 0; --i)
                 {
                     if (!_proposedValueBindingExpressions[i].CheckValidationRules(this, _validationStep))
                     {
@@ -1214,7 +1214,7 @@ namespace System.Windows.Data
 
             // check rules attached to the binding group
             CultureInfo culture = GetCulture();
-            for (int i=0, n=_validationRules.Count; i<n; ++i)
+            for (int i = 0, n = _validationRules.Count; i < n; ++i)
             {
                 ValidationRule rule = _validationRules[i];
                 if (rule.ValidationStep == _validationStep)
@@ -1244,18 +1244,18 @@ namespace System.Windows.Data
         {
             bool result = true;
             IList items = Items;
-            for (int i=items.Count-1; i>=0; --i)
+            for (int i = items.Count - 1; i >= 0; --i)
             {
                 IEditableObject ieo = items[i] as IEditableObject;
                 if (ieo != null)
                 {
                     // PreSharp uses message numbers that the C# compiler doesn't know about.
                     // Disable the C# complaints, per the PreSharp documentation.
-                    #pragma warning disable 1634, 1691
+#pragma warning disable 1634, 1691
 
                     // PreSharp complains about catching NullReference (and other) exceptions.
                     // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-                    #pragma warning disable 56500
+#pragma warning disable 56500
 
                     try
                     {
@@ -1271,8 +1271,8 @@ namespace System.Windows.Data
                         result = false;
                     }
 
-                    #pragma warning restore 56500
-                    #pragma warning restore 1634, 1691
+#pragma warning restore 56500
+#pragma warning restore 1634, 1691
                 }
             }
             return result;
@@ -1290,7 +1290,7 @@ namespace System.Windows.Data
 
         static int FindIndexOf(object item, IList<WeakReference> list)
         {
-            for (int i=0, n=list.Count; i<n; ++i)
+            for (int i = 0, n = list.Count; i < n; ++i)
             {
                 if (ItemsControl.EqualsEx(item, list[i].Target))
                 {
@@ -1309,7 +1309,7 @@ namespace System.Windows.Data
                 DependencyObject mentor = Helper.FindMentor(this);
                 if (mentor != null)
                 {
-                    _culture = ((System.Windows.Markup.XmlLanguage) mentor.GetValue(FrameworkElement.LanguageProperty)).GetSpecificCulture();
+                    _culture = ((System.Windows.Markup.XmlLanguage)mentor.GetValue(FrameworkElement.LanguageProperty)).GetSpecificCulture();
                 }
             }
 
@@ -1405,7 +1405,7 @@ namespace System.Windows.Data
             if (proposedValues == null)
                 return;
 
-            for (int i=0, n=proposedValues.Count; i<n; ++i)
+            for (int i = 0, n = proposedValues.Count; i < n; ++i)
             {
                 _proposedValueTable.Add(proposedValues[i]);
             }
@@ -1423,24 +1423,26 @@ namespace System.Windows.Data
             {
                 // create a shadow binding for each proposed value
                 _proposedValueBindingExpressions = new BindingExpression[count];
-                for (int i=0; i<count; ++i)
+                for (int i = 0; i < count; ++i)
                 {
                     ProposedValueEntry entry = _proposedValueTable[i];
                     Binding originalBinding = entry.Binding;
 
-                    Binding binding = new Binding();
-                    binding.Source = entry.Item;
-                    binding.Mode = BindingMode.TwoWay;
-                    binding.Path = new PropertyPath(entry.PropertyName, originalBinding.Path.PathParameters);
+                    Binding binding = new Binding
+                    {
+                        Source = entry.Item,
+                        Mode = BindingMode.TwoWay,
+                        Path = new PropertyPath(entry.PropertyName, originalBinding.Path.PathParameters),
 
-                    binding.ValidatesOnDataErrors = originalBinding.ValidatesOnDataErrors;
-                    binding.ValidatesOnNotifyDataErrors = originalBinding.ValidatesOnNotifyDataErrors;
-                    binding.ValidatesOnExceptions = originalBinding.ValidatesOnExceptions;
+                        ValidatesOnDataErrors = originalBinding.ValidatesOnDataErrors,
+                        ValidatesOnNotifyDataErrors = originalBinding.ValidatesOnNotifyDataErrors,
+                        ValidatesOnExceptions = originalBinding.ValidatesOnExceptions
+                    };
 
                     Collection<ValidationRule> rules = originalBinding.ValidationRulesInternal;
                     if (rules != null)
                     {
-                        for (int j=0, n=rules.Count; j<n; ++j)
+                        for (int j = 0, n = rules.Count; j < n; ++j)
                         {
                             binding.ValidationRules.Add(rules[j]);
                         }
@@ -1460,7 +1462,7 @@ namespace System.Windows.Data
         {
             if (_proposedValueBindingExpressions != null)
             {
-                for (int i=0, n=_proposedValueBindingExpressions.Length; i<n; ++i)
+                for (int i = 0, n = _proposedValueBindingExpressions.Length; i < n; ++i)
                 {
                     BindingExpression bindExpr = _proposedValueBindingExpressions[i];
                     ValidationError validationError = bindExpr.ValidationError;
@@ -1526,8 +1528,11 @@ namespace System.Windows.Data
             {
                 // otherwise invoke an operation to do the work on the right context
                 Engine.Marshal(
-                    (arg) => {  UpdateNotifyDataErrors((INotifyDataErrorInfo)arg, null);
-                                 return null; }, sender);
+                    (arg) =>
+                    {
+                        UpdateNotifyDataErrors((INotifyDataErrorInfo)arg, null);
+                        return null;
+                    }, sender);
             }
         }
 
@@ -1541,22 +1546,22 @@ namespace System.Windows.Data
         //
         //------------------------------------------------------
 
-        ValidationRuleCollection    _validationRules;
-        string                      _name;
-        bool                        _notifyOnValidationError;
-        bool                        _sharesProposedValues;
-        bool                        _validatesOnNotifyDataError = true;
+        ValidationRuleCollection _validationRules;
+        string _name;
+        bool _notifyOnValidationError;
+        bool _sharesProposedValues;
+        bool _validatesOnNotifyDataError = true;
 
-        DataBindEngine              _engine;
+        DataBindEngine _engine;
         BindingExpressionCollection _bindingExpressions;
-        bool                        _isItemsValid;
-        ValidationStep              _validationStep = (ValidationStep)(-1);
-        GetValueTable               _getValueTable = new GetValueTable();
-        ProposedValueTable          _proposedValueTable = new ProposedValueTable();
-        BindingExpression[]         _proposedValueBindingExpressions;
-        Collection<WeakReference>   _itemsRW;
+        bool _isItemsValid;
+        ValidationStep _validationStep = (ValidationStep)(-1);
+        GetValueTable _getValueTable = new GetValueTable();
+        ProposedValueTable _proposedValueTable = new ProposedValueTable();
+        BindingExpression[] _proposedValueBindingExpressions;
+        Collection<WeakReference> _itemsRW;
         WeakReadOnlyCollection<object> _items;
-        CultureInfo                 _culture;
+        CultureInfo _culture;
         Dictionary<WeakReference, List<ValidationError>> _notifyDataErrors = new Dictionary<WeakReference, List<ValidationError>>();
 
         internal static readonly object DeferredTargetValue = new NamedObject("DeferredTargetValue");
@@ -1565,7 +1570,7 @@ namespace System.Windows.Data
         // Fields to implement DO's inheritance context
         static WeakReference<DependencyObject> NullInheritanceContext = new WeakReference<DependencyObject>(null);
         WeakReference<DependencyObject> _inheritanceContext = NullInheritanceContext;
-        bool                            _hasMultipleInheritanceContexts;
+        bool _hasMultipleInheritanceContexts;
 
         #endregion Private data
 
@@ -1586,7 +1591,7 @@ namespace System.Windows.Data
             {
                 get
                 {
-                    for (int i=_table.Count-1; i >= 0; --i)
+                    for (int i = _table.Count - 1; i >= 0; --i)
                     {
                         GetValueTableEntry entry = _table[i];
                         if (propertyName == entry.PropertyName &&
@@ -1605,7 +1610,7 @@ namespace System.Windows.Data
             {
                 get
                 {
-                    for (int i=_table.Count-1; i >= 0; --i)
+                    for (int i = _table.Count - 1; i >= 0; --i)
                     {
                         GetValueTableEntry entry = _table[i];
                         if (bindingExpressionBase == entry.BindingExpressionBase)
@@ -1651,7 +1656,7 @@ namespace System.Windows.Data
             {
                 List<BindingExpressionBase> result = new List<BindingExpressionBase>();
 
-                for (int i=_table.Count-1; i >= 0; --i)
+                for (int i = _table.Count - 1; i >= 0; --i)
                 {
                     BindingExpressionBase expr = _table[i].BindingExpressionBase;
                     if (expr.RootBindingExpression == rootBindingExpression)
@@ -1667,7 +1672,7 @@ namespace System.Windows.Data
             // append to a list of the unique items (wrapped in WeakReferences)
             public void AddUniqueItems(IList<WeakReference> list)
             {
-                for (int i=_table.Count-1; i >= 0; --i)
+                for (int i = _table.Count - 1; i >= 0; --i)
                 {
                     // don't include bindings that couldn't resolve
                     if (_table[i].BindingExpressionBase.StatusInternal == BindingStatusInternal.PathError)
@@ -1701,7 +1706,7 @@ namespace System.Windows.Data
             // reset values to "raw"
             public void ResetValues()
             {
-                for (int i=_table.Count-1; i>=0; --i)
+                for (int i = _table.Count - 1; i >= 0; --i)
                 {
                     _table[i].Value = BindingGroup.DeferredTargetValue;
                 }
@@ -1710,7 +1715,7 @@ namespace System.Windows.Data
             // set values to "source" for all bindings under the given root
             public void UseSourceValue(BindingExpressionBase rootBindingExpression)
             {
-                for (int i=_table.Count-1; i>=0; --i)
+                for (int i = _table.Count - 1; i >= 0; --i)
                 {
                     if (_table[i].BindingExpressionBase.RootBindingExpression == rootBindingExpression)
                     {
@@ -1795,10 +1800,10 @@ namespace System.Windows.Data
                 set { _value = value; }
             }
 
-            BindingExpressionBase   _bindingExpressionBase;
-            WeakReference   _itemWR;
-            string          _propertyName;
-            object          _value = BindingGroup.DeferredTargetValue;
+            BindingExpressionBase _bindingExpressionBase;
+            WeakReference _itemWR;
+            string _propertyName;
+            object _value = BindingGroup.DeferredTargetValue;
         }
 
 
@@ -1880,7 +1885,7 @@ namespace System.Windows.Data
             // append to a list of unique items
             public void AddUniqueItems(IList<WeakReference> list)
             {
-                for (int i=_table.Count-1; i >= 0; --i)
+                for (int i = _table.Count - 1; i >= 0; --i)
                 {
                     WeakReference itemWR = _table[i].ItemReference;
                     if (itemWR != null && BindingGroup.FindIndexOf(itemWR, list) < 0)
@@ -1893,12 +1898,12 @@ namespace System.Windows.Data
             // call UpdateTarget on all dependents
             public void UpdateDependents()
             {
-                for (int i=_table.Count-1; i>=0; --i)
+                for (int i = _table.Count - 1; i >= 0; --i)
                 {
                     Collection<BindingExpressionBase> dependents = _table[i].Dependents;
                     if (dependents != null)
                     {
-                        for (int j=dependents.Count-1; j>=0; --j)
+                        for (int j = dependents.Count - 1; j >= 0; --j)
                         {
                             BindingExpressionBase beb = dependents[j];
                             if (!beb.IsDetached)
@@ -1912,7 +1917,7 @@ namespace System.Windows.Data
 
             public bool HasValidationError(ValidationError validationError)
             {
-                for (int i=_table.Count-1; i>=0; --i)
+                for (int i = _table.Count - 1; i >= 0; --i)
                 {
                     if (validationError == _table[i].ValidationError)
                         return true;
@@ -1923,7 +1928,7 @@ namespace System.Windows.Data
             // return the index of the entry with given key (or -1)
             private int IndexOf(object item, string propertyName)
             {
-                for (int i=_table.Count-1; i >= 0; --i)
+                for (int i = _table.Count - 1; i >= 0; --i)
                 {
                     ProposedValueEntry entry = _table[i];
                     if (propertyName == entry.PropertyName &&
@@ -1956,13 +1961,13 @@ namespace System.Windows.Data
                 _binding = bindExpr.ParentBinding;
             }
 
-            public object Item                      { get { return _itemReference.Target; } }
-            public string PropertyName              { get { return _propertyName; } }
-            public object RawValue                  { get { return _rawValue; } }
-            public object ConvertedValue            { get { return _convertedValue; } }
-            public ValidationError ValidationError  { get { return _error; } }
-            public Binding Binding                  { get { return _binding; } }
-            public WeakReference ItemReference      { get { return _itemReference; } }
+            public object Item { get { return _itemReference.Target; } }
+            public string PropertyName { get { return _propertyName; } }
+            public object RawValue { get { return _rawValue; } }
+            public object ConvertedValue { get { return _convertedValue; } }
+            public ValidationError ValidationError { get { return _error; } }
+            public Binding Binding { get { return _binding; } }
+            public WeakReference ItemReference { get { return _itemReference; } }
             public Collection<BindingExpressionBase> Dependents { get { return _dependents; } }
 
             public void AddDependent(BindingExpressionBase dependent)

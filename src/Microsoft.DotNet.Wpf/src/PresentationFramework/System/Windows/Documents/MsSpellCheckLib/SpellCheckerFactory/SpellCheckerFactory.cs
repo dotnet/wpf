@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -46,7 +46,7 @@ namespace System.Windows.Documents
 
             internal ISpellCheckerFactory ComFactory { get; private set; }
 
-            private static ReaderWriterLockSlimWrapper _factoryLock 
+            private static ReaderWriterLockSlimWrapper _factoryLock
                 = new ReaderWriterLockSlimWrapper(System.Threading.LockRecursionPolicy.SupportsRecursion);
             internal static SpellCheckerFactory Singleton { get; private set; }
 
@@ -72,7 +72,7 @@ namespace System.Windows.Documents
                     result = Singleton;
                 }
 
-                return result; 
+                return result;
             }
 
             /// <summary>
@@ -127,15 +127,15 @@ namespace System.Windows.Documents
                         // do nothing
                     }
 
-                    Singleton.ComFactory = null; 
+                    Singleton.ComFactory = null;
                 }
 
                 bool success = false;
-                ISpellCheckerFactory result = null; 
+                ISpellCheckerFactory result = null;
                 try
                 {
                     result = new SpellCheckerFactoryClass();
-                    success = true; 
+                    success = true;
                 }
                 catch (COMException) when (suppressCOMExceptions)
                 {
@@ -159,7 +159,7 @@ namespace System.Windows.Documents
                         throw new COMException(string.Empty, icex);
                     }
                 }
-                catch (Exception e) when (suppressOtherExceptions && !(e is COMException) && !(e is UnauthorizedAccessException)) 
+                catch (Exception e) when (suppressOtherExceptions && !(e is COMException) && !(e is UnauthorizedAccessException))
                 {
                     // do nothing
                 }
@@ -177,12 +177,12 @@ namespace System.Windows.Documents
             #region ISpellCheckerFactory services 
 
             #region SupportedLanguages
-            
+
             private List<string> SupportedLanguagesImpl()
             {
                 var languages = ComFactory?.SupportedLanguages;
 
-                List<string> result = null; 
+                List<string> result = null;
                 if (languages != null)
                 {
                     result = languages.ToList();
@@ -198,23 +198,23 @@ namespace System.Windows.Documents
                 // Note:
                 //  SupportedLanguagesImpl is Safe 
                 //  preamble delegate only calls Safe or Transparent methods.
-                bool callSucceeded  =
+                bool callSucceeded =
                     RetryHelper.TryExecuteFunction(
                         func: SupportedLanguagesImpl,
                         result: out languages,
                         preamble: () => Reinitalize(),
                         ignoredExceptions: SuppressedExceptions[shouldSuppressCOMExceptions]);
 
-                return callSucceeded ? languages : null; 
-            }         
+                return callSucceeded ? languages : null;
+            }
 
             private List<string> GetSupportedLanguagesPrivate(bool shouldSuppressCOMExceptions = true)
             {
                 List<string> result = null;
-                bool lockedExecutionSucceeded = 
+                bool lockedExecutionSucceeded =
                     _factoryLock.WithWriteLock(SupportedLanguagesImplWithRetries, shouldSuppressCOMExceptions, out result);
 
-                return lockedExecutionSucceeded ? result : null; 
+                return lockedExecutionSucceeded ? result : null;
             }
 
             internal static List<string> GetSupportedLanguages(bool shouldSuppressCOMExceptions = true)
@@ -225,7 +225,7 @@ namespace System.Windows.Documents
             #endregion // SupportedLanguages
 
             #region IsSupported
-            
+
             /// <summary>
             /// 
             /// </summary>
@@ -238,16 +238,16 @@ namespace System.Windows.Documents
 
             private bool IsSupportedImplWithRetries(string languageTag, bool suppressCOMExceptions = true)
             {
-                bool isSupported = false; 
+                bool isSupported = false;
 
                 // Note: 
                 //  The delegate passed as [func] is Transparent, and calls only Safe methods in turn.
                 //  The delegate passed as [preamble] is Transparent, and calls only Safe or Transparent methods in turn.
-                bool callSucceeded = 
+                bool callSucceeded =
                    RetryHelper.TryExecuteFunction<bool>(
                        func: () => IsSupportedImpl(languageTag),
                        result: out isSupported,
-                       preamble: () => Reinitalize(), 
+                       preamble: () => Reinitalize(),
                        ignoredExceptions: SuppressedExceptions[suppressCOMExceptions]);
 
                 return callSucceeded ? isSupported : false;
@@ -256,7 +256,7 @@ namespace System.Windows.Documents
             private bool IsSupportedPrivate(string languageTag, bool suppressCOMExceptons = true)
             {
                 bool isSupported = false;
-                bool lockedExecutionSucceeded = 
+                bool lockedExecutionSucceeded =
                     _factoryLock.WithWriteLock(IsSupportedImplWithRetries, languageTag, suppressCOMExceptons, out isSupported);
 
                 return lockedExecutionSucceeded ? isSupported : false;
@@ -284,7 +284,7 @@ namespace System.Windows.Documents
                     RetryHelper.TryExecuteFunction<ISpellChecker>(
                         func: SpellCheckerCreationHelper.Helper(languageTag).CreateSpellChecker,
                         result: out spellChecker,
-                        preamble:  SpellCheckerCreationHelper.Helper(languageTag).CreateSpellCheckerRetryPreamble,
+                        preamble: SpellCheckerCreationHelper.Helper(languageTag).CreateSpellCheckerRetryPreamble,
                         ignoredExceptions: SuppressedExceptions[suppressCOMExceptions]);
 
 
@@ -294,10 +294,10 @@ namespace System.Windows.Documents
             private ISpellChecker CreateSpellCheckerPrivate(string languageTag, bool suppressCOMExceptions = true)
             {
                 ISpellChecker spellChecker = null;
-                bool lockedExecutionSucceeded = 
+                bool lockedExecutionSucceeded =
                     _factoryLock.WithWriteLock(CreateSpellCheckerImplWithRetries, languageTag, suppressCOMExceptions, out spellChecker);
 
-                return lockedExecutionSucceeded ? spellChecker : null; 
+                return lockedExecutionSucceeded ? spellChecker : null;
             }
 
             internal static ISpellChecker CreateSpellChecker(string languageTag, bool suppressCOMExceptions = true)
@@ -328,7 +328,7 @@ namespace System.Windows.Documents
                 // that lambda below.
                 RetryHelper.TryCallAction(
                     action: () => RegisterUserDicionaryImpl(dictionaryPath, languageTag),
-                    preamble: () => Reinitalize(), 
+                    preamble: () => Reinitalize(),
                     ignoredExceptions: SuppressedExceptions[suppressCOMExceptions]);
             }
 
@@ -362,7 +362,7 @@ namespace System.Windows.Documents
                     preamble: () => Reinitalize(),
                     ignoredExceptions: SuppressedExceptions[suppressCOMExceptions]);
             }
-            
+
             private void UnregisterUserDictionaryPrivate(string dictionaryPath, string languageTag, bool suppressCOMExceptions = true)
             {
                 _factoryLock.WithWriteLock(() => { UnregisterUserDictionaryImplWithRetries(dictionaryPath, languageTag, suppressCOMExceptions); });

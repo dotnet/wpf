@@ -1,14 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal.Documents;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
-using System.Windows.Shapes;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;  // CharacterHit
+using System.Windows.Shapes;
+using MS.Internal.Documents;
 
 //
 // Description: TextView implementation for FixedDocument.
@@ -28,7 +28,7 @@ namespace System.Windows.Documents
         //-------------------------------------------------------------------
 
         #region Constructors
-        internal FixedTextView(FixedDocumentPage  docPage)
+        internal FixedTextView(FixedDocumentPage docPage)
         {
             _docPage = docPage;
         }
@@ -163,7 +163,7 @@ namespace System.Windows.Documents
             Debug.Assert(ftp != null);
             if (ftp.FlowPosition.IsBoundary)
             {
-                if  (!_GetFirstFixedPosition(ftp, out fixedp))
+                if (!_GetFirstFixedPosition(ftp, out fixedp))
                 {
                     return designRect;
                 }
@@ -239,7 +239,7 @@ namespace System.Windows.Documents
             PathGeometry boundingGeometry = new PathGeometry();
             Debug.Assert(startPosition != null && this.Contains(startPosition));
             Debug.Assert(endPosition != null && this.Contains(endPosition));
-            Dictionary<FixedPage, ArrayList> highlights = new Dictionary<FixedPage,ArrayList>();
+            Dictionary<FixedPage, ArrayList> highlights = new Dictionary<FixedPage, ArrayList>();
             FixedTextPointer startftp = this.Container.VerifyPosition(startPosition);
             FixedTextPointer endftp = this.Container.VerifyPosition(endPosition);
 
@@ -281,8 +281,10 @@ namespace System.Windows.Documents
                         backgroundRect.Intersect(clipRect);
                     }
 
-                    Geometry thisGeometry = new RectangleGeometry(backgroundRect);
-                    thisGeometry.Transform = t;
+                    Geometry thisGeometry = new RectangleGeometry(backgroundRect)
+                    {
+                        Transform = t
+                    };
 
                     backgroundRect = transform.TransformBounds(backgroundRect);
 
@@ -345,9 +347,9 @@ namespace System.Windows.Documents
             //Skip any formatting tags
             _SkipFormattingTags(nav);
             bool gotFixedPosition = false;
-            if (   count == 0
+            if (count == 0
                 || ((gotFixedPosition = _GetFixedPosition(nav, out fixedp))
-                && fixedp.Page != this.PageIndex )
+                && fixedp.Page != this.PageIndex)
                 )
             {
                 //Invalid text position, so do nothing. PS #963924
@@ -356,7 +358,7 @@ namespace System.Windows.Documents
 
             if (count < 0)
             {
-                count   = -count;
+                count = -count;
                 scanDir = LogicalDirection.Backward;
             }
 
@@ -586,7 +588,7 @@ namespace System.Windows.Documents
             FixedPosition fixedp;
             if (!_GetFixedPosition(ftp, out fixedp))
             {
-				return new TextSegment(position, position, true);
+                return new TextSegment(position, position, true);
             }
 
             int count = 0;
@@ -777,7 +779,7 @@ namespace System.Windows.Documents
                 DependencyObjectType t = v.DependencyObjectType;
                 if (t == UIElementType || t.IsSubclassOf(UIElementType))
                 {
-                    e = (UIElement) v;
+                    e = (UIElement)v;
 
                     return true;
                 }
@@ -856,7 +858,7 @@ namespace System.Windows.Documents
 
                 FixedPosition fixedp = new FixedPosition(closestNode, index);
                 itp = _CreateTextPointer(fixedp, dir);
-				Debug.Assert(itp != null);
+                Debug.Assert(itp != null);
             }
             else
             {
@@ -1091,12 +1093,12 @@ namespace System.Windows.Documents
                 //Try to find the first valid insertion position if exists
                 switch (symbolType)
                 {
-                case TextPointerContext.ElementStart:
-                    textdir = LogicalDirection.Forward;
-                    break;
-                case TextPointerContext.ElementEnd:
-                    textdir = LogicalDirection.Backward;
-                    break;
+                    case TextPointerContext.ElementStart:
+                        textdir = LogicalDirection.Forward;
+                        break;
+                    case TextPointerContext.ElementEnd:
+                        textdir = LogicalDirection.Backward;
+                        break;
                 }
 
                 FixedTextPointer nav = new FixedTextPointer(true, textdir, (FlowPosition)ftp.FlowPosition.Clone());
@@ -1138,7 +1140,7 @@ namespace System.Windows.Documents
                 //End boundary
                 dir = LogicalDirection.Backward;
             }
-            FlowPosition flowP = (FlowPosition) ftp.FlowPosition.Clone();
+            FlowPosition flowP = (FlowPosition)ftp.FlowPosition.Clone();
             //Get the first node that comes before or after the boundary node(probably a start or end node)
             flowP.Move(dir);
 
@@ -1202,7 +1204,7 @@ namespace System.Windows.Documents
 
             LogicalDirection dir = textPointer.LogicalDirection;
             int increment = (dir == LogicalDirection.Forward ? +1 : -1);
-            while (TextSchema.IsFormattingType( textPointer.GetElementType(dir)) )
+            while (TextSchema.IsFormattingType(textPointer.GetElementType(dir)))
             {
                 textPointer.MoveByOffset(increment);
             }

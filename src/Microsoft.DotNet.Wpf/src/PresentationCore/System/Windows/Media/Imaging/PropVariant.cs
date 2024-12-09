@@ -1,14 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 //
 //
 
-using MS.Internal;
-using MS.Win32.PresentationCore;
 using System.Runtime.InteropServices;
+using MS.Internal;
 using MS.Internal.PresentationCore;
+using MS.Win32.PresentationCore;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -59,38 +59,38 @@ namespace System.Windows.Media.Imaging
 {
     #region PropVariant
 
-    [StructLayout(LayoutKind.Sequential, Pack=0)]
+    [StructLayout(LayoutKind.Sequential, Pack = 0)]
     internal struct PROPARRAY
     {
         internal UInt32 cElems;
         internal IntPtr pElems;
     }
 
-    [StructLayout(LayoutKind.Explicit, Pack=1)]
+    [StructLayout(LayoutKind.Explicit, Pack = 1)]
     internal struct PROPVARIANT
     {
-       [FieldOffset(0)] internal ushort varType;
-       [FieldOffset(2)] internal ushort wReserved1;
-       [FieldOffset(4)] internal ushort wReserved2;
-       [FieldOffset(6)] internal ushort wReserved3;
+        [FieldOffset(0)] internal ushort varType;
+        [FieldOffset(2)] internal ushort wReserved1;
+        [FieldOffset(4)] internal ushort wReserved2;
+        [FieldOffset(6)] internal ushort wReserved3;
 
-       [FieldOffset(8)] internal byte bVal;
-       [FieldOffset(8)] internal sbyte cVal;
-       [FieldOffset(8)] internal ushort uiVal;
-       [FieldOffset(8)] internal short iVal;
-       [FieldOffset(8)] internal UInt32 uintVal;
-       [FieldOffset(8)] internal Int32 intVal;
-       [FieldOffset(8)] internal UInt64 ulVal;
-       [FieldOffset(8)] internal Int64 lVal;
-       [FieldOffset(8)] internal float fltVal;
-       [FieldOffset(8)] internal double dblVal;
-       [FieldOffset(8)] internal short boolVal;
-       [FieldOffset(8)] internal IntPtr pclsidVal; //this is for GUID ID pointer
-       [FieldOffset(8)] internal IntPtr pszVal; //this is for ansi string pointer
-       [FieldOffset(8)] internal IntPtr pwszVal; //this is for Unicode string pointer
-       [FieldOffset(8)] internal IntPtr punkVal; //this is for punkVal (interface pointer)
-       [FieldOffset(8)] internal PROPARRAY ca;
-       [FieldOffset(8)] internal System.Runtime.InteropServices.ComTypes.FILETIME filetime;
+        [FieldOffset(8)] internal byte bVal;
+        [FieldOffset(8)] internal sbyte cVal;
+        [FieldOffset(8)] internal ushort uiVal;
+        [FieldOffset(8)] internal short iVal;
+        [FieldOffset(8)] internal UInt32 uintVal;
+        [FieldOffset(8)] internal Int32 intVal;
+        [FieldOffset(8)] internal UInt64 ulVal;
+        [FieldOffset(8)] internal Int64 lVal;
+        [FieldOffset(8)] internal float fltVal;
+        [FieldOffset(8)] internal double dblVal;
+        [FieldOffset(8)] internal short boolVal;
+        [FieldOffset(8)] internal IntPtr pclsidVal; //this is for GUID ID pointer
+        [FieldOffset(8)] internal IntPtr pszVal; //this is for ansi string pointer
+        [FieldOffset(8)] internal IntPtr pwszVal; //this is for Unicode string pointer
+        [FieldOffset(8)] internal IntPtr punkVal; //this is for punkVal (interface pointer)
+        [FieldOffset(8)] internal PROPARRAY ca;
+        [FieldOffset(8)] internal System.Runtime.InteropServices.ComTypes.FILETIME filetime;
 
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace System.Windows.Media.Imaging
             int cbFrom
         )
         {
-            if (cbFrom>cbTo)
+            if (cbFrom > cbTo)
             {
                 throw new InvalidOperationException(SR.Image_InsufficientBufferSize);
             }
@@ -123,12 +123,12 @@ namespace System.Windows.Media.Imaging
 
         internal void InitVector(Array array, Type type, VarEnum varEnum)
         {
-            Init(array,  type, varEnum | VarEnum.VT_VECTOR);
+            Init(array, type, varEnum | VarEnum.VT_VECTOR);
         }
 
         internal void Init(Array array, Type type, VarEnum vt)
         {
-            varType = (ushort) vt;
+            varType = (ushort)vt;
             ca.cElems = 0;
             ca.pElems = IntPtr.Zero;
 
@@ -138,16 +138,16 @@ namespace System.Windows.Media.Imaging
             {
                 long size = Marshal.SizeOf(type) * length;
 
-                IntPtr destPtr =IntPtr.Zero;
+                IntPtr destPtr = IntPtr.Zero;
                 GCHandle handle = new GCHandle();
 
                 try
                 {
-                    destPtr = Marshal.AllocCoTaskMem((int) size);
+                    destPtr = Marshal.AllocCoTaskMem((int)size);
                     handle = GCHandle.Alloc(array, GCHandleType.Pinned);
                     unsafe
                     {
-                        CopyBytes((byte *) destPtr, (int)size, (byte *)handle.AddrOfPinnedObject(), (int)size);
+                        CopyBytes((byte*)destPtr, (int)size, (byte*)handle.AddrOfPinnedObject(), (int)size);
                     }
 
                     ca.cElems = (uint)length;
@@ -172,8 +172,8 @@ namespace System.Windows.Media.Imaging
 
         internal void Init(String[] value, bool fAscii)
         {
-            varType = (ushort) (fAscii ? VarEnum.VT_LPSTR : VarEnum.VT_LPWSTR);
-            varType |= (ushort) VarEnum.VT_VECTOR;
+            varType = (ushort)(fAscii ? VarEnum.VT_LPSTR : VarEnum.VT_LPWSTR);
+            varType |= (ushort)VarEnum.VT_VECTOR;
             ca.cElems = 0;
             ca.pElems = IntPtr.Zero;
 
@@ -196,7 +196,7 @@ namespace System.Windows.Media.Imaging
 
                     destPtr = Marshal.AllocCoTaskMem((int)size);
 
-                    for (index=0; index<length; index++)
+                    for (index = 0; index < length; index++)
                     {
                         if (fAscii)
                         {
@@ -206,10 +206,10 @@ namespace System.Windows.Media.Imaging
                         {
                             pString = Marshal.StringToCoTaskMemUni(value[index]);
                         }
-                        Marshal.WriteIntPtr(destPtr, (int)index*sizeIntPtr, pString);
+                        Marshal.WriteIntPtr(destPtr, (int)index * sizeIntPtr, pString);
                     }
 
-                    ca.cElems = (uint) length;
+                    ca.cElems = (uint)length;
                     ca.pElems = destPtr;
                     destPtr = IntPtr.Zero;
                 }
@@ -217,9 +217,9 @@ namespace System.Windows.Media.Imaging
                 {
                     if (destPtr != IntPtr.Zero)
                     {
-                        for (int i=0; i<index; i++)
+                        for (int i = 0; i < index; i++)
                         {
-                            IntPtr pString = Marshal.ReadIntPtr(destPtr, i*sizeIntPtr);
+                            IntPtr pString = Marshal.ReadIntPtr(destPtr, i * sizeIntPtr);
                             Marshal.FreeCoTaskMem(pString);
                         }
 
@@ -249,7 +249,7 @@ namespace System.Windows.Media.Imaging
                 }
                 else if (value is char[])
                 {
-                    varType = (ushort) VarEnum.VT_LPSTR;
+                    varType = (ushort)VarEnum.VT_LPSTR;
                     pszVal = Marshal.StringToCoTaskMemAnsi(new String(value as char[]));
                 }
                 else if (value is char[][])
@@ -258,12 +258,12 @@ namespace System.Windows.Media.Imaging
 
                     String[] strArray = new String[charArray.GetLength(0)];
 
-                    for (int i=0; i<charArray.Length; i++)
+                    for (int i = 0; i < charArray.Length; i++)
                     {
                         strArray[i] = new String(charArray[i] as char[]);
                     }
 
-                    Init (strArray, true);
+                    Init(strArray, true);
                 }
                 else if (type == typeof(short[]))
                 {
@@ -303,16 +303,16 @@ namespace System.Windows.Media.Imaging
                 }
                 else if (value is String[])
                 {
-                    Init (value as String[], false);
+                    Init(value as String[], false);
                 }
                 else if (value is bool[])
                 {
-                    bool[] boolArray =value as bool[];
+                    bool[] boolArray = value as bool[];
                     short[] array = new short[boolArray.Length];
 
-                    for (int i=0; i<boolArray.Length; i++)
+                    for (int i = 0; i < boolArray.Length; i++)
                     {
-                        array[i] = (short) (boolArray[i] ? -1 : 0);
+                        array[i] = (short)(boolArray[i] ? -1 : 0);
                     }
 
                     InitVector(array, typeof(short), VarEnum.VT_BOOL);
@@ -328,18 +328,18 @@ namespace System.Windows.Media.Imaging
 
                 if (value is String)
                 {
-                    varType = (ushort) VarEnum.VT_LPWSTR;
+                    varType = (ushort)VarEnum.VT_LPWSTR;
                     pwszVal = Marshal.StringToCoTaskMemUni(value as String);
                 }
                 else if (type == typeof(sbyte))
                 {
-                    varType = (ushort) VarEnum.VT_I1;
-                    cVal = (sbyte) value;
+                    varType = (ushort)VarEnum.VT_I1;
+                    cVal = (sbyte)value;
                 }
                 else if (type == typeof(byte))
                 {
-                    varType = (ushort) VarEnum.VT_UI1;
-                    bVal = (byte) value;
+                    varType = (ushort)VarEnum.VT_UI1;
+                    bVal = (byte)value;
                 }
                 else if (type == typeof(System.Runtime.InteropServices.ComTypes.FILETIME))
                 {
@@ -433,11 +433,11 @@ namespace System.Windows.Media.Imaging
                     throw new System.InvalidOperationException(SR.Image_PropertyNotSupported);
                 }
             }
-       }
+        }
 
         internal void Clear()
-       {
-            VarEnum vt = (VarEnum) varType;
+        {
+            VarEnum vt = (VarEnum)varType;
 
             if ((vt & VarEnum.VT_VECTOR) != 0 || vt == VarEnum.VT_BLOB)
             {
@@ -454,10 +454,10 @@ namespace System.Windows.Media.Imaging
                             sizeIntPtr = sizeof(IntPtr);
                         }
 
-                        for (uint i=0; i<ca.cElems; i++)
+                        for (uint i = 0; i < ca.cElems; i++)
                         {
-                            #pragma warning suppress 6031 // Return value ignored on purpose.
-                            UnsafeNativeMethods.MILUnknown.Release(Marshal.ReadIntPtr(punkPtr, (int) (i*sizeIntPtr)));
+#pragma warning suppress 6031 // Return value ignored on purpose.
+                            UnsafeNativeMethods.MILUnknown.Release(Marshal.ReadIntPtr(punkPtr, (int)(i * sizeIntPtr)));
                         }
                     }
                     else if (vt == VarEnum.VT_LPWSTR || vt == VarEnum.VT_LPSTR)
@@ -469,9 +469,9 @@ namespace System.Windows.Media.Imaging
                             sizeIntPtr = sizeof(IntPtr);
                         }
 
-                        for (uint i=0; i<ca.cElems; i++)
+                        for (uint i = 0; i < ca.cElems; i++)
                         {
-                            Marshal.FreeCoTaskMem(Marshal.ReadIntPtr(strPtr, (int) (i*sizeIntPtr)));
+                            Marshal.FreeCoTaskMem(Marshal.ReadIntPtr(strPtr, (int)(i * sizeIntPtr)));
                         }
                     }
 
@@ -486,16 +486,16 @@ namespace System.Windows.Media.Imaging
             }
             else if (vt == VarEnum.VT_UNKNOWN)
             {
-                #pragma warning suppress 6031 // Return value ignored on purpose.
+#pragma warning suppress 6031 // Return value ignored on purpose.
                 UnsafeNativeMethods.MILUnknown.Release(punkVal);
             }
 
             vt = VarEnum.VT_EMPTY;
-       }
+        }
 
         internal object ToObject(object syncObject)
         {
-            VarEnum vt = (VarEnum) varType;
+            VarEnum vt = (VarEnum)varType;
 
             if ((vt & VarEnum.VT_VECTOR) != 0)
             {
@@ -505,132 +505,132 @@ namespace System.Windows.Media.Imaging
                         return null;
 
                     case VarEnum.VT_I1:
-                    {
-                        sbyte[] array = new sbyte[ca.cElems];
-                        for (int i=0; i<ca.cElems; i++)
-                            array[i] = (sbyte) Marshal.ReadByte(ca.pElems, i);
-                        return array;
-                    }
+                        {
+                            sbyte[] array = new sbyte[ca.cElems];
+                            for (int i = 0; i < ca.cElems; i++)
+                                array[i] = (sbyte)Marshal.ReadByte(ca.pElems, i);
+                            return array;
+                        }
 
                     case VarEnum.VT_UI1:
-                    {
-                        byte[] array = new byte[ca.cElems];
-                        Marshal.Copy(ca.pElems, array, 0, (int)ca.cElems);
-                        return array;
-                    }
+                        {
+                            byte[] array = new byte[ca.cElems];
+                            Marshal.Copy(ca.pElems, array, 0, (int)ca.cElems);
+                            return array;
+                        }
 
                     case VarEnum.VT_I2:
-                    {
-                        short[] array = new short[ca.cElems];
-                        Marshal.Copy(ca.pElems, array, 0, (int)ca.cElems);
-                        return array;
-                    }
+                        {
+                            short[] array = new short[ca.cElems];
+                            Marshal.Copy(ca.pElems, array, 0, (int)ca.cElems);
+                            return array;
+                        }
 
                     case VarEnum.VT_UI2:
-                    {
-                        ushort[] array = new ushort[ca.cElems];
-                        for (int i=0; i<ca.cElems; i++)
-                            array[i] = (ushort) Marshal.ReadInt16(ca.pElems, i*sizeof(ushort));
-                        return array;
-                    }
+                        {
+                            ushort[] array = new ushort[ca.cElems];
+                            for (int i = 0; i < ca.cElems; i++)
+                                array[i] = (ushort)Marshal.ReadInt16(ca.pElems, i * sizeof(ushort));
+                            return array;
+                        }
 
                     case VarEnum.VT_I4:
-                    {
-                        int[] array = new int[ca.cElems];
-                        Marshal.Copy(ca.pElems, array, 0, (int)ca.cElems);
-                        return array;
-                    }
+                        {
+                            int[] array = new int[ca.cElems];
+                            Marshal.Copy(ca.pElems, array, 0, (int)ca.cElems);
+                            return array;
+                        }
 
                     case VarEnum.VT_UI4:
-                    {
-                        uint[] array = new uint[ca.cElems];
-                        for (int i=0; i<ca.cElems; i++)
-                            array[i] = (uint) Marshal.ReadInt32(ca.pElems, i*sizeof(uint));
-                        return array;
-                    }
+                        {
+                            uint[] array = new uint[ca.cElems];
+                            for (int i = 0; i < ca.cElems; i++)
+                                array[i] = (uint)Marshal.ReadInt32(ca.pElems, i * sizeof(uint));
+                            return array;
+                        }
 
                     case VarEnum.VT_I8:
-                    {
-                        Int64[] array = new Int64[ca.cElems];
-                        Marshal.Copy(ca.pElems, array, 0, (int)ca.cElems);
-                        return array;
-                    }
+                        {
+                            Int64[] array = new Int64[ca.cElems];
+                            Marshal.Copy(ca.pElems, array, 0, (int)ca.cElems);
+                            return array;
+                        }
 
                     case VarEnum.VT_UI8:
-                    {
-                        UInt64[] array = new UInt64[ca.cElems];
-                        for (int i=0; i<ca.cElems; i++)
-                            array[i] = (UInt64) Marshal.ReadInt64(ca.pElems, i*sizeof(UInt64));
-                        return array;
-                    }
+                        {
+                            UInt64[] array = new UInt64[ca.cElems];
+                            for (int i = 0; i < ca.cElems; i++)
+                                array[i] = (UInt64)Marshal.ReadInt64(ca.pElems, i * sizeof(UInt64));
+                            return array;
+                        }
 
                     case VarEnum.VT_R4:
-                    {
-                        float[] array = new float[ca.cElems];
-                        Marshal.Copy(ca.pElems, array, 0, (int)ca.cElems);
-                        return array;
-                    }
+                        {
+                            float[] array = new float[ca.cElems];
+                            Marshal.Copy(ca.pElems, array, 0, (int)ca.cElems);
+                            return array;
+                        }
 
                     case VarEnum.VT_R8:
-                    {
-                        double[] array = new double[ca.cElems];
-                        Marshal.Copy(ca.pElems, array, 0, (int)ca.cElems);
-                        return array;
-                    }
+                        {
+                            double[] array = new double[ca.cElems];
+                            Marshal.Copy(ca.pElems, array, 0, (int)ca.cElems);
+                            return array;
+                        }
 
                     case VarEnum.VT_BOOL:
-                    {
-                        bool[] array = new bool[ca.cElems];
-                        for (int i=0; i<ca.cElems; i++)
-                            array[i] = (bool) (Marshal.ReadInt16(ca.pElems, i*sizeof(ushort)) != 0);
-                        return array;
-                    }
+                        {
+                            bool[] array = new bool[ca.cElems];
+                            for (int i = 0; i < ca.cElems; i++)
+                                array[i] = (bool)(Marshal.ReadInt16(ca.pElems, i * sizeof(ushort)) != 0);
+                            return array;
+                        }
 
                     case VarEnum.VT_CLSID:
-                    {
-                        Guid[] array = new Guid[ca.cElems];
-                        for (int i=0; i<ca.cElems; i++)
                         {
-                            byte[] guid = new byte[16];
-                            Marshal.Copy(ca.pElems, guid, i*16, 16);
-                            array[i] = new Guid(guid);
+                            Guid[] array = new Guid[ca.cElems];
+                            for (int i = 0; i < ca.cElems; i++)
+                            {
+                                byte[] guid = new byte[16];
+                                Marshal.Copy(ca.pElems, guid, i * 16, 16);
+                                array[i] = new Guid(guid);
+                            }
+                            return array;
                         }
-                        return array;
-                    }
 
                     case VarEnum.VT_LPSTR:
-                    {
-                        String[] array = new String[ca.cElems];
-                        int sizeIntPtr = 0;
-                        unsafe
                         {
-                            sizeIntPtr = sizeof(IntPtr);
-                        }
+                            String[] array = new String[ca.cElems];
+                            int sizeIntPtr = 0;
+                            unsafe
+                            {
+                                sizeIntPtr = sizeof(IntPtr);
+                            }
 
-                        for (int i=0; i<ca.cElems; i++)
-                        {
-                            IntPtr ptr = Marshal.ReadIntPtr(ca.pElems, i*sizeIntPtr);
-                            array[i] = Marshal.PtrToStringAnsi(ptr);
+                            for (int i = 0; i < ca.cElems; i++)
+                            {
+                                IntPtr ptr = Marshal.ReadIntPtr(ca.pElems, i * sizeIntPtr);
+                                array[i] = Marshal.PtrToStringAnsi(ptr);
+                            }
+                            return array;
                         }
-                        return array;
-                    }
 
                     case VarEnum.VT_LPWSTR:
-                    {
-                        String[] array = new String[ca.cElems];
-                        int sizeIntPtr = 0;
-                        unsafe
                         {
-                            sizeIntPtr = sizeof(IntPtr);
-                        }
+                            String[] array = new String[ca.cElems];
+                            int sizeIntPtr = 0;
+                            unsafe
+                            {
+                                sizeIntPtr = sizeof(IntPtr);
+                            }
 
-                        for (int i=0; i<ca.cElems; i++)
-                        {
-                            IntPtr ptr = Marshal.ReadIntPtr(ca.pElems, i*sizeIntPtr);
-                            array[i] = Marshal.PtrToStringUni(ptr);
+                            for (int i = 0; i < ca.cElems; i++)
+                            {
+                                IntPtr ptr = Marshal.ReadIntPtr(ca.pElems, i * sizeIntPtr);
+                                array[i] = Marshal.PtrToStringUni(ptr);
+                            }
+                            return array;
                         }
-                        return array;
-                    }
 
                     case VarEnum.VT_UNKNOWN:
                     default:
@@ -678,7 +678,7 @@ namespace System.Windows.Media.Imaging
                         return filetime;
 
                     case VarEnum.VT_BOOL:
-                        return (bool) (boolVal != 0);
+                        return (bool)(boolVal != 0);
 
                     case VarEnum.VT_CLSID:
                         byte[] guid = new byte[16];
@@ -692,59 +692,59 @@ namespace System.Windows.Media.Imaging
                         return Marshal.PtrToStringUni(pwszVal);
 
                     case VarEnum.VT_BLOB:
-                    {
-                        byte[] blob = new byte[ca.cElems];
-                        Marshal.Copy(ca.pElems, blob, 0, (int)ca.cElems);
-                        return new BitmapMetadataBlob(blob);
-                    }
+                        {
+                            byte[] blob = new byte[ca.cElems];
+                            Marshal.Copy(ca.pElems, blob, 0, (int)ca.cElems);
+                            return new BitmapMetadataBlob(blob);
+                        }
 
                     case VarEnum.VT_UNKNOWN:
-                    {
-                        IntPtr queryHandle = IntPtr.Zero;
-                        Guid guidIWICQueryWriter = MILGuidData.IID_IWICMetadataQueryWriter;
-                        Guid guidIWICQueryReader = MILGuidData.IID_IWICMetadataQueryReader;
-
-                        try
                         {
-                            int hr = UnsafeNativeMethods.MILUnknown.QueryInterface(punkVal, ref guidIWICQueryWriter, out queryHandle);
+                            IntPtr queryHandle = IntPtr.Zero;
+                            Guid guidIWICQueryWriter = MILGuidData.IID_IWICMetadataQueryWriter;
+                            Guid guidIWICQueryReader = MILGuidData.IID_IWICMetadataQueryReader;
 
-                            if (hr == HRESULT.S_OK)
+                            try
                             {
-                                // It's a IWICMetadataQueryWriter interface - read and write
-                                SafeMILHandle metadataHandle = new SafeMILHandle(queryHandle);
-
-                                // To avoid releasing the queryHandle in finally.
-                                queryHandle = IntPtr.Zero;
-
-                                return new BitmapMetadata(metadataHandle, false, false, syncObject);
-                            }
-                            else
-                            {
-                                hr = UnsafeNativeMethods.MILUnknown.QueryInterface(punkVal, ref guidIWICQueryReader, out queryHandle);
+                                int hr = UnsafeNativeMethods.MILUnknown.QueryInterface(punkVal, ref guidIWICQueryWriter, out queryHandle);
 
                                 if (hr == HRESULT.S_OK)
                                 {
-                                    // It's a IWICMetadataQueryReader interface - read only
+                                    // It's a IWICMetadataQueryWriter interface - read and write
                                     SafeMILHandle metadataHandle = new SafeMILHandle(queryHandle);
 
                                     // To avoid releasing the queryHandle in finally.
                                     queryHandle = IntPtr.Zero;
 
-                                    return new BitmapMetadata(metadataHandle, true, false, syncObject);
+                                    return new BitmapMetadata(metadataHandle, false, false, syncObject);
                                 }
+                                else
+                                {
+                                    hr = UnsafeNativeMethods.MILUnknown.QueryInterface(punkVal, ref guidIWICQueryReader, out queryHandle);
 
-                                HRESULT.Check(hr);
+                                    if (hr == HRESULT.S_OK)
+                                    {
+                                        // It's a IWICMetadataQueryReader interface - read only
+                                        SafeMILHandle metadataHandle = new SafeMILHandle(queryHandle);
+
+                                        // To avoid releasing the queryHandle in finally.
+                                        queryHandle = IntPtr.Zero;
+
+                                        return new BitmapMetadata(metadataHandle, true, false, syncObject);
+                                    }
+
+                                    HRESULT.Check(hr);
+                                }
                             }
-                        }
-                        finally
-                        {
-                            if (queryHandle != IntPtr.Zero)
+                            finally
                             {
-                                UnsafeNativeMethods.MILUnknown.ReleaseInterface(ref queryHandle);
+                                if (queryHandle != IntPtr.Zero)
+                                {
+                                    UnsafeNativeMethods.MILUnknown.ReleaseInterface(ref queryHandle);
+                                }
                             }
+                            break;
                         }
-                        break;
-                    }
 
                     default:
                         break;
@@ -752,13 +752,13 @@ namespace System.Windows.Media.Imaging
             }
 
             throw new System.NotSupportedException(SR.Image_PropertyNotSupported);
-       }
+        }
 
         internal bool RequiresSyncObject
         {
             get
             {
-                return (varType == (ushort) VarEnum.VT_UNKNOWN);
+                return (varType == (ushort)VarEnum.VT_UNKNOWN);
             }
         }
     }

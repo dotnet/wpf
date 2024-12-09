@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Runtime.InteropServices;
-using MS.Internal.Interop;
-using System.Windows.Threading;
 using System.Threading;
+using System.Windows.Threading;
+using MS.Internal.Interop;
 
 namespace MS.Win32
 {
@@ -39,7 +39,7 @@ namespace MS.Win32
 
             // Go find the address of DefWindowProc.
             IntPtr hModuleUser32 = UnsafeNativeMethods.GetModuleHandle(ExternDll.User32);
-            IntPtr address = UnsafeNativeMethods.GetProcAddress(new HandleRef(null,hModuleUser32), "DefWindowProcW");
+            IntPtr address = UnsafeNativeMethods.GetProcAddress(new HandleRef(null, hModuleUser32), "DefWindowProcW");
 
             DefWndProc = address;
         }
@@ -78,7 +78,7 @@ namespace MS.Win32
         // has been disposed its GCHandle is released at the time and hence this object 
         // is available for GC thereafter. Even in that case since all the cleanup has been 
         // done during dispose there is no further cleanup required.
-        
+
         // ~HwndSubclass()
         // {
         //     // In Shutdown, the finalizer is called on LIVE OBJECTS.
@@ -120,7 +120,7 @@ namespace MS.Win32
             if (_bond != Bond.Unattached)
                 throw new InvalidOperationException(SR.HwndSubclassMultipleAttach);
 
-            return CriticalAttach( hwnd ) ;
+            return CriticalAttach(hwnd);
         }
 
 
@@ -152,7 +152,7 @@ namespace MS.Win32
             bool detached;
 
             // If we have already detached, return immediately.
-            if(_bond == Bond.Detached || _bond == Bond.Unattached)
+            if (_bond == Bond.Detached || _bond == Bond.Unattached)
             {
                 detached = true;
             }
@@ -188,9 +188,9 @@ namespace MS.Win32
         internal void RequestDetach(bool force)
         {
             // Let the static version do the work.
-            if(_hwndAttached != IntPtr.Zero)
+            if (_hwndAttached != IntPtr.Zero)
             {
-                RequestDetach(_hwndAttached, (IntPtr) _gcHandle, force);
+                RequestDetach(_hwndAttached, (IntPtr)_gcHandle, force);
             }
         }
 
@@ -219,17 +219,17 @@ namespace MS.Win32
         /// </returns>
         internal static void RequestDetach(IntPtr hwnd, IntPtr subclass, bool force)
         {
-            if(hwnd == IntPtr.Zero)
+            if (hwnd == IntPtr.Zero)
             {
                 throw new ArgumentNullException("hwnd");
             }
-            if(subclass == IntPtr.Zero)
+            if (subclass == IntPtr.Zero)
             {
                 throw new ArgumentNullException("subclass");
             }
 
             int iForce = force ? 1 : 0;
-            UnsafeNativeMethods.UnsafeSendMessage(hwnd, DetachMessage, subclass, (IntPtr) iForce);
+            UnsafeNativeMethods.UnsafeSendMessage(hwnd, DetachMessage, subclass, (IntPtr)iForce);
         }
 
         /// <summary>
@@ -267,28 +267,28 @@ namespace MS.Win32
             // ourselves as if the original window proc had been DefWindowProc.
             // We pass in DefWndProcStub as a workaround for a bug in UxTheme on
             // Windows XP. For details see the comment on the DefWndProcWrapper method.
-            if(_bond == Bond.Unattached)
+            if (_bond == Bond.Unattached)
             {
                 HookWindowProc(hwnd, new NativeMethods.WndProc(SubclassWndProc),
                     Marshal.GetFunctionPointerForDelegate(DefWndProcStub));
             }
-            else if(_bond == Bond.Detached)
+            else if (_bond == Bond.Detached)
             {
                 throw new InvalidOperationException();
             }
 
             IntPtr oldWndProc = _oldWndProc;    // in case we get detached during this method
 
-            if(message == DetachMessage)
+            if (message == DetachMessage)
             {
                 // We received our special message to detach.  Make sure it is intended
                 // for us by matching the bridge.
-                if(wParam == IntPtr.Zero || wParam == (IntPtr)_gcHandle)
+                if (wParam == IntPtr.Zero || wParam == (IntPtr)_gcHandle)
                 {
                     int param = (int)lParam;    // 0 - normal, 1 - force, 2 - force and forward
                     bool force = (param > 0);
 
-                    retval = CriticalDetach(force) ? new IntPtr(1) : IntPtr.Zero ;
+                    retval = CriticalDetach(force) ? new IntPtr(1) : IntPtr.Zero;
                     handled = (param < 2);
                 }
             }
@@ -297,7 +297,7 @@ namespace MS.Win32
                 // Pass this message to our delegate function.  Do this under
                 // the exception filter/handlers of the dispatcher for this thread.
                 Dispatcher dispatcher = Dispatcher.FromThread(Thread.CurrentThread);
-                if(dispatcher != null && !dispatcher.HasShutdownFinished)
+                if (dispatcher != null && !dispatcher.HasShutdownFinished)
                 {
                     if (_dispatcherOperationCallback == null)
                         _dispatcherOperationCallback = new DispatcherOperationCallback(this.DispatcherCallbackOperation);
@@ -332,7 +332,7 @@ namespace MS.Win32
                 }
 
                 // Handle WM_NCDESTROY explicitly to forcibly clean up.
-                if(message == WindowMessage.WM_NCDESTROY)
+                if (message == WindowMessage.WM_NCDESTROY)
                 {
                     // The fact that we received this message means that we are
                     // still in the call chain.  This is our last chance to clean
@@ -347,7 +347,7 @@ namespace MS.Win32
 
             // If our window proc didn't handle this message, pass it on down the
             // chain.
-            if(!handled)
+            if (!handled)
             {
                 retval = CallOldWindowProc(oldWndProc, hwnd, message, wParam, lParam);
             }
@@ -372,23 +372,23 @@ namespace MS.Win32
 
         private DispatcherOperationCallback _dispatcherOperationCallback = null;
 
-        internal IntPtr CriticalAttach( IntPtr hwnd )
+        internal IntPtr CriticalAttach(IntPtr hwnd)
         {
-            if(hwnd == IntPtr.Zero)
+            if (hwnd == IntPtr.Zero)
             {
                 throw new ArgumentNullException("hwnd");
             }
-            if(_bond != Bond.Unattached)
+            if (_bond != Bond.Unattached)
             {
                 throw new InvalidOperationException();
             }
 
             NativeMethods.WndProc newWndProc = new NativeMethods.WndProc(SubclassWndProc);
-            IntPtr oldWndProc = UnsafeNativeMethods.GetWindowLongPtr(new HandleRef(this,hwnd), NativeMethods.GWL_WNDPROC);
+            IntPtr oldWndProc = UnsafeNativeMethods.GetWindowLongPtr(new HandleRef(this, hwnd), NativeMethods.GWL_WNDPROC);
             HookWindowProc(hwnd, newWndProc, oldWndProc);
 
             // Return the GC handle as a unique identifier of this
-            return (IntPtr) _gcHandle;
+            return (IntPtr)_gcHandle;
         }
 
         private object DispatcherCallbackOperation(object o)
@@ -398,7 +398,7 @@ namespace MS.Win32
             param.retVal = IntPtr.Zero;
             if (_bond == Bond.Attached)
             {
-                HwndWrapperHook hook= _hook.Target as HwndWrapperHook;
+                HwndWrapperHook hook = _hook.Target as HwndWrapperHook;
 
                 if (hook != null)
                 {
@@ -440,7 +440,7 @@ namespace MS.Win32
         private void HookWindowProc(IntPtr hwnd, NativeMethods.WndProc newWndProc, IntPtr oldWndProc)
         {
             _hwndAttached = hwnd;
-            _hwndHandleRef = new HandleRef(null,_hwndAttached);
+            _hwndHandleRef = new HandleRef(null, _hwndAttached);
             _bond = Bond.Attached;
 
             _attachedWndProc = newWndProc;
@@ -487,7 +487,7 @@ namespace MS.Win32
             // the 'force' parameter was true.
             if (!force)
             {
-                NativeMethods.WndProc currentWndProc = UnsafeNativeMethods.GetWindowLongWndProc(new HandleRef(this,_hwndAttached));
+                NativeMethods.WndProc currentWndProc = UnsafeNativeMethods.GetWindowLongWndProc(new HandleRef(this, _hwndAttached));
                 force = (currentWndProc == _attachedWndProc);
             }
 
@@ -521,7 +521,7 @@ namespace MS.Win32
             _oldWndProc = IntPtr.Zero;
             _attachedWndProc = null;
             _hwndAttached = IntPtr.Zero;
-            _hwndHandleRef = new HandleRef(null,IntPtr.Zero);
+            _hwndHandleRef = new HandleRef(null, IntPtr.Zero);
 
             // un-Pin this object.
             // Note: the GC is free to collect this object at anytime
@@ -531,7 +531,7 @@ namespace MS.Win32
             //AvDebug.Assert(_gcHandle.IsAllocated, "External GC handle has not been allocated.");
 
             // GCHandle is a non-nullable type.  Check GCHandle.IsAllocated before calling Free().
-            if(_gcHandle.IsAllocated)
+            if (_gcHandle.IsAllocated)
                 _gcHandle.Free();
 
             return true;
@@ -600,9 +600,9 @@ namespace MS.Win32
         private IntPtr _hwndAttached;
         private HandleRef _hwndHandleRef;
         private NativeMethods.WndProc _attachedWndProc;
-        private IntPtr                _oldWndProc;
-        private Bond                  _bond;
-        private GCHandle              _gcHandle;
+        private IntPtr _oldWndProc;
+        private Bond _bond;
+        private GCHandle _gcHandle;
         private WeakReference _hook;
     };
 }

@@ -1,17 +1,17 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal;
-using MS.Internal.Documents;
-using System.Windows.Input; // KeyboardNavigation
+using System.Collections; // IEnumerator
 using System.ComponentModel; // DefaultValue
+using System.Windows.Automation.Peers; // AutomationPattern
 using System.Windows.Controls.Primitives; // TextBoxBase
 using System.Windows.Documents; // TextEditor
-using System.Windows.Automation.Peers; // AutomationPattern
+using System.Windows.Input; // KeyboardNavigation
 using System.Windows.Markup; // IAddChild
-using System.Collections; // IEnumerator
+using MS.Internal;
 using MS.Internal.Controls; // EmptyEnumerator
+using MS.Internal.Documents;
 using MS.Internal.Telemetry.PresentationFramework;
 
 //
@@ -51,7 +51,7 @@ namespace System.Windows.Controls
 
             if (!FrameworkAppContextSwitches.UseAdornerForTextboxSelectionRendering)
             {
-                
+
                 // Override the default selection opacity so if FrameworkAppContextSwitches.UseAdornerForTextboxSelectionRendering
                 // is false, we still get the appropriate value.
                 TextBoxBase.SelectionOpacityProperty.OverrideMetadata(typeof(RichTextBox), new FrameworkPropertyMetadata(TextBoxBase.AdornerSelectionOpacityDefaultValue));
@@ -72,7 +72,7 @@ namespace System.Windows.Controls
         /// Creates implicit instance of a FlowDocument as its initial content.
         /// The initial document will contain one Paragraph with an empty Run in it.
         /// </remarks>
-        public RichTextBox() 
+        public RichTextBox()
             : this(null)
         {
         }
@@ -284,7 +284,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// Creates AutomationPeer (<see cref="UIElement.OnCreateAutomationPeer"/>)
         /// </summary>
-        protected override AutomationPeer OnCreateAutomationPeer() 
+        protected override AutomationPeer OnCreateAutomationPeer()
         {
             return new RichTextBoxAutomationPeer(this);
         }
@@ -314,8 +314,10 @@ namespace System.Windows.Controls
         // Allocates the initial render scope for this control.
         internal override FrameworkElement CreateRenderScope()
         {
-            FlowDocumentView renderScope = new FlowDocumentView();
-            renderScope.Document = this.Document;
+            FlowDocumentView renderScope = new FlowDocumentView
+            {
+                Document = this.Document
+            };
 
             // Set a margin so that the BiDi Or Italic caret has room to render at the edges of content.
             // Otherwise, anti-aliasing or italic causes the caret to be partially clipped.
@@ -353,7 +355,7 @@ namespace System.Windows.Controls
                 ArgumentNullException.ThrowIfNull(value);
 
                 if (value != _document &&
-                    value.StructuralCache != null && value.StructuralCache.TextContainer != null && 
+                    value.StructuralCache != null && value.StructuralCache.TextContainer != null &&
                     value.StructuralCache.TextContainer.TextSelection != null)
                 {
                     throw new ArgumentException(SR.RichTextBox_DocumentBelongsToAnotherRichTextBoxAlready);
@@ -372,7 +374,7 @@ namespace System.Windows.Controls
 
                 // Identify the case for the _document initialization
                 bool initialSetting = _document == null;
-                
+
                 // Detach existing FlowDocument
                 if (_document != null)
                 {
@@ -577,7 +579,7 @@ namespace System.Windows.Controls
                 Selection.SetCaretToPosition(value, value.LogicalDirection, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/false);
             }
         }
-        
+
         #endregion Content Accessing Properties
 
         #endregion Public Properties

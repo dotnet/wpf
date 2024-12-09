@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,12 +6,12 @@
 // Description: Contains the ScrollContentPresenter class.
 //
 
-using MS.Internal;
-using MS.Utility;
 using System.ComponentModel;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Media;
+using MS.Internal;
+using MS.Utility;
 
 namespace System.Windows.Controls
 {
@@ -54,28 +54,32 @@ namespace System.Windows.Controls
         /// </summary>
         public void LineUp()
         {
-            if (IsScrollClient) { SetVerticalOffset(VerticalOffset - ScrollViewer._scrollLineDelta); }
+            if (IsScrollClient)
+            { SetVerticalOffset(VerticalOffset - ScrollViewer._scrollLineDelta); }
         }
         /// <summary>
         /// Scroll content by one line to the bottom.
         /// </summary>
         public void LineDown()
         {
-            if (IsScrollClient) { SetVerticalOffset(VerticalOffset + ScrollViewer._scrollLineDelta); }
+            if (IsScrollClient)
+            { SetVerticalOffset(VerticalOffset + ScrollViewer._scrollLineDelta); }
         }
         /// <summary>
         /// Scroll content by one line to the left.
         /// </summary>
         public void LineLeft()
         {
-            if (IsScrollClient) { SetHorizontalOffset(HorizontalOffset - ScrollViewer._scrollLineDelta); }
+            if (IsScrollClient)
+            { SetHorizontalOffset(HorizontalOffset - ScrollViewer._scrollLineDelta); }
         }
         /// <summary>
         /// Scroll content by one line to the right.
         /// </summary>
         public void LineRight()
         {
-            if (IsScrollClient) { SetHorizontalOffset(HorizontalOffset + ScrollViewer._scrollLineDelta); }
+            if (IsScrollClient)
+            { SetHorizontalOffset(HorizontalOffset + ScrollViewer._scrollLineDelta); }
         }
 
         /// <summary>
@@ -83,28 +87,32 @@ namespace System.Windows.Controls
         /// </summary>
         public void PageUp()
         {
-            if (IsScrollClient) { SetVerticalOffset(VerticalOffset - ViewportHeight); }
+            if (IsScrollClient)
+            { SetVerticalOffset(VerticalOffset - ViewportHeight); }
         }
         /// <summary>
         /// Scroll content by one page to the bottom.
         /// </summary>
         public void PageDown()
         {
-            if (IsScrollClient) { SetVerticalOffset(VerticalOffset + ViewportHeight); }
+            if (IsScrollClient)
+            { SetVerticalOffset(VerticalOffset + ViewportHeight); }
         }
         /// <summary>
         /// Scroll content by one page to the left.
         /// </summary>
         public void PageLeft()
         {
-            if (IsScrollClient) { SetHorizontalOffset(HorizontalOffset - ViewportWidth); }
+            if (IsScrollClient)
+            { SetHorizontalOffset(HorizontalOffset - ViewportWidth); }
         }
         /// <summary>
         /// Scroll content by one page to the right.
         /// </summary>
         public void PageRight()
         {
-            if (IsScrollClient) { SetHorizontalOffset(HorizontalOffset + ViewportWidth); }
+            if (IsScrollClient)
+            { SetHorizontalOffset(HorizontalOffset + ViewportWidth); }
         }
 
         /// <summary>
@@ -112,28 +120,32 @@ namespace System.Windows.Controls
         /// </summary>
         public void MouseWheelUp()
         {
-            if (IsScrollClient) { SetVerticalOffset(VerticalOffset - ScrollViewer._mouseWheelDelta); }
+            if (IsScrollClient)
+            { SetVerticalOffset(VerticalOffset - ScrollViewer._mouseWheelDelta); }
         }
         /// <summary>
         /// Scroll content by one line to the bottom.
         /// </summary>
         public void MouseWheelDown()
         {
-            if (IsScrollClient) { SetVerticalOffset(VerticalOffset + ScrollViewer._mouseWheelDelta); }
+            if (IsScrollClient)
+            { SetVerticalOffset(VerticalOffset + ScrollViewer._mouseWheelDelta); }
         }
         /// <summary>
         /// Scroll content by one page to the top.
         /// </summary>
         public void MouseWheelLeft()
         {
-            if (IsScrollClient) { SetHorizontalOffset(HorizontalOffset - ScrollViewer._mouseWheelDelta); }
+            if (IsScrollClient)
+            { SetHorizontalOffset(HorizontalOffset - ScrollViewer._mouseWheelDelta); }
         }
         /// <summary>
         /// Scroll content by one page to the bottom.
         /// </summary>
         public void MouseWheelRight()
         {
-            if (IsScrollClient) { SetHorizontalOffset(HorizontalOffset + ScrollViewer._mouseWheelDelta); }
+            if (IsScrollClient)
+            { SetHorizontalOffset(HorizontalOffset + ScrollViewer._mouseWheelDelta); }
         }
 
         /// <summary>
@@ -203,7 +215,7 @@ namespace System.Windows.Controls
         /// </summary>
         public bool CanContentScroll
         {
-            get { return (bool) GetValue(CanContentScrollProperty); }
+            get { return (bool)GetValue(CanContentScrollProperty); }
             set { SetValue(CanContentScrollProperty, value); }
         }
 
@@ -213,7 +225,7 @@ namespace System.Windows.Controls
         /// </summary>
         public bool CanHorizontallyScroll
         {
-            get { return (IsScrollClient) ? EnsureScrollData()._canHorizontallyScroll : false;  }
+            get { return (IsScrollClient) ? EnsureScrollData()._canHorizontallyScroll : false; }
             set
             {
                 if (IsScrollClient && (EnsureScrollData()._canHorizontallyScroll != value))
@@ -246,14 +258,14 @@ namespace System.Windows.Controls
         /// </summary>
         public double ExtentWidth
         {
-            get  { return (IsScrollClient) ? EnsureScrollData()._extent.Width : 0.0; }
+            get { return (IsScrollClient) ? EnsureScrollData()._extent.Width : 0.0; }
         }
         /// <summary>
         /// ExtentHeight contains the vertical size of the scrolled content element in 1/96"
         /// </summary>
         public double ExtentHeight
         {
-            get  { return (IsScrollClient) ? EnsureScrollData()._extent.Height : 0.0; }
+            get { return (IsScrollClient) ? EnsureScrollData()._extent.Height : 0.0; }
         }
         /// <summary>
         /// ViewportWidth contains the horizontal size of content's visible range in 1/96"
@@ -294,7 +306,7 @@ namespace System.Windows.Controls
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public ScrollViewer ScrollOwner
         {
-            get { return (IsScrollClient) ? _scrollData._scrollOwner: null; }
+            get { return (IsScrollClient) ? _scrollData._scrollOwner : null; }
             set { if (IsScrollClient) { _scrollData._scrollOwner = value; } }
         }
 
@@ -355,7 +367,7 @@ namespace System.Windows.Controls
                         throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
                 }
             }
-         }
+        }
 
         /// <summary>
         /// Gets or sets the template child of the FrameworkElement.
@@ -380,7 +392,7 @@ namespace System.Windows.Controls
 
                     base.TemplateChild = value;
 
-                    if(oldTemplate == null && value != null)
+                    if (oldTemplate == null && value != null)
                     {
                         // If we did not use to have a template child, but we have one
                         // now, attach the adorner layer.
@@ -419,8 +431,10 @@ namespace System.Windows.Controls
                     {
                         Size childConstraint = constraint;
 
-                        if (_scrollData._canHorizontallyScroll) { childConstraint.Width = Double.PositiveInfinity; }
-                        if (_scrollData._canVerticallyScroll) { childConstraint.Height = Double.PositiveInfinity; }
+                        if (_scrollData._canHorizontallyScroll)
+                        { childConstraint.Width = Double.PositiveInfinity; }
+                        if (_scrollData._canVerticallyScroll)
+                        { childConstraint.Height = Double.PositiveInfinity; }
 
                         desiredSize = base.MeasureOverride(childConstraint);
                     }
@@ -699,7 +713,8 @@ namespace System.Windows.Controls
 
         private ScrollData EnsureScrollData()
         {
-            if (_scrollData == null) { _scrollData = new ScrollData(); }
+            if (_scrollData == null)
+            { _scrollData = new ScrollData(); }
             return _scrollData;
         }
 
@@ -746,7 +761,7 @@ namespace System.Windows.Controls
                                 itemsPresenter.ApplyTemplate();
 
                                 int count = VisualTreeHelper.GetChildrenCount(itemsPresenter);
-                                if(count > 0)
+                                if (count > 0)
                                     si = VisualTreeHelper.GetChild(itemsPresenter, 0) as IScrollInfo;
                             }
                         }
@@ -763,8 +778,10 @@ namespace System.Windows.Controls
                 // Detach any differing previous IScrollInfo from ScrollViewer
                 if (si != _scrollInfo && _scrollInfo != null)
                 {
-                    if (IsScrollClient) { _scrollData = null; }
-                    else _scrollInfo.ScrollOwner = null;
+                    if (IsScrollClient)
+                    { _scrollData = null; }
+                    else
+                        _scrollInfo.ScrollOwner = null;
                 }
 
                 // Introduce our ScrollViewer and IScrollInfo to each other.
@@ -780,7 +797,8 @@ namespace System.Windows.Controls
             // back into a totally unlinked state.
             else if (_scrollInfo != null)
             {
-                if (_scrollInfo.ScrollOwner != null) { _scrollInfo.ScrollOwner.ScrollInfo = null; }
+                if (_scrollInfo.ScrollOwner != null)
+                { _scrollInfo.ScrollOwner.ScrollInfo = null; }
                 _scrollInfo.ScrollOwner = null;
                 _scrollInfo = null;
                 _scrollData = null;
@@ -801,8 +819,10 @@ namespace System.Windows.Controls
             //  Infinity size from measure, which is a regression from the old scrolling model.
             // They also have the incidental affect of probably avoiding reinvalidation at Arrange
             //   when inside a parent that measures you to Infinity.
-            if (Double.IsInfinity(viewport.Width)) viewport.Width = extent.Width;
-            if (Double.IsInfinity(viewport.Height)) viewport.Height = extent.Height;
+            if (Double.IsInfinity(viewport.Width))
+                viewport.Width = extent.Width;
+            if (Double.IsInfinity(viewport.Height))
+                viewport.Height = extent.Height;
 
             fValid &= DoubleUtil.AreClose(viewport, _scrollData._viewport);
             fValid &= DoubleUtil.AreClose(extent, _scrollData._extent);
@@ -821,8 +841,10 @@ namespace System.Windows.Controls
         // Internal because it is also used by other Avalon ISI implementations (just to avoid code duplication).
         static internal double CoerceOffset(double offset, double extent, double viewport)
         {
-            if (offset > extent - viewport) { offset = extent - viewport; }
-            if (offset < 0) { offset = 0; }
+            if (offset > extent - viewport)
+            { offset = extent - viewport; }
+            if (offset < 0)
+            { offset = 0; }
             return offset;
         }
 
@@ -849,7 +871,7 @@ namespace System.Windows.Controls
                 return;
             }
 
-// the code that was here appeared to care about the first time this property was ever set -- verify if this replacement is okay
+            // the code that was here appeared to care about the first time this property was ever set -- verify if this replacement is okay
             scp.HookupScrollingComponents();
             scp.InvalidateMeasure();
         }

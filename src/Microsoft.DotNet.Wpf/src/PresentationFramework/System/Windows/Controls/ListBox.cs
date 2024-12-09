@@ -1,16 +1,16 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using MS.Internal;
 using System.Collections;
 using System.ComponentModel;
-using System.Windows.Threading;
-using System.Windows.Media;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using System.Windows.Automation.Peers;
+using System.Windows.Media;
+using System.Windows.Threading;
+using MS.Internal;
 using MS.Internal.Commands; // CommandHelpers
 using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;
@@ -50,7 +50,7 @@ namespace System.Windows.Controls
         // common code for all constructors
         private void Initialize()
         {
-            SelectionMode mode = (SelectionMode) SelectionModeProperty.GetDefaultValue(DependencyObjectType);
+            SelectionMode mode = (SelectionMode)SelectionModeProperty.GetDefaultValue(DependencyObjectType);
             ValidateSelectionMode(mode);
         }
 
@@ -157,7 +157,7 @@ namespace System.Windows.Controls
         /// </summary>
         public SelectionMode SelectionMode
         {
-            get { return (SelectionMode) GetValue(SelectionModeProperty); }
+            get { return (SelectionMode)GetValue(SelectionModeProperty); }
             set { SetValue(SelectionModeProperty, value); }
         }
 
@@ -289,10 +289,10 @@ namespace System.Windows.Controls
                     UpdateAnchorAndActionItem(info);
             }
 
-            if (    AutomationPeer.ListenerExists(AutomationEvents.SelectionPatternOnInvalidated)
-                ||  AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementSelected)
-                ||  AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementAddedToSelection)
-                ||  AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection)   )
+            if (AutomationPeer.ListenerExists(AutomationEvents.SelectionPatternOnInvalidated)
+                || AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementSelected)
+                || AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementAddedToSelection)
+                || AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection))
             {
                 ListBoxAutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(this) as ListBoxAutomationPeer;
                 if (peer != null)
@@ -345,7 +345,7 @@ namespace System.Windows.Controls
                 case Key.Left:
                 case Key.Down:
                 case Key.Right:
-                    {                   
+                    {
                         KeyboardNavigation.ShowFocusVisual();
 
                         // Depend on logical orientation we decide to move focus or just scroll
@@ -355,8 +355,8 @@ namespace System.Windows.Controls
                         {
                             shouldScroll =
                                 ((key == Key.Down && IsLogicalHorizontal && DoubleUtil.GreaterThan(ScrollHost.ScrollableHeight, ScrollHost.VerticalOffset))) ||
-                                ((key == Key.Up   && IsLogicalHorizontal && DoubleUtil.GreaterThanZero(ScrollHost.VerticalOffset))) ||
-                                ((key == Key.Right&& IsLogicalVertical && DoubleUtil.GreaterThan(ScrollHost.ScrollableWidth, ScrollHost.HorizontalOffset))) ||
+                                ((key == Key.Up && IsLogicalHorizontal && DoubleUtil.GreaterThanZero(ScrollHost.VerticalOffset))) ||
+                                ((key == Key.Right && IsLogicalVertical && DoubleUtil.GreaterThan(ScrollHost.ScrollableWidth, ScrollHost.HorizontalOffset))) ||
                                 ((key == Key.Left && IsLogicalVertical && DoubleUtil.GreaterThanZero(ScrollHost.HorizontalOffset)));
                         }
 
@@ -403,7 +403,7 @@ namespace System.Windows.Controls
                         ListBoxItem source = e.OriginalSource as ListBoxItem;
 
                         // If ALT is down & Ctrl is up, then we shouldn't handle this. (system menu)
-                        if ((Keyboard.Modifiers & (ModifierKeys.Control|ModifierKeys.Alt)) == ModifierKeys.Alt)
+                        if ((Keyboard.Modifiers & (ModifierKeys.Control | ModifierKeys.Alt)) == ModifierKeys.Alt)
                         {
                             handled = false;
                             break;
@@ -487,7 +487,7 @@ namespace System.Windows.Controls
                         handled = false;
                         break;
                     }
-                    
+
                     Key skey = e.SystemKey;
                     switch (skey)
                     {
@@ -617,8 +617,10 @@ namespace System.Windows.Controls
                 Debug.Assert(_autoScrollTimer == null, "IsMouseCaptured went from true to true");
                 if (_autoScrollTimer == null)
                 {
-                    _autoScrollTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
-                    _autoScrollTimer.Interval = AutoScrollTimeout;
+                    _autoScrollTimer = new DispatcherTimer(DispatcherPriority.SystemIdle)
+                    {
+                        Interval = AutoScrollTimeout
+                    };
                     _autoScrollTimer.Tick += new EventHandler(OnAutoScrollTimeout);
                     _autoScrollTimer.Start();
                 }
@@ -1051,7 +1053,7 @@ namespace System.Windows.Controls
         private WeakReference _lastActionItem;
 
         private DispatcherTimer _autoScrollTimer;
-        
+
         private const double ColumnWidthStepSize = 10d;
 
         private static RoutedUICommand SelectAllCommand =

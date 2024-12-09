@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -46,7 +46,7 @@ namespace System.Windows.Controls
                 // in a BindingGroup, check the item-level IDataErrorInfo for each
                 // source item in the group
                 IList items = bindingGroup.Items;
-                for (int i=items.Count-1; i>=0; --i)
+                for (int i = items.Count - 1; i >= 0; --i)
                 {
                     IDataErrorInfo idei = items[i] as IDataErrorInfo;
                     if (idei != null)
@@ -74,11 +74,11 @@ namespace System.Windows.Controls
 
                     // PreSharp uses message numbers that the C# compiler doesn't know about.
                     // Disable the C# complaints, per the PreSharp documentation.
-                    #pragma warning disable 1634, 1691
+#pragma warning disable 1634, 1691
 
                     // PreSharp complains about catching NullReference (and other) exceptions.
                     // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-                    #pragma warning disable 56500
+#pragma warning disable 56500
 
                     string error;
                     try
@@ -103,8 +103,8 @@ namespace System.Windows.Controls
                                             bindingExpr);
                         }
                     }
-                    #pragma warning restore 56500
-                    #pragma warning restore 1634, 1691
+#pragma warning restore 56500
+#pragma warning restore 1634, 1691
 
                     if (!String.IsNullOrEmpty(error))
                     {

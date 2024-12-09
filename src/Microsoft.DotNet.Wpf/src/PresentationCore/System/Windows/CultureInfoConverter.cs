@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -59,7 +59,7 @@ namespace System.Windows
         /// </returns>
         /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
         /// <param name="destinationType"> The Type being queried for support. </param>
-        public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType) 
+        public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType)
         {
             // We can convert to an InstanceDescriptor or to a string.
             return destinationType == typeof(InstanceDescriptor) ||
@@ -82,8 +82,8 @@ namespace System.Windows
         /// <param name="typeDescriptorContext">The ITypeDescriptorContext for this call.</param>
         /// <param name="cultureInfo">The CultureInfo which is respected when converting.</param>
         /// <param name="source">The object to convert to a CultureInfo.</param>
-        public override object ConvertFrom(ITypeDescriptorContext typeDescriptorContext, 
-                                           CultureInfo cultureInfo, 
+        public override object ConvertFrom(ITypeDescriptorContext typeDescriptorContext,
+                                           CultureInfo cultureInfo,
                                            object source)
         {
             string cultureName = source as string;
@@ -112,7 +112,7 @@ namespace System.Windows
         /// <param name="cultureInfo"> The CultureInfo which is respected when converting. </param>
         /// <param name="value"> The double to convert. </param>
         /// <param name="destinationType">The type to which to convert the CultureInfo. </param>
-        public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, 
+        public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext,
                                          CultureInfo cultureInfo,
                                          object value,
                                          Type destinationType)

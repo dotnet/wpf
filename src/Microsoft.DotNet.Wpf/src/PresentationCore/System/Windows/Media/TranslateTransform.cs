@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -40,10 +40,10 @@ namespace System.Windows.Media
         ///</summary>
         public override Matrix Value
         {
-            get 
+            get
             {
                 ReadPreamble();
-                
+
                 Matrix matrix = Matrix.Identity;
 
                 matrix.Translate(X, Y);
@@ -51,13 +51,13 @@ namespace System.Windows.Media
                 return matrix;
             }
         }
-        
+
         ///<summary>
         /// Returns true if transformation matches the identity transform.
         ///</summary>
         internal override bool IsIdentity
         {
-            get 
+            get
             {
                 return X == 0 && Y == 0 && CanFreeze;
             }

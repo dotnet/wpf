@@ -1,22 +1,21 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 using System.Collections;
-using System.IO;
-using System.Xml;
 using System.ComponentModel;
+using System.IO;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
-using System.Windows.Media.Media3D;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
-
-using Microsoft.Internal.AlphaFlattener;
-using System.Windows.Xps.Serialization;
 using System.Windows.Xps.Packaging;
+using System.Windows.Xps.Serialization;
+using System.Xml;
+using Microsoft.Internal.AlphaFlattener;
 
 namespace MS.Internal.ReachFramework
 {
@@ -247,13 +246,13 @@ namespace MS.Internal.ReachFramework
                 {
                     m_imageConverter = new LooseImageSourceTypeConverter(m_mainFile);
                 }
-                
+
                 return m_imageConverter;
             }
 
             return null;
         }
-    } 
+    }
 }
 
 namespace System.Windows.Xps.Serialization
@@ -298,7 +297,7 @@ namespace System.Windows.Xps.Serialization
         #region Private Fields
 
         DrawingContextFlattener _dcf;
-        Dictionary<String, int>      _nameList;
+        Dictionary<String, int> _nameList;
 
         //
         // Fix bug 1514270: Any VisualBrush.Visual rasterization occurs in brush-space, which
@@ -344,7 +343,7 @@ namespace System.Windows.Xps.Serialization
         internal VisualTreeFlattener(IMetroDrawingContext dc, Size pageSize, TreeWalkProgress treeWalkProgress)
         {
             Debug.Assert(treeWalkProgress != null);
-            
+
             // DrawingContextFlattener flattens calls to DrawingContext
             _dcf = new DrawingContextFlattener(dc, pageSize, treeWalkProgress);
         }
@@ -359,7 +358,7 @@ namespace System.Windows.Xps.Serialization
         internal VisualTreeFlattener(System.Xml.XmlWriter resWriter, System.Xml.XmlWriter bodyWriter, PackageSerializationManager manager, Size pageSize, TreeWalkProgress treeWalkProgress)
         {
             Debug.Assert(treeWalkProgress != null);
-                        
+
             VisualSerializer dc = new VisualSerializer(resWriter, bodyWriter, manager);
 
             _dcf = new DrawingContextFlattener(dc, pageSize, treeWalkProgress);
@@ -383,7 +382,7 @@ namespace System.Windows.Xps.Serialization
             }
 
             DrawingGroup dg = drawing as DrawingGroup;
-            
+
             if (dg != null)
             {
                 if (Utility.IsTransparent(dg.Opacity))
@@ -644,10 +643,10 @@ namespace System.Windows.Xps.Serialization
             {
                 int count = VisualTreeHelper.GetChildrenCount(visual);
 
-                for(int i = 0; i < count; i++)
+                for (int i = 0; i < count; i++)
                 {
                     // StartVisual() special cases Viewport3DVisual to avoid walking children.
-                    VisualWalk((Visual) VisualTreeHelper.GetChild(visual,i));
+                    VisualWalk((Visual)VisualTreeHelper.GetChild(visual, i));
                 }
 
 
@@ -666,7 +665,7 @@ namespace System.Windows.Xps.Serialization
             {
                 return;
             }
-            
+
             {
                 GeometryDrawing gd = d as GeometryDrawing;
 
@@ -677,7 +676,7 @@ namespace System.Windows.Xps.Serialization
                     return;
                 }
             }
-            
+
             {
                 GlyphRunDrawing gd = d as GlyphRunDrawing;
 
@@ -688,7 +687,7 @@ namespace System.Windows.Xps.Serialization
                     return;
                 }
             }
-            
+
             {
                 ImageDrawing id = d as ImageDrawing;
 
@@ -699,7 +698,7 @@ namespace System.Windows.Xps.Serialization
                     return;
                 }
             }
-            
+
             DrawingGroup dg = d as DrawingGroup;
 
             if (dg != null)
@@ -805,7 +804,7 @@ namespace System.Windows.Xps.Serialization
             resWriter.WriteStartElement("Canvas.Resources");
             resWriter.WriteStartElement("ResourceDictionary");
             resWriter.WriteWhitespace("\r\n");
-            
+
             VisualTreeFlattener flattener = new VisualTreeFlattener(resWriter, bodyWriter, manager, new Size(8.5 * 96, 11 * 96), new TreeWalkProgress());
 
             flattener.VisualWalk(visual);

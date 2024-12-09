@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,9 +9,9 @@
 //
 
 
-using System.Net;
-using System.IO.Packaging;
 using System.IO;
+using System.IO.Packaging;
+using System.Net;
 
 namespace MS.Internal.AppModel
 {
@@ -49,7 +49,7 @@ namespace MS.Internal.AppModel
             if (SiteOfOriginContainer._traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        Environment.CurrentManagedThreadId + 
+                        Environment.CurrentManagedThreadId +
                         ": SiteOfOriginPart: Getting stream.");
 #endif
             return GetStreamAndSetContentType(false);
@@ -61,10 +61,10 @@ namespace MS.Internal.AppModel
             if (SiteOfOriginContainer._traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        Environment.CurrentManagedThreadId + 
+                        Environment.CurrentManagedThreadId +
                         ": SiteOfOriginPart: Getting content type.");
 #endif
-            
+
             GetStreamAndSetContentType(true);
             return _contentType.ToString();
         }
@@ -89,12 +89,12 @@ namespace MS.Internal.AppModel
                     if (SiteOfOriginContainer._traceSwitch.Enabled)
                         System.Diagnostics.Trace.TraceInformation(
                                 DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                Environment.CurrentManagedThreadId + 
+                                Environment.CurrentManagedThreadId +
                                 ": SiteOfOriginPart: Getting content type and using previously determined value");
 #endif
                     return null;
                 }
-                
+
                 // If GetContentTypeCore is called before GetStream() 
                 // then we need to retrieve the stream to get the mime type.
                 // That stream is then stored as _cacheStream and returned
@@ -119,7 +119,7 @@ namespace MS.Internal.AppModel
                     if (SiteOfOriginContainer._traceSwitch.Enabled)
                         System.Diagnostics.Trace.TraceInformation(
                                 DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                Environment.CurrentManagedThreadId + 
+                                Environment.CurrentManagedThreadId +
                                 ": SiteOfOriginPart: Determining absolute uri for this resource");
 #endif
                     string original = Uri.ToString();
@@ -132,10 +132,10 @@ namespace MS.Internal.AppModel
                 if (SiteOfOriginContainer._traceSwitch.Enabled)
                     System.Diagnostics.Trace.TraceInformation(
                             DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                            Environment.CurrentManagedThreadId + 
+                            Environment.CurrentManagedThreadId +
                             ": SiteOfOriginPart: Making web request to " + _absoluteLocation);
 #endif
-                
+
                 // For performance reasons it is better to open local files directly
                 // rather than make a FileWebRequest.
                 Stream responseStream;
@@ -147,7 +147,7 @@ namespace MS.Internal.AppModel
                 {
                     responseStream = HandleWebSource(onlyNeedContentType);
                 }
-                
+
                 return responseStream;
             }
         }
@@ -158,12 +158,12 @@ namespace MS.Internal.AppModel
             if (SiteOfOriginContainer._traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        Environment.CurrentManagedThreadId + 
+                        Environment.CurrentManagedThreadId +
                         ": Opening local file " + _absoluteLocation);
 #endif
             if (_contentType == MS.Internal.ContentType.Empty)
             {
-                _contentType = MS.Internal.MimeTypeMapper.GetMimeTypeFromUri(Uri);                
+                _contentType = MS.Internal.MimeTypeMapper.GetMimeTypeFromUri(Uri);
             }
 
             if (!onlyNeedContentType)
@@ -182,7 +182,7 @@ namespace MS.Internal.AppModel
             if (SiteOfOriginContainer._traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        Environment.CurrentManagedThreadId + 
+                        Environment.CurrentManagedThreadId +
                         ": Successfully retrieved stream from " + _absoluteLocation);
 #endif
 
@@ -192,7 +192,7 @@ namespace MS.Internal.AppModel
                 if (SiteOfOriginContainer._traceSwitch.Enabled)
                     System.Diagnostics.Trace.TraceInformation(
                             DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                            Environment.CurrentManagedThreadId + 
+                            Environment.CurrentManagedThreadId +
                             ": SiteOfOriginPart: Setting _contentType");
 #endif                    
 

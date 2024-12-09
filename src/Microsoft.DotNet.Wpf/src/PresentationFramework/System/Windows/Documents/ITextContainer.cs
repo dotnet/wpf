@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -103,7 +103,7 @@ namespace System.Windows.Documents
         /// <remarks>
         /// The returned ITextPointer has LogicalDirection.Forward gravity.
         /// </remarks>
-        ITextPointer End { get; } 
+        ITextPointer End { get; }
 
         /// <summary>
         /// The object containing this TextContainer, from which property

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,10 +8,9 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Markup;
+using System.Windows.Media;
 using System.Xml;
-
 using MS.Internal;
 
 namespace System.Windows.Controls
@@ -125,14 +124,14 @@ namespace System.Windows.Controls
         /// <summary>
         /// DependencyProperty for <see cref="Text" /> property.
         /// </summary>
-        public static readonly DependencyProperty TextProperty = 
+        public static readonly DependencyProperty TextProperty =
                 DependencyProperty.Register(
-                        "Text", 
-                        typeof(string), 
+                        "Text",
+                        typeof(string),
                         typeof(AccessText),
                         new FrameworkPropertyMetadata(
-                                string.Empty, 
-                                FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender, 
+                                string.Empty,
+                                FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender,
                                 new PropertyChangedCallback(OnTextChanged)));
 
         /// <summary>
@@ -141,7 +140,7 @@ namespace System.Windows.Controls
         [DefaultValue("")]
         public string Text
         {
-            get { return (string) GetValue(TextProperty); }
+            get { return (string)GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
         }
 
@@ -149,7 +148,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// DependencyProperty for <see cref="FontFamily" /> property.
         /// </summary>
-        public static readonly DependencyProperty FontFamilyProperty = 
+        public static readonly DependencyProperty FontFamilyProperty =
                 TextElement.FontFamilyProperty.AddOwner(typeof(AccessText));
 
         /// <summary>
@@ -161,14 +160,14 @@ namespace System.Windows.Controls
         )]
         public FontFamily FontFamily
         {
-            get { return (FontFamily) GetValue(FontFamilyProperty); }
+            get { return (FontFamily)GetValue(FontFamilyProperty); }
             set { SetValue(FontFamilyProperty, value); }
         }
 
         /// <summary>
         /// DependencyProperty for <see cref="FontStyle" /> property.
         /// </summary>
-        public static readonly DependencyProperty FontStyleProperty = 
+        public static readonly DependencyProperty FontStyleProperty =
                 TextElement.FontStyleProperty.AddOwner(typeof(AccessText));
 
         /// <summary>
@@ -176,14 +175,14 @@ namespace System.Windows.Controls
         /// </summary>
         public FontStyle FontStyle
         {
-            get { return (FontStyle) GetValue(FontStyleProperty); }
+            get { return (FontStyle)GetValue(FontStyleProperty); }
             set { SetValue(FontStyleProperty, value); }
         }
-        
+
         /// <summary>
         /// DependencyProperty for <see cref="FontWeight" /> property.
         /// </summary>
-        public static readonly DependencyProperty FontWeightProperty = 
+        public static readonly DependencyProperty FontWeightProperty =
                 TextElement.FontWeightProperty.AddOwner(typeof(AccessText));
 
         /// <summary>
@@ -191,14 +190,14 @@ namespace System.Windows.Controls
         /// </summary>
         public FontWeight FontWeight
         {
-            get { return (FontWeight) GetValue(FontWeightProperty); }
+            get { return (FontWeight)GetValue(FontWeightProperty); }
             set { SetValue(FontWeightProperty, value); }
         }
 
         /// <summary>
         /// DependencyProperty for <see cref="FontStretch" /> property.
         /// </summary>
-        public static readonly DependencyProperty FontStretchProperty = 
+        public static readonly DependencyProperty FontStretchProperty =
                 TextElement.FontStretchProperty.AddOwner(typeof(AccessText));
 
         /// <summary>
@@ -206,31 +205,31 @@ namespace System.Windows.Controls
         /// </summary>
         public FontStretch FontStretch
         {
-            get { return (FontStretch) GetValue(FontStretchProperty); }
+            get { return (FontStretch)GetValue(FontStretchProperty); }
             set { SetValue(FontStretchProperty, value); }
         }
 
         /// <summary>
         /// DependencyProperty for <see cref="FontSize" /> property.
         /// </summary>
-        public static readonly DependencyProperty FontSizeProperty = 
+        public static readonly DependencyProperty FontSizeProperty =
                 TextElement.FontSizeProperty.AddOwner(typeof(AccessText));
 
         /// <summary>
         /// The FontSize property specifies the size of the font.
         /// </summary>
         [TypeConverter(typeof(FontSizeConverter))]
-        [Localizability(LocalizationCategory.None)]        
+        [Localizability(LocalizationCategory.None)]
         public double FontSize
         {
-            get { return (double) GetValue(FontSizeProperty); }
+            get { return (double)GetValue(FontSizeProperty); }
             set { SetValue(FontSizeProperty, value); }
         }
 
         /// <summary>
         /// DependencyProperty for <see cref="Foreground" /> property.
         /// </summary>
-        public static readonly DependencyProperty ForegroundProperty = 
+        public static readonly DependencyProperty ForegroundProperty =
                 TextElement.ForegroundProperty.AddOwner(typeof(AccessText));
 
         /// <summary>
@@ -238,14 +237,14 @@ namespace System.Windows.Controls
         /// </summary>
         public Brush Foreground
         {
-            get { return (Brush) GetValue(ForegroundProperty); }
+            get { return (Brush)GetValue(ForegroundProperty); }
             set { SetValue(ForegroundProperty, value); }
         }
 
         /// <summary>
         /// DependencyProperty for <see cref="Background" /> property.
         /// </summary>
-        public static readonly DependencyProperty BackgroundProperty = 
+        public static readonly DependencyProperty BackgroundProperty =
                 TextElement.BackgroundProperty.AddOwner(
                         typeof(AccessText),
                         new FrameworkPropertyMetadata(
@@ -258,18 +257,18 @@ namespace System.Windows.Controls
         /// </summary>
         public Brush Background
         {
-            get { return (Brush) GetValue(BackgroundProperty); }
+            get { return (Brush)GetValue(BackgroundProperty); }
             set { SetValue(BackgroundProperty, value); }
         }
 
         /// <summary>
         /// DependencyProperty for <see cref="TextDecorations" /> property.
         /// </summary>
-        public static readonly DependencyProperty TextDecorationsProperty = 
+        public static readonly DependencyProperty TextDecorationsProperty =
                 Inline.TextDecorationsProperty.AddOwner(
                         typeof(AccessText),
                         new FrameworkPropertyMetadata(
-                                new FreezableDefaultValueFactory(TextDecorationCollection.Empty), 
+                                new FreezableDefaultValueFactory(TextDecorationCollection.Empty),
                                 FrameworkPropertyMetadataOptions.AffectsRender,
                                 new PropertyChangedCallback(OnPropertyChanged)));
 
@@ -278,18 +277,18 @@ namespace System.Windows.Controls
         /// </summary>
         public TextDecorationCollection TextDecorations
         {
-            get { return (TextDecorationCollection) GetValue(TextDecorationsProperty); }
+            get { return (TextDecorationCollection)GetValue(TextDecorationsProperty); }
             set { SetValue(TextDecorationsProperty, value); }
         }
 
         /// <summary>
         /// DependencyProperty for <see cref="TextEffects" /> property.
         /// </summary>
-        public static readonly DependencyProperty TextEffectsProperty = 
+        public static readonly DependencyProperty TextEffectsProperty =
                 TextElement.TextEffectsProperty.AddOwner(
                         typeof(AccessText),
                         new FrameworkPropertyMetadata(
-                                new FreezableDefaultValueFactory(TextEffectCollection.Empty), 
+                                new FreezableDefaultValueFactory(TextEffectCollection.Empty),
                                 FrameworkPropertyMetadataOptions.AffectsRender,
                                 new PropertyChangedCallback(OnPropertyChanged)));
 
@@ -298,23 +297,23 @@ namespace System.Windows.Controls
         /// </summary>
         public TextEffectCollection TextEffects
         {
-            get { return (TextEffectCollection) GetValue(TextEffectsProperty); }
+            get { return (TextEffectCollection)GetValue(TextEffectsProperty); }
             set { SetValue(TextEffectsProperty, value); }
         }
 
         /// <summary>
         /// DependencyProperty for <see cref="LineHeight" /> property.
         /// </summary>
-        public static readonly DependencyProperty LineHeightProperty = 
+        public static readonly DependencyProperty LineHeightProperty =
                 Block.LineHeightProperty.AddOwner(typeof(AccessText));
-        
+
         /// <summary>
         /// The LineHeight property specifies the height of each generated line box.
         /// </summary>
         [TypeConverter(typeof(LengthConverter))]
         public double LineHeight
         {
-            get { return (double) GetValue(LineHeightProperty); }
+            get { return (double)GetValue(LineHeightProperty); }
             set { SetValue(LineHeightProperty, value); }
         }
 
@@ -336,7 +335,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// DependencyProperty for <see cref="TextAlignment" /> property.
         /// </summary>
-        public static readonly DependencyProperty TextAlignmentProperty = 
+        public static readonly DependencyProperty TextAlignmentProperty =
                 Block.TextAlignmentProperty.AddOwner(typeof(AccessText));
 
         /// <summary>
@@ -344,7 +343,7 @@ namespace System.Windows.Controls
         /// </summary>
         public TextAlignment TextAlignment
         {
-            get { return (TextAlignment) GetValue(TextAlignmentProperty); }
+            get { return (TextAlignment)GetValue(TextAlignmentProperty); }
             set { SetValue(TextAlignmentProperty, value); }
         }
 
@@ -365,7 +364,7 @@ namespace System.Windows.Controls
         /// </summary>
         public TextTrimming TextTrimming
         {
-            get { return (TextTrimming) GetValue(TextTrimmingProperty); }
+            get { return (TextTrimming)GetValue(TextTrimmingProperty); }
             set { SetValue(TextTrimmingProperty, value); }
         }
 
@@ -386,7 +385,7 @@ namespace System.Windows.Controls
         /// </summary>
         public TextWrapping TextWrapping
         {
-            get { return (TextWrapping) GetValue(TextWrappingProperty); }
+            get { return (TextWrapping)GetValue(TextWrappingProperty); }
             set { SetValue(TextWrappingProperty, value); }
         }
 
@@ -401,7 +400,7 @@ namespace System.Windows.Controls
         /// </summary>
         public double BaselineOffset
         {
-            get { return (double) GetValue(BaselineOffsetProperty); }
+            get { return (double)GetValue(BaselineOffsetProperty); }
             set { SetValue(BaselineOffsetProperty, value); }
         }
 
@@ -472,7 +471,7 @@ namespace System.Windows.Controls
             }
         }
 
-      
+
         internal static char AccessKeyMarker
         {
             get { return _accessKeyMarker; }
@@ -531,7 +530,7 @@ namespace System.Windows.Controls
         {
             if (index != 0)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange); 
+                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
             return TextBlock;
         }
@@ -553,9 +552,11 @@ namespace System.Windows.Controls
                 if (_accessKeyStyle == null)
                 {
                     Style accessKeyStyle = new Style(typeof(Run));
-                    Trigger trigger = new Trigger();
-                    trigger.Property = KeyboardNavigation.ShowKeyboardCuesProperty;
-                    trigger.Value = true;
+                    Trigger trigger = new Trigger
+                    {
+                        Property = KeyboardNavigation.ShowKeyboardCuesProperty,
+                        Value = true
+                    };
                     trigger.Setters.Add(new Setter(TextDecorationsProperty, System.Windows.TextDecorations.Underline));
                     accessKeyStyle.Triggers.Add(trigger);
                     accessKeyStyle.Seal();
@@ -572,7 +573,7 @@ namespace System.Windows.Controls
         {
             TextPointer navigator = new TextPointer(TextContainer.Start);
 
-            while (!_accessKeyLocated && navigator.CompareTo(TextContainer.End) < 0 )
+            while (!_accessKeyLocated && navigator.CompareTo(TextContainer.End) < 0)
             {
                 TextPointerContext symbolType = navigator.GetPointerContext(LogicalDirection.Forward);
                 switch (symbolType)
@@ -580,13 +581,15 @@ namespace System.Windows.Controls
                     case TextPointerContext.Text:
                         string text = navigator.GetTextInRun(LogicalDirection.Forward);
                         int index = FindAccessKeyMarker(text);
-                        if(index != -1 && index < text.Length - 1)
+                        if (index != -1 && index < text.Length - 1)
                         {
                             string keyText = StringInfo.GetNextTextElement(text, index + 1);
                             TextPointer keyEnd = navigator.GetPositionAtOffset(index + 1 + keyText.Length);
 
-                            _accessKey = new Run(keyText);
-                            _accessKey.Style = AccessKeyStyle;
+                            _accessKey = new Run(keyText)
+                            {
+                                Style = AccessKeyStyle
+                            };
 
                             RegisterAccessKey();
 
@@ -676,9 +679,9 @@ namespace System.Windows.Controls
             if (!string.IsNullOrEmpty(text))
             {
                 string accessKeyMarker = AccessKeyMarker.ToString();
-                string doubleAccessKeyMarker = accessKeyMarker + accessKeyMarker; 
+                string doubleAccessKeyMarker = accessKeyMarker + accessKeyMarker;
                 int index = FindAccessKeyMarker(text);
-                if (index >=0 && index < text.Length - 1)
+                if (index >= 0 && index < text.Length - 1)
                     text = text.Remove(index, 1);
                 // Replace double _ with single _
                 text = text.Replace(doubleAccessKeyMarker, accessKeyMarker);
@@ -706,7 +709,7 @@ namespace System.Windows.Controls
         //-------------------------------------------------------------------
         private static void OnTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((AccessText) d).UpdateText((string) e.NewValue);
+            ((AccessText)d).UpdateText((string)e.NewValue);
         }
 
         private void UpdateText(string text)

@@ -1,18 +1,17 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Windows.Threading;
+using System.Runtime.InteropServices;
 using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
-using MS.Win32;
+using System.Windows.Interop;
+using System.Windows.Media;
+using System.Windows.Threading;
 using MS.Internal.Media;
-using System.Runtime.InteropServices;
-
 using MS.Internal.PresentationCore;
+using MS.Win32;
 
 namespace MS.Internal.Automation
 {
@@ -24,7 +23,7 @@ namespace MS.Internal.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         // static class, so use private ctor
@@ -38,36 +37,36 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
-        internal static Visual GetParent( Visual el )
+        internal static Visual GetParent(Visual el)
         {
             return VisualTreeHelper.GetParent(el) as Visual;
         }
 
-        internal static Visual GetFirstChild( Visual el )
+        internal static Visual GetFirstChild(Visual el)
         {
             if (el == null)
             {
                 return null;
             }
 
-            return FindVisibleSibling ( el, 0, true );
+            return FindVisibleSibling(el, 0, true);
         }
 
-        internal static Visual GetLastChild( Visual el )
+        internal static Visual GetLastChild(Visual el)
         {
             if (el == null)
             {
                 return null;
             }
 
-            return FindVisibleSibling ( el, el.InternalVisualChildrenCount - 1, false );
+            return FindVisibleSibling(el, el.InternalVisualChildrenCount - 1, false);
         }
 
         // Warning: Method is O(N). See FindVisibleSibling function for more information.
-        internal static Visual GetNextSibling( Visual el )
+        internal static Visual GetNextSibling(Visual el)
         {
             // To get next/previous sibling, have to find out where we
             // are in our parent's children collection (ie. our siblings)
@@ -77,11 +76,11 @@ namespace MS.Internal.Automation
             {
                 return null;
             }
-            return FindVisibleSibling ( parent, el, true /* Next */);
+            return FindVisibleSibling(parent, el, true /* Next */);
         }
 
         // Warning: Method is O(N). See FindVisibleSibling function for more information.
-        internal static Visual GetPreviousSibling( Visual el )
+        internal static Visual GetPreviousSibling(Visual el)
         {
             // To get next/previous sibling, have to find out where we
             // are in our parent's children collection (ie. our siblings)
@@ -92,17 +91,17 @@ namespace MS.Internal.Automation
                 return null;
             }
 
-            return FindVisibleSibling ( parent, el, false /* Previous */);
+            return FindVisibleSibling(parent, el, false /* Previous */);
         }
 
-        internal static Visual GetRoot( Visual el )
+        internal static Visual GetRoot(Visual el)
         {
             // Keep moving up parent chain till we reach the top...
             Visual scan = el;
-            for( ; ; )
+            for (; ; )
             {
                 Visual test = VisualTreeHelper.GetParent(scan) as Visual;
-                if( test == null )
+                if (test == null)
                     break;
                 scan = test;
             }
@@ -110,27 +109,27 @@ namespace MS.Internal.Automation
         }
 
         // Get bounding rectangle, in coords relative to root (not screen)
-        internal static Rect GetLocalRect( UIElement element )
+        internal static Rect GetLocalRect(UIElement element)
         {
             // Get top-most visual.
-            Visual parent = GetRoot( element );
+            Visual parent = GetRoot(element);
 
             // Get the points for the rectangle and transform them.
             double height = element.RenderSize.Height;
             double width = element.RenderSize.Width;
             Rect rect = new Rect(0, 0, width, height);
-            
+
             GeneralTransform g = element.TransformToAncestor(parent);
-            return g.TransformBounds(rect);            
+            return g.TransformBounds(rect);
         }
 
         // Get bounding rectangle, relative to screen
-        internal static Rect GetScreenRect( IntPtr hwnd, UIElement el )
-        {            
-            Rect rc = GetLocalRect( el );
-            
+        internal static Rect GetScreenRect(IntPtr hwnd, UIElement el)
+        {
+            Rect rc = GetLocalRect(el);
+
             // Map from local to screen coords...
-            NativeMethods.RECT rcWin32 = new NativeMethods.RECT( (int) rc.Left, (int) rc.Top, (int) rc.Right, (int) rc.Bottom );
+            NativeMethods.RECT rcWin32 = new NativeMethods.RECT((int)rc.Left, (int)rc.Top, (int)rc.Right, (int)rc.Bottom);
             try
             {
                 SafeSecurityHelper.TransformLocalRectToScreen(new HandleRef(null, hwnd), ref rcWin32);
@@ -140,23 +139,23 @@ namespace MS.Internal.Automation
                 return Rect.Empty;
             }
 
-            rc = new Rect( rcWin32.left, rcWin32.top, rcWin32.right - rcWin32.left, rcWin32.bottom - rcWin32.top );
+            rc = new Rect(rcWin32.left, rcWin32.top, rcWin32.right - rcWin32.left, rcWin32.bottom - rcWin32.top);
 
             return rc;
         }
 
         // Get element at given point (screen coords)
-        internal static Visual GetElementFromPoint( IntPtr hwnd, Visual root, Point pointScreen )
+        internal static Visual GetElementFromPoint(IntPtr hwnd, Visual root, Point pointScreen)
         {
             HwndSource hwndSource = HwndSource.CriticalFromHwnd(hwnd);
 
-            if(hwndSource == null)
+            if (hwndSource == null)
                 return null;
 
-            Point               pointClient = PointUtil.ScreenToClient( pointScreen, hwndSource );
-            Point               pointRoot   = PointUtil.ClientToRoot(pointClient, hwndSource);
-            PointHitTestResult  result      = VisualTreeUtils.AsNearestPointHitTestResult(VisualTreeHelper.HitTest(root, pointRoot));
-            Visual              visual      = (result != null) ? result.VisualHit : null;
+            Point pointClient = PointUtil.ScreenToClient(pointScreen, hwndSource);
+            Point pointRoot = PointUtil.ClientToRoot(pointClient, hwndSource);
+            PointHitTestResult result = VisualTreeUtils.AsNearestPointHitTestResult(VisualTreeHelper.HitTest(root, pointRoot));
+            Visual visual = (result != null) ? result.VisualHit : null;
 
 
             return visual;
@@ -166,8 +165,8 @@ namespace MS.Internal.Automation
         internal static void CheckEnabled(Visual visual)
         {
             UIElement el = visual as UIElement;
-            
-            if( el != null && ! el.IsEnabled )
+
+            if (el != null && !el.IsEnabled)
             {
                 throw new ElementNotEnabledException();
             }
@@ -178,7 +177,7 @@ namespace MS.Internal.Automation
             Dispatcher dispatcher = peer.Dispatcher;
 
             // Null dispatcher likely means the visual is in bad shape!
-            if( dispatcher == null )
+            if (dispatcher == null)
             {
                 throw new ElementNotAvailableException();
             }
@@ -186,16 +185,16 @@ namespace MS.Internal.Automation
             Exception remoteException = null;
             bool completed = false;
 
-            object retVal = dispatcher.Invoke(            
+            object retVal = dispatcher.Invoke(
                 DispatcherPriority.Send,
                 TimeSpan.FromMinutes(3),
-                (DispatcherOperationCallback) delegate(object unused)
+                (DispatcherOperationCallback)delegate (object unused)
                 {
                     try
                     {
                         return work(arg);
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         remoteException = e;
                         return null;
@@ -209,12 +208,12 @@ namespace MS.Internal.Automation
                     {
                         completed = true;
                     }
-},
+                },
                 null);
-                
-            if(completed)
+
+            if (completed)
             {
-                if(remoteException != null)
+                if (remoteException != null)
                 {
                     throw remoteException;
                 }
@@ -223,7 +222,7 @@ namespace MS.Internal.Automation
             {
                 bool dispatcherInShutdown = dispatcher.HasShutdownStarted;
 
-                if(dispatcherInShutdown)
+                if (dispatcherInShutdown)
                 {
                     throw new InvalidOperationException(SR.AutomationDispatcherShutdown);
                 }
@@ -232,9 +231,9 @@ namespace MS.Internal.Automation
                     throw new TimeoutException(SR.AutomationTimeout);
                 }
             }
-            
+
             return retVal;
-}
+        }
 
         #endregion Internal Methods
 
@@ -247,17 +246,17 @@ namespace MS.Internal.Automation
         // Potential enhancement: Consider Visual3Ds in this walk?
         //      Does this walk need to continue through the Visual3D tree once
         //      we have UIElement3D?
-        private static Visual FindVisibleSibling ( Visual parent, int start, bool searchForwards)
+        private static Visual FindVisibleSibling(Visual parent, int start, bool searchForwards)
         {
             int index = start;
             int childrenCount = parent.InternalVisualChildrenCount;
-            
-            while ( index >= 0 && index < childrenCount )
+
+            while (index >= 0 && index < childrenCount)
             {
                 Visual sibling = parent.InternalGetVisualChild(index);
-                
+
                 // if its visible or something other than a UIElement keep it
-                if ( !(sibling is UIElement) || (((UIElement)sibling).Visibility == Visibility.Visible ) )
+                if (!(sibling is UIElement) || (((UIElement)sibling).Visibility == Visibility.Visible))
                     return sibling;
 
                 index += searchForwards ? 1 : -1;
@@ -276,7 +275,7 @@ namespace MS.Internal.Automation
             //
             // First we figure out the index of the specified child Visual. This is why the runtime
             // of this method is O(n).
-            
+
             int childrenCount = parent.InternalVisualChildrenCount;
             int childIndex;
 
@@ -292,10 +291,10 @@ namespace MS.Internal.Automation
 
             //
             // Now that we have the child index, we can go and lookup the sibling.
-            if(searchForwards)
-                return FindVisibleSibling(parent, childIndex+1, searchForwards); // (FindVisibleSibling can deal with out of range indices).
+            if (searchForwards)
+                return FindVisibleSibling(parent, childIndex + 1, searchForwards); // (FindVisibleSibling can deal with out of range indices).
             else
-                return FindVisibleSibling(parent, childIndex-1, searchForwards); // (FindVisibleSibling can deal with out of range indices).
+                return FindVisibleSibling(parent, childIndex - 1, searchForwards); // (FindVisibleSibling can deal with out of range indices).
         }
 
         //------------------------------------------------------
@@ -303,7 +302,7 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         // static class, so no private fields

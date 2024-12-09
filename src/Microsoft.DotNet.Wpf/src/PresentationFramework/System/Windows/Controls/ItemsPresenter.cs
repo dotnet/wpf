@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -115,7 +115,7 @@ namespace System.Windows.Controls
                         typeof(ItemsPanelTemplate),
                         typeof(ItemsPresenter),
                         new FrameworkPropertyMetadata(
-                                (ItemsPanelTemplate) null,  // default value
+                                (ItemsPanelTemplate)null,  // default value
                                 FrameworkPropertyMetadataOptions.AffectsMeasure,
                                 new PropertyChangedCallback(OnTemplateChanged)));
 
@@ -125,7 +125,7 @@ namespace System.Windows.Controls
         /// </summary>
         private ItemsPanelTemplate Template
         {
-            get {  return _templateCache; }
+            get { return _templateCache; }
             set { SetValue(TemplateProperty, value); }
         }
 
@@ -138,8 +138,8 @@ namespace System.Windows.Controls
         // Property invalidation callback invoked when TemplateProperty is invalidated
         private static void OnTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ItemsPresenter ip = (ItemsPresenter) d;
-            StyleHelper.UpdateTemplateCache(ip, (FrameworkTemplate) e.OldValue, (FrameworkTemplate) e.NewValue, TemplateProperty);
+            ItemsPresenter ip = (ItemsPresenter)d;
+            StyleHelper.UpdateTemplateCache(ip, (FrameworkTemplate)e.OldValue, (FrameworkTemplate)e.NewValue, TemplateProperty);
         }
 
         /// <summary>
@@ -304,12 +304,12 @@ namespace System.Windows.Controls
             Panel oldPanel = (this.VisualChildrenCount > 0) ? this.GetVisualChild(0) as Panel : null;
             Type type = null;
 
-            if( Template != null )
+            if (Template != null)
             {
                 // Get the type of the template content's root
 
                 // Is this a FEF-based template?
-                if( Template.VisualTree != null )
+                if (Template.VisualTree != null)
                 {
                     type = Template.VisualTree.Type;
                 }

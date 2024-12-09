@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -80,7 +80,7 @@ namespace System.Windows.Controls
             {
                 // This makes sure that the ItemsPresenter and the DatagridCellsPresenter is invalidated even if this is an arrange pass.
                 this.ParentPresenter.InvalidateMeasure();
-                UIElement parent =  VisualTreeHelper.GetParent(this) as UIElement;
+                UIElement parent = VisualTreeHelper.GetParent(this) as UIElement;
                 if (parent != null)
                     parent.InvalidateMeasure();
             }
@@ -1357,8 +1357,10 @@ namespace System.Windows.Controls
         {
             IList children = RealizedChildren;
 
-            ArrangeState arrangeState = new ArrangeState();
-            arrangeState.ChildHeight = arrangeSize.Height;
+            ArrangeState arrangeState = new ArrangeState
+            {
+                ChildHeight = arrangeSize.Height
+            };
             DataGrid parentDataGrid = ParentDataGrid;
 
             /*
@@ -1648,13 +1650,13 @@ namespace System.Windows.Controls
                 // The block list and the children are both sorted, so we can do a linear merge.
                 List<int> displayIndexMap = columns.DisplayIndexMap;
                 List<RealizedColumnsBlock> blockList = RealizedColumnsBlockList;
-                int k=0, n=children.Count;
-                for (int j=0; j<blockList.Count; ++j)
+                int k = 0, n = children.Count;
+                for (int j = 0; j < blockList.Count; ++j)
                 {
                     RealizedColumnsBlock block = blockList[j];
-                    for (int index=block.StartIndex; index<=block.EndIndex; ++index)
+                    for (int index = block.StartIndex; index <= block.EndIndex; ++index)
                     {
-                        for (; k<n; ++k)
+                        for (; k < n; ++k)
                         {
                             IProvideDataGridColumn cell = children[k] as IProvideDataGridColumn;
                             if (cell != null)
@@ -1668,7 +1670,7 @@ namespace System.Windows.Controls
                             }
                         }
 
-                        if (k==n)
+                        if (k == n)
                             return false;   // index didn't appear in child list
                         ++k;                // index did appear at position k
                     }

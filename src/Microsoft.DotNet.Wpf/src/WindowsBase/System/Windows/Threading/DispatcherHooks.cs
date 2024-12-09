@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,20 +23,20 @@ namespace System.Windows.Threading
         {
             add
             {
-                lock(_instanceLock)
+                lock (_instanceLock)
                 {
                     _dispatcherInactive += value;
                 }
             }
             remove
             {
-                lock(_instanceLock)
+                lock (_instanceLock)
                 {
                     _dispatcherInactive -= value;
                 }
             }
         }
-        
+
         /// <summary>
         ///     An event indicating that an operation was posted to the dispatcher.
         /// </summary>
@@ -53,14 +53,14 @@ namespace System.Windows.Threading
         {
             add
             {
-                lock(_instanceLock)
+                lock (_instanceLock)
                 {
                     _operationPosted += value;
                 }
             }
             remove
             {
-                lock(_instanceLock)
+                lock (_instanceLock)
                 {
                     _operationPosted -= value;
                 }
@@ -83,14 +83,14 @@ namespace System.Windows.Threading
         {
             add
             {
-                lock(_instanceLock)
+                lock (_instanceLock)
                 {
                     _operationStarted += value;
                 }
             }
             remove
             {
-                lock(_instanceLock)
+                lock (_instanceLock)
                 {
                     _operationStarted -= value;
                 }
@@ -113,20 +113,20 @@ namespace System.Windows.Threading
         {
             add
             {
-                lock(_instanceLock)
+                lock (_instanceLock)
                 {
                     _operationCompleted += value;
                 }
             }
             remove
             {
-                lock(_instanceLock)
+                lock (_instanceLock)
                 {
                     _operationCompleted -= value;
                 }
             }
         }
-        
+
         /// <summary>
         ///     An event indicating that the priority of an operation was changed.
         /// </summary>
@@ -138,20 +138,20 @@ namespace System.Windows.Threading
         {
             add
             {
-                lock(_instanceLock)
+                lock (_instanceLock)
                 {
                     _operationPriorityChanged += value;
                 }
             }
             remove
             {
-                lock(_instanceLock)
+                lock (_instanceLock)
                 {
                     _operationPriorityChanged -= value;
                 }
             }
         }
-        
+
         /// <summary>
         ///     An event indicating that an operation was aborted.
         /// </summary>
@@ -163,29 +163,29 @@ namespace System.Windows.Threading
         {
             add
             {
-                lock(_instanceLock)
+                lock (_instanceLock)
                 {
                     _operationAborted += value;
                 }
             }
             remove
             {
-                lock(_instanceLock)
+                lock (_instanceLock)
                 {
                     _operationAborted -= value;
                 }
             }
         }
-        
+
         // Only we can create these things.
         internal DispatcherHooks()
         {
         }
-        
+
         internal void RaiseDispatcherInactive(Dispatcher dispatcher)
         {
             EventHandler dispatcherInactive = _dispatcherInactive;
-            if(dispatcherInactive != null)
+            if (dispatcherInactive != null)
             {
                 dispatcherInactive(dispatcher, EventArgs.Empty);
             }
@@ -194,8 +194,8 @@ namespace System.Windows.Threading
         internal void RaiseOperationPosted(Dispatcher dispatcher, DispatcherOperation operation)
         {
             DispatcherHookEventHandler operationPosted = _operationPosted;
-            
-            if(operationPosted != null)
+
+            if (operationPosted != null)
             {
                 operationPosted(dispatcher, new DispatcherHookEventArgs(operation));
             }
@@ -204,28 +204,28 @@ namespace System.Windows.Threading
         internal void RaiseOperationStarted(Dispatcher dispatcher, DispatcherOperation operation)
         {
             DispatcherHookEventHandler operationStarted = _operationStarted;
-            
-            if(operationStarted != null)
+
+            if (operationStarted != null)
             {
                 operationStarted(dispatcher, new DispatcherHookEventArgs(operation));
             }
         }
-        
+
         internal void RaiseOperationCompleted(Dispatcher dispatcher, DispatcherOperation operation)
         {
             DispatcherHookEventHandler operationCompleted = _operationCompleted;
 
-            if(operationCompleted != null)
+            if (operationCompleted != null)
             {
                 operationCompleted(dispatcher, new DispatcherHookEventArgs(operation));
             }
         }
-        
+
         internal void RaiseOperationPriorityChanged(Dispatcher dispatcher, DispatcherOperation operation)
         {
             DispatcherHookEventHandler operationPriorityChanged = _operationPriorityChanged;
 
-            if(operationPriorityChanged != null)
+            if (operationPriorityChanged != null)
             {
                 operationPriorityChanged(dispatcher, new DispatcherHookEventArgs(operation));
             }
@@ -235,7 +235,7 @@ namespace System.Windows.Threading
         {
             DispatcherHookEventHandler operationAborted = _operationAborted;
 
-            if(operationAborted != null)
+            if (operationAborted != null)
             {
                 operationAborted(dispatcher, new DispatcherHookEventArgs(operation));
             }

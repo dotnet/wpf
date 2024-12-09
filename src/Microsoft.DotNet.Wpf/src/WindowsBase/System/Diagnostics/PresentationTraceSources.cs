@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,8 +8,8 @@
 // The other portion of this partial class is generated using
 // genTraceSource.pl and AvTraceMessages.txt
 
-using MS.Internal;
 using System.Windows;
+using MS.Internal;
 
 namespace System.Diagnostics
 {
@@ -125,7 +125,7 @@ namespace System.Diagnostics
             // using exposed elements under the assert
             return source;
         }
-}
+    }
 
     internal delegate void TraceRefreshEventHandler();
 }

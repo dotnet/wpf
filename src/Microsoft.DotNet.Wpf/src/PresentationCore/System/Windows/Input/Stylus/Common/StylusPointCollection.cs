@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.ComponentModel;
-using MS.Internal.Ink.InkSerializedFormat;
-using System.Windows.Media;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows.Media;
+using MS.Internal.Ink.InkSerializedFormat;
 
 namespace System.Windows.Input
 {
@@ -38,7 +38,7 @@ namespace System.Windows.Input
         /// StylusPointCollection
         /// </summary>
         /// <param name="initialCapacity">initialCapacity</param>
-        public StylusPointCollection(int initialCapacity) 
+        public StylusPointCollection(int initialCapacity)
             : this()
         {
             if (initialCapacity < 0)
@@ -63,8 +63,8 @@ namespace System.Windows.Input
         /// </summary>
         /// <param name="stylusPointDescription">stylusPointDescription</param>
         /// <param name="initialCapacity">initialCapacity</param>
-        public StylusPointCollection(StylusPointDescription stylusPointDescription, int initialCapacity) 
-            : this (stylusPointDescription)
+        public StylusPointCollection(StylusPointDescription stylusPointDescription, int initialCapacity)
+            : this(stylusPointDescription)
         {
             if (initialCapacity < 0)
             {
@@ -79,7 +79,7 @@ namespace System.Windows.Input
         /// </summary>
         /// <param name="stylusPoints">stylusPoints</param>
         public StylusPointCollection(IEnumerable<StylusPoint> stylusPoints)
-            //: this() //don't call the base ctor, we want to use the first sp
+        //: this() //don't call the base ctor, we want to use the first sp
         {
             ArgumentNullException.ThrowIfNull(stylusPoints);
 
@@ -227,13 +227,13 @@ namespace System.Windows.Input
         /// </summary>
         public StylusPointDescription Description
         {
-            get 
+            get
             {
                 if (null == _stylusPointDescription)
                 {
                     _stylusPointDescription = new StylusPointDescription();
-                } 
-                return _stylusPointDescription; 
+                }
+                return _stylusPointDescription;
             }
         }
 
@@ -269,7 +269,7 @@ namespace System.Windows.Input
             {
                 throw new InvalidOperationException(SR.InvalidStylusPointCollectionZeroCount);
             }
-}
+        }
 
         /// <summary>
         /// called by base class Collection&lt;T&gt; when an item is added to list;
@@ -303,7 +303,7 @@ namespace System.Windows.Input
 
             stylusPoint.Description = _stylusPointDescription;
             base.SetItem(index, stylusPoint);
-            
+
             OnChanged(EventArgs.Empty);
         }
 
@@ -345,7 +345,7 @@ namespace System.Windows.Input
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(count);
 
             return this.Clone(System.Windows.Media.Transform.Identity, this.Description, count);
-}
+        }
 
         /// <summary>
         /// Clone with a transform, used by input
@@ -450,10 +450,10 @@ namespace System.Windows.Input
             }
 
             StylusPointDescription subsetToReformatToWithCurrentMetrics =
-                StylusPointDescription.GetCommonDescription(subsetToReformatTo, 
+                StylusPointDescription.GetCommonDescription(subsetToReformatTo,
                                                             this.Description); //preserve metrics from this spd
 
-            if (StylusPointDescription.AreCompatible(this.Description, subsetToReformatToWithCurrentMetrics) && 
+            if (StylusPointDescription.AreCompatible(this.Description, subsetToReformatToWithCurrentMetrics) &&
                 (transform is Transform) && ((Transform)transform).IsIdentity)
             {
                 //subsetToReformatTo might have different x, y, p metrics
@@ -554,7 +554,7 @@ namespace System.Windows.Input
         /// pressure was non-default
         /// 
         /// </summary>
-        internal void ToISFReadyArrays(out int[][]output, out bool shouldPersistPressure)
+        internal void ToISFReadyArrays(out int[][] output, out bool shouldPersistPressure)
         {
             Debug.Assert(this.Count != 0, "Why are we serializing an empty StylusPointCollection???");
             //
@@ -583,9 +583,9 @@ namespace System.Windows.Input
             // 1) The StylusPointPropertyInfo for pressure is not the default
             // 2) There is at least one non-default pressure value in this SPC
             //
-            StylusPointPropertyInfo pressureInfo = 
+            StylusPointPropertyInfo pressureInfo =
                 this.Description.GetPropertyInfo(StylusPointPropertyIds.NormalPressure);
-            shouldPersistPressure = 
+            shouldPersistPressure =
                 !StylusPointPropertyInfo.AreCompatible(pressureInfo, StylusPointPropertyInfoDefaults.NormalPressure);
 
             for (int b = 0; b < this.Count; b++)
@@ -606,8 +606,8 @@ namespace System.Windows.Input
                 {
                     int[] additionalData = stylusPoint.GetAdditionalData();
                     int countToCopy = lengthPerPoint - StylusPointDescription.RequiredCountOfProperties;/*3*/
-                    Debug.Assert(   this.Description.ButtonCount > 0 ? 
-                                    additionalData.Length -1 == countToCopy :
+                    Debug.Assert(this.Description.ButtonCount > 0 ?
+                                    additionalData.Length - 1 == countToCopy :
                                     additionalData.Length == countToCopy);
 
                     for (int y = 0; y < countToCopy; y++)
@@ -632,8 +632,10 @@ namespace System.Windows.Input
                 return true;
             }
 
-            CancelEventArgs e = new CancelEventArgs();
-            e.Cancel = false;
+            CancelEventArgs e = new CancelEventArgs
+            {
+                Cancel = false
+            };
 
             //
             // call the listeners
@@ -642,6 +644,6 @@ namespace System.Windows.Input
             Debug.Assert(e.Cancel, "This event should always be cancelled");
 
             return !e.Cancel;
-}
+        }
     }
 }

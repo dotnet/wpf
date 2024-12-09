@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: This class wraps an event listener object on the client side.
 
 using System;
-using System.Windows.Automation;
 using System.Runtime.InteropServices;
+using System.Windows.Automation;
 using MS.Win32;
 
 namespace MS.Internal.Automation
@@ -88,17 +88,17 @@ namespace MS.Internal.Automation
             {
                 rid = el.GetRuntimeId();
             }
-            catch( ElementNotAvailableException )
+            catch (ElementNotAvailableException)
             {
                 // This can't be the element this instance is holding because when
                 // creating this instance we caused the RuntimeId to be cached.
                 return false;
             }
 
-            if( !Misc.Compare( _refRid, rid ) )
+            if (!Misc.Compare(_refRid, rid))
                 return false;
 
-            if( _eventListener.EventId != eventId )
+            if (_eventListener.EventId != eventId)
                 return false;
 
             if (_clientCallback != clientCallback)
@@ -165,7 +165,7 @@ namespace MS.Internal.Automation
         }
 
         // WithinScope - returns true if rid is the RuntimeId of this listener or listening for all elements.
-        internal bool WithinScope( int [] rid )
+        internal bool WithinScope(int[] rid)
         {
             // Quick look: If want all elements then no compare is necessary
             if ((_eventListener.TreeScope & TreeScope.Subtree) == TreeScope.Subtree &&
@@ -176,14 +176,14 @@ namespace MS.Internal.Automation
 
             // Can only determine if ref element is the element using RuntimeId;
             // can't determine other relationships.
-            if ( ( _eventListener.TreeScope & TreeScope.Element ) == 0 )
+            if ((_eventListener.TreeScope & TreeScope.Element) == 0)
             {
                 return false;
             }
 
             // Quick look: If they want this element but use our ref RuntimeId
             // since the weak reference may be gone.
-            if ( Misc.Compare( rid, _refRid ) )
+            if (Misc.Compare(rid, _refRid))
             {
                 return true;
             }
@@ -261,12 +261,12 @@ namespace MS.Internal.Automation
         private bool IsChildOf(AutomationElement elPossibleParent, AutomationElement el)
         {
             // Do the work [slower] using the proxies
-            if( ! Misc.Compare( el, elPossibleParent ) )
+            if (!Misc.Compare(el, elPossibleParent))
             {
                 AutomationElement elPossibleChild = TreeWalker.RawViewWalker.GetParent(el);
-                while( elPossibleChild != null )
+                while (elPossibleChild != null)
                 {
-                    if( Misc.Compare( elPossibleChild, elPossibleParent ) )
+                    if (Misc.Compare(elPossibleChild, elPossibleParent))
                     {
                         return true;
                     }
@@ -289,7 +289,7 @@ namespace MS.Internal.Automation
 
         private EventListener _eventListener;
         private AutomationElement _refElement;
-        private int [] _refRid;
+        private int[] _refRid;
         private Delegate _clientCallback;
         private UiaCoreApi.UiaEventCallback _callbackDelegate;
         private GCHandle _gch; // GCHandle to keep GCs from moving the callback

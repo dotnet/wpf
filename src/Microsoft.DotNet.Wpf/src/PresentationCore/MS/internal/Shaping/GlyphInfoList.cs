@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,9 +21,9 @@ namespace MS.Internal.Shaping
     {
         internal GlyphInfoList(int capacity, int leap, bool justify)
         {
-            _glyphs         = new UshortList(capacity, leap);
-            _glyphFlags     = new UshortList(capacity, leap);
-            _firstChars     = new UshortList(capacity, leap);
+            _glyphs = new UshortList(capacity, leap);
+            _glyphFlags = new UshortList(capacity, leap);
+            _firstChars = new UshortList(capacity, leap);
             _ligatureCounts = new UshortList(capacity, leap);
         }
 
@@ -110,10 +110,10 @@ namespace MS.Internal.Shaping
             get { return _ligatureCounts; }
         }
 
-        private UshortList  _glyphs;
-        private UshortList  _glyphFlags;
-        private UshortList  _firstChars;
-        private UshortList  _ligatureCounts;
+        private UshortList _glyphs;
+        private UshortList _glyphFlags;
+        private UshortList _firstChars;
+        private UshortList _ligatureCounts;
     }
 
     [Flags]
@@ -122,31 +122,31 @@ namespace MS.Internal.Shaping
         /**** [Bit 0-7 OpenType flags] ****/
 
         // Value 0-4 used. Value 5 - 15 Reserved
-        Unassigned              = 0x0000,
-        Base                    = 0x0001,
-        Ligature                = 0x0002,
-        Mark                    = 0x0003,
-        Component               = 0x0004,
-        Unresolved              = 0x0007,
-        GlyphTypeMask           = 0x0007,
+        Unassigned = 0x0000,
+        Base = 0x0001,
+        Ligature = 0x0002,
+        Mark = 0x0003,
+        Component = 0x0004,
+        Unresolved = 0x0007,
+        GlyphTypeMask = 0x0007,
 
         // Bit 4-5 used. Bit 7 Reserved
-        Substituted             = 0x0010,
-        Positioned              = 0x0020,
-        NotChanged              = 0x0000,
+        Substituted = 0x0010,
+        Positioned = 0x0020,
+        NotChanged = 0x0000,
 
         // reserved for OTLS internal use
         // inside one call
-        CursiveConnected        = 0x0040,
+        CursiveConnected = 0x0040,
 
         //bit 7 - reserved
 
         /**** [Bit 8-15 Avalon flags] ****/
 
-        ClusterStart            = 0x0100,   // First glyph of cluster
-        Diacritic               = 0x0200,   // Diacritic
-        ZeroWidth               = 0x0400,   // Blank, ZWJ, ZWNJ etc, with no width
-        Missing                 = 0x0800,   // Missing glyph
-        InvalidBase             = 0x1000,   // Glyph of U+25cc indicating invalid base glyph
+        ClusterStart = 0x0100,   // First glyph of cluster
+        Diacritic = 0x0200,   // Diacritic
+        ZeroWidth = 0x0400,   // Blank, ZWJ, ZWNJ etc, with no width
+        Missing = 0x0800,   // Missing glyph
+        InvalidBase = 0x1000,   // Glyph of U+25cc indicating invalid base glyph
     }
 }

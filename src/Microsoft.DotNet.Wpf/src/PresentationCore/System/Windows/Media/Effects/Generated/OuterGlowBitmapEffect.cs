@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -53,28 +53,28 @@ namespace System.Windows.Media.Effects
 
         private static void GlowColorPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            OuterGlowBitmapEffect target = ((OuterGlowBitmapEffect) d);
+            OuterGlowBitmapEffect target = ((OuterGlowBitmapEffect)d);
 
 
             target.PropertyChanged(GlowColorProperty);
         }
         private static void GlowSizePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            OuterGlowBitmapEffect target = ((OuterGlowBitmapEffect) d);
+            OuterGlowBitmapEffect target = ((OuterGlowBitmapEffect)d);
 
 
             target.PropertyChanged(GlowSizeProperty);
         }
         private static void NoisePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            OuterGlowBitmapEffect target = ((OuterGlowBitmapEffect) d);
+            OuterGlowBitmapEffect target = ((OuterGlowBitmapEffect)d);
 
 
             target.PropertyChanged(NoiseProperty);
         }
         private static void OpacityPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            OuterGlowBitmapEffect target = ((OuterGlowBitmapEffect) d);
+            OuterGlowBitmapEffect target = ((OuterGlowBitmapEffect)d);
 
 
             target.PropertyChanged(OpacityProperty);
@@ -90,7 +90,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (Color) GetValue(GlowColorProperty);
+                return (Color)GetValue(GlowColorProperty);
             }
             set
             {
@@ -105,7 +105,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double) GetValue(GlowSizeProperty);
+                return (double)GetValue(GlowSizeProperty);
             }
             set
             {
@@ -120,7 +120,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double) GetValue(NoiseProperty);
+                return (double)GetValue(NoiseProperty);
             }
             set
             {
@@ -135,7 +135,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double) GetValue(OpacityProperty);
+                return (double)GetValue(OpacityProperty);
             }
             set
             {

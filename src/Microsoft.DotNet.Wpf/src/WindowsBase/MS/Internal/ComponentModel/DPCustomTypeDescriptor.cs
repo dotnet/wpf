@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,7 +14,8 @@ namespace MS.Internal.ComponentModel
     ///     derive from the CustomTypeDescriptor class, but because these are allocated a lot
     ///     we make them a struct so they are not on the heap.
     /// </summary>
-    internal struct DPCustomTypeDescriptor : ICustomTypeDescriptor {
+    internal struct DPCustomTypeDescriptor : ICustomTypeDescriptor
+    {
         //------------------------------------------------------
         //
         //  Constructors
@@ -28,7 +29,7 @@ namespace MS.Internal.ComponentModel
         ///     our base provider, which provides is with a default implementation of everything
         ///     we don't override.  for us, we want to override only the property mechanism.
         /// </summary>
-        internal DPCustomTypeDescriptor(ICustomTypeDescriptor parent, Type objectType, object instance) 
+        internal DPCustomTypeDescriptor(ICustomTypeDescriptor parent, Type objectType, object instance)
         {
             _parent = parent;
             _objectType = objectType;
@@ -54,13 +55,13 @@ namespace MS.Internal.ComponentModel
         /// </summary>
         public string GetComponentName()
         {
-            if (_instance != null) 
+            if (_instance != null)
             {
                 RuntimeNamePropertyAttribute nameAttr = GetAttributes()[typeof(RuntimeNamePropertyAttribute)] as RuntimeNamePropertyAttribute;
-                if (nameAttr != null && nameAttr.Name != null) 
+                if (nameAttr != null && nameAttr.Name != null)
                 {
                     PropertyDescriptor nameProp = GetProperties()[nameAttr.Name];
-                    if (nameProp != null) 
+                    if (nameProp != null)
                     {
                         return nameProp.GetValue(_instance) as string;
                     }
@@ -73,7 +74,7 @@ namespace MS.Internal.ComponentModel
         /// <summary>
         ///     Returns a collection of properties for our object.
         /// </summary>
-        public PropertyDescriptorCollection GetProperties() 
+        public PropertyDescriptorCollection GetProperties()
         {
             return GetProperties(null);
         }
@@ -82,7 +83,7 @@ namespace MS.Internal.ComponentModel
         ///     Returns a collection of properties for our object.  We first rely on base
         ///     CLR properties and then we attempt to match these with dependency properties.
         /// </summary>
-        public PropertyDescriptorCollection GetProperties(Attribute[] attributes) 
+        public PropertyDescriptorCollection GetProperties(Attribute[] attributes)
         {
             // We have two code paths here based on filtered attributes.  An attribute
             // filter is just a notificaiton of a filter, it doesn't actually perform
@@ -93,12 +94,12 @@ namespace MS.Internal.ComponentModel
 
             PropertyFilterOptions filter = PropertyFilterOptions.Valid | PropertyFilterOptions.SetValues;
 
-            if (attributes != null) 
+            if (attributes != null)
             {
-                foreach (Attribute attr in attributes) 
+                foreach (Attribute attr in attributes)
                 {
                     PropertyFilterAttribute filterAttr = attr as PropertyFilterAttribute;
-                    if (filterAttr != null) 
+                    if (filterAttr != null)
                     {
                         filter = filterAttr.Filter;
                         break;
@@ -109,7 +110,7 @@ namespace MS.Internal.ComponentModel
             // If no filter is set, or if the only filter is for "invalid" properties, 
             // there's no work to do.
 
-            if (filter == PropertyFilterOptions.None || filter == PropertyFilterOptions.Invalid) 
+            if (filter == PropertyFilterOptions.None || filter == PropertyFilterOptions.Invalid)
             {
                 return PropertyDescriptorCollection.Empty;
             }
@@ -118,12 +119,13 @@ namespace MS.Internal.ComponentModel
             // returned for .Valid and .All, the only case we're directly interested
             // in is when filter exactly equals SetValues.
             DependencyObject filterValue;
-            if (filter == PropertyFilterOptions.SetValues) 
+            if (filter == PropertyFilterOptions.SetValues)
             {
-                if (_instance == null) return PropertyDescriptorCollection.Empty;
+                if (_instance == null)
+                    return PropertyDescriptorCollection.Empty;
                 filterValue = (DependencyObject)TypeDescriptor.GetAssociation(_objectType, _instance);
             }
-            else 
+            else
             {
                 filterValue = null;
             }
@@ -142,11 +144,11 @@ namespace MS.Internal.ComponentModel
 
             PropertyDescriptorCollection properties = (PropertyDescriptorCollection)_typeProperties[_objectType];
 
-            if (properties == null) 
+            if (properties == null)
             {
                 properties = CreateProperties();
-                
-                lock (_typeProperties) 
+
+                lock (_typeProperties)
                 {
                     _typeProperties[_objectType] = properties;
                 }
@@ -157,7 +159,7 @@ namespace MS.Internal.ComponentModel
             // the valid bit is set, we're done.
 
 
-            if ((filter & _anySet) == _anySet || (filter & _anyValid) == _anyValid) 
+            if ((filter & _anySet) == _anySet || (filter & _anyValid) == _anyValid)
             {
                 return properties;
             }
@@ -169,32 +171,32 @@ namespace MS.Internal.ComponentModel
             List<PropertyDescriptor> newDescriptors = null;
 
             int cnt = properties.Count;
-            for(int idx = 0; idx < cnt; idx++)
+            for (int idx = 0; idx < cnt; idx++)
             {
                 PropertyDescriptor prop = properties[idx];
                 bool shouldSerialize = prop.ShouldSerializeValue(filterValue);
                 bool addProp = shouldSerialize ^ ((filter & _anySet) == PropertyFilterOptions.UnsetValues);
 
-                if (!addProp) 
+                if (!addProp)
                 {
                     // Property should be removed.  Make sure our newDescriptors array is
                     // up to date for where we need to be
-                    if (newDescriptors == null) 
+                    if (newDescriptors == null)
                     {
                         newDescriptors = new List<PropertyDescriptor>(cnt);
-                        for (int i = 0; i < idx; i++) 
+                        for (int i = 0; i < idx; i++)
                         {
                             newDescriptors.Add(properties[i]);
                         }
                     }
                 }
-                else if (newDescriptors != null) 
+                else if (newDescriptors != null)
                 {
                     newDescriptors.Add(prop);
                 }
             }
 
-            if (newDescriptors != null) 
+            if (newDescriptors != null)
             {
                 properties = new PropertyDescriptorCollection(newDescriptors.ToArray(), true);
             }
@@ -213,7 +215,7 @@ namespace MS.Internal.ComponentModel
         {
             // We only support public type converters, in order to avoid asserts.
             TypeConverter typeConverter = _parent.GetConverter();
-            if( typeConverter.GetType().IsPublic )
+            if (typeConverter.GetType().IsPublic)
             {
                 return typeConverter;
             }
@@ -222,7 +224,7 @@ namespace MS.Internal.ComponentModel
                 return new TypeConverter();
             }
         }
-            
+
         public EventDescriptor GetDefaultEvent() { return _parent.GetDefaultEvent(); }
         public PropertyDescriptor GetDefaultProperty() { return _parent.GetDefaultProperty(); }
         public object GetEditor(Type editorBaseType) { return _parent.GetEditor(editorBaseType); }
@@ -231,7 +233,7 @@ namespace MS.Internal.ComponentModel
         public object GetPropertyOwner(PropertyDescriptor property) { return _parent.GetPropertyOwner(property); }
 
         #endregion Public Methods
-        
+
         //------------------------------------------------------
         //
         //  Internal Methods
@@ -239,19 +241,19 @@ namespace MS.Internal.ComponentModel
         //------------------------------------------------------
 
         #region Internal Methods
-        
+
         /// <summary>
         ///     This method is called when we should clear our cached state.  The cache
         ///     may become invalid if someone adds additional type description providers.
         /// </summary>
         internal static void ClearCache()
         {
-            lock (_propertyMap) 
+            lock (_propertyMap)
             {
                 _propertyMap.Clear();
             }
 
-            lock(_typeProperties)
+            lock (_typeProperties)
             {
                 _typeProperties.Clear();
             }
@@ -266,7 +268,7 @@ namespace MS.Internal.ComponentModel
         //------------------------------------------------------
 
         #region Private Methods
-        
+
         //
         // Creates the property descriptor collection for this type.  The return
         // value is all properties that are exposed on this type.
@@ -276,7 +278,7 @@ namespace MS.Internal.ComponentModel
             PropertyDescriptorCollection baseProps = _parent.GetProperties();
             List<PropertyDescriptor> newDescriptors = new List<PropertyDescriptor>(baseProps.Count);
 
-            for (int idx = 0; idx < baseProps.Count; idx++) 
+            for (int idx = 0; idx < baseProps.Count; idx++)
             {
                 PropertyDescriptor prop = baseProps[idx];
 
@@ -284,8 +286,8 @@ namespace MS.Internal.ComponentModel
                 DependencyProperty dp = null;
 
                 bool inMap;
-                 
-                lock(_propertyMap)
+
+                lock (_propertyMap)
                 {
                     inMap = _propertyMap.TryGetValue(prop, out dpProp);
                 }
@@ -306,14 +308,14 @@ namespace MS.Internal.ComponentModel
                         // We also need to verify that the property metadata for dpProp matches
                         // our object type's metadata
 
-                        if (dpProp.Metadata != dp.GetMetadata(_objectType)) 
+                        if (dpProp.Metadata != dp.GetMetadata(_objectType))
                         {
                             dpProp = null;
                         }
                     }
                 }
 
-                if (dpProp == null) 
+                if (dpProp == null)
                 {
                     // Either the property wasn't in the map or the one that was in there
                     // can't work for this type.  Make a new property if this property is
@@ -326,12 +328,12 @@ namespace MS.Internal.ComponentModel
 
                     if (dp != null || typeof(DependencyObject).IsAssignableFrom(prop.ComponentType))
                     {
-                        if (dp == null) 
+                        if (dp == null)
                         {
                             dp = DependencyProperty.FromName(prop.Name, _objectType);
                         }
 
-                        if (dp != null) 
+                        if (dp != null)
                         {
                             dpProp = new DependencyObjectPropertyDescriptor(prop, dp, _objectType);
                         }
@@ -341,9 +343,9 @@ namespace MS.Internal.ComponentModel
                     // insert a null value into the map if this property descriptor
                     // had no backing DP so we don't go through this work twice.
 
-                    if (!inMap) 
+                    if (!inMap)
                     {
-                        lock(_propertyMap)
+                        lock (_propertyMap)
                         {
                             _propertyMap[prop] = dpProp;
                         }
@@ -354,7 +356,7 @@ namespace MS.Internal.ComponentModel
                 // If we found a dependency property desecriptor for this property,
                 // use it as our new property.
 
-                if (dpProp != null) 
+                if (dpProp != null)
                 {
                     prop = dpProp;
                 }
@@ -374,13 +376,13 @@ namespace MS.Internal.ComponentModel
         //------------------------------------------------------
 
         #region Private Fields
-        
+
         private ICustomTypeDescriptor _parent;
         private Type _objectType;
         private object _instance;
 
         // Synchronized by "_propertyMap"
-        private static Dictionary<PropertyDescriptor, DependencyObjectPropertyDescriptor> _propertyMap = 
+        private static Dictionary<PropertyDescriptor, DependencyObjectPropertyDescriptor> _propertyMap =
             new Dictionary<PropertyDescriptor, DependencyObjectPropertyDescriptor>(new PropertyDescriptorComparer());
 
         // Synchronized by "_typeProperties"

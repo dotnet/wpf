@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,11 +9,11 @@ using System.Windows.Input;
 namespace System.Windows.Automation.Peers
 {
     ///
-    public abstract class ButtonBaseAutomationPeer: FrameworkElementAutomationPeer 
+    public abstract class ButtonBaseAutomationPeer : FrameworkElementAutomationPeer
     {
         ///
-        protected ButtonBaseAutomationPeer(ButtonBase owner): base(owner)
-        {}
+        protected ButtonBaseAutomationPeer(ButtonBase owner) : base(owner)
+        { }
 
         ///
         override protected string GetAcceleratorKeyCore()
@@ -33,21 +33,21 @@ namespace System.Windows.Automation.Peers
         /// 
         protected override string GetAutomationIdCore()
         {
-           string result = base.GetAutomationIdCore();
-           if (string.IsNullOrEmpty(result))
-           {
-               ButtonBase owner = (ButtonBase)Owner;
-               RoutedCommand command = owner.Command as RoutedCommand;
-               if (command != null)
-               {
-                   string commandName = command.Name;
-                   if (!string.IsNullOrEmpty(commandName))
-                   {
-                       result = commandName;
-                   }
-               }
-           }
-           return result ?? string.Empty;
+            string result = base.GetAutomationIdCore();
+            if (string.IsNullOrEmpty(result))
+            {
+                ButtonBase owner = (ButtonBase)Owner;
+                RoutedCommand command = owner.Command as RoutedCommand;
+                if (command != null)
+                {
+                    string commandName = command.Name;
+                    if (!string.IsNullOrEmpty(commandName))
+                    {
+                        result = commandName;
+                    }
+                }
+            }
+            return result ?? string.Empty;
         }
 
 

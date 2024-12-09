@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -68,7 +68,7 @@ namespace System.Windows
         [Ambient]
         public object DataType
         {
-            get {  return _dataType; }
+            get { return _dataType; }
             set
             {
                 Exception ex = TemplateKey.ValidateDataType(value, "value");
@@ -133,7 +133,7 @@ namespace System.Windows
         //
         internal override Type TargetTypeInternal
         {
-            get {  return DefaultTargetType; }
+            get { return DefaultTargetType; }
         }
 
         // Subclasses must provide a way for the parser to directly set the
@@ -149,7 +149,7 @@ namespace System.Windows
         //
         internal override object DataTypeInternal
         {
-            get {  return DataType; }
+            get { return DataType; }
         }
 
         //
@@ -198,8 +198,8 @@ namespace System.Windows
 
         #region Data
 
-        private object                  _dataType;
-        private TriggerCollection       _triggers;
+        private object _dataType;
+        private TriggerCollection _triggers;
 
         #endregion Data
     }

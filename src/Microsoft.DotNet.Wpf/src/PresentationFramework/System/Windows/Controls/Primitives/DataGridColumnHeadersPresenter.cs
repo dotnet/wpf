@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -60,7 +60,7 @@ namespace System.Windows.Controls.Primitives
             {
                 InternalItemsHost = null;
             }
-            
+
             base.OnApplyTemplate();
 
             // Find the columns collection and set the ItemsSource.
@@ -347,7 +347,7 @@ namespace System.Windows.Controls.Primitives
 
                     // Handle Style & Height change notification for PART_FillerColumnHeader.
                     if (d is DataGrid &&
-                        (e.Property == DataGrid.ColumnHeaderStyleProperty || e.Property == DataGrid.ColumnHeaderHeightProperty) )
+                        (e.Property == DataGrid.ColumnHeaderStyleProperty || e.Property == DataGrid.ColumnHeaderHeightProperty))
                     {
                         DataGridColumnHeader fillerColumnHeader = GetTemplateChild(ElementFillerColumnHeader) as DataGridColumnHeader;
                         if (fillerColumnHeader != null)
@@ -751,8 +751,10 @@ namespace System.Windows.Controls.Primitives
         {
             Debug.Assert(_draggingSrcColumnHeader != null, "Dragging header is null");
 
-            DataGridColumnFloatingHeader floatingHeader = new DataGridColumnFloatingHeader();
-            floatingHeader.ReferenceHeader = _draggingSrcColumnHeader;
+            DataGridColumnFloatingHeader floatingHeader = new DataGridColumnFloatingHeader
+            {
+                ReferenceHeader = _draggingSrcColumnHeader
+            };
             return floatingHeader;
         }
 
@@ -782,8 +784,10 @@ namespace System.Windows.Controls.Primitives
         {
             Debug.Assert(_draggingSrcColumnHeader != null, "Dragging header is null");
 
-            DataGridColumnDropSeparator indicator = new DataGridColumnDropSeparator();
-            indicator.ReferenceHeader = _draggingSrcColumnHeader;
+            DataGridColumnDropSeparator indicator = new DataGridColumnDropSeparator
+            {
+                ReferenceHeader = _draggingSrcColumnHeader
+            };
             return indicator;
         }
 

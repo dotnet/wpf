@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,7 +19,7 @@ namespace System.Windows.Documents
         // Constructors
         //
         //---------------------------------------------------------------------
-        
+
         #region Constructors
         public FixedSOMTableCell(double left, double top, double right, double bottom)
         {
@@ -41,7 +41,7 @@ namespace System.Windows.Documents
         {
             Pen pen = new Pen(Brushes.Red, 2);
             Rect rect = _boundingRect;
-            dc.DrawRectangle(null, pen , rect);
+            dc.DrawRectangle(null, pen, rect);
             /*
             for (int i = 0; i < _semanticBoxes.Count; i++)
             {
@@ -135,7 +135,7 @@ namespace System.Windows.Documents
             }
         }
         #endregion Internal Properties
-        
+
         //--------------------------------------------------------------------
         //
         // Private Fields
@@ -145,7 +145,7 @@ namespace System.Windows.Documents
         private bool _containsTable;
         private int _columnSpan;
         #endregion Private Fields
-        
+
     }
 }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -133,8 +133,8 @@ namespace MS.Internal.FontCache
             else
             {
                 // Either we have a URI or a file name, never both
-                int hash = (_absoluteLocationUri != null) ? 
-                    _absoluteLocationUri.GetHashCode() : 
+                int hash = (_absoluteLocationUri != null) ?
+                    _absoluteLocationUri.GetHashCode() :
                     EscapedFileName.GetHashCode();
 
                 // Combine the location hash with the family name hash
@@ -183,8 +183,8 @@ namespace MS.Internal.FontCache
             }
         }
 
-        private Uri     _absoluteLocationUri;
-        private string  _familyName;
+        private Uri _absoluteLocationUri;
+        private string _familyName;
         private static readonly CanonicalFontFamilyReference _unresolved = new CanonicalFontFamilyReference((Uri)null, string.Empty);
     }
 }

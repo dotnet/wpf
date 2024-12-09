@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -30,7 +30,7 @@ namespace System.Windows.Media.TextFormatting
         /// <summary>
         /// Constructing text run cache
         /// </summary>
-        public TextRunCache() {}
+        public TextRunCache() { }
 
 
 
@@ -42,12 +42,12 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="addition">the number of text source characters to be added in the source text</param>
         /// <param name="removal">the number of text source characters to be removed in the source text</param>
         public void Change(
-            int     textSourceCharacterIndex,
-            int     addition,
-            int     removal
+            int textSourceCharacterIndex,
+            int addition,
+            int removal
             )
         {
-            if(_imp != null)
+            if (_imp != null)
             {
                 _imp.Change(
                     textSourceCharacterIndex,
@@ -65,7 +65,7 @@ namespace System.Windows.Media.TextFormatting
         /// </summary>
         public void Invalidate()
         {
-            if(_imp != null)
+            if (_imp != null)
             {
                 _imp = null;
             }
@@ -83,7 +83,7 @@ namespace System.Windows.Media.TextFormatting
 #endif               
         {
             if (_imp != null)
-            {                
+            {
                 return _imp.GetTextRunSpans();
             }
 
@@ -101,6 +101,6 @@ namespace System.Windows.Media.TextFormatting
             set { _imp = value; }
         }
 
-        private TextRunCacheImp   _imp;
+        private TextRunCacheImp _imp;
     }
 }

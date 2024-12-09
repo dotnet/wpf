@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -53,12 +53,12 @@ namespace System.Windows.Input
         /// </summary>
         public override void Complete()
         {
-//             VerifyAccess();
+            //             VerifyAccess();
 
             UnsafeNativeMethods.ITfContext context = GetTransitoryContext();
             UnsafeNativeMethods.ITfContextOwnerCompositionServices compositionService = context as UnsafeNativeMethods.ITfContextOwnerCompositionServices;
             UnsafeNativeMethods.ITfCompositionView composition = GetComposition(context);
-            
+
             if (composition != null)
             {
                 // Terminate composition if there is a composition view.
@@ -67,7 +67,7 @@ namespace System.Windows.Input
             }
 
             Marshal.ReleaseComObject(context);
-}
+        }
 
         //------------------------------------------------------
         //
@@ -99,7 +99,7 @@ namespace System.Windows.Input
             UnsafeNativeMethods.IEnumITfCompositionView enumCompositionView;
             UnsafeNativeMethods.ITfCompositionView[] compositionViews = new UnsafeNativeMethods.ITfCompositionView[1];
             int fetched;
-          
+
             contextComposition = (UnsafeNativeMethods.ITfContextComposition)context;
             contextComposition.EnumCompositions(out enumCompositionView);
 
@@ -107,6 +107,6 @@ namespace System.Windows.Input
 
             Marshal.ReleaseComObject(enumCompositionView);
             return compositionViews[0];
-}
+        }
     }
 }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,7 +19,7 @@ namespace System.Windows.Media.Converters
     /// BrushValueSerializer - ValueSerializer class for converting instances of strings to and from Brush instances
     /// This is used by the MarkupWriter class.
     /// </summary>
-    public class BrushValueSerializer : ValueSerializer 
+    public class BrushValueSerializer : ValueSerializer
     {
         /// <summary>
         /// Returns true.
@@ -40,11 +40,11 @@ namespace System.Windows.Media.Converters
                 return false;
             }
 
-            Brush instance  = (Brush) value;
+            Brush instance = (Brush)value;
 
-            #pragma warning suppress 6506 // instance is obviously not null
+#pragma warning suppress 6506 // instance is obviously not null
             return instance.CanSerializeToString();
-}
+        }
 
         /// <summary>
         /// Converts a string into a Brush.
@@ -53,13 +53,13 @@ namespace System.Windows.Media.Converters
         {
             if (value != null)
             {
-                return Brush.Parse(value, context );
+                return Brush.Parse(value, context);
             }
             else
             {
-                return base.ConvertFromString( value, context );
+                return base.ConvertFromString(value, context);
             }
-}
+        }
 
         /// <summary>
         /// Converts the value into a string.
@@ -68,9 +68,9 @@ namespace System.Windows.Media.Converters
         {
             if (value is Brush)
             {
-                Brush instance = (Brush) value;
+                Brush instance = (Brush)value;
                 // When invoked by the serialization engine we can convert to string only for some instances
-                #pragma warning suppress 6506 // instance is obviously not null
+#pragma warning suppress 6506 // instance is obviously not null
                 if (!instance.CanSerializeToString())
                 {
                     // Let base throw an exception.
@@ -78,7 +78,7 @@ namespace System.Windows.Media.Converters
                 }
 
 
-                #pragma warning suppress 6506 // instance is obviously not null
+#pragma warning suppress 6506 // instance is obviously not null
                 return instance.ConvertToString(null, System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS);
             }
 

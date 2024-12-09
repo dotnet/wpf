@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,7 +16,7 @@ namespace System.Windows.Media
         /// Constructor
         ///</summary>
         public InvalidWmpVersionException()
-        {}
+        { }
 
         ///<summary>
         /// Constructor
@@ -25,7 +25,7 @@ namespace System.Windows.Media
         /// Exception message
         ///</param>
         public InvalidWmpVersionException(string message) : base(message)
-        {}
+        { }
 
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace System.Windows.Media
         /// </param>
 #pragma warning disable SYSLIB0051 // Type or member is obsolete
         protected InvalidWmpVersionException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {}
+        { }
 #pragma warning restore SYSLIB0051 // Type or member is obsolete
 
         ///<summary>
@@ -53,6 +53,6 @@ namespace System.Windows.Media
         /// Inner exception
         ///</param>
         public InvalidWmpVersionException(string message, Exception innerException) : base(message, innerException)
-        {}
+        { }
     }
 }

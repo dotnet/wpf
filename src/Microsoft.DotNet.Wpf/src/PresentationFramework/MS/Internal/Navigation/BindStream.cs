@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,10 +10,10 @@
 
 
 using System.IO;
-using MS.Internal.AppModel;
-using System.Windows.Threading; //DispatcherObject
-using System.Windows.Markup;
 using System.Reflection;
+using System.Windows.Markup;
+using System.Windows.Threading; //DispatcherObject
+using MS.Internal.AppModel;
 
 namespace MS.Internal.Navigation
 {
@@ -36,19 +36,19 @@ namespace MS.Internal.Navigation
             _cc = cc;
             _callbackDispatcher = callbackDispatcher;
         }
-        
+
         #endregion Constructors
 
         #region Private Methods
-        
+
         private void UpdateNavigationProgress()
-        {            
-            for(long numBytes =_lastProgressEventByte + _bytesInterval; 
-                numBytes <= _bytesRead; 
+        {
+            for (long numBytes = _lastProgressEventByte + _bytesInterval;
+                numBytes <= _bytesRead;
                 numBytes += _bytesInterval)
             {
                 UpdateNavProgressHelper(numBytes);
-                _lastProgressEventByte = numBytes;                
+                _lastProgressEventByte = numBytes;
             }
 
             if (_bytesRead == _maxBytes && _lastProgressEventByte < _maxBytes)
@@ -64,7 +64,7 @@ namespace MS.Internal.Navigation
             {
                 _callbackDispatcher.BeginInvoke(
                                 DispatcherPriority.Send,
-                                (DispatcherOperationCallback)delegate(object unused)
+                                (DispatcherOperationCallback)delegate (object unused)
                                 {
                                     _cc.OnNavigationProgress(_uri, numBytes, _maxBytes);
                                     return null;
@@ -80,9 +80,9 @@ namespace MS.Internal.Navigation
         #endregion Private Methods
 
         #region Overrides
-        
+
         #region Overridden Properties                 
-        
+
         /// <summary>
         /// Overridden CanRead Property
         /// </summary>
@@ -143,9 +143,9 @@ namespace MS.Internal.Navigation
         }
 
         #endregion Overridden Properties                 
-        
+
         #region Overridden Public Methods   
-        
+
         /// <summary>
         /// Overridden BeginRead method
         /// </summary>
@@ -199,7 +199,7 @@ namespace MS.Internal.Navigation
             {
                 _callbackDispatcher.BeginInvoke(
                                 DispatcherPriority.Send,
-                                (DispatcherOperationCallback)delegate(object unused)
+                                (DispatcherOperationCallback)delegate (object unused)
                                 {
                                     _cc.OnStreamClosed(_uri);
                                     return null;
@@ -416,7 +416,7 @@ namespace MS.Internal.Navigation
         #endregion Overrides
 
         #region Properties                 
-        
+
         /// <summary>
         /// Underlying Stream of BindStream
         /// </summary>
@@ -453,14 +453,14 @@ namespace MS.Internal.Navigation
 
         #region Private Data
 
-        long                    _bytesRead;
-        long                    _maxBytes;
-        long                    _lastProgressEventByte;
-        Stream                  _stream;
-        Uri                     _uri;
-        IContentContainer        _cc;
-        Dispatcher              _callbackDispatcher;
-        private const long      _bytesInterval = 1024;
+        long _bytesRead;
+        long _maxBytes;
+        long _lastProgressEventByte;
+        Stream _stream;
+        Uri _uri;
+        IContentContainer _cc;
+        Dispatcher _callbackDispatcher;
+        private const long _bytesInterval = 1024;
 
         #endregion Private Data
     }

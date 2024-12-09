@@ -1,15 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal.AppModel;
-using MS.Internal.Interop;
-using MS.Win32;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
-
+using MS.Internal.AppModel;
+using MS.Internal.Interop;
+using MS.Win32;
 // There are THREE definitions of HRESULT. Two in ErrorCodes, and one in wgx_render.cs.
 // wgx_render.cs wins if we don't explicitly define it here.
 using HRESULT = MS.Internal.Interop.HRESULT;
@@ -525,12 +524,12 @@ namespace Microsoft.Win32
             // Initialize Options Flags
             //
             _dialogOptions = 0;   // _dialogOptions is an int containing a set of
-                                        // bit flags used to initialize the dialog box.
-                                        // Within our code, we only use GetOption and SetOption
-                                        // (change from Windows Forms, which sometimes directly
-                                        // modified _dialogOptions).  As such, we initialize to 0
-                                        // here and then call SetOption to get _dialogOptions
-                                        // into the default state.
+                                  // bit flags used to initialize the dialog box.
+                                  // Within our code, we only use GetOption and SetOption
+                                  // (change from Windows Forms, which sometimes directly
+                                  // modified _dialogOptions).  As such, we initialize to 0
+                                  // here and then call SetOption to get _dialogOptions
+                                  // into the default state.
 
             //
             // Set some default options

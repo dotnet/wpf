@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,7 +13,7 @@ namespace System.Windows.Controls.Primitives
     ///     with a host to store and retrieve values of a DependencyProperty of a container being virtualized.
     ///     
     /// </summary>
-    public interface IContainItemStorage 
+    public interface IContainItemStorage
     {
         /// <summary>
         /// Stores the given value in ItemValueStorage, associating it with the given item and DependencyProperty.
@@ -37,7 +37,7 @@ namespace System.Windows.Controls.Primitives
         /// <param name="item"></param>
         /// <param name="dp">DependencyProperty</param>
         void ClearItemValue(object item, DependencyProperty dp);
-        
+
         /// <summary>
         /// Clears the given DependencyProperty starting at the current element including all nested storage bags.
         /// </summary>

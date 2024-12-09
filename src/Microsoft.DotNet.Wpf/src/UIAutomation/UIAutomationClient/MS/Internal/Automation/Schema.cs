@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,11 +7,11 @@
 // PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
 #pragma warning disable 1634, 1691
 
+using System.Diagnostics;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Text;
-using System.Globalization;
-using System.Diagnostics;
 
 
 namespace MS.Internal.Automation
@@ -28,7 +28,7 @@ namespace MS.Internal.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         // static singleton class, private ctor prevents creation
@@ -44,22 +44,22 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         // look up information on the specified property, returns true if found, else false
-        internal static bool GetPropertyInfo( AutomationProperty id, out AutomationPropertyInfo info )
+        internal static bool GetPropertyInfo(AutomationProperty id, out AutomationPropertyInfo info)
         {
-            foreach( AutomationPropertyInfo pi in _propertyInfoTable )
+            foreach (AutomationPropertyInfo pi in _propertyInfoTable)
             {
-                if( pi.ID == id )
+                if (pi.ID == id)
                 {
                     info = pi;
                     return true;
                 }
             }
             info = null;
-            Debug.Assert( false, "GetPropertyInfo failed " + id );
+            Debug.Assert(false, "GetPropertyInfo failed " + id);
             return false;
         }
 
@@ -80,11 +80,11 @@ namespace MS.Internal.Automation
 
 
         // look up information on the specified pattern, returns true if found, else false
-        internal static bool GetPatternInfo( AutomationPattern id, out AutomationPatternInfo info )
+        internal static bool GetPatternInfo(AutomationPattern id, out AutomationPatternInfo info)
         {
-            foreach( AutomationPatternInfo pi in _patternInfoTable )
+            foreach (AutomationPatternInfo pi in _patternInfoTable)
             {
-                if( pi.ID == id )
+                if (pi.ID == id)
                 {
                     info = pi;
                     return true;
@@ -96,30 +96,30 @@ namespace MS.Internal.Automation
 
 
         // look up information on the specified property, returns true if found, else false
-        internal static bool GetAttributeInfo( AutomationTextAttribute id, out AutomationAttributeInfo info )
+        internal static bool GetAttributeInfo(AutomationTextAttribute id, out AutomationAttributeInfo info)
         {
-            foreach( AutomationAttributeInfo ai in _attributeInfoTable )
+            foreach (AutomationAttributeInfo ai in _attributeInfoTable)
             {
-                if( ai.ID == id )
+                if (ai.ID == id)
                 {
                     info = ai;
                     return true;
                 }
             }
             info = null;
-            Debug.Assert( false, "GetAttributeInfo failed " + id );
+            Debug.Assert(false, "GetAttributeInfo failed " + id);
             return false;
         }
 
 
         // Used by AutomationElement to get the basic property list
-        internal static AutomationProperty [ ] GetBasicProperties()
+        internal static AutomationProperty[] GetBasicProperties()
         {
             return _basicProperties;
         }
 
         // Used by AutomationElement to get list of patterns to try querying providers for to see what they support
-        internal static AutomationPatternInfo [ ] GetPatternInfoTable()
+        internal static AutomationPatternInfo[] GetPatternInfoTable()
         {
             return _patternInfoTable;
         }
@@ -131,22 +131,22 @@ namespace MS.Internal.Automation
         //  Private Methods
         //
         //------------------------------------------------------
- 
+
         #region Private Methods
 
-        private static object ConvertToBool(object value)                   { return value; } // Leave as-is, we use VT_BOOL
-        private static object ConvertToRowOrColumnMajor(object value)       { return (RowOrColumnMajor)value; }
-        private static object ConvertToToggleState(object value)            { return (ToggleState)value; }
+        private static object ConvertToBool(object value) { return value; } // Leave as-is, we use VT_BOOL
+        private static object ConvertToRowOrColumnMajor(object value) { return (RowOrColumnMajor)value; }
+        private static object ConvertToToggleState(object value) { return (ToggleState)value; }
         private static object ConvertToWindowInteractionState(object value) { return (WindowInteractionState)value; }
-        private static object ConvertToWindowVisualState(object value)      { return (WindowVisualState)value; }
-        private static object ConvertToExpandCollapseState(object value)    { return (ExpandCollapseState)value; }
-        private static object ConvertToOrientationType(object value)        { return (OrientationType)value; }
-        private static object ConvertToDockPosition(object value)           { return (DockPosition)value; }
+        private static object ConvertToWindowVisualState(object value) { return (WindowVisualState)value; }
+        private static object ConvertToExpandCollapseState(object value) { return (ExpandCollapseState)value; }
+        private static object ConvertToOrientationType(object value) { return (OrientationType)value; }
+        private static object ConvertToDockPosition(object value) { return (DockPosition)value; }
 
         private static object ConvertToRect(object value)
         {
             // Convert array of doubles to rect...
-            double [ ] doubles = (double [ ]) value;
+            double[] doubles = (double[])value;
             double left = doubles[0];
             double top = doubles[1];
             double width = doubles[2];
@@ -172,7 +172,7 @@ namespace MS.Internal.Automation
 
         private static object ConvertToCultureInfo(object value)
         {
-            if(value is int)
+            if (value is int)
             {
                 return new CultureInfo((int)value);
             }
@@ -208,7 +208,7 @@ namespace MS.Internal.Automation
         private static object ConvertToAutomationHeadingLevel(object value)
         {
             var headingLevel = (HeadingLevel)value;
-            switch(headingLevel)
+            switch (headingLevel)
             {
                 case HeadingLevel.None:
                     return AutomationHeadingLevel.None;
@@ -237,20 +237,20 @@ namespace MS.Internal.Automation
 
         // Delegate versions of the above...
         private static AutomationPropertyConverter convertToBool = new AutomationPropertyConverter(ConvertToBool);
-        private static AutomationPropertyConverter convertToRowOrColumnMajor        = new AutomationPropertyConverter(ConvertToRowOrColumnMajor);
-        private static AutomationPropertyConverter convertToToggleState             = new AutomationPropertyConverter(ConvertToToggleState);
-        private static AutomationPropertyConverter convertToWindowInteractionState  = new AutomationPropertyConverter(ConvertToWindowInteractionState);
-        private static AutomationPropertyConverter convertToWindowVisualState       = new AutomationPropertyConverter(ConvertToWindowVisualState);
-        private static AutomationPropertyConverter convertToExpandCollapseState     = new AutomationPropertyConverter(ConvertToExpandCollapseState);
-        private static AutomationPropertyConverter convertToRect                    = new AutomationPropertyConverter(ConvertToRect);
-        private static AutomationPropertyConverter convertToPoint                   = new AutomationPropertyConverter(ConvertToPoint);
-        private static AutomationPropertyConverter convertToOrientationType         = new AutomationPropertyConverter(ConvertToOrientationType);
-        private static AutomationPropertyConverter convertToDockPosition            = new AutomationPropertyConverter(ConvertToDockPosition);
-        private static AutomationPropertyConverter convertToElement                 = new AutomationPropertyConverter(ConvertToElement);
-        private static AutomationPropertyConverter convertToElementArray            = new AutomationPropertyConverter(ConvertToElementArray);
-        private static AutomationPropertyConverter convertToControlType             = new AutomationPropertyConverter(ConvertToControlType);
-        private static AutomationPropertyConverter convertToCultureInfo             = new AutomationPropertyConverter(ConvertToCultureInfo);
-        private static AutomationPropertyConverter convertToAutomationHeadingLevel  = new AutomationPropertyConverter(ConvertToAutomationHeadingLevel);
+        private static AutomationPropertyConverter convertToRowOrColumnMajor = new AutomationPropertyConverter(ConvertToRowOrColumnMajor);
+        private static AutomationPropertyConverter convertToToggleState = new AutomationPropertyConverter(ConvertToToggleState);
+        private static AutomationPropertyConverter convertToWindowInteractionState = new AutomationPropertyConverter(ConvertToWindowInteractionState);
+        private static AutomationPropertyConverter convertToWindowVisualState = new AutomationPropertyConverter(ConvertToWindowVisualState);
+        private static AutomationPropertyConverter convertToExpandCollapseState = new AutomationPropertyConverter(ConvertToExpandCollapseState);
+        private static AutomationPropertyConverter convertToRect = new AutomationPropertyConverter(ConvertToRect);
+        private static AutomationPropertyConverter convertToPoint = new AutomationPropertyConverter(ConvertToPoint);
+        private static AutomationPropertyConverter convertToOrientationType = new AutomationPropertyConverter(ConvertToOrientationType);
+        private static AutomationPropertyConverter convertToDockPosition = new AutomationPropertyConverter(ConvertToDockPosition);
+        private static AutomationPropertyConverter convertToElement = new AutomationPropertyConverter(ConvertToElement);
+        private static AutomationPropertyConverter convertToElementArray = new AutomationPropertyConverter(ConvertToElementArray);
+        private static AutomationPropertyConverter convertToControlType = new AutomationPropertyConverter(ConvertToControlType);
+        private static AutomationPropertyConverter convertToCultureInfo = new AutomationPropertyConverter(ConvertToCultureInfo);
+        private static AutomationPropertyConverter convertToAutomationHeadingLevel = new AutomationPropertyConverter(ConvertToAutomationHeadingLevel);
 
         #endregion Private Methods
 
@@ -261,7 +261,7 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private static readonly AutomationPropertyInfo[] _propertyInfoTable =
@@ -378,14 +378,14 @@ namespace MS.Internal.Automation
         };
 
         // Basic properties assumed to be always supported
-        private static AutomationProperty [ ] _basicProperties = 
+        private static AutomationProperty[] _basicProperties =
         {
             AutomationElement.RuntimeIdProperty,
             AutomationElement.BoundingRectangleProperty,
             AutomationElement.ProcessIdProperty,
             AutomationElement.IsControlElementProperty,
             AutomationElement.IsContentElementProperty,
-            
+
             AutomationElement.ControlTypeProperty,
             AutomationElement.LocalizedControlTypeProperty,
             AutomationElement.NameProperty,
@@ -409,67 +409,67 @@ namespace MS.Internal.Automation
 
         // Note - these need to be declared before the patternInfoTable array that uses them,
         // if they're after it, they'll still be null when used to init the array.
-        private static readonly AutomationProperty [ ] ValueProperties = { ValuePattern.ValueProperty,
+        private static readonly AutomationProperty[] ValueProperties = { ValuePattern.ValueProperty,
                                                                            ValuePattern.IsReadOnlyProperty };
 
-        private static readonly AutomationProperty [ ] RangeValueProperties = { RangeValuePattern.ValueProperty,
+        private static readonly AutomationProperty[] RangeValueProperties = { RangeValuePattern.ValueProperty,
                                                                                 RangeValuePattern.IsReadOnlyProperty,
                                                                                 RangeValuePattern.MinimumProperty,
                                                                                 RangeValuePattern.MaximumProperty,
                                                                                 RangeValuePattern.LargeChangeProperty,
                                                                                 RangeValuePattern.SmallChangeProperty,};
 
-        private static readonly AutomationProperty [ ] ScrollProperties = { ScrollPattern.HorizontalScrollPercentProperty,
+        private static readonly AutomationProperty[] ScrollProperties = { ScrollPattern.HorizontalScrollPercentProperty,
                                                                             ScrollPattern.HorizontalViewSizeProperty,
                                                                             ScrollPattern.HorizontallyScrollableProperty,
                                                                             ScrollPattern.VerticallyScrollableProperty,
                                                                             ScrollPattern.VerticalScrollPercentProperty,
                                                                             ScrollPattern.VerticalViewSizeProperty };
 
-        private static readonly AutomationProperty [ ] SelectionProperties = { SelectionPattern.SelectionProperty,
+        private static readonly AutomationProperty[] SelectionProperties = { SelectionPattern.SelectionProperty,
                                                                                SelectionPattern.CanSelectMultipleProperty,
                                                                                SelectionPattern.IsSelectionRequiredProperty };
 
-        private static readonly AutomationProperty [ ] ExpandCollapseProperties = { ExpandCollapsePattern.ExpandCollapseStateProperty};
+        private static readonly AutomationProperty[] ExpandCollapseProperties = { ExpandCollapsePattern.ExpandCollapseStateProperty };
 
-        private static readonly AutomationProperty [ ] DockProperties = { DockPattern.DockPositionProperty };
+        private static readonly AutomationProperty[] DockProperties = { DockPattern.DockPositionProperty };
 
-        private static readonly AutomationProperty [ ] GridProperties = { GridPattern.RowCountProperty,
+        private static readonly AutomationProperty[] GridProperties = { GridPattern.RowCountProperty,
                                                                           GridPattern.ColumnCountProperty };
 
-        private static readonly AutomationProperty [ ] GridItemProperties = { GridItemPattern.RowProperty,
+        private static readonly AutomationProperty[] GridItemProperties = { GridItemPattern.RowProperty,
                                                                               GridItemPattern.ColumnProperty,
                                                                               GridItemPattern.RowSpanProperty,
                                                                               GridItemPattern.ColumnSpanProperty,
                                                                               GridItemPattern.ContainingGridProperty };
-        
-        private static readonly AutomationProperty [ ] MultipleViewProperties = { MultipleViewPattern.CurrentViewProperty,
+
+        private static readonly AutomationProperty[] MultipleViewProperties = { MultipleViewPattern.CurrentViewProperty,
                                                                                   MultipleViewPattern.SupportedViewsProperty };
-        
-        private static readonly AutomationProperty [ ] WindowProperties = { WindowPattern.CanMaximizeProperty,
+
+        private static readonly AutomationProperty[] WindowProperties = { WindowPattern.CanMaximizeProperty,
                                                                             WindowPattern.CanMinimizeProperty,
                                                                             WindowPattern.IsModalProperty,
                                                                             WindowPattern.WindowVisualStateProperty,
                                                                             WindowPattern.WindowInteractionStateProperty,
                                                                             WindowPattern.IsTopmostProperty };
-          
-        private static readonly AutomationProperty [ ] SelectionItemProperties = { SelectionItemPattern.IsSelectedProperty,
+
+        private static readonly AutomationProperty[] SelectionItemProperties = { SelectionItemPattern.IsSelectedProperty,
                                                                                    SelectionItemPattern.SelectionContainerProperty};
 
-        private static readonly AutomationProperty [ ] TableProperties = { TablePattern.RowHeadersProperty,
+        private static readonly AutomationProperty[] TableProperties = { TablePattern.RowHeadersProperty,
                                                                            TablePattern.ColumnHeadersProperty,
                                                                            TablePattern.RowOrColumnMajorProperty};
-        
-        private static readonly AutomationProperty [ ] TableItemProperties = { TableItemPattern.RowHeaderItemsProperty,
+
+        private static readonly AutomationProperty[] TableItemProperties = { TableItemPattern.RowHeaderItemsProperty,
                                                                                TableItemPattern.ColumnHeaderItemsProperty};
 
-        private static readonly AutomationProperty [ ] ToggleProperties = { TogglePattern.ToggleStateProperty};
+        private static readonly AutomationProperty[] ToggleProperties = { TogglePattern.ToggleStateProperty };
 
 
-        private static readonly AutomationProperty [ ] TransformProperties = { TransformPattern.CanMoveProperty,
+        private static readonly AutomationProperty[] TransformProperties = { TransformPattern.CanMoveProperty,
                                                                                TransformPattern.CanResizeProperty,
                                                                                TransformPattern.CanRotateProperty};
-        private static readonly AutomationPatternInfo [ ] _patternInfoTable =
+        private static readonly AutomationPatternInfo[] _patternInfoTable =
         {
             new AutomationPatternInfo( InvokePattern.Pattern,                null,                            new WrapObjectClientSide(InvokePattern.Wrap)         ),
             new AutomationPatternInfo( SelectionPattern.Pattern,             SelectionProperties,             new WrapObjectClientSide(SelectionPattern.Wrap)      ),
@@ -480,19 +480,19 @@ namespace MS.Internal.Automation
             new AutomationPatternInfo( GridPattern.Pattern,                  GridProperties,                  new WrapObjectClientSide(GridPattern.Wrap)           ),
             new AutomationPatternInfo( GridItemPattern.Pattern,              GridItemProperties,              new WrapObjectClientSide(GridItemPattern.Wrap)       ),
             new AutomationPatternInfo( MultipleViewPattern.Pattern,          MultipleViewProperties,          new WrapObjectClientSide(MultipleViewPattern.Wrap)   ),
-            new AutomationPatternInfo( WindowPattern.Pattern,                WindowProperties,                new WrapObjectClientSide(WindowPattern.Wrap)         ), 
-            new AutomationPatternInfo( SelectionItemPattern.Pattern,         SelectionItemProperties,         new WrapObjectClientSide(SelectionItemPattern.Wrap)  ), 
-            new AutomationPatternInfo( DockPattern.Pattern,                  null,                            new WrapObjectClientSide(DockPattern.Wrap)           ), 
-            new AutomationPatternInfo( TablePattern.Pattern,                 TableProperties,                 new WrapObjectClientSide(TablePattern.Wrap)          ), 
-            new AutomationPatternInfo( TableItemPattern.Pattern,             TableItemProperties,             new WrapObjectClientSide(TableItemPattern.Wrap)      ), 
-            new AutomationPatternInfo( TextPattern.Pattern,                  null,                            new WrapObjectClientSide(TextPattern.Wrap)           ), 
+            new AutomationPatternInfo( WindowPattern.Pattern,                WindowProperties,                new WrapObjectClientSide(WindowPattern.Wrap)         ),
+            new AutomationPatternInfo( SelectionItemPattern.Pattern,         SelectionItemProperties,         new WrapObjectClientSide(SelectionItemPattern.Wrap)  ),
+            new AutomationPatternInfo( DockPattern.Pattern,                  null,                            new WrapObjectClientSide(DockPattern.Wrap)           ),
+            new AutomationPatternInfo( TablePattern.Pattern,                 TableProperties,                 new WrapObjectClientSide(TablePattern.Wrap)          ),
+            new AutomationPatternInfo( TableItemPattern.Pattern,             TableItemProperties,             new WrapObjectClientSide(TableItemPattern.Wrap)      ),
+            new AutomationPatternInfo( TextPattern.Pattern,                  null,                            new WrapObjectClientSide(TextPattern.Wrap)           ),
             new AutomationPatternInfo( TogglePattern.Pattern,                ToggleProperties,                new WrapObjectClientSide(TogglePattern.Wrap)         ),
-            new AutomationPatternInfo( TransformPattern.Pattern,             TransformProperties,             new WrapObjectClientSide(TransformPattern.Wrap)      ), 
+            new AutomationPatternInfo( TransformPattern.Pattern,             TransformProperties,             new WrapObjectClientSide(TransformPattern.Wrap)      ),
             new AutomationPatternInfo( ScrollItemPattern.Pattern,            null,                            new WrapObjectClientSide(ScrollItemPattern.Wrap)     ),
             new AutomationPatternInfo( SynchronizedInputPattern.Pattern,     null,                            new WrapObjectClientSide(SynchronizedInputPattern.Wrap)     ),
             new AutomationPatternInfo( VirtualizedItemPattern.Pattern,       null,                            new WrapObjectClientSide(VirtualizedItemPattern.Wrap)),
             new AutomationPatternInfo( ItemContainerPattern.Pattern,         null,                            new WrapObjectClientSide(ItemContainerPattern.Wrap)  ),
-            
+
         };
 
         private static readonly AutomationAttributeInfo[] _attributeInfoTable =

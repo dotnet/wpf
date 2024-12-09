@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,11 +11,11 @@
 //
 
 using System.Runtime.InteropServices;
-using System.Windows.Navigation;
 using System.Windows.Controls;
-using MS.Win32;
+using System.Windows.Navigation;
 using MS.Internal.AppModel;
 using MS.Internal.Interop;
+using MS.Win32;
 
 //In order to avoid generating warnings about unknown message numbers and
 //unknown pragmas when compiling your C# source code with the actual C# compiler,

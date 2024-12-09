@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,8 +12,8 @@ namespace System.Windows.Automation.Peers
     public abstract class SelectorAutomationPeer : ItemsControlAutomationPeer, ISelectionProvider
     {
         ///
-        protected SelectorAutomationPeer(Selector owner): base(owner)
-        {}
+        protected SelectorAutomationPeer(Selector owner) : base(owner)
+        { }
 
         ///
         override protected AutomationControlType GetAutomationControlTypeCore()
@@ -24,7 +24,7 @@ namespace System.Windows.Automation.Peers
         ///
         override public object GetPattern(PatternInterface patternInterface)
         {
-            if(patternInterface == PatternInterface.Selection)
+            if (patternInterface == PatternInterface.Selection)
             {
                 return this;
             }
@@ -80,21 +80,21 @@ namespace System.Windows.Automation.Peers
 
         #region ISelectionProvider
 
-        IRawElementProviderSimple [] ISelectionProvider.GetSelection()
+        IRawElementProviderSimple[] ISelectionProvider.GetSelection()
         {
             Selector owner = (Selector)Owner;
 
             int count = owner._selectedItems.Count;
             int itemsCount = (owner as ItemsControl).Items.Count;
 
-            if(count > 0 && itemsCount > 0)
+            if (count > 0 && itemsCount > 0)
             {
                 List<IRawElementProviderSimple> selectedProviders = new List<IRawElementProviderSimple>(count);
 
-                for(int i=0; i<count; i++)
+                for (int i = 0; i < count; i++)
                 {
                     SelectorItemAutomationPeer peer = FindOrCreateItemAutomationPeer(owner._selectedItems[i].Item) as SelectorItemAutomationPeer;
-                    if(peer != null)
+                    if (peer != null)
                     {
                         selectedProviders.Add(ProviderFromPeer(peer));
                     }
@@ -147,7 +147,7 @@ namespace System.Windows.Automation.Peers
             if (numSelected == 1 && numAdded == 1)
             {
                 SelectorItemAutomationPeer peer = FindOrCreateItemAutomationPeer(owner._selectedItems[0].Item) as SelectorItemAutomationPeer;
-                if(peer != null)
+                if (peer != null)
                 {
                     peer.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementSelected);
                 }

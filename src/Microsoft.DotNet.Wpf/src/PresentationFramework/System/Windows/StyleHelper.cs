@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,19 +9,19 @@
 *
 *
 \***************************************************************************/
-using MS.Internal;                      // Helper
-using MS.Utility;                       // ItemStructList<ChildValueLookup>
 using System.Collections;               // Hashtable
 using System.Collections.Specialized;   // HybridDictionary
 using System.ComponentModel;            // TypeConverter, TypeDescriptor
 using System.Runtime.CompilerServices;  // ConditionalWeakTable
+using System.Threading;                 // Interlocked
 using System.Windows.Controls;          // Control, ContentPresenter
 using System.Windows.Data;              // BindingExpression
+using System.Windows.Markup;            // MarkupExtension
 using System.Windows.Media;             // VisualCollection
 using System.Windows.Media.Animation;   // Storyboard
-using System.Windows.Markup;            // MarkupExtension
-using System.Threading;                 // Interlocked
+using MS.Internal;                      // Helper
 using MS.Internal.Data;                 // BindingValueChangedEventArgs
+using MS.Utility;                       // ItemStructList<ChildValueLookup>
 
 // Disabling 1634 and 1691:
 // In order to avoid generating warnings about unknown message numbers and
@@ -52,11 +52,11 @@ namespace System.Windows
         //  1. Updates the style cache for the given fe/fce
         //
         internal static void UpdateStyleCache(
-            FrameworkElement        fe,
+            FrameworkElement fe,
             FrameworkContentElement fce,
-            Style                   oldStyle,
-            Style                   newStyle,
-            ref Style               styleCache)
+            Style oldStyle,
+            Style newStyle,
+            ref Style styleCache)
         {
             Debug.Assert(fe != null || fce != null);
 
@@ -91,11 +91,11 @@ namespace System.Windows
         //  1. Updates the theme style cache for the given fe/fce
         //
         internal static void UpdateThemeStyleCache(
-            FrameworkElement        fe,
+            FrameworkElement fe,
             FrameworkContentElement fce,
-            Style                   oldThemeStyle,
-            Style                   newThemeStyle,
-            ref Style               themeStyleCache)
+            Style oldThemeStyle,
+            Style newThemeStyle,
+            ref Style themeStyleCache)
         {
             Debug.Assert(fe != null || fce != null);
 
@@ -131,14 +131,14 @@ namespace System.Windows
 
             if (fe != null)
             {
-                if(ShouldGetValueFromStyle ( FrameworkElement.DefaultStyleKeyProperty ) )
+                if (ShouldGetValueFromStyle(FrameworkElement.DefaultStyleKeyProperty))
                 {
                     style = fe.Style;
                 }
             }
             else
             {
-                if(ShouldGetValueFromStyle ( FrameworkContentElement.DefaultStyleKeyProperty ) )
+                if (ShouldGetValueFromStyle(FrameworkContentElement.DefaultStyleKeyProperty))
                 {
                     style = fce.Style;
                 }
@@ -163,7 +163,7 @@ namespace System.Windows
         //
         internal static Style GetThemeStyle(FrameworkElement fe, FrameworkContentElement fce)
         {
-            Debug.Assert((fe != null && fce == null)|| (fe == null && fce != null));
+            Debug.Assert((fe != null && fce == null) || (fe == null && fce != null));
 
             // Fetch the DefaultStyleKey and the self Style for
             // the given Framework[Content]Element
@@ -222,9 +222,9 @@ namespace System.Windows
                     styleLookup = SystemResources.FindResourceInternal(themeStyleKey);
                 }
 
-                if( styleLookup != null )
+                if (styleLookup != null)
                 {
-                    if( styleLookup is Style )
+                    if (styleLookup is Style)
                     {
                         // We have found an applicable Style in system resources
                         //  let's us use that as second stop to find property values.
@@ -249,7 +249,7 @@ namespace System.Windows
                         PropertyMetadata styleMetadata =
                             FrameworkElement.StyleProperty.GetMetadata(themeStyleTypeKey);
 
-                        if( styleMetadata != null )
+                        if (styleMetadata != null)
                         {
                             // Have a metadata object, get the default style (if any)
                             newThemeStyle = styleMetadata.DefaultValue as Style;
@@ -282,10 +282,10 @@ namespace System.Windows
         //  1. Updates the template cache for the given fe/fce
         //
         internal static void UpdateTemplateCache(
-            FrameworkElement        fe,
-            FrameworkTemplate       oldTemplate,
-            FrameworkTemplate       newTemplate,
-            DependencyProperty      templateProperty)
+            FrameworkElement fe,
+            FrameworkTemplate oldTemplate,
+            FrameworkTemplate newTemplate,
+            DependencyProperty templateProperty)
         {
             DependencyObject d = fe;
 
@@ -298,7 +298,7 @@ namespace System.Windows
                 // style trigger that triggers the TemplateProperty and the values set by that
                 // Template's triggers on the container.  This check is done only when we're
                 // not in the middle of updating Style or ThemeStyle.
-                if( StyleHelper.ShouldGetValueFromStyle(templateProperty)
+                if (StyleHelper.ShouldGetValueFromStyle(templateProperty)
                     &&
                     StyleHelper.ShouldGetValueFromThemeStyle(templateProperty))
                 {
@@ -335,23 +335,23 @@ namespace System.Windows
         //  1. Seals a template
         //
         internal static void SealTemplate(
-            FrameworkTemplate                                           frameworkTemplate,
-            ref bool                                                    isSealed,
-            FrameworkElementFactory                                     templateRoot,
-            TriggerCollection                                           triggers,
-            ResourceDictionary                                          resources,
-            HybridDictionary                                            childIndexFromChildID,
-            ref FrugalStructList<ChildRecord>                           childRecordFromChildIndex,
-            ref FrugalStructList<ItemStructMap<TriggerSourceRecord>>    triggerSourceRecordFromChildIndex,
-            ref FrugalStructList<ContainerDependent>                    containerDependents,
-            ref FrugalStructList<ChildPropertyDependent>                resourceDependents,
-            ref ItemStructList<ChildEventDependent>                     eventDependents,
-            ref HybridDictionary                                        triggerActions,
-            ref HybridDictionary                                        dataTriggerRecordFromBinding,
-            ref bool                                                    hasInstanceValues,
-            ref EventHandlersStore                                      eventHandlersStore)
+            FrameworkTemplate frameworkTemplate,
+            ref bool isSealed,
+            FrameworkElementFactory templateRoot,
+            TriggerCollection triggers,
+            ResourceDictionary resources,
+            HybridDictionary childIndexFromChildID,
+            ref FrugalStructList<ChildRecord> childRecordFromChildIndex,
+            ref FrugalStructList<ItemStructMap<TriggerSourceRecord>> triggerSourceRecordFromChildIndex,
+            ref FrugalStructList<ContainerDependent> containerDependents,
+            ref FrugalStructList<ChildPropertyDependent> resourceDependents,
+            ref ItemStructList<ChildEventDependent> eventDependents,
+            ref HybridDictionary triggerActions,
+            ref HybridDictionary dataTriggerRecordFromBinding,
+            ref bool hasInstanceValues,
+            ref EventHandlersStore eventHandlersStore)
         {
-            Debug.Assert(frameworkTemplate != null );
+            Debug.Assert(frameworkTemplate != null);
 
             // This template has already been sealed.
             // There is no more to do.
@@ -371,7 +371,7 @@ namespace System.Windows
 
             if (templateRoot != null)
             {
-                Debug.Assert( !frameworkTemplate.HasXamlNodeContent );
+                Debug.Assert(!frameworkTemplate.HasXamlNodeContent);
 
                 // Seal the template
 
@@ -416,7 +416,7 @@ namespace System.Windows
 
             bool hasHandler = false;
 
-            Debug.Assert( frameworkTemplate != null );
+            Debug.Assert(frameworkTemplate != null);
 
             StyleHelper.ProcessTemplateTriggers(
                 triggers,
@@ -427,7 +427,7 @@ namespace System.Windows
                 ref triggerActions, templateRoot, ref eventHandlersStore,
                 ref frameworkTemplate.PropertyTriggersWithActions,
                 ref frameworkTemplate.DataTriggersWithActions,
-                ref hasHandler );
+                ref hasHandler);
 
             frameworkTemplate.HasLoadedChangeHandler = hasHandler;
 
@@ -493,13 +493,13 @@ namespace System.Windows
         //     references
         //
         internal static void UpdateTables(
-            ref PropertyValue                                           propertyValue,
-            ref FrugalStructList<ChildRecord>                           childRecordFromChildIndex,
-            ref FrugalStructList<ItemStructMap<TriggerSourceRecord>>    triggerSourceRecordFromChildIndex,
-            ref FrugalStructList<ChildPropertyDependent>                resourceDependents,
-            ref HybridDictionary                                        dataTriggerRecordFromBinding,
-            HybridDictionary                                            childIndexFromChildName,
-            ref bool                                                    hasInstanceValues)
+            ref PropertyValue propertyValue,
+            ref FrugalStructList<ChildRecord> childRecordFromChildIndex,
+            ref FrugalStructList<ItemStructMap<TriggerSourceRecord>> triggerSourceRecordFromChildIndex,
+            ref FrugalStructList<ChildPropertyDependent> resourceDependents,
+            ref HybridDictionary dataTriggerRecordFromBinding,
+            HybridDictionary childIndexFromChildName,
+            ref bool hasInstanceValues)
         {
             //
             //  Record instructions for Child/Self value computation
@@ -521,11 +521,13 @@ namespace System.Windows
 
             int mapIndex = childRecord.ValueLookupListFromProperty.EnsureEntry(propertyValue.Property.GlobalIndex);
 
-            ChildValueLookup valueLookup = new ChildValueLookup();
-            valueLookup.LookupType = (ValueLookupType)propertyValue.ValueType; // Maps directly to ValueLookupType for applicable values
-            valueLookup.Conditions = propertyValue.Conditions;
-            valueLookup.Property = propertyValue.Property;
-            valueLookup.Value = propertyValue.ValueInternal;
+            ChildValueLookup valueLookup = new ChildValueLookup
+            {
+                LookupType = (ValueLookupType)propertyValue.ValueType, // Maps directly to ValueLookupType for applicable values
+                Conditions = propertyValue.Conditions,
+                Property = propertyValue.Property,
+                Value = propertyValue.ValueInternal
+            };
 
             childRecord.ValueLookupListFromProperty.Entries[mapIndex].Value.Add(ref valueLookup);
 
@@ -538,123 +540,123 @@ namespace System.Windows
 
             switch ((ValueLookupType)propertyValue.ValueType)
             {
-            case ValueLookupType.Simple:
-                {
-                    hasInstanceValues |= requiresInstanceStorage;
-                }
-                break;
-
-            case ValueLookupType.Trigger:
-            case ValueLookupType.PropertyTriggerResource:
-                {
-                    if( propertyValue.Conditions != null )
-                    {
-                        // Record the current property as a dependent to each on of the
-                        // properties in the condition. This is to facilitate the invalidation
-                        // of the current property in the event that any one of the properties
-                        // in the condition change. This will allow the current property to get
-                        // re-evaluated.
-                        for (int i = 0; i < propertyValue.Conditions.Length; i++)
-                        {
-                            int sourceChildIndex = propertyValue.Conditions[i].SourceChildIndex;
-                            triggerSourceRecordFromChildIndex.EnsureIndex(sourceChildIndex);
-                            ItemStructMap<TriggerSourceRecord> triggerSourceRecordMap = triggerSourceRecordFromChildIndex[sourceChildIndex];
-
-                            if (propertyValue.Conditions[i].Property == null)
-                            {
-                                throw new InvalidOperationException(SR.MissingTriggerProperty);
-                            }
-                            int index = triggerSourceRecordMap.EnsureEntry(propertyValue.Conditions[i].Property.GlobalIndex);
-                            AddPropertyDependent(childIndex, propertyValue.Property,
-                                ref triggerSourceRecordMap.Entries[index].Value.ChildPropertyDependents);
-
-                            // Store the triggerSourceRecordMap back into the list after it has been updated
-                            triggerSourceRecordFromChildIndex[sourceChildIndex] = triggerSourceRecordMap;
-                        }
-
-                        // If value is a resource reference, add dependent on resource changes
-                        if ((ValueLookupType)propertyValue.ValueType == ValueLookupType.PropertyTriggerResource)
-                        {
-                            AddResourceDependent(childIndex, propertyValue.Property, propertyValue.ValueInternal, ref resourceDependents);
-                        }
-                    }
-
-                    // values in a Trigger may require per-instance storage
-                    if ((ValueLookupType)propertyValue.ValueType != ValueLookupType.PropertyTriggerResource)
+                case ValueLookupType.Simple:
                     {
                         hasInstanceValues |= requiresInstanceStorage;
                     }
-                }
-                break;
+                    break;
 
-            case ValueLookupType.DataTrigger:
-            case ValueLookupType.DataTriggerResource:
-                {
-                    if( propertyValue.Conditions != null )
+                case ValueLookupType.Trigger:
+                case ValueLookupType.PropertyTriggerResource:
                     {
-                        if (dataTriggerRecordFromBinding == null)
+                        if (propertyValue.Conditions != null)
                         {
-                            dataTriggerRecordFromBinding = new HybridDictionary();
-                        }
-
-                        // Record container conditional child property dependents
-                        for (int i = 0; i < propertyValue.Conditions.Length; i++)
-                        {
-                            DataTriggerRecord record = (DataTriggerRecord)dataTriggerRecordFromBinding[propertyValue.Conditions[i].Binding];
-                            if (record == null)
+                            // Record the current property as a dependent to each on of the
+                            // properties in the condition. This is to facilitate the invalidation
+                            // of the current property in the event that any one of the properties
+                            // in the condition change. This will allow the current property to get
+                            // re-evaluated.
+                            for (int i = 0; i < propertyValue.Conditions.Length; i++)
                             {
-                                record = new DataTriggerRecord();
-                                dataTriggerRecordFromBinding[propertyValue.Conditions[i].Binding] = record;
+                                int sourceChildIndex = propertyValue.Conditions[i].SourceChildIndex;
+                                triggerSourceRecordFromChildIndex.EnsureIndex(sourceChildIndex);
+                                ItemStructMap<TriggerSourceRecord> triggerSourceRecordMap = triggerSourceRecordFromChildIndex[sourceChildIndex];
+
+                                if (propertyValue.Conditions[i].Property == null)
+                                {
+                                    throw new InvalidOperationException(SR.MissingTriggerProperty);
+                                }
+                                int index = triggerSourceRecordMap.EnsureEntry(propertyValue.Conditions[i].Property.GlobalIndex);
+                                AddPropertyDependent(childIndex, propertyValue.Property,
+                                    ref triggerSourceRecordMap.Entries[index].Value.ChildPropertyDependents);
+
+                                // Store the triggerSourceRecordMap back into the list after it has been updated
+                                triggerSourceRecordFromChildIndex[sourceChildIndex] = triggerSourceRecordMap;
                             }
 
-                            // Add dependent on trigger
-                            AddPropertyDependent(childIndex, propertyValue.Property,
-                                ref record.Dependents);
+                            // If value is a resource reference, add dependent on resource changes
+                            if ((ValueLookupType)propertyValue.ValueType == ValueLookupType.PropertyTriggerResource)
+                            {
+                                AddResourceDependent(childIndex, propertyValue.Property, propertyValue.ValueInternal, ref resourceDependents);
+                            }
                         }
 
-                        // If value is a resource reference, add dependent on resource changes
-                        if ((ValueLookupType)propertyValue.ValueType == ValueLookupType.DataTriggerResource)
+                        // values in a Trigger may require per-instance storage
+                        if ((ValueLookupType)propertyValue.ValueType != ValueLookupType.PropertyTriggerResource)
                         {
-                            AddResourceDependent(childIndex, propertyValue.Property, propertyValue.ValueInternal, ref resourceDependents);
+                            hasInstanceValues |= requiresInstanceStorage;
                         }
                     }
+                    break;
 
-                    // values in a DataTrigger may require per-instance storage
-                    if ((ValueLookupType)propertyValue.ValueType != ValueLookupType.DataTriggerResource)
+                case ValueLookupType.DataTrigger:
+                case ValueLookupType.DataTriggerResource:
                     {
-                        hasInstanceValues |= requiresInstanceStorage;
+                        if (propertyValue.Conditions != null)
+                        {
+                            if (dataTriggerRecordFromBinding == null)
+                            {
+                                dataTriggerRecordFromBinding = new HybridDictionary();
+                            }
+
+                            // Record container conditional child property dependents
+                            for (int i = 0; i < propertyValue.Conditions.Length; i++)
+                            {
+                                DataTriggerRecord record = (DataTriggerRecord)dataTriggerRecordFromBinding[propertyValue.Conditions[i].Binding];
+                                if (record == null)
+                                {
+                                    record = new DataTriggerRecord();
+                                    dataTriggerRecordFromBinding[propertyValue.Conditions[i].Binding] = record;
+                                }
+
+                                // Add dependent on trigger
+                                AddPropertyDependent(childIndex, propertyValue.Property,
+                                    ref record.Dependents);
+                            }
+
+                            // If value is a resource reference, add dependent on resource changes
+                            if ((ValueLookupType)propertyValue.ValueType == ValueLookupType.DataTriggerResource)
+                            {
+                                AddResourceDependent(childIndex, propertyValue.Property, propertyValue.ValueInternal, ref resourceDependents);
+                            }
+                        }
+
+                        // values in a DataTrigger may require per-instance storage
+                        if ((ValueLookupType)propertyValue.ValueType != ValueLookupType.DataTriggerResource)
+                        {
+                            hasInstanceValues |= requiresInstanceStorage;
+                        }
                     }
-                }
-                break;
+                    break;
 
-            case ValueLookupType.TemplateBinding:
-                {
-                    TemplateBindingExtension templateBinding = (TemplateBindingExtension)propertyValue.ValueInternal;
-                    DependencyProperty destinationProperty = propertyValue.Property; // Child
-                    DependencyProperty sourceProperty = templateBinding.Property; // Container
+                case ValueLookupType.TemplateBinding:
+                    {
+                        TemplateBindingExtension templateBinding = (TemplateBindingExtension)propertyValue.ValueInternal;
+                        DependencyProperty destinationProperty = propertyValue.Property; // Child
+                        DependencyProperty sourceProperty = templateBinding.Property; // Container
 
-                    // Record the current property as a dependent to the aliased
-                    // property on the container. This is to facilitate the
-                    // invalidation of the current property in the event that the
-                    // aliased container property changes. This will allow the current
-                    // property to get re-evaluated.
-                    int sourceChildIndex = 0; // TemplateBinding is always sourced off of the container
-                    triggerSourceRecordFromChildIndex.EnsureIndex(sourceChildIndex);
-                    ItemStructMap<TriggerSourceRecord> triggerSourceRecordMap = triggerSourceRecordFromChildIndex[sourceChildIndex];
+                        // Record the current property as a dependent to the aliased
+                        // property on the container. This is to facilitate the
+                        // invalidation of the current property in the event that the
+                        // aliased container property changes. This will allow the current
+                        // property to get re-evaluated.
+                        int sourceChildIndex = 0; // TemplateBinding is always sourced off of the container
+                        triggerSourceRecordFromChildIndex.EnsureIndex(sourceChildIndex);
+                        ItemStructMap<TriggerSourceRecord> triggerSourceRecordMap = triggerSourceRecordFromChildIndex[sourceChildIndex];
 
-                    int index = triggerSourceRecordMap.EnsureEntry(sourceProperty.GlobalIndex);
-                    AddPropertyDependent(childIndex, destinationProperty, ref triggerSourceRecordMap.Entries[index].Value.ChildPropertyDependents);
+                        int index = triggerSourceRecordMap.EnsureEntry(sourceProperty.GlobalIndex);
+                        AddPropertyDependent(childIndex, destinationProperty, ref triggerSourceRecordMap.Entries[index].Value.ChildPropertyDependents);
 
-                    // Store the triggerSourceRecordMap back into the list after it has been updated
-                    triggerSourceRecordFromChildIndex[sourceChildIndex] = triggerSourceRecordMap;
-                }
-                break;
+                        // Store the triggerSourceRecordMap back into the list after it has been updated
+                        triggerSourceRecordFromChildIndex[sourceChildIndex] = triggerSourceRecordMap;
+                    }
+                    break;
 
-            case ValueLookupType.Resource:
-                {
-                    AddResourceDependent(childIndex, propertyValue.Property, propertyValue.ValueInternal, ref resourceDependents);
-                }
-                break;
+                case ValueLookupType.Resource:
+                    {
+                        AddResourceDependent(childIndex, propertyValue.Property, propertyValue.ValueInternal, ref resourceDependents);
+                    }
+                    break;
             }
         }
 
@@ -665,8 +667,8 @@ namespace System.Windows
         private static bool RequiresInstanceStorage(ref object value)
         {
             DeferredReference deferredReference = null;
-            MarkupExtension markupExtension     = null;
-            Freezable freezable                 = null;
+            MarkupExtension markupExtension = null;
+            Freezable freezable = null;
 
             if ((deferredReference = value as DeferredReference) != null)
             {
@@ -730,9 +732,9 @@ namespace System.Windows
         //     already present. This is used to invalidate container dependents.
         //
         internal static void AddContainerDependent(
-            DependencyProperty                          dp,
-            bool                                        fromVisualTrigger,
-            ref FrugalStructList<ContainerDependent>    containerDependents)
+            DependencyProperty dp,
+            bool fromVisualTrigger,
+            ref FrugalStructList<ContainerDependent> containerDependents)
         {
             ContainerDependent dependent;
 
@@ -749,9 +751,11 @@ namespace System.Windows
                 }
             }
 
-            dependent = new ContainerDependent();
-            dependent.Property = dp;
-            dependent.FromVisualTrigger = fromVisualTrigger;
+            dependent = new ContainerDependent
+            {
+                Property = dp,
+                FromVisualTrigger = fromVisualTrigger
+            };
             containerDependents.Add(dependent);
         }
 
@@ -764,17 +768,19 @@ namespace System.Windows
         //     to lookup events in styles during event routing.
         //
         internal static void AddEventDependent(
-            int                                     childIndex,
-            EventHandlersStore                      eventHandlersStore,
+            int childIndex,
+            EventHandlersStore eventHandlersStore,
             ref ItemStructList<ChildEventDependent> eventDependents)
         {
             if (eventHandlersStore != null)
             {
                 Debug.Assert(childIndex >= 0);
 
-                ChildEventDependent dependent = new ChildEventDependent();
-                dependent.ChildIndex = childIndex;
-                dependent.EventHandlersStore = eventHandlersStore;
+                ChildEventDependent dependent = new ChildEventDependent
+                {
+                    ChildIndex = childIndex,
+                    EventHandlersStore = eventHandlersStore
+                };
 
                 eventDependents.Add(ref dependent);
             }
@@ -789,13 +795,15 @@ namespace System.Windows
         //     or from a property alias on a TemplateNode.
         //
         private static void AddPropertyDependent(
-            int                                             childIndex,
-            DependencyProperty                              dp,
-            ref FrugalStructList<ChildPropertyDependent>    propertyDependents)
+            int childIndex,
+            DependencyProperty dp,
+            ref FrugalStructList<ChildPropertyDependent> propertyDependents)
         {
-            ChildPropertyDependent dependent = new ChildPropertyDependent();
-            dependent.ChildIndex = childIndex;
-            dependent.Property = dp;
+            ChildPropertyDependent dependent = new ChildPropertyDependent
+            {
+                ChildIndex = childIndex,
+                Property = dp
+            };
 
             propertyDependents.Add(dependent);
         }
@@ -807,10 +815,10 @@ namespace System.Windows
         //     resource references
         //
         private static void AddResourceDependent(
-            int                                             childIndex,
-            DependencyProperty                              dp,
-            object                                          name,
-            ref FrugalStructList<ChildPropertyDependent>    resourceDependents)
+            int childIndex,
+            DependencyProperty dp,
+            object name,
+            ref FrugalStructList<ChildPropertyDependent> resourceDependents)
         {
             bool add = true;
 
@@ -831,10 +839,12 @@ namespace System.Windows
             {
                 // Since there isn't a duplicate entry,
                 // create and add a new one
-                ChildPropertyDependent resourceDependent = new ChildPropertyDependent();
-                resourceDependent.ChildIndex = childIndex;
-                resourceDependent.Property = dp;
-                resourceDependent.Name = name;
+                ChildPropertyDependent resourceDependent = new ChildPropertyDependent
+                {
+                    ChildIndex = childIndex,
+                    Property = dp,
+                    Name = name
+                };
 
                 resourceDependents.Add(resourceDependent);
             }
@@ -852,14 +862,14 @@ namespace System.Windows
         //+----------------------------------------------------------------------------------------------
 
         internal static void ProcessTemplateContentFromFEF(
-            FrameworkElementFactory                                     factory,
-            ref FrugalStructList<ChildRecord>                           childRecordFromChildIndex,
-            ref FrugalStructList<ItemStructMap<TriggerSourceRecord>>    triggerSourceRecordFromChildIndex,
-            ref FrugalStructList<ChildPropertyDependent>                resourceDependents,
-            ref ItemStructList<ChildEventDependent>                     eventDependents,
-            ref HybridDictionary                                        dataTriggerRecordFromBinding,
-            HybridDictionary                                            childIndexFromChildID,
-            ref bool                                                    hasInstanceValues)
+            FrameworkElementFactory factory,
+            ref FrugalStructList<ChildRecord> childRecordFromChildIndex,
+            ref FrugalStructList<ItemStructMap<TriggerSourceRecord>> triggerSourceRecordFromChildIndex,
+            ref FrugalStructList<ChildPropertyDependent> resourceDependents,
+            ref ItemStructList<ChildEventDependent> eventDependents,
+            ref HybridDictionary dataTriggerRecordFromBinding,
+            HybridDictionary childIndexFromChildID,
+            ref bool hasInstanceValues)
         {
             // Process the PropertyValues on the current node
             for (int i = 0; i < factory.PropertyValues.Count; i++)
@@ -891,22 +901,22 @@ namespace System.Windows
         //  1. Adds shared table entries for property values set via Triggers
         //
         private static void ProcessTemplateTriggers(
-            TriggerCollection                                           triggers,
-            FrameworkTemplate                                           frameworkTemplate,
-            ref FrugalStructList<ChildRecord>                           childRecordFromChildIndex,
-            ref FrugalStructList<ItemStructMap<TriggerSourceRecord>>    triggerSourceRecordFromChildIndex,
-            ref FrugalStructList<ContainerDependent>                    containerDependents,
-            ref FrugalStructList<ChildPropertyDependent>                resourceDependents,
-            ref ItemStructList<ChildEventDependent>                     eventDependents,
-            ref HybridDictionary                                        dataTriggerRecordFromBinding,
-            HybridDictionary                                            childIndexFromChildID,
-            ref bool                                                    hasInstanceValues,
-            ref HybridDictionary                                        triggerActions,
-            FrameworkElementFactory                                     templateRoot,
-            ref EventHandlersStore                                      eventHandlersStore,
-            ref FrugalMap                                               propertyTriggersWithActions,
-            ref HybridDictionary                                        dataTriggersWithActions,
-            ref bool                                                    hasLoadedChangeHandler)
+            TriggerCollection triggers,
+            FrameworkTemplate frameworkTemplate,
+            ref FrugalStructList<ChildRecord> childRecordFromChildIndex,
+            ref FrugalStructList<ItemStructMap<TriggerSourceRecord>> triggerSourceRecordFromChildIndex,
+            ref FrugalStructList<ContainerDependent> containerDependents,
+            ref FrugalStructList<ChildPropertyDependent> resourceDependents,
+            ref ItemStructList<ChildEventDependent> eventDependents,
+            ref HybridDictionary dataTriggerRecordFromBinding,
+            HybridDictionary childIndexFromChildID,
+            ref bool hasInstanceValues,
+            ref HybridDictionary triggerActions,
+            FrameworkElementFactory templateRoot,
+            ref EventHandlersStore eventHandlersStore,
+            ref FrugalMap propertyTriggersWithActions,
+            ref HybridDictionary dataTriggersWithActions,
+            ref bool hasLoadedChangeHandler)
         {
             if (triggers != null)
             {
@@ -921,14 +931,14 @@ namespace System.Windows
                     MultiDataTrigger multiDataTrigger;
                     EventTrigger eventTrigger;
 
-                    DetermineTriggerType( triggerBase, out trigger, out multiTrigger, out dataTrigger, out multiDataTrigger, out eventTrigger );
+                    DetermineTriggerType(triggerBase, out trigger, out multiTrigger, out dataTrigger, out multiDataTrigger, out eventTrigger);
 
-                    if ( trigger != null || multiTrigger != null||
-                        dataTrigger != null || multiDataTrigger != null )
+                    if (trigger != null || multiTrigger != null ||
+                        dataTrigger != null || multiDataTrigger != null)
                     {
                         // Update the SourceChildIndex for each of the conditions for this trigger
                         TriggerCondition[] conditions = triggerBase.TriggerConditions;
-                        for (int k=0; k<conditions.Length; k++)
+                        for (int k = 0; k < conditions.Length; k++)
                         {
                             conditions[k].SourceChildIndex = StyleHelper.QueryChildIndexFromChildName(conditions[k].SourceName, childIndexFromChildID);
                         }
@@ -954,32 +964,32 @@ namespace System.Windows
                         }
 
                         // Set things up to handle TriggerActions
-                        if( triggerBase.HasEnterActions || triggerBase.HasExitActions )
+                        if (triggerBase.HasEnterActions || triggerBase.HasExitActions)
                         {
-                            if( trigger != null )
+                            if (trigger != null)
                             {
-                                StyleHelper.AddPropertyTriggerWithAction( triggerBase, trigger.Property, ref propertyTriggersWithActions );
+                                StyleHelper.AddPropertyTriggerWithAction(triggerBase, trigger.Property, ref propertyTriggersWithActions);
                             }
-                            else if( multiTrigger != null )
+                            else if (multiTrigger != null)
                             {
-                                for( int k = 0; k < multiTrigger.Conditions.Count; k++ )
+                                for (int k = 0; k < multiTrigger.Conditions.Count; k++)
                                 {
                                     Condition triggerCondition = multiTrigger.Conditions[k];
 
-                                    StyleHelper.AddPropertyTriggerWithAction( triggerBase, triggerCondition.Property, ref propertyTriggersWithActions );
+                                    StyleHelper.AddPropertyTriggerWithAction(triggerBase, triggerCondition.Property, ref propertyTriggersWithActions);
                                 }
                             }
-                            else if( dataTrigger != null )
+                            else if (dataTrigger != null)
                             {
-                                StyleHelper.AddDataTriggerWithAction( triggerBase, dataTrigger.Binding, ref dataTriggersWithActions );
+                                StyleHelper.AddDataTriggerWithAction(triggerBase, dataTrigger.Binding, ref dataTriggersWithActions);
                             }
-                            else if( multiDataTrigger != null )
+                            else if (multiDataTrigger != null)
                             {
-                                for( int k = 0; k < multiDataTrigger.Conditions.Count; k++ )
+                                for (int k = 0; k < multiDataTrigger.Conditions.Count; k++)
                                 {
                                     Condition dataCondition = multiDataTrigger.Conditions[k];
 
-                                    StyleHelper.AddDataTriggerWithAction( triggerBase, dataCondition.Binding, ref dataTriggersWithActions );
+                                    StyleHelper.AddDataTriggerWithAction(triggerBase, dataCondition.Binding, ref dataTriggersWithActions);
                                 }
                             }
                             else
@@ -988,7 +998,7 @@ namespace System.Windows
                             }
                         }
                     }
-                    else if( eventTrigger != null )
+                    else if (eventTrigger != null)
                     {
                         StyleHelper.ProcessEventTrigger(eventTrigger,
                                                         childIndexFromChildID,
@@ -1012,34 +1022,34 @@ namespace System.Windows
         //  trigger type we're dealing here.
         // Attempted casts are done in the order of decreasing expected frequency.
         //  rearrange as expectations change.
-        private static void DetermineTriggerType( TriggerBase triggerBase,
+        private static void DetermineTriggerType(TriggerBase triggerBase,
             out Trigger trigger, out MultiTrigger multiTrigger,
             out DataTrigger dataTrigger, out MultiDataTrigger multiDataTrigger,
-            out EventTrigger eventTrigger )
+            out EventTrigger eventTrigger)
         {
-            if( (trigger = (triggerBase as Trigger)) != null )
+            if ((trigger = (triggerBase as Trigger)) != null)
             {
                 multiTrigger = null;
                 dataTrigger = null;
                 multiDataTrigger = null;
                 eventTrigger = null;
             }
-            else if( (multiTrigger = (triggerBase as MultiTrigger)) != null )
+            else if ((multiTrigger = (triggerBase as MultiTrigger)) != null)
             {
                 dataTrigger = null;
                 multiDataTrigger = null;
                 eventTrigger = null;
             }
-            else if( (dataTrigger = (triggerBase as DataTrigger)) != null )
+            else if ((dataTrigger = (triggerBase as DataTrigger)) != null)
             {
                 multiDataTrigger = null;
                 eventTrigger = null;
             }
-            else if( (multiDataTrigger = (triggerBase as MultiDataTrigger)) != null )
+            else if ((multiDataTrigger = (triggerBase as MultiDataTrigger)) != null)
             {
                 eventTrigger = null;
             }
-            else if( (eventTrigger = (triggerBase as EventTrigger)) != null )
+            else if ((eventTrigger = (triggerBase as EventTrigger)) != null)
             {
                 ; // Do nothing - eventTrigger is now non-null, and everything else has been set to null.
             }
@@ -1055,31 +1065,31 @@ namespace System.Windows
         //  1. Adds the trigger information to the data structure that will be
         //     used when it's time to add the delegate to the event route.
         //
-        internal static void ProcessEventTrigger (
-            EventTrigger                            eventTrigger,
-            HybridDictionary                        childIndexFromChildName,
-            ref HybridDictionary                    triggerActions,
+        internal static void ProcessEventTrigger(
+            EventTrigger eventTrigger,
+            HybridDictionary childIndexFromChildName,
+            ref HybridDictionary triggerActions,
             ref ItemStructList<ChildEventDependent> eventDependents,
-            FrameworkElementFactory                 templateRoot,
-            FrameworkTemplate                       frameworkTemplate,
-            ref EventHandlersStore                  eventHandlersStore,
-            ref bool                                hasLoadedChangeHandler)
+            FrameworkElementFactory templateRoot,
+            FrameworkTemplate frameworkTemplate,
+            ref EventHandlersStore eventHandlersStore,
+            ref bool hasLoadedChangeHandler)
         {
-            if( eventTrigger == null )
+            if (eventTrigger == null)
             {
                 return;
             }
 
             // The list of actions associated with the event of this EventTrigger.
             List<TriggerAction> actionsList = null;
-            bool                actionsListExisted = true;
-            bool                actionsListChanged = false;
-            TriggerAction       action = null;
+            bool actionsListExisted = true;
+            bool actionsListChanged = false;
+            TriggerAction action = null;
 
             FrameworkElementFactory childFef = null;
 
             // Find a ChildID for the EventTrigger.
-            if( eventTrigger.SourceName == null )
+            if (eventTrigger.SourceName == null)
             {
                 eventTrigger.TriggerChildIndex = 0;
             }
@@ -1087,7 +1097,7 @@ namespace System.Windows
             {
                 int childIndex = StyleHelper.QueryChildIndexFromChildName(eventTrigger.SourceName, childIndexFromChildName);
 
-                if( childIndex == -1 )
+                if (childIndex == -1)
                 {
                     throw new InvalidOperationException(SR.Format(SR.EventTriggerTargetNameUnresolvable, eventTrigger.SourceName));
                 }
@@ -1118,7 +1128,7 @@ namespace System.Windows
                 action = eventTrigger.Actions[i];
 
                 // Any reason we shouldn't use this TriggerAction?  Check here.
-                if( false /* No reason not to use it right now */ )
+                if (false /* No reason not to use it right now */ )
                 {
                     // continue;
                 }
@@ -1138,7 +1148,7 @@ namespace System.Windows
             // Add a special delegate to listen for this event and
             // fire the trigger.
 
-            if( templateRoot != null || eventTrigger.TriggerChildIndex == 0 )
+            if (templateRoot != null || eventTrigger.TriggerChildIndex == 0)
             {
                 // This is a FEF-style template, or the trigger is keying off of
                 // the templated parent.
@@ -1153,20 +1163,20 @@ namespace System.Windows
                 // If this trigger needs the loaded/unloaded events, set the optimization
                 // flag.
 
-                if (  (eventTrigger.RoutedEvent == FrameworkElement.LoadedEvent)
-                    ||(eventTrigger.RoutedEvent == FrameworkElement.UnloadedEvent))
+                if ((eventTrigger.RoutedEvent == FrameworkElement.LoadedEvent)
+                    || (eventTrigger.RoutedEvent == FrameworkElement.UnloadedEvent))
                 {
                     if (eventTrigger.TriggerChildIndex == 0)
                     {
                         // Mark the template to show it has a loaded or unloaded handler
 
-                        hasLoadedChangeHandler  = true;
+                        hasLoadedChangeHandler = true;
                     }
                     else
                     {
                         // Mark the FEF to show it has a loaded or unloaded handler
 
-                        childFef.HasLoadedChangeHandler  = true;
+                        childFef.HasLoadedChangeHandler = true;
                     }
                 }
 
@@ -1190,18 +1200,18 @@ namespace System.Windows
 
                 if (eventTrigger.RoutedEvent == FrameworkElement.LoadedEvent
                     ||
-                    eventTrigger.RoutedEvent == FrameworkElement.UnloadedEvent )
+                    eventTrigger.RoutedEvent == FrameworkElement.UnloadedEvent)
                 {
                     FrameworkTemplate.TemplateChildLoadedFlags templateChildLoadedFlags
-                        = frameworkTemplate._TemplateChildLoadedDictionary[ eventTrigger.TriggerChildIndex ] as FrameworkTemplate.TemplateChildLoadedFlags;
+                        = frameworkTemplate._TemplateChildLoadedDictionary[eventTrigger.TriggerChildIndex] as FrameworkTemplate.TemplateChildLoadedFlags;
 
-                    if( templateChildLoadedFlags == null )
+                    if (templateChildLoadedFlags == null)
                     {
                         templateChildLoadedFlags = new FrameworkTemplate.TemplateChildLoadedFlags();
-                        frameworkTemplate._TemplateChildLoadedDictionary[ eventTrigger.TriggerChildIndex ] = templateChildLoadedFlags;
+                        frameworkTemplate._TemplateChildLoadedDictionary[eventTrigger.TriggerChildIndex] = templateChildLoadedFlags;
                     }
 
-                    if( eventTrigger.RoutedEvent == FrameworkElement.LoadedEvent )
+                    if (eventTrigger.RoutedEvent == FrameworkElement.LoadedEvent)
                     {
                         templateChildLoadedFlags.HasLoadedChangedHandler = true;
                     }
@@ -1227,12 +1237,12 @@ namespace System.Windows
         //     will allow us to invoke the TriggerActions
         //
         private static void AddDelegateToFireTrigger(
-            RoutedEvent                             routedEvent,
-            int                                     childIndex,
-            FrameworkElementFactory                 templateRoot,
-            FrameworkElementFactory                 childFef,
+            RoutedEvent routedEvent,
+            int childIndex,
+            FrameworkElementFactory templateRoot,
+            FrameworkElementFactory childFef,
             ref ItemStructList<ChildEventDependent> eventDependents,
-            ref EventHandlersStore                  eventHandlersStore)
+            ref EventHandlersStore eventHandlersStore)
         {
             if (childIndex == 0)
             {
@@ -1273,12 +1283,12 @@ namespace System.Windows
         //+---------------------------------------------------------------------------------------
 
         private static void AddDelegateToFireTrigger(
-            RoutedEvent                             routedEvent,
-            int                                     childIndex,
+            RoutedEvent routedEvent,
+            int childIndex,
             ref ItemStructList<ChildEventDependent> eventDependents,
-            ref EventHandlersStore                  eventHandlersStore)
+            ref EventHandlersStore eventHandlersStore)
         {
-            Debug.Assert( childIndex != 0 ); // This should go to the other AddDelegateToFireTrigger overload
+            Debug.Assert(childIndex != 0); // This should go to the other AddDelegateToFireTrigger overload
 
 
             if (eventHandlersStore == null)
@@ -1286,9 +1296,9 @@ namespace System.Windows
                 eventHandlersStore = new EventHandlersStore();
             }
 
-            StyleHelper.AddEventDependent( childIndex,
+            StyleHelper.AddEventDependent(childIndex,
                                            eventHandlersStore,
-                                           ref eventDependents );
+                                           ref eventDependents);
             eventHandlersStore.AddRoutedEventHandler(routedEvent, StyleHelper.EventTriggerHandlerOnChild, false/* HandledEventsToo */);
 
         }
@@ -1328,26 +1338,26 @@ namespace System.Windows
         //
         internal static void UpdateInstanceData(
             UncommonField<HybridDictionary[]> dataField,
-            FrameworkElement           fe,
-            FrameworkContentElement    fce,
-            Style                      oldStyle,
-            Style                      newStyle,
-            FrameworkTemplate          oldFrameworkTemplate,
-            FrameworkTemplate          newFrameworkTemplate,
-            InternalFlags              hasGeneratedSubTreeFlag)
+            FrameworkElement fe,
+            FrameworkContentElement fce,
+            Style oldStyle,
+            Style newStyle,
+            FrameworkTemplate oldFrameworkTemplate,
+            FrameworkTemplate newFrameworkTemplate,
+            InternalFlags hasGeneratedSubTreeFlag)
         {
             Debug.Assert((fe != null && fce == null) || (fe == null && fce != null));
 
             DependencyObject container = (fe != null) ? (DependencyObject)fe : (DependencyObject)fce;
 
-            if (oldStyle != null || oldFrameworkTemplate != null )
+            if (oldStyle != null || oldFrameworkTemplate != null)
             {
                 ReleaseInstanceData(dataField, container, fe, fce, oldStyle, oldFrameworkTemplate, hasGeneratedSubTreeFlag);
             }
 
-            if (newStyle != null || newFrameworkTemplate != null )
+            if (newStyle != null || newFrameworkTemplate != null)
             {
-                CreateInstanceData(dataField, container, fe, fce, newStyle, newFrameworkTemplate );
+                CreateInstanceData(dataField, container, fe, fce, newStyle, newFrameworkTemplate);
             }
             else
             {
@@ -1362,15 +1372,15 @@ namespace System.Windows
         //
         internal static void CreateInstanceData(
             UncommonField<HybridDictionary[]> dataField,
-            DependencyObject            container,
-            FrameworkElement            fe,
-            FrameworkContentElement     fce,
-            Style                       newStyle,
-            FrameworkTemplate           newFrameworkTemplate )
+            DependencyObject container,
+            FrameworkElement fe,
+            FrameworkContentElement fce,
+            Style newStyle,
+            FrameworkTemplate newFrameworkTemplate)
         {
             Debug.Assert((fe != null && fce == null) || (fe == null && fce != null));
             Debug.Assert((fe != null && fe == container) || (fce != null && fce == container));
-            Debug.Assert(newStyle != null || newFrameworkTemplate != null );
+            Debug.Assert(newStyle != null || newFrameworkTemplate != null);
 
             if (newStyle != null)
             {
@@ -1402,12 +1412,12 @@ namespace System.Windows
         //     any property-related funtionality of the Style/Template.)
         //
         internal static void CreateInstanceDataForChild(
-            UncommonField<HybridDictionary[]>   dataField,
-            DependencyObject                    container,
-            DependencyObject                    child,
-            int                                 childIndex,
-            bool                                hasInstanceValues,
-            ref FrugalStructList<ChildRecord>   childRecordFromChildIndex)
+            UncommonField<HybridDictionary[]> dataField,
+            DependencyObject container,
+            DependencyObject child,
+            int childIndex,
+            bool hasInstanceValues,
+            ref FrugalStructList<ChildRecord> childRecordFromChildIndex)
         {
             if (hasInstanceValues)
             {
@@ -1424,17 +1434,17 @@ namespace System.Windows
         //  2. It removes per-instance StyleData/TemplateData for the old Style/Template
         //
         internal static void ReleaseInstanceData(
-            UncommonField<HybridDictionary[]>  dataField,
-            DependencyObject            container,
-            FrameworkElement            fe,
-            FrameworkContentElement     fce,
-            Style                       oldStyle,
-            FrameworkTemplate           oldFrameworkTemplate,
-            InternalFlags               hasGeneratedSubTreeFlag)
+            UncommonField<HybridDictionary[]> dataField,
+            DependencyObject container,
+            FrameworkElement fe,
+            FrameworkContentElement fce,
+            Style oldStyle,
+            FrameworkTemplate oldFrameworkTemplate,
+            InternalFlags hasGeneratedSubTreeFlag)
         {
             Debug.Assert((fe != null && fce == null) || (fe == null && fce != null));
             Debug.Assert((fe != null && fe == container) || (fce != null && fce == container));
-            Debug.Assert(oldStyle != null || oldFrameworkTemplate != null );
+            Debug.Assert(oldStyle != null || oldFrameworkTemplate != null);
 
             // Fetch the per-instance data field value
             HybridDictionary[] styleData = dataField.GetValue(container);
@@ -1442,7 +1452,7 @@ namespace System.Windows
             if (oldStyle != null)
             {
                 HybridDictionary instanceValues = (styleData != null) ? styleData[(int)InstanceStyleData.InstanceValues] : null;
-                ReleaseInstanceDataForDataTriggers(dataField, instanceValues, oldStyle, oldFrameworkTemplate );
+                ReleaseInstanceDataForDataTriggers(dataField, instanceValues, oldStyle, oldFrameworkTemplate);
                 if (oldStyle.HasInstanceValues)
                 {
                     StyleHelper.ProcessInstanceValuesForChild(
@@ -1453,7 +1463,7 @@ namespace System.Windows
             else if (oldFrameworkTemplate != null)
             {
                 HybridDictionary instanceValues = (styleData != null) ? styleData[(int)InstanceStyleData.InstanceValues] : null;
-                ReleaseInstanceDataForDataTriggers(dataField, instanceValues, oldStyle, oldFrameworkTemplate );
+                ReleaseInstanceDataForDataTriggers(dataField, instanceValues, oldStyle, oldFrameworkTemplate);
                 if (oldFrameworkTemplate.HasInstanceValues)
                 {
                     StyleHelper.ProcessInstanceValuesForChild(
@@ -1464,7 +1474,7 @@ namespace System.Windows
             else
             {
                 HybridDictionary instanceValues = (styleData != null) ? styleData[(int)InstanceStyleData.InstanceValues] : null;
-                ReleaseInstanceDataForDataTriggers(dataField, instanceValues, oldStyle, oldFrameworkTemplate );
+                ReleaseInstanceDataForDataTriggers(dataField, instanceValues, oldStyle, oldFrameworkTemplate);
             }
         }
 
@@ -1474,9 +1484,9 @@ namespace System.Windows
         //     for Style/Template exists
         //
         internal static HybridDictionary EnsureInstanceData(
-            UncommonField<HybridDictionary[]>  dataField,
-            DependencyObject            container,
-            InstanceStyleData           dataType)
+            UncommonField<HybridDictionary[]> dataField,
+            DependencyObject container,
+            InstanceStyleData dataType)
         {
             return EnsureInstanceData(dataField, container, dataType, -1);
         }
@@ -1488,10 +1498,10 @@ namespace System.Windows
         //  2. Also allows you to specify initial capacity
         //
         internal static HybridDictionary EnsureInstanceData(
-            UncommonField<HybridDictionary[]>  dataField,
-            DependencyObject            container,
-            InstanceStyleData           dataType,
-            int                         initialSize)
+            UncommonField<HybridDictionary[]> dataField,
+            DependencyObject container,
+            InstanceStyleData dataType,
+            int initialSize)
         {
             Debug.Assert((container is FrameworkElement) || (container is FrameworkContentElement), "Caller has queried with non-framework element.  Bad caller, bad!");
             Debug.Assert(dataType < InstanceStyleData.ArraySize, "Caller has queried using a value outside the range of the Enum.  Bad caller, bad!");
@@ -1504,9 +1514,9 @@ namespace System.Windows
                 dataField.SetValue(container, data);
             }
 
-            if (data[(int)dataType] == null )
+            if (data[(int)dataType] == null)
             {
-                if( initialSize < 0 )
+                if (initialSize < 0)
                 {
                     data[(int)dataType] = new HybridDictionary();
                 }
@@ -1525,12 +1535,12 @@ namespace System.Windows
         //  2. Processes values that need per-instance storage
         //
         private static void ProcessInstanceValuesForChild(
-            DependencyObject                    container,
-            DependencyObject                    child,
-            int                                 childIndex,
-            HybridDictionary                    instanceValues,
-            bool                                apply,
-            ref FrugalStructList<ChildRecord>   childRecordFromChildIndex)
+            DependencyObject container,
+            DependencyObject child,
+            int childIndex,
+            HybridDictionary instanceValues,
+            bool apply,
+            ref FrugalStructList<ChildRecord> childRecordFromChildIndex)
         {
             // If childIndex has not been provided,
             // fetch it from the given child node
@@ -1564,45 +1574,45 @@ namespace System.Windows
         //
         private static void ProcessInstanceValuesHelper(
             ref ItemStructList<ChildValueLookup> valueLookupList,
-            DependencyObject                     target,
-            int                                  childIndex,
-            HybridDictionary                     instanceValues,
-            bool                                 apply)
+            DependencyObject target,
+            int childIndex,
+            HybridDictionary instanceValues,
+            bool apply)
         {
             // update all properties whose value needs per-instance storage
-            for (int i = valueLookupList.Count - 1;  i >= 0;  --i)
+            for (int i = valueLookupList.Count - 1; i >= 0; --i)
             {
                 switch (valueLookupList.List[i].LookupType)
                 {
-                case ValueLookupType.Simple:
-                case ValueLookupType.Trigger:
-                case ValueLookupType.DataTrigger:
-                    Freezable freezable;
+                    case ValueLookupType.Simple:
+                    case ValueLookupType.Trigger:
+                    case ValueLookupType.DataTrigger:
+                        Freezable freezable;
 
-                    DependencyProperty dp = valueLookupList.List[i].Property;
-                    object o = valueLookupList.List[i].Value;
+                        DependencyProperty dp = valueLookupList.List[i].Property;
+                        object o = valueLookupList.List[i].Value;
 
-                    if (o is MarkupExtension)
-                    {
-                        ProcessInstanceValue(target, childIndex, instanceValues, dp, i, apply);
-                    }
-                    else if ((freezable = o as Freezable) != null)
-                    {
-                        if (freezable.CheckAccess())
+                        if (o is MarkupExtension)
                         {
-                            if (!freezable.IsFrozen)
+                            ProcessInstanceValue(target, childIndex, instanceValues, dp, i, apply);
+                        }
+                        else if ((freezable = o as Freezable) != null)
+                        {
+                            if (freezable.CheckAccess())
                             {
-                                ProcessInstanceValue(target, childIndex, instanceValues, dp, i, apply);
+                                if (!freezable.IsFrozen)
+                                {
+                                    ProcessInstanceValue(target, childIndex, instanceValues, dp, i, apply);
+                                }
+                            }
+                            else
+                            {
+                                Debug.Assert(!freezable.CanFreeze, "If a freezable could have been frozen it would have been done by now.");
+                                throw new InvalidOperationException(SR.Format(SR.CrossThreadAccessOfUnshareableFreezable, freezable.GetType().FullName));
                             }
                         }
-                        else
-                        {
-                            Debug.Assert(!freezable.CanFreeze, "If a freezable could have been frozen it would have been done by now.");
-                            throw new InvalidOperationException(SR.Format(SR.CrossThreadAccessOfUnshareableFreezable, freezable.GetType().FullName));
-                        }
-                    }
 
-                    break;
+                        break;
                 }
             }
         }
@@ -1613,12 +1623,12 @@ namespace System.Windows
         //  2. Processes a single value that needs per-instance storage
         //
         internal static void ProcessInstanceValue(
-            DependencyObject    target,
-            int                 childIndex,
-            HybridDictionary    instanceValues,
-            DependencyProperty  dp,
-            int                 i,
-            bool                apply)
+            DependencyObject target,
+            int childIndex,
+            HybridDictionary instanceValues,
+            DependencyProperty dp,
+            int i,
+            bool apply)
         {
             // If we get this far, it's because there's a value
             // in the property value list of an active style that requires
@@ -1643,12 +1653,12 @@ namespace System.Windows
                 Expression expr;
                 Freezable freezable;
 
-                if ((expr = value as Expression)!= null)
+                if ((expr = value as Expression) != null)
                 {
                     // if the instance value is an expression, detach it
                     expr.OnDetach(target, dp);
                 }
-                else if ((freezable = value as Freezable)!= null)
+                else if ((freezable = value as Freezable) != null)
                 {
                     // if the instance value is a Freezable, remove its
                     // inheritance context
@@ -1664,11 +1674,11 @@ namespace System.Windows
         //
         private static void ReleaseInstanceDataForDataTriggers(
             UncommonField<HybridDictionary[]> dataField,
-            HybridDictionary            instanceValues,
-            Style                       oldStyle,
-            FrameworkTemplate           oldFrameworkTemplate)
+            HybridDictionary instanceValues,
+            Style oldStyle,
+            FrameworkTemplate oldFrameworkTemplate)
         {
-            Debug.Assert(oldStyle != null || oldFrameworkTemplate != null );
+            Debug.Assert(oldStyle != null || oldFrameworkTemplate != null);
 
             if (instanceValues == null)
                 return;
@@ -1732,9 +1742,9 @@ namespace System.Windows
         }
 
         private static void ReleaseInstanceDataForTriggerBinding(
-            BindingBase                                 binding,
-            HybridDictionary                            instanceValues,
-            EventHandler<BindingValueChangedEventArgs>  handler)
+            BindingBase binding,
+            HybridDictionary instanceValues,
+            EventHandler<BindingValueChangedEventArgs> handler)
         {
             BindingExpressionBase bindingExpr = (BindingExpressionBase)instanceValues[binding];
 
@@ -1761,14 +1771,14 @@ namespace System.Windows
 
         //[CodeAnalysis("AptcaMethodsShouldOnlyCallAptcaMethods")] //Tracking Bug: 29647
         internal static bool ApplyTemplateContent(
-            UncommonField<HybridDictionary[]>  dataField,
-            DependencyObject            container,
-            FrameworkElementFactory     templateRoot,
-            int                         lastChildIndex,
-            HybridDictionary            childIndexFromChildID,
-            FrameworkTemplate           frameworkTemplate)
+            UncommonField<HybridDictionary[]> dataField,
+            DependencyObject container,
+            FrameworkElementFactory templateRoot,
+            int lastChildIndex,
+            HybridDictionary childIndexFromChildID,
+            FrameworkTemplate frameworkTemplate)
         {
-            Debug.Assert(frameworkTemplate != null );
+            Debug.Assert(frameworkTemplate != null);
 
             bool visualsCreated = false;
 
@@ -1782,7 +1792,7 @@ namespace System.Windows
 
                 EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordXamlBaml, EventTrace.Level.Verbose, EventTrace.Event.WClientParseInstVisTreeBegin);
 
-                CheckForCircularReferencesInTemplateTree(container, frameworkTemplate );
+                CheckForCircularReferencesInTemplateTree(container, frameworkTemplate);
 
                 // Container is considered ChildIndex '0' (Self), but,
                 // Container.ChildIndex isn't set
@@ -1810,12 +1820,12 @@ namespace System.Windows
                     ref frameworkTemplate.ResourceDependents);
 
                 Debug.Assert(treeRoot is FrameworkElement || treeRoot is FrameworkContentElement,
-                    "Root node of tree must be a FrameworkElement or FrameworkContentElement.  This should have been caught by set_VisualTree" );
+                    "Root node of tree must be a FrameworkElement or FrameworkContentElement.  This should have been caught by set_VisualTree");
 
                 // From childFirst to childLast is the chain of child nodes with
                 //  childIndex.  Append that chain with the chain of child nodes
                 //  with no childIndex assigned.
-                if( noChildIndexChildren != null )
+                if (noChildIndexChildren != null)
                 {
                     affectedChildren.AddRange(noChildIndexChildren);
                 }
@@ -1840,7 +1850,7 @@ namespace System.Windows
                 // Yes, create from the optimized template content.
                 EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordXamlBaml, EventTrace.Level.Verbose, EventTrace.Event.WClientParseInstVisTreeBegin);
 
-                CheckForCircularReferencesInTemplateTree(container, frameworkTemplate );
+                CheckForCircularReferencesInTemplateTree(container, frameworkTemplate);
 
                 // Container is considered ChildIndex '0' (Self), but,
                 // Container.ChildIndex isn't set
@@ -1855,10 +1865,10 @@ namespace System.Windows
 
                 // Load the content
 
-                treeRoot = frameworkTemplate.LoadContent( container, affectedChildren);
+                treeRoot = frameworkTemplate.LoadContent(container, affectedChildren);
 
                 Debug.Assert(treeRoot == null || treeRoot is FrameworkElement || treeRoot is FrameworkContentElement,
-                    "Root node of tree must be a FrameworkElement or FrameworkContentElement.  This should have been caught by set_VisualTree" );
+                    "Root node of tree must be a FrameworkElement or FrameworkContentElement.  This should have been caught by set_VisualTree");
 
                 visualsCreated = true;
 
@@ -1885,7 +1895,7 @@ namespace System.Windows
 
                     // CALLBACK
 #if DEBUG
-                    Debug.Assert( feContainer._buildVisualTreeVerification == VerificationState.WaitingForBuildVisualTree,
+                    Debug.Assert(feContainer._buildVisualTreeVerification == VerificationState.WaitingForBuildVisualTree,
                         "The BuildVisualTree override has triggered another call to itself.  This is not good - something between the two Style.InstantiateSubTree calls on the stack is doing A Very Bad Thing.");
                     feContainer._buildVisualTreeVerification = VerificationState.WaitingForAddCustomTemplateRoot;
                     bool exceptionThrown = true;
@@ -1893,24 +1903,24 @@ namespace System.Windows
                     {
 #endif
 
-                    Debug.Assert(frameworkTemplate != null, "Only FrameworkTemplate has the ability to build a VisualTree by this means");
-                    visualsCreated = frameworkTemplate.BuildVisualTree(feContainer);
+                        Debug.Assert(frameworkTemplate != null, "Only FrameworkTemplate has the ability to build a VisualTree by this means");
+                        visualsCreated = frameworkTemplate.BuildVisualTree(feContainer);
 
 #if DEBUG
-                    exceptionThrown = false;
+                        exceptionThrown = false;
                     }
                     finally
                     {
                         if (!exceptionThrown)   // results are unreliable if an exception was thrown
                         {
-                            if( visualsCreated )
+                            if (visualsCreated)
                             {
-                                Debug.Assert( feContainer._buildVisualTreeVerification == VerificationState.WaitingForBuildVisualTreeCompletion,
+                                Debug.Assert(feContainer._buildVisualTreeVerification == VerificationState.WaitingForBuildVisualTreeCompletion,
                                     "A derived class overriding BuildVisualTree must call AddCustomTemplateRoot to attach its custom subtree before exiting.");
                             }
                             else
                             {
-                                Debug.Assert( feContainer._buildVisualTreeVerification == VerificationState.WaitingForAddCustomTemplateRoot,
+                                Debug.Assert(feContainer._buildVisualTreeVerification == VerificationState.WaitingForAddCustomTemplateRoot,
                                     "If a derived class overriding BuildVisualTree has called AddCustomTemplateRoot to attach its custom subtree, its BuildVisualTree must return true to indicate that it has done so.");
                             }
                         }
@@ -1931,9 +1941,9 @@ namespace System.Windows
         //  they've created the root, before building the rest of the tree.
         // Building this tree "in place" means we won't have to do a tree
         //  invalidation after BuildVisualTree completes.
-        internal static void AddCustomTemplateRoot( FrameworkElement container, UIElement child )
+        internal static void AddCustomTemplateRoot(FrameworkElement container, UIElement child)
         {
-            AddCustomTemplateRoot( container, child, true, false);
+            AddCustomTemplateRoot(container, child, true, false);
         }
 
         // The boolean parameter allows us to bypass a possibly expensive call
@@ -1945,9 +1955,9 @@ namespace System.Windows
             bool mustCacheTreeStateOnChild)
         {
 #if DEBUG
-            Debug.Assert( container._buildVisualTreeVerification != VerificationState.WaitingForBuildVisualTreeCompletion,
+            Debug.Assert(container._buildVisualTreeVerification != VerificationState.WaitingForBuildVisualTreeCompletion,
                 "AddCustomTemplateRoot should only be called once.  This assert may be removed if really necessary but be aware of the performance penalty you're imposing for unnecessary work");
-            Debug.Assert( container._buildVisualTreeVerification == VerificationState.WaitingForAddCustomTemplateRoot,
+            Debug.Assert(container._buildVisualTreeVerification == VerificationState.WaitingForAddCustomTemplateRoot,
                 "This should only be called from the BuildVisualTree override of Style-derived subclasses");
 #endif
 
@@ -1956,7 +1966,7 @@ namespace System.Windows
             // actually returns null.  Not a likely situation, but still have to check.
             if (child != null)
             {
-                if( checkVisualParent )
+                if (checkVisualParent)
                 {
                     // Need to disconnect the template root from it's previous parent.
                     FrameworkElement parent = VisualTreeHelper.GetParent(child) as FrameworkElement;
@@ -1968,16 +1978,16 @@ namespace System.Windows
                 }
                 else
                 {
-                    Debug.Assert( null == VisualTreeHelper.GetParent(child),
+                    Debug.Assert(null == VisualTreeHelper.GetParent(child),
                         "The caller was positive that 'child' doesn't have a visual parent, bad call.");
                 }
             }
 
             container.TemplateChild = child;
-/*
-            AncestorChangedTreeState containerCache = AncestorChangedTreeState.From(container);
-            FrameworkElement.InvalidateTreeDependentProperties(child as FrameworkElement, null, containerCache);
-*/
+            /*
+                        AncestorChangedTreeState containerCache = AncestorChangedTreeState.From(container);
+                        FrameworkElement.InvalidateTreeDependentProperties(child as FrameworkElement, null, containerCache);
+            */
 #if DEBUG
             container._buildVisualTreeVerification = VerificationState.WaitingForBuildVisualTreeCompletion;
 #endif
@@ -2039,10 +2049,10 @@ namespace System.Windows
         ///
         /// </remarks>
         private static void CheckForCircularReferencesInTemplateTree(
-            DependencyObject    container,
-            FrameworkTemplate   frameworkTemplate)
+            DependencyObject container,
+            FrameworkTemplate frameworkTemplate)
         {
-            Debug.Assert(frameworkTemplate != null );
+            Debug.Assert(frameworkTemplate != null);
 
             // Get set up to handle the FE/FCE duality
             DependencyObject walkNode = container;
@@ -2051,14 +2061,14 @@ namespace System.Windows
             FrameworkContentElement fceWalkNode;
             bool walkNodeIsFE;
 
-            while( walkNode != null )
+            while (walkNode != null)
             {
                 // Figure out whether the node is a FE or FCE
                 Helper.DowncastToFEorFCE(walkNode, out feWalkNode, out fceWalkNode, false);
                 walkNodeIsFE = (feWalkNode != null);
-                Debug.Assert( feWalkNode != null || fceWalkNode != null,
+                Debug.Assert(feWalkNode != null || fceWalkNode != null,
                     "Template tree node should be either FE or FCE - did you add support for more types and forgot to update this function?");
-                if( walkNodeIsFE )
+                if (walkNodeIsFE)
                 {
                     nextParent = feWalkNode.TemplatedParent;
                 }
@@ -2069,13 +2079,13 @@ namespace System.Windows
 
                 // If we're beyond "this" container, check for identical Style & type
                 //  because that indicates a cycle.  If so, stop the train.
-                if( walkNode != container && nextParent != null ) // Only interested in nodes that are "Not me" and not auto-generated (== no TemplatedParent)
+                if (walkNode != container && nextParent != null) // Only interested in nodes that are "Not me" and not auto-generated (== no TemplatedParent)
                 {
                     // Do the cheaper comparison first - the Style reference should be cached
-                    if ((frameworkTemplate != null && walkNodeIsFE == true && feWalkNode.TemplateInternal == frameworkTemplate) )
+                    if ((frameworkTemplate != null && walkNodeIsFE == true && feWalkNode.TemplateInternal == frameworkTemplate))
                     {
                         // Then the expensive one - pulling in reflection to check if they're also the same types.
-                        if( walkNode.GetType() == container.GetType() )
+                        if (walkNode.GetType() == container.GetType())
                         {
                             string name = (walkNodeIsFE) ? feWalkNode.Name : fceWalkNode.Name;
 
@@ -2105,7 +2115,7 @@ namespace System.Windows
                 //  allows cases like the one illustrated here, while catching real
                 //  cycles involving ContentPresenter - they're caught when this method
                 //  is called with container = ContentPresenter.
-                walkNode = (walkNode is ContentPresenter) ? null: nextParent;
+                walkNode = (walkNode is ContentPresenter) ? null : nextParent;
             }
         }
 
@@ -2124,10 +2134,10 @@ namespace System.Windows
         //  2. Invalidates all properties that came from FrameworkElementFactory.SetValue
         //
         internal static void ClearGeneratedSubTree(
-            HybridDictionary[]          instanceData,
-            FrameworkElement            feContainer,
-            FrameworkContentElement     fceContainer,
-            FrameworkTemplate           oldFrameworkTemplate)
+            HybridDictionary[] instanceData,
+            FrameworkElement feContainer,
+            FrameworkContentElement fceContainer,
+            FrameworkTemplate oldFrameworkTemplate)
         {
             Debug.Assert(feContainer != null || fceContainer != null,
                 "Must supply a non-null container");
@@ -2154,10 +2164,10 @@ namespace System.Windows
                 // Fetch the rootNode of the template generated tree
                 rootNode = templatedChildren[0];
 
-                if (oldFrameworkTemplate != null )
+                if (oldFrameworkTemplate != null)
                 {
                     // Style/Template has built the tree via FrameworkElementFactories
-                    ClearTemplateChain(instanceData, feContainer, fceContainer, templatedChildren, oldFrameworkTemplate );
+                    ClearTemplateChain(instanceData, feContainer, fceContainer, templatedChildren, oldFrameworkTemplate);
                 }
             }
 
@@ -2177,8 +2187,8 @@ namespace System.Windows
         //  2. Invalidates all properties that came from FrameworkElementFactory.SetValue
         //
         private static void DetachGeneratedSubTree(
-            FrameworkElement            feContainer,
-            FrameworkContentElement     fceContainer)
+            FrameworkElement feContainer,
+            FrameworkContentElement fceContainer)
         {
             Debug.Assert(feContainer != null || fceContainer != null);
 
@@ -2209,13 +2219,13 @@ namespace System.Windows
         //  2. Invalidates all properties that came from FrameworkElementFactory.SetValue
         //
         private static void ClearTemplateChain(
-            HybridDictionary[]      instanceData,
-            FrameworkElement        feContainer,
+            HybridDictionary[] instanceData,
+            FrameworkElement feContainer,
             FrameworkContentElement fceContainer,
-            List<DependencyObject>  templateChain,
-            FrameworkTemplate       oldFrameworkTemplate)
+            List<DependencyObject> templateChain,
+            FrameworkTemplate oldFrameworkTemplate)
         {
-            Debug.Assert(oldFrameworkTemplate != null );
+            Debug.Assert(oldFrameworkTemplate != null);
 
             FrameworkObject container = new FrameworkObject(feContainer, fceContainer);
 
@@ -2227,7 +2237,7 @@ namespace System.Windows
             // FrameworkElementFactory.IsTemplatedTreeRoot = true.
             // (HasGeneratedSubTree tells us if we have one, but it
             // doesn't tell us who it is.)
-            for (int i=0; i< templateChain.Count; i++)
+            for (int i = 0; i < templateChain.Count; i++)
             {
                 DependencyObject walk = templateChain[i];
 
@@ -2258,13 +2268,13 @@ namespace System.Windows
             // TemplateChildIndex and TemplatedParent dropped. Hence we use two
             // separate loops to do these two operations so one does not
             // interfere with the other.
-            for (int i=0; i< templateChain.Count; i++)
+            for (int i = 0; i < templateChain.Count; i++)
             {
                 DependencyObject walk = templateChain[i];
                 FrameworkObject foWalk = new FrameworkObject(walk);
                 int childIndex = childIndices[i];
 
-                Debug.Assert( oldFrameworkTemplate != null );
+                Debug.Assert(oldFrameworkTemplate != null);
 
                 // Unapply the style's InstanceValues on the subtree node.
                 ProcessInstanceValuesForChild(
@@ -2337,7 +2347,7 @@ namespace System.Windows
                 fe = null;
                 fce = frameworkContentElement;
             }
-            else if (throwIfNeither && !(d is System.Windows.Media.Media3D.Visual3D) )
+            else if (throwIfNeither && !(d is System.Windows.Media.Media3D.Visual3D))
             {
                 throw new InvalidOperationException(SR.Format(SR.MustBeFrameworkDerived, d.GetType()));
             }
@@ -2377,7 +2387,8 @@ namespace System.Windows
             while (child != null)
             {
                 match = FindFEF(child, childIndex);
-                if (match != null) return match;
+                if (match != null)
+                    return match;
 
                 child = child.NextSibling;
             }
@@ -2390,7 +2401,7 @@ namespace System.Windows
         //  1. Invokes the TriggerActions as the corresponding event is being
         //     routed through the tree
         //
-        private static void ExecuteEventTriggerActionsOnContainer (object sender, RoutedEventArgs e)
+        private static void ExecuteEventTriggerActionsOnContainer(object sender, RoutedEventArgs e)
         {
             Debug.Assert(sender is FrameworkElement || sender is FrameworkContentElement,
                 "Sender object was expected to be FE or FCE, because they are the ones that can have a Style.  Have Style support been added to some other type?  If so the EventTrigger mechanism needs to be updated too.");
@@ -2445,7 +2456,7 @@ namespace System.Windows
         //  1. Invokes the TriggerActions as the corresponding event is being
         //     routed through the tree
         //
-        private static void ExecuteEventTriggerActionsOnChild (object sender, RoutedEventArgs e)
+        private static void ExecuteEventTriggerActionsOnChild(object sender, RoutedEventArgs e)
         {
             Debug.Assert(sender is FrameworkElement || sender is FrameworkContentElement,
                 "Sender object was expected to be FE or FCE, because they are the ones that can have a Style.  Have Style support been added to some other type?  If so the EventTrigger mechanism needs to be updated too.");
@@ -2478,7 +2489,7 @@ namespace System.Windows
 
                 FrameworkTemplate templatedParentTemplate = null;
 
-                Debug.Assert( feTemplatedParent != null );
+                Debug.Assert(feTemplatedParent != null);
                 templatedParentTemplate = feTemplatedParent.TemplateInternal;
 
                 Debug.Assert(templatedParentTemplate != null, "Must have a VisualTree owner");
@@ -2495,14 +2506,14 @@ namespace System.Windows
         //  1. Invokes the trigger actions on either the given ownerStyle or the ownerTemplate
         //
         private static void InvokeEventTriggerActions(
-            FrameworkElement        fe,
+            FrameworkElement fe,
             FrameworkContentElement fce,
-            Style                   ownerStyle,
-            FrameworkTemplate       frameworkTemplate,
-            int                     childIndex,
-            RoutedEvent           Event)
+            Style ownerStyle,
+            FrameworkTemplate frameworkTemplate,
+            int childIndex,
+            RoutedEvent Event)
         {
-            Debug.Assert(ownerStyle != null || frameworkTemplate != null );
+            Debug.Assert(ownerStyle != null || frameworkTemplate != null);
 
             List<TriggerAction> actionsList;
 
@@ -2514,7 +2525,7 @@ namespace System.Windows
             }
             else
             {
-                Debug.Assert( frameworkTemplate != null );
+                Debug.Assert(frameworkTemplate != null);
                 actionsList = (frameworkTemplate._triggerActions != null)
                                 ? frameworkTemplate._triggerActions[Event] as List<TriggerAction>
                                 : null;
@@ -2554,15 +2565,15 @@ namespace System.Windows
         //     (Index is '0' when the styled container is asking)
         //
         internal static object GetChildValue(
-            UncommonField<HybridDictionary[]>   dataField,
-            DependencyObject                    container,
-            int                                 childIndex,
-            FrameworkObject                     child,
-            DependencyProperty                  dp,
-            ref FrugalStructList<ChildRecord>   childRecordFromChildIndex,
-            ref EffectiveValueEntry             entry,
-            out ValueLookupType                 sourceType,
-            FrameworkElementFactory             templateRoot)
+            UncommonField<HybridDictionary[]> dataField,
+            DependencyObject container,
+            int childIndex,
+            FrameworkObject child,
+            DependencyProperty dp,
+            ref FrugalStructList<ChildRecord> childRecordFromChildIndex,
+            ref EffectiveValueEntry entry,
+            out ValueLookupType sourceType,
+            FrameworkElementFactory templateRoot)
         {
             object value = DependencyProperty.UnsetValue;
             sourceType = ValueLookupType.Simple;
@@ -2606,16 +2617,16 @@ namespace System.Windows
         //  1. Computes the property value given the ChildLookupValue list for it
         //
         private static object GetChildValueHelper(
-            UncommonField<HybridDictionary[]>       dataField,
-            ref ItemStructList<ChildValueLookup>    valueLookupList,
-            DependencyProperty                      dp,
-            DependencyObject                        container,
-            FrameworkObject                         child,
-            int                                     childIndex,
-            bool                                    styleLookup,
-            ref EffectiveValueEntry                 entry,
-            out ValueLookupType                     sourceType,
-            FrameworkElementFactory                 templateRoot)
+            UncommonField<HybridDictionary[]> dataField,
+            ref ItemStructList<ChildValueLookup> valueLookupList,
+            DependencyProperty dp,
+            DependencyObject container,
+            FrameworkObject child,
+            int childIndex,
+            bool styleLookup,
+            ref EffectiveValueEntry entry,
+            out ValueLookupType sourceType,
+            FrameworkElementFactory templateRoot)
         {
             Debug.Assert(child.IsValid, "child should either be an FE or an FCE");
 
@@ -2632,166 +2643,166 @@ namespace System.Windows
                 // for Storyboard timeline lookups.
                 switch (valueLookupList.List[i].LookupType)
                 {
-                case ValueLookupType.Simple:
-                    {
-                        // Simple value
-                        value = valueLookupList.List[i].Value;
-                    }
-                    break;
-
-                case ValueLookupType.Trigger:
-                case ValueLookupType.PropertyTriggerResource:
-                case ValueLookupType.DataTrigger:
-                case ValueLookupType.DataTriggerResource:
-                    {
-                        // Conditional value based on Container state
-                        bool triggerMatch = true;
-
-                        if( valueLookupList.List[i].Conditions != null )
+                    case ValueLookupType.Simple:
                         {
-                            // Check whether the trigger applies.  All conditions must match,
-                            // so the loop can terminate as soon as it finds a condition
-                            // that doesn't match.
-                            for (int j = 0; triggerMatch && j < valueLookupList.List[i].Conditions.Length; j++)
+                            // Simple value
+                            value = valueLookupList.List[i].Value;
+                        }
+                        break;
+
+                    case ValueLookupType.Trigger:
+                    case ValueLookupType.PropertyTriggerResource:
+                    case ValueLookupType.DataTrigger:
+                    case ValueLookupType.DataTriggerResource:
+                        {
+                            // Conditional value based on Container state
+                            bool triggerMatch = true;
+
+                            if (valueLookupList.List[i].Conditions != null)
                             {
-                                object state;
-
-                                switch (valueLookupList.List[i].LookupType)
+                                // Check whether the trigger applies.  All conditions must match,
+                                // so the loop can terminate as soon as it finds a condition
+                                // that doesn't match.
+                                for (int j = 0; triggerMatch && j < valueLookupList.List[i].Conditions.Length; j++)
                                 {
-                                case ValueLookupType.Trigger:
-                                case ValueLookupType.PropertyTriggerResource:
-                                    // Find the source node
-                                    DependencyObject sourceNode;
-                                    int sourceChildIndex = valueLookupList.List[i].Conditions[j].SourceChildIndex;
-                                    if (sourceChildIndex == 0)
+                                    object state;
+
+                                    switch (valueLookupList.List[i].LookupType)
                                     {
-                                        sourceNode = container;
+                                        case ValueLookupType.Trigger:
+                                        case ValueLookupType.PropertyTriggerResource:
+                                            // Find the source node
+                                            DependencyObject sourceNode;
+                                            int sourceChildIndex = valueLookupList.List[i].Conditions[j].SourceChildIndex;
+                                            if (sourceChildIndex == 0)
+                                            {
+                                                sourceNode = container;
+                                            }
+                                            else
+                                            {
+                                                sourceNode = StyleHelper.GetChild(container, sourceChildIndex);
+                                            }
+
+                                            // Note that the sourceNode could be null when the source
+                                            // property for this trigger is on a node that hasn't been
+                                            // instantiated yet.
+                                            DependencyProperty sourceProperty = valueLookupList.List[i].Conditions[j].Property;
+                                            if (sourceNode != null)
+                                            {
+                                                state = sourceNode.GetValue(sourceProperty);
+                                            }
+                                            else
+                                            {
+                                                Type sourceNodeType;
+
+                                                if (templateRoot != null)
+                                                {
+                                                    sourceNodeType = FindFEF(templateRoot, sourceChildIndex).Type;
+                                                }
+                                                else
+                                                {
+                                                    sourceNodeType = (container as FrameworkElement).TemplateInternal.ChildTypeFromChildIndex[sourceChildIndex];
+                                                }
+
+                                                state = sourceProperty.GetDefaultValue(sourceNodeType);
+                                            }
+
+                                            triggerMatch = valueLookupList.List[i].Conditions[j].Match(state);
+
+                                            break;
+
+                                        case ValueLookupType.DataTrigger:
+                                        case ValueLookupType.DataTriggerResource:
+                                        default:    // this cannot happen - but make the compiler happy
+
+                                            state = GetDataTriggerValue(dataField, container, valueLookupList.List[i].Conditions[j].Binding);
+                                            triggerMatch = valueLookupList.List[i].Conditions[j].ConvertAndMatch(state);
+
+                                            break;
                                     }
-                                    else
-                                    {
-                                        sourceNode = StyleHelper.GetChild(container, sourceChildIndex);
-                                    }
+                                }
+                            }
 
-                                    // Note that the sourceNode could be null when the source
-                                    // property for this trigger is on a node that hasn't been
-                                    // instantiated yet.
-                                    DependencyProperty sourceProperty = valueLookupList.List[i].Conditions[j].Property;
-                                    if (sourceNode != null)
-                                    {
-                                        state = sourceNode.GetValue(sourceProperty);
-                                    }
-                                    else
-                                    {
-                                        Type sourceNodeType;
+                            if (triggerMatch)
+                            {
+                                // Conditionals matched, use the value
 
-                                        if( templateRoot != null )
-                                        {
-                                            sourceNodeType = FindFEF(templateRoot, sourceChildIndex).Type;
-                                        }
-                                        else
-                                        {
-                                            sourceNodeType = (container as FrameworkElement).TemplateInternal.ChildTypeFromChildIndex[sourceChildIndex];
-                                        }
+                                if (valueLookupList.List[i].LookupType == ValueLookupType.PropertyTriggerResource ||
+                                    valueLookupList.List[i].LookupType == ValueLookupType.DataTriggerResource)
+                                {
+                                    // Resource lookup
+                                    object source;
+                                    value = FrameworkElement.FindResourceInternal(child.FE,
+                                                                                  child.FCE,
+                                                                                  dp,
+                                                                                  valueLookupList.List[i].Value,  // resourceKey
+                                                                                  null,  // unlinkedParent
+                                                                                  true,  // allowDeferredResourceReference
+                                                                                  false, // mustReturnDeferredResourceReference
+                                                                                  null,  // boundaryElement
+                                                                                  false, // disableThrowOnResourceNotFound
+                                                                                  out source);
 
-                                        state = sourceProperty.GetDefaultValue(sourceNodeType);
-                                    }
-
-                                    triggerMatch = valueLookupList.List[i].Conditions[j].Match(state);
-
-                                    break;
-
-                                case ValueLookupType.DataTrigger:
-                                case ValueLookupType.DataTriggerResource:
-                                default:    // this cannot happen - but make the compiler happy
-
-                                    state = GetDataTriggerValue(dataField, container, valueLookupList.List[i].Conditions[j].Binding);
-                                    triggerMatch = valueLookupList.List[i].Conditions[j].ConvertAndMatch(state);
-
-                                    break;
+                                    // Try to freeze the value
+                                    SealIfSealable(value);
+                                }
+                                else
+                                {
+                                    value = valueLookupList.List[i].Value;
                                 }
                             }
                         }
+                        break;
 
-                        if (triggerMatch)
+                    case ValueLookupType.TemplateBinding:
                         {
-                            // Conditionals matched, use the value
+                            TemplateBindingExtension templateBinding = (TemplateBindingExtension)valueLookupList.List[i].Value;
+                            DependencyProperty sourceProperty = templateBinding.Property;
 
-                            if (valueLookupList.List[i].LookupType == ValueLookupType.PropertyTriggerResource ||
-                                valueLookupList.List[i].LookupType == ValueLookupType.DataTriggerResource)
+                            // Direct binding of Child property to Container
+                            value = container.GetValue(sourceProperty);
+
+                            // Apply the converter, if any
+                            if (templateBinding.Converter != null)
                             {
-                                // Resource lookup
-                                object source;
-                                value = FrameworkElement.FindResourceInternal(child.FE,
-                                                                              child.FCE,
-                                                                              dp,
-                                                                              valueLookupList.List[i].Value,  // resourceKey
-                                                                              null,  // unlinkedParent
-                                                                              true,  // allowDeferredResourceReference
-                                                                              false, // mustReturnDeferredResourceReference
-                                                                              null,  // boundaryElement
-                                                                              false, // disableThrowOnResourceNotFound
-                                                                              out source);
+                                DependencyProperty targetProperty = valueLookupList.List[i].Property;
+                                System.Globalization.CultureInfo culture = child.Language.GetCompatibleCulture();
 
-                                // Try to freeze the value
-                                SealIfSealable(value);
+                                value = templateBinding.Converter.Convert(
+                                                    value,
+                                                    targetProperty.PropertyType,
+                                                    templateBinding.ConverterParameter,
+                                                    culture);
                             }
-                            else
+
+                            // if the binding returns an invalid value, fallback to default value
+                            if ((value != DependencyProperty.UnsetValue) && !dp.IsValidValue(value))
                             {
-                                value = valueLookupList.List[i].Value;
+                                value = DependencyProperty.UnsetValue;
                             }
                         }
-                    }
-                    break;
+                        break;
 
-                case ValueLookupType.TemplateBinding:
-                    {
-                        TemplateBindingExtension templateBinding = (TemplateBindingExtension)valueLookupList.List[i].Value;
-                        DependencyProperty sourceProperty = templateBinding.Property;
-
-                        // Direct binding of Child property to Container
-                        value = container.GetValue(sourceProperty);
-
-                        // Apply the converter, if any
-                        if (templateBinding.Converter != null)
+                    case ValueLookupType.Resource:
                         {
-                            DependencyProperty targetProperty = valueLookupList.List[i].Property;
-                            System.Globalization.CultureInfo culture = child.Language.GetCompatibleCulture();
+                            // Resource lookup
+                            object source;
+                            value = FrameworkElement.FindResourceInternal(
+                                            child.FE,
+                                            child.FCE,
+                                            dp,
+                                            valueLookupList.List[i].Value,  // resourceKey
+                                            null,  // unlinkedParent
+                                            true,  // allowDeferredResourceReference
+                                            false, // mustReturnDeferredResourceReference
+                                            null,  // boundaryElement
+                                            false, // disableThrowOnResourceNotFound
+                                            out source);
 
-                            value = templateBinding.Converter.Convert(
-                                                value,
-                                                targetProperty.PropertyType,
-                                                templateBinding.ConverterParameter,
-                                                culture);
+                            // Try to freeze the value
+                            SealIfSealable(value);
                         }
-
-                        // if the binding returns an invalid value, fallback to default value
-                        if ((value != DependencyProperty.UnsetValue) && !dp.IsValidValue(value))
-                        {
-                            value = DependencyProperty.UnsetValue;
-                        }
-                    }
-                    break;
-
-                case ValueLookupType.Resource:
-                    {
-                        // Resource lookup
-                        object source;
-                        value = FrameworkElement.FindResourceInternal(
-                                        child.FE,
-                                        child.FCE,
-                                        dp,
-                                        valueLookupList.List[i].Value,  // resourceKey
-                                        null,  // unlinkedParent
-                                        true,  // allowDeferredResourceReference
-                                        false, // mustReturnDeferredResourceReference
-                                        null,  // boundaryElement
-                                        false, // disableThrowOnResourceNotFound
-                                        out source);
-
-                        // Try to freeze the value
-                        SealIfSealable(value);
-                    }
-                    break;
+                        break;
                 }
 
                 // See if value needs per-instance storage
@@ -2802,42 +2813,42 @@ namespace System.Windows
                     // get the real value from per-instance data.
                     switch (valueLookupList.List[i].LookupType)
                     {
-                    case ValueLookupType.Simple:
-                    case ValueLookupType.Trigger:
-                    case ValueLookupType.DataTrigger:
-                        {
-                            MarkupExtension me;
-                            Freezable freezable;
-
-                            if ((me = value as MarkupExtension) != null)
+                        case ValueLookupType.Simple:
+                        case ValueLookupType.Trigger:
+                        case ValueLookupType.DataTrigger:
                             {
-                                value = GetInstanceValue(
-                                                dataField,
-                                                container,
-                                                child.FE,
-                                                child.FCE,
-                                                childIndex,
-                                                valueLookupList.List[i].Property,
-                                                i,
-                                                ref entry);
-                            }
-                            else if ((freezable = value as Freezable) != null && !freezable.IsFrozen)
-                            {
-                                value = GetInstanceValue(
-                                                dataField,
-                                                container,
-                                                child.FE,
-                                                child.FCE,
-                                                childIndex,
-                                                valueLookupList.List[i].Property,
-                                                i,
-                                                ref entry);
-                            }
-                        }
-                        break;
+                                MarkupExtension me;
+                                Freezable freezable;
 
-                    default:
-                        break;
+                                if ((me = value as MarkupExtension) != null)
+                                {
+                                    value = GetInstanceValue(
+                                                    dataField,
+                                                    container,
+                                                    child.FE,
+                                                    child.FCE,
+                                                    childIndex,
+                                                    valueLookupList.List[i].Property,
+                                                    i,
+                                                    ref entry);
+                                }
+                                else if ((freezable = value as Freezable) != null && !freezable.IsFrozen)
+                                {
+                                    value = GetInstanceValue(
+                                                    dataField,
+                                                    container,
+                                                    child.FE,
+                                                    child.FCE,
+                                                    childIndex,
+                                                    valueLookupList.List[i].Property,
+                                                    i,
+                                                    ref entry);
+                                }
+                            }
+                            break;
+
+                        default:
+                            break;
                     }
                 }
 
@@ -2857,9 +2868,9 @@ namespace System.Windows
         //  1. Retrieves a value from a binding in the condition of a data trigger
         //
         internal static object GetDataTriggerValue(
-            UncommonField<HybridDictionary[]>  dataField,
-            DependencyObject            container,
-            BindingBase                 binding)
+            UncommonField<HybridDictionary[]> dataField,
+            DependencyObject container,
+            BindingBase binding)
         {
             // get the container's instance value list - the bindings are stored there
             HybridDictionary[] data = dataField.GetValue(container);
@@ -2899,14 +2910,14 @@ namespace System.Windows
         //  2. Creates the StyleData if this is the first request.
         //
         internal static object GetInstanceValue(
-            UncommonField<HybridDictionary []>  dataField,
-            DependencyObject            container,
-            FrameworkElement            feChild,
-            FrameworkContentElement     fceChild,
-            int                         childIndex,
-            DependencyProperty          dp,
-            int                         i,
-            ref EffectiveValueEntry     entry)
+            UncommonField<HybridDictionary[]> dataField,
+            DependencyObject container,
+            FrameworkElement feChild,
+            FrameworkContentElement fceChild,
+            int childIndex,
+            DependencyProperty dp,
+            int i,
+            ref EffectiveValueEntry entry)
         {
             object rawValue = entry.Value;
             DependencyObject child = null;
@@ -2919,7 +2930,7 @@ namespace System.Windows
             HybridDictionary instanceValues = (styleData != null) ? styleData[(int)InstanceStyleData.InstanceValues] : null;
             InstanceValueKey key = new InstanceValueKey(childIndex, dp.GlobalIndex, i);
 
-            object value = (instanceValues != null)? instanceValues[key] : null;
+            object value = (instanceValues != null) ? instanceValues[key] : null;
             bool isRequestingExpression = (feChild != null) ? feChild.IsRequestingExpression : fceChild.IsRequestingExpression;
 
             if (value == null)
@@ -2959,7 +2970,7 @@ namespace System.Windows
                     }
 
                     ProvideValueServiceProvider provideValueServiceProvider = new ProvideValueServiceProvider();
-                    provideValueServiceProvider.SetData( child, dp );
+                    provideValueServiceProvider.SetData(child, dp);
                     value = me.ProvideValue(provideValueServiceProvider);
                 }
                 else if ((freezable = rawValue as Freezable) != null)
@@ -3020,12 +3031,12 @@ namespace System.Windows
         //     a cyclic reference and would be bad.
         //
         internal static void CheckForCyclicReferencesInStyleAndTemplateTriggers(
-            DependencyProperty  templateProperty,
-            FrameworkTemplate   frameworkTemplate,
-            Style               style,
-            Style               themeStyle)
+            DependencyProperty templateProperty,
+            FrameworkTemplate frameworkTemplate,
+            Style style,
+            Style themeStyle)
         {
-            Debug.Assert(frameworkTemplate != null );
+            Debug.Assert(frameworkTemplate != null);
 
             CheckForCyclicReferencesInStyleAndTemplateTriggers(templateProperty, frameworkTemplate, style);
             if (themeStyle != style)
@@ -3035,11 +3046,11 @@ namespace System.Windows
         }
 
         private static void CheckForCyclicReferencesInStyleAndTemplateTriggers(
-            DependencyProperty  templateProperty,
-            FrameworkTemplate   frameworkTemplate,
-            Style               style)
+            DependencyProperty templateProperty,
+            FrameworkTemplate frameworkTemplate,
+            Style style)
         {
-            Debug.Assert(frameworkTemplate != null );
+            Debug.Assert(frameworkTemplate != null);
 
             FrugalStructList<ContainerDependent> containerDependents = frameworkTemplate.ContainerDependents;
 
@@ -3063,23 +3074,23 @@ namespace System.Windows
                             // for Storyboard timeline lookups.
                             switch (valueLookupList.List[i].LookupType)
                             {
-                            case ValueLookupType.Trigger:
-                            case ValueLookupType.PropertyTriggerResource:
-                            case ValueLookupType.DataTrigger:
-                            case ValueLookupType.DataTriggerResource:
-                                {
-                                    TriggerCondition[] conditions = valueLookupList.List[i].Conditions;
-                                    if (conditions != null)
+                                case ValueLookupType.Trigger:
+                                case ValueLookupType.PropertyTriggerResource:
+                                case ValueLookupType.DataTrigger:
+                                case ValueLookupType.DataTriggerResource:
                                     {
-                                        // Check for property trigger presence & applicability
-                                        for (int j = 0; j < conditions.Length; j++)
+                                        TriggerCondition[] conditions = valueLookupList.List[i].Conditions;
+                                        if (conditions != null)
                                         {
-                                            Debug.Assert(!StyleHelper.IsSetOnContainer(conditions[j].Property, ref containerDependents, true),
-                                                $"Style trigger condition property {conditions[j].Property} is set via a template trigger on the container. This is a cyclic reference and is illegal.");
+                                            // Check for property trigger presence & applicability
+                                            for (int j = 0; j < conditions.Length; j++)
+                                            {
+                                                Debug.Assert(!StyleHelper.IsSetOnContainer(conditions[j].Property, ref containerDependents, true),
+                                                    $"Style trigger condition property {conditions[j].Property} is set via a template trigger on the container. This is a cyclic reference and is illegal.");
+                                            }
                                         }
+                                        break;
                                     }
-                                    break;
-                                }
                             }
                         }
                     }
@@ -3094,7 +3105,7 @@ namespace System.Windows
         //  2. It establishes the rule that any dependency property other than the
         //     StyleProperty are stylable on the self style
         //
-        internal static bool ShouldGetValueFromStyle (DependencyProperty dp)
+        internal static bool ShouldGetValueFromStyle(DependencyProperty dp)
         {
             return (dp != FrameworkElement.StyleProperty);
         }
@@ -3106,7 +3117,7 @@ namespace System.Windows
         //     StyleProperty, OverridesDefaultStyleProperty and DefaultStyleKeyProperty
         //     are stylable on the self themestyle
         //
-        internal static bool ShouldGetValueFromThemeStyle (DependencyProperty dp)
+        internal static bool ShouldGetValueFromThemeStyle(DependencyProperty dp)
         {
             return (dp != FrameworkElement.StyleProperty &&
                     dp != FrameworkElement.DefaultStyleKeyProperty &&
@@ -3162,7 +3173,7 @@ namespace System.Windows
 
                 // If the style wants to watch for the Loaded and/or Unloaded events, set the
                 // flag that says we want to receive it.  Otherwise, if it was set in the old style, clear it.
-                StyleHelper.UpdateLoadedFlag( container, oldStyle, newStyle );
+                StyleHelper.UpdateLoadedFlag(container, oldStyle, newStyle);
 
                 // Set up any per-instance state relating to the new Style
                 // We do this here instead of OnStyleInvalidated because
@@ -3244,7 +3255,7 @@ namespace System.Windows
 
                 // If the them style wants to watch for the Loaded and/or Unloaded events, set the
                 // flag that says we want to receive it.  Otherwise, if it was set in the old style, clear it.
-                StyleHelper.UpdateLoadedFlag( container, oldThemeStyle, newThemeStyle );
+                StyleHelper.UpdateLoadedFlag(container, oldThemeStyle, newThemeStyle);
 
                 // Set up any per-instance state relating to the new Style
                 // We do this here instead of OnStyleInvalidated because
@@ -3301,17 +3312,17 @@ namespace System.Windows
         //     Page, PageFunctionBase, ContentPresenter, or a sub-class thereof.
         //
         internal static void DoTemplateInvalidations(
-            FrameworkElement            feContainer,
-            FrameworkTemplate           oldFrameworkTemplate)
+            FrameworkElement feContainer,
+            FrameworkTemplate oldFrameworkTemplate)
         {
             Debug.Assert(feContainer != null);
 
-            DependencyObject    container;
-            HybridDictionary[]  oldTemplateData;
-            FrameworkTemplate   newFrameworkTemplate = null;
-            object              oldTemplate;
-            object              newTemplate;
-            bool                newTemplateHasResourceReferences;
+            DependencyObject container;
+            HybridDictionary[] oldTemplateData;
+            FrameworkTemplate newFrameworkTemplate = null;
+            object oldTemplate;
+            object newTemplate;
+            bool newTemplateHasResourceReferences;
 
             Debug.Assert(feContainer != null);
 
@@ -3330,7 +3341,7 @@ namespace System.Windows
 
             // If the template wants to watch for the Loaded and/or Unloaded events, set the
             // flag that says we want to receive it.  Otherwise, if it was set in the old template, clear it.
-            StyleHelper.UpdateLoadedFlag( container, oldFrameworkTemplate, newFrameworkTemplate );
+            StyleHelper.UpdateLoadedFlag(container, oldFrameworkTemplate, newFrameworkTemplate);
 
             if (oldTemplate != newTemplate)
             {
@@ -3360,7 +3371,7 @@ namespace System.Windows
                 // If the template wants to watch for the Loaded and/or Unloaded events, set the
                 // flag that says we want to receive it.  Otherwise, if it was set in the old template, clear it.
 
-                UpdateLoadedFlag( container, oldFrameworkTemplate, newFrameworkTemplate );
+                UpdateLoadedFlag(container, oldFrameworkTemplate, newFrameworkTemplate);
 
 
                 // Wipe out VisualTree only if VisualTree factories
@@ -3369,10 +3380,10 @@ namespace System.Windows
                 // If the factories are null for both new and old, then, the Template
                 // has the opportunity to supply the VisualTree using the "BuildVisualTree"
                 // virtual.
-                FrameworkElementFactory              oldFactory;
-                FrameworkElementFactory              newFactory;
-                bool                                 canBuildVisualTree;
-                bool                                 hasTemplateGeneratedSubTree;
+                FrameworkElementFactory oldFactory;
+                FrameworkElementFactory newFactory;
+                bool canBuildVisualTree;
+                bool hasTemplateGeneratedSubTree;
                 FrugalStructList<ContainerDependent> oldContainerDependents;
                 FrugalStructList<ContainerDependent> newContainerDependents;
 
@@ -3389,7 +3400,7 @@ namespace System.Windows
                 {
                     StyleHelper.ClearGeneratedSubTree(oldTemplateData,
                         feContainer /* fe */, null /* fce */,
-                        oldFrameworkTemplate );
+                        oldFrameworkTemplate);
                 }
 
                 // Propagate invalidation for template dependents
@@ -3421,7 +3432,7 @@ namespace System.Windows
                 {
                     if (feContainer.HasTemplateGeneratedSubTree
                         && newFrameworkTemplate.VisualTree == null
-                        && !newFrameworkTemplate.HasXamlNodeContent )
+                        && !newFrameworkTemplate.HasXamlNodeContent)
                     {
                         StyleHelper.ClearGeneratedSubTree(oldTemplateData, feContainer /* fe */, null /* fce */,
                             oldFrameworkTemplate);
@@ -3442,11 +3453,11 @@ namespace System.Windows
         // gets invalidated.
         //
         internal static void DoStyleResourcesInvalidations(
-            DependencyObject        container,
-            FrameworkElement        fe,
+            DependencyObject container,
+            FrameworkElement fe,
             FrameworkContentElement fce,
-            Style                   oldStyle,
-            Style                   newStyle)
+            Style oldStyle,
+            Style newStyle)
         {
             Debug.Assert(fe != null || fce != null);
             Debug.Assert(container == fe || container == fce);
@@ -3483,21 +3494,21 @@ namespace System.Windows
         // gets invalidated.
         //
         internal static void DoTemplateResourcesInvalidations(
-            DependencyObject        container,
-            FrameworkElement        fe,
+            DependencyObject container,
+            FrameworkElement fe,
             FrameworkContentElement fce,
-            object                  oldTemplate,
-            object                  newTemplate)
+            object oldTemplate,
+            object newTemplate)
         {
             Debug.Assert(fe != null || fce != null);
             Debug.Assert(container == fe || container == fce);
-            Debug.Assert( oldTemplate == null || oldTemplate is FrameworkTemplate,
-                "Existing template is of unknown type." );
-            Debug.Assert( newTemplate == null || newTemplate is FrameworkTemplate,
+            Debug.Assert(oldTemplate == null || oldTemplate is FrameworkTemplate,
+                "Existing template is of unknown type.");
+            Debug.Assert(newTemplate == null || newTemplate is FrameworkTemplate,
                 "New template is of unknown type.");
-            Debug.Assert( (oldTemplate == null || newTemplate == null ) ||
+            Debug.Assert((oldTemplate == null || newTemplate == null) ||
                 (oldTemplate is FrameworkTemplate && newTemplate is FrameworkTemplate),
-                "Old and new template types do not match." );
+                "Old and new template types do not match.");
 
             // Propagate invalidation for resource references that may be
             // picking stuff from the template's ResourceDictionary. This
@@ -3528,7 +3539,7 @@ namespace System.Windows
         {
             if (dictionaries != null && dictionaries.Count > 0 && !fo.ShouldLookupImplicitStyles)
             {
-                for (int i=0; i<dictionaries.Count; i++)
+                for (int i = 0; i < dictionaries.Count; i++)
                 {
                     if (dictionaries[i].HasImplicitStyles)
                     {
@@ -3567,11 +3578,11 @@ namespace System.Windows
         // Given an object (that might be a FrameworkTemplate)
         //  get its ResourceDictionary.  Null is returned if the dictionary
         //  turns out to be empty.
-        private static List<ResourceDictionary> GetResourceDictionaryFromTemplate( object template )
+        private static List<ResourceDictionary> GetResourceDictionaryFromTemplate(object template)
         {
             ResourceDictionary resources = null;
 
-            if( template is FrameworkTemplate )
+            if (template is FrameworkTemplate)
             {
                 resources = ((FrameworkTemplate)template)._resources;
             }
@@ -3594,24 +3605,24 @@ namespace System.Windows
         // affecting that element has changed.
         // If HasLoadedChangeHandler was through an Interface we could Template this.
 
-        internal static void UpdateLoadedFlag( DependencyObject d,
+        internal static void UpdateLoadedFlag(DependencyObject d,
                 Style oldStyle, Style newStyle)
         {
             Invariant.Assert(null != oldStyle || null != newStyle);
 
-            if((oldStyle==null || !oldStyle.HasLoadedChangeHandler)
+            if ((oldStyle == null || !oldStyle.HasLoadedChangeHandler)
                 && (newStyle != null && newStyle.HasLoadedChangeHandler))
             {
                 BroadcastEventHelper.AddHasLoadedChangeHandlerFlagInAncestry(d);
             }
-            else if((oldStyle != null && oldStyle.HasLoadedChangeHandler)
-                && (newStyle==null || !newStyle.HasLoadedChangeHandler))
+            else if ((oldStyle != null && oldStyle.HasLoadedChangeHandler)
+                && (newStyle == null || !newStyle.HasLoadedChangeHandler))
             {
                 BroadcastEventHelper.RemoveHasLoadedChangeHandlerFlagInAncestry(d);
             }
         }
 
-        internal static void UpdateLoadedFlag( DependencyObject d,
+        internal static void UpdateLoadedFlag(DependencyObject d,
                 FrameworkTemplate oldFrameworkTemplate, FrameworkTemplate newFrameworkTemplate)
         {
             // We've seen a case where the XAML designer in VS uses DeferredThemeResourceReference
@@ -3620,25 +3631,25 @@ namespace System.Windows
             // Invariant.Assert.
             // Invariant.Assert(null != oldFrameworkTemplate || null != newFrameworkTemplate);
 
-            if((oldFrameworkTemplate==null || !oldFrameworkTemplate.HasLoadedChangeHandler)
+            if ((oldFrameworkTemplate == null || !oldFrameworkTemplate.HasLoadedChangeHandler)
                 && (newFrameworkTemplate != null && newFrameworkTemplate.HasLoadedChangeHandler))
             {
                 BroadcastEventHelper.AddHasLoadedChangeHandlerFlagInAncestry(d);
             }
-            else if((oldFrameworkTemplate != null && oldFrameworkTemplate.HasLoadedChangeHandler)
-                && (newFrameworkTemplate==null || !newFrameworkTemplate.HasLoadedChangeHandler))
+            else if ((oldFrameworkTemplate != null && oldFrameworkTemplate.HasLoadedChangeHandler)
+                && (newFrameworkTemplate == null || !newFrameworkTemplate.HasLoadedChangeHandler))
             {
                 BroadcastEventHelper.RemoveHasLoadedChangeHandlerFlagInAncestry(d);
             }
         }
 
-         //
+        //
         //  This method
         //  1. Invalidates all the properties set on the container's style.
         //     The value could have been set directly on the Style or via Trigger.
         //
         internal static void InvalidateContainerDependents(
-            DependencyObject                         container,
+            DependencyObject container,
             ref FrugalStructList<ContainerDependent> exclusionContainerDependents,
             ref FrugalStructList<ContainerDependent> oldContainerDependents,
             ref FrugalStructList<ContainerDependent> newContainerDependents)
@@ -3680,15 +3691,17 @@ namespace System.Windows
         }
 
         internal static void ApplyTemplatedParentValue(
-                DependencyObject                container,
-                FrameworkObject                 child,
-                int                             childIndex,
-            ref FrugalStructList<ChildRecord>   childRecordFromChildIndex,
-                DependencyProperty              dp,
-                FrameworkElementFactory         templateRoot)
+                DependencyObject container,
+                FrameworkObject child,
+                int childIndex,
+            ref FrugalStructList<ChildRecord> childRecordFromChildIndex,
+                DependencyProperty dp,
+                FrameworkElementFactory templateRoot)
         {
-            EffectiveValueEntry newEntry = new EffectiveValueEntry(dp);
-            newEntry.Value = DependencyProperty.UnsetValue;
+            EffectiveValueEntry newEntry = new EffectiveValueEntry(dp)
+            {
+                Value = DependencyProperty.UnsetValue
+            };
             if (GetValueFromTemplatedParent(
                     container,
                     childIndex,
@@ -3754,13 +3767,13 @@ namespace System.Windows
         }
 
         internal static bool GetValueFromTemplatedParent(
-                DependencyObject                container,
-                int                             childIndex,
-                FrameworkObject                 child,
-                DependencyProperty              dp,
-            ref FrugalStructList<ChildRecord>   childRecordFromChildIndex,
-                FrameworkElementFactory         templateRoot,
-            ref EffectiveValueEntry             entry)
+                DependencyObject container,
+                int childIndex,
+                FrameworkObject child,
+                DependencyProperty dp,
+            ref FrugalStructList<ChildRecord> childRecordFromChildIndex,
+                FrameworkElementFactory templateRoot,
+            ref EffectiveValueEntry entry)
         {
             ValueLookupType sourceType = ValueLookupType.Simple;
             // entry will be updated to hold the value -- we only need to set the value source
@@ -3801,7 +3814,7 @@ namespace System.Windows
                 if (child.StoresParentTemplateValues)
                 {
                     HybridDictionary parentTemplateValues = StyleHelper.ParentTemplateValuesField.GetValue(child.DO);
-                    if(parentTemplateValues.Contains(dp))
+                    if (parentTemplateValues.Contains(dp))
                     {
                         entry.BaseValueSourceInternal = BaseValueSourceInternal.ParentTemplate;
                         value = parentTemplateValues[dp];
@@ -3833,8 +3846,10 @@ namespace System.Windows
                 FrameworkObject fo,
                 DependencyProperty dp)
         {
-            EffectiveValueEntry newEntry = new EffectiveValueEntry(dp);
-            newEntry.Value = DependencyProperty.UnsetValue;
+            EffectiveValueEntry newEntry = new EffectiveValueEntry(dp)
+            {
+                Value = DependencyProperty.UnsetValue
+            };
             if (GetValueFromStyleOrTemplate(fo, dp, ref newEntry))
             {
                 DependencyObject target = fo.DO;
@@ -4016,20 +4031,20 @@ namespace System.Windows
             // enough.
 
             int n = resourceDependents.Count;
-            for (int i=1; i<n; ++i)
+            for (int i = 1; i < n; ++i)
             {
                 ChildPropertyDependent current = resourceDependents[i];
                 int childIndex = current.ChildIndex;
                 int dpIndex = current.Property.GlobalIndex;
 
                 int j;
-                for (j=i-1;  j>=0;  --j)
+                for (j = i - 1; j >= 0; --j)
                 {
                     if (childIndex < resourceDependents[j].ChildIndex ||
                         (childIndex == resourceDependents[j].ChildIndex &&
                          dpIndex < resourceDependents[j].Property.GlobalIndex))
                     {
-                        resourceDependents[j+1] = resourceDependents[j];
+                        resourceDependents[j + 1] = resourceDependents[j];
                     }
                     else
                     {
@@ -4037,9 +4052,9 @@ namespace System.Windows
                     }
                 }
 
-                if (j < i-1)
+                if (j < i - 1)
                 {
-                    resourceDependents[j+1] = current;
+                    resourceDependents[j + 1] = current;
                 }
             }
         }
@@ -4054,10 +4069,10 @@ namespace System.Windows
         //  invalidateVisualTreeToo flag being false.
         //
         internal static void InvalidateResourceDependents(
-            DependencyObject                             container,
-            ResourcesChangeInfo                          info,
+            DependencyObject container,
+            ResourcesChangeInfo info,
             ref FrugalStructList<ChildPropertyDependent> resourceDependents,
-            bool                                         invalidateVisualTreeToo)
+            bool invalidateVisualTreeToo)
         {
             List<DependencyObject> styledChildren = TemplatedFeChildrenField.GetValue(container);
 
@@ -4123,11 +4138,11 @@ namespace System.Windows
         //  2. Returns true if any were found
         //
         internal static void InvalidateResourceDependentsForChild(
-                DependencyObject                            container,
-                DependencyObject                            child,
-                int                                         childIndex,
-                ResourcesChangeInfo                         info,
-                FrameworkTemplate                           parentTemplate)
+                DependencyObject container,
+                DependencyObject child,
+                int childIndex,
+                ResourcesChangeInfo info,
+                FrameworkTemplate parentTemplate)
         {
             FrugalStructList<ChildPropertyDependent> resourceDependents = parentTemplate.ResourceDependents;
             int count = resourceDependents.Count;
@@ -4165,7 +4180,7 @@ namespace System.Windows
         //  1. Returns true if any resource references are set on a template for a given child.
         //
         internal static bool HasResourceDependentsForChild(
-            int                                          childIndex,
+            int childIndex,
             ref FrugalStructList<ChildPropertyDependent> resourceDependents)
         {
             // Look for properties on the given child that
@@ -4186,12 +4201,12 @@ namespace System.Windows
         //  1. Invalidates properties set on a TemplateNode directly or via a Trigger
         //
         internal static void InvalidatePropertiesOnTemplateNode(
-                DependencyObject                container,
-                FrameworkObject                 child,
-                int                             childIndex,
-            ref FrugalStructList<ChildRecord>   childRecordFromChildIndex,
-                bool                            isDetach,
-                FrameworkElementFactory         templateRoot)
+                DependencyObject container,
+                FrameworkObject child,
+                int childIndex,
+            ref FrugalStructList<ChildRecord> childRecordFromChildIndex,
+                bool isDetach,
+                FrameworkElementFactory templateRoot)
         {
             Debug.Assert(child.FE != null || child.FCE != null);
 
@@ -4204,7 +4219,7 @@ namespace System.Windows
                 if (count > 0)
                 {
                     // Iterate through all the properties set on the given childRecord
-                    for (int i=0; i< count; i++)
+                    for (int i = 0; i < count; i++)
                     {
                         // NOTE: Every entry in the ValueLookupListFromProperty corresponds to
                         // one DependencyProperty. All the items in Entries[i].Value.List
@@ -4272,9 +4287,9 @@ namespace System.Windows
         //  from visual triggers would have been invalidated. Hence they can all be skipped.
         //
         internal static bool IsSetOnContainer(
-            DependencyProperty                       dp,
+            DependencyProperty dp,
             ref FrugalStructList<ContainerDependent> containerDependents,
-            bool                                     alsoFromTriggers)
+            bool alsoFromTriggers)
         {
             for (int i = 0; i < containerDependents.Count; i++)
             {
@@ -4292,17 +4307,17 @@ namespace System.Windows
         //     is propagated to its dependent properties from Style/Template.
         //
         internal static void OnTriggerSourcePropertyInvalidated(
-            Style                                                       ownerStyle,
-            FrameworkTemplate                                           frameworkTemplate,
-            DependencyObject                                            container,
-            DependencyProperty                                          dp,
-            DependencyPropertyChangedEventArgs                          changedArgs,
-            bool                                                        invalidateOnlyContainer,
-            ref FrugalStructList<ItemStructMap<TriggerSourceRecord>>    triggerSourceRecordFromChildIndex,
-            ref FrugalMap                                               propertyTriggersWithActions,
-            int                                                         sourceChildIndex)
+            Style ownerStyle,
+            FrameworkTemplate frameworkTemplate,
+            DependencyObject container,
+            DependencyProperty dp,
+            DependencyPropertyChangedEventArgs changedArgs,
+            bool invalidateOnlyContainer,
+            ref FrugalStructList<ItemStructMap<TriggerSourceRecord>> triggerSourceRecordFromChildIndex,
+            ref FrugalMap propertyTriggersWithActions,
+            int sourceChildIndex)
         {
-            Debug.Assert(ownerStyle != null || frameworkTemplate != null );
+            Debug.Assert(ownerStyle != null || frameworkTemplate != null);
 
             ///////////////////////////////////////////////////////////////////
             // Update all values affected by property trigger Setters
@@ -4331,16 +4346,16 @@ namespace System.Windows
             //  the property change.
             object candidateTrigger = propertyTriggersWithActions[dp.GlobalIndex];
 
-            if( candidateTrigger != DependencyProperty.UnsetValue )
+            if (candidateTrigger != DependencyProperty.UnsetValue)
             {
                 // One or more trigger objects need to be evaluated.  The candidateTrigger
                 //  object may be a single trigger or a collection of them.
 
                 TriggerBase triggerBase = candidateTrigger as TriggerBase;
-                if( triggerBase != null )
+                if (triggerBase != null)
                 {
-                    InvokePropertyTriggerActions( triggerBase, container, dp, changedArgs, sourceChildIndex,
-                        ownerStyle, frameworkTemplate );
+                    InvokePropertyTriggerActions(triggerBase, container, dp, changedArgs, sourceChildIndex,
+                        ownerStyle, frameworkTemplate);
                 }
                 else
                 {
@@ -4349,10 +4364,10 @@ namespace System.Windows
 
                     List<TriggerBase> triggerList = (List<TriggerBase>)candidateTrigger;
 
-                    for( int i = 0; i < triggerList.Count; i++ )
+                    for (int i = 0; i < triggerList.Count; i++)
                     {
-                        InvokePropertyTriggerActions( triggerList[i], container, dp, changedArgs, sourceChildIndex,
-                            ownerStyle, frameworkTemplate );
+                        InvokePropertyTriggerActions(triggerList[i], container, dp, changedArgs, sourceChildIndex,
+                            ownerStyle, frameworkTemplate);
                     }
                 }
             }
@@ -4366,14 +4381,14 @@ namespace System.Windows
         //     be invalidated because they don't exist yet.
         //
         private static void InvalidateDependents(
-                Style                                    ownerStyle,
-                FrameworkTemplate                        frameworkTemplate,
-                DependencyObject                         container,
-                DependencyProperty                       dp,
+                Style ownerStyle,
+                FrameworkTemplate frameworkTemplate,
+                DependencyObject container,
+                DependencyProperty dp,
             ref FrugalStructList<ChildPropertyDependent> dependents,
-                bool                                     invalidateOnlyContainer)
+                bool invalidateOnlyContainer)
         {
-            Debug.Assert(ownerStyle != null || frameworkTemplate != null );
+            Debug.Assert(ownerStyle != null || frameworkTemplate != null);
 
             for (int i = 0; i < dependents.Count; i++)
             {
@@ -4416,8 +4431,8 @@ namespace System.Windows
                 if (child != null &&
                     child.GetValueSource(invalidProperty, null, out hasModifiers) != BaseValueSourceInternal.Local)
                 {
-                    child.InvalidateProperty(invalidProperty, preserveCurrentValue:true);
-//                    ApplyStyleOrTemplateValue(new FrameworkObject(child), invalidProperty);
+                    child.InvalidateProperty(invalidProperty, preserveCurrentValue: true);
+                    //                    ApplyStyleOrTemplateValue(new FrameworkObject(child), invalidProperty);
                 }
             }
         }
@@ -4425,7 +4440,7 @@ namespace System.Windows
         // This is expected to be called when a Binding for a DataTrigger has
         //   changed and we need to look for true/false transitions.  If found,
         //   invoke EnterAction (or ExitAction) as needed.
-        private static void InvokeDataTriggerActions( TriggerBase triggerBase,
+        private static void InvokeDataTriggerActions(TriggerBase triggerBase,
             DependencyObject triggerContainer, BindingBase binding, BindingValueChangedEventArgs bindingChangedArgs,
             Style style, FrameworkTemplate frameworkTemplate,
             UncommonField<HybridDictionary[]> dataField)
@@ -4435,26 +4450,26 @@ namespace System.Windows
 
             DataTrigger dataTrigger = triggerBase as DataTrigger;
 
-            if( dataTrigger != null )
+            if (dataTrigger != null)
             {
-                EvaluateOldNewStates( dataTrigger, triggerContainer,
+                EvaluateOldNewStates(dataTrigger, triggerContainer,
                     binding, bindingChangedArgs, dataField,
                     style, frameworkTemplate,
-                    out oldState, out newState );
+                    out oldState, out newState);
             }
             else
             {
-                Debug.Assert( triggerBase is MultiDataTrigger,
-                    "This method only handles DataTrigger and MultiDataTrigger.  Other types should have been handled elsewhere." );
+                Debug.Assert(triggerBase is MultiDataTrigger,
+                    "This method only handles DataTrigger and MultiDataTrigger.  Other types should have been handled elsewhere.");
 
-                EvaluateOldNewStates( (MultiDataTrigger)triggerBase, triggerContainer,
+                EvaluateOldNewStates((MultiDataTrigger)triggerBase, triggerContainer,
                     binding, bindingChangedArgs, dataField,
                     style, frameworkTemplate,
-                    out oldState, out newState );
+                    out oldState, out newState);
             }
 
-            InvokeEnterOrExitActions( triggerBase, oldState, newState, triggerContainer,
-                style, frameworkTemplate  );
+            InvokeEnterOrExitActions(triggerBase, oldState, newState, triggerContainer,
+                style, frameworkTemplate);
         }
 
         // This is expected to be called when a property value has changed and that
@@ -4462,34 +4477,34 @@ namespace System.Windows
         // We're given the trigger here, the property changed, and the before/after state.
         // Evaluate the Trigger, and see if we need to invoke any of the TriggerAction
         //  objects associated with the given trigger.
-        private static void InvokePropertyTriggerActions( TriggerBase triggerBase,
+        private static void InvokePropertyTriggerActions(TriggerBase triggerBase,
             DependencyObject triggerContainer, DependencyProperty changedProperty,
             DependencyPropertyChangedEventArgs changedArgs, int sourceChildIndex,
-            Style style, FrameworkTemplate frameworkTemplate )
+            Style style, FrameworkTemplate frameworkTemplate)
         {
             bool oldState;
             bool newState;
 
             Trigger trigger = triggerBase as Trigger;
 
-            if( trigger != null )
+            if (trigger != null)
             {
-                EvaluateOldNewStates( trigger, triggerContainer, changedProperty, changedArgs,
+                EvaluateOldNewStates(trigger, triggerContainer, changedProperty, changedArgs,
                     sourceChildIndex, style, frameworkTemplate,
-                    out oldState, out newState );
+                    out oldState, out newState);
             }
             else
             {
-                Debug.Assert( triggerBase is MultiTrigger,
-                    "This method only handles Trigger and MultiTrigger.  Other types should have been handled elsewhere." );
+                Debug.Assert(triggerBase is MultiTrigger,
+                    "This method only handles Trigger and MultiTrigger.  Other types should have been handled elsewhere.");
 
-                EvaluateOldNewStates( (MultiTrigger)triggerBase, triggerContainer, changedProperty, changedArgs,
+                EvaluateOldNewStates((MultiTrigger)triggerBase, triggerContainer, changedProperty, changedArgs,
                     sourceChildIndex, style, frameworkTemplate,
-                    out oldState, out newState );
+                    out oldState, out newState);
             }
 
-            InvokeEnterOrExitActions( triggerBase, oldState, newState, triggerContainer,
-                style, frameworkTemplate );
+            InvokeEnterOrExitActions(triggerBase, oldState, newState, triggerContainer,
+                style, frameworkTemplate);
         }
 
         // Called from UpdateStyleCache - When an object's Style changes, some of
@@ -4499,17 +4514,17 @@ namespace System.Windows
         //  transition.  This code treats "true at time Style is applied" as
         //  a False->True transition even though it's possible no transition ever
         //  took place.
-        private static void ExecuteOnApplyEnterExitActions( FrameworkElement fe,
-            FrameworkContentElement fce, Style style, UncommonField<HybridDictionary[]> dataField )
+        private static void ExecuteOnApplyEnterExitActions(FrameworkElement fe,
+            FrameworkContentElement fce, Style style, UncommonField<HybridDictionary[]> dataField)
         {
             // If the "Style Change" is the style being set to null - exit.
-            if( style == null )
+            if (style == null)
             {
                 return;
             }
             // Note: PropertyTriggersWithActions is a FrugalMap, so its count is checked against zero.
             //  DataTriggersWithActions is a HybridDictionary allocated on demand, so it's checked against null.
-            if( style.PropertyTriggersWithActions.Count == 0 && style.DataTriggersWithActions == null )
+            if (style.PropertyTriggersWithActions.Count == 0 && style.DataTriggersWithActions == null)
             {
                 // Style has no trigger actions at all, exit.
                 return;
@@ -4518,7 +4533,7 @@ namespace System.Windows
             TriggerCollection triggers = style.Triggers;
             DependencyObject triggerContainer = (fe != null) ? (DependencyObject)fe : (DependencyObject)fce;
 
-            ExecuteOnApplyEnterExitActionsLoop( triggerContainer, triggers, style, null, dataField );
+            ExecuteOnApplyEnterExitActionsLoop(triggerContainer, triggers, style, null, dataField);
         }
 
         // Called from UpdateStyleCache - When an object's Template changes, some of
@@ -4528,64 +4543,64 @@ namespace System.Windows
         //  transition.  This code treats "true at time Template is applied" as
         //  a False->True transition even though it's possible no transition ever
         //  took place.
-        private static void ExecuteOnApplyEnterExitActions( FrameworkElement fe, FrameworkContentElement fce,
-            FrameworkTemplate ft )
+        private static void ExecuteOnApplyEnterExitActions(FrameworkElement fe, FrameworkContentElement fce,
+            FrameworkTemplate ft)
         {
             // If the "Template Change" is a template being set to null - exit.
-            if( ft == null )
+            if (ft == null)
             {
                 return;
             }
             // Note: PropertyTriggersWithActions is a FrugalMap, so its count is checked against zero.
             //  DataTriggersWithActions is a HybridDictionary allocated on demand, so it's checked against null.
-            if( ft != null && ft.PropertyTriggersWithActions.Count == 0 && ft.DataTriggersWithActions == null )
+            if (ft != null && ft.PropertyTriggersWithActions.Count == 0 && ft.DataTriggersWithActions == null)
             {
                 // FrameworkTemplate has no trigger actions at all, exit.
                 return;
             }
 
-            Debug.Assert( ft != null );
+            Debug.Assert(ft != null);
             TriggerCollection triggers = ft.TriggersInternal;
             DependencyObject triggerContainer = (fe != null) ? (DependencyObject)fe : (DependencyObject)fce;
 
-            ExecuteOnApplyEnterExitActionsLoop( triggerContainer, triggers, null, ft, TemplateDataField );
+            ExecuteOnApplyEnterExitActionsLoop(triggerContainer, triggers, null, ft, TemplateDataField);
         }
 
         // Called from either the Style-specific ExecuteOnApplyEnterActions or the
         //  Template-specific version.  This section is the common code for both that
         //  walks through the trigger collection and execute applicable actions.
-        private static void ExecuteOnApplyEnterExitActionsLoop( DependencyObject triggerContainer, TriggerCollection triggers,
-            Style style, FrameworkTemplate ft, UncommonField<HybridDictionary[]> dataField )
+        private static void ExecuteOnApplyEnterExitActionsLoop(DependencyObject triggerContainer, TriggerCollection triggers,
+            Style style, FrameworkTemplate ft, UncommonField<HybridDictionary[]> dataField)
         {
             TriggerBase triggerBase;
             bool triggerState;
-            for( int i = 0; i < triggers.Count; i++ )
+            for (int i = 0; i < triggers.Count; i++)
             {
                 triggerBase = triggers[i];
-                if( (!triggerBase.HasEnterActions) && (!triggerBase.HasExitActions) )
+                if ((!triggerBase.HasEnterActions) && (!triggerBase.HasExitActions))
                 {
                     ; // Trigger has neither enter nor exit actions.  There's nothing to run anyway, so skip.
                 }
-                else if( triggerBase.ExecuteEnterActionsOnApply ||
-                    triggerBase.ExecuteExitActionsOnApply )
+                else if (triggerBase.ExecuteEnterActionsOnApply ||
+                    triggerBase.ExecuteExitActionsOnApply)
                 {
                     // Look for any SourceName in the condition
-                    if( NoSourceNameInTrigger( triggerBase ) )
+                    if (NoSourceNameInTrigger(triggerBase))
                     {
                         // Evaluate the current state of the trigger.
-                        triggerState = triggerBase.GetCurrentState( triggerContainer, dataField );
+                        triggerState = triggerBase.GetCurrentState(triggerContainer, dataField);
 
-                        if( triggerState && triggerBase.ExecuteEnterActionsOnApply )
+                        if (triggerState && triggerBase.ExecuteEnterActionsOnApply)
                         {
                             // Trigger is true, and Trigger wants EnterActions to be executed on Style/Template application.
-                            InvokeActions( triggerBase.EnterActions, triggerBase, triggerContainer,
-                                style, ft );
+                            InvokeActions(triggerBase.EnterActions, triggerBase, triggerContainer,
+                                style, ft);
                         }
-                        else if( !triggerState && triggerBase.ExecuteExitActionsOnApply )
+                        else if (!triggerState && triggerBase.ExecuteExitActionsOnApply)
                         {
                             // Trigger is false, and Trigger wants ExitActions to be executed on Style/Template application.
-                            InvokeActions( triggerBase.ExitActions, triggerBase, triggerContainer,
-                                style, ft );
+                            InvokeActions(triggerBase.ExitActions, triggerBase, triggerContainer,
+                                style, ft);
                         }
                     }
                     else
@@ -4602,12 +4617,12 @@ namespace System.Windows
         //  a SourceName string in the trigger.
         // We only check the two property trigger types here, data triggers
         //  do not support being dependent on child nodes.
-        private static bool NoSourceNameInTrigger( TriggerBase triggerBase )
+        private static bool NoSourceNameInTrigger(TriggerBase triggerBase)
         {
             Trigger trigger = triggerBase as Trigger;
-            if( trigger != null )
+            if (trigger != null)
             {
-                if( trigger.SourceName == null )
+                if (trigger.SourceName == null)
                 {
                     return true;
                 }
@@ -4619,11 +4634,11 @@ namespace System.Windows
             else
             {
                 MultiTrigger multiTrigger = triggerBase as MultiTrigger;
-                if( multiTrigger != null )
+                if (multiTrigger != null)
                 {
-                    for( int i = 0; i < multiTrigger.Conditions.Count; i++ )
+                    for (int i = 0; i < multiTrigger.Conditions.Count; i++)
                     {
-                        if( multiTrigger.Conditions[i].SourceName != null )
+                        if (multiTrigger.Conditions[i].SourceName != null)
                         {
                             return false;
                         }
@@ -4641,18 +4656,18 @@ namespace System.Windows
         // Helper method shared between property trigger and data trigger.  After
         //  the trigger's old and new states are evaluated, look at them and see
         //  if we should invoke the associated EnterActions or ExitActions.
-        private static void InvokeEnterOrExitActions( TriggerBase triggerBase,
+        private static void InvokeEnterOrExitActions(TriggerBase triggerBase,
             bool oldState, bool newState, DependencyObject triggerContainer,
             Style style, FrameworkTemplate frameworkTemplate)
         {
             TriggerActionCollection actions;
 
-            if( !oldState && newState )
+            if (!oldState && newState)
             {
                 // False -> True transition.  Execute EnterActions.
                 actions = triggerBase.EnterActions;
             }
-            else if( oldState && !newState )
+            else if (oldState && !newState)
             {
                 // True -> False transition.  Execute ExitActions.
                 actions = triggerBase.ExitActions;
@@ -4662,7 +4677,7 @@ namespace System.Windows
                 actions = null;
             }
 
-            InvokeActions( actions, triggerBase, triggerContainer, style, frameworkTemplate );
+            InvokeActions(actions, triggerBase, triggerContainer, style, frameworkTemplate);
         }
 
         // Called from InvokeEnterOrExitActions in response to a changed event, or
@@ -4671,23 +4686,23 @@ namespace System.Windows
         // At this point we've decided that the given set of trigger action collections
         //  should be run now.  This method checks to see if that's actually possible
         //  and either invokes immediately or saves enough information to invoke later.
-        private static void InvokeActions( TriggerActionCollection actions,
+        private static void InvokeActions(TriggerActionCollection actions,
             TriggerBase triggerBase, DependencyObject triggerContainer,
-            Style style, FrameworkTemplate frameworkTemplate )
+            Style style, FrameworkTemplate frameworkTemplate)
         {
-            if( actions != null )
+            if (actions != null)
             {
                 // See CanInvokeActionsNow for all the (known) reasons why we might not be able to
                 //  invoke immediately.
-                if( CanInvokeActionsNow( triggerContainer, frameworkTemplate ) )
+                if (CanInvokeActionsNow(triggerContainer, frameworkTemplate))
                 {
-                    InvokeActions( triggerBase, triggerContainer, actions,
-                        style, frameworkTemplate );
+                    InvokeActions(triggerBase, triggerContainer, actions,
+                        style, frameworkTemplate);
                 }
                 else
                 {
-                    DeferActions( triggerBase, triggerContainer, actions,
-                        style, frameworkTemplate );
+                    DeferActions(triggerBase, triggerContainer, actions,
+                        style, frameworkTemplate);
                 }
             }
         }
@@ -4700,19 +4715,19 @@ namespace System.Windows
         //  been generated - but their EffectiveValues cache haven't necessarily picked
         //  up all their templated values yet.  HasTemplatedGeneratedSubTree is set
         //  to true only after all the property values have been updated.
-        private static bool CanInvokeActionsNow( DependencyObject container,
+        private static bool CanInvokeActionsNow(DependencyObject container,
             FrameworkTemplate frameworkTemplate)
         {
             bool result;
 
-            if( frameworkTemplate != null )
+            if (frameworkTemplate != null)
             {
                 FrameworkElement fe = (FrameworkElement)container;
-                if( fe.HasTemplateGeneratedSubTree )
+                if (fe.HasTemplateGeneratedSubTree)
                 {
                     ContentPresenter cp = container as ContentPresenter;
 
-                    if( cp != null && !cp.TemplateIsCurrent )
+                    if (cp != null && !cp.TemplateIsCurrent)
                     {
                         // The containing ContentPresenter does not have an
                         //  up-to-date template.  If we run now we'll run
@@ -4747,7 +4762,7 @@ namespace System.Windows
         //  on the template object.  Because each template can be applicable to
         //  multiple objects, the storage of deferred actions is keyed by the
         //  triggerContainer instance.
-        private static void DeferActions( TriggerBase triggerBase,
+        private static void DeferActions(TriggerBase triggerBase,
             DependencyObject triggerContainer, TriggerActionCollection actions,
             Style style, FrameworkTemplate frameworkTemplate)
 
@@ -4757,11 +4772,11 @@ namespace System.Windows
             deferredAction.TriggerBase = triggerBase;
             deferredAction.TriggerActionCollection = actions;
 
-            if( frameworkTemplate != null )
+            if (frameworkTemplate != null)
             {
                 deferredActions = frameworkTemplate.DeferredActions;
 
-                if( deferredActions == null )
+                if (deferredActions == null)
                 {
                     deferredActions = new ConditionalWeakTable<DependencyObject, List<DeferredAction>>();
                     frameworkTemplate.DeferredActions = deferredActions;
@@ -4774,11 +4789,11 @@ namespace System.Windows
                 deferredActions = null;
             }
 
-            if( deferredActions != null )
+            if (deferredActions != null)
             {
                 List<DeferredAction> actionList;
 
-                if( !deferredActions.TryGetValue(triggerContainer, out actionList) )
+                if (!deferredActions.TryGetValue(triggerContainer, out actionList))
                 {
                     actionList = new List<DeferredAction>();
                     deferredActions.Add(/* key */triggerContainer,/* value */actionList);
@@ -4790,8 +4805,8 @@ namespace System.Windows
 
         // Execute any actions we stored away in the method DeferActions, and
         //  clear out the store for these actions.
-        internal static void InvokeDeferredActions( DependencyObject triggerContainer,
-            FrameworkTemplate frameworkTemplate )
+        internal static void InvokeDeferredActions(DependencyObject triggerContainer,
+            FrameworkTemplate frameworkTemplate)
         {
             // See if we have a list of deferred actions to execute.
             if (frameworkTemplate != null && frameworkTemplate.DeferredActions != null)
@@ -4815,7 +4830,7 @@ namespace System.Windows
 
         // Given a list of action collection, invoke all individual TriggerAction
         //  in that collection using the rest of the information given.
-        internal static void InvokeActions( TriggerBase triggerBase,
+        internal static void InvokeActions(TriggerBase triggerBase,
             DependencyObject triggerContainer, TriggerActionCollection actions,
             Style style, FrameworkTemplate frameworkTemplate)
         {
@@ -4833,29 +4848,29 @@ namespace System.Windows
 
         // Given a single property trigger and associated context information,
         //  evaluate the old and new states of the trigger.
-        private static void EvaluateOldNewStates( Trigger trigger,
+        private static void EvaluateOldNewStates(Trigger trigger,
             DependencyObject triggerContainer, DependencyProperty changedProperty, DependencyPropertyChangedEventArgs changedArgs,
             int sourceChildIndex, Style style, FrameworkTemplate frameworkTemplate,
-            out bool oldState, out bool newState )
+            out bool oldState, out bool newState)
         {
 
-            Debug.Assert( trigger.Property == changedProperty,
-                "We're trying to evaluate the state of a Trigger based on a property that doesn't affect that trigger.  This is indicative of an error upstream, when setting up the [Style/Template].TriggersWithActions data structure." );
+            Debug.Assert(trigger.Property == changedProperty,
+                "We're trying to evaluate the state of a Trigger based on a property that doesn't affect that trigger.  This is indicative of an error upstream, when setting up the [Style/Template].TriggersWithActions data structure.");
 
             int triggerChildId = 0;
 
-            if( trigger.SourceName != null )
+            if (trigger.SourceName != null)
             {
-                Debug.Assert( frameworkTemplate != null,
+                Debug.Assert(frameworkTemplate != null,
                     "A trigger outside of a Template is not supposed to have a SourceName.  This should have been caught somewhere upstream, like in Style.Seal().");
                 triggerChildId = QueryChildIndexFromChildName(trigger.SourceName, frameworkTemplate.ChildIndexFromChildName);
             }
 
-            if( triggerChildId == sourceChildIndex )
+            if (triggerChildId == sourceChildIndex)
             {
                 TriggerCondition[] conditions = trigger.TriggerConditions;
-                Debug.Assert( conditions != null && conditions.Length == 1,
-                    "This method assumes there is exactly one TriggerCondition." );
+                Debug.Assert(conditions != null && conditions.Length == 1,
+                    "This method assumes there is exactly one TriggerCondition.");
 
                 oldState = conditions[0].Match(changedArgs.OldValue);
                 newState = conditions[0].Match(changedArgs.NewValue);
@@ -4877,15 +4892,15 @@ namespace System.Windows
 
         // Given a single data trigger and associated context information,
         //  evaluate the old and new states of the trigger.
-        private static void EvaluateOldNewStates( DataTrigger dataTrigger,
+        private static void EvaluateOldNewStates(DataTrigger dataTrigger,
             DependencyObject triggerContainer,
             BindingBase binding, BindingValueChangedEventArgs bindingChangedArgs, UncommonField<HybridDictionary[]> dataField,
             Style style, FrameworkTemplate frameworkTemplate,
-            out bool oldState, out bool newState )
+            out bool oldState, out bool newState)
         {
             TriggerCondition[] conditions = dataTrigger.TriggerConditions;
-            Debug.Assert( conditions != null && conditions.Length == 1,
-                "This method assumes there is exactly one TriggerCondition." );
+            Debug.Assert(conditions != null && conditions.Length == 1,
+                "This method assumes there is exactly one TriggerCondition.");
 
             oldState = conditions[0].ConvertAndMatch(bindingChangedArgs.OldValue);
             newState = conditions[0].ConvertAndMatch(bindingChangedArgs.NewValue);
@@ -4900,10 +4915,10 @@ namespace System.Windows
         //  transition.
         // Hence this evaluation short-circuits if any property evaluation
         //  (other than the one being compared) turns out false.
-        private static void EvaluateOldNewStates( MultiTrigger multiTrigger,
+        private static void EvaluateOldNewStates(MultiTrigger multiTrigger,
             DependencyObject triggerContainer, DependencyProperty changedProperty, DependencyPropertyChangedEventArgs changedArgs,
             int sourceChildIndex, Style style, FrameworkTemplate frameworkTemplate,
-            out bool oldState, out bool newState )
+            out bool oldState, out bool newState)
         {
             int triggerChildId = 0;
             DependencyObject evaluationNode = null;
@@ -4913,11 +4928,11 @@ namespace System.Windows
             oldState = false;
             newState = false;
 
-            for( int i = 0; i < conditions.Length; i++ )
+            for (int i = 0; i < conditions.Length; i++)
             {
-                if( conditions[i].SourceChildIndex != 0 )
+                if (conditions[i].SourceChildIndex != 0)
                 {
-                    Debug.Assert( frameworkTemplate != null,
+                    Debug.Assert(frameworkTemplate != null,
                         "A trigger outside of a Template is not supposed to have a SourceName.  This should have been caught somewhere upstream, like in Style.Seal().");
                     triggerChildId = conditions[i].SourceChildIndex;
                     evaluationNode = GetChild(triggerContainer, triggerChildId);
@@ -4929,16 +4944,16 @@ namespace System.Windows
                 }
 
                 Debug.Assert(evaluationNode != null,
-                    "Couldn't find the node corresponding to the ID and name given in the trigger.  This should have been caught somewhere upstream, like StyleHelper.SealTemplate()." );
+                    "Couldn't find the node corresponding to the ID and name given in the trigger.  This should have been caught somewhere upstream, like StyleHelper.SealTemplate().");
 
-                if( conditions[i].Property == changedProperty && triggerChildId == sourceChildIndex )
+                if (conditions[i].Property == changedProperty && triggerChildId == sourceChildIndex)
                 {
                     // This is the property that changed, and on the object we
                     //  care about.  Evaluate states.- see if the condition
                     oldState = conditions[i].Match(changedArgs.OldValue);
                     newState = conditions[i].Match(changedArgs.NewValue);
 
-                    if( oldState == newState )
+                    if (oldState == newState)
                     {
                         // There couldn't possibly be a transition here, abort.  The
                         //  returned values here aren't necessarily the state of the
@@ -4949,8 +4964,8 @@ namespace System.Windows
                 }
                 else
                 {
-                    object evaluationValue = evaluationNode.GetValue( conditions[i].Property );
-                    if( !conditions[i].Match(evaluationValue) )
+                    object evaluationValue = evaluationNode.GetValue(conditions[i].Property);
+                    if (!conditions[i].Match(evaluationValue))
                     {
                         // A condition other than the one changed has evaluated to false.
                         // There couldn't possibly be a transition here, short-circuit and abort.
@@ -4972,34 +4987,34 @@ namespace System.Windows
 
         // The short-circuit logic of multi property trigger applies here too.
         //  we bail if any of the "other" conditions evaluate to false.
-        private static void EvaluateOldNewStates( MultiDataTrigger multiDataTrigger,
+        private static void EvaluateOldNewStates(MultiDataTrigger multiDataTrigger,
             DependencyObject triggerContainer,
             BindingBase binding, BindingValueChangedEventArgs changedArgs, UncommonField<HybridDictionary[]> dataField,
             Style style, FrameworkTemplate frameworkTemplate,
-            out bool oldState, out bool newState )
+            out bool oldState, out bool newState)
         {
             BindingBase evaluationBinding = null;
-            object  evaluationValue = null;
+            object evaluationValue = null;
             TriggerCondition[] conditions = multiDataTrigger.TriggerConditions;
 
             // Set up the default condition: A trigger with no conditions will never evaluate to true.
             oldState = false;
             newState = false;
 
-            for( int i = 0; i < multiDataTrigger.Conditions.Count; i++ )
+            for (int i = 0; i < multiDataTrigger.Conditions.Count; i++)
             {
                 evaluationBinding = conditions[i].Binding;
 
-                Debug.Assert( evaluationBinding != null,
+                Debug.Assert(evaluationBinding != null,
                     "A null binding was encountered in a MultiDataTrigger conditions collection - this is invalid input and should have been caught earlier.");
 
-                if( evaluationBinding == binding )
+                if (evaluationBinding == binding)
                 {
                     // The binding that changed belonged to the current condition.
                     oldState = conditions[i].ConvertAndMatch(changedArgs.OldValue);
                     newState = conditions[i].ConvertAndMatch(changedArgs.NewValue);
 
-                    if( oldState == newState )
+                    if (oldState == newState)
                     {
                         // There couldn't possibly be a transition here, abort.  The
                         //  returned values here aren't necessarily the state of the
@@ -5011,7 +5026,7 @@ namespace System.Windows
                 else
                 {
                     evaluationValue = GetDataTriggerValue(dataField, triggerContainer, evaluationBinding);
-                    if( !conditions[i].ConvertAndMatch(evaluationValue) )
+                    if (!conditions[i].ConvertAndMatch(evaluationValue))
                     {
                         // A condition other than the one changed has evaluated to false.
                         // There couldn't possibly be a transition here, short-circuit and abort.
@@ -5036,7 +5051,7 @@ namespace System.Windows
         {
             object existing = triggersWithActions[property.GlobalIndex];
 
-            if( existing == DependencyProperty.UnsetValue )
+            if (existing == DependencyProperty.UnsetValue)
             {
                 // No existing trigger, we put given trigger as entry.
                 triggersWithActions[property.GlobalIndex] = triggerBase;
@@ -5044,7 +5059,7 @@ namespace System.Windows
             else
             {
                 TriggerBase existingTriggerBase = existing as TriggerBase;
-                if( existingTriggerBase != null )
+                if (existingTriggerBase != null)
                 {
                     List<TriggerBase> newList = new List<TriggerBase>();
 
@@ -5055,7 +5070,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    Debug.Assert( existing is List<TriggerBase>,
+                    Debug.Assert(existing is List<TriggerBase>,
                         $"FrugalMap for holding List<TriggerBase> is holding an instance of unexpected type {existing.GetType()}");
 
                     List<TriggerBase> existingList = (List<TriggerBase>)existing;
@@ -5071,16 +5086,16 @@ namespace System.Windows
         // Called during Style/Template Seal when encountering a data trigger that
         //  has associated TriggerActions.
         internal static void AddDataTriggerWithAction(TriggerBase triggerBase,
-            BindingBase binding, ref HybridDictionary dataTriggersWithActions )
+            BindingBase binding, ref HybridDictionary dataTriggersWithActions)
         {
-            if( dataTriggersWithActions == null )
+            if (dataTriggersWithActions == null)
             {
                 dataTriggersWithActions = new HybridDictionary();
             }
 
             object existing = dataTriggersWithActions[binding];
 
-            if( existing == null )
+            if (existing == null)
             {
                 // No existing trigger, we put given trigger as entry.
                 dataTriggersWithActions[binding] = triggerBase;
@@ -5088,7 +5103,7 @@ namespace System.Windows
             else
             {
                 TriggerBase existingTriggerBase = existing as TriggerBase;
-                if( existingTriggerBase != null )
+                if (existingTriggerBase != null)
                 {
                     // Up-convert to list and replace.
 
@@ -5101,7 +5116,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    Debug.Assert( existing is List<TriggerBase>,
+                    Debug.Assert(existing is List<TriggerBase>,
                         $"HybridDictionary for holding List<TriggerBase> is holding an instance of unexpected type {existing.GetType()}");
 
                     List<TriggerBase> existingList = (List<TriggerBase>)existing;
@@ -5119,7 +5134,7 @@ namespace System.Windows
         //  1. Is Invoked when a binding in a condition of a data trigger changes its value.
         //  2. When this happens we must invalidate all its dependents
         //
-        private static void OnBindingValueInStyleChanged(object sender, BindingValueChangedEventArgs  e)
+        private static void OnBindingValueInStyleChanged(object sender, BindingValueChangedEventArgs e)
         {
             BindingExpressionBase bindingExpr = (BindingExpressionBase)sender;
             BindingBase binding = bindingExpr.ParentBindingBase;
@@ -5137,8 +5152,8 @@ namespace System.Windows
             // Look for data trigger Setter information - invalidate the associated
             //  properties if found.
             HybridDictionary dataTriggerRecordFromBinding = style._dataTriggerRecordFromBinding;
-            if( dataTriggerRecordFromBinding != null &&
-                !bindingExpr.IsAttaching ) // Don't invalidate in the middle of attaching - effective value will be updated elsewhere in Style application code.
+            if (dataTriggerRecordFromBinding != null &&
+                !bindingExpr.IsAttaching) // Don't invalidate in the middle of attaching - effective value will be updated elsewhere in Style application code.
             {
                 DataTriggerRecord record = (DataTriggerRecord)dataTriggerRecordFromBinding[binding];
                 if (record != null)         // triggers with no setters (only actions) don't appear in the table
@@ -5156,7 +5171,7 @@ namespace System.Windows
         //  1. Is Invoked when a binding in a condition of a data trigger changes its value.
         //  2. When this happens we must invalidate all its dependents
         //
-        private static void OnBindingValueInTemplateChanged(object sender, BindingValueChangedEventArgs  e)
+        private static void OnBindingValueInTemplateChanged(object sender, BindingValueChangedEventArgs e)
         {
             BindingExpressionBase bindingExpr = (BindingExpressionBase)sender;
             BindingBase binding = bindingExpr.ParentBindingBase;
@@ -5180,8 +5195,8 @@ namespace System.Windows
                 dataTriggerRecordFromBinding = ft._dataTriggerRecordFromBinding;
             }
 
-            if( dataTriggerRecordFromBinding != null &&
-                !bindingExpr.IsAttaching ) // Don't invalidate in the middle of attaching - effective value will be updated elsewhere in Template application code.
+            if (dataTriggerRecordFromBinding != null &&
+                !bindingExpr.IsAttaching) // Don't invalidate in the middle of attaching - effective value will be updated elsewhere in Template application code.
             {
                 DataTriggerRecord record = (DataTriggerRecord)dataTriggerRecordFromBinding[binding];
                 if (record != null)         // triggers with no setters (only actions) don't appear in the table
@@ -5218,8 +5233,8 @@ namespace System.Windows
             //  properties if found.
             HybridDictionary dataTriggerRecordFromBinding = style._dataTriggerRecordFromBinding;
 
-            if( dataTriggerRecordFromBinding != null &&
-                !bindingExpr.IsAttaching ) // Don't invalidate in the middle of attaching - effective value will be updated elsewhere in Style application code.
+            if (dataTriggerRecordFromBinding != null &&
+                !bindingExpr.IsAttaching) // Don't invalidate in the middle of attaching - effective value will be updated elsewhere in Style application code.
             {
                 DataTriggerRecord record = (DataTriggerRecord)dataTriggerRecordFromBinding[binding];
                 if (record != null)         // triggers with no setters (only actions) don't appear in the table
@@ -5236,20 +5251,20 @@ namespace System.Windows
         //  any data triggers that have trigger actions (EnterAction/ExitAction)
         //  and see if any of those actions need to run as a response to this change.
         private static void InvokeApplicableDataTriggerActions(
-            Style                               style,
-            FrameworkTemplate                   frameworkTemplate,
-            DependencyObject                    container,
-            BindingBase                         binding,
-            BindingValueChangedEventArgs        e,
-            UncommonField<HybridDictionary[]>   dataField)
+            Style style,
+            FrameworkTemplate frameworkTemplate,
+            DependencyObject container,
+            BindingBase binding,
+            BindingValueChangedEventArgs e,
+            UncommonField<HybridDictionary[]> dataField)
         {
             HybridDictionary dataTriggersWithActions;
 
-            if( style != null )
+            if (style != null)
             {
                 dataTriggersWithActions = style.DataTriggersWithActions;
             }
-            else if( frameworkTemplate != null )
+            else if (frameworkTemplate != null)
             {
                 dataTriggersWithActions = frameworkTemplate.DataTriggersWithActions;
             }
@@ -5258,18 +5273,18 @@ namespace System.Windows
                 dataTriggersWithActions = null;
             }
 
-            if( dataTriggersWithActions != null )
+            if (dataTriggersWithActions != null)
             {
                 object candidateTrigger = dataTriggersWithActions[binding];
 
-                if( candidateTrigger != null )
+                if (candidateTrigger != null)
                 {
                     // One or more trigger objects need to be evaluated.  The candidateTrigger
                     //  object may be a single trigger or a collection of them.
                     TriggerBase triggerBase = candidateTrigger as TriggerBase;
-                    if( triggerBase != null )
+                    if (triggerBase != null)
                     {
-                        InvokeDataTriggerActions( triggerBase, container, binding, e,
+                        InvokeDataTriggerActions(triggerBase, container, binding, e,
                             style, frameworkTemplate, dataField);
                     }
                     else
@@ -5279,9 +5294,9 @@ namespace System.Windows
 
                         List<TriggerBase> triggerList = (List<TriggerBase>)candidateTrigger;
 
-                        for( int i = 0; i < triggerList.Count; i++ )
+                        for (int i = 0; i < triggerList.Count; i++)
                         {
-                            InvokeDataTriggerActions( triggerList[i], container, binding, e,
+                            InvokeDataTriggerActions(triggerList[i], container, binding, e,
                                 style, frameworkTemplate, dataField);
                         }
                     }
@@ -5303,10 +5318,10 @@ namespace System.Windows
         //     existing childIndex it throws an exception for a duplicate name
         //
         internal static int CreateChildIndexFromChildName(
-            string              childName,
-            FrameworkTemplate   frameworkTemplate)
+            string childName,
+            FrameworkTemplate frameworkTemplate)
         {
-            Debug.Assert(frameworkTemplate != null );
+            Debug.Assert(frameworkTemplate != null);
 
             // Lock must be made by caller
 
@@ -5349,7 +5364,7 @@ namespace System.Windows
         //     existing childIndex it return -1
         //
         internal static int QueryChildIndexFromChildName(
-            string           childName,
+            string childName,
             HybridDictionary childIndexFromChildName)
         {
             // "Self" check
@@ -5378,11 +5393,11 @@ namespace System.Windows
         //+------------------------------------------------------------------------------------
 
         internal static Object FindNameInTemplateContent(
-            DependencyObject    container,
-            string              childName,
-            FrameworkTemplate   frameworkTemplate)
+            DependencyObject container,
+            string childName,
+            FrameworkTemplate frameworkTemplate)
         {
-            Debug.Assert(frameworkTemplate != null );
+            Debug.Assert(frameworkTemplate != null);
 
             // First, look in the list of optimized FE/FCEs in this template for this name.
 
@@ -5396,7 +5411,7 @@ namespace System.Windows
                 // No, we didn't find it, look at the rest of the named elements in the template content.
 
                 Hashtable hashtable = TemplatedNonFeChildrenField.GetValue(container);
-                if( hashtable != null )
+                if (hashtable != null)
                 {
                     return hashtable[childName];
                 }
@@ -5462,7 +5477,7 @@ namespace System.Windows
         //
         internal static void RegisterAlternateExpressionStorage()
         {
-            if(_getExpression == null)
+            if (_getExpression == null)
             {
                 DependencyObject.RegisterForAlternativeExpressionStorage(
                                 new AlternativeExpressionStorageCallback(GetExpressionCore),
@@ -5546,8 +5561,8 @@ namespace System.Windows
         //  (Index is '0' when the styled container is asking)
         //
         internal static RoutedEventHandlerInfo[] GetChildRoutedEventHandlers(
-            int                                     childIndex,
-            RoutedEvent                           routedEvent,
+            int childIndex,
+            RoutedEvent routedEvent,
             ref ItemStructList<ChildEventDependent> eventDependents)
         {
             Debug.Assert(routedEvent != null);
@@ -5556,7 +5571,7 @@ namespace System.Windows
             {
                 // Find the EventHandlersStore that matches the given childIndex
                 EventHandlersStore eventHandlersStore = null;
-                for (int i=0; i<eventDependents.Count; i++)
+                for (int i = 0; i < eventDependents.Count; i++)
                 {
                     if (eventDependents.List[i].ChildIndex == childIndex)
                     {
@@ -5649,7 +5664,7 @@ namespace System.Windows
         //
         // Used to pass an empty stucture reference when the parent style/template is null
         //
-        internal static FrugalStructList<ContainerDependent>  EmptyContainerDependents;
+        internal static FrugalStructList<ContainerDependent> EmptyContainerDependents;
 
         //
         // Certain instance values are "applied" only on demand.  This value indicates that
@@ -5693,13 +5708,13 @@ namespace System.Windows
     //
     internal enum PropertyValueType : int
     {
-        Set                       = ValueLookupType.Simple,
-        Trigger                   = ValueLookupType.Trigger,
-        PropertyTriggerResource   = ValueLookupType.PropertyTriggerResource,
-        DataTrigger               = ValueLookupType.DataTrigger,
-        DataTriggerResource       = ValueLookupType.DataTriggerResource,
-        TemplateBinding           = ValueLookupType.TemplateBinding,
-        Resource                  = ValueLookupType.Resource,
+        Set = ValueLookupType.Simple,
+        Trigger = ValueLookupType.Trigger,
+        PropertyTriggerResource = ValueLookupType.PropertyTriggerResource,
+        DataTrigger = ValueLookupType.DataTrigger,
+        DataTriggerResource = ValueLookupType.DataTriggerResource,
+        TemplateBinding = ValueLookupType.TemplateBinding,
+        Resource = ValueLookupType.Resource,
     }
 
     //
@@ -5708,11 +5723,11 @@ namespace System.Windows
     //
     internal struct PropertyValue
     {
-        internal PropertyValueType  ValueType;
+        internal PropertyValueType ValueType;
         internal TriggerCondition[] Conditions;
-        internal string             ChildName;
+        internal string ChildName;
         internal DependencyProperty Property;
-        internal object             ValueInternal;
+        internal object ValueInternal;
 
         /// <summary>
         /// Sparkle uses this to query values on a FEF
@@ -5754,44 +5769,44 @@ namespace System.Windows
     //
     internal struct ChildValueLookup
     {
-        internal ValueLookupType    LookupType;
+        internal ValueLookupType LookupType;
         internal TriggerCondition[] Conditions;
         internal DependencyProperty Property;
-        internal object             Value;
+        internal object Value;
 
         // Implemented for #1038821, FxCop ConsiderOverridingEqualsAndOperatorEqualsOnValueTypes
         //  Trading off an object boxing cost in exchange for avoiding reflection cost.
-        public override bool Equals( object value )
+        public override bool Equals(object value)
         {
-            if( value is ChildValueLookup )
+            if (value is ChildValueLookup)
             {
                 ChildValueLookup other = (ChildValueLookup)value;
 
-                if( LookupType      == other.LookupType &&
-                    Property        == other.Property &&
-                    Value           == other.Value )
+                if (LookupType == other.LookupType &&
+                    Property == other.Property &&
+                    Value == other.Value)
                 {
-                    if( Conditions == null &&
-                        other.Conditions == null )
+                    if (Conditions == null &&
+                        other.Conditions == null)
                     {
                         // Both condition arrays are null
                         return true;
                     }
 
-                    if( Conditions == null ||
-                        other.Conditions == null )
+                    if (Conditions == null ||
+                        other.Conditions == null)
                     {
                         // One condition array is null, but not other
                         return false;
                     }
 
                     // Both condition array non-null, see if they're the same length..
-                    if( Conditions.Length == other.Conditions.Length )
+                    if (Conditions.Length == other.Conditions.Length)
                     {
                         // Same length.  Walk the list and compare.
-                        for( int i = 0; i < Conditions.Length; i++ )
+                        for (int i = 0; i < Conditions.Length; i++)
                         {
-                            if( !Conditions[i].TypeSpecificEquals(other.Conditions[i]) )
+                            if (!Conditions[i].TypeSpecificEquals(other.Conditions[i]))
                             {
                                 return false;
                             }
@@ -5811,14 +5826,14 @@ namespace System.Windows
             return base.GetHashCode();
         }
 
-        public static bool operator == ( ChildValueLookup value1, ChildValueLookup value2 )
+        public static bool operator ==(ChildValueLookup value1, ChildValueLookup value2)
         {
-            return value1.Equals( value2 );
+            return value1.Equals(value2);
         }
 
-        public static bool operator != ( ChildValueLookup value1, ChildValueLookup value2 )
+        public static bool operator !=(ChildValueLookup value1, ChildValueLookup value2)
         {
-            return !value1.Equals( value2 );
+            return !value1.Equals(value2);
         }
     }
 
@@ -5910,11 +5925,11 @@ namespace System.Windows
                     {
                         // PreSharp uses message numbers that the C# compiler doesn't know about.
                         // Disable the C# complaints, per the PreSharp documentation.
-                        #pragma warning disable 1634, 1691
+#pragma warning disable 1634, 1691
 
                         // PreSharp complains about catching NullReference (and other) exceptions.
                         // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-                        #pragma warning disable 56500
+#pragma warning disable 56500
 
                         try
                         {
@@ -5931,8 +5946,8 @@ namespace System.Windows
                             // if the conversion failed, just use the unconverted value
                         }
 
-                        #pragma warning restore 56500
-                        #pragma warning restore 1634, 1691
+#pragma warning restore 56500
+#pragma warning restore 1634, 1691
                     }
 
                     // cache the converted value
@@ -5948,13 +5963,13 @@ namespace System.Windows
 
         // Implemented for #1038821, FxCop ConsiderOverridingEqualsAndOperatorEqualsOnValueTypes
         //  Called from ChildValueLookup.Equals, avoid boxing by not using the generic object-based Equals.
-        internal bool TypeSpecificEquals( TriggerCondition value )
+        internal bool TypeSpecificEquals(TriggerCondition value)
         {
-            if( Property            == value.Property &&
-                Binding             == value.Binding &&
-                LogicalOp           == value.LogicalOp &&
-                Value               == value.Value &&
-                SourceName          == value.SourceName )
+            if (Property == value.Property &&
+                Binding == value.Binding &&
+                LogicalOp == value.LogicalOp &&
+                Value == value.Value &&
+                SourceName == value.SourceName)
             {
                 return true;
             }
@@ -5963,13 +5978,13 @@ namespace System.Windows
 
         #endregion Construction
 
-        internal readonly DependencyProperty        Property;
-        internal readonly BindingBase               Binding;
-        internal readonly LogicalOp                 LogicalOp;
-        internal readonly object                    Value;
-        internal readonly string                    SourceName;
-        internal          int                       SourceChildIndex;
-        internal          BindingValueCache         BindingValueCache;
+        internal readonly DependencyProperty Property;
+        internal readonly BindingBase Binding;
+        internal readonly LogicalOp LogicalOp;
+        internal readonly object Value;
+        internal readonly string SourceName;
+        internal int SourceChildIndex;
+        internal BindingValueCache BindingValueCache;
     }
 
     //
@@ -5984,7 +5999,7 @@ namespace System.Windows
             ValueAsBindingValueType = valueAsBindingValueType;
         }
 
-        internal readonly Type   BindingValueType;
+        internal readonly Type BindingValueType;
         internal readonly object ValueAsBindingValueType;
     }
 
@@ -6005,8 +6020,8 @@ namespace System.Windows
     //
     internal struct ContainerDependent
     {
-        internal DependencyProperty         Property;
-        internal bool                       FromVisualTrigger;
+        internal DependencyProperty Property;
+        internal bool FromVisualTrigger;
     }
 
     //
@@ -6015,7 +6030,7 @@ namespace System.Windows
     //
     internal struct ChildEventDependent
     {
-        internal int                ChildIndex;
+        internal int ChildIndex;
         internal EventHandlersStore EventHandlersStore;
     }
 
@@ -6028,9 +6043,9 @@ namespace System.Windows
     //  Both are relatively rare.  Is there an optimization here?
     internal struct ChildPropertyDependent
     {
-        public int                          ChildIndex;
-        public DependencyProperty           Property;
-        public object                       Name; // When storing ResourceDependent, the name of the resource.
+        public int ChildIndex;
+        public DependencyProperty Property;
+        public object Name; // When storing ResourceDependent, the name of the resource.
     }
 
     //
@@ -6054,7 +6069,7 @@ namespace System.Windows
         public FrugalStructList<ChildPropertyDependent> Dependents = new FrugalStructList<ChildPropertyDependent>();
     }
 
-    #pragma warning disable 649
+#pragma warning disable 649
 
     //
     //  Disable warnings about fields never being assigned to. The structs in this
@@ -6080,9 +6095,9 @@ namespace System.Windows
         public ItemStructMap<ItemStructList<ChildValueLookup>> ValueLookupListFromProperty;  // Indexed by DP.GlobalIndex
     }
 
-    #pragma warning restore 649
+#pragma warning restore 649
 
-    #if DEBUG
+#if DEBUG
 
     //
     //  This data-structure is used only on debug builds.
@@ -6095,7 +6110,7 @@ namespace System.Windows
         WaitingForBuildVisualTreeCompletion
     }
 
-    #endif
+#endif
 
     //
     //  This enum is used to designate different types of per-instance
@@ -6137,7 +6152,7 @@ namespace System.Windows
 
         public override int GetHashCode()
         {
-            return (20000*_childIndex + 20*_dpIndex + _index);
+            return (20000 * _childIndex + 20 * _dpIndex + _index);
         }
 
         // the origin of the instance value in the container's style:

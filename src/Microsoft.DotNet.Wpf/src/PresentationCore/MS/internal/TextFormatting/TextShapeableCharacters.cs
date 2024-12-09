@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,9 +15,9 @@
 using System.Windows.Markup;    // for XmlLanguage
 using MS.Internal;
 using MS.Internal.FontCache;
-using MS.Internal.TextFormatting;
 using MS.Internal.Shaping;
 using MS.Internal.Text.TextInterface;
+using MS.Internal.TextFormatting;
 
 namespace System.Windows.Media.TextFormatting
 {
@@ -27,15 +27,15 @@ namespace System.Windows.Media.TextFormatting
     /// </summary>
     internal sealed class TextShapeableCharacters : TextShapeableSymbols
     {
-        private CharacterBufferRange    _characterBufferRange;
-        private TextFormattingMode      _textFormattingMode;
-        private bool                    _isSideways;
-        private TextRunProperties       _properties;
-        private double                  _emSize;    // after-scaled
+        private CharacterBufferRange _characterBufferRange;
+        private TextFormattingMode _textFormattingMode;
+        private bool _isSideways;
+        private TextRunProperties _properties;
+        private double _emSize;    // after-scaled
 
-        private ItemProps               _textItem;
-        private ShapeTypeface           _shapeTypeface;
-        private bool                    _nullShape;
+        private ItemProps _textItem;
+        private ShapeTypeface _shapeTypeface;
+        private bool _nullShape;
 
         #region Constructors
 
@@ -47,13 +47,13 @@ namespace System.Windows.Media.TextFormatting
         /// has previously returned true.
         /// </remarks>
         internal TextShapeableCharacters(
-            CharacterBufferRange    characterRange,
-            TextRunProperties       properties,
-            double                  emSize,
-            ItemProps               textItem,
-            ShapeTypeface           shapeTypeface,
-            bool                    nullShape,
-            TextFormattingMode      textFormattingMode,
+            CharacterBufferRange characterRange,
+            TextRunProperties properties,
+            double emSize,
+            ItemProps textItem,
+            ShapeTypeface shapeTypeface,
+            bool nullShape,
+            TextFormattingMode textFormattingMode,
             bool isSideways
             )
         {
@@ -115,26 +115,26 @@ namespace System.Windows.Media.TextFormatting
         /// Compute a shaped glyph run object from specified glyph-based info
         /// </summary>
         internal sealed override GlyphRun ComputeShapedGlyphRun(
-            Point                    origin,
-            char[]                   characterString,
-            ushort[]                 clusterMap,
-            ushort[]                 glyphIndices,
-            IList<double>            glyphAdvances,
-            IList<Point>             glyphOffsets,
-            bool                     rightToLeft,
-            bool                     sideways
+            Point origin,
+            char[] characterString,
+            ushort[] clusterMap,
+            ushort[] glyphIndices,
+            IList<double> glyphAdvances,
+            IList<Point> glyphOffsets,
+            bool rightToLeft,
+            bool sideways
             )
         {
             Invariant.Assert(_shapeTypeface != null);
-            Invariant.Assert(glyphIndices   != null);
+            Invariant.Assert(glyphIndices != null);
             // Device fonts are only used through the LS non-glyphed code path. Only when a DigitCulture is set
             // will a potential device font be ignored and come through shaping.
-            Invariant.Assert(_shapeTypeface.DeviceFont == null  || _textItem.DigitCulture != null);
+            Invariant.Assert(_shapeTypeface.DeviceFont == null || _textItem.DigitCulture != null);
 
             bool[] caretStops = null;
 
-            if (    clusterMap != null
-                &&  (HasExtendedCharacter || NeedsCaretInfo)
+            if (clusterMap != null
+                && (HasExtendedCharacter || NeedsCaretInfo)
                 )
             {
                 caretStops = new bool[clusterMap.Length + 1];
@@ -211,8 +211,8 @@ namespace System.Windows.Media.TextFormatting
         /// Compute unshaped glyph run object from the specified character-based info
         /// </summary>
         internal sealed override GlyphRun ComputeUnshapedGlyphRun(
-            Point         origin,
-            char[]        characterString,
+            Point origin,
+            char[] characterString,
             IList<double> characterAdvances
             )
         {
@@ -233,7 +233,7 @@ namespace System.Windows.Media.TextFormatting
                 _properties.FontHintingEmSize,
                 nullFont,
                 CultureMapper.GetSpecificCulture(_properties.CultureInfo),
-                (_shapeTypeface == null  ||  _shapeTypeface.DeviceFont == null) ? null : _shapeTypeface.DeviceFont.Name,
+                (_shapeTypeface == null || _shapeTypeface.DeviceFont == null) ? null : _shapeTypeface.DeviceFont.Name,
                 _textFormattingMode
             );
         }
@@ -243,9 +243,9 @@ namespace System.Windows.Media.TextFormatting
         /// Draw glyph run to the drawing surface
         /// </summary>
         internal sealed override void Draw(
-            DrawingContext      drawingContext,
-            Brush               foregroundBrush,
-            GlyphRun            glyphRun
+            DrawingContext drawingContext,
+            Brush foregroundBrush,
+            GlyphRun glyphRun
             )
         {
             ArgumentNullException.ThrowIfNull(drawingContext);
@@ -278,16 +278,16 @@ namespace System.Windows.Media.TextFormatting
         /// Get advance widths of unshaped characters
         /// </summary>
         internal sealed override unsafe void GetAdvanceWidthsUnshaped(
-            char*         characterString,
-            int           characterLength,
-            double        scalingFactor,
-            int*          advanceWidthsUnshaped
+            char* characterString,
+            int characterLength,
+            double scalingFactor,
+            int* advanceWidthsUnshaped
             )
         {
             if (!IsShapingRequired)
             {
-                if (    (_shapeTypeface            != null)
-                    &&  (_shapeTypeface.DeviceFont != null))
+                if ((_shapeTypeface != null)
+                    && (_shapeTypeface.DeviceFont != null))
                 {
                     // Use device font to compute advance widths
                     _shapeTypeface.DeviceFont.GetAdvanceWidths(
@@ -396,7 +396,7 @@ namespace System.Windows.Media.TextFormatting
         /// Return value indicates whether two runs can shape together
         /// </summary>
         internal sealed override bool CanShapeTogether(
-            TextShapeableSymbols   shapeable
+            TextShapeableSymbols shapeable
             )
         {
             TextShapeableCharacters charShape = shapeable as TextShapeableCharacters;
@@ -440,9 +440,9 @@ namespace System.Windows.Media.TextFormatting
             {
                 return
                         (_shapeTypeface != null)                 // Can't use shaping without a shape typeface
-                    &&  (    (_shapeTypeface.DeviceFont == null) // Can't use shaping when rendering with a device font
-                         ||  (_textItem.DigitCulture != null))   //   -- unless substituting digits
-                    &&  (!IsSymbol);                             // Can't use shaping for symbol (non-Unicode) fonts
+                    && ((_shapeTypeface.DeviceFont == null) // Can't use shaping when rendering with a device font
+                         || (_textItem.DigitCulture != null))   //   -- unless substituting digits
+                    && (!IsSymbol);                             // Can't use shaping for symbol (non-Unicode) fonts
             }
         }
 
@@ -576,7 +576,7 @@ namespace System.Windows.Media.TextFormatting
         /// is 8 characters, but Indic scripts require this to be 15.
         /// </summary>
         internal const ushort DefaultMaxClusterSize = 8;
-        private  const ushort IndicMaxClusterSize = 15;
+        private const ushort IndicMaxClusterSize = 15;
         internal sealed override ushort MaxClusterSize
         {
             get
@@ -588,7 +588,7 @@ namespace System.Windows.Media.TextFormatting
 
                 return DefaultMaxClusterSize;
             }
-}
+        }
     }
 }
 

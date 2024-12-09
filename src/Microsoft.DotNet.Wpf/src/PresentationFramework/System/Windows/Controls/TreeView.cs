@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -128,7 +128,7 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Appearance")]
         public string SelectedValuePath
         {
-            get { return (string) GetValue(SelectedValuePathProperty); }
+            get { return (string)GetValue(SelectedValuePathProperty); }
             set { SetValue(SelectedValuePathProperty, value); }
         }
 
@@ -243,16 +243,16 @@ namespace System.Windows.Controls
 
             if (changed)
             {
-                if (    _selectedContainer != null
-                    &&  AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementSelected)   )
+                if (_selectedContainer != null
+                    && AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementSelected))
                 {
                     TreeViewItemAutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(_selectedContainer) as TreeViewItemAutomationPeer;
                     if (peer != null)
                         peer.RaiseAutomationSelectionEvent(AutomationEvents.SelectionItemPatternOnElementSelected);
                 }
 
-                if (    oldContainer != null
-                    &&  AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection)   )
+                if (oldContainer != null
+                    && AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection))
                 {
                     TreeViewItemAutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(oldContainer) as TreeViewItemAutomationPeer;
                     if (peer != null)
@@ -314,8 +314,10 @@ namespace System.Windows.Controls
             if (bindingExpr == null)
             {
                 // create the binding
-                binding = new Binding();
-                binding.Source = null;
+                binding = new Binding
+                {
+                    Source = null
+                };
 
                 if (useXml)
                 {
@@ -668,7 +670,7 @@ namespace System.Windows.Controls
 
                     case Key.PageUp:
                         //if vertically scrollable - go vertical, otherwise horizontal
-                        if(DoubleUtil.GreaterThan(scroller.ExtentHeight, scroller.ViewportHeight))
+                        if (DoubleUtil.GreaterThan(scroller.ExtentHeight, scroller.ViewportHeight))
                         {
                             scroller.PageUp();
                         }
@@ -680,7 +682,7 @@ namespace System.Windows.Controls
 
                     case Key.PageDown:
                         //if vertically scrollable - go vertical, otherwise horizontal
-                        if(DoubleUtil.GreaterThan(scroller.ExtentHeight, scroller.ViewportHeight))
+                        if (DoubleUtil.GreaterThan(scroller.ExtentHeight, scroller.ViewportHeight))
                         {
                             scroller.PageDown();
                         }
@@ -866,7 +868,7 @@ namespace System.Windows.Controls
 
         private enum Bits
         {
-            IsSelectionChangeActive     = 0x1,
+            IsSelectionChangeActive = 0x1,
         }
 
         // Packed boolean information

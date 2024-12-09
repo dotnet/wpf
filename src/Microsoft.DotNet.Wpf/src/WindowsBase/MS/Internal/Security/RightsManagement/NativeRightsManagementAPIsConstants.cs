@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,7 +8,7 @@
 
 namespace MS.Internal.Security.RightsManagement
 {
-    internal enum SecurityProviderType: uint
+    internal enum SecurityProviderType : uint
     {
         SoftwareSecRep = 0
     }
@@ -19,7 +19,7 @@ namespace MS.Internal.Security.RightsManagement
         FileName = 1
     }
 
-    internal enum StatusMessage: uint 
+    internal enum StatusMessage : uint
     {
         ActivateMachine = 0,
         ActivateGroupIdentity = 1,
@@ -30,42 +30,42 @@ namespace MS.Internal.Security.RightsManagement
     }
 
     [Flags]
-    internal enum EnumerateLicenseFlags: uint 
+    internal enum EnumerateLicenseFlags : uint
     {
-        Machine                 = 0x0001,
-        GroupIdentity           = 0x0002,
-        GroupIdentityName       = 0x0004,
-        GroupIdentityLid        = 0x0008,
-        SpecifiedGroupIdentity  = 0x0010,
-        Eul                     = 0x0020,
-        EulLid                  = 0x0040,
-        ClientLicensor          = 0x0080,
-        ClientLicensorLid       = 0x0100,
+        Machine = 0x0001,
+        GroupIdentity = 0x0002,
+        GroupIdentityName = 0x0004,
+        GroupIdentityLid = 0x0008,
+        SpecifiedGroupIdentity = 0x0010,
+        Eul = 0x0020,
+        EulLid = 0x0040,
+        ClientLicensor = 0x0080,
+        ClientLicensorLid = 0x0100,
         SpecifiedClientLicensor = 0x0200,
-        RevocationList          = 0x0400,
-        RevocationListLid       = 0x0800,
-        Expired                 = 0x1000,
+        RevocationList = 0x0400,
+        RevocationListLid = 0x0800,
+        Expired = 0x1000,
     }
 
     [Flags]
-    internal enum ActivationFlags: uint 
+    internal enum ActivationFlags : uint
     {
-        Machine              = 0x01,             // Activate machine
-        GroupIdentity        = 0x02,         // Activate Group Identity
-        Temporary            = 0x04,                // Temporary certificate
-        Cancel               = 0x08,                 // Cancel previous request
-        Silent               = 0x10,                   // Silent Activation
-        SharedGroupIdentity  = 0x20,    // Shared Group Identity certificate
-        Delayed              = 0x40,              // Delayed activation
+        Machine = 0x01,             // Activate machine
+        GroupIdentity = 0x02,         // Activate Group Identity
+        Temporary = 0x04,                // Temporary certificate
+        Cancel = 0x08,                 // Cancel previous request
+        Silent = 0x10,                   // Silent Activation
+        SharedGroupIdentity = 0x20,    // Shared Group Identity certificate
+        Delayed = 0x40,              // Delayed activation
     }
 
     [Flags]
-    internal enum ServiceType: uint
-   {
-        Activation      = 0x01,
-        Certification   = 0x02,
-        Publishing      = 0x04,
-        ClientLicensor  = 0x08,
+    internal enum ServiceType : uint
+    {
+        Activation = 0x01,
+        Certification = 0x02,
+        Publishing = 0x04,
+        ClientLicensor = 0x08,
     }
 
     internal enum ServiceLocation : uint
@@ -75,28 +75,28 @@ namespace MS.Internal.Security.RightsManagement
     }
 
     [Flags]
-    internal enum AcquireLicenseFlags: uint
+    internal enum AcquireLicenseFlags : uint
     {
         NonSilent = 0x01,         // Acquire non-silently
-        NoPersist =  0x02,        // Don't persist the license
-        Cancel    = 0x04,             // Cancel previous request
+        NoPersist = 0x02,        // Don't persist the license
+        Cancel = 0x04,             // Cancel previous request
         FetchAdvisory = 0x08,  // Don't acquire advisories
         NoUI = 0x10,                 // Don't display any Authentication UI
     }
 
     [Flags]
-    internal enum SignIssuanceLicenseFlags: uint
+    internal enum SignIssuanceLicenseFlags : uint
     {
-        Online = 0x01, 
+        Online = 0x01,
         Offline = 0x02,
         Cancel = 0x04,
-        ServerIssuanceLicense =   0x08,
-        AutoGenerateKey  = 0x10,
-        OwnerLicenseNoPersist =   0x20,
+        ServerIssuanceLicense = 0x08,
+        AutoGenerateKey = 0x10,
+        OwnerLicenseNoPersist = 0x20,
     }
 
 
-    internal enum DistributionPointInfo 
+    internal enum DistributionPointInfo
     {
         LicenseAcquisition = 0,
         Publishing = 1,
@@ -113,24 +113,24 @@ namespace MS.Internal.Security.RightsManagement
         Raw = 5
     };
 
-    internal static class NativeConstants 
+    internal static class NativeConstants
     {
-        public const uint   DrmCallbackVersion = 1;
-    
-/////////////////////////////////////////////////////////////////////////////////
-//
-//The following codes are used to indicate where the various query strings may be used:
-//
-//for example, GI(*) means that all DRMHANDLES may be asked the indicated question using DRMGetInfo &
-//             GI(hEnv) means on environment handle only
-//
-//GI: DRMGetInfo
-//GULA: DRMGetUnboundLicenceAttribute
-//GULO: DRMGetUnboundLicenseObject
-//GBLA: DRMGetBoundLicenseAttribute
-//GBLO: DRMGetBoundLicenseObject
-//
-/////////////////////////////////////////////////////////////////////////////////
+        public const uint DrmCallbackVersion = 1;
+
+        /////////////////////////////////////////////////////////////////////////////////
+        //
+        //The following codes are used to indicate where the various query strings may be used:
+        //
+        //for example, GI(*) means that all DRMHANDLES may be asked the indicated question using DRMGetInfo &
+        //             GI(hEnv) means on environment handle only
+        //
+        //GI: DRMGetInfo
+        //GULA: DRMGetUnboundLicenceAttribute
+        //GULO: DRMGetUnboundLicenseObject
+        //GBLA: DRMGetBoundLicenseAttribute
+        //GBLO: DRMGetBoundLicenseObject
+        //
+        /////////////////////////////////////////////////////////////////////////////////
 
         internal const string TAG_ASCII = "ASCII Tag";
         internal const string TAG_XRML = "XrML Tag";
@@ -172,7 +172,7 @@ namespace MS.Internal.Security.RightsManagement
         internal const string QUERY_SECREPVERSION = "secrep-version";
 
         // GI(hCrypto)
-        internal const string QUERY_BLOCKSIZE  = "block-size";
+        internal const string QUERY_BLOCKSIZE = "block-size";
 
         // GULO(on a condition list), GBLO(on a bound right)
         internal const string QUERY_ACCESSCONDITION = "access-condition";

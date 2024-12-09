@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,10 +9,10 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
 using System.ComponentModel;
-using System.Windows.Markup;
 using System.Windows.Converters;
+using System.Windows.Markup;
+using MS.Internal;
 // These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows
@@ -44,7 +44,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='rect1'>The first Rect to compare</param>
         /// <param name='rect2'>The second Rect to compare</param>
-        public static bool operator == (Rect rect1, Rect rect2)
+        public static bool operator ==(Rect rect1, Rect rect2)
         {
             return rect1.X == rect2.X &&
                    rect1.Y == rect2.Y &&
@@ -63,7 +63,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='rect1'>The first Rect to compare</param>
         /// <param name='rect2'>The second Rect to compare</param>
-        public static bool operator != (Rect rect1, Rect rect2)
+        public static bool operator !=(Rect rect1, Rect rect2)
         {
             return !(rect1 == rect2);
         }
@@ -79,7 +79,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='rect1'>The first Rect to compare</param>
         /// <param name='rect2'>The second Rect to compare</param>
-        public static bool Equals (Rect rect1, Rect rect2)
+        public static bool Equals(Rect rect1, Rect rect2)
         {
             if (rect1.IsEmpty)
             {
@@ -113,7 +113,7 @@ namespace System.Windows
             }
 
             Rect value = (Rect)o;
-            return Rect.Equals(this,value);
+            return Rect.Equals(this, value);
         }
 
         /// <summary>

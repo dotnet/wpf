@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,9 +22,9 @@ namespace System.Windows.Media.TextFormatting
         /// Constructing TextBounds object
         /// </summary>
         internal TextBounds(
-            Rect                    bounds,
-            FlowDirection           flowDirection,
-            IList<TextRunBounds>    runBounds
+            Rect bounds,
+            FlowDirection flowDirection,
+            IList<TextRunBounds> runBounds
             )
         {
             _bounds = bounds;
@@ -61,9 +61,9 @@ namespace System.Windows.Media.TextFormatting
         }
 
 
-        private FlowDirection           _flowDirection;
-        private Rect                    _bounds;
-        private IList<TextRunBounds>    _runBounds;
+        private FlowDirection _flowDirection;
+        private Rect _bounds;
+        private IList<TextRunBounds> _runBounds;
     }
 
 
@@ -76,10 +76,10 @@ namespace System.Windows.Media.TextFormatting
         /// Constructing TextRunBounds
         /// </summary>
         internal TextRunBounds(
-            Rect        bounds,
-            int         cpFirst,
-            int         cpEnd,
-            TextRun     textRun
+            Rect bounds,
+            int cpFirst,
+            int cpEnd,
+            TextRun textRun
             )
         {
             _cpFirst = cpFirst;
@@ -124,10 +124,10 @@ namespace System.Windows.Media.TextFormatting
             get { return _textRun; }
         }
 
-        private int         _cpFirst;
-        private int         _cch;
-        private Rect        _bounds;
-        private TextRun     _textRun;
+        private int _cpFirst;
+        private int _cch;
+        private Rect _bounds;
+        private TextRun _textRun;
     }
 }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -55,11 +55,11 @@ namespace System.Windows.Media
 
         private static void GlyphRunPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            GlyphRunDrawing target = ((GlyphRunDrawing) d);
+            GlyphRunDrawing target = ((GlyphRunDrawing)d);
 
 
-            GlyphRun oldV = (GlyphRun) e.OldValue;
-            GlyphRun newV = (GlyphRun) e.NewValue;
+            GlyphRun oldV = (GlyphRun)e.OldValue;
+            GlyphRun newV = (GlyphRun)e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
             if (dispatcher != null)
@@ -74,8 +74,8 @@ namespace System.Windows.Media
                         DUCE.Channel channel = targetResource.GetChannel(channelIndex);
                         Debug.Assert(!channel.IsOutOfBandChannel);
                         Debug.Assert(!targetResource.GetHandle(channel).IsNull);
-                        target.ReleaseResource(oldV,channel);
-                        target.AddRefResource(newV,channel);
+                        target.ReleaseResource(oldV, channel);
+                        target.AddRefResource(newV, channel);
                     }
                 }
             }
@@ -92,18 +92,18 @@ namespace System.Windows.Media
             // needs to be marshalled to the compositor. We detect this scenario with the second condition 
             // e.OldValueSource != e.NewValueSource. Specifically in this scenario the OldValueSource will be 
             // Default and the NewValueSource will be Local.
-            if (e.IsASubPropertyChange && 
+            if (e.IsASubPropertyChange &&
                (e.OldValueSource == e.NewValueSource))
             {
                 return;
             }
 
 
-            GlyphRunDrawing target = ((GlyphRunDrawing) d);
+            GlyphRunDrawing target = ((GlyphRunDrawing)d);
 
 
-            Brush oldV = (Brush) e.OldValue;
-            Brush newV = (Brush) e.NewValue;
+            Brush oldV = (Brush)e.OldValue;
+            Brush newV = (Brush)e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
             if (dispatcher != null)
@@ -118,8 +118,8 @@ namespace System.Windows.Media
                         DUCE.Channel channel = targetResource.GetChannel(channelIndex);
                         Debug.Assert(!channel.IsOutOfBandChannel);
                         Debug.Assert(!targetResource.GetHandle(channel).IsNull);
-                        target.ReleaseResource(oldV,channel);
-                        target.AddRefResource(newV,channel);
+                        target.ReleaseResource(oldV, channel);
+                        target.AddRefResource(newV, channel);
                     }
                 }
             }
@@ -137,7 +137,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (GlyphRun) GetValue(GlyphRunProperty);
+                return (GlyphRun)GetValue(GlyphRunProperty);
             }
             set
             {
@@ -152,7 +152,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Brush) GetValue(ForegroundBrushProperty);
+                return (Brush)GetValue(ForegroundBrushProperty);
             }
             set
             {
@@ -226,35 +226,39 @@ namespace System.Windows.Media
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-                if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_GLYPHRUNDRAWING))
-                {
-                    GlyphRun vGlyphRun = GlyphRun;
-                    if (vGlyphRun != null) ((DUCE.IResource)vGlyphRun).AddRefOnChannel(channel);
-                    Brush vForegroundBrush = ForegroundBrush;
-                    if (vForegroundBrush != null) ((DUCE.IResource)vForegroundBrush).AddRefOnChannel(channel);
+            if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_GLYPHRUNDRAWING))
+            {
+                GlyphRun vGlyphRun = GlyphRun;
+                if (vGlyphRun != null)
+                    ((DUCE.IResource)vGlyphRun).AddRefOnChannel(channel);
+                Brush vForegroundBrush = ForegroundBrush;
+                if (vForegroundBrush != null)
+                    ((DUCE.IResource)vForegroundBrush).AddRefOnChannel(channel);
 
-                    AddRefOnChannelAnimations(channel);
+                AddRefOnChannelAnimations(channel);
 
 
-                    UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
-                }
+                UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
+            }
 
-                return _duceResource.GetHandle(channel);
-}
+            return _duceResource.GetHandle(channel);
+        }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-                Debug.Assert(_duceResource.IsOnChannel(channel));
+            Debug.Assert(_duceResource.IsOnChannel(channel));
 
-                if (_duceResource.ReleaseOnChannel(channel))
-                {
-                    GlyphRun vGlyphRun = GlyphRun;
-                    if (vGlyphRun != null) ((DUCE.IResource)vGlyphRun).ReleaseOnChannel(channel);
-                    Brush vForegroundBrush = ForegroundBrush;
-                    if (vForegroundBrush != null) ((DUCE.IResource)vForegroundBrush).ReleaseOnChannel(channel);
+            if (_duceResource.ReleaseOnChannel(channel))
+            {
+                GlyphRun vGlyphRun = GlyphRun;
+                if (vGlyphRun != null)
+                    ((DUCE.IResource)vGlyphRun).ReleaseOnChannel(channel);
+                Brush vForegroundBrush = ForegroundBrush;
+                if (vForegroundBrush != null)
+                    ((DUCE.IResource)vForegroundBrush).ReleaseOnChannel(channel);
 
-                    ReleaseOnChannelAnimations(channel);
-}
-}
+                ReleaseOnChannelAnimations(channel);
+            }
+        }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
             // Note that we are in a lock here already.

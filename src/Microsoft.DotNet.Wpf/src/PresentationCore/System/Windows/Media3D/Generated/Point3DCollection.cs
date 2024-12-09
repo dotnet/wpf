@@ -1,17 +1,17 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // This file was generated, please do not edit it directly.
 // Please see MilCodeGen.html for more information.
 
-using MS.Internal;
-using MS.Utility;
 using System.Collections;
 using System.ComponentModel;
 using System.Text;
 using System.Windows.Markup;
 using System.Windows.Media.Media3D.Converters;
+using MS.Internal;
+using MS.Utility;
 
 // These types are aliased to match the unamanaged names used in interop
 
@@ -189,7 +189,7 @@ namespace System.Windows.Media.Media3D
             set
             {
                 WritePreamble();
-                _collection[ index ] = value;
+                _collection[index] = value;
 
 
                 ++_version;
@@ -445,7 +445,7 @@ namespace System.Windows.Media.Media3D
                 throw new System.ArgumentException(SR.Format(SR.Collection_BadType, this.GetType().Name, value.GetType().Name, "Point3D"));
             }
 
-            return (Point3D) value;
+            return (Point3D)value;
         }
 
         // IList.Add returns int and IList<T>.Add does not. This
@@ -512,7 +512,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         protected override void CloneCore(Freezable source)
         {
-            Point3DCollection sourcePoint3DCollection = (Point3DCollection) source;
+            Point3DCollection sourcePoint3DCollection = (Point3DCollection)source;
 
             base.CloneCore(source);
 
@@ -524,13 +524,13 @@ namespace System.Windows.Media.Media3D
             {
                 _collection.Add(sourcePoint3DCollection._collection[i]);
             }
-}
+        }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable source)
         {
-            Point3DCollection sourcePoint3DCollection = (Point3DCollection) source;
+            Point3DCollection sourcePoint3DCollection = (Point3DCollection)source;
 
             base.CloneCurrentValueCore(source);
 
@@ -542,13 +542,13 @@ namespace System.Windows.Media.Media3D
             {
                 _collection.Add(sourcePoint3DCollection._collection[i]);
             }
-}
+        }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
         /// </summary>
         protected override void GetAsFrozenCore(Freezable source)
         {
-            Point3DCollection sourcePoint3DCollection = (Point3DCollection) source;
+            Point3DCollection sourcePoint3DCollection = (Point3DCollection)source;
 
             base.GetAsFrozenCore(source);
 
@@ -560,13 +560,13 @@ namespace System.Windows.Media.Media3D
             {
                 _collection.Add(sourcePoint3DCollection._collection[i]);
             }
-}
+        }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable source)
         {
-            Point3DCollection sourcePoint3DCollection = (Point3DCollection) source;
+            Point3DCollection sourcePoint3DCollection = (Point3DCollection)source;
 
             base.GetCurrentValueAsFrozenCore(source);
 
@@ -578,7 +578,7 @@ namespace System.Windows.Media.Media3D
             {
                 _collection.Add(sourcePoint3DCollection._collection[i]);
             }
-}
+        }
 
 
         #endregion ProtectedMethods
@@ -675,14 +675,14 @@ namespace System.Windows.Media.Media3D
             // Helper to get the numeric list separator for a given culture.
             // char separator = MS.Internal.TokenizerHelper.GetNumericListSeparator(provider);
 
-            for (int i=0; i<_collection.Count; i++)
+            for (int i = 0; i < _collection.Count; i++)
             {
                 str.AppendFormat(
                     provider,
                     "{0:" + format + "}",
                     _collection[i]);
 
-                if (i != _collection.Count-1)
+                if (i != _collection.Count - 1)
                 {
                     str.Append(' ');
                 }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -18,10 +18,10 @@ namespace System.Windows.Media.TextFormatting
     /// </summary>
     public class TextTabProperties
     {
-        private TextTabAlignment    _alignment;
-        private double              _location;
-        private int                 _tabLeader;
-        private int                 _aligningChar;
+        private TextTabAlignment _alignment;
+        private double _location;
+        private int _tabLeader;
+        private int _aligningChar;
 
 
         /// <summary>
@@ -32,10 +32,10 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="tabLeader">tab leader</param>
         /// <param name="aligningChar">specific character in text that is aligned at tab location</param>
         public TextTabProperties(
-            TextTabAlignment    alignment,
-            double              location,
-            int                 tabLeader,
-            int                 aligningChar
+            TextTabAlignment alignment,
+            double location,
+            int tabLeader,
+            int aligningChar
             )
         {
             _alignment = alignment;

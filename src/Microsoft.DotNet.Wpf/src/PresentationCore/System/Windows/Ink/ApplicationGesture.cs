@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -193,7 +193,7 @@ namespace System.Windows.Ink
         UpRightLong = 61541
     }
 
-        // Whenever the ApplicationGesture is modified, please update this ApplicationGestureHelper.IsDefined.
+    // Whenever the ApplicationGesture is modified, please update this ApplicationGestureHelper.IsDefined.
     internal static class ApplicationGestureHelper
     {
         // the number of enums defined, used by NativeRecognizer
@@ -206,7 +206,7 @@ namespace System.Windows.Ink
         {
             //note that we can't just check the upper and lower bounds since the app gesture
             //values are not contiguous
-            switch(applicationGesture)
+            switch (applicationGesture)
             {
                 case ApplicationGesture.AllGestures:
                 case ApplicationGesture.ArrowDown:
@@ -252,13 +252,13 @@ namespace System.Windows.Ink
                 case ApplicationGesture.UpLeftLong:
                 case ApplicationGesture.UpRight:
                 case ApplicationGesture.UpRightLong:
-                {
-                    return true;
-                }
+                    {
+                        return true;
+                    }
                 default:
-                {
-                    return false;
-                }
+                    {
+                        return false;
+                    }
             }
         }
     }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,7 +11,7 @@ namespace System.Windows
     /// <summary>
     /// NullableBoolConverter - Converter class for converting instances of other types to and from bool to Nullable bool.
     /// </summary> 
-    public class NullableBoolConverter: NullableConverter
+    public class NullableBoolConverter : NullableConverter
     {
         /// <summary>
         /// Construct NullableConverter converter for bool type

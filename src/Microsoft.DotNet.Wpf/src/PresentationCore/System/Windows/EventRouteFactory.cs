@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -28,7 +28,7 @@ namespace System.Windows
                 eventRoute.RoutedEvent = routedEvent;
             }
 
-            return eventRoute;            
+            return eventRoute;
         }
 
         /// <summary>
@@ -42,9 +42,9 @@ namespace System.Windows
             // Push instance on to the stack
             Push(eventRoute);
         }
-        
+
         #endregion Operations
-        
+
         #region HelperMethods
 
         /// <summary>

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -63,7 +63,7 @@ namespace System.Windows.Controls
             EventManager.RegisterClassHandler(typeof(Slider), Thumb.DragCompletedEvent, new DragCompletedEventHandler(Slider.OnThumbDragCompleted));
 
             // Listen to MouseLeftButtonDown event to determine if slide should move focus to itself
-            EventManager.RegisterClassHandler(typeof(Slider), Mouse.MouseDownEvent, new MouseButtonEventHandler(Slider._OnMouseLeftButtonDown),true);
+            EventManager.RegisterClassHandler(typeof(Slider), Mouse.MouseDownEvent, new MouseButtonEventHandler(Slider._OnMouseLeftButtonDown), true);
 
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Slider), new FrameworkPropertyMetadata(typeof(Slider)));
             _dType = DependencyObjectType.FromSystemTypeInternal(typeof(Slider));
@@ -173,7 +173,7 @@ namespace System.Windows.Controls
                 Slider slider = targetElement as Slider;
                 if (keyEventArgs != null && slider != null && Keyboard.Modifiers == ModifierKeys.None)
                 {
-                    if((int)_normal == (int)keyEventArgs.RealKey)
+                    if ((int)_normal == (int)keyEventArgs.RealKey)
                     {
                         return !IsInverted(slider);
                     }
@@ -603,7 +603,7 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Appearance")]
         public double SelectionStart
         {
-            get { return (double) GetValue(SelectionStartProperty); }
+            get { return (double)GetValue(SelectionStartProperty); }
             set { SetValue(SelectionStartProperty, value); }
         }
 
@@ -653,7 +653,7 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Appearance")]
         public double SelectionEnd
         {
-            get { return (double) GetValue(SelectionEndProperty); }
+            get { return (double)GetValue(SelectionEndProperty); }
             set { SetValue(SelectionEndProperty, value); }
         }
 
@@ -836,10 +836,12 @@ namespace System.Windows.Controls
 
             if (_autoToolTip == null)
             {
-                _autoToolTip = new ToolTip();
-                _autoToolTip.Placement = PlacementMode.Custom;
-                _autoToolTip.PlacementTarget = thumb;
-                _autoToolTip.CustomPopupPlacementCallback = new CustomPopupPlacementCallback(this.AutoToolTipCustomPlacementCallback);
+                _autoToolTip = new ToolTip
+                {
+                    Placement = PlacementMode.Custom,
+                    PlacementTarget = thumb,
+                    CustomPopupPlacementCallback = new CustomPopupPlacementCallback(this.AutoToolTipCustomPlacementCallback)
+                };
             }
 
             thumb.ToolTip = _autoToolTip;
@@ -964,7 +966,7 @@ namespace System.Windows.Controls
                     }
 
                 default:
-                    return new CustomPopupPlacement[]{};
+                    return new CustomPopupPlacement[] { };
             }
         }
 
@@ -977,7 +979,7 @@ namespace System.Windows.Controls
             Size trackSize = new Size(0d, 0d);
             Size thumbSize = new Size(0d, 0d);
 
-            if (Track == null || DoubleUtil.LessThan(SelectionEnd,SelectionStart))
+            if (Track == null || DoubleUtil.LessThan(SelectionEnd, SelectionStart))
             {
                 return;
             }
@@ -1036,7 +1038,7 @@ namespace System.Windows.Controls
                 }
                 else
                 {
-                    Canvas.SetTop(rangeElement, (thumbSize.Height * 0.5) + Math.Max(Maximum - SelectionEnd,0) * valueToSize);
+                    Canvas.SetTop(rangeElement, (thumbSize.Height * 0.5) + Math.Max(Maximum - SelectionEnd, 0) * valueToSize);
                 }
             }
         }
@@ -1097,7 +1099,7 @@ namespace System.Windows.Controls
                 }
 
                 rangeElement.Height = ((Value - Minimum) * valueToSize);
-                
+
                 if (IsDirectionReversed)
                 {
                     Canvas.SetTop(rangeElement, (thumbSize.Height * 0.5));
@@ -1193,7 +1195,7 @@ namespace System.Windows.Controls
                         {
                             previous = tick;
                         }
-                        else if (DoubleUtil.GreaterThan(tick ,value) && DoubleUtil.LessThan(tick, next))
+                        else if (DoubleUtil.GreaterThan(tick, value) && DoubleUtil.LessThan(tick, next))
                         {
                             next = tick;
                         }
@@ -1228,7 +1230,7 @@ namespace System.Windows.Controls
 
                 // If the snapping brought us back to value, find the next tick point
                 if (next == value
-                    && !( greaterThan && value == Maximum)  // Stop if searching up if already at Max
+                    && !(greaterThan && value == Maximum)  // Stop if searching up if already at Max
                     && !(!greaterThan && value == Minimum)) // Stop if searching down if already at Min
                 {
                     // This property is rarely set so let's try to avoid the GetValue
@@ -1251,7 +1253,7 @@ namespace System.Windows.Controls
 
                             // Find the smallest tick greater than value or the largest tick less than value
                             if ((greaterThan && DoubleUtil.GreaterThan(tick, value) && (DoubleUtil.LessThan(tick, next) || next == value))
-                             ||(!greaterThan && DoubleUtil.LessThan(tick, value) && (DoubleUtil.GreaterThan(tick, next) || next == value)))
+                             || (!greaterThan && DoubleUtil.LessThan(tick, value) && (DoubleUtil.GreaterThan(tick, next) || next == value)))
                             {
                                 next = tick;
                             }
@@ -1300,7 +1302,8 @@ namespace System.Windows.Controls
         /// <param name="e"></param>
         private static void _OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if(e.ChangedButton != MouseButton.Left) return;
+            if (e.ChangedButton != MouseButton.Left)
+                return;
 
             Slider slider = (Slider)sender;
 

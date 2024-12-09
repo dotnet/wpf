@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -30,7 +30,7 @@ namespace System.Windows.Markup
     {
         #region Constructors
 
-        
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -78,9 +78,9 @@ namespace System.Windows.Markup
         /// Internal Avalon method. Used to Load a file.
         /// </summary>
         /// <returns>An array containing the root objects Loaded from the stream stream</returns>
-        public virtual object ParseFragment ()
+        public virtual object ParseFragment()
         {
-            Debug.Assert (false, "Parse Fragment was not overidden");
+            Debug.Assert(false, "Parse Fragment was not overidden");
             return null;
         }
 
@@ -175,15 +175,15 @@ namespace System.Windows.Markup
         /// <summary>
         /// Called when Tree has been completely built.
         /// </summary>
-        internal virtual void TreeBuildComplete ()
+        internal virtual void TreeBuildComplete()
         {
         }
 
 
         #endregion Methods
- 
+
         #region Properties
-      
+
 #if !PBTCOMPILER
         /// <summary>
         ///  ParserHooks implementation
@@ -310,7 +310,7 @@ namespace System.Windows.Markup
 #endif
 
         #endregion Queuing
-        
+
         #region Data
 
         // Timeout after .2 seconds. 
@@ -325,6 +325,6 @@ namespace System.Windows.Markup
         Exception _parseException;
         int _maxAsyncRecords;
 #endif
-    #endregion Data
+        #endregion Data
     }
 }

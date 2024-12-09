@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,10 +6,10 @@
 // Description: the TextComposition class
 //
 
-using MS.Internal;
-using MS.Win32;
 using System.Runtime.InteropServices;
 using System.Windows.Input;
+using MS.Internal;
+using MS.Win32;
 
 namespace System.Windows.Documents
 {
@@ -17,7 +17,7 @@ namespace System.Windows.Documents
     ///     the internal Composition class provides input-text/composition event promotion
     ///     This class is used for simple TextBox control that does not expose TextRange.
     /// </summary>
-    public class FrameworkTextComposition: TextComposition
+    public class FrameworkTextComposition : TextComposition
     {
         //------------------------------------------------------
         //
@@ -30,7 +30,7 @@ namespace System.Windows.Documents
         //
         // Constructor for TextStore's TextComposition.
         //
-        internal FrameworkTextComposition(InputManager inputManager, IInputElement source, object owner)  : base(inputManager, source, String.Empty, TextCompositionAutoComplete.Off)
+        internal FrameworkTextComposition(InputManager inputManager, IInputElement source, object owner) : base(inputManager, source, String.Empty, TextCompositionAutoComplete.Off)
         {
             _owner = owner;
         }

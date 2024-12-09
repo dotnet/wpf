@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,13 +22,13 @@ namespace MS.Internal.Shaping
     /// </summary>
     internal class ShapeTypeface
     {
-        private GlyphTypeface  _glyphTypeface;
-        private IDeviceFont    _deviceFont;
+        private GlyphTypeface _glyphTypeface;
+        private IDeviceFont _deviceFont;
 
 
         internal ShapeTypeface(
-            GlyphTypeface        glyphTypeface,
-            IDeviceFont          deviceFont
+            GlyphTypeface glyphTypeface,
+            IDeviceFont deviceFont
             )
         {
             Invariant.Assert(glyphTypeface != null);
@@ -45,7 +45,7 @@ namespace MS.Internal.Shaping
         public override bool Equals(object o)
         {
             ShapeTypeface t = o as ShapeTypeface;
-            if(t == null)
+            if (t == null)
                 return false;
 
             if (_deviceFont == null)
@@ -75,7 +75,7 @@ namespace MS.Internal.Shaping
             {
                 return _glyphTypeface;
             }
-        } 
+        }
     }
 
 
@@ -84,16 +84,16 @@ namespace MS.Internal.Shaping
     /// </summary>
     internal class ScaledShapeTypeface
     {
-        private ShapeTypeface       _shapeTypeface;
-        private double              _scaleInEm;
-        private bool                _nullShape;
+        private ShapeTypeface _shapeTypeface;
+        private double _scaleInEm;
+        private bool _nullShape;
 
 
         internal ScaledShapeTypeface(
-            GlyphTypeface           glyphTypeface,
-            IDeviceFont             deviceFont,
-            double                  scaleInEm,
-            bool                    nullShape
+            GlyphTypeface glyphTypeface,
+            IDeviceFont deviceFont,
+            double scaleInEm,
+            bool nullShape
             )
         {
             _shapeTypeface = new ShapeTypeface(glyphTypeface, deviceFont);
@@ -136,8 +136,8 @@ namespace MS.Internal.Shaping
 
             return
                     _shapeTypeface.Equals(t._shapeTypeface)
-                &&  _scaleInEm == t._scaleInEm
-                &&  _nullShape == t._nullShape;
+                && _scaleInEm == t._scaleInEm
+                && _nullShape == t._nullShape;
         }
-}
+    }
 }

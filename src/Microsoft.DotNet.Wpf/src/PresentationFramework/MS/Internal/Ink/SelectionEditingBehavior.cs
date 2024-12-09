@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,9 +9,9 @@
 
 
 
-using System.Windows.Input;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace MS.Internal.Ink
 {
@@ -66,7 +66,7 @@ namespace MS.Internal.Ink
             EditingCoordinator.InvalidateBehaviorCursor(this);
 
             // Get the current selection bounds.
-            _selectionRect = InkCanvas.GetSelectionBounds( );
+            _selectionRect = InkCanvas.GetSelectionBounds();
 
             // Set the initial tracking position and rectangle
             _previousLocation = mouse.GetPosition(InkCanvas.SelectionAdorner);
@@ -80,7 +80,7 @@ namespace MS.Internal.Ink
             InkCanvas.SelectionAdorner.AddHandler(Mouse.MouseMoveEvent, new MouseEventHandler(OnMouseMove));
             InkCanvas.SelectionAdorner.AddHandler(UIElement.LostMouseCaptureEvent,
                 new MouseEventHandler(OnLostMouseCapture));
-}
+        }
 
         /// <summary>
         /// Called when the ResizeEditingBehavior is detached
@@ -127,11 +127,11 @@ namespace MS.Internal.Ink
             Point curPoint = args.GetPosition(InkCanvas.SelectionAdorner);
 
             // Check if we have a mouse movement at all.
-            if ( !DoubleUtil.AreClose(curPoint.X, _previousLocation.X)
-                || !DoubleUtil.AreClose(curPoint.Y, _previousLocation.Y) )
+            if (!DoubleUtil.AreClose(curPoint.X, _previousLocation.X)
+                || !DoubleUtil.AreClose(curPoint.Y, _previousLocation.Y))
             {
                 // We won't start the move until we really see a movement.
-                if ( !_actionStarted )
+                if (!_actionStarted)
                 {
                     _actionStarted = true;
                 }
@@ -153,7 +153,7 @@ namespace MS.Internal.Ink
         private void OnMouseUp(object sender, MouseButtonEventArgs args)
         {
             // We won't start the move until we really see a movement.
-            if ( _actionStarted )
+            if (_actionStarted)
             {
                 _previousRect = ChangeFeedbackRectangle(args.GetPosition(InkCanvas.SelectionAdorner));
             }
@@ -169,7 +169,7 @@ namespace MS.Internal.Ink
         private void OnLostMouseCapture(object sender, MouseEventArgs args)
         {
             // If user is editing, we have to commit the current operation and reset our state.
-            if ( EditingCoordinator.UserIsEditing )
+            if (EditingCoordinator.UserIsEditing)
             {
                 ReleaseCapture(false, true);
             }
@@ -186,44 +186,44 @@ namespace MS.Internal.Ink
             //  the original element in which we hit the resize handle.
 
             // If moving the left side -- don't go past the right side.
-            if ( _hitResult == InkCanvasSelectionHitResult.TopLeft ||
+            if (_hitResult == InkCanvasSelectionHitResult.TopLeft ||
                 _hitResult == InkCanvasSelectionHitResult.BottomLeft ||
-                _hitResult == InkCanvasSelectionHitResult.Left )
+                _hitResult == InkCanvasSelectionHitResult.Left)
             {
-                if ( newPoint.X > _selectionRect.Right - MinimumHeightWidthSize )
+                if (newPoint.X > _selectionRect.Right - MinimumHeightWidthSize)
                 {
                     newPoint.X = _selectionRect.Right - MinimumHeightWidthSize;
                 }
             }
 
             // If moving the right side -- don't go past the left side.
-            if ( _hitResult == InkCanvasSelectionHitResult.TopRight ||
+            if (_hitResult == InkCanvasSelectionHitResult.TopRight ||
                 _hitResult == InkCanvasSelectionHitResult.BottomRight ||
-                _hitResult == InkCanvasSelectionHitResult.Right )
+                _hitResult == InkCanvasSelectionHitResult.Right)
             {
-                if ( newPoint.X < _selectionRect.Left + MinimumHeightWidthSize )
+                if (newPoint.X < _selectionRect.Left + MinimumHeightWidthSize)
                 {
                     newPoint.X = _selectionRect.Left + MinimumHeightWidthSize;
                 }
             }
 
             // If moving the top side -- don't go past the bottom side.
-            if ( _hitResult == InkCanvasSelectionHitResult.TopLeft ||
+            if (_hitResult == InkCanvasSelectionHitResult.TopLeft ||
                 _hitResult == InkCanvasSelectionHitResult.TopRight ||
-                _hitResult == InkCanvasSelectionHitResult.Top )
+                _hitResult == InkCanvasSelectionHitResult.Top)
             {
-                if ( newPoint.Y > _selectionRect.Bottom - MinimumHeightWidthSize )
+                if (newPoint.Y > _selectionRect.Bottom - MinimumHeightWidthSize)
                 {
                     newPoint.Y = _selectionRect.Bottom - MinimumHeightWidthSize;
                 }
             }
 
             // If moving the bottom side -- don't go past the top side.
-            if ( _hitResult == InkCanvasSelectionHitResult.BottomLeft ||
+            if (_hitResult == InkCanvasSelectionHitResult.BottomLeft ||
                 _hitResult == InkCanvasSelectionHitResult.BottomRight ||
-                _hitResult == InkCanvasSelectionHitResult.Bottom )
+                _hitResult == InkCanvasSelectionHitResult.Bottom)
             {
-                if ( newPoint.Y < _selectionRect.Top + MinimumHeightWidthSize )
+                if (newPoint.Y < _selectionRect.Top + MinimumHeightWidthSize)
                 {
                     newPoint.Y = _selectionRect.Top + MinimumHeightWidthSize;
                 }
@@ -233,28 +233,28 @@ namespace MS.Internal.Ink
             Rect newRect = CalculateRect(newPoint.X - _previousLocation.X, newPoint.Y - _previousLocation.Y);
 
             // Depends on the current grab handle, we record the tracking position accordingly.
-            if ( _hitResult == InkCanvasSelectionHitResult.BottomRight ||
+            if (_hitResult == InkCanvasSelectionHitResult.BottomRight ||
                 _hitResult == InkCanvasSelectionHitResult.BottomLeft ||
                 _hitResult == InkCanvasSelectionHitResult.TopRight ||
                 _hitResult == InkCanvasSelectionHitResult.TopLeft ||
-                _hitResult == InkCanvasSelectionHitResult.Selection )
+                _hitResult == InkCanvasSelectionHitResult.Selection)
             {
                 _previousLocation.X = newPoint.X;
                 _previousLocation.Y = newPoint.Y;
             }
-            else if ( _hitResult == InkCanvasSelectionHitResult.Left ||
-                _hitResult == InkCanvasSelectionHitResult.Right )
+            else if (_hitResult == InkCanvasSelectionHitResult.Left ||
+                _hitResult == InkCanvasSelectionHitResult.Right)
             {
                 _previousLocation.X = newPoint.X;
             }
-            else if ( _hitResult == InkCanvasSelectionHitResult.Top || 
-                _hitResult == InkCanvasSelectionHitResult.Bottom )
+            else if (_hitResult == InkCanvasSelectionHitResult.Top ||
+                _hitResult == InkCanvasSelectionHitResult.Bottom)
             {
                 _previousLocation.Y = newPoint.Y;
             }
 
             return newRect;
-}
+        }
 
         /// <summary>
         ///     Resize a given element based on the grab handle
@@ -265,7 +265,7 @@ namespace MS.Internal.Ink
         {
             Rect newRect = _previousRect;
 
-            switch ( _hitResult )
+            switch (_hitResult)
             {
                 case InkCanvasSelectionHitResult.BottomRight:
                     {
@@ -373,7 +373,7 @@ namespace MS.Internal.Ink
         /// </summary>
         private void InitializeCapture()
         {
-            Debug.Assert(EditingCoordinator.UserIsEditing == false, "Unexpect UserIsEditng state." );
+            Debug.Assert(EditingCoordinator.UserIsEditing == false, "Unexpect UserIsEditng state.");
             EditingCoordinator.UserIsEditing = true;
             InkCanvas.SelectionAdorner.CaptureMouse();
         }
@@ -385,10 +385,10 @@ namespace MS.Internal.Ink
         /// <param name="commit"></param>
         private void ReleaseCapture(bool releaseDevice, bool commit)
         {
-            if ( EditingCoordinator.UserIsEditing )
+            if (EditingCoordinator.UserIsEditing)
             {
                 EditingCoordinator.UserIsEditing = false;
-                if ( releaseDevice )
+                if (releaseDevice)
                 {
                     InkCanvas.SelectionAdorner.ReleaseMouseCapture();
                 }

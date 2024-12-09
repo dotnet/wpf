@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,10 +21,10 @@ namespace MS.Internal.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
-        internal AutomationAttributeInfo( 
+        internal AutomationAttributeInfo(
             AutomationPropertyConverter converter,
             AutomationTextAttribute id,
             Type type
@@ -34,7 +34,7 @@ namespace MS.Internal.Automation
             _type = type;
             _converter = converter;
         }
-        
+
         #endregion Constructors
 
         //------------------------------------------------------
@@ -42,12 +42,12 @@ namespace MS.Internal.Automation
         //  Internal Properties
         //
         //------------------------------------------------------
- 
+
         #region Internal Properties
 
-        internal AutomationTextAttribute     ID                { get { return _id; } }
-        internal AutomationPropertyConverter ObjectConverter   { get { return _converter; } }
-        internal Type                        Type              { get { return _type; } }
+        internal AutomationTextAttribute ID { get { return _id; } }
+        internal AutomationPropertyConverter ObjectConverter { get { return _converter; } }
+        internal Type Type { get { return _type; } }
 
         #endregion Internal Properties
 
@@ -57,7 +57,7 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private AutomationTextAttribute _id;

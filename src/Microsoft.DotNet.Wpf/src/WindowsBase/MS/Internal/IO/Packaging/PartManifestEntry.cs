@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -26,12 +26,12 @@ namespace MS.Internal.IO.Packaging
         internal List<String> Transforms { get { return _transforms; } }
         internal List<PackageRelationshipSelector> RelationshipSelectors { get { return _relationshipSelectors; } }      // null if Part entry
         internal Uri OwningPartUri // only valid if IsRelationshipEntry
-        { 
-            get 
-            { 
-                Debug.Assert(_owningPartUri != null, "Logic error: OwningPart is null on a non-Relationship entry"); 
-                return _owningPartUri; 
-            } 
+        {
+            get
+            {
+                Debug.Assert(_owningPartUri != null, "Logic error: OwningPart is null on a non-Relationship entry");
+                return _owningPartUri;
+            }
         }
 
         //------------------------------------------------------
@@ -71,7 +71,7 @@ namespace MS.Internal.IO.Packaging
 #endif
                 //Get owning Part uri from one of the relationship selectors
                 _owningPartUri = relationshipSelectors[0].SourceUri;
-            }                
+            }
         }
 
 
@@ -87,8 +87,8 @@ namespace MS.Internal.IO.Packaging
                     owningPartUri = selector.SourceUri;
                 }
                 else
-                    if (Uri.Compare(owningPartUri, selector.SourceUri, UriComponents.SerializationInfoString, UriFormat.UriEscaped, StringComparison.Ordinal) != 0 )
-                        return false;
+                    if (Uri.Compare(owningPartUri, selector.SourceUri, UriComponents.SerializationInfoString, UriFormat.UriEscaped, StringComparison.Ordinal) != 0)
+                    return false;
             }
             return true;
         }
@@ -108,4 +108,4 @@ namespace MS.Internal.IO.Packaging
         private List<String> _transforms;
         private List<PackageRelationshipSelector> _relationshipSelectors;    // null if this is a Part
     }
-  }
+}

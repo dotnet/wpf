@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,7 +11,7 @@ namespace System.Windows.Automation.Peers
     public class MenuItemAutomationPeer : FrameworkElementAutomationPeer, IExpandCollapseProvider, IInvokeProvider, IToggleProvider
     {
         ///
-        public MenuItemAutomationPeer(MenuItem owner): base(owner)
+        public MenuItemAutomationPeer(MenuItem owner) : base(owner)
         {
         }
 
@@ -36,8 +36,8 @@ namespace System.Windows.Automation.Peers
             if (patternInterface == PatternInterface.ExpandCollapse)
             {
                 MenuItemRole role = owner.Role;
-                if (    (role == MenuItemRole.TopLevelHeader || role == MenuItemRole.SubmenuHeader)
-                    &&  owner.HasItems)
+                if ((role == MenuItemRole.TopLevelHeader || role == MenuItemRole.SubmenuHeader)
+                    && owner.HasItems)
                 {
                     result = this;
                 }
@@ -52,8 +52,8 @@ namespace System.Windows.Automation.Peers
             else if (patternInterface == PatternInterface.Invoke)
             {
                 MenuItemRole role = owner.Role;
-                if (    (role == MenuItemRole.TopLevelItem || role == MenuItemRole.SubmenuItem)
-                    &&  !owner.HasItems)
+                if ((role == MenuItemRole.TopLevelItem || role == MenuItemRole.SubmenuItem)
+                    && !owner.HasItems)
                 {
                     result = this;
                 }
@@ -81,7 +81,7 @@ namespace System.Windows.Automation.Peers
         override protected int GetSizeOfSetCore()
         {
             int sizeOfSet = base.GetSizeOfSetCore();
-            
+
             if (sizeOfSet == AutomationProperties.AutomationSizeOfSetDefault)
             {
                 MenuItem owner = (MenuItem)Owner;
@@ -113,14 +113,14 @@ namespace System.Windows.Automation.Peers
         override protected int GetPositionInSetCore()
         {
             int positionInSet = base.GetPositionInSetCore();
-            
+
             if (positionInSet == AutomationProperties.AutomationPositionInSetDefault)
             {
                 MenuItem owner = (MenuItem)Owner;
                 ItemsControl parent = ItemsControl.ItemsControlFromItemContainer(owner);
 
                 positionInSet = ItemAutomationPeer.GetPositionInSetFromItemsControl(parent, owner);
-                
+
                 foreach (var item in parent.Items)
                 {
                     if (item == owner)
@@ -178,7 +178,7 @@ namespace System.Windows.Automation.Peers
                             AutomationPeer peer = UIElementAutomationPeer.FromElement(uiElement);
                             if (peer == null)
                                 peer = UIElementAutomationPeer.CreatePeerForElement(uiElement);
-                            if( peer!= null)
+                            if (peer != null)
                                 children.Add(peer);
                         }
                     }
@@ -191,14 +191,14 @@ namespace System.Windows.Automation.Peers
         ///
         void IExpandCollapseProvider.Expand()
         {
-            if(!IsEnabled())
+            if (!IsEnabled())
                 throw new ElementNotEnabledException();
 
             MenuItem owner = (MenuItem)Owner;
             MenuItemRole role = owner.Role;
 
-            if (    (role != MenuItemRole.TopLevelHeader && role != MenuItemRole.SubmenuHeader)
-                ||  !owner.HasItems)
+            if ((role != MenuItemRole.TopLevelHeader && role != MenuItemRole.SubmenuHeader)
+                || !owner.HasItems)
             {
                 throw new InvalidOperationException(SR.UIA_OperationCannotBePerformed);
             }
@@ -209,14 +209,14 @@ namespace System.Windows.Automation.Peers
         ///
         void IExpandCollapseProvider.Collapse()
         {
-            if(!IsEnabled())
+            if (!IsEnabled())
                 throw new ElementNotEnabledException();
 
             MenuItem owner = (MenuItem)Owner;
             MenuItemRole role = owner.Role;
 
-            if (    (role != MenuItemRole.TopLevelHeader && role != MenuItemRole.SubmenuHeader)
-                ||  !owner.HasItems)
+            if ((role != MenuItemRole.TopLevelHeader && role != MenuItemRole.SubmenuHeader)
+                || !owner.HasItems)
             {
                 throw new InvalidOperationException(SR.UIA_OperationCannotBePerformed);
             }
@@ -249,7 +249,7 @@ namespace System.Windows.Automation.Peers
         ///
         void IInvokeProvider.Invoke()
         {
-            if(!IsEnabled())
+            if (!IsEnabled())
                 throw new ElementNotEnabledException();
 
             MenuItem owner = (MenuItem)Owner;
@@ -269,7 +269,7 @@ namespace System.Windows.Automation.Peers
         ///
         void IToggleProvider.Toggle()
         {
-            if(!IsEnabled())
+            if (!IsEnabled())
                 throw new ElementNotEnabledException();
 
             MenuItem owner = (MenuItem)Owner;

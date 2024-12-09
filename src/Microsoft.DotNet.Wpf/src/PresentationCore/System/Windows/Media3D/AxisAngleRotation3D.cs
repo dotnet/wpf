@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -25,7 +25,7 @@ namespace System.Windows.Media.Media3D
         /// <summary>
         /// Default constructor that creates a rotation with Axis (0,1,0) and Angle of 0.
         /// </summary>
-        public AxisAngleRotation3D() {}
+        public AxisAngleRotation3D() { }
 
         /// <summary>
         /// Constructor taking axis and angle.
@@ -63,13 +63,13 @@ namespace System.Windows.Media.Media3D
         //------------------------------------------------------
 
         #region Internal Properties
-        
+
         // Used by animation to get a snapshot of the current rotational
         // configuration for interpolation in Rotation3DAnimations.
         internal override Quaternion InternalQuaternion
         {
             get
-            { 
+            {
                 if (_cachedQuaternionValue == c_dirtyQuaternion)
                 {
                     Vector3D axis = Axis;
@@ -79,7 +79,7 @@ namespace System.Windows.Media.Media3D
                     // This threshold needs to match the one we used in D3DXVec3Normalize (d3dxmath9.cpp)
                     // and in unmanaged code.  See also AxisAngleRotation3D.cpp.
                     if (axis.LengthSquared > DoubleUtil.FLT_MIN)
-                    {                    
+                    {
                         _cachedQuaternionValue = new Quaternion(axis, Angle);
                     }
                     else
@@ -87,9 +87,9 @@ namespace System.Windows.Media.Media3D
                         // If we have a zero-length axis we return identity (i.e.,
                         // we consider this to be no rotation.)
                         _cachedQuaternionValue = Quaternion.Identity;
-                    }               
+                    }
                 }
-                
+
                 return _cachedQuaternionValue;
             }
         }
@@ -105,7 +105,7 @@ namespace System.Windows.Media.Media3D
         {
             _cachedQuaternionValue = c_dirtyQuaternion;
         }
-        
+
         //------------------------------------------------------
         //
         //  Private Fields

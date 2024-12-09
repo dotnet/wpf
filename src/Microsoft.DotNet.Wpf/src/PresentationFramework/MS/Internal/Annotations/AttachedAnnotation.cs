@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,27 +23,27 @@ namespace MS.Internal.Annotations
         /// <summary>
         /// The locator was completely resolved.
         /// </summary>
-        Full            = 0x00000007,
+        Full = 0x00000007,
         /// <summary>
         /// The start portion of the locator resolved.
         /// </summary>        
-        StartPortion    = 0x00000004,
+        StartPortion = 0x00000004,
         /// <summary>
         /// The middle portion of the locator resolved.
         /// </summary>
-        MiddlePortion   = 0x00000002,
+        MiddlePortion = 0x00000002,
         /// <summary>
         /// The end portion of the locator was resolved.
         /// </summary>
-        EndPortion      = 0x00000001,
+        EndPortion = 0x00000001,
         /// <summary>
         /// The locator was resolved, but not to the level of content.
         /// </summary>
-        Incomplete      = 0x00000100,
+        Incomplete = 0x00000100,
         /// <summary>
         /// The locator was not resolved at all.
         /// </summary>
-        Unresolved      = 0x00000000
+        Unresolved = 0x00000000
     }
 
     /// <summary>

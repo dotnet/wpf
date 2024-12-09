@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,10 +14,9 @@
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media.TextFormatting;
-using MS.Internal.Text;
 using MS.Internal.Documents;
-
 using MS.Internal.PtsHost.UnsafeNativeMethods;
+using MS.Internal.Text;
 
 namespace MS.Internal.PtsHost
 {
@@ -64,9 +63,9 @@ namespace MS.Internal.PtsHost
         /// </summary>
         public override void Dispose()
         {
-            if(_attachedObjects != null)
+            if (_attachedObjects != null)
             {
-                foreach(AttachedObject obj in _attachedObjects)
+                foreach (AttachedObject obj in _attachedObjects)
                 {
                     obj.Dispose();
                 }
@@ -102,12 +101,12 @@ namespace MS.Internal.PtsHost
         /// OUT: paragraph properties
         /// </param>
         internal override void GetParaProperties(
-            ref PTS.FSPAP fspap)                 
+            ref PTS.FSPAP fspap)
         {
             // Paragraph associated with the element (SegmentParagraph) will
             // take care of break control.
-            fspap.fKeepWithNext      = PTS.False;
-            fspap.fBreakPageBefore   = PTS.False;
+            fspap.fKeepWithNext = PTS.False;
+            fspap.fBreakPageBefore = PTS.False;
             fspap.fBreakColumnBefore = PTS.False;
 
             GetParaProperties(ref fspap, true); // true means ignore element props
@@ -121,7 +120,7 @@ namespace MS.Internal.PtsHost
         /// OUT: Para client handle, opaque to PTS paragraph client
         /// </param>
         internal override void CreateParaclient(
-            out IntPtr paraClientHandle)         
+            out IntPtr paraClientHandle)
         {
 #pragma warning disable 6518
             // Disable PRESharp warning 6518. TextParaClient is an UnmamangedHandle, that adds itself
@@ -143,8 +142,8 @@ namespace MS.Internal.PtsHost
         /// OUT: text paragraph properties
         /// </param>
         internal void GetTextProperties(
-            int iArea,                          
-            ref PTS.FSTXTPROPS fstxtprops)      
+            int iArea,
+            ref PTS.FSTXTPROPS fstxtprops)
         {
             Debug.Assert(iArea == 0);
 
@@ -185,8 +184,8 @@ namespace MS.Internal.PtsHost
         /// OUT: Is paragraph fully justified
         /// </param>
         internal void CreateOptimalBreakSession(
-            TextParaClient textParaClient, 
-            int dcpStart,                          
+            TextParaClient textParaClient,
+            int dcpStart,
             int durTrack,
             LineBreakRecord lineBreakRecord,
             out OptimalBreakSession optimalBreakSession,
@@ -199,10 +198,10 @@ namespace MS.Internal.PtsHost
             OptimalTextSource optimalTextSource = new OptimalTextSource(StructuralCache.TextFormatterHost, ParagraphStartCharacterPosition, durTrack, textParaClient, _textRunCache);
             StructuralCache.TextFormatterHost.Context = optimalTextSource;
 
-            TextParagraphCache paragraphCache = textFormatter.CreateParagraphCache(StructuralCache.TextFormatterHost, 
-                                                                                   dcpStart, 
-                                                                                   TextDpi.FromTextDpi(durTrack), 
-                                                                                   GetLineProperties(true, dcpStart), 
+            TextParagraphCache paragraphCache = textFormatter.CreateParagraphCache(StructuralCache.TextFormatterHost,
+                                                                                   dcpStart,
+                                                                                   TextDpi.FromTextDpi(durTrack),
+                                                                                   GetLineProperties(true, dcpStart),
                                                                                    textLineBreak,
                                                                                    _textRunCache);
 
@@ -210,7 +209,7 @@ namespace MS.Internal.PtsHost
 
             optimalBreakSession = new OptimalBreakSession(this, textParaClient, paragraphCache, optimalTextSource);
             isParagraphJustified = ((TextAlignment)Element.GetValue(Block.TextAlignmentProperty)) == TextAlignment.Justify;
-}
+        }
 
 
         /// <summary>
@@ -226,9 +225,9 @@ namespace MS.Internal.PtsHost
         /// OUT: number of footnote references in the range
         /// </param>
         internal void GetNumberFootnotes(
-            int fsdcpStart,                     
-            int fsdcpLim,                        
-            out int nFootnote)                   
+            int fsdcpStart,
+            int fsdcpLim,
+            out int nFootnote)
         {
             nFootnote = 0;
         }
@@ -252,11 +251,11 @@ namespace MS.Internal.PtsHost
         /// OUT: margin collapsing state at bottom of text
         /// </param>
         internal void FormatBottomText(
-            int iArea,                           
-            uint fswdir,                         
-            Line lastLine,                       
-            int dvrLine,                         
-            out IntPtr mcsClient)                
+            int iArea,
+            uint fswdir,
+            Line lastLine,
+            int dvrLine,
+            out IntPtr mcsClient)
         {
             Invariant.Assert(iArea == 0);
 
@@ -367,32 +366,32 @@ namespace MS.Internal.PtsHost
         /// <param name="iLineBestVariant">
         /// OUT: index of the bset line variant (pts / ls communication)
         /// </param>        
-        internal System.Collections.Generic.IList<TextBreakpoint> 
-                    FormatLineVariants(TextParaClient textParaClient, 
+        internal System.Collections.Generic.IList<TextBreakpoint>
+                    FormatLineVariants(TextParaClient textParaClient,
                                        TextParagraphCache textParagraphCache,
                                        OptimalTextSource optimalTextSource,
-                                       int dcp, 
+                                       int dcp,
                                        TextLineBreak textLineBreak,
-                                       uint fswdir, 
-                                       int urStartLine, 
-                                       int durLine, 
-                                       bool allowHyphenation, 
+                                       uint fswdir,
+                                       int urStartLine,
+                                       int durLine,
+                                       bool allowHyphenation,
                                        bool clearOnLeft,
                                        bool clearOnRight,
-                                       bool treatAsFirstInPara, 
-                                       bool treatAsLastInPara, 
+                                       bool treatAsFirstInPara,
+                                       bool treatAsLastInPara,
                                        bool suppressTopSpace,
-                                       IntPtr lineVariantRestriction, 
+                                       IntPtr lineVariantRestriction,
                                        out int iLineBestVariant)
-                                                                                     
+
         {
-            StructuralCache.TextFormatterHost.Context = optimalTextSource;            
+            StructuralCache.TextFormatterHost.Context = optimalTextSource;
 
             System.Collections.Generic.IList<TextBreakpoint> textBreakpoints = textParagraphCache.FormatBreakpoints(
-                dcp, 
-                textLineBreak, 
-                lineVariantRestriction, 
-                TextDpi.FromTextDpi(durLine), 
+                dcp,
+                textLineBreak,
+                lineVariantRestriction,
+                TextDpi.FromTextDpi(durLine),
                 out iLineBestVariant
                 );
 
@@ -489,34 +488,34 @@ namespace MS.Internal.PtsHost
         /// OUT: should line segments be reformatted?
         /// </param>
         internal void ReconstructLineVariant(
-            TextParaClient paraClient,          
-            int iArea,                           
-            int dcp,                             
-            IntPtr pbrlineIn,                    
+            TextParaClient paraClient,
+            int iArea,
+            int dcp,
+            IntPtr pbrlineIn,
             int dcpLineIn,
-            uint fswdir,                         
-            int urStartLine,                     
-            int durLine,                         
-            int urStartTrack,                    
-            int durTrack,                        
-            int urPageLeftMargin,                
-            bool fAllowHyphenation,              
-            bool fClearOnLeft,                   
-            bool fClearOnRight,                  
-            bool fTreatAsFirstInPara,            
-            bool fTreatAsLastInPara,             
-            bool fSuppressTopSpace,              
-            out IntPtr lineHandle,               
-            out int dcpLine,                     
-            out IntPtr ppbrlineOut,              
-            out int fForcedBroken,               
-            out PTS.FSFLRES fsflres,             
-            out int dvrAscent,                   
-            out int dvrDescent,                  
-            out int urBBox,                      
-            out int durBBox,                     
-            out int dcpDepend,                   
-            out int fReformatNeighborsAsLastLine) 
+            uint fswdir,
+            int urStartLine,
+            int durLine,
+            int urStartTrack,
+            int durTrack,
+            int urPageLeftMargin,
+            bool fAllowHyphenation,
+            bool fClearOnLeft,
+            bool fClearOnRight,
+            bool fTreatAsFirstInPara,
+            bool fTreatAsLastInPara,
+            bool fSuppressTopSpace,
+            out IntPtr lineHandle,
+            out int dcpLine,
+            out IntPtr ppbrlineOut,
+            out int fForcedBroken,
+            out PTS.FSFLRES fsflres,
+            out int dvrAscent,
+            out int dvrDescent,
+            out int urBBox,
+            out int durBBox,
+            out int dcpDepend,
+            out int fReformatNeighborsAsLastLine)
         {
             // NOTE: there is no empty space added at the top of lines, so fSuppressTopSpace is never used.
 
@@ -533,8 +532,10 @@ namespace MS.Internal.PtsHost
             Line line = new Line(StructuralCache.TextFormatterHost, paraClient, ParagraphStartCharacterPosition);
 #pragma warning restore 6518
 
-            Line.FormattingContext ctx = new Line.FormattingContext(true, fClearOnLeft, fClearOnRight, _textRunCache);
-            ctx.LineFormatLengthTarget = dcpLineIn;
+            Line.FormattingContext ctx = new Line.FormattingContext(true, fClearOnLeft, fClearOnRight, _textRunCache)
+            {
+                LineFormatLengthTarget = dcpLineIn
+            };
             FormatLineCore(line, pbrlineIn, ctx, dcp, durLine, durTrack, fTreatAsFirstInPara, dcp);
 
             // Retrieve line properties
@@ -543,7 +544,7 @@ namespace MS.Internal.PtsHost
 
             TextLineBreak textLineBreak = line.GetTextLineBreak();
 
-            if(textLineBreak != null)
+            if (textLineBreak != null)
             {
 #pragma warning disable 56518
                 // Disable PRESharp warning 6518. Line is an UnmamangedHandle, that adds itself
@@ -676,33 +677,33 @@ namespace MS.Internal.PtsHost
         /// OUT: should line segments be reformatted?
         /// </param>
         internal void FormatLine(
-            TextParaClient paraClient,          
-            int iArea,                           
-            int dcp,                             
-            IntPtr pbrlineIn,                    
-            uint fswdir,                         
-            int urStartLine,                     
-            int durLine,                         
-            int urStartTrack,                    
-            int durTrack,                        
-            int urPageLeftMargin,                
-            bool fAllowHyphenation,              
-            bool fClearOnLeft,                   
-            bool fClearOnRight,                  
-            bool fTreatAsFirstInPara,            
-            bool fTreatAsLastInPara,             
-            bool fSuppressTopSpace,              
-            out IntPtr lineHandle,               
-            out int dcpLine,                     
-            out IntPtr ppbrlineOut,              
-            out int fForcedBroken,               
-            out PTS.FSFLRES fsflres,             
-            out int dvrAscent,                   
-            out int dvrDescent,                  
-            out int urBBox,                      
-            out int durBBox,                     
-            out int dcpDepend,                   
-            out int fReformatNeighborsAsLastLine) 
+            TextParaClient paraClient,
+            int iArea,
+            int dcp,
+            IntPtr pbrlineIn,
+            uint fswdir,
+            int urStartLine,
+            int durLine,
+            int urStartTrack,
+            int durTrack,
+            int urPageLeftMargin,
+            bool fAllowHyphenation,
+            bool fClearOnLeft,
+            bool fClearOnRight,
+            bool fTreatAsFirstInPara,
+            bool fTreatAsLastInPara,
+            bool fSuppressTopSpace,
+            out IntPtr lineHandle,
+            out int dcpLine,
+            out IntPtr ppbrlineOut,
+            out int fForcedBroken,
+            out PTS.FSFLRES fsflres,
+            out int dvrAscent,
+            out int dvrDescent,
+            out int urBBox,
+            out int durBBox,
+            out int dcpDepend,
+            out int fReformatNeighborsAsLastLine)
         {
             // NOTE: there is no empty space added at the top of lines, so fSuppressTopSpace is never used.
 
@@ -727,7 +728,7 @@ namespace MS.Internal.PtsHost
 
             TextLineBreak textLineBreak = line.GetTextLineBreak();
 
-            if(textLineBreak != null)
+            if (textLineBreak != null)
             {
 #pragma warning disable 56518
                 // Disable PRESharp warning 6518. Line is an UnmamangedHandle, that adds itself
@@ -788,9 +789,9 @@ namespace MS.Internal.PtsHost
         /// OUT: number of chars in new range
         /// </param>
         internal void UpdGetChangeInText(
-            out int dcpStart,                    
-            out int ddcpOld,                     
-            out int ddcpNew)                     
+            out int dcpStart,
+            out int ddcpOld,
+            out int ddcpNew)
         {
             // Get dtr list for the text presenter
             DtrList dtrs = StructuralCache.DtrsFromRange(ParagraphStartCharacterPosition, LastFormatCch);
@@ -798,13 +799,13 @@ namespace MS.Internal.PtsHost
             {
                 // Union all dtrs. Note: there are no overlapping entries in the list of DTRs.
                 dcpStart = dtrs[0].StartIndex - ParagraphStartCharacterPosition;
-                ddcpNew  = dtrs[0].PositionsAdded;
-                ddcpOld  = dtrs[0].PositionsRemoved;
+                ddcpNew = dtrs[0].PositionsAdded;
+                ddcpOld = dtrs[0].PositionsRemoved;
                 if (dtrs.Length > 1)
                 {
                     for (int i = 1; i < dtrs.Length; i++)
                     {
-                        int delta = dtrs[i].StartIndex - dtrs[i-1].StartIndex;
+                        int delta = dtrs[i].StartIndex - dtrs[i - 1].StartIndex;
                         ddcpNew += delta + dtrs[i].PositionsAdded;
                         ddcpOld += delta + dtrs[i].PositionsRemoved;
                     }
@@ -854,9 +855,9 @@ namespace MS.Internal.PtsHost
         /// OUT: advance amount in tight wrap
         /// </param>
         internal void GetDvrAdvance(
-            int dcp,                            
-            uint fswdir,                        
-            out int dvr)                         
+            int dcp,
+            uint fswdir,
+            out int dvr)
         {
             EnsureLineProperties();
 
@@ -878,11 +879,11 @@ namespace MS.Internal.PtsHost
             ITextPointer textPointer = TextContainerHelper.GetTextPointerFromCP(StructuralCache.TextContainer, ParagraphStartCharacterPosition + dcpFirst, LogicalDirection.Forward);
             ITextPointer textPointerContentStart = TextContainerHelper.GetContentStart(StructuralCache.TextContainer, Element);
 
-            while(textPointer.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.ElementStart)
+            while (textPointer.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.ElementStart)
             {
                 TextElement element = ((TextPointer)textPointer).GetAdjacentElementFromOuterPosition(LogicalDirection.Forward);
 
-                if(!(element is Figure) && !(element is Floater))
+                if (!(element is Figure) && !(element is Floater))
                 {
                     break;
                 }
@@ -901,18 +902,18 @@ namespace MS.Internal.PtsHost
             ITextPointer textPointerContentStart = TextContainerHelper.GetContentStart(StructuralCache.TextContainer, Element);
             ITextPointer textPointer = TextContainerHelper.GetTextPointerFromCP(StructuralCache.TextContainer, ParagraphStartCharacterPosition + dcpFirst, LogicalDirection.Forward);
 
-            if(dcpLast > this.Cch)
+            if (dcpLast > this.Cch)
             {
                 dcpLast = this.Cch; // Remove end of paragraph run cp.
             }
 
-            while(textPointerContentStart.GetOffsetToPosition(textPointer) < dcpLast)
+            while (textPointerContentStart.GetOffsetToPosition(textPointer) < dcpLast)
             {
-                if(textPointer.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.ElementStart)
+                if (textPointer.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.ElementStart)
                 {
                     TextElement element = ((TextPointer)textPointer).GetAdjacentElementFromOuterPosition(LogicalDirection.Forward);
 
-                    if(element is Figure || element is Floater)
+                    if (element is Figure || element is Floater)
                     {
                         attachedElements.Add(element);
                         textPointer.MoveByOffset(element.SymbolCount);
@@ -921,7 +922,7 @@ namespace MS.Internal.PtsHost
                     {
                         textPointer.MoveToNextContextPosition(LogicalDirection.Forward);
                     }
-}
+                }
                 else
                 {
                     textPointer.MoveToNextContextPosition(LogicalDirection.Forward);
@@ -938,7 +939,7 @@ namespace MS.Internal.PtsHost
         {
             List<TextElement> textElements = GetAttachedObjectElements(dcpFirst, dcpLast);
 
-            if(textElements.Count == 0)
+            if (textElements.Count == 0)
             {
                 SubmitAttachedObjects(dcpFirst, dcpLast, null);
             }
@@ -955,11 +956,11 @@ namespace MS.Internal.PtsHost
             List<AttachedObject> attachedObjects = new List<AttachedObject>();
             List<TextElement> textElements = GetAttachedObjectElements(dcpFirst, dcpLast);
 
-            for(int index = 0; index < textElements.Count; index++)
+            for (int index = 0; index < textElements.Count; index++)
             {
                 TextElement textElement = textElements[index];
 
-                if(textElement is Figure && StructuralCache.CurrentFormatContext.FinitePage)
+                if (textElement is Figure && StructuralCache.CurrentFormatContext.FinitePage)
                 {
 #pragma warning disable 6518
                     // Disable PRESharp warning 6518. FigureParagraph is passed to attached objects
@@ -1008,7 +1009,7 @@ namespace MS.Internal.PtsHost
             }
 
             // If it were 0, should have been submitted when count was queried.
-            if(attachedObjects.Count != 0)
+            if (attachedObjects.Count != 0)
             {
                 SubmitAttachedObjects(dcpFirst, dcpLast, attachedObjects);
             }
@@ -1026,7 +1027,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
 
         #region Internal Methods
-        
+
         /// <summary>
         /// Submit inline objects for specified range to the cache. All existing
         /// inline objects in this particular range will be removed. 
@@ -1093,7 +1094,7 @@ namespace MS.Internal.PtsHost
                 }
             }
 
-            if(objects == null || objects.Count == 0)
+            if (objects == null || objects.Count == 0)
             {
                 return null;
             }
@@ -1121,11 +1122,11 @@ namespace MS.Internal.PtsHost
             int thisLineAdvance = dvrAscent + dvrDescent;
             int calculatedLineAdvance = TextDpi.ToTextDpi(_lineProperties.CalcLineAdvanceForTextParagraph(this, dcp, TextDpi.FromTextDpi(thisLineAdvance)));
 
-            if(thisLineAdvance != calculatedLineAdvance)
+            if (thisLineAdvance != calculatedLineAdvance)
             {
                 double scale = (1.0 * calculatedLineAdvance) / (1.0 * thisLineAdvance);
-                dvrAscent = (int) (dvrAscent * scale);
-                dvrDescent = (int) (dvrDescent * scale);
+                dvrAscent = (int)(dvrAscent * scale);
+                dvrDescent = (int)(dvrDescent * scale);
             }
         }
 
@@ -1162,7 +1163,7 @@ namespace MS.Internal.PtsHost
             // Clear update info of all floaters and figures
             if (_attachedObjects != null)
             {
-                for (int index=0; index < _attachedObjects.Count; index++)
+                for (int index = 0; index < _attachedObjects.Count; index++)
                 {
                     _attachedObjects[index].Para.ClearUpdateInfo();
                 }
@@ -1198,7 +1199,7 @@ namespace MS.Internal.PtsHost
                 // Get element owner of the first figure or floater, whichever comes first
                 AnchoredBlock objectElement = null;
 
-                if(_attachedObjects != null && _attachedObjects.Count > 0)
+                if (_attachedObjects != null && _attachedObjects.Count > 0)
                 {
                     objectElement = (AnchoredBlock)(_attachedObjects[0].Element);
                 }
@@ -1229,11 +1230,11 @@ namespace MS.Internal.PtsHost
             // Invalidate structure of floaters and figures
             if (_attachedObjects != null)
             {
-                for (int index=0; index < _attachedObjects.Count; index++)
+                for (int index = 0; index < _attachedObjects.Count; index++)
                 {
                     BaseParagraph attachedObjectPara = _attachedObjects[index].Para;
 
-                    if(attachedObjectPara.ParagraphEndCharacterPosition >= startPosition)
+                    if (attachedObjectPara.ParagraphEndCharacterPosition >= startPosition)
                     {
                         attachedObjectPara.InvalidateStructure(startPosition);
                     }
@@ -1253,7 +1254,7 @@ namespace MS.Internal.PtsHost
             // Invalidate structure of floaters and figures
             if (_attachedObjects != null)
             {
-                for (int index=0; index < _attachedObjects.Count; index++)
+                for (int index = 0; index < _attachedObjects.Count; index++)
                 {
                     _attachedObjects[index].Para.InvalidateFormatCache();
                 }
@@ -1332,7 +1333,7 @@ namespace MS.Internal.PtsHost
             _currentLine = line;
 
             TextLineBreak textLineBreak = null;
-            if(pbrLineIn != IntPtr.Zero)
+            if (pbrLineIn != IntPtr.Zero)
             {
                 LineBreakRecord lineBreakRecord = PtsContext.HandleToObject(pbrLineIn) as LineBreakRecord;
                 PTS.ValidateHandle(lineBreakRecord);
@@ -1358,15 +1359,15 @@ namespace MS.Internal.PtsHost
         /// </param>
         internal Size MeasureChild(InlineObjectRun inlineObject)
         {
-            if(_currentLine == null)
+            if (_currentLine == null)
             {
                 return ((OptimalTextSource)StructuralCache.TextFormatterHost.Context).MeasureChild(inlineObject);
             }
             else
             {
-                return _currentLine.MeasureChild(inlineObject);               
+                return _currentLine.MeasureChild(inlineObject);
             }
-        }   
+        }
 
         /// <summary>
         /// Returns true if there's anything complicated about this para - figures, floaters
@@ -1374,7 +1375,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal bool HasFiguresFloatersOrInlineObjects()
         {
-            if(HasFiguresOrFloaters() || (_inlineObjects != null && _inlineObjects.Count > 0))
+            if (HasFiguresOrFloaters() || (_inlineObjects != null && _inlineObjects.Count > 0))
             {
                 return true;
             }
@@ -1395,35 +1396,35 @@ namespace MS.Internal.PtsHost
         /// Updates text content range with attached object list. Subtracts out all of the known figures and floaters
         /// Ranges, then adds back in the ranges for the para clients.
         /// </summary>
-        internal void UpdateTextContentRangeFromAttachedObjects(TextContentRange textContentRange, int dcpFirst, int dcpLast, PTS.FSATTACHEDOBJECTDESCRIPTION [] arrayAttachedObjectDesc)
+        internal void UpdateTextContentRangeFromAttachedObjects(TextContentRange textContentRange, int dcpFirst, int dcpLast, PTS.FSATTACHEDOBJECTDESCRIPTION[] arrayAttachedObjectDesc)
         {
             int cpCur = dcpFirst;
 
-            for(int index = 0; _attachedObjects != null && index < _attachedObjects.Count; index++)                
+            for (int index = 0; _attachedObjects != null && index < _attachedObjects.Count; index++)
             {
                 AttachedObject attachedObject = _attachedObjects[index];
 
                 int startContentPosition = attachedObject.Para.ParagraphStartCharacterPosition;
                 int paraCch = attachedObject.Para.Cch;
 
-                if(startContentPosition >= cpCur && startContentPosition < dcpLast)
+                if (startContentPosition >= cpCur && startContentPosition < dcpLast)
                 {
                     textContentRange.Merge(new TextContentRange(cpCur, startContentPosition, StructuralCache.TextContainer));
                     cpCur = startContentPosition + paraCch; // Skip past para content range
                 }
 
-                if(dcpLast < cpCur)
+                if (dcpLast < cpCur)
                 {
                     break;
                 }
             }
 
-            if(cpCur < dcpLast)
+            if (cpCur < dcpLast)
             {
                 textContentRange.Merge(new TextContentRange(cpCur, dcpLast, StructuralCache.TextContainer));
             }
 
-            for(int index = 0; arrayAttachedObjectDesc != null && index < arrayAttachedObjectDesc.Length; index++)
+            for (int index = 0; arrayAttachedObjectDesc != null && index < arrayAttachedObjectDesc.Length; index++)
             {
                 PTS.FSATTACHEDOBJECTDESCRIPTION attachedObject = arrayAttachedObjectDesc[index];
                 BaseParaClient paraClient;
@@ -1456,12 +1457,12 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// Run cache used by text formatter.
         /// </summary>
-        internal TextRunCache TextRunCache 
-        { 
-            get 
-            { 
-                return _textRunCache; 
-            } 
+        internal TextRunCache TextRunCache
+        {
+            get
+            {
+                return _textRunCache;
+            }
         }
 
         /// <summary>
@@ -1479,12 +1480,12 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// Optimal paragraph flag
         /// </summary>
-        internal bool IsOptimalParagraph 
-        { 
-            get 
+        internal bool IsOptimalParagraph
+        {
+            get
             {
-                return StructuralCache.IsOptimalParagraphEnabled && GetLineProperties(false, 0).TextWrapping != TextWrapping.NoWrap; 
-            } 
+                return StructuralCache.IsOptimalParagraphEnabled && GetLineProperties(false, 0).TextWrapping != TextWrapping.NoWrap;
+            }
         }
 
         #endregion Internal Properties
@@ -1514,11 +1515,11 @@ namespace MS.Internal.PtsHost
 
                 TextProperties defaultTextProperties = new TextProperties(Element, StaticTextPointer.Null, false /* inline objects */, false /* get background */,
                     StructuralCache.TextFormatterHost.PixelsPerDip);
-                
+
                 _lineProperties = new LineProperties(Element, StructuralCache.FormattingOwner, defaultTextProperties, null); // No marker properties
 
-                bool isHyphenationEnabled = (bool) Element.GetValue(Block.IsHyphenationEnabledProperty);
-                if(isHyphenationEnabled)
+                bool isHyphenationEnabled = (bool)Element.GetValue(Block.IsHyphenationEnabledProperty);
+                if (isHyphenationEnabled)
                 {
                     _lineProperties.Hyphenator = StructuralCache.Hyphenator;
                 }
@@ -1543,24 +1544,26 @@ namespace MS.Internal.PtsHost
         /// </param>
         private void SubmitEmbeddedObjects<T>(ref List<T> objectsCached, int dcpStart, int dcpLim, List<T> objectsNew) where T : EmbeddedObject
         {
-            ErrorHandler.Assert(objectsNew == null || (objectsNew[0].Dcp >= dcpStart && objectsNew[objectsNew.Count-1].Dcp <= dcpLim), ErrorHandler.SubmitInvalidList);
+            ErrorHandler.Assert(objectsNew == null || (objectsNew[0].Dcp >= dcpStart && objectsNew[objectsNew.Count - 1].Dcp <= dcpLim), ErrorHandler.SubmitInvalidList);
 
             // Make sure that cached objects array exists
             if (objectsCached == null)
             {
-                if (objectsNew == null) 
+                if (objectsNew == null)
                 {
                     // Nothing to do
-                    return; 
-                } 
+                    return;
+                }
                 objectsCached = new List<T>(objectsNew.Count);
             }
 
             // Find affected range of cached objects
             int end = objectsCached.Count;
-            while (end > 0 && objectsCached[end-1].Dcp >= dcpLim) --end;
+            while (end > 0 && objectsCached[end - 1].Dcp >= dcpLim)
+                --end;
             int start = end;
-            while (start > 0 && objectsCached[start-1].Dcp >= dcpStart) --start;
+            while (start > 0 && objectsCached[start - 1].Dcp >= dcpStart)
+                --start;
 
             // There are 3 situations, which may happen when submitting embedded objects:
             // (1) Only remove obsolete objects (no objects to add)
@@ -1604,7 +1607,7 @@ namespace MS.Internal.PtsHost
                             if (idx > idxNew)
                             {
                                 objectsCached.InsertRange(start, objectsNew.GetRange(idxNew, idx - idxNew));
-                                end   += idx - idxNew;
+                                end += idx - idxNew;
                                 start += idx - idxNew;
                             }
                             oldEmbeddedObject.Update(newEmbeddedObject);
@@ -1654,23 +1657,23 @@ namespace MS.Internal.PtsHost
         /// difference in characters count
         /// </param>
         private void UpdateEmbeddedObjectsCache<T>(
-            ref List<T> objectsCached,     
-            int dcpStart,                    
-            int cchDeleted,                  
+            ref List<T> objectsCached,
+            int dcpStart,
+            int cchDeleted,
             int cchDiff) where T : EmbeddedObject
         {
             if (objectsCached != null)
             {
                 // Find the first and last affected object
                 int first = 0;
-                while (first < objectsCached.Count && objectsCached[first].Dcp < dcpStart) 
-                { 
-                    ++first; 
+                while (first < objectsCached.Count && objectsCached[first].Dcp < dcpStart)
+                {
+                    ++first;
                 }
                 int last = first;
-                while (last < objectsCached.Count && objectsCached[last].Dcp < dcpStart + cchDeleted) 
-                { 
-                    ++last; 
+                while (last < objectsCached.Count && objectsCached[last].Dcp < dcpStart + cchDeleted)
+                {
+                    ++last;
                 }
 
                 // Remove obsolete embedded objects

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -39,7 +39,7 @@ namespace MS.Internal.IO.Packaging
         /// <param name="packageUri">uri of the package</param>
         /// <param name="partUri">uri of the part - may be null</param>
         /// <param name="cacheEntry">cache entry to base this response on</param>
-        #pragma warning disable SYSLIB0014 
+#pragma warning disable SYSLIB0014
         internal PseudoWebRequest(Uri uri, Uri packageUri, Uri partUri, Package cacheEntry)
         {
             Debug.Assert(uri != null, "PackWebRequest uri cannot be null");
@@ -55,14 +55,14 @@ namespace MS.Internal.IO.Packaging
             // set defaults
             SetDefaults();
         }
-        #pragma warning restore SYSLIB0014 
+#pragma warning restore SYSLIB0014
 
         //------------------------------------------------------
         //
         //  Public Methods
         //
         //------------------------------------------------------
-#region WebRequest - Sync
+        #region WebRequest - Sync
         /// <summary>
         /// GetRequestStream
         /// </summary>
@@ -360,21 +360,21 @@ namespace MS.Internal.IO.Packaging
         //  Private Fields
         //
         //------------------------------------------------------
-        private Uri                 _uri;                   // pack uri
-        private Uri                 _innerUri;              // inner uri extracted from the pack uri
-        private Uri                 _partName;              // name of PackagePart (if any) - null for full-container references
-        private Package             _cacheEntry;            // cached package
+        private Uri _uri;                   // pack uri
+        private Uri _innerUri;              // inner uri extracted from the pack uri
+        private Uri _partName;              // name of PackagePart (if any) - null for full-container references
+        private Package _cacheEntry;            // cached package
 
         // local copies of public members
-        private string              _connectionGroupName;
-        private string              _contentType;           // value of [CONTENT-TYPE] in WebHeaderCollection - provided by server
-        private int                 _contentLength;         // length of data to upload - should be -1
-        private string              _method;
-        private ICredentials        _credentials;           // default is null
+        private string _connectionGroupName;
+        private string _contentType;           // value of [CONTENT-TYPE] in WebHeaderCollection - provided by server
+        private int _contentLength;         // length of data to upload - should be -1
+        private string _method;
+        private ICredentials _credentials;           // default is null
         private WebHeaderCollection _headers;               // empty is default
-        private bool                _preAuthenticate;       // default to false
-        private IWebProxy           _proxy;
-        private int                 _timeout;               // timeout
-        private bool                _useDefaultCredentials; // default is false for HTTP, exception for FTP
+        private bool _preAuthenticate;       // default to false
+        private IWebProxy _proxy;
+        private int _timeout;               // timeout
+        private bool _useDefaultCredentials; // default is false for HTTP, exception for FTP
     }
 }

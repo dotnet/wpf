@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,16 +17,16 @@ namespace System.Windows.Media.Animation
         /// <summary>
         /// Represent the X offset of the progress along the path.
         /// </summary>
-        X                   = 0,
+        X = 0,
 
         /// <summary>
         /// Represent the Y offset of the progress along the path.
         /// </summary>
-        Y                   = 1,
+        Y = 1,
 
         /// <summary>
         /// Represents the tangent angle of rotation of the progress along the path.
         /// </summary>
-        Angle               = 2,
+        Angle = 2,
     }
 }

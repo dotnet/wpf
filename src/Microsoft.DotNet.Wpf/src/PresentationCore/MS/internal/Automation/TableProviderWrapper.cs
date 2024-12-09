@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,10 +9,10 @@
 //
 //
 
-using System.Windows.Threading;
 using System.Windows.Automation;
-using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
+using System.Windows.Automation.Provider;
+using System.Windows.Threading;
 
 namespace MS.Internal.Automation
 {
@@ -29,17 +29,17 @@ namespace MS.Internal.Automation
     // * private methods - one for each interface entry point - which get called back
     //   on the right context. These call through to the peer that's actually
     //   implenting the I...Provider version of the interface. 
-    internal class TableProviderWrapper: MarshalByRefObject, ITableProvider
+    internal class TableProviderWrapper : MarshalByRefObject, ITableProvider
     {
         //------------------------------------------------------
         //
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
-        private TableProviderWrapper( AutomationPeer peer, ITableProvider iface )
+        private TableProviderWrapper(AutomationPeer peer, ITableProvider iface)
         {
             _peer = peer;
             _iface = iface;
@@ -53,19 +53,19 @@ namespace MS.Internal.Automation
         //  Interface ITableProvider
         //
         //------------------------------------------------------
- 
+
         #region Interface ITableProvider
 
         public IRawElementProviderSimple GetItem(int row, int column)
         {
-            return (IRawElementProviderSimple) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetItem ), new int [ ] { row, column } );
-        } 
+            return (IRawElementProviderSimple)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetItem), new int[] { row, column });
+        }
 
         public int RowCount
         {
             get
             {
-                return (int) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetRowCount ), null );
+                return (int)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetRowCount), null);
             }
         }
 
@@ -73,25 +73,25 @@ namespace MS.Internal.Automation
         {
             get
             {
-                return (int) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetColumnCount ), null );
+                return (int)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetColumnCount), null);
             }
         }
-        
-        public IRawElementProviderSimple [] GetRowHeaders()
+
+        public IRawElementProviderSimple[] GetRowHeaders()
         {
-            return (IRawElementProviderSimple []) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetRowHeaders ), null );
+            return (IRawElementProviderSimple[])ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetRowHeaders), null);
         }
 
-        public IRawElementProviderSimple [] GetColumnHeaders()
+        public IRawElementProviderSimple[] GetColumnHeaders()
         {
-            return (IRawElementProviderSimple []) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetColumnHeaders ), null );
+            return (IRawElementProviderSimple[])ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetColumnHeaders), null);
         }
 
         public RowOrColumnMajor RowOrColumnMajor
         {
             get
             {
-                return (RowOrColumnMajor) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetRowOrColumnMajor ), null );
+                return (RowOrColumnMajor)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetRowOrColumnMajor), null);
             }
         }
 
@@ -103,12 +103,12 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
-        internal static object Wrap( AutomationPeer peer, object iface )
+        internal static object Wrap(AutomationPeer peer, object iface)
         {
-            return new TableProviderWrapper( peer, (ITableProvider) iface );
+            return new TableProviderWrapper(peer, (ITableProvider)iface);
         }
 
         #endregion Internal Methods
@@ -118,36 +118,36 @@ namespace MS.Internal.Automation
         //  Private Methods
         //
         //------------------------------------------------------
- 
+
         #region Private Methods
 
-        private object GetItem( object arg )
+        private object GetItem(object arg)
         {
-            int [ ] coords = (int [ ]) arg;
-            return _iface.GetItem( coords[ 0 ], coords[ 1 ] );
-        } 
+            int[] coords = (int[])arg;
+            return _iface.GetItem(coords[0], coords[1]);
+        }
 
-        private object GetRowCount( object unused )
+        private object GetRowCount(object unused)
         {
             return _iface.RowCount;
         }
 
-        private object GetColumnCount( object unused )
+        private object GetColumnCount(object unused)
         {
             return _iface.ColumnCount;
         }
 
-        private object GetRowHeaders( object unused )
+        private object GetRowHeaders(object unused)
         {
             return _iface.GetRowHeaders();
         }
 
-        private object GetColumnHeaders( object unused )
+        private object GetColumnHeaders(object unused)
         {
             return _iface.GetColumnHeaders();
         }
 
-        private object GetRowOrColumnMajor( object unused )
+        private object GetRowOrColumnMajor(object unused)
         {
             return _iface.RowOrColumnMajor;
         }
@@ -160,7 +160,7 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private AutomationPeer _peer;

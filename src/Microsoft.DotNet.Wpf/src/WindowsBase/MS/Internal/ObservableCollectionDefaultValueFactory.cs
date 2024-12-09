@@ -1,10 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Windows;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Windows;
 
 namespace MS.Internal
 {
@@ -37,15 +37,15 @@ namespace MS.Internal
         {
             Debug.Assert(owner != null && property != null,
                 "It is the caller responsibility to ensure that owner and property are non-null.");
-            
+
             var result = new ObservableCollection<T>();
-            
+
             // Wire up a ObservableCollectionDefaultPromoter to observe the default value we
             // just created and automatically promote it to local if it is modified.
             // NOTE: We do not holding a reference to this because it should have the same lifetime as
             // the collection.  It will not be immediately GC'ed because it hooks the collections change event.
             new ObservableCollectionDefaultPromoter(owner, property, result);
-                        
+
             return result;
         }
 
@@ -96,7 +96,7 @@ namespace MS.Internal
                         _owner.SetValue(_property, _collection);
                     }
                 }
-                
+
                 // Unhook the change handler because we're finsihed promoting
                 _collection.CollectionChanged -= OnDefaultValueChanged;
             }

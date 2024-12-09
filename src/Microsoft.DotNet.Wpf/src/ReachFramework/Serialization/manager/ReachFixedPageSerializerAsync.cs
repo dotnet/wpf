@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,12 +12,12 @@
                                                                         
 --*/
 using System.ComponentModel;
-using System.Xml;
 using System.Printing;
-using System.Windows.Xps.Packaging;
 using System.Windows.Documents;
-using System.Windows.Media;
 using System.Windows.Markup;
+using System.Windows.Media;
+using System.Windows.Xps.Packaging;
+using System.Xml;
 
 namespace System.Windows.Xps.Serialization
 {
@@ -40,16 +40,16 @@ namespace System.Windows.Xps.Serialization
         public
         FixedPageSerializerAsync(
             PackageSerializationManager manager
-            ):
+            ) :
         base(manager)
         {
-            
+
         }
 
         #endregion Constructor
-        
+
         #region Public Methods
-        
+
         public
         override
         void
@@ -57,32 +57,32 @@ namespace System.Windows.Xps.Serialization
             ReachSerializerContext context
             )
         {
-            if(context != null)
+            if (context != null)
             {
-                switch (context.Action) 
+                switch (context.Action)
                 {
                     case SerializerAction.endPersistObjectData:
-                    {
-                        EndPersistObjectData();
-                        break;
-                    }
+                        {
+                            EndPersistObjectData();
+                            break;
+                        }
 
                     case SerializerAction.endSerializeReachFixedPage:
-                    {
-                        ReachFixedPageSerializerContext thisContext = context as ReachFixedPageSerializerContext;
-                        if(thisContext == null)
                         {
+                            ReachFixedPageSerializerContext thisContext = context as ReachFixedPageSerializerContext;
+                            if (thisContext == null)
+                            {
 
+                            }
+                            EndSerializeReachFixedPage(thisContext);
+                            break;
                         }
-                        EndSerializeReachFixedPage(thisContext);
-                        break;
-                    }
 
                     default:
-                    {
-                        base.AsyncOperation(context);
-                        break;
-                    }
+                        {
+                            base.AsyncOperation(context);
+                            break;
+                        }
                 }
             }
         }
@@ -117,7 +117,7 @@ namespace System.Windows.Xps.Serialization
         #endregion Public Methods
 
         #region Internal Methods
-        
+
         /// <summary>
         /// The main method that is called to serialize the FixedPage
         /// and that is usually called from within the serialization manager 
@@ -160,14 +160,14 @@ namespace System.Windows.Xps.Serialization
         override
         void
         PersistObjectData(
-            SerializableObjectContext   serializableObjectContext
+            SerializableObjectContext serializableObjectContext
             )
         {
             ArgumentNullException.ThrowIfNull(serializableObjectContext);
 
             FixedPage fixedPage = serializableObjectContext.TargetObject as FixedPage;
 
-            if( SerializationManager is IXpsSerializationManager)
+            if (SerializationManager is IXpsSerializationManager)
             {
                 (SerializationManager as IXpsSerializationManager).RegisterPageStart();
             }
@@ -177,14 +177,14 @@ namespace System.Windows.Xps.Serialization
 
             String xmlnsForType = SerializationManager.GetXmlNSForType(serializableObjectContext.TargetObject.GetType());
 
-            if(xmlnsForType == null)
+            if (xmlnsForType == null)
             {
                 XmlWriter.WriteStartElement(serializableObjectContext.Name);
             }
             else
             {
                 XmlWriter.WriteStartElement(serializableObjectContext.Name);
-                
+
                 XmlWriter.WriteAttributeString(XpsS0Markup.Xmlns, xmlnsForType);
                 XmlWriter.WriteAttributeString(XpsS0Markup.XmlnsX, XpsS0Markup.XmlnsXSchema);
 
@@ -202,16 +202,16 @@ namespace System.Windows.Xps.Serialization
             {
                 Size fixedPageSize = new Size(fixedPage.Width, fixedPage.Height);
                 ((IXpsSerializationManager)SerializationManager).FixedPageSize = fixedPageSize;
-            
+
                 //
                 // Before we serialize any properties on the FixedPage, we need to 
                 // serialize the FixedPage as a Visual
                 //
                 Visual fixedPageAsVisual = serializableObjectContext.TargetObject as Visual;
 
-                bool   needEndVisual     = false;
+                bool needEndVisual = false;
 
-                if(fixedPageAsVisual != null)
+                if (fixedPageAsVisual != null)
                 {
                     needEndVisual = SerializePageAsVisual(fixedPageAsVisual);
                 }
@@ -227,8 +227,8 @@ namespace System.Windows.Xps.Serialization
                     ((IXpsSerializationManagerAsync)SerializationManager).OperationStack.Push(context);
 
                     PrintTicket printTicket = ((IXpsSerializationManager)SerializationManager).FixedPagePrintTicket;
-                    
-                    if(printTicket != null)
+
+                    if (printTicket != null)
                     {
                         PrintTicketSerializer serializer = new PrintTicketSerializer(SerializationManager);
                         serializer.SerializeObject(printTicket);
@@ -266,8 +266,8 @@ namespace System.Windows.Xps.Serialization
 
             attributeValue = GetValueOfAttributeAsString(serializablePropertyContext);
 
-            if ( (attributeValue != null) && 
-                 (attributeValue.Length > 0) )
+            if ((attributeValue != null) &&
+                 (attributeValue.Length > 0))
             {
                 //
                 // Emit name="value" attribute
@@ -291,11 +291,11 @@ namespace System.Windows.Xps.Serialization
         {
             ArgumentNullException.ThrowIfNull(serializablePropertyContext);
 
-            String valueAsString                  = null;
+            String valueAsString = null;
             Object targetObjectContainingProperty = serializablePropertyContext.TargetObject;
-            Object propertyValue                  = serializablePropertyContext.Value;
+            Object propertyValue = serializablePropertyContext.Value;
 
-            if(propertyValue != null)
+            if (propertyValue != null)
             {
                 TypeConverter typeConverter = serializablePropertyContext.TypeConverter;
 
@@ -322,9 +322,9 @@ namespace System.Windows.Xps.Serialization
         }
 
         #endregion Internal Methods
-    
+
         #region Public Properties
-        
+
         /// <summary>
         /// Queries / Set the XmlWriter for a FixedPage.
         /// </summary>
@@ -335,7 +335,7 @@ namespace System.Windows.Xps.Serialization
         {
             get
             {
-                if(base.XmlWriter == null)
+                if (base.XmlWriter == null)
                 {
                     base.XmlWriter = SerializationManager.AcquireXmlWriter(typeof(FixedPage));
                 }
@@ -351,7 +351,7 @@ namespace System.Windows.Xps.Serialization
         }
 
         #endregion Public Properties
-        
+
         #region Private Methods
 
         private
@@ -364,7 +364,7 @@ namespace System.Windows.Xps.Serialization
 
             ReachVisualSerializerAsync serializer = new ReachVisualSerializerAsync(SerializationManager);
 
-            if(serializer!=null)
+            if (serializer != null)
             {
                 needEndVisual = serializer.SerializeDisguisedVisual(fixedPageAsVisual);
             }
@@ -384,19 +384,19 @@ namespace System.Windows.Xps.Serialization
         {
             ReachFixedPageSerializerContext thisContext = context as ReachFixedPageSerializerContext;
 
-            if(thisContext != null)
+            if (thisContext != null)
             {
-                if(thisContext.EndVisual)
+                if (thisContext.EndVisual)
                 {
-                    XmlWriter           pageWriter  = ((XpsSerializationManagerAsync)SerializationManager).
+                    XmlWriter pageWriter = ((XpsSerializationManagerAsync)SerializationManager).
                                                       PackagingPolicy.AcquireXmlWriterForPage();
 
-                    XmlWriter           resWriter   = ((XpsSerializationManagerAsync)SerializationManager).
+                    XmlWriter resWriter = ((XpsSerializationManagerAsync)SerializationManager).
                                                       PackagingPolicy.AcquireXmlWriterForResourceDictionary();
 
 
                     Size fixedPageSize = ((IXpsSerializationManager)SerializationManager).FixedPageSize;
-                    VisualTreeFlattener flattener  = ((IXpsSerializationManager)SerializationManager).
+                    VisualTreeFlattener flattener = ((IXpsSerializationManager)SerializationManager).
                                                       VisualSerializationService.AcquireVisualTreeFlattener(resWriter,
                                                                                                             pageWriter,
                                                                                                             fixedPageSize);
@@ -429,7 +429,7 @@ namespace System.Windows.Xps.Serialization
                 //
                 // Signal to any registered callers that the Page has been serialized
                 //
-                XpsSerializationProgressChangedEventArgs progressEvent = 
+                XpsSerializationProgressChangedEventArgs progressEvent =
                 new XpsSerializationProgressChangedEventArgs(XpsWritingProgressChangeLevel.FixedPageWritingProgress,
                                                              0,
                                                              0,
@@ -454,16 +454,16 @@ namespace System.Windows.Xps.Serialization
     {
         public
         ReachFixedPageSerializerContext(
-            ReachSerializerAsync        serializer,
-            SerializableObjectContext   objectContext,
-            SerializerAction            action,
-            bool                        endVisual,
-            ReachTreeWalker             treeWalker
-            ):
-            base(serializer,objectContext,action)
+            ReachSerializerAsync serializer,
+            SerializableObjectContext objectContext,
+            SerializerAction action,
+            bool endVisual,
+            ReachTreeWalker treeWalker
+            ) :
+            base(serializer, objectContext, action)
         {
             this._treeWalker = treeWalker;
-            this._endVisual  = endVisual;
+            this._endVisual = endVisual;
         }
 
 
@@ -488,9 +488,9 @@ namespace System.Windows.Xps.Serialization
         }
 
         private
-        bool                _endVisual;
+        bool _endVisual;
 
         private
-        ReachTreeWalker     _treeWalker;
+        ReachTreeWalker _treeWalker;
     };
 }

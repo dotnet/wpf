@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,13 +15,13 @@ namespace System.Windows.Media
     /// DisableDpiAwarenessAttribute tells to disable DpiAwareness in this 
     /// application for WPF UI elements.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Assembly, AllowMultiple=false)]
-    public sealed class DisableDpiAwarenessAttribute: Attribute
+    [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = false)]
+    public sealed class DisableDpiAwarenessAttribute : Attribute
     {
         /// <summary>
         /// Ctor of DisableDpiAwareness
         /// </summary>
-        public DisableDpiAwarenessAttribute( )
+        public DisableDpiAwarenessAttribute()
         {
         }
     }

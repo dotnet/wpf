@@ -1,14 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: Text pattern provider wrapper for WCP
 
-using System.Windows.Threading;
 using System.Windows;
 using System.Windows.Automation;
-using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
+using System.Windows.Automation.Provider;
+using System.Windows.Threading;
 
 namespace MS.Internal.Automation
 {
@@ -20,10 +20,10 @@ namespace MS.Internal.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
-        private TextProviderWrapper( AutomationPeer peer, ITextProvider iface )
+        private TextProviderWrapper(AutomationPeer peer, ITextProvider iface)
         {
             _peer = peer;
             _iface = iface;
@@ -37,15 +37,15 @@ namespace MS.Internal.Automation
         //  Interface ITextProvider
         //
         //------------------------------------------------------
- 
+
         #region Interface ITextProvider
 
-        public ITextRangeProvider [] GetSelection()
+        public ITextRangeProvider[] GetSelection()
         {
-            return (ITextRangeProvider [])ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetSelection), null);
+            return (ITextRangeProvider[])ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetSelection), null);
         }
 
-        public ITextRangeProvider [] GetVisibleRanges()
+        public ITextRangeProvider[] GetVisibleRanges()
         {
             return (ITextRangeProvider[])ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetVisibleRanges), null);
         }
@@ -65,7 +65,7 @@ namespace MS.Internal.Automation
             return (ITextRangeProvider)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(RangeFromPoint), screenLocation);
         }
 
-        public ITextRangeProvider DocumentRange 
+        public ITextRangeProvider DocumentRange
         {
             get
             {
@@ -89,12 +89,12 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
-        internal static object Wrap( AutomationPeer peer, object iface )
+        internal static object Wrap(AutomationPeer peer, object iface)
         {
-            return new TextProviderWrapper( peer, (ITextProvider) iface );
+            return new TextProviderWrapper(peer, (ITextProvider)iface);
         }
 
         #endregion Internal Methods
@@ -104,34 +104,34 @@ namespace MS.Internal.Automation
         //  Private Methods
         //
         //------------------------------------------------------
- 
+
         #region Private Methods
 
         private object GetSelection(object unused)
         {
-            return TextRangeProviderWrapper.WrapArgument( _iface.GetSelection(), _peer );
+            return TextRangeProviderWrapper.WrapArgument(_iface.GetSelection(), _peer);
         }
 
         private object GetVisibleRanges(object unused)
         {
-            return TextRangeProviderWrapper.WrapArgument( _iface.GetVisibleRanges(), _peer );
+            return TextRangeProviderWrapper.WrapArgument(_iface.GetVisibleRanges(), _peer);
         }
 
         private object RangeFromChild(object arg)
         {
             IRawElementProviderSimple childElement = (IRawElementProviderSimple)arg;
-            return TextRangeProviderWrapper.WrapArgument( _iface.RangeFromChild(childElement), _peer );
+            return TextRangeProviderWrapper.WrapArgument(_iface.RangeFromChild(childElement), _peer);
         }
 
         private object RangeFromPoint(object arg)
         {
             Point screenLocation = (Point)arg;
-            return TextRangeProviderWrapper.WrapArgument( _iface.RangeFromPoint(screenLocation), _peer );
+            return TextRangeProviderWrapper.WrapArgument(_iface.RangeFromPoint(screenLocation), _peer);
         }
 
         private object GetDocumentRange(object unused)
         {
-            return TextRangeProviderWrapper.WrapArgument( _iface.DocumentRange, _peer );
+            return TextRangeProviderWrapper.WrapArgument(_iface.DocumentRange, _peer);
         }
 
         private object GetSupportedTextSelection(object unused)
@@ -146,7 +146,7 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private AutomationPeer _peer;

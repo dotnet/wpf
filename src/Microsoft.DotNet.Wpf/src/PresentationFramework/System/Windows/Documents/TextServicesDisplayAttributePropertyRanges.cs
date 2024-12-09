@@ -1,10 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System.Runtime.InteropServices;
 using System.Collections;
+using System.Runtime.InteropServices;
 using MS.Win32;
 
 namespace System.Windows.Documents
@@ -30,7 +30,7 @@ namespace System.Windows.Documents
 
         internal TextServicesDisplayAttributePropertyRanges(TextStore textstore)
             : base(textstore, UnsafeNativeMethods.GUID_PROP_ATTRIBUTE)
-        { 
+        {
         }
 
         #endregion Constructors
@@ -48,13 +48,13 @@ namespace System.Windows.Documents
         /// </summary>
         internal override void OnRange(
             UnsafeNativeMethods.ITfProperty property,
-            int ecReadOnly, 
+            int ecReadOnly,
             UnsafeNativeMethods.ITfRange range)
         {
             Int32 guidatom = GetInt32Value(ecReadOnly, property, range);
             if (guidatom != 0)
             {
-                TextServicesDisplayAttribute  attr;
+                TextServicesDisplayAttribute attr;
                 attr = GetDisplayAttribute(guidatom);
                 if (attr != null)
                 {
@@ -73,8 +73,8 @@ namespace System.Windows.Documents
         ///    we track the property change here.
         /// </summary>
         internal override void OnEndEdit(UnsafeNativeMethods.ITfContext context,
-                                        int ecReadOnly, 
-                                        UnsafeNativeMethods.ITfEditRecord editRecord) 
+                                        int ecReadOnly,
+                                        UnsafeNativeMethods.ITfEditRecord editRecord)
         {
             Guid displayAttributeGuid;
             UnsafeNativeMethods.ITfProperty displayAttributeProperty;
@@ -230,7 +230,7 @@ namespace System.Windows.Documents
 
             if (catmgr == null)
                 return null;
-        
+
             Guid guid;
             catmgr.GetGUID(guidatom, out guid);
             Marshal.ReleaseComObject(catmgr);
@@ -258,7 +258,7 @@ namespace System.Windows.Documents
                 dai.GetAttributeInfo(out tfattr);
                 attr = new TextServicesDisplayAttribute(tfattr);
                 Marshal.ReleaseComObject(dai);
- 
+
                 //
                 // cache this into our hashtable.
                 //

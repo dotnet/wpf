@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -65,7 +65,7 @@ namespace MS.Internal.Printing.Configuration
             if (hdc != IntPtr.Zero)
             {
                 HandleRef hdcRef = new HandleRef(this, hdc);
-                
+
                 try
                 {
                     logicalPixelsX = UnsafeNativeMethods.GetDeviceCaps(hdcRef, DeviceCap.LOGPIXELSX);
@@ -80,7 +80,7 @@ namespace MS.Internal.Printing.Configuration
                 }
                 finally
                 {
-                     UnsafeNativeMethods.DeleteDC(hdcRef);
+                    UnsafeNativeMethods.DeleteDC(hdcRef);
                 }
             }
             else
@@ -96,7 +96,7 @@ namespace MS.Internal.Printing.Configuration
                 return false;
             }
         }
-    
+
         /// <summary>
         /// Get the minimum page width and height
         /// </summary>
@@ -190,10 +190,10 @@ namespace MS.Internal.Printing.Configuration
         /// </summary>
         public IList<string> BinNames
         {
-            get 
+            get
             {
                 // 24 chars, 2 bytes per char
-                return GetArrayCapability<string>(DeviceCapability.DC_BINNAMES, ReadUnicodeStringArray, 24 * 2); 
+                return GetArrayCapability<string>(DeviceCapability.DC_BINNAMES, ReadUnicodeStringArray, 24 * 2);
             }
         }
 
@@ -218,7 +218,7 @@ namespace MS.Internal.Printing.Configuration
             get
             {
                 // 64 chars, 2 bytes per char
-                return GetArrayCapability<string>(DeviceCapability.DC_PAPERNAMES, ReadUnicodeStringArray, 64 * 2); 
+                return GetArrayCapability<string>(DeviceCapability.DC_PAPERNAMES, ReadUnicodeStringArray, 64 * 2);
             }
         }
 
@@ -243,10 +243,10 @@ namespace MS.Internal.Printing.Configuration
         /// </summary>
         public IList<string> MediaTypeNames
         {
-            get 
+            get
             {
                 // 64 chars, 2 bytes per char
-                return GetArrayCapability<string>(DeviceCapability.DC_MEDIATYPENAMES, ReadUnicodeStringArray, 64 * 2); 
+                return GetArrayCapability<string>(DeviceCapability.DC_MEDIATYPENAMES, ReadUnicodeStringArray, 64 * 2);
             }
         }
 
@@ -437,24 +437,24 @@ namespace MS.Internal.Printing.Configuration
 
         private uint[] ReadDWORDArray(HGlobalBuffer buffer, int itemByteSize)
         {
-            int nItems = buffer.Length / itemByteSize;            
+            int nItems = buffer.Length / itemByteSize;
             uint[] result = new uint[nItems];
 
             bool shouldRelease = false;
             buffer.Handle.DangerousAddRef(ref shouldRelease);
-            try 
+            try
             {
                 IntPtr baseAddr = buffer.Handle.DangerousGetHandle();
                 for (int i = 0, offset = 0; i < nItems; i++, offset += itemByteSize)
                 {
                     result[i] = (uint)Marshal.ReadInt32(baseAddr, offset);
                 }
-                
+
                 return result;
             }
             finally
             {
-                if(shouldRelease)
+                if (shouldRelease)
                 {
                     buffer.Handle.DangerousRelease();
                 }
@@ -468,7 +468,7 @@ namespace MS.Internal.Printing.Configuration
 
             bool shouldRelease = false;
             buffer.Handle.DangerousAddRef(ref shouldRelease);
-            try 
+            try
             {
                 IntPtr baseAddr = buffer.Handle.DangerousGetHandle();
                 for (int i = 0, offset = 0; i < nItems; i++, offset += itemByteSize)
@@ -480,7 +480,7 @@ namespace MS.Internal.Printing.Configuration
             }
             finally
             {
-                if(shouldRelease)
+                if (shouldRelease)
                 {
                     buffer.Handle.DangerousRelease();
                 }
@@ -494,7 +494,7 @@ namespace MS.Internal.Printing.Configuration
 
             bool shouldRelease = false;
             buffer.Handle.DangerousAddRef(ref shouldRelease);
-            try 
+            try
             {
                 IntPtr baseAddr = buffer.Handle.DangerousGetHandle();
                 for (int i = 0, offset = 0; i < nItems; i++, offset += itemByteSize)
@@ -508,7 +508,7 @@ namespace MS.Internal.Printing.Configuration
             }
             finally
             {
-                if(shouldRelease)
+                if (shouldRelease)
                 {
                     buffer.Handle.DangerousRelease();
                 }
@@ -522,7 +522,7 @@ namespace MS.Internal.Printing.Configuration
 
             bool shouldRelease = false;
             buffer.Handle.DangerousAddRef(ref shouldRelease);
-            try 
+            try
             {
                 IntPtr baseAddr = buffer.Handle.DangerousGetHandle();
                 for (int i = 0, offset = 0; i < nItems; i++, offset += itemByteSize)
@@ -536,21 +536,21 @@ namespace MS.Internal.Printing.Configuration
             }
             finally
             {
-                if(shouldRelease)
+                if (shouldRelease)
                 {
                     buffer.Handle.DangerousRelease();
                 }
             }
         }
 
-        private static string [] ReadUnicodeStringArray(HGlobalBuffer buffer, int itemByteSize)
+        private static string[] ReadUnicodeStringArray(HGlobalBuffer buffer, int itemByteSize)
         {
             int nItems = buffer.Length / itemByteSize;
             string[] result = new string[nItems];
 
             bool shouldRelease = false;
             buffer.Handle.DangerousAddRef(ref shouldRelease);
-            try 
+            try
             {
                 IntPtr baseAddr = buffer.Handle.DangerousGetHandle();
                 for (int i = 0, offset = 0; i < nItems; i++, offset += itemByteSize)
@@ -574,7 +574,7 @@ namespace MS.Internal.Printing.Configuration
             }
             finally
             {
-                if(shouldRelease)
+                if (shouldRelease)
                 {
                     buffer.Handle.DangerousRelease();
                 }

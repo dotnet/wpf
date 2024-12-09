@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -35,7 +35,7 @@ namespace System.Windows.Xps.Serialization
         private const double RasterizationClipInflate = 0.2;
 
         #endregion
-        
+
         #region Private Fields
 
         private IMetroDrawingContext _dc;
@@ -46,18 +46,18 @@ namespace System.Windows.Xps.Serialization
         // Pushed combined clipping in world space.
         private List<Geometry> _fullClip = new List<Geometry>();
 
-        private Size     _pageSize;
-        
+        private Size _pageSize;
+
         // Used to track visual brushes whos visuals are being traversed. We do this to detect cycles in the visual tree
         TreeWalkProgress _treeWalkProgress;
-        
+
         #endregion
 
         #region Constructors
 
         internal DrawingContextFlattener(IMetroDrawingContext dc, Size pageSize, TreeWalkProgress treeWalkProgress)
         {
-            _dc       = dc;
+            _dc = dc;
             _pageSize = pageSize;
             _treeWalkProgress = treeWalkProgress;
         }
@@ -209,7 +209,7 @@ namespace System.Windows.Xps.Serialization
         /// </remarks>
         private Brush ReduceBrush(Brush brush, Rect bounds)
         {
-            return BrushProxy.ReduceBrush(brush, bounds, Transform, _pageSize, _treeWalkProgress);            
+            return BrushProxy.ReduceBrush(brush, bounds, Transform, _pageSize, _treeWalkProgress);
         }
 
         private Pen ReducePen(Pen pen, Rect bounds)
@@ -226,7 +226,7 @@ namespace System.Windows.Xps.Serialization
                 return null;
             }
 
-            if (! Object.ReferenceEquals(b, pen.Brush))
+            if (!Object.ReferenceEquals(b, pen.Brush))
             {
                 pen = pen.CloneCurrentValue();
 
@@ -235,7 +235,7 @@ namespace System.Windows.Xps.Serialization
 
             return pen;
         }
-        
+
         /// <summary>
         /// Draw a Geometry with the provided Brush and/or Pen.
         /// </summary>
@@ -249,7 +249,7 @@ namespace System.Windows.Xps.Serialization
 
                     brush = ReduceBrush(brush, bounds);
                 }
-                
+
                 if ((pen != null) && (pen.Brush != null))
                 {
                     Rect bounds = Rect.Empty;
@@ -258,14 +258,14 @@ namespace System.Windows.Xps.Serialization
                     {
                         bounds = geometry.GetRenderBounds(pen);
                     }
-                                            
+
                     pen = ReducePen(pen, bounds);
-                }                    
+                }
                 else
                 {
                     pen = null;
                 }
-                                    
+
                 // Draw even if brush/pen is null since geometry may be a hyperlink.
                 // _dc should cull invisible geometries when necessary.
                 _dc.DrawGeometry(brush, pen, geometry);
@@ -281,7 +281,7 @@ namespace System.Windows.Xps.Serialization
             {
                 DrawingImage drawingImage;
                 D3DImage d3dimage;
-                
+
                 if (image is BitmapSource)
                 {
                     // Apparently, IMetroDrawingContext.DrawImage only handles BitmapSources...
@@ -315,10 +315,10 @@ namespace System.Windows.Xps.Serialization
         /// <returns></returns>
         private Rect PerformRasterizationClip(Rect visualBounds, Matrix visualToWorldTransform)
         {
-            if (! _pageSize.IsEmpty)
+            if (!_pageSize.IsEmpty)
             {
                 Rect pageBox = new Rect(0, 0, _pageSize.Width, _pageSize.Height);
-                
+
                 pageBox.Inflate(
                     RasterizationClipInflate * pageBox.Width,
                     RasterizationClipInflate * pageBox.Height
@@ -326,7 +326,7 @@ namespace System.Windows.Xps.Serialization
 
                 visualBounds.Intersect(pageBox);
             }
-            
+
             return visualBounds;
         }
 
@@ -413,7 +413,7 @@ namespace System.Windows.Xps.Serialization
             {
                 bounds = effect.GetRenderBounds(bounds);
             }
-            
+
             //
             // Rasterize visual in its entirety. Banding is not useful at this point since
             // the resulting bands are all kept in memory anyway. Plus transformation is applied
@@ -435,7 +435,7 @@ namespace System.Windows.Xps.Serialization
                 _dc.DrawImage(bitmap, new Rect(0, 0, bitmap.Width, bitmap.Height));
                 _dc.Pop();
             }
-            
+
             _dc.Pop();
         }
 

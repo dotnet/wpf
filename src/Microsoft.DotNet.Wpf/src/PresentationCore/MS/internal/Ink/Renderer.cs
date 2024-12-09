@@ -59,7 +59,7 @@ namespace System.Windows.Ink
             {
                 get { return _stroke; }
             }
-            
+
             /// <summary>
             /// Updates the contents of the visual.
             /// </summary>
@@ -94,7 +94,7 @@ namespace System.Windows.Ink
                     }
 
                     // Draw selected stroke as hollow
-                    _stroke.DrawInternal (drawingContext, da, _stroke.IsSelected );
+                    _stroke.DrawInternal(drawingContext, da, _stroke.IsSelected);
                 }
             }
 
@@ -111,8 +111,8 @@ namespace System.Windows.Ink
             /// </summary>
             internal bool CachedIsHighlighter
             {
-                get {return _cachedIsHighlighter;}
-                set {_cachedIsHighlighter = value;}
+                get { return _cachedIsHighlighter; }
+                set { _cachedIsHighlighter = value; }
             }
 
             /// <summary>
@@ -120,15 +120,15 @@ namespace System.Windows.Ink
             /// </summary>
             internal Color CachedColor
             {
-                get {return _cachedColor;}
-                set {_cachedColor = value;}
+                get { return _cachedColor; }
+                set { _cachedColor = value; }
             }
 
-            private Stroke                      _stroke;
-            private bool                        _cachedIsHighlighter;
-            private Color                       _cachedColor;
-            private Renderer                    _renderer;
-}
+            private Stroke _stroke;
+            private bool _cachedIsHighlighter;
+            private Color _cachedColor;
+            private Renderer _renderer;
+        }
 
         /// <summary>
         /// Private helper that helps reverse map the highlighter dictionary
@@ -208,7 +208,7 @@ namespace System.Windows.Ink
             get
             {
                 // We should never return a null value.
-                if ( _strokes == null )
+                if (_strokes == null)
                 {
                     _strokes = new StrokeCollection();
 
@@ -282,7 +282,7 @@ namespace System.Windows.Ink
             // Verify that the visual hasn't been attached already
             if (_attachedVisuals != null)
             {
-                foreach(Visual alreadyAttachedVisual in _attachedVisuals)
+                foreach (Visual alreadyAttachedVisual in _attachedVisuals)
                 {
                     if (visual == alreadyAttachedVisual)
                     {
@@ -354,10 +354,10 @@ namespace System.Windows.Ink
                 return false;
             }
 
-            ContainerVisual correctParent 
+            ContainerVisual correctParent
                 = drawingAttributes.IsHighlighter ? GetContainerVisual(drawingAttributes) : _incrementalRenderingVisuals;
 
-            ContainerVisual currentParent 
+            ContainerVisual currentParent
                 = VisualTreeHelper.GetParent(visual) as ContainerVisual;
 
             if (currentParent == null || correctParent != currentParent)
@@ -375,7 +375,7 @@ namespace System.Windows.Ink
         /// <param name="strokeColor">The stroke color under high contrast</param>
         internal void TurnHighContrastOn(Color strokeColor)
         {
-            if ( !_highContrast || strokeColor != _highContrastColor )
+            if (!_highContrast || strokeColor != _highContrastColor)
             {
                 _highContrast = true;
                 _highContrastColor = strokeColor;
@@ -388,7 +388,7 @@ namespace System.Windows.Ink
         /// </summary>
         internal void TurnHighContrastOff()
         {
-            if ( _highContrast )
+            if (_highContrast)
             {
                 _highContrast = false;
                 UpdateStrokeVisuals();
@@ -511,7 +511,7 @@ namespace System.Windows.Ink
         /// </summary>
         private void UpdateStrokeVisuals()
         {
-            foreach ( StrokeVisual strokeVisual in _visuals.Values )
+            foreach (StrokeVisual strokeVisual in _visuals.Values)
             {
                 strokeVisual.Update();
             }
@@ -658,8 +658,10 @@ namespace System.Windows.Ink
                         _highlighters = new Dictionary<Color, HighlighterContainerVisual>();
                     }
 
-                    hcVisual = new HighlighterContainerVisual(color);
-                    hcVisual.Opacity = StrokeRenderer.HighlighterOpacity;
+                    hcVisual = new HighlighterContainerVisual(color)
+                    {
+                        Opacity = StrokeRenderer.HighlighterOpacity
+                    };
                     _highlightersRoot.Children.Add(hcVisual);
 
                     _highlighters.Add(color, hcVisual);

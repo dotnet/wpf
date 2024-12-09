@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -42,9 +42,9 @@ namespace System.Windows.Automation
         {
             ArgumentNullException.ThrowIfNull(assemblyName);
 
-            ProxyManager.RegisterProxyAssembly( assemblyName );
-        } 
-        
+            ProxyManager.RegisterProxyAssembly(assemblyName);
+        }
+
         /// <summary>
         /// Register client-side providers to use on HWND-based controls.
         /// </summary>
@@ -54,7 +54,7 @@ namespace System.Windows.Automation
             ArgumentNullException.ThrowIfNull(clientSideProviderDescription);
 
             ProxyManager.RegisterWindowHandlers(clientSideProviderDescription);
-        } 
+        }
 
         #endregion Proxies / Client-side providers
 

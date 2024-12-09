@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,9 +11,9 @@ namespace System.Windows.Automation.Peers
     public class RepeatButtonAutomationPeer : ButtonBaseAutomationPeer, IInvokeProvider
     {
         ///
-        public RepeatButtonAutomationPeer(RepeatButton owner): base(owner)
-        {}
-    
+        public RepeatButtonAutomationPeer(RepeatButton owner) : base(owner)
+        { }
+
         ///
         override protected string GetClassNameCore()
         {
@@ -41,7 +41,7 @@ namespace System.Windows.Automation.Peers
 
         void IInvokeProvider.Invoke()
         {
-            if(!IsEnabled())
+            if (!IsEnabled())
                 throw new ElementNotEnabledException();
 
             RepeatButton owner = (RepeatButton)Owner;

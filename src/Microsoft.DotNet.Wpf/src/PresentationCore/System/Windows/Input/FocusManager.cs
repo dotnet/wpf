@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -130,13 +130,13 @@ namespace System.Windows.Input
         {
             ArgumentNullException.ThrowIfNull(element);
 
-            DependencyObject focusedElement = (DependencyObject) element.GetValue(FocusedElementProperty);
+            DependencyObject focusedElement = (DependencyObject)element.GetValue(FocusedElementProperty);
 
             // Validate FocusedElement wrt to its FocusScope. If the two do not belong to the same PresentationSource 
             // then sever this link between them. The classic scenario for this is when an element with logical focus is 
             // dragged out into a floating widow. We want to prevent the MainWindow (focus scope) to point to the 
             // element in the floating window as its logical FocusedElement.
-            
+
             if (validate && focusedElement != null)
             {
                 DependencyObject focusScope = element;
@@ -234,77 +234,77 @@ namespace System.Windows.Input
                 }
             }
 
-/*
-            if (!_currentlyUpdatingTree)
-            {
-                _currentlyUpdatingTree = true;
-
-                IInputElement newFocusedElement = (IInputElement) newValue;
-                Visual oldVisual = GetNearestVisual(args.OldValue);
-                Visual newVisual = GetNearestVisual(args.NewValue);
-
-                if (oldVisual != null)
-                {
-                    oldVisual.ClearValue(UIElement.IsFocusedPropertyKey);
-
-                    // reverse-inherit:  clear the property on all parents that aren't also in the
-                    // new focused element ancestry
-                    while (oldVisual != null)
-                    {
-                        oldVisual.ClearValue(FocusedElementProperty);
-                        oldVisual = VisualTreeHelper.GetParent(oldVisual);
-                        if ((oldVisual == newVisual) || oldVisual.IsAncestorOf(newVisual))
+            /*
+                        if (!_currentlyUpdatingTree)
                         {
-                            // only walk up until you reach a common parent -- the new value walk will take care of the rest
-                            break;
+                            _currentlyUpdatingTree = true;
+
+                            IInputElement newFocusedElement = (IInputElement) newValue;
+                            Visual oldVisual = GetNearestVisual(args.OldValue);
+                            Visual newVisual = GetNearestVisual(args.NewValue);
+
+                            if (oldVisual != null)
+                            {
+                                oldVisual.ClearValue(UIElement.IsFocusedPropertyKey);
+
+                                // reverse-inherit:  clear the property on all parents that aren't also in the
+                                // new focused element ancestry
+                                while (oldVisual != null)
+                                {
+                                    oldVisual.ClearValue(FocusedElementProperty);
+                                    oldVisual = VisualTreeHelper.GetParent(oldVisual);
+                                    if ((oldVisual == newVisual) || oldVisual.IsAncestorOf(newVisual))
+                                    {
+                                        // only walk up until you reach a common parent -- the new value walk will take care of the rest
+                                        break;
+                                    }
+                                }
+                            }
+
+                            if (newVisual != null)
+                            {
+                                newVisual.SetValue(UIElement.IsFocusedPropertyKey, BooleanBoxes.TrueBox);
+
+                                // reverse-inherit:  set the property on all parents
+                                while (newVisual != null)
+                                {
+                                    newVisual.SetValue(FocusedElementProperty, newFocusedElement);
+                                    newVisual = VisualTreeHelper.GetParent(newVisual);
+                                }
+
+                                // Set Keyboard focus to the element if not already focused && current focus is within the current focus scope
+                                DependencyObject currentFocus = Keyboard.FocusedElement as DependencyObject;
+                                if ((currentFocus == null) &&
+                                    (newVisual != currentFocus) &&
+                                    (GetRoot(newVisual) == GetRoot(currentFocus)))
+                                {
+                                    Keyboard.Focus(newFocusedElement);
+                                }
+                            }
+                            _currentlyUpdatingTree = false;
+                        }
+            */
+        }
+
+        /*
+                private static Visual GetNearestVisual(object value)
+                {
+                    Visual visual = null;
+                    if (value != null)
+                    {
+                        visual = value as Visual;
+                        if (visual == null)
+                        {
+                            ContentElement ce = value as ContentElement;
+                            if (ce != null)
+                            {
+                                visual = ce.GetUIParent() as Visual;
+                            }
                         }
                     }
+                    return visual;
                 }
-
-                if (newVisual != null)
-                {
-                    newVisual.SetValue(UIElement.IsFocusedPropertyKey, BooleanBoxes.TrueBox);
-
-                    // reverse-inherit:  set the property on all parents
-                    while (newVisual != null)
-                    {
-                        newVisual.SetValue(FocusedElementProperty, newFocusedElement);
-                        newVisual = VisualTreeHelper.GetParent(newVisual);
-                    }
-
-                    // Set Keyboard focus to the element if not already focused && current focus is within the current focus scope
-                    DependencyObject currentFocus = Keyboard.FocusedElement as DependencyObject;
-                    if ((currentFocus == null) &&
-                        (newVisual != currentFocus) &&
-                        (GetRoot(newVisual) == GetRoot(currentFocus)))
-                    {
-                        Keyboard.Focus(newFocusedElement);
-                    }
-                }
-                _currentlyUpdatingTree = false;
-            }
-*/
-        }
-        
-/*
-        private static Visual GetNearestVisual(object value)
-        {
-            Visual visual = null;
-            if (value != null)
-            {
-                visual = value as Visual;
-                if (visual == null)
-                {
-                    ContentElement ce = value as ContentElement;
-                    if (ce != null)
-                    {
-                        visual = ce.GetUIParent() as Visual;
-                    }
-                }
-            }
-            return visual;
-        }
-*/
+        */
 
         private static DependencyObject GetRoot(DependencyObject element)
         {
@@ -313,14 +313,14 @@ namespace System.Windows.Input
 
             DependencyObject parent = null;
             DependencyObject dependencyObject = element;
-            
+
             ContentElement ce = element as ContentElement;
             if (ce != null)
                 dependencyObject = ce.GetUIParent();
-            
+
             while (dependencyObject != null)
             {
-                parent = dependencyObject; 
+                parent = dependencyObject;
                 dependencyObject = VisualTreeHelper.GetParent(dependencyObject);
             }
 
@@ -393,7 +393,7 @@ namespace System.Windows.Input
         private static readonly UncommonField<bool> IsFocusedElementCacheValid = new UncommonField<bool>();
         private static readonly UncommonField<WeakReference> FocusedElementCache = new UncommonField<WeakReference>();
 
-//        private static bool _currentlyUpdatingTree = false;
+        //        private static bool _currentlyUpdatingTree = false;
 
         #endregion private data
     }

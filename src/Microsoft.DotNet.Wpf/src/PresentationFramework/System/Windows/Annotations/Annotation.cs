@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -614,7 +614,7 @@ namespace System.Windows.Annotations
                         break;
 
                     // XmlConvert.ToDateTime is [Obsolete]
-                    #pragma warning disable 0618
+#pragma warning disable 0618
 
                     case AnnotationXmlConstants.Attributes.CreationTime:
                         _created = XmlConvert.ToDateTime(value);
@@ -624,7 +624,7 @@ namespace System.Windows.Annotations
                         _modified = XmlConvert.ToDateTime(value);
                         break;
 
-                    #pragma warning restore 0618
+#pragma warning restore 0618
 
                     case AnnotationXmlConstants.Attributes.TypeName:
                         string[] typeName = value.Split(_Colon);
@@ -658,8 +658,8 @@ namespace System.Windows.Annotations
 
                     default:
                         if (!Annotation.IsNamespaceDeclaration(reader))
-                           throw new XmlException(SR.Format(SR.UnexpectedAttribute, reader.LocalName, AnnotationXmlConstants.Elements.Annotation));
-                       break;
+                            throw new XmlException(SR.Format(SR.UnexpectedAttribute, reader.LocalName, AnnotationXmlConstants.Elements.Annotation));
+                        break;
                 }
             }
 

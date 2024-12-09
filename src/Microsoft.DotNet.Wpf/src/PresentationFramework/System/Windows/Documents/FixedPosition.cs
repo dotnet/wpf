@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -26,8 +26,8 @@ namespace System.Windows.Documents
         #region Constructors
         internal FixedPosition(FixedNode fixedNode, int offset)
         {
-            _fixedNode  = fixedNode;
-            _offset     = offset;
+            _fixedNode = fixedNode;
+            _offset = offset;
         }
         #endregion Constructors
 
@@ -118,7 +118,7 @@ namespace System.Windows.Documents
         //---------------------------------------------------------------------
         #region Private Fields
         private readonly FixedNode _fixedNode;
-        private readonly int       _offset;      // offset into the fixed node
+        private readonly int _offset;      // offset into the fixed node
         #endregion Private Fields
     }
 }

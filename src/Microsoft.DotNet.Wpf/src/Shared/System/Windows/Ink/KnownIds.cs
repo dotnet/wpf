@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -235,25 +235,25 @@ namespace System.Windows.Ink
         /// </summary>
         internal static readonly Guid IsHighlighter = new Guid(0xce305e1a, 0xe08, 0x45e3, 0x8c, 0xdc, 0xe4, 0xb, 0xb4, 0x50, 0x6f, 0x21);
 
-//        /// <summary>
-//        /// Guid used for identifying the fill-brush for rendering a stroke.
-//        /// </summary>
-//        public static readonly Guid FillBrush              = new Guid(0x9a547c5c, 0x1fff, 0x4987, 0x8a, 0xb6, 0xbe, 0xed, 0x75, 0xde, 0xa, 0x1d);
-//
-//        /// <summary>
-//        /// Guid used for identifying the pen used for rendering a stroke's outline.
-//        /// </summary>
-//        public static readonly Guid OutlinePen             = new Guid(0x9967aea6, 0x3980, 0x4337, 0xb7, 0xc6, 0x34, 0xa, 0x33, 0x98, 0x8e, 0x6b);
-//
-//        /// <summary>
-//        /// Guid used for identifying the blend mode used for rendering a stroke (similar to ROP in v1).
-//        /// </summary>
-//        public static readonly Guid BlendMode              = new Guid(0xd6993943, 0x7a84, 0x4a80, 0x84, 0x68, 0xa8, 0x3c, 0xca, 0x65, 0xb0, 0x5);
-//
-//        /// <summary>
-//        /// Guid used for identifying StylusShape object
-//        /// </summary>
-//        public static readonly Guid StylusShape = new Guid(0xf998e7f8, 0x7cdb, 0x4c0e, 0xb2, 0xe2, 0x63, 0x2b, 0xca, 0x21, 0x2a, 0x7b);
+        //        /// <summary>
+        //        /// Guid used for identifying the fill-brush for rendering a stroke.
+        //        /// </summary>
+        //        public static readonly Guid FillBrush              = new Guid(0x9a547c5c, 0x1fff, 0x4987, 0x8a, 0xb6, 0xbe, 0xed, 0x75, 0xde, 0xa, 0x1d);
+        //
+        //        /// <summary>
+        //        /// Guid used for identifying the pen used for rendering a stroke's outline.
+        //        /// </summary>
+        //        public static readonly Guid OutlinePen             = new Guid(0x9967aea6, 0x3980, 0x4337, 0xb7, 0xc6, 0x34, 0xa, 0x33, 0x98, 0x8e, 0x6b);
+        //
+        //        /// <summary>
+        //        /// Guid used for identifying the blend mode used for rendering a stroke (similar to ROP in v1).
+        //        /// </summary>
+        //        public static readonly Guid BlendMode              = new Guid(0xd6993943, 0x7a84, 0x4a80, 0x84, 0x68, 0xa8, 0x3c, 0xca, 0x65, 0xb0, 0x5);
+        //
+        //        /// <summary>
+        //        /// Guid used for identifying StylusShape object
+        //        /// </summary>
+        //        public static readonly Guid StylusShape = new Guid(0xf998e7f8, 0x7cdb, 0x4c0e, 0xb2, 0xe2, 0x63, 0x2b, 0xca, 0x21, 0x2a, 0x7b);
         #endregion
 
         #region Internal Ids
@@ -272,12 +272,12 @@ namespace System.Windows.Ink
         /// Guid used for identifying the Custom Stroke
         /// </summary>
         /// <remarks>Should we hide the CustomStrokes and StrokeLattice data?</remarks>
-        internal static readonly Guid InkCustomStrokes     = KnownIdCache.TabletInternalIdTable[(int)KnownIdCache.TabletInternalIdIndex.InkCustomStrokes];
+        internal static readonly Guid InkCustomStrokes = KnownIdCache.TabletInternalIdTable[(int)KnownIdCache.TabletInternalIdIndex.InkCustomStrokes];
 
         /// <summary>
         /// Guid used for identifying the Stroke Lattice
         /// </summary>
-        internal static readonly Guid InkStrokeLattice     = KnownIdCache.TabletInternalIdTable[(int)KnownIdCache.TabletInternalIdIndex.InkStrokeLattice];
+        internal static readonly Guid InkStrokeLattice = KnownIdCache.TabletInternalIdTable[(int)KnownIdCache.TabletInternalIdIndex.InkStrokeLattice];
 
 #if UNDO_ENABLED
         /// <summary>
@@ -290,7 +290,7 @@ namespace System.Windows.Ink
 
         #region Known Id Helpers
         private static System.Reflection.MemberInfo[] PublicMemberInfo = null;
-        internal static string ConvertToString (Guid id)
+        internal static string ConvertToString(Guid id)
         {
 
             if (null == PublicMemberInfo)
@@ -305,14 +305,14 @@ namespace System.Windows.Ink
             }
             foreach (System.Reflection.MemberInfo info in PublicMemberInfo)
             {
-                if ( id == (Guid)typeof(KnownIds).InvokeMember(info.Name,
+                if (id == (Guid)typeof(KnownIds).InvokeMember(info.Name,
                                 System.Reflection.BindingFlags.Static |
                                 System.Reflection.BindingFlags.GetField |
                                 System.Reflection.BindingFlags.Instance |
                                 System.Reflection.BindingFlags.Public |
                                 System.Reflection.BindingFlags.Default,
                                 null, null, Array.Empty<object>(),
-                                System.Globalization.CultureInfo.InvariantCulture) )
+                                System.Globalization.CultureInfo.InvariantCulture))
                 {
                     return info.Name;
                 }

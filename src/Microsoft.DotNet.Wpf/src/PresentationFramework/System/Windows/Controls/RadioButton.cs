@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -114,7 +114,7 @@ namespace System.Windows.Controls
 
         private static void PurgeDead(ArrayList elements, object elementToRemove)
         {
-            for (int i = 0; i < elements.Count; )
+            for (int i = 0; i < elements.Count;)
             {
                 WeakReference weakReference = (WeakReference)elements[i];
                 object element = weakReference.Target;
@@ -141,7 +141,7 @@ namespace System.Windows.Controls
                 {
                     // Get all elements bound to this key and remove this element
                     ArrayList elements = (ArrayList)_groupNameToElements[groupName];
-                    for (int i = 0; i < elements.Count; )
+                    for (int i = 0; i < elements.Count;)
                     {
                         WeakReference weakReference = (WeakReference)elements[i];
                         RadioButton rb = weakReference.Target as RadioButton;

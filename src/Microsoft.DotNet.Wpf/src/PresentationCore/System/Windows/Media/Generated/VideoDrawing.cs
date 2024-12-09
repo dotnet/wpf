@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -55,11 +55,11 @@ namespace System.Windows.Media
 
         private static void PlayerPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            VideoDrawing target = ((VideoDrawing) d);
+            VideoDrawing target = ((VideoDrawing)d);
 
 
-            MediaPlayer oldV = (MediaPlayer) e.OldValue;
-            MediaPlayer newV = (MediaPlayer) e.NewValue;
+            MediaPlayer oldV = (MediaPlayer)e.OldValue;
+            MediaPlayer newV = (MediaPlayer)e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
             if (dispatcher != null)
@@ -74,8 +74,8 @@ namespace System.Windows.Media
                         DUCE.Channel channel = targetResource.GetChannel(channelIndex);
                         Debug.Assert(!channel.IsOutOfBandChannel);
                         Debug.Assert(!targetResource.GetHandle(channel).IsNull);
-                        target.ReleaseResource(oldV,channel);
-                        target.AddRefResource(newV,channel);
+                        target.ReleaseResource(oldV, channel);
+                        target.AddRefResource(newV, channel);
                     }
                 }
             }
@@ -84,7 +84,7 @@ namespace System.Windows.Media
         }
         private static void RectPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            VideoDrawing target = ((VideoDrawing) d);
+            VideoDrawing target = ((VideoDrawing)d);
 
 
             target.PropertyChanged(RectProperty);
@@ -100,7 +100,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (MediaPlayer) GetValue(PlayerProperty);
+                return (MediaPlayer)GetValue(PlayerProperty);
             }
             set
             {
@@ -115,7 +115,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Rect) GetValue(RectProperty);
+                return (Rect)GetValue(RectProperty);
             }
             set
             {
@@ -194,31 +194,33 @@ namespace System.Windows.Media
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-                if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_VIDEODRAWING))
-                {
-                    MediaPlayer vPlayer = Player;
-                    if (vPlayer != null) ((DUCE.IResource)vPlayer).AddRefOnChannel(channel);
+            if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_VIDEODRAWING))
+            {
+                MediaPlayer vPlayer = Player;
+                if (vPlayer != null)
+                    ((DUCE.IResource)vPlayer).AddRefOnChannel(channel);
 
-                    AddRefOnChannelAnimations(channel);
+                AddRefOnChannelAnimations(channel);
 
 
-                    UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
-                }
+                UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
+            }
 
-                return _duceResource.GetHandle(channel);
-}
+            return _duceResource.GetHandle(channel);
+        }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-                Debug.Assert(_duceResource.IsOnChannel(channel));
+            Debug.Assert(_duceResource.IsOnChannel(channel));
 
-                if (_duceResource.ReleaseOnChannel(channel))
-                {
-                    MediaPlayer vPlayer = Player;
-                    if (vPlayer != null) ((DUCE.IResource)vPlayer).ReleaseOnChannel(channel);
+            if (_duceResource.ReleaseOnChannel(channel))
+            {
+                MediaPlayer vPlayer = Player;
+                if (vPlayer != null)
+                    ((DUCE.IResource)vPlayer).ReleaseOnChannel(channel);
 
-                    ReleaseOnChannelAnimations(channel);
-}
-}
+                ReleaseOnChannelAnimations(channel);
+            }
+        }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
             // Note that we are in a lock here already.

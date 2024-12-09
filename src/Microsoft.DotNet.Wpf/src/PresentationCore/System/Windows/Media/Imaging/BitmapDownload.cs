@@ -1,20 +1,20 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 #pragma warning disable 1634, 1691 // Allow suppression of certain presharp messages
 
-using System.IO;
 using System.Collections;
 using System.ComponentModel;
-using System.Threading;
-using System.Windows.Threading;
-using MS.Internal;
+using System.IO;
 using System.Net;
 using System.Net.Cache;
 using System.Text;
-using MS.Win32;
+using System.Threading;
+using System.Windows.Threading;
 using Microsoft.Win32.SafeHandles;
+using MS.Internal;
+using MS.Win32;
 
 namespace System.Windows.Media.Imaging
 {
@@ -46,7 +46,7 @@ namespace System.Windows.Media.Imaging
     /// a cache
     ///
     internal static class BitmapDownload
-    {           
+    {
         static BitmapDownload()
         {
             _waitEvent = new AutoResetEvent(false);
@@ -62,16 +62,16 @@ namespace System.Windows.Media.Imaging
             _thread = new Thread(new ThreadStart(DownloadThreadProc));
 
             _syncLock = new object();
-}
+        }
         #region Methods
 
         ///
         /// Begin a download
         ///
         internal static void BeginDownload(
-            BitmapDecoder decoder, 
-            Uri uri, 
-            RequestCachePolicy uriCachePolicy, 
+            BitmapDecoder decoder,
+            Uri uri,
+            RequestCachePolicy uriCachePolicy,
             Stream stream
             )
         {
@@ -101,8 +101,10 @@ namespace System.Windows.Media.Imaging
                 }
             }
 
-            entry = new QueueEntry();
-            entry.decoders  = new List<WeakReference>();
+            entry = new QueueEntry
+            {
+                decoders = new List<WeakReference>()
+            };
 
             lock (_syncLock)
             {
@@ -118,17 +120,17 @@ namespace System.Windows.Media.Imaging
             // Get the file path 
             StringBuilder tmpFileName = new StringBuilder(NativeMethods.MAX_PATH);
             MS.Win32.UnsafeNativeMethods.GetTempFileName(cacheFolder, "WPF", 0, tmpFileName);
-              
+
             try
             {
                 string pathToUse = tmpFileName.ToString();
                 SafeFileHandle fileHandle = MS.Win32.UnsafeNativeMethods.CreateFile(
-                    pathToUse, 
+                    pathToUse,
                     NativeMethods.GENERIC_READ | NativeMethods.GENERIC_WRITE, /* dwDesiredAccess */
                     0,                                                        /* dwShare */
                     null,                                                     /* lpSecurityAttributes */
                     NativeMethods.CREATE_ALWAYS,                              /* dwCreationDisposition */
-                    NativeMethods.FILE_ATTRIBUTE_TEMPORARY | 
+                    NativeMethods.FILE_ATTRIBUTE_TEMPORARY |
                     NativeMethods.FILE_FLAG_DELETE_ON_CLOSE,                  /* dwFlagsAndAttributes */
                     IntPtr.Zero                                               /* hTemplateFile */
                     );
@@ -137,12 +139,12 @@ namespace System.Windows.Media.Imaging
                 {
                     throw new Win32Exception();
                 }
-                    
+
                 entry.outputStream = new FileStream(fileHandle, FileAccess.ReadWrite);
                 entry.streamPath = pathToUse;
                 passed = true;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 if (CriticalExceptions.IsCriticalException(e))
                 {
@@ -155,7 +157,7 @@ namespace System.Windows.Media.Imaging
                 throw new IOException(SR.Image_CannotCreateTempFile);
             }
 
-            entry.readBuffer  = new byte[READ_SIZE];
+            entry.readBuffer = new byte[READ_SIZE];
             entry.contentLength = -1;
             entry.contentType = string.Empty;
             entry.lastPercent = 0;
@@ -193,7 +195,7 @@ namespace System.Windows.Media.Imaging
         internal static void DownloadThreadProc()
         {
             Queue workQueue = _workQueue;
-            for (;;)
+            for (; ; )
             {
                 _waitEvent.WaitOne();
 
@@ -201,7 +203,7 @@ namespace System.Windows.Media.Imaging
                 {
                     QueueEntry entry = (QueueEntry)workQueue.Dequeue();
 
-                    #pragma warning disable 6500
+#pragma warning disable 6500
 
                     // Catch all exceptions and marshal them to the correct thread
                     try
@@ -228,7 +230,7 @@ namespace System.Windows.Media.Imaging
                         entry = null;
                     }
 
-                    #pragma warning restore 6500
+#pragma warning restore 6500
                 }
             }
         }
@@ -239,7 +241,7 @@ namespace System.Windows.Media.Imaging
         {
             QueueEntry entry = (QueueEntry)result.AsyncState;
 
-            #pragma warning disable 6500
+#pragma warning disable 6500
 
             // Catch all exceptions and marshal them to the correct thread
             try
@@ -254,12 +256,12 @@ namespace System.Windows.Media.Imaging
                 // Signal
                 _waitEvent.Set();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 MarshalException(entry, e);
             }
 
-            #pragma warning restore 6500
+#pragma warning restore 6500
         }
 
         ///
@@ -270,18 +272,18 @@ namespace System.Windows.Media.Imaging
             QueueEntry entry = (QueueEntry)result.AsyncState;
             int bytesRead = 0;
 
-            #pragma warning disable 6500
+#pragma warning disable 6500
 
             try
             {
                 bytesRead = entry.inputStream.EndRead(result);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 MarshalException(entry, e);
             }
 
-            #pragma warning restore 6500
+#pragma warning restore 6500
 
             if (bytesRead == 0)
             {

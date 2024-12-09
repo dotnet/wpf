@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -133,7 +133,7 @@ namespace System.Windows.Media.TextFormatting
             get { return null; }
         }
 #else
-        private TextLexicalService  _hyphenator;
+        private TextLexicalService _hyphenator;
         internal virtual TextLexicalService Hyphenator
         {
             get { return _hyphenator; }

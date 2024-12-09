@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -51,7 +51,7 @@ namespace System.Windows.Controls
         /// </param>
         public
         PageRange(
-            int     page
+            int page
             )
         {
             _pageFrom = page;
@@ -69,8 +69,8 @@ namespace System.Windows.Controls
         /// </param>
         public
         PageRange(
-            int     pageFrom,
-            int     pageTo
+            int pageFrom,
+            int pageTo
             )
         {
             _pageFrom = pageFrom;
@@ -116,10 +116,10 @@ namespace System.Windows.Controls
         #region Private data
 
         private
-        int         _pageFrom;
+        int _pageFrom;
 
         private
-        int         _pageTo;
+        int _pageTo;
 
         #endregion Private data
 
@@ -173,7 +173,7 @@ namespace System.Windows.Controls
                 return false;
             }
 
-            return Equals((PageRange) obj);
+            return Equals((PageRange)obj);
         }
 
         /// <summary>

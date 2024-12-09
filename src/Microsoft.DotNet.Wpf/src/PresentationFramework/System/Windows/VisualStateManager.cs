@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -99,7 +99,7 @@ namespace System.Windows
 
         #region CustomVisualStateManager
 
-        public static readonly DependencyProperty CustomVisualStateManagerProperty = 
+        public static readonly DependencyProperty CustomVisualStateManagerProperty =
             DependencyProperty.RegisterAttached(
             "CustomVisualStateManager",
             typeof(VisualStateManager),
@@ -124,7 +124,7 @@ namespace System.Windows
 
         #region VisualStateGroups
 
-        private static readonly DependencyPropertyKey VisualStateGroupsPropertyKey = 
+        private static readonly DependencyPropertyKey VisualStateGroupsPropertyKey =
             DependencyProperty.RegisterAttachedReadOnly(
             "VisualStateGroups",
             typeof(IList),
@@ -148,7 +148,7 @@ namespace System.Windows
             {
                 return obj.GetValue(VisualStateManager.VisualStateGroupsProperty) as Collection<VisualStateGroup>;
             }
-            
+
             return null;
         }
 
@@ -237,7 +237,7 @@ namespace System.Windows
                 transition.DynamicStoryboardCompleted = false;
 
                 // Hook up generated Storyboard's Completed event handler
-                dynamicTransition.Completed += delegate(object sender, EventArgs e)
+                dynamicTransition.Completed += delegate (object sender, EventArgs e)
                 {
                     if (transition.Storyboard == null || transition.ExplicitStoryboardCompleted)
                     {
@@ -255,7 +255,7 @@ namespace System.Windows
                 if (transition.Storyboard != null && transition.ExplicitStoryboardCompleted == true)
                 {
                     EventHandler transitionCompleted = null;
-                    transitionCompleted = new EventHandler(delegate(object sender, EventArgs e)
+                    transitionCompleted = new EventHandler(delegate (object sender, EventArgs e)
                     {
                         if (transition.DynamicStoryboardCompleted)
                         {
@@ -358,7 +358,7 @@ namespace System.Windows
         {
             IEasingFunction easingFunction = null;
             Storyboard dynamic = new Storyboard();
-            
+
             if (transition != null)
             {
                 if (transition.GeneratedDuration != DurationZero)
@@ -421,7 +421,7 @@ namespace System.Windows
         private static Timeline GenerateFromAnimation(FrameworkElement root, Timeline timeline, IEasingFunction easingFunction)
         {
             Timeline result = null;
-            
+
             if (timeline is ColorAnimation || timeline is ColorAnimationUsingKeyFrames)
             {
                 result = new ColorAnimation() { EasingFunction = easingFunction };
@@ -492,7 +492,7 @@ namespace System.Windows
                 string targetName = Storyboard.GetTargetName(source);
                 DependencyObject target = Storyboard.GetTarget(source);
                 PropertyPath path = Storyboard.GetTargetProperty(source);
-                
+
                 if (target == null && !string.IsNullOrEmpty(targetName))
                 {
                     target = root.FindName(targetName) as DependencyObject;
@@ -732,7 +732,7 @@ namespace System.Windows
                     targetsEqual = (other._target == null && other._targetName == null);
                 }
 
-                if (targetsEqual && 
+                if (targetsEqual &&
                     (other._targetProperty.Path == _targetProperty.Path) &&
                     (other._targetProperty.PathParameters.Count == _targetProperty.PathParameters.Count))
                 {
@@ -773,7 +773,7 @@ namespace System.Windows
             private string _targetName;
             private PropertyPath _targetProperty;
         }
-        
+
         #endregion
 
         #region Data

@@ -1,4 +1,4 @@
-
+﻿
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
@@ -55,12 +55,12 @@ namespace System.Windows.Automation
         /// The element has a heading level of 7
         /// </summary>
         Level7,
- 
+
         /// <summary>
         /// The element has a heading level of 8
         /// </summary>
         Level8,
- 
+
         /// <summary>
         /// The element has a heading level of 9
         /// </summary>

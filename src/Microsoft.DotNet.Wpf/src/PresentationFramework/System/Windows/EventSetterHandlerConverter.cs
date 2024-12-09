@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -70,7 +70,7 @@ namespace System.Windows.Markup
                 {
                     EventSetter setter = ipvt.TargetObject as EventSetter;
                     string handlerName;
-                    if(setter != null && (handlerName = source as string) != null)
+                    if (setter != null && (handlerName = source as string) != null)
                     {
                         handlerName = handlerName.Trim();
                         return Delegate.CreateDelegate(setter.Event.HandlerType, rootProvider.RootObject, handlerName);

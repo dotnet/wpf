@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -62,7 +62,7 @@ namespace System.Windows.Input.StylusPointer
         {
             get
             {
-                return _tabletInfo.DeviceType == TabletDeviceType.Touch ? 
+                return _tabletInfo.DeviceType == TabletDeviceType.Touch ?
                     StylusLogic.CurrentStylusLogic.TouchDoubleTapDeltaTime : StylusLogic.CurrentStylusLogic.StylusDoubleTapDeltaTime;
             }
         }
@@ -132,7 +132,7 @@ namespace System.Windows.Input.StylusPointer
             if (dwXValue != 0 && dwYValue != 0)
             {
                 _doubleTapSize = new Size((int)Math.Round((ScreenSize.Width * DoubleTapDelta) / dwXValue),
-                                          (int)Math.Round((ScreenSize.Height *DoubleTapDelta) / dwYValue));
+                                          (int)Math.Round((ScreenSize.Height * DoubleTapDelta) / dwYValue));
 
                 // Make sure we return whole numbers (pixels are whole numbers) and take the maximum
                 // value between mouse and stylus settings to be safe.
